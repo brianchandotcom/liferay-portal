@@ -95,7 +95,7 @@ public class BaseNotificationTypeTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		ListTypeEntry listTypeEntry = ListTypeEntryUtil.createListTypeEntry(
+		listTypeEntry = ListTypeEntryUtil.createListTypeEntry(
 			RandomTestUtil.randomString(),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
@@ -115,7 +115,7 @@ public class BaseNotificationTypeTest {
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 					"yyyy-MM-dd");
 
-				return simpleDateFormat.format(RandomTestUtil.nextDate());
+				return simpleDateFormat.format(DATE);
 			}
 		).put(
 			"dateTimeObjectField",
@@ -123,7 +123,7 @@ public class BaseNotificationTypeTest {
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 					"yyyy-MM-dd 00:00:00.0");
 
-				return simpleDateFormat.format(RandomTestUtil.nextDate());
+				return simpleDateFormat.format(DATE);
 			}
 		).put(
 			"emailTextObjectField",
@@ -492,11 +492,14 @@ public class BaseNotificationTypeTest {
 			ListUtil.fromMapValues(parentObjectEntryValues));
 	}
 
+	protected static final Date DATE = RandomTestUtil.nextDate();
+
 	@DeleteAfterTestRun
 	protected static ObjectDefinition childObjectDefinition;
 
 	protected static LinkedHashMap<String, Object> childObjectEntryValues;
 	protected static DTOConverterContext dtoConverterContext;
+	protected static ListTypeEntry listTypeEntry;
 
 	@Inject
 	protected static ObjectFieldLocalService objectFieldLocalService;

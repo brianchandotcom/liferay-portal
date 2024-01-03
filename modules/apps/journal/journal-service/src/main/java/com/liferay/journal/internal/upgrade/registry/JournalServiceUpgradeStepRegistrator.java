@@ -283,8 +283,10 @@ public class JournalServiceUpgradeStepRegistrator
 
 		registry.register("3.4.2", "3.4.3", new DummyUpgradeStep());
 
+		registry.register("3.4.3", "3.4.4", new DummyUpgradeStep());
+
 		registry.register(
-			"3.4.3", "3.5.0",
+			"3.4.4", "3.5.0",
 			new JournalArticleContentUpgradeProcess(
 				_journalContentCompatibilityConverter));
 

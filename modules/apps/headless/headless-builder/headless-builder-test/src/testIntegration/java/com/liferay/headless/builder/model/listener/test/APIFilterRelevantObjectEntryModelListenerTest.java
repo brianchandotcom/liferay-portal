@@ -7,7 +7,6 @@ package com.liferay.headless.builder.model.listener.test;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.test.BaseTestCase;
-import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -48,6 +47,8 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 		super.setUp();
 
 		_objectDefinitionJSONObject = _addObjectDefinition();
+
+		_objectEntryJSONObject = _addObjectEntry();
 	}
 
 	@Test
@@ -259,7 +260,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 					"oDataFilter", "test ne 1"
 				).put(
 					"r_apiEndpointToAPIFilters_c_apiEndpointId",
-					RandomTestUtil.randomLong()
+					_objectEntryJSONObject.getLong("id")
 				).toString(),
 				"headless-builder/filters", Http.Method.POST
 			).toString(),
@@ -359,7 +360,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			).put(
 				"label", JSONUtil.put("en-US", RandomTestUtil.randomString())
 			).put(
-				"name", ObjectDefinitionTestUtil.getRandomName()
+				"name", _OBJECT_NAME
 			).put(
 				"objectFields",
 				JSONUtil.put(
@@ -378,7 +379,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 					).put(
 						"listTypeDefinitionId", 0
 					).put(
-						"name", "x" + RandomTestUtil.randomString()
+						"name", _OBJECT_FIELD_NAME
 					).put(
 						"required", false
 					).put(
@@ -397,6 +398,15 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			"object-admin/v1.0/object-definitions", Http.Method.POST);
 	}
 
+	private JSONObject _addObjectEntry() throws Exception {
+		return HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
+			).toString(),
+			"c/" + StringUtil.toLowerCase(_OBJECT_NAME) + "s",
+			Http.Method.POST);
+	}
+
 	private static final String _API_APPLICATION_PATH =
 		StringPool.SLASH +
 			StringUtil.toLowerCase(RandomTestUtil.randomString());
@@ -407,6 +417,12 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 	private static final String _OBJECT_FIELD_ERC =
 		RandomTestUtil.randomString();
 
+	private static final String _OBJECT_FIELD_NAME =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_NAME = RandomTestUtil.randomString();
+
 	private static JSONObject _objectDefinitionJSONObject;
+	private static JSONObject _objectEntryJSONObject;
 
 }

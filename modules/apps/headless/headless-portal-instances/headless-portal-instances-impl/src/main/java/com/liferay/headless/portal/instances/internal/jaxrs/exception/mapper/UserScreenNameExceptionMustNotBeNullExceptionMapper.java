@@ -30,7 +30,7 @@ public class UserScreenNameExceptionMustNotBeNullExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		UserScreenNameException.MustNotBeNull userScreenNameException) {
+		UserScreenNameException.MustNotBeNull mustNotBeNull) {
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,

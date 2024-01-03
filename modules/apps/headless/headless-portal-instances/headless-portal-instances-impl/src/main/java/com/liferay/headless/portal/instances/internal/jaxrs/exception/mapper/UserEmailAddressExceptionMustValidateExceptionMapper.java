@@ -30,11 +30,10 @@ public class UserEmailAddressExceptionMustValidateExceptionMapper
 
 	@Override
 	protected Problem getProblem(
-		UserEmailAddressException.MustValidate userEmailAddressException) {
+		UserEmailAddressException.MustValidate mustValidate) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST,
-			userEmailAddressException.getMessage());
+			Response.Status.BAD_REQUEST, mustValidate.getMessage());
 	}
 
 }

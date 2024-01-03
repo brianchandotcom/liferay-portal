@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -546,8 +547,8 @@ public class EditFragmentEntryDisplayContext {
 							"/portal/fragment/render_fragment_entry",
 						"groupId", _themeDisplay.getScopeGroupId(),
 						"fragmentEntryId", fragmentEntry.getFragmentEntryId(),
-						"fragmentEntryKey",
-						fragmentEntry.getFragmentEntryKey());
+						"fragmentEntryKey", fragmentEntry.getFragmentEntryKey(),
+						"p_l_mode", Constants.PREVIEW);
 				}
 			).build()
 		).build();

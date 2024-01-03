@@ -102,8 +102,6 @@ public class JournalFeedStagedModelDataHandlerTest
 		portalPreferences.setValue(
 			"", "indexAllArticleVersionsEnabled", "true");
 		portalPreferences.setValue(
-			"", "databaseContentKeywordSearchEnabled", "true");
-		portalPreferences.setValue(
 			"", "journalArticlePageBreakToken", "@page_break@");
 
 		PortalPreferencesLocalServiceUtil.updatePreferences(

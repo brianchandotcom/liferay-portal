@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONDITIONS_PROPERTY_NAME_BY_INDEX</td>
+	<td>xpath=(//div[contains(@class,'criterion-row')]//span[contains(@class,'criterion')])[${index}][normalize-space()='${propertyName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CRITERION_CONJUNCTION</td>
 	<td>//div[contains(@class,'criteria')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
@@ -86,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CRITERION_DRAG_ICON</td>
+	<td>//div[contains(@class,'criterion-row')][.//span[contains(@class,'criterion')][normalize-space()='${propertyName}']]//button[(contains(@class,'drag-icon'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CRITERION_VIEW_MODE</td>
 	<td>//span[contains(@class, 'criterion-string')] //b[contains(text(), '${propertyValue}')]</td>
 	<td></td>
@@ -106,6 +116,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_DROP_ZONE_TARGET</td>
+	<td>//div[contains(@class,'empty-drop-zone--target')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX</td>
 	<td>//input[contains(@class, 'custom-control-input') and contains(@name, 'roleSegmentation')]</td>
 	<td></td>
@@ -113,6 +128,11 @@
 <tr>
 	<td>ENABLE_SEGMENTS_INSTANCE_SETTINGS</td>
 	<td>//div[@role='alert']//a[text()='To enable, go to Instance Settings.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEYBOARD_MOVEMENT_PREVIEW</td>
+	<td>//div[contains(@class,'keyboard-movement-preview')]</td>
 	<td></td>
 </tr>
 <tr>

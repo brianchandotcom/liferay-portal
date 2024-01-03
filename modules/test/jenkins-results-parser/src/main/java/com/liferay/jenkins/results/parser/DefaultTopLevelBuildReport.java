@@ -61,8 +61,11 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 				for (final AxisBuild axisBuild :
 						batchBuild.getDownstreamAxisBuilds()) {
 
+					JenkinsMaster jenkinsMaster = axisBuild.getJenkinsMaster();
+
 					callables.add(
-						new Callable<JSONObject>() {
+						new ParallelExecutor.SequentialCallable<JSONObject>(
+							jenkinsMaster.getName()) {
 
 							@Override
 							public JSONObject call() throws Exception {
@@ -73,8 +76,11 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 				}
 			}
 			else {
+				JenkinsMaster jenkinsMaster = build.getJenkinsMaster();
+
 				callables.add(
-					new Callable<JSONObject>() {
+					new ParallelExecutor.SequentialCallable<JSONObject>(
+						jenkinsMaster.getName()) {
 
 						@Override
 						public JSONObject call() throws Exception {

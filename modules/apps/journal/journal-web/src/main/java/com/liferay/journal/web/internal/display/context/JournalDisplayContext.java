@@ -2218,9 +2218,15 @@ public class JournalDisplayContext {
 			Field.CLASS_NAME_ID, JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
 		attributes.put(Field.STATUS, getStatus());
 		attributes.put(Field.TITLE, getKeywords());
-		attributes.put("head", !showVersions);
-		attributes.put("latest", !showVersions);
-		attributes.put("showNonindexable", !showVersions);
+
+		if (isIndexAllArticleVersions()) {
+			attributes.put("head", !showVersions);
+			attributes.put("latest", !showVersions);
+			attributes.put("showNonindexable", !showVersions);
+		}
+		else {
+			attributes.put("head", false);
+		}
 
 		searchContext.setAttributes(attributes);
 

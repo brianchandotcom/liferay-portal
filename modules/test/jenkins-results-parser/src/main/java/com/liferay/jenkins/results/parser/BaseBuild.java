@@ -1254,7 +1254,7 @@ public abstract class BaseBuild implements Build {
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(getBuildURL() + urlSuffix),
-				checkCache);
+				checkCache, 5000);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(

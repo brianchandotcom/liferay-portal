@@ -138,6 +138,80 @@ definition {
 			webContentTitle = "WC WebContent Title 3");
 	}
 
+	@description = "This is a test for LPS-202596. The content creator could filter assets by Web Content type in Web Content admin."
+	@priority = 3
+	test CanFilterByWebContentType {
+		property custom.properties = "feature.flag.LPS-196768=true";
+
+		task ("Given a site administrator has a folder and web contents") {
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name");
+
+			JSONWebcontent.addWebContent(
+				content = "WC Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC Web Content Title");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content Draft",
+				groupName = "Test Site Name",
+				title = "Web Content Title Draft",
+				workflowAction = "DRAFT");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC Web Content Title");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Edit",
+				webContentTitle = "WC Web Content Title",
+				webContentTitleEdit = "WC Web Content Title Edit");
+		}
+
+		task ("When open the dropdown menu of Filter") {
+			Click(locator1 = "ManagementBar#FILTER");
+		}
+
+		task ("Then assert can filter by web content type") {
+			task ("View the Web Content is selected") {
+				AssertVisible(
+					key_menuItem = "Web Content",
+					locator1 = "MenuItem#ANY_MENU_ITEM_SELECTED");
+			}
+
+			task ("View the folder, the latest version of published web content and draft web content are shown and the folder name and web content name have link") {
+				Click(locator1 = "ManagementBar#FILTER");
+
+				for (var webContentTitle : list "WC Folder Name,WC Web Content Title Edit,Web Content Title Draft") {
+					WebContent.viewTitle(webContentTitle = ${webContentTitle});
+				}
+
+				WebContent.viewNotPresentCP(webContentTitle = "WC Web Content Title");
+			}
+
+			task ("View status labels are shown on web contents") {
+				AssertTextEquals(
+					key_webContentTitle = "Web Content Title Draft",
+					locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
+					value1 = "DRAFT");
+
+				AssertTextEquals(
+					key_webContentTitle = "WC Web Content Title Edit",
+					locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
+					value1 = "APPROVED");
+			}
+
+			task ("Open the dropdown menu of published web content and view all actions are available") {
+				Click(
+					key_webContentTitle = "WC Web Content Title Edit",
+					locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+
+				MenuItem.viewOrder(menuItemList = "Edit,Preview,Translate,Expire,Subscribe,View History,View Usages,Make a Copy,Export for Translation,Import Translation,Move,Permissions,Delete");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-196842. When the “Recent” filter is applied, the possibility of changing the order must be disabled"
 	@priority = 4
 	test CannotReverseSortDirectionWhenFilterByRecent {

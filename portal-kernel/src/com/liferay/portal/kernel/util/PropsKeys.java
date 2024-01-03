@@ -432,6 +432,9 @@ public interface PropsKeys {
 	public static final String COMPANY_DEFAULT_VIRTUAL_HOST_NAME =
 		"company.default.virtual.host.name";
 
+	public static final String COMPANY_DEFAULT_VIRTUAL_HOST_SYNC_ON_STARTUP =
+		"company.default.virtual.host.sync.on.startup";
+
 	public static final String COMPANY_DEFAULT_WEB_ID =
 		"company.default.web.id";
 

@@ -359,6 +359,11 @@ public class PropsValues {
 	public static String COMPANY_DEFAULT_VIRTUAL_HOST_NAME = PropsUtil.get(
 		PropsKeys.COMPANY_DEFAULT_VIRTUAL_HOST_NAME);
 
+	public static boolean COMPANY_DEFAULT_VIRTUAL_HOST_SYNC_ON_STARTUP =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.COMPANY_DEFAULT_VIRTUAL_HOST_SYNC_ON_STARTUP));
+
 	public static String COMPANY_DEFAULT_WEB_ID = PropsUtil.get(
 		PropsKeys.COMPANY_DEFAULT_WEB_ID);
 

@@ -1563,6 +1563,27 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
+	protected Company syncDefaultCompanyVirtualHost(Company company)
+		throws PortalException {
+
+		if (!PropsValues.COMPANY_DEFAULT_VIRTUAL_HOST_SYNC_ON_STARTUP ||
+			!Objects.equals(
+				PropsValues.COMPANY_DEFAULT_WEB_ID, company.getWebId())) {
+
+			return company;
+		}
+
+		return updateCompany(
+			company.getCompanyId(),
+			GetterUtil.getString(
+				PropsValues.COMPANY_DEFAULT_VIRTUAL_HOST_NAME,
+				company.getVirtualHostname()),
+			GetterUtil.getString(
+				PropsValues.COMPANY_DEFAULT_VIRTUAL_HOST_MAIL_DOMAIN,
+				company.getMx()),
+			company.getMaxUsers(), company.isActive());
+	}
+
 	protected void unregisterCompany(Company company) {
 		PortalInstanceLifecycleManager portalInstanceLifecycleManager =
 			_serviceTracker.getService();
@@ -2057,6 +2078,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			// Key
 
 			checkCompanyKey(company.getCompanyId());
+
+			// Sync Virtual Host Name
+
+			company = syncDefaultCompanyVirtualHost(company);
 
 			// Resource actions
 

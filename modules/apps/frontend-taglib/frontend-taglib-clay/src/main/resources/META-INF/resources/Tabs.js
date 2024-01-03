@@ -6,12 +6,14 @@
 import ClayTabs from '@clayui/tabs';
 import React, {useEffect, useRef} from 'react';
 
-const Panel = ({children}) => {
+const Panel = ({children: tabPanel}) => {
 	const ref = useRef();
 
 	useEffect(() => {
-		ref.current.appendChild(children);
-	}, [children]);
+		while (tabPanel.firstChild) {
+			ref.current.appendChild(tabPanel.firstChild);
+		}
+	}, [tabPanel]);
 
 	return <div ref={ref}></div>;
 };

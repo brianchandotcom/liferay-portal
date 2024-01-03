@@ -5,11 +5,79 @@
 
 /* eslint-disable no-undef */
 
-document.getElementById('searchInput').addEventListener('keypress', (event) => {
-	if (event.keyCode === 13) {
-		event.preventDefault();
-		document.getElementById('searchSubmitBtn').click();
-	}
+window.addEventListener('load', () => {
+	const searchInput = fragmentElement.querySelector('.search-input');
+
+	searchInput.value = '';
+
+	new navigation.default.DropdownProvider(
+		'.account-info',
+		'.account-info',
+		'menu-open'
+	);
+
+	new navigation.default.DropdownProvider(
+		'.account-info',
+		'.account-dropdown',
+		'show',
+		true
+	);
+
+	new navigation.default.DropdownProvider(
+		'.sites',
+		'.liferay-sites-dropdown',
+		'show',
+		true
+	);
+
+	new navigation.default.DropdownProvider('.sites', '.sites', 'show', true);
+
+	new navigation.default.DropdownProvider(
+		'.menu-button-group',
+		'.menu-button-group',
+		'menu-open'
+	);
+
+	new navigation.default.DropdownProvider(
+		'.menu-button-group',
+		'.tablet-mobile-nav-section',
+		'menu-open',
+		true
+	);
+
+	new navigation.default.DropdownProvider(
+		'.adt-nav-text',
+		'.adt-submenu',
+		'dropdown-open',
+		false,
+		(menu) => {
+			adtSpatialNavigationProvider.addFocusableClasses(menu);
+		},
+		(menu) => {
+			adtSpatialNavigationProvider.removeFocusableClasses(menu);
+		}
+	);
+
+	new navigation.default.DropdownProvider(
+		'.language',
+		'.language-selector',
+		'list-open',
+		true
+	);
+
+	new navigation.default.DropdownProvider(
+		'.language',
+		'.language-dropdown-list-container',
+		'list-open',
+		true
+	);
+
+	new navigation.default.DropdownProvider(
+		'.search-icon, .close-search',
+		'.search-wrapper',
+		'search-open',
+		true
+	);
 });
 
 const searchSuggestionsInput = fragmentElement.querySelector(
@@ -20,11 +88,11 @@ const searchSuggestions = fragmentElement.querySelector('.search-suggestions');
 
 const searchSuggestionItemTemplate = suggestions.querySelector('template');
 
-const searchSubmit = fragmentElement.querySelector('.search-submit');
-
 const seeAllResultsLink = fragmentElement.querySelector(
 	'.search-suggestions-see-all-results-text'
 );
+
+const searchSubmitLink = fragmentElement.querySelector('.search-submit');
 
 const searchSuggestionItem = searchSuggestionItemTemplate.content.querySelector(
 	'a'
@@ -36,6 +104,8 @@ function updateSearch() {
 	const searchSuggestionsInputValue = searchSuggestionsInput.value;
 
 	if (searchSuggestionsInputValue) {
+		seeAllResultsLink.href = '/search?q=' + searchSuggestionsInputValue;
+		searchSubmitLink.href = '/search?q=' + searchSuggestionsInputValue;
 		suggestions.classList.add('performing-search');
 		performSearch(searchSuggestionsInputValue);
 	}
@@ -52,9 +122,6 @@ function updateSearch() {
 let debounceTimer;
 
 const debounce = (callback, time) => {
-	const searchQuery = '/search?q=' + searchSuggestionsInput.value;
-	seeAllResultsLink.href = searchQuery;
-	searchSubmit.href = searchQuery;
 	window.clearTimeout(debounceTimer);
 	debounceTimer = window.setTimeout(callback, time);
 };
@@ -213,3 +280,5 @@ function getBreadcrumbFromURL(url) {
 		})
 		.join(' ');
 }
+
+fragmentElement.querySelector('.public-sites-navigation').style.zIndex = '4';

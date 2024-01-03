@@ -387,31 +387,28 @@ public class VariableNameCheck extends BaseCheck {
 	private void _checkExceptionVariableName(
 		DetailAST detailAST, String name, String typeName) {
 
-		if (StringUtil.count(typeName, StringPool.PERIOD) > 1) {
-			return;
-		}
-
-		int index = typeName.indexOf(StringPool.PERIOD);
-
-		if (index != -1) {
-			String className = typeName.substring(0, index);
-
-			if (!className.endsWith("Exception")) {
-				return;
-			}
-
-			typeName = typeName.substring(index + 1);
-		}
-		else if (!typeName.endsWith("Exception")) {
-			return;
-		}
-
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		if ((parentDetailAST.getType() == TokenTypes.LITERAL_CATCH) ||
 			(detailAST.getType() != TokenTypes.PARAMETER_DEF)) {
 
 			return;
+		}
+
+		String[] names = StringUtil.split(typeName, StringPool.PERIOD);
+
+		if (names.length > 2) {
+			return;
+		}
+
+		typeName = names[0];
+
+		if (!StringUtil.endsWith(typeName, "Exception")) {
+			return;
+		}
+
+		if (names.length == 2) {
+			typeName = names[1];
 		}
 
 		String absolutePath = getAbsolutePath();

@@ -498,14 +498,9 @@ exports[`SegmentEdit renders with given values 1`] = `
                     type="button"
                   >
                     <div
-                      class="c-inner"
-                      tabindex="-1"
+                      class="d-flex justify-content-between text-uppercase"
                     >
-                      <div
-                        class="d-flex justify-content-between text-uppercase"
-                      >
-                        First Test Values Group
-                      </div>
+                      First Test Values Group
                     </div>
                     <span
                       class="collapse-icon-closed"

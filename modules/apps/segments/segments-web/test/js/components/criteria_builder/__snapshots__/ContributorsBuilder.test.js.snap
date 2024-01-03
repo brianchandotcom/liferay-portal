@@ -77,14 +77,9 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                 type="button"
               >
                 <div
-                  class="c-inner"
-                  tabindex="-1"
+                  class="d-flex justify-content-between text-uppercase"
                 >
-                  <div
-                    class="d-flex justify-content-between text-uppercase"
-                  >
-                    User
-                  </div>
+                  User
                 </div>
                 <span
                   class="collapse-icon-closed"
@@ -739,14 +734,9 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                 type="button"
               >
                 <div
-                  class="c-inner"
-                  tabindex="-1"
+                  class="d-flex justify-content-between text-uppercase"
                 >
-                  <div
-                    class="d-flex justify-content-between text-uppercase"
-                  >
-                    User Organization
-                  </div>
+                  User Organization
                 </div>
                 <span
                   class="collapse-icon-closed"
@@ -1202,14 +1192,9 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                 type="button"
               >
                 <div
-                  class="c-inner"
-                  tabindex="-1"
+                  class="d-flex justify-content-between text-uppercase"
                 >
-                  <div
-                    class="d-flex justify-content-between text-uppercase"
-                  >
-                    User
-                  </div>
+                  User
                 </div>
                 <span
                   class="collapse-icon-closed"
@@ -1864,14 +1849,9 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                 type="button"
               >
                 <div
-                  class="c-inner"
-                  tabindex="-1"
+                  class="d-flex justify-content-between text-uppercase"
                 >
-                  <div
-                    class="d-flex justify-content-between text-uppercase"
-                  >
-                    User Organization
-                  </div>
+                  User Organization
                 </div>
                 <span
                   class="collapse-icon-closed"

@@ -241,26 +241,21 @@ exports[`SidebarPanelInfoView renders 1`] = `
                   class="panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled"
                   type="button"
                 >
-                  <span
-                    class="c-inner"
-                    tabindex="-1"
-                  >
-                    <div>
+                  <div>
+                    <div
+                      class="autofit-row"
+                    >
                       <div
-                        class="autofit-row"
+                        class="align-self-center panel-title autofit-col autofit-col-expand"
                       >
-                        <div
-                          class="align-self-center panel-title autofit-col autofit-col-expand"
+                        <span
+                          aria-label="view properties"
                         >
-                          <span
-                            aria-label="view properties"
-                          >
-                            properties
-                          </span>
-                        </div>
+                          properties
+                        </span>
                       </div>
                     </div>
-                  </span>
+                  </div>
                   <span
                     class="collapse-icon-closed"
                   >

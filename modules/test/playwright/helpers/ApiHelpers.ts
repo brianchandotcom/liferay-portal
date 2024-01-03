@@ -28,7 +28,7 @@ export class ApiHelpers {
 		});
 	}
 
-	async post(url: string, data: object) {
+	async post(url: string, data: DataObject) {
 		const response = await this.page.request.post(url, {
 			data,
 			headers: await this.getHeader(),

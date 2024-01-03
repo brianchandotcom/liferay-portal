@@ -1,0 +1,174 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Play Button",
+					"label": "Show Play Button",
+					"name": "showPlayButton",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Hide Overlay",
+					"label": "Hide Overlay",
+					"name": "hideOverlay",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "html-5-video-url",
+					"label": "html-5-video-url",
+					"localizable": true,
+					"name": "html5videoUrl",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "overlay-background-image-url",
+					"label": "overlay-background-image-url",
+					"name": "overlayBackgroundImageUrl",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "center",
+					"description": "play-button-position",
+					"label": "play-button-position",
+					"name": "playButtonPosition",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "center",
+								"value": "center"
+							},
+							{
+								"label": "bottom-left",
+								"value": "bottom-left"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "16:9",
+					"description": "video-player-aspect-ratio",
+					"label": "video-player-aspect-ratio",
+					"name": "videoPlayerAspectRatio",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "16:9"
+							},
+							{
+								"value": "15:7"
+							},
+							{
+								"value": "8:5"
+							},
+							{
+								"value": "4:3"
+							},
+							{
+								"value": "3:2"
+							},
+							{
+								"value": "1:1"
+							},
+							{
+								"label": "none",
+								"value": "none"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "max-width-xsmall",
+					"description": "video-player-max-width",
+					"label": "video-player-max-width",
+					"name": "videoPlayerMaxWidth",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "none",
+								"value": ""
+							},
+							{
+								"label": "x-small",
+								"value": "max-width-xsmall"
+							},
+							{
+								"label": "small",
+								"value": "max-width-small"
+							},
+							{
+								"label": "medium",
+								"value": "max-width-medium"
+							},
+							{
+								"label": "large",
+								"value": "max-width-large"
+							},
+							{
+								"label": "full",
+								"value": "max-width-full"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "mr-10",
+					"description": "video-position",
+					"label": "video-position",
+					"name": "videoPosition",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "left",
+								"value": "mr-10"
+							},
+							{
+								"label": "center",
+								"value": "mx-10"
+							},
+							{
+								"label": "right",
+								"value": "ml-10"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "wistia-id",
+					"label": "wistia-id",
+					"localizable": true,
+					"name": "wistiaId",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "youtube-id",
+					"label": "youtube-id",
+					"localizable": true,
+					"name": "youtubeId",
+					"type": "text"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

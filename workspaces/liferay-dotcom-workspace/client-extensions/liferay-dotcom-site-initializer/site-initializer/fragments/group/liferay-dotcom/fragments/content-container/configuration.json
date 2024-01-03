@@ -1,0 +1,104 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "medium",
+					"label": "Padding",
+					"name": "padding",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "None",
+								"value": "p-0"
+							},
+							{
+								"label": "Small",
+								"value": "small"
+							},
+							{
+								"label": "Medium (default)",
+								"value": "medium"
+							},
+							{
+								"label": "Large",
+								"value": "large"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "blue",
+					"label": "Color",
+					"name": "color",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Blue",
+								"value": "blue"
+							},
+							{
+								"label": "Gray",
+								"value": "gray"
+							},
+							{
+								"label": "White",
+								"value": "white"
+							},
+							{
+								"label": "Gradient Light",
+								"value": "gradient-light"
+							},
+							{
+								"label": "Gradient Dark",
+								"value": "gradient-dark"
+							},
+							{
+								"label": "Translucent",
+								"value": "translucent"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Interactive",
+					"label": "Interative (toggle)",
+					"name": "interactive",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "url",
+					"label": "url",
+					"localizable": true,
+					"name": "url",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Open in a New Tab.",
+					"label": "Open in a New Tab.",
+					"name": "newTab",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Force Equal Height Column",
+					"label": "Force Equal Height Column",
+					"name": "forceEqualHeightColumn",
+					"type": "checkbox"
+				}
+			],
+			"label": "Spacing"
+		}
+	]
+}

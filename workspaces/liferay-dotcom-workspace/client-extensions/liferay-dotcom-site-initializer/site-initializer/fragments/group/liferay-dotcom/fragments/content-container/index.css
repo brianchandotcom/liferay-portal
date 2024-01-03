@@ -1,0 +1,118 @@
+.f-content-container {
+	border-radius: var(--border-radius);
+}
+
+.f-content-container .interactive:hover,
+.f-content-container .interactive:focus,
+.f-content-container .interactive:focus-visible,
+.f-content-container .interactive:active {
+	box-shadow: none;
+	outline: var(--color-brand-primary-lighten-2) solid 2px;
+	outline-offset: 2px;
+	text-decoration: none;
+}
+
+.f-content-container .content-container {
+	border-radius: var(--border-radius);
+}
+
+@media screen and (min-width: 993px) {
+	.f-content-container .content-container.small {
+		padding: 1.5rem;
+	}
+
+	.f-content-container .content-container.medium {
+		padding: 2.5rem;
+	}
+
+	.f-content-container .content-container.large {
+		padding: 4rem;
+	}
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+	.f-content-container .content-container.small {
+		padding: 1.5rem;
+	}
+
+	.f-content-container .content-container.medium {
+		padding: 2.5rem;
+	}
+
+	.f-content-container .content-container.large {
+		padding: 2.5rem;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.f-content-container .content-container.small {
+		padding: 1.5rem;
+	}
+
+	.f-content-container .content-container.medium {
+		padding: 1.5rem;
+	}
+
+	.f-content-container .content-container.large {
+		padding: 1.5rem;
+	}
+}
+
+.f-content-container .content-container-blue {
+	background: linear-gradient(139deg, #e7efff 99.99%, #baccee 100%);
+}
+
+.f-content-container .content-container-blue.interactive:hover,
+.f-content-container .content-container-blue.interactive:focus,
+.f-content-container .content-container-blue.interactive:focus-visible,
+.f-content-container .content-container-blue.interactive:active {
+	background: linear-gradient(139deg, #e7efff 60.42%, #baccee 100%);
+}
+
+.f-content-container .content-container-gray {
+	background: var(--color-neutral-1, #f7f7f8);
+}
+
+.f-content-container .content-container-gray.interactive:hover,
+.f-content-container .content-container-gray.interactive:focus,
+.f-content-container .content-container-gray.interactive:focus-visible,
+.f-content-container .content-container-gray.interactive:active {
+	background: var(--brand-primary-lighten-lighten-6, #fbfcfe);
+}
+
+.f-content-container .content-container-white {
+	background: var(--color-neutral-0, #fff);
+}
+
+.f-content-container .content-container-gradient-light {
+	background: linear-gradient(115deg, #122aaf 0%, #01bbf8 100%);
+}
+
+.f-content-container .content-container-gradient-light.interactive:hover,
+.f-content-container .content-container-gradient-light.interactive:focus,
+.f-content-container .content-container-gradient-light.interactive:focus-visible,
+.f-content-container .content-container-gradient-light.interactive:active {
+	background: linear-gradient(115deg, #122aaf 0%, #01bbf8 84.37%);
+}
+
+.f-content-container .content-container-gradient-dark {
+	background: linear-gradient(124deg, #1514a4 0%, #0a70d2 100%);
+}
+
+.f-content-container .content-container-gradient-dark.interactive:hover,
+.f-content-container .content-container-gradient-dark.interactive:focus,
+.f-content-container .content-container-gradient-dark.interactive:focus-visible,
+.f-content-container .content-container-gradient-dark.interactive:active {
+	background: linear-gradient(124deg, #1514a4 0%, #0a70d2 80.21%);
+}
+
+.f-content-container .content-container-translucent {
+	background: rgba(255, 255, 255, 0.2);
+}
+
+.f-content-container .content-container-translucent.interactive:hover,
+.f-content-container .content-container-translucent.interactive:focus,
+.f-content-container .content-container-translucent.interactive:focus-visible,
+.f-content-container .content-container-translucent.interactive:active {
+	background: rgba(255, 255, 255, 0.2);
+}

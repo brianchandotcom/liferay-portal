@@ -1,0 +1,30 @@
+[#assign color = configuration.color /]
+[#assign padding = configuration.padding /]
+[#assign interactive = configuration.interactive /]
+[#assign url = configuration.url /]
+[#assign forceEqualHeightColumn = configuration.forceEqualHeightColumn /]
+
+<div class="f-content-container f-content-container-${fragmentEntryLinkNamespace} ${forceEqualHeightColumn?then('force-equal-height', '')} text-decoration-none">
+	[#if url?has_content]
+		<a class="content-container content-container-${color} d-block ${interactive?then('interactive', '')} ${padding}" href="${url}" target="${configuration.newTab?then('_blank', '_self')}">
+	[#else]
+		<div class="content-container content-container-${color} ${interactive?then('interactive', '')} ${padding}">
+	[/#if]
+		<lfr-drop-zone>
+
+		</lfr-drop-zone>
+	[#if url?has_content]
+		</a>
+	[#else]
+		</div>
+	[/#if]
+</div>
+
+<style>
+	div[class^='lfr-layout-structure-item-content-container'] > div[id^='fragment-'] > .f-content-container-${fragmentEntryLinkNamespace}.force-equal-height > .content-container,
+	div[class^='lfr-layout-structure-item-content-container'] > div[id^='fragment-'] > .f-content-container-${fragmentEntryLinkNamespace}.force-equal-height,
+	div[class^='lfr-layout-structure-item-content-container']:has(.f-content-container-${fragmentEntryLinkNamespace}.force-equal-height) > div[id^='fragment-'],
+	div[class^='lfr-layout-structure-item-content-container']:has(.f-content-container-${fragmentEntryLinkNamespace}.force-equal-height) {
+		height: 100%;
+	}
+</style>

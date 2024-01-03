@@ -41,6 +41,7 @@ String resultActionUid = ParamUtil.getString(request, "resultActionUid");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 %>

@@ -31,6 +31,7 @@ EditRankingDisplayContext editRankingDisplayContext = (EditRankingDisplayContext
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(editRankingDisplayContext.getBackURL());
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 %>

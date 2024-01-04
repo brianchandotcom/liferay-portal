@@ -24,7 +24,6 @@ import com.liferay.petra.string.StringPool;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -711,37 +710,53 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		String classificationGrouping, File inputFile, File outputFile,
 		Map<String, String> substitutionMap) {
 
-		String templatePath = String.format(
-			"dependencies/templates/%s/%s.tpl", classificationGrouping,
-			inputFile.getName());
+		InputStream inputStream1 = null;
 
 		try {
-			InputStream inputStream1 = null;
-
 			if (inputFile.exists()) {
-				inputStream1 = new FileInputStream(inputFile);
-			}
-			else {
-				inputStream1 =
-					CreateClientExtensionConfigTask.class.getResourceAsStream(
-						templatePath);
-			}
-
-			try (InputStream inputStream2 = inputStream1) {
-				String fileContent = StringUtil.read(inputStream2);
-
-				for (Map.Entry<String, String> entry :
-						substitutionMap.entrySet()) {
-
-					fileContent = fileContent.replace(
-						entry.getKey(), entry.getValue());
-				}
-
-				Files.write(outputFile.toPath(), fileContent.getBytes());
+				inputStream1 = Files.newInputStream(inputFile.toPath());
 			}
 		}
 		catch (IOException ioException) {
-			throw new GradleException(inputFile.getName() + " not specified");
+			throw new GradleException(
+				String.format(
+					"Could not read file %s",
+					StringUtil.quote(inputFile.getName())),
+				ioException);
+		}
+
+		if (inputStream1 == null) {
+			inputStream1 =
+				CreateClientExtensionConfigTask.class.getResourceAsStream(
+					String.format(
+						"dependencies/templates/%s/%s.tpl",
+						classificationGrouping, inputFile.getName()));
+		}
+
+		if (inputStream1 == null) {
+			throw new GradleException(
+				String.format(
+					"Required file %s not found in project %s",
+					StringUtil.quote(inputFile.getName()),
+					StringUtil.quote(_project.getName())));
+		}
+
+		try (InputStream inputStream2 = inputStream1) {
+			String fileContent = StringUtil.read(inputStream2);
+
+			for (Map.Entry<String, String> entry : substitutionMap.entrySet()) {
+				fileContent = fileContent.replace(
+					entry.getKey(), entry.getValue());
+			}
+
+			Files.write(outputFile.toPath(), fileContent.getBytes());
+		}
+		catch (IOException ioException) {
+			throw new GradleException(
+				String.format(
+					"Could not write file %s",
+					StringUtil.quote(outputFile.getName())),
+				ioException);
 		}
 	}
 

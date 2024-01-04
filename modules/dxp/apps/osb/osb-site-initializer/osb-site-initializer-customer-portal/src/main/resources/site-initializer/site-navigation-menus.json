@@ -14,7 +14,10 @@
 							{
 								"externalReferenceCode": "knowledgeBaseMenuItem",
 								"name_i18n": {
-									"en_US": "Knowledge Base"
+									"en_US": "Knowledge Base",
+									"es_ES": "Base de conocimientos",
+									"ja_JP": "ナレッジ・ベース",
+									"pt_BR": "Base de conhecimento"
 								},
 								"type": "url",
 								"url": "/knowledge-base",
@@ -23,7 +26,10 @@
 							{
 								"externalReferenceCode": "documentationMenuItem",
 								"name_i18n": {
-									"en_US": "Documentation"
+									"en_US": "Documentation",
+									"es_ES": "Documentación",
+									"ja_JP": "ドキュメンテーション",
+									"pt_BR": "Documentação"
 								},
 								"type": "url",
 								"url": "/documentation",
@@ -31,7 +37,10 @@
 							}
 						],
 						"name_i18n": {
-							"en_US": "Products Documentation"
+							"en_US": "Products Documentation",
+							"es_ES": "Documentación del producto",
+							"ja_JP": "製品ドキュメント",
+							"pt_BR": "Documentação do produto"
 						},
 						"title": "Products Documentation",
 						"type": "node"
@@ -42,7 +51,10 @@
 							{
 								"externalReferenceCode": "dxpReleaseNotesMenuItem",
 								"name_i18n": {
-									"en_US": "DXP Release Notes"
+									"en_US": "DXP Release Notes",
+									"es_ES": "Notas de publicación de DXP",
+									"ja_JP": "DXPリリースノート",
+									"pt_BR": "Notas de lançamento do DXP"
 								},
 								"type": "url",
 								"url": "/dxp-release-notes",
@@ -51,7 +63,10 @@
 							{
 								"externalReferenceCode": "downloadsMenuItem",
 								"name_i18n": {
-									"en_US": "Downloads"
+									"en_US": "Downloads",
+									"es_ES": "Descargas",
+									"ja_JP": "ダウンロード",
+									"pt_BR": "Transferências"
 								},
 								"type": "url",
 								"url": "/downloads",
@@ -59,7 +74,10 @@
 							}
 						],
 						"name_i18n": {
-							"en_US": "Tools"
+							"en_US": "Tools",
+							"es_ES": "Herramientas",
+							"ja_JP": "ツール",
+							"pt_BR": "Ferramentas"
 						},
 						"title": "Tools",
 						"type": "node"
@@ -70,7 +88,10 @@
 							{
 								"externalReferenceCode": "securityOverviewMenuItem",
 								"name_i18n": {
-									"en_US": "Security Overview"
+									"en_US": "Security Overview",
+									"es_ES": "Panorama de la seguridad",
+									"ja_JP": "セキュリティの概要",
+									"pt_BR": "Visão geral da segurança"
 								},
 								"type": "url",
 								"url": "/security-overview",
@@ -79,7 +100,10 @@
 							{
 								"externalReferenceCode": "securityAdvisoriesMenuItem",
 								"name_i18n": {
-									"en_US": "Security Advisories"
+									"en_US": "Security Advisories",
+									"es_ES": "Avisos de seguridad",
+									"ja_JP": "セキュリティ情報",
+									"pt_BR": "Avisos de segurança"
 								},
 								"type": "url",
 								"url": "/security-advisories",
@@ -87,14 +111,20 @@
 							}
 						],
 						"name_i18n": {
-							"en_US": "Securities & Policies"
+							"en_US": "Securities & Policies",
+							"es_ES": "Seguridad y políticas",
+							"ja_JP": "セキュリティとポリシー",
+							"pt_BR": "Segurança e políticas"
 						},
 						"title": "Securities & Policies",
 						"type": "node"
 					}
 				],
 				"name_i18n": {
-					"en_US": "Resources"
+					"en_US": "Resources",
+					"es_ES": "Recursos",
+					"ja_JP": "リソース",
+					"pt_BR": "Recursos"
 				},
 				"title": "Resources",
 				"type": "node"
@@ -107,7 +137,10 @@
 							{
 								"externalReferenceCode": "productSupportMenuItem",
 								"name_i18n": {
-									"en_US": "Product Support"
+									"en_US": "Product Support",
+									"es_ES": "Soporte sobre productos",
+									"ja_JP": "製品サポート",
+									"pt_BR": "Suporte ao produto"
 								},
 								"type": "url",
 								"url": "/product-support",
@@ -116,7 +149,10 @@
 							{
 								"externalReferenceCode": "accountSupportMenuItem",
 								"name_i18n": {
-									"en_US": "Account Support"
+									"en_US": "Account Support",
+									"es_ES": "Soporte de cuentas",
+									"ja_JP": "アカウントサポート",
+									"pt_BR": "Suporte à conta"
 								},
 								"type": "url",
 								"url": "/account-support",
@@ -124,7 +160,10 @@
 							}
 						],
 						"name_i18n": {
-							"en_US": "Support Documentation"
+							"en_US": "Support Documentation",
+							"es_ES": "Documentación de soporte",
+							"ja_JP": "サポート・ドキュメント",
+							"pt_BR": "Documentação de suporte"
 						},
 						"title": "Support Documentation",
 						"type": "node"
@@ -135,7 +174,10 @@
 							{
 								"externalReferenceCode": "supportFaqMenuItem",
 								"name_i18n": {
-									"en_US": "Support FAQ"
+									"en_US": "Support FAQ",
+									"es_ES": "Preguntas frecuentes sobre asistencia",
+									"ja_JP": "サポートに関するよくある質問",
+									"pt_BR": "Perguntas frequentes sobre suporte"
 								},
 								"type": "url",
 								"url": "/support-faq",
@@ -144,7 +186,10 @@
 							{
 								"externalReferenceCode": "contactUsMenuItem",
 								"name_i18n": {
-									"en_US": "Contact Us"
+									"en_US": "Contact Us",
+									"es_ES": "Contacte con nosotros",
+									"ja_JP": "お問い合わせ",
+									"pt_BR": "Contate-nos"
 								},
 								"type": "url",
 								"url": "/contact-us",
@@ -152,7 +197,10 @@
 							}
 						],
 						"name_i18n": {
-							"en_US": "Support Assistance"
+							"en_US": "Support Assistance",
+							"es_ES": "Asistencia de apoyo",
+							"ja_JP": "サポート",
+							"pt_BR": "Assistência de suporte"
 						},
 						"title": "Support Assistance",
 						"type": "node"
@@ -163,7 +211,10 @@
 							{
 								"externalReferenceCode": "submitATicketMenuItem",
 								"name_i18n": {
-									"en_US": "Submit a Ticket"
+									"en_US": "Submit a Ticket",
+									"es_ES": "Envíe un billete",
+									"ja_JP": "チケットを提出する",
+									"pt_BR": "Enviar um tíquete"
 								},
 								"type": "url",
 								"url": "/submit-a-ticket",
@@ -172,7 +223,10 @@
 							{
 								"externalReferenceCode": "myTicketsMenuItem",
 								"name_i18n": {
-									"en_US": "My Tickets"
+									"en_US": "My Tickets",
+									"es_ES": "Mis billetes",
+									"ja_JP": "マイ・チケット",
+									"pt_BR": "Meus tíquetes"
 								},
 								"type": "url",
 								"url": "/my-tickets",
@@ -181,7 +235,10 @@
 							{
 								"externalReferenceCode": "myTeamsTicketsMenuItem",
 								"name_i18n": {
-									"en_US": "My Team's Tickets"
+									"en_US": "My Team's Tickets",
+									"es_ES": "Billetes de mi equipo",
+									"ja_JP": "マイチームのチケット",
+									"pt_BR": "Tíquetes da minha equipe"
 								},
 								"type": "url",
 								"url": "/my-teams-tickets",
@@ -190,7 +247,10 @@
 							{
 								"externalReferenceCode": "escalateATicketBetaMenuItem",
 								"name_i18n": {
-									"en_US": "Escalate a Ticket (BETA)"
+									"en_US": "Escalate a Ticket (BETA)",
+									"es_ES": "Escalar un billete (BETA)",
+									"ja_JP": "チケットのエスカレーション (BETA)",
+									"pt_BR": "Escalar um tíquete (BETA)"
 								},
 								"type": "url",
 								"url": "/support-ticket-escalation",
@@ -198,14 +258,20 @@
 							}
 						],
 						"name_i18n": {
-							"en_US": "Support Tickets"
+							"en_US": "Support Tickets",
+							"es_ES": "Billetes de soporte",
+							"ja_JP": "サポートチケット",
+							"pt_BR": "Tíquetes de suporte"
 						},
 						"title": "Support Tickets",
 						"type": "node"
 					}
 				],
 				"name_i18n": {
-					"en_US": "Support"
+					"en_US": "Support",
+					"es_ES": "Soporte",
+					"ja_JP": "サポート",
+					"pt_BR": "Suporte"
 				},
 				"title": "Support",
 				"type": "node"

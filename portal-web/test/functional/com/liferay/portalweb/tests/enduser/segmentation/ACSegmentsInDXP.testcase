@@ -88,8 +88,22 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Update Segments Analytics Cloud in System Settings") {
-			Segmentation.updateSegmentsInterval(interval = 1);
+		task ("Run individual segments scheduler job") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Job Scheduler");
+
+			Navigator.gotoNavTab(navTab = "Scheduled Jobs");
+
+			Pagination.changePagination(itemsPerPage = 60);
+
+			Click(
+				key_tableEntry = "CheckIndividualSegmentsSchedulerJobConfiguration",
+				key_text = "Run Now",
+				locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Go to segmentats page and assert that not possible Edit/Delete ") {
@@ -100,10 +114,6 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "People",
 				portlet = "Segments");
-
-			while ((IsElementNotPresent(key_tableEntry = "Dynamic Segment Test", locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS")) && (maxIterations = "40")) {
-				Refresh();
-			}
 
 			Click.waitForMenuToggleJSClick(
 				key_tableEntry = "Dynamic Segment Test",
@@ -175,12 +185,25 @@ definition {
 	@description = "LPS-96574 Given I have edit, delete and permission permissions for segments And I have connected my DXP instance with AC When I create an Individual Segment in AC and it shows in the DXP Segments administration And I delete the segment Then in the next sync time, the segment will appear again"
 	@priority = 4
 	test PersistSegmentFromACAtDXP {
-		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Change 'Check Interval' at Segment Analytics Cloud in System Settings") {
-			Segmentation.updateSegmentsInterval(interval = 1);
+		task ("Run individual segments scheduler job") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Job Scheduler");
+
+			Navigator.gotoNavTab(navTab = "Scheduled Jobs");
+
+			Pagination.changePagination(itemsPerPage = 60);
+
+			Click(
+				key_tableEntry = "CheckIndividualSegmentsSchedulerJobConfiguration",
+				key_text = "Run Now",
+				locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Go to segmentats page and assert that the segment created is preset") {
@@ -191,10 +214,6 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "People",
 				portlet = "Segments");
-
-			while ((IsElementNotPresent(key_tableEntry = "Dynamic Segment Test", locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS")) && (maxIterations = "40")) {
-				Refresh();
-			}
 
 			AssertElementPresent(
 				key_tableEntry = "Dynamic Segment Test",
@@ -240,12 +259,25 @@ definition {
 	@description = "LPS-94938 Validate if the user is redirected to the segment page details when he tries to see the detail of the imported segment from Analytics Cloud into DXP	"
 	@priority = 5
 	test RedirectToSegmentPageAC {
-		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Update Segments Analytics Cloud in System Settings") {
-			Segmentation.updateSegmentsInterval(interval = 1);
+		task ("Run individual segments scheduler job") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Job Scheduler");
+
+			Navigator.gotoNavTab(navTab = "Scheduled Jobs");
+
+			Pagination.changePagination(itemsPerPage = 60);
+
+			Click(
+				key_tableEntry = "CheckIndividualSegmentsSchedulerJobConfiguration",
+				key_text = "Run Now",
+				locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Go to segmentats page and click at segment crieted in AC") {
@@ -256,10 +288,6 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "People",
 				portlet = "Segments");
-
-			while ((IsElementNotPresent(key_tableEntry = "Dynamic Segment Test", locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS")) && (maxIterations = "40")) {
-				Refresh();
-			}
 
 			Click(
 				key_tableEntry = "Dynamic Segment Test",
@@ -282,12 +310,25 @@ definition {
 	@description = "LPS-94938 Validate if the user is redirected to the not found Analytics Cloud page, when he tries to see the detail of the imported segment from Analytics Cloud into DXP, one time that the segment does not exist in Analytics Cloud anymore"
 	@priority = 4
 	test RedirectToSegmentPageErrorAC {
-		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Update Segments Analytics Cloud in System Settings") {
-			Segmentation.updateSegmentsInterval(interval = 1);
+		task ("Run individual segments scheduler job") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Job Scheduler");
+
+			Navigator.gotoNavTab(navTab = "Scheduled Jobs");
+
+			Pagination.changePagination(itemsPerPage = 60);
+
+			Click(
+				key_tableEntry = "CheckIndividualSegmentsSchedulerJobConfiguration",
+				key_text = "Run Now",
+				locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Go to segmentats page and at segment created in AC") {
@@ -298,10 +339,6 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "People",
 				portlet = "Segments");
-
-			while ((IsElementNotPresent(key_tableEntry = "Dynamic Segment Test", locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS")) && (maxIterations = "40")) {
-				Refresh();
-			}
 
 			AssertElementPresent(
 				key_tableEntry = "Dynamic Segment Test",

@@ -6,6 +6,10 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		if (!(isSet(teamDescription))) {
+			var teamDescription = "";
+		}
+
 		var groupId = JSONLayoutSetter.setGroupId(groupName = ${siteName});
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 

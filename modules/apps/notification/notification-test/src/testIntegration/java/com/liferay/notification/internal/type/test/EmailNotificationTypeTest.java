@@ -95,11 +95,14 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		).put(
 			"${ObjectField_dateObjectField.getData()}",
 			() -> {
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					"M/d/yy");
+				SimpleDateFormat dateInfoFieldSimpleDateFormat =
+					new SimpleDateFormat("M/d/yy hh:mm a");
+				SimpleDateFormat dateObjectFieldSimpleDateFormat =
+					new SimpleDateFormat("yyyy-MM-dd");
 
-				return simpleDateFormat.format(RandomTestUtil.nextDate()) +
-					" 12:00 AM";
+				return dateInfoFieldSimpleDateFormat.format(
+					dateObjectFieldSimpleDateFormat.parse(
+						(String)childObjectEntryValues.get("dateObjectField")));
 			}
 		).put(
 			"${ObjectField_dateTimeObjectField.getData()}",

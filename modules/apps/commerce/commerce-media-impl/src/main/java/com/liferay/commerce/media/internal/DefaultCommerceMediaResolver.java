@@ -18,9 +18,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -274,10 +272,6 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 	private CommerceProductViewPermission _commerceProductViewPermission;
 
 	@Reference
-	private CommerceVirtualOrderItemLocalService
-		_commerceVirtualOrderItemLocalService;
-
-	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
@@ -286,9 +280,6 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private DLAppService _dlAppService;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

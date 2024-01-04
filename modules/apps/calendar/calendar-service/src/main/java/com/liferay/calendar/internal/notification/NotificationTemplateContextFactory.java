@@ -54,7 +54,8 @@ public class NotificationTemplateContextFactory {
 	public static NotificationTemplateContext getInstance(
 			CalendarBooking calendarBooking,
 			NotificationTemplateType notificationTemplateType,
-			NotificationType notificationType, long scopeGroupId, User user)
+			NotificationType notificationType, String layoutURL,
+			String portalURL, User user)
 		throws Exception {
 
 		CalendarBooking parentCalendarBooking =
@@ -125,6 +126,9 @@ public class NotificationTemplateContextFactory {
 			).put(
 				"portalURL",
 				() -> {
+					if (portalURL != null){
+						return portalURL;
+					}
 					GroupLocalService groupLocalService =
 						_groupLocalServiceSnapshot.get();
 
@@ -164,7 +168,7 @@ public class NotificationTemplateContextFactory {
 			).put(
 				"url",
 				_getCalendarBookingURL(
-					calendarBooking.getCalendarBookingId(), scopeGroupId, user)
+					calendarBooking.getCalendarBookingId(), layoutURL, portalURL, user)
 			).build();
 
 		notificationTemplateContext.setAttributes(attributes);
@@ -179,15 +183,19 @@ public class NotificationTemplateContextFactory {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		long scopeGroupId = 0L;
+		String portalURL = null;
+
+		String layoutURL = null;
 
 		if (serviceContext != null) {
-			scopeGroupId = serviceContext.getScopeGroupId();
+			portalURL = serviceContext.getPortalURL();
+
+			layoutURL = serviceContext.getLayoutURL();
 		}
 
 		NotificationTemplateContext notificationTemplateContext = getInstance(
 			calendarBooking, notificationTemplateType, notificationType,
-			scopeGroupId, user);
+			layoutURL, portalURL, user);
 
 		if ((serviceContext != null) &&
 			Validator.isNotNull(
@@ -218,20 +226,13 @@ public class NotificationTemplateContextFactory {
 	 * CalendarBooking)}
 	 */
 	private static String _getCalendarBookingURL(
-			long calendarBookingId, long scopeGroupId, User user)
+			long calendarBookingId, String layoutURL, String portalURL, User user)
 		throws Exception {
 
 		GroupLocalService groupLocalService = _groupLocalServiceSnapshot.get();
 
-		Group group = null;
-
-		if (scopeGroupId != 0) {
-			group = groupLocalService.getGroup(scopeGroupId);
-		}
-		else {
-			group = groupLocalService.getGroup(
+		Group group = groupLocalService.getGroup(
 				user.getCompanyId(), GroupConstants.GUEST);
-		}
 
 		LayoutLocalService layoutLocalService =
 			_layoutLocalServiceSnapshot.get();
@@ -247,12 +248,16 @@ public class NotificationTemplateContextFactory {
 				group.getDefaultPublicPlid());
 		}
 
-		String portalURL = _getPortalURL(
-			group.getCompanyId(), group.getGroupId());
+		if (portalURL == null) {
+			portalURL = _getPortalURL(
+				group.getCompanyId(), group.getGroupId());
+		}
 
-		String layoutActualURL = PortalUtil.getLayoutActualURL(layout);
+		if (layoutURL == null) {
+			layoutURL = PortalUtil.getLayoutActualURL(layout);
+		}
 
-		String url = portalURL + layoutActualURL;
+		String url = portalURL + layoutURL;
 
 		String namespace = PortalUtil.getPortletNamespace(
 			CalendarPortletKeys.CALENDAR);

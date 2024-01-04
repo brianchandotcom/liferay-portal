@@ -31,7 +31,7 @@ public class TransformUtil {
 
 	public static <R, E extends Throwable> R[] transform(
 		int[] array, UnsafeFunction<Integer, R, E> unsafeFunction,
-		Class<?> clazz) {
+		Class<? extends R> clazz) {
 
 		try {
 			return unsafeTransform(array, unsafeFunction, clazz);
@@ -43,7 +43,7 @@ public class TransformUtil {
 
 	public static <R, E extends Throwable> R[] transform(
 		long[] array, UnsafeFunction<Long, R, E> unsafeFunction,
-		Class<?> clazz) {
+		Class<? extends R> clazz) {
 
 		try {
 			return unsafeTransform(array, unsafeFunction, clazz);
@@ -54,7 +54,8 @@ public class TransformUtil {
 	}
 
 	public static <T, R, E extends Throwable> R[] transform(
-		T[] array, UnsafeFunction<T, R, E> unsafeFunction, Class<?> clazz) {
+		T[] array, UnsafeFunction<T, R, E> unsafeFunction,
+		Class<? extends R> clazz) {
 
 		try {
 			return unsafeTransform(array, unsafeFunction, clazz);
@@ -66,7 +67,7 @@ public class TransformUtil {
 
 	public static <T, R, E extends Throwable> R[] transformToArray(
 		Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction,
-		Class<?> clazz) {
+		Class<? extends R> clazz) {
 
 		try {
 			return unsafeTransformToArray(collection, unsafeFunction, clazz);
@@ -154,7 +155,7 @@ public class TransformUtil {
 
 	public static <R, E extends Throwable> R[] unsafeTransform(
 			int[] array, UnsafeFunction<Integer, R, E> unsafeFunction,
-			Class<?> clazz)
+			Class<? extends R> clazz)
 		throws E {
 
 		List<R> list = unsafeTransformToList(array, unsafeFunction);
@@ -164,7 +165,7 @@ public class TransformUtil {
 
 	public static <R, E extends Throwable> R[] unsafeTransform(
 			long[] array, UnsafeFunction<Long, R, E> unsafeFunction,
-			Class<?> clazz)
+			Class<? extends R> clazz)
 		throws E {
 
 		List<R> list = unsafeTransformToList(array, unsafeFunction);
@@ -173,7 +174,8 @@ public class TransformUtil {
 	}
 
 	public static <T, R, E extends Throwable> R[] unsafeTransform(
-			T[] array, UnsafeFunction<T, R, E> unsafeFunction, Class<?> clazz)
+			T[] array, UnsafeFunction<T, R, E> unsafeFunction,
+			Class<? extends R> clazz)
 		throws E {
 
 		List<R> list = unsafeTransformToList(array, unsafeFunction);
@@ -183,7 +185,7 @@ public class TransformUtil {
 
 	public static <T, R, E extends Throwable> R[] unsafeTransformToArray(
 			Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction,
-			Class<?> clazz)
+			Class<? extends R> clazz)
 		throws E {
 
 		List<R> list = unsafeTransform(collection, unsafeFunction);

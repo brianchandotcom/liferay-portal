@@ -6,12 +6,16 @@
 package com.liferay.frontend.js.a11y.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.a11y.web.internal.configuration.A11yConfiguration;
+import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 
@@ -118,13 +122,18 @@ public class A11yBottomJSPDynamicInclude implements DynamicInclude {
 			"targets", new String[] {_a11yConfiguration.target()}
 		);
 
-		String resolvedModuleName = _npmResolver.resolveModuleName(
-			"@liferay/frontend-js-a11y-web/index");
+		AbsolutePortalURLBuilder absolutePortalURLBuilder =
+			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				httpServletRequest);
 
 		scriptData.append(
-			null, "FrontendA11y.default(" + propsJSONObject.toString() + ")",
-			resolvedModuleName + " as FrontendA11y",
-			ScriptData.ModulesType.ES6);
+			null,
+			new JSFragment(
+				"main(" + propsJSONObject.toString() + ");",
+				Arrays.asList(
+					ESImportUtil.getESImport(
+						absolutePortalURLBuilder,
+						"{default as main} from frontend-js-a11y-web"))));
 
 		scriptData.writeTo(httpServletResponse.getWriter());
 	}
@@ -149,6 +158,9 @@ public class A11yBottomJSPDynamicInclude implements DynamicInclude {
 	private static final String[] _STAR = {"*"};
 
 	private volatile A11yConfiguration _a11yConfiguration;
+
+	@Reference
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	@Reference
 	private NPMResolver _npmResolver;

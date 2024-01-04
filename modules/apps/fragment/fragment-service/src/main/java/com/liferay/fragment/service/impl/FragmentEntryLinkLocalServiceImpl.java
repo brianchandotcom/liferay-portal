@@ -735,15 +735,8 @@ public class FragmentEntryLinkLocalServiceImpl
 			long fragmentEntryLinkId, String editableValues)
 		throws PortalException {
 
-		FragmentEntryLink fragmentEntryLink = fetchFragmentEntryLink(
-			fragmentEntryLinkId);
-
-		_checkUnlockedLayout(
-			fragmentEntryLink.getPlid(), GuestOrUserUtil.getUserId());
-
-		fragmentEntryLink.setEditableValues(editableValues);
-
-		return fragmentEntryLinkPersistence.update(fragmentEntryLink);
+		return updateFragmentEntryLink(
+			fragmentEntryLinkId, editableValues, true);
 	}
 
 	@Override

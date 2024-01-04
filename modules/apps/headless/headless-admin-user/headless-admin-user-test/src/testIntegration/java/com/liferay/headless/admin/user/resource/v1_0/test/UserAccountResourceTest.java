@@ -1175,6 +1175,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 				return calendar.getTime();
 			});
+		userAccount.setImageId(0L);
 		userAccount.setUserAccountContactInformation(
 			_randomUserAccountContactInformation());
 

@@ -305,8 +305,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 			blogPosting.setTaxonomyCategoryIds(
 				transform(
 					taxonomyCategoryBriefs,
-					TaxonomyCategoryBrief::getTaxonomyCategoryId,
-					Long[].class));
+					TaxonomyCategoryBrief::getTaxonomyCategoryId, Long.class));
 		}
 	}
 

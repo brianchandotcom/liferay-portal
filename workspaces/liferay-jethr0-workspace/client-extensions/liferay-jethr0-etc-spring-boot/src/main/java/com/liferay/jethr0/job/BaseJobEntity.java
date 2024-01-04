@@ -398,6 +398,16 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		return Boolean.valueOf(valueBoolean);
 	}
 
+	protected Integer getParameterValueInteger(String name) {
+		String valueInteger = getParameterValue(name);
+
+		if (StringUtil.isNullOrEmpty(valueInteger)) {
+			return null;
+		}
+
+		return Integer.valueOf(valueInteger);
+	}
+
 	protected Long getParameterValueLong(String name) {
 		String valueLong = getParameterValue(name);
 
@@ -420,6 +430,10 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 
 	protected void setParameterValueBoolean(String name, Boolean valueBoolean) {
 		setParameterValue(name, String.valueOf(valueBoolean));
+	}
+
+	protected void setParameterValueInteger(String name, Integer valueInteger) {
+		setParameterValue(name, String.valueOf(valueInteger));
 	}
 
 	protected void setParameterValueLong(String name, Long valueLong) {

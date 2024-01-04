@@ -5,14 +5,13 @@
 
 package com.liferay.segments.internal.provider;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -63,15 +62,8 @@ public abstract class BaseSegmentsEntryProvider
 				SegmentsEntryRel::getClassPK);
 		}
 
-		ODataRetriever<BaseModel<?>> oDataRetriever =
-			serviceTrackerMap.getService(segmentsEntry.getType());
-
-		if (oDataRetriever == null) {
-			return new long[0];
-		}
-
 		return TransformUtil.transformToLongArray(
-			oDataRetriever.getResults(
+			userODataRetriever.getResults(
 				segmentsEntry.getCompanyId(), filterString,
 				LocaleUtil.getDefault(), start, end),
 			baseModel -> (Long)baseModel.getPrimaryKeyObj());
@@ -96,14 +88,7 @@ public abstract class BaseSegmentsEntryProvider
 				segmentsEntryId);
 		}
 
-		ODataRetriever<BaseModel<?>> oDataRetriever =
-			serviceTrackerMap.getService(segmentsEntry.getType());
-
-		if (oDataRetriever == null) {
-			return 0;
-		}
-
-		return oDataRetriever.getResultsCount(
+		return userODataRetriever.getResultsCount(
 			segmentsEntry.getCompanyId(), filterString,
 			LocaleUtil.getDefault());
 	}
@@ -172,12 +157,9 @@ public abstract class BaseSegmentsEntryProvider
 
 		Criteria criteria = new Criteria();
 
-		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
-			segmentsCriteriaContributorRegistry.getSegmentsCriteriaContributors(
-				segmentsEntry.getType());
-
 		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
-				segmentsCriteriaContributors) {
+				segmentsCriteriaContributorRegistry.
+					getSegmentsCriteriaContributors(User.class.getName())) {
 
 			Criteria.Criterion criterion =
 				segmentsCriteriaContributor.getCriterion(existingCriteria);
@@ -263,16 +245,11 @@ public abstract class BaseSegmentsEntryProvider
 			}
 		}
 
-		ODataRetriever<BaseModel<?>> oDataRetriever =
-			serviceTrackerMap.getService(className);
-
-		if (Validator.isNotNull(modelFilterString) &&
-			(oDataRetriever != null)) {
-
+		if (Validator.isNotNull(modelFilterString)) {
 			boolean matchesModel = false;
 
 			try {
-				int count = oDataRetriever.getResultsCount(
+				int count = userODataRetriever.getResultsCount(
 					segmentsEntry.getCompanyId(),
 					StringBundler.concat(
 						"(", modelFilterString, ") and (classPK eq '", classPK,
@@ -324,8 +301,10 @@ public abstract class BaseSegmentsEntryProvider
 	@Reference
 	protected SegmentsEntryRelLocalService segmentsEntryRelLocalService;
 
-	protected ServiceTrackerMap<String, ODataRetriever<BaseModel<?>>>
-		serviceTrackerMap;
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	protected ODataRetriever<User> userODataRetriever;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSegmentsEntryProvider.class);

@@ -5,8 +5,6 @@
 
 package com.liferay.segments.web.internal.portlet.action;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -26,10 +24,7 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -60,30 +55,14 @@ public class PreviewSegmentsEntryUsersMVCRenderCommand
 				SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_CRITERIA);
 		}
 
-		ODataRetriever<User> userODataRetriever = _serviceTrackerMap.getService(
-			User.class.getName());
-
 		renderRequest.setAttribute(
 			PreviewSegmentsEntryUsersDisplayContext.class.getName(),
 			new PreviewSegmentsEntryUsersDisplayContext(
 				httpServletRequest, renderRequest, renderResponse,
 				_segmentsEntryProviderRegistry, _segmentsEntryService,
-				userODataRetriever, _userLocalService));
+				_userODataRetriever, _userLocalService));
 
 		return "/preview_segments_entry_users.jsp";
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext,
-			(Class<ODataRetriever<User>>)(Class<?>)ODataRetriever.class,
-			"model.class.name");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
 	}
 
 	@Reference
@@ -95,9 +74,12 @@ public class PreviewSegmentsEntryUsersMVCRenderCommand
 	@Reference
 	private SegmentsEntryService _segmentsEntryService;
 
-	private ServiceTrackerMap<String, ODataRetriever<User>> _serviceTrackerMap;
-
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private ODataRetriever<User> _userODataRetriever;
 
 }

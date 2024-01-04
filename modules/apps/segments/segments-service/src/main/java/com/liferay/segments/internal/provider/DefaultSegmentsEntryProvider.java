@@ -5,16 +5,10 @@
 
 package com.liferay.segments.internal.provider;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.odata.retriever.ODataRetriever;
 import com.liferay.segments.provider.SegmentsEntryProvider;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Eduardo García
@@ -28,19 +22,6 @@ import org.osgi.service.component.annotations.Deactivate;
 )
 public class DefaultSegmentsEntryProvider
 	extends BaseSegmentsEntryProvider implements SegmentsEntryProvider {
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext,
-			(Class<ODataRetriever<BaseModel<?>>>)(Class<?>)ODataRetriever.class,
-			"model.class.name");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		serviceTrackerMap.close();
-	}
 
 	@Override
 	protected String getSource() {

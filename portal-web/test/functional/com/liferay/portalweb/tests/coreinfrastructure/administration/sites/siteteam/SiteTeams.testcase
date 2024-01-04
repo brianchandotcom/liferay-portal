@@ -13,23 +13,6 @@ definition {
 		HeadlessSite.addSite(siteName = "Site Name");
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			Team.tearDownCP();
-
-			UserGroup.tearDownCP();
-
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
-		}
-	}
-
 	@description = "Able to add site team."
 	@priority = 4
 	@uitest

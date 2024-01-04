@@ -410,19 +410,6 @@ public class SegmentsEntryLocalServiceImpl
 		long companyId, long groupId, String keywords,
 		LinkedHashMap<String, Object> params, int start, int end, Sort sort) {
 
-		SearchContext searchContext = _buildSearchContext(
-			companyId, keywords, params, start, end, sort);
-
-		searchContext.setGroupIds(
-			_portal.getCurrentAndAncestorSiteGroupIds(groupId));
-
-		return searchContext;
-	}
-
-	private SearchContext _buildSearchContext(
-		long companyId, String keywords, LinkedHashMap<String, Object> params,
-		int start, int end, Sort sort) {
-
 		SearchContext searchContext = new SearchContext();
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
@@ -443,6 +430,8 @@ public class SegmentsEntryLocalServiceImpl
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
+		searchContext.setGroupIds(
+			_portal.getCurrentAndAncestorSiteGroupIds(groupId));
 
 		if (Validator.isNotNull(keywords)) {
 			searchContext.setKeywords(keywords);

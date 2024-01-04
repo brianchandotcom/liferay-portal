@@ -73,6 +73,23 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (_testMode && fileName.endsWith(".java")) {
+			UpgradeCatchAllJavaTermOrderCheck termOrderCheck =
+				new UpgradeCatchAllJavaTermOrderCheck();
+
+			JavaClass javaClass = JavaClassParser.parseJavaClass(
+				fileName, content);
+
+			if (!StringUtil.equals(
+					javaClass.getContent(),
+					termOrderCheck.doProcess(
+						fileName, absolutePath, javaClass, content))) {
+
+				throw new UpgradeCatchAllException(
+					fileName + " missing javaTerms sorting");
+			}
+		}
+
 		JSONArray jsonArray = _getReplacementsJSONArray("replacements.json");
 
 		for (int i = 0; i < jsonArray.length(); i++) {

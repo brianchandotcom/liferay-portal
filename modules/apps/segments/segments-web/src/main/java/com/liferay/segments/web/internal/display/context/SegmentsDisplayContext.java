@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -141,8 +140,7 @@ public class SegmentsDisplayContext {
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_renderResponse.createRenderURL(), "mvcRenderCommandName",
-					"/segments/edit_segments_entry", "type",
-					User.class.getName());
+					"/segments/edit_segments_entry");
 				dropdownItem.setLabel(
 					_language.get(_httpServletRequest, "add-new-user-segment"));
 			}

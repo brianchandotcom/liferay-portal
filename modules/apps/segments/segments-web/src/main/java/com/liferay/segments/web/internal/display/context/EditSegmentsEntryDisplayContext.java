@@ -190,24 +190,13 @@ public class EditSegmentsEntryDisplayContext {
 		}
 		else {
 			String type = ResourceActionsUtil.getModelResource(
-				locale, getType());
+				locale, User.class.getName());
 
 			_title = LanguageUtil.format(
 				_httpServletRequest, "new-x-segment", type, false);
 		}
 
 		return _title;
-	}
-
-	public String getType() throws PortalException {
-		SegmentsEntry segmentsEntry = _getSegmentsEntry();
-
-		if (segmentsEntry != null) {
-			return segmentsEntry.getType();
-		}
-
-		return ParamUtil.getString(
-			_httpServletRequest, "type", User.class.getName());
 	}
 
 	private Map<String, String> _getAvailableLocales() throws Exception {
@@ -428,7 +417,7 @@ public class EditSegmentsEntryDisplayContext {
 		throws Exception {
 
 		return _segmentsCriteriaContributorRegistry.
-			getSegmentsCriteriaContributors(getType());
+			getSegmentsCriteriaContributors(User.class.getName());
 	}
 
 	private SegmentsEntry _getSegmentsEntry() throws PortalException {

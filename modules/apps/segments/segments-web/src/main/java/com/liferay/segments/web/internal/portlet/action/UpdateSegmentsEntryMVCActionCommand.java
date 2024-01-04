@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.exception.NestableRuntimeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -75,7 +76,6 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
 			actionRequest, "description");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
-		String type = ParamUtil.getString(actionRequest, "type");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			SegmentsEntry.class.getName(), actionRequest);
@@ -86,7 +86,7 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 			Criteria criteria = ActionUtil.getCriteria(
 				actionRequest,
 				_segmentsCriteriaContributorRegistry.
-					getSegmentsCriteriaContributors(type));
+					getSegmentsCriteriaContributors(User.class.getName()));
 
 			boolean dynamic = ParamUtil.getBoolean(
 				actionRequest, "dynamic", true);
@@ -99,8 +99,8 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				segmentsEntry = _segmentsEntryService.addSegmentsEntry(
 					segmentsEntryKey, nameMap, descriptionMap, active,
-					CriteriaSerializer.serialize(criteria), type,
-					serviceContext);
+					CriteriaSerializer.serialize(criteria),
+					User.class.getName(), serviceContext);
 			}
 			else {
 				segmentsEntry = _segmentsEntryService.updateSegmentsEntry(

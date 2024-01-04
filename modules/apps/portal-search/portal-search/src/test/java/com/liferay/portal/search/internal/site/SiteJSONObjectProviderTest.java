@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.site.SitesJSONObjectProvider;
+import com.liferay.portal.search.site.SiteJSONObjectProvider;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import org.mockito.Mockito;
 /**
  * @author Gustavo Lima
  */
-public class SitesJSONObjectProviderTest {
+public class SiteJSONObjectProviderTest {
 
 	@ClassRule
 	@Rule
@@ -46,10 +46,10 @@ public class SitesJSONObjectProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_sitesJSONObjectProvider = new SitesJSONObjectProviderImpl();
+		_siteJSONObjectProvider = new SiteJSONObjectProviderImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			_sitesJSONObjectProvider, "_groupService", _groupService);
+			_siteJSONObjectProvider, "_groupService", _groupService);
 
 		_paramUtilMockedStatic = Mockito.mockStatic(ParamUtil.class);
 	}
@@ -86,7 +86,7 @@ public class SitesJSONObjectProviderTest {
 				}
 			});
 
-		JSONObject siteJSONObject = _sitesJSONObjectProvider.getSiteJSONObject(
+		JSONObject siteJSONObject = _siteJSONObjectProvider.getSiteJSONObject(
 			_resourceRequest);
 
 		Assert.assertEquals(
@@ -112,8 +112,8 @@ public class SitesJSONObjectProviderTest {
 
 		_setUpGroups(false, 3, new ArrayList<>());
 
-		JSONObject sitesJSONObject =
-			_sitesJSONObjectProvider.getSitesJSONObject(_resourceRequest);
+		JSONObject sitesJSONObject = _siteJSONObjectProvider.getSitesJSONObject(
+			_resourceRequest);
 
 		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
@@ -137,8 +137,8 @@ public class SitesJSONObjectProviderTest {
 				}
 			});
 
-		JSONObject sitesJSONObject =
-			_sitesJSONObjectProvider.getSitesJSONObject(_resourceRequest);
+		JSONObject sitesJSONObject = _siteJSONObjectProvider.getSitesJSONObject(
+			_resourceRequest);
 
 		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
@@ -155,8 +155,8 @@ public class SitesJSONObjectProviderTest {
 
 		_setUpGroups(true, 3, new ArrayList<>());
 
-		JSONObject sitesJSONObject =
-			_sitesJSONObjectProvider.getSitesJSONObject(_resourceRequest);
+		JSONObject sitesJSONObject = _siteJSONObjectProvider.getSitesJSONObject(
+			_resourceRequest);
 
 		JSONArray sitesJSONArray = sitesJSONObject.getJSONArray("items");
 
@@ -170,8 +170,8 @@ public class SitesJSONObjectProviderTest {
 		_setUpPages(_resourceRequest, 5, 3);
 		_setUpGroups(true, 8, new ArrayList<>());
 
-		JSONObject sitesJSONObject =
-			_sitesJSONObjectProvider.getSitesJSONObject(_resourceRequest);
+		JSONObject sitesJSONObject = _siteJSONObjectProvider.getSitesJSONObject(
+			_resourceRequest);
 
 		Assert.assertEquals(2, sitesJSONObject.getInt("lastPage"));
 
@@ -187,8 +187,8 @@ public class SitesJSONObjectProviderTest {
 		_setUpPages(_resourceRequest, 10, 1);
 		_setUpGroups(true, 8, new ArrayList<>());
 
-		JSONObject sitesJSONObject =
-			_sitesJSONObjectProvider.getSitesJSONObject(_resourceRequest);
+		JSONObject sitesJSONObject = _siteJSONObjectProvider.getSitesJSONObject(
+			_resourceRequest);
 
 		Assert.assertEquals(1, sitesJSONObject.getInt("lastPage"));
 
@@ -204,8 +204,8 @@ public class SitesJSONObjectProviderTest {
 		_setUpPages(_resourceRequest, 5, 2);
 		_setUpGroups(true, 10, new ArrayList<>());
 
-		JSONObject sitesJSONObject =
-			_sitesJSONObjectProvider.getSitesJSONObject(_resourceRequest);
+		JSONObject sitesJSONObject = _siteJSONObjectProvider.getSitesJSONObject(
+			_resourceRequest);
 
 		Assert.assertEquals(2, sitesJSONObject.getInt("lastPage"));
 
@@ -345,7 +345,7 @@ public class SitesJSONObjectProviderTest {
 	private MockedStatic<ParamUtil> _paramUtilMockedStatic;
 	private final ResourceRequest _resourceRequest = Mockito.mock(
 		ResourceRequest.class);
-	private SitesJSONObjectProvider _sitesJSONObjectProvider;
+	private SiteJSONObjectProvider _siteJSONObjectProvider;
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

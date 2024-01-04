@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.site.SitesJSONObjectProvider;
+import com.liferay.portal.search.site.SiteJSONObjectProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gustavo Lima
  */
-@Component(service = SitesJSONObjectProvider.class)
-public class SitesJSONObjectProviderImpl implements SitesJSONObjectProvider {
+@Component(service = SiteJSONObjectProvider.class)
+public class SiteJSONObjectProviderImpl implements SiteJSONObjectProvider {
 
 	@Override
 	public JSONObject getSiteJSONObject(ResourceRequest resourceRequest)
@@ -150,7 +150,7 @@ public class SitesJSONObjectProviderImpl implements SitesJSONObjectProvider {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SitesJSONObjectProviderImpl.class);
+		SiteJSONObjectProviderImpl.class);
 
 	@Reference
 	private GroupService _groupService;

@@ -13,25 +13,29 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
+import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.ListTypeServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -55,8 +59,24 @@ public class PostalAddressResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_organization = OrganizationTestUtil.addOrganization();
 		_user = UserTestUtil.addGroupAdminUser(testGroup);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		_accountEntry = _accountEntryLocalService.addAccountEntry(
+			_user.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), null, new String[0], null, null,
+			null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+		_country = _countryLocalService.addCountry(
+			"X" + RandomTestUtil.randomString(1),
+			"X" + RandomTestUtil.randomString(2), true, true,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.nextLong(), true,
+			false, false, serviceContext);
+
+		_organization = OrganizationTestUtil.addOrganization();
 	}
 
 	@Override
@@ -70,13 +90,25 @@ public class PostalAddressResourceTest
 	protected PostalAddress randomPostalAddress() {
 		return new PostalAddress() {
 			{
+				addressCountry = _country.getTitle(LocaleUtil.getDefault());
 				addressLocality = RandomTestUtil.randomString();
+				addressType = "billing";
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				postalCode = RandomTestUtil.randomString();
 				primary = false;
 				streetAddressLine1 = RandomTestUtil.randomString();
 			}
 		};
+	}
+
+	@Override
+	protected PostalAddress testDeletePostalAddress_addPostalAddress()
+		throws Exception {
+
+		return _addPostalAddress(
+			randomPostalAddress(), AccountEntry.class.getName(),
+			_accountEntry.getAccountEntryId(),
+			AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 	}
 
 	@Override
@@ -93,18 +125,15 @@ public class PostalAddressResourceTest
 	protected Long testGetAccountPostalAddressesPage_getAccountId()
 		throws Exception {
 
-		AccountEntry accountEntry = _addAccountEntry();
-
-		return accountEntry.getAccountEntryId();
+		return _accountEntry.getAccountEntryId();
 	}
 
 	@Override
-	protected Long testGetAccountPostalAddressesPage_getIrrelevantAccountId()
+	protected Map<String, Map<String, String>>
+			testGetAccountPostalAddressesPage_getExpectedActions(Long accountId)
 		throws Exception {
 
-		AccountEntry accountEntry = _addAccountEntry();
-
-		return accountEntry.getAccountEntryId();
+		return new HashMap<>();
 	}
 
 	@Override
@@ -155,17 +184,29 @@ public class PostalAddressResourceTest
 	protected PostalAddress testGraphQLPostalAddress_addPostalAddress()
 		throws Exception {
 
-		return testGetPostalAddress_addPostalAddress();
+		return _addPostalAddress(
+			randomPostalAddress(), Contact.class.getName(),
+			_user.getContactId(), ListTypeConstants.CONTACT_ADDRESS);
 	}
 
-	private AccountEntry _addAccountEntry() throws Exception {
-		return _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(),
-			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
-			RandomTestUtil.randomString(), null, new String[0], null, null,
-			null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
+	@Override
+	protected PostalAddress testPatchPostalAddress_addPostalAddress()
+		throws Exception {
+
+		return _addPostalAddress(
+			randomPostalAddress(), AccountEntry.class.getName(),
+			_accountEntry.getAccountEntryId(),
+			AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
+	}
+
+	@Override
+	protected PostalAddress testPutPostalAddress_addPostalAddress()
+		throws Exception {
+
+		return _addPostalAddress(
+			randomPostalAddress(), AccountEntry.class.getName(),
+			_accountEntry.getAccountEntryId(),
+			AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 	}
 
 	private PostalAddress _addPostalAddress(
@@ -206,8 +247,17 @@ public class PostalAddressResourceTest
 		};
 	}
 
+	@DeleteAfterTestRun
+	private AccountEntry _accountEntry;
+
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@DeleteAfterTestRun
+	private Country _country;
+
+	@Inject
+	private CountryLocalService _countryLocalService;
 
 	@DeleteAfterTestRun
 	private Organization _organization;

@@ -6,11 +6,29 @@
 package com.liferay.layout.seo.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.journal.constants.JournalArticleConstants;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -66,7 +84,8 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 
 		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		ServiceContext serviceContext = new ServiceContext();
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -78,9 +97,84 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 
 		_themeDisplay.setRequest(mockHttpServletRequest);
 
-		serviceContext.setRequest(mockHttpServletRequest);
+		_serviceContext.setRequest(mockHttpServletRequest);
 
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+	}
+
+	@Test
+	public void testGetCanonicalAssetDisplayPageURL() throws Exception {
+		JournalArticle journalArticle = _addJournalArticle();
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_addJournalArticleAssetDisplayPageEntry(
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				journalArticle);
+
+		Layout layout = _layoutLocalService.getLayout(
+			assetDisplayPageEntry.getPlid());
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(journalArticle, layout);
+
+		String url = _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+			new InfoItemReference(
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey()),
+			journalArticle, themeDisplay);
+
+		_pushServiceContext(themeDisplay, url);
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> {
+				LayoutSEOLink canonicalLayoutSEOLink =
+					_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
+						layout, LocaleUtil.getSiteDefault(), url, themeDisplay);
+
+				Assert.assertEquals(url, canonicalLayoutSEOLink.getHref());
+			});
+	}
+
+	@Test
+	public void testGetCanonicalAssetDisplayPageURLCustomDisplayPage()
+		throws Exception {
+
+		JournalArticle journalArticle = _addJournalArticle();
+
+		long classNameId = _portal.getClassNameId(
+			JournalArticle.class.getName());
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_addJournalArticleAssetDisplayPageEntry(
+				classNameId, journalArticle);
+
+		Layout layout = _layoutLocalService.getLayout(
+			assetDisplayPageEntry.getPlid());
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(journalArticle, layout);
+
+		String url = StringBundler.concat(
+			_portal.getGroupFriendlyURL(
+				_group.getPublicLayoutSet(), themeDisplay, false, false),
+			"/e", layout.getFriendlyURL(LocaleUtil.getSiteDefault()),
+			StringPool.SLASH, classNameId, StringPool.SLASH,
+			journalArticle.getResourcePrimKey());
+
+		_pushServiceContext(themeDisplay, url);
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> {
+				LayoutSEOLink canonicalLayoutSEOLink =
+					_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
+						layout, LocaleUtil.getSiteDefault(), url, themeDisplay);
+
+				Assert.assertEquals(
+					_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+						new InfoItemReference(
+							JournalArticle.class.getName(),
+							journalArticle.getResourcePrimKey()),
+						journalArticle, themeDisplay),
+					canonicalLayoutSEOLink.getHref());
+			});
 	}
 
 	@Test
@@ -161,6 +255,38 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 			});
 	}
 
+	private JournalArticle _addJournalArticle() throws Exception {
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		return JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, StringPool.BLANK,
+			true, RandomTestUtil.randomLocaleStringMap(locale),
+			RandomTestUtil.randomLocaleStringMap(locale),
+			RandomTestUtil.randomLocaleStringMap(locale), null, locale, null,
+			false, false, _serviceContext);
+	}
+
+	private AssetDisplayPageEntry _addJournalArticleAssetDisplayPageEntry(
+			long classNameId, JournalArticle journalArticle)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				_group.getCreatorUserId(), _group.getGroupId(), 0, classNameId,
+				journalArticle.getDDMStructureId(),
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
+				0, 0, 0, _serviceContext);
+
+		return _assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			journalArticle.getResourcePrimKey(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			AssetDisplayPageConstants.TYPE_SPECIFIC, _serviceContext);
+	}
+
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -182,6 +308,49 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
 		return themeDisplay;
+	}
+
+	private ThemeDisplay _getThemeDisplay(
+			JournalArticle journalArticle, Layout layout)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
+			_companyLocalService.getCompany(_group.getCompanyId()), _group,
+			layout);
+
+		themeDisplay.setPortalURL("http://localhost:8080");
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+		LayoutDisplayPageObjectProvider<JournalArticle>
+			layoutDisplayPageObjectProvider =
+				_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+					_group.getGroupId(),
+					journalArticle.getUrlTitle(LocaleUtil.getDefault()));
+
+		Assert.assertNotNull(layoutDisplayPageObjectProvider);
+
+		mockHttpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			layoutDisplayPageObjectProvider);
+
+		themeDisplay.setRequest(mockHttpServletRequest);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return themeDisplay;
+	}
+
+	private void _pushServiceContext(ThemeDisplay themeDisplay, String url) {
+		themeDisplay.setURLCurrent(url);
+
+		_serviceContext.setRequest(themeDisplay.getRequest());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	private void _testWithLayoutSEOCompanyConfiguration(
@@ -208,6 +377,14 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 	private static final String _VIRTUAL_HOSTNAME = "test.com";
 
 	@Inject
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
+
+	@Inject
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
+
+	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
@@ -215,8 +392,18 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 
 	private Layout _layout;
 
+	@Inject(
+		filter = "component.name=com.liferay.journal.web.internal.layout.display.page.JournalArticleLayoutDisplayPageProvider"
+	)
+	private LayoutDisplayPageProvider<JournalArticle>
+		_layoutDisplayPageProvider;
+
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
@@ -227,6 +414,7 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 	@Inject
 	private Portal _portal;
 
+	private ServiceContext _serviceContext;
 	private ThemeDisplay _themeDisplay;
 
 }

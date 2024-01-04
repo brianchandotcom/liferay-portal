@@ -765,6 +765,10 @@ export default function ChangeTrackingRenderView({
 			});
 		}
 
+		if (!dropdownItems.length) {
+			return null;
+		}
+
 		return (
 			<div className="autofit-col">
 				<ClayDropDownWithItems

@@ -26,7 +26,10 @@ public class JobDefinitionFactory {
 	}
 
 	public static JobDefinition newJobDefinition(JobEntity.Type type) {
-		if (type == JobEntity.Type.FILE_PROPAGATOR) {
+		if (type == JobEntity.Type.ARCHIVE_CI_BUILD_DATA) {
+			return new ArchiveCIBuildDataJobDefinition(type);
+		}
+		else if (type == JobEntity.Type.FILE_PROPAGATOR) {
 			return new FilePropagatorJobDefinition(type);
 		}
 		else if (type == JobEntity.Type.FIXPACK_BUILDER_PULL_REQUEST) {

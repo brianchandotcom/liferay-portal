@@ -24,7 +24,10 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		JobEntity.Type type = JobEntity.Type.getByKey(
 			typeJSONObject.getString("key"));
 
-		if (type == JobEntity.Type.FILE_PROPAGATOR) {
+		if (type == JobEntity.Type.ARCHIVE_CI_BUILD_DATA) {
+			return new ArchiveCIBuildDataJobEntity(jsonObject);
+		}
+		else if (type == JobEntity.Type.FILE_PROPAGATOR) {
 			return new FilePropagatorJobEntity(jsonObject);
 		}
 		else if (type == JobEntity.Type.FIXPACK_BUILDER_PULL_REQUEST) {

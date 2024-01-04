@@ -8,7 +8,7 @@
 	"please-migrate-your-data-to-object-before-then": {
 		"en_US": {
 			"message": "Please migrate your data to Object before then.",
-			"url": "https://learn.liferay.com/w/dxp/building-applications/objects/creating-and-managing-objects"
+			"url": "https://learn.liferay.com/web/guest/w/dxp/process-automation/forms/dynamic-data-lists/migrating-to-liferay-objects"
 		}
 	}
 }

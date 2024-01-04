@@ -35,6 +35,13 @@ definition {
 		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 	}
 
+	@summary = "Go to management bar ellipsis menu item"
+	macro gotoManagementBarEllipsisMenuItem(menuItem = null) {
+		Click.waitForMenuToggleJSClick(locator1 = "ManagementBar#ELLIPSIS");
+
+		MenuItem.click(menuItem = ${menuItem});
+	}
+
 	@summary = "Default summary"
 	macro setFilterAndOrder(orderBy = null, filterBy = null) {
 		if (isSet(filterBy)) {

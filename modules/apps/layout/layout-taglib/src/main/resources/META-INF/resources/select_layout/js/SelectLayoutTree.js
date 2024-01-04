@@ -305,13 +305,20 @@ export function SelectLayoutTree({
 									{Liferay.FeatureFlags['LPS-196847'] &&
 									item.id !== '0' &&
 									!item.hasGuestViewPermission ? (
-										<ClayIcon
-											className="c-ml-2 c-mt-0 lfr-portal-tooltip text-4"
-											data-title={Liferay.Language.get(
+										<span
+											aria-label={Liferay.Language.get(
 												'restricted-page'
 											)}
-											symbol="lock"
-										/>
+											className="c-ml-2 lfr-portal-tooltip"
+											title={Liferay.Language.get(
+												'restricted-page'
+											)}
+										>
+											<ClayIcon
+												className="c-mt-0 text-4"
+												symbol="lock"
+											/>
+										</span>
 									) : null}
 								</div>
 							</ClayTreeView.ItemStack>
@@ -382,13 +389,20 @@ export function SelectLayoutTree({
 											] &&
 												item.hasGuestViewPermission ===
 													false && (
-													<ClayIcon
-														className="c-ml-2 c-mt-0 lfr-portal-tooltip text-4"
-														data-title={Liferay.Language.get(
+													<span
+														aria-label={Liferay.Language.get(
 															'restricted-page'
 														)}
-														symbol="lock"
-													/>
+														className="c-ml-2 lfr-portal-tooltip"
+														title={Liferay.Language.get(
+															'restricted-page'
+														)}
+													>
+														<ClayIcon
+															className="c-mt-0 text-4"
+															symbol="lock"
+														/>
+													</span>
 												)}
 										</div>
 									</ClayTreeView.Item>

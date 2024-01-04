@@ -2452,6 +2452,12 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Virtual");
 
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Virtual");
+
+			Button.clickSave();
+
 			CommerceProducts.updateProductVirtualConfiguration(
 				enableSample = "true",
 				sampleFileName = ${sampleFileName},

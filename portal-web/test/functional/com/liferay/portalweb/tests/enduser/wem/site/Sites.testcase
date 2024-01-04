@@ -450,6 +450,59 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177717. The tooltip of the back button of a Site child is Go to Site Name."
+	@priority = 3
+	test ViewBackButtonTooltipOfChildSite {
+		task ("Given a site administrator accesses to the child site in Site admin") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+
+			HeadlessSite.addSite(
+				parentSiteName = ${randomSiteName},
+				siteName = "Child Site Name");
+
+			HeadlessSite.addSite(
+				grandParentSiteName = ${randomSiteName},
+				parentSiteName = "Child Site Name",
+				siteName = "Grandchild Site Name");
+
+			Site.openSitesAdmin();
+
+			LexiconTable.clickTableEntryTitle(tableEntry = ${randomSiteName});
+
+			Breadcrumb.viewActiveEntry(breadcrumbName = ${randomSiteName});
+
+			LexiconTable.clickTableEntryTitle(tableEntry = "Child Site Name");
+
+			Breadcrumb.viewActiveEntry(breadcrumbName = "Child Site Name");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to ${randomSiteName}",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Given a site administrator accesses to the grandchild site in Site admin") {
+			LexiconTable.clickTableEntryTitle(tableEntry = "Grandchild Site Name");
+
+			Breadcrumb.viewActiveEntry(breadcrumbName = "Grandchild Site Name");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Child Site Name",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 	@description = "This is a test case for LRQA-5853. Disbale Content Sharing in instance level and view child Sites doesn't display content from parent Sites."
 	@priority = 4
 	test ViewContentSharingDisabledAcrossSitesViaAP {

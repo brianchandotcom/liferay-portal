@@ -10,6 +10,7 @@ import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
@@ -78,6 +79,15 @@ public class ObjectEntryInfoItemExceptionRequestHandler {
 			}
 
 			throw new InfoFormException();
+		}
+
+		if (exception instanceof ObjectEntryCountException) {
+			ObjectEntryCountException objectEntryCountException =
+				(ObjectEntryCountException)exception;
+
+			throw new InfoFormValidationException.ExceedsMaxEntries(
+				objectEntryCountException.getMessageKey(),
+				objectEntryCountException.getObjectDefinitionLabel());
 		}
 
 		if (exception instanceof

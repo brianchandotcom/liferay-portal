@@ -213,7 +213,7 @@ definition {
 	@description = "Assert scheduled clean up in recycle bin works."
 	@priority = 3
 	test RecycleBinScheduledCleanup {
-		property custom.properties = "trash.entries.max.age=1${line.separator}trash.entry.check.interval=1";
+		property custom.properties = "trash.entries.max.age=0";
 
 		task ("Add a blogs widget to page and a blog entry") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -238,23 +238,23 @@ definition {
 				entryTitle = "Blogs Entry Title");
 		}
 
-		task ("Go to recycle bin and wait 2 minutes") {
-			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+		task ("Run check entry scheduler job") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Job Scheduler");
 
-			RecycleBin.viewCP(
-				assetName = "Blogs Entry Title",
-				assetType = "Blogs Entry",
-				customMaxAge = "1 minute",
-				deleteUser = "Test Test");
+			Navigator.gotoNavTab(navTab = "Scheduled Jobs");
 
-			// We need this pause to check issue due trash.entry.check.interval=1
-			// To be investigated in LPS-157883
+			Pagination.changePagination(itemsPerPage = 60);
 
-			Pause(value1 = 120000);
+			Click(locator1 = "xpath=(//tr[@data-qa-id='row'][contains(.,'CheckEntrySchedulerJobConfiguration')])[2]//td[contains(@class,'action-column')]//a[normalize-space()='Run Now']");
+
+			Alert.viewSuccessMessage();
 		}
 
-		task ("Refresh and assert no blog entry") {
-			Refresh();
+		task ("Assert no blog entry in recycle bin") {
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
 			RecycleBin.viewDefaultCP(assetName = "Blogs Entry Title");
 		}

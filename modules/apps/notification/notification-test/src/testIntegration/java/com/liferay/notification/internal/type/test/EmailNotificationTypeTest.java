@@ -23,6 +23,7 @@ import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -117,7 +118,12 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			childObjectEntryValues.get("integerObjectField")
 		).put(
 			"${ObjectField_picklistObjectField.getData()}",
-			listTypeEntry.getName(LocaleUtil.US)
+			() -> {
+				ListEntry listEntry = (ListEntry)childObjectEntryValues.get(
+					"picklistObjectField");
+
+				return listEntry.getName();
+			}
 		).put(
 			"${ObjectField_textObjectField.getData()}",
 			childObjectEntryValues.get("textObjectField")

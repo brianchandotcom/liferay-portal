@@ -95,7 +95,7 @@ public class BaseNotificationTypeTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		listTypeEntry = ListTypeEntryUtil.createListTypeEntry(
+		ListTypeEntry listTypeEntry = ListTypeEntryUtil.createListTypeEntry(
 			RandomTestUtil.randomString(),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
@@ -497,7 +497,6 @@ public class BaseNotificationTypeTest {
 
 	protected static LinkedHashMap<String, Object> childObjectEntryValues;
 	protected static DTOConverterContext dtoConverterContext;
-	protected static ListTypeEntry listTypeEntry;
 
 	@Inject
 	protected static ObjectFieldLocalService objectFieldLocalService;

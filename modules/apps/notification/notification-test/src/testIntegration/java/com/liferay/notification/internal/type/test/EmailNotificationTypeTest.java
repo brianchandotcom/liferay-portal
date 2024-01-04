@@ -161,13 +161,15 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 						user2.getEmailAddress()))));
 
 		List<NotificationQueueEntry> notificationQueueEntries =
-			_getNotificationQueueEntries();
+			notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
 
 		Assert.assertEquals(
 			notificationQueueEntries.toString(), 1,
 			notificationQueueEntries.size());
 
-		NotificationQueueEntry notificationQueueEntry = 
+		NotificationQueueEntry notificationQueueEntry =
 			notificationQueueEntries.get(0);
 
 		assertTermValues(
@@ -441,24 +443,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				notificationQueueEntry.getNotificationQueueEntryId()));
 	}
 
-	private List<NotificationQueueEntry> _getNotificationQueueEntries() {
-		return ListUtil.sort(
-			notificationQueueEntryLocalService.getNotificationEntries(
-				NotificationConstants.TYPE_EMAIL,
-				NotificationQueueEntryConstants.STATUS_SENT),
-			Comparator.comparing(
-				notificationQueueEntry -> {
-					Map<String, Object> notificationRecipientSettingsMap =
-						NotificationRecipientSettingUtil.
-							getNotificationRecipientSettingsMap(
-								notificationQueueEntry);
-
-					return String.valueOf(
-						notificationRecipientSettingsMap.get(
-							NotificationRecipientSettingConstants.NAME_TO));
-				}));
-	}
-
 	private void _testSendNotification(
 			int expectedNotificationQueueEntriesCount,
 			List<String> expectedToEmailAddresses, boolean singleRecipient,
@@ -480,8 +464,21 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
 				singleRecipient, Collections.singletonMap(LocaleUtil.US, to)));
 
-		List<NotificationQueueEntry> notificationQueueEntries =
-			_getNotificationQueueEntries();
+		List<NotificationQueueEntry> notificationQueueEntries = ListUtil.sort(
+			notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT),
+			Comparator.comparing(
+				notificationQueueEntry -> {
+					Map<String, Object> notificationRecipientSettingsMap =
+						NotificationRecipientSettingUtil.
+							getNotificationRecipientSettingsMap(
+								notificationQueueEntry);
+
+					return String.valueOf(
+						notificationRecipientSettingsMap.get(
+							NotificationRecipientSettingConstants.NAME_TO));
+				}));
 
 		Assert.assertEquals(
 			notificationQueueEntries.toString(),

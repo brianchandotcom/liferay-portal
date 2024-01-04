@@ -292,6 +292,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177675. The tooltip of the back button is Go to Tags when adding or merging Tags."
+	@priority = 3
+	test ViewBackButtonTooltipForTagsAdmin {
+		task ("Given a site administrator adds a tag") {
+			Tag.openTagsAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoAdd();
+
+			WaitForElementPresent(locator1 = "TextInput#NAME");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Tags",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Given a site administrator merges tags") {
+			for (var i : list "1,2") {
+				JSONAssettag.addTag(
+					groupName = "Test Site Name",
+					tagName = "tagname${i}");
+			}
+
+			Navigator.gotoBack();
+
+			PortletEntry.selectAll();
+
+			ManagementBar.gotoManagementBarEllipsisMenuItem(menuItem = "Merge");
+
+			WaitForElementPresent(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "targetTagName");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver.javaScriptFocus(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Tags",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of tags admin."
 	@priority = 4
 	test ViewDropdownMenuIconsInTagsAdmin {

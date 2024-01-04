@@ -146,6 +146,9 @@ public class JobDefinitionFactory {
 		else if (type == JobEntity.Type.ROOT_CAUSE_ANALYSIS_TOOL) {
 			return new RootCauseAnalysisToolJobDefinition(type);
 		}
+		else if (type == JobEntity.Type.SANITIZE_LANGUAGE) {
+			return new SanitizeLanguageJobDefinition(type);
+		}
 		else if (type == JobEntity.Type.SUBREPOSITORY_PULL_REQUEST) {
 			return new SubrepositoryPullRequestJobDefinition(type);
 		}

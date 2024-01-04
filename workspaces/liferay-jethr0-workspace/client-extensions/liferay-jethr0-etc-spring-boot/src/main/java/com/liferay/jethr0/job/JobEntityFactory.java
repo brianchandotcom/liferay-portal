@@ -144,6 +144,9 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		else if (type == JobEntity.Type.ROOT_CAUSE_ANALYSIS_TOOL) {
 			return new RootCauseAnalysisToolJobEntity(jsonObject);
 		}
+		else if (type == JobEntity.Type.SANITIZE_LANGUAGE) {
+			return new SanitizeLanguageJobEntity(jsonObject);
+		}
 		else if (type == JobEntity.Type.SUBREPOSITORY_PULL_REQUEST) {
 			return new SubrepositoryPullRequestJobEntity(jsonObject);
 		}

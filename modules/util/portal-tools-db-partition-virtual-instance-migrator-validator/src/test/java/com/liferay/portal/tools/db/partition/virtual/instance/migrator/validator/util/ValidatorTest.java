@@ -52,7 +52,7 @@ public class ValidatorTest extends Validator {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_testValidateCompany(
-			company, false, true, true, true,
+			true, false, true, true, company,
 			() -> _assertValidateDatabases(
 				true, false,
 				Arrays.asList(
@@ -60,7 +60,7 @@ public class ValidatorTest extends Validator {
 						" already exists in the target database")));
 
 		_testValidateCompany(
-			company, true, false, true, true,
+			true, true, false, true, company,
 			() -> _assertValidateDatabases(
 				false, true,
 				Arrays.asList(
@@ -69,7 +69,7 @@ public class ValidatorTest extends Validator {
 					"change it during migration.")));
 
 		_testValidateCompany(
-			company, true, true, false, true,
+			false, true, true, true, company,
 			() -> _assertValidateDatabases(
 				false, true,
 				Arrays.asList(
@@ -78,7 +78,7 @@ public class ValidatorTest extends Validator {
 					"change it during migration.")));
 
 		_testValidateCompany(
-			company, true, true, true, false,
+			true, true, true, false, company,
 			() -> _assertValidateDatabases(
 				false, true,
 				Arrays.asList(
@@ -100,6 +100,7 @@ public class ValidatorTest extends Validator {
 					"[WARN] Table table2 is not present in the target database",
 					"[WARN] Table table4 is not present in the source " +
 						"database")));
+
 		_testValidatePartitionedTables(
 			new ArrayList<>(Arrays.asList("table1", "table3", "table4")),
 			new ArrayList<>(
@@ -111,6 +112,7 @@ public class ValidatorTest extends Validator {
 					"[WARN] Table table2 is not present in the source database",
 					"[WARN] Table table5 is not present in the source " +
 						"database")));
+
 		_testValidatePartitionedTables(
 			new ArrayList<>(
 				Arrays.asList(
@@ -125,7 +127,7 @@ public class ValidatorTest extends Validator {
 	}
 
 	@Test
-	public void testValidateReleaseMissingSourceModules() throws Exception {
+	public void testValidateReleaseMissingSourceModules() {
 		List<Release> sourceReleases = _getReleases();
 
 		List<Release> targetReleases = new ArrayList<>();
@@ -154,6 +156,7 @@ public class ValidatorTest extends Validator {
 				Arrays.asList(
 					"[WARN] Module module1 is not present in the source " +
 						"database")));
+
 		_testValidateReleaseMissingTargetModule(
 			"module2.service",
 			() -> _assertValidateDatabases(
@@ -177,6 +180,7 @@ public class ValidatorTest extends Validator {
 						"the source database",
 					"[ERROR] Module module2 has a failed release state in " +
 						"the source database")));
+
 		_testValidateReleaseState(
 			new ArrayList<>(), failedServletContextNames,
 			() -> _assertValidateDatabases(
@@ -197,6 +201,7 @@ public class ValidatorTest extends Validator {
 				Arrays.asList(
 					"[ERROR] Module module2.service needs to be verified in " +
 						"the source database before the migration")));
+
 		_testValidateReleaseUnverifiedModule(
 			"module2", false,
 			() -> _assertValidateDatabases(
@@ -215,6 +220,7 @@ public class ValidatorTest extends Validator {
 				Arrays.asList(
 					"[ERROR] Module module2.service needs to be upgraded in " +
 						"the target database before the migration")));
+
 		_testValidateReleaseVersionModule(
 			"10.0.0", "module1",
 			() -> _assertValidateDatabases(
@@ -225,31 +231,25 @@ public class ValidatorTest extends Validator {
 	}
 
 	private void _assertValidateDatabases(
-			boolean hasErrors, boolean hasWarnings, List<String> messages)
-		throws Exception {
+		boolean hasErrors, boolean hasWarnings, List<String> messages) {
 
-		try {
-			Recorder recorder = Validator.validateDatabases(
-				_sourceInstanceData, _targetInstanceData);
+		Recorder recorder = Validator.validateDatabases(
+			_sourceInstanceData, _targetInstanceData);
 
-			Assert.assertEquals(hasErrors, recorder.hasErrors());
-			Assert.assertEquals(hasWarnings, recorder.hasWarnings());
+		Assert.assertEquals(hasErrors, recorder.hasErrors());
+		Assert.assertEquals(hasWarnings, recorder.hasWarnings());
 
-			recorder.printMessages();
+		recorder.printMessages();
 
-			String string = _byteArrayOutputStream.toString();
+		String string = _byteArrayOutputStream.toString();
 
-			if (messages == null) {
-				Assert.assertTrue(string.isEmpty());
-			}
-			else {
-				for (String message : messages) {
-					Assert.assertTrue(string.contains(message));
-				}
-			}
+		if (messages == null) {
+			Assert.assertTrue(string.isEmpty());
 		}
-		finally {
-			_byteArrayOutputStream.reset();
+		else {
+			for (String message : messages) {
+				Assert.assertTrue(string.contains(message));
+			}
 		}
 	}
 
@@ -264,16 +264,16 @@ public class ValidatorTest extends Validator {
 	}
 
 	private void _init(InstanceData instanceData) {
-		instanceData.setReleases(new ArrayList<>());
-		instanceData.setTableNames(new ArrayList<>());
 		instanceData.setCompanies(new ArrayList<>());
 		instanceData.setCompanyId(RandomTestUtil.randomLong());
 		instanceData.setDefaultPartition(true);
+		instanceData.setReleases(new ArrayList<>());
+		instanceData.setTableNames(new ArrayList<>());
 	}
 
 	private void _testValidateCompany(
-			Company sourceCompany, boolean changeId, boolean changeName,
-			boolean changeHost, boolean changeWebId,
+			boolean changeHost, boolean changeId, boolean changeName,
+			boolean changeWebId, Company sourceCompany,
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
@@ -285,17 +285,17 @@ public class ValidatorTest extends Validator {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
+		if (!changeHost) {
+			targetCompany.setVirtualHostName(
+				sourceCompany.getVirtualHostName());
+		}
+
 		if (!changeId) {
 			targetCompany.setCompanyId(sourceCompany.getCompanyId());
 		}
 
 		if (!changeName) {
 			targetCompany.setCompanyName(sourceCompany.getCompanyName());
-		}
-
-		if (!changeHost) {
-			targetCompany.setVirtualHostName(
-				sourceCompany.getVirtualHostName());
 		}
 
 		if (!changeWebId) {

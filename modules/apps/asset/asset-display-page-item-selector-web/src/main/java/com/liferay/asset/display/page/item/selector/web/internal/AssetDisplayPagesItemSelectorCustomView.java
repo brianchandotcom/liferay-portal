@@ -9,7 +9,6 @@ import com.liferay.asset.display.page.item.selector.criterion.AssetDisplayPageSe
 import com.liferay.asset.display.page.item.selector.web.internal.display.context.AssetDisplayPagesItemSelectorCustomViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -102,10 +101,6 @@ public class AssetDisplayPagesItemSelectorCustomView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new UUIDItemSelectorReturnType());
-
-	@Reference
-	private ItemSelectorViewDescriptorRenderer
-		<AssetDisplayPageSelectorCriterion> _itemSelectorViewDescriptorRenderer;
 
 	@Reference
 	private Language _language;

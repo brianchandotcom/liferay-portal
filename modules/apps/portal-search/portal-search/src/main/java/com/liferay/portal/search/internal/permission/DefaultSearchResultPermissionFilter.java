@@ -689,6 +689,7 @@ public class DefaultSearchResultPermissionFilter
 			}
 
 			hits.setLength(size);
+
 			hits.setSearchTime(
 				(float)(System.currentTimeMillis() - hitsStart) / Time.SECOND);
 		}

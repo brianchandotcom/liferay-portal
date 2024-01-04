@@ -8,7 +8,7 @@ package com.liferay.message.boards.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
-import com.liferay.message.boards.uad.test.MBCategoryUADTestUtil;
+import com.liferay.message.boards.uad.test.util.MBCategoryUADTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;

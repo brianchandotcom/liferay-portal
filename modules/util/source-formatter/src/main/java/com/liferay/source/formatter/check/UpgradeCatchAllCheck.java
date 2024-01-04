@@ -53,9 +53,11 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			}
 
 			String from = jsonObject.getString("from");
+			Set<String> keys = jsonObject.keySet();
 
-			if (from.contains(StringPool.OPEN_PARENTHESIS) &&
-				!jsonObject.getBoolean("skipParametersValidation")) {
+			if ((from.contains(StringPool.OPEN_PARENTHESIS) &&
+				 !jsonObject.getBoolean("skipParametersValidation")) ||
+				!keys.contains("to")) {
 
 				expectedMessages.add(_getMessage(jsonObject));
 			}
@@ -165,8 +167,10 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		String[] classNames = JSONUtil.toStringArray(
 			jsonObject.getJSONArray("classNames"));
 
+		String classNamesFormated = null;
+
 		if (classNames.length > 0) {
-			sb.append(StringUtil.merge(classNames, StringPool.SLASH));
+			classNamesFormated = StringUtil.merge(classNames, StringPool.SLASH);
 		}
 
 		String from = jsonObject.getString("from");
@@ -176,7 +180,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		if (index != -1) {
 			from = StringUtil.replace(from, CharPool.PERIOD, CharPool.POUND);
 		}
-		else {
+		else if (classNamesFormated != null) {
+			sb.append(classNamesFormated);
 			sb.append(StringPool.POUND);
 		}
 
@@ -225,7 +230,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				regex, StringPool.COMMA_AND_SPACE, ",[?\\s\\w]*");
 		}
 		else {
-			regex = regex + "[,;> (]";
+			regex = regex + "[,;> ({]";
 		}
 
 		if (regex.contains(StringPool.PERIOD)) {
@@ -347,6 +352,16 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 					to);
 			}
 			else {
+				Set<String> keys = jsonObject.keySet();
+
+				if (!keys.contains("to")) {
+					addMessage(fileName, _getMessage(jsonObject));
+
+					_newMessage = true;
+
+					continue;
+				}
+
 				newContent = StringUtil.replaceFirst(
 					newContent, methodCall,
 					StringUtil.replace(methodCall, from, to));
@@ -428,6 +443,21 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		if (!content.equals(newContent)) {
 			newContent = _addReplacementDependencies(
 				fileName, jsonObject, newContent);
+		}
+		else if (!_newMessage) {
+			Set<String> keys = jsonObject.keySet();
+
+			if (!keys.contains("to")) {
+				Pattern pattern = _getPattern(jsonObject);
+
+				Matcher matcher = pattern.matcher(content);
+
+				if (matcher.find()) {
+					addMessage(fileName, _getMessage(jsonObject));
+
+					_newMessage = true;
+				}
+			}
 		}
 
 		return newContent;

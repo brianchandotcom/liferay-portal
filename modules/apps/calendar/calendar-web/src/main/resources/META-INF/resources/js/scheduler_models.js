@@ -440,7 +440,13 @@ AUI.add(
 					const endDate = instance.get('endDate');
 					const title = [];
 
+					const titleText = instance._formatDate(
+						startDate,
+						'<span class="sr-only">%A, %B %e, %G</span>'
+					);
+
 					if (format.startDate) {
+						title.push(titleText);
 						title.push(
 							instance._formatDate(startDate, format.startDate) +
 								' '

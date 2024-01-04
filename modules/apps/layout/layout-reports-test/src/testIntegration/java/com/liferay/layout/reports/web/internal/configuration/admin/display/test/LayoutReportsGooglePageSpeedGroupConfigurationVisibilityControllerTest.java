@@ -7,7 +7,7 @@ package com.liferay.layout.reports.web.internal.configuration.admin.display.test
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.configuration.admin.display.ConfigurationVisibilityController;
-import com.liferay.layout.reports.web.internal.util.LayoutReportsTestUtil;
+import com.liferay.layout.reports.web.internal.test.util.LayoutReportsTestUtil;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

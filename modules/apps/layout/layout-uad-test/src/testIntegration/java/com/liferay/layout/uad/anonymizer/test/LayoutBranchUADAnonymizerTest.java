@@ -6,7 +6,7 @@
 package com.liferay.layout.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.uad.test.LayoutBranchUADTestUtil;
+import com.liferay.layout.uad.test.util.LayoutBranchUADTestUtil;
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.reports.web.internal.util;
+package com.liferay.layout.reports.web.internal.test.util;
 
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;

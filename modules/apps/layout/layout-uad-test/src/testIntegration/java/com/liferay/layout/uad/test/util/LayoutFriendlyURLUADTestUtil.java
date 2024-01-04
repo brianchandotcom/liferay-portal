@@ -3,12 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.uad.test;
+package com.liferay.layout.uad.test.util;
 
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
@@ -17,12 +19,15 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class LayoutUADTestUtil {
+public class LayoutFriendlyURLUADTestUtil {
 
-	public static Layout addLayout(
+	public static LayoutFriendlyURL addLayoutFriendlyURL(
+			LayoutFriendlyURLLocalService layoutFriendlyURLLocalService,
 			LayoutLocalService layoutLocalService, long userId)
 		throws Exception {
 
@@ -34,12 +39,25 @@ public class LayoutUADTestUtil {
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
 
-		return layoutLocalService.addLayout(
+		Layout layout = layoutLocalService.addLayout(
 			userId, TestPropsValues.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LayoutConstants.TYPE_PORTLET, false, friendlyURL,
 			ServiceContextTestUtil.getServiceContext());
+
+		return layoutFriendlyURLLocalService.getLayoutFriendlyURL(
+			layout.getPlid(), layout.getDefaultLanguageId());
+	}
+
+	public static void cleanUpDependencies(
+			LayoutLocalService layoutLocalService,
+			List<LayoutFriendlyURL> layoutFriendlyURLs)
+		throws Exception {
+
+		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
+			layoutLocalService.deleteLayout(layoutFriendlyURL.getPlid());
+		}
 	}
 
 }

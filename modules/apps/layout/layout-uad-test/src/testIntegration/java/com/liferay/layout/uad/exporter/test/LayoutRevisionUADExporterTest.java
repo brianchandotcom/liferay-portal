@@ -6,7 +6,7 @@
 package com.liferay.layout.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.uad.test.LayoutRevisionUADTestUtil;
+import com.liferay.layout.uad.test.util.LayoutRevisionUADTestUtil;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;

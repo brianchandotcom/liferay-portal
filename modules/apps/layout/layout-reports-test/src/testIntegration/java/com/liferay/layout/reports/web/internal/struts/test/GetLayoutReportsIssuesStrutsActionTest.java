@@ -6,7 +6,7 @@
 package com.liferay.layout.reports.web.internal.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.reports.web.internal.util.LayoutReportsTestUtil;
+import com.liferay.layout.reports.web.internal.test.util.LayoutReportsTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;

@@ -507,6 +507,14 @@ public class AssetListDisplayContext {
 		).setActionName(
 			"/asset_list/add_asset_list_entry"
 		).setParameter(
+			"backURLTitle",
+			() -> {
+				PortletDisplay portletDisplay =
+					_themeDisplay.getPortletDisplay();
+
+				return portletDisplay.getPortletDisplayName();
+			}
+		).setParameter(
 			"type", type
 		).buildString();
 	}

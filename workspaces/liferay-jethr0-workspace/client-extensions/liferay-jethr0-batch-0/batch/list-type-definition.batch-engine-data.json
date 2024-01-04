@@ -476,6 +476,14 @@
 					}
 				},
 				{
+					"externalReferenceCode": "portalEvaluatePullRequest",
+					"key": "portalEvaluatePullRequest",
+					"name": "Portal Evaluate Pull Request",
+					"name_i18n": {
+						"en-US": "Portal Evaluate Pull Request"
+					}
+				},
+				{
 					"externalReferenceCode": "portalFixpackRelease",
 					"key": "portalFixpackRelease",
 					"name": "Portal Fixpack Release",

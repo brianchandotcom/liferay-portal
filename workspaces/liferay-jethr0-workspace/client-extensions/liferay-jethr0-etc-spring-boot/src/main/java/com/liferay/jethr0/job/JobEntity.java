@@ -204,6 +204,8 @@ public interface JobEntity extends Entity {
 		PORTAL_APP_RELEASE("portalAppRelease", "Portal App Release"),
 		PORTAL_BUILD_OPTIMIZATION(
 			"portalBuildOptimization", "Portal Build Optimization"),
+		PORTAL_EVALUATE_PULL_REQUEST(
+			"portalEvaluatePullRequest", "Portal Evaluate Pull Request"),
 		PORTAL_FIXPACK_RELEASE(
 			"portalFixpackRelease", "Portal Fixpack Release"),
 		PORTAL_HOTFIX_RELEASE("portalHotfixRelease", "Portal Hotfix Release"),

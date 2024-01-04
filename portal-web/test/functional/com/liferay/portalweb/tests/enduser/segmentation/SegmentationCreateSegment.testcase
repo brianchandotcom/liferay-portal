@@ -19,8 +19,6 @@ definition {
 		}
 
 		task ("Open Segmentation Admin") {
-			Navigator.openURL();
-
 			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 		}
 	}
@@ -3342,6 +3340,51 @@ definition {
 			AssertElementPresent(
 				locator1 = "Segmentation#CRITERION_VIEW_MODE",
 				propertyValue = "Test Group Name");
+		}
+	}
+
+	@description = "This is a test for LPS-177714. The tooltip of the back button is Go to Segments in the page editor of Segments."
+	@priority = 3
+	test ViewBackButtonTooltipForSegmentsAdmin {
+		task ("Given a site administrator adds a segment") {
+			LexiconEntry.gotoAdd();
+
+			WaitForVisible(locator1 = "Segmentation#ADD_FIELD_POSITION");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Segments",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Given a site administrator edits the segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Regular Role",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Test Segment Name",
+				selectedOption = "Power User");
+
+			Navigator.gotoBack();
+
+			Segmentation.editSegment(entry = "Test Segment Name");
+
+			WaitForElementPresent(locator1 = "Segmentation#CRITERION_INPUT_ANY");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Segments",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 	}
 

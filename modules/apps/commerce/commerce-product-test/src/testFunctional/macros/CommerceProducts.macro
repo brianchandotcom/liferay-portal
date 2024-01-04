@@ -509,7 +509,7 @@ definition {
 			Refresh();
 
 			AssertElementPresent(
-				columnName = "${attachment}",
+				columnName = ${attachment},
 				locator1 = "FrontendDataSet#COLUMN_NAME");
 		}
 

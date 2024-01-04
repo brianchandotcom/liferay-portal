@@ -15,6 +15,6 @@
 	</clay:row>
 
 	<react:component
-		module="js/ManagementToolbarSamples"
+		module="{ManagementToolbarSamples} from frontend-js-components-sample-web"
 	/>
 </clay:container-fluid>

@@ -24,7 +24,7 @@
 
 	<div>
 		<react:component
-			module="js/TestSampleWalkthrough"
+			module="{TestSampleWalkthrough} from frontend-js-components-sample-web"
 		/>
 	</div>
 </clay:container-fluid>

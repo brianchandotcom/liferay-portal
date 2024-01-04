@@ -16,7 +16,7 @@
 
 	<div>
 		<react:component
-			module="js/FeatureIndicatorSamples"
+			module="{FeatureIndicatorSamples} from frontend-js-components-sample-web"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"learnResourceContext", LearnMessageUtil.getReactDataJSONObject("frontend-js-components-web")

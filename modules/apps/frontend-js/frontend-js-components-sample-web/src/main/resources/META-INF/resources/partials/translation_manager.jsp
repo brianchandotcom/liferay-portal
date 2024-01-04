@@ -23,7 +23,7 @@ Map<String, Object> translations = translationManagerDisplayContext.getTranslati
 
 	<clay:row>
 		<react:component
-			module="js/TranslationManagerSamples"
+			module="{TranslationManagerSamples} from frontend-js-components-sample-web"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"activeLanguageIds", activeLanguageIds

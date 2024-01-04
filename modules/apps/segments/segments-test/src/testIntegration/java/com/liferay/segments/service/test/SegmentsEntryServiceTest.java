@@ -85,7 +85,6 @@ public class SegmentsEntryServiceTest {
 			RandomTestUtil.randomLocaleStringMap(), true,
 			CriteriaSerializer.serialize(new Criteria()),
 			SegmentsEntryConstants.SOURCE_DEFAULT,
-			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 	}
@@ -130,7 +129,6 @@ public class SegmentsEntryServiceTest {
 				RandomTestUtil.randomLocaleStringMap(), true,
 				RandomTestUtil.randomString(),
 				SegmentsEntryConstants.SOURCE_DEFAULT,
-				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, _groupUser.getUserId()));
 		}
@@ -320,8 +318,7 @@ public class SegmentsEntryServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			CriteriaSerializer.serialize(new Criteria()),
-			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-			RandomTestUtil.randomString(), serviceContext);
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND, serviceContext);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {

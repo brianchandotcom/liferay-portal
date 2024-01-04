@@ -122,8 +122,7 @@ public class SegmentsEntryStagedModelDataHandlerTest
 			columnValue);
 
 		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			stagingGroup.getGroupId(), _getCriteria(filterString),
-			User.class.getName());
+			stagingGroup.getGroupId(), _getCriteria(filterString));
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, _segmentsEntry);
@@ -186,8 +185,7 @@ public class SegmentsEntryStagedModelDataHandlerTest
 			"(teamIds eq '%s')", team.getTeamId());
 
 		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			stagingGroup.getGroupId(), _getCriteria(filterString),
-			User.class.getName());
+			stagingGroup.getGroupId(), _getCriteria(filterString));
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, _segmentsEntry);

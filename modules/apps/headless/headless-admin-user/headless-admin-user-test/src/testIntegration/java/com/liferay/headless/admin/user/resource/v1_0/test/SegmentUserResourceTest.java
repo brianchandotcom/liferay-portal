@@ -129,8 +129,7 @@ public class SegmentUserResourceTest extends BaseSegmentUserResourceTestCase {
 					).put(
 						"filterString", _filterString
 					))
-			).toString(),
-			User.class.getName());
+			).toString());
 
 		return segmentsEntry.getSegmentsEntryId();
 	}

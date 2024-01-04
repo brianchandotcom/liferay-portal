@@ -345,7 +345,6 @@ public class SegmentsDisplayContextTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null,
 			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _user.getUserId()));
 
@@ -371,7 +370,6 @@ public class SegmentsDisplayContextTest {
 				RandomTestUtil.randomString(),
 				CriteriaSerializer.serialize(new Criteria()),
 				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), _user.getUserId()));
 
@@ -400,7 +398,6 @@ public class SegmentsDisplayContextTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), null,
 				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), _user.getUserId()));
 

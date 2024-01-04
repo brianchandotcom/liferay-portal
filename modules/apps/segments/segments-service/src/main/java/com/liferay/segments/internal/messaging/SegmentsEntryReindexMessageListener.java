@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -149,7 +150,7 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 			}
 		}
 
-		long classNameId = _portal.getClassNameId(segmentsEntry.getType());
+		long classNameId = _portal.getClassNameId(User.class);
 
 		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
 			segmentsEntryId, classNameId,

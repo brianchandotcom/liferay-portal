@@ -211,7 +211,6 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 			SegmentsTestUtil.addSegmentsEntry(
 				segment.getName(), segment.getName(), null,
 				segment.getCriteria(), segment.getSource(),
-				User.class.getName(),
 				ServiceContextTestUtil.getServiceContext(
 					siteId, _adminUser.getUserId())));
 	}

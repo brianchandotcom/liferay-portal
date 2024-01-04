@@ -245,12 +245,10 @@ public class IndividualSegmentsCheckerTest {
 		SegmentsTestUtil.addSegmentsEntry(
 			"1234567", "Segments Entry 1", null, null,
 			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-			User.class.getName(),
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
 		SegmentsTestUtil.addSegmentsEntry(
 			"2345678", "Segments Entry 2", null, null,
 			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-			User.class.getName(),
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
 
 		List<SegmentsEntry> segmentsEntries =

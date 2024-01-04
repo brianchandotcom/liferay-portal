@@ -79,8 +79,7 @@ public class SegmentsEntryReindexMessageListenerTest {
 			Criteria.Conjunction.AND);
 
 		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
@@ -239,7 +238,6 @@ public class SegmentsEntryReindexMessageListenerTest {
 
 		message.put("companyId", _segmentsEntry.getCompanyId());
 		message.put("segmentsEntryId", _segmentsEntry.getSegmentsEntryId());
-		message.put("type", _segmentsEntry.getType());
 
 		_messageListener.receive(message);
 	}

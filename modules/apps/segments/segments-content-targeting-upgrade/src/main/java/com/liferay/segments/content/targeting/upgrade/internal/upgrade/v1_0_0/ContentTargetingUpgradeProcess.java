@@ -10,7 +10,6 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -228,8 +227,7 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 					_segmentsEntryLocalService.addSegmentsEntry(
 						"ct_" + userSegmentId, nameMap, descriptionMap, true,
 						_getCriteria(userSegmentId),
-						SegmentsEntryConstants.SOURCE_DEFAULT,
-						User.class.getName(), serviceContext);
+						SegmentsEntryConstants.SOURCE_DEFAULT, serviceContext);
 				}
 				finally {
 					LocaleThreadLocal.setSiteDefaultLocale(

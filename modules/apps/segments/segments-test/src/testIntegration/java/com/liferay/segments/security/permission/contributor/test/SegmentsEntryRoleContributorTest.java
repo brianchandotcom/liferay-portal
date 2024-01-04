@@ -343,8 +343,7 @@ public class SegmentsEntryRoleContributorTest {
 			Criteria.Conjunction.AND);
 
 		return SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 	}
 
 	private SegmentsEntry _addSegmentsEntry(User user) throws Exception {
@@ -362,8 +361,7 @@ public class SegmentsEntryRoleContributorTest {
 					).put(
 						"typeValue", "model"
 					))
-			).toString(),
-			User.class.getName());
+			).toString());
 	}
 
 	private void _setUpHasGroupPermissionTest() throws Exception {

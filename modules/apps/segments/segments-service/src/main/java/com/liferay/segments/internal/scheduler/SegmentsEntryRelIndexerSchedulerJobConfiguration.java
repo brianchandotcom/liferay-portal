@@ -78,7 +78,6 @@ public class SegmentsEntryRelIndexerSchedulerJobConfiguration
 
 		message.put("companyId", segmentsEntry.getCompanyId());
 		message.put("segmentsEntryId", segmentsEntry.getSegmentsEntryId());
-		message.put("type", segmentsEntry.getType());
 
 		_messageBus.sendMessage(
 			SegmentsDestinationNames.SEGMENTS_ENTRY_REINDEX, message);

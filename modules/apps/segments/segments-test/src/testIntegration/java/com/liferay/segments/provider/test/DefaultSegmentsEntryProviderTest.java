@@ -89,8 +89,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Assert.assertEquals(
 			1,
@@ -125,8 +124,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Assert.assertEquals(
 			0,
@@ -140,8 +138,7 @@ public class DefaultSegmentsEntryProviderTest {
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(new Criteria()),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(new Criteria()));
 
 		_segmentsEntryRelLocalService.addSegmentsEntryRel(
 			segmentsEntry.getSegmentsEntryId(),
@@ -173,8 +170,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Assert.assertEquals(
 			1,
@@ -196,8 +192,7 @@ public class DefaultSegmentsEntryProviderTest {
 			criteria, "(languageId eq 'en')", Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
@@ -226,8 +221,7 @@ public class DefaultSegmentsEntryProviderTest {
 			criteria, "(languageId eq 'en')", Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
@@ -263,10 +257,9 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria1),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria1));
 
 		Criteria criteria2 = new Criteria();
 
@@ -279,8 +272,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria2),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria2));
 
 		Context context = new Context();
 
@@ -324,8 +316,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Context context = new Context();
 
@@ -359,8 +350,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Context context = new Context();
 
@@ -393,8 +383,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Context context = new Context();
 
@@ -428,8 +417,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Context context = new Context();
 
@@ -459,8 +447,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Context context = new Context();
 
@@ -498,10 +485,9 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria1),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria1));
 
 		Criteria criteria2 = new Criteria();
 
@@ -511,10 +497,9 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+			_group.getGroupId(), _user2.getUserId());
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria2),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria2));
 
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
 			_group.getGroupId(), User.class.getName(), _user1.getUserId());
@@ -541,8 +526,7 @@ public class DefaultSegmentsEntryProviderTest {
 			criteria, "(languageId eq 'en')", Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
@@ -571,8 +555,7 @@ public class DefaultSegmentsEntryProviderTest {
 			criteria, "(languageId eq 'en')", Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
@@ -607,8 +590,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Context context = new Context();
 
@@ -641,8 +623,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Context context = new Context();
 
@@ -676,8 +657,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Context context = new Context();
 
@@ -710,8 +690,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Context context = new Context();
 
@@ -745,8 +724,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Context context = new Context();
 
@@ -772,10 +750,9 @@ public class DefaultSegmentsEntryProviderTest {
 			criteria1, "(languageId eq 'en')", Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria1),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria1));
 
 		Criteria criteria2 = new Criteria();
 
@@ -783,8 +760,7 @@ public class DefaultSegmentsEntryProviderTest {
 			criteria2, "(languageId eq 'fr')", Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria2),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria2));
 
 		Context context = new Context();
 
@@ -822,10 +798,9 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria1),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria1));
 
 		Criteria criteria2 = new Criteria();
 
@@ -835,10 +810,9 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+			_group.getGroupId(), _user2.getUserId());
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria2),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria2));
 
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
 			_group.getGroupId(), User.class.getName(), _user1.getUserId(), null,
@@ -871,11 +845,10 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria1),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria1));
 
 		Criteria criteria2 = new Criteria();
 
@@ -885,10 +858,9 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+			_group.getGroupId(), _user2.getUserId());
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria2),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria2));
 
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
 			_group.getGroupId(), User.class.getName(), _user1.getUserId(), null,
@@ -914,8 +886,7 @@ public class DefaultSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		_user1 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.US, firstName,

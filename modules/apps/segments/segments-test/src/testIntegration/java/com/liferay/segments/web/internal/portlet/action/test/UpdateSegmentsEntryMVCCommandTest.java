@@ -146,8 +146,6 @@ public class UpdateSegmentsEntryMVCCommandTest {
 		mockLiferayPortletActionRequest.setParameter(
 			"description_" + LocaleUtil.getDefault(), "This is a description.");
 		mockLiferayPortletActionRequest.setParameter(
-			"type", initialSegmentsEntry.getType());
-		mockLiferayPortletActionRequest.setParameter(
 			"saveAndContinue", StringPool.TRUE);
 
 		_mvcActionCommand.processAction(
@@ -187,7 +185,7 @@ public class UpdateSegmentsEntryMVCCommandTest {
 
 		return SegmentsTestUtil.addSegmentsEntry(
 			TestPropsValues.getGroupId(),
-			CriteriaSerializer.serialize(criteria), User.class.getName());
+			CriteriaSerializer.serialize(criteria));
 	}
 
 	private MockLiferayPortletActionRequest

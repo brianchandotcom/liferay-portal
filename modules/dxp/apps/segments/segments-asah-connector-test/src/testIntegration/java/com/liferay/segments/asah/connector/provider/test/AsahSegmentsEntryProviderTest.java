@@ -65,8 +65,7 @@ public class AsahSegmentsEntryProviderTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			CriteriaSerializer.serialize(new Criteria()),
-			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-			RandomTestUtil.randomString(), serviceContext);
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND, serviceContext);
 
 		_segmentsEntryRelLocalService.addSegmentsEntryRel(
 			segmentsEntry.getSegmentsEntryId(),
@@ -95,8 +94,7 @@ public class AsahSegmentsEntryProviderTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			CriteriaSerializer.serialize(new Criteria()),
-			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-			User.class.getName(), serviceContext);
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND, serviceContext);
 
 		_segmentsEntryRelLocalService.addSegmentsEntryRel(
 			segmentsEntry1.getSegmentsEntryId(),
@@ -107,8 +105,7 @@ public class AsahSegmentsEntryProviderTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			CriteriaSerializer.serialize(new Criteria()),
-			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-			User.class.getName(), serviceContext);
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND, serviceContext);
 
 		_segmentsEntryRelLocalService.addSegmentsEntryRel(
 			segmentsEntry2.getSegmentsEntryId(),
@@ -149,8 +146,7 @@ public class AsahSegmentsEntryProviderTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			CriteriaSerializer.serialize(new Criteria()),
-			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-			User.class.getName(), serviceContext);
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND, serviceContext);
 
 		_segmentsEntryRelLocalService.addSegmentsEntryRel(
 			segmentsEntry1.getSegmentsEntryId(),
@@ -161,8 +157,7 @@ public class AsahSegmentsEntryProviderTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			CriteriaSerializer.serialize(new Criteria()),
-			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-			User.class.getName(), serviceContext);
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND, serviceContext);
 
 		_segmentsEntryRelLocalService.addSegmentsEntryRel(
 			segmentsEntry2.getSegmentsEntryId(),

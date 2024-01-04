@@ -3519,8 +3519,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),
 					null, jsonObject.getBoolean("active", true),
-					jsonObject.getString("criteria"),
-					jsonObject.getString("type"), serviceContext);
+					jsonObject.getString("criteria"), serviceContext);
 			}
 			else {
 				segmentsEntry = _segmentsEntryLocalService.updateSegmentsEntry(

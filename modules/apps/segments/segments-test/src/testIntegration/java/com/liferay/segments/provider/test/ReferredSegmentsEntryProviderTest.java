@@ -68,9 +68,9 @@ public class ReferredSegmentsEntryProviderTest {
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+			_group.getGroupId(), _user2.getUserId());
 
 		Criteria criteria = new Criteria();
 
@@ -83,8 +83,7 @@ public class ReferredSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Assert.assertEquals(
 			0,
@@ -100,9 +99,9 @@ public class ReferredSegmentsEntryProviderTest {
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+			_group.getGroupId(), _user2.getUserId());
 
 		Criteria criteria = new Criteria();
 
@@ -115,8 +114,7 @@ public class ReferredSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Assert.assertEquals(
 			2,
@@ -137,9 +135,9 @@ public class ReferredSegmentsEntryProviderTest {
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+			_group.getGroupId(), _user2.getUserId());
 
 		Criteria criteria = new Criteria();
 
@@ -157,8 +155,7 @@ public class ReferredSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Assert.assertEquals(
 			1,
@@ -179,9 +176,9 @@ public class ReferredSegmentsEntryProviderTest {
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+			_group.getGroupId(), _user2.getUserId());
 
 		Criteria criteria = new Criteria();
 
@@ -199,8 +196,7 @@ public class ReferredSegmentsEntryProviderTest {
 			Criteria.Conjunction.OR);
 
 		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Assert.assertEquals(
 			2,
@@ -221,9 +217,9 @@ public class ReferredSegmentsEntryProviderTest {
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+			_group.getGroupId(), _user2.getUserId());
 
 		Criteria criteria = new Criteria();
 
@@ -236,8 +232,7 @@ public class ReferredSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		_segmentsEntryLocalService.deleteSegmentsEntry(segmentsEntry1);
 
@@ -260,9 +255,9 @@ public class ReferredSegmentsEntryProviderTest {
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+			_group.getGroupId(), _user2.getUserId());
 
 		Criteria criteria = new Criteria();
 
@@ -275,8 +270,7 @@ public class ReferredSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		long[] segmentsEntryIds =
 			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
@@ -300,9 +294,9 @@ public class ReferredSegmentsEntryProviderTest {
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+			_group.getGroupId(), _user2.getUserId());
 
 		Criteria criteria = new Criteria();
 
@@ -315,8 +309,7 @@ public class ReferredSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		long[] segmentsEntryIds =
 			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
@@ -343,9 +336,9 @@ public class ReferredSegmentsEntryProviderTest {
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+			_group.getGroupId(), _user2.getUserId());
 
 		Criteria criteria = new Criteria();
 
@@ -366,8 +359,7 @@ public class ReferredSegmentsEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Context context = new Context();
 
@@ -399,9 +391,9 @@ public class ReferredSegmentsEntryProviderTest {
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+			_group.getGroupId(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+			_group.getGroupId(), _user2.getUserId());
 
 		Criteria criteria = new Criteria();
 
@@ -422,8 +414,7 @@ public class ReferredSegmentsEntryProviderTest {
 			Criteria.Conjunction.OR);
 
 		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		Context context = new Context();
 

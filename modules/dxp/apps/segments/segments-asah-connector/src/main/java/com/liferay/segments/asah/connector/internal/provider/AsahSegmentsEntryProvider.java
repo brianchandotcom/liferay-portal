@@ -85,7 +85,7 @@ public class AsahSegmentsEntryProvider implements SegmentsEntryProvider {
 			List<SegmentsEntry> segmentsEntries =
 				_segmentsEntryLocalService.getSegmentsEntries(
 					groupId, SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-					className, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			if (segmentsEntries.isEmpty()) {
 				return new long[0];

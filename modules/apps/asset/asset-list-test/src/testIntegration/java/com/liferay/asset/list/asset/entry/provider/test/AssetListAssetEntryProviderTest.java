@@ -863,8 +863,7 @@ public class AssetListAssetEntryProviderTest {
 			Criteria.Conjunction.AND);
 
 		return SegmentsTestUtil.addSegmentsEntry(
-			groupId, CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			groupId, CriteriaSerializer.serialize(criteria));
 	}
 
 	private String _getTypeSettings(String queryValue) {

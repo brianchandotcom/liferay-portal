@@ -47,7 +47,7 @@ public class SegmentsEntryStagedModelRepository
 			segmentsEntry.getSegmentsEntryKey(), segmentsEntry.getNameMap(),
 			segmentsEntry.getDescriptionMap(), segmentsEntry.isActive(),
 			segmentsEntry.getCriteria(), segmentsEntry.getSource(),
-			segmentsEntry.getType(), serviceContext);
+			serviceContext);
 	}
 
 	@Override

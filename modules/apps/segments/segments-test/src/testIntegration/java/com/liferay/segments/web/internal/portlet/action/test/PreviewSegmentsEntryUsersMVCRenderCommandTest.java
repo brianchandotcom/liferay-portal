@@ -122,8 +122,7 @@ public class PreviewSegmentsEntryUsersMVCRenderCommandTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest();
@@ -199,8 +198,7 @@ public class PreviewSegmentsEntryUsersMVCRenderCommandTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria2),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria2));
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest();
@@ -249,8 +247,7 @@ public class PreviewSegmentsEntryUsersMVCRenderCommandTest {
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria2),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria2));
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest();

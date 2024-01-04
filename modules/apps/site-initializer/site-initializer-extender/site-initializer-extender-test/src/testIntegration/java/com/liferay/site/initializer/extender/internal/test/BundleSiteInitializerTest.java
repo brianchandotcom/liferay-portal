@@ -3207,8 +3207,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Segments Entry 1",
 			segmentsEntry1.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertEquals(
-			"com.liferay.portal.kernel.model.User", segmentsEntry1.getType());
 
 		SegmentsEntry segmentsEntry2 =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
@@ -3219,8 +3217,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Segments Entry 2",
 			segmentsEntry2.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertEquals(
-			"com.liferay.portal.kernel.model.User", segmentsEntry2.getType());
 
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			_group.getGroupId(), false, "/test-public-layout");

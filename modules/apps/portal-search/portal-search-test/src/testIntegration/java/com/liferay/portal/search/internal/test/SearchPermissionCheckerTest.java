@@ -155,8 +155,7 @@ public class SearchPermissionCheckerTest {
 				Criteria.Conjunction.AND);
 
 			SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-				_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-				User.class.getName());
+				_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 			_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 

@@ -498,8 +498,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			Criteria.Conjunction.AND);
 
 		return SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
-			User.class.getName());
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws Exception {

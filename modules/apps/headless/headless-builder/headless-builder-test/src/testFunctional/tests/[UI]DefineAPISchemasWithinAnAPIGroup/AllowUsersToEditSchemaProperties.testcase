@@ -12,8 +12,8 @@ definition {
 
 		User.firstLoginPG();
 
-		task ("Given Custom Object Definition University with text field 'name' created and one-to-many relationship UniversityAddresses created") {
-			var universityId = ObjectDefinitionAPI.createObjectDefinition(
+		task ("Given Custom Object Definition University with text field 'name' created and one-to-many relationship UniversityAddresses created and published") {
+			var universityId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "University",
 				en_US_plural_label = "Universities",
 				name = "University",

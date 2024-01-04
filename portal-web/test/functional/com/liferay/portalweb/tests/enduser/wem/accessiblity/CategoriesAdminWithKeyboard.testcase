@@ -1,0 +1,133 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Echo Accessibility";
+	property testray.main.component.name = "Categories";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-177675. Accessing via keyboard navigation the tooltip of the back button is Go to Categories in the in the edit mode of the elements of Categories."
+	@priority = 2
+	test ViewBackButtonTooltipForCategoriesAdminViaKeyboard {
+		task ("Given a site administrator adds a vocabulary") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.gotoAddVocabulary();
+
+			WaitForElementPresent(locator1 = "TextInput#NAME");
+		}
+
+		task ("When the site administrator hovers over the back button via keyboard") {
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Categories",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Given a site administrator adds a category") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			Navigator.gotoBack();
+
+			Navigator.gotoNavNested(navNested = "Vocabulary Name");
+
+			LexiconEntry.gotoAdd();
+
+			WaitForElementPresent(locator1 = "TextInput#NAME");
+		}
+
+		task ("When the site administrator hovers over the back button via keyboard") {
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Categories",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Given a site administrator bulkly assigns display page template") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+
+			Navigator.gotoBack();
+
+			PortletEntry.selectAll();
+
+			ManagementBar.gotoManagementBarEllipsisMenuItem(menuItem = "Assign Display Page Template");
+
+			WaitForElementPresent(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "displayPageType");
+		}
+
+		task ("When the site administrator hovers over the back button via keyboard") {
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Categories",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Given a site administrator adds a subcategory") {
+			Navigator.gotoBack();
+
+			LexiconTable.clickEllipsisItem(
+				item = "Add Subcategory",
+				tableEntry = "Category Name");
+
+			WaitForElementPresent(locator1 = "TextInput#NAME");
+		}
+
+		task ("When the site administrator hovers over the back button via keyboard") {
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Categories",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
+}

@@ -97,7 +97,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 					"M/d/yy");
 
-				return simpleDateFormat.format(DATE) + " 12:00 AM";
+				return simpleDateFormat.format(RandomTestUtil.nextDate()) +
+					" 12:00 AM";
 			}
 		).put(
 			"${ObjectField_dateTimeObjectField.getData()}",
@@ -105,7 +106,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 					"yyyy-MM-dd");
 
-				return simpleDateFormat.format(DATE) + "T00:00";
+				return simpleDateFormat.format(RandomTestUtil.nextDate()) +
+					"T00:00";
 			}
 		).put(
 			"${ObjectField_emailTextObjectField.getData()}",

@@ -115,7 +115,7 @@ public class BaseNotificationTypeTest {
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 					"yyyy-MM-dd");
 
-				return simpleDateFormat.format(DATE);
+				return simpleDateFormat.format(RandomTestUtil.nextDate());
 			}
 		).put(
 			"dateTimeObjectField",
@@ -123,7 +123,7 @@ public class BaseNotificationTypeTest {
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 					"yyyy-MM-dd 00:00:00.0");
 
-				return simpleDateFormat.format(DATE);
+				return simpleDateFormat.format(RandomTestUtil.nextDate());
 			}
 		).put(
 			"emailTextObjectField",
@@ -491,8 +491,6 @@ public class BaseNotificationTypeTest {
 			ListUtil.fromMapValues(childObjectEntryValues),
 			ListUtil.fromMapValues(parentObjectEntryValues));
 	}
-
-	protected static final Date DATE = RandomTestUtil.nextDate();
 
 	@DeleteAfterTestRun
 	protected static ObjectDefinition childObjectDefinition;

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventWrapper;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -267,9 +268,19 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			Mockito.anyLong()
 		);
 
+		Snapshot<WorkflowTaskManager> workflowTaskManagerSnapshot = Mockito.spy(
+			new Snapshot<>(
+				WorkflowTaskManagerUtil.class, WorkflowTaskManager.class));
+
+		Mockito.doReturn(
+			workflowTaskManager
+		).when(
+			workflowTaskManagerSnapshot
+		).get();
+
 		ReflectionTestUtil.setFieldValue(
-			WorkflowTaskManagerUtil.class, "_workflowTaskManager",
-			workflowTaskManager);
+			WorkflowTaskManagerUtil.class, "_workflowTaskManagerSnapshot",
+			workflowTaskManagerSnapshot);
 	}
 
 	private static void _setUpWorkflowTaskPermission() throws Exception {

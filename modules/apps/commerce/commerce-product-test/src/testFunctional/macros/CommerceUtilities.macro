@@ -272,7 +272,9 @@ definition {
 			Button.clickSelect();
 		}
 
-		CommerceItemSelector.uploadSingleFile(uploadFileName = ${uploadFileName});
+		CommerceItemSelector.uploadSingleFile(
+			parent = ${parent},
+			uploadFileName = ${uploadFileName});
 	}
 
 }

@@ -471,9 +471,15 @@ definition {
 
 	@summary = "Default summary"
 	macro configureVirtualProduct(assertUploaded = null, attachment = null, activationStatus = null, maxDownloads = null) {
-		Click(locator1 = "FormFields#SELECT_UPLOAD_FIELD");
+		Click(locator1 = "Button#SAVE");
 
-		SelectFrameTop();
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(locator1 = "FormFields#SELECT_UPLOAD_FIELD");
 
 		SelectFrame(
 			key_frameTitle = "Select File",
@@ -489,16 +495,22 @@ definition {
 
 		SelectFrameTop();
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
 		Click(locator1 = "Button#SAVE");
 
 		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrameTop();
 
 		if (isSet(assertUploaded) && (${assertUploaded} == "true")) {
 			Refresh();
 
 			AssertElementPresent(
-				key_index = ${attachment},
-				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+				columnName = "${attachment}",
+				locator1 = "FrontendDataSet#COLUMN_NAME");
 		}
 
 		if (isSet(activationStatus) || isSet(maxDownloads)) {
@@ -839,7 +851,25 @@ definition {
 		}
 
 		if (isSet(virtualProductFile)) {
-			CommerceUtilities.uploadSingleFile(uploadFileName = ${virtualProductFile});
+			Click(locator1 = "Button#SAVE");
+
+			Alert.viewSuccessMessage();
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceUtilities.uploadSingleFileWithoutFrameTop(uploadFileName = ${virtualProductFile});
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(locator1 = "Button#SAVE");
+
+			Alert.viewSuccessMessage();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
 		}
 
 		if (isSet(enableSample) && isSet(sampleFileName)) {
@@ -902,19 +932,42 @@ definition {
 
 	@summary = "Default summary"
 	macro updateVirtualSkuConfiguration(duration = null, maxDownload = null, sampleFileName = null, activationStatus = null, virtualProductFile = null, key_contentType = null, key_fieldLabel = null, maxDownloads = null, enableSample = null) {
+		if (IsElementPresent(key_toggleSwitchLabel = "Override", locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH")) {
+			var override = "true";
+		}
+		else {
+			var override = "false";
+		}
+
 		if (IsElementPresent(key_accordionTitle = "details", locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS")) {
 			Click(
 				key_accordionTitle = "details",
 				locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS");
 		}
 
-		if (isSet(virtualProductFile)) {
-			CommerceUtilities.uploadSingleFileWithoutFrameTop(uploadFileName = ${virtualProductFile});
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Button#PLUS");
+
+		if (${override} == "true") {
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 		}
 
-		WaitForElementPresent(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		if (isSet(virtualProductFile)) {
+			CommerceUtilities.uploadSingleFileWithoutFrameTop(
+				parent = ${override},
+				uploadFileName = ${virtualProductFile});
+		}
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		if (${override} == "true") {
+			Button.clickSave();
+
+			SelectFrameParent();
+
+			Click(locator1 = "Icon#BACK");
+		}
 
 		if ((${activationStatus} != "") || (${duration} != "") || (${maxDownload} != "")) {
 			if (IsElementPresent(key_accordionTitle = "base-information", locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS")) {
@@ -1101,7 +1154,7 @@ definition {
 
 				if (isSet(sampleFileName)) {
 					AssertElementPresent(
-						key_indexNumber = 2,
+						key_indexNumber = 1,
 						key_text = ${sampleFileName},
 						locator1 = "Link#ANY_N");
 				}
@@ -1119,7 +1172,7 @@ definition {
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 				AssertElementPresent(
-					key_indexNumber = 2,
+					key_indexNumber = 1,
 					labelOption = "None",
 					locator1 = "FormViewBuilder#FIELD_LABEL_OPTION_N");
 

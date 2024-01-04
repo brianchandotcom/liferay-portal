@@ -47,7 +47,12 @@ definition {
 			locator1 = "ItemSelector#ADD_BUTTON",
 			value1 = "Add");
 
-		SelectFrameTop();
+		if (${parent} == "true") {
+			SelectFrameParent();
+		}
+		else {
+			SelectFrameTop();
+		}
 	}
 
 }

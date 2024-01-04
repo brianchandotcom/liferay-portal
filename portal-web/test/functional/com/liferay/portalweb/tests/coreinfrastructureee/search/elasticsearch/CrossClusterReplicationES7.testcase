@@ -515,6 +515,8 @@ definition {
 
 		Navigator.openURL();
 
+		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
+
 		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");

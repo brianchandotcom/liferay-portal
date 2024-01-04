@@ -42,6 +42,8 @@ definition {
 
 		Navigator.openURL();
 
+		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
+
 		SearchPage.searchEmbedded(searchTerm = "abc");
 
 		SearchResults.viewSearchResults(
@@ -151,6 +153,8 @@ definition {
 		Button.clickSave();
 
 		Navigator.openURL();
+
+		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
 
@@ -336,6 +340,8 @@ definition {
 		Button.clickSave();
 
 		Navigator.openURL();
+
+		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
 
@@ -642,6 +648,8 @@ definition {
 
 		Navigator.openURL();
 
+		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
+
 		SearchPage.searchEmbedded(searchTerm = "Article");
 
 		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Article 3,Article 1,Article 4");
@@ -776,6 +784,8 @@ definition {
 		Button.clickSave();
 
 		Navigator.openURL();
+
+		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
 
 		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
@@ -1141,6 +1151,8 @@ definition {
 		Button.clickSave();
 
 		Navigator.openURL();
+
+		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
 

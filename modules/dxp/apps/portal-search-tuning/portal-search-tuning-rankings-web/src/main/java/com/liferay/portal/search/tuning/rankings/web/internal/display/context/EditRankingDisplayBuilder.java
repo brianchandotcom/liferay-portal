@@ -143,8 +143,7 @@ public class EditRankingDisplayBuilder {
 		).put(
 			"fetchDocumentsVisibleURL", _getVisibleResultRankingsResourceURL()
 		).put(
-			"fetchSiteByExternalReferenceCodeURL",
-			_getSiteByExternalReferenceCodeResourceURL()
+			"fetchSiteByExternalReferenceCodeURL", _getSiteResourceURL()
 		).put(
 			"fetchSitesURL", _getSitesResourceURL()
 		).put(
@@ -202,11 +201,10 @@ public class EditRankingDisplayBuilder {
 		return resourceURL.toString();
 	}
 
-	private String _getSiteByExternalReferenceCodeResourceURL() {
+	private String _getSiteResourceURL() {
 		ResourceURL resourceURL = _renderResponse.createResourceURL();
 
-		resourceURL.setParameter(
-			Constants.CMD, "getSiteByExternalReferenceCodeJSONObject");
+		resourceURL.setParameter(Constants.CMD, "getSiteJSONObject");
 		resourceURL.setResourceID("/result_rankings/get_sites");
 
 		return resourceURL.toString();

@@ -286,3 +286,61 @@ On the message of the commit 51895916ce756437c2ae1c11a734c9e640abbb05 the file p
 so the correct message on **What** section should be
 
 modules/apps/document-library/document-library-web/src/main/java/com/liferay/document/library/web/internal/configuration/CacheControlConfiguration.java
+
+----
+
+# a35946f28515783df6d3de0a45ff8c9631dc416a
+
+Missing breaking change
+
+Correct message should be:
+```
+LPS-188270 Add new method getPortletInstanceConfiguration in class ConfigurationProviderImpl to replace method getPortletInstanceConfiguration in class PortletDisplay
+    
+# breaking
+## What portal-kernel/src/com/liferay/portal/kernel/theme/PortletDisplay.java
+Method getPortletInstanceConfiguration(Class<T> clazz) in class PortletDisplay is being removed.
+## Why
+Method getPortletInstanceConfiguration should belong to class ConfigurationProvider.
+## Alternatives
+Directly use ConfigurationProviderUtil.getPortletInstanceConfiguration(Class<T> clazz, ThemeDisplay themeDisplay) or reference service ConfigurationProvider and use the same method.
+----
+```
+----
+
+# 29f42c44bfcc71b02e16edb99081a7a89fc3ceed
+
+Missing breaking change
+
+Correct message should be:
+```
+LPS-188270 Move class ConfigurationProviderUtil to module, prepare for next
+    
+# breaking
+## What portal-kernel/src/com/liferay/portal/kernel/module/configuration/ConfigurationProviderUtil.java
+CLass ConfigurationProviderUtil is moving from portal-kernel into module portal-configuration-module-configuration-api.
+## Why
+We want to replace class ServiceProxyFactory with class Snapshot in class ConfigurationProviderUtil, and need to ensure that service ConfigurationProvider is always available.
+## Alternatives
+Add portal-configuration-module-configuration-api in build dependency and use the same class.
+----
+```
+----
+
+# fe131c06d9596e3eb7954a1d73876db8ad16ae7f
+
+Missing breaking change
+
+Correct message should be:
+```
+LPS-188270 Move interface ConfigurationProvider to module
+    
+# breaking
+## What portal-kernel/src/com/liferay/portal/kernel/module/configuration/ConfigurationProvider.java
+CLass ConfigurationProvider is moving from portal-kernel into module portal-configuration-module-configuration-api.
+## Why
+Class ConfigurationProvider is only used in modules.
+## Alternatives
+Add portal-configuration-module-configuration-api in build dependency and use the same class.
+----
+```

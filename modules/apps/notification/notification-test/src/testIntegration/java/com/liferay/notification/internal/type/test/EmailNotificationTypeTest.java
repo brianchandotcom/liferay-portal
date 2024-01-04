@@ -160,7 +160,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 						user2.getEmailAddress()))));
 
 		List<NotificationQueueEntry> notificationQueueEntries =
-			_getNotificationEntries();
+			_getNotificationQueueEntries();
 
 		Assert.assertEquals(
 			notificationQueueEntries.toString(), 1,
@@ -439,7 +439,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				notificationQueueEntry.getNotificationQueueEntryId()));
 	}
 
-	private List<NotificationQueueEntry> _getNotificationEntries() {
+	private List<NotificationQueueEntry> _getNotificationQueueEntries() {
 		return ListUtil.sort(
 			notificationQueueEntryLocalService.getNotificationEntries(
 				NotificationConstants.TYPE_EMAIL,
@@ -478,7 +478,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				singleRecipient, Collections.singletonMap(LocaleUtil.US, to)));
 
 		List<NotificationQueueEntry> notificationQueueEntries =
-			_getNotificationEntries();
+			_getNotificationQueueEntries();
 
 		Assert.assertEquals(
 			notificationQueueEntries.toString(),

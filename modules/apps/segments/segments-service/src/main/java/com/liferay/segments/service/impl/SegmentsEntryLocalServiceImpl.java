@@ -346,18 +346,6 @@ public class SegmentsEntryLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
-			long companyId, String keywords,
-			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
-		throws PortalException {
-
-		SearchContext searchContext = _buildSearchContext(
-			companyId, keywords, params, start, end, sort);
-
-		return segmentsEntryLocalService.searchSegmentsEntries(searchContext);
-	}
-
-	@Override
-	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
 			SearchContext searchContext)
 		throws PortalException {
 

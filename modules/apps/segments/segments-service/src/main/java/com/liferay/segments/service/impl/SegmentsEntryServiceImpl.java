@@ -157,15 +157,6 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
-			long companyId, String keywords, int start, int end, Sort sort)
-		throws PortalException {
-
-		return segmentsEntryLocalService.searchSegmentsEntries(
-			companyId, keywords, new LinkedHashMap<>(), start, end, sort);
-	}
-
-	@Override
 	public SegmentsEntry updateSegmentsEntry(
 			long segmentsEntryId, String segmentsEntryKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,

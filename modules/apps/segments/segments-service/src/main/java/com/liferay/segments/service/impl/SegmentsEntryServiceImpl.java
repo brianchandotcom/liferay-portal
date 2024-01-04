@@ -109,13 +109,7 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public List<SegmentsEntry> getSegmentsEntries(
-		long groupId, boolean includeAncestorSegmentsEntries) {
-
-		if (!includeAncestorSegmentsEntries) {
-			return segmentsEntryPersistence.filterFindByGroupId(groupId);
-		}
-
+	public List<SegmentsEntry> getSegmentsEntries(long groupId) {
 		return segmentsEntryPersistence.filterFindByGroupId(
 			ArrayUtil.append(
 				_portal.getAncestorSiteGroupIds(groupId), groupId));
@@ -123,13 +117,8 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 
 	@Override
 	public List<SegmentsEntry> getSegmentsEntries(
-		long groupId, boolean includeAncestorSegmentsEntries, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		if (!includeAncestorSegmentsEntries) {
-			return segmentsEntryPersistence.filterFindByGroupId(
-				groupId, start, end, orderByComparator);
-		}
+		long groupId, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return segmentsEntryPersistence.filterFindByGroupId(
 			ArrayUtil.append(_portal.getAncestorSiteGroupIds(groupId), groupId),
@@ -137,13 +126,7 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public int getSegmentsEntriesCount(
-		long groupId, boolean includeAncestorSegmentsEntries) {
-
-		if (!includeAncestorSegmentsEntries) {
-			return segmentsEntryPersistence.filterCountByGroupId(groupId);
-		}
-
+	public int getSegmentsEntriesCount(long groupId) {
 		return segmentsEntryPersistence.filterCountByGroupId(
 			ArrayUtil.append(
 				_portal.getAncestorSiteGroupIds(groupId), groupId));
@@ -164,8 +147,7 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
-			long companyId, long groupId, String keywords,
-			boolean includeAncestorSegmentsEntries, int start, int end,
+			long companyId, long groupId, String keywords, int start, int end,
 			Sort sort)
 		throws PortalException {
 
@@ -173,8 +155,8 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
 		return segmentsEntryLocalService.searchSegmentsEntries(
-			companyId, groupId, keywords, includeAncestorSegmentsEntries,
-			new LinkedHashMap<>(), start, end, sort);
+			companyId, groupId, keywords, new LinkedHashMap<>(), start, end,
+			sort);
 	}
 
 	@Override

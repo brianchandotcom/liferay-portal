@@ -52,7 +52,6 @@ public class SegmentsEntryWrapper
 		attributes.put("active", isActive());
 		attributes.put("criteria", getCriteria());
 		attributes.put("source", getSource());
-		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -154,12 +153,6 @@ public class SegmentsEntryWrapper
 
 		if (source != null) {
 			setSource(source);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -474,16 +467,6 @@ public class SegmentsEntryWrapper
 	@Override
 	public String getSource() {
 		return model.getSource();
-	}
-
-	/**
-	 * Returns the type of this segments entry.
-	 *
-	 * @return the type of this segments entry
-	 */
-	@Override
-	public String getType() {
-		return model.getType();
 	}
 
 	/**
@@ -814,16 +797,6 @@ public class SegmentsEntryWrapper
 	@Override
 	public void setSource(String source) {
 		model.setSource(source);
-	}
-
-	/**
-	 * Sets the type of this segments entry.
-	 *
-	 * @param type the type of this segments entry
-	 */
-	@Override
-	public void setType(String type) {
-		model.setType(type);
 	}
 
 	/**

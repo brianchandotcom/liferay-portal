@@ -501,21 +501,6 @@ public interface SegmentsEntryModel
 	public void setSource(String source);
 
 	/**
-	 * Returns the type of this segments entry.
-	 *
-	 * @return the type of this segments entry
-	 */
-	@AutoEscape
-	public String getType();
-
-	/**
-	 * Sets the type of this segments entry.
-	 *
-	 * @param type the type of this segments entry
-	 */
-	public void setType(String type);
-
-	/**
 	 * Returns the last publish date of this segments entry.
 	 *
 	 * @return the last publish date of this segments entry

@@ -265,18 +265,18 @@ public class SegmentsDisplayContext {
 			searchContainer.setResultsAndTotal(
 				_segmentsEntryService.searchSegmentsEntries(
 					_themeDisplay.getCompanyId(),
-					_themeDisplay.getScopeGroupId(), _getKeywords(), true,
+					_themeDisplay.getScopeGroupId(), _getKeywords(),
 					searchContainer.getStart(), searchContainer.getEnd(),
 					_getSort()));
 		}
 		else {
 			searchContainer.setResultsAndTotal(
 				() -> _segmentsEntryService.getSegmentsEntries(
-					_themeDisplay.getScopeGroupId(), true,
-					searchContainer.getStart(), searchContainer.getEnd(),
+					_themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+					searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
 				_segmentsEntryService.getSegmentsEntriesCount(
-					_themeDisplay.getScopeGroupId(), true));
+					_themeDisplay.getScopeGroupId()));
 		}
 
 		searchContainer.setRowChecker(

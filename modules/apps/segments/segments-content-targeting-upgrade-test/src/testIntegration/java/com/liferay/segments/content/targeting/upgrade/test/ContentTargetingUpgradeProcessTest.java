@@ -116,7 +116,7 @@ public class ContentTargetingUpgradeProcessTest {
 		_contentTargetingUpgradeProcess.upgrade();
 
 		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId);
 
 		Assert.assertNotNull(_segmentsEntry);
 
@@ -141,7 +141,7 @@ public class ContentTargetingUpgradeProcessTest {
 		_contentTargetingUpgradeProcess.upgrade();
 
 		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId);
 
 		Assert.assertNotNull(_segmentsEntry);
 
@@ -184,7 +184,7 @@ public class ContentTargetingUpgradeProcessTest {
 		_contentTargetingUpgradeProcess.upgrade();
 
 		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId);
 
 		Assert.assertNotNull(_segmentsEntry);
 
@@ -221,7 +221,7 @@ public class ContentTargetingUpgradeProcessTest {
 		_contentTargetingUpgradeProcess.upgrade();
 
 		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId);
 
 		Assert.assertNotNull(_segmentsEntry);
 
@@ -267,7 +267,7 @@ public class ContentTargetingUpgradeProcessTest {
 		_contentTargetingUpgradeProcess.upgrade();
 
 		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId);
 
 		Assert.assertNotNull(_segmentsEntry);
 
@@ -310,7 +310,7 @@ public class ContentTargetingUpgradeProcessTest {
 		_contentTargetingUpgradeProcess.upgrade();
 
 		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId);
 
 		Assert.assertNotNull(_segmentsEntry);
 
@@ -347,7 +347,7 @@ public class ContentTargetingUpgradeProcessTest {
 		_contentTargetingUpgradeProcess.upgrade();
 
 		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId);
 
 		Assert.assertNotNull(_segmentsEntry);
 
@@ -386,7 +386,7 @@ public class ContentTargetingUpgradeProcessTest {
 		_contentTargetingUpgradeProcess.upgrade();
 
 		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId);
 
 		Assert.assertNotNull(_segmentsEntry);
 
@@ -422,7 +422,7 @@ public class ContentTargetingUpgradeProcessTest {
 		_contentTargetingUpgradeProcess.upgrade();
 
 		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId);
 
 		Assert.assertNotNull(_segmentsEntry);
 
@@ -464,7 +464,7 @@ public class ContentTargetingUpgradeProcessTest {
 		_contentTargetingUpgradeProcess.upgrade();
 
 		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId);
 
 		Assert.assertNotNull(_segmentsEntry);
 
@@ -489,7 +489,7 @@ public class ContentTargetingUpgradeProcessTest {
 		_contentTargetingUpgradeProcess.upgrade();
 
 		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId);
 
 		Assert.assertNotNull(_segmentsEntry);
 
@@ -525,7 +525,7 @@ public class ContentTargetingUpgradeProcessTest {
 		_contentTargetingUpgradeProcess.upgrade();
 
 		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId);
 
 		Assert.assertNotNull(_segmentsEntry);
 
@@ -561,7 +561,7 @@ public class ContentTargetingUpgradeProcessTest {
 		_contentTargetingUpgradeProcess.upgrade();
 
 		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
-			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId);
 
 		Assert.assertNotNull(_segmentsEntry);
 

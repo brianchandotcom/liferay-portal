@@ -116,7 +116,7 @@ public class SegmentsSimulationDisplayContext {
 		}
 
 		_segmentsEntries = SegmentsEntryServiceUtil.getSegmentsEntries(
-			_getStagingAwareGroupId(), true);
+			_getStagingAwareGroupId());
 
 		return _segmentsEntries;
 	}

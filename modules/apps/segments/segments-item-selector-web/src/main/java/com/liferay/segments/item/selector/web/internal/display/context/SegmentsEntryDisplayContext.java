@@ -65,7 +65,6 @@ public class SegmentsEntryDisplayContext {
 		segmentEntrySearchContainer.setResultsAndTotal(
 			_segmentsEntryLocalService.searchSegmentsEntries(
 				_themeDisplay.getCompanyId(), _getGroupId(), _getKeywords(),
-				true,
 				LinkedHashMapBuilder.<String, Object>put(
 					"excludedSegmentsEntryIds",
 					_segmentsEntryItemSelectorCriterion.

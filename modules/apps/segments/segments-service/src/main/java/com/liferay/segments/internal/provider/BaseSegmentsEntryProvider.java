@@ -124,7 +124,7 @@ public abstract class BaseSegmentsEntryProvider
 
 		List<SegmentsEntry> segmentsEntries =
 			segmentsEntryLocalService.getSegmentsEntries(
-				groupId, true, getSource(), className, QueryUtil.ALL_POS,
+				groupId, getSource(), className, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
 		if (segmentsEntries.isEmpty()) {

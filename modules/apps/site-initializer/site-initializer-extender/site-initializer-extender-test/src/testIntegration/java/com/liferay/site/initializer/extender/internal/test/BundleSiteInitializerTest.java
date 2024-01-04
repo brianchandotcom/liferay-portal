@@ -3098,11 +3098,11 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			2,
 			_segmentsEntryLocalService.getSegmentsEntriesCount(
-				_group.getGroupId(), true));
+				_group.getGroupId()));
 
 		SegmentsEntry segmentsEntry1 =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "TEST-SEGMENTS-ENTRY-1", true);
+				_group.getGroupId(), "TEST-SEGMENTS-ENTRY-1");
 
 		Assert.assertNotNull(segmentsEntry1);
 		Assert.assertTrue(segmentsEntry1.isActive());
@@ -3114,7 +3114,7 @@ public class BundleSiteInitializerTest {
 
 		SegmentsEntry segmentsEntry2 =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "TEST-SEGMENTS-ENTRY-2", true);
+				_group.getGroupId(), "TEST-SEGMENTS-ENTRY-2");
 
 		Assert.assertNotNull(segmentsEntry2);
 		Assert.assertFalse(segmentsEntry2.isActive());

@@ -3435,7 +3435,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			SegmentsEntry segmentsEntry =
 				_segmentsEntryLocalService.fetchSegmentsEntry(
 					serviceContext.getScopeGroupId(),
-					jsonObject.getString("segmentsEntryKey"), true);
+					jsonObject.getString("segmentsEntryKey"));
 
 			if (segmentsEntry == null) {
 				segmentsEntry = _segmentsEntryLocalService.addSegmentsEntry(

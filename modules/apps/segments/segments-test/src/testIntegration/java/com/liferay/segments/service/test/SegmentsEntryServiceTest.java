@@ -184,7 +184,7 @@ public class SegmentsEntryServiceTest {
 			Assert.assertEquals(
 				2,
 				_segmentsEntryService.getSegmentsEntriesCount(
-					_group.getGroupId(), false));
+					_group.getGroupId()));
 		}
 	}
 
@@ -206,7 +206,7 @@ public class SegmentsEntryServiceTest {
 			Assert.assertEquals(
 				3,
 				_segmentsEntryService.getSegmentsEntriesCount(
-					_group.getGroupId(), false));
+					_group.getGroupId()));
 		}
 	}
 
@@ -229,8 +229,7 @@ public class SegmentsEntryServiceTest {
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
 
 			List<SegmentsEntry> segmentsEntries =
-				_segmentsEntryService.getSegmentsEntries(
-					_group.getGroupId(), false);
+				_segmentsEntryService.getSegmentsEntries(_group.getGroupId());
 
 			Assert.assertEquals(
 				segmentsEntries.toString(), 2, segmentsEntries.size());
@@ -258,7 +257,7 @@ public class SegmentsEntryServiceTest {
 
 			List<SegmentsEntry> segmentsEntries =
 				_segmentsEntryService.getSegmentsEntries(
-					_group.getGroupId(), false, 0, 100, null);
+					_group.getGroupId(), 0, 100, null);
 
 			Assert.assertEquals(
 				segmentsEntries.toString(), 3, segmentsEntries.size());

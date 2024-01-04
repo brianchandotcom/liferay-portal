@@ -4239,6 +4239,42 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177675. The tooltip of the back button is Go to Collections in the edit mode of a new Collection."
+	@priority = 3
+	test ViewBackButtonTooltipOfCollectionEditor {
+		task ("Given a site administrator accesses to dynamic collection editor") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Collections",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Given a site administrator accesses to manual collection editor") {
+			Navigator.gotoBack();
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Collections",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-125486. Collection should be available after delete Item Subtype."
 	@priority = 4
 	test ViewCollectionAfterDeleteItemSubtype {

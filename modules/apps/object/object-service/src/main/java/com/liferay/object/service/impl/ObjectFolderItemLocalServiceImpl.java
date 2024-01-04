@@ -7,13 +7,20 @@ package com.liferay.object.service.impl;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolderItem;
+import com.liferay.object.model.ObjectFolderItemTable;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.base.ObjectFolderItemLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFolderPersistence;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.List;
@@ -151,7 +158,37 @@ public class ObjectFolderItemLocalServiceImpl
 	public List<ObjectFolderItem> getObjectFolderItemsByObjectFolderId(
 		long objectFolderId) {
 
-		return objectFolderItemPersistence.findByObjectFolderId(objectFolderId);
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			ObjectFolderItemTable.INSTANCE
+		).from(
+			ObjectFolderItemTable.INSTANCE
+		).where(
+			() -> {
+				Predicate predicate =
+					ObjectFolderItemTable.INSTANCE.objectFolderId.eq(
+						objectFolderId);
+
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
+				if (permissionChecker == null) {
+					return predicate;
+				}
+
+				Predicate permissionPredicate =
+					_inlineSQLHelper.getPermissionWherePredicate(
+						ObjectDefinition.class.getName(),
+						ObjectFolderItemTable.INSTANCE.objectDefinitionId);
+
+				if (permissionPredicate != null) {
+					predicate = predicate.and(permissionPredicate);
+				}
+
+				return predicate;
+			}
+		);
+
+		return dslQuery(dslQuery);
 	}
 
 	@Override
@@ -217,6 +254,9 @@ public class ObjectFolderItemLocalServiceImpl
 		objectFolderItemLocalService.addObjectFolderItem(
 			userId, objectDefinitionId, newObjectFolderId, 0, 0);
 	}
+
+	@Reference
+	private InlineSQLHelper _inlineSQLHelper;
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;

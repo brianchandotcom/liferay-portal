@@ -32,7 +32,9 @@ import org.junit.runner.RunWith;
 public class CaptchaResourceTest extends BaseCaptchaResourceTestCase {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+		super.setUp();
+
 		CaptchaResource.Builder builder = CaptchaResource.builder();
 
 		_captchaResource = builder.build();

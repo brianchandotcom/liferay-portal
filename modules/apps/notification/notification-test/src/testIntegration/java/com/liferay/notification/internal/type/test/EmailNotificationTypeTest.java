@@ -167,7 +167,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntries.toString(), 1,
 			notificationQueueEntries.size());
 
-		notificationQueueEntry = notificationQueueEntries.get(0);
+		NotificationQueueEntry notificationQueueEntry = 
+			notificationQueueEntries.get(0);
 
 		assertTermValues(
 			new ArrayList<>(_freeMarkTermValues.values()),

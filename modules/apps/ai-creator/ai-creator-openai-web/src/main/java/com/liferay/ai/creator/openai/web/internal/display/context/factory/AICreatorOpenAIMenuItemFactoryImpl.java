@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletMode;
@@ -131,8 +130,5 @@ public class AICreatorOpenAIMenuItemFactoryImpl
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -8773,38 +8773,35 @@ public class SegmentsEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_G_A_T_TYPE_3_SQL =
 		"(segmentsEntry.type_ IS NULL OR segmentsEntry.type_ = '')";
 
-	private FinderPath _finderPathWithPaginationFindByG_A_S_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_A_S_T;
-	private FinderPath _finderPathCountByG_A_S_T;
-	private FinderPath _finderPathWithPaginationCountByG_A_S_T;
+	private FinderPath _finderPathWithPaginationFindByG_S_T;
+	private FinderPath _finderPathWithoutPaginationFindByG_S_T;
+	private FinderPath _finderPathCountByG_S_T;
+	private FinderPath _finderPathWithPaginationCountByG_S_T;
 
 	/**
-	 * Returns all the segments entries where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns all the segments entries where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @return the matching segments entries
 	 */
 	@Override
-	public List<SegmentsEntry> findByG_A_S_T(
-		long groupId, boolean active, String source, String type) {
+	public List<SegmentsEntry> findByG_S_T(
+		long groupId, String source, String type) {
 
-		return findByG_A_S_T(
-			groupId, active, source, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return findByG_S_T(
+			groupId, source, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the segments entries where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns a range of all the segments entries where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param start the lower bound of the range of segments entries
@@ -8812,22 +8809,20 @@ public class SegmentsEntryPersistenceImpl
 	 * @return the range of matching segments entries
 	 */
 	@Override
-	public List<SegmentsEntry> findByG_A_S_T(
-		long groupId, boolean active, String source, String type, int start,
-		int end) {
+	public List<SegmentsEntry> findByG_S_T(
+		long groupId, String source, String type, int start, int end) {
 
-		return findByG_A_S_T(groupId, active, source, type, start, end, null);
+		return findByG_S_T(groupId, source, type, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the segments entries where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns an ordered range of all the segments entries where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param start the lower bound of the range of segments entries
@@ -8836,23 +8831,22 @@ public class SegmentsEntryPersistenceImpl
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
-	public List<SegmentsEntry> findByG_A_S_T(
-		long groupId, boolean active, String source, String type, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator) {
+	public List<SegmentsEntry> findByG_S_T(
+		long groupId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
 
-		return findByG_A_S_T(
-			groupId, active, source, type, start, end, orderByComparator, true);
+		return findByG_S_T(
+			groupId, source, type, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the segments entries where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns an ordered range of all the segments entries where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param start the lower bound of the range of segments entries
@@ -8862,9 +8856,9 @@ public class SegmentsEntryPersistenceImpl
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
-	public List<SegmentsEntry> findByG_A_S_T(
-		long groupId, boolean active, String source, String type, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator,
+	public List<SegmentsEntry> findByG_S_T(
+		long groupId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
 		boolean useFinderCache) {
 
 		source = Objects.toString(source, "");
@@ -8880,14 +8874,14 @@ public class SegmentsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByG_A_S_T;
-				finderArgs = new Object[] {groupId, active, source, type};
+				finderPath = _finderPathWithoutPaginationFindByG_S_T;
+				finderArgs = new Object[] {groupId, source, type};
 			}
 		}
 		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByG_A_S_T;
+			finderPath = _finderPathWithPaginationFindByG_S_T;
 			finderArgs = new Object[] {
-				groupId, active, source, type, start, end, orderByComparator
+				groupId, source, type, start, end, orderByComparator
 			};
 		}
 
@@ -8900,7 +8894,6 @@ public class SegmentsEntryPersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
 					if ((groupId != segmentsEntry.getGroupId()) ||
-						(active != segmentsEntry.isActive()) ||
 						!source.equals(segmentsEntry.getSource()) ||
 						!type.equals(segmentsEntry.getType())) {
 
@@ -8917,38 +8910,36 @@ public class SegmentsEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				sb = new StringBundler(
-					6 + (orderByComparator.getOrderByFields().length * 2));
+					5 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				sb = new StringBundler(6);
+				sb = new StringBundler(5);
 			}
 
 			sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_A_S_T_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
 
 			boolean bindSource = false;
 
 			if (source.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_3);
+				sb.append(_FINDER_COLUMN_G_S_T_SOURCE_3);
 			}
 			else {
 				bindSource = true;
 
-				sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_2);
+				sb.append(_FINDER_COLUMN_G_S_T_SOURCE_2);
 			}
 
 			boolean bindType = false;
 
 			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_3);
+				sb.append(_FINDER_COLUMN_G_S_T_TYPE_3);
 			}
 			else {
 				bindType = true;
 
-				sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_2);
+				sb.append(_FINDER_COLUMN_G_S_T_TYPE_2);
 			}
 
 			if (orderByComparator != null) {
@@ -8971,8 +8962,6 @@ public class SegmentsEntryPersistenceImpl
 				QueryPos queryPos = QueryPos.getInstance(query);
 
 				queryPos.add(groupId);
-
-				queryPos.add(active);
 
 				if (bindSource) {
 					queryPos.add(source);
@@ -9003,10 +8992,9 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the first segments entry in the ordered set where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns the first segments entry in the ordered set where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -9014,27 +9002,24 @@ public class SegmentsEntryPersistenceImpl
 	 * @throws NoSuchEntryException if a matching segments entry could not be found
 	 */
 	@Override
-	public SegmentsEntry findByG_A_S_T_First(
-			long groupId, boolean active, String source, String type,
+	public SegmentsEntry findByG_S_T_First(
+			long groupId, String source, String type,
 			OrderByComparator<SegmentsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		SegmentsEntry segmentsEntry = fetchByG_A_S_T_First(
-			groupId, active, source, type, orderByComparator);
+		SegmentsEntry segmentsEntry = fetchByG_S_T_First(
+			groupId, source, type, orderByComparator);
 
 		if (segmentsEntry != null) {
 			return segmentsEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		sb.append("groupId=");
 		sb.append(groupId);
-
-		sb.append(", active=");
-		sb.append(active);
 
 		sb.append(", source=");
 		sb.append(source);
@@ -9048,22 +9033,21 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the first segments entry in the ordered set where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns the first segments entry in the ordered set where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching segments entry, or <code>null</code> if a matching segments entry could not be found
 	 */
 	@Override
-	public SegmentsEntry fetchByG_A_S_T_First(
-		long groupId, boolean active, String source, String type,
+	public SegmentsEntry fetchByG_S_T_First(
+		long groupId, String source, String type,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
-		List<SegmentsEntry> list = findByG_A_S_T(
-			groupId, active, source, type, 0, 1, orderByComparator);
+		List<SegmentsEntry> list = findByG_S_T(
+			groupId, source, type, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -9073,10 +9057,9 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns the last segments entry in the ordered set where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -9084,27 +9067,24 @@ public class SegmentsEntryPersistenceImpl
 	 * @throws NoSuchEntryException if a matching segments entry could not be found
 	 */
 	@Override
-	public SegmentsEntry findByG_A_S_T_Last(
-			long groupId, boolean active, String source, String type,
+	public SegmentsEntry findByG_S_T_Last(
+			long groupId, String source, String type,
 			OrderByComparator<SegmentsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		SegmentsEntry segmentsEntry = fetchByG_A_S_T_Last(
-			groupId, active, source, type, orderByComparator);
+		SegmentsEntry segmentsEntry = fetchByG_S_T_Last(
+			groupId, source, type, orderByComparator);
 
 		if (segmentsEntry != null) {
 			return segmentsEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		sb.append("groupId=");
 		sb.append(groupId);
-
-		sb.append(", active=");
-		sb.append(active);
 
 		sb.append(", source=");
 		sb.append(source);
@@ -9118,28 +9098,27 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last segments entry in the ordered set where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns the last segments entry in the ordered set where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
 	 */
 	@Override
-	public SegmentsEntry fetchByG_A_S_T_Last(
-		long groupId, boolean active, String source, String type,
+	public SegmentsEntry fetchByG_S_T_Last(
+		long groupId, String source, String type,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
-		int count = countByG_A_S_T(groupId, active, source, type);
+		int count = countByG_S_T(groupId, source, type);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SegmentsEntry> list = findByG_A_S_T(
-			groupId, active, source, type, count - 1, count, orderByComparator);
+		List<SegmentsEntry> list = findByG_S_T(
+			groupId, source, type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -9149,11 +9128,10 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the segments entries before and after the current segments entry in the ordered set where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns the segments entries before and after the current segments entry in the ordered set where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * @param segmentsEntryId the primary key of the current segments entry
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -9161,9 +9139,9 @@ public class SegmentsEntryPersistenceImpl
 	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
 	 */
 	@Override
-	public SegmentsEntry[] findByG_A_S_T_PrevAndNext(
-			long segmentsEntryId, long groupId, boolean active, String source,
-			String type, OrderByComparator<SegmentsEntry> orderByComparator)
+	public SegmentsEntry[] findByG_S_T_PrevAndNext(
+			long segmentsEntryId, long groupId, String source, String type,
+			OrderByComparator<SegmentsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
 		source = Objects.toString(source, "");
@@ -9178,14 +9156,14 @@ public class SegmentsEntryPersistenceImpl
 
 			SegmentsEntry[] array = new SegmentsEntryImpl[3];
 
-			array[0] = getByG_A_S_T_PrevAndNext(
-				session, segmentsEntry, groupId, active, source, type,
+			array[0] = getByG_S_T_PrevAndNext(
+				session, segmentsEntry, groupId, source, type,
 				orderByComparator, true);
 
 			array[1] = segmentsEntry;
 
-			array[2] = getByG_A_S_T_PrevAndNext(
-				session, segmentsEntry, groupId, active, source, type,
+			array[2] = getByG_S_T_PrevAndNext(
+				session, segmentsEntry, groupId, source, type,
 				orderByComparator, false);
 
 			return array;
@@ -9198,48 +9176,46 @@ public class SegmentsEntryPersistenceImpl
 		}
 	}
 
-	protected SegmentsEntry getByG_A_S_T_PrevAndNext(
+	protected SegmentsEntry getByG_S_T_PrevAndNext(
 		Session session, SegmentsEntry segmentsEntry, long groupId,
-		boolean active, String source, String type,
+		String source, String type,
 		OrderByComparator<SegmentsEntry> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
 
 		if (orderByComparator != null) {
 			sb = new StringBundler(
-				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			sb = new StringBundler(6);
+			sb = new StringBundler(5);
 		}
 
 		sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
 
-		sb.append(_FINDER_COLUMN_G_A_S_T_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_A_S_T_ACTIVE_2);
+		sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
 
 		boolean bindSource = false;
 
 		if (source.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_3);
+			sb.append(_FINDER_COLUMN_G_S_T_SOURCE_3);
 		}
 		else {
 			bindSource = true;
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_2);
+			sb.append(_FINDER_COLUMN_G_S_T_SOURCE_2);
 		}
 
 		boolean bindType = false;
 
 		if (type.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_3);
+			sb.append(_FINDER_COLUMN_G_S_T_TYPE_3);
 		}
 		else {
 			bindType = true;
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_2);
+			sb.append(_FINDER_COLUMN_G_S_T_TYPE_2);
 		}
 
 		if (orderByComparator != null) {
@@ -9313,8 +9289,6 @@ public class SegmentsEntryPersistenceImpl
 
 		queryPos.add(groupId);
 
-		queryPos.add(active);
-
 		if (bindSource) {
 			queryPos.add(source);
 		}
@@ -9343,32 +9317,29 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the segments entries that the user has permission to view where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns all the segments entries that the user has permission to view where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @return the matching segments entries that the user has permission to view
 	 */
 	@Override
-	public List<SegmentsEntry> filterFindByG_A_S_T(
-		long groupId, boolean active, String source, String type) {
+	public List<SegmentsEntry> filterFindByG_S_T(
+		long groupId, String source, String type) {
 
-		return filterFindByG_A_S_T(
-			groupId, active, source, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return filterFindByG_S_T(
+			groupId, source, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the segments entries that the user has permission to view where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns a range of all the segments entries that the user has permission to view where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param start the lower bound of the range of segments entries
@@ -9376,23 +9347,20 @@ public class SegmentsEntryPersistenceImpl
 	 * @return the range of matching segments entries that the user has permission to view
 	 */
 	@Override
-	public List<SegmentsEntry> filterFindByG_A_S_T(
-		long groupId, boolean active, String source, String type, int start,
-		int end) {
+	public List<SegmentsEntry> filterFindByG_S_T(
+		long groupId, String source, String type, int start, int end) {
 
-		return filterFindByG_A_S_T(
-			groupId, active, source, type, start, end, null);
+		return filterFindByG_S_T(groupId, source, type, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the segments entries that the user has permissions to view where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns an ordered range of all the segments entries that the user has permissions to view where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param start the lower bound of the range of segments entries
@@ -9401,13 +9369,13 @@ public class SegmentsEntryPersistenceImpl
 	 * @return the ordered range of matching segments entries that the user has permission to view
 	 */
 	@Override
-	public List<SegmentsEntry> filterFindByG_A_S_T(
-		long groupId, boolean active, String source, String type, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator) {
+	public List<SegmentsEntry> filterFindByG_S_T(
+		long groupId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_A_S_T(
-				groupId, active, source, type, start, end, orderByComparator);
+			return findByG_S_T(
+				groupId, source, type, start, end, orderByComparator);
 		}
 
 		source = Objects.toString(source, "");
@@ -9417,10 +9385,10 @@ public class SegmentsEntryPersistenceImpl
 
 		if (orderByComparator != null) {
 			sb = new StringBundler(
-				6 + (orderByComparator.getOrderByFields().length * 2));
+				5 + (orderByComparator.getOrderByFields().length * 2));
 		}
 		else {
-			sb = new StringBundler(7);
+			sb = new StringBundler(6);
 		}
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -9431,30 +9399,28 @@ public class SegmentsEntryPersistenceImpl
 				_FILTER_SQL_SELECT_SEGMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_G_A_S_T_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_A_S_T_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
 
 		boolean bindSource = false;
 
 		if (source.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_3);
+			sb.append(_FINDER_COLUMN_G_S_T_SOURCE_3);
 		}
 		else {
 			bindSource = true;
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_2);
+			sb.append(_FINDER_COLUMN_G_S_T_SOURCE_2);
 		}
 
 		boolean bindType = false;
 
 		if (type.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_3_SQL);
+			sb.append(_FINDER_COLUMN_G_S_T_TYPE_3_SQL);
 		}
 		else {
 			bindType = true;
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_2_SQL);
+			sb.append(_FINDER_COLUMN_G_S_T_TYPE_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -9505,8 +9471,6 @@ public class SegmentsEntryPersistenceImpl
 
 			queryPos.add(groupId);
 
-			queryPos.add(active);
-
 			if (bindSource) {
 				queryPos.add(source);
 			}
@@ -9527,11 +9491,10 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the segments entries before and after the current segments entry in the ordered set of segments entries that the user has permission to view where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns the segments entries before and after the current segments entry in the ordered set of segments entries that the user has permission to view where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * @param segmentsEntryId the primary key of the current segments entry
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -9539,15 +9502,14 @@ public class SegmentsEntryPersistenceImpl
 	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
 	 */
 	@Override
-	public SegmentsEntry[] filterFindByG_A_S_T_PrevAndNext(
-			long segmentsEntryId, long groupId, boolean active, String source,
-			String type, OrderByComparator<SegmentsEntry> orderByComparator)
+	public SegmentsEntry[] filterFindByG_S_T_PrevAndNext(
+			long segmentsEntryId, long groupId, String source, String type,
+			OrderByComparator<SegmentsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_A_S_T_PrevAndNext(
-				segmentsEntryId, groupId, active, source, type,
-				orderByComparator);
+			return findByG_S_T_PrevAndNext(
+				segmentsEntryId, groupId, source, type, orderByComparator);
 		}
 
 		source = Objects.toString(source, "");
@@ -9562,14 +9524,14 @@ public class SegmentsEntryPersistenceImpl
 
 			SegmentsEntry[] array = new SegmentsEntryImpl[3];
 
-			array[0] = filterGetByG_A_S_T_PrevAndNext(
-				session, segmentsEntry, groupId, active, source, type,
+			array[0] = filterGetByG_S_T_PrevAndNext(
+				session, segmentsEntry, groupId, source, type,
 				orderByComparator, true);
 
 			array[1] = segmentsEntry;
 
-			array[2] = filterGetByG_A_S_T_PrevAndNext(
-				session, segmentsEntry, groupId, active, source, type,
+			array[2] = filterGetByG_S_T_PrevAndNext(
+				session, segmentsEntry, groupId, source, type,
 				orderByComparator, false);
 
 			return array;
@@ -9582,20 +9544,20 @@ public class SegmentsEntryPersistenceImpl
 		}
 	}
 
-	protected SegmentsEntry filterGetByG_A_S_T_PrevAndNext(
+	protected SegmentsEntry filterGetByG_S_T_PrevAndNext(
 		Session session, SegmentsEntry segmentsEntry, long groupId,
-		boolean active, String source, String type,
+		String source, String type,
 		OrderByComparator<SegmentsEntry> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
 
 		if (orderByComparator != null) {
 			sb = new StringBundler(
-				8 + (orderByComparator.getOrderByConditionFields().length * 3) +
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			sb = new StringBundler(7);
+			sb = new StringBundler(6);
 		}
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -9606,30 +9568,28 @@ public class SegmentsEntryPersistenceImpl
 				_FILTER_SQL_SELECT_SEGMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_G_A_S_T_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_A_S_T_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
 
 		boolean bindSource = false;
 
 		if (source.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_3);
+			sb.append(_FINDER_COLUMN_G_S_T_SOURCE_3);
 		}
 		else {
 			bindSource = true;
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_2);
+			sb.append(_FINDER_COLUMN_G_S_T_SOURCE_2);
 		}
 
 		boolean bindType = false;
 
 		if (type.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_3_SQL);
+			sb.append(_FINDER_COLUMN_G_S_T_TYPE_3_SQL);
 		}
 		else {
 			bindType = true;
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_2_SQL);
+			sb.append(_FINDER_COLUMN_G_S_T_TYPE_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -9740,8 +9700,6 @@ public class SegmentsEntryPersistenceImpl
 
 		queryPos.add(groupId);
 
-		queryPos.add(active);
-
 		if (bindSource) {
 			queryPos.add(source);
 		}
@@ -9770,32 +9728,29 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the segments entries that the user has permission to view where groupId = any &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns all the segments entries that the user has permission to view where groupId = any &#63; and source = &#63; and type = &#63;.
 	 *
 	 * @param groupIds the group IDs
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @return the matching segments entries that the user has permission to view
 	 */
 	@Override
-	public List<SegmentsEntry> filterFindByG_A_S_T(
-		long[] groupIds, boolean active, String source, String type) {
+	public List<SegmentsEntry> filterFindByG_S_T(
+		long[] groupIds, String source, String type) {
 
-		return filterFindByG_A_S_T(
-			groupIds, active, source, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return filterFindByG_S_T(
+			groupIds, source, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the segments entries that the user has permission to view where groupId = any &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns a range of all the segments entries that the user has permission to view where groupId = any &#63; and source = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param start the lower bound of the range of segments entries
@@ -9803,23 +9758,20 @@ public class SegmentsEntryPersistenceImpl
 	 * @return the range of matching segments entries that the user has permission to view
 	 */
 	@Override
-	public List<SegmentsEntry> filterFindByG_A_S_T(
-		long[] groupIds, boolean active, String source, String type, int start,
-		int end) {
+	public List<SegmentsEntry> filterFindByG_S_T(
+		long[] groupIds, String source, String type, int start, int end) {
 
-		return filterFindByG_A_S_T(
-			groupIds, active, source, type, start, end, null);
+		return filterFindByG_S_T(groupIds, source, type, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the segments entries that the user has permission to view where groupId = any &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns an ordered range of all the segments entries that the user has permission to view where groupId = any &#63; and source = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param start the lower bound of the range of segments entries
@@ -9828,13 +9780,13 @@ public class SegmentsEntryPersistenceImpl
 	 * @return the ordered range of matching segments entries that the user has permission to view
 	 */
 	@Override
-	public List<SegmentsEntry> filterFindByG_A_S_T(
-		long[] groupIds, boolean active, String source, String type, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator) {
+	public List<SegmentsEntry> filterFindByG_S_T(
+		long[] groupIds, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
-			return findByG_A_S_T(
-				groupIds, active, source, type, start, end, orderByComparator);
+			return findByG_S_T(
+				groupIds, source, type, start, end, orderByComparator);
 		}
 
 		if (groupIds == null) {
@@ -9860,7 +9812,7 @@ public class SegmentsEntryPersistenceImpl
 		if (groupIds.length > 0) {
 			sb.append("(");
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_GROUPID_7);
+			sb.append(_FINDER_COLUMN_G_S_T_GROUPID_7);
 
 			sb.append(StringUtil.merge(groupIds));
 
@@ -9871,28 +9823,26 @@ public class SegmentsEntryPersistenceImpl
 			sb.append(WHERE_AND);
 		}
 
-		sb.append(_FINDER_COLUMN_G_A_S_T_ACTIVE_2_SQL);
-
 		boolean bindSource = false;
 
 		if (source.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_3);
+			sb.append(_FINDER_COLUMN_G_S_T_SOURCE_3);
 		}
 		else {
 			bindSource = true;
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_2);
+			sb.append(_FINDER_COLUMN_G_S_T_SOURCE_2);
 		}
 
 		boolean bindType = false;
 
 		if (type.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_3_SQL);
+			sb.append(_FINDER_COLUMN_G_S_T_TYPE_3_SQL);
 		}
 		else {
 			bindType = true;
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_2_SQL);
+			sb.append(_FINDER_COLUMN_G_S_T_TYPE_2_SQL);
 		}
 
 		sb.setStringAt(
@@ -9944,8 +9894,6 @@ public class SegmentsEntryPersistenceImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			queryPos.add(active);
-
 			if (bindSource) {
 				queryPos.add(source);
 			}
@@ -9966,36 +9914,33 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the segments entries where groupId = any &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns all the segments entries where groupId = any &#63; and source = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @return the matching segments entries
 	 */
 	@Override
-	public List<SegmentsEntry> findByG_A_S_T(
-		long[] groupIds, boolean active, String source, String type) {
+	public List<SegmentsEntry> findByG_S_T(
+		long[] groupIds, String source, String type) {
 
-		return findByG_A_S_T(
-			groupIds, active, source, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByG_S_T(
+			groupIds, source, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the segments entries where groupId = any &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns a range of all the segments entries where groupId = any &#63; and source = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param start the lower bound of the range of segments entries
@@ -10003,22 +9948,20 @@ public class SegmentsEntryPersistenceImpl
 	 * @return the range of matching segments entries
 	 */
 	@Override
-	public List<SegmentsEntry> findByG_A_S_T(
-		long[] groupIds, boolean active, String source, String type, int start,
-		int end) {
+	public List<SegmentsEntry> findByG_S_T(
+		long[] groupIds, String source, String type, int start, int end) {
 
-		return findByG_A_S_T(groupIds, active, source, type, start, end, null);
+		return findByG_S_T(groupIds, source, type, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the segments entries where groupId = any &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns an ordered range of all the segments entries where groupId = any &#63; and source = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param start the lower bound of the range of segments entries
@@ -10027,24 +9970,22 @@ public class SegmentsEntryPersistenceImpl
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
-	public List<SegmentsEntry> findByG_A_S_T(
-		long[] groupIds, boolean active, String source, String type, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator) {
+	public List<SegmentsEntry> findByG_S_T(
+		long[] groupIds, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
 
-		return findByG_A_S_T(
-			groupIds, active, source, type, start, end, orderByComparator,
-			true);
+		return findByG_S_T(
+			groupIds, source, type, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the segments entries where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;, optionally using the finder cache.
+	 * Returns an ordered range of all the segments entries where groupId = &#63; and source = &#63; and type = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @param start the lower bound of the range of segments entries
@@ -10054,9 +9995,9 @@ public class SegmentsEntryPersistenceImpl
 	 * @return the ordered range of matching segments entries
 	 */
 	@Override
-	public List<SegmentsEntry> findByG_A_S_T(
-		long[] groupIds, boolean active, String source, String type, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator,
+	public List<SegmentsEntry> findByG_S_T(
+		long[] groupIds, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
 		boolean useFinderCache) {
 
 		if (groupIds == null) {
@@ -10070,9 +10011,8 @@ public class SegmentsEntryPersistenceImpl
 		type = Objects.toString(type, "");
 
 		if (groupIds.length == 1) {
-			return findByG_A_S_T(
-				groupIds[0], active, source, type, start, end,
-				orderByComparator);
+			return findByG_S_T(
+				groupIds[0], source, type, start, end, orderByComparator);
 		}
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -10085,13 +10025,13 @@ public class SegmentsEntryPersistenceImpl
 
 			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), active, source, type
+					StringUtil.merge(groupIds), source, type
 				};
 			}
 		}
 		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
-				StringUtil.merge(groupIds), active, source, type, start, end,
+				StringUtil.merge(groupIds), source, type, start, end,
 				orderByComparator
 			};
 		}
@@ -10100,13 +10040,12 @@ public class SegmentsEntryPersistenceImpl
 
 		if (useFinderCache && productionMode) {
 			list = (List<SegmentsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_A_S_T, finderArgs, this);
+				_finderPathWithPaginationFindByG_S_T, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
 					if (!ArrayUtil.contains(
 							groupIds, segmentsEntry.getGroupId()) ||
-						(active != segmentsEntry.isActive()) ||
 						!source.equals(segmentsEntry.getSource()) ||
 						!type.equals(segmentsEntry.getType())) {
 
@@ -10126,7 +10065,7 @@ public class SegmentsEntryPersistenceImpl
 			if (groupIds.length > 0) {
 				sb.append("(");
 
-				sb.append(_FINDER_COLUMN_G_A_S_T_GROUPID_7);
+				sb.append(_FINDER_COLUMN_G_S_T_GROUPID_7);
 
 				sb.append(StringUtil.merge(groupIds));
 
@@ -10137,28 +10076,26 @@ public class SegmentsEntryPersistenceImpl
 				sb.append(WHERE_AND);
 			}
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_ACTIVE_2);
-
 			boolean bindSource = false;
 
 			if (source.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_3);
+				sb.append(_FINDER_COLUMN_G_S_T_SOURCE_3);
 			}
 			else {
 				bindSource = true;
 
-				sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_2);
+				sb.append(_FINDER_COLUMN_G_S_T_SOURCE_2);
 			}
 
 			boolean bindType = false;
 
 			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_3);
+				sb.append(_FINDER_COLUMN_G_S_T_TYPE_3);
 			}
 			else {
 				bindType = true;
 
-				sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_2);
+				sb.append(_FINDER_COLUMN_G_S_T_TYPE_2);
 			}
 
 			sb.setStringAt(
@@ -10183,8 +10120,6 @@ public class SegmentsEntryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(active);
-
 				if (bindSource) {
 					queryPos.add(source);
 				}
@@ -10200,8 +10135,7 @@ public class SegmentsEntryPersistenceImpl
 
 				if (useFinderCache && productionMode) {
 					finderCache.putResult(
-						_finderPathWithPaginationFindByG_A_S_T, finderArgs,
-						list);
+						_finderPathWithPaginationFindByG_S_T, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
@@ -10216,39 +10150,33 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Removes all the segments entries where groupId = &#63; and active = &#63; and source = &#63; and type = &#63; from the database.
+	 * Removes all the segments entries where groupId = &#63; and source = &#63; and type = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 */
 	@Override
-	public void removeByG_A_S_T(
-		long groupId, boolean active, String source, String type) {
-
+	public void removeByG_S_T(long groupId, String source, String type) {
 		for (SegmentsEntry segmentsEntry :
-				findByG_A_S_T(
-					groupId, active, source, type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
+				findByG_S_T(
+					groupId, source, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
 
 			remove(segmentsEntry);
 		}
 	}
 
 	/**
-	 * Returns the number of segments entries where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns the number of segments entries where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @return the number of matching segments entries
 	 */
 	@Override
-	public int countByG_A_S_T(
-		long groupId, boolean active, String source, String type) {
-
+	public int countByG_S_T(long groupId, String source, String type) {
 		source = Objects.toString(source, "");
 		type = Objects.toString(type, "");
 
@@ -10261,42 +10189,40 @@ public class SegmentsEntryPersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByG_A_S_T;
+			finderPath = _finderPathCountByG_S_T;
 
-			finderArgs = new Object[] {groupId, active, source, type};
+			finderArgs = new Object[] {groupId, source, type};
 
 			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
 
 		if (count == null) {
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_A_S_T_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
 
 			boolean bindSource = false;
 
 			if (source.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_3);
+				sb.append(_FINDER_COLUMN_G_S_T_SOURCE_3);
 			}
 			else {
 				bindSource = true;
 
-				sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_2);
+				sb.append(_FINDER_COLUMN_G_S_T_SOURCE_2);
 			}
 
 			boolean bindType = false;
 
 			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_3);
+				sb.append(_FINDER_COLUMN_G_S_T_TYPE_3);
 			}
 			else {
 				bindType = true;
 
-				sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_2);
+				sb.append(_FINDER_COLUMN_G_S_T_TYPE_2);
 			}
 
 			String sql = sb.toString();
@@ -10311,8 +10237,6 @@ public class SegmentsEntryPersistenceImpl
 				QueryPos queryPos = QueryPos.getInstance(query);
 
 				queryPos.add(groupId);
-
-				queryPos.add(active);
 
 				if (bindSource) {
 					queryPos.add(source);
@@ -10340,18 +10264,15 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of segments entries where groupId = any &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns the number of segments entries where groupId = any &#63; and source = &#63; and type = &#63;.
 	 *
 	 * @param groupIds the group IDs
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @return the number of matching segments entries
 	 */
 	@Override
-	public int countByG_A_S_T(
-		long[] groupIds, boolean active, String source, String type) {
-
+	public int countByG_S_T(long[] groupIds, String source, String type) {
 		if (groupIds == null) {
 			groupIds = new long[0];
 		}
@@ -10371,11 +10292,11 @@ public class SegmentsEntryPersistenceImpl
 
 		if (productionMode) {
 			finderArgs = new Object[] {
-				StringUtil.merge(groupIds), active, source, type
+				StringUtil.merge(groupIds), source, type
 			};
 
 			count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByG_A_S_T, finderArgs, this);
+				_finderPathWithPaginationCountByG_S_T, finderArgs, this);
 		}
 
 		if (count == null) {
@@ -10386,7 +10307,7 @@ public class SegmentsEntryPersistenceImpl
 			if (groupIds.length > 0) {
 				sb.append("(");
 
-				sb.append(_FINDER_COLUMN_G_A_S_T_GROUPID_7);
+				sb.append(_FINDER_COLUMN_G_S_T_GROUPID_7);
 
 				sb.append(StringUtil.merge(groupIds));
 
@@ -10397,28 +10318,26 @@ public class SegmentsEntryPersistenceImpl
 				sb.append(WHERE_AND);
 			}
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_ACTIVE_2);
-
 			boolean bindSource = false;
 
 			if (source.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_3);
+				sb.append(_FINDER_COLUMN_G_S_T_SOURCE_3);
 			}
 			else {
 				bindSource = true;
 
-				sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_2);
+				sb.append(_FINDER_COLUMN_G_S_T_SOURCE_2);
 			}
 
 			boolean bindType = false;
 
 			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_3);
+				sb.append(_FINDER_COLUMN_G_S_T_TYPE_3);
 			}
 			else {
 				bindType = true;
 
-				sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_2);
+				sb.append(_FINDER_COLUMN_G_S_T_TYPE_2);
 			}
 
 			sb.setStringAt(
@@ -10435,8 +10354,6 @@ public class SegmentsEntryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(active);
-
 				if (bindSource) {
 					queryPos.add(source);
 				}
@@ -10449,7 +10366,7 @@ public class SegmentsEntryPersistenceImpl
 
 				if (productionMode) {
 					finderCache.putResult(
-						_finderPathWithPaginationCountByG_A_S_T, finderArgs,
+						_finderPathWithPaginationCountByG_S_T, finderArgs,
 						count);
 				}
 			}
@@ -10465,53 +10382,48 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of segments entries that the user has permission to view where groupId = &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns the number of segments entries that the user has permission to view where groupId = &#63; and source = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @return the number of matching segments entries that the user has permission to view
 	 */
 	@Override
-	public int filterCountByG_A_S_T(
-		long groupId, boolean active, String source, String type) {
-
+	public int filterCountByG_S_T(long groupId, String source, String type) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_A_S_T(groupId, active, source, type);
+			return countByG_S_T(groupId, source, type);
 		}
 
 		source = Objects.toString(source, "");
 		type = Objects.toString(type, "");
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(_FILTER_SQL_COUNT_SEGMENTSENTRY_WHERE);
 
-		sb.append(_FINDER_COLUMN_G_A_S_T_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_A_S_T_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_G_S_T_GROUPID_2);
 
 		boolean bindSource = false;
 
 		if (source.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_3);
+			sb.append(_FINDER_COLUMN_G_S_T_SOURCE_3);
 		}
 		else {
 			bindSource = true;
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_2);
+			sb.append(_FINDER_COLUMN_G_S_T_SOURCE_2);
 		}
 
 		boolean bindType = false;
 
 		if (type.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_3_SQL);
+			sb.append(_FINDER_COLUMN_G_S_T_TYPE_3_SQL);
 		}
 		else {
 			bindType = true;
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_2_SQL);
+			sb.append(_FINDER_COLUMN_G_S_T_TYPE_2_SQL);
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -10531,8 +10443,6 @@ public class SegmentsEntryPersistenceImpl
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			queryPos.add(groupId);
-
-			queryPos.add(active);
 
 			if (bindSource) {
 				queryPos.add(source);
@@ -10555,20 +10465,17 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of segments entries that the user has permission to view where groupId = any &#63; and active = &#63; and source = &#63; and type = &#63;.
+	 * Returns the number of segments entries that the user has permission to view where groupId = any &#63; and source = &#63; and type = &#63;.
 	 *
 	 * @param groupIds the group IDs
-	 * @param active the active
 	 * @param source the source
 	 * @param type the type
 	 * @return the number of matching segments entries that the user has permission to view
 	 */
 	@Override
-	public int filterCountByG_A_S_T(
-		long[] groupIds, boolean active, String source, String type) {
-
+	public int filterCountByG_S_T(long[] groupIds, String source, String type) {
 		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
-			return countByG_A_S_T(groupIds, active, source, type);
+			return countByG_S_T(groupIds, source, type);
 		}
 
 		if (groupIds == null) {
@@ -10588,7 +10495,7 @@ public class SegmentsEntryPersistenceImpl
 		if (groupIds.length > 0) {
 			sb.append("(");
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_GROUPID_7);
+			sb.append(_FINDER_COLUMN_G_S_T_GROUPID_7);
 
 			sb.append(StringUtil.merge(groupIds));
 
@@ -10599,28 +10506,26 @@ public class SegmentsEntryPersistenceImpl
 			sb.append(WHERE_AND);
 		}
 
-		sb.append(_FINDER_COLUMN_G_A_S_T_ACTIVE_2_SQL);
-
 		boolean bindSource = false;
 
 		if (source.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_3);
+			sb.append(_FINDER_COLUMN_G_S_T_SOURCE_3);
 		}
 		else {
 			bindSource = true;
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_SOURCE_2);
+			sb.append(_FINDER_COLUMN_G_S_T_SOURCE_2);
 		}
 
 		boolean bindType = false;
 
 		if (type.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_3_SQL);
+			sb.append(_FINDER_COLUMN_G_S_T_TYPE_3_SQL);
 		}
 		else {
 			bindType = true;
 
-			sb.append(_FINDER_COLUMN_G_A_S_T_TYPE_2_SQL);
+			sb.append(_FINDER_COLUMN_G_S_T_TYPE_2_SQL);
 		}
 
 		sb.setStringAt(
@@ -10642,8 +10547,6 @@ public class SegmentsEntryPersistenceImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			queryPos.add(active);
-
 			if (bindSource) {
 				queryPos.add(source);
 			}
@@ -10664,34 +10567,28 @@ public class SegmentsEntryPersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_G_A_S_T_GROUPID_2 =
+	private static final String _FINDER_COLUMN_G_S_T_GROUPID_2 =
 		"segmentsEntry.groupId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_A_S_T_GROUPID_7 =
+	private static final String _FINDER_COLUMN_G_S_T_GROUPID_7 =
 		"segmentsEntry.groupId IN (";
 
-	private static final String _FINDER_COLUMN_G_A_S_T_ACTIVE_2 =
-		"segmentsEntry.active = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_A_S_T_ACTIVE_2_SQL =
-		"segmentsEntry.active_ = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_A_S_T_SOURCE_2 =
+	private static final String _FINDER_COLUMN_G_S_T_SOURCE_2 =
 		"segmentsEntry.source = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_A_S_T_SOURCE_3 =
+	private static final String _FINDER_COLUMN_G_S_T_SOURCE_3 =
 		"(segmentsEntry.source IS NULL OR segmentsEntry.source = '') AND ";
 
-	private static final String _FINDER_COLUMN_G_A_S_T_TYPE_2 =
+	private static final String _FINDER_COLUMN_G_S_T_TYPE_2 =
 		"segmentsEntry.type = ?";
 
-	private static final String _FINDER_COLUMN_G_A_S_T_TYPE_3 =
+	private static final String _FINDER_COLUMN_G_S_T_TYPE_3 =
 		"(segmentsEntry.type IS NULL OR segmentsEntry.type = '')";
 
-	private static final String _FINDER_COLUMN_G_A_S_T_TYPE_2_SQL =
+	private static final String _FINDER_COLUMN_G_S_T_TYPE_2_SQL =
 		"segmentsEntry.type_ = ?";
 
-	private static final String _FINDER_COLUMN_G_A_S_T_TYPE_3_SQL =
+	private static final String _FINDER_COLUMN_G_S_T_TYPE_3_SQL =
 		"(segmentsEntry.type_ IS NULL OR segmentsEntry.type_ = '')";
 
 	public SegmentsEntryPersistenceImpl() {
@@ -11748,39 +11645,38 @@ public class SegmentsEntryPersistenceImpl
 			},
 			new String[] {"groupId", "active_", "type_"}, false);
 
-		_finderPathWithPaginationFindByG_A_S_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A_S_T",
+		_finderPathWithPaginationFindByG_S_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S_T",
 			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
+				Long.class.getName(), String.class.getName(),
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
 			},
-			new String[] {"groupId", "active_", "source", "type_"}, true);
+			new String[] {"groupId", "source", "type_"}, true);
 
-		_finderPathWithoutPaginationFindByG_A_S_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A_S_T",
+		_finderPathWithoutPaginationFindByG_S_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S_T",
 			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), String.class.getName()
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
 			},
-			new String[] {"groupId", "active_", "source", "type_"}, true);
+			new String[] {"groupId", "source", "type_"}, true);
 
-		_finderPathCountByG_A_S_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A_S_T",
+		_finderPathCountByG_S_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S_T",
 			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), String.class.getName()
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
 			},
-			new String[] {"groupId", "active_", "source", "type_"}, false);
+			new String[] {"groupId", "source", "type_"}, false);
 
-		_finderPathWithPaginationCountByG_A_S_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_A_S_T",
+		_finderPathWithPaginationCountByG_S_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_S_T",
 			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), String.class.getName()
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
 			},
-			new String[] {"groupId", "active_", "source", "type_"}, false);
+			new String[] {"groupId", "source", "type_"}, false);
 
 		SegmentsEntryUtil.setPersistence(this);
 	}

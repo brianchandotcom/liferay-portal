@@ -373,35 +373,22 @@ public class SegmentsEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<SegmentsEntry> getSegmentsEntries(
-		long groupId, boolean includeAncestorSegmentsEntries, int start,
-		int end,
+		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator) {
 
 		return _segmentsEntryLocalService.getSegmentsEntries(
-			groupId, includeAncestorSegmentsEntries, start, end,
-			orderByComparator);
+			groupId, start, end, orderByComparator);
 	}
 
 	@Override
 	public java.util.List<SegmentsEntry> getSegmentsEntries(
-		long groupId, boolean active, String type, int start, int end,
+		long groupId, String source, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator) {
 
 		return _segmentsEntryLocalService.getSegmentsEntries(
-			groupId, active, type, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<SegmentsEntry> getSegmentsEntries(
-		long groupId, boolean active, String source, String type, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
-			orderByComparator) {
-
-		return _segmentsEntryLocalService.getSegmentsEntries(
-			groupId, active, source, type, start, end, orderByComparator);
+			groupId, source, type, start, end, orderByComparator);
 	}
 
 	@Override
@@ -460,11 +447,8 @@ public class SegmentsEntryLocalServiceWrapper
 	}
 
 	@Override
-	public int getSegmentsEntriesCount(
-		long groupId, boolean includeAncestorSegmentsEntries) {
-
-		return _segmentsEntryLocalService.getSegmentsEntriesCount(
-			groupId, includeAncestorSegmentsEntries);
+	public int getSegmentsEntriesCount(long groupId) {
+		return _segmentsEntryLocalService.getSegmentsEntriesCount(groupId);
 	}
 
 	/**
@@ -508,18 +492,6 @@ public class SegmentsEntryLocalServiceWrapper
 
 		return _segmentsEntryLocalService.searchSegmentsEntries(
 			companyId, groupId, keywords, params, start, end, sort);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult<SegmentsEntry>
-			searchSegmentsEntries(
-				long companyId, String keywords,
-				java.util.LinkedHashMap<String, Object> params, int start,
-				int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _segmentsEntryLocalService.searchSegmentsEntries(
-			companyId, keywords, params, start, end, sort);
 	}
 
 	@Override

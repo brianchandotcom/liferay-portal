@@ -325,23 +325,19 @@ public class SegmentsEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_A_S_T() throws Exception {
-		_persistence.countByG_A_S_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "", "");
+	public void testCountByG_S_T() throws Exception {
+		_persistence.countByG_S_T(RandomTestUtil.nextLong(), "", "");
 
-		_persistence.countByG_A_S_T(
-			0L, RandomTestUtil.randomBoolean(), "null", "null");
+		_persistence.countByG_S_T(0L, "null", "null");
 
-		_persistence.countByG_A_S_T(
-			0L, RandomTestUtil.randomBoolean(), (String)null, (String)null);
+		_persistence.countByG_S_T(0L, (String)null, (String)null);
 	}
 
 	@Test
-	public void testCountByG_A_S_TArrayable() throws Exception {
-		_persistence.countByG_A_S_T(
+	public void testCountByG_S_TArrayable() throws Exception {
+		_persistence.countByG_S_T(
 			new long[] {RandomTestUtil.nextLong(), 0L},
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	@Test

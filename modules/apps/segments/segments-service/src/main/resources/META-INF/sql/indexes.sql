@@ -1,8 +1,10 @@
 create index IX_175FC150 on SegmentsEntry (companyId);
+create index IX_2E0C3F77 on SegmentsEntry (groupId, active_);
 create unique index IX_DB53F1B1 on SegmentsEntry (groupId, segmentsEntryKey[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_7BB6BCA6 on SegmentsEntry (groupId, type_[$COLUMN_LENGTH:75$], active_);
+create index IX_42657B92 on SegmentsEntry (groupId, type_[$COLUMN_LENGTH:75$], source[$COLUMN_LENGTH:75$]);
 create index IX_90AB04A7 on SegmentsEntry (source[$COLUMN_LENGTH:75$]);
 create index IX_625680AC on SegmentsEntry (type_[$COLUMN_LENGTH:75$], active_);
-create index IX_2A65042B on SegmentsEntry (type_[$COLUMN_LENGTH:75$], groupId, active_, source[$COLUMN_LENGTH:75$]);
 create index IX_8046BADC on SegmentsEntry (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_64CBABA8 on SegmentsEntryRel (classNameId, classPK, groupId);

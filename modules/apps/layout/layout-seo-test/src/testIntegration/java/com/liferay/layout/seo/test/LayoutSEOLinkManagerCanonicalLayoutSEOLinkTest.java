@@ -109,7 +109,7 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			_addJournalArticleAssetDisplayPageEntry(
 				_portal.getClassNameId(JournalArticle.class.getName()),
-				journalArticle);
+				journalArticle, AssetDisplayPageConstants.TYPE_SPECIFIC);
 
 		Layout layout = _layoutLocalService.getLayout(
 			assetDisplayPageEntry.getPlid());
@@ -145,19 +145,16 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			_addJournalArticleAssetDisplayPageEntry(
-				classNameId, journalArticle);
+				classNameId, journalArticle,
+				AssetDisplayPageConstants.TYPE_SPECIFIC);
 
 		Layout layout = _layoutLocalService.getLayout(
 			assetDisplayPageEntry.getPlid());
 
 		ThemeDisplay themeDisplay = _getThemeDisplay(journalArticle, layout);
 
-		String url = StringBundler.concat(
-			_portal.getGroupFriendlyURL(
-				_group.getPublicLayoutSet(), themeDisplay, false, false),
-			"/e", layout.getFriendlyURL(LocaleUtil.getSiteDefault()),
-			StringPool.SLASH, classNameId, StringPool.SLASH,
-			journalArticle.getResourcePrimKey());
+		String url = _getCustomDisplayPageURL(
+			classNameId, journalArticle, layout, themeDisplay);
 
 		_pushServiceContext(themeDisplay, url);
 
@@ -174,6 +171,40 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 							journalArticle.getResourcePrimKey()),
 						journalArticle, themeDisplay),
 					canonicalLayoutSEOLink.getHref());
+			});
+	}
+
+	@Test
+	public void testGetCanonicalAssetDisplayPageURLCustomDisplayPageNoneAssetDisplayPageEntry()
+		throws Exception {
+
+		JournalArticle journalArticle = _addJournalArticle();
+
+		long classNameId = _portal.getClassNameId(
+			JournalArticle.class.getName());
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_addJournalArticleAssetDisplayPageEntry(
+				classNameId, journalArticle,
+				AssetDisplayPageConstants.TYPE_NONE);
+
+		Layout layout = _layoutLocalService.getLayout(
+			assetDisplayPageEntry.getPlid());
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(journalArticle, layout);
+
+		String url = _getCustomDisplayPageURL(
+			classNameId, journalArticle, layout, themeDisplay);
+
+		_pushServiceContext(themeDisplay, url);
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> {
+				LayoutSEOLink canonicalLayoutSEOLink =
+					_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
+						layout, LocaleUtil.getSiteDefault(), url, themeDisplay);
+
+				Assert.assertEquals(url, canonicalLayoutSEOLink.getHref());
 			});
 	}
 
@@ -269,7 +300,7 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 	}
 
 	private AssetDisplayPageEntry _addJournalArticleAssetDisplayPageEntry(
-			long classNameId, JournalArticle journalArticle)
+			long classNameId, JournalArticle journalArticle, int type)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -283,8 +314,21 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 		return _assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			journalArticle.getResourcePrimKey(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			AssetDisplayPageConstants.TYPE_SPECIFIC, _serviceContext);
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), type,
+			_serviceContext);
+	}
+
+	private String _getCustomDisplayPageURL(
+			long classNameId, JournalArticle journalArticle, Layout layout,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return StringBundler.concat(
+			_portal.getGroupFriendlyURL(
+				_group.getPublicLayoutSet(), themeDisplay, false, false),
+			"/e", layout.getFriendlyURL(LocaleUtil.getSiteDefault()),
+			StringPool.SLASH, classNameId, StringPool.SLASH,
+			journalArticle.getResourcePrimKey());
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

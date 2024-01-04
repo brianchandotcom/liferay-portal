@@ -7,7 +7,7 @@ package com.liferay.headless.builder.instance.lifecycle.test;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.test.BaseTestCase;
-import com.liferay.headless.builder.util.APIApplicationTestUtil;
+import com.liferay.headless.builder.test.util.APIApplicationTestUtil;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

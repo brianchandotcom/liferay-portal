@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.search.site.SitesJSONObjectProvider;
+import com.liferay.portal.search.site.SiteJSONObjectProvider;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
 
 import java.io.IOException;
@@ -47,11 +47,11 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 			JSONObject jsonObject = null;
 
 			if (cmd.equals("getSiteJSONObject")) {
-				jsonObject = _sitesJSONObjectProvider.getSiteJSONObject(
+				jsonObject = _siteJSONObjectProvider.getSiteJSONObject(
 					resourceRequest);
 			}
 			else if (cmd.equals("getSitesJSONObject")) {
-				jsonObject = _sitesJSONObjectProvider.getSitesJSONObject(
+				jsonObject = _siteJSONObjectProvider.getSitesJSONObject(
 					resourceRequest);
 			}
 
@@ -88,6 +88,6 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 		GetSitesMVCResourceCommand.class);
 
 	@Reference
-	private SitesJSONObjectProvider _sitesJSONObjectProvider;
+	private SiteJSONObjectProvider _siteJSONObjectProvider;
 
 }

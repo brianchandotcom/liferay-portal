@@ -397,6 +397,76 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-202596. The content creator cannot filter assets by type when Index All Article Versions disabled."
+	@priority = 3
+	test CanNotFilterAssetByTypeWhenDisableIndexAllArticleVersionsEnabled {
+		property custom.properties = "feature.flag.LPS-196768=true";
+
+		task ("Given a site administrator disable Index All Article Versions Enabled") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Web Content",
+				configurationName = "Web Content",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.viewCheckboxChecked(fieldName = "indexAllArticleVersionsEnabled");
+
+			FormFields.disableCheckbox(fieldName = "indexAllArticleVersionsEnabled");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("When a site administrator has a folder and a web content with two versions") {
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = "Test Site Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content Version 1",
+				groupName = "Test Site Name",
+				title = "Web Content Title Version 1");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Version 1");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Version 2",
+				webContentTitle = "Web Content Title Version 1",
+				webContentTitleEdit = "Web Content Title Version 2");
+		}
+
+		task ("Then view Filter by Type section is not shown and view the folder and the latest version of published web content are shown") {
+			Click(locator1 = "ManagementBar#FILTER");
+
+			AssertElementNotPresent(
+				locator1 = "Dropdown#DROPDOWN_SUBHEADER",
+				subHeader = "Filter by Type");
+
+			var i = 1;
+
+			for (var menuItem : list "Web Content,Versions") {
+				AssertElementNotPresent(
+					index = ${i},
+					key_menuItem = ${menuItem},
+					key_subheader = "Filter by Type",
+					locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
+
+				var i = ${i} + 1;
+			}
+
+			for (var webContentTitle : list "WC Folder Name,Web Content Title Version 2") {
+				WebContent.viewTitle(webContentTitle = ${webContentTitle});
+			}
+
+			WebContent.viewNotPresentCP(webContentTitle = "Web Content Title Version ");
+		}
+	}
+
 	@description = "This is a test for LPS-196842. When the “Recent” filter is applied, the possibility of changing the order must be disabled"
 	@priority = 4
 	test CannotReverseSortDirectionWhenFilterByRecent {

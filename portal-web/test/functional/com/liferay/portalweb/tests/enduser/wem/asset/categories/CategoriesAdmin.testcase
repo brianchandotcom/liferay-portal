@@ -627,6 +627,99 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177675. The tooltip of the back button is Go to Categories in the edit mode of the elements of Categories."
+	@priority = 3
+	test ViewBackButtonTooltipForCategoriesAdmin {
+		task ("Given a site administrator adds a vocabulary") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.gotoAddVocabulary();
+
+			WaitForElementPresent(locator1 = "TextInput#NAME");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Categories",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Given a site administrator adds a category") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			Navigator.gotoBack();
+
+			Navigator.gotoNavNested(navNested = "Vocabulary Name");
+
+			LexiconEntry.gotoAdd();
+
+			WaitForElementPresent(locator1 = "TextInput#NAME");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Categories",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Given a site administrator bulkly assigns display page template") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+
+			Navigator.gotoBack();
+
+			PortletEntry.selectAll();
+
+			ManagementBar.gotoManagementBarEllipsisMenuItem(menuItem = "Assign Display Page Template");
+
+			WaitForElementPresent(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "displayPageType");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Categories",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Given a site administrator adds a subcategory") {
+			Navigator.gotoBack();
+
+			LexiconTable.clickEllipsisItem(
+				item = "Add Subcategory",
+				tableEntry = "Category Name");
+
+			WaitForElementPresent(locator1 = "TextInput#NAME");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver.javaScriptFocus(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Categories",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-118305. The maximum number of categories per vocabulary is 150 shown below vocabulary name in Categories admin by default."
 	@priority = 5
 	@uitest

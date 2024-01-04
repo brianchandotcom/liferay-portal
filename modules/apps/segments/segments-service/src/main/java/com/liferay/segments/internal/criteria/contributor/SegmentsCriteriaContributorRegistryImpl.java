@@ -27,9 +27,7 @@ public class SegmentsCriteriaContributorRegistryImpl
 	implements SegmentsCriteriaContributorRegistry {
 
 	@Override
-	public List<SegmentsCriteriaContributor> getSegmentsCriteriaContributors(
-		String className) {
-
+	public List<SegmentsCriteriaContributor> getSegmentsCriteriaContributors() {
 		return _serviceTrackerList.toList();
 	}
 

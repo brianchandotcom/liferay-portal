@@ -166,8 +166,10 @@ public interface JobEntity extends Entity {
 
 	public enum Type {
 
+		ARCHIVE_CI_BUILD_DATA("archiveCIBuildData", "Archive CI Build Data"),
 		DEFAULT("default", "Default"),
 		FILE_PROPAGATOR("filePropagator", "File Propagator"),
+		FIXPACK_BUILDER("fixpackBuilder", "Fixpack Builder"),
 		FIXPACK_BUILDER_PULL_REQUEST(
 			"fixpackBuilderPullRequest", "Fixpack Builder Pull Request"),
 		FORWARD_PULL_REQUEST("forwardPullRequest", "Forward Pull Request"),
@@ -181,6 +183,7 @@ public interface JobEntity extends Entity {
 			"generateTestDurationMetrics", "Generate Test Duration Metrics"),
 		GENERATE_TESTRAY_CSV("generateTestrayCSV", "Generate Testray CSV"),
 		JENKINS_PULL_REQUEST("jenkinsPullRequest", "Jenkins Pull Request"),
+		LEGACY_DATABASE_DUMP("legacyDatabaseDump", "Legacy Database Dump"),
 		LIFERAY_BINARIES_CACHE_UPDATER(
 			"liferayBinariesCacheUpdater", "Liferay Binaries Cache Updater"),
 		MAINTENANCE_DAILY("maintenanceDaily", "Maintenance Daily"),
@@ -200,6 +203,8 @@ public interface JobEntity extends Entity {
 		PLUGINS_RELEASE("pluginsRelease", "Plugins Release"),
 		PLUGINS_UPSTREAM("pluginsUpstream", "Plugins Upstream"),
 		PORTAL_APP_RELEASE("portalAppRelease", "Portal App Release"),
+		PORTAL_BUILD_OPTIMIZATION(
+			"portalBuildOptimization", "Portal Build Optimization"),
 		PORTAL_FIXPACK_RELEASE(
 			"portalFixpackRelease", "Portal Fixpack Release"),
 		PORTAL_HOTFIX_RELEASE("portalHotfixRelease", "Portal Hotfix Release"),
@@ -220,6 +225,9 @@ public interface JobEntity extends Entity {
 			"qaWebsitesPullRequestSF", "QA Websites Pull Request SF"),
 		QA_WEBSITES_WEEKLY("qaWebsitesWeekly", "QA Websites Weekly"),
 		REPOSITORY_ARCHIVE("repositoryArchive", "Repository Archive"),
+		ROOT_CAUSE_ANALYSIS_TOOL(
+			"rootCauseAnalysisTool", "Root Cause Analysis Tool"),
+		SANITIZE_LANGUAGE("sanitizeLanguage", "Sanitize Language"),
 		SUBREPOSITORY_PULL_REQUEST(
 			"subrepositoryPullRequest", "Subrepository Pull Request"),
 		VERIFICATION("verification", "Verification"),

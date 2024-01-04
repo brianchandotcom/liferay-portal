@@ -3,7 +3,7 @@
 		"@clayui/alert": "3.106.1",
 		"react": "16.12.0"
 	},
-	"main": "js/App.es",
+	"main": "js/App.js",
 	"name": "frontend-js-clay-sample-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

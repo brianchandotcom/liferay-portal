@@ -104,6 +104,9 @@ public class JobDefinitionFactory {
 		else if (type == JobEntity.Type.PORTAL_FIXPACK_RELEASE) {
 			return new PortalFixpackReleaseJobDefinition(type);
 		}
+		else if (type == JobEntity.Type.PORTAL_EVALUATE_PULL_REQUEST) {
+			return new PortalEvaluatePullRequestJobDefinition(type);
+		}
 		else if (type == JobEntity.Type.PORTAL_HOTFIX_RELEASE) {
 			return new PortalHotfixReleaseJobDefinition(type);
 		}

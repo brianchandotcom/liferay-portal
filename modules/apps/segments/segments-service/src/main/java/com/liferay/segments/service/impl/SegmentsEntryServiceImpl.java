@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsActionKeys;
@@ -111,8 +110,7 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 	@Override
 	public List<SegmentsEntry> getSegmentsEntries(long groupId) {
 		return segmentsEntryPersistence.filterFindByGroupId(
-			ArrayUtil.append(
-				_portal.getAncestorSiteGroupIds(groupId), groupId));
+			_portal.getCurrentAndAncestorSiteGroupIds(groupId));
 	}
 
 	@Override
@@ -121,15 +119,14 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return segmentsEntryPersistence.filterFindByGroupId(
-			ArrayUtil.append(_portal.getAncestorSiteGroupIds(groupId), groupId),
-			start, end, orderByComparator);
+			_portal.getCurrentAndAncestorSiteGroupIds(groupId), start, end,
+			orderByComparator);
 	}
 
 	@Override
 	public int getSegmentsEntriesCount(long groupId) {
 		return segmentsEntryPersistence.filterCountByGroupId(
-			ArrayUtil.append(
-				_portal.getAncestorSiteGroupIds(groupId), groupId));
+			_portal.getCurrentAndAncestorSiteGroupIds(groupId));
 	}
 
 	@Override

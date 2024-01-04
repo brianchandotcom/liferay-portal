@@ -169,7 +169,6 @@ public interface JobEntity extends Entity {
 		ARCHIVE_CI_BUILD_DATA("archiveCIBuildData", "Archive CI Build Data"),
 		DEFAULT("default", "Default"),
 		FILE_PROPAGATOR("filePropagator", "File Propagator"),
-		FIXPACK_BUILDER("fixpackBuilder", "Fixpack Builder"),
 		FIXPACK_BUILDER_PULL_REQUEST(
 			"fixpackBuilderPullRequest", "Fixpack Builder Pull Request"),
 		FORWARD_PULL_REQUEST("forwardPullRequest", "Forward Pull Request"),

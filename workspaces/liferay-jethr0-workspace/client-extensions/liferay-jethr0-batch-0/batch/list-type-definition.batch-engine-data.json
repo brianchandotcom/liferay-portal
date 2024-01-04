@@ -292,14 +292,6 @@
 					}
 				},
 				{
-					"externalReferenceCode": "fixpackBuilder",
-					"key": "fixpackBuilder",
-					"name": "Fixpack Builder",
-					"name_i18n": {
-						"en-US": "Fixpack Builder"
-					}
-				},
-				{
 					"externalReferenceCode": "fixpackBuilderPullRequest",
 					"key": "fixpackBuilderPullRequest",
 					"name": "Fixpack Builder Pull Request",

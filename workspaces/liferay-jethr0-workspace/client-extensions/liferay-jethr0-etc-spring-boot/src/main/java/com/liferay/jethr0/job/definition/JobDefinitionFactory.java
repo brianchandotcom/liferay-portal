@@ -143,6 +143,9 @@ public class JobDefinitionFactory {
 		else if (type == JobEntity.Type.REPOSITORY_ARCHIVE) {
 			return new RepositoryArchiveJobDefinition(type);
 		}
+		else if (type == JobEntity.Type.ROOT_CAUSE_ANALYSIS_TOOL) {
+			return new RootCauseAnalysisToolJobDefinition(type);
+		}
 		else if (type == JobEntity.Type.SUBREPOSITORY_PULL_REQUEST) {
 			return new SubrepositoryPullRequestJobDefinition(type);
 		}

@@ -328,7 +328,8 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 	private static final String _OBJECT_FIELD_NAME =
 		"x" + RandomTestUtil.randomString();
 
-	private static final String _OBJECT_NAME = RandomTestUtil.randomString();
+	private static final String _OBJECT_NAME = StringUtil.upperCaseFirstLetter(
+		RandomTestUtil.randomString());
 
 	private static JSONObject _objectDefinitionJSONObject;
 	private static JSONObject _objectEntryJSONObject;

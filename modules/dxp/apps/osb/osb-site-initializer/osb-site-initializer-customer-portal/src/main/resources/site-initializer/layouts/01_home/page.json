@@ -1,7 +1,10 @@
 {
 	"hidden": false,
 	"name_i18n": {
-		"en_US": "Home"
+		"en_US": "Home",
+		"es_ES": "Página de inicio",
+		"ja_JP": "ホームページ",
+		"pt_BR": "Página inicial"
 	},
 	"permissions": [
 		{

@@ -455,8 +455,12 @@ const MillerColumnsItem = ({
 							aria-label={
 								Liferay.FeatureFlags['LPS-174417'] &&
 								hasDuplicatedFriendlyURL
-									? `${title}. ${warningMessage}`
-									: title
+									? `${title}. ${Liferay.Language.get(
+											'restricted-page'
+									  )} ${warningMessage}`
+									: `${title}. ${Liferay.Language.get(
+											'restricted-page'
+									  )}`
 							}
 							className="text-truncate"
 							href={viewUrl}
@@ -470,17 +474,13 @@ const MillerColumnsItem = ({
 
 					{Liferay.FeatureFlags['LPS-196847'] &&
 						!hasGuestViewPermission && (
-							<span
-								className="c-ml-2 lfr-portal-tooltip miller-columns-item--restricted__icon"
+							<ClayIcon
+								className="c-ml-2 c-mt-0 lfr-portal-tooltip miller-columns-item--restricted__icon text-4 text-secondary"
 								data-title={Liferay.Language.get(
 									'restricted-page'
 								)}
-							>
-								<ClayIcon
-									className="c-mt-0 text-4 text-secondary"
-									symbol="lock"
-								/>
-							</span>
+								symbol="lock"
+							/>
 						)}
 
 					{Liferay.FeatureFlags['LPS-174417'] &&

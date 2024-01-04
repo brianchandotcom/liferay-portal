@@ -22,17 +22,32 @@ import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -265,6 +280,51 @@ public class ObjectFolderItemLocalServiceTest {
 	}
 
 	@Test
+	public void testGetObjectFolderItemByObjectFolderId() throws Exception {
+		String originalName = PrincipalThreadLocal.getName();
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			User user = UserTestUtil.addUser();
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+			_resourcePermissionLocalService.setResourcePermissions(
+				TestPropsValues.getCompanyId(), ObjectFolder.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				role.getRoleId(), new String[] {ActionKeys.VIEW});
+
+			_userLocalService.addRoleUser(role.getRoleId(), user);
+
+			ObjectFolder objectFolder =
+				_objectFolderLocalService.getUncategorizedObjectFolder(
+					TestPropsValues.getCompanyId());
+
+			List<ObjectFolderItem> objectFolderItems =
+				_objectFolderItemLocalService.
+					getObjectFolderItemsByObjectFolderId(
+						objectFolder.getObjectFolderId());
+
+			Assert.assertEquals(
+				objectFolderItems.toString(), 0, objectFolderItems.size());
+
+			_roleLocalService.deleteRole(role.getRoleId());
+			_userLocalService.deleteUser(user);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
+	}
+
+	@Test
 	public void testUpdateObjectFolderItem() throws PortalException {
 		long objectDefinitionId = RandomTestUtil.randomLong();
 		long objectFolderId = RandomTestUtil.randomLong();
@@ -364,5 +424,14 @@ public class ObjectFolderItemLocalServiceTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

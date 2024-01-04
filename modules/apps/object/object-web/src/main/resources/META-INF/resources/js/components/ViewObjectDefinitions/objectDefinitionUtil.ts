@@ -111,7 +111,7 @@ export async function deleteObjectDefinition({
 		return;
 	}
 
-	const newDeleteObjectDefinition = {
+	const deletedObjectDefinition = {
 		hasObjectRelationship,
 		id: objectDefinitionId,
 		name: objectDefinitionName,
@@ -119,14 +119,14 @@ export async function deleteObjectDefinition({
 	};
 
 	if (handleDeleteObjectDefinition) {
-		handleDeleteObjectDefinition(newDeleteObjectDefinition);
+		handleDeleteObjectDefinition(deletedObjectDefinition);
 	}
 
 	if (handleShowDeleteObjectDefinitionModal) {
 		handleShowDeleteObjectDefinitionModal();
 	}
 
-	return newDeleteObjectDefinition;
+	return deletedObjectDefinition;
 }
 
 export async function deleteRelationship(
@@ -263,16 +263,16 @@ export function getObjectDefinitionNodeActions({
 				Liferay.Language.get('object')
 			),
 			onClick: async () => {
-				const newDeleteObjectDefinition = await deleteObjectDefinition({
+				const deletedObjectDefinition = await deleteObjectDefinition({
 					baseResourceURL,
 					objectDefinitionId,
 					objectDefinitionName,
 				});
 
-				if (newDeleteObjectDefinition) {
+				if (deletedObjectDefinition) {
 					dispatch({
 						payload: {
-							newDeleteObjectDefinition,
+							deletedObjectDefinition,
 						},
 						type: TYPES.SET_DELETE_OBJECT_DEFINITION,
 					});

@@ -59,7 +59,7 @@ export default function EditObjectFolder({
 	const [
 		{
 			baseResourceURL,
-			deleteObjectDefinition,
+			deletedObjectDefinition,
 			editObjectDefinitionURL,
 			elements,
 			isLoadingObjectFolder,
@@ -90,11 +90,11 @@ export default function EditObjectFolder({
 	>[];
 
 	const handleDeleteObjectDefinition = (
-		deleteObjectDefinition: DeletedObjectDefinition
+		deletedObjectDefinition: DeletedObjectDefinition
 	) => {
 		dispatch({
 			payload: {
-				newDeleteObjectDefinition: deleteObjectDefinition,
+				deletedObjectDefinition,
 			},
 			type: TYPES.SET_DELETE_OBJECT_DEFINITION,
 		});
@@ -354,7 +354,7 @@ export default function EditObjectFolder({
 				)}
 
 			{modelBuilderModals.deleteObjectDefinition &&
-				deleteObjectDefinition && (
+				deletedObjectDefinition && (
 					<ModalDeleteObjectDefinition
 						handleDeleteObjectDefinition={() =>
 							handleDeleteObjectDefinition
@@ -370,7 +370,7 @@ export default function EditObjectFolder({
 									TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
 							});
 						}}
-						objectDefinition={deleteObjectDefinition}
+						objectDefinition={deletedObjectDefinition}
 					/>
 				)}
 

@@ -47,10 +47,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				isNode(element)
 			) as Node<ObjectDefinitionNodeData>[];
 
-			const {
-				baseResourceURL,
-				objectDefinitionPermissionsURL,
-			} = state;
+			const {baseResourceURL, objectDefinitionPermissionsURL} = state;
 
 			let objectDefinitionNodePosition;
 
@@ -697,11 +694,11 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 		}
 
 		case TYPES.SET_DELETE_OBJECT_DEFINITION: {
-			const {newDeleteObjectDefinition} = action.payload;
+			const {deletedObjectDefinition} = action.payload;
 
 			return {
 				...state,
-				deleteObjectDefinition: newDeleteObjectDefinition,
+				deletedObjectDefinition,
 			};
 		}
 

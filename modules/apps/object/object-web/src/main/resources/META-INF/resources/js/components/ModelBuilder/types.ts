@@ -100,7 +100,7 @@ export type TAction =
 	  }
 	| {
 			payload: {
-				newDeleteObjectDefinition: DeletedObjectDefinition | null;
+				deletedObjectDefinition: DeletedObjectDefinition | null;
 			};
 			type: TYPES.SET_DELETE_OBJECT_DEFINITION;
 	  }
@@ -211,7 +211,7 @@ export type TAction =
 
 export type TState = {
 	baseResourceURL: string;
-	deleteObjectDefinition: DeletedObjectDefinition | null;
+	deletedObjectDefinition: DeletedObjectDefinition | null;
 	editObjectDefinitionURL: string;
 	elements: Elements<ObjectDefinitionNodeData | ObjectRelationshipEdgeData>;
 	filterOperators: TFilterOperators;
@@ -247,11 +247,26 @@ export interface LeftSidebarItem {
 	type: 'objectFolder' | 'objectDefinition';
 }
 
+export type LeftSidebarKebabOption = {
+	label?: string;
+	onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+	symbolLeft?: string;
+	symbolRight?: string;
+	type?:
+		| 'checkbox'
+		| 'contextual'
+		| 'group'
+		| 'item'
+		| 'radio'
+		| 'radiogroup'
+		| 'divider';
+};
+
 export interface LeftSidebarObjectDefinitionItem {
 	externalReferenceCode?: string;
 	hiddenObjectDefinitionNode: boolean;
 	id: number;
-	kebabOptions: any[];
+	kebabOptions: LeftSidebarKebabOption[];
 	label: string;
 	linked?: boolean;
 	name: string;

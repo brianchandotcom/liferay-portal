@@ -40,6 +40,58 @@ public class DLLegacyConfigurationUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (Validator.isNull(
+				_prefsProps.getString(LegacyDLKeys.DL_FILE_EXTENSIONS, null)) &&
+			Validator.isNull(
+				_prefsProps.getString(LegacyDLKeys.DL_FILE_MAX_SIZE, null)) &&
+			Validator.isNull(
+				_prefsProps.getString(
+					LegacyDLKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE,
+					null))) {
+
+			return;
+		}
+
+		Configuration dlSizeLimitConfiguration =
+			_dlConfigurationUpgradeHelper.getSystemConfiguration(
+				DLSizeLimitConfiguration.class.getName());
+
+		if (dlSizeLimitConfiguration != null) {
+			Dictionary<String, Object> dictionary =
+				dlSizeLimitConfiguration.getProperties();
+
+			if (dictionary != null) {
+				Long fileMaxSize = (Long)dictionary.get("fileMaxSize");
+
+				if ((fileMaxSize != null) && (fileMaxSize != 0)) {
+					return;
+				}
+			}
+		}
+
+		Configuration dlFileEntryConfiguration =
+			_dlConfigurationUpgradeHelper.getSystemConfiguration(
+				DLConfigurationUpgradeHelper.
+					CLASS_NAME_DL_FILE_ENTRY_CONFIGURATION);
+
+		if (dlFileEntryConfiguration != null) {
+			Dictionary<String, Object> dictionary =
+				dlFileEntryConfiguration.getProperties();
+
+			if (dictionary != null) {
+				Long previewableProcessorMaxSize = (Long)dictionary.get(
+					"previewableProcessorMaxSize");
+
+				if ((previewableProcessorMaxSize != null) &&
+					(previewableProcessorMaxSize !=
+						DLFileEntryConfigurationConstants.
+							PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT)) {
+
+					return;
+				}
+			}
+		}
+
 		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
 			DLConfiguration.class,
 			new KeyValuePair(

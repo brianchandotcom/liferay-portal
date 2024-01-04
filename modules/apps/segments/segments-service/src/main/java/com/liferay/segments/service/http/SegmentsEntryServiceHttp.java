@@ -45,7 +45,7 @@ public class SegmentsEntryServiceHttp {
 			HttpPrincipal httpPrincipal, String segmentsEntryKey,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			boolean active, String criteria, String type,
+			boolean active, String criteria,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -56,7 +56,7 @@ public class SegmentsEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsEntryKey, nameMap, descriptionMap, active,
-				criteria, type, serviceContext);
+				criteria, serviceContext);
 
 			Object returnObj = null;
 
@@ -90,7 +90,7 @@ public class SegmentsEntryServiceHttp {
 			HttpPrincipal httpPrincipal, String segmentsEntryKey,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			boolean active, String criteria, String source, String type,
+			boolean active, String criteria, String source,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -101,7 +101,7 @@ public class SegmentsEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsEntryKey, nameMap, descriptionMap, active,
-				criteria, source, type, serviceContext);
+				criteria, source, serviceContext);
 
 			Object returnObj = null;
 
@@ -479,13 +479,13 @@ public class SegmentsEntryServiceHttp {
 	private static final Class<?>[] _addSegmentsEntryParameterTypes0 =
 		new Class[] {
 			String.class, java.util.Map.class, java.util.Map.class,
-			boolean.class, String.class, String.class,
+			boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addSegmentsEntryParameterTypes1 =
 		new Class[] {
 			String.class, java.util.Map.class, java.util.Map.class,
-			boolean.class, String.class, String.class, String.class,
+			boolean.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addSegmentsEntryClassPKsParameterTypes2 =

@@ -145,8 +145,6 @@ public class SegmentsEntryPersistenceTest {
 
 		newSegmentsEntry.setSource(RandomTestUtil.randomString());
 
-		newSegmentsEntry.setType(RandomTestUtil.randomString());
-
 		newSegmentsEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_segmentsEntries.add(_persistence.update(newSegmentsEntry));
@@ -196,8 +194,6 @@ public class SegmentsEntryPersistenceTest {
 			newSegmentsEntry.getCriteria());
 		Assert.assertEquals(
 			existingSegmentsEntry.getSource(), newSegmentsEntry.getSource());
-		Assert.assertEquals(
-			existingSegmentsEntry.getType(), newSegmentsEntry.getType());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingSegmentsEntry.getLastPublishDate()),
 			Time.getShortTimestamp(newSegmentsEntry.getLastPublishDate()));
@@ -256,21 +252,19 @@ public class SegmentsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByActive() throws Exception {
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
+
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountBySource() throws Exception {
 		_persistence.countBySource("");
 
 		_persistence.countBySource("null");
 
 		_persistence.countBySource((String)null);
-	}
-
-	@Test
-	public void testCountByType() throws Exception {
-		_persistence.countByType("");
-
-		_persistence.countByType("null");
-
-		_persistence.countByType((String)null);
 	}
 
 	@Test
@@ -298,46 +292,19 @@ public class SegmentsEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByA_T() throws Exception {
-		_persistence.countByA_T(RandomTestUtil.randomBoolean(), "");
+	public void testCountByG_SRC() throws Exception {
+		_persistence.countByG_SRC(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByA_T(RandomTestUtil.randomBoolean(), "null");
+		_persistence.countByG_SRC(0L, "null");
 
-		_persistence.countByA_T(RandomTestUtil.randomBoolean(), (String)null);
+		_persistence.countByG_SRC(0L, (String)null);
 	}
 
 	@Test
-	public void testCountByG_A_T() throws Exception {
-		_persistence.countByG_A_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");
-
-		_persistence.countByG_A_T(0L, RandomTestUtil.randomBoolean(), "null");
-
-		_persistence.countByG_A_T(
-			0L, RandomTestUtil.randomBoolean(), (String)null);
-	}
-
-	@Test
-	public void testCountByG_A_TArrayable() throws Exception {
-		_persistence.countByG_A_T(
+	public void testCountByG_SRCArrayable() throws Exception {
+		_persistence.countByG_SRC(
 			new long[] {RandomTestUtil.nextLong(), 0L},
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString());
-	}
-
-	@Test
-	public void testCountByG_S_T() throws Exception {
-		_persistence.countByG_S_T(RandomTestUtil.nextLong(), "", "");
-
-		_persistence.countByG_S_T(0L, "null", "null");
-
-		_persistence.countByG_S_T(0L, (String)null, (String)null);
-	}
-
-	@Test
-	public void testCountByG_S_TArrayable() throws Exception {
-		_persistence.countByG_S_T(
-			new long[] {RandomTestUtil.nextLong(), 0L},
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -375,7 +342,7 @@ public class SegmentsEntryPersistenceTest {
 			"uuid", true, "segmentsEntryId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "segmentsEntryKey", true, "name", true,
-			"description", true, "active", true, "source", true, "type", true,
+			"description", true, "active", true, "source", true,
 			"lastPublishDate", true);
 	}
 
@@ -700,8 +667,6 @@ public class SegmentsEntryPersistenceTest {
 		segmentsEntry.setCriteria(RandomTestUtil.randomString());
 
 		segmentsEntry.setSource(RandomTestUtil.randomString());
-
-		segmentsEntry.setType(RandomTestUtil.randomString());
 
 		segmentsEntry.setLastPublishDate(RandomTestUtil.nextDate());
 

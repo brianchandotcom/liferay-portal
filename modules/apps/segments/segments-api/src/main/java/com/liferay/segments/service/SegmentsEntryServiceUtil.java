@@ -34,25 +34,25 @@ public class SegmentsEntryServiceUtil {
 	public static SegmentsEntry addSegmentsEntry(
 			String segmentsEntryKey, Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap, boolean active,
-			String criteria, String type,
+			String criteria,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSegmentsEntry(
-			segmentsEntryKey, nameMap, descriptionMap, active, criteria, type,
+			segmentsEntryKey, nameMap, descriptionMap, active, criteria,
 			serviceContext);
 	}
 
 	public static SegmentsEntry addSegmentsEntry(
 			String segmentsEntryKey, Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap, boolean active,
-			String criteria, String source, String type,
+			String criteria, String source,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSegmentsEntry(
 			segmentsEntryKey, nameMap, descriptionMap, active, criteria, source,
-			type, serviceContext);
+			serviceContext);
 	}
 
 	public static void addSegmentsEntryClassPKs(

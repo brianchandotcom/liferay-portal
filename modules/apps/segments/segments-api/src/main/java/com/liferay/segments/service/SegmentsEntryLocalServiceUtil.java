@@ -54,25 +54,25 @@ public class SegmentsEntryLocalServiceUtil {
 	public static SegmentsEntry addSegmentsEntry(
 			String segmentsEntryKey, Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap, boolean active,
-			String criteria, String type,
+			String criteria,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSegmentsEntry(
-			segmentsEntryKey, nameMap, descriptionMap, active, criteria, type,
+			segmentsEntryKey, nameMap, descriptionMap, active, criteria,
 			serviceContext);
 	}
 
 	public static SegmentsEntry addSegmentsEntry(
 			String segmentsEntryKey, Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap, boolean active,
-			String criteria, String source, String type,
+			String criteria, String source,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSegmentsEntry(
 			segmentsEntryKey, nameMap, descriptionMap, active, criteria, source,
-			type, serviceContext);
+			serviceContext);
 	}
 
 	public static void addSegmentsEntryClassPKs(
@@ -338,11 +338,11 @@ public class SegmentsEntryLocalServiceUtil {
 	}
 
 	public static List<SegmentsEntry> getSegmentsEntries(
-		long groupId, String source, String type, int start, int end,
+		long groupId, String source, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return getService().getSegmentsEntries(
-			groupId, source, type, start, end, orderByComparator);
+			groupId, source, start, end, orderByComparator);
 	}
 
 	public static List<SegmentsEntry> getSegmentsEntriesBySource(

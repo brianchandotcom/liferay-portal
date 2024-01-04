@@ -64,7 +64,7 @@ public class KeywordsFieldPredicateProvider implements FieldPredicateProvider {
 			objectDefinitionColumnSupplier,
 			AssetTagTable.INSTANCE.name.in(
 				TransformUtil.transformToArray(
-					rights, String::valueOf, Object.class)));
+					rights, String::valueOf, String.class)));
 	}
 
 	@Override

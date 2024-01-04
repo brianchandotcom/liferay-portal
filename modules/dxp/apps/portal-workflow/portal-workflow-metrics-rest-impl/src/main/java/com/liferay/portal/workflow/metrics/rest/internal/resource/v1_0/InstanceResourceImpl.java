@@ -1016,7 +1016,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		termsQuery.addValues(
 			transformToArray(
-				instancesMap.keySet(), String::valueOf, Object.class));
+				instancesMap.keySet(), String::valueOf, String.class));
 
 		filterBooleanQuery.addMustQueryClauses(
 			_queries.term("blocked", Boolean.FALSE),

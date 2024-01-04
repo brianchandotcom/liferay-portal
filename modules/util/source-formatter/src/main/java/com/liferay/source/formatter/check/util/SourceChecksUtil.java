@@ -17,6 +17,7 @@ import com.liferay.source.formatter.check.FileCheck;
 import com.liferay.source.formatter.check.GradleFileCheck;
 import com.liferay.source.formatter.check.JavaTermCheck;
 import com.liferay.source.formatter.check.SourceCheck;
+import com.liferay.source.formatter.check.UpgradeCatchAllJavaTermOrderCheck;
 import com.liferay.source.formatter.check.configuration.SourceCheckConfiguration;
 import com.liferay.source.formatter.check.configuration.SourceChecksResult;
 import com.liferay.source.formatter.check.configuration.SourceFormatterConfiguration;
@@ -121,7 +122,10 @@ public class SourceChecksUtil {
 					sourceChecksResult, (GradleFileCheck)sourceCheck,
 					gradleFile, fileName, absolutePath);
 			}
-			else {
+			else if (!((sourceCheck instanceof
+						UpgradeCatchAllJavaTermOrderCheck) &&
+					   !fileName.endsWith(".java"))) {
+
 				if (javaClass == null) {
 					try {
 						javaClass = JavaClassParser.parseJavaClass(

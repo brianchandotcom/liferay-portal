@@ -8,10 +8,12 @@ package com.liferay.headless.admin.address.internal.resource.v1_0;
 import com.liferay.headless.admin.address.dto.v1_0.Region;
 import com.liferay.headless.admin.address.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.address.resource.v1_0.RegionResource;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -27,7 +29,10 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -111,22 +116,48 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 	public Region postCountryRegion(Long countryId, Region region)
 		throws Exception {
 
-		return _toRegion(
+		_setTitleMap(region);
+
+		com.liferay.portal.kernel.model.Region serviceBuilderRegion =
 			_regionService.addRegion(
 				countryId, GetterUtil.get(region.getActive(), true),
 				region.getName(), GetterUtil.getDouble(region.getPosition()),
 				region.getRegionCode(),
 				ServiceContextFactory.getInstance(
-					Region.class.getName(), contextHttpServletRequest)));
+					Region.class.getName(), contextHttpServletRequest));
+
+		_regionLocalService.updateRegionLocalizations(
+			serviceBuilderRegion, region.getTitle_i18n());
+
+		return _toRegion(serviceBuilderRegion);
 	}
 
 	@Override
 	public Region putRegion(Long regionId, Region region) throws Exception {
-		return _toRegion(
+		_setTitleMap(region);
+
+		com.liferay.portal.kernel.model.Region serviceBuilderRegion =
 			_regionService.updateRegion(
 				regionId, GetterUtil.get(region.getActive(), true),
 				region.getName(), GetterUtil.getDouble(region.getPosition()),
-				region.getRegionCode()));
+				region.getRegionCode());
+
+		_regionLocalService.updateRegionLocalizations(
+			serviceBuilderRegion, region.getTitle_i18n());
+
+		return _toRegion(serviceBuilderRegion);
+	}
+
+	private void _setTitleMap(Region region) {
+		if (region.getTitle_i18n() == null) {
+			Map<String, String> titleMap = new HashMap<>();
+
+			for (Locale locale : _language.getAvailableLocales()) {
+				titleMap.put(_language.getLanguageId(locale), null);
+			}
+
+			region.setTitle_i18n(titleMap);
+		}
 	}
 
 	private OrderByComparator<com.liferay.portal.kernel.model.Region>
@@ -162,6 +193,12 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 
 	@Reference
 	private CountryService _countryService;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private RegionLocalService _regionLocalService;
 
 	@Reference(target = DTOConverterConstants.REGION_RESOURCE_DTO_CONVERTER)
 	private DTOConverter<com.liferay.portal.kernel.model.Region, Region>

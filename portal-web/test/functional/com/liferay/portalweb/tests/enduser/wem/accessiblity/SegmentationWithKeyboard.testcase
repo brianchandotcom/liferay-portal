@@ -351,4 +351,59 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177714. When accessing the back button via keyboard navigation the tooltip is Go to Segments in the page editor of Segments."
+	@priority = 2
+	test ViewBackButtonTooltipForSegmentsAdminViaKeyboard {
+		task ("Given a site administrator adds a segment") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoAdd();
+
+			WaitForVisible(locator1 = "Segmentation#ADD_FIELD_POSITION");
+		}
+
+		task ("When the site administrator hovers over the back button via keyboard") {
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Segments",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Given a site administrator edits the segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Regular Role",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Test Segment Name",
+				selectedOption = "Power User");
+
+			Navigator.gotoBack();
+
+			Segmentation.editSegment(entry = "Test Segment Name");
+
+			WaitForElementPresent(locator1 = "Segmentation#CRITERION_INPUT_ANY");
+		}
+
+		task ("When the site administrator hovers over the back button via keyboard") {
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Segments",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 }

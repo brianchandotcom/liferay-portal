@@ -96,6 +96,9 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		else if (type == JobEntity.Type.PORTAL_APP_RELEASE) {
 			return new PortalAppReleaseJobEntity(jsonObject);
 		}
+		else if (type == JobEntity.Type.PORTAL_BUILD_OPTIMIZATION) {
+			return new PortalBuildOptimizationJobEntity(jsonObject);
+		}
 		else if (type == JobEntity.Type.PORTAL_FIXPACK_RELEASE) {
 			return new PortalFixpackReleaseJobEntity(jsonObject);
 		}

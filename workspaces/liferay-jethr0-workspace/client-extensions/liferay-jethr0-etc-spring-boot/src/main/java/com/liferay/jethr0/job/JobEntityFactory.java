@@ -54,6 +54,9 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		else if (type == JobEntity.Type.JENKINS_PULL_REQUEST) {
 			return new JenkinsPullRequestJobEntity(jsonObject);
 		}
+		else if (type == JobEntity.Type.LEGACY_DATABASE_DUMP) {
+			return new LegacyDatabaseDumpJobEntity(jsonObject);
+		}
 		else if (type == JobEntity.Type.LIFERAY_BINARIES_CACHE_UPDATER) {
 			return new LiferayBinariesCacheUpdaterJobEntity(jsonObject);
 		}

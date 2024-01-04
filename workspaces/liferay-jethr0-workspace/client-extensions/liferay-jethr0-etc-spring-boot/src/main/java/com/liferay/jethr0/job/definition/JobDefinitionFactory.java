@@ -56,6 +56,9 @@ public class JobDefinitionFactory {
 		else if (type == JobEntity.Type.JENKINS_PULL_REQUEST) {
 			return new JenkinsPullRequestJobDefinition(type);
 		}
+		else if (type == JobEntity.Type.LEGACY_DATABASE_DUMP) {
+			return new LegacyDatabaseDumpJobDefinition(type);
+		}
 		else if (type == JobEntity.Type.LIFERAY_BINARIES_CACHE_UPDATER) {
 			return new LiferayBinariesCacheUpdaterJobDefinition(type);
 		}

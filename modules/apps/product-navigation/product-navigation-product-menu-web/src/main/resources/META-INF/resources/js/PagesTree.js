@@ -243,13 +243,20 @@ function TreeItem({
 
 							{Liferay.FeatureFlags['LPS-196847'] &&
 							!item.hasGuestViewPermission ? (
-								<ClayIcon
-									className="c-ml-2 c-mt-0 flex-shrink-0 icon-tooltip lfr-portal-tooltip text-4"
-									data-title={Liferay.Language.get(
+								<span
+									aria-label={Liferay.Language.get(
 										'restricted-page'
 									)}
-									symbol="lock"
-								/>
+									className="c-ml-2 icon-tooltip lfr-portal-tooltip"
+									title={Liferay.Language.get(
+										'restricted-page'
+									)}
+								>
+									<ClayIcon
+										className="c-mt-0 flex-shrink-0 icon-tooltip text-4"
+										symbol="lock"
+									/>
+								</span>
 							) : null}
 
 							{Liferay.FeatureFlags['LPS-174417'] &&
@@ -326,13 +333,20 @@ function TreeItem({
 
 									{Liferay.FeatureFlags['LPS-196847'] &&
 									!item.hasGuestViewPermission ? (
-										<ClayIcon
-											className="c-ml-2 c-mt-0 flex-shrink-0 icon-tooltip lfr-portal-tooltip text-4"
-											data-title={Liferay.Language.get(
+										<span
+											aria-label={Liferay.Language.get(
 												'restricted-page'
 											)}
-											symbol="lock"
-										/>
+											className="c-ml-2 icon-tooltip lfr-portal-tooltip"
+											title={Liferay.Language.get(
+												'restricted-page'
+											)}
+										>
+											<ClayIcon
+												className="c-mt-0 flex-shrink-0 text-4"
+												symbol="lock"
+											/>
+										</span>
 									) : null}
 
 									{Liferay.FeatureFlags['LPS-174417'] &&

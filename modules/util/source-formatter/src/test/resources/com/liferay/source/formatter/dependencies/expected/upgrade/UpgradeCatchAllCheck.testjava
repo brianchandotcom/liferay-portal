@@ -134,15 +134,15 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CookiesManagerUtil.getCookieValue(name, httpServletRequest, toUpperCase);
 	}
 
+	public void method(Indexer<?> indexer) {
+		indexer.getSearchClassNames();
+	}
+
 	public void method(
 		Indexer<?> indexer, ServiceReference<Indexer<?>> serviceReference) {
 
 		Map<Indexer<?>, Indexer<?>> indexerRequests = new LinkedHashMap<>();
 		List<Indexer<?>> indexers = portlet.getIndexerInstances();
-	}
-
-	public void method(Indexer<?> indexer) {
-		indexer.getSearchClassNames();
 	}
 
 	public void method(long commerceOrderId) {
@@ -631,6 +631,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 	private FDSTableSchemaBuilderFactory _fDSTableSchemaBuilderFactory;
 
 	@Reference
+	private HtmlParser _htmlParser;
+
+	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;
 
 	@Reference
@@ -646,8 +649,5 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	@Reference
 	private UserService _userService;
-
-	@Reference
-	private HtmlParser _htmlParser;
 
 }

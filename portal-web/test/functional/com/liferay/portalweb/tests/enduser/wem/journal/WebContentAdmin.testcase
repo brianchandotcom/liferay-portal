@@ -392,6 +392,132 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-202596. The content creator could search comments associated to web contents by keywords."
+	@priority = 3
+	test CanSearchWebContentCommentsByKeyword {
+		property custom.properties = "feature.flag.LPS-196768=true";
+
+		task ("Given a site administrator has a folder and a web content with 2 comments") {
+			JSONWebcontent.addFolder(
+				folderName = "Liferay",
+				groupName = "Test Site Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Liferay DXP");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Web Content Display");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Liferay DXP");
+
+			WebContentDisplayPortlet.configureSetup(metadataNameList = "Comments");
+
+			WebContentDisplayPortlet.saveConfiguration();
+
+			Comments.addPG(entryComment = "Welcome to Liferay DXP");
+
+			Comments.addPG(entryComment = "Enjoy using the best DXP on Earth!");
+		}
+
+		task ("When go to web content admin") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Then assert can search comments by keyword") {
+			task ("Search the 'Liferay' keywords") {
+				Search.searchCP(searchTerm = "Liferay");
+			}
+
+			task ("View the search results message is 2 Results Found for 'Liferay'") {
+				AssertTextEquals(
+					locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+					value1 = "2 Results Found for \"Liferay\"");
+			}
+
+			task ("View both folder and web content are shown") {
+				for (var webContentTitle : list "Liferay,Liferay DXP") {
+					WebContent.viewTitle(webContentTitle = ${webContentTitle});
+				}
+			}
+
+			task ("View the selection of Search In is All Fields and change the selection to Comments") {
+				Click(
+					buttonId = "JournalPortlet_searchIn",
+					locator1 = "Button#BUTTON_ID",
+					value1 = "All Fields");
+
+				MenuItem.click(menuItem = "Comments");
+			}
+
+			task ("View the search results message is 1 Result Found for "Liferay"") {
+				AssertTextEquals(
+					locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+					value1 = "1 Result Found for \"Liferay\"");
+			}
+
+			task ("View only the comment Welcome to Liferay DXP is shown") {
+				AssertVisible(
+					key_webContentComment = "Welcome to Liferay DXP",
+					locator1 = "WebContentSearchResults#COMMENT");
+			}
+
+			task ("Clear the search results") {
+				Search.clearSearchResult();
+			}
+
+			task ("Search the 'DXP' keywords") {
+				Search.searchCP(searchTerm = "DXP");
+			}
+
+			task ("View the search results message is 1 Result Found for "DXP"") {
+				AssertTextEquals(
+					locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+					value1 = "1 Result Found for \"DXP\"");
+			}
+
+			task ("View only the web content is shown") {
+				WebContent.viewTitle(webContentTitle = "Liferay DXP");
+
+				WebContent.viewNotPresentCP(webContentTitle = "Liferay");
+			}
+
+			task ("Change the selection to Comments") {
+				Click(
+					buttonId = "JournalPortlet_searchIn",
+					locator1 = "Button#BUTTON_ID",
+					value1 = "All Fields");
+
+				MenuItem.click(menuItem = "Comments");
+			}
+
+			task ("View the search results message is 2 Results Found for 'DXP'") {
+				AssertTextEquals(
+					locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
+					value1 = "2 Results Found for \"DXP\"");
+			}
+
+			task ("View both comments are shown") {
+				for (var webContentComment : list "Welcome to Liferay DXP,Enjoy using the best DXP on Earth!") {
+					AssertVisible(
+						key_webContentComment = ${webContentComment},
+						locator1 = "WebContentSearchResults#COMMENT");
+				}
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-197694. The user could configure notifications on the configuration page of Web Content admin in asset library."
 	@priority = 4
 	test ConfigureWebContentNotificationsInAssetLibrary {

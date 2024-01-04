@@ -25,6 +25,11 @@
 	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//h6[2]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COMMENT</td>
+	<td>//*[@data-qa-id='row']//h6[contains(.,'${key_webContentComment}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

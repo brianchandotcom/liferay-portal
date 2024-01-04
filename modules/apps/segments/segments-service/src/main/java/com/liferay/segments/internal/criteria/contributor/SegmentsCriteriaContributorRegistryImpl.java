@@ -5,22 +5,18 @@
 
 package com.liferay.segments.internal.criteria.contributor;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -36,29 +32,7 @@ public class SegmentsCriteriaContributorRegistryImpl
 	public List<SegmentsCriteriaContributor> getSegmentsCriteriaContributors(
 		String className) {
 
-		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
-			new ArrayList<>();
-
-		if (Validator.isNotNull(className)) {
-			List<SegmentsCriteriaContributor>
-				classNameSegmentsCriteriaContributors =
-					_serviceTrackerMap.getService(className);
-
-			if (ListUtil.isNotEmpty(classNameSegmentsCriteriaContributors)) {
-				segmentsCriteriaContributors.addAll(
-					classNameSegmentsCriteriaContributors);
-			}
-		}
-
-		List<SegmentsCriteriaContributor> generalSegmentsCriteriaContributors =
-			_serviceTrackerMap.getService("*");
-
-		if (ListUtil.isNotEmpty(generalSegmentsCriteriaContributors)) {
-			segmentsCriteriaContributors.addAll(
-				generalSegmentsCriteriaContributors);
-		}
-
-		return segmentsCriteriaContributors;
+		return _serviceTrackerList.toList();
 	}
 
 	@Override
@@ -73,10 +47,9 @@ public class SegmentsCriteriaContributorRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, SegmentsCriteriaContributor.class,
 			"(segments.criteria.contributor.model.class.name=*)",
-			new SegmentsCriteriaContributorServiceReferenceMapper(),
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<>(
 					"segments.criteria.contributor.priority")));
@@ -84,26 +57,9 @@ public class SegmentsCriteriaContributorRegistryImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_serviceTrackerList.close();
 	}
 
-	private ServiceTrackerMap<String, List<SegmentsCriteriaContributor>>
-		_serviceTrackerMap;
-
-	private class SegmentsCriteriaContributorServiceReferenceMapper
-		implements ServiceReferenceMapper<String, SegmentsCriteriaContributor> {
-
-		@Override
-		public void map(
-			ServiceReference<SegmentsCriteriaContributor> serviceReference,
-			Emitter<String> emitter) {
-
-			String modelClassName = (String)serviceReference.getProperty(
-				"segments.criteria.contributor.model.class.name");
-
-			emitter.emit(modelClassName);
-		}
-
-	}
+	private ServiceTrackerList<SegmentsCriteriaContributor> _serviceTrackerList;
 
 }

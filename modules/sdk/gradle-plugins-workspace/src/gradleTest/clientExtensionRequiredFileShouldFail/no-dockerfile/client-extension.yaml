@@ -1,0 +1,21 @@
+assemble:
+    - include:
+          - "**/*.js"
+          - package.json
+no-dockerfile-oauth-application-user-agent:
+    .serviceAddress: localhost:3001
+    .serviceScheme: http
+    name: No Dockerfile Node OAuth Application User Agent
+    scopes:
+        - Liferay.Headless.Admin.Workflow.everything
+    type: oAuthApplicationUserAgent
+no-dockerfile-object-action-1:
+    name: No Dockerfile Object Action 1
+    oAuth2ApplicationExternalReferenceCode: no-dockerfile-oauth-application-user-agent
+    resourcePath: /sample/object/action/1
+    type: objectAction
+no-dockerfile-object-action-2:
+    name: No Dockerfile Object Action 2
+    oAuth2ApplicationExternalReferenceCode: no-dockerfile-oauth-application-user-agent
+    resourcePath: /sample/object/action/2
+    type: objectAction

@@ -1,0 +1,4 @@
+ext.expectedErrorMessage = 'Required file "LCP.json" not found in project "no-lcp-json"'
+ext.taskPath = ":no-lcp-json:createClientExtensionConfig"
+
+apply from: "./_baseShouldFailTestCase.gradle"

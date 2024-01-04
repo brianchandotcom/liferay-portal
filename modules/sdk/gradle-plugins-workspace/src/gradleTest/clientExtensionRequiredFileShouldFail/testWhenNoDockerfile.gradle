@@ -1,0 +1,4 @@
+ext.expectedErrorMessage = 'Required file "Dockerfile" not found in project "no-dockerfile"'
+ext.taskPath = ":no-dockerfile:createClientExtensionConfig"
+
+apply from: "./_baseShouldFailTestCase.gradle"

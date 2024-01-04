@@ -289,32 +289,22 @@ public class SegmentsEntryLocalServiceImpl
 
 	@Override
 	public List<SegmentsEntry> getSegmentsEntries(
-		long groupId, boolean active, String type, int start, int end,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		return segmentsEntryPersistence.findByG_A_T(
-			_portal.getCurrentAndAncestorSiteGroupIds(groupId), active, type,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public List<SegmentsEntry> getSegmentsEntries(
-		long groupId, boolean active, String source, String type, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		return segmentsEntryPersistence.findByG_A_S_T(
-			_portal.getCurrentAndAncestorSiteGroupIds(groupId), active, source,
-			type, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<SegmentsEntry> getSegmentsEntries(
 		long groupId, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return segmentsEntryPersistence.findByGroupId(
 			_portal.getCurrentAndAncestorSiteGroupIds(groupId), start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public List<SegmentsEntry> getSegmentsEntries(
+		long groupId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return segmentsEntryPersistence.findByG_S_T(
+			_portal.getCurrentAndAncestorSiteGroupIds(groupId), source, type,
+			start, end, orderByComparator);
 	}
 
 	@Override

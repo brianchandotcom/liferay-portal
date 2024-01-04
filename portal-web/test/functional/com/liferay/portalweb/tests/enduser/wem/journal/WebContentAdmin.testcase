@@ -138,6 +138,39 @@ definition {
 			webContentTitle = "WC WebContent Title 3");
 	}
 
+	@description = "This is a test for LPS-202596. The content creator could filter web contents by Status type."
+	@priority = 3
+	test CanFilterByStatusType {
+		property custom.properties = "feature.flag.LPS-196768=true";
+
+		task ("Given a site administrator has a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("When open the dropdown menu of Filter") {
+			Click(locator1 = "ManagementBar#FILTER");
+		}
+
+		task ("Then View Any, Draft, Approved, Expired and Scheduled are under Filter by Status section") {
+			var i = 1;
+
+			for (var menuItem : list "Any,Draft,Approved,Expired,Scheduled") {
+				AssertVisible(
+					index = ${i},
+					key_menuItem = ${menuItem},
+					key_subheader = "Filter by Status",
+					locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
+
+				var i = ${i} + 1;
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-202596. The content creator could filter web contents by Versions type."
 	@priority = 3
 	test CanFilterByVersionsType {

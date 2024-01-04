@@ -214,13 +214,20 @@ export function LayoutSelector({layoutType}) {
 
 							{Liferay.FeatureFlags['LPS-196847'] &&
 								!layout.hasGuestViewPermission && (
-									<ClayIcon
-										className="c-ml-2 lfr-portal-tooltip text-4 text-dark"
-										data-title={Liferay.Language.get(
+									<span
+										aria-label={Liferay.Language.get(
 											'restricted-page'
 										)}
-										symbol="lock"
-									/>
+										className="c-ml-2 lfr-portal-tooltip"
+										title={Liferay.Language.get(
+											'restricted-page'
+										)}
+									>
+										<ClayIcon
+											className="text-4 text-dark"
+											symbol="lock"
+										/>
+									</span>
 								)}
 						</ClayDropDown.Item>
 					))}

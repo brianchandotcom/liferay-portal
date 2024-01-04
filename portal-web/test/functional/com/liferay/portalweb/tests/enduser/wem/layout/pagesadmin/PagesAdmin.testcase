@@ -1636,6 +1636,73 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177675. The tooltip of the back button is Go to Pages in the view mode of a DPT related to a Web Content in a collection page from the Miller Columns."
+	@priority = 3
+	test ViewBackButtonTooltipInAssociatedDisplayPageTemplate {
+		task ("Given a site administrator accesses to the associated display page") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = ${randomSiteName},
+				subType = "Basic Web Content");
+
+			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
+				groupName = ${randomSiteName},
+				layoutPageTemplateEntryName = "Display Page Name",
+				type = "Display Page Template");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+
+			AssetListsAdmin.selectAsset(
+				assetType = "Basic Web Content",
+				entryList = "Web Content Title");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
+			ContentPages.addCollectionPage(
+				collectionName = "Manual Collection",
+				pageName = "Test Page Name",
+				tabName = "Collections");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View Collection Items",
+				pageName = "Test Page Name");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Page.gotoCollectionEntryEllipsisItem(
+				item = "View Display Page",
+				tableEntry = "Web Content Title");
+
+			SelectFrameTop();
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver.javaScriptFocus(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Pages",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-144559. The breadcrumb should be unavailable to Link to a Page of This Site."
 	@priority = 4
 	test ViewBreadcrumbUnavailableToLinkToAPageOfThisSite {

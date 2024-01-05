@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
@@ -203,8 +202,5 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 
 	@Reference
 	private Localization _localization;
-
-	@Reference
-	private Portal _portal;
 
 }

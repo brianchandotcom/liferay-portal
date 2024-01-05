@@ -150,7 +150,9 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 				element.attr("style", sb.toString());
 			}
 
-			if (fragmentEntryProcessorContext.isViewMode()) {
+			if (fragmentEntryProcessorContext.isPreviewMode() ||
+				fragmentEntryProcessorContext.isViewMode()) {
+
 				element.removeAttr("data-lfr-background-image-id");
 			}
 		}

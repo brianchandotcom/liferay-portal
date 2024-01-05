@@ -38,7 +38,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -198,62 +197,6 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		return false;
 	}
 
-	public boolean syncedAccountFieldsChanged(long companyId) throws Exception {
-		AnalyticsConfiguration analyticsConfiguration =
-			getAnalyticsConfiguration(companyId);
-
-		String[] previousSyncedAccountFieldNames =
-			analyticsConfiguration.previousSyncedAccountFieldNames();
-
-		Arrays.sort(previousSyncedAccountFieldNames);
-
-		String[] syncedAccountFieldNames =
-			analyticsConfiguration.syncedAccountFieldNames();
-
-		Arrays.sort(syncedAccountFieldNames);
-
-		if ((previousSyncedAccountFieldNames.length != 0) &&
-			!Arrays.equals(
-				previousSyncedAccountFieldNames, syncedAccountFieldNames)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean syncedAccountSettingsChanged(long companyId)
-		throws Exception {
-
-		AnalyticsConfiguration analyticsConfiguration =
-			getAnalyticsConfiguration(companyId);
-
-		if (analyticsConfiguration.previousSyncAllAccounts() !=
-				analyticsConfiguration.syncAllAccounts()) {
-
-			return true;
-		}
-
-		String[] previousSyncedAccountGroupIds =
-			analyticsConfiguration.previousSyncedAccountGroupIds();
-
-		Arrays.sort(previousSyncedAccountGroupIds);
-
-		String[] syncedAccountGroupIds =
-			analyticsConfiguration.syncedAccountGroupIds();
-
-		Arrays.sort(syncedAccountGroupIds);
-
-		if (!analyticsConfiguration.syncAllAccounts() &&
-			!Arrays.equals(
-				previousSyncedAccountGroupIds, syncedAccountGroupIds)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean syncedAccountSettingsEnabled(long companyId)
 		throws Exception {
 
@@ -275,108 +218,6 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		return false;
 	}
 
-	public boolean syncedCommerceSettingsChanged(long companyId)
-		throws Exception {
-
-		AnalyticsConfiguration analyticsConfiguration =
-			getAnalyticsConfiguration(companyId);
-
-		String[] commerceSyncEnabledAnalyticsChannelIds =
-			analyticsConfiguration.commerceSyncEnabledAnalyticsChannelIds();
-
-		Arrays.sort(commerceSyncEnabledAnalyticsChannelIds);
-
-		String[] previousCommerceSyncEnabledAnalyticsChannelIds =
-			analyticsConfiguration.
-				previousCommerceSyncEnabledAnalyticsChannelIds();
-
-		Arrays.sort(previousCommerceSyncEnabledAnalyticsChannelIds);
-
-		String[] previousSyncedCommerceChannelIds =
-			analyticsConfiguration.previousSyncedCommerceChannelIds();
-
-		Arrays.sort(previousSyncedCommerceChannelIds);
-
-		String[] syncedCommerceChannelIds =
-			analyticsConfiguration.syncedCommerceChannelIds();
-
-		Arrays.sort(syncedCommerceChannelIds);
-
-		if (!Arrays.equals(
-				commerceSyncEnabledAnalyticsChannelIds,
-				previousCommerceSyncEnabledAnalyticsChannelIds) ||
-			!Arrays.equals(
-				previousSyncedCommerceChannelIds, syncedCommerceChannelIds)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean syncedCommerceSettingsEnabled(long companyId)
-		throws Exception {
-
-		AnalyticsConfiguration analyticsConfiguration =
-			getAnalyticsConfiguration(companyId);
-
-		String[] commerceSyncEnabledAnalyticsChannelIds =
-			analyticsConfiguration.commerceSyncEnabledAnalyticsChannelIds();
-		String[] syncedCommerceChannelIds =
-			analyticsConfiguration.syncedCommerceChannelIds();
-
-		if ((commerceSyncEnabledAnalyticsChannelIds.length != 0) &&
-			(syncedCommerceChannelIds.length != 0)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean syncedContactSettingsChanged(long companyId)
-		throws Exception {
-
-		AnalyticsConfiguration analyticsConfiguration =
-			getAnalyticsConfiguration(companyId);
-
-		if (analyticsConfiguration.previousSyncAllContacts() !=
-				analyticsConfiguration.syncAllContacts()) {
-
-			return true;
-		}
-
-		String[] previousSyncedOrganizationIds =
-			analyticsConfiguration.previousSyncedOrganizationIds();
-
-		Arrays.sort(previousSyncedOrganizationIds);
-
-		String[] previousSyncedUserGroupIds =
-			analyticsConfiguration.previousSyncedUserGroupIds();
-
-		Arrays.sort(previousSyncedUserGroupIds);
-
-		String[] syncedOrganizationIds =
-			analyticsConfiguration.syncedOrganizationIds();
-
-		Arrays.sort(syncedOrganizationIds);
-
-		String[] syncedUserGroupIds =
-			analyticsConfiguration.syncedUserGroupIds();
-
-		Arrays.sort(syncedUserGroupIds);
-
-		if (!analyticsConfiguration.syncAllContacts() &&
-			(!Arrays.equals(
-				previousSyncedOrganizationIds, syncedOrganizationIds) ||
-			 !Arrays.equals(previousSyncedUserGroupIds, syncedUserGroupIds))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean syncedContactSettingsEnabled(long companyId)
 		throws Exception {
 
@@ -391,91 +232,6 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		if (analyticsConfiguration.syncAllContacts() ||
 			(syncedOrganizationIds.length != 0) ||
 			(syncedUserGroupIds.length != 0)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean syncedOrderFieldsChanged(long companyId) throws Exception {
-		AnalyticsConfiguration analyticsConfiguration =
-			getAnalyticsConfiguration(companyId);
-
-		String[] previousSyncedOrderFieldNames =
-			analyticsConfiguration.previousSyncedOrderFieldNames();
-
-		Arrays.sort(previousSyncedOrderFieldNames);
-
-		String[] syncedOrderFieldNames =
-			analyticsConfiguration.syncedOrderFieldNames();
-
-		Arrays.sort(syncedOrderFieldNames);
-
-		if ((previousSyncedOrderFieldNames.length != 0) &&
-			!Arrays.equals(
-				previousSyncedOrderFieldNames, syncedOrderFieldNames)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean syncedProductFieldsChanged(long companyId) throws Exception {
-		AnalyticsConfiguration analyticsConfiguration =
-			getAnalyticsConfiguration(companyId);
-
-		String[] previousSyncedProductFieldNames =
-			analyticsConfiguration.previousSyncedProductFieldNames();
-
-		Arrays.sort(previousSyncedProductFieldNames);
-
-		String[] syncedProductFieldNames =
-			analyticsConfiguration.syncedProductFieldNames();
-
-		Arrays.sort(syncedProductFieldNames);
-
-		if ((previousSyncedProductFieldNames.length != 0) &&
-			!Arrays.equals(
-				previousSyncedProductFieldNames, syncedProductFieldNames)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean syncedUserFieldsChanged(long companyId) throws Exception {
-		AnalyticsConfiguration analyticsConfiguration =
-			getAnalyticsConfiguration(companyId);
-
-		String[] previousSyncedContactFieldNames =
-			analyticsConfiguration.previousSyncedContactFieldNames();
-
-		Arrays.sort(previousSyncedContactFieldNames);
-
-		String[] previousSyncedUserFieldNames =
-			analyticsConfiguration.previousSyncedUserFieldNames();
-
-		Arrays.sort(previousSyncedUserFieldNames);
-
-		String[] syncedContactFieldNames =
-			analyticsConfiguration.syncedContactFieldNames();
-
-		Arrays.sort(syncedContactFieldNames);
-
-		String[] syncedUserFieldNames =
-			analyticsConfiguration.syncedUserFieldNames();
-
-		Arrays.sort(syncedUserFieldNames);
-
-		if ((previousSyncedContactFieldNames.length != 0) &&
-			(previousSyncedUserFieldNames.length != 0) &&
-			(!Arrays.equals(
-				previousSyncedUserFieldNames, syncedUserFieldNames) ||
-			 !Arrays.equals(
-				 previousSyncedContactFieldNames, syncedContactFieldNames))) {
 
 			return true;
 		}

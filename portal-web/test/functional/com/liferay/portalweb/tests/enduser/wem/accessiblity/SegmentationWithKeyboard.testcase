@@ -406,4 +406,41 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177714. When adding a segment to a new experience and accessing the back button via keyboard, the tooltip of the back button is Go to [pageName] where [pageName] is the name of the page in the Page Editor view."
+	@priority = 2
+	test ViewBackButtonTooltipOfNewSegmentFromNewExperienceViaKeyboard {
+		task ("Given a site administrator accesses to the segment editor from new experience") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.openNewExperienceEditor();
+
+			Click(
+				key_text = "New Segment",
+				locator1 = "Button#ANY");
+
+			WaitForVisible(locator1 = "Segmentation#ADD_FIELD_POSITION");
+		}
+
+		task ("When the site administrator hovers over the back button via keyboard") {
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			AssertElementFocused(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Test Page Name",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 }

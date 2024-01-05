@@ -80,14 +80,14 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 					_accountEntryModelResourcePermission)
 			).build(),
 			booleanQuery -> {
-				int commerceChannelAccountEntryRelsCount =
+				int count =
 					_commerceChannelAccountEntryRelLocalService.
 						getCommerceChannelAccountEntryRelsCount(
 							channelId, null,
 							CommerceChannelAccountEntryRelConstants.
 								TYPE_ELIGIBILITY);
 
-				if (commerceChannelAccountEntryRelsCount > 0) {
+				if (count > 0) {
 					BooleanFilter booleanFilter =
 						booleanQuery.getPreBooleanFilter();
 
@@ -129,13 +129,13 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			_getType(account), _getStatus(account),
 			_createServiceContext(account));
 
-		int commerceChannelAccountEntryRelsCount =
+		int count =
 			_commerceChannelAccountEntryRelLocalService.
 				getCommerceChannelAccountEntryRelsCount(
 					channelId, null,
 					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
 
-		if (commerceChannelAccountEntryRelsCount > 0) {
+		if (count > 0) {
 			_commerceChannelAccountEntryRelLocalService.
 				addCommerceChannelAccountEntryRel(
 					contextUser.getUserId(), accountEntry.getAccountEntryId(),

@@ -110,15 +110,13 @@ public class AccountEntrySearchPermissionFilterContributor
 		long commerceChannelId = AccountEntryUtil.getCommerceChannelId(
 			CommerceContextThreadLocal.get(), CommerceGroupThreadLocal.get());
 
-		int commerceChannelAccountEntryRelCounts =
+		int count =
 			_commerceChannelAccountEntryRelService.
 				getCommerceChannelAccountEntryRelsCount(
 					commerceChannelId, null,
 					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
 
-		if ((commerceChannelId > 0) &&
-			(commerceChannelAccountEntryRelCounts > 0)) {
-
+		if ((commerceChannelId > 0) && (count > 0)) {
 			TermsFilter accountUserIdsTermsFilter = new TermsFilter(
 				"accountUserIds");
 

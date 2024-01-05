@@ -46,13 +46,13 @@ public class CommerceChannelAccountEntryQualifiersDisplayContext {
 	}
 
 	public String getActiveAccountEligibility() throws PortalException {
-		long commerceChannelAccountRelsCount =
+		long count =
 			_commerceChannelAccountEntryRelService.
 				getCommerceChannelAccountEntryRelsCount(
 					getCommerceChannelId(), null,
 					CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
 
-		if (commerceChannelAccountRelsCount > 0) {
+		if (count > 0) {
 			return "accounts";
 		}
 

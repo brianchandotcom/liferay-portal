@@ -28,7 +28,6 @@ import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.io.IOException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -131,11 +130,6 @@ public class CommerceChannelSiteScreenNavigationEntry
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.channel.web)"
-	)
-	private ServletContext _servletContext;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

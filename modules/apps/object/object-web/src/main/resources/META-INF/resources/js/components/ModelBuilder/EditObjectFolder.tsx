@@ -40,6 +40,7 @@ import {TYPES} from './ModelBuilderContext/typesEnum';
 import {RedirectToEditObjectDetailsModal} from './ObjectDefinitionNode/RedirectToEditObjectDetailsModal';
 import {RightSideBar} from './RightSidebar/index';
 import {LeftSidebarItem, ObjectRelationshipEdgeData} from './types';
+import {updatePreviousURLParam} from './utils';
 
 import './EditObjectFolder.scss';
 import {ModalMoveObjectDefinition} from '../ViewObjectDefinitions/ModalMoveObjectDefinition';
@@ -241,6 +242,14 @@ export default function EditObjectFolder({
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedObjectFolder.objectFolderItems?.length]);
+
+	Liferay.on('beforeNavigate', () => {
+		updatePreviousURLParam('objectFolderName', objectFolderName);
+	});
+
+	window.addEventListener('popstate', () => {
+		updatePreviousURLParam('objectFolderName', objectFolderName);
+	});
 
 	return (
 		<>

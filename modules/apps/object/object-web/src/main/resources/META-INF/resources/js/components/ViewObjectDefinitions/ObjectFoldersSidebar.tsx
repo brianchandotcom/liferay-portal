@@ -146,6 +146,19 @@ export default function ObjectFoldersSideBar({
 						key={currentObjectFolder.name}
 						onClick={() => {
 							setSelectedObjectFolder(currentObjectFolder);
+
+							const currentUrl = new URL(window.location.href);
+
+							currentUrl.searchParams.set(
+								'objectFolderName',
+								currentObjectFolder.name
+							);
+
+							window.history.replaceState(
+								null,
+								'',
+								currentUrl.href
+							);
 						}}
 					>
 						<span className="lfr__object-web-view-object-definitions-object-folder-list-item-label">

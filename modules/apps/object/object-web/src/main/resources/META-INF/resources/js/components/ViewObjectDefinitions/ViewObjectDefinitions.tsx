@@ -348,15 +348,41 @@ export default function ViewObjectDefinitions({
 	useEffect(() => {
 		if (Liferay.FeatureFlags['LPS-148856']) {
 			const makeFetch = async () => {
-				API.getAllObjectFolders().then((response) => {
-					setObjectFoldersRequestInfo(response);
-					setSelectedObjectFolder(response.items[0]);
-					setLoading(false);
-				});
+				const allObjectFolders = await API.getAllObjectFolders();
+
+				setObjectFoldersRequestInfo(allObjectFolders);
 
 				const objectDefinitions = await API.getAllObjectDefinitions();
 
 				setObjectDefinitionActions(objectDefinitions.actions);
+
+				const currentUrl = new URL(window.location.href);
+
+				const objectFolderNameSearchParam = currentUrl.searchParams.get(
+					'objectFolderName'
+				);
+
+				if (objectFolderNameSearchParam === null) {
+					currentUrl.searchParams.set(
+						'objectFolderName',
+						'Uncategorized'
+					);
+
+					window.history.replaceState(null, '', currentUrl.href);
+
+					setSelectedObjectFolder(allObjectFolders.items[0]);
+				}
+				else {
+					const newSelectedFolder = allObjectFolders.items.find(
+						(folder) => folder.name === objectFolderNameSearchParam
+					);
+
+					if (newSelectedFolder) {
+						setSelectedObjectFolder(newSelectedFolder);
+					}
+				}
+
+				setLoading(false);
 			};
 
 			makeFetch();

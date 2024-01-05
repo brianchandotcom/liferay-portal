@@ -89,6 +89,10 @@ export declare function getUnsupportedObjectRelationshipErrorMessage(
 			learnMessage: string;
 	  }
 	| undefined;
+export declare function updatePreviousURLParam(
+	paramType: string,
+	paramValue: string
+): void;
 export declare function updateURLParam(
 	paramType: string,
 	paramValue: string

@@ -143,7 +143,7 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		registry.register(
 			"3.2.8", "3.2.9",
 			new DLLegacyConfigurationUpgradeProcess(
-				_dlConfigurationUpgradeHelper, _prefsProps,
+				_dlConfigurationUpgradeHelper,
 				_prefsPropsToConfigurationUpgradeHelper));
 	}
 

@@ -9,11 +9,14 @@ import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.configuration.DLFileEntryConfiguration;
 import com.liferay.document.library.constants.DLFileEntryConfigurationConstants;
 import com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration;
+import com.liferay.document.library.internal.constants.LegacyDLKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PrefsProps;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
 
@@ -60,6 +63,64 @@ public class DLConfigurationUpgradeHelper {
 		}
 
 		return configurations[0];
+	}
+
+	public boolean hasConfigurationChanges() throws Exception {
+		Configuration dlSizeLimitConfiguration = getSystemConfiguration(
+			DLSizeLimitConfiguration.class.getName());
+
+		if (dlSizeLimitConfiguration != null) {
+			Dictionary<String, Object> dictionary =
+				dlSizeLimitConfiguration.getProperties();
+
+			if (dictionary != null) {
+				Long fileMaxSize = (Long)dictionary.get("fileMaxSize");
+
+				if ((fileMaxSize != null) && (fileMaxSize != 0)) {
+					return false;
+				}
+			}
+		}
+
+		Configuration dlFileEntryConfiguration = getSystemConfiguration(
+			DLConfigurationUpgradeHelper.
+				CLASS_NAME_DL_FILE_ENTRY_CONFIGURATION);
+
+		if (dlFileEntryConfiguration != null) {
+			Dictionary<String, Object> dictionary =
+				dlFileEntryConfiguration.getProperties();
+
+			if (dictionary != null) {
+				Long previewableProcessorMaxSize = (Long)dictionary.get(
+					"previewableProcessorMaxSize");
+
+				if ((previewableProcessorMaxSize != null) &&
+					(previewableProcessorMaxSize !=
+						DLFileEntryConfigurationConstants.
+							PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT)) {
+
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	public boolean hasLegacyProps() throws Exception {
+		if (Validator.isNull(
+				_prefsProps.getString(LegacyDLKeys.DL_FILE_EXTENSIONS, null)) &&
+			Validator.isNull(
+				_prefsProps.getString(LegacyDLKeys.DL_FILE_MAX_SIZE, null)) &&
+			Validator.isNull(
+				_prefsProps.getString(
+					LegacyDLKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE,
+					null))) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	public void updateDLSizeLimitConfiguration() throws Exception {
@@ -234,5 +295,8 @@ public class DLConfigurationUpgradeHelper {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 }

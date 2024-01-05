@@ -177,8 +177,8 @@ public class PicklistObjectFieldBusinessType
 							oldObjectField.getObjectFieldId());
 
 				_objectStateFlowLocalService.updateObjectStateFlow(
-					oldObjectStateFlow.getObjectStateFlowId(),
 					newObjectField.getUserId(),
+					oldObjectStateFlow.getObjectStateFlowId(),
 					newObjectStateFlow.getObjectStates());
 
 				_objectStateFlowLocalService.updateDefaultObjectStateFlow(

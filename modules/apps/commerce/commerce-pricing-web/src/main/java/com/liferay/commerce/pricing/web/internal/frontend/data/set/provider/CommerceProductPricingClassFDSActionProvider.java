@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
@@ -141,8 +140,5 @@ public class CommerceProductPricingClassFDSActionProvider
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 }

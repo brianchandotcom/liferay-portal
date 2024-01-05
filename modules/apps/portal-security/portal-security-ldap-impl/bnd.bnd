@@ -6,4 +6,6 @@ Import-Package:\
 	\
 	!org.junit.*,\
 	\
+	javax.net.ssl,\
+	\
 	*

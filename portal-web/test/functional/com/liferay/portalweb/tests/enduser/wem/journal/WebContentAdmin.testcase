@@ -1826,6 +1826,39 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191927. The status and version of web content are shown on the header of info panel."
+	@priority = 3
+	test ViewStatusAndVersionOfWebContentOnHeaderOfInfoPanel {
+		task ("Given a site administrator has a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("When the site administrator navigates to the info panel of web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			LexiconList.checkListCheckbox(listEntry = "Web Content Title");
+
+			ManagementBar.clickInfo();
+		}
+
+		task ("Then the site administrator could see status and version shown on the header of info panel") {
+			AssertTextEquals(
+				locator1 = "Sidebar#COMPONENT_TITLE",
+				value1 = "Web Content Title");
+
+			AssertVisible(
+				key_labelName = "Version 1.0",
+				locator1 = "Sidebar#HEADER_LABEL");
+
+			AssertVisible(
+				key_labelName = "Approved",
+				locator1 = "Sidebar#HEADER_LABEL");
+		}
+	}
+
 	@description = "This is a test for LPS-146458. View the available status filters of Web Content admin."
 	@priority = 5
 	test ViewStatusFiltersOfWebContentAdmin {

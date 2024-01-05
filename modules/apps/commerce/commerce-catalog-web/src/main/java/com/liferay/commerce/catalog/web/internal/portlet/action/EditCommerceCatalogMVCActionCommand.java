@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 
 import java.util.Map;
@@ -265,9 +264,6 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private Portal _portal;
 
 	private class CommerceCatalogCallable implements Callable<Object> {
 

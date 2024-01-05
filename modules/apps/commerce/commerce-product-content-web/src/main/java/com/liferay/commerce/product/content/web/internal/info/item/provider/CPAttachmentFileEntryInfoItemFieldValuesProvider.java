@@ -10,7 +10,6 @@ import com.liferay.commerce.product.content.util.CPMedia;
 import com.liferay.commerce.product.content.web.internal.info.CPAttachmentFileEntryInfoItemFields;
 import com.liferay.commerce.product.content.web.internal.util.CPMediaImpl;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
-import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
 import com.liferay.info.field.InfoFieldValue;
@@ -260,10 +259,6 @@ public class CPAttachmentFileEntryInfoItemFieldValuesProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPAttachmentFileEntryInfoItemFieldValuesProvider.class);
-
-	@Reference
-	private CPSpecificationOptionLocalService
-		_cpSpecificationOptionLocalService;
 
 	@Reference
 	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;

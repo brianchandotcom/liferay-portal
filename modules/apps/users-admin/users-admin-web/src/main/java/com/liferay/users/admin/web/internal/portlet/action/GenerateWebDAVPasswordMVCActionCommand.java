@@ -8,7 +8,6 @@ package com.liferay.users.admin.web.internal.portlet.action;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -48,9 +47,6 @@ public class GenerateWebDAVPasswordMVCActionCommand
 
 		actionResponse.setRenderParameter("webDAVPassword", plainToken);
 	}
-
-	@Reference
-	private PasswordEncryptor _passwordEncryptor;
 
 	@Reference
 	private Portal _portal;

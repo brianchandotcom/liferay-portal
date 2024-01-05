@@ -9,7 +9,6 @@ import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
-import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -112,9 +111,6 @@ public class QuoteProcessedCommerceOrderStatusImpl
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile CommerceOrderLocalService _commerceOrderLocalService;
-
-	@Reference
-	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
 
 	@Reference
 	private Language _language;

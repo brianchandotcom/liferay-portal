@@ -46,11 +46,7 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 
 			JSONObject jsonObject = null;
 
-			if (cmd.equals("getSiteJSONObject")) {
-				jsonObject = _siteJSONObjectProvider.getSiteJSONObject(
-					resourceRequest);
-			}
-			else if (cmd.equals("getSitesJSONObject")) {
+			if (cmd.equals("getSitesJSONObject")) {
 				jsonObject = _siteJSONObjectProvider.getSitesJSONObject(
 					resourceRequest);
 			}

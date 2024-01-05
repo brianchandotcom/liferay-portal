@@ -755,7 +755,6 @@ public class DBUpgradeClient {
 		new LinkedHashMap<String, AppServer>() {
 			{
 				put("jboss", AppServer.getJBossEAPAppServer());
-				put("tcserver", AppServer.getTCServerAppServer());
 				put("tomcat", AppServer.getTomcatAppServer());
 				put("weblogic", AppServer.getWebLogicAppServer());
 				put("websphere", AppServer.getWebSphereAppServer());

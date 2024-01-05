@@ -23,13 +23,6 @@ public class AppServer {
 			"/standalone/deployments/ROOT.war", "jboss");
 	}
 
-	public static AppServer getTCServerAppServer() {
-		return new AppServer(
-			"../../../../tc-server-4.0.2",
-			"/runtimes/tomcat-9.0.10.A.RELEASE/lib", "/instances/liferay/lib",
-			"/instances/liferay/webapps/ROOT", "tomcat");
-	}
-
 	public static AppServer getTomcatAppServer() {
 		return new AppServer(
 			"../../tomcat-9.0.83", "/bin", "/lib", "/webapps/ROOT", "tomcat");

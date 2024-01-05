@@ -9,7 +9,6 @@ import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
@@ -86,9 +85,6 @@ public class CPAttachmentFileEntriesRelatedInfoItemCollectionProvider
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
-
-	@Reference
-	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private Language _language;

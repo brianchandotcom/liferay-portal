@@ -69,8 +69,8 @@
 .f-call-to-action .call-to-action:active {
 	background: linear-gradient(135deg, #e7efff 60%, #baccee 100%);
 	box-shadow: none;
-	outline-offset: 2px;
 	outline: var(--color-brand-primary-lighten-2) solid 2px;
+	outline-offset: 2px;
 	text-decoration: none;
 }
 

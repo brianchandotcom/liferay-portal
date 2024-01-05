@@ -11,20 +11,20 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "py-0",
-								"label": "None"
+								"label": "None",
+								"value": "py-0"
 							},
 							{
-								"value": "small",
-								"label": "Small"
+								"label": "Small",
+								"value": "small"
 							},
 							{
-								"value": "medium",
-								"label": "Medium (default)"
+								"label": "Medium (default)",
+								"value": "medium"
 							},
 							{
-								"value": "large",
-								"label": "Large"
+								"label": "Large",
+								"value": "large"
 							}
 						]
 					}

@@ -11,12 +11,12 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "row",
-								"label": "Horizontal"
+								"label": "Horizontal",
+								"value": "row"
 							},
 							{
-								"value": "column",
-								"label": "Vertical"
+								"label": "Vertical",
+								"value": "column"
 							}
 						]
 					}
@@ -30,28 +30,28 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "flex-start",
-								"label": "Start"
+								"label": "Start",
+								"value": "flex-start"
 							},
 							{
-								"value": "center",
-								"label": "Center"
+								"label": "Center",
+								"value": "center"
 							},
 							{
-								"value": "end",
-								"label": "End"
+								"label": "End",
+								"value": "end"
 							},
 							{
-								"value": "space-between",
-								"label": "Space Between"
+								"label": "Space Between",
+								"value": "space-between"
 							},
 							{
-								"value": "space-around",
-								"label": "Space Around"
+								"label": "Space Around",
+								"value": "space-around"
 							},
 							{
-								"value": "space-evenly",
-								"label": "Space Evenly"
+								"label": "Space Evenly",
+								"value": "space-evenly"
 							}
 						]
 					}
@@ -65,16 +65,16 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "flex-start",
-								"label": "Top"
+								"label": "Top",
+								"value": "flex-start"
 							},
 							{
-								"value": "center",
-								"label": "Center"
+								"label": "Center",
+								"value": "center"
 							},
 							{
-								"value": "flex-end",
-								"label": "Bottom"
+								"label": "Bottom",
+								"value": "flex-end"
 							}
 						]
 					}
@@ -88,12 +88,12 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "wrap",
-								"label": "Wrap"
+								"label": "Wrap",
+								"value": "wrap"
 							},
 							{
-								"value": "nowrap",
-								"label": "No Wrap"
+								"label": "No Wrap",
+								"value": "nowrap"
 							}
 						]
 					}
@@ -123,12 +123,12 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "manual",
-								"label": "Manual"
+								"label": "Manual",
+								"value": "manual"
 							},
 							{
-								"value": "auto",
-								"label": "Auto"
+								"label": "Auto",
+								"value": "auto"
 							}
 						]
 					}
@@ -163,12 +163,12 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "row",
-								"label": "Horizontal"
+								"label": "Horizontal",
+								"value": "row"
 							},
 							{
-								"value": "column",
-								"label": "Vertical"
+								"label": "Vertical",
+								"value": "column"
 							}
 						]
 					}
@@ -182,28 +182,28 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "flex-start",
-								"label": "Start"
+								"label": "Start",
+								"value": "flex-start"
 							},
 							{
-								"value": "center",
-								"label": "Center"
+								"label": "Center",
+								"value": "center"
 							},
 							{
-								"value": "end",
-								"label": "End"
+								"label": "End",
+								"value": "end"
 							},
 							{
-								"value": "space-between",
-								"label": "Space Between"
+								"label": "Space Between",
+								"value": "space-between"
 							},
 							{
-								"value": "space-around",
-								"label": "Space Around"
+								"label": "Space Around",
+								"value": "space-around"
 							},
 							{
-								"value": "space-evenly",
-								"label": "Space Evenly"
+								"label": "Space Evenly",
+								"value": "space-evenly"
 							}
 						]
 					}
@@ -217,16 +217,16 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "flex-start",
-								"label": "Top"
+								"label": "Top",
+								"value": "flex-start"
 							},
 							{
-								"value": "center",
-								"label": "Center"
+								"label": "Center",
+								"value": "center"
 							},
 							{
-								"value": "flex-end",
-								"label": "Bottom"
+								"label": "Bottom",
+								"value": "flex-end"
 							}
 						]
 					}
@@ -240,12 +240,12 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "wrap",
-								"label": "Wrap"
+								"label": "Wrap",
+								"value": "wrap"
 							},
 							{
-								"value": "nowrap",
-								"label": "No Wrap"
+								"label": "No Wrap",
+								"value": "nowrap"
 							}
 						]
 					}
@@ -275,12 +275,12 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "manual",
-								"label": "Manual"
+								"label": "Manual",
+								"value": "manual"
 							},
 							{
-								"value": "auto",
-								"label": "Auto"
+								"label": "Auto",
+								"value": "auto"
 							}
 						]
 					}
@@ -315,12 +315,12 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "row",
-								"label": "Horizontal"
+								"label": "Horizontal",
+								"value": "row"
 							},
 							{
-								"value": "column",
-								"label": "Vertical"
+								"label": "Vertical",
+								"value": "column"
 							}
 						]
 					}
@@ -334,28 +334,28 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "flex-start",
-								"label": "Start"
+								"label": "Start",
+								"value": "flex-start"
 							},
 							{
-								"value": "center",
-								"label": "Center"
+								"label": "Center",
+								"value": "center"
 							},
 							{
-								"value": "end",
-								"label": "End"
+								"label": "End",
+								"value": "end"
 							},
 							{
-								"value": "space-between",
-								"label": "Space Between"
+								"label": "Space Between",
+								"value": "space-between"
 							},
 							{
-								"value": "space-around",
-								"label": "Space Around"
+								"label": "Space Around",
+								"value": "space-around"
 							},
 							{
-								"value": "space-evenly",
-								"label": "Space Evenly"
+								"label": "Space Evenly",
+								"value": "space-evenly"
 							}
 						]
 					}
@@ -369,16 +369,16 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "flex-start",
-								"label": "Top"
+								"label": "Top",
+								"value": "flex-start"
 							},
 							{
-								"value": "center",
-								"label": "Center"
+								"label": "Center",
+								"value": "center"
 							},
 							{
-								"value": "flex-end",
-								"label": "Bottom"
+								"label": "Bottom",
+								"value": "flex-end"
 							}
 						]
 					}
@@ -392,12 +392,12 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "wrap",
-								"label": "Wrap"
+								"label": "Wrap",
+								"value": "wrap"
 							},
 							{
-								"value": "nowrap",
-								"label": "No Wrap"
+								"label": "No Wrap",
+								"value": "nowrap"
 							}
 						]
 					}
@@ -427,12 +427,12 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "manual",
-								"label": "Manual"
+								"label": "Manual",
+								"value": "manual"
 							},
 							{
-								"value": "auto",
-								"label": "Auto"
+								"label": "Auto",
+								"value": "auto"
 							}
 						]
 					}

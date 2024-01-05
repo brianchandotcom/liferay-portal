@@ -3,28 +3,28 @@
 		{
 			"fields": [
 				{
-                    "dataType": "string",
-                    "defaultValue": "large",
-                    "label": "Size",
-                    "name": "size",
-                    "type": "select",
-                    "typeOptions": {
-                        "validValues": [
-                        	{
-                                "value": "small",
-                                "label": "Small"
-                            },
-                        	{
-                                "value": "medium",
-                                "label": "Medium"
-                            },
-                            {
-                                "value": "large",
-                                "label": "Large"
-                            }
-                        ]
-                    }
-                },
+					"dataType": "string",
+					"defaultValue": "large",
+					"label": "Size",
+					"name": "size",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Small",
+								"value": "small"
+							},
+							{
+								"label": "Medium",
+								"value": "medium"
+							},
+							{
+								"label": "Large",
+								"value": "large"
+							}
+						]
+					}
+				},
 				{
 					"dataType": "string",
 					"defaultValue": false,

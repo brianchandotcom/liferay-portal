@@ -2,9 +2,9 @@
 	align-items: center;
 	display: flex;
 	margin: auto;
+	max-width: max-content;
 	min-height: calc(100% - 1rem);
 	width: max-content;
-	max-width: max-content;
 }
 
 #f-modal .modal-dialog .modal-content {

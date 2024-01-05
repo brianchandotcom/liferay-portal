@@ -3,25 +3,25 @@
 		{
 			"fields": [
 				{
-                    "dataType": "string",
-                    "defaultValue": "medium",
-                    "label": "Size",
-                    "name": "size",
-                    "type": "select",
-                    "typeOptions": {
-                        "validValues": [
-                        	{
-                                "value": "medium",
-                                "label": "Medium"
-                            },
-                            {
-                                "value": "large",
-                                "label": "Large"
-                            }
-                        ]
-                    }
-                },
-                {
+					"dataType": "string",
+					"defaultValue": "medium",
+					"label": "Size",
+					"name": "size",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Medium",
+								"value": "medium"
+							},
+							{
+								"label": "Large",
+								"value": "large"
+							}
+						]
+					}
+				},
+				{
 					"dataType": "string",
 					"defaultValue": false,
 					"description": "Check for nesting in other links, don't enter a URL",

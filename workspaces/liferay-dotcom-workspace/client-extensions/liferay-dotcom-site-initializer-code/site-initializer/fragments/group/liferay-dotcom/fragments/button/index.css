@@ -18,11 +18,11 @@
 	-ms-user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
-	user-select: none;
-	display: flex;
-	justify-content: center;
 	align-items: center;
+	display: flex;
 	gap: 8px;
+	justify-content: center;
+	user-select: none;
 	width: fit-content;
 }
 
@@ -50,11 +50,11 @@
 .f-www-button:focus,
 .f-www-button:focus-visible {
 	background-color: var(--color-action-primary-hover);
-	color: var(--color-action-primary-inverted);
-	text-decoration: none;
 	box-shadow: none;
-	outline-offset: 2px;
+	color: var(--color-action-primary-inverted);
 	outline: var(--color-brand-primary-lighten-2) solid 2px;
+	outline-offset: 2px;
+	text-decoration: none;
 }
 
 .f-www-button:active {
@@ -88,9 +88,9 @@
 .button-icon-right,
 .button-icon-left {
 	height: 16px;
-	width: 16px;
 	min-width: 16px !important;
 	transition: color 0.15s ease-in-out;
+	width: 16px;
 }
 
 .button-icon-right svg,

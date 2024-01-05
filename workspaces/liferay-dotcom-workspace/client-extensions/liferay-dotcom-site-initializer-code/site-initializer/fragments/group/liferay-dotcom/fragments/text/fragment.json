@@ -11,40 +11,40 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "span",
-								"label": "span"
+								"label": "span",
+								"value": "span"
 							},
 							{
-								"value": "div",
-								"label": "div"
+								"label": "div",
+								"value": "div"
 							},
 							{
-								"value": "h1",
-								"label": "H1"
+								"label": "H1",
+								"value": "h1"
 							},
 							{
-								"value": "h2",
-								"label": "H2"
+								"label": "H2",
+								"value": "h2"
 							},
 							{
-								"value": "h3",
-								"label": "H3"
+								"label": "H3",
+								"value": "h3"
 							},
 							{
-								"value": "h4",
-								"label": "H4"
+								"label": "H4",
+								"value": "h4"
 							},
 							{
-								"value": "h5",
-								"label": "H5"
+								"label": "H5",
+								"value": "h5"
 							},
 							{
-								"value": "h6",
-								"label": "H6"
+								"label": "H6",
+								"value": "h6"
 							},
 							{
-								"value": "p",
-								"label": "Paragraph"
+								"label": "Paragraph",
+								"value": "p"
 							}
 						]
 					}
@@ -63,57 +63,57 @@
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
-						   {
-								"value": "displayLarge",
-								"label": "Display Large"
-							},
-						   {
-								"value": "displaySmall",
-								"label": "Display Small"
+							{
+								"label": "Display Large",
+								"value": "displayLarge"
 							},
 							{
-								"value": "heading1",
-								"label": "Heading 1"
+								"label": "Display Small",
+								"value": "displaySmall"
 							},
 							{
-								"value": "heading2",
-								"label": "Heading 2"
+								"label": "Heading 1",
+								"value": "heading1"
 							},
 							{
-								"value": "heading3",
-								"label": "Heading 3"
+								"label": "Heading 2",
+								"value": "heading2"
 							},
 							{
-								"value": "heading4",
-								"label": "Heading 4"
+								"label": "Heading 3",
+								"value": "heading3"
 							},
 							{
-								"value": "heading5",
-								"label": "Heading 5"
+								"label": "Heading 4",
+								"value": "heading4"
 							},
 							{
-								"value": "heading6",
-								"label": "Heading 6"
+								"label": "Heading 5",
+								"value": "heading5"
 							},
 							{
-								"value": "paragraphLarge",
-								"label": "Paragraph Large"
+								"label": "Heading 6",
+								"value": "heading6"
 							},
 							{
-								"value": "paragraphBase",
-								"label": "Paragraph Base"
+								"label": "Paragraph Large",
+								"value": "paragraphLarge"
 							},
 							{
-								"value": "paragraphSmall",
-								"label": "Paragraph Small"
+								"label": "Paragraph Base",
+								"value": "paragraphBase"
 							},
 							{
-								"value": "paragraphXSmall",
-								"label": "Paragraph XSmall"
+								"label": "Paragraph Small",
+								"value": "paragraphSmall"
 							},
 							{
-								"value": "paragraphTiny",
-								"label": "Paragraph Tiny"
+								"label": "Paragraph XSmall",
+								"value": "paragraphXSmall"
+							},
+							{
+								"label": "Paragraph Tiny",
+								"value": "paragraphTiny"
 							}
 						]
 					}
@@ -127,16 +127,16 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "var(--font-weight-bold)",
-								"label": "Bold"
+								"label": "Bold",
+								"value": "var(--font-weight-bold)"
 							},
 							{
-								"value": "var(--font-weight-semi-bold)",
-								"label": "SemiBold"
+								"label": "SemiBold",
+								"value": "var(--font-weight-semi-bold)"
 							},
 							{
-								"value": "var(--font-weight-regular)",
-								"label": "Regular"
+								"label": "Regular",
+								"value": "var(--font-weight-regular)"
 							}
 						]
 					}

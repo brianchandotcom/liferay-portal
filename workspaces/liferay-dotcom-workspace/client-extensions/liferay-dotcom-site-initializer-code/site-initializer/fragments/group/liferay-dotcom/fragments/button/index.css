@@ -14,7 +14,9 @@
 	padding-top: var(--btn-padding-y);
 	text-align: center;
 	text-transform: none;
-	transition: color var(--transition-base), background-color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+	transition: color var(--transition-base),
+		background-color var(--transition-base),
+		border-color var(--transition-base), box-shadow var(--transition-base);
 	-ms-user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
@@ -82,7 +84,7 @@
 .f-www-button:focus .button-arrow-right,
 .f-www-button:focus-visible .button-arrow-right,
 .f-www-button:active .button-arrow-right {
-	transform: translatex(4px);
+	transform: translateX(4px);
 }
 
 .button-icon-right,

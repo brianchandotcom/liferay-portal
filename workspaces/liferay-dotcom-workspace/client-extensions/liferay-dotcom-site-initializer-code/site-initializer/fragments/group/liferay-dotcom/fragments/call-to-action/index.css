@@ -13,12 +13,18 @@
 		margin-left: 1rem;
 	}
 
-	.f-call-to-action .call-to-action.hasLabel .call-to-action-content-left .call-to-action-label {
+	.f-call-to-action
+		.call-to-action.hasLabel
+		.call-to-action-content-left
+		.call-to-action-label {
 		margin-bottom: 1rem;
 		margin-left: 0;
 	}
 
-	.f-call-to-action .call-to-action.hasLabel .call-to-action-content-left .call-to-action-text {
+	.f-call-to-action
+		.call-to-action.hasLabel
+		.call-to-action-content-left
+		.call-to-action-text {
 		margin-left: 0;
 	}
 
@@ -60,8 +66,15 @@
 	color: var(--white);
 }
 
-.f-call-to-action .call-to-action.loud .call-to-action-content .call-to-action-label {
-	background-color: color-mix(in srgb, var(--color-neutral-10) 15%, transparent);
+.f-call-to-action
+	.call-to-action.loud
+	.call-to-action-content
+	.call-to-action-label {
+	background-color: color-mix(
+		in sRGB,
+		var(--color-neutral-10) 15%,
+		transparent
+	);
 }
 
 .f-call-to-action .call-to-action:hover,
@@ -92,8 +105,15 @@
 	margin: 16px;
 }
 
-.f-call-to-action .call-to-action .call-to-action-content .call-to-action-label {
-	background-color: color-mix(in srgb, var(--color-action-primary-default) 5%, transparent);
+.f-call-to-action
+	.call-to-action
+	.call-to-action-content
+	.call-to-action-label {
+	background-color: color-mix(
+		in sRGB,
+		var(--color-action-primary-default) 5%,
+		transparent
+	);
 	border-radius: 10px;
 	font-size: 14px;
 	font-weight: 600;
@@ -105,7 +125,10 @@
 	white-space: nowrap;
 }
 
-.f-call-to-action .call-to-action .call-to-action-content .call-to-action-content-left {
+.f-call-to-action
+	.call-to-action
+	.call-to-action-content
+	.call-to-action-content-left {
 	align-items: center;
 }
 

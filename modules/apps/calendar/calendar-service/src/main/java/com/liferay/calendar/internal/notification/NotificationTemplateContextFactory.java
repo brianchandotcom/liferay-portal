@@ -241,14 +241,6 @@ public class NotificationTemplateContextFactory {
 		Layout layout = layoutLocalService.fetchLayout(
 			group.getDefaultPublicPlid());
 
-		if (layout == null) {
-			group = groupLocalService.getGroup(
-				user.getCompanyId(), GroupConstants.GUEST);
-
-			layout = layoutLocalService.fetchLayout(
-				group.getDefaultPublicPlid());
-		}
-
 		if (portalURL == null) {
 			portalURL = _getPortalURL(group.getCompanyId(), group.getGroupId());
 		}

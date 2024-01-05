@@ -54,4 +54,13 @@ definition {
 		return ${articleId};
 	}
 
+	@summary = "Updates only the fields received in the request body, leaving any other fields untouched."
+	macro patchStructuredContent(structuredContentId = null, data = null) {
+		Variables.assertDefined(parameterList = "${data},${structuredContentId}");
+
+		HeadlessWebcontentAPI._patchStructuredContent(
+			data = ${data},
+			structuredContentId = ${structuredContentId});
+	}
+
 }

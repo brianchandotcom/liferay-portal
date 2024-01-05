@@ -423,6 +423,26 @@ definition {
 		return ${curl};
 	}
 
+	@summary = "Updates only the fields received in the request body, leaving any other fields untouched."
+	macro _patchStructuredContent(structuredContentId = null, data = null) {
+		Variables.assertDefined(parameterList = "${data},${structuredContentId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d {
+					${data}
+				}
+		''';
+
+		var curl = JSONCurlUtil.patch(${curl});
+
+		return ${curl};
+	}
+
 	@summary = "Default summary"
 	macro _sortStructureContent(sortvalue = null) {
 		Variables.assertDefined(parameterList = ${sortvalue});

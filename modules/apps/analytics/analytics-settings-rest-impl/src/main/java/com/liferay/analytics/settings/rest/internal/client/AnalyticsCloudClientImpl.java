@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -47,6 +48,7 @@ import java.net.HttpURLConnection;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -139,7 +141,9 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 
 		JSONObject contentJSONObject = _jsonFactory.createJSONObject(content);
 
-		return contentJSONObject.toMap();
+		_connectionProperties = contentJSONObject.toMap();
+
+		return _connectionProperties;
 	}
 
 	public AnalyticsDataSource disconnectAnalyticsDataSource(long companyId)
@@ -165,6 +169,8 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 			Http.Response response = options.getResponse();
 
 			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				_connectionProperties = new HashMap<>();
+
 				return ObjectMapperHolder._objectMapper.readValue(
 					content, AnalyticsDataSource.class);
 			}
@@ -197,9 +203,11 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 
 			Http.Options options = _getOptions(analyticsConfiguration);
 
-			String url =
-				analyticsConfiguration.liferayAnalyticsFaroBackendURL() +
-					"/api/1.0/channels";
+			String liferayAnalyticsFaroBackendURL = GetterUtil.getString(
+				_connectionProperties.get("liferayAnalyticsFaroBackendURL"),
+				analyticsConfiguration.liferayAnalyticsFaroBackendURL());
+
+			String url = liferayAnalyticsFaroBackendURL + "/api/1.0/channels";
 
 			if (Validator.isNotNull(keywords)) {
 				url = HttpComponentsUtil.addParameter(url, "filter", keywords);
@@ -476,11 +484,16 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 
 		options.addHeader(
 			"OSB-Asah-Faro-Backend-Security-Signature",
-			analyticsConfiguration.
-				liferayAnalyticsFaroBackendSecuritySignature());
+			GetterUtil.getString(
+				_connectionProperties.get(
+					"liferayAnalyticsFaroBackendSecuritySignature"),
+				analyticsConfiguration.
+					liferayAnalyticsFaroBackendSecuritySignature()));
 		options.addHeader(
 			"OSB-Asah-Project-ID",
-			analyticsConfiguration.liferayAnalyticsProjectId());
+			GetterUtil.getString(
+				_connectionProperties.get("liferayAnalyticsProjectId"),
+				analyticsConfiguration.liferayAnalyticsProjectId()));
 
 		return options;
 	}
@@ -495,6 +508,8 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	private Map<String, Object> _connectionProperties = new HashMap<>();
 
 	@Reference
 	private GroupLocalService _groupLocalService;

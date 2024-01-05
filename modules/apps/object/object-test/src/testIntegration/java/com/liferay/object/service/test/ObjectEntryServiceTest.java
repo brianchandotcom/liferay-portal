@@ -755,10 +755,10 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_guestUser);
 
-		_configurationProvider.saveCompanyConfiguration(
-			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
+		_configurationProvider.saveSystemConfiguration(
+			ObjectConfiguration.class,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"duration", 1
+				"duration", 2
 			).put(
 				"maximumFileSizeForGuestUsers", 25
 			).put(
@@ -779,7 +779,7 @@ public class ObjectEntryServiceTest {
 			Date.from(
 				LocalDate.now(
 				).minusDays(
-					7
+					14
 				).atStartOfDay(
 					ZoneId.systemDefault()
 				).toInstant()));
@@ -810,8 +810,8 @@ public class ObjectEntryServiceTest {
 			_assertUserNotificationEventsCount();
 		}
 		finally {
-			_configurationProvider.deleteCompanyConfiguration(
-				ObjectConfiguration.class, TestPropsValues.getCompanyId());
+			_configurationProvider.deleteSystemConfiguration(
+				ObjectConfiguration.class);
 		}
 	}
 

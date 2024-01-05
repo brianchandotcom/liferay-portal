@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
@@ -180,8 +179,5 @@ public class EditCPDefinitionCPDisplayLayoutMVCActionCommand
 
 	@Reference
 	private CPDisplayLayoutService _cpDisplayLayoutService;
-
-	@Reference
-	private Portal _portal;
 
 }

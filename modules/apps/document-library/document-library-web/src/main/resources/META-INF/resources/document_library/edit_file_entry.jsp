@@ -308,7 +308,6 @@ renderResponse.setTitle(headerTitle);
 								if (selectFolderButton) {
 									selectFolderButton.addEventListener('click', (event) => {
 										Liferay.Util.openSelectionModal({
-											selectEventName: '<portlet:namespace />folderSelected',
 											multiple: false,
 											onSelect: function (selectedItem) {
 												if (!selectedItem) {
@@ -324,6 +323,7 @@ renderResponse.setTitle(headerTitle);
 
 												Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
 											},
+											selectEventName: '<portlet:namespace />folderSelected',
 											title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
 											<%

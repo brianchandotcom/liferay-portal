@@ -31,17 +31,17 @@ public class RootCauseAnalysisToolJobDefinition extends BaseJobDefinition {
 		jobParameterDefinitions.add(
 			new JenkinsBranchURLJobParameterDefinition());
 		jobParameterDefinitions.add(
-			new PortalBranchURLJobParameterDefinition());
-		jobParameterDefinitions.add(
-			new PortalUpstreamBranchNameJobParameterDefinition());
-		jobParameterDefinitions.add(
-			new PortalBranchSHAsJobParameterDefinition());
-		jobParameterDefinitions.add(
-			new PortalCherryPickSHAsJobParameterDefinition());
-		jobParameterDefinitions.add(
 			new PortalBatchNameJobParameterDefinition());
 		jobParameterDefinitions.add(
 			new PortalBatchTestSelectorJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new PortalBranchSHAsJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new PortalBranchURLJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new PortalCherryPickSHAsJobParameterDefinition());
+		jobParameterDefinitions.add(
+			new PortalUpstreamBranchNameJobParameterDefinition());
 		jobParameterDefinitions.add(new RetestCountJobParameterDefinition());
 
 		return jobParameterDefinitions;

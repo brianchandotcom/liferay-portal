@@ -276,7 +276,7 @@ paths:
             tags: ["CTCollection"]
     "/ct-collections-by-class":
         get:
-            operationId: getCTCollectionsByClass
+            operationId: getCtCollectionsByClassPage
             parameters:
                 - in: query
                   name: classNameId

@@ -22,8 +22,6 @@ definition {
 
 			User.firstLoginPG();
 
-			Navigator.openURL();
-
 			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
@@ -3062,6 +3060,38 @@ definition {
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
 				value1 = "");
+		}
+	}
+
+	@description = "This is a test for LPS-177714. When executing an A/B test with Analytics Cloud and you open the edit mode of the variant, the tooltip displayed for the Back button is "Go to [pageName]" where [pageName] is the name of the content page associated with the variant."
+	@priority = 3
+	test ViewBackButtonTooltipOfPageEditorFromVariant {
+		task ("Given a site administrator accesses to the page editor from variant") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.publish();
+
+			ABTest.openABTestPanel();
+
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB Test Name");
+
+			ABTest.createVariant(variantName = "New Variant Name");
+
+			ABTest.editVariant(variantName = "New Variant Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Content Page",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 	}
 

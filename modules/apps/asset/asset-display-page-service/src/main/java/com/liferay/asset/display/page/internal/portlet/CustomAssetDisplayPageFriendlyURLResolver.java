@@ -12,7 +12,6 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -52,9 +51,6 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)requestContext.get("request");
-
-		httpServletRequest.setAttribute(
-			LayoutDisplayPageWebKeys.DEFAULT_LAYOUT_DISPLAY, Boolean.FALSE);
 
 		return actualURL;
 	}

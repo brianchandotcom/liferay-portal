@@ -805,6 +805,122 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 	}
 
 	@Test
+	public void testGetNotifiableUsers() throws Exception {
+
+		// Roles Scripted Assignment
+
+		Organization organization = _createOrganization(true);
+
+		User organizationReviewerUser = _createUser(
+			_ORGANIZATION_CONTENT_REVIEWER, organization.getGroup());
+
+		_organizationLocalService.addUserOrganization(
+			organizationReviewerUser.getUserId(), organization);
+
+		User siteAdministratorUser = _createUser(
+			RoleConstants.SITE_ADMINISTRATOR);
+
+		_organizationLocalService.addUserOrganization(
+			siteAdministratorUser.getUserId(), organization);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			organization.getGroupId());
+
+		_activateWorkflow(
+			organization.getGroupId(), BlogsEntry.class.getName(), 0, 0,
+			_SCRIPTED_SINGLE_APPROVER_1, 1);
+
+		_addBlogsEntry(siteAdministratorUser);
+
+		WorkflowTask workflowTask = _getWorkflowTask(
+			organizationReviewerUser, null, false, null, 0);
+
+		Assert.assertEquals(
+			_sort(
+				Arrays.asList(
+					_adminUser, _companyAdminUser, organizationReviewerUser,
+					UserTestUtil.getAdminUser(_company.getCompanyId()))),
+			_sort(
+				_workflowTaskManager.getNotifiableUsers(
+					workflowTask.getWorkflowTaskId())));
+
+		_assignWorkflowTaskToUser(
+			organizationReviewerUser, organizationReviewerUser);
+
+		_completeWorkflowTask(organizationReviewerUser, Constants.APPROVE);
+
+		_deactivateWorkflow(
+			organization.getGroupId(), BlogsEntry.class.getName(), 0, 0);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		// User Scripted Assignment
+
+		_activateWorkflow(
+			0, BlogsEntry.class.getName(), 0, 0, _SCRIPTED_SINGLE_APPROVER_2,
+			1);
+
+		User user1 = UserTestUtil.addUser(
+			_company.getCompanyId(), _companyAdminUser.getUserId(),
+			StringPool.BLANK, "user1@liferay.com",
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext());
+
+		_addBlogsEntry(user1);
+
+		workflowTask = _getWorkflowTask(user1, null, false, null, 0);
+
+		Assert.assertEquals(
+			Collections.singletonList(user1),
+			_workflowTaskManager.getNotifiableUsers(
+				workflowTask.getWorkflowTaskId()));
+
+		_completeWorkflowTask(user1, Constants.APPROVE);
+
+		_deactivateWorkflow(0, BlogsEntry.class.getName(), 0, 0);
+
+		// Users Scripted Assignment
+
+		User user2 = UserTestUtil.addUser(
+			_company.getCompanyId(), _companyAdminUser.getUserId(),
+			StringPool.BLANK, "user2@liferay.com",
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext());
+
+		_activateWorkflow(
+			0, BlogsEntry.class.getName(), 0, 0, _SCRIPTED_SINGLE_APPROVER_3,
+			1);
+
+		_addBlogsEntry(user2);
+
+		workflowTask = _getWorkflowTask(user1, null, false, null, 0);
+
+		Assert.assertEquals(
+			Arrays.asList(user1, user2),
+			_sort(
+				_workflowTaskManager.getNotifiableUsers(
+					workflowTask.getWorkflowTaskId())));
+
+		_assignWorkflowTaskToUser(user1, user2);
+
+		_completeWorkflowTask(user2, Constants.APPROVE);
+
+		_deactivateWorkflow(0, BlogsEntry.class.getName(), 0, 0);
+
+		_userLocalService.deleteUser(user1);
+		_userLocalService.deleteUser(user2);
+	}
+
+	@Test
 	public void testMovetoTrashAndRestoreFromTrashPendingDLFileEntryInDLFolderWithWorkflow()
 		throws Exception {
 
@@ -1023,122 +1139,6 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, blogsEntry.getStatus());
-
-		_deactivateWorkflow(0, BlogsEntry.class.getName(), 0, 0);
-
-		_userLocalService.deleteUser(user1);
-		_userLocalService.deleteUser(user2);
-	}
-
-	@Test
-	public void testScriptedAssignmentNotifiableUsers() throws Exception {
-
-		// Roles Scripted Assignment
-
-		Organization organization = _createOrganization(true);
-
-		User organizationReviewerUser = _createUser(
-			_ORGANIZATION_CONTENT_REVIEWER, organization.getGroup());
-
-		_organizationLocalService.addUserOrganization(
-			organizationReviewerUser.getUserId(), organization);
-
-		User siteAdministratorUser = _createUser(
-			RoleConstants.SITE_ADMINISTRATOR);
-
-		_organizationLocalService.addUserOrganization(
-			siteAdministratorUser.getUserId(), organization);
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			organization.getGroupId());
-
-		_activateWorkflow(
-			organization.getGroupId(), BlogsEntry.class.getName(), 0, 0,
-			_SCRIPTED_SINGLE_APPROVER_1, 1);
-
-		_addBlogsEntry(siteAdministratorUser);
-
-		WorkflowTask workflowTask = _getWorkflowTask(
-			organizationReviewerUser, null, false, null, 0);
-
-		Assert.assertEquals(
-			_sort(
-				Arrays.asList(
-					_adminUser, _companyAdminUser, organizationReviewerUser,
-					UserTestUtil.getAdminUser(_company.getCompanyId()))),
-			_sort(
-				_workflowTaskManager.getNotifiableUsers(
-					workflowTask.getWorkflowTaskId())));
-
-		_assignWorkflowTaskToUser(
-			organizationReviewerUser, organizationReviewerUser);
-
-		_completeWorkflowTask(organizationReviewerUser, Constants.APPROVE);
-
-		_deactivateWorkflow(
-			organization.getGroupId(), BlogsEntry.class.getName(), 0, 0);
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId());
-
-		// User Scripted Assignment
-
-		_activateWorkflow(
-			0, BlogsEntry.class.getName(), 0, 0, _SCRIPTED_SINGLE_APPROVER_2,
-			1);
-
-		User user1 = UserTestUtil.addUser(
-			_company.getCompanyId(), _companyAdminUser.getUserId(),
-			StringPool.BLANK, "user1@liferay.com",
-			RandomTestUtil.randomString(
-				NumericStringRandomizerBumper.INSTANCE,
-				UniqueStringRandomizerBumper.INSTANCE),
-			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null,
-			ServiceContextTestUtil.getServiceContext());
-
-		_addBlogsEntry(user1);
-
-		workflowTask = _getWorkflowTask(user1, null, false, null, 0);
-
-		Assert.assertEquals(
-			Collections.singletonList(user1),
-			_workflowTaskManager.getNotifiableUsers(
-				workflowTask.getWorkflowTaskId()));
-
-		_completeWorkflowTask(user1, Constants.APPROVE);
-
-		_deactivateWorkflow(0, BlogsEntry.class.getName(), 0, 0);
-
-		// Users Scripted Assignment
-
-		User user2 = UserTestUtil.addUser(
-			_company.getCompanyId(), _companyAdminUser.getUserId(),
-			StringPool.BLANK, "user2@liferay.com",
-			RandomTestUtil.randomString(
-				NumericStringRandomizerBumper.INSTANCE,
-				UniqueStringRandomizerBumper.INSTANCE),
-			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null,
-			ServiceContextTestUtil.getServiceContext());
-
-		_activateWorkflow(
-			0, BlogsEntry.class.getName(), 0, 0, _SCRIPTED_SINGLE_APPROVER_3,
-			1);
-
-		_addBlogsEntry(user2);
-
-		workflowTask = _getWorkflowTask(user1, null, false, null, 0);
-
-		Assert.assertEquals(
-			Arrays.asList(user1, user2),
-			_sort(
-				_workflowTaskManager.getNotifiableUsers(
-					workflowTask.getWorkflowTaskId())));
-
-		_assignWorkflowTaskToUser(user1, user2);
-
-		_completeWorkflowTask(user2, Constants.APPROVE);
 
 		_deactivateWorkflow(0, BlogsEntry.class.getName(), 0, 0);
 

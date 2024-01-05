@@ -48,6 +48,10 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 						return new HelpGitHubCommentEventHandler(
 							eventHandlerContext, messageJSONObject);
 					}
+					else if (body.startsWith("ci:reevaluate")) {
+						return new ReevaluateGitHubCommentEventHandler(
+							eventHandlerContext, messageJSONObject);
+					}
 					else if (body.startsWith("ci:reopen")) {
 						return new ReopenGitHubCommentEventHandler(
 							eventHandlerContext, messageJSONObject);

@@ -18,6 +18,7 @@ import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -267,6 +268,15 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		Enumeration<String> enumeration =
 			(Enumeration<String>)properties.propertyNames();
 
+		Properties langProperties = new Properties();
+
+		langProperties.load(
+			new FileReader(
+				getFile(
+					"modules/apps/portal-language/portal-language-lang/src" +
+						"/main/resources/content/Language.properties",
+					10)));
+
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
 
@@ -287,11 +297,20 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 					String featureFlagUIPropertyName =
 						key.substring(0, x) + "." + enforcePropertyName;
 
-					if (!properties.containsKey(featureFlagUIPropertyName)) {
+					if (properties.containsKey(featureFlagUIPropertyName)) {
+						addMessage(
+							fileName,
+							"Property '" + featureFlagUIPropertyName +
+								"' must be in Language.properties");
+					}
+
+					if (!langProperties.containsKey(
+							featureFlagUIPropertyName)) {
+
 						addMessage(
 							fileName,
 							"Missing property '" + featureFlagUIPropertyName +
-								"' in ## Feature Flag UI block");
+								"' in Language.properties");
 					}
 				}
 			}

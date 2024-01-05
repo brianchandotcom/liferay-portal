@@ -1597,6 +1597,49 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177690. The tooltip of the back button should be Go to usages page in View in page."
+	@priority = 3
+	test ViewBackButtonTooltipOfViewInPage {
+		task ("Given a content creator accesses to the View in Page from web content usages") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WidgetPages.addRecentContentWithoutSearch(assetTitle = "Web Content Title");
+
+			Alert.viewSuccessMessage();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Title",
+				menuItem = "View Usages");
+
+			WebContentViewUsages.viewInPage(page = "Test Page Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+		}
+
+		task ("When the content creator hovers over the back button") {
+			MouseOver.javaScriptFocus(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the content creator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Web Content Title",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-196839. Show "Results" picker with the following options: "Web Contents","Versions" and "Comments". "Web Content" will be selected as default. Show "Location" picker with the following options: "Current Folder-name" and "Everywhere". "Current Folder-name" will be selected as default. Show "Search In" picker with the following options: "All Fields", "Title Only". "All Fields" will be selected as default."
 	@priority = 4
 	test ViewDefaultOptionsWhenSearchingWebContentTitle {

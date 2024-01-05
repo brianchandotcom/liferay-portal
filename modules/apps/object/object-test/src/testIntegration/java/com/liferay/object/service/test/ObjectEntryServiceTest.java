@@ -658,14 +658,26 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_guestUser);
 
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"duration", 1
+			).put(
+				"maximumFileSizeForGuestUsers", 25
+			).put(
+				"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 1
+			).put(
+				"timeScale", "days"
+			).build());
+
 		_configurationProvider.saveSystemConfiguration(
 			ObjectConfiguration.class,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"duration", 10
+				"duration", 1
 			).put(
 				"maximumFileSizeForGuestUsers", 25
 			).put(
-				"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 1
+				"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 10
 			).put(
 				"timeScale", "days"
 			).build());
@@ -673,6 +685,40 @@ public class ObjectEntryServiceTest {
 		_addPermissionToGuestUser();
 
 		try {
+			ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
+				0, _objectDefinition.getObjectDefinitionId(),
+				Collections.emptyMap(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), _guestUser.getUserId()));
+
+			Assert.assertNotNull(objectEntry);
+
+			AssertUtils.assertFailure(
+				ObjectEntryCountException.class,
+				StringBundler.concat(
+					"The limit of guest entries for ",
+					_objectDefinition.getLabel(
+						_objectDefinition.getDefaultLanguageId()),
+					" has been reached and will no longer be accepted."),
+				() -> _objectEntryService.addObjectEntry(
+					0, _objectDefinition.getObjectDefinitionId(),
+					Collections.emptyMap(),
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(), _guestUser.getUserId())));
+
+			_assertUserNotificationEventsCount();
+
+			objectEntry.setCreateDate(
+				Date.from(
+					LocalDate.now(
+					).minusDays(
+						1
+					).atStartOfDay(
+						ZoneId.systemDefault()
+					).toInstant()));
+
+			_objectEntryLocalService.updateObjectEntry(objectEntry);
+
 			Assert.assertNotNull(
 				_objectEntryService.addObjectEntry(
 					0, _objectDefinition.getObjectDefinitionId(),
@@ -692,116 +738,14 @@ public class ObjectEntryServiceTest {
 					Collections.emptyMap(),
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(), _guestUser.getUserId())));
+
+			_assertUserNotificationEventsCount();
 		}
 		finally {
+			_configurationProvider.deleteCompanyConfiguration(
+				ObjectConfiguration.class, TestPropsValues.getCompanyId());
 			_configurationProvider.deleteSystemConfiguration(
 				ObjectConfiguration.class);
-		}
-
-		_configurationProvider.saveCompanyConfiguration(
-			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"duration", 1
-			).put(
-				"maximumFileSizeForGuestUsers", 25
-			).put(
-				"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 2
-			).put(
-				"timeScale", "days"
-			).build());
-
-		try {
-			Assert.assertNotNull(
-				_objectEntryService.addObjectEntry(
-					0, _objectDefinition.getObjectDefinitionId(),
-					Collections.emptyMap(),
-					ServiceContextTestUtil.getServiceContext(
-						TestPropsValues.getGroupId(), _guestUser.getUserId())));
-
-			AssertUtils.assertFailure(
-				ObjectEntryCountException.class,
-				StringBundler.concat(
-					"The limit of guest entries for ",
-					_objectDefinition.getLabel(
-						_objectDefinition.getDefaultLanguageId()),
-					" has been reached and will no longer be accepted."),
-				() -> _objectEntryService.addObjectEntry(
-					0, _objectDefinition.getObjectDefinitionId(),
-					Collections.emptyMap(),
-					ServiceContextTestUtil.getServiceContext(
-						TestPropsValues.getGroupId(), _guestUser.getUserId())));
-
-			_assertUserNotificationEventsCount();
-		}
-		finally {
-			_configurationProvider.deleteCompanyConfiguration(
-				ObjectConfiguration.class, TestPropsValues.getCompanyId());
-		}
-	}
-
-	@Test
-	public void testValidateMaximumNumberOfGuestUserObjectEntriesPerObjectDefinitionPerDayWithDataBeyondDuration()
-		throws Exception {
-
-		_setUser(_guestUser);
-
-		_configurationProvider.saveCompanyConfiguration(
-			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"duration", 1
-			).put(
-				"maximumFileSizeForGuestUsers", 25
-			).put(
-				"maximumNumberOfGuestUserObjectEntriesPerObjectDefinition", 1
-			).put(
-				"timeScale", "days"
-			).build());
-
-		_addPermissionToGuestUser();
-
-		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
-			0, _objectDefinition.getObjectDefinitionId(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), _guestUser.getUserId()));
-
-		objectEntry.setCreateDate(
-			Date.from(
-				LocalDate.now(
-				).minusDays(
-					1
-				).atStartOfDay(
-					ZoneId.systemDefault()
-				).toInstant()));
-
-		_objectEntryLocalService.updateObjectEntry(objectEntry);
-
-		try {
-			Assert.assertNotNull(
-				_objectEntryService.addObjectEntry(
-					0, _objectDefinition.getObjectDefinitionId(),
-					Collections.emptyMap(),
-					ServiceContextTestUtil.getServiceContext(
-						TestPropsValues.getGroupId(), _guestUser.getUserId())));
-
-			AssertUtils.assertFailure(
-				ObjectEntryCountException.class,
-				StringBundler.concat(
-					"The limit of guest entries for ",
-					_objectDefinition.getLabel(
-						_objectDefinition.getDefaultLanguageId()),
-					" has been reached and will no longer be accepted."),
-				() -> _objectEntryService.addObjectEntry(
-					0, _objectDefinition.getObjectDefinitionId(),
-					Collections.emptyMap(),
-					ServiceContextTestUtil.getServiceContext(
-						TestPropsValues.getGroupId(), _guestUser.getUserId())));
-
-			_assertUserNotificationEventsCount();
-		}
-		finally {
-			_configurationProvider.deleteCompanyConfiguration(
-				ObjectConfiguration.class, TestPropsValues.getCompanyId());
 		}
 	}
 
@@ -981,7 +925,7 @@ public class ObjectEntryServiceTest {
 					).getEpochSecond(),
 					true);
 
-			Assert.assertTrue(count > 0);
+			Assert.assertTrue(count == 1);
 		}
 	}
 

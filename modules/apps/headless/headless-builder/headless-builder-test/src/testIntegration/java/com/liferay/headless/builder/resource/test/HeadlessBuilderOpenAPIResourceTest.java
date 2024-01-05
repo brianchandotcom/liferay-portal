@@ -505,7 +505,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					JSONUtil.put(
 						"description", "description"
 					).put(
-						"externalReferenceCode", _GET_API_ENDPOINT_ERC
+						"externalReferenceCode", _API_GET_ENDPOINT_ERC
 					).put(
 						"httpMethod", "get"
 					).put(
@@ -523,7 +523,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					JSONUtil.put(
 						"description", "post description"
 					).put(
-						"externalReferenceCode", _POST_API_ENDPOINT_ERC
+						"externalReferenceCode", _API_POST_ENDPOINT_ERC
 					).put(
 						"httpMethod", "post"
 					).put(
@@ -542,7 +542,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"description", "site scoped post description"
 					).put(
 						"externalReferenceCode",
-						_SITE_SCOPED_POST_API_ENDPOINT_ERC
+						_API_SITE_SCOPED_POST_ENDPOINT_ERC
 					).put(
 						"httpMethod", "post"
 					).put(
@@ -764,14 +764,14 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				_API_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
-				_POST_API_ENDPOINT_ERC),
+				_API_POST_ENDPOINT_ERC),
 			Http.Method.PUT);
 		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				_API_SITE_SCOPED_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
-				_SITE_SCOPED_POST_API_ENDPOINT_ERC),
+				_API_SITE_SCOPED_POST_ENDPOINT_ERC),
 			Http.Method.PUT);
 		assertSuccessfulJSONObject(
 			null,
@@ -779,14 +779,14 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				"headless-builder/schemas/by-external-reference-code/",
 				_API_SITE_SCOPED_SCHEMA_ERC,
 				"/responseAPISchemaToAPIEndpoints/",
-				_SITE_SCOPED_POST_API_ENDPOINT_ERC),
+				_API_SITE_SCOPED_POST_ENDPOINT_ERC),
 			Http.Method.PUT);
 		assertSuccessfulJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				_API_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",
-				_GET_API_ENDPOINT_ERC),
+				_API_GET_ENDPOINT_ERC),
 			Http.Method.PUT);
 		assertSuccessfulJSONObject(
 			null,
@@ -850,9 +850,15 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	private static final String _API_BASE_URL = StringUtil.toLowerCase(
 		RandomTestUtil.randomString());
 
+	private static final String _API_GET_ENDPOINT_ERC =
+		RandomTestUtil.randomString();
+
 	private static final String
 		_API_POST_COMPANY_SCOPED_NO_SCHEMA_ENDPOINT_ERC =
 			RandomTestUtil.randomString();
+
+	private static final String _API_POST_ENDPOINT_ERC =
+		RandomTestUtil.randomString();
 
 	private static final String _API_SCHEMA_AGGREGATION_FIELD_ERC =
 		RandomTestUtil.randomString();
@@ -923,19 +929,13 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	private static final String _API_SITE_SCOPED_NO_SCHEMA_ENDPOINT_ERC =
 		RandomTestUtil.randomString();
 
+	private static final String _API_SITE_SCOPED_POST_ENDPOINT_ERC =
+		RandomTestUtil.randomString();
+
 	private static final String _API_SITE_SCOPED_SCHEMA_ERC =
 		RandomTestUtil.randomString();
 
 	private static final String _API_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC =
-		RandomTestUtil.randomString();
-
-	private static final String _GET_API_ENDPOINT_ERC =
-		RandomTestUtil.randomString();
-
-	private static final String _POST_API_ENDPOINT_ERC =
-		RandomTestUtil.randomString();
-
-	private static final String _SITE_SCOPED_POST_API_ENDPOINT_ERC =
 		RandomTestUtil.randomString();
 
 	private ListTypeDefinition _listTypeDefinition;

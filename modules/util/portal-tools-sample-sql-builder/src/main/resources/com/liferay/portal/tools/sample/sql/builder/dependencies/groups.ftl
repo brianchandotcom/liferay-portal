@@ -1,5 +1,7 @@
 <#include "guest_user.ftl">
 
+<#include "sample_user.ftl">
+
 <#include "commerce_groups.ftl">
 
 <#include "asset.ftl">

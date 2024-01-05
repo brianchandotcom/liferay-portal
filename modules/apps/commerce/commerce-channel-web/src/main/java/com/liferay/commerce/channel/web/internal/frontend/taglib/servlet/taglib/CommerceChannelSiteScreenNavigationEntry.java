@@ -8,7 +8,6 @@ package com.liferay.commerce.channel.web.internal.frontend.taglib.servlet.taglib
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.channel.web.internal.display.context.SiteCommerceChannelTypeDisplayContext;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.inventory.method.CommerceInventoryMethodRegistry;
 import com.liferay.commerce.product.channel.CommerceChannelHealthStatusRegistry;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
@@ -111,9 +110,6 @@ public class CommerceChannelSiteScreenNavigationEntry
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
-
-	@Reference
-	private CommerceInventoryMethodRegistry _commerceInventoryMethodRegistry;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

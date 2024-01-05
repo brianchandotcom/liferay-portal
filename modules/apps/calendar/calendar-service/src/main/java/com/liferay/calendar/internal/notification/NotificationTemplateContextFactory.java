@@ -185,14 +185,12 @@ public class NotificationTemplateContextFactory {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		String layoutURL = null;
 		String portalURL = null;
 
-		String layoutURL = null;
-
 		if (serviceContext != null) {
-			portalURL = serviceContext.getPortalURL();
-
 			layoutURL = serviceContext.getLayoutURL();
+			portalURL = serviceContext.getPortalURL();
 		}
 
 		NotificationTemplateContext notificationTemplateContext = getInstance(

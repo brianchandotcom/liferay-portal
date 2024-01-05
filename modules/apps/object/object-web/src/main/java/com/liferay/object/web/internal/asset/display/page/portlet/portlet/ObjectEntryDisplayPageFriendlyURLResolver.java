@@ -6,6 +6,7 @@
 package com.liferay.object.web.internal.asset.display.page.portlet.portlet;
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
@@ -19,8 +20,23 @@ public class ObjectEntryDisplayPageFriendlyURLResolver
 	extends BaseAssetDisplayPageFriendlyURLResolver {
 
 	@Override
+	public String getDefaultURLSeparator() {
+		return FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY;
+	}
+
+	@Override
+	public String getKey() {
+		return ObjectEntry.class.getName();
+	}
+
+	@Override
 	public String getURLSeparator() {
 		return FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY;
+	}
+
+	@Override
+	public boolean isURLSeparatorConfigurable() {
+		return true;
 	}
 
 }

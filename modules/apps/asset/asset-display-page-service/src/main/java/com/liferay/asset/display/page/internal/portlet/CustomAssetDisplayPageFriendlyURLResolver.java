@@ -58,8 +58,23 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 	}
 
 	@Override
+	public String getDefaultURLSeparator() {
+		return "/e/";
+	}
+
+	@Override
+	public String getKey() {
+		return "custom-asset-display-page";
+	}
+
+	@Override
 	public String getURLSeparator() {
 		return "/e/";
+	}
+
+	@Override
+	public boolean isURLSeparatorConfigurable() {
+		return true;
 	}
 
 	@Override

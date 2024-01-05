@@ -6,6 +6,7 @@
 package com.liferay.blogs.web.internal.asset.display.contributor.portlet;
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
@@ -19,8 +20,23 @@ public class BlogsAssetDisplayPageFriendlyURLResolver
 	extends BaseAssetDisplayPageFriendlyURLResolver {
 
 	@Override
+	public String getDefaultURLSeparator() {
+		return FriendlyURLResolverConstants.URL_SEPARATOR_BLOGS_ENTRY;
+	}
+
+	@Override
+	public String getKey() {
+		return BlogsEntry.class.getName();
+	}
+
+	@Override
 	public String getURLSeparator() {
 		return FriendlyURLResolverConstants.URL_SEPARATOR_BLOGS_ENTRY;
+	}
+
+	@Override
+	public boolean isURLSeparatorConfigurable() {
+		return true;
 	}
 
 }

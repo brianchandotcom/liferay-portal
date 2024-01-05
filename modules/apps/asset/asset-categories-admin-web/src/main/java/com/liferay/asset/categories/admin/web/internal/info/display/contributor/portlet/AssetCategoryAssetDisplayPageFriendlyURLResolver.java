@@ -6,6 +6,7 @@
 package com.liferay.asset.categories.admin.web.internal.info.display.contributor.portlet;
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
@@ -19,8 +20,23 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 	extends BaseAssetDisplayPageFriendlyURLResolver {
 
 	@Override
+	public String getDefaultURLSeparator() {
+		return FriendlyURLResolverConstants.URL_SEPARATOR_ASSET_CATEGORY;
+	}
+
+	@Override
+	public String getKey() {
+		return AssetCategory.class.getName();
+	}
+
+	@Override
 	public String getURLSeparator() {
 		return FriendlyURLResolverConstants.URL_SEPARATOR_ASSET_CATEGORY;
+	}
+
+	@Override
+	public boolean isURLSeparatorConfigurable() {
+		return true;
 	}
 
 }

@@ -22,9 +22,25 @@ public class KBArticleAssetDisplayPageFriendlyURLResolver
 	extends BaseAssetDisplayPageFriendlyURLResolver {
 
 	@Override
+	public String getDefaultURLSeparator() {
+		return FriendlyURLResolverConstants.
+			URL_SEPARATOR_KNOWLEDGE_BASE_ARTICLE;
+	}
+
+	@Override
+	public String getKey() {
+		return KBArticle.class.getName();
+	}
+
+	@Override
 	public String getURLSeparator() {
 		return FriendlyURLResolverConstants.
 			URL_SEPARATOR_KNOWLEDGE_BASE_ARTICLE;
+	}
+
+	@Override
+	public boolean isURLSeparatorConfigurable() {
+		return true;
 	}
 
 	@Override

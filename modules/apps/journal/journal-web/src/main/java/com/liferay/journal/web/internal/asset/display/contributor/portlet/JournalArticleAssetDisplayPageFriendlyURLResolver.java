@@ -6,6 +6,7 @@
 package com.liferay.journal.web.internal.asset.display.contributor.portlet;
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
@@ -19,8 +20,23 @@ public class JournalArticleAssetDisplayPageFriendlyURLResolver
 	extends BaseAssetDisplayPageFriendlyURLResolver {
 
 	@Override
+	public String getDefaultURLSeparator() {
+		return FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE;
+	}
+
+	@Override
+	public String getKey() {
+		return JournalArticle.class.getName();
+	}
+
+	@Override
 	public String getURLSeparator() {
 		return FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE;
+	}
+
+	@Override
+	public boolean isURLSeparatorConfigurable() {
+		return true;
 	}
 
 }

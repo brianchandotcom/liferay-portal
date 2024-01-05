@@ -11,7 +11,6 @@ import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.pricing.web.internal.display.context.CPInstanceCommercePriceEntryDisplayContext;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
@@ -99,9 +98,6 @@ public class AddCPInstanceCommercePriceEntryMVCRenderCommand
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;
-
-	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private ItemSelector _itemSelector;

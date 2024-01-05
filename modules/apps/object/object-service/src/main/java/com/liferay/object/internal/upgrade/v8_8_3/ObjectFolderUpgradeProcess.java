@@ -5,7 +5,6 @@
 
 package com.liferay.object.internal.upgrade.v8_8_3;
 
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,10 +46,7 @@ public class ObjectFolderUpgradeProcess extends UpgradeProcess {
 								"companyId = ? and externalReferenceCode = ?");
 
 					preparedStatement.setLong(1, company.getCompanyId());
-					preparedStatement.setString(
-						2,
-						ObjectFolderConstants.
-							EXTERNAL_REFERENCE_CODE_UNCATEGORIZED);
+					preparedStatement.setString(2, "uncategorized");
 
 					ResultSet resultSet = preparedStatement.executeQuery();
 

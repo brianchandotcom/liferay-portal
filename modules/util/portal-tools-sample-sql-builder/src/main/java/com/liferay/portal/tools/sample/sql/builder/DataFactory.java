@@ -2264,9 +2264,7 @@ public class DataFactory {
 
 	public List<CompanyModel> newCompanyModels() {
 		List<CompanyModel> companyModels = new ArrayList<>(
-			BenchmarksPropsValues.MAX_COMPANY_COUNT + 1);
-
-		companyModels.add(_newCompanyModel("liferay.com"));
+			BenchmarksPropsValues.MAX_COMPANY_COUNT);
 
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_COMPANY_COUNT; i++) {
 			companyModels.add(
@@ -3587,6 +3585,10 @@ public class DataFactory {
 		return newAssetVocabularyModel(
 			_globalGroupId, _guestUserId, null,
 			PropsValues.ASSET_VOCABULARY_DEFAULT);
+	}
+
+	public CompanyModel newDefaultCompanyModel() {
+		return _newCompanyModel("liferay.com");
 	}
 
 	public DDMStructureLayoutModel newDefaultDLDDMStructureLayoutModel() {

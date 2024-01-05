@@ -43,7 +43,8 @@ public class PortalLegacyBranchURLJobParameterDefinition
 	@Override
 	public String getValueRegex() {
 		return StringUtil.combine(
-			"https://github.com/[^/]+/liferay-qa-portal-legacy-ee/tree/[^/]+");
+			"https://github.com/[^/]+/liferay-qa-portal-legacy-ee",
+			"/tree/[^/]+");
 	}
 
 }

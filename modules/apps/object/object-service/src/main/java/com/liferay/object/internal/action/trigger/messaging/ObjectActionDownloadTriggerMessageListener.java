@@ -111,7 +111,7 @@ public class ObjectActionDownloadTriggerMessageListener
 		_objectActionEngine.executeObjectActions(
 			objectDefinition.getClassName(), message.getLong("companyId"),
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ATTACHMENT_DOWNLOAD,
-			ObjectEntryUtil.getPayloadJSONObject(
+			() -> ObjectEntryUtil.getPayloadJSONObject(
 				_dtoConverterRegistry, _jsonFactory,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ATTACHMENT_DOWNLOAD,
 				objectDefinition, objectEntry, null,

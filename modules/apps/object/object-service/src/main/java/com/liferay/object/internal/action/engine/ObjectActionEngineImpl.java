@@ -26,6 +26,7 @@ import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -87,9 +88,11 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 	}
 
 	@Override
-	public void executeObjectActions(
-		String className, long companyId, String objectActionTriggerKey,
-		JSONObject payloadJSONObject, long userId) {
+	public <E extends Exception> void executeObjectActions(
+			String className, long companyId, String objectActionTriggerKey,
+			UnsafeSupplier<JSONObject, E> payloadJSONObjectUnsafeSupplier,
+			long userId)
+		throws E {
 
 		if ((companyId == 0) || (userId == 0)) {
 			return;
@@ -121,6 +124,9 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			PrincipalThreadLocal.setName(userId);
 			PermissionThreadLocal.setPermissionChecker(
 				_permissionCheckerFactory.create(user));
+
+			JSONObject payloadJSONObject =
+				payloadJSONObjectUnsafeSupplier.get();
 
 			_updatePayloadJSONObject(objectDefinition, payloadJSONObject, user);
 

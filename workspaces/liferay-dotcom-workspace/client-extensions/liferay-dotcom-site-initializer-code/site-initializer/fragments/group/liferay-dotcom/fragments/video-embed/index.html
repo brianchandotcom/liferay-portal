@@ -19,18 +19,11 @@
 
 [#assign hideOverlay = configuration.hideOverlay]
 
-<div
-	class="
-		f-video-embed
-		${configuration.videoPlayerMaxWidth!'max-width-xsmall'}
-		${configuration.videoPosition}
-	"
->
+<div class="f-video-embed ${configuration.videoPlayerMaxWidth!'max-width-xsmall'} ${configuration.videoPosition}">
 	<div class="f-video-embed-container ${aspectRatioClass}" id="embeddedVideo${fragmentEntryLinkNamespace}">
 		[#if wistiaId != ""]
 			<script crossorigin="anonymous" src="//fast.wistia.com/embed/medias/${wistiaId}.jsonp" defer></script>
 			<script crossorigin="anonymous" src="//fast.wistia.com/assets/external/E-v1.js" defer></script>
-
 
 			<iframe class="h-100 w-100 wistia_embed" src="//fast.wistia.net/embed/iframe/${wistiaId}" frameborder="0" allowfullscreen mozallowfullscreen msallowfullscreen oallowfullscreen webkitallowfullscreen></iframe>
 		[#elseif youtubeId != ""]
@@ -48,12 +41,7 @@
 		[/#if]
 
 		[#if configuration.showPlayButton]
-			<div class="
-				f-video-embed-overlay
-				${hideOverlay?then('hide-overlay-color','')}
-				"
-				data-wistia-id="${wistiaId}"
-			>
+		<div class=" f-video-embed-overlay ${hideOverlay?then('hide-overlay-color','')} " data-wistia-id="${wistiaId}">
 				<div class="f-video-embed-overlay-placeholder" style="${overlayStyle}background-size:cover;"></div>
 
 				<div class="f-embedded-play-button d-flex p-3 play-${configuration.playButtonPosition}">

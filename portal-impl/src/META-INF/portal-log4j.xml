@@ -99,6 +99,7 @@
 		<Logger level="INFO" name="com.liferay.portal.kernel.servlet.ServletContextUtil" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.servlet.ServletRequestUtil" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.servlet.ServletResponseUtil" />
+		<Logger level="ERROR" name="com.liferay.portal.kernel.servlet.SessionErrors" />
 		<Logger level="FATAL" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter" />
 		<Logger level="FATAL" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.upgrade" />

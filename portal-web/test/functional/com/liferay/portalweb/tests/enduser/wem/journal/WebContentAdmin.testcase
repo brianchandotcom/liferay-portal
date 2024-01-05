@@ -1080,6 +1080,68 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191927. The site administrator could preview or expire a specific version on the info panel."
+	@priority = 3
+	test PreviewOrExpireSpecificVersionOfWebContentOnInfoPanel {
+		task ("Given a site administrator has a web content with versions") {
+			var structuredContentId = HeadlessWebcontent.addBasicWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title Version 1");
+
+			for (var title : list "Web Content Title Version 2,Web Content Title Version 3") {
+				HeadlessWebcontent.patchStructuredContent(
+					data = "\"title\": \"${title}\"",
+					structuredContentId = ${structuredContentId});
+			}
+		}
+
+		task ("When the site administrator navigates to the Versions tab of info panel of web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			LexiconList.checkListCheckbox(listEntry = "Web Content Title Version 3");
+
+			ManagementBar.clickInfo();
+
+			Navigator.gotoNavTab(navTab = "Versions");
+		}
+
+		task ("Then the site administrator could preview or expire specific version of web content") {
+			Click.waitForMenuToggleJSClick(
+				key_listEntry = "Version 1.0",
+				locator1 = "Sidebar#LIST_ENTRY_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Preview");
+
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Web Content Title Version 1");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			WebContentDisplayPortlet.viewContent(webContentContent = "Web Content Content");
+
+			IFrame.closeFrame();
+
+			Click.waitForMenuToggleJSClick(
+				key_listEntry = "Version 1.1",
+				locator1 = "Sidebar#LIST_ENTRY_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Expire");
+
+			LexiconList.checkListCheckbox(listEntry = "Web Content Title Version 3");
+
+			ManagementBar.clickInfo();
+
+			Navigator.gotoNavTab(navTab = "Versions");
+
+			AssertTextEquals(
+				key_listEntry = "Version 1.1",
+				locator1 = "Sidebar#LIST_ENTRY_LABEL",
+				value1 = "Expired");
+		}
+	}
+
 	@description = "This is a test for LPS-196842. When searched and filtered content exists, the order must be applied to the displayed content."
 	@priority = 4
 	test RevertSortDirectionOfSearchResults {

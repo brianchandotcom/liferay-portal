@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.upload.UploadHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -463,9 +462,6 @@ public class EditCommerceChannelMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UploadHandler _uploadHandler;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

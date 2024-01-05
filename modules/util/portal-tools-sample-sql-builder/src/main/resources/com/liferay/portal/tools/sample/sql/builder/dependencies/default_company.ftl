@@ -11,3 +11,5 @@ ${dataFactory.toInsertSQL(dataFactory.newVirtualHostModel())}
 <#list dataFactory.newPortalPreferencesModels() as portalPreferencesModel>
 	${dataFactory.toInsertSQL(portalPreferencesModel)}
 </#list>
+
+<#include "roles.ftl">

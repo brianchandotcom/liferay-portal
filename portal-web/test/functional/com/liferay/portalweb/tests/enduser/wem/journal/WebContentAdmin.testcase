@@ -1496,6 +1496,47 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177690. The tooltip of the back button should be Go to Web Content in the View Usages page."
+	@priority = 3
+	test ViewBackButtonTooltipOfUsages {
+		task ("Given a content creator accesses to the Usages of a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WidgetPages.addRecentContentWithoutSearch(assetTitle = "Web Content Title");
+
+			Alert.viewSuccessMessage();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Title",
+				menuItem = "View Usages");
+
+			MenuBar.viewActive(menuBar = "All (1)");
+		}
+
+		task ("When the content creator hovers over the back button") {
+			MouseOver.javaScriptFocus(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the content creator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Web Content",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-177690. The tooltip of the back button should be Go to Web Content in the Versions page."
 	@priority = 3
 	test ViewBackButtonTooltipOfVersions {

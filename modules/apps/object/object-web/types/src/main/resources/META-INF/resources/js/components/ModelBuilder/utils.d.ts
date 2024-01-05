@@ -75,6 +75,10 @@ export declare function getObjectFolderDiagramCenterPosition(): {
 	x: number;
 	y: number;
 };
+export declare function updatePreviousURLParam(
+	paramType: string,
+	paramValue: string
+): void;
 export declare function updateURLParam(
 	paramType: string,
 	paramValue: string

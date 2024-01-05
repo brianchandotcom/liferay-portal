@@ -318,6 +318,22 @@ function getUncategorizedPredefinedPosition(
 	return {x, y};
 }
 
+export function updatePreviousURLParam(paramType: string, paramValue: string) {
+	const previousPath = document.referrer;
+
+	const newPreviousURL = new URL(previousPath);
+
+	const objectFolderNameParam = newPreviousURL.searchParams.get(paramType);
+
+	if (objectFolderNameParam) {
+		newPreviousURL.searchParams.set(paramType, paramValue);
+
+		window.history.pushState(null, '', newPreviousURL.toString());
+
+		window.location.href = newPreviousURL.toString();
+	}
+}
+
 export function updateURLParam(paramType: string, paramValue: string) {
 	const currentURL = window.location.href;
 

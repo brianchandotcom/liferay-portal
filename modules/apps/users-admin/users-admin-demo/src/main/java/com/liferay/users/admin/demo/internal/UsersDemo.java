@@ -5,13 +5,11 @@
 
 package com.liferay.users.admin.demo.internal;
 
-import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -107,11 +105,6 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private CompanyAdminUserDemoDataCreator _companyAdminUserDemoDataCreator;
-
-	@Reference(
-		target = "(javax.portlet.name=" + JournalPortletKeys.JOURNAL + ")"
-	)
-	private Portlet _journalPortlet;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

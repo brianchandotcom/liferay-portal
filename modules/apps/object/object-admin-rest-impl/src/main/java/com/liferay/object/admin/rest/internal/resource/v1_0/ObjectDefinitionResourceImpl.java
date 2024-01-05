@@ -171,9 +171,8 @@ public class ObjectDefinitionResourceImpl
 		throws Exception {
 
 		return _toObjectDefinition(
-			_objectDefinitionService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId()));
+			_objectDefinitionService.getObjectDefinitionByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId()));
 	}
 
 	@Override

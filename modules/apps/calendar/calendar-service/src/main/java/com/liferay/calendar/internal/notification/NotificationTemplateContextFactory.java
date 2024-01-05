@@ -124,20 +124,7 @@ public class NotificationTemplateContextFactory {
 				"location", calendarBooking.getLocation()
 			).put(
 				"portalURL",
-				() -> {
-					if (portalURL != null) {
-						return portalURL;
-					}
-
-					GroupLocalService groupLocalService =
-						_groupLocalServiceSnapshot.get();
-
-					Group group = groupLocalService.getGroup(
-						user.getCompanyId(), GroupConstants.GUEST);
-
-					return _getPortalURL(
-						group.getCompanyId(), group.getGroupId());
-				}
+				() -> _getPortalURLOrCompanyDefault(portalURL, user.getCompanyId())
 			).put(
 				"portletName",
 				LanguageUtil.get(
@@ -234,9 +221,8 @@ public class NotificationTemplateContextFactory {
 		Group group = groupLocalService.getGroup(
 			user.getCompanyId(), GroupConstants.GUEST);
 
-		if (portalURL == null) {
-			portalURL = _getPortalURL(group.getCompanyId(), group.getGroupId());
-		}
+		portalURL = _getPortalURLOrCompanyDefault(
+			portalURL, user.getCompanyId());
 
 		if (layoutURL == null) {
 			LayoutLocalService layoutLocalService =
@@ -265,15 +251,26 @@ public class NotificationTemplateContextFactory {
 		return url;
 	}
 
-	private static String _getPortalURL(long companyId, long groupId)
+	private static String _getPortalURLOrCompanyDefault(
+			String portalURL, long companyId)
 		throws PortalException {
+
+		if (portalURL != null){
+			return portalURL;
+		}
 
 		CompanyLocalService companyLocalService =
 			_companyLocalServiceSnapshot.get();
 
 		Company company = companyLocalService.getCompany(companyId);
 
-		return company.getPortalURL(groupId);
+		GroupLocalService groupLocalService =
+			_groupLocalServiceSnapshot.get();
+
+		Group group = groupLocalService.getGroup(
+			companyId, GroupConstants.GUEST);
+
+		return company.getPortalURL(group.getGroupId());
 	}
 
 	private static Format _getUserDateTimeFormat(

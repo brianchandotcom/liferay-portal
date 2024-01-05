@@ -5,9 +5,7 @@
 
 package com.liferay.document.library.internal.upgrade.v3_2_9;
 
-import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.configuration.DLFileEntryConfiguration;
-import com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration;
 import com.liferay.document.library.internal.constants.LegacyDLKeys;
 import com.liferay.document.library.internal.upgrade.helper.DLConfigurationUpgradeHelper;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
@@ -15,11 +13,13 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.KeyValuePair;
 
 /**
+ * @author Drew Brokke
+ * @author Marco Galluzzi
  * @author Alicia García
  */
-public class DLLegacyConfigurationUpgradeProcess extends UpgradeProcess {
+public class DLFileEntryConfigurationUpgradeProcess extends UpgradeProcess {
 
-	public DLLegacyConfigurationUpgradeProcess(
+	public DLFileEntryConfigurationUpgradeProcess(
 		DLConfigurationUpgradeHelper dlConfigurationUpgradeHelper,
 		PrefsPropsToConfigurationUpgradeHelper
 			prefsPropsToConfigurationUpgradeHelper) {
@@ -37,22 +37,21 @@ public class DLLegacyConfigurationUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
-			DLConfiguration.class,
-			new KeyValuePair(
-				LegacyDLKeys.DL_FILE_EXTENSIONS, "fileExtensions"));
+		_upgradeConfiguration();
+	}
 
-		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
-			DLSizeLimitConfiguration.class,
-			new KeyValuePair(LegacyDLKeys.DL_FILE_MAX_SIZE, "fileMaxSize"));
+	private void _upgradeConfiguration() throws Exception {
+		if (!_dlConfigurationUpgradeHelper.hasLegacyProps() ||
+			!_dlConfigurationUpgradeHelper.hasConfigurationChanges()) {
+
+			return;
+		}
 
 		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
 			DLFileEntryConfiguration.class,
 			new KeyValuePair(
 				LegacyDLKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE,
 				"previewableProcessorMaxSize"));
-
-		_dlConfigurationUpgradeHelper.updateDLSizeLimitConfiguration();
 
 		long systemPreviewableProcessorMaxSize =
 			_dlConfigurationUpgradeHelper.updateSystemConfiguration();

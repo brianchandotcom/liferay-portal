@@ -20,7 +20,6 @@ import com.liferay.document.library.internal.upgrade.v3_2_4.DLSizeLimitConfigura
 import com.liferay.document.library.internal.upgrade.v3_2_5.DLFileEntryTypesDDMStructureUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_6.DeleteStalePWCVersionsUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_7.DownloadViewActionResourcePermissionUpgradeProcess;
-import com.liferay.document.library.internal.upgrade.v3_2_9.DLLegacyConfigurationUpgradeProcess;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
-import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
@@ -142,9 +140,17 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 		registry.register(
 			"3.2.8", "3.2.9",
-			new DLLegacyConfigurationUpgradeProcess(
-				_dlConfigurationUpgradeHelper,
-				_prefsPropsToConfigurationUpgradeHelper));
+			new com.liferay.document.library.internal.upgrade.v3_2_9.
+				DLConfigurationUpgradeProcess(
+					_dlConfigurationUpgradeHelper,
+					_prefsPropsToConfigurationUpgradeHelper),
+			new com.liferay.document.library.internal.upgrade.v3_2_9.
+				DLFileEntryConfigurationUpgradeProcess(
+					_dlConfigurationUpgradeHelper,
+					_prefsPropsToConfigurationUpgradeHelper),
+			new com.liferay.document.library.internal.upgrade.v3_2_9.
+				DLSizeLimitConfigurationUpgradeProcess(
+					_dlConfigurationUpgradeHelper));
 	}
 
 	@Reference
@@ -155,9 +161,6 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 	@Reference
 	private DLConfigurationUpgradeHelper _dlConfigurationUpgradeHelper;
-
-	@Reference
-	private PrefsProps _prefsProps;
 
 	@Reference
 	private PrefsPropsToConfigurationUpgradeHelper

@@ -31,7 +31,7 @@ public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) {
 		_objectActionEngine.executeObjectActions(
 			_className, GetterUtil.getLong(message.get("companyId")),
-			_objectActionTriggerKey, (JSONObject)message.getPayload(),
+			_objectActionTriggerKey, () -> (JSONObject)message.getPayload(),
 			_getUserId(message));
 	}
 

@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
-import com.liferay.portal.kernel.settings.ArchivedSettingsFactory;
 import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
@@ -1000,9 +999,6 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 
 	@Reference
 	private AdminAccountGroupResource.Factory _adminAccountGroupResourceFactory;
-
-	@Reference
-	private ArchivedSettingsFactory _archivedSettingsFactory;
 
 	@Reference
 	private CatalogResource.Factory _catalogResourceFactory;

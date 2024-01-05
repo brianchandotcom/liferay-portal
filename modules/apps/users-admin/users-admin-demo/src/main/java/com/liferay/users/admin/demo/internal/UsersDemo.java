@@ -5,7 +5,6 @@
 
 package com.liferay.users.admin.demo.internal;
 
-import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -108,11 +107,6 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private CompanyAdminUserDemoDataCreator _companyAdminUserDemoDataCreator;
-
-	@Reference(
-		target = "(javax.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT + ")"
-	)
-	private Portlet _journalContentPortlet;
 
 	@Reference(
 		target = "(javax.portlet.name=" + JournalPortletKeys.JOURNAL + ")"

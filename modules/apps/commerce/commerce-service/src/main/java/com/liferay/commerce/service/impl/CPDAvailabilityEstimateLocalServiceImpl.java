@@ -8,7 +8,6 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.exception.NoSuchAvailabilityEstimateException;
 import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.service.base.CPDAvailabilityEstimateLocalServiceBaseImpl;
 import com.liferay.commerce.service.persistence.CommerceAvailabilityEstimatePersistence;
 import com.liferay.portal.aop.AopService;
@@ -157,9 +156,6 @@ public class CPDAvailabilityEstimateLocalServiceImpl
 	@Reference
 	private CommerceAvailabilityEstimatePersistence
 		_commerceAvailabilityEstimatePersistence;
-
-	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

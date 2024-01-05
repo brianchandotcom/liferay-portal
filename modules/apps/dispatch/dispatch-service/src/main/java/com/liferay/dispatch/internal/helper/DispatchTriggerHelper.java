@@ -35,8 +35,6 @@ public class DispatchTriggerHelper {
 			String timeZoneId)
 		throws DispatchTriggerSchedulerException {
 
-		long dispatchTriggerId = dispatchTrigger.getDispatchTriggerId();
-
 		Trigger trigger = _triggerFactory.createTrigger(
 			_getJobName(dispatchTrigger), _getGroupName(dispatchTrigger),
 			dispatchTrigger.getStartDate(), dispatchTrigger.getEndDate(),
@@ -47,7 +45,7 @@ public class DispatchTriggerHelper {
 
 		message.put("companyId", dispatchTrigger.getCompanyId());
 
-		message.setPayload(_getPayload(dispatchTriggerId));
+		message.setPayload(_getPayload(dispatchTrigger.getDispatchTriggerId()));
 
 		try {
 			_schedulerEngineHelper.schedule(
@@ -57,13 +55,13 @@ public class DispatchTriggerHelper {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Scheduler entry created for dispatch trigger " +
-						dispatchTriggerId);
+						dispatchTrigger.getDispatchTriggerId());
 			}
 		}
 		catch (SchedulerException schedulerException) {
 			throw new DispatchTriggerSchedulerException(
 				"Unable to create scheduler entry for dispatch trigger " +
-					dispatchTriggerId,
+					dispatchTrigger.getDispatchTriggerId(),
 				schedulerException);
 		}
 	}

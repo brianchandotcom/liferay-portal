@@ -103,8 +103,8 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 		String destinationName = jobDataMap.getString(
 			SchedulerEngine.DESTINATION_NAME);
 
-		if (destinationName.equals(_LAYOUTS_LOCAL_PUBLISHER) ||
-			destinationName.equals(_LAYOUTS_REMOTE_PUBLISHER)) {
+		if (destinationName.equals("liferay/layouts_local_publisher") ||
+			destinationName.equals("liferay/layouts_remote_publisher")) {
 
 			return;
 		}
@@ -124,7 +124,9 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 					return;
 				}
 
-				if (destinationName.equals(_CT_COLLECTION_SCHEDULED_PUBLISH)) {
+				if (destinationName.equals(
+						"liferay/ct_collection_scheduled_publish")) {
+
 					long ctCollectionId = message.getLong("ctCollectionId");
 
 					if (_containsColumnId(
@@ -133,7 +135,7 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 						jobCompanyIds.put(jobName, companyId);
 					}
 				}
-				else if (destinationName.equals(_DISPATCH_EXECUTOR)) {
+				else if (destinationName.equals("liferay/dispatch/executor")) {
 					JSONObject jsonObject = _jsonFactory.createJSONObject(
 						(String)message.getPayload());
 
@@ -178,18 +180,6 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 			}
 		}
 	}
-
-	private static final String _CT_COLLECTION_SCHEDULED_PUBLISH =
-		"liferay/ct_collection_scheduled_publish";
-
-	private static final String _DISPATCH_EXECUTOR =
-		"liferay/dispatch/executor";
-
-	private static final String _LAYOUTS_LOCAL_PUBLISHER =
-		"liferay/layouts_local_publisher";
-
-	private static final String _LAYOUTS_REMOTE_PUBLISHER =
-		"liferay/layouts_remote_publisher";
 
 	private final CompanyLocalService _companyLocalService;
 	private final JSONFactory _jsonFactory;

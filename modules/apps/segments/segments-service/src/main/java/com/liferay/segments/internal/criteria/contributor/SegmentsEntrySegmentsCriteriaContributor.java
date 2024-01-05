@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	property = {
 		"segments.criteria.contributor.key=" + SegmentsEntrySegmentsCriteriaContributor.KEY,
 		"segments.criteria.contributor.model.class.name=*",
-		"segments.criteria.contributor.priority:Integer=1000"
+		"segments.criteria.contributor.priority:Integer=40"
 	},
 	service = SegmentsCriteriaContributor.class
 )

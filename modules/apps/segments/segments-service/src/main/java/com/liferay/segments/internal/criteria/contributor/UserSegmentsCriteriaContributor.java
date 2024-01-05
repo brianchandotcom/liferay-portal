@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	property = {
 		"segments.criteria.contributor.key=" + UserSegmentsCriteriaContributor.KEY,
 		"segments.criteria.contributor.model.class.name=com.liferay.portal.kernel.model.User",
-		"segments.criteria.contributor.priority:Integer=50"
+		"segments.criteria.contributor.priority:Integer=10"
 	},
 	service = SegmentsCriteriaContributor.class
 )

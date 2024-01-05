@@ -5,6 +5,8 @@
 
 package com.liferay.portal.security.ldap.internal;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -457,7 +459,9 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 					environmentProperties, null, Context.SECURITY_CREDENTIALS));
 		}
 
-		try {
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				SafeLdapContextImpl.class.getClassLoader())) {
+
 			return new SafeLdapContextImpl(
 				new InitialLdapContext(environmentProperties, null));
 		}

@@ -6,14 +6,12 @@
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -34,8 +32,5 @@ public class ViewUADExportProcessesMVCRenderCommand
 
 		return "/view_uad_export_processes.jsp";
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

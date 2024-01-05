@@ -46,6 +46,8 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "abc");
 
+		Refresh();
+
 		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article");
@@ -157,6 +159,8 @@ definition {
 		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
+
+		Refresh();
 
 		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Article 3,Article 1");
 
@@ -344,6 +348,8 @@ definition {
 		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
+
+		Refresh();
 
 		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Journal 2");
 
@@ -652,6 +658,8 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
 
+		Refresh();
+
 		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Article 3,Article 1,Article 4");
 
 		SearchResults.viewSearchResultNotPresent(
@@ -788,6 +796,8 @@ definition {
 		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
 
 		SearchPage.searchEmbedded(searchTerm = "WC Title");
+
+		Refresh();
 
 		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");
 
@@ -1155,6 +1165,8 @@ definition {
 		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
+
+		Refresh();
 
 		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Liferay Journal,New Site Article,New Site Journal,Liferay Article");
 

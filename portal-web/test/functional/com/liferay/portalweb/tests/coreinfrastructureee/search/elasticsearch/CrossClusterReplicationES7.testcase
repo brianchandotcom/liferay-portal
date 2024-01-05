@@ -519,6 +519,8 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
+		Refresh();
+
 		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");
 
 		SearchResults.viewSearchResultNotPresent(

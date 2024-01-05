@@ -11,8 +11,10 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -166,6 +169,22 @@ public class JournalEditDDMStructuresDisplayContext {
 		}
 
 		return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
+	}
+
+	public boolean getDisplayFieldName() {
+		try {
+			JournalServiceConfiguration journalServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					JournalServiceConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+			return journalServiceConfiguration.displayFieldName();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return false;
 	}
 
 	public Map<String, Object> getLocaleChangedHandlerContext() {

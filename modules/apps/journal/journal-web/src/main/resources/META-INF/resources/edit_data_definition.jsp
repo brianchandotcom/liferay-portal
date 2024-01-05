@@ -118,6 +118,7 @@ editDDMStructureURL.setParameter("structureKey", String.valueOf(ddmStructureKey)
 						componentId='<%= liferayPortletResponse.getNamespace() + "dataLayoutBuilder" %>'
 						contentType="journal"
 						dataDefinitionId="<%= ddmStructureId %>"
+						displayFieldName="<%= journalEditDDMStructuresDisplayContext.getDisplayFieldName() %>"
 						groupId="<%= groupId %>"
 						namespace="<%= liferayPortletResponse.getNamespace() %>"
 						scopes='<%= SetUtil.fromCollection(Arrays.asList("journal")) %>'

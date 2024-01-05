@@ -136,4 +136,11 @@ public interface JournalServiceConfiguration {
 	)
 	public String termsOfUseJournalArticleId();
 
+	@Meta.AD(
+		deflt = "false",
+		name = "display-field-name-in-structures-ui-and-allow-users-to-edit-it",
+		required = false
+	)
+	public boolean displayFieldName();
+
 }

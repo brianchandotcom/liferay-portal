@@ -828,8 +828,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			workflowTaskId, comment, dueDate, serviceContext);
 	}
 
-	private void _addActiveUser(Set<User> allowedUsers, long assigneeClassPK) {
-		User user = _userLocalService.fetchUser(assigneeClassPK);
+	private void _addActiveUser(Set<User> allowedUsers, long userId) {
+		User user = _userLocalService.fetchUser(userId);
 
 		if ((user != null) && user.isActive()) {
 			allowedUsers.add(user);

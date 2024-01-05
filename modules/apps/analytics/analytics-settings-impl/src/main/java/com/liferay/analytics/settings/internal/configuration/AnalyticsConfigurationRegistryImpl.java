@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashSet;
@@ -261,17 +262,19 @@ public class AnalyticsConfigurationRegistryImpl
 		}
 	}
 
-	private void _firstSync(long companyId) {
+	private void _firstSync(long companyId, Dictionary<String, ?> dictionary) {
 		try {
 			Set<String> dispatchTriggerNames = new HashSet<>();
 
-			dispatchTriggerNames.add(
-				AnalyticsDXPEntityBatchExporterConstants.
-					DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
+			if (_syncedAccountSettingsEnabled(dictionary) ||
+				_syncedContactSettingsEnabled(dictionary)) {
 
-			if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
-					companyId)) {
+				dispatchTriggerNames.add(
+					AnalyticsDXPEntityBatchExporterConstants.
+						DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
+			}
 
+			if (_syncedCommerceSettingsEnabled(dictionary)) {
 				Collections.addAll(
 					dispatchTriggerNames,
 					AnalyticsDXPEntityBatchExporterConstants.
@@ -280,11 +283,13 @@ public class AnalyticsConfigurationRegistryImpl
 						DISPATCH_TRIGGER_NAME_PRODUCT);
 			}
 
-			_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
-				companyId, dispatchTriggerNames.toArray(new String[0]));
+			if (!dispatchTriggerNames.isEmpty()) {
+				_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
+					companyId, dispatchTriggerNames.toArray(new String[0]));
 
-			_analyticsDXPEntityBatchExporter.export(
-				companyId, dispatchTriggerNames.toArray(new String[0]));
+				_analyticsDXPEntityBatchExporter.export(
+					companyId, dispatchTriggerNames.toArray(new String[0]));
+			}
 
 			_analyticsSettingsManager.updateCompanyConfiguration(
 				companyId, Collections.singletonMap("firstSync", false));
@@ -324,17 +329,13 @@ public class AnalyticsConfigurationRegistryImpl
 		return false;
 	}
 
-	private void _sync(long companyId) {
+	private void _sync(long companyId, Dictionary<String, ?> dictionary) {
 		try {
 			Set<String> refreshDispatchTriggerNames = new HashSet<>();
 			Set<String> unscheduleDispatchTriggerNames = new HashSet<>();
 
-			if (_analyticsSettingsManager.syncedCommerceSettingsChanged(
-					companyId)) {
-
-				if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
-						companyId)) {
-
+			if (_syncedCommerceSettingsChanged(dictionary)) {
+				if (_syncedCommerceSettingsEnabled(dictionary)) {
 					Collections.addAll(
 						refreshDispatchTriggerNames,
 						AnalyticsDXPEntityBatchExporterConstants.
@@ -352,42 +353,28 @@ public class AnalyticsConfigurationRegistryImpl
 				}
 			}
 
-			if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
-					companyId)) {
-
-				if (_analyticsSettingsManager.syncedOrderFieldsChanged(
-						companyId)) {
-
+			if (_syncedCommerceSettingsEnabled(dictionary)) {
+				if (_syncedOrderFieldsChanged(dictionary)) {
 					refreshDispatchTriggerNames.add(
 						AnalyticsDXPEntityBatchExporterConstants.
 							DISPATCH_TRIGGER_NAME_ORDER);
 				}
 
-				if (_analyticsSettingsManager.syncedProductFieldsChanged(
-						companyId)) {
-
+				if (_syncedProductFieldsChanged(dictionary)) {
 					refreshDispatchTriggerNames.add(
 						AnalyticsDXPEntityBatchExporterConstants.
 							DISPATCH_TRIGGER_NAME_PRODUCT);
 				}
 			}
 
-			if ((_analyticsSettingsManager.syncedAccountSettingsChanged(
-					companyId) &&
-				 _analyticsSettingsManager.syncedAccountSettingsEnabled(
-					 companyId)) ||
-				(_analyticsSettingsManager.syncedAccountSettingsEnabled(
-					companyId) &&
-				 _analyticsSettingsManager.syncedAccountFieldsChanged(
-					 companyId)) ||
-				(_analyticsSettingsManager.syncedContactSettingsChanged(
-					companyId) &&
-				 _analyticsSettingsManager.syncedContactSettingsEnabled(
-					 companyId)) ||
-				(_analyticsSettingsManager.syncedContactSettingsEnabled(
-					companyId) &&
-				 _analyticsSettingsManager.syncedUserFieldsChanged(
-					 companyId))) {
+			if ((_syncedAccountSettingsChanged(dictionary) &&
+				 _syncedAccountSettingsEnabled(dictionary)) ||
+				(_syncedAccountSettingsEnabled(dictionary) &&
+				 _syncedAccountFieldsChanged(dictionary)) ||
+				(_syncedContactSettingsChanged(dictionary) &&
+				 _syncedContactSettingsEnabled(dictionary)) ||
+				(_syncedContactSettingsEnabled(dictionary) &&
+				 _syncedUserFieldsChanged(dictionary))) {
 
 				refreshDispatchTriggerNames.add(
 					AnalyticsDXPEntityBatchExporterConstants.
@@ -407,10 +394,8 @@ public class AnalyticsConfigurationRegistryImpl
 					});
 			}
 
-			if (!_analyticsSettingsManager.syncedAccountSettingsEnabled(
-					companyId) &&
-				!_analyticsSettingsManager.syncedContactSettingsEnabled(
-					companyId)) {
+			if (!_syncedAccountSettingsEnabled(dictionary) &&
+				!_syncedContactSettingsEnabled(dictionary)) {
 
 				unscheduleDispatchTriggerNames.add(
 					AnalyticsDXPEntityBatchExporterConstants.
@@ -426,6 +411,270 @@ public class AnalyticsConfigurationRegistryImpl
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+	}
+
+	private boolean _syncedAccountFieldsChanged(
+		Dictionary<String, ?> dictionary) {
+
+		String[] previousSyncedAccountFieldNames = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedAccountFieldNames"));
+
+		Arrays.sort(previousSyncedAccountFieldNames);
+
+		String[] syncedAccountFieldNames = GetterUtil.getStringValues(
+			dictionary.get("syncedAccountFieldNames"));
+
+		Arrays.sort(syncedAccountFieldNames);
+
+		if ((previousSyncedAccountFieldNames.length != 0) &&
+			!Arrays.equals(
+				previousSyncedAccountFieldNames, syncedAccountFieldNames)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _syncedAccountSettingsChanged(
+		Dictionary<String, ?> dictionary) {
+
+		if (GetterUtil.getBoolean(dictionary.get("previousSyncAllAccounts")) !=
+				GetterUtil.getBoolean(dictionary.get("syncAllAccounts"))) {
+
+			return true;
+		}
+
+		String[] previousSyncedAccountGroupIds = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedAccountGroupIds"));
+
+		Arrays.sort(previousSyncedAccountGroupIds);
+
+		String[] syncedAccountGroupIds = GetterUtil.getStringValues(
+			dictionary.get("syncedAccountGroupIds"));
+
+		Arrays.sort(syncedAccountGroupIds);
+
+		if (!GetterUtil.getBoolean(dictionary.get("syncAllAccounts")) &&
+			!Arrays.equals(
+				previousSyncedAccountGroupIds, syncedAccountGroupIds)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _syncedAccountSettingsEnabled(
+		Dictionary<String, ?> dictionary) {
+
+		String[] previousSyncedAccountGroupIds = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedAccountGroupIds"));
+		String[] syncedAccountGroupIds = GetterUtil.getStringValues(
+			dictionary.get("syncedAccountGroupIds"));
+
+		if (GetterUtil.getBoolean(dictionary.get("syncAllAccounts")) ||
+			(previousSyncedAccountGroupIds.length != 0) ||
+			(syncedAccountGroupIds.length != 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _syncedCommerceSettingsChanged(
+		Dictionary<String, ?> dictionary) {
+
+		String[] commerceSyncEnabledAnalyticsChannelIds =
+			GetterUtil.getStringValues(
+				dictionary.get("commerceSyncEnabledAnalyticsChannelIds"));
+
+		Arrays.sort(commerceSyncEnabledAnalyticsChannelIds);
+
+		String[] previousCommerceSyncEnabledAnalyticsChannelIds =
+			GetterUtil.getStringValues(
+				dictionary.get(
+					"previousCommerceSyncEnabledAnalyticsChannelIds"));
+
+		Arrays.sort(previousCommerceSyncEnabledAnalyticsChannelIds);
+
+		String[] previousSyncedCommerceChannelIds = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedCommerceChannelIds"));
+
+		Arrays.sort(previousSyncedCommerceChannelIds);
+
+		String[] syncedCommerceChannelIds = GetterUtil.getStringValues(
+			dictionary.get("syncedCommerceChannelIds"));
+
+		Arrays.sort(syncedCommerceChannelIds);
+
+		if (!Arrays.equals(
+				commerceSyncEnabledAnalyticsChannelIds,
+				previousCommerceSyncEnabledAnalyticsChannelIds) ||
+			!Arrays.equals(
+				previousSyncedCommerceChannelIds, syncedCommerceChannelIds)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _syncedCommerceSettingsEnabled(
+		Dictionary<String, ?> dictionary) {
+
+		String[] commerceSyncEnabledAnalyticsChannelIds =
+			GetterUtil.getStringValues(
+				dictionary.get("commerceSyncEnabledAnalyticsChannelIds"));
+		String[] syncedCommerceChannelIds = GetterUtil.getStringValues(
+			dictionary.get("syncedCommerceChannelIds"));
+
+		if ((commerceSyncEnabledAnalyticsChannelIds.length != 0) &&
+			(syncedCommerceChannelIds.length != 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _syncedContactSettingsChanged(
+		Dictionary<String, ?> dictionary) {
+
+		if (GetterUtil.getBoolean(dictionary.get("previousSyncAllContacts")) !=
+				GetterUtil.getBoolean(dictionary.get("syncAllContacts"))) {
+
+			return true;
+		}
+
+		String[] previousSyncedOrganizationIds = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedOrganizationIds"));
+
+		Arrays.sort(previousSyncedOrganizationIds);
+
+		String[] previousSyncedUserGroupIds = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedUserGroupIds"));
+
+		Arrays.sort(previousSyncedUserGroupIds);
+
+		String[] syncedOrganizationIds = GetterUtil.getStringValues(
+			dictionary.get("syncedOrganizationIds"));
+
+		Arrays.sort(syncedOrganizationIds);
+
+		String[] syncedUserGroupIds = GetterUtil.getStringValues(
+			dictionary.get("syncedUserGroupIds"));
+
+		Arrays.sort(syncedUserGroupIds);
+
+		if (!GetterUtil.getBoolean(dictionary.get("syncAllContacts")) &&
+			(!Arrays.equals(
+				previousSyncedOrganizationIds, syncedOrganizationIds) ||
+			 !Arrays.equals(previousSyncedUserGroupIds, syncedUserGroupIds))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _syncedContactSettingsEnabled(
+		Dictionary<String, ?> dictionary) {
+
+		String[] syncedOrganizationIds = GetterUtil.getStringValues(
+			dictionary.get("syncedOrganizationIds"));
+		String[] syncedUserGroupIds = GetterUtil.getStringValues(
+			dictionary.get("syncedUserGroupIds"));
+
+		if (GetterUtil.getBoolean(dictionary.get("syncAllContacts")) ||
+			(syncedOrganizationIds.length != 0) ||
+			(syncedUserGroupIds.length != 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _syncedOrderFieldsChanged(
+		Dictionary<String, ?> dictionary) {
+
+		String[] previousSyncedOrderFieldNames = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedOrderFieldNames"));
+
+		Arrays.sort(previousSyncedOrderFieldNames);
+
+		String[] syncedOrderFieldNames = GetterUtil.getStringValues(
+			dictionary.get("syncedOrderFieldNames"));
+
+		Arrays.sort(syncedOrderFieldNames);
+
+		if ((previousSyncedOrderFieldNames.length != 0) &&
+			!Arrays.equals(
+				previousSyncedOrderFieldNames, syncedOrderFieldNames)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _syncedProductFieldsChanged(
+		Dictionary<String, ?> dictionary) {
+
+		String[] previousSyncedProductFieldNames = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedProductFieldNames"));
+
+		Arrays.sort(previousSyncedProductFieldNames);
+
+		String[] syncedProductFieldNames = GetterUtil.getStringValues(
+			dictionary.get("syncedProductFieldNames"));
+
+		Arrays.sort(syncedProductFieldNames);
+
+		if ((previousSyncedProductFieldNames.length != 0) &&
+			!Arrays.equals(
+				previousSyncedProductFieldNames, syncedProductFieldNames)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _syncedUserFieldsChanged(Dictionary<String, ?> dictionary) {
+		String[] previousSyncedContactFieldNames = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedContactFieldNames"));
+
+		Arrays.sort(previousSyncedContactFieldNames);
+
+		String[] previousSyncedUserFieldNames = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedUserFieldNames"));
+
+		Arrays.sort(previousSyncedUserFieldNames);
+
+		String[] syncedContactFieldNames = GetterUtil.getStringValues(
+			dictionary.get("syncedContactFieldNames"));
+
+		Arrays.sort(syncedContactFieldNames);
+
+		String[] syncedUserFieldNames = GetterUtil.getStringValues(
+			dictionary.get("syncedUserFieldNames"));
+
+		Arrays.sort(syncedUserFieldNames);
+
+		if ((previousSyncedContactFieldNames.length != 0) &&
+			(previousSyncedUserFieldNames.length != 0) &&
+			(!Arrays.equals(
+				previousSyncedUserFieldNames, syncedUserFieldNames) ||
+			 !Arrays.equals(
+				 previousSyncedContactFieldNames, syncedContactFieldNames))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _unmapPid(String pid) {
@@ -477,10 +726,10 @@ public class AnalyticsConfigurationRegistryImpl
 			if (!FeatureFlagManagerUtil.isEnabled("LRAC-10757") &&
 				analyticsConfiguration.firstSync()) {
 
-				_firstSync(companyId);
+				_firstSync(companyId, dictionary);
 			}
 			else {
-				_sync((Long)dictionary.get("companyId"));
+				_sync((Long)dictionary.get("companyId"), dictionary);
 			}
 		}
 	}

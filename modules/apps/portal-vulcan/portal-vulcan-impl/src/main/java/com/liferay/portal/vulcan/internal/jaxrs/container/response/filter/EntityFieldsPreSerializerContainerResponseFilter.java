@@ -23,9 +23,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Priority;
-
-import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
@@ -38,7 +35,6 @@ import javax.ws.rs.ext.Providers;
 /**
  * @author Carlos Correa
  */
-@Priority(Priorities.USER + 11)
 @Provider
 public class EntityFieldsPreSerializerContainerResponseFilter
 	implements ContainerResponseFilter {

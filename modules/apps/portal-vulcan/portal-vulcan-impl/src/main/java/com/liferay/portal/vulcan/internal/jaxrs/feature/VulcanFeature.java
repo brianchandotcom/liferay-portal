@@ -113,10 +113,12 @@ public class VulcanFeature implements Feature {
 		featureContext.register(DocumentFileExtensionExceptionMapper.class);
 		featureContext.register(DocumentFileNameExceptionMapper.class);
 		featureContext.register(DocumentFileSizeExceptionMapper.class);
-		featureContext.register(EntityExtensionContainerResponseFilter.class);
+		featureContext.register(
+			EntityExtensionContainerResponseFilter.class, Priorities.USER + 10);
 		featureContext.register(EntityExtensionWriterInterceptor.class);
 		featureContext.register(
-			EntityFieldsPreSerializerContainerResponseFilter.class);
+			EntityFieldsPreSerializerContainerResponseFilter.class,
+			Priorities.USER + 11);
 		featureContext.register(ExceptionMapper.class);
 		featureContext.register(FieldsQueryParamContextProvider.class);
 		featureContext.register(IllegalArgumentExceptionMapper.class);
@@ -138,7 +140,8 @@ public class VulcanFeature implements Feature {
 		featureContext.register(PrincipalExceptionMapper.class);
 		featureContext.register(RestrictFieldsQueryParamContextProvider.class);
 		featureContext.register(StatusDynamicFeature.class);
-		featureContext.register(TransactionContainerRequestFilter.class);
+		featureContext.register(
+			TransactionContainerRequestFilter.class, Priorities.USER - 10);
 		featureContext.register(UnrecognizedPropertyExceptionMapper.class);
 		featureContext.register(UnsupportedOperationExceptionMapper.class);
 		featureContext.register(ValidationExceptionMapper.class);

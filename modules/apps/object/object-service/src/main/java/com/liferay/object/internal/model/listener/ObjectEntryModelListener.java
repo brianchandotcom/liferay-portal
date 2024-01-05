@@ -247,7 +247,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		_objectActionEngine.executeObjectActions(
 			objectEntry.getModelClassName(), objectEntry.getCompanyId(),
 			objectActionTriggerKey,
-			ObjectEntryUtil.getPayloadJSONObject(
+			() -> ObjectEntryUtil.getPayloadJSONObject(
 				_dtoConverterRegistry, _jsonFactory, objectActionTriggerKey,
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectEntry.getObjectDefinitionId()),

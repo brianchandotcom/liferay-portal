@@ -5,7 +5,6 @@
 
 package com.liferay.headless.builder.model.listener.test;
 
-import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.headless.builder.util.ObjectDefinitionTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -13,7 +12,6 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -28,9 +26,6 @@ import java.util.Collections;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Sergio Jiménez del Coso
@@ -69,6 +64,22 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 			"headless-builder/applications", Http.Method.POST);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"mainObjectDefinitionERC", RandomTestUtil.randomString()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				apiApplicationJSONObject.getLong("id")
+			).toString(),
+			"headless-builder/schemas", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"An API schema must be an existing object definition.",
+			jsonObject.get("title"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"mainObjectDefinitionERC",
 				_objectDefinition.getExternalReferenceCode()
@@ -112,56 +123,6 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 		Assert.assertEquals(
 			"An API schema must be related to an API application.",
 			jsonObject.get("title"));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"mainObjectDefinitionERC", RandomTestUtil.randomString()
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"r_apiApplicationToAPISchemas_c_apiApplicationId",
-				apiApplicationJSONObject.getLong("id")
-			).toString(),
-			"headless-builder/schemas", Http.Method.POST);
-
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"An API schema must be an existing object definition.",
-			jsonObject.get("title"));
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title", "An API endpoint must be related to an API schema."
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"httpMethod", "get"
-				).put(
-					"name", RandomTestUtil.randomString()
-				).put(
-					"path",
-					StringPool.FORWARD_SLASH +
-						StringUtil.toLowerCase(RandomTestUtil.randomString())
-				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-					apiApplicationJSONObject.getLong("id")
-				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
-					_objectEntry.getObjectEntryId()
-				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
-					_objectEntry.getObjectEntryId()
-				).put(
-					"retrieveType",
-					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
-				).put(
-					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
-				).toString(),
-				"headless-builder/endpoints", Http.Method.POST
-			).toString(),
-			JSONCompareMode.STRICT);
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(

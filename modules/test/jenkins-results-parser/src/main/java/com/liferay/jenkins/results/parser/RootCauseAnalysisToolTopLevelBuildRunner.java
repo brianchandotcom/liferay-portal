@@ -694,6 +694,10 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 				_NAME_BUILD_PARAMETER_PORTAL_UPSTREAM_BRANCH_NAME + " is null");
 		}
 
+		if (portalUpstreamBranchName.matches("release-\\d{4}.q\\d+")) {
+			return;
+		}
+
 		String allowedPortalUpstreamBranchNames = getJobPropertyValue(
 			"allowed.portal.upstream.branch.names");
 
@@ -725,6 +729,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			}
 
 			sb.append("</ul>");
+			sb.append("or is not a valid release branch.");
 
 			failBuildRunner(sb.toString());
 		}

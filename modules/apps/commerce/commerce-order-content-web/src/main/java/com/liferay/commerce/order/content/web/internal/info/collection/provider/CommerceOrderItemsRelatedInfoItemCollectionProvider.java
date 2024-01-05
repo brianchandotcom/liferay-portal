@@ -8,7 +8,6 @@ package com.liferay.commerce.order.content.web.internal.info.collection.provider
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
-import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
@@ -79,9 +78,6 @@ public class CommerceOrderItemsRelatedInfoItemCollectionProvider
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
-
-	@Reference
-	private CommerceOrderService _commerceOrderService;
 
 	@Reference
 	private Language _language;

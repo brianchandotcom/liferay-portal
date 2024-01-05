@@ -186,9 +186,13 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title Version 1");
 
-			for (var title : list "Web Content Title Version 2,Web Content Title Version 3") {
+			for (var i : list "2,3") {
+				var data = "\"title\": \"Web Content Title Version ${i}\"";
+
+				var data = StringUtil.add(${data}, ",\"contentFields\": [{\"contentFieldValue\": {\"data\": \"<p>Web Content Content Version ${i}</p>\"},\"name\": \"content\"}]", "");
+
 				HeadlessWebcontent.patchStructuredContent(
-					data = "\"title\": \"${title}\"",
+					data = ${data},
 					structuredContentId = ${structuredContentId});
 			}
 
@@ -421,9 +425,12 @@ definition {
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title Version 1");
+			var data = "\"title\": \"Web Content Title Version 2\"";
+
+			var data = StringUtil.add(${data}, ",\"contentFields\": [{\"contentFieldValue\": {\"data\": \"<p>Web Content Content Version 2</p>\"},\"name\": \"content\"}]", "");
 
 			HeadlessWebcontent.patchStructuredContent(
-				data = "\"title\": \"Web Content Title Version 2\"",
+				data = ${data},
 				structuredContentId = ${structuredContentId});
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1027,8 +1034,12 @@ definition {
 				title = "Web Content Title Version 1");
 
 			for (var i : list "2,3,4,5,6,7,8,9,10,11") {
+				var data = "\"title\": \"Web Content Title Version ${i}\"";
+
+				var data = StringUtil.add(${data}, ",\"contentFields\": [{\"contentFieldValue\": {\"data\": \"<p>Web Content Content Version ${i}</p>\"},\"name\": \"content\"}]", "");
+
 				HeadlessWebcontent.patchStructuredContent(
-					data = "\"title\": \"Web Content Title Version ${i}\"",
+					data = ${data},
 					structuredContentId = ${structuredContentId});
 			}
 		}
@@ -1129,9 +1140,13 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title Version 1");
 
-			for (var title : list "Web Content Title Version 2,Web Content Title Version 3") {
+			for (var i : list "2,3") {
+				var data = "\"title\": \"Web Content Title Version ${i}\"";
+
+				var data = StringUtil.add(${data}, ",\"contentFields\": [{\"contentFieldValue\": {\"data\": \"<p>Web Content Content Version ${i}</p>\"},\"name\": \"content\"}]", "");
+
 				HeadlessWebcontent.patchStructuredContent(
-					data = "\"title\": \"${title}\"",
+					data = ${data},
 					structuredContentId = ${structuredContentId});
 			}
 		}
@@ -2163,9 +2178,13 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title Version 1");
 
-			for (var title : list "Web Content Title Version 2,Web Content Title Version 3") {
+			for (var i : list "2,3") {
+				var data = "\"title\": \"Web Content Title Version ${i}\"";
+
+				var data = StringUtil.add(${data}, ",\"contentFields\": [{\"contentFieldValue\": {\"data\": \"<p>Web Content Content Version ${i}</p>\"},\"name\": \"content\"}]", "");
+
 				HeadlessWebcontent.patchStructuredContent(
-					data = "\"title\": \"${title}\"",
+					data = ${data},
 					structuredContentId = ${structuredContentId});
 			}
 		}

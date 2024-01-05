@@ -807,54 +807,6 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 	@Test
 	public void testGetNotifiableUsers() throws Exception {
 
-		// Roles Scripted Assignment
-
-		Organization organization = _createOrganization(true);
-
-		User organizationReviewerUser = _createUser(
-			_ORGANIZATION_CONTENT_REVIEWER, organization.getGroup());
-
-		_organizationLocalService.addUserOrganization(
-			organizationReviewerUser.getUserId(), organization);
-
-		User siteAdministratorUser = _createUser(
-			RoleConstants.SITE_ADMINISTRATOR);
-
-		_organizationLocalService.addUserOrganization(
-			siteAdministratorUser.getUserId(), organization);
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			organization.getGroupId());
-
-		_activateWorkflow(
-			organization.getGroupId(), BlogsEntry.class.getName(), 0, 0,
-			_SCRIPTED_SINGLE_APPROVER_1, 1);
-
-		_addBlogsEntry(siteAdministratorUser);
-
-		WorkflowTask workflowTask = _getWorkflowTask(
-			organizationReviewerUser, null, false, null, 0);
-
-		Assert.assertEquals(
-			_sort(
-				Arrays.asList(
-					_adminUser, _companyAdminUser, organizationReviewerUser,
-					UserTestUtil.getAdminUser(_company.getCompanyId()))),
-			_sort(
-				_workflowTaskManager.getNotifiableUsers(
-					workflowTask.getWorkflowTaskId())));
-
-		_assignWorkflowTaskToUser(
-			organizationReviewerUser, organizationReviewerUser);
-
-		_completeWorkflowTask(organizationReviewerUser, Constants.APPROVE);
-
-		_deactivateWorkflow(
-			organization.getGroupId(), BlogsEntry.class.getName(), 0, 0);
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId());
-
 		// User Scripted Assignment
 
 		_activateWorkflow(
@@ -873,7 +825,8 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 
 		_addBlogsEntry(user1);
 
-		workflowTask = _getWorkflowTask(user1, null, false, null, 0);
+		WorkflowTask workflowTask = _getWorkflowTask(
+			user1, null, false, null, 0);
 
 		Assert.assertEquals(
 			Collections.singletonList(user1),

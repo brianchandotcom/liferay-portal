@@ -10,7 +10,6 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
@@ -645,9 +644,6 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Reference
 	private CommerceCatalogService _commerceCatalogService;
-
-	@Reference
-	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
 
 	@Reference
 	private CProductLocalService _cProductLocalService;

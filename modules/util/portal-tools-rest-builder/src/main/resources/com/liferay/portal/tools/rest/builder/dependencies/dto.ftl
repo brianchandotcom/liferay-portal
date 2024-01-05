@@ -232,9 +232,9 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 		@JsonIgnore
 		public void set${capitalizedPropertyName}(UnsafeSupplier<${propertyType}, Exception> ${propertyName}UnsafeSupplier) {
-			_${propertyName}Supplier = () -> {
+			<#if propertySchema.jsonMap>
 				try {
-					return ${propertyName}UnsafeSupplier.get();
+					${propertyName} = ${propertyName}UnsafeSupplier.get();
 				}
 				catch (RuntimeException re) {
 					throw re;
@@ -242,7 +242,19 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 				catch (Exception e) {
 					throw new RuntimeException(e);
 				}
-			};
+			<#else>
+				_${propertyName}Supplier = () -> {
+					try {
+						return ${propertyName}UnsafeSupplier.get();
+					}
+					catch (RuntimeException re) {
+						throw re;
+					}
+					catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				};
+			</#if>
 		}
 
 		<#if propertySchema.deprecated>

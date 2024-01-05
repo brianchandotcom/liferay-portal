@@ -36,9 +36,10 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 	public LayoutClassedModelUsageUpgradeProcess(
 		ClassNameLocalService classNameLocalService, JSONFactory jsonFactory) {
 
+		_jsonFactory = jsonFactory;
+
 		_fragmentEntryLinkClassNameId = classNameLocalService.getClassNameId(
 			FragmentEntryLink.class.getName());
-		_jsonFactory = jsonFactory;
 	}
 
 	@Override

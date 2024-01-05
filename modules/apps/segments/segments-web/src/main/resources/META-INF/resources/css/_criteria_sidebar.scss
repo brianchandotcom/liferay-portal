@@ -23,7 +23,11 @@
 		flex-basis: 0;
 		flex-grow: 1;
 		flex-shrink: 1;
-		overflow-x: hidden;
+
+		@include media-breakpoint-up(md) {
+			overflow-x: hidden;
+			overflow-y: auto;
+		}
 	}
 
 	.criteria-sidebar-item-root {

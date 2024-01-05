@@ -15,6 +15,10 @@
 		.contributor-container {
 			background-color: $light;
 
+			@include media-breakpoint-up(md) {
+				overflow: auto;
+			}
+
 			.container-fluid {
 				transition: all 0.5s ease;
 
@@ -36,15 +40,28 @@
 	}
 
 	.criteria-builder-section-sidebar {
-		height: calc(100% - 121px);
+		position: absolute;
 		right: 0;
-		top: 121px;
 		width: 0;
 		z-index: 10;
 
-		&--with-warning {
-			height: calc(100% - 177px);
-			top: 177px;
+		.criteria-sidebar-root {
+			min-height: calc(100vh - 121px);
+		}
+
+		@include media-breakpoint-up(md) {
+			height: calc(100% - 121px);
+			position: fixed;
+			top: 121px;
+
+			&--with-warning {
+				height: calc(100% - 177px);
+				top: 177px;
+			}
+
+			.criteria-sidebar-root {
+				position: absolute;
+			}
 		}
 	}
 
@@ -54,10 +71,10 @@
 
 	&.editing {
 		.criteria-builder-section-main {
-			padding-right: $sidebarWidth;
-
 			.contributor-container .container-fluid {
-				padding-right: $sidebarWidth;
+				@include media-breakpoint-up(md) {
+					padding-right: $sidebarWidth;
+				}
 
 				.content-wrapper {
 					height: 100%;

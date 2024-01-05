@@ -1,7 +1,12 @@
+@import 'cadmin-variables';
 @import 'mixins';
 @import 'variables';
 
 @import 'globals';
+
+html#{$cadmin-selector} .portlet-layout .cadmin.control-menu-container {
+	position: static;
+}
 
 .segments-root {
 	@import 'conjunction';

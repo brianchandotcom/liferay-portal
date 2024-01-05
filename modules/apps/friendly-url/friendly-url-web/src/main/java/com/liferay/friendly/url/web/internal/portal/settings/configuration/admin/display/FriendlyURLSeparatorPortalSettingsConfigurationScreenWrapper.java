@@ -7,14 +7,21 @@ package com.liferay.friendly.url.web.internal.portal.settings.configuration.admi
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
+import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
+import com.liferay.friendly.url.web.internal.display.context.FriendlyURLSeparatorCompanyConfigurationDisplayContext;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
 
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,6 +38,13 @@ public class FriendlyURLSeparatorPortalSettingsConfigurationScreenWrapper
 		return _portalSettingsConfigurationScreenFactory.create(
 			new FriendlyURLSeparatorPortalSettingsConfigurationScreenContributor());
 	}
+
+	@Reference
+	private FriendlyURLSeparatorConfigurationManager
+		_friendlyURLSeparatorConfigurationManager;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;
@@ -85,6 +99,24 @@ public class FriendlyURLSeparatorPortalSettingsConfigurationScreenWrapper
 			}
 
 			return true;
+		}
+
+		@Override
+		public void setAttributes(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse) {
+
+			PortalSettingsConfigurationScreenContributor.super.setAttributes(
+				httpServletRequest, httpServletResponse);
+
+			httpServletRequest.setAttribute(
+				FriendlyURLSeparatorCompanyConfigurationDisplayContext.class.
+					getName(),
+				new FriendlyURLSeparatorCompanyConfigurationDisplayContext(
+					_friendlyURLSeparatorConfigurationManager, _jsonFactory,
+					_language,
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY)));
 		}
 
 	}

@@ -4,7 +4,7 @@
 	}
 
 	.autofit-col .c-inner {
-		color: #282934;
+		color: var(--color-neutral-10, #282934);
 		flex-shrink: 0;
 		height: 16px;
 		width: 16px;
@@ -28,11 +28,11 @@
 	}
 
 	.custom-control-label:hover:before {
-		box-shadow: 0px 0px 0px 8px #EDF3FE;
+		box-shadow: 0px 0px 0px 8px var(--color-action-primary-hover-10, #EDF3FE);
 	}
 
 	.custom-control-label .text-truncate-inline {
-		color: var(--neutral-10, #282934);
+		color: var(--color-neutral-10, #282934);
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 13px;
 		font-style: normal;
@@ -41,7 +41,7 @@
 	}
 
 	.text-truncate-inline .text-truncate {
-		color: var(--neutral-10, #282934);
+		color: var(--color-neutral-10, #282934);
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 18px;
 		font-style: normal;
@@ -51,7 +51,7 @@
 
 	.treeview.treeview-light.treeview-nested.treeview-vocabulary-display {
 		align-items: flex-start;
-		background: var(--neutral-01, #F7F7F8);
+		background: var(--color-neutral-01, #F7F7F8);
 		border-radius: 10px;
 		display: flex;
 		flex-direction: column;

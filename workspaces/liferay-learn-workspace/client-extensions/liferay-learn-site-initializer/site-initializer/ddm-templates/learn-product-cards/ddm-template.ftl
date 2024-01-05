@@ -5,16 +5,16 @@
 	}
 
 	.home-card {
-		background-color:#FBFCFE !important;
-		border-color:#E7EFFF !important;
+		background-color: var(--color-brand-primary-lighten-6, #FBFCFE) !important;
+		border-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;
 		border-radius: 10px !important;
 		border-width:1px !important;
 		min-width: 100%;
 	}
 
 	.home-card:hover {
-		background-color: #EDF3FE !important;
-		border-color: #0053F0 !important;
+		background-color: var(--color-action-primary-hover-10, #EDF3FE) !important;
+		border-color: var(--color-brand-primary-darken-1, #0053F0) !important;
 		box-shadow: none !important;
 		transform: none !important;
 	}
@@ -37,12 +37,12 @@
 	}
 
 	.subtitle {
-		color: #54555F;
+		color: var(--color-neutral-08, #54555F);
 		font-size: small;
 	}
 
 	.title {
-		color: #282934;
+		color: var(--color-neutral-10, #282934);
 	}
 </style>
 

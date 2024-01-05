@@ -13,7 +13,7 @@
 	}
 
 	.account-menu-item-text {
-		color: var(--color-neutral-10);
+		color: var(--color-neutral-10, #282934);
 	}
 
 	.account-menu-item-icon {
@@ -25,7 +25,7 @@
 	.account-menu-item:active,
 	.account-menu-item:focus {
 		background: var(--color-action-primary-hover-lighten);
-		color: var(--color-action-primary-default);
+		color: var(--color-action-primary-default, #0B5FFF);
 	}
 </style>
 

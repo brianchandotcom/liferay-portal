@@ -45,11 +45,11 @@
 	}
 
 	.dropdown-menu .row .dropdown-item-div .dropdown-item:hover {
-		background: var(--action-primary-hover-7, #EDF3FE);
+		background: var(--color-action-primary-hover-10, #EDF3FE);
 	}
 
 	.dropdown-menu .row .dropdown-item-div .dropdown-item:hover .title {
-		color: var(--action-primary-hover, #0053F0);
+		color: var(--color-brand-primary-darken-1, #0053F0);
 	}
 
 	.dropdown-menu .row .dropdown-item-div .dropdown-item .icon {
@@ -58,7 +58,7 @@
 	}
 
 	.dropdown-menu .row .dropdown-item-div .dropdown-item .subtitle {
-		color: var(--neutral-08, #54555F);
+		color: var(--color-neutral-08, #54555F);
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 13px;
 		font-style: normal;
@@ -67,7 +67,7 @@
 	}
 
 	.dropdown-menu .row .dropdown-item-div .dropdown-item .title {
-		color: var(--neutral-10, #282934);
+		color: var(--color-neutral-10, #282934);
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 18px;
 		font-style: normal;

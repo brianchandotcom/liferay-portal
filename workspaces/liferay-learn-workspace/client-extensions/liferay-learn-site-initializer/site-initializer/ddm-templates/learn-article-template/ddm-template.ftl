@@ -11,12 +11,12 @@
 
 <style>
 	.adt-nav-title.align-items-center.d-flex {
-		color: #282934;
+		color: var(--color-neutral-10, #282934);
 		font-weight: 700;
 	}
 
 	.adt-submenu-item-link {
-		color: #282934;
+		color: var(--color-neutral-10, #282934);
 		display: contents;
 	}
 
@@ -25,7 +25,7 @@
 	}
 
 	.bg-color-1 {
-		background-color: #F7F7F8;
+		background-color: var(--color-neutral-01, #F7F7F8);
 	}
 
 	.br-5 {
@@ -57,13 +57,13 @@
 	}
 
 	.current-level {
-		color: #004AD7 !important;
-		background-color: #E6EDFB;
+		color: var(--color-action-primary-active, #004AD7) !important;
+		background-color: var(--color-action-primary-active-20, #E6EDFB);
 	}
 
 	.current-level:hover a {
-		background-color: #EDF3FE !important;
-		color: ##004AD7 !important;
+		background-color: var(--color-action-primary-hover-10, #EDF3FE) !important;
+		color: var(--color-brand-primary-darken-2, #004AD7) !important;
 	}
 
 	.d-flex>.lexicon-icon-angle-left {
@@ -75,7 +75,7 @@
 
 	.doc-nav>.align-items-center {
 		border-bottom: solid;
-		border-color: #EAECEE;
+		border-color: var(--color-action-neutral-hover-10, #EAECEE);
 	}
 
 	.dropdown-item {
@@ -87,7 +87,7 @@
 	}
 
 	.dropdown-item:hover {
-		background-color: #EDF3FE;
+		background-color: var(--color-action-primary-hover-10, #EDF3FE);
 	}
 
 	.dropdown-menu .row {
@@ -95,7 +95,7 @@
 	}
 
 	.reference:hover {
-		color: #0053F0 !important;
+		color: var(--color-brand-primary-darken-1, #0053F0) !important;
 	}
 
 	.rounded-10{
@@ -103,16 +103,16 @@
 	}
 
 	.section-card:hover {
-		background-color: #EDF3FE !important;
-		border-bottom: 1px solid #0053F0 !important;
-		border-color: #0053F0 !important;
+		background-color: var(--color-action-primary-hover-10, #EDF3FE) !important;
+		border-bottom: 1px solid var(--color-brand-primary-darken-1, #0053F0) !important;
+		border-color: var(--color-brand-primary-darken-1, #0053F0) !important;
 		box-shadow: none !important;
 		margin-bottom: 0px !important;
 		transform: none !important;
 	}
 
 	.show #dropdown-products {
-		background-color: #EDF3FE !important;
+		background-color: var(--color-action-primary-hover-10, #EDF3FE) !important;
 	}
 
 	.show #dropdown-products svg {
@@ -121,21 +121,21 @@
 	}
 
 	.side-nav>.other-level{
-		color: #282934 !important;
+		color: var(--color-neutral-10, #282934) !important;
 		font-size: 1rem;
 		font-weight:600;
 		width: 100%;
 	}
 
 	.side-nav:hover {
-		background-color: #EDF3FE !important;
-		color: #0053F0 !important;
+		background-color: var(--color-action-primary-hover-10, #EDF3FE) !important;
+		color: var(--color-brand-primary-darken-1, #0053F0) !important;
 	}
 
 	.tag-container {
 		border-radius: 1.5rem;
-		border: 1px solid #0B5FFF;
-		background: var(--action-primary-inverted, #FFF);
+		border: 1px solid var(--color-brand-primary, #0B5FFF);
+		background: var(--color-neutral-00, #FFFFFF);
 		padding: 0.25rem 0.75rem;
 		gap: 0.25rem;
 	}
@@ -150,7 +150,6 @@
 		background-position: right 0.8rem top $spacing-md;
 		background-repeat: no-repeat;
 		background-size: 0.65rem;
-		color: $color-neutral-6;
 		color: var(--color-action-primary-hover) !important;
 	}
 
@@ -162,31 +161,31 @@
 
 	#backLink {
 		border-left-width: 0px;
-		color: #282934;
+		color: var(--color-neutral-10, #282934);
 	}
 
 	#backLink:hover {
-		background-color: #EAECEE;
+		background-color: var(--color-action-neutral-hover-10, #EAECEE);
 		transition: box-shadow 0.1s linear, background-color 0.1s linear;
 	}
 
 	#dropdown-products:hover {
-		background-color: #EDF3FE !important;
+		background-color: var(--color-action-primary-hover-10, #EDF3FE) !important;
 	}
 
 	#dropdown-products:hover svg {
-		color: var(--color-action-primary-hover);
+		color: var(--color-action-primary-hover, #0053F0);
 	}
 
 	#parentTitle {
-		color: #282934;
+		color: var(--color-neutral-10, #282934);
 		font-weight: 700;
 	}
 
 	#productIcon {
-		background-color: #E7EFFF;
+		background-color: var(--color-brand-primary-lighten-5, #E7EFFF);
 		border: 1px solid;
-		border-color: #FFFFFF;
+		border-color: var(--color-neutral-00, #FFFFFF);
 		height: 3.25rem;
 		width: 3.25rem;
 	}
@@ -200,7 +199,7 @@
 
 	#productsIcon {
 		border: 1px solid;
-		border-color: #F7F7F8;
+		border-color: var(--color-neutral-01, #F7F7F8);
 		height: 2.25rem;
 		width: 2.25rem;
 	}
@@ -213,7 +212,7 @@
 	}
 
 	#send-feedback {
-		color: #0B5FFF;
+		color: var(--color-brand-primary, #0B5FFF);
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 1rem;
 		font-style: normal;
@@ -224,7 +223,7 @@
 	}
 
 	a.other-level:hover {
-		color: #0053F0 !important;
+		color: var(--color-action-primary-hover, #0053F0) !important;
 	}
 </style>
 

@@ -18,7 +18,6 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -100,8 +99,5 @@ public class CSDiagramEntryInfoItemPermissionProvider
 
 	@Reference
 	private CSDiagramEntryLocalService _csDiagramEntryLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

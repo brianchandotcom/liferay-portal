@@ -124,6 +124,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 
 	public boolean isLayoutSetPrototypeUpdateable();
 
+	public boolean isLayoutSetReadyForPropagation();
+
 	public boolean isLogo();
 
 	public void setCompanyFallbackVirtualHostname(

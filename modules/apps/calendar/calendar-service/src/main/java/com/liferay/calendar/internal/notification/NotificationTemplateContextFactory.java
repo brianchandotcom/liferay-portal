@@ -215,9 +215,6 @@ public class NotificationTemplateContextFactory {
 			long calendarBookingId, String layoutURL, String portalURL,
 			User user)
 		throws Exception {
-		portalURL = _getPortalURLOrCompanyDefault(
-			portalURL, user.getCompanyId());
-
 		if (layoutURL == null) {
 			GroupLocalService groupLocalService = _groupLocalServiceSnapshot.get();
 
@@ -230,6 +227,9 @@ public class NotificationTemplateContextFactory {
 			layoutURL = PortalUtil.getLayoutActualURL(
 				layoutLocalService.fetchLayout(group.getDefaultPublicPlid()));
 		}
+
+		portalURL = _getPortalURLOrCompanyDefault(
+			portalURL, user.getCompanyId());
 
 		String url = portalURL + layoutURL;
 

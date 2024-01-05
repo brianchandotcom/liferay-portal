@@ -5,11 +5,16 @@
 
 package com.liferay.frontend.js.tabs.support.web.internal.servlet.taglib;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
+
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,12 +36,18 @@ public class TabsBottomDynamicInclude implements DynamicInclude {
 
 		ScriptData scriptData = new ScriptData();
 
-		String initModuleName = _npmResolver.resolveModuleName(
-			"frontend-js-tabs-support-web/index");
+		AbsolutePortalURLBuilder absolutePortalURLBuilder =
+			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				httpServletRequest);
 
 		scriptData.append(
-			null, "TabsProvider.default()", initModuleName + " as TabsProvider",
-			ScriptData.ModulesType.ES6);
+			null,
+			new JSFragment(
+				"main();",
+				Arrays.asList(
+					ESImportUtil.getESImport(
+						absolutePortalURLBuilder,
+						"{default as main} from frontend-js-tabs-support-web"))));
 
 		scriptData.writeTo(httpServletResponse.getWriter());
 	}
@@ -49,6 +60,6 @@ public class TabsBottomDynamicInclude implements DynamicInclude {
 	}
 
 	@Reference
-	private NPMResolver _npmResolver;
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 }

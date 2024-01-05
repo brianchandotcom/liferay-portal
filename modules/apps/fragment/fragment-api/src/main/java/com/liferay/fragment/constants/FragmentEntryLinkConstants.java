@@ -14,6 +14,8 @@ public class FragmentEntryLinkConstants {
 
 	public static final String INDEX = "INDEX";
 
+	public static final String PREVIEW = "PREVIEW";
+
 	public static final String VIEW = "VIEW";
 
 }

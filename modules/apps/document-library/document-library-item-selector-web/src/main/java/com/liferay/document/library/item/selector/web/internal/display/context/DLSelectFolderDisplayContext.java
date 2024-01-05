@@ -278,7 +278,9 @@ public class DLSelectFolderDisplayContext {
 	}
 
 	public boolean isSelectButtonDisabled(long folderId, long repositoryId) {
-		if (((folderId == _blockedFolderId) ||
+		if ((((DLFolderConstants.DEFAULT_PARENT_FOLDER_ID !=
+				_blockedFolderId) &&
+			  (folderId == _blockedFolderId)) ||
 			 (folderId == getSelectedFolderId())) &&
 			(repositoryId == getSelectedRepositoryId())) {
 

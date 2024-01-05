@@ -77,7 +77,6 @@ import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1582,16 +1581,17 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		DTOConverterContext dtoConverterContext = _getDTOConverterContext(
 			userId);
 
+		Map<String, Map<String, String>> actionsMap = new HashMap<>();
+
 		if (!actions.isEmpty()) {
-			MapUtil.merge(dtoConverterContext.getActions(), actions);
+			actionsMap.putAll(actions);
 		}
-		else {
-			actions = dtoConverterContext.getActions();
-		}
+
+		actionsMap.putAll(dtoConverterContext.getActions());
 
 		return _userResourceDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), actions,
+				contextAcceptLanguage.isAcceptAllLanguages(), actionsMap,
 				_dtoConverterRegistry, userId,
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));

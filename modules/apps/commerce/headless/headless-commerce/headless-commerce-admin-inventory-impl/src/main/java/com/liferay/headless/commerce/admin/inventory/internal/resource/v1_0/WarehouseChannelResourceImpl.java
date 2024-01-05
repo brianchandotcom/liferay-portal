@@ -245,12 +245,6 @@ public class WarehouseChannelResourceImpl
 	@Reference
 	private CommerceChannelService _commerceChannelService;
 
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.inventory.model.CommerceInventoryWarehouse)"
-	)
-	private ModelResourcePermission<CommerceInventoryWarehouse>
-		_commerceInventoryWarehouseModelResourcePermission;
-
 	@Reference
 	private CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;

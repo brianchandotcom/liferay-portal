@@ -159,6 +159,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_ENTRY_ELLIPSIS</td>
+	<td>//div[contains(@class,'info-panel')]//li[contains(@class,'list-group-item')][.//div[contains(@class,'list-group-title')][normalize-space()='${key_listEntry}']]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_ENTRY_LABEL</td>
+	<td>//div[contains(@class,'info-panel')]//li[contains(@class,'list-group-item')][.//div[contains(@class,'list-group-title')][normalize-space()='${key_listEntry}']]//span[contains(@class,'label-item')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCALTION</td>
 	<td>//div[contains(@class,'sidebar-body')]//p[normalize-space()='Location']//following-sibling::p</td>
 	<td></td>

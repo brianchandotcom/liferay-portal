@@ -435,6 +435,51 @@ public abstract class BaseCTCollectionResourceTestCase {
 	}
 
 	@Test
+	public void testGetCtCollectionsByClassPage() throws Exception {
+		Page<CTCollection> page =
+			ctCollectionResource.getCtCollectionsByClassPage(null, null);
+
+		long totalCount = page.getTotalCount();
+
+		CTCollection ctCollection1 =
+			testGetCtCollectionsByClassPage_addCTCollection(
+				randomCTCollection());
+
+		CTCollection ctCollection2 =
+			testGetCtCollectionsByClassPage_addCTCollection(
+				randomCTCollection());
+
+		page = ctCollectionResource.getCtCollectionsByClassPage(null, null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(ctCollection1, (List<CTCollection>)page.getItems());
+		assertContains(ctCollection2, (List<CTCollection>)page.getItems());
+		assertValid(page, testGetCtCollectionsByClassPage_getExpectedActions());
+
+		ctCollectionResource.deleteCTCollection(ctCollection1.getId());
+
+		ctCollectionResource.deleteCTCollection(ctCollection2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetCtCollectionsByClassPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected CTCollection testGetCtCollectionsByClassPage_addCTCollection(
+			CTCollection ctCollection)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteCTCollectionByExternalReferenceCode()
 		throws Exception {
 

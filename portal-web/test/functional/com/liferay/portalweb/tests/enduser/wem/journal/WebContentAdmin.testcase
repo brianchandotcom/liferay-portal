@@ -181,26 +181,18 @@ definition {
 				folderName = "WC Folder Name",
 				groupName = "Test Site Name");
 
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content Version 1",
+			var structuredContentId = HeadlessWebcontent.addBasicWebContent(
+				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title Version 1");
 
+			for (var title : list "Web Content Title Version 2,Web Content Title Version 3") {
+				HeadlessWebcontent.patchStructuredContent(
+					data = "\"title\": \"${title}\"",
+					structuredContentId = ${structuredContentId});
+			}
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Version 1");
-
-			WebContent.editCP(
-				webContentContentEdit = "Web Content Content Version 2",
-				webContentTitle = "Web Content Title Version 1",
-				webContentTitleEdit = "Web Content Title Version 2");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Version 2");
-
-			WebContent.editCP(
-				webContentContentEdit = "Web Content Content Version 3",
-				webContentTitle = "Web Content Title Version 2",
-				webContentTitleEdit = "Web Content Title Version 3");
 		}
 
 		task ("When open the dropdown menu of Filter") {
@@ -425,19 +417,16 @@ definition {
 				folderName = "WC Folder Name",
 				groupName = "Test Site Name");
 
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content Version 1",
+			var structuredContentId = HeadlessWebcontent.addBasicWebContent(
+				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title Version 1");
 
+			HeadlessWebcontent.patchStructuredContent(
+				data = "\"title\": \"Web Content Title Version 2\"",
+				structuredContentId = ${structuredContentId});
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Version 1");
-
-			WebContent.editCP(
-				webContentContentEdit = "Web Content Content Version 2",
-				webContentTitle = "Web Content Title Version 1",
-				webContentTitleEdit = "Web Content Title Version 2");
 		}
 
 		task ("Then view Filter by Type section is not shown and view the folder and the latest version of published web content are shown") {
@@ -1654,19 +1643,19 @@ definition {
 	@priority = 3
 	test ViewBackButtonTooltipOfVersions {
 		task ("Given a content creator accesses to the Versions of a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content Version 1",
+			var structuredContentId = HeadlessWebcontent.addBasicWebContent(
+				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title Version 1");
+			var data = "\"title\": \"Web Content Title Version 2\"";
+
+			var data = StringUtil.add(${data}, ",\"contentFields\": [{\"contentFieldValue\": {\"data\": \"<p>Web Content Content Version 2</p>\"},\"name\": \"content\"}]", "");
+
+			HeadlessWebcontent.patchStructuredContent(
+				data = ${data},
+				structuredContentId = ${structuredContentId});
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Version 1");
-
-			WebContent.editCP(
-				webContentContentEdit = "Web Content Content Version 2",
-				webContentTitle = "Web Content Title Version 1",
-				webContentTitleEdit = "Web Content Title Version 2");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Web Content Title Version 2",

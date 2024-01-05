@@ -1,0 +1,59 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-177690. The tooltip of the back button should be Go to Web Content in the editor of Feeds."
+	@priority = 3
+	test ViewBackButtonTooltipOfWebContentFeedEditor {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given a content creator adds a web content feed") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Web Content",
+				configurationName = "Administration",
+				configurationScope = "System Scope");
+
+			FormFields.enableCheckbox(fieldName = "Show Feeds");
+
+			SystemSettings.saveConfiguration();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoFeeds();
+
+			LexiconEntry.gotoAdd();
+
+			WaitForElementPresent(locator1 = "TextInput#NAME");
+		}
+
+		task ("When the content creator hovers over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the content creator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Web Content",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
+}

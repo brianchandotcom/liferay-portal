@@ -15,9 +15,6 @@ import java.io.Serializable;
 
 import java.util.Map;
 
-import javax.annotation.Priority;
-
-import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
@@ -30,7 +27,6 @@ import javax.ws.rs.ext.Providers;
 /**
  * @author Carlos Correa
  */
-@Priority(Priorities.USER + 10)
 @Provider
 public class EntityExtensionContainerResponseFilter
 	implements ContainerResponseFilter {

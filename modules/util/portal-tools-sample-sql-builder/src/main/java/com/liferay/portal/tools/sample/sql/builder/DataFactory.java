@@ -6980,8 +6980,11 @@ public class DataFactory {
 		long userId, String firstName, String lastName, String screenName,
 		int type) {
 
+		String emailAddress = screenName + "@liferay.com";
+
 		if (Validator.isNull(screenName)) {
 			screenName = String.valueOf(userId);
+			emailAddress = "default@liferay.com";
 		}
 
 		UserModel userModel = new UserModelImpl();
@@ -7004,7 +7007,7 @@ public class DataFactory {
 		userModel.setReminderQueryQuestion("What is your screen name?");
 		userModel.setReminderQueryAnswer(screenName);
 		userModel.setScreenName(screenName);
-		userModel.setEmailAddress(screenName + "@liferay.com");
+		userModel.setEmailAddress(emailAddress);
 		userModel.setLanguageId("en_US");
 		userModel.setGreeting("Welcome " + screenName + StringPool.EXCLAMATION);
 		userModel.setFirstName(firstName);

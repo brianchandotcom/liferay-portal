@@ -3,10 +3,8 @@
 [#assign url = configuration.url /]
 
 <div class="f-call-to-action">
-	<a class="align-items-center call-to-action d-flex ${loud?then('loud', '')} ${label?then('hasLabel', '')} position-relative text-decoration-none"
-		href="${url}" rel="noopener noreferrer" target="${configuration.newTab?then('_blank', '_self')}">
+	<a class="align-items-center call-to-action d-flex ${loud?then('loud', '')} ${label?then('hasLabel', '')} position-relative text-decoration-none" href="${url}" rel="noopener noreferrer" target="${configuration.newTab?then('_blank', '_self')}">
 		<div class="call-to-action-content d-flex">
-
 			<div class="call-to-action-content-left d-flex">
 				[#if label]
 					<div class="call-to-action-label d-flex" data-lfr-editable-id="ctaLabel" data-lfr-editable-type="text">
@@ -20,50 +18,45 @@
 			</div>
 
 			<div class="call-to-action-arrow-right d-flex">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<mask id="mask0_210_94" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="2" y="7" width="19" height="10">
-						<path
-							d="M16.8645 16.4842L20.2207 13.128C20.727 12.5702 20.7457 11.5858 20.2207 10.9811L16.8645 7.62484C15.2895 6.22796 13.3535 8.36546 14.7176 9.77171L15.5004 10.5545H4.11914C2.12695 10.5545 2.12695 13.5545 4.11914 13.5545H15.5004L14.7176 14.3373C13.316 15.828 15.416 17.8764 16.8645 16.4842Z"
-							fill="#6B6C7E" />
+				<svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+					<mask height="10" id="mask0_210_94" maskUnits="userSpaceOnUse" style="mask-type:alpha" width="19" x="2" y="7">
+						<path d="M16.8645 16.4842L20.2207 13.128C20.727 12.5702 20.7457 11.5858 20.2207 10.9811L16.8645 7.62484C15.2895 6.22796 13.3535 8.36546 14.7176 9.77171L15.5004 10.5545H4.11914C2.12695 10.5545 2.12695 13.5545 4.11914 13.5545H15.5004L14.7176 14.3373C13.316 15.828 15.416 17.8764 16.8645 16.4842Z" fill="#6B6C7E" />
 					</mask>
+
 					<g mask="url(#mask0_210_94)">
-						<rect width="24" height="24" fill="${loud?then('white', 'var(--color-action-primary-default)')}" />
+						<rect fill="${loud?then('white', 'var(--color-action-primary-default)')}" height="24" width="24" />
 					</g>
 				</svg>
 			</div>
 		</div>
 
 		[#if loud]
-			<svg class="cta-gradient position-absolute" width="172" height="172" viewBox="0 0 172 72" fill="none"
-				xmlns="http://www.w3.org/2000/svg">
+			<svg class="cta-gradient position-absolute" fill="none" height="172" viewBox="0 0 172 72" width="172" xmlns="http://www.w3.org/2000/svg">
 				<g clip-path="url(#clip0_211_84)">
-					<path
-						d="M42.6962 27.1665C-8.45382 79.5523 -21.3853 159.021 40.3182 224.387C102.022 289.753 176.482 252.453 225.073 202.688C276.223 150.302 272.434 68.4779 219.858 17.1403C167.281 -34.1973 93.8462 -25.2194 42.6962 27.1665Z"
-						fill="url(#paint0_linear_211_84)" />
-					<path
-						d="M262.169 25.1315C198.272 -71.3644 77.6535 -38.2026 49.0374 18.1012C19.2403 76.7344 53.9356 219.304 129.907 265.536C223.821 322.688 326.173 121.783 262.169 25.1282V25.1315Z"
-						fill="url(#paint1_linear_211_84)" />
+					<path d="M42.6962 27.1665C-8.45382 79.5523 -21.3853 159.021 40.3182 224.387C102.022 289.753 176.482 252.453 225.073 202.688C276.223 150.302 272.434 68.4779 219.858 17.1403C167.281 -34.1973 93.8462 -25.2194 42.6962 27.1665Z" fill="url(#paint0_linear_211_84)" />
+					<path d="M262.169 25.1315C198.272 -71.3644 77.6535 -38.2026 49.0374 18.1012C19.2403 76.7344 53.9356 219.304 129.907 265.536C223.821 322.688 326.173 121.783 262.169 25.1282V25.1315Z" fill="url(#paint1_linear_211_84)" />
 				</g>
+
 				<defs>
-					<linearGradient id="paint0_linear_211_84" x1="-4.43881" y1="-23.4821" x2="136.937" y2="127.991"
-						gradientUnits="userSpaceOnUse">
-						<stop stop-color="white" stop-opacity="0.7" />
-						<stop offset="0.11" stop-color="white" stop-opacity="0.55" />
-						<stop offset="0.25" stop-color="white" stop-opacity="0.38" />
-						<stop offset="0.39" stop-color="white" stop-opacity="0.24" />
-						<stop offset="0.53" stop-color="white" stop-opacity="0.14" />
-						<stop offset="0.67" stop-color="white" stop-opacity="0.06" />
-						<stop offset="0.81" stop-color="white" stop-opacity="0.01" />
-						<stop offset="0.96" stop-color="white" stop-opacity="0" />
+					<linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_211_84" x1="-4.43881" x2="136.937" y1="-23.4821" y2="127.991">
+							<stop stop-color="white" stop-opacity="0.7" />
+							<stop offset="0.11" stop-color="white" stop-opacity="0.55" />
+							<stop offset="0.25" stop-color="white" stop-opacity="0.38" />
+							<stop offset="0.39" stop-color="white" stop-opacity="0.24" />
+							<stop offset="0.53" stop-color="white" stop-opacity="0.14" />
+							<stop offset="0.67" stop-color="white" stop-opacity="0.06" />
+							<stop offset="0.81" stop-color="white" stop-opacity="0.01" />
+							<stop offset="0.96" stop-color="white" stop-opacity="0" />
 					</linearGradient>
-					<linearGradient id="paint1_linear_211_84" x1="56.5918" y1="-127.413" x2="239.622" y2="269.15"
-						gradientUnits="userSpaceOnUse">
-						<stop stop-color="white" stop-opacity="0.25" />
-						<stop offset="0.52" stop-color="white" stop-opacity="0.08" />
-						<stop offset="0.81" stop-color="white" stop-opacity="0" />
+
+					<linearGradient gradientUnits="userSpaceOnUse" id="paint1_linear_211_84" x1="56.5918" x2="239.622" y1="-127.413" y2="269.15">
+							<stop stop-color="white" stop-opacity="0.25" />
+							<stop offset="0.52" stop-color="white" stop-opacity="0.08" />
+							<stop offset="0.81" stop-color="white" stop-opacity="0" />
 					</linearGradient>
+
 					<clipPath id="clip0_211_84">
-						<rect width="220" height="220" fill="white" transform="translate(0 -78)" />
+						<rect fill="white" height="220" transform="translate(0 -78)" width="220" />
 					</clipPath>
 				</defs>
 			</svg>

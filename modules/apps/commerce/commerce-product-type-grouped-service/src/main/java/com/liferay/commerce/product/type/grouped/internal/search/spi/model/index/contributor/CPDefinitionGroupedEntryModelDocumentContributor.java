@@ -8,7 +8,6 @@ package com.liferay.commerce.product.type.grouped.internal.search.spi.model.inde
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -93,9 +92,6 @@ public class CPDefinitionGroupedEntryModelDocumentContributor
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Localization _localization;

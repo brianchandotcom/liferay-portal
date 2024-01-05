@@ -316,6 +316,7 @@
 		"actions": [
 			{
 				"actionIds": [
+					"ADD_COMMERCE_ORDER",
 					"CHECKOUT_OPEN_COMMERCE_ORDERS",
 					"VIEW_OPEN_COMMERCE_ORDERS"
 				],

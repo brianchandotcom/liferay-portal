@@ -11,6 +11,8 @@ import com.liferay.object.model.ObjectDefinition;
 
 import java.io.IOException;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,6 +32,11 @@ public abstract class BaseObjectDefinitionsScreenNavigationEntry
 	}
 
 	public abstract String getJspPath();
+
+	@Override
+	public String getLabel(Locale locale) {
+		return null;
+	}
 
 	@Override
 	public void render(

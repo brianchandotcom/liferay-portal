@@ -23,6 +23,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
@@ -107,6 +108,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -1068,9 +1070,33 @@ public class DefaultObjectEntryManagerImplTest
 	public void testAddObjectEntryWithAccountEntryRestricted1()
 		throws Exception {
 
-		// Account entry restricted scope
+		// Regular roles' company scope permissions should not be restricted by
+		// account entry
 
 		AccountEntry accountEntry1 = _addAccountEntry();
+
+		_user = _addUser();
+
+		Role role = _addRoleUser(
+			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY}, _objectDefinition3, _user);
+
+		Assert.assertNotNull(_addObjectEntry(accountEntry1));
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			companyId, _objectDefinition3.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+			role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(),
+				" must have ADD_OBJECT_ENTRY permission for ",
+				_objectDefinition3.getResourceName(), StringPool.SPACE),
+			() -> _addObjectEntry(accountEntry1));
+
+		// Account entry restricted scope
+
 		_user = _addUser();
 
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
@@ -2211,6 +2237,32 @@ public class DefaultObjectEntryManagerImplTest
 			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
 			role.getRoleId(), ActionKeys.VIEW);
 
+		// Regular roles permissions should bypass the account restriction
+
+		Assert.assertTrue(
+			AccountRoleConstants.isSharedRole(_accountAdministratorRole));
+
+		AccountEntryUserRel accountEntryUserRel =
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				accountEntry1.getAccountEntryId(), _user.getUserId());
+
+		_assertObjectEntriesSize(1);
+
+		role = _addRoleUser(
+			new String[] {ActionKeys.VIEW}, _objectDefinition3, _user);
+
+		_assertObjectEntriesSize(2);
+
+		_accountEntryUserRelLocalService.deleteAccountEntryUserRel(
+			accountEntryUserRel);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			companyId, _objectDefinition3.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+			role.getRoleId(), ActionKeys.VIEW);
+
+		_assertObjectEntriesSize(0);
+
 		// Regular roles' individual permissions should not be restricted by
 		// account entry
 
@@ -2232,7 +2284,7 @@ public class DefaultObjectEntryManagerImplTest
 		Assert.assertTrue(
 			AccountRoleConstants.isSharedRole(_accountAdministratorRole));
 
-		AccountEntryUserRel accountEntryUserRel =
+		accountEntryUserRel =
 			_accountEntryUserRelLocalService.addAccountEntryUserRel(
 				accountEntry1.getAccountEntryId(), _user.getUserId());
 
@@ -3713,8 +3765,14 @@ public class DefaultObjectEntryManagerImplTest
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
+		String name = objectDefinition.getClassName();
+
+		if (ArrayUtil.contains(actionIds, ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+			name = objectDefinition.getResourceName();
+		}
+
 		_resourcePermissionLocalService.setResourcePermissions(
-			companyId, objectDefinition.getClassName(),
+			companyId, name,
 			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
 			role.getRoleId(), actionIds);
 

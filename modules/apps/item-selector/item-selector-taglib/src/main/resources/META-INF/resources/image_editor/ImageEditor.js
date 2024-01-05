@@ -124,7 +124,7 @@ function ImageEditor({
 
 		if (imageElement !== null) {
 			new Cropper(imageElement, {
-				autoCrop: true,
+				autoCrop: false,
 				autoCropArea: 1,
 				background: false,
 				center: false,
@@ -135,16 +135,24 @@ function ImageEditor({
 				scaleX: 1,
 				scaleY: 1,
 				viewMode: 1,
-				zoomTo: 0,
 			});
 
 			const handleCropReady = () => {
 				const imageData = imageElement?.cropper?.getImageData();
 
-				const currentZoom =
-					(imageData.width * 100) / imageData.naturalWidth;
+				if (imageData.width < imageData.naturalWidth) {
+					const currentZoom =
+						(imageData.width * 100) / imageData.naturalWidth;
 
-				setCurrentZoom(parseFloat(currentZoom.toFixed(1)));
+					setCurrentZoom(parseFloat(currentZoom.toFixed(1)));
+				}
+				else {
+					imageElement?.cropper?.zoomTo(1);
+
+					setCurrentZoom(100);
+				}
+
+				imageElement?.cropper?.crop();
 			};
 
 			const handleZoomChange = (event) => {

@@ -15,9 +15,11 @@
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:TESTSITENAVIGATIONMENUITEM1#]",
 		"columnName": "Test Expando Column 6",
-		"data": [
-			32,
-			40
-		]
+		"data": {
+			"en_US": [
+				"Test Value 1",
+				"Test Value 2"
+			]
+		}
 	}
 ]

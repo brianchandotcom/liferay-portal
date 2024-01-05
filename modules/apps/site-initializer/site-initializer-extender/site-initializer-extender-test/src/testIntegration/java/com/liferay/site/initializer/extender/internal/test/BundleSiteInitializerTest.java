@@ -209,6 +209,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -1508,10 +1509,14 @@ public class BundleSiteInitializerTest {
 
 		expandoBridge = siteNavigationMenuItem.getExpandoBridge();
 
+		Map<Locale, String[]> expandoBridgeAttribute =
+			(Map<Locale, String[]>)expandoBridge.getAttribute(
+				"Test Expando Column 6");
+
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
-				new int[] {32, 40},
-				(int[])expandoBridge.getAttribute("Test Expando Column 6")));
+				new String[] {"Test Value 1", "Test Value 2"},
+				expandoBridgeAttribute.get(LocaleUtil.getSiteDefault())));
 	}
 
 	private void _assertFragmentEntries() throws Exception {

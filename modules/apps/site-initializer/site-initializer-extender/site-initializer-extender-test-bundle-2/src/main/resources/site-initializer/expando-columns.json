@@ -49,7 +49,7 @@
 		"name": "Test Expando Column 5"
 	},
 	{
-		"dataType": 10,
+		"dataType": 19,
 		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"name": "Test Expando Column 6"
 	}

@@ -8,7 +8,6 @@ package com.liferay.commerce.shop.by.diagram.web.internal.info.item.provider;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
 import com.liferay.commerce.util.CommerceUtil;
@@ -98,9 +97,6 @@ public class CSDiagramEntryInfoItemPermissionProvider
 
 	@Reference
 	private CommerceProductViewPermission _commerceProductViewPermission;
-
-	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CSDiagramEntryLocalService _csDiagramEntryLocalService;

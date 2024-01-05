@@ -13,9 +13,12 @@ html#{$cadmin-selector} {
 	.cadmin {
 		&.affix,
 		&.control-menu-container {
-			position: sticky;
 			top: 0;
 			z-index: $control-menu-zindex;
+
+			@include media-breakpoint-up(sm) {
+				position: sticky;
+			}
 		}
 
 		.control-menu-level-1 {

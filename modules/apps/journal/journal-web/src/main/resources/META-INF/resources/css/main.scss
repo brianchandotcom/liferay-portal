@@ -52,11 +52,14 @@ $productMenuWidth: 320px;
 			height: auto;
 			left: 0;
 			min-height: 3.5rem;
-			position: fixed;
 			transition: left ease $productMenuTransitionDuration,
 				width ease $productMenuTransitionDuration;
 			width: 100%;
 			z-index: $toolbarZIndex;
+
+			@include media-breakpoint-up(sm) {
+				position: fixed;
+			}
 
 			body.open & {
 				left: $productMenuWidth;
@@ -154,7 +157,7 @@ $productMenuWidth: 320px;
 			}
 
 			.ddm-form-builder-app {
-				@include media-breakpoint-down(md) {
+				@include media-breakpoint-between(sm, md) {
 					margin-top: $toolbarHeight;
 				}
 			}
@@ -207,6 +210,15 @@ $productMenuWidth: 320px;
 			position: fixed;
 			width: $productMenuWidth;
 			z-index: 1;
+
+			@include media-breakpoint-down(xs) {
+				display: none;
+				height: auto;
+				&.contextual-sidebar-visible {
+					display: block;
+					position: absolute;
+				}
+			}
 
 			.schedule {
 				.form-group-autofit {

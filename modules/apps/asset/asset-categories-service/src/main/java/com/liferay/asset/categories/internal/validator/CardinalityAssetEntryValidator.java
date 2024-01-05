@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -130,9 +129,6 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;

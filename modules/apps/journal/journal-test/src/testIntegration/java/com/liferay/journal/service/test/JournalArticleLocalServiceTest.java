@@ -559,7 +559,6 @@ public class JournalArticleLocalServiceTest {
 
 			Assert.assertNotEquals(
 				oldResourcePermission, newResourcePermission);
-
 			Assert.assertEquals(
 				oldResourcePermission.getRoleId(),
 				newResourcePermission.getRoleId());

@@ -10,7 +10,6 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
-import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -30,7 +29,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -103,9 +101,5 @@ public class CommerceOrderItemQuantityFormatterImpl
 
 	private volatile CommerceOrderItemDecimalQuantityConfiguration
 		_commerceOrderItemDecimalQuantityConfiguration;
-
-	@Reference
-	private CPInstanceUnitOfMeasureLocalService
-		_cpInstanceUnitOfMeasureLocalService;
 
 }

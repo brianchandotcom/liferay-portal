@@ -1028,6 +1028,57 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191927. The View More button will be shown when there are more than 10 versions on the info panel."
+	@priority = 3
+	test NavigateToVersionsPageViaViewMoreWhenWebContentWithMoreThan10Versions {
+		task ("Given a site administrator has a web content with 11 versions") {
+			var structuredContentId = HeadlessWebcontent.addBasicWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title Version 1");
+
+			for (var i : list "2,3,4,5,6,7,8,9,10,11") {
+				HeadlessWebcontent.patchStructuredContent(
+					data = "\"title\": \"Web Content Title Version ${i}\"",
+					structuredContentId = ${structuredContentId});
+			}
+		}
+
+		task ("When the site administrator navigates to the Versions tab of info panel of web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			LexiconList.checkListCheckbox(listEntry = "Web Content Title Version 11");
+
+			ManagementBar.clickInfo();
+
+			Navigator.gotoNavTab(navTab = "Versions");
+		}
+
+		task ("Then the site administrator could only see 10 versions of web content") {
+			for (var i : list "1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0") {
+				AssertVisible(
+					key_listEntry = "Version ${i}",
+					locator1 = "Sidebar#LIST_ENTRY");
+			}
+
+			AssertElementNotPresent(
+				key_listEntry = "Version 1.0",
+				locator1 = "Sidebar#LIST_ENTRY");
+		}
+
+		task ("When the site administrator clicks the View More button") {
+			Button.click(button = "View More");
+		}
+
+		task ("Then the site administrator could see all versions of web content on versions page") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title Version 11");
+
+			for (var i : list "1,2,3,4,5,6,7,8,9,10,11") {
+				LexiconTable.viewTableEntryTitle(tableEntry = "Web Content Title Version ${i}");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-196842. When varying filters or searching if order by is applied, the order by must be applied to the new search + filters."
 	@priority = 4
 	test OrderWebContentsInSearchResults {

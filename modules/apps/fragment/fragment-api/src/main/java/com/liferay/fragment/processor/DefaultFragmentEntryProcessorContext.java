@@ -115,6 +115,15 @@ public class DefaultFragmentEntryProcessorContext
 	}
 
 	@Override
+	public boolean isPreviewMode() {
+		if (Objects.equals(getMode(), FragmentEntryLinkConstants.PREVIEW)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isViewMode() {
 		if (Objects.equals(getMode(), FragmentEntryLinkConstants.VIEW)) {
 			return true;

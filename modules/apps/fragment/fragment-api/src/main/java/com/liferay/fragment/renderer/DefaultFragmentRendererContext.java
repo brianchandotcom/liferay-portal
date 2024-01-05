@@ -100,6 +100,15 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 	}
 
 	@Override
+	public boolean isPreviewMode() {
+		if (Objects.equals(getMode(), FragmentEntryLinkConstants.PREVIEW)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isUseCachedContent() {
 		return _useCachedContent;
 	}

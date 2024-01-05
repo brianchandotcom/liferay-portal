@@ -45,6 +45,8 @@ public interface FragmentRendererContext {
 
 	public boolean isIndexMode();
 
+	public boolean isPreviewMode();
+
 	public boolean isUseCachedContent();
 
 	public boolean isViewMode();

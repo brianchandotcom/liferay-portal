@@ -49,6 +49,8 @@ public interface FragmentEntryProcessorContext {
 
 	public boolean isIndexMode();
 
+	public boolean isPreviewMode();
+
 	public boolean isViewMode();
 
 }

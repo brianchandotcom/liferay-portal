@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -85,14 +86,20 @@ public class ViewConflictsMVCRenderCommand implements MVCRenderCommand {
 				HttpServletResponse httpServletResponse =
 					_portal.getHttpServletResponse(renderResponse);
 
-				httpServletResponse.sendRedirect(
-					PortletURLBuilder.createRenderURL(
+				String redirect = ParamUtil.getString(
+					renderRequest, "redirect");
+
+				if (Validator.isNull(redirect)) {
+					redirect = PortletURLBuilder.createRenderURL(
 						renderResponse
 					).setMVCRenderCommandName(
 						"/change_tracking/view_changes"
 					).setParameter(
 						"ctCollectionId", ctCollectionId
-					).buildString());
+					).buildString();
+				}
+
+				httpServletResponse.sendRedirect(redirect);
 			}
 
 			Map<Long, List<ConflictInfo>> conflictInfoMap = null;

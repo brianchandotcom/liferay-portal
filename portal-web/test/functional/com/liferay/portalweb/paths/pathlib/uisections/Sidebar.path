@@ -154,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_ENTRY</td>
+	<td>//div[contains(@class,'info-panel')]//li[contains(@class,'list-group-item')][.//div[contains(@class,'list-group-title')][normalize-space()='${key_listEntry}']]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCALTION</td>
 	<td>//div[contains(@class,'sidebar-body')]//p[normalize-space()='Location']//following-sibling::p</td>
 	<td></td>

@@ -6157,27 +6157,27 @@ definition {
 
 		task ("Add IdP configurations to SPs") {
 			SAML.addIDPConfigurationsToServiceProvider(
-				idpAttributeMapping = "screenName,UUID,emailAddress,firstName,lastName",
-				idpAttributeMappingText = "screenName,uuid,emailAddress,firstName,lastName",
+				idpAttributeMapping = "UUID,screenName,emailAddress,firstName,lastName",
+				idpAttributeMappingText = "uuid,screenName,emailAddress,firstName,lastName",
 				idpEntityId = ${identityProviderEntityId},
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
 				idpURL = "http://localhost:8080",
 				nameIdentifierFormat = "Email Address",
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
-				userMatchingAttributeIndex = 1,
+				userMatchingAttributeIndex = 0,
 				userResolution = "attribute");
 
 			SAML.addIDPConfigurationsToServiceProvider(
-				idpAttributeMapping = "screenName,UUID,emailAddress,firstName,lastName",
-				idpAttributeMappingText = "screenName,uuid,emailAddress,firstName,lastName",
+				idpAttributeMapping = "UUID,screenName,emailAddress,firstName,lastName",
+				idpAttributeMappingText = "uuid,screenName,emailAddress,firstName,lastName",
 				idpEntityId = ${identityProviderEntityId},
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
 				idpURL = "http://localhost:8080",
 				nameIdentifierFormat = "Email Address",
 				spURL = "http://www.baker.com:8080",
 				userEmailAddress = "test@www.baker.com",
-				userMatchingAttributeIndex = 1,
+				userMatchingAttributeIndex = 0,
 				userResolution = "attribute");
 		}
 

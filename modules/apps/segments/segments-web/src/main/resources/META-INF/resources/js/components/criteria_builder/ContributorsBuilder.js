@@ -67,7 +67,7 @@ export default function ContributorsBuilder({
 			>
 				<div
 					className={classNames(
-						'criteria-builder-section-sidebar overflow-hidden position-fixed',
+						'criteria-builder-section-sidebar overflow-hidden',
 						{
 							'criteria-builder-section-sidebar--with-warning': showDisabledSegmentationAlert,
 						}
@@ -84,7 +84,7 @@ export default function ContributorsBuilder({
 					className="c-pr-0 criteria-builder-section-main d-flex h-100 w-100"
 					role="application"
 				>
-					<div className="contributor-container h-100 overflow-auto position-absolute w-100">
+					<div className="contributor-container h-100 position-absolute w-100">
 						{renderEmptyValuesErrors && (
 							<section className="alert-danger criteria-builder-empty-errors-alert position-sticky top-0">
 								<div className="c-pr-0 criteria-builder-empty-errors-alert__inner">
@@ -112,7 +112,7 @@ export default function ContributorsBuilder({
 
 										<div className="c-ml-2 criterion-string">
 											<div className="btn-group">
-												<div className="btn-group-item inline-item">
+												<div className="btn-group-item d-flex flex-wrap inline-item">
 													{membersCountLoading && (
 														<ClayLoadingIndicator
 															className="c-mr-4"

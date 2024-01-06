@@ -720,7 +720,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		catch (IOException ioException) {
 			throw new GradleException(
 				String.format(
-					"Could not read file %s",
+					"Unable to read file %s",
 					StringUtil.quote(inputFile.getName())),
 				ioException);
 		}
@@ -754,7 +754,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		catch (IOException ioException) {
 			throw new GradleException(
 				String.format(
-					"Could not write file %s",
+					"Unable to write file %s",
 					StringUtil.quote(outputFile.getName())),
 				ioException);
 		}

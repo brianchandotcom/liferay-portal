@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>CARD</td>
-	<td>//*[contains(@class,'card-body')][contains(.,"${key_card}")]</td>
+	<td>//*[contains(@class,'card-body')][contains(.,concat('${key_card}',''))]</td>
 	<td></td>
 </tr>
 <tr>
@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>CARD_LABEL</td>
-	<td>xpath=(//div[contains(@class,'card')][contains(.,"${key_card}")]//span[contains(@class,'label-item')])[${index}]</td>
+	<td>xpath=(//div[contains(@class,'card')][contains(.,concat('${key_card}',''))]//span[contains(@class,'label-item')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -18,23 +18,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			Organization.tearDownCP();
-
-			Site.tearDownCP();
-
-			UserGroup.tearDownCP();
-
-			JSONUser.tearDownNonAdminUsers();
-		}
-	}
-
 	@description = "This is a use case for LPS-124620. Assert no pop up when viewing membership request detail."
 	@priority = 4
 	test AddXSSRequestMembershipComment {

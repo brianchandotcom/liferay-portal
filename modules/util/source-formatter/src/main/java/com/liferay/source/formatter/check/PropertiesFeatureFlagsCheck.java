@@ -18,7 +18,6 @@ import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -53,7 +52,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		_checkUnnecessaryFeatureFlags(fileName, content);
 
 		content = _generateFeatureFlagProperties(content);
-		content = _generateFeatureFlagUIProperties(fileName, content);
+		content = _generateFeatureFlagUIProperties(
+			fileName, absolutePath, content);
 
 		return content;
 	}
@@ -241,7 +241,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 	}
 
 	private String _generateFeatureFlagUIProperties(
-			String fileName, String content)
+			String fileName, String absolutePath, String content)
 		throws IOException {
 
 		Matcher matcher = _featureFlagUIPattern.matcher(content);
@@ -261,21 +261,15 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		Map<String, String> featureFlagUICommonPropertiesMap = new TreeMap<>(
 			new NaturalOrderStringComparator());
 
+		Properties portalLanguageProperties = _getPortalLanguageProperties(
+			absolutePath);
+
 		Properties properties = new Properties();
 
 		properties.load(new StringReader(matcher.group()));
 
 		Enumeration<String> enumeration =
 			(Enumeration<String>)properties.propertyNames();
-
-		Properties languageProperties = new Properties();
-
-		languageProperties.load(
-			new FileReader(
-				getFile(
-					"modules/apps/portal-language/portal-language-lang/src" +
-						"/main/resources/content/Language.properties",
-					getMaxDirLevel())));
 
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
@@ -304,7 +298,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 								"' must be in Language.properties");
 					}
 
-					if (!languageProperties.containsKey(
+					if (!portalLanguageProperties.containsKey(
 							featureFlagUIPropertyName)) {
 
 						addMessage(
@@ -388,9 +382,28 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		return featureFlagKeys;
 	}
 
+	private Properties _getPortalLanguageProperties(String absolutePath)
+		throws IOException {
+
+		String portalLanguagePropertiesFileName = getAttributeValue(
+			_PORTAL_LANGUAGE_PROPERTIES_FILE_NAME, absolutePath);
+
+		Properties properties = new Properties();
+
+		properties.load(
+			new StringReader(
+				getPortalContent(
+					portalLanguagePropertiesFileName, absolutePath)));
+
+		return properties;
+	}
+
 	private static final String[] _ENFORCE_PROPERTY_NAMES = {
 		"description", "title"
 	};
+
+	private static final String _PORTAL_LANGUAGE_PROPERTIES_FILE_NAME =
+		"portalLanguagePropertiesFileName";
 
 	private static final Pattern _deprecationFeatureFlagPattern =
 		Pattern.compile("feature\\.flag\\.([A-Z]+-\\d+)\\.type=deprecation");

@@ -1500,13 +1500,21 @@ http.host: ["_local_", "_site_"]
 indices.query.bool.max_clause_count: 4096
 plugins.security.disabled: true</echo>
 
-		<property name="opensearch.java.home" unless:set="opensearch.java.home" value="/opt/java/jdk11" />
+		<if>
+			<or>
+				<isset property="env.JENKINS_HOME" />
+				<isset property="opensearch.java.home" />
+			</or>
+			<then>
+				<property name="opensearch.java.home" unless:set="opensearch.java.home" value="/opt/java/jdk11" />
 
-		<replace
-			file="${opensearch.dir}/bin/opensearch-env"
-			token="#!/usr/bin/env bash"
-			value="#!/usr/bin/env bash${line.separator}OPENSEARCH_JAVA_HOME=${opensearch.java.home}"
-		/>
+				<replace
+					file="${opensearch.dir}/bin/opensearch-env"
+					token="#!/usr/bin/env bash"
+					value="#!/usr/bin/env bash${line.separator}OPENSEARCH_JAVA_HOME=${opensearch.java.home}"
+				/>
+			</then>
+		</if>
 
 		<replaceregexp
 			file="${opensearch.dir}/config/jvm.options"

@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>FAILING_CHECK_NAME</td>
-	<td>//span[contains(@class, 'text-secondary') and contains(@class, 'c-inner') and contains (text(), '${failingCheckName}')]</td>
+	<td>//button[.//span[contains(@class,'text-secondary')][normalize-space(text())='${failingCheckName}']]</td>
 	<td></td>
 </tr>
 <tr>

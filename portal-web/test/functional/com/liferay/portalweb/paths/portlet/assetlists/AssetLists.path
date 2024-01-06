@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>VARIATION_TITLE</td>
-	<td>//nav[@role='navigation']//a//span[text()='${key_variation}']</td>
+	<td>//nav[@role='navigation']//a[normalize-space()='${key_variation}']</td>
 	<td></td>
 </tr>
 <tr>

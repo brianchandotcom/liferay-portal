@@ -268,14 +268,14 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		Enumeration<String> enumeration =
 			(Enumeration<String>)properties.propertyNames();
 
-		Properties langProperties = new Properties();
+		Properties languageProperties = new Properties();
 
-		langProperties.load(
+		languageProperties.load(
 			new FileReader(
 				getFile(
 					"modules/apps/portal-language/portal-language-lang/src" +
 						"/main/resources/content/Language.properties",
-					10)));
+					getMaxDirLevel())));
 
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
@@ -304,7 +304,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 								"' must be in Language.properties");
 					}
 
-					if (!langProperties.containsKey(
+					if (!languageProperties.containsKey(
 							featureFlagUIPropertyName)) {
 
 						addMessage(

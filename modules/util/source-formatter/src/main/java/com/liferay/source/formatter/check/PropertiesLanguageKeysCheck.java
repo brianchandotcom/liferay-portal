@@ -93,7 +93,8 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private Properties _getPortalLanguageProperties(String absolutePath)
+	private synchronized Properties _getPortalLanguageProperties(
+			String absolutePath)
 		throws IOException {
 
 		String portalLanguagePropertiesFileName = getAttributeValue(

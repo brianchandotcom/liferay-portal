@@ -96,8 +96,7 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _loadCompanyIds(
-			Map<String, Long> companyIds, String jobName,
-			JobDataMap jobDataMap)
+			Map<String, Long> companyIds, String jobName, JobDataMap jobDataMap)
 		throws Exception {
 
 		String destinationName = jobDataMap.getString(

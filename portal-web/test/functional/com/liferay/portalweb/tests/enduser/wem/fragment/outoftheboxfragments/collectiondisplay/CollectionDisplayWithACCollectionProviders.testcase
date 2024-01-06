@@ -114,10 +114,10 @@ definition {
 
 		task ("Then the page designer could select the User's Personalized Content Recommendations in Collection Display") {
 			LexiconCard.viewCardLabel(
-				card = "User's Personalized Content Recommendations",
+				card = "User',\"'\",'s Personalized Content Recommendations",
 				cardLabel = "Beta");
 
-			LexiconCard.clickCard(card = "User's Personalized Content Recommendations");
+			LexiconCard.clickCard(card = "User',\"'\",'s Personalized Content Recommendations");
 
 			SelectFrameTop();
 
@@ -199,10 +199,10 @@ definition {
 			Navigator.gotoNavTab(navTab = "Collection Providers");
 
 			LexiconCard.viewCardLabel(
-				card = "User's Personalized Content Recommendations",
+				card = "User',\"'\",'s Personalized Content Recommendations",
 				cardLabel = "Beta");
 
-			LexiconCard.clickCard(card = "User's Personalized Content Recommendations");
+			LexiconCard.clickCard(card = "User',\"'\",'s Personalized Content Recommendations");
 
 			LexiconCard.clickCard(card = "Blank");
 

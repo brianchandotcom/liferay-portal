@@ -288,7 +288,7 @@ definition {
 
 		task ("Add a new fragment to the content page") {
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
+				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(

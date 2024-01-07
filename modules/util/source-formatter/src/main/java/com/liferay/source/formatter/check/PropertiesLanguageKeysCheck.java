@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +33,10 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (!fileName.endsWith("/content/Language.properties")) {
+		if (!fileName.endsWith("/content/Language.properties") ||
+			absolutePath.contains(
+				SourceFormatterUtil.SOURCE_FORMATTER_TEST_PATH)) {
+
 			return content;
 		}
 

@@ -3337,28 +3337,12 @@ definition {
 		task ("Filter results of multiple Collection Displays by multiple Collection Filters at Preview mode") {
 			PageEditor.previewInANewTab();
 
-			var n = 1;
-
-			for (var style : list "512,510,501") {
-				AssertVisible(
-					key_entryContent = "[normalize-space()='${style}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+			for (var title : list "512,510,501") {
+				AssertVisible(locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-collection')])[1]//ul[contains(@class,'list-group')]/li[contains(@class,'list-group-item')][normalize-space()='${title}']");
 			}
 
-			var n = 4;
-
-			for (var style : list "S,Y,X") {
-				AssertVisible(
-					key_entryContent = "[normalize-space()='Model ${style}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+			for (var title : list "Model S,Model Y,Model X") {
+				AssertVisible(locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-collection')])[2]//ul[contains(@class,'list-group')]/li[contains(@class,'list-group-item')][normalize-space()='${title}']");
 			}
 
 			Page.searchInCollectionFilter(searchTerm = 501);
@@ -3395,28 +3379,12 @@ definition {
 				pageName = "Test Page Name",
 				siteName = ${randomSiteName});
 
-			var n = 1;
-
-			for (var style : list "512,510,501") {
-				AssertVisible(
-					key_entryContent = "[normalize-space()='${style}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+			for (var title : list "512,510,501") {
+				AssertVisible(locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-collection')])[1]//ul[contains(@class,'list-group')]/li[contains(@class,'list-group-item')][normalize-space()='${title}']");
 			}
 
-			var n = 4;
-
-			for (var style : list "S,Y,X") {
-				AssertVisible(
-					key_entryContent = "[normalize-space()='Model ${style}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+			for (var title : list "Model S,Model Y,Model X") {
+				AssertVisible(locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-collection')])[2]//ul[contains(@class,'list-group')]/li[contains(@class,'list-group-item')][normalize-space()='${title}']");
 			}
 
 			Page.searchInCollectionFilter(searchTerm = 501);

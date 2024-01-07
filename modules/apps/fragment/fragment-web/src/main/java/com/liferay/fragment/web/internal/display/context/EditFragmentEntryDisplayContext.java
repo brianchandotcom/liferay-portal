@@ -545,10 +545,10 @@ public class EditFragmentEntryDisplayContext {
 					return HttpComponentsUtil.addParameters(
 						_themeDisplay.getPathMain() +
 							"/portal/fragment/render_fragment_entry",
-						"groupId", _themeDisplay.getScopeGroupId(),
-						"fragmentEntryId", fragmentEntry.getFragmentEntryId(),
-						"fragmentEntryKey", fragmentEntry.getFragmentEntryKey(),
-						"p_l_mode", Constants.PREVIEW);
+						"p_l_mode", Constants.PREVIEW, "groupId",
+						_themeDisplay.getScopeGroupId(), "fragmentEntryId",
+						fragmentEntry.getFragmentEntryId(), "fragmentEntryKey",
+						fragmentEntry.getFragmentEntryKey());
 				}
 			).build()
 		).build();

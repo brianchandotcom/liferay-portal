@@ -226,7 +226,7 @@ public class CustomAssetDisplayPageFriendlyURLResolverTest {
 		_assetRendererFactoryRegistryUtilMockedStatic = Mockito.mockStatic(
 			AssetRendererFactoryRegistryUtil.class);
 
-	private CustomAssetDisplayPageFriendlyURLResolver
+	private final CustomAssetDisplayPageFriendlyURLResolver
 		_customAssetDisplayPageFriendlyURLResolver =
 			new CustomAssetDisplayPageFriendlyURLResolver();
 

@@ -113,7 +113,7 @@ public class SitemapManagerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -124,7 +124,7 @@ public class SitemapManagerTest {
 			GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -147,7 +147,7 @@ public class SitemapManagerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -158,7 +158,7 @@ public class SitemapManagerTest {
 			GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", true
 						).put(
@@ -181,7 +181,7 @@ public class SitemapManagerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", true
 						).put(
@@ -192,7 +192,7 @@ public class SitemapManagerTest {
 			GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -215,7 +215,7 @@ public class SitemapManagerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", true
 						).put(
@@ -226,7 +226,7 @@ public class SitemapManagerTest {
 			GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", true
 						).put(
@@ -249,7 +249,7 @@ public class SitemapManagerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -260,7 +260,7 @@ public class SitemapManagerTest {
 			GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -281,7 +281,7 @@ public class SitemapManagerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -292,7 +292,7 @@ public class SitemapManagerTest {
 			GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -313,7 +313,7 @@ public class SitemapManagerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -324,7 +324,7 @@ public class SitemapManagerTest {
 			GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -345,7 +345,7 @@ public class SitemapManagerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -356,7 +356,7 @@ public class SitemapManagerTest {
 			GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -381,7 +381,7 @@ public class SitemapManagerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -392,7 +392,7 @@ public class SitemapManagerTest {
 			GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -421,7 +421,7 @@ public class SitemapManagerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -432,7 +432,7 @@ public class SitemapManagerTest {
 			GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -461,7 +461,7 @@ public class SitemapManagerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -472,7 +472,7 @@ public class SitemapManagerTest {
 			GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -501,7 +501,7 @@ public class SitemapManagerTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						_SITEMAP_COMPANY_CONFIGURATION_PID,
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -512,7 +512,7 @@ public class SitemapManagerTest {
 			GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(), _SITEMAP_GROUP_CONFIGURATION_PID,
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeCategories", false
 						).put(
@@ -705,10 +705,10 @@ public class SitemapManagerTest {
 		_themeDisplay.setServerPort(8080);
 	}
 
-	private static final String _SITEMAP_COMPANY_CONFIGURATION_PID =
+	private static final String _PID_SITEMAP_COMPANY_CONFIGURATION =
 		"com.liferay.site.internal.configuration.SitemapCompanyConfiguration";
 
-	private static final String _SITEMAP_GROUP_CONFIGURATION_PID =
+	private static final String _PID_SITEMAP_GROUP_CONFIGURATION =
 		"com.liferay.site.internal.configuration.SitemapGroupConfiguration";
 
 	@Inject

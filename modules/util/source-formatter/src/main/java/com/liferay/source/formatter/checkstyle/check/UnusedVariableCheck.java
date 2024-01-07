@@ -71,15 +71,13 @@ public class UnusedVariableCheck extends BaseCheck {
 				getAttributeValues(
 					_ALLOWED_UNUSED_REFERENCE_VARIABLE_DIR_NAMES_KEY);
 
-			if (!allowedUnusedReferenceVariableDirNames.isEmpty()) {
-				for (String allowUnusedReferenceVariableDirNames :
-						allowedUnusedReferenceVariableDirNames) {
+			for (String allowUnusedReferenceVariableDirNames :
+					allowedUnusedReferenceVariableDirNames) {
 
-					if (modulePath.startsWith(
-							allowUnusedReferenceVariableDirNames)) {
+				if (modulePath.startsWith(
+						allowUnusedReferenceVariableDirNames)) {
 
-						return;
-					}
+					return;
 				}
 			}
 

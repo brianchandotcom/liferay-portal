@@ -25,12 +25,14 @@ test('can create relationship by dragging node handles', async ({
 
 	const objectFolder = await _apiHelpers.objectAdmin.postRandomObjectFolder();
 
-	const objectDefinition1 = await _apiHelpers.objectAdmin.postRandomObjectDefinition(
-		objectFolder.externalReferenceCode
-	);
-	const objectDefinition2 = await _apiHelpers.objectAdmin.postRandomObjectDefinition(
-		objectFolder.externalReferenceCode
-	);
+	const objectDefinition1 =
+		await _apiHelpers.objectAdmin.postRandomObjectDefinition(
+			objectFolder.externalReferenceCode
+		);
+	const objectDefinition2 =
+		await _apiHelpers.objectAdmin.postRandomObjectDefinition(
+			objectFolder.externalReferenceCode
+		);
 
 	await _objectDefinitionsPage.goto();
 

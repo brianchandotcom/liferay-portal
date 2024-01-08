@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.repository.registry.test;
+package com.liferay.repository.registry.test.util;
 
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RepositoryEventTestUtil {
 
-	protected static <S extends RepositoryEventType, T> AtomicInteger
+	public static <S extends RepositoryEventType, T> AtomicInteger
 		registerCounterRepositoryEventListener(
 			RepositoryEventRegistry repositoryEventRegistry,
 			Class<S> eventClass, Class<T> modelClass) {
@@ -32,7 +32,7 @@ public class RepositoryEventTestUtil {
 		return count;
 	}
 
-	protected static <S extends RepositoryEventType, T> AtomicInteger
+	public static <S extends RepositoryEventType, T> AtomicInteger
 		registerCounterRepositoryEventListener(
 			RepositoryEventRegistry repositoryEventRegistry,
 			Class<S> eventClass, Class<T> modelClass, AtomicInteger count) {
@@ -46,7 +46,7 @@ public class RepositoryEventTestUtil {
 		return count;
 	}
 
-	protected static class AlwaysFailingRepositoryEventListener
+	public static class AlwaysFailingRepositoryEventListener
 		<S extends RepositoryEventType, T>
 			implements RepositoryEventListener<S, T> {
 
@@ -57,7 +57,7 @@ public class RepositoryEventTestUtil {
 
 	}
 
-	protected static class CounterRepositoryEventListener
+	public static class CounterRepositoryEventListener
 		<S extends RepositoryEventType, T>
 			implements RepositoryEventListener<S, T> {
 
@@ -74,7 +74,7 @@ public class RepositoryEventTestUtil {
 
 	}
 
-	protected static class NoOpRepositoryEventListener
+	public static class NoOpRepositoryEventListener
 		<S extends RepositoryEventType, T>
 			implements RepositoryEventListener<S, T> {
 

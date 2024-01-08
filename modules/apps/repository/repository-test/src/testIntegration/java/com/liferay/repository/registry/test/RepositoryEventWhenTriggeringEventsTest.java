@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.repository.registry.DefaultRepositoryEventRegistry;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.repository.registry.test.util.RepositoryEventTestUtil;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

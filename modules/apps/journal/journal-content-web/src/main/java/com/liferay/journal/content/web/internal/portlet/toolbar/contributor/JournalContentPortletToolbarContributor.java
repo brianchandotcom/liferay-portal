@@ -116,8 +116,8 @@ public class JournalContentPortletToolbarContributor
 			_portal.getControlPanelPortletURL(
 				portletRequest, JournalPortletKeys.JOURNAL,
 				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/edit_article.jsp"
+		).setMVCRenderCommandName(
+			"/journal/edit_article"
 		).setRedirect(
 			_portal.getLayoutFullURL(themeDisplay)
 		).setPortletResource(
@@ -242,8 +242,8 @@ public class JournalContentPortletToolbarContributor
 			_portal.getControlPanelPortletURL(
 				portletRequest, JournalPortletKeys.JOURNAL,
 				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/edit_article.jsp"
+		).setMVCRenderCommandName(
+			"/journal/edit_article"
 		).setRedirect(
 			_portal.getLayoutFullURL(themeDisplay)
 		).setPortletResource(

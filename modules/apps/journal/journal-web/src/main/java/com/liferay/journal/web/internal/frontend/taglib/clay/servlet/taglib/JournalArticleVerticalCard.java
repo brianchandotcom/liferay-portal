@@ -97,8 +97,8 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 
 			return PortletURLBuilder.createRenderURL(
 				_renderResponse
-			).setMVCPath(
-				"/edit_article.jsp"
+			).setMVCRenderCommandName(
+				"/journal/edit_article"
 			).setRedirect(
 				themeDisplay.getURLCurrent()
 			).setParameter(

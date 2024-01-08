@@ -16,12 +16,12 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 
 <portlet:actionURL var="editArticleActionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-	<portlet:param name="mvcPath" value="/edit_article.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/journal/edit_article" />
 	<portlet:param name="ddmStructureId" value="<%= String.valueOf(journalEditArticleDisplayContext.getDDMStructureId()) %>" />
 </portlet:actionURL>
 
 <portlet:renderURL var="editArticleRenderURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-	<portlet:param name="mvcPath" value="/edit_article.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/journal/edit_article" />
 </portlet:renderURL>
 
 <aui:form action="<%= editArticleActionURL %>" cssClass="edit-article-form" enctype="multipart/form-data" method="post" name="fm1" onSubmit="event.preventDefault();">

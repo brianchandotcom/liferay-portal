@@ -248,8 +248,8 @@ public class JournalArticleAssetRenderer
 			PortalUtil.getControlPanelPortletURL(
 				httpServletRequest, group, JournalPortletKeys.JOURNAL, 0, 0,
 				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/edit_article.jsp"
+		).setMVCRenderCommandName(
+			"/journal/edit_article"
 		).setParameter(
 			"articleId", _article.getArticleId()
 		).setParameter(

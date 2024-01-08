@@ -294,8 +294,8 @@ public class JournalArticleAssetRendererFactory
 			_portal.getControlPanelPortletURL(
 				liferayPortletRequest, getGroup(liferayPortletRequest),
 				JournalPortletKeys.JOURNAL, 0, 0, PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/edit_article.jsp"
+		).setMVCRenderCommandName(
+			"/journal/edit_article"
 		).setParameter(
 			"ddmStructureId",
 			() -> {

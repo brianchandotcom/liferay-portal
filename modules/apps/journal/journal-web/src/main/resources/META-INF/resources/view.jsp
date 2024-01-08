@@ -50,8 +50,8 @@ else {
 					href='<%=
 						PortletURLBuilder.createRenderURL(
 							liferayPortletResponse
-						).setMVCPath(
-							"/edit_article.jsp"
+						).setMVCRenderCommandName(
+							"/journal/edit_article"
 						).setRedirect(
 							currentURL
 						).setParameter(

@@ -16,7 +16,7 @@ function isDef(param) {
 }
 
 function addParam(url, key, value) {
-	url.searchParams.delete(key, value);
+	url.searchParams.delete(key);
 
 	if (isDef(key) && isDef(value)) {
 		url.searchParams.append(key, value);

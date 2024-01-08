@@ -822,6 +822,7 @@ public class ObjectDefinitionLocalServiceImpl
 		return false;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition publishCustomObjectDefinition(
 			long userId, long objectDefinitionId)
@@ -859,6 +860,7 @@ public class ObjectDefinitionLocalServiceImpl
 		return getObjectDefinition(objectDefinitionId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition publishSystemObjectDefinition(
 			long userId, long objectDefinitionId)

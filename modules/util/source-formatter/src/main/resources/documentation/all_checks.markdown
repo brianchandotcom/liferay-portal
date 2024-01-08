@@ -236,7 +236,7 @@ JavaModuleInternalImportsCheck | [Bug Prevention](bug_prevention_checks.markdown
 JavaModuleJavaxPortletInitParamTemplatePathCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Validates the value of `javax.portlet.init-param.template-path`. |
 JavaModuleServiceReferenceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds cases where `@BeanReference` annotation should be used instead of `@ServiceReference` annotation. |
 [JavaModuleTestCheck](check/java_module_test_check.markdown#javamoduletestcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks package names in tests. |
-JavaModuleTestUtilCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks package names for testUtil. |
+JavaModuleTestUtilCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks package names for `*TestUtil.java`. |
 JavaModuleUniqueVerifyProcessCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks that a module can not have more than 1 verify process class (class extends VerifyProcess). |
 [JavaMultiPlusConcatCheck](check/java_multi_plus_concat_check.markdown#javamultiplusconcatcheck) | [Performance](performance_checks.markdown#performance-checks) | .java | Checks that we do not concatenate more than 3 String objects. |
 JavaNewProblemInstantiationParametersCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds cases where `new Problem` can be simplified. |

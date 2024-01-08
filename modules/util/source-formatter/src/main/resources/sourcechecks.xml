@@ -938,6 +938,10 @@
 			<category name="Bug Prevention" />
 			<description name="Checks package names in tests." />
 		</check>
+		<check name="JavaModuleTestUtilCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks package names for testUtil." />
+		</check>
 		<check name="JavaModuleUniqueVerifyProcessCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that a module can not have more than 1 verify process class (class extends VerifyProcess)." />

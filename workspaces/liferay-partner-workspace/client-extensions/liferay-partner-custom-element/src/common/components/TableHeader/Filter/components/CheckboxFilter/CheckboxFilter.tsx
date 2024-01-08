@@ -10,16 +10,18 @@ import {useEffect, useState} from 'react';
 interface Props {
 	availableItems?: string[];
 	clearCheckboxes: boolean;
+	initialCheckedItems?: string[];
 	updateFilters: (checkedItems: string[]) => void;
 }
-
 const CheckboxFilter = ({
 	availableItems,
 	clearCheckboxes,
+	initialCheckedItems,
 	updateFilters,
 }: Props) => {
-	const [checkedItems, setCheckedItems] = useState<string[]>([]);
-
+	const [checkedItems, setCheckedItems] = useState<string[]>(
+		initialCheckedItems ? initialCheckedItems : []
+	);
 	const handleSelectedCheckbox = (checkedItem: string) => {
 		if (checkedItems.includes(checkedItem)) {
 			return setCheckedItems(

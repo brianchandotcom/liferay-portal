@@ -11,11 +11,21 @@ interface IProps {
 	children?: JSX.Element | JSX.Element[];
 	dateFilters: (dates: {endDate: string; startDate: string}) => void;
 	filterDescription?: string;
+	initialDates?: {endDate: string; startDate: string};
 }
 
-const DateFilter = ({children, dateFilters, filterDescription}: IProps) => {
-	const [startActivityDate, setStartActivityDate] = useState('');
-	const [endActivityDate, setEndActivityDate] = useState('');
+const DateFilter = ({
+	children,
+	dateFilters,
+	filterDescription,
+	initialDates,
+}: IProps) => {
+	const [startActivityDate, setStartActivityDate] = useState(
+		initialDates?.startDate ? initialDates?.startDate : ''
+	);
+	const [endActivityDate, setEndActivityDate] = useState(
+		initialDates?.endDate ? initialDates?.endDate : ''
+	);
 
 	return (
 		<div className="p-3 w-100">

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.tuning.rankings.web.internal.model.listener;
+package com.liferay.search.experiences.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Almir Ferreira
  */
-@Component(service = ModelListener.class)
+@Component(enabled = false, service = ModelListener.class)
 public class SXPBlueprintModelListener extends BaseModelListener<SXPBlueprint> {
 
 	@Override

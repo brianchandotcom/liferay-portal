@@ -1089,8 +1089,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			visible = true;
 		}
 
-		String summary = _htmlParser.extractText(
-			StringUtil.shorten(entry.getContent(), 500));
+		String summary = StringUtil.shorten(
+			_htmlParser.extractText(entry.getContent()), 500);
 
 		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
 			userId, entry.getGroupId(), entry.getCreateDate(),

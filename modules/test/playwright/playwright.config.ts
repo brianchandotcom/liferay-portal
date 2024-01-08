@@ -6,13 +6,20 @@
 import {defineConfig} from '@playwright/test';
 
 import {config as setup} from './tests/global.setup.config';
+import {config as layoutContentPageEditorWeb} from './tests/layout-content-page-editor-web/config';
 import {config as object} from './tests/object-web/config';
 import {config as portalWeb} from './tests/portal-web/config';
 import {config as usersAdminWeb} from './tests/users-admin-web/config';
 
 export default defineConfig({
 	forbidOnly: !!process.env.CI,
-	projects: [object, portalWeb, setup, usersAdminWeb],
+	projects: [
+		layoutContentPageEditorWeb,
+		object,
+		portalWeb,
+		setup,
+		usersAdminWeb,
+	],
 	reporter: [
 		[
 			'html',

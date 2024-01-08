@@ -115,7 +115,7 @@
 	containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" %>'
 	contentType="journal"
 	dataDefinitionId="<%= ddmStructure.getStructureId() %>"
-	dataRecordValues="<%= journalEditArticleDisplayContext.getValues(ddmStructure) %>"
+	dataRecordValues="<%= journalEditArticleDisplayContext.getValues() %>"
 	defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
 	displayType='<%= FeatureFlagManagerUtil.isEnabled("LPS-114700") ? "borderless" : StringPool.BLANK %>'
 	languageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"

@@ -413,12 +413,12 @@ public class JournalEditArticleDisplayContext {
 		).build();
 	}
 
-	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
-		throws PortalException {
-
+	public DDMFormValues getDDMFormValues() throws PortalException {
 		if (_ddmFormValues != null) {
 			return _ddmFormValues;
 		}
+
+		DDMStructure ddmStructure = getDDMStructure();
 
 		if (_isDDMFormValuesEdited() || (_article == null)) {
 			DDMFormValuesFactory ddmFormValuesFactory =
@@ -1170,15 +1170,13 @@ public class JournalEditArticleDisplayContext {
 		).build();
 	}
 
-	public Map<String, Object> getValues(DDMStructure ddmStructure)
-		throws PortalException {
-
+	public Map<String, Object> getValues() throws PortalException {
 		DDMFormValuesToMapConverter ddmFormValuesToMapConverter =
 			(DDMFormValuesToMapConverter)_httpServletRequest.getAttribute(
 				DDMFormValuesToMapConverter.class.getName());
 
 		return ddmFormValuesToMapConverter.convert(
-			getDDMFormValues(ddmStructure), ddmStructure);
+			getDDMFormValues(), getDDMStructure());
 	}
 
 	public double getVersion() {

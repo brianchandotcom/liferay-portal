@@ -99,4 +99,9 @@ public class ContentPageEditorLayoutUtilityPageEntryDisplayContext
 			workflowDefinitionLinkLocalService);
 	}
 
+	@Override
+	public boolean isWorkflowEnabled() {
+		return false;
+	}
+
 }

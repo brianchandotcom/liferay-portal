@@ -3,6 +3,8 @@ import CommerceAverageRevenuePerAccountResolver from './CommerceAverageRevenuePe
 import CommerceIncompleteOrdersResolver from './CommerceIncompleteOrdersResolver';
 import CommerceTotalOrderValueResolver from './CommerceTotalOrderValueResolver';
 import CustomAssetsListResolver from './CustomAssetsListResolver';
+import DocumentsAndMediaListResolver from './DocumentsAndMediaListResolver';
+import DocumentsAndMediaMetricsResolver from './DocumentsAndMediaMetricsResolver';
 import EventAnalysisListResolver from './EventAnalysisListResolver';
 import ExperimentResolver from './ExperimentResolver';
 import PagePathResolver from './PagePathResolver';
@@ -22,6 +24,8 @@ import PagePathResolver from './PagePathResolver';
 
 export const resolvers = {
 	dashboards: CustomAssetsListResolver,
+	document: DocumentsAndMediaMetricsResolver,
+	documents: DocumentsAndMediaListResolver,
 	eventAnalysisList: EventAnalysisListResolver,
 	experiment: ExperimentResolver,
 	orderAccountAverageCurrencyValues: CommerceAverageRevenuePerAccountResolver,

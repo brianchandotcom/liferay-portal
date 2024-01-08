@@ -857,7 +857,7 @@ public class ObjectEntryServiceTest {
 						ZoneId.systemDefault()
 					).toInstant(
 					).getEpochSecond(),
-					true);
+					true, "%\"exceedsObjectEntryLimit\":%");
 
 			Assert.assertTrue(count == 1);
 		}

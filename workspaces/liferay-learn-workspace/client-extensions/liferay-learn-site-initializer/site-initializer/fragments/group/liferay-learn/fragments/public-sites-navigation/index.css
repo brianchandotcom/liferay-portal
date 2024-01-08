@@ -1086,7 +1086,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 	width: 100%;
 }
 .adt-nav-item .adt-submenu-section.grey {
-	background-color: var(--color-neutral-1, #282934);
+	background-color: var(--color-neutral-10, #282934);
 	border-radius: var(--border-radius-sm);
 	padding: 2rem 4rem;
 }

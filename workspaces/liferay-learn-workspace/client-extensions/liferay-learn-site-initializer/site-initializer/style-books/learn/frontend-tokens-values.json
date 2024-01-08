@@ -175,43 +175,43 @@
 		"value": "#FBFCFE"
 	},
 	"colorNeutral00": {
-		"cssVariableMapping": "color-neutral-00",
+		"cssVariableMapping": "color-neutral-0",
 		"value": "#FFFFFF"
 	},
 	"colorNeutral01": {
-		"cssVariableMapping": "color-neutral-01",
+		"cssVariableMapping": "color-neutral-1",
 		"value": "#F7F7F8"
 	},
 	"colorNeutral02": {
-		"cssVariableMapping": "color-neutral-02",
+		"cssVariableMapping": "color-neutral-2",
 		"value": "#E2E2E4"
 	},
 	"colorNeutral03": {
-		"cssVariableMapping": "color-neutral-03",
+		"cssVariableMapping": "color-neutral-3",
 		"value": "#C9C9CF"
 	},
 	"colorNeutral04": {
-		"cssVariableMapping": "color-neutral-04",
+		"cssVariableMapping": "color-neutral-4",
 		"value": "#B1B2B9"
 	},
 	"colorNeutral05": {
-		"cssVariableMapping": "color-neutral-05",
+		"cssVariableMapping": "color-neutral-5",
 		"value": "#999AA3"
 	},
 	"colorNeutral06": {
-		"cssVariableMapping": "color-neutral-06",
+		"cssVariableMapping": "color-neutral-6",
 		"value": "#82828C"
 	},
 	"colorNeutral07": {
-		"cssVariableMapping": "color-neutral-07",
+		"cssVariableMapping": "color-neutral-7",
 		"value": "#6C6C75"
 	},
 	"colorNeutral08": {
-		"cssVariableMapping": "color-neutral-08",
+		"cssVariableMapping": "color-neutral-8",
 		"value": "#54555F"
 	},
 	"colorNeutral09": {
-		"cssVariableMapping": "color-neutral-09",
+		"cssVariableMapping": "color-neutral-9",
 		"value": "#3F404B"
 	},
 	"colorNeutral10": {

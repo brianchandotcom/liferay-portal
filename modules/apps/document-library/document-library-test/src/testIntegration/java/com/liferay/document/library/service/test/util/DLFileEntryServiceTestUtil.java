@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.document.library.service.test;
+package com.liferay.document.library.service.test.util;
 
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -15,7 +15,7 @@ import java.util.Dictionary;
  */
 public class DLFileEntryServiceTestUtil {
 
-	protected static ConfigurationTemporarySwapper
+	public static ConfigurationTemporarySwapper
 			getConfigurationTemporarySwapper(String key, Object value)
 		throws Exception {
 

@@ -438,7 +438,7 @@ public interface ObjectFieldLocalService
 
 	public void validateReadOnlyAndReadOnlyConditionExpression(
 			String businessType, String readOnly,
-			String readOnlyConditionExpression)
+			String readOnlyConditionExpression, boolean required)
 		throws PortalException;
 
 	public void validateRequired(

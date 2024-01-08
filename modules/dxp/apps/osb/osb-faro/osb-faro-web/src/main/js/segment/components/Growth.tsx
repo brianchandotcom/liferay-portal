@@ -34,7 +34,7 @@ import {
 	changesListColumns,
 	individualsListColumns
 } from 'shared/util/table-columns';
-import {CHART_COLOR_NAMES} from 'shared/components/Chart';
+import {CHART_COLOR_NAMES} from 'shared/util/charts';
 import {createDateKeysIMap} from 'shared/util/intervals';
 import {DATE_CHANGED, NAME} from 'shared/util/pagination';
 import {formatUTCDateFromUnix} from 'shared/util/date';

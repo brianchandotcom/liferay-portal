@@ -1,5 +1,5 @@
 import * as utils from '../utils';
-import {CHART_COLOR_NAMES} from 'shared/components/Chart';
+import {CHART_COLOR_NAMES} from 'shared/util/charts';
 
 const {
 	martell,

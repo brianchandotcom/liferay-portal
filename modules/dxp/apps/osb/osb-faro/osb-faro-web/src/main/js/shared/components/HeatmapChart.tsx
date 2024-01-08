@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
-import {CHART_COLOR_NAMES} from 'shared/components/Chart';
+import {CHART_COLOR_NAMES} from 'shared/util/charts';
 import {toThousands} from 'shared/util/numbers';
 
 const {martellD2, martellD4, martellL1, martellL4} = CHART_COLOR_NAMES;

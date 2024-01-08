@@ -23,7 +23,7 @@ import {
 	XAxis,
 	YAxis
 } from 'recharts';
-import {CHART_COLOR_NAMES} from 'shared/components/Chart';
+import {CHART_COLOR_NAMES} from 'shared/util/charts';
 import {
 	formatXAxisDate,
 	getBarColor,

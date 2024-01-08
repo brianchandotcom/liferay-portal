@@ -1,7 +1,7 @@
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React from 'react';
-import {CHART_COLORS} from 'shared/components/Chart';
+import {CHART_COLORS} from 'shared/util/charts';
 
 type TItems = {
 	change: number;

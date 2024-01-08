@@ -3,7 +3,7 @@ import * as d3Shape from 'd3-shape';
 import getCN from 'classnames';
 import React from 'react';
 import TextTruncate from './TextTruncate';
-import {CHART_COLORS} from 'shared/components/Chart';
+import {CHART_COLORS} from 'shared/util/charts';
 import {get, isNull} from 'lodash';
 import {getFinitePercent} from 'shared/util/numbers';
 import {getSafeDisplayValue} from 'shared/util/util';

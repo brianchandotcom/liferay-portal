@@ -24,20 +24,42 @@ export enum MetricValueType {
 	Ratings = 'ratings'
 }
 
+export const CHART_COLORS = [
+	'#4B9BFF',
+	'#FFB46E',
+	'#FF5F5F',
+	'#50D2A0',
+	'#FF73C3',
+	'#9CE269',
+	'#B077FF',
+	'#FFD76E',
+	'#5FC8FF'
+];
+
+export const CHART_COLOR_NAMES = {
+	greyjoy: '#000000',
+	lannister: '#FF5F5F',
+	martell: '#50D2A0',
+	martellD2: '#31BE88',
+	martellD4: '#26966B',
+	martellL1: '#64D7AB',
+	martellL2: '#79DCB6',
+	martellL4: '#A1E7CC',
+	mormont: '#FFB46E',
+	mormontD2: '#FF9A3B',
+	mormontL2: '#FFCEA1',
+	mormontL4: '#FFE9D4',
+	stark: '#4B9BFF',
+	starkD2: '#187FFF',
+	starkL2: '#7EB7FF',
+	starkL4: '#B1D4FF'
+};
+
 export const Colors = {
 	gray: '#AEB0BB',
-	mapBluePallete: [
-		'#B1D4FF',
-		'#95C5FF',
-		'#7EB7FF',
-		'#64A9FF',
-		'#4B9BFF',
-		'#318DFF',
-		'#187FFF',
-		'#0071FD',
-		'#0065E4'
-	],
 	mapEmpty: '#E1E1E1',
+	mapMax: '#0065E4',
+	mapMin: '#B1D4FF',
 	mapSelected: '#4B9BFF',
 	negative: '#DA1414',
 	neutral: '#AEB0BB',

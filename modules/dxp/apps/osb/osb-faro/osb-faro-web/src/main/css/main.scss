@@ -2,8 +2,6 @@
 
 @import 'atlas';
 
-@import '~clay-charts-shared/src/scss/main.scss';
-
 @import 'variables';
 
 @import 'mixins';
@@ -205,7 +203,6 @@
 @import 'training_items_card';
 @import 'transitions';
 @import 'trend';
-@import 'trendline';
 @import 'type_trend';
 @import 'ui-kit/colors';
 @import 'ui-kit/item';

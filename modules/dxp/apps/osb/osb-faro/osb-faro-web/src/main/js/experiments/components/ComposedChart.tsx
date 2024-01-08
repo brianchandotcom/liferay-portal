@@ -12,7 +12,7 @@ import {
 	XAxis,
 	YAxis
 } from 'recharts';
-import {CHART_COLOR_NAMES} from 'shared/components/Chart';
+import {CHART_COLOR_NAMES} from 'shared/util/charts';
 import {CONTROL_COLOR} from '../util/constants';
 import {getAxisMeasuresFromData} from 'shared/util/charts';
 import {getDate} from 'shared/util/date';

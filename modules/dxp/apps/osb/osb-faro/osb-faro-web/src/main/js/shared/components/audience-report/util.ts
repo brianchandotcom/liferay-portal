@@ -1,4 +1,4 @@
-import {CHART_COLOR_NAMES} from 'shared/components/Chart';
+import {CHART_COLOR_NAMES} from 'shared/util/charts';
 import {DataPoint, Empty} from './types';
 import {getPercentage} from 'shared/util/util';
 import {IHTMLBarChartProps} from '../HTMLBarChart';

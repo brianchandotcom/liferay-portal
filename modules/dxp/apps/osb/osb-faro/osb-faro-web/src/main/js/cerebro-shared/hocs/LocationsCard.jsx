@@ -1,8 +1,8 @@
 import BaseCard from 'shared/components/base-card';
 import Card from 'shared/components/Card';
-import GeoMap from 'shared/components/geo-map/GeoMapCard';
 import React from 'react';
 import {compose} from 'redux';
+import {GeomapCard} from 'shared/components/geo-map/GeomapCard';
 import {HOC_CARD_PROPTYPES} from 'shared/util/proptypes';
 import {PropTypes} from 'prop-types';
 import {withEmpty, withError, withLoading} from 'shared/hoc/util';
@@ -41,7 +41,7 @@ const withLocationsCard = (
 			),
 			title
 		})
-	)(GeoMap);
+	)(GeomapCard);
 
 	LocationsGeoMap.propTypes = HOC_CARD_PROPTYPES;
 
@@ -71,12 +71,10 @@ const withLocationsCard = (
 				<Card.Body>
 					<LocationsGeoMap
 						filters={filters}
-						height={400}
 						interval={interval}
 						metricLabel={metricLabel}
 						rangeSelectors={rangeSelectors}
 						router={router}
-						width='calc(60% - 2rem)'
 					/>
 				</Card.Body>
 			)}

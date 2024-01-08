@@ -1,4 +1,4 @@
-import {CHART_COLORS} from 'shared/components/Chart';
+import {CHART_COLORS} from 'shared/util/charts';
 import {CONTROL_COLOR} from './constants';
 import {
 	FormatYAxisFn,

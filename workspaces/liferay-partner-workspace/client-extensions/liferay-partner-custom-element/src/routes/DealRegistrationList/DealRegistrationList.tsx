@@ -35,25 +35,24 @@ export type DealRegistrationItem = {
 interface IProps {
 	getFilteredItems: (
 		items: DealRegistrationItem[],
-		dealsFilter: string
+		submittedDealsFilter: boolean
 	) => DealRegistrationItem[];
-	rejectedDealsFilter: string;
 	sort: string;
-	submittedDealsFilter: string;
 }
 
 const BASE_PAGE = 1;
 const MAX_ITEMS = 200;
 
-const DealRegistrationList = ({
-	getFilteredItems,
-	rejectedDealsFilter,
-	sort,
-	submittedDealsFilter,
-}: IProps) => {
-	const [dealsFilter, setDealsFilter] = useState(submittedDealsFilter);
+const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
+	const [submittedDealsFilter, setSubmittedDealsFilter] = useState(
+		JSON.parse(sessionStorage.getItem('submittedDealsFilter')!) === null
+			? true
+			: (JSON.parse(
+					sessionStorage.getItem('submittedDealsFilter')!
+			  ) as boolean)
+	);
 
-	const {filters, filtersTerm, onFilter} = useFilters(dealsFilter);
+	const {filters, filtersTerm, onFilter} = useFilters(submittedDealsFilter);
 
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [modalContent, setModalContent] = useState<DealRegistrationItem>({});
@@ -85,9 +84,9 @@ const DealRegistrationList = ({
 	const actions = usePermissionActions(ObjectActionName.DEAL_REGISTRATION);
 
 	const filteredData =
-		data.items && getFilteredItems(data.items, dealsFilter);
+		data.items && getFilteredItems(data.items, submittedDealsFilter);
 	const filteredCSVData =
-		dataCSV.items && getFilteredItems(dataCSV.items, dealsFilter);
+		dataCSV.items && getFilteredItems(dataCSV.items, submittedDealsFilter);
 
 	const columns = [
 		{
@@ -177,16 +176,16 @@ const DealRegistrationList = ({
 				<h1>Partner Deal Registration</h1>
 				<ClayTabs className="h-100 nav nav-segment nav-tabs">
 					<ClayTabs.Item
-						active={dealsFilter === submittedDealsFilter}
+						active={submittedDealsFilter}
 						className="nav-item"
-						onClick={() => setDealsFilter(submittedDealsFilter)}
+						onClick={() => setSubmittedDealsFilter(true)}
 					>
 						Submitted
 					</ClayTabs.Item>
 					<ClayTabs.Item
-						active={dealsFilter === rejectedDealsFilter}
+						active={!submittedDealsFilter}
 						className="nav-item"
-						onClick={() => setDealsFilter(rejectedDealsFilter)}
+						onClick={() => setSubmittedDealsFilter(false)}
 					>
 						Rejected
 					</ClayTabs.Item>
@@ -197,6 +196,7 @@ const DealRegistrationList = ({
 				<div className="d-flex">
 					<div>
 						<Search
+							initialSearchTerm={filters.searchTerm}
 							onSearchSubmit={(searchTerm: string) =>
 								onFilter({
 									searchTerm,

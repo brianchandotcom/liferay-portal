@@ -10,7 +10,6 @@ import {SWRConfig} from 'swr';
 import {WebDAV} from './common/context/WebDAV';
 import {AppRouteType} from './common/enums/appRouteType';
 import {OpportunityType} from './common/enums/opportunityType';
-import {Filters} from './common/utils/constants/filters';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
 import DealRegistrationForm from './routes/DealRegistrationForm';
 import DealRegistrationList from './routes/DealRegistrationList';
@@ -42,10 +41,10 @@ const appRoutes: AppRouteComponent = {
 	[AppRouteType.DEAL_REGISTRATION_FORM]: <DealRegistrationForm />,
 	[AppRouteType.DEAL_REGISTRATION_LIST]: (
 		<DealRegistrationList
-			getFilteredItems={(items, dealsFilter) => {
+			getFilteredItems={(items, submittedDealsFilter) => {
 				const currentYear = new Date().getFullYear();
 
-				if (dealsFilter === Filters.DEAL_LISTING.rejectedWIP) {
+				if (submittedDealsFilter === false) {
 					return items.filter((item) => {
 						const createDateYear = new Date(
 							item['DATE-CREATED']
@@ -70,19 +69,13 @@ const appRoutes: AppRouteComponent = {
 					);
 				});
 			}}
-			rejectedDealsFilter={Filters.DEAL_LISTING.rejectedWIP}
 			sort="dateCreated:desc"
-			submittedDealsFilter={Filters.DEAL_LISTING.submittedWIP}
 		/>
 	),
 	[AppRouteType.PARTNER_OPPORTUNITIES_LIST]: (
 		<PartnerOpportunitiesList
-			closedOpportunitiesFilter={Filters.OPPORTUNITY_LISTING.closedWIP}
-			getFilteredItems={(items, opportunitiesFilter) => {
-				if (
-					opportunitiesFilter ===
-					Filters.OPPORTUNITY_LISTING.closedWIP
-				) {
+			getFilteredItems={(items, openOpportunitiesFilter) => {
+				if (openOpportunitiesFilter === false) {
 					return items.filter(
 						(item) =>
 							(item['TYPE'] === OpportunityType.NEW_BUSINESS ||
@@ -94,9 +87,7 @@ const appRoutes: AppRouteComponent = {
 							item['ACTIVE']
 					);
 				}
-				if (
-					opportunitiesFilter === Filters.OPPORTUNITY_LISTING.openWIP
-				) {
+				if (openOpportunitiesFilter === true) {
 					return items.filter(
 						(item) =>
 							(item['TYPE'] === OpportunityType.NEW_BUSINESS ||
@@ -114,15 +105,13 @@ const appRoutes: AppRouteComponent = {
 			}}
 			name="Partner Opportunities"
 			newButtonDeal={false}
-			openOpportunitiesFilter={Filters.OPPORTUNITY_LISTING.openWIP}
 			sort="closeDate:desc"
 		/>
 	),
 	[AppRouteType.RENEWALS_OPPORTUNITIES_LIST]: (
 		<PartnerOpportunitiesList
-			closedOpportunitiesFilter={Filters.RENEWAL_LISTING.closedWIP}
-			getFilteredItems={(items, opportunitiesFilter) => {
-				if (opportunitiesFilter === Filters.RENEWAL_LISTING.closedWIP) {
+			getFilteredItems={(items, openOpportunitiesFilter) => {
+				if (openOpportunitiesFilter === false) {
 					return items.filter(
 						(item) => item['HAS-RENEWAL'] && item['ACTIVE']
 					);
@@ -132,9 +121,9 @@ const appRoutes: AppRouteComponent = {
 					(item) => item['HAS-RENEWAL'] && item['ACTIVE']
 				);
 			}}
+			isRenewalListing={true}
 			name="Renewal Opportunities"
 			newButtonDeal={false}
-			openOpportunitiesFilter={Filters.RENEWAL_LISTING.openWIP}
 			sort="closeDate:asc"
 		/>
 	),

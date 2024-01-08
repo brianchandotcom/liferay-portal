@@ -6,9 +6,12 @@
 package com.liferay.layout.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -24,8 +27,11 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -34,9 +40,19 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,6 +60,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Lourdes Fernández Besada
@@ -74,6 +92,31 @@ public class LayoutPermissionTest {
 		Assert.assertFalse(
 			_layoutPermission.contains(
 				_getGuestPermissionChecker(), layout, ActionKeys.VIEW));
+	}
+
+	@Test
+	public void testContainsWithoutViewPermissionOnPendingLayout()
+		throws Exception {
+
+		try {
+			Layout layout = _addTypeContentLayout();
+
+			_removeGuestViewPermission(layout);
+
+			_setUpLayoutWorkflow();
+
+			layout = _updateLayout(layout);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_PENDING, layout.getStatus());
+
+			Assert.assertFalse(
+				_layoutPermission.contains(
+					_getGuestPermissionChecker(), layout, ActionKeys.VIEW));
+		}
+		finally {
+			_tearDownLayoutWorkflow();
+		}
 	}
 
 	@Test
@@ -184,6 +227,29 @@ public class LayoutPermissionTest {
 				ActionKeys.VIEW));
 	}
 
+	@Test
+	public void testContainsWithViewPermissionOnPendingLayout()
+		throws Exception {
+
+		try {
+			Layout layout = _addTypeContentLayout();
+
+			_setUpLayoutWorkflow();
+
+			layout = _updateLayout(layout);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_PENDING, layout.getStatus());
+
+			Assert.assertTrue(
+				_layoutPermission.contains(
+					_getGuestPermissionChecker(), layout, ActionKeys.VIEW));
+		}
+		finally {
+			_tearDownLayoutWorkflow();
+		}
+	}
+
 	private Layout _addTypeContentLayout() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -212,6 +278,29 @@ public class LayoutPermissionTest {
 	private PermissionChecker _getGuestPermissionChecker() throws Exception {
 		return PermissionCheckerFactoryUtil.create(
 			_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
+	}
+
+	private HttpServletRequest _getHttpServletRequest() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			new MockLiferayPortletRenderResponse());
+
+		Company company = _companyLocalService.getCompany(
+			_group.getCompanyId());
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
+			company, _group, layout);
+
+		themeDisplay.setRequest(mockHttpServletRequest);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
 	}
 
 	private PermissionChecker _getPermissionChecker(String actionId)
@@ -243,6 +332,50 @@ public class LayoutPermissionTest {
 			ActionKeys.VIEW);
 	}
 
+	private void _setUpLayoutWorkflow() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		serviceContext.setRequest(_getHttpServletRequest());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			_group.getGroupId(), Layout.class.getName(), 0, 0,
+			"Single Approver@1");
+	}
+
+	private void _tearDownLayoutWorkflow() throws Exception {
+		List<WorkflowInstance> workflowInstances =
+			WorkflowInstanceManagerUtil.getWorkflowInstances(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				new String[] {Layout.class.getName()}, false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (WorkflowInstance workflowInstance : workflowInstances) {
+			WorkflowInstanceManagerUtil.deleteWorkflowInstance(
+				TestPropsValues.getCompanyId(),
+				workflowInstance.getWorkflowInstanceId());
+		}
+
+		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	private Layout _updateLayout(Layout layout) throws Exception {
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		ContentLayoutTestUtil.addPortletToLayout(
+			layout, AssetPublisherPortletKeys.ASSET_PUBLISHER);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		return _layoutLocalService.getLayout(layout.getPlid());
+	}
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -263,5 +396,9 @@ public class LayoutPermissionTest {
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

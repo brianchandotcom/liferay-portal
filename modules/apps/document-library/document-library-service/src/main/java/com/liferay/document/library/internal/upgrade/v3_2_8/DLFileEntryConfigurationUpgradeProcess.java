@@ -22,7 +22,12 @@ public class DLFileEntryConfigurationUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		long systemPreviewableProcessorMaxSize =
-			_dlConfigurationUpgradeHelper.updateSystemConfiguration();
+			_dlConfigurationUpgradeHelper.
+				getDLFileEntryConfigurationPreviewableProcessorMaxSize();
+
+		_dlConfigurationUpgradeHelper.
+			updateDLFileEntryConfigurationSystemConfiguration(
+				systemPreviewableProcessorMaxSize);
 
 		_dlConfigurationUpgradeHelper.updateScopedConfigurations(
 			systemPreviewableProcessorMaxSize);

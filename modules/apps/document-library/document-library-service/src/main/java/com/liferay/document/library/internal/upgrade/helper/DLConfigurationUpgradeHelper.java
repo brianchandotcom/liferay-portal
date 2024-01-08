@@ -52,6 +52,23 @@ public class DLConfigurationUpgradeHelper {
 		}
 	}
 
+	public long getDLFileEntryConfigurationPreviewableProcessorMaxSize()
+		throws Exception {
+
+		Configuration dlFileEntryConfiguration = getSystemConfiguration(
+			CLASS_NAME_DL_FILE_ENTRY_CONFIGURATION);
+
+		if (dlFileEntryConfiguration != null) {
+			return _getAttributeValue(
+				dlFileEntryConfiguration, "previewableProcessorMaxSize",
+				DLFileEntryConfigurationConstants.
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT);
+		}
+
+		return DLFileEntryConfigurationConstants.
+			PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT;
+	}
+
 	public Configuration getSystemConfiguration(String className)
 		throws Exception {
 
@@ -127,6 +144,29 @@ public class DLConfigurationUpgradeHelper {
 		return true;
 	}
 
+	public void updateDLFileEntryConfigurationSystemConfiguration(
+			long previewableProcessorMaxSize)
+		throws Exception {
+
+		Configuration dlFileEntryConfiguration = getSystemConfiguration(
+			CLASS_NAME_DL_FILE_ENTRY_CONFIGURATION);
+		Configuration pdfPreviewConfiguration = getSystemConfiguration(
+			CLASS_NAME_PDF_PREVIEW_CONFIGURATION);
+
+		if ((dlFileEntryConfiguration != null) ||
+			(pdfPreviewConfiguration != null)) {
+
+			_configurationProvider.saveSystemConfiguration(
+				DLFileEntryConfiguration.class,
+				_createDLFileEntryConfigurationDictionary(
+					_getAttributeValue(
+						pdfPreviewConfiguration, "maxNumberOfPages",
+						DLFileEntryConfigurationConstants.
+							MAX_NUMBER_OF_PAGES_DEFAULT),
+					previewableProcessorMaxSize));
+		}
+	}
+
 	public void updateDLSizeLimitConfiguration() throws Exception {
 		long fileMaxSize = _updateDLConfigurationFileMaxSize();
 
@@ -175,36 +215,6 @@ public class DLConfigurationUpgradeHelper {
 					DLFileEntryConfiguration.class, groupId, dictionary);
 			}
 		}
-	}
-
-	public long updateSystemConfiguration() throws Exception {
-		Configuration dlFileEntryConfiguration = getSystemConfiguration(
-			CLASS_NAME_DL_FILE_ENTRY_CONFIGURATION);
-		Configuration pdfPreviewConfiguration = getSystemConfiguration(
-			CLASS_NAME_PDF_PREVIEW_CONFIGURATION);
-
-		if ((dlFileEntryConfiguration != null) ||
-			(pdfPreviewConfiguration != null)) {
-
-			int maxNumberOfPages = _getAttributeValue(
-				pdfPreviewConfiguration, "maxNumberOfPages",
-				DLFileEntryConfigurationConstants.MAX_NUMBER_OF_PAGES_DEFAULT);
-
-			long previewableProcessorMaxSize = _getAttributeValue(
-				dlFileEntryConfiguration, "previewableProcessorMaxSize",
-				DLFileEntryConfigurationConstants.
-					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT);
-
-			_configurationProvider.saveSystemConfiguration(
-				DLFileEntryConfiguration.class,
-				_createDLFileEntryConfigurationDictionary(
-					maxNumberOfPages, previewableProcessorMaxSize));
-
-			return previewableProcessorMaxSize;
-		}
-
-		return DLFileEntryConfigurationConstants.
-			PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT;
 	}
 
 	private HashMapDictionary<String, Object>

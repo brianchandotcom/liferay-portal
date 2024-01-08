@@ -44,7 +44,6 @@ public class DLFileEntryConfigurationUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeConfiguration() throws Exception {
-
 		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
 			DLFileEntryConfiguration.class,
 			new KeyValuePair(
@@ -52,7 +51,12 @@ public class DLFileEntryConfigurationUpgradeProcess extends UpgradeProcess {
 				"previewableProcessorMaxSize"));
 
 		long systemPreviewableProcessorMaxSize =
-			_dlConfigurationUpgradeHelper.updateSystemConfiguration();
+			_dlConfigurationUpgradeHelper.
+				getDLFileEntryConfigurationPreviewableProcessorMaxSize();
+
+		_dlConfigurationUpgradeHelper.
+			updateDLFileEntryConfigurationSystemConfiguration(
+				systemPreviewableProcessorMaxSize);
 
 		_dlConfigurationUpgradeHelper.updateScopedConfigurations(
 			systemPreviewableProcessorMaxSize);

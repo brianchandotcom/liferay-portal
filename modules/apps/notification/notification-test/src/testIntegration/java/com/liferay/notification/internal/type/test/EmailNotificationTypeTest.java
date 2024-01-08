@@ -29,11 +29,13 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -134,6 +136,14 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		).put(
 			"${ObjectField_textObjectField.getData()}",
 			childObjectEntryValues.get("textObjectField")
+		).put(
+			"${portalURL}",
+			() -> {
+				Company company = _companyLocalService.getCompany(
+					TestPropsValues.getCompanyId());
+
+				return company.getPortalURL(TestPropsValues.getGroupId());
+			}
 		).build();
 	}
 
@@ -521,6 +531,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 								getNotificationQueueEntryId())));
 		}
 	}
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	private static Map<String, Object> _freeMarkerTermValues;
 

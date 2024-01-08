@@ -188,6 +188,21 @@ describe('request', () => {
 		);
 	});
 
+	it('should reject on a xhr status equal to 500 with a messageKey', () => {
+		fetch.mockReturnValue(
+			Promise.resolve(
+				new Response('{ "messageKey": "test"}', {
+					status: 500
+				})
+			)
+		);
+
+		return request({}).catch(error => {
+			expect(error instanceof Error).toBe(true);
+			expect(error.message).toBe('test');
+		});
+	});
+
 	it('should call reloadPage on an xhr status equal to 401', () => {
 		fetch.mockReturnValue(
 			Promise.resolve(

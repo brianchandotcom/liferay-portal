@@ -5,7 +5,6 @@
  */
 
 import {Ticket} from '../types';
-import {Liferay} from './liferay';
 import {
 	J3Y7_PRIORITIES,
 	J3Y7_REGIONS,
@@ -15,6 +14,7 @@ import {
 	ListTypeDefinitions,
 	fetchListTypeDefinitions,
 } from './listTypeEntries';
+import {request} from './request';
 
 const listTypeDefinitions: ListTypeDefinitions = await fetchListTypeDefinitions();
 
@@ -59,28 +59,16 @@ export async function fetchTickets({queryKey}: FetchTicketsQueryKey) {
 		searchString = '&search=' + encodeURIComponent(search);
 	}
 
-	const response = await fetch(
-		`/o/c/j3y7tickets?pageSize=${pageSize}&page=${page}&sort=dateModified:desc${filterString}${searchString}&nestedFields=userToJ3Y7Ticket`,
-		{
-			headers: {
-				'accept': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-		}
+	const response = await request(
+		`/o/c/j3y7tickets?pageSize=${pageSize}&page=${page}&sort=dateModified:desc${filterString}${searchString}&nestedFields=userToJ3Y7Ticket`
 	);
 
 	return response.json();
 }
 
 export async function fetchRecentTickets() {
-	const response = await fetch(
-		'/o/c/j3y7tickets?pageSize=3&page=1&sort=dateModified:desc',
-		{
-			headers: {
-				'accept': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-		}
+	const response = await request(
+		'/o/c/j3y7tickets?pageSize=3&page=1&sort=dateModified:desc'
 	);
 
 	return response.json();
@@ -92,8 +80,10 @@ export async function generateNewTicket() {
 	const resolutions = listTypeDefinitions[J3Y7_RESOLUTIONS].array;
 	const types = listTypeDefinitions[J3Y7_TYPES].array;
 
-	return fetch(`/o/c/j3y7tickets`, {
-		body: JSON.stringify({
+	return request(
+		`/o/c/j3y7tickets`,
+		'POST',
+		JSON.stringify({
 			priority: {
 				key: getRandomElement(priorities).key,
 			},
@@ -113,29 +103,19 @@ export async function generateNewTicket() {
 			type: {
 				key: getRandomElement(types).key,
 			},
-		}),
-		headers: {
-			'accept': 'application/json',
-			'content-Type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		method: 'POST',
-	});
+		})
+	);
 }
 
 export async function updateTicketStatus(ticket: Ticket) {
 	ticket.payload.ticketStatus =
 		listTypeDefinitions[J3Y7_STATUSES].map[ticket.ticketStatus];
 
-	const result = await fetch(`/o/c/j3y7tickets/${ticket.id}`, {
-		body: JSON.stringify(ticket.payload),
-		headers: {
-			'accept': 'application/json',
-			'content-Type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		method: 'PUT',
-	});
+	const result = await request(
+		`/o/c/j3y7tickets/${ticket.id}`,
+		'PUT',
+		JSON.stringify(ticket.payload)
+	);
 
 	if (result.ok) {
 		return;
@@ -143,21 +123,14 @@ export async function updateTicketStatus(ticket: Ticket) {
 	else {
 		const jsonResult = await result.json();
 
-		throw new Error(`${JSON.stringify(jsonResult)}`);
+		throw new Error(JSON.stringify(jsonResult));
 	}
 }
 
 export async function assignTicketToMe(ticket: Ticket) {
-	const result = await fetch(
+	const result = await request(
 		`/o/c/j3y7tickets/by-external-reference-code/${ticket.externalReferenceCode}/object-actions/AssignTicketToMe`,
-		{
-			headers: {
-				'accept': 'application/json',
-				'content-Type': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-			method: 'PUT',
-		}
+		'PUT'
 	);
 
 	if (result.ok) {

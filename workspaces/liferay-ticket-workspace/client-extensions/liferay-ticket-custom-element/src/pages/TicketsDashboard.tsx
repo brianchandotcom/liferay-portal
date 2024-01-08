@@ -9,39 +9,42 @@ import React, {useContext, useMemo, useState} from 'react';
 import {QueryClient, useMutation} from 'react-query';
 
 import StatusColumn from '../components/StatusColumn';
-import {DefaultAppContext, QueryClientContext} from '../context';
+import {QueryClientContext} from '../context';
 import {useTickets} from '../hooks/useTickets';
 import {Liferay} from '../services/liferay';
 import {updateTicketStatus} from '../services/tickets';
-import {Ticket} from '../types';
+import {Filter, ScreenType, Ticket} from '../types';
 
 const DRAG_RESULT = {
 	NO_CHANGE: 'NO_CHANGE',
 	STATUS_CHANGED: 'STATUS_CHANGED',
 };
 
-const allowedStatusesForDashboard = [
+const ALLOWED_DASHBOARD_STATUSES = [
 	'Open',
 	'In Progress',
 	'Answered',
 	'Closed',
 ];
 
-const TicketsDashboardApp: React.FC = () => {
+const initialFilterState: Filter = {
+	field: '',
+	label: '',
+	value: '',
+};
+
+const TicketsDashboard: React.FC<{screenType: ScreenType}> = ({screenType}) => {
 	const queryClient: QueryClient = useContext(QueryClientContext);
 
 	const [isLoading, setIsLoading] = useState(false);
 
-	const specificPageLoadingCSS: React.CSSProperties = {
+	const pageLoadingStyle: React.CSSProperties = {
 		opacity: 0.5,
 		zIndex: 2,
 	};
 
 	const {rows: tickets} = useTickets({
-		filter: {
-			field: '',
-			value: '',
-		},
+		filter: initialFilterState,
 		page: 0,
 		pageSize: 1000,
 		search: '',
@@ -73,17 +76,15 @@ const TicketsDashboardApp: React.FC = () => {
 		}
 
 		const ticket = event.active.data.current;
-		const newStatus = event.over.id.replace('_droppable', '');
+		const newStatus = event.over.data.current.status;
 
-		if (
-			ticket.ticketStatus.toLowerCase().replaceAll(' ', '') !==
-			newStatus.toLowerCase().replaceAll(' ', '')
-		) {
-			const ticketCopy = JSON.parse(JSON.stringify(ticket));
+		if (ticket.ticketStatus !== newStatus) {
+			const updatedTicket = {
+				...ticket,
+				ticketStatus: newStatus,
+			};
 
-			ticketCopy.ticketStatus = newStatus;
-
-			await updateTicketStatus(ticketCopy);
+			await updateTicketStatus(updatedTicket);
 
 			return DRAG_RESULT.STATUS_CHANGED;
 		}
@@ -98,13 +99,13 @@ const TicketsDashboardApp: React.FC = () => {
 
 			return onDragEnd(event);
 		},
-		onError: (error: Error) => {
+		onError: () => {
 			setIsLoading(false);
 
 			queryClient.invalidateQueries();
 
 			Liferay.Util.openToast({
-				message: error.message,
+				message: 'Unable to update ticket status.',
 				title: 'Request Failed',
 				type: 'danger',
 			});
@@ -124,60 +125,51 @@ const TicketsDashboardApp: React.FC = () => {
 	});
 
 	return (
-		<DefaultAppContext.Consumer>
-			{(defaultApp) => (
-				<>
-					{!defaultApp && (
-						<div className="align-items-center autofit-padded autofit-row bg-neutral-1 mb-3 p-3">
-							{isLoading && (
-								<ClayLoadingIndicator
-									className="m-0 mr-2"
-									displayType="secondary"
-									size="md"
-								/>
-							)}
-							<div className="text-11">
-								Ticket Dashboard by Status
-							</div>
-						</div>
+		<>
+			{screenType === ScreenType.INTEGRATED && (
+				<div className="align-items-center autofit-padded autofit-row bg-neutral-1 mb-3 p-3">
+					{isLoading && (
+						<ClayLoadingIndicator
+							className="m-0 mr-2"
+							displayType="secondary"
+							size="md"
+						/>
 					)}
+					<div className="text-11">Ticket Dashboard by Status</div>
+				</div>
+			)}
 
-					{!!defaultApp && isLoading && (
-						<div
-							className="autofit-padded autofit-row bg-neutral-1 h-100 justify-content-center position-absolute rounded w-100"
-							style={specificPageLoadingCSS}
-						>
-							<ClayLoadingIndicator
-								className="d-block"
-								displayType="secondary"
-								size="lg"
+			{screenType === ScreenType.STANDALONE && isLoading && (
+				<div
+					className="autofit-padded autofit-row bg-neutral-1 h-100 justify-content-center position-absolute rounded w-100"
+					style={pageLoadingStyle}
+				>
+					<ClayLoadingIndicator
+						className="d-block"
+						displayType="secondary"
+						size="lg"
+					/>
+				</div>
+			)}
+
+			<div className="autofit-padded-no-gutters autofit-row">
+				<DndContext
+					onDragEnd={(event) => {
+						onDragEndMutation.mutate(event);
+					}}
+				>
+					{ALLOWED_DASHBOARD_STATUSES.map((status) => (
+						<div className="autofit-col w-25" key={status}>
+							<StatusColumn
+								name={status}
+								relatedTickets={relatedTicketsMap[status]}
 							/>
 						</div>
-					)}
-
-					<div className="autofit-padded-no-gutters autofit-row">
-						<DndContext
-							onDragEnd={(event) => {
-								onDragEndMutation.mutate(event);
-							}}
-						>
-							{allowedStatusesForDashboard.map((status) => (
-								<div className="autofit-col w-25" key={status}>
-									<StatusColumn
-										name={status}
-										relatedTickets={
-											relatedTicketsMap[status]
-										}
-										statusKey={status}
-									/>
-								</div>
-							))}
-						</DndContext>
-					</div>
-				</>
-			)}
-		</DefaultAppContext.Consumer>
+					))}
+				</DndContext>
+			</div>
+		</>
 	);
 };
 
-export default TicketsDashboardApp;
+export default TicketsDashboard;

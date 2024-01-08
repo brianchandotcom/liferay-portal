@@ -4,7 +4,8 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayIcon, {ClayIconSpriteContext} from '@clayui/icon';
+import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
 import {useDraggable} from '@dnd-kit/core';
@@ -22,7 +23,6 @@ const TicketCard: React.FC<{ticket: Ticket}> = ({ticket}) => {
 	const [isPanelExpanded, setIsPanelExpanded] = useState(false);
 
 	const queryClient: QueryClient = useContext(QueryClientContext);
-	const assigneeName: string = `${ticket.assignee?.givenName} ${ticket.assignee?.familyName}`;
 
 	const {
 		attributes,
@@ -66,111 +66,99 @@ const TicketCard: React.FC<{ticket: Ticket}> = ({ticket}) => {
 	});
 
 	return (
-		<ClayIconSpriteContext.Consumer>
-			{(spritemap) => (
-				<div
-					ref={setNodeRef}
-					{...attributes}
-					className={`border border-neutral-2 card mb-4 py-2 shadow-none ${
-						isDragging
-							? 'bg-brand-primary-lighten-6'
-							: 'bg-neutral-0'
-					}`}
-					style={style}
+		<div
+			ref={setNodeRef}
+			{...attributes}
+			className={`border border-neutral-2 card mb-4 py-2 shadow-none ${
+				isDragging ? 'bg-brand-primary-lighten-6' : 'bg-neutral-0'
+			}`}
+			style={style}
+		>
+			<ClayLayout.ContentRow padded>
+				<ClayLayout.ContentCol
+					className="justify-content-center p-2"
+					shrink
 				>
-					<div className="autofit-padded autofit-row">
-						<div className="autofit-col autofit-col-shrink justify-content-center p-2">
-							<ClayIcon
-								{...listeners}
-								spritemap={spritemap}
-								style={{cursor: 'grab'}}
-								symbol="drag"
-							></ClayIcon>
-						</div>
-						<div className="autofit-col autofit-col-expand">
-							<div className="autofit-section">
-								<ClayPanel
-									className="border-0 m-0 p-0"
-									collapsable
-									displayTitle={
-										<ClayPanel.Title>
-											<div
-												className={`text-neutral-9 font-weight-bold ${
-													!isPanelExpanded
-														? 'overflow-hidden text-truncate white-space text-paragraph-sm'
-														: 'text-paragraph'
-												}`}
-											>
-												{ticket.subject}
-											</div>
-											<div className="font-weight-normal mt-3 text-neutral-8 text-paragraph-xs">
-												{ticket.assignee ? (
-													<>
-														<ClayIcon
-															className="d-inline mr-1 rounded-circle"
-															spritemap={
-																spritemap
-															}
-															symbol="user"
-														></ClayIcon>
-
-														<div className="d-inline">
-															{assigneeName}
-														</div>
-													</>
-												) : (
-													<i className="ml-2">
-														Not assigned
-													</i>
-												)}
-											</div>
-										</ClayPanel.Title>
-									}
-									displayType="secondary"
-									expanded={isPanelExpanded}
-									onExpandedChange={(isExpanded: any) =>
-										setIsPanelExpanded(isExpanded)
-									}
-									showCollapseIcon={true}
-									spritemap={spritemap}
+					<ClayIcon
+						{...listeners}
+						style={{cursor: 'grab'}}
+						symbol="drag"
+					></ClayIcon>
+				</ClayLayout.ContentCol>
+				<ClayLayout.ContentCol shrink>
+					<ClayPanel
+						className="border-0 m-0 p-0"
+						collapsable
+						displayTitle={
+							<ClayPanel.Title>
+								<div
+									className={`text-neutral-9 font-weight-bold ${
+										!isPanelExpanded
+											? 'text-truncate text-paragraph-sm'
+											: 'text-paragraph'
+									}`}
 								>
-									<ClayPanel.Body>
-										<div className="font-weight-normal text-neutral-8 text-paragraph-sm">
-											{ticket.description
-												? ticket.description
-												: 'No description available.'}
-										</div>
+									{ticket.subject}
+								</div>
+								<div className="font-weight-normal mt-3 text-neutral-8 text-paragraph-xs">
+									{ticket.assignee ? (
+										<>
+											<ClayIcon
+												className="mr-1 rounded-circle"
+												symbol="user"
+											></ClayIcon>
 
-										{!ticket.assignee && (
-											<ClayButton
-												className="mt-3"
-												displayType="secondary"
-												onClick={() =>
-													assignToMeMutation.mutate(
-														ticket
-													)
-												}
-												size="xs"
-											>
-												{isLoading && (
-													<span className="inline-item inline-item-before">
-														<ClayLoadingIndicator
-															displayType="secondary"
-															size="sm"
-														/>
-													</span>
-												)}
-												Assign to Me
-											</ClayButton>
-										)}
-									</ClayPanel.Body>
-								</ClayPanel>
+											<div className="d-inline">
+												{`${ticket.assignee?.givenName} ${ticket.assignee?.familyName}`}
+											</div>
+										</>
+									) : (
+										<div className="ml-2">
+											Not assigned.
+										</div>
+									)}
+								</div>
+							</ClayPanel.Title>
+						}
+						displayType="secondary"
+						expanded={isPanelExpanded}
+						onExpandedChange={(isExpanded: any) =>
+							setIsPanelExpanded(isExpanded)
+						}
+						showCollapseIcon={true}
+					>
+						<ClayPanel.Body>
+							<div className="font-weight-normal text-neutral-8 text-paragraph-sm">
+								{ticket.description
+									? ticket.description
+									: 'No description available.'}
 							</div>
-						</div>
-					</div>
-				</div>
-			)}
-		</ClayIconSpriteContext.Consumer>
+
+							{!ticket.assignee && (
+								<ClayButton
+									className="mt-3"
+									displayType="secondary"
+									onClick={() =>
+										assignToMeMutation.mutate(ticket)
+									}
+									size="xs"
+								>
+									{isLoading && (
+										<span className="inline-item inline-item-before">
+											<ClayLoadingIndicator
+												displayType="secondary"
+												size="sm"
+											/>
+										</span>
+									)}
+									Assign to Me
+								</ClayButton>
+							)}
+						</ClayPanel.Body>
+					</ClayPanel>
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
+		</div>
 	);
 };
 

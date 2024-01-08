@@ -11,9 +11,11 @@ import TicketCard from './TicketCard';
 const StatusColumn: React.FC<{
 	name: string;
 	relatedTickets: Ticket[];
-	statusKey: string;
-}> = ({name, relatedTickets, statusKey}) => {
-	const {setNodeRef} = useDroppable({id: statusKey + '_droppable'});
+}> = ({name, relatedTickets}) => {
+	const {setNodeRef} = useDroppable({
+		data: {status: name},
+		id: name + '_droppable',
+	});
 
 	return (
 		<div

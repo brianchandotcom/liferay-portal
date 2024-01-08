@@ -7,11 +7,7 @@ import React, {Context} from 'react';
 import {QueryClient} from 'react-query';
 
 const queryClient = new QueryClient();
-const defaultPage = '';
 
 export const QueryClientContext: Context<QueryClient> = React.createContext(
 	queryClient
-);
-export const DefaultAppContext: Context<string> = React.createContext(
-	defaultPage
 );

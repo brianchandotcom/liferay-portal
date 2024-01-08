@@ -4,60 +4,53 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
-import {ReactNode, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {QueryClientProvider} from 'react-query';
 
-import {DefaultAppContext, QueryClientContext} from './context';
-import AllApps from './pages/AllApps';
-import TicketApp from './pages/TicketsApp';
-import TicketsDashboardApp from './pages/TicketsDashboardApp';
+import {QueryClientContext} from './context';
+import AllScreens from './pages/AllScreens';
+import TicketsDashboard from './pages/TicketsDashboard';
+import TicketsOverview from './pages/TicketsOverview';
 import {Liferay} from './services/liferay';
+import {ScreenType} from './types';
 
-const Main: React.FC<{defaultAppProp: string}> = ({defaultAppProp}) => {
-	const [defaultApp] = useState(defaultAppProp);
-
-	let app: ReactNode;
-
-	switch (defaultApp) {
-		case 'dashboard':
-			app = <TicketsDashboardApp></TicketsDashboardApp>;
-			break;
-		case 'ticketsapp':
-			app = <TicketApp></TicketApp>;
-			break;
-		default:
-			app = <AllApps></AllApps>;
-	}
-
-	return (
-		<QueryClientContext.Consumer>
-			{(queryClient) => (
-				<QueryClientProvider client={queryClient}>
-					<DefaultAppContext.Provider value={defaultApp}>
-						<ClayIconSpriteContext.Provider
-							value={Liferay.Icons.spritemap}
-						>
-							{app}
-						</ClayIconSpriteContext.Provider>
-					</DefaultAppContext.Provider>
-				</QueryClientProvider>
-			)}
-		</QueryClientContext.Consumer>
-	);
+export type LiferayTicketWorkspaceComponentsType = {
+	[key: string]: JSX.Element;
 };
 
-class MainHTMLElement extends HTMLElement {
+const NoRouteSelected = () => <AllScreens />;
+
+const LiferayTicketWorkspaceComponents: LiferayTicketWorkspaceComponentsType = {
+	dashboard: <TicketsDashboard screenType={ScreenType.STANDALONE} />,
+	overview: <TicketsOverview />,
+};
+
+const DirectToCustomer: React.FC<{defaultScreen: string}> = ({defaultScreen}) =>
+	LiferayTicketWorkspaceComponents[defaultScreen] ?? <NoRouteSelected />;
+
+const Main: React.FC<{defaultScreen: string}> = ({defaultScreen}) => (
+	<QueryClientContext.Consumer>
+		{(queryClient) => (
+			<QueryClientProvider client={queryClient}>
+				<ClayIconSpriteContext.Provider value={Liferay.Icons.spritemap}>
+					<DirectToCustomer defaultScreen={defaultScreen} />
+				</ClayIconSpriteContext.Provider>
+			</QueryClientProvider>
+		)}
+	</QueryClientContext.Consumer>
+);
+
+class WebComponent extends HTMLElement {
 	connectedCallback() {
 		const root = createRoot(this);
-		const defaultApp = this.getAttribute('defaultapp') || '';
+		const defaultScreen = this.getAttribute('defaultScreen') || '';
 
-		root.render(<Main defaultAppProp={defaultApp} />);
+		root.render(<Main defaultScreen={defaultScreen} />);
 	}
 }
 
 const ELEMENT_ID = 'liferay-ticket-custom-element';
 
 if (!customElements.get(ELEMENT_ID)) {
-	customElements.define(ELEMENT_ID, MainHTMLElement);
+	customElements.define(ELEMENT_ID, WebComponent);
 }

@@ -1,0 +1,170 @@
+/* eslint-disable quote-props */
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayButton from '@clayui/button';
+import {Option, Picker} from '@clayui/core';
+import ClayLayout from '@clayui/layout';
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {useDebounce} from '@uidotdev/usehooks';
+import {useContext, useState} from 'react';
+import {QueryClient, useMutation} from 'react-query';
+
+import {RecentActivity} from '../components/RecentActivity';
+import {TicketGrid} from '../components/TicketGrid';
+import {QueryClientContext} from '../context';
+import {useRecentTickets} from '../hooks/useRecentTickets';
+import {useTickets} from '../hooks/useTickets';
+import {Liferay} from '../services/liferay';
+import {generateNewTicket} from '../services/tickets';
+import {Filter} from '../types';
+
+const initialFilterState: Filter = {
+	field: '',
+	label: '',
+	value: '',
+};
+
+const filters: Filter[] = [
+	{
+		field: '',
+		label: 'No Filter',
+		value: '',
+	},
+	{
+		field: 'ticketStatus',
+		label: 'Open Issues',
+		value: 'open',
+	},
+	{
+		field: 'ticketStatus',
+		label: 'Queued Issues',
+		value: 'queued',
+	},
+	{
+		field: 'priority',
+		label: 'Major Priority Issues',
+		value: 'major',
+	},
+	{
+		field: 'resolution',
+		label: 'Unresolved Issues',
+		value: 'unresolved',
+	},
+];
+
+const TicketsOverview: React.FC = () => {
+	const queryClient: QueryClient = useContext(QueryClientContext);
+
+	const [filter, setFilter] = useState(initialFilterState);
+	const [page, setPage] = useState(1);
+	const [pageSize, setPageSize] = useState(20);
+	const [searchToDebounce, setSearchToDebounce] = useState<string>('');
+	const search = useDebounce(searchToDebounce, 500);
+
+	const recentTickets = useRecentTickets();
+	const {rows: tickets, totalCount} = useTickets({
+		filter,
+		page,
+		pageSize,
+		search,
+	});
+
+	const generateNewTicketMutation = useMutation({
+		mutationFn: generateNewTicket,
+		onSuccess: () => {
+			queryClient.invalidateQueries();
+
+			setPage(1);
+
+			Liferay.Util.openToast({
+				message: 'A new ticket was added!',
+				type: 'success',
+			});
+		},
+	});
+
+	return (
+		<>
+			<ClayLayout.ContentRow
+				className="bg-neutral-1 justify-content-between mb-3 p-3 rounded"
+				padded
+			>
+				<ClayLayout.ContentCol className="text-11">
+					Your Tickets
+				</ClayLayout.ContentCol>
+				<ClayLayout.ContentCol float="end">
+					<ClayButton
+						displayType="primary"
+						onClick={() => {
+							generateNewTicketMutation.mutate();
+						}}
+					>
+						Generate a New Ticket
+					</ClayButton>
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
+
+			<ClayLayout.ContentRow padded>
+				<ClayLayout.ContentCol expand>
+					<input
+						className="form-control mb-3 w-100"
+						onChange={(event) => {
+							setSearchToDebounce(event.target.value);
+
+							setPage(1);
+						}}
+						placeholder="Search Tickets"
+						type="text"
+					></input>
+				</ClayLayout.ContentCol>
+
+				<ClayLayout.ContentCol>
+					<Picker
+						aria-label="Select a Filter"
+						items={filters}
+						onSelectionChange={(selectedFilterValue: any) => {
+							setPage(1);
+
+							const selectedFilter = filters.find(
+								(filter) => filter.value === selectedFilterValue
+							);
+
+							if (selectedFilter) {
+								setFilter(selectedFilter);
+							}
+						}}
+						placeholder="Select a Filter"
+					>
+						{(item) => (
+							<Option key={item.value}>{item.label}</Option>
+						)}
+					</Picker>
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
+
+			<ClayLayout.ContentRow padded>
+				<TicketGrid tickets={tickets} />
+			</ClayLayout.ContentRow>
+
+			<ClayLayout.ContentRow className="mt-3" padded>
+				<ClayPaginationBarWithBasicItems
+					active={page}
+					activeDelta={pageSize}
+					ellipsisBuffer={3}
+					onActiveChange={setPage}
+					onDeltaChange={setPageSize}
+					totalItems={totalCount}
+				/>
+			</ClayLayout.ContentRow>
+
+			<ClayLayout.ContentRow padded>
+				<RecentActivity tickets={recentTickets} />
+			</ClayLayout.ContentRow>
+		</>
+	);
+};
+
+export default TicketsOverview;

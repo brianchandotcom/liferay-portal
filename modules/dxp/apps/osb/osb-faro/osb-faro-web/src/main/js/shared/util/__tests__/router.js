@@ -40,6 +40,8 @@ describe('setUriQueryValue', () => {
 		const url = 'http://www.liferay.com';
 
 		expect(setUriQueryValue(url, 'foo', 'bar')).toBe('/?foo=bar');
+
+		expect(setUriQueryValue(url, 'foo')).toBe('/');
 	});
 });
 

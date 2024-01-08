@@ -89,7 +89,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	public static void setUpClass() throws Exception {
 		BaseNotificationTypeTest.setUpClass();
 
-		_freeMarkTermValues = LinkedHashMapBuilder.<String, Object>put(
+		_freeMarkerTermValues = LinkedHashMapBuilder.<String, Object>put(
 			"${ObjectField_booleanObjectField.getData()}",
 			childObjectEntryValues.get("booleanObjectField")
 		).put(
@@ -144,7 +144,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				HashMapBuilder.put(
 					LanguageUtil.getLanguageId(LocaleUtil.US),
 					StringUtil.merge(
-						_freeMarkTermValues.keySet(), StringPool.COMMA)
+						_freeMarkerTermValues.keySet(), StringPool.COMMA)
 				).build()),
 			null, "Body", LanguageUtil.getLanguageId(LocaleUtil.US));
 
@@ -172,7 +172,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntries.get(0);
 
 		assertTermValues(
-			new ArrayList<>(_freeMarkTermValues.values()),
+			new ArrayList<>(_freeMarkerTermValues.values()),
 			Arrays.asList(
 				StringUtil.split(
 					notificationQueueEntry.getBody(), StringPool.COMMA)));
@@ -522,7 +522,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		}
 	}
 
-	private static Map<String, Object> _freeMarkTermValues;
+	private static Map<String, Object> _freeMarkerTermValues;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

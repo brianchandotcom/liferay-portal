@@ -1,0 +1,190 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"marginBottom": "5",
+						"marginTop": "5"
+					},
+					"indexed": true,
+					"layout": {
+						"marginBottom": 4,
+						"marginTop": 4
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-heading"
+							},
+							"fragmentConfig": {
+								"headingLevel": "h1"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Escalate a Ticket"
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-heading"
+							},
+							"fragmentConfig": {
+								"headingLevel": "h5"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Raise an issue regarding an existing ticket."
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginBottom": "3",
+								"textColor": "colorNeutral7"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"formConfig": {
+								"formReference": {
+									"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:SupportTicketEscalation$]",
+									"classType": 0
+								}
+							},
+							"formSuccessSubmissionResult": {
+								"itemReference": {
+									"className": "com.liferay.portal.kernel.model.Layout",
+									"fields": [
+										{
+											"fieldName": "friendlyURL",
+											"fieldValue": "/home"
+										},
+										{
+											"fieldName": "privatePage",
+											"fieldValue": "false"
+										},
+										{
+											"fieldName": "siteKey",
+											"fieldValue": "[$GROUP_KEY$]"
+										}
+									]
+								}
+							},
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_ticketsIDs",
+										"inputHelpText": {
+											"en_US": "Provide the Ticket IDs to be prioritized."
+										},
+										"inputShowHelpText": true,
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-textarea"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_description",
+										"inputHelpText": {
+											"en_US": "Please describe why these tickets need to be prioritized."
+										},
+										"inputShowHelpText": true,
+										"numberOfLines": 5,
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-submit-button"
+									},
+									"fragmentConfig": {
+										"buttonSize": "nm",
+										"buttonType": "primary",
+										"submittedEntryStatus": "approved"
+									},
+									"fragmentFields": [
+										{
+											"id": "submit-button-text",
+											"value": {
+												"fragmentLink": {
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Form"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "home"
+		}
+	},
+	"version": 1.1
+}

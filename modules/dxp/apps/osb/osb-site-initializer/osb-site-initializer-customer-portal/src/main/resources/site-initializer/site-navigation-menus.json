@@ -246,15 +246,8 @@
 							},
 							{
 								"externalReferenceCode": "escalateATicketBetaMenuItem",
-								"name_i18n": {
-									"en_US": "Escalate a Ticket (BETA)",
-									"es_ES": "Escalar un billete (BETA)",
-									"ja_JP": "チケットのエスカレーション (BETA)",
-									"pt_BR": "Escalar um tíquete (BETA)"
-								},
-								"type": "url",
-								"url": "/support-ticket-escalation",
-								"useNewTab": false
+								"friendlyURL": "/support-ticket-escalation",
+								"type": "layout"
 							}
 						],
 						"name_i18n": {

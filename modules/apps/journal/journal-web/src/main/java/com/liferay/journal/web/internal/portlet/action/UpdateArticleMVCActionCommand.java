@@ -673,8 +673,8 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			PortletURLFactoryUtil.create(
 				actionRequest, JournalPortletKeys.JOURNAL,
 				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/edit_article.jsp"
+		).setMVCRenderCommandName(
+			"/journal/edit_article"
 		).setRedirect(
 			redirect
 		).setPortletResource(

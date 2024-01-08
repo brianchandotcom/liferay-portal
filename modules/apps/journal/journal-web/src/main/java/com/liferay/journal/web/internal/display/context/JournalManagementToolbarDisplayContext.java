@@ -225,8 +225,8 @@ public class JournalManagementToolbarDisplayContext
 			"addArticleURL",
 			PortletURLBuilder.createRenderURL(
 				liferayPortletResponse
-			).setMVCPath(
-				"/edit_article.jsp"
+			).setMVCRenderCommandName(
+				"/journal/edit_article"
 			).setRedirect(
 				_themeDisplay.getURLCurrent()
 			).setParameter(
@@ -1059,8 +1059,8 @@ public class JournalManagementToolbarDisplayContext
 						PortletURL portletURL =
 							PortletURLBuilder.createRenderURL(
 								liferayPortletResponse
-							).setMVCPath(
-								"/edit_article.jsp"
+							).setMVCRenderCommandName(
+								"/journal/edit_article"
 							).setRedirect(
 								() -> {
 									if (FeatureFlagManagerUtil.isEnabled(

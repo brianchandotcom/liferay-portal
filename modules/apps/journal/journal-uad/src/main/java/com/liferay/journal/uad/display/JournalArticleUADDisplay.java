@@ -40,8 +40,8 @@ public class JournalArticleUADDisplay extends BaseJournalArticleUADDisplay {
 			_portal.getControlPanelPortletURL(
 				liferayPortletRequest, JournalPortletKeys.JOURNAL,
 				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/edit_article.jsp"
+		).setMVCRenderCommandName(
+			"/journal/edit_article"
 		).setRedirect(
 			_portal.getCurrentURL(liferayPortletRequest)
 		).setParameter(

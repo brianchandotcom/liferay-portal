@@ -83,8 +83,8 @@ public class JournalArticleCTDisplayRenderer
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, group, JournalPortletKeys.JOURNAL, 0, 0,
 				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/edit_article.jsp"
+		).setMVCRenderCommandName(
+			"/journal/edit_article"
 		).setRedirect(
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(

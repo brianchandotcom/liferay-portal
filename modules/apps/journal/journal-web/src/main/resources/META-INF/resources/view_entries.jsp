@@ -64,8 +64,8 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 				if (JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE)) {
 					editURL = PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
-					).setMVCPath(
-						"/edit_article.jsp"
+					).setMVCRenderCommandName(
+						"/journal/edit_article"
 					).setRedirect(
 						currentURL
 					).setParameter(

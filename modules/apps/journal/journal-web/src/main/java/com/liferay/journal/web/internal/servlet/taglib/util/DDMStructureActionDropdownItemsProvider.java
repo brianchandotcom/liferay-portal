@@ -196,8 +196,8 @@ public class DDMStructureActionDropdownItemsProvider {
 			dropdownItem.setHref(
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
-				).setMVCPath(
-					"/edit_article.jsp"
+				).setMVCRenderCommandName(
+					"/journal/edit_article"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(

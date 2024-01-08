@@ -6231,8 +6231,8 @@ public class JournalArticleLocalServiceImpl
 				article.getGroupId(), portletId, null);
 
 			articleURL = HttpComponentsUtil.addParameter(
-				articleURL, _portal.getPortletNamespace(portletId) + "mvcPath",
-				"/edit_article.jsp");
+				articleURL, _portal.getPortletNamespace(portletId) + "mvcRenderCommandName",
+				"/journal/edit_article");
 
 			articleURL = buildArticleURL(
 				articleURL, article.getGroupId(), article.getFolderId(),

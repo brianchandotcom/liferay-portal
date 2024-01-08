@@ -911,7 +911,7 @@ public class ObjectRelationshipLocalServiceImpl
 			objectDefinition2.getObjectDefinitionId());
 		_objectFieldLocalService.validateReadOnlyAndReadOnlyConditionExpression(
 			ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP, readOnly,
-			readOnlyConditionExpression);
+			readOnlyConditionExpression, required);
 		_objectFieldLocalService.validateRequired(
 			0, ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP, required);
 

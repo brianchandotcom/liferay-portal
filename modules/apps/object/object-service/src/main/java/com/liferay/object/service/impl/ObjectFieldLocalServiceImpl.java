@@ -663,7 +663,7 @@ public class ObjectFieldLocalServiceImpl
 	@Override
 	public void validateReadOnlyAndReadOnlyConditionExpression(
 			String businessType, String readOnly,
-			String readOnlyConditionExpression)
+			String readOnlyConditionExpression, boolean required)
 		throws PortalException {
 
 		if (Objects.equals(
@@ -714,6 +714,13 @@ public class ObjectFieldLocalServiceImpl
 				throw new ObjectFieldReadOnlyConditionExpressionException(
 					"Syntax error in: " + readOnlyConditionExpression);
 			}
+		}
+
+		if (required &&
+			!Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_FALSE)) {
+
+			throw new ObjectFieldReadOnlyException(
+				"Required object field cannot be read only");
 		}
 	}
 
@@ -801,7 +808,7 @@ public class ObjectFieldLocalServiceImpl
 		_validateLocalized(businessType, localized, objectDefinition, required);
 		_validateName(0, objectDefinition, name, system);
 		validateReadOnlyAndReadOnlyConditionExpression(
-			businessType, readOnly, readOnlyConditionExpression);
+			businessType, readOnly, readOnlyConditionExpression, required);
 		validateRequired(0, businessType, required);
 		_validateState(required, state);
 
@@ -1360,7 +1367,7 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		validateReadOnlyAndReadOnlyConditionExpression(
-			businessType, readOnly, readOnlyConditionExpression);
+			businessType, readOnly, readOnlyConditionExpression, required);
 
 		_validateState(required, state);
 

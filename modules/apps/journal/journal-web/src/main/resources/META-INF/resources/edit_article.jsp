@@ -10,7 +10,7 @@
 <%
 JournalArticle article = journalDisplayContext.getArticle();
 
-JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
+JournalEditArticleDisplayContext journalEditArticleDisplayContext = (JournalEditArticleDisplayContext)request.getAttribute(JournalEditArticleDisplayContext.class.getName());
 %>
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />

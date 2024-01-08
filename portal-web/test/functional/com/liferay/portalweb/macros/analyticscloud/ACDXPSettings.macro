@@ -247,6 +247,8 @@ definition {
 			Click(
 				key_text = "Create",
 				locator1 = "Button#ANY");
+
+			WaitForElementNotPresent(locator1 = "Modal#MODAL_CONTENT");
 		}
 	}
 

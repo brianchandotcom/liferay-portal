@@ -33,6 +33,8 @@
 				<echo>Use SQL files in ${basedir}/output to load the database.</echo>
 			</else>
 		</if>
+
+		<echo>Attention: please make sure SampleSQLBuilder is using the same timezone with portal and database by setting consistent timezone in this property: sample.sql.db.time.zone!</echo>
 	</target>
 
 	<target name="clean">

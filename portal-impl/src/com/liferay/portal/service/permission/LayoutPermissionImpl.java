@@ -304,7 +304,9 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			return false;
 		}
 
-		if (layout.isPending()) {
+		if (layout.isPending() &&
+			(!actionId.equals(ActionKeys.VIEW) || !layout.isPublished())) {
+
 			Boolean hasPermission = WorkflowPermissionUtil.hasPermission(
 				permissionChecker, layout.getGroupId(), Layout.class.getName(),
 				layout.getPlid(), actionId);

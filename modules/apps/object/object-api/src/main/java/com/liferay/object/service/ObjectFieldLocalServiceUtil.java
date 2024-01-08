@@ -561,11 +561,11 @@ public class ObjectFieldLocalServiceUtil {
 
 	public static void validateReadOnlyAndReadOnlyConditionExpression(
 			String businessType, String readOnly,
-			String readOnlyConditionExpression)
+			String readOnlyConditionExpression, boolean required)
 		throws PortalException {
 
 		getService().validateReadOnlyAndReadOnlyConditionExpression(
-			businessType, readOnly, readOnlyConditionExpression);
+			businessType, readOnly, readOnlyConditionExpression, required);
 	}
 
 	public static void validateRequired(

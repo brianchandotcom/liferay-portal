@@ -647,11 +647,11 @@ public class ObjectFieldLocalServiceWrapper
 	@Override
 	public void validateReadOnlyAndReadOnlyConditionExpression(
 			String businessType, String readOnly,
-			String readOnlyConditionExpression)
+			String readOnlyConditionExpression, boolean required)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_objectFieldLocalService.validateReadOnlyAndReadOnlyConditionExpression(
-			businessType, readOnly, readOnlyConditionExpression);
+			businessType, readOnly, readOnlyConditionExpression, required);
 	}
 
 	@Override

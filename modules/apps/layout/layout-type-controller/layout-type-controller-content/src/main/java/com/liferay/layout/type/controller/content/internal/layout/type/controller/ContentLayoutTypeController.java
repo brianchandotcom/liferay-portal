@@ -263,26 +263,27 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			httpServletRequest.setAttribute(
 				ContentPageEditorWebKeys.CLASS_PK,
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-		}
-		else {
-			LayoutUtilityPageEntry layoutUtilityPageEntry =
-				_fetchLayoutUtilityPageEntry(layout);
 
-			if (layoutUtilityPageEntry != null) {
-				httpServletRequest.setAttribute(
-					ContentPageEditorWebKeys.CLASS_NAME,
-					LayoutUtilityPageEntry.class.getName());
-				httpServletRequest.setAttribute(
-					ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
-			}
-			else {
-				httpServletRequest.setAttribute(
-					ContentPageEditorWebKeys.CLASS_NAME,
-					Layout.class.getName());
-				httpServletRequest.setAttribute(
-					ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
-			}
+			return;
 		}
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_fetchLayoutUtilityPageEntry(layout);
+
+		if (layoutUtilityPageEntry != null) {
+			httpServletRequest.setAttribute(
+				ContentPageEditorWebKeys.CLASS_NAME,
+				LayoutUtilityPageEntry.class.getName());
+			httpServletRequest.setAttribute(
+				ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
+
+			return;
+		}
+
+		httpServletRequest.setAttribute(
+			ContentPageEditorWebKeys.CLASS_NAME, Layout.class.getName());
+		httpServletRequest.setAttribute(
+			ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
 	}
 
 	private LayoutPageTemplateEntry _fetchLayoutPageTemplateEntry(

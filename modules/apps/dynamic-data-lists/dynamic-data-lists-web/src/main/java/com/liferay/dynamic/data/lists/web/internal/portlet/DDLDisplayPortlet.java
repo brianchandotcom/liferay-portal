@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-dynamic-data-lists-display",
-		"com.liferay.portlet.display-category=category.collaboration",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portal-javascript=/o/dynamic-data-mapping-web/js/custom_fields.js",
 		"com.liferay.portlet.header-portal-javascript=/o/dynamic-data-mapping-web/js/main.js",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",

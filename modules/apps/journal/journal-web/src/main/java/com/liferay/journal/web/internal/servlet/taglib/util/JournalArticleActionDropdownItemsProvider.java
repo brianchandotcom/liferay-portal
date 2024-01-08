@@ -576,13 +576,25 @@ public class JournalArticleActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				_liferayPortletResponse.createRenderURL(), "backURLTitle",
-				portletDisplay.getPortletDisplayName(), "mvcPath",
-				"/edit_article.jsp", "redirect", _getRedirect(),
-				"referringPortletResource", _getReferringPortletResource(),
-				"groupId", _article.getGroupId(), "folderId",
-				_article.getFolderId(), "articleId", _article.getArticleId(),
-				"version", _article.getVersion());
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/edit_article.jsp"
+				).setRedirect(
+					_getRedirect()
+				).setParameter(
+					"articleId", _article.getArticleId()
+				).setParameter(
+					"backURLTitle", portletDisplay.getPortletDisplayName()
+				).setParameter(
+					"folderId", _article.getFolderId()
+				).setParameter(
+					"groupId", _article.getGroupId()
+				).setParameter(
+					"referringPortletResource", _getReferringPortletResource()
+				).setParameter(
+					"version", _article.getVersion()
+				).buildString());
 			dropdownItem.setIcon("pencil");
 
 			String label = "edit";

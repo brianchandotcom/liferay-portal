@@ -47,7 +47,8 @@ public class CollapseBottomDynamicInclude implements DynamicInclude {
 				Arrays.asList(
 					ESImportUtil.getESImport(
 						absolutePortalURLBuilder,
-						"{default as main} from frontend-js-collapse-support-web"))));
+						"{default as main} from " +
+							"frontend-js-collapse-support-web"))));
 
 		scriptData.writeTo(httpServletResponse.getWriter());
 	}

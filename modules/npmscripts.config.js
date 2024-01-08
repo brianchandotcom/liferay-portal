@@ -363,7 +363,6 @@ module.exports = {
 			'dynamic-data-mapping-form-renderer',
 		],
 		imports: {
-			'@liferay/frontend-js-walkthrough-web': [],
 			'@liferay/accessibility-menu-web': [],
 			'@liferay/accessibility-settings-state-web': [],
 			'@liferay/cookies-banner-web': [],
@@ -423,6 +422,7 @@ module.exports = {
 				'react-dom',
 			],
 			'@liferay/frontend-js-state-web': [],
+			'@liferay/frontend-js-walkthrough-web': [],
 			'frontend-js-components-web': [],
 			'frontend-js-web': [],
 			'frontend-taglib-clay': [

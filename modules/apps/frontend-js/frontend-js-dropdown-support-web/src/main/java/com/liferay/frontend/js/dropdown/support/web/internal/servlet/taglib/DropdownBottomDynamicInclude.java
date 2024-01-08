@@ -47,7 +47,8 @@ public class DropdownBottomDynamicInclude implements DynamicInclude {
 				Arrays.asList(
 					ESImportUtil.getESImport(
 						absolutePortalURLBuilder,
-						"{default as main} from frontend-js-dropdown-support-web"))));
+						"{default as main} from " +
+							"frontend-js-dropdown-support-web"))));
 
 		scriptData.writeTo(httpServletResponse.getWriter());
 	}

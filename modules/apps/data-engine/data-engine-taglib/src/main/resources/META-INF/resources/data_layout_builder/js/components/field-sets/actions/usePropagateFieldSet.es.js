@@ -12,6 +12,33 @@ import React, {useContext} from 'react';
 
 import {getItem} from '../../../utils/client.es';
 
+const findField = (dataDefinitionFields, fieldSetId) => {
+	let field;
+
+	const evaluateField = (dataDefinitionField) => {
+		const {
+			customProperties: {ddmStructureId},
+			nestedDataDefinitionFields,
+		} = dataDefinitionField;
+
+		if (String(ddmStructureId) === String(fieldSetId)) {
+			field = dataDefinitionField;
+
+			return true;
+		}
+
+		if (nestedDataDefinitionFields) {
+			return nestedDataDefinitionFields.some(evaluateField);
+		}
+
+		return false;
+	};
+
+	dataDefinitionFields.some(evaluateField);
+
+	return field;
+};
+
 const getName = ({name = {}}) => {
 	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
@@ -59,9 +86,9 @@ const usePropagateFieldSet = () => {
 			`/o/data-engine/v2.0/data-definitions/${fieldSet.id}/data-definition-field-links`
 		);
 
-		const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
-			({customProperties: {ddmStructureId}}) =>
-				ddmStructureId === fieldSet.id
+		const dataDefinitionField = findField(
+			dataDefinition.dataDefinitionFields,
+			fieldSet.id
 		);
 
 		if (dataDefinitionField) {

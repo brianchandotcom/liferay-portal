@@ -2008,7 +2008,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	@Test
 	public void testPostWithAllFields() throws Exception {
 		_addAPIApplicationWithPostEndpoint(
-			true, _objectDefinition1.getExternalReferenceCode());
+			true, _objectDefinition1.getExternalReferenceCode(),
+			APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -2270,7 +2271,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	@Test
 	public void testPostWithoutResponseSchema() throws Exception {
 		_addAPIApplicationWithPostEndpoint(
-			false, _objectDefinition1.getExternalReferenceCode());
+			false, _objectDefinition1.getExternalReferenceCode(),
+			APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -2475,7 +2477,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	private void _addAPIApplicationWithPostEndpoint(
 			boolean addResponseSchema,
-			String objectDefinitionExternalReferenceCode)
+			String objectDefinitionExternalReferenceCode,
+			APIApplication.Endpoint.Scope scope)
 		throws Exception {
 
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
@@ -2488,7 +2491,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						_API_ENDPOINT_ERC_1, Http.Method.POST, "/test", null,
 						APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
 							getValue(),
-						APIApplication.Endpoint.Scope.COMPANY))
+						scope))
 			).put(
 				"apiApplicationToAPISchemas",
 				JSONUtil.put(

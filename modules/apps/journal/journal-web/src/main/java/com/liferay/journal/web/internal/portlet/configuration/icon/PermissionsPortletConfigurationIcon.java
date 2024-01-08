@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -8,16 +8,19 @@ package com.liferay.journal.web.internal.portlet.configuration.icon;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -26,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Daniel Kocsis
+ * @author Bárbara Cabrera
  */
 @Component(
 	property = {
@@ -35,12 +38,17 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class ViewSourcePortletConfigurationIcon
+public class PermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
+	public String getIconCssClass() {
+		return "password-policies";
+	}
+
+	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(getLocale(portletRequest), "view-source");
+		return _language.get(getLocale(portletRequest), "permissions");
 	}
 
 	@Override
@@ -48,28 +56,23 @@ public class ViewSourcePortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
+			JournalArticle article = ActionUtil.getArticle(
+				_portal.getHttpServletRequest(portletRequest));
+
+			if (article == null) {
+				return null;
+			}
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			JournalArticle article = ActionUtil.getArticle(
+			return PermissionsURLTag.doTag(
+				StringPool.BLANK, JournalArticle.class.getName(),
+				HtmlUtil.escape(article.getTitle(themeDisplay.getLocale())),
+				null, String.valueOf(article.getResourcePrimKey()),
+				LiferayWindowState.POP_UP.toString(), null,
 				_portal.getHttpServletRequest(portletRequest));
-
-			return PortletURLBuilder.createRenderURL(
-				_portal.getLiferayPortletResponse(portletResponse)
-			).setMVCPath(
-				"/configuration/icon/view_source.jsp"
-			).setRedirect(
-				themeDisplay.getURLCurrent()
-			).setParameter(
-				"articleId", article.getArticleId()
-			).setParameter(
-				"groupId", article.getGroupId()
-			).setParameter(
-				"status", article.getStatus()
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -82,7 +85,7 @@ public class ViewSourcePortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 101;
+		return 100;
 	}
 
 	@Override
@@ -91,7 +94,9 @@ public class ViewSourcePortletConfigurationIcon
 			JournalArticle article = ActionUtil.getArticle(
 				_portal.getHttpServletRequest(portletRequest));
 
-			if (article != null) {
+			if ((article != null) &&
+				_featureFlagManager.isEnabled("LPS-198959")) {
+
 				return true;
 			}
 		}
@@ -110,7 +115,10 @@ public class ViewSourcePortletConfigurationIcon
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ViewSourcePortletConfigurationIcon.class);
+		PermissionsPortletConfigurationIcon.class);
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private Language _language;

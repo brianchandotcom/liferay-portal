@@ -99,27 +99,19 @@ export default request => {
 		if (status === 204) {
 			return {};
 		} else if (status === 400 || status === 500) {
-			try {
-				const {
-					field,
-					localizedMessage,
-					messageKey
-				} = await response.json();
+			const {field, localizedMessage, messageKey} = await response.json();
 
-				if (field) {
-					throw new ValidationError(field, localizedMessage);
-				}
-
-				if (messageKey) {
-					throw new Error(messageKey);
-				}
-
-				throw new Error(
-					localizedMessage ? localizedMessage : 'Request Error'
-				);
-			} catch (error) {
-				throw new Error('Request Error');
+			if (field) {
+				throw new ValidationError(field, localizedMessage);
 			}
+
+			if (messageKey) {
+				throw new Error(messageKey);
+			}
+
+			throw new Error(
+				localizedMessage ? localizedMessage : 'Request Error'
+			);
 		} else if (status === 401) {
 			reloadPage();
 		} else if (status === 403) {

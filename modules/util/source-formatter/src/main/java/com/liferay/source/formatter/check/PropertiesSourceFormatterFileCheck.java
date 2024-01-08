@@ -232,7 +232,9 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 				content = _sortPropertyValues(content, key, propertyValues);
 			}
 
-			if (!key.endsWith("excludes") && !key.endsWith("FileNames")) {
+			if (!key.endsWith("excludes") && !key.endsWith("DirNames") &&
+				!key.endsWith("FileNames")) {
+
 				continue;
 			}
 
@@ -262,8 +264,10 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 				if (file == null) {
 					addMessage(
 						fileName,
-						"Property value '" + propertyFileName +
-							"' points to file that does not exist");
+						StringBundler.concat(
+							"Property value '", propertyFileName,
+							"' points to file or directory that does not ",
+							"exist"));
 				}
 			}
 		}

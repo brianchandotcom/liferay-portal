@@ -11,6 +11,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -263,10 +265,23 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 		}
 		else {
-			httpServletRequest.setAttribute(
-				ContentPageEditorWebKeys.CLASS_NAME, Layout.class.getName());
-			httpServletRequest.setAttribute(
-				ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
+			LayoutUtilityPageEntry layoutUtilityPageEntry =
+				_fetchLayoutUtilityPageEntry(layout);
+
+			if (layoutUtilityPageEntry != null) {
+				httpServletRequest.setAttribute(
+					ContentPageEditorWebKeys.CLASS_NAME,
+					LayoutUtilityPageEntry.class.getName());
+				httpServletRequest.setAttribute(
+					ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
+			}
+			else {
+				httpServletRequest.setAttribute(
+					ContentPageEditorWebKeys.CLASS_NAME,
+					Layout.class.getName());
+				httpServletRequest.setAttribute(
+					ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
+			}
 		}
 	}
 
@@ -284,6 +299,23 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		if (layout.isDraftLayout()) {
 			return _layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+		}
+
+		return null;
+	}
+
+	private LayoutUtilityPageEntry _fetchLayoutUtilityPageEntry(Layout layout) {
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchLayoutUtilityPageEntryByPlid(layout.getPlid());
+
+		if (layoutUtilityPageEntry != null) {
+			return layoutUtilityPageEntry;
+		}
+
+		if (layout.isDraftLayout()) {
+			return _layoutUtilityPageEntryLocalService.
+				fetchLayoutUtilityPageEntryByPlid(layout.getClassPK());
 		}
 
 		return null;
@@ -374,6 +406,10 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Reference
 	private LayoutPermission _layoutPermission;
+
+	@Reference
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	@Reference
 	private LayoutContentModelResourcePermission _modelResourcePermission;

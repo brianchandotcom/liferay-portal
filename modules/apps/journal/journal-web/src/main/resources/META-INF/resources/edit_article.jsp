@@ -155,10 +155,12 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = (JournalEdit
 									type="submit"
 								/>
 
-								<react:component
-									module="js/SaveButtons"
-									props="<%= journalEditArticleDisplayContext.getSaveButtonsContext() %>"
-								/>
+								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-198959") %>'>
+									<react:component
+										module="js/SaveButtons"
+										props="<%= journalEditArticleDisplayContext.getSaveButtonsContext() %>"
+									/>
+								</c:if>
 							</div>
 						</c:if>
 

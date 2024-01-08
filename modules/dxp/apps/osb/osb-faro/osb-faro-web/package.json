@@ -32,7 +32,6 @@
 		"apollo-link-error": "^1.1.12",
 		"apollo-link-http": "^1.5.16",
 		"classnames": "^2.2.5",
-		"clay-charts-shared": "^2.9.0",
 		"clipboard": "^1.7.1",
 		"core-js": "^2.5.7",
 		"custom-event-polyfill": "^1.0.7",

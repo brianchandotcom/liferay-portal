@@ -55,22 +55,22 @@ definition {
 
 		task ("Add a new user") {
 			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
+				userEmailAddress = "anonymousconvertedtoknown@liferay.com",
+				userFirstName = "anonymousconvertedtoknown",
+				userLastName = "anonymousconvertedtoknown",
+				userScreenName = "anonymousconvertedtoknown");
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "ac@liferay.com");
+				userEmailAddress = "anonymousconvertedtoknown@liferay.com");
 		}
 
 		task ("View the blog as a new user") {
 			ACUtils.navigateToSitePageWithUser(
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
-				emailList = "ac@liferay.com",
+				emailList = "anonymousconvertedtoknown@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -115,8 +115,8 @@ definition {
 			ACDXPSettings.syncNewContactData();
 
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
+				userLoginEmailAddress = "anonymousconvertedtoknown@liferay.com",
+				userLoginFullName = "anonymousconvertedtoknown anonymousconvertedtoknown");
 
 			ACUtils.navigateToSitePage(
 				actionType = "View Blog",

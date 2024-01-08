@@ -6,6 +6,7 @@
 package com.liferay.object.web.internal.notifications;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.object.model.ObjectDefinition;
@@ -13,8 +14,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -72,13 +76,33 @@ public class ObjectUserNotificationsHandler
 			}
 		}
 
+		if (GetterUtil.getBoolean(jsonObject.get("exceedsObjectEntryLimit"))) {
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+				RequestBackedPortletURLFactoryUtil.create(
+					serviceContext.getRequest());
+
+			return PortletURLBuilder.create(
+				requestBackedPortletURLFactory.createActionURL(
+					ConfigurationAdminPortletKeys.SYSTEM_SETTINGS)
+			).setMVCRenderCommandName(
+				"/configuration_admin/edit_configuration"
+			).setRedirect(
+				serviceContext.getCurrentURL()
+			).setParameter(
+				"factoryPid",
+				"com.liferay.object.configuration.ObjectConfiguration"
+			).setWindowState(
+				WindowState.MAXIMIZED
+			).buildString();
+		}
+
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				serviceContext.getRequest(), serviceContext.getScopeGroup(),
 				jsonObject.getString("portletId"), 0, 0,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
-			"/object_entries/edit_object_entry"
+			"/configuration_admin/edit_configuration"
 		).setParameter(
 			"externalReferenceCode",
 			jsonObject.getString("externalReferenceCode")

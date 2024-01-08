@@ -548,10 +548,11 @@ public class UserNotificationEventLocalServiceImpl
 
 	@Override
 	public int getUserNotificationEventsCount(
-		long userId, String type, long timestamp, boolean delivered) {
+		long userId, String type, long timestamp, boolean delivered,
+		String payload) {
 
-		return userNotificationEventPersistence.countByU_T_GteT_D(
-			userId, type, timestamp, delivered);
+		return userNotificationEventPersistence.countByU_T_GteT_D_LikeP(
+			userId, type, timestamp, delivered, payload);
 	}
 
 	@Override

@@ -2844,12 +2844,6 @@
 			<finder-column name="actionRequired" />
 			<finder-column name="archived" />
 		</finder>
-		<finder name="U_T_GteT_D" return-type="Collection">
-			<finder-column name="userId" />
-			<finder-column name="type" />
-			<finder-column comparator="&gt;=" name="timestamp" />
-			<finder-column name="delivered" />
-		</finder>
 		<finder name="U_T_DT_D" return-type="Collection">
 			<finder-column name="userId" />
 			<finder-column name="type" />
@@ -2879,6 +2873,13 @@
 			<finder-column name="delivered" />
 			<finder-column name="actionRequired" />
 			<finder-column name="archived" />
+		</finder>
+		<finder name="U_T_GteT_D_LikeP" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="type" />
+			<finder-column comparator="&gt;=" name="timestamp" />
+			<finder-column name="delivered" />
+			<finder-column comparator="LIKE" name="payload" />
 		</finder>
 		<finder name="U_T_DT_D_A" return-type="Collection">
 			<finder-column name="userId" />

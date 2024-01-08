@@ -11,6 +11,7 @@
 		"@clayui/alert": "^3.106.1",
 		"@clayui/badge": "^3.107.0",
 		"@clayui/button": "^3.107.0",
+		"@clayui/charts": "^3.106.1",
 		"@clayui/core": "^3.108.0",
 		"@clayui/css": "^3.108.0",
 		"@clayui/drop-down": "^3.108.0",

@@ -4,7 +4,7 @@ exports[`CriteriaSidebar renders 1`] = `
 <DocumentFragment>
   <div
     aria-label="segments-contributors-panel"
-    class="criteria-sidebar-root d-flex flex-column position-absolute"
+    class="criteria-sidebar-root d-flex flex-column"
     role="tabpanel"
     tabindex="-1"
   >
@@ -54,7 +54,7 @@ exports[`CriteriaSidebar renders 1`] = `
       </div>
     </div>
     <div
-      class="c-p-4 overflow-y-auto position-relative sidebar-collapse"
+      class="c-p-4 position-relative sidebar-collapse"
     >
       <div
         class="panel-group"

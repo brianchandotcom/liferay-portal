@@ -6,11 +6,11 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
     class="contributor-builder-root h-100 editing"
   >
     <div
-      class="criteria-builder-section-sidebar overflow-hidden position-fixed criteria-builder-section-sidebar--with-warning"
+      class="criteria-builder-section-sidebar overflow-hidden criteria-builder-section-sidebar--with-warning"
     >
       <div
         aria-label="segments-contributors-panel"
-        class="criteria-sidebar-root d-flex flex-column position-absolute"
+        class="criteria-sidebar-root d-flex flex-column"
         role="tabpanel"
         tabindex="-1"
       >
@@ -60,7 +60,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
           </div>
         </div>
         <div
-          class="c-p-4 overflow-y-auto position-relative sidebar-collapse"
+          class="c-p-4 position-relative sidebar-collapse"
         >
           <div
             class="panel-group"
@@ -1058,7 +1058,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
       role="application"
     >
       <div
-        class="contributor-container h-100 overflow-auto position-absolute w-100"
+        class="contributor-container h-100 position-absolute w-100"
       >
         <div
           class="container-fluid container-fluid-max-xl"
@@ -1084,7 +1084,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     class="btn-group"
                   >
                     <div
-                      class="btn-group-item inline-item"
+                      class="btn-group-item d-flex flex-wrap inline-item"
                     >
                       <span
                         class="c-mr-4"
@@ -1121,11 +1121,11 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
     class="contributor-builder-root h-100"
   >
     <div
-      class="criteria-builder-section-sidebar overflow-hidden position-fixed criteria-builder-section-sidebar--with-warning"
+      class="criteria-builder-section-sidebar overflow-hidden criteria-builder-section-sidebar--with-warning"
     >
       <div
         aria-label="segments-contributors-panel"
-        class="criteria-sidebar-root d-flex flex-column position-absolute"
+        class="criteria-sidebar-root d-flex flex-column"
         role="tabpanel"
         tabindex="-1"
       >
@@ -1175,7 +1175,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
           </div>
         </div>
         <div
-          class="c-p-4 overflow-y-auto position-relative sidebar-collapse"
+          class="c-p-4 position-relative sidebar-collapse"
         >
           <div
             class="panel-group"
@@ -2173,7 +2173,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
       role="application"
     >
       <div
-        class="contributor-container h-100 overflow-auto position-absolute w-100"
+        class="contributor-container h-100 position-absolute w-100"
       >
         <div
           class="container-fluid container-fluid-max-xl"
@@ -2199,7 +2199,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     class="btn-group"
                   >
                     <div
-                      class="btn-group-item inline-item"
+                      class="btn-group-item d-flex flex-wrap inline-item"
                     >
                       <span
                         class="c-mr-4"

@@ -318,6 +318,26 @@ definition {
 		task ("Then the page designer cannot see the Button fragment") {
 			ContentPages.viewFragmentNotPresent(fragmentName = "Button");
 		}
+
+		task ("When the page designer changes the action to Show Fragment Button") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.gotoTab(tabName = "Page Rules");
+
+			PageEditor.editPageRule(
+				ruleName = "Rule",
+				selectAction = "Show",
+				selectActionValue = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page designer could see the Button fragment at view mode") {
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+		}
 	}
 
 	@description = "This is a test for LPS-200332. Apply a page rule with Has the Role Of condition."
@@ -364,6 +384,26 @@ definition {
 		task ("Then the page designer cannot see the Button fragment") {
 			ContentPages.viewFragmentNotPresent(fragmentName = "Button");
 		}
+
+		task ("When the page designer changes the action to Show Fragment Button") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.gotoTab(tabName = "Page Rules");
+
+			PageEditor.editPageRule(
+				ruleName = "Rule",
+				selectAction = "Show",
+				selectActionValue = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page designer could see the Button fragment at view mode") {
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+		}
 	}
 
 	@description = "This is a test for LPS-200332. Apply a page rule with Is the User condition."
@@ -409,6 +449,26 @@ definition {
 
 		task ("Then the page designer cannot see the Button fragment") {
 			ContentPages.viewFragmentNotPresent(fragmentName = "Button");
+		}
+
+		task ("When the page designer changes the action to Show Fragment Button") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.gotoTab(tabName = "Page Rules");
+
+			PageEditor.editPageRule(
+				ruleName = "Rule",
+				selectAction = "Show",
+				selectActionValue = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page designer could see the Button fragment at view mode") {
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
 		}
 	}
 

@@ -15,7 +15,7 @@ import java.util.Dictionary;
  */
 public class DLFileEntryServiceTestUtil {
 
-	protected static ConfigurationTemporarySwapper
+	public static ConfigurationTemporarySwapper
 			getConfigurationTemporarySwapper(String key, Object value)
 		throws Exception {
 

@@ -126,14 +126,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			"${ObjectField_integerObjectField.getData()}",
 			childObjectEntryValues.get("integerObjectField")
 		).put(
-			"${ObjectField_picklistObjectField.getData()}",
-			() -> {
-				ListEntry listEntry = (ListEntry)childObjectEntryValues.get(
-					"picklistObjectField");
-
-				return listEntry.getName();
-			}
-		).put(
 			"${ObjectField_textObjectField.getData()}",
 			childObjectEntryValues.get("textObjectField")
 		).put(
@@ -183,6 +175,48 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		assertTermValues(
 			new ArrayList<>(_freeMarkerTermValues.values()),
+			Arrays.asList(
+				StringUtil.split(
+					notificationQueueEntry.getBody(), StringPool.COMMA)));
+	}
+
+	@Test
+	public void testFreeMarkerNotificationPickListObjectFieldTerm()
+		throws Exception {
+
+		String body = LocalizationUtil.updateLocalization(
+			LocalizedMapUtil.getLocalizedMap(
+				HashMapBuilder.put(
+					LanguageUtil.getLanguageId(LocaleUtil.US),
+					"${ObjectField_picklistObjectField.getData()}"
+				).build()),
+			null, "Body", LanguageUtil.getLanguageId(LocaleUtil.US));
+
+		_executeNotificationObjectAction(
+			0,
+			_addNotificationTemplate(
+				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
+				false,
+				Collections.singletonMap(
+					LocaleUtil.US, user1.getEmailAddress())));
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 1,
+			notificationQueueEntries.size());
+
+		NotificationQueueEntry notificationQueueEntry =
+			notificationQueueEntries.get(0);
+
+		ListEntry listEntry = (ListEntry)childObjectEntryValues.get(
+			"picklistObjectField");
+
+		assertTermValues(
+			Arrays.asList(listEntry.getName()),
 			Arrays.asList(
 				StringUtil.split(
 					notificationQueueEntry.getBody(), StringPool.COMMA)));

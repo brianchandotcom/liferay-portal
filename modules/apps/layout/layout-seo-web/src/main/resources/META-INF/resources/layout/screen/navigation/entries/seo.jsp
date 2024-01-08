@@ -231,11 +231,6 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 			</clay:sheet>
 
 			<liferay-frontend:component
-				context='<%=
-					HashMapBuilder.<String, Object>put(
-						"nondefaultAssetDisplayPage", nondefaultAssetDisplayPage
-					).build()
-				%>'
 				module="js/seo/toggleSitemapFields"
 				servletContext="<%= application %>"
 			/>

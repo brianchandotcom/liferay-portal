@@ -41,11 +41,6 @@ public class DLFileEntryConfigurationUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeConfiguration() throws Exception {
-		if (!_dlConfigurationUpgradeHelper.hasLegacyProps() ||
-			!_dlConfigurationUpgradeHelper.hasConfigurationChanges()) {
-
-			return;
-		}
 
 		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
 			DLFileEntryConfiguration.class,

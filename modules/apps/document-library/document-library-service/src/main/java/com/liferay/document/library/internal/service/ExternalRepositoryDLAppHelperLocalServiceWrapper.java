@@ -5,6 +5,7 @@
 
 package com.liferay.document.library.internal.service;
 
+import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceWrapper;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,6 +21,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -122,5 +124,8 @@ public class ExternalRepositoryDLAppHelperLocalServiceWrapper
 
 		return true;
 	}
+
+	@Reference
+	private DLAppHelperLocalService _dlAppHelperLocalService;
 
 }

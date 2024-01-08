@@ -16,6 +16,8 @@ import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.trash.TrashHelper;
+import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.service.TrashEntryService;
 
 import org.osgi.service.component.annotations.Component;
@@ -92,6 +94,12 @@ public class TrashEntryDLAppServiceWrapper extends DLAppServiceWrapper {
 	private RepositoryProvider _repositoryProvider;
 
 	@Reference
+	private TrashEntryLocalService _trashEntryLocalService;
+
+	@Reference
 	private TrashEntryService _trashEntryService;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

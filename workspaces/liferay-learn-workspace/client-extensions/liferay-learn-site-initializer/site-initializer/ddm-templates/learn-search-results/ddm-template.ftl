@@ -123,7 +123,7 @@
 	}
 
 	.search-results .solid {
-		border-top: 1px solid var(--color-neutral-02, #E2E2E4);
+		border-top: 1px solid var(--color-neutral-2, #E2E2E4);
 	}
 </style>
 

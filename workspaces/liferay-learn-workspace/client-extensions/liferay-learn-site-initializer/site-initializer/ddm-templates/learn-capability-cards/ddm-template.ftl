@@ -33,7 +33,7 @@
 
 	.subtitle {
 		-webkit-line-clamp: 3 !important;
-		color: var(--color-neutral-08, #54555F);
+		color: var(--color-neutral-8, #54555F);
 		font-size: small;
 	}
 

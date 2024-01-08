@@ -51,7 +51,7 @@
 
 	.treeview.treeview-light.treeview-nested.treeview-vocabulary-display {
 		align-items: flex-start;
-		background: var(--color-neutral-01, #F7F7F8);
+		background: var(--color-neutral-1, #F7F7F8);
 		border-radius: 10px;
 		display: flex;
 		flex-direction: column;

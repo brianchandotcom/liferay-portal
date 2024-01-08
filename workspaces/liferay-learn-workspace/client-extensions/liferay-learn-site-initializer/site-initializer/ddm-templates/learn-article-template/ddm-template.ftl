@@ -25,7 +25,7 @@
 	}
 
 	.bg-color-1 {
-		background-color: var(--color-neutral-01, #F7F7F8);
+		background-color: var(--color-neutral-1, #F7F7F8);
 	}
 
 	.br-5 {
@@ -135,7 +135,7 @@
 	.tag-container {
 		border-radius: 1.5rem;
 		border: 1px solid var(--color-brand-primary, #0B5FFF);
-		background: var(--color-neutral-00, #FFFFFF);
+		background: var(--color-neutral-0, #FFFFFF);
 		padding: 0.25rem 0.75rem;
 		gap: 0.25rem;
 	}
@@ -185,7 +185,7 @@
 	#productIcon {
 		background-color: var(--color-brand-primary-lighten-5, #E7EFFF);
 		border: 1px solid;
-		border-color: var(--color-neutral-00, #FFFFFF);
+		border-color: var(--color-neutral-0, #FFFFFF);
 		height: 3.25rem;
 		width: 3.25rem;
 	}
@@ -199,7 +199,7 @@
 
 	#productsIcon {
 		border: 1px solid;
-		border-color: var(--color-neutral-01, #F7F7F8);
+		border-color: var(--color-neutral-1, #F7F7F8);
 		height: 2.25rem;
 		width: 2.25rem;
 	}

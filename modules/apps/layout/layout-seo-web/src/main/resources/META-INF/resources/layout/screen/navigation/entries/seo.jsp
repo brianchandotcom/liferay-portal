@@ -13,7 +13,6 @@ LayoutsSEODisplayContext layoutsSEODisplayContext = (LayoutsSEODisplayContext)re
 Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 
 UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSettingsProperties();
-boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsSEODisplayContext.isDefaultAssetDisplayPage();
 %>
 
 <liferay-util:html-top>
@@ -161,18 +160,7 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 						</c:otherwise>
 					</c:choose>
 
-					<c:if test="<%= nondefaultAssetDisplayPage %>">
-						<clay:alert
-							displayType="info"
-							message="robots-can-only-be-defined-for-display-page-templates-marked-as-default"
-						/>
-
-						<aui:input disabled="<%= true %>" id="<%= StringUtil.randomId() %>" label="robots" name="" placeholder="robots" type="textarea" value="noindex, nofollow" />
-					</c:if>
-
-					<div class="<%= nondefaultAssetDisplayPage ? "d-none" : StringPool.BLANK %>">
-						<aui:input name="robots" placeholder="robots" />
-					</div>
+					<aui:input name="robots" placeholder="robots" />
 				</div>
 			</clay:sheet-section>
 		</clay:sheet>
@@ -195,37 +183,28 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 						<liferay-ui:error exception="<%= SitemapIncludeException.class %>" message="please-select-a-valid-include-value" />
 						<liferay-ui:error exception="<%= SitemapPagePriorityException.class %>" message="please-enter-a-valid-page-priority" />
 
-						<div class="<%= nondefaultAssetDisplayPage ? "section-disabled" : StringPool.BLANK %>">
-							<c:if test="<%= nondefaultAssetDisplayPage %>">
-								<clay:alert
-									displayType="info"
-									message="only-display-page-templates-that-are-marked-as-default-for-an-asset-type-will-be-indexed-in-order-to-avoid-duplicity"
-								/>
-							</c:if>
+						<clay:select
+							cssClass="propagatable-field"
+							disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>"
+							id='<%= liferayPortletResponse.getNamespace() + "sitemap-include" %>'
+							label="include"
+							name="TypeSettingsProperties--sitemap-include--"
+							options="<%= layoutsSEODisplayContext.getSitemapIncludeSelectOptions() %>"
+						/>
 
-							<clay:select
-								cssClass="propagatable-field"
-								disabled="<%= nondefaultAssetDisplayPage || selLayout.isLayoutPrototypeLinkActive() %>"
-								id='<%= liferayPortletResponse.getNamespace() + "sitemap-include" %>'
-								label="include"
-								name="TypeSettingsProperties--sitemap-include--"
-								options="<%= layoutsSEODisplayContext.getSitemapIncludeSelectOptions() %>"
-							/>
+						<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="page-priority-help" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" placeholder="0.0" size="3" type="text" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY) %>'>
+							<aui:validator name="number" />
+							<aui:validator errorMessage="please-enter-a-valid-page-priority" name="range">[0,1]</aui:validator>
+						</aui:input>
 
-							<aui:input cssClass="propagatable-field" disabled="<%= nondefaultAssetDisplayPage || selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="page-priority-help" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" placeholder="0.0" size="3" type="text" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY) %>'>
-								<aui:validator name="number" />
-								<aui:validator errorMessage="please-enter-a-valid-page-priority" name="range">[0,1]</aui:validator>
-							</aui:input>
-
-							<clay:select
-								cssClass="propagatable-field"
-								disabled="<%= nondefaultAssetDisplayPage || selLayout.isLayoutPrototypeLinkActive() %>"
-								id='<%= liferayPortletResponse.getNamespace() + "sitemap-changefreq" %>'
-								label="change-frequency"
-								name="TypeSettingsProperties--sitemap-changefreq--"
-								options="<%= layoutsSEODisplayContext.getSitemapChangeFrequencySelectOptions() %>"
-							/>
-						</div>
+						<clay:select
+							cssClass="propagatable-field"
+							disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>"
+							id='<%= liferayPortletResponse.getNamespace() + "sitemap-changefreq" %>'
+							label="change-frequency"
+							name="TypeSettingsProperties--sitemap-changefreq--"
+							options="<%= layoutsSEODisplayContext.getSitemapChangeFrequencySelectOptions() %>"
+						/>
 					</div>
 				</clay:sheet-section>
 			</clay:sheet>

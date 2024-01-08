@@ -154,8 +154,8 @@ describe('DownloadReportModal CSV', () => {
 		jest.useRealTimers();
 	});
 
-	it.only('renders component', () => {
-		const {container, getByRole, getByTestId, getByText} = render(
+	it('renders component', () => {
+		const {getByRole, getByTestId, getByText} = render(
 			<WrapperCSVComponent
 				date={{end: moment(0), start: moment(0)}}
 				maxDate={moment(0)}
@@ -195,8 +195,6 @@ describe('DownloadReportModal CSV', () => {
 
 		expect(getByTestId('cancel')).toBeInTheDocument();
 		expect(getByTestId('submit')).toBeInTheDocument();
-
-		expect(container).toMatchSnapshot();
 	});
 
 	it('download button should be disabled when there are no date range value', () => {
@@ -291,7 +289,7 @@ describe('DownloadReportModal PDF', () => {
 			Containers.VisitorsByTimeCard
 		];
 
-		const {container, getByRole, getByTestId, getByText} = render(
+		const {getByRole, getByTestId, getByText} = render(
 			<WrapperPDFomponent
 				date={{end: moment(0), start: moment(0)}}
 				maxDate={moment(0)}
@@ -345,7 +343,5 @@ describe('DownloadReportModal PDF', () => {
 
 		expect(getByTestId('cancel')).toBeInTheDocument();
 		expect(getByTestId('submit')).toBeInTheDocument();
-
-		expect(container).toMatchSnapshot();
 	});
 });

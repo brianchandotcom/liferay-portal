@@ -32,9 +32,9 @@ export const PLAN_TYPES = {
 	['LXC - CSP - Up to 500 Users - Extra User']: 'lxcCspUpTo500UsersExtraUser',
 	['LXC - CSP - Up to 5K Users']: 'lxcCspUpTo5kUsers',
 	['LXC - CSP - Up to 5K Users - Extra User']: 'lxcCspUpTo5kUsersExtraUser',
-	['LXC Business']: 'business',
-	['LXC Enterprise']: 'enterprise',
-	['LXC Pro']: 'basic',
+	['LXC Business']: 'lxcBusiness',
+	['LXC Enterprise']: 'lxcEnterprise',
+	['LXC Pro']: 'lxcBasic',
 	['LXC Subscription - Engage Site']: 'lxcSubscriptionEngageSite',
 	['LXC Subscription - Support Site']: 'lxcSubscriptionSupportSite',
 	['LXC Subscription - Transact Site']: 'lxcSubscriptionTransactSite'

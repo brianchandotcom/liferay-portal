@@ -40,7 +40,7 @@ exports[`CSVPreviewModal should render 1`] = `
           class="table-responsive"
         >
           <table
-            class="table table-autofit show-quick-actions-on-hover table-hover table-list"
+            class="table table-autofit show-quick-actions-on-hover table-hover table-list table-head-bordered table-striped"
           >
             <thead>
               <tr

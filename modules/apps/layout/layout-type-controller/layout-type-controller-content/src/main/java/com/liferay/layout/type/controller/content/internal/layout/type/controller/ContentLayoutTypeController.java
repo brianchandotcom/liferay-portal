@@ -282,11 +282,8 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		}
 
 		if (layout.isDraftLayout()) {
-			Layout publishedLayout = _layoutLocalService.fetchLayout(
-				layout.getClassPK());
-
 			return _layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(publishedLayout.getPlid());
+				fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
 		}
 
 		return null;

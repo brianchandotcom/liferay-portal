@@ -48,7 +48,7 @@ import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuMode;
 import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuTag;
-import com.liferay.site.navigation.util.SiteNavigationMenuTestUtil;
+import com.liferay.site.navigation.test.util.SiteNavigationMenuTestUtil;
 
 import java.io.Serializable;
 

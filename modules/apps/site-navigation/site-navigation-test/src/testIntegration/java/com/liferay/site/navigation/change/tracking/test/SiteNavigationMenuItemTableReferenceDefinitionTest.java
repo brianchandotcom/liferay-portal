@@ -12,8 +12,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
-import com.liferay.site.navigation.util.SiteNavigationMenuItemTestUtil;
-import com.liferay.site.navigation.util.SiteNavigationMenuTestUtil;
+import com.liferay.site.navigation.test.util.SiteNavigationMenuItemTestUtil;
+import com.liferay.site.navigation.test.util.SiteNavigationMenuTestUtil;
 
 import org.junit.Before;
 import org.junit.ClassRule;

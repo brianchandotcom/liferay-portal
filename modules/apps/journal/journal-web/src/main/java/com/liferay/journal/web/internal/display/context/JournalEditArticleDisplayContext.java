@@ -969,6 +969,25 @@ public class JournalEditArticleDisplayContext {
 		return "save";
 	}
 
+	public Map<String, Object> getSaveButtonsContext() {
+		return HashMapBuilder.<String, Object>put(
+			"articleId", getArticleId()
+		).put(
+			"defaultLanguageId", getDefaultArticleLanguageId()
+		).put(
+			"editingDefaultValues",
+			getClassNameId() != JournalArticleConstants.CLASS_NAME_ID_DEFAULT
+		).put(
+			"publishButtonLabel",
+			() -> LanguageUtil.get(_httpServletRequest, getPublishButtonLabel())
+		).put(
+			"saveButtonLabel",
+			() -> LanguageUtil.get(_httpServletRequest, getSaveButtonLabel())
+		).put(
+			"selectedLanguageId", getSelectedLanguageId()
+		).build();
+	}
+
 	public Map<String, Object> getSelectAssetDisplayPageContext() {
 		String selectAssetDisplayPageEventName =
 			_liferayPortletResponse.getNamespace() + "selectAssetDisplayPage";

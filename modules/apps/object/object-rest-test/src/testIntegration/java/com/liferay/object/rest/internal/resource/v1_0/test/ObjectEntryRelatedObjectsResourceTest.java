@@ -307,7 +307,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		user = UserLocalServiceUtil.updateUser(user);
 
-		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
+		long userId = user.getUserId();
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), userId);
 
 		// Relationship type cascade
 
@@ -344,15 +346,26 @@ public class ObjectEntryRelatedObjectsResourceTest {
 						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
 						ActionKeys.UPDATE, ActionKeys.VIEW
 					});
-				Assert.assertEquals(
-					204,
-					HTTPTestUtil.invokeToHttpCode(
+				JSONAssert.assertEquals(
+					JSONUtil.put(
+						"status", "BAD_REQUEST"
+					).put(
+						"title",
+						StringBundler.concat(
+							"User ", userId,
+							" must have DELETE permission for ",
+							_objectDefinition2.getClassName(), " ",
+							_objectEntry2.getObjectEntryId())
+					).toString(),
+					HTTPTestUtil.invokeToJSONObject(
 						null,
 						StringBundler.concat(
 							_objectDefinition1.getRESTContextPath(),
 							"/by-external-reference-code/",
 							_objectEntry1.getExternalReferenceCode()),
-						Http.Method.DELETE));
+						Http.Method.DELETE
+					).toString(),
+					JSONCompareMode.LENIENT);
 				ResourcePermissionLocalServiceUtil.setResourcePermissions(
 					TestPropsValues.getCompanyId(),
 					_objectDefinition2.getClassName(),
@@ -360,7 +373,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					String.valueOf(TestPropsValues.getCompanyId()),
 					role.getRoleId(), new String[] {ActionKeys.VIEW});
 				Assert.assertEquals(
-					404,
+					200,
 					HTTPTestUtil.invokeToHttpCode(
 						null,
 						StringBundler.concat(

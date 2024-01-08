@@ -30,6 +30,7 @@ import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
+import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
@@ -149,6 +150,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import org.hamcrest.CoreMatchers;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -1327,22 +1330,24 @@ public class DefaultObjectEntryManagerImplTest
 			},
 			objectDefinition1, _user);
 
-		PrincipalThreadLocal.setName(_user.getUserId());
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user));
+		try {
+			_defaultObjectEntryManager.deleteObjectEntry(
+				companyId, _simpleDTOConverterContext, "externalReferenceCode1",
+				objectDefinition1, null);
 
-		_defaultObjectEntryManager.deleteObjectEntry(
-			companyId, _simpleDTOConverterContext, "externalReferenceCode1",
-			objectDefinition1, null);
+			Assert.fail();
+		}
+		catch (ObjectRelationshipDeletionTypeException
+					objectRelationshipDeletionTypeException) {
 
-		Assert.assertNull(
-			_objectEntryLocalService.fetchObjectEntry(
-				"externalReferenceCode1",
-				objectDefinition1.getObjectDefinitionId()));
-		Assert.assertNull(
-			_objectEntryLocalService.fetchObjectEntry(
-				"externalReferenceCode2",
-				objectDefinition2.getObjectDefinitionId()));
+			Assert.assertThat(
+				objectRelationshipDeletionTypeException.getMessage(),
+				CoreMatchers.containsString(
+					StringBundler.concat(
+						"User ", _user.getUserId(),
+						" must have DELETE permission for ",
+						objectDefinition2.getClassName())));
+		}
 
 		// Relationship type disassociate
 
@@ -1352,14 +1357,6 @@ public class DefaultObjectEntryManagerImplTest
 				objectRelationship.getObjectRelationshipId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 				objectRelationship.getLabelMap(), null);
-
-		PrincipalThreadLocal.setName(adminUser.getUserId());
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(adminUser));
-
-		_addRelatedObjectEntries(
-			objectDefinition1, objectDefinition2, "externalReferenceCode1",
-			"externalReferenceCode2", objectRelationship);
 
 		_defaultObjectEntryManager.deleteObjectEntry(
 			companyId, _simpleDTOConverterContext, "externalReferenceCode1",
@@ -1375,6 +1372,10 @@ public class DefaultObjectEntryManagerImplTest
 		catch (NoSuchObjectEntryException noSuchObjectEntryException) {
 			Assert.assertNotNull(noSuchObjectEntryException);
 		}
+
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
 
 		Assert.assertNotNull(
 			_defaultObjectEntryManager.getObjectEntry(

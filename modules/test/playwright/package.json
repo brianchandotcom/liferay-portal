@@ -2,6 +2,8 @@
 	"author": "",
 	"description": "",
 	"devDependencies": {
+		"@liferay/eslint-plugin": "1.5.0",
+		"@liferay/npm-scripts": "49.1.0",
 		"@playwright/test": "1.39.0",
 		"@types/node": "^20.9.0"
 	},
@@ -10,7 +12,13 @@
 	"license": "ISC",
 	"main": "index.js",
 	"name": "@liferay/playwright",
+	"private": true,
+	"resolutions": {
+		"prettier": "2.1.2"
+	},
 	"scripts": {
+		"checkFormat": "liferay-npm-scripts prettier \"**/*.ts\" --list-different",
+		"format": "liferay-npm-scripts prettier \"**/*.ts\" --write",
 		"playwright": "playwright",
 		"test": "playwright test"
 	},

@@ -26,6 +26,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -95,6 +96,27 @@ public class ContentPageEditorDisplayContextProvider {
 				_layoutPageTemplateEntryService,
 				_layoutPageTemplateStructureLocalService,
 				_layoutPageTemplateStructureRelLocalService, _layoutPermission,
+				_pageEditorConfiguration, _portal, portletRequest,
+				_portletURLFactory, renderResponse,
+				_segmentsConfigurationProvider,
+				new SegmentsExperienceManager(_segmentsExperienceLocalService),
+				_segmentsExperienceLocalService,
+				_segmentsExperimentRelLocalService, _segmentsEntryService,
+				_staging, _stagingGroupHelper, _styleBookEntryLocalService,
+				_userLocalService, _workflowDefinitionLinkLocalService);
+		}
+
+		if (Objects.equals(className, LayoutUtilityPageEntry.class.getName())) {
+			return new ContentPageEditorLayoutUtilityPageEntryDisplayContext(
+				_getContentPageEditorSidebarPanels(), _contentManager,
+				_fragmentCollectionManager, _fragmentEntryLinkManager,
+				_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
+				_frontendTokenDefinitionRegistry, httpServletRequest,
+				_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
+				_itemSelector, _jsonFactory, _language, _layoutLocalService,
+				_layoutLockManager, _layoutSetLocalService,
+				_layoutPageTemplateEntryLocalService,
+				_layoutPageTemplateEntryService, _layoutPermission,
 				_pageEditorConfiguration, _portal, portletRequest,
 				_portletURLFactory, renderResponse,
 				_segmentsConfigurationProvider,

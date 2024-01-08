@@ -940,7 +940,7 @@
 		</check>
 		<check name="JavaModuleTestUtilCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks package names for testUtil." />
+			<description name="Checks package names for `*TestUtil.java`." />
 		</check>
 		<check name="JavaModuleUniqueVerifyProcessCheck">
 			<category name="Bug Prevention" />

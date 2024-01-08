@@ -5,13 +5,12 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.source.formatter.parser.JavaClass;
-import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 /**
  * @author Qi Zhang
  */
-public class JavaModuleTestUtilCheck extends BaseJavaTermCheck {
+public class JavaModuleTestUtilCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isModuleSourceCheck() {
@@ -20,42 +19,29 @@ public class JavaModuleTestUtilCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, JavaTerm javaTerm,
-		String fileContent) {
+		String fileName, String absolutePath, String content) {
 
-		String content = javaTerm.getContent();
-
-		if (!fileName.contains("/src/testIntegration")) {
-			return content;
-		}
-
-		JavaClass javaClass = (JavaClass)javaTerm;
-
-		if ((javaClass.getParentJavaClass() != null) ||
-			javaClass.isAnonymous()) {
+		if (!fileName.endsWith("TestUtil.java") ||
+			!isModulesFile(absolutePath) ||
+			!absolutePath.contains("/src/testIntegration")) {
 
 			return content;
 		}
 
-		String className = javaClass.getName();
+		String packageName = JavaSourceUtil.getPackageName(content);
 
-		String packageName = javaClass.getPackageName();
+		if (!packageName.startsWith("com.liferay")) {
+			return content;
+		}
 
-		if (className.endsWith("TestUtil") &&
-			packageName.startsWith("com.liferay") &&
-			!packageName.endsWith(".test.util")) {
-
+		if (!packageName.endsWith(".test.util")) {
 			addMessage(
 				fileName,
-				"TestUtil must be in package ending with '.test.util'");
+				"Name of class ending with 'TestUtil' should be in package " +
+					"ending with '.test.util'");
 		}
 
 		return content;
-	}
-
-	@Override
-	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_CLASS};
 	}
 
 }

@@ -89,7 +89,7 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 		Criteria criteria = ActionUtil.getCriteria(
 			resourceRequest,
 			_segmentsCriteriaContributorRegistry.
-				getSegmentsCriteriaContributors(User.class.getName()));
+				getSegmentsCriteriaContributors());
 
 		_saveCriteriaInSession(resourceRequest, criteria);
 

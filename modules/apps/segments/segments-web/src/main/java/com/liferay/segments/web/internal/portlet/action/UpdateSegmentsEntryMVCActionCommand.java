@@ -86,7 +86,7 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 			Criteria criteria = ActionUtil.getCriteria(
 				actionRequest,
 				_segmentsCriteriaContributorRegistry.
-					getSegmentsCriteriaContributors(User.class.getName()));
+					getSegmentsCriteriaContributors());
 
 			boolean dynamic = ParamUtil.getBoolean(
 				actionRequest, "dynamic", true);

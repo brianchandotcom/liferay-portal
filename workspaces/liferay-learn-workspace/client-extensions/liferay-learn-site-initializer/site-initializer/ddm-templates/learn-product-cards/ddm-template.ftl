@@ -28,6 +28,10 @@
 		width: 50px !important;
 	}
 
+	.product-name {
+		font-size: 1rem;
+	}
+
 	.responsive-text {
 		display: -webkit-box;
 		overflow: hidden;
@@ -66,7 +70,7 @@
 					</#if>
 
 					<div>
-						<h6 class="responsive-text title">
+						<h6 class="product-name responsive-text title">
 							${navigationEntry.getName()}
 						</h6>
 

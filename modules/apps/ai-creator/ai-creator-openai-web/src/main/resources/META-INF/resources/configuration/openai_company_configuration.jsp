@@ -12,7 +12,7 @@ AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigur
 %>
 
 <liferay-util:html-top
-	outputKey="document_library_preview_image_css"
+	outputKey="ai_creator_openai_css"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/configuration.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

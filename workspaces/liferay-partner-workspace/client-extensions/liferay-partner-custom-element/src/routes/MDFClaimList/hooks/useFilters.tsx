@@ -15,8 +15,11 @@ export default function useFilters(
 	openClaimsFilter: boolean,
 	isChannel?: boolean
 ) {
-	const [filters, setFilters] = useState(INITIAL_FILTER);
-
+	const [filters, setFilters] = useState(
+		(JSON.parse(
+			sessionStorage.getItem('claimFilters')!
+		) as typeof INITIAL_FILTER) || INITIAL_FILTER
+	);
 	const [filtersTerm, setFilterTerm] = useState('');
 
 	const mdfClaimRoleFilter = isChannel
@@ -29,6 +32,12 @@ export default function useFilters(
 
 	const onFilter = (newFilters: Partial<typeof INITIAL_FILTER>) =>
 		setFilters((previousFilters) => ({...previousFilters, ...newFilters}));
+
+	sessionStorage.setItem('claimFilters', JSON.stringify(filters));
+	sessionStorage.setItem(
+		'openClaimsFilter',
+		JSON.stringify(openClaimsFilter)
+	);
 
 	useEffect(() => {
 		let initialFilter = '';

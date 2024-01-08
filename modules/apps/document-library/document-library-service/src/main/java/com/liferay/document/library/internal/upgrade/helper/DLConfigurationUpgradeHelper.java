@@ -128,10 +128,10 @@ public class DLConfigurationUpgradeHelper {
 	}
 
 	public void updateDLSizeLimitConfiguration() throws Exception {
-		long fileMaxSize = _updateDLConfiguration();
+		long fileMaxSize = _updateDLConfigurationFileMaxSize();
 
 		if (fileMaxSize > 0) {
-			_updateDLSizeLimitConfiguration(fileMaxSize);
+			_updateDLSizeLimitConfigurationFileMaxSize(fileMaxSize);
 		}
 	}
 
@@ -255,7 +255,7 @@ public class DLConfigurationUpgradeHelper {
 		return configurations;
 	}
 
-	private long _updateDLConfiguration() throws Exception {
+	private long _updateDLConfigurationFileMaxSize() throws Exception {
 		Configuration configuration = getSystemConfiguration(
 			DLConfiguration.class.getName());
 
@@ -282,7 +282,7 @@ public class DLConfigurationUpgradeHelper {
 		return fileMaxSize;
 	}
 
-	private void _updateDLSizeLimitConfiguration(long fileMaxSize)
+	private void _updateDLSizeLimitConfigurationFileMaxSize(long fileMaxSize)
 		throws Exception {
 
 		Configuration configuration = _configurationAdmin.getConfiguration(

@@ -185,45 +185,49 @@ export default function fieldSetReducer(state, action, config) {
 			} = fieldSet;
 			const fieldSetId = `${id}`;
 			const visitor = new PagesVisitor(pages);
-			const newPages = visitor.mapFields((field) => {
-				if (String(field.ddmStructureId) !== fieldSetId) {
-					return field;
-				}
-				const nestedFields = dataDefinitionFields.map(({name}) => {
-					return getDDMFormField({
-						dataDefinition: fieldSet,
-						editingLanguageId,
-						fieldName: name,
-						fieldTypes,
+			const newPages = visitor.mapFields(
+				(field) => {
+					if (String(field.ddmStructureId) !== fieldSetId) {
+						return field;
+					}
+					const nestedFields = dataDefinitionFields.map(({name}) => {
+						return getDDMFormField({
+							dataDefinition: fieldSet,
+							editingLanguageId,
+							fieldName: name,
+							fieldTypes,
+						});
 					});
-				});
-				const rows = normalizeDataLayoutRows(
-					defaultDataLayout.dataLayoutPages
-				);
-				const props = {
-					availableLanguageIds,
-					defaultLanguageId,
-					editingLanguageId,
-				};
-
-				let updatedFieldSet = SettingsContext.updateField(
-					props,
-					field,
-					'label',
-					fieldSet.name
-				);
-
-				if (rows && rows.length) {
-					updatedFieldSet = SettingsContext.updateField(
-						props,
-						updatedFieldSet,
-						'rows',
-						rows
+					const rows = normalizeDataLayoutRows(
+						defaultDataLayout.dataLayoutPages
 					);
-				}
+					const props = {
+						availableLanguageIds,
+						defaultLanguageId,
+						editingLanguageId,
+					};
 
-				return {...updatedFieldSet, nestedFields, rows};
-			});
+					let updatedFieldSet = SettingsContext.updateField(
+						props,
+						field,
+						'label',
+						fieldSet.name
+					);
+
+					if (rows && rows.length) {
+						updatedFieldSet = SettingsContext.updateField(
+							props,
+							updatedFieldSet,
+							'rows',
+							rows
+						);
+					}
+
+					return {...updatedFieldSet, nestedFields, rows};
+				},
+				true,
+				true
+			);
 
 			return {pages: newPages};
 		}

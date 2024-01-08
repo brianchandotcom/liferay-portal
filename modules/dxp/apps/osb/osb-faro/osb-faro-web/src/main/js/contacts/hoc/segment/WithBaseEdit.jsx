@@ -218,8 +218,6 @@ export default WrappedComponent => {
 
 					setSubmitting(false);
 
-					close();
-
 					return segment;
 				})
 				.catch(error => {
@@ -231,9 +229,8 @@ export default WrappedComponent => {
 					});
 
 					setSubmitting(false);
-
-					close();
-				});
+				})
+				.finally(() => close());
 		}
 
 		render() {

@@ -13,7 +13,7 @@ SearchContainer<Country> countrySearchContainer = CountrySearchContainerFactory.
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new CountriesManagementAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, countrySearchContainer) %>"
-	propsTransformer="js/CountriesManagementToolbarPropsTransformer"
+	propsTransformer="{CountriesManagementToolbarPropsTransformer} from address-web"
 />
 
 <clay:container-fluid>

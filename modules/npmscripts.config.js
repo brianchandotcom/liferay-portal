@@ -365,6 +365,7 @@ module.exports = {
 		imports: {
 			'@liferay/accessibility-menu-web': [],
 			'@liferay/accessibility-settings-state-web': [],
+			'@liferay/address-web': [],
 			'@liferay/cookies-banner-web': [],
 			'@liferay/frontend-data-set-web': [],
 			'@liferay/frontend-js-dependencies-web': [

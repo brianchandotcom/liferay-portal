@@ -85,7 +85,7 @@ public class LayoutPermissionTest {
 	public void testContainsWithoutViewPermissionOnApprovedLayout()
 		throws Exception {
 
-		Layout layout = _addTypeContentLayout();
+		Layout layout = _addTypeContentLayout(true);
 
 		_removeGuestViewPermission(layout);
 
@@ -99,7 +99,7 @@ public class LayoutPermissionTest {
 		throws Exception {
 
 		try {
-			Layout layout = _addTypeContentLayout();
+			Layout layout = _addTypeContentLayout(true);
 
 			_removeGuestViewPermission(layout);
 
@@ -223,7 +223,7 @@ public class LayoutPermissionTest {
 
 		Assert.assertTrue(
 			_layoutPermission.contains(
-				_getGuestPermissionChecker(), _addTypeContentLayout(),
+				_getGuestPermissionChecker(), _addTypeContentLayout(true),
 				ActionKeys.VIEW));
 	}
 
@@ -232,7 +232,7 @@ public class LayoutPermissionTest {
 		throws Exception {
 
 		try {
-			Layout layout = _addTypeContentLayout();
+			Layout layout = _addTypeContentLayout(true);
 
 			_setUpLayoutWorkflow();
 
@@ -250,7 +250,30 @@ public class LayoutPermissionTest {
 		}
 	}
 
-	private Layout _addTypeContentLayout() throws Exception {
+	@Test
+	public void testContainsWithViewPermissionOnUnpublishedPendingLayout()
+		throws Exception {
+
+		try {
+			Layout layout = _addTypeContentLayout(false);
+
+			_setUpLayoutWorkflow();
+
+			layout = _updateLayout(layout);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_PENDING, layout.getStatus());
+
+			Assert.assertFalse(
+				_layoutPermission.contains(
+					_getGuestPermissionChecker(), layout, ActionKeys.VIEW));
+		}
+		finally {
+			_tearDownLayoutWorkflow();
+		}
+	}
+
+	private Layout _addTypeContentLayout(boolean publish) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
@@ -262,15 +285,20 @@ public class LayoutPermissionTest {
 			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,
 			serviceContext);
 
-		Layout draftLayout = layout.fetchDraftLayout();
+		if (publish) {
+			Layout draftLayout = layout.fetchDraftLayout();
 
-		Assert.assertNotNull(draftLayout);
+			Assert.assertNotNull(draftLayout);
 
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
-		layout = _layoutLocalService.getLayout(layout.getPlid());
+			layout = _layoutLocalService.getLayout(layout.getPlid());
 
-		Assert.assertTrue(layout.isPublished());
+			Assert.assertTrue(layout.isPublished());
+		}
+		else {
+			Assert.assertFalse(layout.isPublished());
+		}
 
 		return layout;
 	}

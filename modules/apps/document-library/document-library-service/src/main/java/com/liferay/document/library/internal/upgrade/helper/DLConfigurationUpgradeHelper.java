@@ -65,23 +65,7 @@ public class DLConfigurationUpgradeHelper {
 		return configurations[0];
 	}
 
-	public boolean hasConfigurationChanges() throws Exception {
-		Configuration dlSizeLimitConfiguration = getSystemConfiguration(
-			DLSizeLimitConfiguration.class.getName());
-
-		if (dlSizeLimitConfiguration != null) {
-			Dictionary<String, Object> dictionary =
-				dlSizeLimitConfiguration.getProperties();
-
-			if (dictionary != null) {
-				Long fileMaxSize = (Long)dictionary.get("fileMaxSize");
-
-				if ((fileMaxSize != null) && (fileMaxSize != 0)) {
-					return false;
-				}
-			}
-		}
-
+	public boolean hasDLFileEntryConfigurationChanges() throws Exception {
 		Configuration dlFileEntryConfiguration = getSystemConfiguration(
 			DLConfigurationUpgradeHelper.
 				CLASS_NAME_DL_FILE_ENTRY_CONFIGURATION);
@@ -99,6 +83,26 @@ public class DLConfigurationUpgradeHelper {
 						DLFileEntryConfigurationConstants.
 							PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT)) {
 
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	public boolean hasDLSizeLimitConfigurationChanges() throws Exception {
+		Configuration dlSizeLimitConfiguration = getSystemConfiguration(
+			DLSizeLimitConfiguration.class.getName());
+
+		if (dlSizeLimitConfiguration != null) {
+			Dictionary<String, Object> dictionary =
+				dlSizeLimitConfiguration.getProperties();
+
+			if (dictionary != null) {
+				Long fileMaxSize = (Long)dictionary.get("fileMaxSize");
+
+				if ((fileMaxSize != null) && (fileMaxSize != 0)) {
 					return false;
 				}
 			}

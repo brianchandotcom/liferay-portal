@@ -32,7 +32,10 @@ public class DLFileEntryConfigurationUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!_dlConfigurationUpgradeHelper.hasLegacyProps() ||
-			!_dlConfigurationUpgradeHelper.hasConfigurationChanges()) {
+			!_dlConfigurationUpgradeHelper.
+				hasDLSizeLimitConfigurationChanges() ||
+			!_dlConfigurationUpgradeHelper.
+				hasDLFileEntryConfigurationChanges()) {
 
 			return;
 		}

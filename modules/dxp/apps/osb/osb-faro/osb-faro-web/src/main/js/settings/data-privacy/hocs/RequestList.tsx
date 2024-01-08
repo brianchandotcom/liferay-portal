@@ -467,7 +467,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 				renderNav={() => (
 					<Nav>
 						<Nav.Item>
-							{selectedItems.size ? (
+							{authorized && selectedItems.size ? (
 								<a
 									className='btn btn-primary button-root nav-btn '
 									href={`/o/proxy/download/data-control-tasks?projectGroupId=${groupId}&ids=${selectedItems

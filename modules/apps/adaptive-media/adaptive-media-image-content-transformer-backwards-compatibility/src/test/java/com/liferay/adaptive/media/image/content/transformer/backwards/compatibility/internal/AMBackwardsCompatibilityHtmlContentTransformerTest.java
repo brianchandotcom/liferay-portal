@@ -103,6 +103,12 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 	}
 
 	@Test
+	public void testLeavesPictureTagsAsIs() throws Exception {
+		Assert.assertEquals(
+			_PICTURE_TAG, _contentTransformer.transform(_PICTURE_TAG));
+	}
+
+	@Test
 	public void testReplacesFriendlyURLImageTagsWithDoubleQuotes()
 		throws Exception {
 
@@ -117,6 +123,10 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 			StringBundler.concat(
 				_CONTENT_PREFIX, "[REPLACED]", _PICTURE_TAG, _CONTENT_SUFFIX),
 			_contentTransformer.transform(_CONTENT_WITH_IMAGE_AND_PICTURE));
+		Assert.assertEquals(
+			StringBundler.concat(
+				_CONTENT_PREFIX, _PICTURE_TAG, "[REPLACED]", _CONTENT_SUFFIX),
+			_contentTransformer.transform(_CONTENT_WITH_PICTURE_AND_IMAGE));
 	}
 
 	@Test
@@ -223,6 +233,12 @@ public class AMBackwardsCompatibilityHtmlContentTransformerTest {
 		StringBundler.concat(
 			_CONTENT_PREFIX, "<img src=\"/documents/d/site_name/sample\" />",
 			_CONTENT_SUFFIX);
+
+	private static final String _CONTENT_WITH_PICTURE_AND_IMAGE =
+		StringBundler.concat(
+			_CONTENT_PREFIX,
+			AMBackwardsCompatibilityHtmlContentTransformerTest._PICTURE_TAG,
+			"<img src='/documents/d/site_name/sample' />", _CONTENT_SUFFIX);
 
 	private static final String _LEGACY_CONTENT_WITH_IMAGE_AND_SINGLE_QUOTES =
 		StringBundler.concat(

@@ -44,6 +44,7 @@ export function AdvancedTab({
 		values.businessType === 'AutoIncrement' ||
 		values.businessType === 'Formula' ||
 		(values.businessType === 'Relationship' && isRootDescendantNode) ||
+		values.required ||
 		values.system;
 
 	return (

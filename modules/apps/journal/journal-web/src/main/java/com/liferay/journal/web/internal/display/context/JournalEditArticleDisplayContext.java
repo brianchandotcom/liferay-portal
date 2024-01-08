@@ -422,7 +422,8 @@ public class JournalEditArticleDisplayContext {
 
 		if (_isDDMFormValuesEdited() || (_article == null)) {
 			DDMFormValuesFactory ddmFormValuesFactory =
-				_getDDMFormValuesFactory();
+				(DDMFormValuesFactory)_httpServletRequest.getAttribute(
+					DDMFormValuesFactory.class.getName());
 
 			return ddmFormValuesFactory.create(
 				_httpServletRequest, ddmStructure.getDDMForm());
@@ -1348,11 +1349,6 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		return _article.getAvailableLanguageIds();
-	}
-
-	private DDMFormValuesFactory _getDDMFormValuesFactory() {
-		return (DDMFormValuesFactory)_httpServletRequest.getAttribute(
-			DDMFormValuesFactory.class.getName());
 	}
 
 	private String _getDDMStructureDefaultLanguageId() {

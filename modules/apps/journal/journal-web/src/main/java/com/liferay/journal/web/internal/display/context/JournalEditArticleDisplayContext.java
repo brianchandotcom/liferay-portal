@@ -559,7 +559,7 @@ public class JournalEditArticleDisplayContext {
 		String defaultArticleLanguageId = null;
 
 		if (Validator.isNotNull(getArticleId())) {
-			DDMFormValues ddmFormValues = _article.getDDMFormValues();
+			DDMFormValues ddmFormValues = getDDMFormValues();
 
 			defaultArticleLanguageId = LocaleUtil.toLanguageId(
 				ddmFormValues.getDefaultLocale());

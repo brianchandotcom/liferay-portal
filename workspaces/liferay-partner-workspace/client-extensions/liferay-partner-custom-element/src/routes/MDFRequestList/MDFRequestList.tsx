@@ -47,7 +47,11 @@ type MDFRequestItem = {
 
 const MDFRequestList = () => {
 	const {isChannel} = useIsChannel();
-	const [openRequestFilter, setOpenRequestFilter] = useState(true);
+	const [openRequestFilter, setOpenRequestFilter] = useState(
+		JSON.parse(sessionStorage.getItem('openRequestFilter')!) === null
+			? true
+			: JSON.parse(sessionStorage.getItem('openRequestFilter')!)
+	);
 
 	const {userAccount} = useDynamicFieldEntries();
 	const actions = usePermissionActions(ObjectActionName.MDF_REQUEST);
@@ -151,6 +155,7 @@ const MDFRequestList = () => {
 							});
 						}}
 						filterDescription="Activity Date "
+						initialDates={filters.activityPeriod?.dates}
 					/>
 				),
 				name: 'Activity Period',
@@ -164,6 +169,7 @@ const MDFRequestList = () => {
 								: Filters.MDF_REQUEST_LISTING.completedList
 						}
 						clearCheckboxes={!filters.status.value?.length}
+						initialCheckedItems={filters.status.value}
 						updateFilters={(checkedItems) =>
 							setFilters((previousFilters) => ({
 								...previousFilters,
@@ -187,6 +193,7 @@ const MDFRequestList = () => {
 							(company) => company.label as string
 						)}
 						clearCheckboxes={!filters.partner.value?.length}
+						initialCheckedItems={filters.partner.value}
 						updateFilters={(checkedItems) =>
 							setFilters((previousFilters) => ({
 								...previousFilters,
@@ -231,6 +238,7 @@ const MDFRequestList = () => {
 				<div className="d-flex">
 					<div>
 						<Search
+							initialSearchTerm={filters.searchTerm}
 							onSearchSubmit={(searchTerm: string) =>
 								onFilter({
 									searchTerm,

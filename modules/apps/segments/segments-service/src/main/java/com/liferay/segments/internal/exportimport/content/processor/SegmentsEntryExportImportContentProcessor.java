@@ -26,7 +26,6 @@ import com.liferay.segments.field.customizer.SegmentsFieldCustomizerRegistry;
 import com.liferay.segments.internal.odata.entity.EntityModelFieldMapper;
 import com.liferay.segments.internal.odata.filter.expression.ExportExpressionVisitorImpl;
 import com.liferay.segments.internal.odata.filter.expression.ImportExpressionVisitorImpl;
-import com.liferay.segments.model.SegmentsEntry;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -72,7 +71,7 @@ public class SegmentsEntryExportImportContentProcessor
 		Criteria criteria = CriteriaSerializer.deserialize(content);
 
 		return _replaceImportSegmentsEntryReferences(
-			portletDataContext, stagedModel, criteria);
+			portletDataContext, criteria);
 	}
 
 	@Override
@@ -85,11 +84,9 @@ public class SegmentsEntryExportImportContentProcessor
 			Criteria criteria)
 		throws Exception {
 
-		SegmentsEntry segmentsEntry = (SegmentsEntry)stagedModel;
-
 		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
 			_segmentsCriteriaContributorRegistry.
-				getSegmentsCriteriaContributors(segmentsEntry.getType());
+				getSegmentsCriteriaContributors();
 
 		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
 				segmentsCriteriaContributors) {
@@ -205,15 +202,12 @@ public class SegmentsEntryExportImportContentProcessor
 	}
 
 	private String _replaceImportSegmentsEntryReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			Criteria criteria)
+			PortletDataContext portletDataContext, Criteria criteria)
 		throws Exception {
-
-		SegmentsEntry segmentsEntry = (SegmentsEntry)stagedModel;
 
 		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
 			_segmentsCriteriaContributorRegistry.
-				getSegmentsCriteriaContributors(segmentsEntry.getType());
+				getSegmentsCriteriaContributors();
 
 		Criteria importCriteria = new Criteria();
 

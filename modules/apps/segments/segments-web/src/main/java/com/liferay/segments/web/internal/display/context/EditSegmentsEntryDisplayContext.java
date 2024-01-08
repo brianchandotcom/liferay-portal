@@ -44,7 +44,6 @@ import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -226,13 +225,11 @@ public class EditSegmentsEntryDisplayContext {
 	}
 
 	private JSONArray _getContributorsJSONArray() throws Exception {
-		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
-			_getSegmentsCriteriaContributors();
-
 		JSONArray contributorsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
-				segmentsCriteriaContributors) {
+				_segmentsCriteriaContributorRegistry.
+					getSegmentsCriteriaContributors()) {
 
 			JSONObject jsonObject =
 				segmentsCriteriaContributor.getCriteriaJSONObject(
@@ -331,13 +328,11 @@ public class EditSegmentsEntryDisplayContext {
 	}
 
 	private JSONArray _getPropertyGroupsJSONArray() throws Exception {
-		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
-			_getSegmentsCriteriaContributors();
-
 		JSONArray jsonContributorsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
-				segmentsCriteriaContributors) {
+				_segmentsCriteriaContributorRegistry.
+					getSegmentsCriteriaContributors()) {
 
 			jsonContributorsJSONArray.put(
 				JSONUtil.put(
@@ -411,13 +406,6 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private List<SegmentsCriteriaContributor> _getSegmentsCriteriaContributors()
-		throws Exception {
-
-		return _segmentsCriteriaContributorRegistry.
-			getSegmentsCriteriaContributors(User.class.getName());
 	}
 
 	private SegmentsEntry _getSegmentsEntry() throws PortalException {

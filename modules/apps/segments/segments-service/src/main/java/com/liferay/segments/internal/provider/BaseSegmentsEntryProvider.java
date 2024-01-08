@@ -159,7 +159,7 @@ public abstract class BaseSegmentsEntryProvider
 
 		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
 				segmentsCriteriaContributorRegistry.
-					getSegmentsCriteriaContributors(User.class.getName())) {
+					getSegmentsCriteriaContributors()) {
 
 			Criteria.Criterion criterion =
 				segmentsCriteriaContributor.getCriterion(existingCriteria);

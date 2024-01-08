@@ -1,0 +1,123 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.vulcan.internal.jaxrs.container.response.filter;
+
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.PropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
+import com.liferay.petra.io.DummyOutputStream;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.fields.FieldsQueryParam;
+import com.liferay.portal.vulcan.fields.RestrictFieldsQueryParam;
+import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
+
+import java.io.IOException;
+
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.Priority;
+
+import javax.ws.rs.Priorities;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.ext.ContextResolver;
+import javax.ws.rs.ext.Provider;
+import javax.ws.rs.ext.Providers;
+
+/**
+ * @author Carlos Correa
+ */
+@Priority(Priorities.USER + 11)
+@Provider
+public class EntityFieldsPreSerializerContainerResponseFilter
+	implements ContainerResponseFilter {
+
+	@Override
+	public void filter(
+			ContainerRequestContext containerRequestContext,
+			ContainerResponseContext containerResponseContext)
+		throws IOException {
+
+		MediaType mediaType = containerResponseContext.getMediaType();
+
+		if ((containerResponseContext.getEntity() == null) ||
+			!_mediaTypeObjectMappers.containsKey(mediaType)) {
+
+			return;
+		}
+
+		ContextResolver<ObjectMapper> contextResolver =
+			_providers.getContextResolver(
+				(Class<ObjectMapper>)_mediaTypeObjectMappers.get(mediaType),
+				mediaType);
+
+		ObjectMapper objectMapper = contextResolver.getContext(
+			ObjectMapper.class);
+
+		try {
+			objectMapper.writer(
+				_getSimpleFilterProvider()
+			).writeValue(
+				new DummyOutputStream(), containerResponseContext.getEntity()
+			);
+		}
+		catch (JsonMappingException jsonMappingException) {
+			if (jsonMappingException.getCause() != null) {
+				throw new RuntimeException(jsonMappingException.getCause());
+			}
+
+			throw jsonMappingException;
+		}
+	}
+
+	private SimpleFilterProvider _getSimpleFilterProvider() {
+		return new SimpleFilterProvider() {
+			{
+				PropertyFilter propertyFilter = null;
+
+				Set<String> fieldNames = _fieldsQueryParam.getFieldNames();
+				Set<String> restrictFieldNames =
+					_restrictFieldsQueryParam.getRestrictFieldNames();
+
+				if ((fieldNames == null) && (restrictFieldNames == null)) {
+					propertyFilter = SimpleBeanPropertyFilter.serializeAll();
+				}
+				else {
+					propertyFilter = VulcanPropertyFilter.of(
+						fieldNames, restrictFieldNames);
+				}
+
+				addFilter("Liferay.Vulcan", propertyFilter);
+			}
+		};
+	}
+
+	private static final Map<MediaType, Class<? extends ObjectMapper>>
+		_mediaTypeObjectMappers =
+			HashMapBuilder.<MediaType, Class<? extends ObjectMapper>>put(
+				MediaType.APPLICATION_JSON_TYPE, ObjectMapper.class
+			).put(
+				MediaType.APPLICATION_XML_TYPE, XmlMapper.class
+			).build();
+
+	@Context
+	private FieldsQueryParam _fieldsQueryParam;
+
+	@Context
+	private Providers _providers;
+
+	@Context
+	private RestrictFieldsQueryParam _restrictFieldsQueryParam;
+
+}

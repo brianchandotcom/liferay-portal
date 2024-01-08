@@ -141,8 +141,7 @@ public class NotificationTemplateFTLElementsMVCResourceCommand
 		TemplateVariableGroup generalVariablesTemplateVariableGroup =
 			templateVariableGroupsMap.get("general-variables");
 
-		String label = _language.get(
-			locale, NotificationFreemarkerTemplateConstants.KEY_PORTAL_URL);
+		String label = _language.get(locale, "portal-url");
 
 		generalVariablesTemplateVariableGroup.addFieldVariable(
 			label, TemplateNode.class,

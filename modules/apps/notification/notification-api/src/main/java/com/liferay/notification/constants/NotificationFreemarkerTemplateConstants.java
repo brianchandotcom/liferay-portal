@@ -10,8 +10,6 @@ package com.liferay.notification.constants;
  */
 public class NotificationFreemarkerTemplateConstants {
 
-	public static final String KEY_PORTAL_URL = "portal-url";
-
 	public static final String VARIABLE_NAME_PORTAL_URL = "portalURL";
 
 }

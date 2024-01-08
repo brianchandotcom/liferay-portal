@@ -234,13 +234,13 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		while (lastPos < end) {
 			int imgStart = html.indexOf(_OPEN_TAG_TOKEN_IMG, lastPos);
 
-			if (imgStart == -1) {
+			if ((imgStart == -1) || (imgStart > end)) {
 				sb.append(html.substring(lastPos, end));
 
 				return;
 			}
 
-			sb.append(html.substring(start, imgStart));
+			sb.append(html.substring(lastPos, imgStart));
 
 			int imgEnd = html.indexOf(CharPool.GREATER_THAN, imgStart) + 1;
 
@@ -248,7 +248,7 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 
 			int srcStart = html.indexOf(_ATTRIBUTE_TOKEN_SRC, attributeListPos);
 
-			if (srcStart == -1) {
+			if ((srcStart == -1) || (srcStart > imgEnd)) {
 				sb.append(html.substring(imgStart, imgEnd));
 
 				lastPos = imgEnd;

@@ -16,6 +16,15 @@
     types/**/*.d.ts
 
 ##
+## Playwright Tests
+##
+
+    #
+    # Tests have their own formatting rules.
+    #
+    /test/playwright/**
+
+##
 ## Template Files
 ##
 

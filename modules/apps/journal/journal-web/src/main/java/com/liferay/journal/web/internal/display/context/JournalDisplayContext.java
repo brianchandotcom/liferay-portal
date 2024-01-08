@@ -1195,6 +1195,16 @@ public class JournalDisplayContext {
 		).build();
 	}
 
+	public boolean hasAssetFilter() {
+		if (ArrayUtil.isEmpty(_getAssetCategoryIds()) &&
+			ArrayUtil.isEmpty(_getAssetTagNames())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean hasCommentsResults() throws PortalException {
 		if (getCommentsTotal() > 0) {
 			return true;
@@ -1348,9 +1358,8 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isShowInfoButton() throws PortalException {
-		if (isNavigationMine() || isNavigationRecent() || isSearch() ||
-			isTypeVersions() || ArrayUtil.isNotEmpty(_getAssetCategoryIds()) ||
-			ArrayUtil.isNotEmpty(_getAssetTagNames())) {
+		if (hasAssetFilter() || isNavigationMine() || isNavigationRecent() ||
+			isSearch() || isTypeVersions()) {
 
 			return false;
 		}
@@ -1511,8 +1520,8 @@ public class JournalDisplayContext {
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-196768")) {
-			if (!isHighlightedDDMStructure() && !isSearch() &&
-				!isNavigationMine() && !isNavigationRecent() &&
+			if (!hasAssetFilter() && !isHighlightedDDMStructure() &&
+				!isSearch() && !isNavigationMine() && !isNavigationRecent() &&
 				(getDDMStructureId() <= 0)) {
 
 				SearchContainer<Object> articleAndFolderSearchContainer =
@@ -1534,7 +1543,9 @@ public class JournalDisplayContext {
 				return _articleSearchContainer;
 			}
 
-			if (!isSearch() && (isNavigationMine() || isNavigationRecent())) {
+			if (!hasAssetFilter() && !isSearch() &&
+				(isNavigationMine() || isNavigationRecent())) {
+
 				SearchContainer<JournalArticle> articleSearchContainer =
 					_getArticleSearchContainer();
 
@@ -1555,7 +1566,7 @@ public class JournalDisplayContext {
 				return _articleSearchContainer;
 			}
 
-			if (!isSearch() && (getDDMStructureId() > 0)) {
+			if (!hasAssetFilter() && !isSearch() && (getDDMStructureId() > 0)) {
 				SearchContainer<JournalArticle> articleSearchContainer =
 					_getArticleSearchContainer();
 
@@ -1577,7 +1588,9 @@ public class JournalDisplayContext {
 				return _articleSearchContainer;
 			}
 
-			if (isHighlightedDDMStructure() && !isSearch()) {
+			if (!hasAssetFilter() && isHighlightedDDMStructure() &&
+				!isSearch()) {
+
 				SearchContainer<JournalArticle> articleSearchContainer =
 					_getArticleSearchContainer();
 
@@ -1601,12 +1614,10 @@ public class JournalDisplayContext {
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
-			!isHighlightedDDMStructure() && !isNavigationMine() &&
-			!isNavigationRecent() && !isSearch() && !isTypeVersions() &&
-			(getDDMStructureId() <= 0) &&
-			(getStatus() == WorkflowConstants.STATUS_ANY) &&
-			ArrayUtil.isEmpty(_getAssetCategoryIds()) &&
-			ArrayUtil.isEmpty(_getAssetTagNames())) {
+			!hasAssetFilter() && !isHighlightedDDMStructure() &&
+			!isNavigationMine() && !isNavigationRecent() && !isSearch() &&
+			!isTypeVersions() && (getDDMStructureId() <= 0) &&
+			(getStatus() == WorkflowConstants.STATUS_ANY)) {
 
 			SearchContainer<Object> articleAndFolderSearchContainer =
 				_getArticleAndFolderSearchContainer();
@@ -1628,6 +1639,7 @@ public class JournalDisplayContext {
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			!hasAssetFilter() &&
 			(isHighlightedDDMStructure() || isNavigationStructure())) {
 
 			SearchContainer<JournalArticle> articleSearchContainer =

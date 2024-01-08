@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.service.SubscriptionLocalService;
-import com.liferay.view.count.service.ViewCountEntryLocalService;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -155,6 +155,11 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 	private PrefsPropsToConfigurationUpgradeHelper
 		_prefsPropsToConfigurationUpgradeHelper;
 
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.view.count.service)(&(release.schema.version>=1.0.0)))"
+	)
+	private Release _release;
+
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
 
@@ -169,8 +174,5 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
-
-	@Reference
-	private ViewCountEntryLocalService _viewCountEntryLocalService;
 
 }

@@ -398,8 +398,9 @@ export default function LeftSidebarTreeView({
 												<ClayDropDownWithItems
 													items={kebabOptions}
 													menuElementAttrs={{
-														className:
-															'lfr-objects__model-builder-left-sidebar-dropdown',
+														style: {
+															zIndex: 1036,
+														},
 													}}
 													trigger={
 														<ClayButton

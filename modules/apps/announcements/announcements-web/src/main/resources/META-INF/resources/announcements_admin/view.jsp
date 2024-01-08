@@ -55,7 +55,7 @@ SearchContainer<AnnouncementsEntry> announcementsEntriesSearchContainer = announ
 	filterDropdownItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	filterLabelItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= announcementsEntriesSearchContainer.getTotal() %>"
-	propsTransformer="announcements_admin/js/AnnouncementsManagementToolbarPropsTransformer"
+	propsTransformer="{AnnouncementsManagementToolbarPropsTransformer} from announcements-web"
 	searchContainerId="<%= announcementsAdminViewManagementToolbarDisplayContext.getSearchContainerId() %>"
 	selectable="<%= true %>"
 	showSearch="<%= false %>"

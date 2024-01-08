@@ -45,7 +45,11 @@ const MAX_ITEMS = -1;
 const MDFClaimList = () => {
 	const {isChannel} = useIsChannel();
 
-	const [openClaimsFilter, setOpenClaimsFilter] = useState(true);
+	const [openClaimsFilter, setOpenClaimsFilter] = useState(
+		JSON.parse(sessionStorage.getItem('openClaimsFilter')!) === null
+			? true
+			: JSON.parse(sessionStorage.getItem('openClaimsFilter')!)
+	);
 
 	const {companiesEntries} = useDynamicFieldEntries();
 
@@ -132,6 +136,7 @@ const MDFClaimList = () => {
 				<div className="d-flex">
 					<div>
 						<Search
+							initialSearchTerm={filters.searchTerm}
 							onSearchSubmit={(searchTerm: string) =>
 								onFilter({
 									searchTerm,
@@ -192,6 +197,7 @@ const MDFClaimList = () => {
 											});
 										}}
 										filterDescription="Claim Submitted "
+										initialDates={filters.submitDate?.dates}
 									/>
 								),
 								name: 'Date Submitted',
@@ -208,6 +214,9 @@ const MDFClaimList = () => {
 										}
 										clearCheckboxes={
 											!filters.status.value?.length
+										}
+										initialCheckedItems={
+											filters.status.value
 										}
 										updateFilters={(checkedItems) =>
 											setFilters((previousFilters) => ({
@@ -231,6 +240,9 @@ const MDFClaimList = () => {
 										clearCheckboxes={
 											!filters.partner.value?.length
 										}
+										initialCheckedItems={
+											filters.partner.value
+										}
 										updateFilters={(checkedItems) =>
 											setFilters((previousFilters) => ({
 												...previousFilters,
@@ -251,6 +263,7 @@ const MDFClaimList = () => {
 										clearCheckboxes={
 											!filters.type.value?.length
 										}
+										initialCheckedItems={filters.type.value}
 										updateFilters={(checkedItems) =>
 											setFilters((previousFilters) => ({
 												...previousFilters,

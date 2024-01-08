@@ -5,13 +5,29 @@
 
 import {useCallback, useEffect, useState} from 'react';
 
+import {Filters} from '../../../common/utils/constants/filters';
 import getSearchFilterTerm from '../../../common/utils/getSearchFilterTerm';
 import {INITIAL_FILTER} from '../utils/constants/initialFilter';
 
-export default function useFilters(opportunitiesFilter?: string) {
-	const [filters, setFilters] = useState(INITIAL_FILTER);
+export default function useFilters(
+	openOpportunitiesFilter?: boolean,
+	isRenewalListing?: boolean
+) {
+	const [filters, setFilters] = useState(
+		(JSON.parse(
+			sessionStorage.getItem('opportunitiesFilters')!
+		) as typeof INITIAL_FILTER) || INITIAL_FILTER
+	);
 
 	const [filtersTerm, setFilterTerm] = useState('');
+
+	const opportunitiesInitialFilter = isRenewalListing
+		? openOpportunitiesFilter
+			? Filters.RENEWAL_LISTING.openWIP
+			: Filters.RENEWAL_LISTING.closedWIP
+		: openOpportunitiesFilter
+		? Filters.OPPORTUNITY_LISTING.openWIP
+		: Filters.OPPORTUNITY_LISTING.closedWIP;
 
 	const onFilter = useCallback(
 		(newFilters: Partial<typeof INITIAL_FILTER>) =>
@@ -22,13 +38,19 @@ export default function useFilters(opportunitiesFilter?: string) {
 		[]
 	);
 
+	sessionStorage.setItem('opportunitiesFilters', JSON.stringify(filters));
+	sessionStorage.setItem(
+		'openOpportunitiesFilter',
+		JSON.stringify(openOpportunitiesFilter)
+	);
+
 	useEffect(() => {
 		let initialFilter = ``;
 
-		if (opportunitiesFilter) {
+		if (opportunitiesInitialFilter) {
 			initialFilter = initialFilter
-				? initialFilter.concat(opportunitiesFilter)
-				: `${opportunitiesFilter}`;
+				? initialFilter.concat(opportunitiesInitialFilter)
+				: `${opportunitiesInitialFilter}`;
 		}
 
 		if (filters.searchTerm) {
@@ -38,7 +60,7 @@ export default function useFilters(opportunitiesFilter?: string) {
 		}
 
 		setFilterTerm(initialFilter);
-	}, [filters.searchTerm, opportunitiesFilter, setFilters]);
+	}, [filters.searchTerm, opportunitiesInitialFilter, setFilters]);
 
 	return {filters, filtersTerm, onFilter};
 }

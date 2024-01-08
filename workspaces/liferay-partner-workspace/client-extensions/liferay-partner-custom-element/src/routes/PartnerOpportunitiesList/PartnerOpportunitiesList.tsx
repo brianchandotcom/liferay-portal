@@ -28,14 +28,13 @@ import useGetListItemsFromPartnerOpportunities from './hooks/useGetListItemsFrom
 import PartnerOpportunitiesItem from './interfaces/partnerOpportunitiesItem';
 
 interface IProps {
-	closedOpportunitiesFilter: string;
 	getFilteredItems: (
 		items: PartnerOpportunitiesItem[],
-		opportunitiesFilter: string
+		openOpportunitiesFilter: boolean
 	) => PartnerOpportunitiesItem[];
+	isRenewalListing?: boolean;
 	name: string;
 	newButtonDeal?: boolean;
-	openOpportunitiesFilter: string;
 	sort: string;
 }
 
@@ -43,18 +42,24 @@ const BASE_PAGE = 1;
 const MAX_ITEMS = 200;
 
 const PartnerOpportunitiesList = ({
-	closedOpportunitiesFilter,
 	getFilteredItems,
+	isRenewalListing,
 	name,
 	newButtonDeal,
-	openOpportunitiesFilter,
 	sort,
 }: IProps) => {
-	const [opportunitiesFilter, setOpportunitiesFilter] = useState(
-		openOpportunitiesFilter
+	const [openOpportunitiesFilter, setOpenOpportunitiesFilter] = useState(
+		JSON.parse(sessionStorage.getItem('openOpportunitiesFilter')!) === null
+			? true
+			: (JSON.parse(
+					sessionStorage.getItem('openOpportunitiesFilter')!
+			  ) as boolean)
 	);
 
-	const {filters, filtersTerm, onFilter} = useFilters(opportunitiesFilter);
+	const {filters, filtersTerm, onFilter} = useFilters(
+		openOpportunitiesFilter,
+		isRenewalListing
+	);
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [modalContent, setModalContent] = useState<
 		PartnerOpportunitiesItem
@@ -83,9 +88,10 @@ const PartnerOpportunitiesList = ({
 
 	const {totalCount: totalPagination} = data;
 	const filteredData =
-		data.items && getFilteredItems(data.items, opportunitiesFilter);
+		data.items && getFilteredItems(data.items, openOpportunitiesFilter);
 	const filteredCSVData =
-		dataCSV.items && getFilteredItems(dataCSV.items, opportunitiesFilter);
+		dataCSV.items &&
+		getFilteredItems(dataCSV.items, openOpportunitiesFilter);
 
 	const siteURL = useLiferayNavigate();
 	const columns = [
@@ -182,22 +188,16 @@ const PartnerOpportunitiesList = ({
 				<h1>{name}</h1>
 				<ClayTabs className="h-100 nav nav-segment nav-tabs">
 					<ClayTabs.Item
-						active={opportunitiesFilter === openOpportunitiesFilter}
+						active={openOpportunitiesFilter}
 						className="nav-item"
-						onClick={() =>
-							setOpportunitiesFilter(openOpportunitiesFilter)
-						}
+						onClick={() => setOpenOpportunitiesFilter(true)}
 					>
 						Open
 					</ClayTabs.Item>
 					<ClayTabs.Item
-						active={
-							opportunitiesFilter === closedOpportunitiesFilter
-						}
+						active={!openOpportunitiesFilter}
 						className="nav-item"
-						onClick={() =>
-							setOpportunitiesFilter(closedOpportunitiesFilter)
-						}
+						onClick={() => setOpenOpportunitiesFilter(false)}
 					>
 						Closed
 					</ClayTabs.Item>
@@ -208,6 +208,7 @@ const PartnerOpportunitiesList = ({
 				<div className="d-flex">
 					<div>
 						<Search
+							initialSearchTerm={filters.searchTerm}
 							onSearchSubmit={(searchTerm: string) =>
 								onFilter({
 									searchTerm,

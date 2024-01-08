@@ -16,6 +16,8 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,6 +70,17 @@ public class DLPortlet extends MVCPortlet {
 		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	@Override
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		resourceRequest.setAttribute(
+			ItemSelector.class.getName(), _itemSelector);
+
+		super.serveResource(resourceRequest, resourceResponse);
 	}
 
 	@Reference

@@ -5,11 +5,19 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			exclude: {
-				'*': ['test?(s)/**/*', 'test.js'],
-			},
-		},
+		exports: [
+			'assert',
+			'buffer',
+			'domain-browser',
+			'events',
+			'os-browserify',
+			'path-browserify',
+			'process',
+			'string_decoder',
+			'timers-browserify',
+			'url',
+			'util',
+		],
 	},
 	check: false,
 	fix: false,

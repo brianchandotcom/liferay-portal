@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.repository.registry.DefaultRepositoryEventRegistry;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.repository.registry.test.util.RepositoryEventTestUtil;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

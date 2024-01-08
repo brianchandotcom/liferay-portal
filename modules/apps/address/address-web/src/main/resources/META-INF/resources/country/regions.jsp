@@ -13,7 +13,7 @@ SearchContainer<Region> regionSearchContainer = RegionSearchContainerFactory.cre
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new RegionsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, regionSearchContainer) %>"
-	propsTransformer="js/RegionsManagementToolbarPropsTransformer"
+	propsTransformer="{RegionsManagementToolbarPropsTransformer} from address-web"
 />
 
 <clay:container-fluid>

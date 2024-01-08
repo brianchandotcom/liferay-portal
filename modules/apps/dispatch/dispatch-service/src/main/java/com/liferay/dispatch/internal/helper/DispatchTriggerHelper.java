@@ -126,7 +126,8 @@ public class DispatchTriggerHelper {
 
 	private String _getGroupName(DispatchTrigger dispatchTrigger) {
 		return String.format(
-			"DISPATCH_GROUP_%07d@%d", dispatchTrigger.getDispatchTriggerId());
+			"DISPATCH_GROUP_%07d@%d", dispatchTrigger.getDispatchTriggerId(),
+			dispatchTrigger.getCompanyId());
 	}
 
 	private String _getJobName(DispatchTrigger dispatchTrigger) {

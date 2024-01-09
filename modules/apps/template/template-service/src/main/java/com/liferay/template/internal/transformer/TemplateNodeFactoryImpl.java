@@ -8,14 +8,21 @@ package com.liferay.template.internal.transformer;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.template.info.field.transformer.TemplateNodeTransformer;
-import com.liferay.template.internal.info.field.transformer.TemplateNodeTransformerRegistry;
 import com.liferay.template.transformer.TemplateNodeFactory;
 
+import java.util.List;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Lourdes Fernández Besada
@@ -34,13 +41,62 @@ public class TemplateNodeFactoryImpl implements TemplateNodeFactory {
 		Class<?> infoFieldTypeClass = infoFieldType.getClass();
 
 		TemplateNodeTransformer templateNodeTransformer =
-			_templateNodeTransformerRegistry.getTemplateNodeTransformer(
-				infoFieldTypeClass.getName());
+			_getTemplateNodeTransformer(infoFieldTypeClass.getName());
 
 		return templateNodeTransformer.transform(infoFieldValue, themeDisplay);
 	}
 
-	@Reference
-	private TemplateNodeTransformerRegistry _templateNodeTransformerRegistry;
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_templateNodeTransformerServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext,
+				(Class<TemplateNodeTransformer>)
+					(Class)TemplateNodeTransformer.class,
+				null,
+				(serviceReference, emitter) -> {
+					try {
+						List<String> classNames = StringUtil.asList(
+							serviceReference.getProperty(
+								"info.field.type.class.name"));
+
+						for (String className : classNames) {
+							emitter.emit(className);
+						}
+
+						if (classNames.isEmpty()) {
+							emitter.emit(_CLASS_NAME_ANY);
+						}
+					}
+					finally {
+						bundleContext.ungetService(serviceReference);
+					}
+				},
+				new PropertyServiceReferenceComparator<>("service.ranking"));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_templateNodeTransformerServiceTrackerMap.close();
+	}
+
+	private TemplateNodeTransformer _getTemplateNodeTransformer(
+		String className) {
+
+		TemplateNodeTransformer templateNodeTransformer =
+			_templateNodeTransformerServiceTrackerMap.getService(className);
+
+		if (templateNodeTransformer != null) {
+			return templateNodeTransformer;
+		}
+
+		return _templateNodeTransformerServiceTrackerMap.getService(
+			_CLASS_NAME_ANY);
+	}
+
+	private static final String _CLASS_NAME_ANY = "<ANY>";
+
+	private ServiceTrackerMap<String, TemplateNodeTransformer>
+		_templateNodeTransformerServiceTrackerMap;
 
 }

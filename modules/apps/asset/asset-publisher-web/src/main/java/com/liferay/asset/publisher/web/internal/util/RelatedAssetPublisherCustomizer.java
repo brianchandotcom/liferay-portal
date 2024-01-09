@@ -7,6 +7,8 @@ package com.liferay.asset.publisher.web.internal.util;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -15,14 +17,18 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Pavel Savinov
  */
-@Component(service = AssetPublisherCustomizer.class)
 public class RelatedAssetPublisherCustomizer
 	extends DefaultAssetPublisherCustomizer {
+
+	public RelatedAssetPublisherCustomizer(
+		AssetPublisherHelper assetPublisherHelper,
+		AssetPublisherWebConfiguration assetPublisherWebConfiguration) {
+
+		super(assetPublisherHelper, assetPublisherWebConfiguration);
+	}
 
 	@Override
 	public String getPortletId() {

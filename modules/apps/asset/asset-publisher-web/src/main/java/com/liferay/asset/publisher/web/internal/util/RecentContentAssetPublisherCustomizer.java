@@ -6,6 +6,8 @@
 package com.liferay.asset.publisher.web.internal.util;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -13,17 +15,18 @@ import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Pavel Savinov
  */
-@Component(
-	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
-	service = AssetPublisherCustomizer.class
-)
 public class RecentContentAssetPublisherCustomizer
 	extends DefaultAssetPublisherCustomizer {
+
+	public RecentContentAssetPublisherCustomizer(
+		AssetPublisherHelper assetPublisherHelper,
+		AssetPublisherWebConfiguration assetPublisherWebConfiguration) {
+
+		super(assetPublisherHelper, assetPublisherWebConfiguration);
+	}
 
 	@Override
 	public Integer getDelta(HttpServletRequest httpServletRequest) {

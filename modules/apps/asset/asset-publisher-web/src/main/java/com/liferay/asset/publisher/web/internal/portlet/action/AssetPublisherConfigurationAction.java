@@ -125,7 +125,7 @@ public class AssetPublisherConfigurationAction
 			portletResource);
 
 		AssetPublisherCustomizer assetPublisherCustomizer =
-			assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
+			_assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
 				rootPortletId);
 
 		RenderRequest renderRequest =
@@ -314,6 +314,10 @@ public class AssetPublisherConfigurationAction
 	protected void activate(Map<String, Object> properties) {
 		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
 			AssetPublisherWebConfiguration.class, properties);
+
+		_assetPublisherCustomizerRegistry =
+			new AssetPublisherCustomizerRegistry(
+				assetPublisherHelper, assetPublisherWebConfiguration);
 	}
 
 	protected String getDefaultSelectionStyle() {
@@ -330,9 +334,6 @@ public class AssetPublisherConfigurationAction
 	@Reference
 	protected AssetListEntrySegmentsEntryRelLocalService
 		assetListEntrySegmentsEntryRelLocalService;
-
-	@Reference
-	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
 
 	@Reference
 	protected AssetPublisherHelper assetPublisherHelper;
@@ -876,5 +877,8 @@ public class AssetPublisherConfigurationAction
 				queryRule.getName());
 		}
 	}
+
+	private volatile AssetPublisherCustomizerRegistry
+		_assetPublisherCustomizerRegistry;
 
 }

@@ -10,7 +10,6 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.util.AssetEntryQueryProcessor;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -18,27 +17,24 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
-
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Pavel Savinov
  */
-@Component(
-	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
-	service = AssetPublisherCustomizer.class
-)
 public class DefaultAssetPublisherCustomizer
 	implements AssetPublisherCustomizer {
+
+	public DefaultAssetPublisherCustomizer(
+		AssetPublisherHelper assetPublisherHelper,
+		AssetPublisherWebConfiguration assetPublisherWebConfiguration) {
+
+		_assetPublisherHelper = assetPublisherHelper;
+		this.assetPublisherWebConfiguration = assetPublisherWebConfiguration;
+	}
 
 	@Override
 	public Integer getDelta(HttpServletRequest httpServletRequest) {
@@ -153,16 +149,9 @@ public class DefaultAssetPublisherCustomizer
 				WebKeys.THEME_DISPLAY);
 
 		assetEntryQuery.setGroupIds(
-			assetPublisherHelper.getGroupIds(
+			_assetPublisherHelper.getGroupIds(
 				getPortletPreferences(httpServletRequest),
 				themeDisplay.getScopeGroupId(), themeDisplay.getLayout()));
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
-			AssetPublisherWebConfiguration.class, properties);
 	}
 
 	protected PortletPreferences getPortletPreferences(
@@ -179,10 +168,9 @@ public class DefaultAssetPublisherCustomizer
 		return null;
 	}
 
-	@Reference
-	protected AssetPublisherHelper assetPublisherHelper;
-
-	protected volatile AssetPublisherWebConfiguration
+	protected final AssetPublisherWebConfiguration
 		assetPublisherWebConfiguration;
+
+	private final AssetPublisherHelper _assetPublisherHelper;
 
 }

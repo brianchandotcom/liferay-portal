@@ -955,6 +955,44 @@ public class GitWorkingDirectory {
 			localGitBranch.getName(), true, localGitBranch.getSHA());
 	}
 
+	public Set<File> findFiles(String fileName, String fileContentSnippet) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(fileName) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(fileContentSnippet)) {
+
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("git grep ");
+		sb.append(fileContentSnippet);
+		sb.append(" | grep ");
+		sb.append(fileName);
+
+		GitUtil.ExecutionResult result = executeBashCommands(
+			5, 1000, 30 * 1000, sb.toString());
+
+		if (result.getExitValue() != 0) {
+			throw new GitWorkingDirectoryRuntimeException(
+				this, "Unable to run: git grep");
+		}
+
+		Pattern pattern = Pattern.compile(
+			JenkinsResultsParserUtil.combine(
+				"(?<filePath>.+/", fileName, ")\\:.+"));
+
+		Matcher matcher = pattern.matcher(result.getStandardOut());
+
+		Set<File> files = new HashSet<>();
+
+		while (matcher.find()) {
+			files.add(
+				new File(getWorkingDirectory(), matcher.group("filePath")));
+		}
+
+		return files;
+	}
+
 	public void gc() {
 		int retries = 0;
 
@@ -1504,6 +1542,35 @@ public class GitWorkingDirectory {
 		return executionResult.getStandardOut();
 	}
 
+	public String getMergeBaseCommitSHA(String... refNames) {
+		if (refNames.length < 2) {
+			throw new GitWorkingDirectoryIllegalArgumentException(
+				this,
+				"Unable to perform merge-base with less than two commits");
+		}
+
+		StringBuilder sb = new StringBuilder("git merge-base");
+
+		for (String refName : refNames) {
+			sb.append(" ");
+			sb.append(refName);
+		}
+
+		GitUtil.ExecutionResult executionResult = executeBashCommands(
+			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+			GitUtil.MILLIS_TIMEOUT, sb.toString());
+
+		if (executionResult.getExitValue() != 0) {
+			throw new GitWorkingDirectoryRuntimeException(
+				this,
+				JenkinsResultsParserUtil.combine(
+					"Unable to get merge base commit SHA\n",
+					executionResult.getStandardError()));
+		}
+
+		return executionResult.getStandardOut();
+	}
+
 	public List<File> getModifiedDirsList(
 		boolean checkUnstagedFiles, List<PathMatcher> excludesPathMatchers,
 		List<PathMatcher> includesPathMatchers) {
@@ -1523,6 +1590,41 @@ public class GitWorkingDirectory {
 
 		return JenkinsResultsParserUtil.getIncludedFiles(
 			excludesPathMatchers, includesPathMatchers, subdirectories);
+	}
+
+	public Set<File> getModifiedFilesInCommitRange(
+		String startingCommitSHA, String endingCommitSHA) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("git log --name-status --no-renames --pretty=\"format:\" \"");
+		sb.append(startingCommitSHA);
+		sb.append("..");
+		sb.append(endingCommitSHA);
+		sb.append("\" | tr '\\t' ' ' | sed 's/^[^ ]* *//'");
+
+		GitUtil.ExecutionResult executionResult = executeBashCommands(
+			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+			GitUtil.MILLIS_TIMEOUT, sb.toString());
+
+		if (executionResult.getExitValue() != 0) {
+			throw new GitWorkingDirectoryRuntimeException(
+				this,
+				JenkinsResultsParserUtil.combine(
+					"Unable to get modified files\n",
+					executionResult.getStandardError()));
+		}
+
+		String standardOut = executionResult.getStandardOut();
+
+		Set<File> modifiedFiles = new HashSet<>();
+
+		for (String modifiedFilePath : standardOut.split("\\s+")) {
+			modifiedFiles.add(
+				new File(getWorkingDirectory(), modifiedFilePath));
+		}
+
+		return modifiedFiles;
 	}
 
 	public List<File> getModifiedFilesList() {

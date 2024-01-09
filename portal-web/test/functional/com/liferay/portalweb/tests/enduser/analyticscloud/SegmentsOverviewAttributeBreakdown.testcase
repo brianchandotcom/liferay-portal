@@ -70,7 +70,11 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Close all sessions, lauch AC, change the property and go to segments") {
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Launch AC, change the property and go to segments") {
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});

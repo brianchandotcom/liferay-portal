@@ -26,6 +26,10 @@ definition {
 			ACUtils.addSiteAndPage();
 		}
 
+		task ("Create Blog to Add to Page") {
+			ACUtils.createBlogsAndAddToPage();
+		}
+
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -63,10 +67,6 @@ definition {
 	@priority = 4
 	test AssertPageViewAccuracyBetweenCards {
 		var metricNum = 1;
-
-		task ("Create Blog to Add to Page") {
-			ACUtils.createBlogsAndAddToPage();
-		}
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(

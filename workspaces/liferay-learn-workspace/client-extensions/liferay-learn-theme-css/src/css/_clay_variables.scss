@@ -70,8 +70,21 @@ $link-hover-color: $primary-d2;
 
 $background-color: #f4f6f9;
 $black: #000;
+$blue: #007bff;
+$cyan: #17a2b8;
 $default-color: $color-neutral-8;
+$gray: #6c757d;
+$gray-dark: #343a40;
+$green: #28a745;
+$indigo: #6610f2;
+$light: #f8f9fa;
+$orange: #fd7e14;
+$pink: #e83e8c;
+$purple: #6f42c1;
+$red: #dc3545;
+$teal: #20c997;
 $white: #fff;
+$yellow: #ffc107;
 
 $admonition-error: $danger-d1;
 $admonition-error-bg: $danger-l2;
@@ -94,6 +107,7 @@ $admonition-warning-highlight: $warning-l1;
 $font-family-base: 'Source Sans Pro', 'Source Serif Pro', -apple-system,
 	blinkmacsystemfont, 'Segoe UI', roboto, 'Helvetica Neue', arial, sans-serif,
 	'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
 $font-weight-light: 200;
 $font-weight-normal: 400;
@@ -119,6 +133,12 @@ $table-data-border-color: transparent;
 $table-margin-bottom: 1rem; // 16px
 
 // Custom Variables
+
+$breakpoint-lg: 992px;
+$breakpoint-md: 768px;
+$breakpoint-sm: 576px;
+$breakpoint-xl: 1200px;
+$breakpoint-xs: 0;
 
 $h1-display-font-size: 3rem; // 48px
 
@@ -156,6 +176,12 @@ $elevation-fluffy-1: 0 5px 15px rgba(19, 20, 31, 0.12);
 $hr-border-color: $color-neutral-2;
 
 :root {
+	--blue: #{$blue};
+	--breakpoint-lg: #{$breakpoint-lg};
+	--breakpoint-md: #{$breakpoint-md};
+	--breakpoint-sm: #{$breakpoint-sm};
+	--breakpoint-xl: #{$breakpoint-xl};
+	--breakpoint-xs: #{$breakpoint-xs};
 	--color-action-primary-active: #{$color-action-primary-active} !important;
 	--color-action-primary-active-lighten: #{$color-action-primary-active-lighten} !important;
 	--color-action-primary-default: #{$color-action-primary-default} !important;
@@ -170,10 +196,31 @@ $hr-border-color: $color-neutral-2;
 	--color-neutral-10: #{$color-neutral-10} !important;
 	--color-neutral-2: #{$color-neutral-2} !important;
 	--color-neutral-8: #{$color-neutral-8} !important;
+	--cyan: #{$cyan};
+	--danger: #{$danger};
+	--dark: #{$gray-dark};
 	--display4-size: #{$display4-size} !important;
 	--display4-weight: #{$display4-weight} !important;
 	--elevation-fluffy-1: #{$elevation-fluffy-1} !important;
 	--font-family-base: #{$font-family-base} !important;
+	--font-family-monospace: #{$font-family-monospace};
+	--font-family-sans-serif: #{$font-family-base};
+	--gray: #{$gray};
+	--gray-dark: #{$gray-dark};
+	--green: #{$green};
 	--hr-border-color: #{$hr-border-color} !important;
+	--indigo: #{$indigo};
 	--info: #{$info} !important;
+	--light: #{$light};
+	--orange: #{$orange};
+	--pink: #{$pink};
+	--primary: #{$primary};
+	--purple: #{$purple};
+	--red: #{$red};
+	--secondary: #{$secondary};
+	--success: #{$success};
+	--teal: #{$teal};
+	--warning: #{$warning};
+	--white: #{$white};
+	--yellow: #{$yellow};
 }

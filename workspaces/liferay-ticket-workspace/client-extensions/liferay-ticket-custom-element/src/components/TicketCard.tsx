@@ -67,11 +67,11 @@ const TicketCard: React.FC<{ticket: Ticket}> = ({ticket}) => {
 
 	return (
 		<div
-			ref={setNodeRef}
 			{...attributes}
 			className={`border border-neutral-2 card mb-4 py-2 shadow-none ${
 				isDragging ? 'bg-brand-primary-lighten-6' : 'bg-neutral-0'
 			}`}
+			ref={setNodeRef}
 			style={style}
 		>
 			<ClayLayout.ContentRow padded>

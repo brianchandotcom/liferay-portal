@@ -15,12 +15,12 @@ import TicketApp from './TicketsOverview';
 const routes = [
 	{
 		element: <TicketsDashboardApp screenType={ScreenType.INTEGRATED} />,
-		href: '#/dashboard',
+		href: '#dashboard',
 		label: 'Dashboard',
 	},
 	{
 		element: <TicketApp />,
-		href: '#/overview',
+		href: '#overview',
 		label: 'Tickets Overview',
 	},
 ];
@@ -31,7 +31,7 @@ routes.forEach((item) => {
 	HREF_COMPONENT_MAP[item.href] = item.element;
 });
 
-const defaultRoute: string = '#/dashboard';
+const defaultRoute: string = '#dashboard';
 
 const AllScreens: React.FC = () => {
 	const {hash} = useHash(defaultRoute);

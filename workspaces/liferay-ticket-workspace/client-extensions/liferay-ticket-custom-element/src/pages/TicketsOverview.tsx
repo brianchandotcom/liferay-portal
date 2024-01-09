@@ -8,7 +8,6 @@ import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useDebounce} from '@uidotdev/usehooks';
 import {useContext, useState} from 'react';
 import {QueryClient, useMutation} from 'react-query';
 
@@ -20,6 +19,7 @@ import {useTickets} from '../hooks/useTickets';
 import {Liferay} from '../services/liferay';
 import {generateNewTicket} from '../services/tickets';
 import {Filter} from '../types';
+import useDebounce from '../services/useDebounce';
 
 const initialFilterState: Filter = {
 	field: '',

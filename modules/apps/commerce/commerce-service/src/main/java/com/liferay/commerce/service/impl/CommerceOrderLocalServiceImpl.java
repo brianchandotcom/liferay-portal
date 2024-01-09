@@ -1967,6 +1967,9 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
+		CommerceOrder originalCommerceOrder =
+			commerceOrder.cloneWithOriginalValues();
+
 		int previousPaymentStatus = commerceOrder.getPaymentStatus();
 
 		commerceOrder.setPaymentStatus(paymentStatus);
@@ -1976,7 +1979,8 @@ public class CommerceOrderLocalServiceImpl
 
 		// Messaging
 
-		_sendPaymentStatusMessage(commerceOrder, previousPaymentStatus);
+		_sendPaymentStatusMessage(
+			commerceOrder, originalCommerceOrder, previousPaymentStatus);
 
 		return commerceOrder;
 	}
@@ -2410,7 +2414,8 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	private void _sendPaymentStatusMessage(
-		CommerceOrder commerceOrder, int previousPaymentStatus) {
+		CommerceOrder commerceOrder, CommerceOrder originalCommerceOrder,
+		int previousPaymentStatus) {
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
@@ -2438,6 +2443,9 @@ public class CommerceOrderLocalServiceImpl
 						_commerceModelAttributesProvider.getModelAttributes(
 							commerceOrder, commerceOrderDTOConverter,
 							commerceOrder.getUserId())
+					).put(
+						"original" + CommerceOrder.class.getSimpleName(),
+						originalCommerceOrder.getModelAttributes()
 					).put(
 						"paymentStatus", commerceOrder.getPaymentStatus()
 					).put(

@@ -13,7 +13,12 @@ export default function useIsChannel() {
 	);
 
 	const isChannel =
-		userAccount && Boolean(userAccount?.organizationBriefs.length);
+		(userAccount && Boolean(userAccount?.organizationBriefs.length)) ||
+		Boolean(
+			userAccount?.roleBriefs.find(
+				(role) => role.name === 'Administrator'
+			)
+		);
 
 	return {isChannel};
 }

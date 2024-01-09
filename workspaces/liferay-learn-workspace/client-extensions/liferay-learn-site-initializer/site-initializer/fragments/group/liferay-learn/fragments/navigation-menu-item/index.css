@@ -13,7 +13,7 @@
 .menu-item-wrapper .menu-item:active,
 .menu-item-wrapper .menu-item:focus {
 	background: var(--color-action-primary-hover-lighten);
-	color: var(--color-action-primary-default, #0B5FFF);
+	color: var(--color-action-primary-default, #0b5fff);
 }
 .menu-item-wrapper .menu-item:hover .arrow-hover-icon,
 .menu-item-wrapper .menu-item:active .arrow-hover-icon,

@@ -6,7 +6,6 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.manager.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -15,7 +14,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -42,11 +40,10 @@ public class UnmarkItemsForDeletionMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		return _unmarkItemsForDeletion(actionRequest, actionResponse);
+		return _unmarkItemsForDeletion(actionRequest);
 	}
 
-	private JSONObject _unmarkItemsForDeletion(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private JSONObject _unmarkItemsForDeletion(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -69,23 +66,10 @@ public class UnmarkItemsForDeletionMVCActionCommand
 						layoutStructure.unmarkLayoutStructureItemForDeletion(
 							itemIdsJSONArray.getString(i));
 					}
-				})
-		).put(
-			"pageContents",
-			_contentManager.getPageContentsJSONArray(
-				_portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse),
-				themeDisplay.getPlid(), segmentsExperienceId)
-		);
+				}));
 	}
 
 	@Reference
-	private ContentManager _contentManager;
-
-	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Portal _portal;
 
 }

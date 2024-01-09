@@ -15,7 +15,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.manager.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -159,13 +158,6 @@ public class UpdateConfigurationValuesMVCActionCommand
 				_portal.getHttpServletResponse(actionResponse), layoutStructure)
 		).put(
 			"layoutData", layoutStructure.toJSONObject()
-		).put(
-			"pageContents",
-			_contentManager.getPageContentsJSONArray(
-				_portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse),
-				themeDisplay.getPlid(),
-				ParamUtil.getLong(actionRequest, "segmentsExperienceId"))
 		);
 	}
 
@@ -174,9 +166,6 @@ public class UpdateConfigurationValuesMVCActionCommand
 			KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 		FragmentEntryProcessorConstants.KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 	};
-
-	@Reference
-	private ContentManager _contentManager;
 
 	@Reference
 	private FragmentEntryLinkListenerRegistry

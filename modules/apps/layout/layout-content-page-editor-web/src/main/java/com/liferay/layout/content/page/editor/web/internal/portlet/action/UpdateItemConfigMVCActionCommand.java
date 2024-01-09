@@ -6,7 +6,6 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.manager.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -14,7 +13,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -41,11 +39,10 @@ public class UpdateItemConfigMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		return _updateItemConfig(actionRequest, actionResponse);
+		return _updateItemConfig(actionRequest);
 	}
 
-	private JSONObject _updateItemConfig(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private JSONObject _updateItemConfig(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -62,23 +59,10 @@ public class UpdateItemConfigMVCActionCommand
 				themeDisplay.getScopeGroupId(), segmentsExperienceId,
 				themeDisplay.getPlid(),
 				layoutStructure -> layoutStructure.updateItemConfig(
-					_jsonFactory.createJSONObject(itemConfig), itemId))
-		).put(
-			"pageContents",
-			_contentManager.getPageContentsJSONArray(
-				_portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse),
-				themeDisplay.getPlid(), segmentsExperienceId)
-		);
+					_jsonFactory.createJSONObject(itemConfig), itemId)));
 	}
 
 	@Reference
-	private ContentManager _contentManager;
-
-	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Portal _portal;
 
 }

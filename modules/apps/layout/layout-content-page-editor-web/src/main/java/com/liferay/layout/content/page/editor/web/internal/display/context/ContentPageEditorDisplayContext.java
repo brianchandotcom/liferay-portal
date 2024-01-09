@@ -776,13 +776,6 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"masterLayout", _getMasterLayoutJSONObject()
 			).put(
-				"pageContents",
-				_contentManager.getPageContentsJSONArray(
-					httpServletRequest,
-					portal.getHttpServletResponse(renderResponse),
-					themeDisplay.getPlid(), _getRestrictedItemIds(),
-					getSegmentsExperienceId())
-			).put(
 				"permissions",
 				() -> {
 					boolean hasUpdatePermission = _hasPermissions(

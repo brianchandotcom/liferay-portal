@@ -129,9 +129,15 @@ const PreviewSeoContainer = ({
 					const input = document.getElementById(
 						`${portletNamespace}${id}`
 					);
+
+					if (!input) {
+						return acc;
+					}
+
 					const defaultLanguageInput = document.getElementById(
 						`${portletNamespace}${id}_${defaultLanguage}`
 					);
+
 					acc[type] = {
 						defaultLanguageInput,
 						input,

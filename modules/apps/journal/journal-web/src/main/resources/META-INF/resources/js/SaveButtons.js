@@ -4,18 +4,33 @@
  */
 
 import ClayButton from '@clayui/button';
-import React from 'react';
+import React, {useState} from 'react';
+
+import PermissionsModal from './modals/PermissionsModal';
 
 export default function SaveButtons({
 	articleId,
 	defaultLanguageId,
 	editingDefaultValues,
+	permissionsURL,
 	portletNamespace,
 	publishButtonLabel,
 	saveButtonLabel,
 	selectedLanguageId,
 }) {
-	const handleButtonClick = (type) => {
+	const [
+		{permissionsModalAction, permissionsModalVisible},
+		setPermissionsModalState,
+	] = useState({permissionsModalAction: '', permissionsModalVisible: false});
+
+	const onClick = (action) => {
+		setPermissionsModalState({
+			permissionsModalAction: action,
+			permissionsModalVisible: true,
+		});
+	};
+
+	const handleButtonClick = () => {
 		document
 			.querySelectorAll('.journal-alert-container')
 			.forEach((alertElement) => {
@@ -26,7 +41,7 @@ export default function SaveButtons({
 			`${portletNamespace}workflowAction`
 		);
 
-		if (type === 'publish') {
+		if (permissionsModalAction === 'publish') {
 			workflowActionInput.value = Liferay.Workflow.ACTION_PUBLISH;
 		}
 
@@ -88,18 +103,29 @@ export default function SaveButtons({
 				<ClayButton
 					className="mr-1"
 					displayType="secondary"
-					onClick={() => handleButtonClick()}
-					type="submit"
+					onClick={() => onClick('draft')}
 				>
 					{saveButtonLabel}
 				</ClayButton>
 			) : null}
-			<ClayButton
-				onClick={() => handleButtonClick('publish')}
-				type="submit"
-			>
+			<ClayButton onClick={() => onClick('publish')}>
 				{publishButtonLabel}
 			</ClayButton>
+
+			{permissionsModalVisible ? (
+				<PermissionsModal
+					actionButton={permissionsModalAction}
+					onCloseModal={() =>
+						setPermissionsModalState({
+							permissionsModalAction: '',
+							permissionsModalVisible: false,
+						})
+					}
+					onPublishButtonClick={handleButtonClick}
+					permissionsURL={permissionsURL}
+					portletNamespace={portletNamespace}
+				/>
+			) : null}
 		</>
 	);
 }

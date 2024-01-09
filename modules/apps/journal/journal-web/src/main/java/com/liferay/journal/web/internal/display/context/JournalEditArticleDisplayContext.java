@@ -855,6 +855,18 @@ public class JournalEditArticleDisplayContext {
 			});
 	}
 
+	public String getPermissionsURL() {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/article/permissions.jsp"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setWindowState(
+			LiferayWindowState.EXCLUSIVE
+		).buildString();
+	}
+
 	public String getPortletResource() {
 		if (_portletResource != null) {
 			return _portletResource;
@@ -1013,6 +1025,8 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"editingDefaultValues",
 			getClassNameId() != JournalArticleConstants.CLASS_NAME_ID_DEFAULT
+		).put(
+			"permissionsURL", getPermissionsURL()
 		).put(
 			"publishButtonLabel",
 			() -> LanguageUtil.get(_httpServletRequest, getPublishButtonLabel())

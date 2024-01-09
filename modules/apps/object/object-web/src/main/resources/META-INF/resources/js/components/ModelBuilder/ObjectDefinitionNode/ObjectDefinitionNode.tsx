@@ -45,6 +45,7 @@ export function ObjectDefinitionNode({
 			baseResourceURL,
 			nodeHandleConnectable,
 			objectDefinitionPermissionsURL,
+			objectFolders,
 		},
 		dispatch,
 	] = useObjectFolderContext();
@@ -119,6 +120,7 @@ export function ObjectDefinitionNode({
 						objectDefinitionId: id,
 						objectDefinitionName: name,
 						objectDefinitionPermissionsURL,
+						objectFoldersLenght: objectFolders.length,
 						status,
 					})}
 					handleSelectObjectDefinitionNode={

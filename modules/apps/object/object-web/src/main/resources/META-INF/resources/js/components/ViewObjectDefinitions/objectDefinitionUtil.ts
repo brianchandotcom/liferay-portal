@@ -34,6 +34,7 @@ type ObjectDefinitionNodeActionsProps = {
 	objectDefinitionId: number;
 	objectDefinitionName: string;
 	objectDefinitionPermissionsURL: string;
+	objectFoldersLenght: number;
 	status: {
 		code: number;
 		label: string;
@@ -194,6 +195,7 @@ export function getObjectDefinitionNodeActions({
 	objectDefinitionId,
 	objectDefinitionName,
 	objectDefinitionPermissionsURL,
+	objectFoldersLenght,
 }: ObjectDefinitionNodeActionsProps) {
 	const PermissionUrl = formatActionURL(
 		objectDefinitionPermissionsURL,
@@ -237,6 +239,30 @@ export function getObjectDefinitionNodeActions({
 		},
 		{type: 'divider'},
 	] as DropDownItems[];
+
+	if (objectFoldersLenght > 1) {
+		kebabOptions.push({
+			label: Liferay.Language.get('move'),
+			onClick: () => {
+				dispatch({
+					payload: {
+						movedObjectDefinitionId: objectDefinitionId,
+					},
+					type: TYPES.SET_MOVED_OBJECT_DEFINITION,
+				});
+
+				dispatch({
+					payload: {
+						updatedModelBuilderModals: {
+							moveObjectDefinition: true,
+						},
+					},
+					type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+				});
+			},
+			symbolLeft: 'move-folder',
+		});
+	}
 
 	if (hasObjectDefinitionManagePermissionsResourcePermission) {
 		kebabOptions.push({

@@ -127,6 +127,12 @@ export type TAction =
 	  }
 	| {
 			payload: {
+				movedObjectDefinitionId?: number;
+			};
+			type: TYPES.SET_MOVED_OBJECT_DEFINITION;
+	  }
+	| {
+			payload: {
 				objectFolderName: string;
 			};
 			type: TYPES.SET_OBJECT_FOLDER_NAME;
@@ -230,6 +236,7 @@ export type TState = {
 	learnResourceContext: ILearnResourceContext;
 	leftSidebarItems: LeftSidebarItem[];
 	modelBuilderModals: ModelBuilderModals;
+	movedObjectDefinitionId?: number;
 	nodeHandleConnectable: boolean;
 	objectDefinitionPermissionsURL: string;
 	objectDefinitions: ObjectDefinition[];

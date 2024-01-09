@@ -503,6 +503,19 @@ export default function EditObjectFolder({
 						}}
 						objectDefinitionId={movedObjectDefinitionId}
 						objectFolders={objectFolders}
+						onAfterSubmit={() => {
+							setTimeout(async () => {
+								const payload = await getUpdatedModelBuilderStructurePayload(
+									baseResourceURL,
+									selectedObjectFolder.name
+								);
+
+								dispatch({
+									payload: {...payload, dispatch},
+									type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
+								});
+							}, 200);
+						}}
 						selectedObjectFolder={selectedObjectFolder}
 						setMoveObjectDefinition={() => {
 							dispatch({

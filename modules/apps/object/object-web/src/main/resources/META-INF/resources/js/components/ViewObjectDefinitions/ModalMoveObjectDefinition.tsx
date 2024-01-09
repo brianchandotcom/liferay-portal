@@ -27,6 +27,7 @@ interface ModalMoveObjectDefinitionProps {
 	handleOnClose: () => void;
 	objectDefinitionId: number;
 	objectFolders: ObjectFolder[];
+	onAfterSubmit: () => void;
 	selectedObjectFolder: Partial<ObjectFolder>;
 	setMoveObjectDefinition: (value: ObjectDefinition | null) => void;
 }
@@ -35,6 +36,7 @@ export function ModalMoveObjectDefinition({
 	handleOnClose,
 	objectDefinitionId,
 	objectFolders,
+	onAfterSubmit,
 	selectedObjectFolder,
 	setMoveObjectDefinition,
 }: ModalMoveObjectDefinitionProps) {
@@ -100,7 +102,9 @@ export function ModalMoveObjectDefinition({
 				type: 'success',
 			});
 
-			setTimeout(() => window.location.reload(), 1000);
+			if (onAfterSubmit) {
+				onAfterSubmit();
+			}
 		}
 		catch (error) {
 			setError((error as Error).message);
@@ -121,7 +125,7 @@ export function ModalMoveObjectDefinition({
 
 	return (
 		<ClayModalProvider>
-			<ClayModal observer={observer}>
+			<ClayModal center observer={observer}>
 				<ClayModal.Header>
 					{`${Liferay.Language.get('move')} "${getLocalizableLabel(
 						defaultLanguageId,

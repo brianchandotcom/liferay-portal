@@ -14,6 +14,7 @@ import {
 	LeftSidebarItem,
 	LeftSidebarObjectDefinitionItem,
 	ObjectRelationshipEdgeData,
+	RightSidebarType,
 	TAction,
 	TState,
 } from '../types';
@@ -642,6 +643,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				],
 				leftSidebarItems: newLeftSidebarItems,
 				objectFolders,
+				rightSidebarType: 'empty' as RightSidebarType,
 				selectedObjectFolder: selectedObjectFolder as ObjectFolder,
 				selectedObjectRelationship: null,
 			};

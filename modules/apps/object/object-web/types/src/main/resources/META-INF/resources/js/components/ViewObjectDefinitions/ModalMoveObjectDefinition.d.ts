@@ -10,6 +10,7 @@ interface ModalMoveObjectDefinitionProps {
 	handleOnClose: () => void;
 	objectDefinitionId: number;
 	objectFolders: ObjectFolder[];
+	onAfterSubmit: () => void;
 	selectedObjectFolder: Partial<ObjectFolder>;
 	setMoveObjectDefinition: (value: ObjectDefinition | null) => void;
 }
@@ -17,6 +18,7 @@ export declare function ModalMoveObjectDefinition({
 	handleOnClose,
 	objectDefinitionId,
 	objectFolders,
+	onAfterSubmit,
 	selectedObjectFolder,
 	setMoveObjectDefinition,
 }: ModalMoveObjectDefinitionProps): JSX.Element;

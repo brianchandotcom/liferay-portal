@@ -9,10 +9,11 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
+import {createResourceURL} from 'frontend-js-web';
 import React, {SetStateAction} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
-import {exportObjectFolder} from '../../utils/exportObjectFolder';
+import {exportObjectEntity} from '../../utils/exportObjectEntity';
 import {ModalImportProperties} from './ViewObjectDefinitions';
 
 interface ObjectFoldersSidebarProps {
@@ -46,9 +47,14 @@ export default function ObjectFoldersSideBar({
 	objectFoldersKebabOptions.push({
 		label: Liferay.Language.get('export-object-folder'),
 		onClick: () => {
-			exportObjectFolder({
-				baseResourceURL,
+			const exportObjectFolderURL = createResourceURL(baseResourceURL, {
 				objectFolderId: selectedObjectFolder.id,
+				p_p_resource_id: '/object_definitions/export_object_folder',
+			}).href;
+
+			exportObjectEntity({
+				exportObjectEntityURL: exportObjectFolderURL,
+				objectEntityId: selectedObjectFolder.id,
 			});
 		},
 		symbolLeft: 'export',

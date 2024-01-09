@@ -7,7 +7,7 @@ import {API} from '@liferay/object-js-components-web';
 import {createResourceURL, openModal, sub} from 'frontend-js-web';
 import {SetStateAction} from 'react';
 
-import {exportObjectFolder} from '../../utils/exportObjectFolder';
+import {exportObjectEntity} from '../../utils/exportObjectEntity';
 import {formatActionURL} from '../../utils/fds';
 import {
 	firstLetterUppercase,
@@ -240,33 +240,55 @@ export function getObjectDefinitionNodeActions({
 			symbolLeft: 'info-panel-closed',
 		},
 		{type: 'divider'},
+		{
+			label: Liferay.Language.get('export-as-json'),
+			onClick: () => {
+				const exportObjectDefinitionURL = createResourceURL(
+					baseResourceURL,
+					{
+						objectDefinitionId,
+						p_p_resource_id:
+							'/object_definitions/export_object_definition',
+					}
+				).href;
+
+				exportObjectEntity({
+					exportObjectEntityURL: exportObjectDefinitionURL,
+					objectEntityId: objectDefinitionId,
+				});
+			},
+			symbolLeft: 'export',
+		},
 	] as DropDownItems[];
 
 	if (
 		objectFoldersLenght > 1 &&
 		hasObjectDefinitionUpdateResourcePermission
 	) {
-		kebabOptions.push({
-			label: Liferay.Language.get('move'),
-			onClick: () => {
-				dispatch({
-					payload: {
-						movedObjectDefinitionId: objectDefinitionId,
-					},
-					type: TYPES.SET_MOVED_OBJECT_DEFINITION,
-				});
-
-				dispatch({
-					payload: {
-						updatedModelBuilderModals: {
-							moveObjectDefinition: true,
+		kebabOptions.push(
+			{
+				label: Liferay.Language.get('move'),
+				onClick: () => {
+					dispatch({
+						payload: {
+							movedObjectDefinitionId: objectDefinitionId,
 						},
-					},
-					type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
-				});
+						type: TYPES.SET_MOVED_OBJECT_DEFINITION,
+					});
+
+					dispatch({
+						payload: {
+							updatedModelBuilderModals: {
+								moveObjectDefinition: true,
+							},
+						},
+						type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+					});
+				},
+				symbolLeft: 'move-folder',
 			},
-			symbolLeft: 'move-folder',
-		});
+			{type: 'divider'}
+		);
 	}
 
 	if (hasObjectDefinitionManagePermissionsResourcePermission) {
@@ -373,7 +395,15 @@ export function getObjectFolderActions({
 	kebabOptions.push({
 		label: Liferay.Language.get('export-object-folder'),
 		onClick: () => {
-			exportObjectFolder({baseResourceURL, objectFolderId});
+			const exportObjectFolderURL = createResourceURL(baseResourceURL, {
+				objectFolderId,
+				p_p_resource_id: '/object_definitions/export_object_folder',
+			}).href;
+
+			exportObjectEntity({
+				exportObjectEntityURL: exportObjectFolderURL,
+				objectEntityId: objectFolderId,
+			});
 		},
 		symbolLeft: 'export',
 		value: 'exportObjectFolder',

@@ -5,8 +5,8 @@
 
 import {test} from '@playwright/test';
 
-import {ModelBuilderPage} from '../pages/object/modelBuilder.page';
-import {ObjectDefinitionsPage} from '../pages/object/objectDefinitions.page';
+import {ModelBuilderPage} from '../pages/object-web/modelBuilder.page';
+import {ObjectDefinitionsPage} from '../pages/object-web/objectDefinitions.page';
 
 const objectPagesTest = test.extend<{
 	_modelBuilderPage: ModelBuilderPage;

@@ -107,7 +107,11 @@
 		}
 
 		.criteria-builder-section-sidebar {
-			width: $sidebarWidth;
+			width: $sidebarWidthSmall;
+
+			@include media-breakpoint-up(sm) {
+				width: $sidebarWidth;
+			}
 		}
 	}
 }

@@ -5,7 +5,11 @@
 	border-left: 1px solid $gray-300;
 	min-height: 100%;
 	right: 0;
-	width: $sidebarWidth;
+	width: $sidebarWidthSmall;
+
+	@include media-breakpoint-up(sm) {
+		width: $sidebarWidth;
+	}
 
 	.sidebar-header,
 	.panel-header,

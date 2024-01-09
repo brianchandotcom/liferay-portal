@@ -76,29 +76,6 @@ public class HttpHelperImpl implements HttpHelper {
 		}
 	}
 
-	@Override
-	public String getPortletIdParameter(
-		String urlString, String parameterName, String portletId) {
-
-		try {
-			Map<String, String[]> parameterMap =
-				HttpComponentsUtil.parameterMapFromString(
-					HttpComponentsUtil.getQueryString(urlString));
-
-			return parameterMap.get(
-				StringBundler.concat(
-					StringPool.UNDERLINE, portletId, StringPool.UNDERLINE,
-					parameterName))[0];
-		}
-		catch (RuntimeException runtimeException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(runtimeException);
-			}
-
-			return null;
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(HttpHelperImpl.class);
 
 }

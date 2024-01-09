@@ -14,7 +14,4 @@ public interface HttpHelper {
 
 	public String getPortletIdParameter(String urlString, String parameterName);
 
-	public String getPortletIdParameter(
-		String urlString, String parameterName, String portletId);
-
 }

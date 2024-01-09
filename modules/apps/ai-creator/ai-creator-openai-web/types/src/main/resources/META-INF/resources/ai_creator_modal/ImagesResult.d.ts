@@ -7,6 +7,12 @@
 
 interface Props {
 	imagesURL: string[];
+	onSelectedChange: Function;
+	selectedImages: string[];
 }
-export declare function ImagesResult({imagesURL}: Props): JSX.Element;
+export declare function ImagesResult({
+	imagesURL,
+	onSelectedChange,
+	selectedImages,
+}: Props): JSX.Element;
 export {};

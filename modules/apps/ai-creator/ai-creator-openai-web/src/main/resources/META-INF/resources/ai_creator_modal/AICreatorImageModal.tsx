@@ -52,12 +52,27 @@ export default function AICreatorImageModal({
 	const [status, setStatus] = useState<RequestStatus>({type: 'idle'});
 	const [imagesURL, setImagesURL] = useState<string[] | null>(null);
 
+	const [selectedImages, setSelectedImages] = useState<string[]>([]);
+
 	const onAdd = () => {
 		if (imagesURL) {
 			const opener = Liferay.Util.getOpener();
 
 			opener.Liferay.fire('closeModal', {imagesURL});
 		}
+	};
+
+	const onSelectedChange = (imageURL: string) => {
+		const newSelectedImages = [...selectedImages] || [];
+
+		if (newSelectedImages?.includes(imageURL)) {
+			newSelectedImages?.splice(newSelectedImages.indexOf(imageURL), 1);
+		}
+		else {
+			newSelectedImages?.push(imageURL);
+		}
+
+		setSelectedImages(newSelectedImages);
 	};
 
 	const onSubmit = (event: FormEvent) => {
@@ -131,7 +146,13 @@ export default function AICreatorImageModal({
 					>
 						<FormImage portletNamespace={portletNamespace} />
 
-						{imagesURL && <ImagesResult imagesURL={imagesURL} />}
+						{imagesURL && (
+							<ImagesResult
+								imagesURL={imagesURL}
+								onSelectedChange={onSelectedChange}
+								selectedImages={selectedImages}
+							/>
+						)}
 
 						<ClayForm.Group className="c-mb-0">
 							<LearnResourcesContext.Provider

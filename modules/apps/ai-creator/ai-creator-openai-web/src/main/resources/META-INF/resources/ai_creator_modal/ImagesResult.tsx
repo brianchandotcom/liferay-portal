@@ -4,22 +4,45 @@
  */
 
 import ClayCard from '@clayui/card';
+import {ClayCheckbox} from '@clayui/form';
 import React from 'react';
 
 interface Props {
 	imagesURL: string[];
+	onSelectedChange: Function;
+	selectedImages: string[];
 }
 
-export function ImagesResult({imagesURL}: Props) {
+export function ImagesResult({
+	imagesURL,
+	onSelectedChange,
+	selectedImages,
+}: Props) {
 	return (
 		<>
 			<label>{Liferay.Language.get('image-results')}</label>
 
 			<ul className="card-page card-page-equal-height">
 				{imagesURL.map((imageURL, index) => (
-					<li className="card-page-item mr-2" key={index}>
+					<li
+						className="card-page-item card-page-item-asset"
+						key={index}
+						role="menuitem"
+					>
 						<ClayCard displayType="image" selectable>
-							<img src={imageURL} style={{width: '200px'}} />
+							<ClayCheckbox
+								checked={
+									selectedImages.includes(imageURL) || false
+								}
+								onChange={() => onSelectedChange(imageURL)}
+							>
+								<ClayCard.AspectRatio className="card-item-first">
+									<img
+										className="aspect-ratio-item-center-middle aspect-ratio-item-fluid"
+										src={imageURL}
+									/>
+								</ClayCard.AspectRatio>
+							</ClayCheckbox>
 						</ClayCard>
 					</li>
 				))}

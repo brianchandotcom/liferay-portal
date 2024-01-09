@@ -1,27 +1,4 @@
 {
-	"boxShadowSm": {
-		"cssVariableMapping": "box-shadow-sm",
-		"value": "inset 0px -1px 0px #C9C9CE"
-	},
-	"brandColor3": {
-		"cssVariableMapping": "brand-color-3",
-		"value": "#00318F"
-	},
-	"btnLinkColor": {
-		"cssVariableMapping": "btn-link-color",
-		"name": "brandColor1",
-		"value": "#0B5FFF"
-	},
-	"btnPrimaryBackgroundColor": {
-		"cssVariableMapping": "btn-primary-background-color",
-		"name": "brandColor1",
-		"value": "#0B5FFF"
-	},
-	"btnPrimaryBorderColor": {
-		"cssVariableMapping": "btn-primary-border-color",
-		"name": "brandColor1",
-		"value": "#0B5FFF"
-	},
 	"colorAccent1": {
 		"cssVariableMapping": "color-accent-1",
 		"value": "#1AA0E8"

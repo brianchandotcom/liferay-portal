@@ -49,7 +49,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 				new ConcurrentHashMap<>();
 
 			String sql = StringBundler.concat(
-				"select distinct FragmentEntryLink.groupId, ",
+				"select FragmentEntryLink.groupId, ",
 				"FragmentEntryLink.companyId, ",
 				"FragmentEntryLink.fragmentEntryLinkId, ",
 				"FragmentEntryLink.plid, FragmentEntryLink.editableValues ",

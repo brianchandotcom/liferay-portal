@@ -13,6 +13,7 @@ export class ApplicationsMenuPage {
 	readonly objectsMenuItem: Locator;
 	readonly page: Page;
 	readonly signInButton: Locator;
+	readonly usersAndOrganizationsItem: Locator;
 
 	constructor(page: Page) {
 		this.applicationMenuButton = page.getByLabel(
@@ -30,6 +31,10 @@ export class ApplicationsMenuPage {
 		});
 		this.page = page;
 		this.signInButton = page.getByRole('button', {name: 'Sign In'});
+		this.usersAndOrganizationsItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Users and Organizations',
+		});
 	}
 
 	async goto() {
@@ -50,5 +55,12 @@ export class ApplicationsMenuPage {
 		await this.goto();
 		await this.applicationMenuButton.click();
 		await this.controlPanelButton.click();
+	}
+
+	async goToUsersAndOrganizations() {
+		await this.goto();
+		await this.applicationMenuButton.click();
+		await this.controlPanelButton.click();
+		await this.usersAndOrganizationsItem.click();
 	}
 }

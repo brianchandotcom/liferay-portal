@@ -17,6 +17,7 @@ export class ModelBuilderPage {
 	readonly objectRelationshipEdges: Locator;
 	readonly page: Page;
 	readonly saveNewObjectRelationshipButton: Locator;
+	readonly toggleSidebarsButton: Locator;
 
 	constructor(page: Page) {
 		this.fitViewButton = page.locator(
@@ -37,6 +38,7 @@ export class ModelBuilderPage {
 		this.saveNewObjectRelationshipButton = page.getByRole('button', {
 			name: 'Save',
 		});
+		this.toggleSidebarsButton = page.getByLabel('Toggle Sidebars');
 	}
 
 	clickObjectDefinitionCardDot(
@@ -65,6 +67,10 @@ export class ModelBuilderPage {
 			.filter({hasText: objectDefinitionName})
 			.getByRole('button', {name: 'Show All Fields'})
 			.click();
+	}
+
+	async clickToggleSidebarsButton() {
+		this.toggleSidebarsButton.click();
 	}
 
 	async goto() {

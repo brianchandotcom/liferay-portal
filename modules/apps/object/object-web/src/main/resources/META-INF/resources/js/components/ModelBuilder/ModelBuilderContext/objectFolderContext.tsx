@@ -37,7 +37,6 @@ const initialState = {
 	leftSidebarItems: [] as LeftSidebarItem[],
 	modelBuilderModals: {} as ModelBuilderModals,
 	nodeHandleConnectable: false,
-	objectDefinitions: [] as ObjectDefinition[],
 	objectFolderName: getObjectFolderName(),
 	objectFolders: [] as ObjectFolder[],
 	rightSidebarType: 'empty' as RightSidebarType,

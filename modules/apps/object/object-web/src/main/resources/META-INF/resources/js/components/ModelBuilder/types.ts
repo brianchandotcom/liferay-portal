@@ -239,7 +239,6 @@ export type TState = {
 	movedObjectDefinitionId?: number;
 	nodeHandleConnectable: boolean;
 	objectDefinitionPermissionsURL: string;
-	objectDefinitions: ObjectDefinition[];
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectFolderName: string;
 	objectFolders: ObjectFolder[];

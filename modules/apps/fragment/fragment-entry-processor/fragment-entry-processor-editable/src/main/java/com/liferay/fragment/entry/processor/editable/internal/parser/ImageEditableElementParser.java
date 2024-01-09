@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(property = "type=image", service = EditableElementParser.class)
-public class ImageEditableElementParser implements EditableElementParser {
+public class ImageEditableElementParser extends BaseEditableElementParser {
 
 	@Override
 	public JSONObject getFieldTemplateConfigJSONObject(
@@ -276,6 +276,8 @@ public class ImageEditableElementParser implements EditableElementParser {
 					"each-editable-image-element-must-contain-an-img-tag",
 					new Object[] {"<em>", "</em>"}, false));
 		}
+
+		super.validate(element);
 	}
 
 	private String _getPreviewURL(long fileEntryId) {

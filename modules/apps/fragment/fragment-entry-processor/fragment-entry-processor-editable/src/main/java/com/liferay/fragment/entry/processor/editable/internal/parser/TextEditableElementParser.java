@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(property = "type=text", service = EditableElementParser.class)
-public class TextEditableElementParser implements EditableElementParser {
+public class TextEditableElementParser extends BaseEditableElementParser {
 
 	@Override
 	public String getValue(Element element) {
@@ -91,6 +91,8 @@ public class TextEditableElementParser implements EditableElementParser {
 						new Object[] {getEditableElementType(), tag}, false));
 			}
 		}
+
+		super.validate(element);
 	}
 
 	protected String getEditableElementType() {

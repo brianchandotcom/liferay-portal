@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(property = "type=action", service = EditableElementParser.class)
-public class ActionEditableElementParser implements EditableElementParser {
+public class ActionEditableElementParser extends BaseEditableElementParser {
 
 	@Override
 	public String getValue(Element element) {
@@ -56,6 +56,8 @@ public class ActionEditableElementParser implements EditableElementParser {
 					"an-editable-of-type-x-can-only-be-used-in-a-tag-of-type-x",
 					new Object[] {"action", "button"}, false));
 		}
+
+		super.validate(element);
 	}
 
 	@Reference

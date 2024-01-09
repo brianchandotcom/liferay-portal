@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Diego Hu
  */
 @Component(property = "type=date-time", service = EditableElementParser.class)
-public class DateTimeEditableElementParser implements EditableElementParser {
+public class DateTimeEditableElementParser extends BaseEditableElementParser {
 
 	@Override
 	public String getValue(Element element) {

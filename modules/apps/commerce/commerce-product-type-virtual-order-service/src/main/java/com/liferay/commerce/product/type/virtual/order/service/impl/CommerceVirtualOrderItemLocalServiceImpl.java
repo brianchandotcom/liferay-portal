@@ -103,6 +103,10 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 		commerceVirtualOrderItem = commerceVirtualOrderItemPersistence.update(
 			commerceVirtualOrderItem);
 
+		if (cpdVirtualSettingFileEntries == null) {
+			return commerceVirtualOrderItem;
+		}
+
 		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
 				cpdVirtualSettingFileEntries) {
 

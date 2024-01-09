@@ -210,9 +210,31 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
+		"globalJSClientExtensions": [
+			{
+				"clientExtensionConfig": {
+					"loadType": "default",
+					"scriptLocation": "head"
+				},
+				"externalReferenceCode": "LXC:liferay-dotcom-global-js",
+				"name": "Liferay Dotcom Global JS"
+			},
+			{
+				"clientExtensionConfig": {
+					"loadType": "default",
+					"scriptLocation": "head"
+				},
+				"externalReferenceCode": "LXC:liferay-learn-global-js",
+				"name": "Liferay Learn Global JS"
+			}
+		],
 		"styleBook": {
 			"key": "learn",
 			"name": "Learn"
+		},
+		"themeCSSClientExtension": {
+			"externalReferenceCode": "LXC:liferay-learn-theme-css",
+			"name": "Liferay Learn Theme CSS"
 		},
 		"themeName": "Dialect",
 		"themeSettings": {

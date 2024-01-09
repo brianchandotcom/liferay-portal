@@ -156,10 +156,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
 				false,
 				Collections.singletonMap(
-					LocaleUtil.US,
-					StringBundler.concat(
-						user1.getEmailAddress(), StringPool.COMMA,
-						user2.getEmailAddress()))));
+					LocaleUtil.US, user1.getEmailAddress())));
 
 		List<NotificationQueueEntry> notificationQueueEntries =
 			notificationQueueEntryLocalService.getNotificationEntries(
@@ -170,8 +167,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntries.toString(), 1,
 			notificationQueueEntries.size());
 
-		NotificationQueueEntry notificationQueueEntry =
-			notificationQueueEntries.get(0);
+		notificationQueueEntry = notificationQueueEntries.get(0);
 
 		assertTermValues(
 			new ArrayList<>(_freeMarkerTermValues.values()),
@@ -209,8 +205,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntries.toString(), 1,
 			notificationQueueEntries.size());
 
-		NotificationQueueEntry notificationQueueEntry =
-			notificationQueueEntries.get(0);
+		notificationQueueEntry = notificationQueueEntries.get(0);
 
 		ListEntry listEntry = (ListEntry)childObjectEntryValues.get(
 			"picklistObjectField");

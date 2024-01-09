@@ -13,6 +13,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
@@ -56,8 +57,8 @@ public class AssetPublisherSimilarResultsContributor
 		_putAttribute(parameters[2], "type", routeBuilder);
 
 		String assetEntryId = _httpHelper.getPortletIdParameter(
-			urlString, "assetEntryId",
-			_getAssetPublisherPortletId(parameters[1]));
+			urlString,
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "assetEntryId");
 
 		_putAttribute(Long.valueOf(assetEntryId), "entryId", routeBuilder);
 	}

@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.taglib.clay.internal.servlet.taglib;
 
+import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.util.ServicesProvider;
@@ -356,11 +357,16 @@ public class BaseContainerTag extends AttributesTagSupport {
 			String propsTransformer = null;
 
 			if (Validator.isNotNull(_propsTransformer)) {
+
+				if (ESImportUtil.isESImport(_propsTransformer)) {
+					propsTransformer = _propsTransformer;
+				} else {
 				String resolvedPackageName = NPMResolvedPackageNameUtil.get(
 					getPropsTransformerServletContext());
 
-				propsTransformer =
-					resolvedPackageName + "/" + _propsTransformer;
+					propsTransformer =
+						resolvedPackageName + "/" + _propsTransformer;
+				}
 			}
 			else if (Validator.isNotNull(getDefaultEventHandler())) {
 				propsTransformer =

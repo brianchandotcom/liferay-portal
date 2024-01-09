@@ -15,6 +15,7 @@ liveGroupId = groupDisplayContextHelper.getLiveGroupId();
 
 UnicodeProperties liveGroupTypeSettingsUnicodeProperties = liveGroup.getTypeSettingsProperties();
 
+LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), true);
 LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), false);
 
 boolean liveGroupRemoteStaging = liveGroup.hasRemoteStagingGroup() && PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED;
@@ -67,7 +68,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 					<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
 					<aui:input name="forceDisable" type="hidden" value="<%= false %>" />
 
-					<c:if test="<%= !publicLayoutSet.isLayoutSetReadyForPropagation() %>">
+					<c:if test="<%= !privateLayoutSet.isLayoutSetReadyForPropagation() && !publicLayoutSet.isLayoutSetReadyForPropagation() %>">
 						<clay:sheet-header>
 							<div class="sheet-title">
 								<liferay-ui:message key="javax.portlet.title.com_liferay_staging_configuration_web_portlet_StagingConfigurationPortlet" />

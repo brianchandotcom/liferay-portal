@@ -84,7 +84,7 @@
 	value="staging"
 />
 
-<c:if test="<%= publicLayoutSet.isLayoutSetReadyForPropagation() %>">
+<c:if test="<%= privateLayoutSet.isLayoutSetReadyForPropagation() || publicLayoutSet.isLayoutSetReadyForPropagation() %>">
 	<liferay-staging:alert
 		type="WARNING"
 	>

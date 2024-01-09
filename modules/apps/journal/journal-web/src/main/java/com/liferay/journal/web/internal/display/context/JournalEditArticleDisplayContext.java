@@ -97,6 +97,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 
 import javax.portlet.RenderResponse;
 
@@ -1135,6 +1136,12 @@ public class JournalEditArticleDisplayContext {
 						ddmTemplateItemSelectorCriterion));
 			}
 		).build();
+	}
+
+	public String getTimeZoneName() {
+		TimeZone timeZone = _themeDisplay.getTimeZone();
+
+		return timeZone.getDisplayName(false, TimeZone.SHORT);
 	}
 
 	public Map<String, Object> getValues(DDMStructure ddmStructure)

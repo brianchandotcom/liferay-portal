@@ -158,6 +158,19 @@ public class LinkEditableElementParser implements EditableElementParser {
 					"each-editable-link-element-must-contain-an-a-tag",
 					new Object[] {"<em>", "</em>"}, false));
 		}
+
+		String html = element.html();
+
+		if (html.contains("<lfr-drop-zone") || html.contains("<lfr-widget-")) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
+
+			throw new FragmentEntryContentException(
+				_language.get(
+					resourceBundle,
+					"editable-link-element-cannot-include-drop-zones-or-" +
+						"widgets-in-it"));
+		}
 	}
 
 	@Reference

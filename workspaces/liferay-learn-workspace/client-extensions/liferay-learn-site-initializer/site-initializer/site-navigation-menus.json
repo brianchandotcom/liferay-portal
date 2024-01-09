@@ -129,7 +129,9 @@
 					},
 					{
 						"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM16",
-						"name": "DXP/Portal",
+						"name_i18n": {
+							"en_US": "DXP/Portal"
+						},
 						"type": "url",
 						"url": "/w/dxp/index"
 					},

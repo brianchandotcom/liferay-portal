@@ -18,7 +18,6 @@ import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.util.AssetQueryRule;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
@@ -30,7 +29,6 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -67,7 +65,6 @@ import com.liferay.segments.context.RequestContextMapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -84,9 +81,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.text.StrMatcher;
 import org.apache.commons.lang.text.StrTokenizer;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -94,7 +89,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Juan Fernández
  */
 @Component(
-	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
 	property = "javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER,
 	service = ConfigurationAction.class
 )
@@ -140,10 +134,10 @@ public class AssetPublisherConfigurationAction
 				assetHelper, assetListAssetEntryProvider,
 				assetListEntrySegmentsEntryRelLocalService,
 				assetPublisherCustomizer, assetPublisherHelper,
-				assetPublisherWebConfiguration, assetPublisherWebHelper,
-				infoItemServiceRegistry, itemSelector, portal, renderRequest,
-				renderResponse, renderRequest.getPreferences(),
-				requestContextMapper, segmentsEntryRetriever);
+				assetPublisherWebHelper, infoItemServiceRegistry, itemSelector,
+				portal, renderRequest, renderResponse,
+				renderRequest.getPreferences(), requestContextMapper,
+				segmentsEntryRetriever);
 
 		httpServletRequest.setAttribute(
 			AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,
@@ -309,13 +303,6 @@ public class AssetPublisherConfigurationAction
 		}
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
-			AssetPublisherWebConfiguration.class, properties);
-	}
-
 	protected String getDefaultSelectionStyle() {
 		return AssetPublisherSelectionStyleConfigurationUtil.
 			defaultSelectionStyle();
@@ -336,9 +323,6 @@ public class AssetPublisherConfigurationAction
 
 	@Reference
 	protected AssetPublisherHelper assetPublisherHelper;
-
-	protected volatile AssetPublisherWebConfiguration
-		assetPublisherWebConfiguration;
 
 	@Reference
 	protected AssetPublisherWebHelper assetPublisherWebHelper;

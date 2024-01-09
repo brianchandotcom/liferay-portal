@@ -8,9 +8,8 @@ package com.liferay.asset.publisher.web.internal.util;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationUtil;
 import com.liferay.asset.util.AssetEntryQueryProcessor;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -18,25 +17,18 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
-
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
  */
-@Component(
-	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
-	service = AssetPublisherCustomizer.class
-)
+@Component(service = AssetPublisherCustomizer.class)
 public class DefaultAssetPublisherCustomizer
 	implements AssetPublisherCustomizer {
 
@@ -64,8 +56,9 @@ public class DefaultAssetPublisherCustomizer
 
 	@Override
 	public boolean isEnablePermissions(HttpServletRequest httpServletRequest) {
-		if (assetPublisherWebConfiguration.searchWithIndex() ||
-			!assetPublisherWebConfiguration.permissionCheckingConfigurable()) {
+		if (AssetPublisherWebConfigurationUtil.searchWithIndex() ||
+			!AssetPublisherWebConfigurationUtil.
+				permissionCheckingConfigurable()) {
 
 			return true;
 		}
@@ -88,7 +81,7 @@ public class DefaultAssetPublisherCustomizer
 	public boolean isOrderingByTitleEnabled(
 		HttpServletRequest httpServletRequest) {
 
-		if (!assetPublisherWebConfiguration.searchWithIndex()) {
+		if (!AssetPublisherWebConfigurationUtil.searchWithIndex()) {
 			return false;
 		}
 
@@ -132,7 +125,7 @@ public class DefaultAssetPublisherCustomizer
 	public boolean isShowSubtypeFieldsFilter(
 		HttpServletRequest httpServletRequest) {
 
-		if (!assetPublisherWebConfiguration.searchWithIndex()) {
+		if (!AssetPublisherWebConfigurationUtil.searchWithIndex()) {
 			return false;
 		}
 
@@ -158,13 +151,6 @@ public class DefaultAssetPublisherCustomizer
 				themeDisplay.getScopeGroupId(), themeDisplay.getLayout()));
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
-			AssetPublisherWebConfiguration.class, properties);
-	}
-
 	protected PortletPreferences getPortletPreferences(
 		HttpServletRequest httpServletRequest) {
 
@@ -181,8 +167,5 @@ public class DefaultAssetPublisherCustomizer
 
 	@Reference
 	protected AssetPublisherHelper assetPublisherHelper;
-
-	protected volatile AssetPublisherWebConfiguration
-		assetPublisherWebConfiguration;
 
 }

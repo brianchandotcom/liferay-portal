@@ -31,7 +31,7 @@ import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
@@ -168,7 +168,6 @@ public class AssetPublisherDisplayContext {
 				assetListEntrySegmentsEntryRelLocalService,
 			AssetPublisherCustomizer assetPublisherCustomizer,
 			AssetPublisherHelper assetPublisherHelper,
-			AssetPublisherWebConfiguration assetPublisherWebConfiguration,
 			AssetPublisherWebHelper assetPublisherWebHelper,
 			InfoItemServiceRegistry infoItemServiceRegistry,
 			ItemSelector itemSelector, Portal portal,
@@ -184,7 +183,6 @@ public class AssetPublisherDisplayContext {
 			assetListEntrySegmentsEntryRelLocalService;
 		_assetPublisherCustomizer = assetPublisherCustomizer;
 		_assetPublisherHelper = assetPublisherHelper;
-		_assetPublisherWebConfiguration = assetPublisherWebConfiguration;
 		_assetPublisherWebHelper = assetPublisherWebHelper;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_itemSelector = itemSelector;
@@ -1568,7 +1566,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isEnabledAutoscroll() {
-		return _assetPublisherWebConfiguration.enableAutoscroll();
+		return AssetPublisherWebConfigurationUtil.enableAutoscroll();
 	}
 
 	public boolean isEnableFlags() {
@@ -1746,7 +1744,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isSearchWithIndex() {
-		return _assetPublisherWebConfiguration.searchWithIndex();
+		return AssetPublisherWebConfigurationUtil.searchWithIndex();
 	}
 
 	public boolean isSelectionStyleAssetList() {
@@ -1902,11 +1900,12 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public Boolean isShowEnablePermissions() {
-		if (_assetPublisherWebConfiguration.searchWithIndex()) {
+		if (AssetPublisherWebConfigurationUtil.searchWithIndex()) {
 			return false;
 		}
 
-		return _assetPublisherWebConfiguration.permissionCheckingConfigurable();
+		return AssetPublisherWebConfigurationUtil.
+			permissionCheckingConfigurable();
 	}
 
 	public boolean isShowEnableRelatedAssets() {
@@ -2418,8 +2417,6 @@ public class AssetPublisherDisplayContext {
 	private final AssetPublisherHelper _assetPublisherHelper;
 	private final AssetPublisherPortletInstanceConfiguration
 		_assetPublisherPortletInstanceConfiguration;
-	private final AssetPublisherWebConfiguration
-		_assetPublisherWebConfiguration;
 	private final AssetPublisherWebHelper _assetPublisherWebHelper;
 	private String _assetTagName;
 	private Map<String, Serializable> _attributes;

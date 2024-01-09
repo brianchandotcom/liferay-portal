@@ -6,6 +6,7 @@
 package com.liferay.asset.publisher.web.internal.util;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import javax.portlet.PortletPreferences;
@@ -17,10 +18,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pavel Savinov
  */
-@Component(
-	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
-	service = AssetPublisherCustomizer.class
-)
+@Component(service = AssetPublisherCustomizer.class)
 public class MostViewedAssetPublisherCustomizer
 	extends DefaultAssetPublisherCustomizer {
 
@@ -31,7 +29,9 @@ public class MostViewedAssetPublisherCustomizer
 
 	@Override
 	public boolean isEnablePermissions(HttpServletRequest httpServletRequest) {
-		if (!assetPublisherWebConfiguration.permissionCheckingConfigurable()) {
+		if (!AssetPublisherWebConfigurationUtil.
+				permissionCheckingConfigurable()) {
+
 			return true;
 		}
 
@@ -53,7 +53,7 @@ public class MostViewedAssetPublisherCustomizer
 	public boolean isOrderingByTitleEnabled(
 		HttpServletRequest httpServletRequest) {
 
-		if (!assetPublisherWebConfiguration.searchWithIndex()) {
+		if (!AssetPublisherWebConfigurationUtil.searchWithIndex()) {
 			return false;
 		}
 
@@ -78,7 +78,7 @@ public class MostViewedAssetPublisherCustomizer
 	public boolean isShowSubtypeFieldsFilter(
 		HttpServletRequest httpServletRequest) {
 
-		if (!assetPublisherWebConfiguration.searchWithIndex()) {
+		if (!AssetPublisherWebConfigurationUtil.searchWithIndex()) {
 			return false;
 		}
 

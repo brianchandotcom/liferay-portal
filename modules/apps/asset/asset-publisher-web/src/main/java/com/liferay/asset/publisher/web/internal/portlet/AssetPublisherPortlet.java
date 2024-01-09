@@ -16,7 +16,6 @@ import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.publisher.web.internal.helper.AssetRSSHelper;
@@ -32,7 +31,6 @@ import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -64,7 +62,6 @@ import java.io.Serializable;
 import java.text.DateFormat;
 
 import java.util.Date;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -83,14 +80,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-asset-publisher",
@@ -281,9 +276,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 					assetListEntrySegmentsEntryRelLocalService,
 					assetPublisherCustomizerRegistry.
 						getAssetPublisherCustomizer(rootPortletId),
-					assetPublisherHelper, assetPublisherWebConfiguration,
-					assetPublisherWebHelper, infoItemServiceRegistry,
-					itemSelector, portal, resourceRequest, resourceResponse,
+					assetPublisherHelper, assetPublisherWebHelper,
+					infoItemServiceRegistry, itemSelector, portal,
+					resourceRequest, resourceResponse,
 					resourceRequest.getPreferences(), requestContextMapper,
 					segmentsEntryRetriever);
 
@@ -357,11 +352,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 	}
 
 	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
-			AssetPublisherWebConfiguration.class, properties);
-
+	protected void activate() {
 		portletRegistry.registerAlias(
 			_ALIAS, AssetPublisherPortletKeys.ASSET_PUBLISHER);
 	}
@@ -400,11 +391,10 @@ public class AssetPublisherPortlet extends MVCPortlet {
 					assetListEntrySegmentsEntryRelLocalService,
 					assetPublisherCustomizerRegistry.
 						getAssetPublisherCustomizer(rootPortletId),
-					assetPublisherHelper, assetPublisherWebConfiguration,
-					assetPublisherWebHelper, infoItemServiceRegistry,
-					itemSelector, portal, renderRequest, renderResponse,
-					portletPreferences, requestContextMapper,
-					segmentsEntryRetriever);
+					assetPublisherHelper, assetPublisherWebHelper,
+					infoItemServiceRegistry, itemSelector, portal,
+					renderRequest, renderResponse, portletPreferences,
+					requestContextMapper, segmentsEntryRetriever);
 
 			renderRequest.setAttribute(
 				AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,
@@ -458,9 +448,6 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 	@Reference
 	protected AssetPublisherHelper assetPublisherHelper;
-
-	protected volatile AssetPublisherWebConfiguration
-		assetPublisherWebConfiguration;
 
 	@Reference
 	protected AssetPublisherWebHelper assetPublisherWebHelper;

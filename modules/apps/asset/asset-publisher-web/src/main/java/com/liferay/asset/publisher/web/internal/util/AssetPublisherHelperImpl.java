@@ -23,13 +23,12 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -85,18 +83,13 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
-	service = AssetPublisherHelper.class
-)
+@Component(service = AssetPublisherHelper.class)
 public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 	@Override
@@ -904,15 +897,6 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		return key;
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties)
-		throws ConfigurationException {
-
-		_assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
-			AssetPublisherWebConfiguration.class, properties);
-	}
-
 	private List<AssetEntry> _filterAssetCategoriesAssetEntries(
 		List<AssetEntry> assetEntries, long[] assetCategoryIds) {
 
@@ -1186,7 +1170,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 	private boolean _isSearchWithIndex(
 		String portletName, AssetEntryQuery assetEntryQuery) {
 
-		if (_assetPublisherWebConfiguration.searchWithIndex() &&
+		if (AssetPublisherWebConfigurationUtil.searchWithIndex() &&
 			ArrayUtil.isEmpty(assetEntryQuery.getLinkedAssetEntryIds()) &&
 			!portletName.equals(
 				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
@@ -1432,9 +1416,6 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 	@Reference
 	private AssetListEntryService _assetListEntryService;
-
-	private volatile AssetPublisherWebConfiguration
-		_assetPublisherWebConfiguration;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

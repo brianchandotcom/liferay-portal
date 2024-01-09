@@ -19,7 +19,7 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
@@ -43,7 +43,6 @@ import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImp
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
@@ -91,9 +90,7 @@ import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -107,7 +104,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Máté Thurzó
  */
 @Component(
-	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
 	property = "javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER,
 	service = ExportImportPortletPreferencesProcessor.class
 )
@@ -189,13 +185,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 			throw portletDataException;
 		}
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
-			AssetPublisherWebConfiguration.class, properties);
 	}
 
 	@Override
@@ -467,7 +456,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		if (selectionStyle.equals(
 				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
 
-			if (!_assetPublisherWebConfiguration.dynamicExportEnabled() ||
+			if (!AssetPublisherWebConfigurationUtil.dynamicExportEnabled() ||
 				layout.isTypeAssetDisplay()) {
 
 				return;
@@ -502,7 +491,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			assetEntries = baseModelSearchResult.getBaseModels();
 		}
 		else {
-			if (!_assetPublisherWebConfiguration.manualExportEnabled()) {
+			if (!AssetPublisherWebConfigurationUtil.manualExportEnabled()) {
 				return;
 			}
 
@@ -563,7 +552,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 					companyId, true)));
 		assetEntryQuery.setEnablePermissions(false);
 
-		int end = _assetPublisherWebConfiguration.dynamicExportLimit();
+		int end = AssetPublisherWebConfigurationUtil.dynamicExportLimit();
 
 		if (_isPaginationTypeNone(portletPreferences)) {
 			int delta = GetterUtil.getInteger(
@@ -1456,8 +1445,5 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherExportImportPortletPreferencesProcessor.class);
-
-	private volatile AssetPublisherWebConfiguration
-		_assetPublisherWebConfiguration;
 
 }

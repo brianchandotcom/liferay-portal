@@ -4,7 +4,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
@@ -17,10 +16,7 @@ import Table from '../../common/components/Table';
 import TableHeader from '../../common/components/TableHeader';
 import Search from '../../common/components/TableHeader/Search';
 import {PartnerOpportunitiesColumnKey} from '../../common/enums/partnerOpportunitiesColumnKey';
-import {PRMPageRoute} from '../../common/enums/prmPageRoute';
-import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
-import {Liferay} from '../../common/services/liferay';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
@@ -34,7 +30,6 @@ interface IProps {
 	) => PartnerOpportunitiesItem[];
 	isRenewalListing?: boolean;
 	name: string;
-	newButtonDeal?: boolean;
 	sort: string;
 }
 
@@ -45,7 +40,6 @@ const PartnerOpportunitiesList = ({
 	getFilteredItems,
 	isRenewalListing,
 	name,
-	newButtonDeal,
 	sort,
 }: IProps) => {
 	const [openOpportunitiesFilter, setOpenOpportunitiesFilter] = useState(
@@ -93,7 +87,6 @@ const PartnerOpportunitiesList = ({
 		dataCSV.items &&
 		getFilteredItems(dataCSV.items, openOpportunitiesFilter);
 
-	const siteURL = useLiferayNavigate();
 	const columns = [
 		{
 			columnKey: PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME,
@@ -241,19 +234,6 @@ const PartnerOpportunitiesList = ({
 						>
 							Export {name}
 						</CSVLink>
-					)}
-
-					{newButtonDeal && (
-						<ClayButton
-							className="mb-2 mb-lg-0 mr-2"
-							onClick={() =>
-								Liferay.Util.navigate(
-									`${siteURL}/${PRMPageRoute.CREATE_DEAL_REGISTRATION}`
-								)
-							}
-						>
-							Register New Deal
-						</ClayButton>
 					)}
 				</div>
 			</TableHeader>

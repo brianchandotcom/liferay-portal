@@ -104,7 +104,6 @@ const appRoutes: AppRouteComponent = {
 				return items;
 			}}
 			name="Partner Opportunities"
-			newButtonDeal={false}
 			sort="closeDate:desc"
 		/>
 	),
@@ -123,7 +122,6 @@ const appRoutes: AppRouteComponent = {
 			}}
 			isRenewalListing={true}
 			name="Renewal Opportunities"
-			newButtonDeal={false}
 			sort="closeDate:asc"
 		/>
 	),

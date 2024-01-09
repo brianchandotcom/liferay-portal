@@ -41,7 +41,7 @@ export class ModelBuilderPage {
 		this.toggleSidebarsButton = page.getByLabel('Toggle Sidebars');
 	}
 
-	clickObjectDefinitionCardDot(
+	getObjectDefinitionNodeRelationshipHandle(
 		objectDefinitionExternalReferenceCode: string,
 		position: string
 	) {
@@ -84,11 +84,14 @@ export class ModelBuilderPage {
 		objectRelationshipLabel: string,
 		type: string
 	) {
-		await this.clickObjectDefinitionCardDot(
+		await this.getObjectDefinitionNodeRelationshipHandle(
 			objectDefinitionId1,
 			'right'
 		).dragTo(
-			this.clickObjectDefinitionCardDot(objectDefinitionId2, 'left')
+			this.getObjectDefinitionNodeRelationshipHandle(
+				objectDefinitionId2,
+				'left'
+			)
 		);
 
 		await expect(this.newObjectRelationshipTitle).toBeVisible();

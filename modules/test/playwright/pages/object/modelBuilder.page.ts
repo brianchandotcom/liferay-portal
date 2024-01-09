@@ -41,21 +41,6 @@ export class ModelBuilderPage {
 		this.toggleSidebarsButton = page.getByLabel('Toggle Sidebars');
 	}
 
-	getObjectDefinitionNodeRelationshipHandle(
-		objectDefinitionExternalReferenceCode: string,
-		position: string
-	) {
-		let dataHandled = 'fixedRightHandle';
-
-		if (position === 'left') {
-			dataHandled = 'fixedLeftHandle';
-		}
-
-		return this.page.locator(
-			`div[data-handleid="${objectDefinitionExternalReferenceCode}_${position}"]:not([data-handleid="${dataHandled}"])`
-		);
-	}
-
 	async clickFitViewButton() {
 		this.fitViewButton.click({force: true});
 	}
@@ -71,11 +56,6 @@ export class ModelBuilderPage {
 
 	async clickToggleSidebarsButton() {
 		this.toggleSidebarsButton.click();
-	}
-
-	async goto() {
-		await this.objectDefinitionsPage.goto();
-		await this.objectDefinitionsPage.viewInModelBuilder();
 	}
 
 	async createObjectRelationship(
@@ -106,5 +86,25 @@ export class ModelBuilderPage {
 		const response = await responsePromise;
 
 		return response.json();
+	}
+
+	getObjectDefinitionNodeRelationshipHandle(
+		objectDefinitionExternalReferenceCode: string,
+		position: string
+	) {
+		let dataHandled = 'fixedRightHandle';
+
+		if (position === 'left') {
+			dataHandled = 'fixedLeftHandle';
+		}
+
+		return this.page.locator(
+			`div[data-handleid="${objectDefinitionExternalReferenceCode}_${position}"]:not([data-handleid="${dataHandled}"])`
+		);
+	}
+
+	async goto() {
+		await this.objectDefinitionsPage.goto();
+		await this.objectDefinitionsPage.viewInModelBuilder();
 	}
 }

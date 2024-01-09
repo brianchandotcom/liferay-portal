@@ -129,7 +129,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			}
 
 			if (FeatureFlagManagerUtil.isEnabled("LPS-196847") &&
-				!_hasGuestViewPermission(layout)) {
+				!_hasGuestViewPermission(layout) && !layout.isPrivateLayout()) {
 
 				sb.append("<span class=\"align-items-center c-ml-3 d-flex ");
 				sb.append("lfr-portal-tooltip text-white\" data-title=\" ");

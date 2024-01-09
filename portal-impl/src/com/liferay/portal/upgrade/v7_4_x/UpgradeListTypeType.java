@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.util.PortalInstances;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Luis Ortiz
@@ -35,18 +36,46 @@ public class UpgradeListTypeType extends UpgradeProcess {
 	}
 
 	private void _updateListType(long companyId, String name) throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update ListType set type_ = ? where companyId = ? and name " +
-					"= ? and type_ = ?")) {
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"Select 1 from ListType where companyId = ? and name = ? and " +
+					"type_ = ?")) {
 
-			preparedStatement.setString(
-				1, "com.liferay.portal.kernel.model.Company.website");
-			preparedStatement.setLong(2, companyId);
-			preparedStatement.setString(3, name);
-			preparedStatement.setString(
-				4, "com.liferay.account.model.AccountEntry.address");
+			preparedStatement1.setLong(1, companyId);
+			preparedStatement1.setString(2, name);
+			preparedStatement1.setString(
+				3, "com.liferay.portal.kernel.model.Company.website");
 
-			preparedStatement.executeUpdate();
+			ResultSet resultSet = preparedStatement1.executeQuery();
+
+			if (resultSet.next()) {
+				try (PreparedStatement preparedStatement2 =
+						connection.prepareStatement(
+							"DELETE FROM ListType where companyId = ? and  " +
+								"name = ? and type_ = ?")) {
+
+					preparedStatement2.setLong(1, companyId);
+					preparedStatement2.setString(2, name);
+					preparedStatement2.setString(
+						3, "com.liferay.account.model.AccountEntry.address");
+
+					preparedStatement2.executeUpdate();
+				}
+			}
+
+			try (PreparedStatement preparedStatement3 =
+					connection.prepareStatement(
+						"update ListType set type_ = ? where companyId = ?  " +
+							"and name = ? and type_ = ?")) {
+
+				preparedStatement3.setString(
+					1, "com.liferay.portal.kernel.model.Company.website");
+				preparedStatement3.setLong(2, companyId);
+				preparedStatement3.setString(3, name);
+				preparedStatement3.setString(
+					4, "com.liferay.account.model.AccountEntry.address");
+
+				preparedStatement3.executeUpdate();
+			}
 		}
 	}
 

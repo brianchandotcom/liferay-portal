@@ -9,7 +9,6 @@ import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorCons
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.manager.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -151,12 +150,6 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 				themeDisplay.getPlid(),
 				curLayoutStructure -> curLayoutStructure.updateItemConfig(
 					_jsonFactory.createJSONObject(itemConfig), itemId))
-		).put(
-			"pageContents",
-			_contentManager.getPageContentsJSONArray(
-				_portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse),
-				themeDisplay.getPlid(), segmentsExperienceId)
 		);
 	}
 
@@ -168,9 +161,6 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 	private static final String _KEY_COLLECTION_FILTER_FRAGMENT_RENDERER =
 		"com.liferay.fragment.renderer.collection.filter.internal." +
 			"CollectionFilterFragmentRenderer";
-
-	@Reference
-	private ContentManager _contentManager;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

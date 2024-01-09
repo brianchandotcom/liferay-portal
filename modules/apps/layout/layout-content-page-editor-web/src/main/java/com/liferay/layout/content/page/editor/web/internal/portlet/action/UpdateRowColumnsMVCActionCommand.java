@@ -6,7 +6,6 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.manager.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -14,14 +13,12 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -66,20 +63,7 @@ public class UpdateRowColumnsMVCActionCommand
 						segmentsExperienceId);
 
 				return layoutStructure.toJSONObject();
-			}
-		).put(
-			"pageContents",
-			_contentManager.getPageContentsJSONArray(
-				_portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse),
-				themeDisplay.getPlid(), segmentsExperienceId)
-		);
+			});
 	}
-
-	@Reference
-	private ContentManager _contentManager;
-
-	@Reference
-	private Portal _portal;
 
 }

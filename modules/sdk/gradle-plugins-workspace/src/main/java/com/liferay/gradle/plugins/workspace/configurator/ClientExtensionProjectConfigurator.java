@@ -680,6 +680,28 @@ public class ClientExtensionProjectConfigurator
 				taskInputs.file(clientExtensionYamlFile);
 
 				copy.into(clientExtensionBuildDir);
+
+				copy.doLast(
+					new Action<Task>() {
+
+						@Override
+						public void execute(Task copy1) {
+							if (!copy1.getDidWork()) {
+								return;
+							}
+
+							CreateClientExtensionConfigTask
+								createClientExtensionConfigTask =
+									createClientExtensionConfigTaskProvider.
+										get();
+
+							TaskOutputs taskOutputs =
+								createClientExtensionConfigTask.getOutputs();
+
+							taskOutputs.upToDateWhen(task1 -> false);
+						}
+
+					});
 			});
 
 		buildClientExtensionZipTaskProvider.configure(

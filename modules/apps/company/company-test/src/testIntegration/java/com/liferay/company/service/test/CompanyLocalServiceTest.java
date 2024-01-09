@@ -795,7 +795,7 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testextractDBPartitionCompanyDefaultCompany() {
+	public void testExtractDBPartitionCompanyDefaultCompany() {
 		try {
 			_companyLocalService.extractDBPartitionCompany(
 				PortalInstances.getDefaultCompanyId());

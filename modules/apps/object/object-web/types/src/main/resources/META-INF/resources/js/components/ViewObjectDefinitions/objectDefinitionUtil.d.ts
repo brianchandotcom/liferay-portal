@@ -19,6 +19,7 @@ declare type ObjectDefinitionNodeActionsProps = {
 	dispatch: React.Dispatch<TAction>;
 	hasObjectDefinitionDeleteResourcePermission: boolean;
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
+	hasObjectDefinitionUpdateResourcePermission: boolean;
 	objectDefinitionId: number;
 	objectDefinitionName: string;
 	objectDefinitionPermissionsURL: string;
@@ -69,6 +70,7 @@ export declare function getObjectDefinitionNodeActions({
 	dispatch,
 	hasObjectDefinitionDeleteResourcePermission,
 	hasObjectDefinitionManagePermissionsResourcePermission,
+	hasObjectDefinitionUpdateResourcePermission,
 	objectDefinitionId,
 	objectDefinitionName,
 	objectDefinitionPermissionsURL,

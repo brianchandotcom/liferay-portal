@@ -31,6 +31,7 @@ type ObjectDefinitionNodeActionsProps = {
 	dispatch: React.Dispatch<TAction>;
 	hasObjectDefinitionDeleteResourcePermission: boolean;
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
+	hasObjectDefinitionUpdateResourcePermission: boolean;
 	objectDefinitionId: number;
 	objectDefinitionName: string;
 	objectDefinitionPermissionsURL: string;
@@ -192,6 +193,7 @@ export function getObjectDefinitionNodeActions({
 	dispatch,
 	hasObjectDefinitionDeleteResourcePermission,
 	hasObjectDefinitionManagePermissionsResourcePermission,
+	hasObjectDefinitionUpdateResourcePermission,
 	objectDefinitionId,
 	objectDefinitionName,
 	objectDefinitionPermissionsURL,
@@ -240,7 +242,10 @@ export function getObjectDefinitionNodeActions({
 		{type: 'divider'},
 	] as DropDownItems[];
 
-	if (objectFoldersLenght > 1) {
+	if (
+		objectFoldersLenght > 1 &&
+		hasObjectDefinitionUpdateResourcePermission
+	) {
 		kebabOptions.push({
 			label: Liferay.Language.get('move'),
 			onClick: () => {

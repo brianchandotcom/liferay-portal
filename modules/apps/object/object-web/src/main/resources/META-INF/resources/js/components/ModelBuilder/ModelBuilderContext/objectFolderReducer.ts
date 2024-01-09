@@ -76,6 +76,8 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 								.actions.delete,
 							hasObjectDefinitionManagePermissionsResourcePermission: !!newObjectDefinition
 								.actions.permissions,
+							hasObjectDefinitionUpdateResourcePermission: !!newObjectDefinition
+								.actions.update,
 							objectDefinitionId: newObjectDefinition.id,
 							objectDefinitionName: newObjectDefinition.name,
 							objectDefinitionPermissionsURL,
@@ -467,6 +469,8 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 								objectDefinition.hasObjectDefinitionDeleteResourcePermission,
 							hasObjectDefinitionManagePermissionsResourcePermission:
 								objectDefinition.hasObjectDefinitionManagePermissionsResourcePermission,
+							hasObjectDefinitionUpdateResourcePermission:
+								objectDefinition.hasObjectDefinitionUpdateResourcePermission,
 							objectDefinitionId: objectDefinition.id,
 							objectDefinitionName: objectDefinition.name,
 							objectDefinitionPermissionsURL,

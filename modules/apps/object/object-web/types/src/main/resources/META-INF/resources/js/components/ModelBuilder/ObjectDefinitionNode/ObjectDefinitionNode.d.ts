@@ -14,6 +14,7 @@ export declare function ObjectDefinitionNode({
 		externalReferenceCode,
 		hasObjectDefinitionDeleteResourcePermission,
 		hasObjectDefinitionManagePermissionsResourcePermission,
+		hasObjectDefinitionUpdateResourcePermission,
 		id,
 		label,
 		linkedObjectDefinition,

@@ -28,7 +28,6 @@ interface ModalMoveObjectDefinitionProps {
 	objectDefinitionId: number;
 	objectFolders: ObjectFolder[];
 	onAfterSubmit: () => void;
-	selectedObjectFolder: Partial<ObjectFolder>;
 	setMoveObjectDefinition: (value: ObjectDefinition | null) => void;
 }
 
@@ -37,7 +36,6 @@ export function ModalMoveObjectDefinition({
 	objectDefinitionId,
 	objectFolders,
 	onAfterSubmit,
-	selectedObjectFolder,
 	setMoveObjectDefinition,
 }: ModalMoveObjectDefinitionProps) {
 	const [objectDefinition, setObjectDefinition] = useState<
@@ -48,6 +46,9 @@ export function ModalMoveObjectDefinition({
 		selectedObjectFolderExternalReferenceCode,
 		setSelectedObjectFolderExternalReferenceCode,
 	] = useState<string>('');
+	const [selectedObjectFolder, setSelectedObjectFolder] = useState<
+		ObjectFolder
+	>();
 	const [error, setError] = useState<string>('');
 
 	const {observer, onClose} = useModal({
@@ -60,7 +61,7 @@ export function ModalMoveObjectDefinition({
 	const filteredObjectFolders = objectFolders.filter(
 		(item) =>
 			item.externalReferenceCode !==
-			selectedObjectFolder.externalReferenceCode
+			selectedObjectFolder?.externalReferenceCode
 	);
 
 	const modalObjectFolderItems = useMemo(() => {
@@ -117,6 +118,11 @@ export function ModalMoveObjectDefinition({
 				objectDefinitionId
 			);
 
+			const objectFolderResponse = await API.getObjectFolderByExternalReferenceCode(
+				objectDefinitionResponse.objectFolderExternalReferenceCode
+			);
+
+			setSelectedObjectFolder(objectFolderResponse);
 			setObjectDefinition(objectDefinitionResponse);
 		};
 

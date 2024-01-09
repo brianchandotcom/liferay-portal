@@ -516,7 +516,6 @@ export default function EditObjectFolder({
 								});
 							}, 200);
 						}}
-						selectedObjectFolder={selectedObjectFolder}
 						setMoveObjectDefinition={() => {
 							dispatch({
 								payload: {movedObjectDefinitionId: undefined},

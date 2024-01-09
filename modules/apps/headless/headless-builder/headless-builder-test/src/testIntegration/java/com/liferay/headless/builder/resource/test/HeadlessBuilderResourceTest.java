@@ -2301,6 +2301,101 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		Assert.assertEquals(textPropertyValue, values.get("textField"));
 	}
 
+	@Test
+	public void testPostWithSiteScopedEndpoint() throws Exception {
+		_addAPIApplicationWithPostEndpoint(
+			true, _siteScopedObjectDefinition1.getExternalReferenceCode(),
+			APIApplication.Endpoint.Scope.SITE);
+
+		Document document = _addRandomDocument();
+
+		String body = JSONUtil.put(
+			"attachmentProperty", document.getId()
+		).put(
+			"booleanProperty", RandomTestUtil.randomBoolean()
+		).put(
+			"dateProperty", _dateFormat.format(RandomTestUtil.nextDate())
+		).put(
+			"dateTimeProperty",
+			_dateTimeFormat.format(RandomTestUtil.nextDate())
+		).put(
+			"decimalProperty", RandomTestUtil.randomDouble()
+		).put(
+			"integerProperty", RandomTestUtil.randomInt()
+		).put(
+			"longIntegerProperty",
+			RandomTestUtil.randomLong(
+				ObjectFieldValidationConstants.BUSINESS_TYPE_LONG_VALUE_MIN,
+				ObjectFieldValidationConstants.BUSINESS_TYPE_LONG_VALUE_MAX)
+		).put(
+			"longTextProperty", RandomTestUtil.randomString()
+		).put(
+			"multiselectPicklistProperty",
+			TransformUtil.transform(
+				Arrays.asList(ListTypeValue.VALUE1, ListTypeValue.VALUE3),
+				ListTypeValue::name)
+		).put(
+			"picklistProperty", ListTypeValue.VALUE1.name()
+		).put(
+			"precisionDecimalProperty", 1.1
+		).put(
+			"richTextProperty", RandomTestUtil.randomString()
+		).put(
+			"textProperty", RandomTestUtil.randomString()
+		).toString();
+
+		String endpointPath = "c/" + _BASE_URL_1 + "/test";
+
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(
+				body, endpointPath, Http.Method.POST));
+
+		long groupId = TestPropsValues.getGroupId();
+
+		String scopedEndpointPath = StringBundler.concat(
+			"c/", _BASE_URL_1, "/scopes/", groupId, "/test");
+
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(
+				body, scopedEndpointPath, Http.Method.POST));
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(
+				body, endpointPath, Http.Method.POST));
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				body, scopedEndpointPath, Http.Method.POST));
+
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getObjectEntries(
+				groupId, _siteScopedObjectDefinition1.getObjectDefinitionId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+
+		scopedEndpointPath = StringBundler.concat(
+			"c/", _BASE_URL_1, "/scopes/", _group.getGroupId(), "/test");
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				body, scopedEndpointPath, Http.Method.POST));
+
+		objectEntries = _objectEntryLocalService.getObjectEntries(
+			_group.getGroupId(),
+			_siteScopedObjectDefinition1.getObjectDefinitionId(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+	}
+
 	private void _addAggregationObjectField(
 			ObjectDefinition objectDefinition, String relationshipName)
 		throws Exception {

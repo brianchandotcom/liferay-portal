@@ -43,13 +43,6 @@ if (Validator.isNotNull(backURL)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
 }
-
-if (!usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) {
-	portletDisplay.setShowExportImportIcon(true);
-}
-else {
-	portletDisplay.setShowExportImportIcon(false);
-}
 %>
 
 <liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-activate-user-because-that-would-exceed-the-maximum-number-of-users-allowed" />
@@ -78,3 +71,14 @@ else {
 		</c:if>
 	</c:otherwise>
 </c:choose>
+
+<%
+usersListView = (String)request.getAttribute("view.jsp-usersListView");
+
+if (!usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) {
+	portletDisplay.setShowExportImportIcon(true);
+}
+else {
+	portletDisplay.setShowExportImportIcon(false);
+}
+%>

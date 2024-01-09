@@ -5,6 +5,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.model.LayoutFriendlyURLTable;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -284,6 +286,22 @@ public class LayoutFriendlyURLLocalServiceImpl
 
 		return layoutFriendlyURLPersistence.findByP_F(
 			plid, friendlyURL, start, end);
+	}
+
+	@Override
+	public int getLayoutFriendlyURLsCount(long companyId, String friendlyURL) {
+		return layoutFriendlyURLPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				LayoutFriendlyURLTable.INSTANCE
+			).where(
+				LayoutFriendlyURLTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					LayoutFriendlyURLTable.INSTANCE.friendlyURL.like(
+						StringUtil.toLowerCase(friendlyURL))
+				)
+			));
 	}
 
 	@Override

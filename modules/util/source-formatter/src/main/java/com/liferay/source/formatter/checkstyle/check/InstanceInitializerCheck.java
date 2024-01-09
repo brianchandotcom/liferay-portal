@@ -68,10 +68,18 @@ public class InstanceInitializerCheck extends BaseCheck {
 			_checkAttributeOrder(exprDetailASTList);
 		}
 
+		String absolutePath = getAbsolutePath();
+
+		if (absolutePath.contains("/test/") ||
+			absolutePath.contains("/testIntegration/")) {
+
+			return;
+		}
+
 		JavaClass javaClass = null;
 
 		try {
-			javaClass = _getJavaClass(detailAST, parentDetailAST);
+			javaClass = _getJavaClass(absolutePath, detailAST, parentDetailAST);
 		}
 		catch (IOException | ParseException exception) {
 			if (_log.isDebugEnabled()) {
@@ -281,7 +289,7 @@ public class InstanceInitializerCheck extends BaseCheck {
 	}
 
 	private JavaClass _getJavaClass(
-			DetailAST detailAST, DetailAST parentDetailAST)
+			String absolutePath, DetailAST detailAST, DetailAST parentDetailAST)
 		throws IOException, ParseException {
 
 		String fullyQualifiedTypeName = null;
@@ -302,8 +310,6 @@ public class InstanceInitializerCheck extends BaseCheck {
 		if (fullyQualifiedTypeName == null) {
 			return null;
 		}
-
-		String absolutePath = getAbsolutePath();
 
 		File javaFile = JavaSourceUtil.getJavaFile(
 			fullyQualifiedTypeName, _getRootDirName(absolutePath),

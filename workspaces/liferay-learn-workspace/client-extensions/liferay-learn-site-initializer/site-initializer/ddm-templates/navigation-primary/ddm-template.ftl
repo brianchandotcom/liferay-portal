@@ -8,19 +8,19 @@
 		border: none;
 	}
 
-	.dropdown-full .adt-nav-item:focus {
-		border-bottom: 1px solid white;
-		border-radius: 2px;
-	}
-
-	.dropdown-full .adt-nav-item:focus .adt-nav-text .lexicon-icon {
-		transform: rotate(180deg);
-	}
-
 	.dropdown-full .adt-nav-item .adt-nav-text {
 		align-items: center;
 		display: flex;
 		justify-content: flex-start;
+	}
+
+	.dropdown-full.show .adt-nav-item {
+		border-bottom: 1px solid white;
+		border-radius: 2px;
+	}
+
+	.dropdown-full.show .adt-nav-item .adt-nav-text .lexicon-icon {
+		transform: rotate(180deg);
 	}
 
 	.dropdown-menu {

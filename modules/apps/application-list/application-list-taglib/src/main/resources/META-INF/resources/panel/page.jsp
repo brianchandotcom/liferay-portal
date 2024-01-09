@@ -201,5 +201,5 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 			"categoryKey", panelCategory.getKey()
 		).build()
 	%>'
-	module="panel/PanelKeyboardHandler"
+	module="{PanelKeyboardHandler} from application-list-taglib"
 />

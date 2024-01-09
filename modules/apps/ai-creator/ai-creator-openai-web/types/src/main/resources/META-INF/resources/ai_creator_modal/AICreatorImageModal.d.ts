@@ -9,6 +9,7 @@ interface Props {
 	getGenerationsURL: string;
 	learnResources: AICreatorModalLearnResources;
 	portletNamespace: string;
+	uploadGenerationsURL: string;
 }
 declare type AICreatorModalLearnResources = {
 	'ai-creator-openai-web': {
@@ -24,5 +25,6 @@ export default function AICreatorImageModal({
 	getGenerationsURL,
 	learnResources,
 	portletNamespace,
+	uploadGenerationsURL,
 }: Props): JSX.Element;
 export {};

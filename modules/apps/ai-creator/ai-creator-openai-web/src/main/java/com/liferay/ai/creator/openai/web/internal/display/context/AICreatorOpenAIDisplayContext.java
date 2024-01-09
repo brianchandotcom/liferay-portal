@@ -9,6 +9,7 @@ import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIPortl
 import com.liferay.learn.LearnMessageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -71,6 +72,20 @@ public class AICreatorOpenAIDisplayContext {
 		).put(
 			"learnResources",
 			LearnMessageUtil.getReactDataJSONObject("ai-creator-openai-web")
+		).put(
+			"uploadGenerationsURL",
+			() -> {
+				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+					RequestBackedPortletURLFactoryUtil.create(
+						_httpServletRequest);
+
+				return PortletURLBuilder.create(
+					requestBackedPortletURLFactory.createActionURL(
+						AICreatorOpenAIPortletKeys.AI_CREATOR_OPENAI)
+				).setMVCRenderCommandName(
+					"/ai_creator_openai/upload_generations"
+				).buildString();
+			}
 		).build();
 	}
 

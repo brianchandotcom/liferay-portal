@@ -20,6 +20,7 @@ interface Props {
 	getGenerationsURL: string;
 	learnResources: AICreatorModalLearnResources;
 	portletNamespace: string;
+	uploadGenerationsURL: string;
 }
 
 type AICreatorModalLearnResources = {
@@ -42,6 +43,7 @@ export default function AICreatorImageModal({
 	getGenerationsURL,
 	learnResources,
 	portletNamespace,
+	uploadGenerationsURL,
 }: Props) {
 	const closeModal = () => {
 		const opener = Liferay.Util.getOpener();
@@ -55,10 +57,23 @@ export default function AICreatorImageModal({
 	const [selectedImages, setSelectedImages] = useState<string[]>([]);
 
 	const onAdd = () => {
-		if (imagesURL) {
-			const opener = Liferay.Util.getOpener();
+		if (selectedImages.length) {
+			Promise.all(
+				selectedImages.map((imageURL) => {
+					return fetch(uploadGenerationsURL, {
+						body: JSON.stringify(imageURL),
+						method: 'POST',
+					})
+						.then((response) => response.json())
+						.then((json) => {
+							console.log(json); // TODO
+						});
+				})
+			).then(() => {
+				const opener = Liferay.Util.getOpener();
 
-			opener.Liferay.fire('closeModal', {imagesURL});
+				opener.Liferay.fire('closeModal', {imagesURL});
+			});
 		}
 	};
 

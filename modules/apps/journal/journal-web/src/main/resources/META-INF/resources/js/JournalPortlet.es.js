@@ -222,6 +222,10 @@ export default function _JournalPortlet({
 	};
 
 	const handlePublishButtonClick = (event) => {
+		if (Liferay.FeatureFlags['LPS-141392']) {
+			return;
+		}
+
 		publishingLock.lock();
 
 		document

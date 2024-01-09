@@ -6,7 +6,6 @@
 package com.liferay.cookies.banner.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
@@ -36,10 +35,6 @@ public class EnableThirdPartyCookiesBottomJSDynamicInclude
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-154290")) {
-			return;
-		}
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(

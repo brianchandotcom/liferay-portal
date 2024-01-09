@@ -74,20 +74,6 @@ public class EditableFragmentEntryValidator
 			}
 
 			editableElementParser.validate(element);
-
-			String html = element.html();
-
-			if (html.contains("data-lfr-editable-id=\"") ||
-				html.contains("<lfr-drop-zone") ||
-				html.contains("<lfr-editable") ||
-				html.contains("<lfr-widget-")) {
-
-				throw new FragmentEntryContentException(
-					_language.get(
-						locale,
-						"editable-fields-cannot-include-nested-editables-" +
-							"drop-zones-or-widgets-in-it"));
-			}
 		}
 
 		for (Element element :

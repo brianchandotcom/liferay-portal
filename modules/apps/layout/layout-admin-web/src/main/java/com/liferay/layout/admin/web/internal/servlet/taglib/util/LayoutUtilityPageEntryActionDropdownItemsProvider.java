@@ -144,6 +144,9 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
+						() -> _hasUpdatePermission(),
+						_getConfigureLayoutUtilityPageEntryActionUnsafeConsumer()
+					).add(
 						() -> LayoutUtilityPageEntryPermission.contains(
 							_themeDisplay.getPermissionChecker(),
 							_layoutUtilityPageEntry, ActionKeys.PERMISSIONS),
@@ -161,6 +164,35 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getConfigureLayoutUtilityPageEntryActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/layout_admin/edit_layout"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setBackURL(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"backURLTitle",
+					LanguageUtil.get(_httpServletRequest, "utility-pages")
+				).setParameter(
+					"groupId", _layout.getGroupId()
+				).setParameter(
+					"privateLayout", _layout.isPrivateLayout()
+				).setParameter(
+					"selPlid", _layout.getPlid()
+				).buildString());
+			dropdownItem.setIcon("cog");
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "configure"));
+		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

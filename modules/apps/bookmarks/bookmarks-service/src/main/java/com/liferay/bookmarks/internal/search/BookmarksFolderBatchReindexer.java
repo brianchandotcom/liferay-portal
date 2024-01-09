@@ -5,11 +5,47 @@
 
 package com.liferay.bookmarks.internal.search;
 
+import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.search.batch.BatchIndexingActionable;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
+import com.liferay.portal.search.indexer.IndexerWriter;
+
 /**
  * @author Luan Maoski
  */
-public interface BookmarksFolderBatchReindexer {
+public class BookmarksFolderBatchReindexer {
 
-	public void reindex(long folderId, long companyId);
+	public BookmarksFolderBatchReindexer(
+		IndexerDocumentBuilder indexerDocumentBuilder,
+		IndexerWriter<BookmarksFolder> indexerWriter) {
+
+		_indexerDocumentBuilder = indexerDocumentBuilder;
+		_indexerWriter = indexerWriter;
+	}
+
+	public void reindex(long folderId, long companyId) {
+		BatchIndexingActionable batchIndexingActionable =
+			_indexerWriter.getBatchIndexingActionable();
+
+		batchIndexingActionable.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property folderIdProperty = PropertyFactoryUtil.forName(
+					"folderId");
+
+				dynamicQuery.add(folderIdProperty.eq(folderId));
+			});
+		batchIndexingActionable.setCompanyId(companyId);
+		batchIndexingActionable.setPerformActionMethod(
+			(BookmarksFolder bookmarksFolder) ->
+				batchIndexingActionable.addDocuments(
+					_indexerDocumentBuilder.getDocument(bookmarksFolder)));
+
+		batchIndexingActionable.performActions();
+	}
+
+	private final IndexerDocumentBuilder _indexerDocumentBuilder;
+	private final IndexerWriter<BookmarksFolder> _indexerWriter;
 
 }

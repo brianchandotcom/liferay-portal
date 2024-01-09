@@ -103,9 +103,7 @@ export function ModalMoveObjectDefinition({
 				type: 'success',
 			});
 
-			if (onAfterMoveObjectDefinition) {
-				onAfterMoveObjectDefinition();
-			}
+			onAfterMoveObjectDefinition();
 		}
 		catch (error) {
 			setError((error as Error).message);
@@ -114,16 +112,18 @@ export function ModalMoveObjectDefinition({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const objectDefinitionResponse = await API.getObjectDefinitionById(
-				objectDefinitionId
-			);
+			if (objectDefinitionId) {
+				const objectDefinitionResponse = await API.getObjectDefinitionById(
+					objectDefinitionId
+				);
 
-			const objectFolderResponse = await API.getObjectFolderByExternalReferenceCode(
-				objectDefinitionResponse.objectFolderExternalReferenceCode
-			);
+				const objectFolderResponse = await API.getObjectFolderByExternalReferenceCode(
+					objectDefinitionResponse.objectFolderExternalReferenceCode
+				);
 
-			setSelectedObjectFolder(objectFolderResponse);
-			setObjectDefinition(objectDefinitionResponse);
+				setSelectedObjectFolder(objectFolderResponse);
+				setObjectDefinition(objectDefinitionResponse);
+			}
 		};
 
 		makeFetch();

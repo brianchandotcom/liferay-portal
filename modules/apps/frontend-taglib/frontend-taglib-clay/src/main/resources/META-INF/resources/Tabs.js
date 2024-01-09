@@ -10,9 +10,13 @@ const Panel = ({children: tabPanel}) => {
 	const ref = useRef();
 
 	useEffect(() => {
+		const fragment = document.createDocumentFragment();
+
 		while (tabPanel.firstChild) {
-			ref.current.appendChild(tabPanel.firstChild);
+			fragment.appendChild(tabPanel.firstChild);
 		}
+
+		ref.current.appendChild(fragment);
 	}, [tabPanel]);
 
 	return <div ref={ref}></div>;

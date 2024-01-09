@@ -786,6 +786,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-invoke', 'aui-debounce', 'aui-node'],
+		requires: ['aui-component', 'array-invoke', 'aui-debounce', 'aui-node'],
 	}
 );

@@ -1352,24 +1352,25 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 	</target>
 
 	<target name="update-portal-osgi-configuration-properties">
-		<pathconvert pathsep="," property="configuration.java.files">
-			<fileset
-				dir="modules"
-				excludes=""
-				includes="**/apps/**/configuration/*Configuration.java"
-			>
-			</fileset>
-		</pathconvert>
+		<exec dir="${project.dir}" executable="git" outputproperty="configuration.java.files">
+			<arg line="ls-files --full-name -- ':(glob)**/apps/**/configuration/**/*Configuration.java' ':!:**/*-test/**'" />
+		</exec>
+
+		<exec dir="${project.dir}" executable="git" outputproperty="language.properties.file">
+			<arg line="ls-files --full-name -- '**/portal-language-lang/**/Language.properties'" />
+		</exec>
 
 		<java
 			classname="com.liferay.portal.tools.ConfigurationEnvBuilder"
 			classpathref="project.classpath"
-			dir="${project.dir}/modules"
+			dir="${project.dir}"
 			fork="${fork.mode}"
 			newenvironment="true"
 		>
 			<arg value="configuration.java.files=${configuration.java.files}" />
-			<arg value="output.file=${project.dir}/portal-impl/src/portal-osgi-configuration.properties" />
+			<arg value="json.schema.output.file=${project.dir}/modules/sdk/gradle-plugins-workspace/src/main/resources/schemas/client-extension-type-instance-settings.schema.json" />
+			<arg value="language.properties.file=${project.dir}/${language.properties.file}" />
+			<arg value="properties.output.file=${project.dir}/portal-impl/src/portal-osgi-configuration.properties" />
 			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
 		</java>
 	</target>

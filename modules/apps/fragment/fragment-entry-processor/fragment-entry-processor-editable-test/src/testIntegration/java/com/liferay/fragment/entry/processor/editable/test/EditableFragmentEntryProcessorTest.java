@@ -763,6 +763,15 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testFragmentEntryProcessorEditableLinkWithNestedEditablesInHtml()
+		throws Exception {
+
+		_addFragmentEntry(
+			"fragment_entry_with_editable_link_with_nested_editable_in_html." +
+				"html");
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableMappedAssetField()
 		throws Exception {
 

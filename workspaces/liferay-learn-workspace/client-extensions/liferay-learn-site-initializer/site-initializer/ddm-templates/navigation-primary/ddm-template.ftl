@@ -58,7 +58,7 @@
 	}
 
 	.dropdown-menu .row .dropdown-item-div .dropdown-item .subtitle {
-		color: var(--color-neutral-08, #54555F);
+		color: var(--color-neutral-8, #54555F);
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 13px;
 		font-style: normal;

@@ -40,6 +40,10 @@ test('can create relationship by dragging node handles', async ({
 
 	await _objectDefinitionsPage.viewInModelBuilder();
 
+	await _modelBuilderPage.clickToggleSidebarsButton();
+
+	await _modelBuilderPage.clickFitViewButton();
+
 	const objectRelationshipLabel = 'objectRelationship' + getRandomInt();
 
 	const objectRelationship = await _modelBuilderPage.createObjectRelationship(
@@ -58,6 +62,8 @@ test('can create relationship by dragging node handles', async ({
 	await _modelBuilderPage.clickObjectDefinitionShowAllFieldsButton(
 		objectDefinition2.name
 	);
+
+	await _modelBuilderPage.clickFitViewButton();
 
 	await expect(
 		_modelBuilderPage.objectDefinitionNodes

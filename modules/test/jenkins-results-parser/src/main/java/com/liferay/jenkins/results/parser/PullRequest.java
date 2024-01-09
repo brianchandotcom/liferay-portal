@@ -12,6 +12,9 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import java.io.File;
 import java.io.IOException;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -201,6 +204,19 @@ public class PullRequest {
 		return gitWorkingDirectory.createPullRequest(
 			commentBody, forwardBranchName, forwardReceiverUsername,
 			forwardSenderUsername, getTitle());
+	}
+
+	public URL getBaseURL() {
+		try {
+			return new URL(
+				JenkinsResultsParserUtil.combine(
+					"https://github.com/", getReceiverUsername(), "/",
+					getGitRepositoryName(), "/tree/",
+					getUpstreamRemoteGitBranchName()));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	public String getBody() {
@@ -406,6 +422,18 @@ public class PullRequest {
 
 	public String getGitRepositoryName() {
 		return getGitHubRemoteGitRepositoryName();
+	}
+
+	public URL getHeadURL() {
+		try {
+			return new URL(
+				JenkinsResultsParserUtil.combine(
+					"https://github.com/", getSenderUsername(), "/",
+					getGitRepositoryName(), "/tree/", getSenderBranchName()));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	public String getHtmlURL() {

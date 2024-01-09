@@ -22,79 +22,47 @@ import java.util.regex.Pattern;
 public class MergePortalSubrepositoryUtil {
 
 	public static void mergePortalSubrepository(
-			URL portalGitHubURL, String portalUpstreamBranchName,
-			URL subrepositoryGitHubURL, String subrepositoryUpstreamBranchName,
+			PullRequest portalPullRequest, URL subrepositoryGitHubURL,
+			String subrepositoryUpstreamBranchName,
 			String targetGitRepoCommitSHA)
 		throws IOException {
 
 		GitWorkingDirectory portalGitWorkingDirectory = _getGitWorkingDirectory(
-			portalGitHubURL, portalUpstreamBranchName);
+			portalPullRequest.getBaseURL(),
+			portalPullRequest.getUpstreamRemoteGitBranchName());
 
 		GitWorkingDirectory subrepositoryGitWorkingDirectory =
 			_getGitWorkingDirectory(
 				subrepositoryGitHubURL, subrepositoryUpstreamBranchName);
 
 		String currentGitRepoCommitSHA = _getCurrentGitRepoCommitSHA(
-			portalGitHubURL, portalGitWorkingDirectory,
+			portalPullRequest, portalGitWorkingDirectory,
 			subrepositoryGitWorkingDirectory, targetGitRepoCommitSHA);
 
-		LocalGitBranch portalCurrentLocalGitBranch =
-			portalGitWorkingDirectory.getCurrentLocalGitBranch();
-
-		String portalCurrentBranchSHA = portalCurrentLocalGitBranch.getSHA();
-
 		_fetchSubrepositoryBranchToPortalRepository(
-			portalCurrentBranchSHA, portalGitWorkingDirectory,
-			subrepositoryGitWorkingDirectory);
+			portalGitWorkingDirectory, subrepositoryGitWorkingDirectory);
 
 		_checkMergeCommitSHA(
 			currentGitRepoCommitSHA, targetGitRepoCommitSHA,
-			portalGitWorkingDirectory, portalGitHubURL,
+			portalGitWorkingDirectory, portalPullRequest,
 			subrepositoryGitWorkingDirectory);
 
-		_createPatch(
+		_createAndApplyPatch(
 			portalGitWorkingDirectory, subrepositoryGitWorkingDirectory,
 			currentGitRepoCommitSHA, targetGitRepoCommitSHA);
 
-		_applyPatch(
-			portalGitWorkingDirectory, subrepositoryGitWorkingDirectory);
-
 		_commitGitRepoUpdates(
 			portalGitWorkingDirectory, subrepositoryGitWorkingDirectory,
-			portalCurrentBranchSHA, targetGitRepoCommitSHA);
+			targetGitRepoCommitSHA);
 
 		_pushUpdatesToRemoteBranch(
-			portalGitHubURL, portalGitWorkingDirectory,
-			portalUpstreamBranchName);
-	}
-
-	private static void _applyPatch(
-		GitWorkingDirectory portalGitWorkingDirectory,
-		GitWorkingDirectory subrepositoryGitWorkingDirectory) {
-
-		GitUtil.ExecutionResult executionResult =
-			portalGitWorkingDirectory.executeBashCommands(
-				3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 10,
-				"(git am --abort || true)",
-				JenkinsResultsParserUtil.combine(
-					"git am --directory=\"",
-					_getSubrepositoryModuleDirPath(
-						portalGitWorkingDirectory,
-						subrepositoryGitWorkingDirectory),
-					"\" --keep-cr --whitespace=nowarn *.patch"));
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				"Unable to apply patch \n" +
-					executionResult.getStandardError());
-		}
-
-		System.out.println(executionResult.getStandardOut());
+			portalPullRequest, portalGitWorkingDirectory);
 	}
 
 	private static void _checkMergeCommitSHA(
 		String currentGitRepoCommitSHA, String targetGitRepoCommitSHA,
-		GitWorkingDirectory portalGitWorkingDirectory, URL portalGitHubURL,
+		GitWorkingDirectory portalGitWorkingDirectory,
+		PullRequest portalPullRequest,
 		GitWorkingDirectory subrepositoryGitWorkingDirectory) {
 
 		if (Objects.equals(
@@ -107,8 +75,10 @@ public class MergePortalSubrepositoryUtil {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_getGitHubURLString(portalGitHubURL, targetGitRepoCommitSHA));
-		sb.append(" is incompatible with SHA found in '");
+		sb.append(
+			_getGitHubURLString(
+				portalPullRequest.getBaseURL(), targetGitRepoCommitSHA));
+		sb.append(" is incompatible with sha found in '");
 
 		sb.append(
 			JenkinsResultsParserUtil.getPathRelativeTo(
@@ -126,7 +96,12 @@ public class MergePortalSubrepositoryUtil {
 	private static void _commitGitRepoUpdates(
 		GitWorkingDirectory portalGitWorkingDirectory,
 		GitWorkingDirectory subrepositoryGitWorkingDirectory,
-		String portalParentBranchSHA, String targetGitRepoCommitSHA) {
+		String targetGitRepoCommitSHA) {
+
+		LocalGitBranch portalCurrentLocalGitBranch =
+			portalGitWorkingDirectory.getCurrentLocalGitBranch();
+
+		String portalCurrentBranchSHA = portalCurrentLocalGitBranch.getSHA();
 
 		File gitRepoFile = _getGitRepoFile(
 			portalGitWorkingDirectory, subrepositoryGitWorkingDirectory);
@@ -141,7 +116,7 @@ public class MergePortalSubrepositoryUtil {
 			gitRepoFileContent = gitRepoFileContent.replaceAll(
 				"commit = [0-9a-f]{40}", "commit = " + targetGitRepoCommitSHA);
 			gitRepoFileContent = gitRepoFileContent.replaceAll(
-				"parent = [0-9a-f]{40}", "parent = " + portalParentBranchSHA);
+				"parent = [0-9a-f]{40}", "parent = " + portalCurrentBranchSHA);
 
 			JenkinsResultsParserUtil.write(gitRepoFile, gitRepoFileContent);
 
@@ -160,7 +135,7 @@ public class MergePortalSubrepositoryUtil {
 		}
 	}
 
-	private static void _createPatch(
+	private static void _createAndApplyPatch(
 		GitWorkingDirectory portalGitWorkingDirectory,
 		GitWorkingDirectory subrepositoryGitWorkingDirectory, String gitRepoSHA,
 		String targetGitRepoCommitSHA) {
@@ -207,11 +182,17 @@ public class MergePortalSubrepositoryUtil {
 		GitUtil.ExecutionResult executionResult =
 			portalGitWorkingDirectory.executeBashCommands(
 				3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 10, "rm -f *.patch",
-				sb.toString());
+				sb.toString(), "(git am --abort || true)",
+				JenkinsResultsParserUtil.combine(
+					"git am --directory=\"",
+					_getSubrepositoryModuleDirPath(
+						portalGitWorkingDirectory,
+						subrepositoryGitWorkingDirectory),
+					"\" --keep-cr --whitespace=nowarn *.patch"));
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
-				"Failed to create a patch \n" +
+				"Failed to create & apply the patch \n" +
 					executionResult.getStandardError());
 		}
 
@@ -219,18 +200,35 @@ public class MergePortalSubrepositoryUtil {
 	}
 
 	private static void _fetchSubrepositoryBranchToPortalRepository(
-		String portalCurrentBranchSHA,
 		GitWorkingDirectory portalGitWorkingDirectory,
 		GitWorkingDirectory subrepositoryGitWorkingDirectory) {
 
-		portalGitWorkingDirectory.fetch(
-			null, subrepositoryGitWorkingDirectory.getCurrentLocalGitBranch());
+		LocalGitBranch portalCurrentLocalGitBranch =
+			portalGitWorkingDirectory.getCurrentLocalGitBranch();
 
-		portalGitWorkingDirectory.reset("--hard " + portalCurrentBranchSHA);
+		String portalCurrentBranchSHA = portalCurrentLocalGitBranch.getSHA();
+
+		try {
+			portalGitWorkingDirectory.fetch(
+				null,
+				subrepositoryGitWorkingDirectory.getCurrentLocalGitBranch());
+		}
+		catch (Exception exception) {
+			File subrepositoryWorkingDirectory =
+				subrepositoryGitWorkingDirectory.getWorkingDirectory();
+
+			throw new RuntimeException(
+				"Unable to fetch from " + subrepositoryWorkingDirectory,
+				exception);
+		}
+		finally {
+			portalGitWorkingDirectory.reset("--hard " + portalCurrentBranchSHA);
+		}
 	}
 
 	private static String _getCurrentGitRepoCommitSHA(
-		URL portalGitHubURL, GitWorkingDirectory portalGitWorkingDirectory,
+		PullRequest portalPullRequest,
+		GitWorkingDirectory portalGitWorkingDirectory,
 		GitWorkingDirectory subrepositoryGitWorkingDirectory,
 		String targetGitRepoCommitSHA) {
 
@@ -247,7 +245,8 @@ public class MergePortalSubrepositoryUtil {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append(
-				_getGitHubURLString(portalGitHubURL, targetGitRepoCommitSHA));
+				_getGitHubURLString(
+					portalPullRequest.getBaseURL(), targetGitRepoCommitSHA));
 			sb.append(" already found in '");
 			sb.append(
 				JenkinsResultsParserUtil.getPathRelativeTo(
@@ -350,24 +349,26 @@ public class MergePortalSubrepositoryUtil {
 	}
 
 	private static void _pushUpdatesToRemoteBranch(
-		URL portalGitHubURL, GitWorkingDirectory portalGitWorkingDirectory,
-		String portalUpstreamBranchName) {
+		PullRequest portalPullRequest,
+		GitWorkingDirectory portalGitWorkingDirectory) {
+
+		URL portalBaseURL = portalPullRequest.getBaseURL();
 
 		Matcher gitHubURLMatcher = _gitHubURLPattern.matcher(
-			String.valueOf(portalGitHubURL));
+			String.valueOf(portalBaseURL));
 
 		if (!gitHubURLMatcher.find()) {
-			throw new RuntimeException("Invalid GitHub URL " + portalGitHubURL);
+			throw new RuntimeException("Invalid GitHub URL " + portalBaseURL);
 		}
 
 		String remoteURL = JenkinsResultsParserUtil.combine(
 			"git@github.com:", gitHubURLMatcher.group("userName"), "/",
-			portalGitWorkingDirectory.getGitRepositoryName(), ".git");
+			gitHubURLMatcher.group("repositoryName"), ".git");
 
 		RemoteGitBranch remoteGitBranch =
 			portalGitWorkingDirectory.pushToRemoteGitRepository(
 				false, portalGitWorkingDirectory.getCurrentLocalGitBranch(),
-				portalUpstreamBranchName, remoteURL);
+				gitHubURLMatcher.group("branchName"), remoteURL);
 
 		if (remoteGitBranch == null) {
 			throw new RuntimeException(

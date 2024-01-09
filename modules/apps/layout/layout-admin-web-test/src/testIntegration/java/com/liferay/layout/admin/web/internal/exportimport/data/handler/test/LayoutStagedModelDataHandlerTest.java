@@ -628,6 +628,8 @@ public class LayoutStagedModelDataHandlerTest
 			).put(
 				"com.liferay.portlet.preferences-owned-by-group", "true"
 			).put(
+				"javax.portlet.init-param.view-template", "/view.jsp"
+			).put(
 				"javax.portlet.name", _TEST_PORTLET_NAME
 			).build());
 	}

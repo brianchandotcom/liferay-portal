@@ -92,7 +92,7 @@ public class DBPartitionSchemaValidator {
 	private static List<Long> _getCompanyIds() throws Exception {
 		try (Statement statement = _connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
-				"select companyId from Company order by companyId asc")) {
+				"select companyId from Company order by createDate asc")) {
 
 			List<Long> companyIds = new ArrayList<>();
 

@@ -287,6 +287,11 @@ public class LayoutFriendlyURLLocalServiceImpl
 	}
 
 	@Override
+	public int getLayoutFriendlyURLsCount(long companyId, String friendlyURL) {
+		return layoutFriendlyURLPersistence.countByC_F(companyId, friendlyURL);
+	}
+
+	@Override
 	public LayoutFriendlyURL updateLayoutFriendlyURL(
 			long userId, long companyId, long groupId, long plid,
 			boolean privateLayout, String friendlyURL, String languageId,

@@ -60,7 +60,7 @@ definition {
 		}
 
 		task ("Connect AC to DXP") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("View AC Page as new user") {
@@ -73,7 +73,7 @@ definition {
 		task ("Close all sessions, lauch AC, change the property and go to segments") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = ${propertyName});
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToSegments();
 		}

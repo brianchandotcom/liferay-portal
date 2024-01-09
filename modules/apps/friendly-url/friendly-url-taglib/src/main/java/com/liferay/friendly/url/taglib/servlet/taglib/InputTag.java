@@ -67,6 +67,10 @@ public class InputTag extends IncludeTag {
 		return _disabled;
 	}
 
+	public boolean isLanguagesDropdownVisible() {
+		return _languagesDropdownVisible;
+	}
+
 	public boolean isLocalizable() {
 		return _localizable;
 	}
@@ -103,6 +107,10 @@ public class InputTag extends IncludeTag {
 		_inputAddon = inputAddon;
 	}
 
+	public void setLanguagesDropdownVisible(boolean languagesDropdownVisible) {
+		_languagesDropdownVisible = languagesDropdownVisible;
+	}
+
 	public void setLocalizable(boolean localizable) {
 		_localizable = localizable;
 	}
@@ -136,6 +144,7 @@ public class InputTag extends IncludeTag {
 		_disabled = false;
 		_helpMessage = null;
 		_inputAddon = null;
+		_languagesDropdownVisible = true;
 		_localizable = true;
 		_name = _DEFAULT_NAME;
 		_showHistory = true;
@@ -167,6 +176,9 @@ public class InputTag extends IncludeTag {
 			"liferay-friendly-url:input:helpMessage", getHelpMessage());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:inputAddon", getInputAddon());
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:input:languagesDropdownVisible",
+			isLanguagesDropdownVisible());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:localizable", isLocalizable());
 		httpServletRequest.setAttribute(
@@ -316,6 +328,7 @@ public class InputTag extends IncludeTag {
 	private boolean _disabled;
 	private String _helpMessage;
 	private String _inputAddon;
+	private boolean _languagesDropdownVisible = true;
 	private boolean _localizable = true;
 	private String _name = _DEFAULT_NAME;
 	private boolean _showHistory = true;

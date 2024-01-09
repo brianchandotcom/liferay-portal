@@ -11,6 +11,7 @@
 String defaultLanguageId = (String)request.getAttribute("liferay-friendly-url:input:defaultLanguageId");
 boolean disabled = (boolean)request.getAttribute("liferay-friendly-url:input:disabled");
 int friendlyURLMaxLength = (int)request.getAttribute("liferay-friendly-url:input:friendlyURLMaxLength");
+boolean languagesDropdownVisible = (boolean)request.getAttribute("liferay-friendly-url:input:languagesDropdownVisible");
 boolean localizable = (boolean)request.getAttribute("liferay-friendly-url:input:localizable");
 String name = (String)request.getAttribute("liferay-friendly-url:input:name");
 String value = (String)request.getAttribute("liferay-friendly-url:input:value");
@@ -47,6 +48,7 @@ if (defaultLanguageId == null) {
 				helpMessage='<%= (String)request.getAttribute("liferay-friendly-url:input:helpMessage") %>'
 				ignoreRequestValue="<%= SessionErrors.isEmpty(request) %>"
 				inputAddon='<%= (String)request.getAttribute("liferay-friendly-url:input:inputAddon") %>'
+				languagesDropdownVisible="<%= languagesDropdownVisible %>"
 				name="<%= name %>"
 				xml="<%= HttpComponentsUtil.decodeURL(value) %>"
 			/>

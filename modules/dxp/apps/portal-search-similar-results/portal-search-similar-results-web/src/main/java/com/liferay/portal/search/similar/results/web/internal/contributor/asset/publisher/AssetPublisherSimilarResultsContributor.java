@@ -8,7 +8,6 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.asset
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
@@ -101,11 +100,6 @@ public class AssetPublisherSimilarResultsContributor
 		).replace(
 			String.valueOf(entryId), String.valueOf(assetEntry.getEntryId())
 		);
-	}
-
-	private String _getAssetPublisherPortletId(String instanceId) {
-		return AssetPublisherPortletKeys.ASSET_PUBLISHER + "_INSTANCE_" +
-			instanceId;
 	}
 
 	private ClassedModel _getClassedModel(AssetEntry assetEntry) {

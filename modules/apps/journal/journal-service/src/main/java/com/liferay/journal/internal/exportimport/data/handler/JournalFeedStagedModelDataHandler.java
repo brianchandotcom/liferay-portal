@@ -17,7 +17,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.journal.exception.FeedTargetLayoutFriendlyUrlException;
-import com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategy;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -162,13 +161,6 @@ public class JournalFeedStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(feed.getUserUuid());
 
-		long authorId = _journalCreationStrategy.getAuthorUserId(
-			portletDataContext, feed);
-
-		if (authorId != JournalCreationStrategy.USE_DEFAULT_USER_ID_STRATEGY) {
-			userId = authorId;
-		}
-
 		_journalFeedExportImportContentProcessor.replaceImportContentReferences(
 			portletDataContext, feed, StringPool.BLANK);
 
@@ -291,9 +283,6 @@ public class JournalFeedStagedModelDataHandler
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-
-	@Reference
-	private JournalCreationStrategy _journalCreationStrategy;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalFeed)"

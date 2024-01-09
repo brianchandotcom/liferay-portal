@@ -532,6 +532,18 @@ public class DLAdminDisplayContext {
 					}
 				}
 			}
+
+			if (_folder != null) {
+				List<Long> ancestors = _folder.getAncestorFolderIds();
+
+				if ((_folderId != _rootFolderId) &&
+					(_rootFolderId !=
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
+					!ancestors.contains(_rootFolderId)) {
+
+					throw new NoSuchFolderException();
+				}
+			}
 		}
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);

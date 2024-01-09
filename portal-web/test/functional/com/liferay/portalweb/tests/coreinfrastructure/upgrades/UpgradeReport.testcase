@@ -854,7 +854,7 @@ definition {
 				fail("Upgrade report does not contain the warning class name.");
 			}
 
-			if (!(contains(${upgradeReportContent}, "1 occurrences of the following event: null"))) {
+			if (!(contains(${upgradeReportContent}, "2 occurrences of the following event: null"))) {
 				echo(${upgradeReportContent});
 
 				fail("Upgrade report does not contain the warning message.");

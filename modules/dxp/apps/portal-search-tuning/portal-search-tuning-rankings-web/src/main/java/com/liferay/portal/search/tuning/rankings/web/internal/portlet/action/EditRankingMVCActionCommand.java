@@ -375,7 +375,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		Ranking ranking) {
 
 		if (_resultRankingsConfiguration.allowDuplicateQueryStrings() ||
-			_isInactive(editRankingMVCActionRequest) ||
 			editRankingMVCActionRequest.isCmd(
 				ResultRankingsConstants.ACTION_DEACTIVATE)) {
 
@@ -385,6 +384,10 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		Collection<String> queryStrings = ranking.getQueryStrings();
 
 		if (editRankingMVCActionRequest.isCmd(Constants.UPDATE)) {
+			if (_isInactive(editRankingMVCActionRequest)) {
+				return;
+			}
+
 			queryStrings = RankingUtil.getQueryStrings(
 				ranking.getQueryString(),
 				_getAliases(editRankingMVCActionRequest));

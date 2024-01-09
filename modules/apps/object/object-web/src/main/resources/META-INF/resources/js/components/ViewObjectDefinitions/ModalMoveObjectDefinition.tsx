@@ -17,7 +17,7 @@ import {
 } from '@liferay/object-js-components-web';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {openToast, sub} from 'frontend-js-web';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
 
@@ -25,7 +25,7 @@ import './ModalMoveObjectDefinition.scss';
 
 interface ModalMoveObjectDefinitionProps {
 	handleOnClose: () => void;
-	objectDefinition: ObjectDefinition;
+	objectDefinitionId: number;
 	objectFolders: ObjectFolder[];
 	selectedObjectFolder: Partial<ObjectFolder>;
 	setMoveObjectDefinition: (value: ObjectDefinition | null) => void;
@@ -33,11 +33,14 @@ interface ModalMoveObjectDefinitionProps {
 
 export function ModalMoveObjectDefinition({
 	handleOnClose,
-	objectDefinition,
+	objectDefinitionId,
 	objectFolders,
 	selectedObjectFolder,
 	setMoveObjectDefinition,
 }: ModalMoveObjectDefinitionProps) {
+	const [objectDefinition, setObjectDefinition] = useState<
+		ObjectDefinition
+	>();
 	const [query, setQuery] = useState('');
 	const [
 		selectedObjectFolderExternalReferenceCode,
@@ -70,7 +73,7 @@ export function ModalMoveObjectDefinition({
 
 	const handleMoveObject = async () => {
 		const movedObjectDefinition: ObjectDefinition = {
-			...objectDefinition,
+			...(objectDefinition as ObjectDefinition),
 			objectFolderExternalReferenceCode: selectedObjectFolderExternalReferenceCode,
 		};
 
@@ -78,7 +81,7 @@ export function ModalMoveObjectDefinition({
 			await API.save({
 				item: movedObjectDefinition,
 				method: 'PATCH',
-				url: `/o/object-admin/v1.0/object-definitions/${objectDefinition.id}`,
+				url: `/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`,
 			});
 
 			onClose();
@@ -89,8 +92,8 @@ export function ModalMoveObjectDefinition({
 					`<strong>${Liferay.Util.escapeHTML(
 						getLocalizableLabel(
 							defaultLanguageId,
-							movedObjectDefinition.label,
-							movedObjectDefinition.name
+							movedObjectDefinition?.label,
+							movedObjectDefinition?.name
 						)
 					)}</strong>`
 				),
@@ -103,6 +106,18 @@ export function ModalMoveObjectDefinition({
 			setError((error as Error).message);
 		}
 	};
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			const objectDefinitionResponse = await API.getObjectDefinitionById(
+				objectDefinitionId
+			);
+
+			setObjectDefinition(objectDefinitionResponse);
+		};
+
+		makeFetch();
+	}, [objectDefinitionId]);
 
 	return (
 		<ClayModalProvider>

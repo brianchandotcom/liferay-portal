@@ -22,6 +22,7 @@ declare type ObjectDefinitionNodeActionsProps = {
 	objectDefinitionId: number;
 	objectDefinitionName: string;
 	objectDefinitionPermissionsURL: string;
+	objectFoldersLenght: number;
 	status: {
 		code: number;
 		label: string;
@@ -71,6 +72,7 @@ export declare function getObjectDefinitionNodeActions({
 	objectDefinitionId,
 	objectDefinitionName,
 	objectDefinitionPermissionsURL,
+	objectFoldersLenght,
 }: ObjectDefinitionNodeActionsProps): DropDownItems[];
 interface GetObjectFolderActionsProps {
 	actions?: {

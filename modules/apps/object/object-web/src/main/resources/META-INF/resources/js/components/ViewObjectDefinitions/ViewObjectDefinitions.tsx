@@ -623,7 +623,7 @@ export default function ViewObjectDefinitions({
 							})
 						);
 					}}
-					objectDefinition={moveObjectDefinition as ObjectDefinition}
+					objectDefinitionId={moveObjectDefinition?.id as number}
 					objectFolders={objectFoldersRequestInfo.items}
 					selectedObjectFolder={selectedObjectFolder}
 					setMoveObjectDefinition={setMoveObjectDefinition}

@@ -33,7 +33,6 @@ import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.util.ObjectFieldUtil;
-import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.field.setting.contributor.DefaultObjectFieldSettingContributor;
 import com.liferay.object.internal.field.setting.contributor.FiltersObjectFieldSettingsContributor;
 import com.liferay.object.internal.field.setting.contributor.ObjectFieldSettingContributor;
@@ -873,27 +872,23 @@ public class ObjectFieldLocalServiceImpl
 			return objectField;
 		}
 
-		if (localized) {
-			_addObjectFieldColumn(
-				objectDefinition.getLocalizationDBTableName(), objectField,
-				objectField.getDBColumnName(), "languageId");
-		}
-		else if (!objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
-				 !objectField.compareBusinessType(
-					 ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
+		if (!objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
+			!objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
-			_addObjectFieldColumn(
-				dbTableName, objectField, objectField.getDBColumnName());
+			if (localized) {
+				dbTableName = objectDefinition.getLocalizationDBTableName();
+			}
+
+			_addObjectFieldColumn(dbTableName, objectField);
 		}
 
 		return objectField;
 	}
 
 	private void _addObjectFieldColumn(
-			String dbTableName, ObjectField objectField,
-			String... dbColumnNames)
-		throws PortalException {
+		String dbTableName, ObjectField objectField) {
 
 		runSQL(
 			DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
@@ -908,13 +903,6 @@ public class ObjectFieldLocalServiceImpl
 					dbTableName, objectField.getBusinessType(),
 					objectField.getSortableDBColumnName(),
 					ObjectFieldConstants.DB_TYPE_LONG));
-		}
-
-		if (objectField.hasUniqueValues()) {
-			ObjectDBManagerUtil.createIndexMetadata(
-				_currentConnection.getConnection(
-					objectFieldPersistence.getDataSource()),
-				dbTableName, true, dbColumnNames);
 		}
 	}
 

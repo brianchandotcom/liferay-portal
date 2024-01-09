@@ -8,6 +8,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import {ObjectDefinitionsPage} from './objectDefinitions.page';
 
 export class ModelBuilderPage {
+	readonly fitViewButton: Locator;
 	readonly newObjectRelationshipLabel: Locator;
 	readonly newObjectRelationshipTitle: Locator;
 	readonly newObjectRelationshipType: Locator;
@@ -18,6 +19,9 @@ export class ModelBuilderPage {
 	readonly saveNewObjectRelationshipButton: Locator;
 
 	constructor(page: Page) {
+		this.fitViewButton = page.locator(
+			'button.react-flow__controls-button.react-flow__controls-fitview'
+		);
 		this.newObjectRelationshipLabel = page
 			.locator('div.form-group')
 			.filter({hasText: /^LabelMandatory$/})
@@ -48,6 +52,10 @@ export class ModelBuilderPage {
 		return this.page.locator(
 			`div[data-handleid="${objectDefinitionExternalReferenceCode}_${position}"]:not([data-handleid="${dataHandled}"])`
 		);
+	}
+
+	async clickFitViewButton() {
+		this.fitViewButton.click({force: true});
 	}
 
 	async clickObjectDefinitionShowAllFieldsButton(

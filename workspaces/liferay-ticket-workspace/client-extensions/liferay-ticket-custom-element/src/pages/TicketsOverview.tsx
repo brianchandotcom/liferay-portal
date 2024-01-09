@@ -18,8 +18,8 @@ import {useRecentTickets} from '../hooks/useRecentTickets';
 import {useTickets} from '../hooks/useTickets';
 import {Liferay} from '../services/liferay';
 import {generateNewTicket} from '../services/tickets';
-import {Filter} from '../types';
 import useDebounce from '../services/useDebounce';
+import {Filter} from '../types';
 
 const initialFilterState: Filter = {
 	field: '',

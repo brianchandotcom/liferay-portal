@@ -102,7 +102,7 @@ public class ObjectUserNotificationsHandler
 				jsonObject.getString("portletId"), 0, 0,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
-			"/configuration_admin/edit_configuration"
+			"/object_entries/edit_object_entry"
 		).setParameter(
 			"externalReferenceCode",
 			jsonObject.getString("externalReferenceCode")

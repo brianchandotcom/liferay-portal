@@ -214,27 +214,29 @@ public class ViewChangesDisplayContext {
 				).buildString(),
 				"list-ul", "view-change",
 				_language.get(_httpServletRequest, "review-change"), "get",
-				"get", null),
-			new FDSActionDropdownItem(
-				PortletURLBuilder.createRenderURL(
-					_renderResponse
-				).setMVCRenderCommandName(
-					"/change_tracking/view_move_changes"
-				).setRedirect(
-					_themeDisplay.getURLCurrent()
-				).setParameter(
-					"ctCollectionId", "{ctCollectionId}"
-				).setParameter(
-					"modelClassNameId", "{modelClassNameId}"
-				).setParameter(
-					"modelClassPK", "{modelClassPK}"
-				).buildString(),
-				"move-folder", "move-changes",
-				_language.get(_httpServletRequest, "move-changes"), "post",
-				"move-changes", null));
+				"get", null));
 
 		if ((_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
 			(_ctCollection.getStatus() == WorkflowConstants.STATUS_PENDING)) {
+
+			fdsActionDropdownItems.add(
+				new FDSActionDropdownItem(
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCRenderCommandName(
+						"/change_tracking/view_move_changes"
+					).setRedirect(
+						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"ctCollectionId", "{ctCollectionId}"
+					).setParameter(
+						"modelClassNameId", "{modelClassNameId}"
+					).setParameter(
+						"modelClassPK", "{modelClassPK}"
+					).buildString(),
+					"move-folder", "move-changes",
+					_language.get(_httpServletRequest, "move-changes"), "post",
+					"move-changes", null));
 
 			fdsActionDropdownItems.add(
 				new FDSActionDropdownItem(
@@ -537,7 +539,12 @@ public class ViewChangesDisplayContext {
 		).put(
 			"moveChangesURL",
 			() -> {
-				if (!FeatureFlagManagerUtil.isEnabled("LPS-171364")) {
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-171364") ||
+					((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_DRAFT) &&
+					 (_ctCollection.getStatus() !=
+						 WorkflowConstants.STATUS_PENDING))) {
+
 					return null;
 				}
 

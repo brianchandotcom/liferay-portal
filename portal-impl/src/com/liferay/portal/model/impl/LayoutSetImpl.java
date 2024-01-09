@@ -401,7 +401,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	@Override
 	public boolean isLayoutSetReadyForPropagation() {
 		if (!isLayoutSetPrototypeLinkActive()) {
-			return true;
+			return false;
 		}
 
 		try {

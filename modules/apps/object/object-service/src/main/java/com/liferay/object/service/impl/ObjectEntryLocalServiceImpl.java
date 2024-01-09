@@ -261,7 +261,7 @@ public class ObjectEntryLocalServiceImpl
 		long objectEntryId = counterLocalService.increment();
 
 		_validateValues(
-			null, user.isGuestUser(), objectDefinition, objectEntryId,
+			null, user.isGuestUser(), groupId, objectDefinition, objectEntryId,
 			serviceContext, userId, values);
 
 		_insertIntoLocalizationTable(
@@ -365,7 +365,7 @@ public class ObjectEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validateValues(
-			null, user.isGuestUser(), objectDefinition, primaryKey,
+			null, user.isGuestUser(), 0, objectDefinition, primaryKey,
 			serviceContext, userId, values);
 
 		insertIntoOrUpdateExtensionTable(
@@ -1453,8 +1453,8 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getObjectDefinitionId());
 
 		_validateValues(
-			objectEntry, user.isGuestUser(), objectDefinition, objectEntryId,
-			serviceContext, userId, values);
+			objectEntry, user.isGuestUser(), objectEntry.getGroupId(),
+			objectDefinition, objectEntryId, serviceContext, userId, values);
 
 		int workflowAction = serviceContext.getWorkflowAction();
 
@@ -4445,7 +4445,7 @@ public class ObjectEntryLocalServiceImpl
 
 	private void _validateValues(
 			Map.Entry<String, Serializable> entry,
-			ObjectEntry existingObjectEntry, boolean guestUser,
+			ObjectEntry existingObjectEntry, boolean guestUser, long groupId,
 			ObjectDefinition objectDefinition, long objectEntryId,
 			ServiceContext serviceContext, long userId,
 			Map<String, Serializable> values)
@@ -4649,10 +4649,44 @@ public class ObjectEntryLocalServiceImpl
 				}
 			}
 		}
+
+		if (objectField.hasUniqueValues()) {
+			long objectEntriesCount = 0;
+			Table<?> table = null;
+
+			try {
+				table = _objectFieldLocalService.getTable(
+					objectDefinition.getObjectDefinitionId(),
+					objectField.getName());
+
+				Column<?, ?> column = table.getColumn(
+					objectField.getDBColumnName());
+
+				objectEntriesCount = getObjectEntriesCount(
+					groupId, objectDefinition,
+					ObjectEntrySearchUtil.
+						getUniqueCompositeKeyObjectFieldPredicate(
+							(Column<?, Object>)column, objectField.getDBType(),
+							entry.getValue()));
+			}
+			catch (PortalException portalException) {
+				throw new RuntimeException(portalException);
+			}
+
+			if (objectEntriesCount > 0) {
+				User user = _userLocalService.getUser(userId);
+
+				throw new ObjectEntryValuesException.
+					UniqueValueConstraintViolation(
+						objectField.getDBColumnName(), entry.getValue(),
+						objectField.getLabel(user.getLocale()),
+						table.getTableName(), null);
+			}
+		}
 	}
 
 	private void _validateValues(
-			ObjectEntry existingObjectEntry, boolean guestUser,
+			ObjectEntry existingObjectEntry, boolean guestUser, long groupId,
 			ObjectDefinition objectDefinition, long objectEntryId,
 			ServiceContext serviceContext, long userId,
 			Map<String, Serializable> values)
@@ -4691,8 +4725,9 @@ public class ObjectEntryLocalServiceImpl
 
 		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
 			_validateValues(
-				entry, existingObjectEntry, guestUser, objectDefinition,
-				objectEntryId, serviceContext, userId, values);
+				entry, existingObjectEntry, guestUser, groupId,
+				objectDefinition, objectEntryId, serviceContext, userId,
+				values);
 		}
 	}
 

@@ -5471,6 +5471,20 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static void updateBuildDescription(
+		String buildDescription, URL buildURL) {
+
+		Matcher matcher = _buildURLPattern.matcher(String.valueOf(buildURL));
+
+		if (!matcher.find()) {
+			throw new RuntimeException("Invalid Build URL");
+		}
+
+		updateBuildDescription(
+			buildDescription, Integer.valueOf(matcher.group("buildNumber")),
+			matcher.group("jobName"), matcher.group("masterHostname"));
+	}
+
 	public static void updateBuildResult(
 		int buildNumber, String buildResult, String jobName,
 		String masterHostname) {

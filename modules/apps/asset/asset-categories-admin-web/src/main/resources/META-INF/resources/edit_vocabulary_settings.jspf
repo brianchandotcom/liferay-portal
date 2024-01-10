@@ -38,7 +38,7 @@ long[] selectedClassTypePKs = editVocabularySettingsDisplayContext.getSelectedCl
 			<div class="row-fields">
 				<clay:select
 					cssClass="vocabulary-asset-type-select"
-					label="choose-asset-type"
+					label="asset-types"
 					name='<%= "classNameId" + index %>'
 					options="<%= editVocabularySettingsDisplayContext.getClassNameIdOptions(classNameId) %>"
 				/>

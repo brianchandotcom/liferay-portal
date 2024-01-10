@@ -1493,6 +1493,71 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testTrashArticleExternalReferenceCode() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		JournalArticle originalJournalArticle =
+			JournalTestUtil.addArticleWithWorkflow(
+				_group.getGroupId(), 0, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), true, serviceContext);
+
+		JournalArticle latestJournalArticle =
+			_journalArticleLocalService.updateArticle(
+				originalJournalArticle.getUserId(),
+				originalJournalArticle.getGroupId(),
+				originalJournalArticle.getFolderId(),
+				originalJournalArticle.getArticleId(),
+				originalJournalArticle.getVersion(),
+				originalJournalArticle.getTitleMap(),
+				originalJournalArticle.getDescriptionMap(),
+				originalJournalArticle.getContent(),
+				originalJournalArticle.getLayoutUuid(), serviceContext);
+
+		Map<Double, String> externalReferenceCodeMap = HashMapBuilder.put(
+			originalJournalArticle.getVersion(),
+			originalJournalArticle.getExternalReferenceCode()
+		).put(
+			latestJournalArticle.getVersion(),
+			latestJournalArticle.getExternalReferenceCode()
+		).build();
+
+		latestJournalArticle = _journalArticleLocalService.moveArticleToTrash(
+			TestPropsValues.getUserId(), latestJournalArticle);
+
+		for (Map.Entry<Double, String> entry :
+				externalReferenceCodeMap.entrySet()) {
+
+			JournalArticle persistedJournalArticle =
+				_journalArticleLocalService.fetchArticleByUrlTitle(
+					originalJournalArticle.getGroupId(),
+					originalJournalArticle.getUrlTitle(), entry.getKey());
+
+			Assert.assertTrue(persistedJournalArticle.isInTrash());
+			Assert.assertEquals(
+				entry.getValue(),
+				persistedJournalArticle.getExternalReferenceCode());
+		}
+
+		_journalArticleLocalService.restoreArticleFromTrash(
+			TestPropsValues.getUserId(), latestJournalArticle);
+
+		for (Map.Entry<Double, String> entry :
+				externalReferenceCodeMap.entrySet()) {
+
+			JournalArticle persistedJournalArticle =
+				_journalArticleLocalService.fetchArticleByUrlTitle(
+					originalJournalArticle.getGroupId(),
+					originalJournalArticle.getUrlTitle(), entry.getKey());
+
+			Assert.assertFalse(persistedJournalArticle.isInTrash());
+			Assert.assertEquals(
+				entry.getValue(),
+				persistedJournalArticle.getExternalReferenceCode());
+		}
+	}
+
+	@Test
 	public void testUpdateArticleByNonownerUser() throws Exception {
 		User ownerUser = UserTestUtil.addGroupUser(
 			_group, RoleConstants.ADMINISTRATOR);

@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Correa
  * @author Javier de Arcos
  */
-@Component(
-	service = {ExtensionProvider.class, ObjectEntryExtensionProvider.class}
-)
+@Component(service = ExtensionProvider.class)
 public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 
 	@Override

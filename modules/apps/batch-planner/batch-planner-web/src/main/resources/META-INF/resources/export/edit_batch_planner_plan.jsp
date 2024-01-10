@@ -38,7 +38,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 
 					<clay:row>
 						<react:component
-							module="js/components/ExportSettings"
+							module="{ExportSettings} from batch-planner-web"
 							props='<%=
 								HashMapBuilder.<String, Object>put(
 									"externalTypeId", liferayPortletResponse.getNamespace() + "externalType"
@@ -66,7 +66,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 							md="6"
 						>
 							<react:component
-								module="js/components/Scope"
+								module="{Scope} from batch-planner-web"
 							/>
 						</clay:col>
 					</clay:row>
@@ -77,7 +77,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 		<liferay-frontend:edit-form-body>
 			<div>
 				<react:component
-					module="js/FieldsTable"
+					module="{FieldsTable} from batch-planner-web"
 				/>
 			</div>
 
@@ -109,7 +109,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 			<liferay-frontend:edit-form-footer>
 				<span>
 					<react:component
-						module="js/SaveTemplate"
+						module="{SaveTemplate} from batch-planner-web"
 						props='<%=
 							HashMapBuilder.<String, Object>put(
 								"formSaveAsTemplateDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
@@ -134,7 +134,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 				</span>
 				<span>
 					<react:component
-						module="js/export/Export"
+						module="{Export} from batch-planner-web"
 						props='<%=
 							HashMapBuilder.<String, Object>put(
 								"formExportDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
@@ -170,5 +170,5 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 			"templatesOptions", editBatchPlannerPlanDisplayContext.getTemplateSelectOptions()
 		).build()
 	%>'
-	module="js/edit_batch_planner_plan"
+	module="{editBatchPlannerPlan} from batch-planner-web"
 />

@@ -47,7 +47,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 									md="6"
 								>
 									<react:component
-										module="js/components/ImportEntityType"
+										module="{ImportEntityType} from batch-planner-web"
 										props='<%=
 											HashMapBuilder.<String, Object>put(
 												"internalClassNameKeyId", liferayPortletResponse.getNamespace() + "internalClassNameKey"
@@ -66,7 +66,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 							<clay:row>
 								<clay:col>
 									<react:component
-										module="js/components/Scope"
+										module="{Scope} from batch-planner-web"
 									/>
 								</clay:col>
 							</clay:row>
@@ -92,7 +92,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 											"type", "batchPlannerTemplate"
 										).build()
 									%>'
-									module="js/DownloadHelper"
+									module="{DownloadHelper} from batch-planner-web"
 								/>
 							</clay:alert>
 
@@ -120,7 +120,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 							<clay:row>
 								<clay:col>
 									<react:component
-										module="js/components/Strategies"
+										module="{Strategies} from batch-planner-web"
 									/>
 								</clay:col>
 							</clay:row>
@@ -155,7 +155,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 
 							<div id="<portlet:namespace />fileUpload">
 								<react:component
-									module="js/components/FileUpload"
+									module="{FileUpload} from batch-planner-web"
 								/>
 							</div>
 						</liferay-frontend:edit-form-body>
@@ -166,7 +166,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 
 		<span>
 			<react:component
-				module="js/import/ImportForm"
+				module="{ImportForm} from batch-planner-web"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
 						"formDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
@@ -211,9 +211,9 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 			"templatesOptions", editBatchPlannerPlanDisplayContext.getTemplateSelectOptions()
 		).build()
 	%>'
-	module="js/edit_batch_planner_plan"
+	module="{editBatchPlannerPlan} from batch-planner-web"
 />
 
 <liferay-frontend:component
-	module="js/show_upload_input"
+	module="{showUploadInput} from batch-planner-web"
 />

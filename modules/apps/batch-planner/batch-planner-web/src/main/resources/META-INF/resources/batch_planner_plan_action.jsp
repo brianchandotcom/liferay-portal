@@ -37,7 +37,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)resul
 					"type", "errorReport"
 				).build()
 			%>'
-			module="js/DownloadHelper"
+			module="{DownloadHelper} from batch-planner-web"
 		/>
 	</c:if>
 
@@ -58,7 +58,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)resul
 					"type", "importFile"
 				).build()
 			%>'
-			module="js/DownloadHelper"
+			module="{DownloadHelper} from batch-planner-web"
 		/>
 	</c:if>
 
@@ -79,7 +79,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)resul
 					"type", "exportFile"
 				).build()
 			%>'
-			module="js/DownloadHelper"
+			module="{DownloadHelper} from batch-planner-web"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

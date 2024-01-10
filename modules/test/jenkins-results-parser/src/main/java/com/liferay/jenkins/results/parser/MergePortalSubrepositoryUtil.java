@@ -35,12 +35,13 @@ public class MergePortalSubrepositoryUtil {
 		_checkPassingTestSuites(jenkinsBuildURL, portalPullRequest);
 
 		GitWorkingDirectory portalGitWorkingDirectory = _getGitWorkingDirectory(
-			portalPullRequest.getBaseURL(),
+			jenkinsBuildURL, portalPullRequest, portalPullRequest.getBaseURL(),
 			portalPullRequest.getUpstreamRemoteGitBranchName());
 
 		GitWorkingDirectory subrepositoryGitWorkingDirectory =
 			_getGitWorkingDirectory(
-				subrepositoryGitHubURL, subrepositoryUpstreamBranchName);
+				jenkinsBuildURL, portalPullRequest, subrepositoryGitHubURL,
+				subrepositoryUpstreamBranchName);
 
 		String currentGitRepoCommitSHA = _getCurrentGitRepoCommitSHA(
 			portalPullRequest, portalGitWorkingDirectory,
@@ -366,14 +367,19 @@ public class MergePortalSubrepositoryUtil {
 	}
 
 	private static GitWorkingDirectory _getGitWorkingDirectory(
-			URL gitHubURL, String upstreamBranchName)
+			URL jenkinsBuildURL, PullRequest portalPullRequest, URL gitHubURL,
+			String upstreamBranchName)
 		throws IOException {
 
 		Matcher gitHubURLMatcher = _gitHubURLPattern.matcher(
 			String.valueOf(gitHubURL));
 
 		if (!gitHubURLMatcher.find()) {
-			throw new RuntimeException("Invalid GitHub URL " + gitHubURL);
+			_reportError(
+				"Invalid GitHub URL " + gitHubURL, jenkinsBuildURL,
+				portalPullRequest);
+
+			return null;
 		}
 
 		String baseRepositoryDirPath =
@@ -507,6 +513,32 @@ public class MergePortalSubrepositoryUtil {
 			throw new RuntimeException(
 				"Failed to push updates to " + remoteURL);
 		}
+	}
+
+	private static void _reportError(
+		String errorMessage, URL jenkinsBuildURL,
+		PullRequest portalPullRequest) {
+
+		_reportError(errorMessage, jenkinsBuildURL, portalPullRequest, null);
+	}
+
+	private static void _reportError(
+		String errorMessage, URL jenkinsBuildURL, PullRequest portalPullRequest,
+		Exception exception) {
+
+		JenkinsResultsParserUtil.updateBuildDescription(
+			errorMessage, jenkinsBuildURL);
+
+		portalPullRequest.addComment(
+			JenkinsResultsParserUtil.combine(
+				errorMessage, "\n\nFor more details click <a href=\"",
+				String.valueOf(jenkinsBuildURL), "\">here</a>."));
+
+		if (exception != null) {
+			throw new RuntimeException(errorMessage, exception);
+		}
+
+		throw new RuntimeException(errorMessage);
 	}
 
 	private static final Pattern _gitHubURLPattern = Pattern.compile(

@@ -23,13 +23,13 @@ import {Filter} from '../types';
 
 const DEBOUNCE_DELAY: number = 300;
 
-const initialFilterState: Filter = {
+const INITIAL_FILTER_STATE: Filter = {
 	field: '',
 	label: '',
 	value: '',
 };
 
-const filters: Filter[] = [
+const FILTERS: Filter[] = [
 	{
 		field: '',
 		label: 'No Filter',
@@ -60,14 +60,16 @@ const filters: Filter[] = [
 const TicketsOverview: React.FC = () => {
 	const queryClient: QueryClient = useQueryClient();
 
-	const [filter, setFilter] = useState(initialFilterState);
+	const [filter, setFilter] = useState(INITIAL_FILTER_STATE);
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(20);
 	const [search, setSearch] = useState<string>('');
+
 	const debouncedSearch = useDebounce(search, DEBOUNCE_DELAY);
 	const debouncedPage = useDebounce(page, DEBOUNCE_DELAY);
 
 	const recentTickets = useRecentTickets();
+
 	const {rows: tickets, totalCount} = useTickets({
 		debouncedPage,
 		debouncedSearch,
@@ -109,7 +111,6 @@ const TicketsOverview: React.FC = () => {
 					</ClayButton>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
-
 			<ClayLayout.ContentRow className="mb-3" padded>
 				<ClayLayout.ContentCol expand>
 					<ClayInput
@@ -122,15 +123,14 @@ const TicketsOverview: React.FC = () => {
 						type="text"
 					/>
 				</ClayLayout.ContentCol>
-
 				<ClayLayout.ContentCol>
 					<Picker
 						aria-label="Select a Filter"
-						items={filters}
+						items={FILTERS}
 						onSelectionChange={(selectedFilterValue: any) => {
 							setPage(1);
 
-							const selectedFilter = filters.find(
+							const selectedFilter = FILTERS.find(
 								(filter) => filter.value === selectedFilterValue
 							);
 
@@ -146,11 +146,9 @@ const TicketsOverview: React.FC = () => {
 					</Picker>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
-
 			<ClayLayout.ContentRow padded>
 				<TicketGrid tickets={tickets} />
 			</ClayLayout.ContentRow>
-
 			<ClayLayout.ContentRow className="mt-3" padded>
 				<ClayPaginationBarWithBasicItems
 					active={page}
@@ -161,7 +159,6 @@ const TicketsOverview: React.FC = () => {
 					totalItems={totalCount}
 				/>
 			</ClayLayout.ContentRow>
-
 			<ClayLayout.ContentRow padded>
 				<RecentActivity tickets={recentTickets} />
 			</ClayLayout.ContentRow>

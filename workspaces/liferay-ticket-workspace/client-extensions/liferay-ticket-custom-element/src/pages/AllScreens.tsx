@@ -12,7 +12,7 @@ import {ScreenType} from '../types';
 import TicketsDashboard from './TicketsDashboard';
 import TicketsOverview from './TicketsOverview';
 
-const routes = [
+const ROUTES = [
 	{
 		element: <TicketsDashboard screenType={ScreenType.INTEGRATED} />,
 		href: '#dashboard',
@@ -27,8 +27,8 @@ const routes = [
 
 const HREF_COMPONENT_MAP: {[key: string]: ReactNode} = {};
 
-routes.forEach((item) => {
-	HREF_COMPONENT_MAP[item.href] = item.element;
+ROUTES.forEach((route) => {
+	HREF_COMPONENT_MAP[route.href] = route.element;
 });
 
 const defaultRoute: string = '#dashboard';
@@ -41,7 +41,7 @@ const AllScreens: React.FC = () => {
 			<ClayLayout.ContentCol>
 				<div className="mb-2 text-uppercase">Site</div>
 
-				<ClayVerticalNav active={hash} items={routes} large={false}>
+				<ClayVerticalNav active={hash} items={ROUTES} large={false}>
 					{(item: any) => (
 						<ClayVerticalNav.Item href={item.href} key={item.href}>
 							{item.label}

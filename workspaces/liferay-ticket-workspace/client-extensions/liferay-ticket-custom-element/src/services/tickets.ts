@@ -16,21 +16,6 @@ import {
 } from './listTypeEntries';
 import {request} from './request';
 
-const listTypeDefinitions: ListTypeDefinitions = await fetchListTypeDefinitions();
-
-const ticketSubjects = [
-	'My object definition is not deploying in my batch client extension',
-	'A theme CSS client extension is not showing on my search page',
-	"I would like to change my site's icon through a client extension",
-	'When updating a custom element React app, the URL metadata is not specified correctly',
-	'Liferay is not triggering my Spring Boot app from an Object Action',
-	'Client Extensions are amazing - how can I learn more?',
-];
-
-function getRandomElement(array: any[]) {
-	return array[Math.floor(Math.random() * array.length)];
-}
-
 export type FetchTicketsQueryKey = {
 	queryKey: [
 		string,
@@ -42,6 +27,21 @@ export type FetchTicketsQueryKey = {
 		}
 	];
 };
+
+const LIST_TYPE_DEFINITIONS: ListTypeDefinitions = await fetchListTypeDefinitions();
+
+const TICKET_SUBJECTS = [
+	'My object definition is not deploying in my batch client extension',
+	'A theme CSS client extension is not showing on my search page',
+	"I would like to change my site's icon through a client extension",
+	'When updating a custom element React app, the URL metadata is not specified correctly',
+	'Liferay is not triggering my Spring Boot app from an Object Action',
+	'Client Extensions are amazing - how can I learn more?',
+];
+
+function getRandomElement(array: any[]) {
+	return array[Math.floor(Math.random() * array.length)];
+}
 
 export async function fetchTickets({queryKey}: FetchTicketsQueryKey) {
 	const [, {filter, page, pageSize, search}] = queryKey;
@@ -75,10 +75,10 @@ export async function fetchRecentTickets() {
 }
 
 export async function generateNewTicket() {
-	const priorities = listTypeDefinitions[J3Y7_PRIORITIES].array;
-	const regions = listTypeDefinitions[J3Y7_REGIONS].array;
-	const resolutions = listTypeDefinitions[J3Y7_RESOLUTIONS].array;
-	const types = listTypeDefinitions[J3Y7_TYPES].array;
+	const priorities = LIST_TYPE_DEFINITIONS[J3Y7_PRIORITIES].array;
+	const regions = LIST_TYPE_DEFINITIONS[J3Y7_REGIONS].array;
+	const resolutions = LIST_TYPE_DEFINITIONS[J3Y7_RESOLUTIONS].array;
+	const types = LIST_TYPE_DEFINITIONS[J3Y7_TYPES].array;
 
 	return request(
 		`/o/c/j3y7tickets`,
@@ -96,7 +96,7 @@ export async function generateNewTicket() {
 			status: {
 				code: 0,
 			},
-			subject: getRandomElement(ticketSubjects),
+			subject: getRandomElement(TICKET_SUBJECTS),
 			ticketStatus: {
 				key: 'open',
 			},
@@ -109,7 +109,7 @@ export async function generateNewTicket() {
 
 export async function updateTicketStatus(ticket: Ticket) {
 	ticket.payload.ticketStatus =
-		listTypeDefinitions[J3Y7_STATUSES].map[ticket.ticketStatus];
+		LIST_TYPE_DEFINITIONS[J3Y7_STATUSES].map[ticket.ticketStatus];
 
 	const result = await request(
 		`/o/c/j3y7tickets/${ticket.id}`,

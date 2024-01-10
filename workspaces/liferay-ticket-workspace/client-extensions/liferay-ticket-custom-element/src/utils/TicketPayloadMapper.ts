@@ -7,6 +7,7 @@ import {TicketPayload} from '../types';
 
 export function TicketPayloadMapper(ticket: TicketPayload) {
 	let suggestions = [];
+
 	try {
 		suggestions = JSON.parse(ticket?.suggestions);
 	}

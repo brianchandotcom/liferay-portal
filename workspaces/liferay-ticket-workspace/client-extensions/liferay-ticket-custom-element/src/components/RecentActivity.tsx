@@ -7,9 +7,9 @@ import RelativeTime from '@yaireo/relative-time';
 
 import {Ticket} from '../types';
 
-const relativeTime = new RelativeTime();
+const RELATIVE_TIME = new RelativeTime();
 
-const defaultTickets = [
+const DEFAULT_TICKETS = [
 	`Ticket #1234 closed with status "Resolved" by administrator`,
 	`Ticket #4566 closed with status "Won't fix" by administrator`,
 ];
@@ -22,7 +22,7 @@ const DisplayTickets: React.FC<Props> = ({tickets}) => {
 	if (!tickets.length) {
 		return (
 			<>
-				{defaultTickets.map((defaultTicket, index) => (
+				{DEFAULT_TICKETS.map((defaultTicket, index) => (
 					<li key={index}>{defaultTicket}</li>
 				))}
 			</>
@@ -40,7 +40,7 @@ const DisplayTickets: React.FC<Props> = ({tickets}) => {
 							recentTicket.ticketStatus
 						}" for support region ${
 							recentTicket.region
-						} ${relativeTime.from(recentTicket.dateCreated)}. `}
+						} ${RELATIVE_TIME.from(recentTicket.dateCreated)}. `}
 					</span>
 
 					{!!recentTicket.suggestions?.length && (

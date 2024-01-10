@@ -19,13 +19,13 @@ export type LiferayTicketWorkspaceComponentsType = {
 
 const NoRouteSelected = () => <AllScreens />;
 
-const LiferayTicketWorkspaceComponents: LiferayTicketWorkspaceComponentsType = {
+const LIFERAY_TICKET_WORKSPACE_COMPONENTS: LiferayTicketWorkspaceComponentsType = {
 	dashboard: <TicketsDashboard screenType={ScreenType.STANDALONE} />,
 	overview: <TicketsOverview />,
 };
 
 const DirectToCustomer: React.FC<{defaultScreen: string}> = ({defaultScreen}) =>
-	LiferayTicketWorkspaceComponents[defaultScreen] ?? <NoRouteSelected />;
+	LIFERAY_TICKET_WORKSPACE_COMPONENTS[defaultScreen] ?? <NoRouteSelected />;
 
 const QUERY_CLIENT = new QueryClient();
 

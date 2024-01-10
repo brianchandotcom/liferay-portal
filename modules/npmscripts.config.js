@@ -438,6 +438,7 @@ module.exports = {
 			],
 			'@liferay/frontend-js-state-web': [],
 			'@liferay/frontend-js-walkthrough-web': [],
+			'@liferay/layout-js-components-web': [],
 			'asset-taglib': [],
 			'frontend-js-components-web': [],
 			'frontend-js-web': [],

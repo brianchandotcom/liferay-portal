@@ -682,7 +682,7 @@ public class ObjectEntryServiceTest {
 				"timeScale", "days"
 			).build());
 
-		_addPermissionToGuestUser();
+		_addResourcePermissionToGuestUser();
 
 		try {
 			ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
@@ -767,7 +767,7 @@ public class ObjectEntryServiceTest {
 				"timeScale", "weeks"
 			).build());
 
-		_addPermissionToGuestUser();
+		_addResourcePermissionToGuestUser();
 
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -827,7 +827,7 @@ public class ObjectEntryServiceTest {
 				TestPropsValues.getGroupId(), user.getUserId()));
 	}
 
-	private void _addPermissionToGuestUser() throws Exception {
+	private void _addResourcePermissionToGuestUser() throws Exception {
 		Role guestRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
 

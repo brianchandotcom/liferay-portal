@@ -18,7 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -106,9 +105,6 @@ public class CalendarBookingLayoutDisplayPageProvider
 
 	@Reference
 	private CalendarBookingLocalService _calendarBookingLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference(
 		target = "(item.class.name=com.liferay.calendar.model.CalendarBooking)"

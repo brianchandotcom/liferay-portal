@@ -6,6 +6,7 @@
 package com.liferay.asset.publisher.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.asset.publisher.constants.AssetPublisherConstants;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerRegistry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -75,13 +77,21 @@ public class SelectionStyleFormNavigatorEntry
 		return false;
 	}
 
+	@Activate
+	protected void activate() {
+		_assetPublisherCustomizerRegistry =
+			new AssetPublisherCustomizerRegistry(_assetPublisherHelper);
+	}
+
 	@Override
 	protected String getJspPath() {
 		return "/configuration/selection_style.jsp";
 	}
 
-	@Reference
 	private AssetPublisherCustomizerRegistry _assetPublisherCustomizerRegistry;
+
+	@Reference
+	private AssetPublisherHelper _assetPublisherHelper;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

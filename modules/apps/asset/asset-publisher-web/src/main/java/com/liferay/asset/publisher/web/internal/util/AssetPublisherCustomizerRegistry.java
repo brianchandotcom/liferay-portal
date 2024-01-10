@@ -5,12 +5,49 @@
 
 package com.liferay.asset.publisher.web.internal.util;
 
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Pavel Savinov
  */
-public interface AssetPublisherCustomizerRegistry {
+public class AssetPublisherCustomizerRegistry {
+
+	public AssetPublisherCustomizerRegistry(
+		AssetPublisherHelper assetPublisherHelper) {
+
+		_register(new DefaultAssetPublisherCustomizer(assetPublisherHelper));
+		_register(
+			new HighestRatedAssetPublisherCustomizer(assetPublisherHelper));
+		_register(new MostViewedAssetPublisherCustomizer(assetPublisherHelper));
+		_register(
+			new RecentContentAssetPublisherCustomizer(assetPublisherHelper));
+		_register(new RelatedAssetPublisherCustomizer(assetPublisherHelper));
+	}
 
 	public AssetPublisherCustomizer getAssetPublisherCustomizer(
-		String portletId);
+		String portletId) {
+
+		AssetPublisherCustomizer assetPublisherCustomizer =
+			_assetPublisherCustomizers.get(portletId);
+
+		if (assetPublisherCustomizer == null) {
+			assetPublisherCustomizer = _assetPublisherCustomizers.get(
+				AssetPublisherPortletKeys.ASSET_PUBLISHER);
+		}
+
+		return assetPublisherCustomizer;
+	}
+
+	private void _register(AssetPublisherCustomizer assetPublisherCustomizer) {
+		_assetPublisherCustomizers.put(
+			assetPublisherCustomizer.getPortletId(), assetPublisherCustomizer);
+	}
+
+	private final Map<String, AssetPublisherCustomizer>
+		_assetPublisherCustomizers = new HashMap<>();
 
 }

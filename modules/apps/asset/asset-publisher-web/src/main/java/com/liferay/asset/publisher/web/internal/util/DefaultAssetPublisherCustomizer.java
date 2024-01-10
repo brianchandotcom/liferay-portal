@@ -22,15 +22,17 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Pavel Savinov
  */
-@Component(service = AssetPublisherCustomizer.class)
 public class DefaultAssetPublisherCustomizer
 	implements AssetPublisherCustomizer {
+
+	public DefaultAssetPublisherCustomizer(
+		AssetPublisherHelper assetPublisherHelper) {
+
+		_assetPublisherHelper = assetPublisherHelper;
+	}
 
 	@Override
 	public Integer getDelta(HttpServletRequest httpServletRequest) {
@@ -146,7 +148,7 @@ public class DefaultAssetPublisherCustomizer
 				WebKeys.THEME_DISPLAY);
 
 		assetEntryQuery.setGroupIds(
-			assetPublisherHelper.getGroupIds(
+			_assetPublisherHelper.getGroupIds(
 				getPortletPreferences(httpServletRequest),
 				themeDisplay.getScopeGroupId(), themeDisplay.getLayout()));
 	}
@@ -165,7 +167,6 @@ public class DefaultAssetPublisherCustomizer
 		return null;
 	}
 
-	@Reference
-	protected AssetPublisherHelper assetPublisherHelper;
+	private final AssetPublisherHelper _assetPublisherHelper;
 
 }

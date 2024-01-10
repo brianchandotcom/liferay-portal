@@ -81,6 +81,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.text.StrMatcher;
 import org.apache.commons.lang.text.StrTokenizer;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -119,7 +120,7 @@ public class AssetPublisherConfigurationAction
 			portletResource);
 
 		AssetPublisherCustomizer assetPublisherCustomizer =
-			assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
+			_assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
 				rootPortletId);
 
 		RenderRequest renderRequest =
@@ -303,6 +304,12 @@ public class AssetPublisherConfigurationAction
 		}
 	}
 
+	@Activate
+	protected void activate() {
+		_assetPublisherCustomizerRegistry =
+			new AssetPublisherCustomizerRegistry(assetPublisherHelper);
+	}
+
 	protected String getDefaultSelectionStyle() {
 		return AssetPublisherSelectionStyleConfigurationUtil.
 			defaultSelectionStyle();
@@ -317,9 +324,6 @@ public class AssetPublisherConfigurationAction
 	@Reference
 	protected AssetListEntrySegmentsEntryRelLocalService
 		assetListEntrySegmentsEntryRelLocalService;
-
-	@Reference
-	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
 
 	@Reference
 	protected AssetPublisherHelper assetPublisherHelper;
@@ -860,5 +864,7 @@ public class AssetPublisherConfigurationAction
 				queryRule.getName());
 		}
 	}
+
+	private AssetPublisherCustomizerRegistry _assetPublisherCustomizerRegistry;
 
 }

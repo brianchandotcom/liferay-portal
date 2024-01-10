@@ -6,6 +6,7 @@
 package com.liferay.asset.publisher.web.internal.util;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -13,14 +14,17 @@ import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Pavel Savinov
  */
-@Component(service = AssetPublisherCustomizer.class)
 public class MostViewedAssetPublisherCustomizer
 	extends DefaultAssetPublisherCustomizer {
+
+	public MostViewedAssetPublisherCustomizer(
+		AssetPublisherHelper assetPublisherHelper) {
+
+		super(assetPublisherHelper);
+	}
 
 	@Override
 	public String getPortletId() {

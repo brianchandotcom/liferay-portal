@@ -60,8 +60,9 @@ public class MergePortalSubrepositoryUtil {
 			subrepositoryGitWorkingDirectory);
 
 		_createAndApplyPatch(
-			portalGitWorkingDirectory, subrepositoryGitWorkingDirectory,
-			currentGitRepoCommitSHA, targetGitRepoCommitSHA);
+			jenkinsBuildURL, portalPullRequest, portalGitWorkingDirectory,
+			subrepositoryGitWorkingDirectory, currentGitRepoCommitSHA,
+			targetGitRepoCommitSHA);
 
 		_commitGitRepoUpdates(
 			portalGitWorkingDirectory, subrepositoryGitWorkingDirectory,
@@ -194,6 +195,7 @@ public class MergePortalSubrepositoryUtil {
 	}
 
 	private static void _createAndApplyPatch(
+		URL jenkinsBuildURL, PullRequest portalPullRequest,
 		GitWorkingDirectory portalGitWorkingDirectory,
 		GitWorkingDirectory subrepositoryGitWorkingDirectory, String gitRepoSHA,
 		String targetGitRepoCommitSHA) {
@@ -234,7 +236,10 @@ public class MergePortalSubrepositoryUtil {
 		}
 
 		if (!foundModifiedFiles) {
-			throw new RuntimeException("No found modified files");
+			_reportError(
+				"No found modified files", jenkinsBuildURL, portalPullRequest);
+
+			return;
 		}
 
 		GitUtil.ExecutionResult executionResult =

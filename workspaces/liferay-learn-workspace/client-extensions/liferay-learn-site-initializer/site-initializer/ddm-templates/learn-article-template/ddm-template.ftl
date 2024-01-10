@@ -23,7 +23,7 @@
 	.align-items-baseline .col-10 {
 		gap: 1rem;
 	}
-	
+
 	.align-items-baseline.d-flex.flex-wrap.mr-2 {
 		color: #000;
 		font-family: Source Sans 3;
@@ -84,36 +84,36 @@
 	}
 
 	.doc-nav::-webkit-scrollbar {
-  	background: transparent;
+		background: transparent;
 		width: 18px;
 	}
-	
-	.doc-nav::-webkit-scrollbar-thumb { 
-  	background: var(--color-neutral-4, #B1B2B9);
+
+	.doc-nav::-webkit-scrollbar-thumb {
+		background: var(--color-neutral-4, #B1B2B9);
 		border: 5px solid var(--color-neutral-1, #F7F7F8);
 		border-radius: 12px;
 		height: 20px;
 	}
-	
+
 	.doc-nav::-webkit-scrollbar-thumb:hover {
-  	background: var(--color-neutral-4, #B1B2B9);
+		background: var(--color-neutral-4, #B1B2B9);
 	}
-	
+
 	.doc-nav::-webkit-scrollbar-track-piece:end {
-    background: transparent;
-    margin-bottom: 10px;
+		background: transparent;
+		margin-bottom: 10px;
 	}
-	
+
 	.doc-nav::-webkit-scrollbar-track-piece:start {
-    background: transparent;
-    margin-top: 10px;
+		background: transparent;
+		margin-top: 10px;
 	}
 
 	.doc-nav>.align-items-center {
 		border-bottom: solid;
 		border-color: var(--color-action-neutral-hover-10, #EAECEE);
 	}
-	
+
 	.dropdown-item {
 		align-items: center;
 		align-self: stretch;
@@ -188,13 +188,13 @@
 		background-size: 0.65rem;
 		color: var(--color-action-primary-hover) !important;
 	}
-	
+
 	@media only screen and (min-width: 768px) and (max-width: 1000px) {
 		.doc-nav-wrapper-inner {
 			max-width: 20% !important;
 		}
 	}
-	
+
 	@media only screen and (min-width:768px) {
 		.bg-color-1.br-5.doc-nav.mt-3 {
 			max-height: 66vh;
@@ -328,8 +328,6 @@
 	<div class="row">
 		<div class="col-12 col-md-2 mobile-nav-hide mt-3">
 			<div class="doc-nav-wrapper-inner">
-				
-
 				<#if !topLevelArticle>
 					<#assign
 						productTitle = breadcrumbLinksJSONArray.getJSONObject(breadcrumbLinksJSONArray.length()-1).title

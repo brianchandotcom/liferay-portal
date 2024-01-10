@@ -452,13 +452,13 @@ definition {
 		}
 
 		task ("Select the first tab and edit Web Content Title") {
-			SelectWindow.selectPopUp(value1 = "null");
+			SelectWindow(value1 = "null");
 
 			WebContent.addCP(webContentTitle = "WC WebContent Title Edit");
 		}
 
 		task ("Publish Web Content and view the error message") {
-			PortletEntry.publish();
+			Button.clickPublish();
 
 			Alert.viewErrorMessage(errorMessage = "Another user has made changes since you started editing. Publish this article to save this version and overwrite the recent changes.");
 		}

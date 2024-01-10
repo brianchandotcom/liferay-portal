@@ -38,7 +38,7 @@
 										<@clay["dropdown-actions"]
 											additionalProps=blogsEntryActionDropdownAdditionalProps
 											dropdownItems=blogsEntryActionDropdownItemsProvider.getActionDropdownItems(curBlogEntry)
-											propsTransformer="blogs_admin/js/ElementsPropsTransformer"
+											propsTransformer="{ElementsPropsTransformer} from blogs-web"
 											propsTransformerServletContext=blogsEntryActionDropdownPropsTransformerServletContext
 										/>
 									</div>

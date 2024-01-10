@@ -65,7 +65,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						%>'
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems(entry) %>"
-						propsTransformer="blogs_admin/js/ElementsPropsTransformer"
+						propsTransformer="{ElementsPropsTransformer} from blogs-web"
 					/>
 				</clay:content-col>
 			</clay:content-row>

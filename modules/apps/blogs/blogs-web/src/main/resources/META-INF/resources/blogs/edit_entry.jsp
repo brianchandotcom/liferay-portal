@@ -388,7 +388,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 
 <liferay-frontend:component
 	context="<%= blogsEditEntryDisplayContext.getTaglibContext() %>"
-	module="blogs/js/blogs"
+	module="{blogs} from blogs-web"
 	servletContext="<%= application %>"
 />
 

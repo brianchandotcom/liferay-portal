@@ -57,7 +57,7 @@
 					).build()
 				%>'
 				dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems(entry) %>"
-				propsTransformer="blogs_admin/js/ElementsPropsTransformer"
+				propsTransformer="{ElementsPropsTransformer} from blogs-web"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>
@@ -126,7 +126,7 @@
 					).build()
 				%>'
 				dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems(entry) %>"
-				propsTransformer="blogs_admin/js/ElementsPropsTransformer"
+				propsTransformer="{ElementsPropsTransformer} from blogs-web"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:otherwise>

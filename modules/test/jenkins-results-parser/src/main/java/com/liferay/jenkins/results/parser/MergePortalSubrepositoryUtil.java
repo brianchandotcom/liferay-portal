@@ -447,7 +447,7 @@ public class MergePortalSubrepositoryUtil {
 			String.valueOf(jenkinsBuildURL));
 
 		String message = JenkinsResultsParserUtil.combine(
-			"Completed merge process at ",
+			"Completed subrepo merge process at ",
 			JenkinsResultsParserUtil.toDateString(new Date()), ".\n",
 			"All commits have been successfully pulled.\n",
 			"Diff URL: <a href=\"https://github.com/",
@@ -473,7 +473,7 @@ public class MergePortalSubrepositoryUtil {
 
 		portalPullRequest.addComment(
 			JenkinsResultsParserUtil.combine(
-				"Started merge process <a href=\"",
+				"Started subrepo merge process <a href=\"",
 				String.valueOf(jenkinsBuildURL), "\">here</a> at ",
 				JenkinsResultsParserUtil.toDateString(new Date()), "."));
 

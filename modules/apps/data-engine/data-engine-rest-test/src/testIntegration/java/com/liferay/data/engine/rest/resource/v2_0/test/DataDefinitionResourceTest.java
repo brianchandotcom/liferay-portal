@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,6 +46,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -188,6 +190,26 @@ public class DataDefinitionResourceTest
 					null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
+
+		List<DataDefinition> dataDefinitions = ListUtil.fromCollection(
+			page.getItems());
+
+		DataDefinition dataDefinition = dataDefinitions.get(0);
+
+		Map<String, DataDefinitionField> dataDefinitionFields = new HashMap<>();
+
+		ListUtil.isNotEmptyForEach(
+			ListUtil.fromArray(dataDefinition.getDataDefinitionFields()),
+			dataDefinitionField -> dataDefinitionFields.put(
+				dataDefinitionField.getName(), dataDefinitionField));
+
+		DataDefinitionField richTextDataDefinitionField =
+			dataDefinitionFields.get("RichText");
+
+		Map<String, Object> customProperties =
+			richTextDataDefinitionField.getCustomProperties();
+
+		Assert.assertTrue(customProperties.containsKey("editorConfig"));
 	}
 
 	@Override

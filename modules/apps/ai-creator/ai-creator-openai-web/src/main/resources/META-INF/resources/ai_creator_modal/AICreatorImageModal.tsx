@@ -66,11 +66,7 @@ export default function AICreatorImageModal({
 					return fetch(uploadGenerationsURL, {
 						body: formData,
 						method: 'POST',
-					})
-						.then((response) => response.json())
-						.then((json) => {
-							console.log(json); // TODO
-						});
+					});
 				})
 			).then(() => {
 				closeModal();

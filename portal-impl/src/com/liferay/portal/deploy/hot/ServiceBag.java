@@ -23,9 +23,9 @@ import org.osgi.framework.ServiceReference;
 public class ServiceBag<V> {
 
 	public ServiceBag(
-		ClassLoader classLoader, AopInvocationHandler aopInvocationHandler,
-		Class<?> serviceTypeClass, ServiceWrapper<V> serviceWrapper,
-		BundleContext bundleContext, ServiceReference<?> serviceReference) {
+		AopInvocationHandler aopInvocationHandler, Class<?> serviceTypeClass,
+		ServiceWrapper<V> serviceWrapper, BundleContext bundleContext,
+		ServiceReference<?> serviceReference) {
 
 		_aopInvocationHandler = aopInvocationHandler;
 		_bundleContext = bundleContext;
@@ -57,13 +57,15 @@ public class ServiceBag<V> {
 				serviceTypeClass.getClassLoader(),
 				IdentifiableOSGiService.class.getClassLoader());
 
+		Class<?> clazz = serviceWrapper.getClass();
+
 		Object nextTarget = ProxyUtil.newProxyInstance(
 			newServiceAggregateClassLoader,
 			new Class<?>[] {
 				serviceTypeClass, ServiceWrapper.class,
 				IdentifiableOSGiService.class
 			},
-			new ClassLoaderBeanHandler(serviceWrapper, classLoader));
+			new ClassLoaderBeanHandler(serviceWrapper, clazz.getClassLoader()));
 
 		_aopInvocationHandler.setTarget(nextTarget);
 

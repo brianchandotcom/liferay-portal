@@ -66,9 +66,18 @@ public class DefaultWorkflowTransitionTest {
 		Assert.assertEquals(
 			"Aprovar", defaultWorkflowTransition.getLabel(LocaleUtil.BRAZIL));
 
-		// Name
+		// Name, labelMap empty
 
 		defaultWorkflowTransition.setLabelMap(new HashMap<>());
+		defaultWorkflowTransition.setName("businessRuleReview");
+
+		Assert.assertEquals(
+			"businessRuleReview",
+			defaultWorkflowTransition.getLabel(LocaleUtil.BRAZIL));
+
+		// Name, labelMap null
+
+		defaultWorkflowTransition.setLabelMap(null);
 		defaultWorkflowTransition.setName("businessRuleReview");
 
 		Assert.assertEquals(

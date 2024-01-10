@@ -2,7 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
-	"main": "index.es.js",
+	"main": "js/index.ts",
 	"name": "item-selector-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

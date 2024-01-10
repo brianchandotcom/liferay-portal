@@ -5,7 +5,7 @@
 
 import {createPortletURL, openSelectionModal} from 'frontend-js-web';
 
-const openItemSelectorModal = ({multiple, params, url, ...props}) => {
+const openItemSelectorModal = ({multiple, params, url, ...props}: any) => {
 	openSelectionModal({
 		multiple,
 		url: createPortletURL(url, {

@@ -5,10 +5,12 @@
 
 package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.dto.v1_0.DataSourceToken;
 import com.liferay.analytics.settings.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.DataSourceResource;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -32,7 +34,9 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 	public void deleteDataSource() throws Exception {
 		try {
 			_analyticsCloudClient.disconnectAnalyticsDataSource(
-				contextCompany.getCompanyId());
+				_configurationProvider.getCompanyConfiguration(
+					AnalyticsConfiguration.class,
+					contextCompany.getCompanyId()));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -70,5 +74,8 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

@@ -5,12 +5,14 @@
 
 package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.dto.v1_0.CommerceChannel;
 import com.liferay.analytics.settings.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChannel;
 import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.CommerceChannelDTOConverterContext;
 import com.liferay.analytics.settings.rest.internal.util.SortUtil;
 import com.liferay.analytics.settings.rest.resource.v1_0.CommerceChannelResource;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
@@ -50,8 +52,10 @@ public class CommerceChannelResourceImpl
 		com.liferay.analytics.settings.rest.internal.client.pagination.Page
 			<AnalyticsChannel> page =
 				_analyticsCloudClient.getAnalyticsChannelsPage(
-					contextCompany.getCompanyId(), null, 0, QueryUtil.ALL_POS,
-					null);
+					_configurationProvider.getCompanyConfiguration(
+						AnalyticsConfiguration.class,
+						contextCompany.getCompanyId()),
+					null, 0, QueryUtil.ALL_POS, null);
 
 		for (AnalyticsChannel analyticsChannel : page.getItems()) {
 			analyticsChannelsMap.put(
@@ -101,6 +105,9 @@ public class CommerceChannelResourceImpl
 		target = "(component.name=com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.CommerceChannelDTOConverter)"
 	)
 	private DTOConverter<Group, CommerceChannel> _commerceChannelDTOConverter;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private GroupService _groupService;

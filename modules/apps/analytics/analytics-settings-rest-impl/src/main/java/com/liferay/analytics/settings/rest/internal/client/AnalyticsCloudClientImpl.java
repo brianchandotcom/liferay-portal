@@ -20,7 +20,6 @@ import com.liferay.analytics.settings.rest.internal.client.pagination.Page;
 import com.liferay.analytics.settings.rest.internal.client.pagination.Pagination;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -60,12 +59,9 @@ import org.osgi.service.component.annotations.Reference;
 public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 
 	@Override
-	public AnalyticsChannel addAnalyticsChannel(long companyId, String name)
+	public AnalyticsChannel addAnalyticsChannel(
+			AnalyticsConfiguration analyticsConfiguration, String name)
 		throws Exception {
-
-		AnalyticsConfiguration analyticsConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				AnalyticsConfiguration.class, companyId);
 
 		Http.Options options = _getOptions(analyticsConfiguration);
 
@@ -139,12 +135,9 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 		return _connectionProperties;
 	}
 
-	public AnalyticsDataSource disconnectAnalyticsDataSource(long companyId)
+	public AnalyticsDataSource disconnectAnalyticsDataSource(
+			AnalyticsConfiguration analyticsConfiguration)
 		throws Exception {
-
-		AnalyticsConfiguration analyticsConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				AnalyticsConfiguration.class, companyId);
 
 		try {
 			Http.Options options = _getOptions(analyticsConfiguration);
@@ -186,14 +179,11 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 	}
 
 	public Page<AnalyticsChannel> getAnalyticsChannelsPage(
-			long companyId, String keywords, int page, int size, Sort[] sorts)
+			AnalyticsConfiguration analyticsConfiguration, String keywords,
+			int page, int size, Sort[] sorts)
 		throws Exception {
 
 		try {
-			AnalyticsConfiguration analyticsConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					AnalyticsConfiguration.class, companyId);
-
 			Http.Options options = _getOptions(analyticsConfiguration);
 
 			String liferayAnalyticsFaroBackendURL = GetterUtil.getString(
@@ -284,15 +274,11 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 	@Override
 	public AnalyticsChannel updateAnalyticsChannel(
 			String analyticsChannelId, Group[] commerceChannelGroups,
-			long companyId, String dataSourceId, Locale locale,
-			Group[] siteGroups)
+			AnalyticsConfiguration analyticsConfiguration, String dataSourceId,
+			Locale locale, Group[] siteGroups)
 		throws Exception {
 
 		try {
-			AnalyticsConfiguration analyticsConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					AnalyticsConfiguration.class, companyId);
-
 			if (!dataSourceId.equals(
 					analyticsConfiguration.liferayAnalyticsDataSourceId())) {
 
@@ -351,16 +337,13 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 	}
 
 	public AnalyticsDataSource updateAnalyticsDataSourceDetails(
-			Boolean accountsSelected, long companyId,
+			Boolean accountsSelected,
+			AnalyticsConfiguration analyticsConfiguration,
 			Boolean commerceChannelsSelected, Boolean contactsSelected,
 			Boolean sitesSelected)
 		throws Exception {
 
 		try {
-			AnalyticsConfiguration analyticsConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					AnalyticsConfiguration.class, companyId);
-
 			Http.Options options = _getOptions(analyticsConfiguration);
 
 			options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
@@ -476,9 +459,6 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsCloudClientImpl.class);
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	private Map<String, Object> _connectionProperties = new HashMap<>();
 

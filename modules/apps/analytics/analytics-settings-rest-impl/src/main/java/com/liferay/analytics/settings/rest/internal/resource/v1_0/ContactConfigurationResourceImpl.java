@@ -10,6 +10,7 @@ import com.liferay.analytics.settings.rest.dto.v1_0.ContactConfiguration;
 import com.liferay.analytics.settings.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.ContactConfigurationResource;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -72,8 +73,10 @@ public class ContactConfigurationResourceImpl
 		}
 
 		_analyticsCloudClient.updateAnalyticsDataSourceDetails(
-			accountsSelected, contextCompany.getCompanyId(), null,
-			contactsSelected, null);
+			accountsSelected,
+			_configurationProvider.getCompanyConfiguration(
+				AnalyticsConfiguration.class, contextCompany.getCompanyId()),
+			null, contactsSelected, null);
 
 		_analyticsSettingsManager.updateCompanyConfiguration(
 			contextCompany.getCompanyId(),
@@ -98,5 +101,8 @@ public class ContactConfigurationResourceImpl
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

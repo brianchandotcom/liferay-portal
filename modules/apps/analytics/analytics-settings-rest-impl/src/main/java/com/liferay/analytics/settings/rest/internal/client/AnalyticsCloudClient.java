@@ -5,6 +5,7 @@
 
 package com.liferay.analytics.settings.rest.internal.client;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChannel;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsDataSource;
 import com.liferay.analytics.settings.rest.internal.client.pagination.Page;
@@ -20,28 +21,32 @@ import java.util.Map;
  */
 public interface AnalyticsCloudClient {
 
-	public AnalyticsChannel addAnalyticsChannel(long companyId, String name)
+	public AnalyticsChannel addAnalyticsChannel(
+			AnalyticsConfiguration analyticsConfiguration, String name)
 		throws Exception;
 
 	public Map<String, Object> connectAnalyticsDataSource(
 			Company company, String connectionToken)
 		throws Exception;
 
-	public AnalyticsDataSource disconnectAnalyticsDataSource(long companyId)
+	public AnalyticsDataSource disconnectAnalyticsDataSource(
+			AnalyticsConfiguration analyticsConfiguration)
 		throws Exception;
 
 	public Page<AnalyticsChannel> getAnalyticsChannelsPage(
-			long companyId, String keywords, int page, int size, Sort[] sorts)
+			AnalyticsConfiguration analyticsConfiguration, String keywords,
+			int page, int size, Sort[] sorts)
 		throws Exception;
 
 	public AnalyticsChannel updateAnalyticsChannel(
 			String analyticsChannelId, Group[] commerceChannelGroups,
-			long companyId, String dataSourceId, Locale locale,
-			Group[] siteGroups)
+			AnalyticsConfiguration analyticsConfiguration, String dataSourceId,
+			Locale locale, Group[] siteGroups)
 		throws Exception;
 
 	public AnalyticsDataSource updateAnalyticsDataSourceDetails(
-			Boolean accountsSelected, long companyId,
+			Boolean accountsSelected,
+			AnalyticsConfiguration analyticsConfiguration,
 			Boolean commerceChannelsSelected, Boolean contactsSelected,
 			Boolean sitesSelected)
 		throws Exception;

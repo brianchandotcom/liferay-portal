@@ -1426,10 +1426,10 @@ definition {
 
 		AssertVisible(locator1 = "Button#SUBSCRIBE");
 
-		AssertVisible(locator1 = "ManagementBar#ELLIPSIS");
+		AssertVisible(locator1 = "Icon#NAVBAR_ELLIPSIS");
 
 		if (isSet(moreActions)) {
-			Click(locator1 = "ManagementBar#ELLIPSIS");
+			Click(locator1 = "Icon#NAVBAR_ELLIPSIS");
 
 			MenuItem.viewVisible(menuItem = "Edit");
 
@@ -2132,7 +2132,7 @@ definition {
 	@summary = "Default summary"
 	macro viewSourceURLCP(kbArticleTitle = null, kbArticleSourceURL = null) {
 		if (isSet(kbChildArticleTitle)) {
-			Click(locator1 = "ManagementBar#ELLIPSIS");
+			Click(locator1 = "Icon#NAVBAR_ELLIPSIS");
 		}
 		else {
 			Click(

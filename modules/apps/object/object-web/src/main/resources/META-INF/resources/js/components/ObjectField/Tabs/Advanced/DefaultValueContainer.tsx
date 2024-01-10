@@ -139,7 +139,7 @@ export function DefaultValueContainer({
 						<LearnMessage
 							className="alert-link"
 							resource="object-web"
-							resourceKey="general"
+							resourceKey="expression-builder-validations-reference"
 						/>
 					</LearnResourcesContext.Provider>
 				</ClayAlert>

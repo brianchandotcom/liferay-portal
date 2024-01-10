@@ -351,27 +351,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _guardDuplicateQueryStrings(
 		EditRankingMVCActionRequest editRankingMVCActionRequest,
-		List<Ranking> rankings) {
-
-		List<String> queryStrings = new ArrayList<>();
-
-		for (Ranking ranking : rankings) {
-			queryStrings.addAll(ranking.getQueryStrings());
-		}
-
-		List<String> uniqueQueryStrings = ListUtil.unique(queryStrings);
-
-		if (queryStrings.size() != uniqueQueryStrings.size()) {
-			throw new DuplicateQueryStringException();
-		}
-
-		for (Ranking ranking : rankings) {
-			_guardDuplicateQueryStrings(editRankingMVCActionRequest, ranking);
-		}
-	}
-
-	private void _guardDuplicateQueryStrings(
-		EditRankingMVCActionRequest editRankingMVCActionRequest,
 		Ranking ranking) {
 
 		if (_resultRankingsConfiguration.allowDuplicateQueryStrings() ||
@@ -580,10 +559,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		List<Ranking> rankings = _getRankings(
 			actionRequest, editRankingMVCActionRequest);
 
-		if (status.equals(ResultRankingsConstants.STATUS_ACTIVE)) {
-			_guardDuplicateQueryStrings(editRankingMVCActionRequest, rankings);
-		}
-
 		boolean notApplicableStatus = false;
 
 		for (Ranking ranking : rankings) {
@@ -594,6 +569,11 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 				notApplicableStatus = true;
 
 				continue;
+			}
+
+			if (status.equals(ResultRankingsConstants.STATUS_ACTIVE)) {
+				_guardDuplicateQueryStrings(
+					editRankingMVCActionRequest, ranking);
 			}
 
 			Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder(

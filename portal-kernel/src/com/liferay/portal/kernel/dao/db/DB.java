@@ -184,7 +184,7 @@ public interface DB {
 		throws Exception;
 
 	public void updateIndexes(
-			Connection connection, String tableNameSQL, String indexesSQL,
+			Connection connection, String tableName, String indexesSQL,
 			boolean dropStaleIndexes)
 		throws Exception;
 

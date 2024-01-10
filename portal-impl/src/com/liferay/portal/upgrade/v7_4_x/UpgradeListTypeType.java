@@ -60,6 +60,8 @@ public class UpgradeListTypeType extends UpgradeProcess {
 
 					preparedStatement2.executeUpdate();
 				}
+
+				return;
 			}
 
 			try (PreparedStatement preparedStatement3 =

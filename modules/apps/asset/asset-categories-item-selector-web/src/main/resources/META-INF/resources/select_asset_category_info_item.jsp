@@ -13,7 +13,7 @@ SelectAssetCategoryInfoItemDisplayContext selectAssetCategoryInfoItemDisplayCont
 
 <div>
 	<react:component
-		module="js/SelectAssetCategoryInfoItem.es"
+		module="{SelectAssetCategoryInfoItem} from asset-categories-item-selector-web"
 		props="<%= selectAssetCategoryInfoItemDisplayContext.getData() %>"
 	/>
 </div>

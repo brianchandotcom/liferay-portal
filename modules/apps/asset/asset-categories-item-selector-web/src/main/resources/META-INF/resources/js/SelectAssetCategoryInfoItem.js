@@ -11,7 +11,7 @@ import ClayLayout from '@clayui/layout';
 import {navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {AssetCategoryTree} from './AssetCategoryTree.es';
+import {AssetCategoryTree} from './AssetCategoryTree';
 
 function SelectAssetCategory({
 	addCategoryURL,

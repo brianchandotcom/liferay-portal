@@ -69,5 +69,5 @@ SelectAssetCategoryTreeNodeDisplayContext selectAssetCategoryTreeNodeDisplayCont
 <liferay-frontend:component
 	componentId="SelectEntityHandler"
 	context="<%= selectAssetCategoryTreeNodeDisplayContext.getContext(liferayPortletResponse) %>"
-	module="js/SelectEntityHandler"
+	module="{SelectEntityHandler} from asset-categories-item-selector-web"
 />

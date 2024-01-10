@@ -42,6 +42,8 @@ import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -1059,6 +1061,60 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Commerce Specification 1",
 			cpOptionCategory.getTitle(LocaleUtil.getSiteDefault()));
+	}
+
+	private void _assertDataDefinition() throws Exception {
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
+
+		DataDefinitionResource dataDefinitionResource =
+			dataDefinitionResourceBuilder.user(
+				_serviceContext.fetchUser()
+			).build();
+
+		DataDefinition dataDefinition =
+			dataDefinitionResource.
+				getSiteDataDefinitionByContentTypeByDataDefinitionKey(
+					_serviceContext.getScopeGroupId(), "journal",
+					"test-data-definition-1");
+
+		Assert.assertNotNull(dataDefinition);
+
+		Assert.assertEquals(
+			"Test Data Definition Name 1",
+			dataDefinition.getName(
+			).get(
+				"en_US"
+			));
+
+		Assert.assertEquals(
+			"Test Data Definition Description 1",
+			dataDefinition.getDescription(
+			).get(
+				"en_US"
+			));
+
+		dataDefinition =
+			dataDefinitionResource.
+				getSiteDataDefinitionByContentTypeByDataDefinitionKey(
+					_serviceContext.getScopeGroupId(), "journal",
+					"test-data-definition-2");
+
+		Assert.assertNotNull(dataDefinition);
+
+		Assert.assertEquals(
+			"Test Data Definition Name 2",
+			dataDefinition.getName(
+			).get(
+				"en_US"
+			));
+
+		Assert.assertEquals(
+			"Test Data Definition Description 2",
+			dataDefinition.getDescription(
+			).get(
+				"en_US"
+			));
 	}
 
 	private void _assertDDMStructure() {
@@ -3753,6 +3809,7 @@ public class BundleSiteInitializerTest {
 		_assertCPDefinition();
 		_assertCPInstanceProperties();
 		_assertCPOptionCategory();
+		_assertDataDefinition();
 		_assertDDMStructure();
 		_assertDDMTemplate1();
 		_assertDLFileEntry();
@@ -3877,6 +3934,9 @@ public class BundleSiteInitializerTest {
 	@Inject
 	private CPSpecificationOptionLocalService
 		_cpSpecificationOptionLocalService;
+
+	@Inject
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

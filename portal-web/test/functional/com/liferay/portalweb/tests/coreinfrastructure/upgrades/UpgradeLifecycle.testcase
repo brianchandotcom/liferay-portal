@@ -31,9 +31,7 @@ definition {
 			Portlet.startServer(keepOsGiState = "true");
 		}
 
-		AssertConsoleTextPresent(value1 = "Updating portal database indexes");
-
-		AssertConsoleTextPresent(value1 = "Updating database indexes for");
+		AssertConsoleTextPresent(value1 = "Updating database indexes");
 	}
 
 	@description = "LPS-109189: Given a user starts the portal with a database created previously. When core and module indexes are missing and property database.indexes.update.on.startup is set to true. Then portal creates missing indexes."

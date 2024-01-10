@@ -84,7 +84,7 @@ public class AICreatorOpenAIDisplayContext {
 				return PortletURLBuilder.create(
 					requestBackedPortletURLFactory.createActionURL(
 						AICreatorOpenAIPortletKeys.AI_CREATOR_OPENAI)
-				).setMVCRenderCommandName(
+				).setActionName(
 					"/ai_creator_openai/upload_generations"
 				).setParameter(
 					"fileEntryTypeId",

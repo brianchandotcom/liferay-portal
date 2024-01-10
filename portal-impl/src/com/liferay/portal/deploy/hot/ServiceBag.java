@@ -73,7 +73,7 @@ public class ServiceBag<V> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> void replace() throws Exception {
+	public <T> void replace() {
 		Object currentService = _aopInvocationHandler.getTarget();
 
 		ServiceWrapper<T> previousService = null;

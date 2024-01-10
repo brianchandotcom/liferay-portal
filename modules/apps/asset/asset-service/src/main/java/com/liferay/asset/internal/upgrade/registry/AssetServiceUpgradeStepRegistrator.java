@@ -6,10 +6,10 @@
 package com.liferay.asset.internal.upgrade.registry;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.view.count.service.ViewCountEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,10 +39,9 @@ public class AssetServiceUpgradeStepRegistrator
 		registry.register("2.0.1", "2.1.0", new DummyUpgradeStep());
 	}
 
-	/**
-	 * See LPS-101084. The ViewCount table needs to exist.
-	 */
-	@Reference
-	private ViewCountEntryLocalService _viewCountEntryLocalService;
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.view.count.service)(&(release.schema.version>=1.0.0)))"
+	)
+	private Release _release;
 
 }

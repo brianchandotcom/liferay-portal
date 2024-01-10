@@ -52,7 +52,8 @@ public class MergePortalSubrepositoryUtil {
 			portalGitWorkingDirectory.getLatestCommitSHA();
 
 		_fetchSubrepositoryBranchToPortalRepository(
-			portalGitWorkingDirectory, subrepositoryGitWorkingDirectory);
+			jenkinsBuildURL, portalPullRequest, portalGitWorkingDirectory,
+			subrepositoryGitWorkingDirectory);
 
 		_checkMergeCommitSHA(
 			currentGitRepoCommitSHA, targetGitRepoCommitSHA,
@@ -261,6 +262,7 @@ public class MergePortalSubrepositoryUtil {
 	}
 
 	private static void _fetchSubrepositoryBranchToPortalRepository(
+		URL jenkinsBuildURL, PullRequest portalPullRequest,
 		GitWorkingDirectory portalGitWorkingDirectory,
 		GitWorkingDirectory subrepositoryGitWorkingDirectory) {
 
@@ -278,9 +280,9 @@ public class MergePortalSubrepositoryUtil {
 			File subrepositoryWorkingDirectory =
 				subrepositoryGitWorkingDirectory.getWorkingDirectory();
 
-			throw new RuntimeException(
+			_reportError(
 				"Unable to fetch from " + subrepositoryWorkingDirectory,
-				exception);
+				jenkinsBuildURL, portalPullRequest, exception);
 		}
 		finally {
 			portalGitWorkingDirectory.reset("--hard " + portalCurrentBranchSHA);

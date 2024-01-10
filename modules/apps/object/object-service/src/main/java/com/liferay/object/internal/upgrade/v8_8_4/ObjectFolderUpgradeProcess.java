@@ -36,37 +36,34 @@ public class ObjectFolderUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update ObjectFolder set externalReferenceCode = ?, " +
-						"label = ?, name = ? where objectFolderId = ?")) {
+						"label = ?, name = ? where objectFolderId = ?");
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			preparedStatement2.setString(
 				1, ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_DEFAULT);
 			preparedStatement2.setString(3, ObjectFolderConstants.NAME_DEFAULT);
 
-			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
-				while (resultSet.next()) {
-					preparedStatement2.setString(
-						2,
-						LocalizationUtil.getXml(
-							new LocalizedValuesMap() {
-								{
-									put(
-										LocaleUtil.fromLanguageId(
-											UpgradeProcessUtil.
-												getDefaultLanguageId(
-													resultSet.getLong(
-														"companyId"))),
-										ObjectFolderConstants.NAME_DEFAULT);
-								}
-							},
-							"Label"));
-					preparedStatement2.setLong(
-						4, resultSet.getLong("objectFolderId"));
+			while (resultSet.next()) {
+				preparedStatement2.setString(
+					2,
+					LocalizationUtil.getXml(
+						new LocalizedValuesMap() {
+							{
+								put(
+									LocaleUtil.fromLanguageId(
+										UpgradeProcessUtil.getDefaultLanguageId(
+											resultSet.getLong("companyId"))),
+									ObjectFolderConstants.NAME_DEFAULT);
+							}
+						},
+						"Label"));
+				preparedStatement2.setLong(
+					4, resultSet.getLong("objectFolderId"));
 
-					preparedStatement2.addBatch();
-				}
-
-				preparedStatement2.executeBatch();
+				preparedStatement2.addBatch();
 			}
+
+			preparedStatement2.executeBatch();
 		}
 	}
 

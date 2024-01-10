@@ -7,21 +7,25 @@ import {useMemo} from 'react';
 import {useQuery} from 'react-query';
 
 import {FetchTicketsQueryKey, fetchTickets} from '../services/tickets';
-import {Ticket, TicketPayload} from '../types';
+import {Ticket} from '../types';
+import {TicketPayloadMapper} from '../utils/TicketPayloadMapper';
 
 const useTickets = ({
+	debouncedPage,
+	debouncedSearch,
 	filter,
-	page,
 	pageSize,
-	search,
 }: {
+	debouncedPage: string | number;
+	debouncedSearch?: string | number;
 	filter: {field: string; value: string};
-	page: number;
 	pageSize: number;
-	search?: string;
 }) => {
 	const tickets = useQuery(
-		['tickets', {filter, page, pageSize, search}],
+		[
+			'tickets',
+			{filter, page: debouncedPage, pageSize, search: debouncedSearch},
+		],
 		({queryKey}) => fetchTickets({queryKey} as FetchTicketsQueryKey),
 		{refetchInterval: 5000, refetchOnMount: true}
 	);
@@ -29,30 +33,7 @@ const useTickets = ({
 	const ticketsMemoized = useMemo(() => {
 		if (tickets.isSuccess) {
 			return {
-				rows: tickets?.data?.items?.map((ticket: TicketPayload) => {
-					let suggestions = [];
-					try {
-						suggestions = JSON.parse(ticket?.suggestions);
-					}
-					catch (error) {}
-
-					delete (ticket as any).actions;
-
-					return {
-						assignee: ticket.userToJ3Y7Ticket,
-						description: ticket.description,
-						externalReferenceCode: ticket.externalReferenceCode,
-						id: ticket.id,
-						payload: ticket,
-						priority: ticket.priority?.name,
-						region: ticket.region?.name,
-						resolution: ticket.resolution?.name,
-						subject: ticket.subject,
-						suggestions,
-						ticketStatus: ticket.ticketStatus?.name,
-						type: ticket.type?.name,
-					};
-				}),
+				rows: tickets?.data?.items?.map(TicketPayloadMapper),
 				totalCount: tickets?.data?.totalCount,
 			};
 		}

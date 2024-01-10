@@ -7,19 +7,19 @@ import ClayLayout from '@clayui/layout';
 import {ClayVerticalNav} from '@clayui/nav';
 import {ReactNode} from 'react';
 
-import {useHash} from '../services/useHash';
+import {useHash} from '../hooks/useHash';
 import {ScreenType} from '../types';
-import TicketsDashboardApp from './TicketsDashboard';
-import TicketApp from './TicketsOverview';
+import TicketsDashboard from './TicketsDashboard';
+import TicketsOverview from './TicketsOverview';
 
 const routes = [
 	{
-		element: <TicketsDashboardApp screenType={ScreenType.INTEGRATED} />,
+		element: <TicketsDashboard screenType={ScreenType.INTEGRATED} />,
 		href: '#dashboard',
 		label: 'Dashboard',
 	},
 	{
-		element: <TicketApp />,
+		element: <TicketsOverview />,
 		href: '#overview',
 		label: 'Tickets Overview',
 	},
@@ -40,6 +40,7 @@ const AllScreens: React.FC = () => {
 		<ClayLayout.ContentRow padded>
 			<ClayLayout.ContentCol>
 				<div className="mb-2 text-uppercase">Site</div>
+
 				<ClayVerticalNav active={hash} items={routes} large={false}>
 					{(item: any) => (
 						<ClayVerticalNav.Item href={item.href} key={item.href}>
@@ -49,7 +50,11 @@ const AllScreens: React.FC = () => {
 				</ClayVerticalNav>
 			</ClayLayout.ContentCol>
 			<ClayLayout.ContentCol expand>
-				{HREF_COMPONENT_MAP[hash]}
+				{HREF_COMPONENT_MAP[hash] ? (
+					HREF_COMPONENT_MAP[hash]
+				) : (
+					<TicketsDashboard screenType={ScreenType.INTEGRATED} />
+				)}
 			</ClayLayout.ContentCol>
 		</ClayLayout.ContentRow>
 	);

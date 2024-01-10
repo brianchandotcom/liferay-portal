@@ -6,20 +6,22 @@
 
 import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
+import {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useContext, useState} from 'react';
-import {QueryClient, useMutation} from 'react-query';
+import {useState} from 'react';
+import {QueryClient, useMutation, useQueryClient} from 'react-query';
 
 import {RecentActivity} from '../components/RecentActivity';
 import {TicketGrid} from '../components/TicketGrid';
-import {QueryClientContext} from '../context';
+import useDebounce from '../hooks/useDebounce';
 import {useRecentTickets} from '../hooks/useRecentTickets';
 import {useTickets} from '../hooks/useTickets';
 import {Liferay} from '../services/liferay';
 import {generateNewTicket} from '../services/tickets';
-import useDebounce from '../services/useDebounce';
 import {Filter} from '../types';
+
+const DEBOUNCE_DELAY: number = 300;
 
 const initialFilterState: Filter = {
 	field: '',
@@ -56,20 +58,21 @@ const filters: Filter[] = [
 ];
 
 const TicketsOverview: React.FC = () => {
-	const queryClient: QueryClient = useContext(QueryClientContext);
+	const queryClient: QueryClient = useQueryClient();
 
 	const [filter, setFilter] = useState(initialFilterState);
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(20);
-	const [searchToDebounce, setSearchToDebounce] = useState<string>('');
-	const search = useDebounce(searchToDebounce, 500);
+	const [search, setSearch] = useState<string>('');
+	const debouncedSearch = useDebounce(search, DEBOUNCE_DELAY);
+	const debouncedPage = useDebounce(page, DEBOUNCE_DELAY);
 
 	const recentTickets = useRecentTickets();
 	const {rows: tickets, totalCount} = useTickets({
+		debouncedPage,
+		debouncedSearch,
 		filter,
-		page,
 		pageSize,
-		search,
 	});
 
 	const generateNewTicketMutation = useMutation({
@@ -107,18 +110,17 @@ const TicketsOverview: React.FC = () => {
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
 
-			<ClayLayout.ContentRow padded>
+			<ClayLayout.ContentRow className="mb-3" padded>
 				<ClayLayout.ContentCol expand>
-					<input
-						className="form-control mb-3 w-100"
+					<ClayInput
 						onChange={(event) => {
-							setSearchToDebounce(event.target.value);
+							setSearch(event.target.value);
 
 							setPage(1);
 						}}
 						placeholder="Search Tickets"
 						type="text"
-					></input>
+					/>
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol>

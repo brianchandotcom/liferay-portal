@@ -443,9 +443,7 @@ export default function ChangeTrackingIndicator({
 									}}
 									size="xs"
 								>
-									{Liferay.Language.get(
-										'work-on-publication'
-									)}
+									{Liferay.Language.get('work-on-production')}
 								</ClayButton>
 							)}
 						</ClayLayout.Col>

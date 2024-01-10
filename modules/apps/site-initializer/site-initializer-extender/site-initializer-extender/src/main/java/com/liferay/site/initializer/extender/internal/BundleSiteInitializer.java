@@ -27,11 +27,14 @@ import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.client.extension.util.CETUtil;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -252,6 +255,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		CETManager cetManager,
 		ClientExtensionEntryLocalService clientExtensionEntryLocalService,
 		ConfigurationProvider configurationProvider,
+		DataDefinitionResource.Factory dataDefinitionResourceFactory,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -334,6 +338,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_cetManager = cetManager;
 		_clientExtensionEntryLocalService = clientExtensionEntryLocalService;
 		_configurationProvider = configurationProvider;
+		_dataDefinitionResourceFactory = dataDefinitionResourceFactory;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -495,6 +500,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addAccounts(serviceContext));
 
 			_invoke(() -> _addAccountGroupAssignments(serviceContext));
+
+			_invoke(
+				() -> _addOrUpdateDataDefinition(
+					serviceContext, stringUtilReplaceValues));
 
 			_invoke(
 				() -> _addOrUpdateDDMStructures(
@@ -1552,6 +1561,64 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.getCompanyId(), "_",
 					CETUtil.normalizeExternalReferenceCodeForPortletId(
 						jsonObject.getString("externalReferenceCode"))));
+		}
+	}
+
+	private void _addOrUpdateDataDefinition(
+			ServiceContext serviceContext,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/data-definitions");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
+
+		DataDefinitionResource dataDefinitionResource =
+			dataDefinitionResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		for (String resourcePath : resourcePaths) {
+			String json = SiteInitializerUtil.read(
+				resourcePath, _servletContext);
+
+			json = _replace(json, stringUtilReplaceValues);
+
+			DataDefinition dataDefinition = DataDefinition.toDTO(json);
+
+			if (dataDefinition == null) {
+				_log.error(
+					"Unable to transform data definition from JSON: " + json);
+
+				continue;
+			}
+
+			try {
+				DataDefinition existingDataDefinition =
+					dataDefinitionResource.
+						getSiteDataDefinitionByContentTypeByDataDefinitionKey(
+							serviceContext.getScopeGroupId(),
+							dataDefinition.getContentType(),
+							dataDefinition.getDataDefinitionKey());
+
+				dataDefinitionResource.patchDataDefinition(
+					existingDataDefinition.getId(), dataDefinition);
+			}
+			catch (NoSuchStructureException noSuchStructureException) {
+				dataDefinitionResource.postSiteDataDefinitionByContentType(
+					serviceContext.getScopeGroupId(),
+					dataDefinition.getContentType(), dataDefinition);
+			}
+
+			stringUtilReplaceValues.put(
+				"DATA_DEFINITION_ID:" + dataDefinition.getDataDefinitionKey(),
+				String.valueOf(dataDefinition.getId()));
 		}
 	}
 
@@ -5126,6 +5193,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ClientExtensionEntryLocalService
 		_clientExtensionEntryLocalService;
 	private final ConfigurationProvider _configurationProvider;
+	private final DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;

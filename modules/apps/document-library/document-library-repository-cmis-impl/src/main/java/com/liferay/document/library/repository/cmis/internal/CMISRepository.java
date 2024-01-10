@@ -57,12 +57,14 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
@@ -79,6 +81,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
@@ -125,12 +129,11 @@ public class CMISRepository extends BaseCmisRepository {
 		CMISRepositoryConfiguration cmisRepositoryConfiguration,
 		CMISRepositoryHandler cmisRepositoryHandler,
 		CMISSearchQueryBuilder cmisSearchQueryBuilder,
-		CMISSessionCache cmisSessionCache, LockManager lockManager) {
+		LockManager lockManager) {
 
 		_cmisRepositoryConfiguration = cmisRepositoryConfiguration;
 		_cmisRepositoryHandler = cmisRepositoryHandler;
 		_cmisSearchQueryBuilder = cmisSearchQueryBuilder;
-		_cmisSessionCache = cmisSessionCache;
 		_lockManager = lockManager;
 	}
 
@@ -872,15 +875,13 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	public Session getSession() throws PortalException {
-		Session session = _cmisSessionCache.get(_sessionKey);
+		Session session = _get(_sessionKey);
 
 		if (session == null) {
 			SessionImpl sessionImpl =
 				(SessionImpl)_cmisRepositoryHandler.getSession();
 
 			session = sessionImpl.getSession();
-
-			_cmisSessionCache.put(_sessionKey, session);
 		}
 
 		if (_cmisRepositoryDetector == null) {
@@ -1864,6 +1865,31 @@ public class CMISRepository extends BaseCmisRepository {
 		return dlFolderLocalService.fetchFolder(repository.getDlFolderId());
 	}
 
+	private Session _get(String key) {
+		HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
+
+		if (httpSession == null) {
+			return null;
+		}
+
+		TransientValue<Session> transientValue =
+			(TransientValue<Session>)httpSession.getAttribute(key);
+
+		if (transientValue == null) {
+			return null;
+		}
+
+		Object value = transientValue.getValue();
+
+		if (value instanceof Session) {
+			return (Session)value;
+		}
+
+		httpSession.removeAttribute(key);
+
+		return null;
+	}
+
 	private org.apache.chemistry.opencmis.client.api.Folder _getCmisFolder(
 			Session session, long folderId)
 		throws PortalException {
@@ -2378,7 +2404,6 @@ public class CMISRepository extends BaseCmisRepository {
 	private CMISRepositoryDetector _cmisRepositoryDetector;
 	private final CMISRepositoryHandler _cmisRepositoryHandler;
 	private final CMISSearchQueryBuilder _cmisSearchQueryBuilder;
-	private final CMISSessionCache _cmisSessionCache;
 	private final LockManager _lockManager;
 	private String _sessionKey;
 

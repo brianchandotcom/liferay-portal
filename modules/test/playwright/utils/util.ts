@@ -3,6 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {v4 as uuidv4} from 'uuid';
+
 export function getRandomInt(): number {
 	return Math.floor(Math.random() * 9999999999);
+}
+
+export function getRandomId(): string {
+	return uuidv4();
 }

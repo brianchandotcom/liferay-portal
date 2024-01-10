@@ -52,15 +52,12 @@ public class ServiceBag<V> {
 			serviceWrapper.setWrappedService((V)previousService);
 		}
 
-		ClassLoader newServiceAggregateClassLoader =
-			AggregateClassLoader.getAggregateClassLoader(
-				serviceTypeClass.getClassLoader(),
-				IdentifiableOSGiService.class.getClassLoader());
-
 		Class<?> clazz = serviceWrapper.getClass();
 
 		Object nextTarget = ProxyUtil.newProxyInstance(
-			newServiceAggregateClassLoader,
+			AggregateClassLoader.getAggregateClassLoader(
+				serviceTypeClass.getClassLoader(),
+				IdentifiableOSGiService.class.getClassLoader()),
 			new Class<?>[] {
 				serviceTypeClass, ServiceWrapper.class,
 				IdentifiableOSGiService.class

@@ -1,0 +1,118 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.ai.creator.openai.web.internal.upload;
+
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.upload.UploadFileEntryHandler;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URL;
+import java.net.URLConnection;
+
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
+
+import javax.portlet.PortletRequest;
+
+/**
+ * @author Roberto Díaz
+ */
+public class AICreatorOpenAIUploadFileEntryHandler
+	implements UploadFileEntryHandler {
+
+	public AICreatorOpenAIUploadFileEntryHandler(
+		DLAppService dlAppService, com.liferay.portal.kernel.util.File file) {
+
+		_dlAppService = dlAppService;
+		_file = file;
+	}
+
+	@Override
+	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
+		throws IOException, PortalException {
+
+		PortletRequest portletRequest =
+			uploadPortletRequest.getPortletRequest();
+
+		String urlPath = ParamUtil.getString(portletRequest, "urlPath");
+
+		if (Validator.isNull(urlPath)) {
+			return null;
+		}
+
+		URL url = new URL(urlPath);
+
+		InputStream inputStream = new BufferedInputStream(url.openStream());
+
+		String mimeType = URLConnection.guessContentTypeFromStream(inputStream);
+
+		Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
+
+		String extension = StringPool.BLANK;
+
+		if (!extensions.isEmpty()) {
+			Iterator<String> iterator = extensions.iterator();
+
+			extension = iterator.next();
+		}
+
+		File tempFile = _file.createTempFile(inputStream);
+
+		Date now = new Date();
+
+		String title = StringBundler.concat("image-", now.getTime(), extension);
+
+		File file = new File(tempFile.getParent(), title);
+
+		if (file.exists() && !file.delete()) {
+			throw new IOException();
+		}
+
+		if (!tempFile.renameTo(file)) {
+			file = tempFile;
+		}
+
+		long repositoryId = GetterUtil.getLong(
+			ParamUtil.getLong(portletRequest, "repositoryId"));
+
+		long folderId = GetterUtil.getLong(
+			ParamUtil.getLong(portletRequest, "folderId"),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			FileEntry.class.getName(), portletRequest);
+
+		serviceContext.setAttribute(
+			"fileEntryTypeId",
+			GetterUtil.getLong(
+				ParamUtil.getLong(portletRequest, "fileEntryTypeId")));
+
+		return _dlAppService.addFileEntry(
+			null, repositoryId, folderId, title, mimeType, title, title, null,
+			null, file, null, null, serviceContext);
+	}
+
+	private final DLAppService _dlAppService;
+	private final com.liferay.portal.kernel.util.File _file;
+
+}

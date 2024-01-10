@@ -238,19 +238,7 @@
 					"description": "Description for iframe"
 				},
 				"instanceSettings": {
-					"allOf": [
-						{
-							"properties": {
-								"pid": {
-									"type": "string"
-								}
-							},
-							"required": [
-								"pid"
-							],
-							"type": "object"
-						}
-					],
+					"$ref": "./client-extension-type-instance-settings.schema.json",
 					"description": "Description for instanceSettings"
 				},
 				"jsImportMapsEntry": {

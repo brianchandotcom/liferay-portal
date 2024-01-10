@@ -81,10 +81,9 @@
 }
 
 /**
- * TEMP - Remove z-index trick below after
- * upgrade @clayui/css version to 3.93
+ * Css to add bg white in the rechart tooltips
  */
 
-.modal-open .dropdown-menu {
-	z-index: 9999;
+.bb-tooltip-container {
+	background-color: white;
 }

@@ -4720,6 +4720,66 @@ public class ObjectEntryLocalServiceImpl
 						280, entry.getValue(), objectField.getObjectFieldId(),
 						objectField.getI18nObjectFieldName());
 				}
+
+				if (!objectField.hasUniqueValues()) {
+					continue;
+				}
+
+				long objectEntriesCount = 0;
+				Table<?> table = null;
+
+				try {
+					table = _objectFieldLocalService.getTable(
+						objectDefinition.getObjectDefinitionId(),
+						objectField.getName());
+
+					Column<?, Object> column =
+						(Column<?, Object>)table.getColumn(
+							objectField.getDBColumnName());
+
+					DynamicObjectDefinitionLocalizationTable
+						dynamicObjectDefinitionLocalizationTable =
+							(DynamicObjectDefinitionLocalizationTable)table;
+
+					Predicate predicate =
+						ObjectEntryTable.INSTANCE.objectEntryId.in(
+							DSLQueryFactoryUtil.select(
+								dynamicObjectDefinitionLocalizationTable.
+									getForeignKeyColumn()
+							).from(
+								dynamicObjectDefinitionLocalizationTable
+							).where(
+								dynamicObjectDefinitionLocalizationTable.
+									getLanguageIdColumn(
+									).eq(
+										entry.getKey()
+									).and(
+										column.eq(entry.getValue())
+									)
+							));
+
+					if (existingObjectEntry != null) {
+						predicate = predicate.and(
+							ObjectEntryTable.INSTANCE.objectEntryId.neq(
+								existingObjectEntry.getObjectEntryId()));
+					}
+
+					objectEntriesCount = getObjectEntriesCount(
+						groupId, objectDefinition, predicate);
+				}
+				catch (PortalException portalException) {
+					throw new RuntimeException(portalException);
+				}
+
+				if (objectEntriesCount > 0) {
+					User user = _userLocalService.getUser(userId);
+
+					throw new ObjectEntryValuesException.
+						UniqueValueConstraintViolation(
+							objectField.getDBColumnName(), entry.getValue(),
+							objectField.getLabel(user.getLocale()),
+							table.getTableName(), null);
+				}
 			}
 		}
 

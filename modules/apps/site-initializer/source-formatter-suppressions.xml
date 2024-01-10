@@ -3,6 +3,7 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="MethodNamingCheck" files="site-initializer-extender/site-initializer-extender/src/main/java/com/liferay/site/initializer/extender/internal/file/backed/servlet/FileBackedServletContextDelegate\.java" />
+		<suppress checks="UnprocessedExceptionCheck" files="site-initializer-extender/site-initializer-extender/src/main/java/com/liferay/site/initializer/extender/internal/BundleSiteInitializer\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaModuleClassGetResourceCallCheck" files="site-initializer-extender/site-initializer-extender-test/src/testIntegration/java/com/liferay/site/initializer/extender/internal/test/BundleSiteInitializerTest\.java" />

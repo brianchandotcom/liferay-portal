@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.HttpURLConnection;
@@ -53,7 +52,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -288,8 +286,8 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 	@Override
 	public AnalyticsChannel updateAnalyticsChannel(
 			String analyticsChannelId, Long[] commerceChannelIds,
-			long companyId, String dataSourceId, Locale locale,
-			Long[] siteGroupIds)
+			long companyId, long commerceChannelClassNameId,
+			String dataSourceId, Locale locale, Long[] siteGroupIds)
 		throws Exception {
 
 		try {
@@ -311,7 +309,7 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 					"commerceChannels",
 					_getGroupsJSONArray(
 						commerceChannelId -> _groupLocalService.fetchGroup(
-							companyId, _commerceChannelClassNameId,
+							companyId, commerceChannelClassNameId,
 							commerceChannelId),
 						commerceChannelIds, locale)
 				).put(
@@ -419,12 +417,6 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 		}
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_commerceChannelClassNameId = _portal.getClassNameId(
-			"com.liferay.commerce.product.model.CommerceChannel");
-	}
-
 	private JSONObject _decodeToken(String connectionToken) throws Exception {
 		try {
 			if (Validator.isBlank(connectionToken)) {
@@ -498,8 +490,6 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsCloudClientImpl.class);
 
-	private long _commerceChannelClassNameId;
-
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
@@ -516,9 +506,6 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 	private static class ObjectMapperHolder {
 

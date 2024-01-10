@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -26,6 +27,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -120,7 +122,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 					channel.getChannelId(),
 					_analyticsSettingsManager.getCommerceChannelIds(
 						channel.getChannelId(), contextUser.getCompanyId()),
-					contextUser.getCompanyId(),
+					contextUser.getCompanyId(), _commerceChannelClassNameId,
 					analyticsConfiguration.liferayAnalyticsDataSourceId(),
 					contextAcceptLanguage.getPreferredLocale(),
 					_analyticsSettingsManager.getSiteIds(
@@ -148,7 +150,8 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		AnalyticsChannel analyticsChannel =
 			_analyticsCloudClient.updateAnalyticsChannel(
 				channel.getChannelId(), dataSource.getCommerceChannelIds(),
-				contextUser.getCompanyId(), dataSource.getDataSourceId(),
+				contextUser.getCompanyId(), _commerceChannelClassNameId,
+				dataSource.getDataSourceId(),
 				contextAcceptLanguage.getPreferredLocale(),
 				dataSource.getSiteIds());
 
@@ -200,6 +203,12 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 				contextCompany.getCompanyId(), channel.getName()));
 	}
 
+	@Activate
+	protected void activate() {
+		_commerceChannelClassNameId = _portal.getClassNameId(
+			"com.liferay.commerce.product.model.CommerceChannel");
+	}
+
 	@Reference
 	protected DTOConverterRegistry dtoConverterRegistry;
 
@@ -226,5 +235,10 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		target = "(component.name=com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.ChannelDTOConverter)"
 	)
 	private DTOConverter<AnalyticsChannel, Channel> _channelDTOConverter;
+
+	private long _commerceChannelClassNameId;
+
+	@Reference
+	private Portal _portal;
 
 }

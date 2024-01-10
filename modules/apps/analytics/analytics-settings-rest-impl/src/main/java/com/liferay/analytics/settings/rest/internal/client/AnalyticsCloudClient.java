@@ -35,8 +35,8 @@ public interface AnalyticsCloudClient {
 
 	public AnalyticsChannel updateAnalyticsChannel(
 			String analyticsChannelId, Long[] commerceChannelIds,
-			long companyId, String dataSourceId, Locale locale,
-			Long[] siteGroupIds)
+			long companyId, long commerceChannelClassNameId,
+			String dataSourceId, Locale locale, Long[] siteGroupIds)
 		throws Exception;
 
 	public AnalyticsDataSource updateAnalyticsDataSourceDetails(

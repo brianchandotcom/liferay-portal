@@ -196,6 +196,7 @@ export function LayoutSelector({layoutType}) {
 				<ClayDropDown.Group header={Liferay.Language.get('recent')}>
 					{recentLayouts.map((layout) => (
 						<ClayDropDown.Item
+							className="align-items-center d-flex"
 							key={layout.url}
 							onClick={() => {
 								setActive(false);
@@ -224,7 +225,7 @@ export function LayoutSelector({layoutType}) {
 										)}
 									>
 										<ClayIcon
-											className="text-4 text-dark"
+											className="c-mt-0 text-4 text-dark"
 											symbol="lock"
 										/>
 									</span>

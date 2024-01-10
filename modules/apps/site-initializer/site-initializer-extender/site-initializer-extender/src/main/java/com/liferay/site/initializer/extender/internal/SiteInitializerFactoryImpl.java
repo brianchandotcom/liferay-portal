@@ -14,6 +14,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -124,8 +125,8 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_accountRoleResourceFactory, _assetCategoryLocalService,
 			_assetListEntryLocalService, bundle, _cetManager,
 			_clientExtensionEntryLocalService, _configurationProvider,
-			_ddmStructureLocalService, _ddmTemplateLocalService,
-			_defaultDDMStructureHelper, _dlURLHelper,
+			_dataDefinitionResourceFactory, _ddmStructureLocalService,
+			_ddmTemplateLocalService, _defaultDDMStructureHelper, _dlURLHelper,
 			_documentFolderResourceFactory, _documentResourceFactory,
 			_expandoValueLocalService, _fragmentsImporter, _groupLocalService,
 			_journalArticleLocalService, _jsonFactory,
@@ -214,6 +215,9 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

@@ -13,7 +13,9 @@ import com.liferay.analytics.settings.rest.resource.v1_0.ContactConfigurationRes
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -96,7 +98,11 @@ public class ContactConfigurationResourceImpl
 			).build());
 	}
 
-	@Reference
+	@Activate
+	protected void activate() {
+		_analyticsCloudClient = new AnalyticsCloudClient(_http);
+	}
+
 	private AnalyticsCloudClient _analyticsCloudClient;
 
 	@Reference
@@ -104,5 +110,8 @@ public class ContactConfigurationResourceImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Http _http;
 
 }

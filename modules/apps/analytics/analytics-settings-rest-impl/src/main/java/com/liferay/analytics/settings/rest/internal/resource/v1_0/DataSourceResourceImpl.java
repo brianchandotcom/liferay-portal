@@ -14,9 +14,11 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.Http;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -63,10 +65,14 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 			contextUser.getCompanyId(), properties);
 	}
 
+	@Activate
+	protected void activate() {
+		_analyticsCloudClient = new AnalyticsCloudClient(_http);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataSourceResourceImpl.class);
 
-	@Reference
 	private AnalyticsCloudClient _analyticsCloudClient;
 
 	@Reference
@@ -77,5 +83,8 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Http _http;
 
 }

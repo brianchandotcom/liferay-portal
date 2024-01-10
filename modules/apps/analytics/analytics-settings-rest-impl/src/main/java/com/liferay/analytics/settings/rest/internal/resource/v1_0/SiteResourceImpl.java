@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -88,6 +89,8 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			_portal.getClassNameId(Group.class),
 			_portal.getClassNameId(Organization.class)
 		};
+
+		_analyticsCloudClient = new AnalyticsCloudClient(_http);
 	}
 
 	private LinkedHashMap<String, Object> _getParams() {
@@ -98,9 +101,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		).build();
 	}
 
-	@Reference
 	private AnalyticsCloudClient _analyticsCloudClient;
-
 	private long[] _classNameIds;
 
 	@Reference
@@ -108,6 +109,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private Portal _portal;

@@ -41,7 +41,11 @@ const ratios = [
 	},
 ];
 
-const zoomSteps = [12.5, 25, 50, 100, 150, 200];
+const ZOOM_CONFIG = {
+	max: 200,
+	min: 12.5,
+	step: 0.5,
+};
 
 const noop = () => {};
 
@@ -55,7 +59,8 @@ function ImageEditor({
 }) {
 	const ref = useRef();
 
-	const [currentZoom, setCurrentZoom] = useState(100);
+	const [disabledZoomIn, setDisabledZoomIn] = useState(false);
+	const [disabledZoomOut, setDisabledZoomOut] = useState(false);
 
 	const handleAspectRationChange = (event) => {
 		const value = event.target.value;
@@ -94,29 +99,23 @@ function ImageEditor({
 	};
 
 	const handleZoomIn = () => {
-		const newZoomValue = zoomSteps.reduce((a, b) => {
-			return currentZoom < a ? a : b;
-		});
-
-		ref.current?.cropper?.zoomTo(newZoomValue / 100);
+		ref.current?.cropper?.zoom(ZOOM_CONFIG.step);
 	};
 
 	const handleZoomOut = () => {
-		const newZoomValue = zoomSteps.reduce((a, b) => {
-			return currentZoom > b ? b : a;
-		});
-
 		const cropBoxDdata = ref.current?.cropper?.getCropBoxData();
 		const imageData = ref.current?.cropper?.getImageData();
 
 		if (
-			imageData.width <= cropBoxDdata.width ||
-			imageData.height <= cropBoxDdata.height
+			Math.round(imageData.width) <= Math.round(cropBoxDdata.width) ||
+			Math.round(imageData.height) <= Math.round(cropBoxDdata.height)
 		) {
+			setDisabledZoomOut(true);
+
 			return;
 		}
 
-		ref.current?.cropper?.zoomTo(newZoomValue / 100);
+		ref.current?.cropper?.zoom(-ZOOM_CONFIG.step);
 	};
 
 	useEffect(() => {
@@ -140,39 +139,31 @@ function ImageEditor({
 			const handleCropReady = () => {
 				const imageData = imageElement?.cropper?.getImageData();
 
-				if (imageData.width < imageData.naturalWidth) {
-					const currentZoom =
-						(imageData.width * 100) / imageData.naturalWidth;
-
-					setCurrentZoom(parseFloat(currentZoom.toFixed(1)));
-				}
-				else {
+				if (imageData.width > imageData.naturalWidth) {
 					imageElement?.cropper?.zoomTo(1);
-
-					setCurrentZoom(100);
 				}
 
 				imageElement?.cropper?.crop();
 			};
 
 			const handleZoomChange = (event) => {
-				const newZoomValue = event.detail.ratio * 100;
+				const zoom = event.detail.ratio * 100;
 
-				if (newZoomValue > zoomSteps[zoomSteps.length - 1]) {
+				if (zoom < ZOOM_CONFIG.min) {
 					event.preventDefault();
-
-					return imageElement?.cropper?.zoomTo(
-						zoomSteps[zoomSteps.length - 1] / 100
-					);
+					setDisabledZoomOut(true);
+				}
+				else {
+					setDisabledZoomOut(false);
 				}
 
-				if (newZoomValue < zoomSteps[0]) {
+				if (zoom > ZOOM_CONFIG.max) {
 					event.preventDefault();
-
-					return imageElement?.cropper?.zoomTo(zoomSteps[0] / 100);
+					setDisabledZoomIn(true);
 				}
-
-				setCurrentZoom(parseFloat(newZoomValue.toFixed(1)));
+				else {
+					setDisabledZoomIn(false);
+				}
 			};
 
 			imageElement.addEventListener('ready', handleCropReady);
@@ -238,16 +229,14 @@ function ImageEditor({
 						<ClayToolbar.Section>
 							<ClayButton.Group spaced>
 								<ClayButtonWithIcon
+									disabled={disabledZoomOut}
 									displayType={null}
 									onClick={handleZoomOut}
 									symbol="hr"
 								/>
 
-								<span className="zoom-percent">
-									{currentZoom}%
-								</span>
-
 								<ClayButtonWithIcon
+									disabled={disabledZoomIn}
 									displayType={null}
 									onClick={handleZoomIn}
 									symbol="plus"

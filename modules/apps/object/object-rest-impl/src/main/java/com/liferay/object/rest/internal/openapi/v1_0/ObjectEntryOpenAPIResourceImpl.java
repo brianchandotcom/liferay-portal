@@ -24,6 +24,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -149,7 +150,14 @@ public class ObjectEntryOpenAPIResourceImpl
 
 			DTOProperty dtoProperty = new DTOProperty(
 				HashMapBuilder.<String, Object>put(
-					"x-batch-unsupported-formats", "CSV"
+					"x-batch-unsupported-formats",
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPS-200135")) {
+							return "CSV";
+						}
+
+						return null;
+					}
 				).put(
 					"x-parent-map", "properties"
 				).build(),
@@ -248,7 +256,8 @@ public class ObjectEntryOpenAPIResourceImpl
 						if (Objects.equals(
 								objectField.getBusinessType(),
 								ObjectFieldConstants.
-									BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+									BUSINESS_TYPE_MULTISELECT_PICKLIST) &&
+							!FeatureFlagManagerUtil.isEnabled("LPS-200135")) {
 
 							return "CSV";
 						}

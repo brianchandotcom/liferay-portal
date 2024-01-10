@@ -136,7 +136,7 @@ renderResponse.setTitle(title);
 							%>
 
 							<react:component
-								module="js/AssetCategoriesSelectorTag.es"
+								module="{AssetCategoriesSelectorTag} from asset-categories-admin-web"
 								props='<%=
 									HashMapBuilder.<String, Object>put(
 										"categoryIds", Collections.singletonList(parentCategoryId)
@@ -211,7 +211,7 @@ renderResponse.setTitle(title);
 					disabled="<%= assetCategoriesDisplayContext.isSaveAndAddNewButtonDisabled() %>"
 					displayType="secondary"
 					label="save-and-add-a-new-one"
-					propsTransformer="js/SaveAndAddNewPropsTransformer"
+					propsTransformer="{SaveAndAddNewPropsTransformer} from asset-categories-admin-web"
 				/>
 
 				<clay:link
@@ -232,7 +232,7 @@ renderResponse.setTitle(title);
 						"redirect", redirect
 					).build()
 				%>'
-				module="js/ItemSelectorAddCategory"
+				module="{ItemSelectorAddCategory} from asset-categories-admin-web"
 				servletContext="<%= application %>"
 			/>
 		</c:otherwise>

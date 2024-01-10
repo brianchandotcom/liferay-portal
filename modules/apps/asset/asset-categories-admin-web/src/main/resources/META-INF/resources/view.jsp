@@ -59,7 +59,7 @@
 									<clay:dropdown-actions
 										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 										dropdownItems="<%= assetCategoriesDisplayContext.getVocabulariesDropdownItems() %>"
-										propsTransformer="js/ActionsComponentPropsTransformer"
+										propsTransformer="{ActionsComponentPropsTransformer} from asset-categories-admin-web"
 									/>
 								</li>
 							</ul>
@@ -143,7 +143,7 @@
 									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 									cssClass="component-action"
 									dropdownItems="<%= assetVocabularyActionDropdownItemsProvider.getActionDropdownItems(vocabulary) %>"
-									propsTransformer="js/VocabularyActionDropdownPropsTransformer"
+									propsTransformer="{VocabularyActionDropdownPropsTransformer} from asset-categories-admin-web"
 								/>
 							</clay:content-col>
 						</clay:content-row>

@@ -14,7 +14,7 @@ AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvide
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= assetCategoriesManagementToolbarDisplayContext %>"
-	propsTransformer="js/AssetCategoriesManagementToolbarPropsTransformer"
+	propsTransformer="{AssetCategoriesManagementToolbarPropsTransformer} from asset-categories-admin-web"
 />
 
 <portlet:actionURL name="/asset_categories_admin/delete_asset_category" var="deleteCategoryURL">
@@ -92,7 +92,7 @@ AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvide
 						<clay:dropdown-actions
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= assetCategoryActionDropdownItemsProvider.getActionDropdownItems(curCategory) %>"
-							propsTransformer="js/CategoryActionDropdownPropsTransformer"
+							propsTransformer="{CategoryActionDropdownPropsTransformer} from asset-categories-admin-web"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
@@ -156,7 +156,7 @@ AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvide
 						<clay:dropdown-actions
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= assetCategoryActionDropdownItemsProvider.getActionDropdownItems(curCategory) %>"
-							propsTransformer="js/CategoryActionDropdownPropsTransformer"
+							propsTransformer="{CategoryActionDropdownPropsTransformer} from asset-categories-admin-web"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

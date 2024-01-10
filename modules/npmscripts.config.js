@@ -438,6 +438,7 @@ module.exports = {
 			],
 			'@liferay/frontend-js-state-web': [],
 			'@liferay/frontend-js-walkthrough-web': [],
+			'asset-taglib': [],
 			'frontend-js-components-web': [],
 			'frontend-js-web': [],
 			'frontend-taglib-clay': [
@@ -484,6 +485,7 @@ module.exports = {
 				'@clayui/tooltip',
 				'@clayui/upper-toolbar',
 			],
+			'item-selector-web': [],
 		},
 	},
 	check: CHECK_AND_FIX_GLOBS,

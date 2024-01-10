@@ -14,6 +14,9 @@ import com.liferay.portal.spring.aop.AopInvocationHandler;
 
 import java.lang.reflect.InvocationHandler;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+
 /**
  * @author Raymond Augé
  */
@@ -21,9 +24,12 @@ public class ServiceBag<V> {
 
 	public ServiceBag(
 		ClassLoader classLoader, AopInvocationHandler aopInvocationHandler,
-		Class<?> serviceTypeClass, ServiceWrapper<V> serviceWrapper) {
+		Class<?> serviceTypeClass, ServiceWrapper<V> serviceWrapper,
+		BundleContext bundleContext, ServiceReference<?> serviceReference) {
 
 		_aopInvocationHandler = aopInvocationHandler;
+		_bundleContext = bundleContext;
+		_serviceReference = serviceReference;
 
 		Object previousService = serviceWrapper.getWrappedService();
 
@@ -128,9 +134,15 @@ public class ServiceBag<V> {
 
 			currentService = previousService.getWrappedService();
 		}
+
+		if (_serviceReference != null) {
+			_bundleContext.ungetService(_serviceReference);
+		}
 	}
 
 	private final AopInvocationHandler _aopInvocationHandler;
+	private final BundleContext _bundleContext;
+	private final ServiceReference<?> _serviceReference;
 	private final ServiceWrapper<?> _serviceWrapper;
 
 }

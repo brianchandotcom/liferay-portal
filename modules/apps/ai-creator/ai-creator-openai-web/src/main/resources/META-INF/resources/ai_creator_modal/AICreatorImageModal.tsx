@@ -60,8 +60,11 @@ export default function AICreatorImageModal({
 		if (selectedImages.length) {
 			Promise.all(
 				selectedImages.map((imageURL) => {
+					const formData = new FormData();
+					formData.append(`${portletNamespace}urlPath`, imageURL);
+
 					return fetch(uploadGenerationsURL, {
-						body: JSON.stringify(imageURL),
+						body: formData,
 						method: 'POST',
 					})
 						.then((response) => response.json())
@@ -70,9 +73,7 @@ export default function AICreatorImageModal({
 						});
 				})
 			).then(() => {
-				const opener = Liferay.Util.getOpener();
-
-				opener.Liferay.fire('closeModal', {imagesURL});
+				closeModal();
 			});
 		}
 	};

@@ -63,9 +63,7 @@ public class MoveFolderPortletConfigurationIcon
 		try {
 			LiferayPortletResponse liferayPortletResponse =
 				_portal.getLiferayPortletResponse(portletResponse);
-
 			Folder folder = ActionUtil.getFolder(portletRequest);
-
 			FolderItemSelectorURLProvider folderItemSelectorURLProvider =
 				new FolderItemSelectorURLProvider(
 					_portal.getHttpServletRequest(portletRequest),

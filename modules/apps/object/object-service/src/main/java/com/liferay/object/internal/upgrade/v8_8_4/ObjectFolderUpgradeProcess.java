@@ -35,17 +35,17 @@ public class ObjectFolderUpgradeProcess extends UpgradeProcess {
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update ObjectFolder set externalReferenceCode = ?, " +
-						"label = ?, name = ? where objectFolderId = ?");
+					StringBundler.concat(
+						"update ObjectFolder set externalReferenceCode = '",
+						ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_DEFAULT,
+						"', label = ?, name = '",
+						ObjectFolderConstants.NAME_DEFAULT,
+						"' where objectFolderId = ?"));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
-
-			preparedStatement2.setString(
-				1, ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_DEFAULT);
-			preparedStatement2.setString(3, ObjectFolderConstants.NAME_DEFAULT);
 
 			while (resultSet.next()) {
 				preparedStatement2.setString(
-					2,
+					1,
 					LocalizationUtil.getXml(
 						new LocalizedValuesMap() {
 							{
@@ -58,7 +58,7 @@ public class ObjectFolderUpgradeProcess extends UpgradeProcess {
 						},
 						"Label"));
 				preparedStatement2.setLong(
-					4, resultSet.getLong("objectFolderId"));
+					2, resultSet.getLong("objectFolderId"));
 
 				preparedStatement2.addBatch();
 			}

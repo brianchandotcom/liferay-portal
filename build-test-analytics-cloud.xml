@@ -240,6 +240,18 @@ OSB_ASAH_PUBLISHER_URL=${analytics.cloud.asah.publisher.url}
 OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 
 			<if>
+				<isset property="test.portal.license.url" />
+				<then>
+					<mkdir dir="${analytics.cloud.faro.dir}/osb-faro-docker/common/license/" />
+
+					<mirrors-get
+						dest="${analytics.cloud.faro.dir}/osb-faro-docker/common/license/"
+						src="${test.portal.license.url}"
+					/>
+				</then>
+			</if>
+
+			<if>
 				<equals arg1="${analytics.cloud.asah.build}" arg2="true" />
 				<then>
 					<pull-docker-image-dependencies

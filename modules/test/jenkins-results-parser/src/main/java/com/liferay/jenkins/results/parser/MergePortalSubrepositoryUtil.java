@@ -65,11 +65,11 @@ public class MergePortalSubrepositoryUtil {
 			targetGitRepoCommitSHA);
 
 		_commitGitRepoUpdates(
-			portalGitWorkingDirectory, subrepositoryGitWorkingDirectory,
-			targetGitRepoCommitSHA);
+			jenkinsBuildURL, portalPullRequest, portalGitWorkingDirectory,
+			subrepositoryGitWorkingDirectory, targetGitRepoCommitSHA);
 
 		_pushUpdatesToRemoteBranch(
-			portalPullRequest, portalGitWorkingDirectory);
+			jenkinsBuildURL, portalPullRequest, portalGitWorkingDirectory);
 
 		String endingPortalCommitSHA =
 			portalGitWorkingDirectory.getLatestCommitSHA();
@@ -153,6 +153,7 @@ public class MergePortalSubrepositoryUtil {
 	}
 
 	private static void _commitGitRepoUpdates(
+		URL jenkinsBuildURL, PullRequest portalPullRequest,
 		GitWorkingDirectory portalGitWorkingDirectory,
 		GitWorkingDirectory subrepositoryGitWorkingDirectory,
 		String targetGitRepoCommitSHA) {
@@ -189,8 +190,9 @@ public class MergePortalSubrepositoryUtil {
 				"subrepo:ignore Update '" + gitRepoFilePath + "'.");
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Failed to update " + gitRepoFilePath, ioException);
+			_reportError(
+				"Failed to update " + gitRepoFilePath, jenkinsBuildURL,
+				portalPullRequest, ioException);
 		}
 	}
 
@@ -492,7 +494,7 @@ public class MergePortalSubrepositoryUtil {
 	}
 
 	private static void _pushUpdatesToRemoteBranch(
-		PullRequest portalPullRequest,
+		URL jenkinsBuildURL, PullRequest portalPullRequest,
 		GitWorkingDirectory portalGitWorkingDirectory) {
 
 		URL portalBaseURL = portalPullRequest.getBaseURL();
@@ -501,7 +503,11 @@ public class MergePortalSubrepositoryUtil {
 			String.valueOf(portalBaseURL));
 
 		if (!gitHubURLMatcher.find()) {
-			throw new RuntimeException("Invalid GitHub URL " + portalBaseURL);
+			_reportError(
+				"Invalid GitHub URL " + portalBaseURL, jenkinsBuildURL,
+				portalPullRequest);
+
+			return;
 		}
 
 		String remoteURL = JenkinsResultsParserUtil.combine(
@@ -514,8 +520,9 @@ public class MergePortalSubrepositoryUtil {
 				gitHubURLMatcher.group("branchName"), remoteURL);
 
 		if (remoteGitBranch == null) {
-			throw new RuntimeException(
-				"Failed to push updates to " + remoteURL);
+			_reportError(
+				"Failed to push updates to " + remoteURL, jenkinsBuildURL,
+				portalPullRequest);
 		}
 	}
 

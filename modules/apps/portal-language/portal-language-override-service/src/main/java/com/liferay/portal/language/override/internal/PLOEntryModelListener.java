@@ -11,26 +11,22 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.language.override.model.PLOEntry;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
  */
-@Component(service = {ModelListener.class, IdentifiableOSGiService.class})
-public class PLOEntryModelListener
-	extends BaseModelListener<PLOEntry> implements IdentifiableOSGiService {
-
-	@Override
-	public String getOSGiServiceIdentifier() {
-		return PLOEntryModelListener.class.getName();
-	}
+@Component(service = ModelListener.class)
+public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 
 	@Override
 	public void onAfterCreate(PLOEntry ploEntry) {
@@ -53,17 +49,34 @@ public class PLOEntryModelListener
 		_notifyCluster(MethodType.UPDATE, ploEntry);
 	}
 
-	private static void _onNotify(
-		MethodType methodType, String osgiServiceIdentifier,
-		PLOEntry ploEntry) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
 
-		PLOEntryModelListener ploEntryModelListener =
-			(PLOEntryModelListener)
-				IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
-					osgiServiceIdentifier);
+	private static void _onNotify(MethodType methodType, PLOEntry ploEntry)
+		throws InvalidSyntaxException {
 
-		ploEntryModelListener._updatePLOLanguageOverrideProvider(
-			methodType, ploEntry);
+		ServiceReference<?>[] serviceReferences =
+			_bundleContext.getServiceReferences(
+				ModelListener.class.getName(),
+				"(component.name=com.liferay.portal.language.override." +
+					"internal.PLOEntryModelListener)");
+
+		ModelListener<PLOEntry> modelListener =
+			(ModelListener<PLOEntry>)_bundleContext.getService(
+				serviceReferences[0]);
+
+		try {
+			PLOEntryModelListener ploEntryModelListener =
+				(PLOEntryModelListener)modelListener;
+
+			ploEntryModelListener._updatePLOLanguageOverrideProvider(
+				methodType, ploEntry);
+		}
+		finally {
+			_bundleContext.ungetService(serviceReferences[0]);
+		}
 	}
 
 	private void _notifyCluster(MethodType methodType, PLOEntry ploEntry) {
@@ -73,8 +86,7 @@ public class PLOEntryModelListener
 
 		try {
 			MethodHandler methodHandler = new MethodHandler(
-				_onNotifyMethodKey, methodType, getOSGiServiceIdentifier(),
-				ploEntry);
+				_onNotifyMethodKey, methodType, ploEntry);
 
 			ClusterRequest clusterRequest =
 				ClusterRequest.createMulticastRequest(methodHandler, true);
@@ -105,9 +117,10 @@ public class PLOEntryModelListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		PLOEntryModelListener.class.getName());
 
+	private static BundleContext _bundleContext;
 	private static final MethodKey _onNotifyMethodKey = new MethodKey(
 		PLOEntryModelListener.class, "_onNotify", MethodType.class,
-		String.class, PLOEntry.class);
+		PLOEntry.class);
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;

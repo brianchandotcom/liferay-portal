@@ -393,6 +393,15 @@ public class ObjectServiceUpgradeStepRegistrator
 				ObjectFieldSettingUpgradeProcess());
 
 		registry.register("8.8.1", "8.8.2", new SchemaUpgradeProcess());
+
+		registry.register("8.8.2", "8.8.3", new DummyUpgradeStep());
+
+		registry.register("8.8.3", "8.8.4", new DummyUpgradeStep());
+
+		registry.register(
+			"8.8.4", "9.0.0",
+			new com.liferay.object.internal.upgrade.v9_0_0.
+				ObjectFieldUpgradeProcess());
 	}
 
 	@Reference

@@ -42,6 +42,10 @@ const Routine = () => {
 						total: false,
 						untested: false,
 					},
+					sort: {
+						direction: 'DESC',
+						key: 'dateCreated',
+					},
 				}}
 				managementToolbarProps={{
 					buttons: (actions) =>

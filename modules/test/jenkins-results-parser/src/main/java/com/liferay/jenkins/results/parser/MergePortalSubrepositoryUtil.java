@@ -139,17 +139,7 @@ public class MergePortalSubrepositoryUtil {
 
 		sb.append("</ul>\n");
 
-		portalPullRequest.addComment(
-			JenkinsResultsParserUtil.combine(
-				sb.toString(), "\n\nFor more details click <a href=\"",
-				String.valueOf(jenkinsBuildURL), "\">here</a>."));
-
-		JenkinsResultsParserUtil.updateBuildDescription(
-			JenkinsResultsParserUtil.combine(
-				_getPullRequestLink(portalPullRequest), "\n", sb.toString()),
-			jenkinsBuildURL);
-
-		throw new RuntimeException(sb.toString());
+		_reportError(sb.toString(), jenkinsBuildURL, portalPullRequest);
 	}
 
 	private static void _commitGitRepoUpdates(
@@ -442,8 +432,11 @@ public class MergePortalSubrepositoryUtil {
 			String.valueOf(subrepositoryGitHubURL));
 
 		if (!matcher.find()) {
-			throw new RuntimeException(
-				"Invalid subrepository github url " + subrepositoryGitHubURL);
+			_reportError(
+				"Invalid subrepository github url " + subrepositoryGitHubURL,
+				jenkinsBuildURL, portalPullRequest);
+
+			return;
 		}
 
 		GitHubRemoteGitCommit gitHubRemoteGitCommit =

@@ -1426,6 +1426,14 @@ public class GitWorkingDirectory {
 		return null;
 	}
 
+	public String getLatestCommitSHA() {
+		List<LocalGitCommit> localGitCommits = log(1);
+
+		LocalGitCommit latestLocalGitCommit = localGitCommits.get(0);
+
+		return latestLocalGitCommit.getSHA();
+	}
+
 	public LocalGitBranch getLocalGitBranch(String branchName) {
 		return getLocalGitBranch(branchName, false);
 	}

@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
@@ -22,10 +23,12 @@ import java.util.regex.Pattern;
 public class MergePortalSubrepositoryUtil {
 
 	public static void mergePortalSubrepository(
-			PullRequest portalPullRequest, URL subrepositoryGitHubURL,
-			String subrepositoryUpstreamBranchName,
+			URL jenkinsBuildURL, PullRequest portalPullRequest,
+			URL subrepositoryGitHubURL, String subrepositoryUpstreamBranchName,
 			String targetGitRepoCommitSHA)
 		throws IOException {
+
+		_mergeStarted(jenkinsBuildURL, portalPullRequest);
 
 		GitWorkingDirectory portalGitWorkingDirectory = _getGitWorkingDirectory(
 			portalPullRequest.getBaseURL(),
@@ -38,6 +41,9 @@ public class MergePortalSubrepositoryUtil {
 		String currentGitRepoCommitSHA = _getCurrentGitRepoCommitSHA(
 			portalPullRequest, portalGitWorkingDirectory,
 			subrepositoryGitWorkingDirectory, targetGitRepoCommitSHA);
+
+		String startingPortalCommitSHA =
+			portalGitWorkingDirectory.getLatestCommitSHA();
 
 		_fetchSubrepositoryBranchToPortalRepository(
 			portalGitWorkingDirectory, subrepositoryGitWorkingDirectory);
@@ -57,6 +63,14 @@ public class MergePortalSubrepositoryUtil {
 
 		_pushUpdatesToRemoteBranch(
 			portalPullRequest, portalGitWorkingDirectory);
+
+		String endingPortalCommitSHA =
+			portalGitWorkingDirectory.getLatestCommitSHA();
+
+		_mergeCompleted(
+			jenkinsBuildURL, portalPullRequest, subrepositoryGitHubURL,
+			targetGitRepoCommitSHA, startingPortalCommitSHA,
+			endingPortalCommitSHA);
 	}
 
 	private static void _checkMergeCommitSHA(
@@ -336,6 +350,20 @@ public class MergePortalSubrepositoryUtil {
 			upstreamBranchName, repositoryDirPath, repositoryName);
 	}
 
+	private static String _getPullRequestLink(PullRequest portalPullRequest) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<a href=\"");
+		sb.append(portalPullRequest.getHtmlURL());
+		sb.append("\">");
+		sb.append(portalPullRequest.getReceiverUsername());
+		sb.append("#");
+		sb.append(portalPullRequest.getNumber());
+		sb.append("</a>");
+
+		return sb.toString();
+	}
+
 	private static String _getSubrepositoryModuleDirPath(
 		GitWorkingDirectory portalGitWorkingDirectory,
 		GitWorkingDirectory subrepositoryGitWorkingDirectory) {
@@ -346,6 +374,66 @@ public class MergePortalSubrepositoryUtil {
 			portalGitWorkingDirectory.getWorkingDirectory());
 
 		return relativeFilePath.replaceAll("/\\.gitrepo", "");
+	}
+
+	private static void _mergeCompleted(
+		URL jenkinsBuildURL, PullRequest portalPullRequest,
+		URL subrepositoryGitHubURL, String targetGitRepoCommitSHA,
+		String startingPortalCommitSHA, String endingPortalCommitSHA) {
+
+		Matcher matcher = _gitHubURLPattern.matcher(
+			String.valueOf(subrepositoryGitHubURL));
+
+		if (!matcher.find()) {
+			throw new RuntimeException(
+				"Invalid subrepository github url " + subrepositoryGitHubURL);
+		}
+
+		GitHubRemoteGitCommit gitHubRemoteGitCommit =
+			GitCommitFactory.newGitHubRemoteGitCommit(
+				matcher.group("userName"), matcher.group("repositoryName"),
+				targetGitRepoCommitSHA);
+
+		gitHubRemoteGitCommit.setStatus(
+			GitHubRemoteGitCommit.Status.SUCCESS, "liferay/merged-into-central",
+			JenkinsResultsParserUtil.combine(
+				"Merged into ", portalPullRequest.getReceiverUsername(), "/",
+				portalPullRequest.getGitRepositoryName()),
+			String.valueOf(jenkinsBuildURL));
+
+		String message = JenkinsResultsParserUtil.combine(
+			"Completed merge process at ",
+			JenkinsResultsParserUtil.toDateString(new Date()), ".\n",
+			"All commits have been successfully pulled.\n",
+			"Diff URL: <a href=\"https://github.com/",
+			portalPullRequest.getReceiverUsername(), "/",
+			portalPullRequest.getGitRepositoryName(), "/compare/",
+			startingPortalCommitSHA, "...", endingPortalCommitSHA, "\">",
+			startingPortalCommitSHA.substring(0, 7), "...",
+			endingPortalCommitSHA.substring(0, 7), "</a>");
+
+		JenkinsResultsParserUtil.updateBuildDescription(
+			message, jenkinsBuildURL);
+
+		portalPullRequest.addComment(
+			JenkinsResultsParserUtil.combine(
+				message, "\n\nFor more details click <a href=\"",
+				String.valueOf(jenkinsBuildURL), "\">here</a>."));
+
+		portalPullRequest.close();
+	}
+
+	private static void _mergeStarted(
+		URL jenkinsBuildURL, PullRequest portalPullRequest) {
+
+		portalPullRequest.addComment(
+			JenkinsResultsParserUtil.combine(
+				"Started merge process <a href=\"",
+				String.valueOf(jenkinsBuildURL), "\">here</a> at ",
+				JenkinsResultsParserUtil.toDateString(new Date()), "."));
+
+		JenkinsResultsParserUtil.updateBuildDescription(
+			_getPullRequestLink(portalPullRequest), jenkinsBuildURL);
 	}
 
 	private static void _pushUpdatesToRemoteBranch(

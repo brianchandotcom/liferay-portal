@@ -44,9 +44,8 @@ public class MergePortalSubrepositoryUtil {
 				subrepositoryUpstreamBranchName);
 
 		String currentGitRepoCommitSHA = _getCurrentGitRepoCommitSHA(
-			jenkinsBuildURL, portalPullRequest,
-			portalGitWorkingDirectory, subrepositoryGitWorkingDirectory,
-			targetGitRepoCommitSHA);
+			jenkinsBuildURL, portalPullRequest, portalGitWorkingDirectory,
+			subrepositoryGitWorkingDirectory, targetGitRepoCommitSHA);
 
 		String startingPortalCommitSHA =
 			portalGitWorkingDirectory.getLatestCommitSHA();
@@ -56,8 +55,8 @@ public class MergePortalSubrepositoryUtil {
 			subrepositoryGitWorkingDirectory);
 
 		_checkMergeCommitSHA(
-			currentGitRepoCommitSHA, targetGitRepoCommitSHA,
-			portalGitWorkingDirectory, portalPullRequest,
+			jenkinsBuildURL, portalPullRequest, currentGitRepoCommitSHA,
+			targetGitRepoCommitSHA, portalGitWorkingDirectory,
 			subrepositoryGitWorkingDirectory);
 
 		_createAndApplyPatch(
@@ -81,9 +80,9 @@ public class MergePortalSubrepositoryUtil {
 	}
 
 	private static void _checkMergeCommitSHA(
+		URL jenkinsBuildURL, PullRequest portalPullRequest,
 		String currentGitRepoCommitSHA, String targetGitRepoCommitSHA,
 		GitWorkingDirectory portalGitWorkingDirectory,
-		PullRequest portalPullRequest,
 		GitWorkingDirectory subrepositoryGitWorkingDirectory) {
 
 		if (Objects.equals(
@@ -100,7 +99,6 @@ public class MergePortalSubrepositoryUtil {
 			_getGitHubURLString(
 				portalPullRequest.getBaseURL(), targetGitRepoCommitSHA));
 		sb.append(" is incompatible with sha found in '");
-
 		sb.append(
 			JenkinsResultsParserUtil.getPathRelativeTo(
 				_getGitRepoFile(
@@ -109,9 +107,7 @@ public class MergePortalSubrepositoryUtil {
 				portalGitWorkingDirectory.getWorkingDirectory()));
 		sb.append("'");
 
-		System.out.println(sb.toString());
-
-		throw new RuntimeException(sb.toString());
+		_reportError(sb.toString(), jenkinsBuildURL, portalPullRequest);
 	}
 
 	private static void _checkPassingTestSuites(

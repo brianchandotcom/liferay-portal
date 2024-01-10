@@ -110,7 +110,7 @@ JavaModuleInternalImportsCheck | .java | Finds cases where a module imports an `
 JavaModuleJavaxPortletInitParamTemplatePathCheck | .java | Validates the value of `javax.portlet.init-param.template-path`. |
 JavaModuleServiceReferenceCheck | .java | Finds cases where `@BeanReference` annotation should be used instead of `@ServiceReference` annotation. |
 [JavaModuleTestCheck](check/java_module_test_check.markdown#javamoduletestcheck) | .java | Checks package names in tests. |
-JavaModuleTestUtilCheck | .java | Checks package names for `*TestUtil.java`. |
+JavaModuleTestUtilCheck | .java | Checks package name for `*TestUtil.java`. |
 JavaModuleUniqueVerifyProcessCheck | .java | Checks that a module can not have more than 1 verify process class (class extends VerifyProcess). |
 JavaNewProblemInstantiationParametersCheck | .java | Finds cases where `new Problem` can be simplified. |
 [JavaOSGiReferenceCheck](check/java_osgi_reference_check.markdown#javaosgireferencecheck) | .java | Performs several checks on classes with `@Component` annotation. |

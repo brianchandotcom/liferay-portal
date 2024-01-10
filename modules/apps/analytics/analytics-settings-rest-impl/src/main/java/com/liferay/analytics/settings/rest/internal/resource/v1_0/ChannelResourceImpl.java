@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -236,6 +237,8 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 	protected void activate() {
 		_commerceChannelClassNameId = _portal.getClassNameId(
 			"com.liferay.commerce.product.model.CommerceChannel");
+
+		_analyticsCloudClient = new AnalyticsCloudClient(_http);
 	}
 
 	@Reference
@@ -254,7 +257,6 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		throw new RuntimeException("Unable to get analytics data source");
 	}
 
-	@Reference
 	private AnalyticsCloudClient _analyticsCloudClient;
 
 	@Reference
@@ -272,6 +274,9 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private Portal _portal;

@@ -11,6 +11,7 @@ import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.DataSourceResource;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.util.Map;
 
@@ -49,7 +50,8 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 
 		Map<String, Object> properties =
 			_analyticsCloudClient.connectAnalyticsDataSource(
-				contextUser.getCompanyId(), dataSourceToken.getToken());
+				_companyLocalService.getCompany(contextUser.getCompanyId()),
+				dataSourceToken.getToken());
 
 		properties.put("token", dataSourceToken.getToken());
 
@@ -65,5 +67,8 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 }

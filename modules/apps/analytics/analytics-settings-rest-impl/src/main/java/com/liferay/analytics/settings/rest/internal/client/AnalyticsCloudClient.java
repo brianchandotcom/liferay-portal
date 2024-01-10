@@ -8,6 +8,7 @@ package com.liferay.analytics.settings.rest.internal.client;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChannel;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsDataSource;
 import com.liferay.analytics.settings.rest.internal.client.pagination.Page;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 
 import java.util.Locale;
@@ -22,7 +23,7 @@ public interface AnalyticsCloudClient {
 		throws Exception;
 
 	public Map<String, Object> connectAnalyticsDataSource(
-			long companyId, String connectionToken)
+			Company company, String connectionToken)
 		throws Exception;
 
 	public AnalyticsDataSource disconnectAnalyticsDataSource(long companyId)

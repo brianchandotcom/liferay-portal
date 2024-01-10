@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -111,12 +110,10 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 	}
 
 	public Map<String, Object> connectAnalyticsDataSource(
-			long companyId, String connectionToken)
+			Company company, String connectionToken)
 		throws Exception {
 
 		JSONObject connectionTokenJSONObject = _decodeToken(connectionToken);
-
-		Company company = _companyLocalService.getCompany(companyId);
 
 		Http.Options options = new Http.Options();
 
@@ -502,9 +499,6 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 		AnalyticsCloudClientImpl.class);
 
 	private long _commerceChannelClassNameId;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

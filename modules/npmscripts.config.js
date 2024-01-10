@@ -486,6 +486,7 @@ module.exports = {
 				'@clayui/tooltip',
 				'@clayui/upper-toolbar',
 			],
+			'item-selector-taglib': [],
 			'item-selector-web': [],
 		},
 	},

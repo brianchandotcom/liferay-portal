@@ -6,7 +6,7 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import Carousel from '../../src/main/resources/META-INF/resources/item_selector_preview/js/Carousel.es';
+import Carousel from '../../src/main/resources/META-INF/resources/js/item_selector_preview/Carousel';
 
 const itemTitle = 'test image.jpg';
 const itemUrl = 'image1.jpg';

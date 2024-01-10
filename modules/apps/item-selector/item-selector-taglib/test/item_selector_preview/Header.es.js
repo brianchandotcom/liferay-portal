@@ -6,7 +6,7 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import Header from '../../src/main/resources/META-INF/resources/item_selector_preview/js/Header.es';
+import Header from '../../src/main/resources/META-INF/resources/js/item_selector_preview/Header';
 
 const headerTitle = 'Images';
 

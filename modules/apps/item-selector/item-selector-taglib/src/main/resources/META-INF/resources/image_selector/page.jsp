@@ -37,7 +37,7 @@ if (draggable) {
 
 <div>
 	<react:component
-		module="image_selector/js/ImageSelector"
+		module="{ImageSelector} from item-selector-taglib"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"fileEntryId", fileEntryId

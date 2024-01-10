@@ -6,7 +6,7 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import Footer from '../../src/main/resources/META-INF/resources/item_selector_preview/js/Footer.es';
+import Footer from '../../src/main/resources/META-INF/resources/js/item_selector_preview/Footer';
 
 describe('Footer', () => {
 	afterEach(cleanup);

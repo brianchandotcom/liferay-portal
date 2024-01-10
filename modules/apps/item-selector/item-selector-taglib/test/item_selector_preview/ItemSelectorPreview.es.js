@@ -6,7 +6,7 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import ItemSelectorPreview from '../../src/main/resources/META-INF/resources/item_selector_preview/js/ItemSelectorPreview.es';
+import ItemSelectorPreview from '../../src/main/resources/META-INF/resources/js/item_selector_preview/ItemSelectorPreview';
 
 const basicMetadata = {
 	groups: [

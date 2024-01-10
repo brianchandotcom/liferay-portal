@@ -5,8 +5,6 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			ignore: ['**/image_selector.js', '**/config.js'],
-		},
+		main: 'src/main/resources/META-INF/resources/js/index.js',
 	},
 };

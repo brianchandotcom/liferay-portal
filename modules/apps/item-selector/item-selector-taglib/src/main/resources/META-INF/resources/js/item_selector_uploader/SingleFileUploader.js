@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 import {ErrorCode, useDropzone} from 'react-dropzone';
 
-import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
+import ItemSelectorPreview from '../item_selector_preview/ItemSelectorPreview';
 import DragFileBackground from './components/DragFilePlaceholder';
 import getPreviewProps from './utils/getPreviewProps';
 import getUploadErrorMessage from './utils/getUploadErrorMessage';

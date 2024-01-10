@@ -8,9 +8,9 @@ import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import React, {useState} from 'react';
 
-import NoPreview from './NoPreview.es';
-import PreviewImage from './PreviewImage.es';
-import PreviewVideo from './PreviewVideo.es';
+import NoPreview from './NoPreview';
+import PreviewImage from './PreviewImage';
+import PreviewVideo from './PreviewVideo';
 
 const Arrow = ({direction, handleClick}) => (
 	<div className={`pull-${direction}`}>

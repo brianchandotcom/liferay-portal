@@ -15,10 +15,10 @@ import {
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
+import DropHereInfo from '../DropHereInfo';
 import imageSelectorImageAtom, {
 	STR_NULL_IMAGE_FILE_ENTRY_ID,
-} from '../../atoms/imageSelectorImageAtom';
-import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
+} from '../atoms/imageSelectorImageAtom';
 import BrowseImage from './BrowseImage';
 import ChangeImageControls from './ChangeImageControls';
 import ErrorAlert from './ErrorAlert';

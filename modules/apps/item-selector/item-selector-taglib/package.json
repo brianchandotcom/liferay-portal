@@ -19,7 +19,7 @@
 		"react-dom": "16.12.0",
 		"react-dropzone": "11.4.2"
 	},
-	"main": "index.es.js",
+	"main": "js/index.js",
 	"name": "item-selector-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

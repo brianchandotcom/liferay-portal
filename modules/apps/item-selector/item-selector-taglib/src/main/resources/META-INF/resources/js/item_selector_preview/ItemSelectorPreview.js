@@ -7,10 +7,10 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import ImageEditor from '../../image_editor/ImageEditor';
-import Carousel from './Carousel.es';
-import Footer from './Footer.es';
-import Header from './Header.es';
+import ImageEditor from '../ImageEditor';
+import Carousel from './Carousel';
+import Footer from './Footer';
+import Header from './Header';
 
 import '../../css/item_selector_preview.scss';
 

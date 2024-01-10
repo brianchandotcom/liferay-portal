@@ -7,8 +7,8 @@ import {delegate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
-import SingleFileUploader from '../../item_selector_uploader/js/SingleFileUploader';
+import ItemSelectorPreview from '../item_selector_preview/ItemSelectorPreview';
+import SingleFileUploader from '../item_selector_uploader/SingleFileUploader';
 
 export default function ItemSelectorRepositoryEntryBrowser({
 	closeCaption,

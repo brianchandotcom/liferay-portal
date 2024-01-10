@@ -23,8 +23,18 @@
 	.align-items-baseline .col-10 {
 		gap: 1rem;
 	}
+	
+	.align-items-baseline.d-flex.flex-wrap.mr-2 {
+		color: #000;
+		font-family: Source Sans 3;
+		font-size: 0.875rem;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 1rem;
+	}
 
 	.bg-color-1 {
+		background-color: var(--color-neutral-1, #F7F7F8);
 		background-color: var(--color-neutral-1, #F7F7F8);
 	}
 
@@ -48,7 +58,7 @@
 	}
 
 	.callout-title {
-		color: var(--Neutral-Neutral-10, #272833);
+		color: var(--color-neutral-10, #282934);
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 1.5rem;
 		font-style: normal;
@@ -73,11 +83,37 @@
 		width: 0.6rem;
 	}
 
+	.doc-nav::-webkit-scrollbar {
+  	background: transparent;
+		width: 18px;
+	}
+	
+	.doc-nav::-webkit-scrollbar-thumb { 
+  	background: var(--color-neutral-4, #B1B2B9);
+		border: 5px solid var(--color-neutral-1, #F7F7F8);
+		border-radius: 12px;
+		height: 20px;
+	}
+	
+	.doc-nav::-webkit-scrollbar-thumb:hover {
+  	background: var(--color-neutral-4, #B1B2B9);
+	}
+	
+	.doc-nav::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-bottom: 10px;
+	}
+	
+	.doc-nav::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 10px;
+	}
+
 	.doc-nav>.align-items-center {
 		border-bottom: solid;
 		border-color: var(--color-action-neutral-hover-10, #EAECEE);
 	}
-
+	
 	.dropdown-item {
 		align-items: center;
 		align-self: stretch;
@@ -98,7 +134,7 @@
 		color: var(--color-brand-primary-darken-1, #0053F0) !important;
 	}
 
-	.rounded-10{
+	.rounded-10 {
 	  border-radius: 10px;
 	}
 
@@ -152,10 +188,16 @@
 		background-size: 0.65rem;
 		color: var(--color-action-primary-hover) !important;
 	}
-
+	
 	@media only screen and (min-width: 768px) and (max-width: 1000px) {
 		.doc-nav-wrapper-inner {
 			max-width: 20% !important;
+		}
+	}
+	
+	@media only screen and (min-width:768px) {
+		.bg-color-1.br-5.doc-nav.mt-3 {
+			max-height: 66vh;
 		}
 	}
 
@@ -284,33 +326,9 @@
 
 <div class="container-fluid documentations main-content" role="main">
 	<div class="row">
-		<div class="col-12 col-md-2 mobile-nav-hide mt-5">
+		<div class="col-12 col-md-2 mobile-nav-hide mt-3">
 			<div class="doc-nav-wrapper-inner">
-				<div
-					class="d-md-none mobile-doc-nav-toggler"
-					id="mobileDocNavToggler"
-				>
-					${languageUtil.get(locale, "documentation-menu", "Documentation Menu")}
-					<button
-						aria-label="Expand Documentation Menu"
-						class="btn expand-btn"
-						onclick="javascript:;"
-						title="Expand Documentation Menu"
-						type="button"
-					>
-						<@clay["icon"] symbol="angle-down-small" />
-					</button>
-
-					<button
-						aria-label="Close Documentation Menu"
-						class="btn collapse-btn"
-						onclick="javascript:;"
-						title="Close Documentation Menu"
-						type="button"
-					>
-						<@clay["icon"] symbol="angle-up-small" />
-					</button>
-				</div>
+				
 
 				<#if !topLevelArticle>
 					<#assign

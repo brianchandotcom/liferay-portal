@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Lourdes Fernández Besada
+ * @author Roberto Díaz
+ * @author Ambrín Chaudhary
  */
 public class AICreatorOpenAIDisplayContext {
 
@@ -84,6 +86,15 @@ public class AICreatorOpenAIDisplayContext {
 						AICreatorOpenAIPortletKeys.AI_CREATOR_OPENAI)
 				).setMVCRenderCommandName(
 					"/ai_creator_openai/upload_generations"
+				).setParameter(
+					"fileEntryTypeId",
+					ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId")
+				).setParameter(
+					"folderId",
+					ParamUtil.getLong(_httpServletRequest, "folderId")
+				).setParameter(
+					"repositoryId",
+					ParamUtil.getLong(_httpServletRequest, "repositoryId")
 				).buildString();
 			}
 		).build();

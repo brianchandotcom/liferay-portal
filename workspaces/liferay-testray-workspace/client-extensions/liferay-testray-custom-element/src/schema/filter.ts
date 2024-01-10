@@ -394,10 +394,6 @@ const filterSchema = {
 				operator: 'lt',
 				type: 'date',
 			},
-			overrides(baseFilters.team, {
-				name: 'componentToCaseResult/r_teamToComponents_c_teamId',
-				type: 'multiselect',
-			}),
 		] as RendererFields[],
 	},
 	buildRuns: {

@@ -170,15 +170,19 @@ public class MultipartBodyMessageBodyReader
 	private UploadServletRequest _getUploadServletRequest(
 		ServletRequest servletRequest) {
 
-		if (servletRequest instanceof UploadServletRequest) {
-			return (UploadServletRequest)servletRequest;
-		}
+		while (servletRequest instanceof ServletRequestWrapper) {
+			if (servletRequest instanceof UploadServletRequest) {
+				return (UploadServletRequest)servletRequest;
+			}
 
-		if (servletRequest instanceof ServletRequestWrapper) {
 			ServletRequestWrapper servletRequestWrapper =
 				(ServletRequestWrapper)servletRequest;
 
-			return _getUploadServletRequest(servletRequestWrapper.getRequest());
+			servletRequest = servletRequestWrapper.getRequest();
+		}
+
+		if (servletRequest instanceof UploadServletRequest) {
+			return (UploadServletRequest)servletRequest;
 		}
 
 		return null;

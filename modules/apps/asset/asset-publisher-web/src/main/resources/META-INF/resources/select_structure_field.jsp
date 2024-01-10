@@ -46,5 +46,5 @@ SelectStructureFieldDisplayContext selectStructureFieldDisplayContext = new Sele
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "selectStructureField" %>'
 	context="<%= selectStructureFieldDisplayContext.getComponentContextData() %>"
-	module="js/SelectStructureField"
+	module="{SelectStructureField} from asset-publisher-web"
 />

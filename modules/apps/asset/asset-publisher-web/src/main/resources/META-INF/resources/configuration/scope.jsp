@@ -71,5 +71,5 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 	displayType="secondary"
 	dropdownItems="<%= assetPublisherDisplayContext.getScopeDropdownItems(addScopeURL) %>"
 	label="select"
-	propsTransformer="js/ScopeActionDropdownPropsTransformer"
+	propsTransformer="{ScopeActionDropdownPropsTransformer} from asset-publisher-web"
 />

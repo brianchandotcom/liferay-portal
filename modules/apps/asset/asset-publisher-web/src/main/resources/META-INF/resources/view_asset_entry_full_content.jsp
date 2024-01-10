@@ -365,7 +365,7 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 								borderless="<%= true %>"
 								displayType="secondary"
 								icon="print"
-								propsTransformer="js/printPageButtonPropsTransformer"
+								propsTransformer="{printPageButtonPropsTransformer} from asset-publisher-web"
 								small="<%= true %>"
 								type="button"
 							/>

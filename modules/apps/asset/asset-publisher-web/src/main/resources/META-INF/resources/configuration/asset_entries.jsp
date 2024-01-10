@@ -114,7 +114,7 @@ long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 					displayType="secondary"
 					dropdownItems="<%= assetPublisherDisplayContext.getDropdownItems(group) %>"
 					label="<%= title %>"
-					propsTransformer="js/AssetEntrySelectionDropdownPropsTransformer"
+					propsTransformer="{AssetEntrySelectionDropdownPropsTransformer} from asset-publisher-web"
 					title="<%= title %>"
 				/>
 

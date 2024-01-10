@@ -295,6 +295,6 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 				"classTypes", classTypesList
 			).build()
 		%>'
-		module="js/Source"
+		module="{Source} from asset-publisher-web"
 	/>
 </liferay-frontend:fieldset>

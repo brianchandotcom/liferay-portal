@@ -148,17 +148,22 @@ function ImageEditor({
 
 			const handleZoomChange = (event) => {
 				const zoom = event.detail.ratio * 100;
+				const zoomDirection =
+					event.detail.ratio > event.detail.oldRatio ? 1 : -1;
+				const nextZoom = zoom * (1 + zoomDirection * ZOOM_CONFIG.step);
 
-				if (zoom < ZOOM_CONFIG.min) {
+				if (zoom < ZOOM_CONFIG.min || zoom > ZOOM_CONFIG.max) {
 					event.preventDefault();
+				}
+
+				if (nextZoom < ZOOM_CONFIG.min) {
 					setDisabledZoomOut(true);
 				}
 				else {
 					setDisabledZoomOut(false);
 				}
 
-				if (zoom > ZOOM_CONFIG.max) {
-					event.preventDefault();
+				if (nextZoom > ZOOM_CONFIG.max) {
 					setDisabledZoomIn(true);
 				}
 				else {

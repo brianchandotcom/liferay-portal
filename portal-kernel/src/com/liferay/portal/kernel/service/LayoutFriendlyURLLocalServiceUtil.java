@@ -435,6 +435,13 @@ public class LayoutFriendlyURLLocalServiceUtil {
 		return getService().getLayoutFriendlyURLsCount();
 	}
 
+	public static int getLayoutFriendlyURLsCount(
+		long companyId, String friendlyURL, boolean exactMatch) {
+
+		return getService().getLayoutFriendlyURLsCount(
+			companyId, friendlyURL, exactMatch);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

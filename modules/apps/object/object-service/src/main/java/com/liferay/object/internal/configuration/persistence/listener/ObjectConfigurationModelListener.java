@@ -51,7 +51,7 @@ public class ObjectConfigurationModelListener
 
 			throw new ConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
-					resourceBundle, "the-time-scale-is-not-valid"),
+					resourceBundle, "the-time-scale-is-invalid"),
 				ObjectConfiguration.class, getClass(), properties);
 		}
 	}

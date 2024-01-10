@@ -68,7 +68,7 @@ InfoCollectionProviderDisplayContext infoCollectionProviderDisplayContext = (Inf
 				<clay:dropdown-actions
 					aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 					dropdownItems="<%= infoCollectionProviderActionDropdownItems.getActionDropdownItems() %>"
-					propsTransformer="js/InfoCollectionProviderDropdownDefaultPropsTransformer"
+					propsTransformer="{InfoCollectionProviderDropdownDefaultPropsTransformer} from asset-list-web"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

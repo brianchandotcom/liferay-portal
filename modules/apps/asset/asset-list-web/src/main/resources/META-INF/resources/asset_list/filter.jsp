@@ -42,7 +42,7 @@
 
 	<div>
 		<react:component
-			module="js/components/AssetFilterBuilder/index"
+			module="{AssetFilterBuilder} from asset-list-web"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL()

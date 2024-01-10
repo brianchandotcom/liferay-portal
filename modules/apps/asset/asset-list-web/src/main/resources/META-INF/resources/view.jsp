@@ -20,7 +20,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= assetListManagementToolbarDisplayContext %>"
-	propsTransformer="js/ManagementToolbarPropsTransformer"
+	propsTransformer="{ManagementToolbarPropsTransformer} from asset-list-web"
 />
 
 <portlet:actionURL name="/asset_list/delete_asset_list_entries" var="deleteAssetListEntryURL">
@@ -103,14 +103,14 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 								<clay:dropdown-actions
 									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 									dropdownItems="<%= assetListDisplayContext.getActionDropdownItems(assetListEntry) %>"
-									propsTransformer="js/AssetEntryListDropdownDefaultPropsTransformer"
+									propsTransformer="{AssetEntryListDropdownDefaultPropsTransformer} from asset-list-web"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test='<%= Objects.equals(assetListDisplayContext.getDisplayStyle(), "icon") %>'>
 							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
-									propsTransformer="js/AssetEntryListDropdownDefaultPropsTransformer"
+									propsTransformer="{AssetEntryListDropdownDefaultPropsTransformer} from asset-list-web"
 									verticalCard="<%= new AssetListEntryVerticalCard(assetListDisplayContext, assetListEntry, renderRequest, searchContainer.getRowChecker()) %>"
 								/>
 							</liferay-ui:search-container-column-text>
@@ -174,7 +174,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 								<clay:dropdown-actions
 									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 									dropdownItems="<%= assetListDisplayContext.getActionDropdownItems(assetListEntry) %>"
-									propsTransformer="js/AssetEntryListDropdownDefaultPropsTransformer"
+									propsTransformer="{AssetEntryListDropdownDefaultPropsTransformer} from asset-list-web"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:otherwise>
@@ -193,7 +193,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 				buttonCssClass="secondary"
 				description="<%= assetListDisplayContext.getEmptyResultMessageDescription() %>"
 				elementType='<%= LanguageUtil.get(request, "collections") %>'
-				propsTransformer="js/EmptyResultMessagePropsTransformer"
+				propsTransformer="{EmptyResultMessagePropsTransformer} from asset-list-web"
 				propsTransformerServletContext="<%= application %>"
 			/>
 		</c:otherwise>

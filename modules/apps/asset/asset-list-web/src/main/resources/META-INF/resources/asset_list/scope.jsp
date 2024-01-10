@@ -74,7 +74,7 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 		cssClass="btn btn-secondary"
 		dropdownItems="<%= scopeActionDropdownItemsProvider.getActionDropdownItems() %>"
 		label='<%= LanguageUtil.get(request, "select") %>'
-		propsTransformer="js/ScopeDefaultPropsTransformer"
+		propsTransformer="{ScopeDefaultPropsTransformer} from asset-list-web"
 	/>
 </c:if>
 

@@ -115,5 +115,5 @@
 			"orderingContainerId", liferayPortletResponse.getNamespace() + "ordering"
 		).build()
 	%>'
-	module="js/Ordering"
+	module="{Ordering} from asset-list-web"
 />

@@ -95,7 +95,7 @@ InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoCollectionProvide
 						<clay:dropdown-actions
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= listItemsActionDropdownItems.getActionDropdownItems(infoCollectionProviderItemsDisplayContext.getInfoCollectionProviderClassName(), result) %>"
-							propsTransformer="js/ListItemsDropdownPropsTransformer"
+							propsTransformer="{ListItemsDropdownPropsTransformer} from asset-list-web"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:if>
@@ -109,5 +109,5 @@ InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoCollectionProvide
 </clay:container-fluid>
 
 <liferay-frontend:component
-	module="js/TopLinkEventHandler.es"
+	module="{TopLinkEventHandler} from asset-list-web"
 />

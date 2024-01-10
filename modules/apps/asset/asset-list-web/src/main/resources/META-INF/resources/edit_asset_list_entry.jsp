@@ -64,7 +64,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 				<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
 
 				<react:component
-					module="js/components/VariationsNav/index"
+					module="{VariationsNav} from asset-list-web"
 					props="<%= editAssetListDisplayContext.getData() %>"
 				/>
 			</div>

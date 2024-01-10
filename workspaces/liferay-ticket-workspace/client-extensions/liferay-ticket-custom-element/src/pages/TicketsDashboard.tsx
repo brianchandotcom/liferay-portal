@@ -3,17 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {DndContext} from '@dnd-kit/core';
-import React, {useContext, useMemo, useState} from 'react';
-import {QueryClient, useMutation} from 'react-query';
+import React, {useMemo, useState} from 'react';
+import {QueryClient, useMutation, useQueryClient} from 'react-query';
 
 import StatusColumn from '../components/StatusColumn';
-import {QueryClientContext} from '../context';
 import {useTickets} from '../hooks/useTickets';
 import {Liferay} from '../services/liferay';
 import {updateTicketStatus} from '../services/tickets';
 import {Filter, ScreenType, Ticket} from '../types';
+
+type RelatedTicketsMap = {
+	[key: string]: Ticket[];
+};
 
 const DRAG_RESULT = {
 	NO_CHANGE: 'NO_CHANGE',
@@ -27,32 +31,35 @@ const ALLOWED_DASHBOARD_STATUSES = [
 	'Closed',
 ];
 
-const initialFilterState: Filter = {
+const INITIAL_FILTER_STATE: Filter = {
 	field: '',
 	label: '',
 	value: '',
 };
 
-const TicketsDashboard: React.FC<{screenType: ScreenType}> = ({screenType}) => {
-	const queryClient: QueryClient = useContext(QueryClientContext);
+const DASHBOARD_STYLE_WHILE_LOADING: React.CSSProperties = {
+	opacity: 0.5,
+	zIndex: 1,
+};
+
+const PAGE_LOADING_INDICATOR_STYLE: React.CSSProperties = {
+	opacity: 1,
+	zIndex: 2,
+};
+
+const TicketsDashboard: React.FC<{screenType?: ScreenType}> = ({
+	screenType,
+}) => {
+	const queryClient: QueryClient = useQueryClient();
 
 	const [isLoading, setIsLoading] = useState(false);
 
-	const pageLoadingStyle: React.CSSProperties = {
-		opacity: 0.5,
-		zIndex: 2,
-	};
-
 	const {rows: tickets} = useTickets({
-		filter: initialFilterState,
-		page: 0,
+		debouncedPage: 0,
+		debouncedSearch: '',
+		filter: INITIAL_FILTER_STATE,
 		pageSize: 1000,
-		search: '',
 	});
-
-	type RelatedTicketsMap = {
-		[key: string]: Ticket[];
-	};
 
 	const relatedTicketsMap: RelatedTicketsMap = useMemo<
 		RelatedTicketsMap
@@ -125,9 +132,12 @@ const TicketsDashboard: React.FC<{screenType: ScreenType}> = ({screenType}) => {
 	});
 
 	return (
-		<>
+		<div className="position-relative">
 			{screenType === ScreenType.INTEGRATED && (
-				<div className="align-items-center autofit-padded autofit-row bg-neutral-1 mb-3 p-3">
+				<ClayLayout.ContentRow
+					className="align-items-center bg-neutral-1 mb-3 p-3 rounded"
+					padded
+				>
 					{isLoading && (
 						<ClayLoadingIndicator
 							className="m-0 mr-2"
@@ -136,23 +146,26 @@ const TicketsDashboard: React.FC<{screenType: ScreenType}> = ({screenType}) => {
 						/>
 					)}
 					<div className="text-11">Ticket Dashboard by Status</div>
-				</div>
+				</ClayLayout.ContentRow>
 			)}
 
 			{screenType === ScreenType.STANDALONE && isLoading && (
-				<div
-					className="autofit-padded autofit-row bg-neutral-1 h-100 justify-content-center position-absolute rounded w-100"
-					style={pageLoadingStyle}
+				<ClayLayout.ContentRow
+					className="h-100 position-absolute pt-5 w-100"
+					padded
+					style={PAGE_LOADING_INDICATOR_STYLE}
 				>
 					<ClayLoadingIndicator
 						className="d-block"
 						displayType="secondary"
 						size="lg"
 					/>
-				</div>
+				</ClayLayout.ContentRow>
 			)}
 
-			<div className="autofit-padded-no-gutters autofit-row">
+			<ClayLayout.ContentRow
+				style={isLoading ? DASHBOARD_STYLE_WHILE_LOADING : {}}
+			>
 				<DndContext
 					onDragEnd={(event) => {
 						onDragEndMutation.mutate(event);
@@ -167,8 +180,8 @@ const TicketsDashboard: React.FC<{screenType: ScreenType}> = ({screenType}) => {
 						</div>
 					))}
 				</DndContext>
-			</div>
-		</>
+			</ClayLayout.ContentRow>
+		</div>
 	);
 };
 

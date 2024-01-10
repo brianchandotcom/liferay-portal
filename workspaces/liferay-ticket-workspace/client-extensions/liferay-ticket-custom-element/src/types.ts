@@ -37,6 +37,7 @@ export type User = {
 };
 
 export type Ticket = {
+	actions?: any;
 	assignee: User;
 	dateCreated: Date;
 	dateModified: Date;
@@ -57,6 +58,7 @@ export type Ticket = {
 };
 
 export type TicketPayload = {
+	actions?: any;
 	dateCreated: string;
 	dateModified: string;
 	description: string;

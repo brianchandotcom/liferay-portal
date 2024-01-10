@@ -10,10 +10,9 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
 import {useDraggable} from '@dnd-kit/core';
 import {CSS} from '@dnd-kit/utilities';
-import {useContext, useState} from 'react';
-import {QueryClient, useMutation} from 'react-query';
+import {useState} from 'react';
+import {QueryClient, useMutation, useQueryClient} from 'react-query';
 
-import {QueryClientContext} from '../context';
 import {Liferay} from '../services/liferay';
 import {assignTicketToMe} from '../services/tickets';
 import {Ticket} from '../types';
@@ -22,7 +21,7 @@ const TicketCard: React.FC<{ticket: Ticket}> = ({ticket}) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isPanelExpanded, setIsPanelExpanded] = useState(false);
 
-	const queryClient: QueryClient = useContext(QueryClientContext);
+	const queryClient: QueryClient = useQueryClient();
 
 	const {
 		attributes,
@@ -122,7 +121,7 @@ const TicketCard: React.FC<{ticket: Ticket}> = ({ticket}) => {
 						}
 						displayType="secondary"
 						expanded={isPanelExpanded}
-						onExpandedChange={(isExpanded: any) =>
+						onExpandedChange={(isExpanded: boolean) =>
 							setIsPanelExpanded(isExpanded)
 						}
 						showCollapseIcon={true}

@@ -8,7 +8,7 @@ import {useEffect, useState} from 'react';
 // see https://github.com/tannerlinsley/react-query/issues/293
 // see https://usehooks.com/useDebounce/
 
-export default function useDebounce(value: string, delay: number) {
+export default function useDebounce(value: string | number, delay: number) {
 
 	// State and setters for debounced value
 

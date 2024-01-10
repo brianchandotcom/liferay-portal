@@ -5,9 +5,8 @@
 
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {createRoot} from 'react-dom/client';
-import {QueryClientProvider} from 'react-query';
+import {QueryClient, QueryClientProvider} from 'react-query';
 
-import {QueryClientContext} from './context';
 import AllScreens from './pages/AllScreens';
 import TicketsDashboard from './pages/TicketsDashboard';
 import TicketsOverview from './pages/TicketsOverview';
@@ -28,16 +27,14 @@ const LiferayTicketWorkspaceComponents: LiferayTicketWorkspaceComponentsType = {
 const DirectToCustomer: React.FC<{defaultScreen: string}> = ({defaultScreen}) =>
 	LiferayTicketWorkspaceComponents[defaultScreen] ?? <NoRouteSelected />;
 
+const QUERY_CLIENT = new QueryClient();
+
 const Main: React.FC<{defaultScreen: string}> = ({defaultScreen}) => (
-	<QueryClientContext.Consumer>
-		{(queryClient) => (
-			<QueryClientProvider client={queryClient}>
-				<ClayIconSpriteContext.Provider value={Liferay.Icons.spritemap}>
-					<DirectToCustomer defaultScreen={defaultScreen} />
-				</ClayIconSpriteContext.Provider>
-			</QueryClientProvider>
-		)}
-	</QueryClientContext.Consumer>
+	<QueryClientProvider client={QUERY_CLIENT}>
+		<ClayIconSpriteContext.Provider value={Liferay.Icons.spritemap}>
+			<DirectToCustomer defaultScreen={defaultScreen} />
+		</ClayIconSpriteContext.Provider>
+	</QueryClientProvider>
 );
 
 class WebComponent extends HTMLElement {

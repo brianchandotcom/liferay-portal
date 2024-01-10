@@ -37,12 +37,12 @@ public class ObjectConfigurationModelListener
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", LocaleUtil.getMostRelevantLocale(), getClass());
 
-		if (duration < 1)
-
+		if (duration < 1) {
 			throw new ConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
 					resourceBundle, "the-duration-field-cannot-be-less-than-1"),
 				ObjectConfiguration.class, getClass(), properties);
+		}
 
 		String timeScale = GetterUtil.getString(properties.get("timeScale"));
 

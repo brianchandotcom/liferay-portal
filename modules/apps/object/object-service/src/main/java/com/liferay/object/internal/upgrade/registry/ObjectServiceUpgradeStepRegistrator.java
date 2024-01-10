@@ -407,6 +407,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"8.8.3", "8.8.4",
 			new com.liferay.object.internal.upgrade.v8_8_4.
 				ObjectFolderUpgradeProcess());
+
+		registry.register(
+			"8.8.4", "9.0.0",
+			new com.liferay.object.internal.upgrade.v9_0_0.
+				ObjectFieldUpgradeProcess());
 	}
 
 	@Reference

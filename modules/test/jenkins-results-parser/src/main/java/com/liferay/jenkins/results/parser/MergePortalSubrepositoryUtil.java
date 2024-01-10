@@ -108,7 +108,7 @@ public class MergePortalSubrepositoryUtil {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(_getGitHubURLString(portalGitHubURL, targetGitRepoCommitSHA));
-		sb.append(" is incompatible with sha found in '");
+		sb.append(" is incompatible with SHA found in '");
 
 		sb.append(
 			JenkinsResultsParserUtil.getPathRelativeTo(

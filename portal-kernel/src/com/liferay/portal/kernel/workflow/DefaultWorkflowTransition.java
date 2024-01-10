@@ -34,7 +34,11 @@ public class DefaultWorkflowTransition implements WorkflowTransition {
 			return HtmlUtil.escape(name);
 		}
 
-		String label = _labelMap.get(LocaleUtil.getSiteDefault());
+		String label = null;
+
+		if (_labelMap != null) {
+			label = _labelMap.get(LocaleUtil.getSiteDefault());
+		}
 
 		if (label != null) {
 			return HtmlUtil.escape(label);

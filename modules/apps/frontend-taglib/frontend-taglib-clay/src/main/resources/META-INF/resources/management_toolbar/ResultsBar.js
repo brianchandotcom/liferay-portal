@@ -150,6 +150,16 @@ const ResultsBar = ({
 
 							navigate(clearResultsURL);
 						}}
+						onKeyPress={(event) => {
+							if (event.key === 'Enter') {
+								event.preventDefault();
+
+								searchContainerRef.current?.fire('clearFilter');
+
+								navigate(clearResultsURL);
+							}
+						}}
+						tabIndex={0}
 					>
 						{Liferay.Language.get('clear')}
 					</ClayLink>

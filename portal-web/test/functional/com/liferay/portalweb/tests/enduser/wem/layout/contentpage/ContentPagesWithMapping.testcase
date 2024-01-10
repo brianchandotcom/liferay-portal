@@ -1744,7 +1744,9 @@ definition {
 			PageEditor.publish();
 		}
 
-		task ("When the user accesses to the associated display page") {
+		task ("When the guest user accesses to the associated display page") {
+			UserBar.signOut();
+
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
 				siteName = ${randomSiteName});
@@ -1760,6 +1762,8 @@ definition {
 		}
 
 		task ("When the user maps the normal display page template as specific to a Button fragment") {
+			User.loginPG();
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
 				siteName = ${randomSiteName});

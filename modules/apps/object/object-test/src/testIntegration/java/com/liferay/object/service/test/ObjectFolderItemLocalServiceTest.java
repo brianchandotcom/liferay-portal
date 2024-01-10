@@ -280,7 +280,7 @@ public class ObjectFolderItemLocalServiceTest {
 	}
 
 	@Test
-	public void testGetObjectFolderItemByObjectFolderId() throws Exception {
+	public void testGetObjectFolderItemsByObjectFolderId() throws Exception {
 		String originalName = PrincipalThreadLocal.getName();
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();

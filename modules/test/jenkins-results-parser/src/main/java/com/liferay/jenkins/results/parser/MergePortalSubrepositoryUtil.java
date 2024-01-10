@@ -10,7 +10,9 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
@@ -29,6 +31,8 @@ public class MergePortalSubrepositoryUtil {
 		throws IOException {
 
 		_mergeStarted(jenkinsBuildURL, portalPullRequest);
+
+		_checkPassingTestSuites(jenkinsBuildURL, portalPullRequest);
 
 		GitWorkingDirectory portalGitWorkingDirectory = _getGitWorkingDirectory(
 			portalPullRequest.getBaseURL(),
@@ -103,6 +107,47 @@ public class MergePortalSubrepositoryUtil {
 		sb.append("'");
 
 		System.out.println(sb.toString());
+
+		throw new RuntimeException(sb.toString());
+	}
+
+	private static void _checkPassingTestSuites(
+		URL jenkinsBuildURL, PullRequest portalPullRequest) {
+
+		List<String> requiredPassingTestSuiteNames = Arrays.asList(
+			"relevant", "sf");
+
+		requiredPassingTestSuiteNames.removeAll(
+			portalPullRequest.getPassingTestSuiteNames());
+
+		if (requiredPassingTestSuiteNames.isEmpty()) {
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Skip merge subrepo because tests have not passed.\n");
+		sb.append("<ul>\n");
+
+		for (String requiredPassingTestSuiteName :
+				requiredPassingTestSuiteNames) {
+
+			sb.append("<li>ci:test:");
+			sb.append(requiredPassingTestSuiteName);
+			sb.append("</li>\n");
+		}
+
+		sb.append("</ul>\n");
+
+		portalPullRequest.addComment(
+			JenkinsResultsParserUtil.combine(
+				sb.toString(), "\n\nFor more details click <a href=\"",
+				String.valueOf(jenkinsBuildURL), "\">here</a>."));
+
+		JenkinsResultsParserUtil.updateBuildDescription(
+			JenkinsResultsParserUtil.combine(
+				_getPullRequestLink(portalPullRequest), "\n", sb.toString()),
+			jenkinsBuildURL);
 
 		throw new RuntimeException(sb.toString());
 	}

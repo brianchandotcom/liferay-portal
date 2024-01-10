@@ -112,9 +112,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 	public void testAssetPublisher() {
 		String urlString = StringBundler.concat(
 			"http://localhost:8080/web/guest/ap-page/-/asset_publisher",
-			"/BNPTUvWUBXIr/content/id",
-			"?_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
-			"INSTANCE_BNPTUvWUBXIr_assetEntryId=43152",
+			"/BNPTUvWUBXIr/content/id?p_r_p_assetEntryId=43152",
 			"&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
 			"INSTANCE_BNPTUvWUBXIr_redirect=",
 			"http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2F",
@@ -124,8 +122,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 			"&p_p_mode=view",
 			"&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
 			"INSTANCE_BNPTUvWUBXIr_cur=0&p_r_p_resetCur=false",
-			"&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
-			"INSTANCE_BNPTUvWUBXIr_assetEntryId=43152");
+			"&p_r_p_assetEntryId=43152");
 
 		String className1 = JournalArticle.class.getName();
 		String className2 = BlogsEntry.class.getName();
@@ -138,9 +135,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 
 		String expectedDestination = StringBundler.concat(
 			"http://localhost:8080/web/guest/ap-page/-/asset_publisher",
-			"/BNPTUvWUBXIr/blog/id",
-			"?_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
-			"INSTANCE_BNPTUvWUBXIr_assetEntryId=25134",
+			"/BNPTUvWUBXIr/blog/id?p_r_p_assetEntryId=25134",
 			"&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
 			"INSTANCE_BNPTUvWUBXIr_redirect=http://localhost:8080/web/guest",
 			"/ap-page?p_p_id=com_liferay_asset_publisher_web_portlet_",
@@ -149,8 +144,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 			"&p_p_mode=view",
 			"&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
 			"INSTANCE_BNPTUvWUBXIr_cur=0&p_r_p_resetCur=false",
-			"&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
-			"INSTANCE_BNPTUvWUBXIr_assetEntryId=25134");
+			"&p_r_p_assetEntryId=25134");
 
 		AssetEntry assetEntry1 = getAssetEntry(className1, classPK1);
 

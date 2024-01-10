@@ -44,8 +44,9 @@ public class MergePortalSubrepositoryUtil {
 				subrepositoryUpstreamBranchName);
 
 		String currentGitRepoCommitSHA = _getCurrentGitRepoCommitSHA(
-			portalPullRequest, portalGitWorkingDirectory,
-			subrepositoryGitWorkingDirectory, targetGitRepoCommitSHA);
+			jenkinsBuildURL, portalPullRequest,
+			portalGitWorkingDirectory, subrepositoryGitWorkingDirectory,
+			targetGitRepoCommitSHA);
 
 		String startingPortalCommitSHA =
 			portalGitWorkingDirectory.getLatestCommitSHA();
@@ -287,7 +288,7 @@ public class MergePortalSubrepositoryUtil {
 	}
 
 	private static String _getCurrentGitRepoCommitSHA(
-		PullRequest portalPullRequest,
+		URL jenkinsBuildURL, PullRequest portalPullRequest,
 		GitWorkingDirectory portalGitWorkingDirectory,
 		GitWorkingDirectory subrepositoryGitWorkingDirectory,
 		String targetGitRepoCommitSHA) {
@@ -314,9 +315,9 @@ public class MergePortalSubrepositoryUtil {
 					portalGitWorkingDirectory.getWorkingDirectory()));
 			sb.append("'");
 
-			System.out.println(sb.toString());
+			_reportError(sb.toString(), jenkinsBuildURL, portalPullRequest);
 
-			throw new RuntimeException(sb.toString());
+			return null;
 		}
 
 		return currentGitRepoCommitSHA;
@@ -525,6 +526,8 @@ public class MergePortalSubrepositoryUtil {
 	private static void _reportError(
 		String errorMessage, URL jenkinsBuildURL, PullRequest portalPullRequest,
 		Exception exception) {
+
+		System.out.println(errorMessage);
 
 		JenkinsResultsParserUtil.updateBuildDescription(
 			errorMessage, jenkinsBuildURL);

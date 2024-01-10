@@ -133,25 +133,16 @@ public class ServiceWrapperRegistry {
 				return null;
 			}
 
-			ClassLoader classLoader = clazz.getClassLoader();
+			AopInvocationHandler aopInvocationHandler =
+				ProxyUtil.fetchInvocationHandler(
+					serviceProxy, AopInvocationHandler.class);
 
-			try {
-				AopInvocationHandler aopInvocationHandler =
-					ProxyUtil.fetchInvocationHandler(
-						serviceProxy, AopInvocationHandler.class);
+			serviceWrapper.setWrappedService(
+				(T)aopInvocationHandler.getTarget());
 
-				serviceWrapper.setWrappedService(
-					(T)aopInvocationHandler.getTarget());
-
-				return new ServiceBag<>(
-					classLoader, aopInvocationHandler, serviceTypeClass,
-					serviceWrapper);
-			}
-			finally {
-				if (serviceReference != null) {
-					_bundleContext.ungetService(serviceReference);
-				}
-			}
+			return new ServiceBag<>(
+				clazz.getClassLoader(), aopInvocationHandler, serviceTypeClass,
+				serviceWrapper, _bundleContext, serviceReference);
 		}
 
 	}

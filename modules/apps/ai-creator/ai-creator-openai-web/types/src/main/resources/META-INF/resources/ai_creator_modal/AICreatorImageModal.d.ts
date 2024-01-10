@@ -6,6 +6,7 @@
 /// <reference types="react" />
 
 interface Props {
+	eventName?: string;
 	getGenerationsURL: string;
 	learnResources: AICreatorModalLearnResources;
 	portletNamespace: string;
@@ -22,6 +23,7 @@ declare type AICreatorModalLearnResources = {
 	};
 };
 export default function AICreatorImageModal({
+	eventName,
 	getGenerationsURL,
 	learnResources,
 	portletNamespace,

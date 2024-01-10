@@ -5,6 +5,7 @@
 
 import {
 	addParams,
+	createPortletURL,
 	navigate,
 	openCategorySelectionModal,
 	openConfirmModal,
@@ -312,9 +313,17 @@ export default function propsTransformer({
 		else {
 			openSelectionModal({
 				height: '70vh',
+				onSelect: ({selectedItems}) => {
+					if (selectedItems) {
+						window.location.reload();
+					}
+				},
+				selectEventName: `${portletNamespace}selectAIImages`,
 				size: 'lg',
 				title: Liferay.Language.get('create-ai-image'),
-				url: aiImageCreatorURL,
+				url: createPortletURL(aiImageCreatorURL, {
+					selectEventName: `${portletNamespace}selectAIImages`,
+				}).toString(),
 			});
 		}
 	};

@@ -17,6 +17,7 @@ import {ImagesResult} from './ImagesResult';
 import {LoadingMessage} from './LoadingMessage';
 
 interface Props {
+	eventName?: string;
 	getGenerationsURL: string;
 	learnResources: AICreatorModalLearnResources;
 	portletNamespace: string;
@@ -40,6 +41,7 @@ type RequestStatus =
 	| {errorMessage: string; type: 'error'};
 
 export default function AICreatorImageModal({
+	eventName,
 	getGenerationsURL,
 	learnResources,
 	portletNamespace,
@@ -69,7 +71,9 @@ export default function AICreatorImageModal({
 					});
 				})
 			).then(() => {
-				closeModal();
+				const opener = Liferay.Util.getOpener();
+
+				opener.Liferay.fire(eventName, {selectedItems: selectedImages});
 			});
 		}
 	};

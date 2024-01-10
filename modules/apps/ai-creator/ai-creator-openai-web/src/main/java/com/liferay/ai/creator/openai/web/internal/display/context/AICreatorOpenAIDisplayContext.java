@@ -57,6 +57,9 @@ public class AICreatorOpenAIDisplayContext {
 
 	public Map<String, Object> getGenerationsProps() {
 		return HashMapBuilder.<String, Object>put(
+			"eventName",
+			ParamUtil.getString(_httpServletRequest, "selectEventName")
+		).put(
 			"getGenerationsURL",
 			() -> {
 				RequestBackedPortletURLFactory requestBackedPortletURLFactory =

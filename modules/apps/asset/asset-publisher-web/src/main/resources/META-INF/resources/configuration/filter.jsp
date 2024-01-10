@@ -44,7 +44,7 @@
 
 	<div>
 		<react:component
-			module="js/components/AssetFilterBuilder/index"
+			module="{AssetFilterBuilder} from asset-publisher-web"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"categorySelectorURL", assetPublisherDisplayContext.getCategorySelectorURL()

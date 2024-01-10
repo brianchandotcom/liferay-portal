@@ -27,7 +27,7 @@ List<DropdownItem> dropdownItems = assetEntryActionDropdownItemsProvider.getActi
 				displayType="unstyled"
 				dropdownItems="<%= dropdownItems %>"
 				monospaced="<%= true %>"
-				propsTransformer="js/AssetEntryActionDropdownPropsTransformer"
+				propsTransformer="{AssetEntryActionDropdownPropsTransformer} from asset-publisher-web"
 				small="<%= true %>"
 				title='<%= LanguageUtil.format(locale, "actions-for-x", assetEntry.getTitle(locale)) %>'
 			/>
@@ -54,7 +54,7 @@ List<DropdownItem> dropdownItems = assetEntryActionDropdownItemsProvider.getActi
 						displayType="unstyled"
 						icon='<%= String.valueOf(dropdownItem.get("icon")) %>'
 						monospaced="<%= true %>"
-						propsTransformer="js/AssetEntryActionButtonPropsTransformer"
+						propsTransformer="{AssetEntryActionButtonPropsTransformer} from asset-publisher-web"
 						small="<%= true %>"
 						title='<%= String.valueOf(dropdownItem.get("label")) %>'
 					/>

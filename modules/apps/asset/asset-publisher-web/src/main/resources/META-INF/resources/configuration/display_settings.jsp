@@ -65,5 +65,5 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 </c:if>
 
 <liferay-frontend:component
-	module="js/DisplaySettings"
+	module="{DisplaySettings} from asset-publisher-web"
 />

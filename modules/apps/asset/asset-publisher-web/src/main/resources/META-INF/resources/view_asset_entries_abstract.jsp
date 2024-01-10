@@ -295,7 +295,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 								borderless="<%= true %>"
 								displayType="secondary"
 								icon="print"
-								propsTransformer="js/printPageButtonPropsTransformer"
+								propsTransformer="{printPageButtonPropsTransformer} from asset-publisher-web"
 								small="<%= true %>"
 								title="<%= label %>"
 								type="button"

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
@@ -50,7 +49,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -285,9 +283,9 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 
 	@Override
 	public AnalyticsChannel updateAnalyticsChannel(
-			String analyticsChannelId, Long[] commerceChannelIds,
-			long companyId, long commerceChannelClassNameId,
-			String dataSourceId, Locale locale, Long[] siteGroupIds)
+			String analyticsChannelId, Group[] commerceChannelGroups,
+			long companyId, String dataSourceId, Locale locale,
+			Group[] siteGroups)
 		throws Exception {
 
 		try {
@@ -307,18 +305,11 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 			options.setBody(
 				JSONUtil.put(
 					"commerceChannels",
-					_getGroupsJSONArray(
-						commerceChannelId -> _groupLocalService.fetchGroup(
-							companyId, commerceChannelClassNameId,
-							commerceChannelId),
-						commerceChannelIds, locale)
+					_getGroupsJSONArray(commerceChannelGroups, locale)
 				).put(
 					"dataSourceId", dataSourceId
 				).put(
-					"groups",
-					_getGroupsJSONArray(
-						groupId -> _groupLocalService.fetchGroup(groupId),
-						siteGroupIds, locale)
+					"groups", _getGroupsJSONArray(siteGroups, locale)
 				).toString(),
 				ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 			options.setLocation(
@@ -433,16 +424,12 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 		}
 	}
 
-	private JSONArray _getGroupsJSONArray(
-			Function<Long, Group> fetchGroupFunction, Long[] groupIds,
-			Locale locale)
+	private JSONArray _getGroupsJSONArray(Group[] groups, Locale locale)
 		throws Exception {
 
 		return JSONUtil.toJSONArray(
-			groupIds,
-			groupId -> {
-				Group group = fetchGroupFunction.apply(groupId);
-
+			groups,
+			group -> {
 				if (group == null) {
 					return null;
 				}
@@ -494,9 +481,6 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 	private ConfigurationProvider _configurationProvider;
 
 	private Map<String, Object> _connectionProperties = new HashMap<>();
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Http _http;

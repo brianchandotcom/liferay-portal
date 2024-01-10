@@ -9,6 +9,7 @@ import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChanne
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsDataSource;
 import com.liferay.analytics.settings.rest.internal.client.pagination.Page;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 
 import java.util.Locale;
@@ -34,9 +35,9 @@ public interface AnalyticsCloudClient {
 		throws Exception;
 
 	public AnalyticsChannel updateAnalyticsChannel(
-			String analyticsChannelId, Long[] commerceChannelIds,
-			long companyId, long commerceChannelClassNameId,
-			String dataSourceId, Locale locale, Long[] siteGroupIds)
+			String analyticsChannelId, Group[] commerceChannelGroups,
+			long companyId, String dataSourceId, Locale locale,
+			Group[] siteGroups)
 		throws Exception;
 
 	public AnalyticsDataSource updateAnalyticsDataSourceDetails(

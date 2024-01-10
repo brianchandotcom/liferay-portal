@@ -15,7 +15,9 @@ import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.ChannelDT
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -120,14 +122,21 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 					contextAcceptLanguage.getPreferredLocale()),
 				_analyticsCloudClient.updateAnalyticsChannel(
 					channel.getChannelId(),
-					_analyticsSettingsManager.getCommerceChannelIds(
-						channel.getChannelId(), contextUser.getCompanyId()),
-					contextUser.getCompanyId(), _commerceChannelClassNameId,
+					transform(
+						_analyticsSettingsManager.getCommerceChannelIds(
+							channel.getChannelId(), contextUser.getCompanyId()),
+						commerceChannelId -> _groupLocalService.fetchGroup(
+							contextUser.getCompanyId(),
+							_commerceChannelClassNameId, commerceChannelId),
+						Group.class),
+					contextUser.getCompanyId(),
 					analyticsConfiguration.liferayAnalyticsDataSourceId(),
 					contextAcceptLanguage.getPreferredLocale(),
-					_analyticsSettingsManager.getSiteIds(
-						channel.getChannelId(),
-						contextCompany.getCompanyId())));
+					transform(
+						_analyticsSettingsManager.getSiteIds(
+							channel.getChannelId(),
+							contextCompany.getCompanyId()),
+						_groupLocalService::fetchGroup, Group.class)));
 		}
 
 		if (dataSources.length > 1) {
@@ -149,11 +158,18 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 		AnalyticsChannel analyticsChannel =
 			_analyticsCloudClient.updateAnalyticsChannel(
-				channel.getChannelId(), dataSource.getCommerceChannelIds(),
-				contextUser.getCompanyId(), _commerceChannelClassNameId,
-				dataSource.getDataSourceId(),
+				channel.getChannelId(),
+				transform(
+					dataSource.getCommerceChannelIds(),
+					commerceChannelId -> _groupLocalService.fetchGroup(
+						contextUser.getCompanyId(), _commerceChannelClassNameId,
+						commerceChannelId),
+					Group.class),
+				contextUser.getCompanyId(), dataSource.getDataSourceId(),
 				contextAcceptLanguage.getPreferredLocale(),
-				dataSource.getSiteIds());
+				transform(
+					dataSource.getSiteIds(), _groupLocalService::fetchGroup,
+					Group.class));
 
 		AnalyticsDataSource analyticsDataSource = _getAnalyticsDataSource(
 			GetterUtil.getLong(dataSource.getDataSourceId()),
@@ -237,6 +253,9 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 	private DTOConverter<AnalyticsChannel, Channel> _channelDTOConverter;
 
 	private long _commerceChannelClassNameId;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -183,6 +183,7 @@ export default function AICreatorImageModal({
 
 					<div className="d-flex flex-column flex-shrink-0">
 						<FormFooter
+							disabledAddButton={Boolean(!selectedImages?.length)}
 							onAdd={onAdd}
 							onClose={closeModal}
 							showAddButton={Boolean(imagesURL?.length)}

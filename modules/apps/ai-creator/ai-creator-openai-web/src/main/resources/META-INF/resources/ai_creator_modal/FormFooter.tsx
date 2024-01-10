@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 interface Props {
+	disabledAddButton?: boolean;
 	onAdd: () => void;
 	onClose: () => void;
 	showAddButton: boolean;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export function FormFooter({
+	disabledAddButton = false,
 	onAdd,
 	onClose,
 	showAddButton,
@@ -44,7 +46,12 @@ export function FormFooter({
 
 	if (showAddButton) {
 		children.push(
-			<ClayButton displayType="primary" key="add" onClick={onAdd}>
+			<ClayButton
+				disabled={disabledAddButton}
+				displayType="primary"
+				key="add"
+				onClick={onAdd}
+			>
 				{Liferay.Language.get('add')}
 			</ClayButton>
 		);

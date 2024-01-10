@@ -82,7 +82,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Writer writer = httpServletResponse.getWriter();
 
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<div class=\"");
 		sb.append(_getCssClass(httpServletRequest));
@@ -106,6 +106,27 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			sb.append("</span>");
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		try {
+			if (FeatureFlagManagerUtil.isEnabled("LPS-196847") &&
+				!_hasGuestViewPermission(layout) && !layout.isPrivateLayout()) {
+
+				sb.append("<span class=\"sr-only\">");
+				sb.append(_language.get(httpServletRequest, "restricted-page"));
+				sb.append("</span>");
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
 		sb.append("</h1>");
 
 		if (_hasDraftLayout(httpServletRequest) &&
@@ -118,12 +139,6 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		sb.append("</span>");
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			Layout layout = themeDisplay.getLayout();
-
 			if (layout.isDraftLayout()) {
 				layout = _layoutLocalService.fetchLayout(layout.getClassPK());
 			}
@@ -132,7 +147,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 				!_hasGuestViewPermission(layout) && !layout.isPrivateLayout()) {
 
 				sb.append("<span class=\"align-items-center c-ml-3 d-flex ");
-				sb.append("lfr-portal-tooltip text-white\" data-title=\" ");
+				sb.append("lfr-portal-tooltip text-white\" title=\"");
 				sb.append(_language.get(httpServletRequest, "restricted-page"));
 				sb.append("\">");
 

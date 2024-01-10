@@ -141,8 +141,8 @@ public class ServiceWrapperRegistry {
 				(T)aopInvocationHandler.getTarget());
 
 			return new ServiceBag<>(
-				clazz.getClassLoader(), aopInvocationHandler, serviceTypeClass,
-				serviceWrapper, _bundleContext, serviceReference);
+				aopInvocationHandler, serviceTypeClass, serviceWrapper,
+				_bundleContext, serviceReference);
 		}
 
 	}

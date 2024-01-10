@@ -1,5 +1,8 @@
 {
 	"author": "",
+	"dependencies": {
+		"uuid": "9.0.0"
+	},
 	"description": "",
 	"devDependencies": {
 		"@liferay/eslint-plugin": "1.5.0",

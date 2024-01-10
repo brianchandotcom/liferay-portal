@@ -29,7 +29,7 @@ AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext 
 	<c:otherwise>
 		<div class="categories-tree container-fluid container-fluid-max-xl" id="<%= assetCategoriesNavigationDisplayContext.getNamespace() %>categoriesContainer">
 			<react:component
-				module="asset_categories_navigation/js/AssetCategoriesNavigationTreeView"
+				module="{AssetCategoriesNavigationTreeView} from asset-taglib"
 				props="<%= assetCategoriesNavigationDisplayContext.getData() %>"
 			/>
 		</div>

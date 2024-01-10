@@ -90,7 +90,7 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 	</div>
 
 	<react:component
-		module="asset_categories_selector/AssetCategoriesSelectorTag.es"
+		module="{AssetCategoriesSelectorTag} from asset-taglib"
 		props="<%= data %>"
 	/>
 </div>

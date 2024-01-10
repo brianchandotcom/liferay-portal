@@ -8,8 +8,8 @@ import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import AssetCategoriesSelector from './AssetCategoriesSelector.es';
-import {ASSET_VOCABULARY_VISIBILITY_TYPES} from './assetVocabularyVisibilityTypes.es';
+import AssetCategoriesSelector from './AssetCategoriesSelector';
+import {ASSET_VOCABULARY_VISIBILITY_TYPES} from './assetVocabularyVisibilityTypes';
 
 function AssetCategoriesSelectorTag({
 	eventName,

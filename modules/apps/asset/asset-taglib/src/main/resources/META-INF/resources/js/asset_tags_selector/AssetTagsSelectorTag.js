@@ -6,7 +6,7 @@
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import AssetTagsSelector from './AssetTagsSelector.es';
+import AssetTagsSelector from './AssetTagsSelector';
 
 function AssetTagsSelectorTag({
 	addCallback,

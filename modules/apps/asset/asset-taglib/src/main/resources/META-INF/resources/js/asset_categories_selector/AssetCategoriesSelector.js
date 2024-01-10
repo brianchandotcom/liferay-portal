@@ -6,7 +6,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import AssetVocabularyCategoriesSelector from './AssetVocabularyCategoriesSelector.es';
+import AssetVocabularyCategoriesSelector from './AssetVocabularyCategoriesSelector';
 
 function AssetCategoriesSelector({
 	eventName,

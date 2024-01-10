@@ -25,7 +25,7 @@
 	cssClass="btn btn-secondary"
 	dropdownItems="<%= inputAssetLinksDisplayContext.getActionDropdownItems() %>"
 	label='<%= LanguageUtil.get(request, "select") %>'
-	propsTransformer="js/InputAssetLinkDropdownDefaultPropsTransformer"
+	propsTransformer="{InputAssetLinkDropdownDefaultPropsTransformer} from asset-taglib"
 />
 
 <liferay-ui:search-container

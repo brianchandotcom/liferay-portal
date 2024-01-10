@@ -402,6 +402,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			new ObjectFolderUpgradeProcess(
 				_companyLocalService, _resourcePermissionLocalService,
 				_roleLocalService));
+
+		registry.register(
+			"8.8.3", "9.0.0",
+			new com.liferay.object.internal.upgrade.v9_0_0.
+				ObjectFieldUpgradeProcess());
 	}
 
 	@Reference

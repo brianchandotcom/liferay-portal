@@ -431,7 +431,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 					permissionSQLContributors) {
 
 				Predicate contributorPermissionWherePredicate =
-					permissionSQLContributor.getPermissionWherePredicate(
+					permissionSQLContributor.getPermissionPredicate(
 						permissionChecker, modelClassName, classPKColumn,
 						groupIds);
 

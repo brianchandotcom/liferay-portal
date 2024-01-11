@@ -109,8 +109,13 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 	private String[] _getGenerations(String url, int numberOfImages) {
 		String[] generations = new String[numberOfImages];
 
-		for (int i = 0; i < numberOfImages; i++) {
-			generations[i] = url;
+		if (numberOfImages > 1) {
+			for (int i = 0; i < numberOfImages; i++) {
+				generations[i] = url + "?t=" + i;
+			}
+		}
+		else {
+			generations[0] = url;
 		}
 
 		return generations;

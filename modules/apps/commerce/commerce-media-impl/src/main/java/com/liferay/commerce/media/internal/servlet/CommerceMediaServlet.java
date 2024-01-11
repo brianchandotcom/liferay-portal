@@ -19,7 +19,9 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
+import com.liferay.commerce.product.type.virtual.order.constants.CommerceVirtualOrderActionKeys;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemFileEntryLocalService;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
@@ -286,8 +288,7 @@ public class CommerceMediaServlet extends HttpServlet {
 
 			long commerceVirtualOrderItemId = GetterUtil.getLongStrict(
 				pathArray[1]);
-			long commerceVirtualOrderItemFileEntryId = GetterUtil.getLongStrict(
-				pathArray[3]);
+			long fileEntryId = GetterUtil.getLongStrict(pathArray[3]);
 
 			try {
 				CommerceVirtualOrderItem commerceVirtualOrderItem =
@@ -310,14 +311,13 @@ public class CommerceMediaServlet extends HttpServlet {
 								getCommerceVirtualOrderItemFileEntries(),
 							commerceVirtualOrderItemFileEntry ->
 								commerceVirtualOrderItemFileEntry.
-									getCommerceVirtualOrderItemFileEntryId()),
-						commerceVirtualOrderItemFileEntryId)) {
+									getFileEntryId()),
+						fileEntryId)) {
 
 					_sendError(
 						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
 						"The commerce virtual order item file entry " +
-							commerceVirtualOrderItemFileEntryId +
-								" does not exist");
+							fileEntryId + " does not exist");
 
 					_sendError(
 						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
@@ -325,20 +325,47 @@ public class CommerceMediaServlet extends HttpServlet {
 							"The commerce virtual order item ",
 							commerceVirtualOrderItemId,
 							" does not have commerce virtual order item file ",
-							"entry ", commerceVirtualOrderItemFileEntryId));
+							"entry ", fileEntryId));
 
 					return;
 				}
 
-				FileEntry fileEntry = _getFileEntry(
-					commerceVirtualOrderItemFileEntryId);
+				FileEntry fileEntry = _getFileEntry(fileEntryId);
 
 				if (fileEntry == null) {
 					_sendError(
 						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
-						"The file entry " +
-							commerceVirtualOrderItemFileEntryId +
-								" does not exist");
+						"The file entry " + fileEntryId + " does not exist");
+
+					return;
+				}
+
+				CommerceVirtualOrderItemFileEntry
+					commerceVirtualOrderItemFileEntry =
+						_commerceVirtualOrderItemFileEntryLocalService.
+							fetchCommerceVirtualOrderItemFileEntry(
+								commerceVirtualOrderItemId, fileEntryId);
+
+				if (commerceVirtualOrderItemFileEntry == null) {
+					_sendError(
+						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
+						"The file entry " + fileEntryId + " does not exist");
+
+					return;
+				}
+
+				if (!_commerceVirtualOrderItemFileEntryModelResourcePermission.
+						contains(
+							PermissionThreadLocal.getPermissionChecker(),
+							commerceVirtualOrderItemFileEntry,
+							CommerceVirtualOrderActionKeys.
+								DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM)) {
+
+					_sendError(
+						httpServletResponse,
+						HttpServletResponse.SC_UNAUTHORIZED,
+						"You do not have permission to access the requested " +
+							"resource");
 
 					return;
 				}
@@ -351,7 +378,8 @@ public class CommerceMediaServlet extends HttpServlet {
 					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 
 				_commerceVirtualOrderItemFileEntryLocalService.incrementUsages(
-					commerceVirtualOrderItemFileEntryId);
+					commerceVirtualOrderItemFileEntry.
+						getCommerceVirtualOrderItemFileEntryId());
 
 				return;
 			}
@@ -640,6 +668,12 @@ public class CommerceMediaServlet extends HttpServlet {
 	@Reference
 	private CommerceVirtualOrderItemFileEntryLocalService
 		_commerceVirtualOrderItemFileEntryLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry)"
+	)
+	private ModelResourcePermission<CommerceVirtualOrderItemFileEntry>
+		_commerceVirtualOrderItemFileEntryModelResourcePermission;
 
 	@Reference
 	private CommerceVirtualOrderItemService _commerceVirtualOrderItemService;

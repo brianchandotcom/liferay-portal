@@ -60,21 +60,6 @@ const Routines = () => {
 						},
 						{
 							clickable: true,
-							key: 'failed',
-							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.caseResultFailed ?? 0,
-							value: i18n.translate('failed'),
-						},
-						{
-							clickable: true,
-							key: 'blocked',
-							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.caseResultBlocked ??
-								0,
-							value: i18n.translate('blocked'),
-						},
-						{
-							clickable: true,
 							key: 'untested',
 							render: (_, testrayRoutine: TestrayRoutine) =>
 								testrayRoutine.builds[0]?.caseResultUntested ??
@@ -98,6 +83,21 @@ const Routines = () => {
 						},
 						{
 							clickable: true,
+							key: 'failed',
+							render: (_, testrayRoutine: TestrayRoutine) =>
+								testrayRoutine.builds[0]?.caseResultFailed ?? 0,
+							value: i18n.translate('failed'),
+						},
+						{
+							clickable: true,
+							key: 'blocked',
+							render: (_, testrayRoutine: TestrayRoutine) =>
+								testrayRoutine.builds[0]?.caseResultBlocked ??
+								0,
+							value: i18n.translate('blocked'),
+						},
+						{
+							clickable: true,
 							key: 'testfix',
 							render: (_, testrayRoutine: TestrayRoutine) =>
 								testrayRoutine.builds[0]?.caseResultTestFix ??
@@ -113,8 +113,6 @@ const Routines = () => {
 									testrayRoutine.builds[0]?.caseResultFailed,
 									testrayRoutine.builds[0]
 										?.caseResultInProgress,
-									testrayRoutine.builds[0]
-										?.caseResultIncomplete,
 									testrayRoutine.builds[0]?.caseResultPassed,
 									testrayRoutine.builds[0]?.caseResultTestFix,
 									testrayRoutine.builds[0]
@@ -125,7 +123,6 @@ const Routines = () => {
 										(prevCount, currentCount) =>
 											prevCount + currentCount
 									),
-							size: 'sm',
 							value: i18n.translate('total'),
 						},
 						{
@@ -141,10 +138,6 @@ const Routines = () => {
 										failed: Number(
 											testrayRoutine.builds[0]
 												?.caseResultFailed
-										),
-										incomplete: Number(
-											testrayRoutine.builds[0]
-												?.caseResultIncomplete
 										),
 										passed: Number(
 											testrayRoutine.builds[0]

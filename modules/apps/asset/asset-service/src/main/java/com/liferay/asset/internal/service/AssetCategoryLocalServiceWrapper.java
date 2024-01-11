@@ -73,7 +73,7 @@ public class AssetCategoryLocalServiceWrapper
 		long groupId, String name, String[] categoryProperties, int start,
 		int end) {
 
-		JoinStep joinStep = DSLQueryFactoryUtil.selectDistinct(
+		JoinStep joinStep = DSLQueryFactoryUtil.select(
 			AssetCategoryTable.INSTANCE
 		).from(
 			AssetCategoryTable.INSTANCE

@@ -787,7 +787,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ROW_NUMBER_DATASET</td>
-	<td>//table[@class='table table-autofit']/tbody/tr[${key_rowNumber}]/td[text()="${key_entry}"]</td>
+	<td>//table/tbody/tr[${key_rowNumber}]/td[text()="${key_entry}"]</td>
 	<td></td>
 </tr>
 <tr>

@@ -7,6 +7,9 @@ package com.liferay.portal.cluster.multiple.internal;
 
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
+import com.liferay.portal.cluster.multiple.internal.jgroups.JGroupsClusterChannelFactory;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterLink;
@@ -30,12 +33,16 @@ import java.util.concurrent.ExecutorService;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
  */
-@Component(enabled = false, service = ClusterLink.class)
+@Component(
+	configurationPid = "com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration",
+	enabled = false, service = ClusterLink.class
+)
 public class ClusterLinkImpl implements ClusterLink {
 
 	@Override
@@ -66,8 +73,10 @@ public class ClusterLinkImpl implements ClusterLink {
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate(Map<String, Object> properties) {
 		_enabled = true;
+
+		modified(properties);
 
 		initialize(
 			_getChannelSettings(
@@ -139,6 +148,13 @@ public class ClusterLinkImpl implements ClusterLink {
 		for (ClusterReceiver clusterReceiver : _clusterReceivers) {
 			clusterReceiver.openLatch();
 		}
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_clusterChannelFactory = new JGroupsClusterChannelFactory(
+			ConfigurableUtil.createConfigurable(
+				ClusterExecutorConfiguration.class, properties));
 	}
 
 	protected void sendLocalMessage(Message message) {
@@ -233,10 +249,7 @@ public class ClusterLinkImpl implements ClusterLink {
 		ClusterLinkImpl.class);
 
 	private int _channelCount;
-
-	@Reference
-	private ClusterChannelFactory _clusterChannelFactory;
-
+	private volatile ClusterChannelFactory _clusterChannelFactory;
 	private List<ClusterChannel> _clusterChannels;
 	private List<ClusterReceiver> _clusterReceivers;
 	private boolean _enabled;

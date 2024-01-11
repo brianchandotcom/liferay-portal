@@ -22,7 +22,9 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -240,7 +242,16 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	}
 
 	private ClusterLinkImpl _getClusterLinkImpl(int channels) {
-		ClusterLinkImpl clusterLinkImpl = new ClusterLinkImpl();
+		ClusterLinkImpl clusterLinkImpl = new ClusterLinkImpl() {
+
+			@Override
+			protected void modified(Map<String, Object> properties) {
+				ReflectionTestUtil.setFieldValue(
+					this, "_clusterChannelFactory",
+					new TestClusterChannelFactory());
+			}
+
+		};
 
 		Properties channelNameProperties = new Properties();
 		Properties channelPropertiesProperties = new Properties();
@@ -266,14 +277,12 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT,
 					channelPropertiesProperties
 				).build()));
-		ReflectionTestUtil.setFieldValue(
-			clusterLinkImpl, "_clusterChannelFactory",
-			new TestClusterChannelFactory());
+
 		ReflectionTestUtil.setFieldValue(
 			clusterLinkImpl, "_portalExecutorManager",
 			new MockPortalExecutorManager());
 
-		clusterLinkImpl.activate();
+		clusterLinkImpl.activate(Collections.emptyMap());
 
 		return clusterLinkImpl;
 	}

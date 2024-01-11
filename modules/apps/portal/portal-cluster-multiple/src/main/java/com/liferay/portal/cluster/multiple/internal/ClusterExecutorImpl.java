@@ -14,6 +14,7 @@ import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
+import com.liferay.portal.cluster.multiple.internal.jgroups.JGroupsClusterChannelFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
@@ -61,7 +62,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -184,14 +184,12 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	}
 
 	@Activate
-	protected void activate(ComponentContext componentContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_enabled = true;
 
-		clusterExecutorConfiguration = ConfigurableUtil.createConfigurable(
-			ClusterExecutorConfiguration.class,
-			componentContext.getProperties());
-
-		BundleContext bundleContext = componentContext.getBundleContext();
+		modified(properties);
 
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, ClusterEventListener.class);
@@ -440,9 +438,12 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	}
 
 	@Modified
-	protected synchronized void modified(Map<String, Object> properties) {
+	protected void modified(Map<String, Object> properies) {
 		clusterExecutorConfiguration = ConfigurableUtil.createConfigurable(
-			ClusterExecutorConfiguration.class, properties);
+			ClusterExecutorConfiguration.class, properies);
+
+		_clusterChannelFactory = new JGroupsClusterChannelFactory(
+			clusterExecutorConfiguration);
 	}
 
 	protected void sendNotifyRequest() {
@@ -560,10 +561,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		ClusterExecutorImpl.class);
 
 	private ClusterChannel _clusterChannel;
-
-	@Reference
-	private ClusterChannelFactory _clusterChannelFactory;
-
+	private volatile ClusterChannelFactory _clusterChannelFactory;
 	private final Map<Address, CompletableFuture<String>>
 		_clusterNodeIdCompletableFutures = new ConcurrentHashMap<>();
 	private final Map<String, ClusterNodeStatus> _clusterNodeStatuses =

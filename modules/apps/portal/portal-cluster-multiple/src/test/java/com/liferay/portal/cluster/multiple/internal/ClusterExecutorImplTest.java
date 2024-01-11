@@ -6,6 +6,8 @@
 package com.liferay.portal.cluster.multiple.internal;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterNode;
@@ -13,11 +15,11 @@ import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -28,7 +30,9 @@ import com.liferay.portal.util.PropsImpl;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
@@ -275,11 +279,21 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 	}
 
 	private ClusterExecutorImpl _getClusterExecutorImpl() {
-		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();
+		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl() {
 
-		ReflectionTestUtil.setFieldValue(
-			clusterExecutorImpl, "_clusterChannelFactory",
-			new TestClusterChannelFactory());
+			@Override
+			protected void modified(Map<String, Object> properies) {
+				clusterExecutorConfiguration =
+					ConfigurableUtil.createConfigurable(
+						ClusterExecutorConfiguration.class, properies);
+
+				ReflectionTestUtil.setFieldValue(
+					this, "_clusterChannelFactory",
+					new TestClusterChannelFactory());
+			}
+
+		};
+
 		ReflectionTestUtil.setFieldValue(
 			clusterExecutorImpl, "_portalExecutorManager",
 			new MockPortalExecutorManager());
@@ -297,7 +311,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 				).build()));
 
 		clusterExecutorImpl.activate(
-			new MockComponentContext(new HashMapDictionary<>()));
+			SystemBundleUtil.getBundleContext(), Collections.emptyMap());
 
 		return clusterExecutorImpl;
 	}

@@ -15,7 +15,7 @@ liferay-sample-commerce-payment-integration:
         key4: value4
         key5: value5
     refundPath: /refund
-    setUpPaymentPath: /setuppayment
+    setUpPaymentPath: /set-up-payment
     type: commercePaymentIntegration
 liferay-sample-commerce-payment-integration-oauth-application-user-agent:
     .serviceAddress: localhost:58081

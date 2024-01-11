@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Crescenzo Rega
  */
-@RequestMapping("/setuppayment")
+@RequestMapping("/set-up-payment")
 @RestController
 public class SetUpPaymentRestController extends BaseRestController {
 

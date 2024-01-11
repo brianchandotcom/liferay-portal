@@ -470,14 +470,9 @@ test('Can import CSV file with custom columns order', async ({
 
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
-
-	const fileWithPath = path.join(
-		__dirname,
-		'/dependencies/c_test-CustomColumnsOrder.csv'
-	);
 	await _dataMigrationCenterPage.importFile(
 		C_TEST,
-		fileWithPath,
+		path.join(__dirname, '/dependencies/c_test-CustomColumnsOrder.csv'),
 		UPSERT,
 		UPDATE
 	);
@@ -486,12 +481,14 @@ test('Can import CSV file with custom columns order', async ({
 		page.getByText('The import process completed successfully.')
 	).toBeVisible();
 
-	const testObjectEntries = await _apiHelpers.customObject.getObjectDefinitionObjectEntriesByScope(
-		'c/tests',
-		'Guest'
-	);
-
-	expect(testObjectEntries.items).toEqual([
+	expect(
+		(
+			await _apiHelpers.customObject.getObjectDefinitionObjectEntriesByScope(
+				'c/tests',
+				'Guest'
+			)
+		).items
+	).toEqual([
 		{
 			actions: expect.any(Object),
 			creator: expect.any(Object),

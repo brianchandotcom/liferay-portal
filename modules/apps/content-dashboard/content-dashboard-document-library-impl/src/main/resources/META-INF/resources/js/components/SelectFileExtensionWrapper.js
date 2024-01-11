@@ -6,8 +6,6 @@
 import {SelectFileExtension} from '@liferay/content-dashboard-web';
 import React from 'react';
 
-const SelectFileExtensionWrapper = (props) => {
+export function SelectFileExtensionWrapper(props) {
 	return <SelectFileExtension {...props} />;
-};
-
-export default SelectFileExtensionWrapper;
+}

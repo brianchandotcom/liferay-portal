@@ -15,7 +15,7 @@ ContentDashboardFileExtensionItemSelectorViewDisplayContext contentDashboardFile
 	<span aria-hidden="true" class="loading-animation mt-0 tree-filter-loader" style="top: 50%; transform: translateY(-50%);"></span>
 
 	<react:component
-		module="js/components/SelectFileExtensionWrapper"
+		module="{SelectFileExtensionWrapper} from content-dashboard-document-library-impl"
 		props="<%= contentDashboardFileExtensionItemSelectorViewDisplayContext.getData() %>"
 	/>
 </section>

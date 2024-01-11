@@ -321,6 +321,17 @@ export default function ViewObjectDefinitions({
 		],
 	};
 
+	const setUncategorizedToSearchParams = (
+		allObjectFolders: ObjectFoldersRequestInfo,
+		currentUrl: URL
+	) => {
+		currentUrl.searchParams.set('objectFolderName', 'Uncategorized');
+
+		window.history.replaceState(null, '', currentUrl.href);
+
+		setSelectedObjectFolder(allObjectFolders.items[0]);
+	};
+
 	useEffect(() => {
 		if (Liferay.FeatureFlags['LPS-148856']) {
 			const makeFetch = async () => {
@@ -339,14 +350,10 @@ export default function ViewObjectDefinitions({
 				);
 
 				if (objectFolderNameSearchParam === null) {
-					currentUrl.searchParams.set(
-						'objectFolderName',
-						'Uncategorized'
+					setUncategorizedToSearchParams(
+						allObjectFolders,
+						currentUrl
 					);
-
-					window.history.replaceState(null, '', currentUrl.href);
-
-					setSelectedObjectFolder(allObjectFolders.items[0]);
 				}
 				else {
 					const newSelectedFolder = allObjectFolders.items.find(
@@ -355,6 +362,12 @@ export default function ViewObjectDefinitions({
 
 					if (newSelectedFolder) {
 						setSelectedObjectFolder(newSelectedFolder);
+					}
+					else {
+						setUncategorizedToSearchParams(
+							allObjectFolders,
+							currentUrl
+						);
 					}
 				}
 

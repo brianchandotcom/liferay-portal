@@ -20,10 +20,4 @@ public class MostViewedContentRecommendationIndexer
 		super("most-viewed-content-recommendation");
 	}
 
-	@Override
-	public String getIndexName(long companyId) {
-		return indexNameBuilder.getIndexName(companyId) +
-			"-most-viewed-content-recommendation";
-	}
-
 }

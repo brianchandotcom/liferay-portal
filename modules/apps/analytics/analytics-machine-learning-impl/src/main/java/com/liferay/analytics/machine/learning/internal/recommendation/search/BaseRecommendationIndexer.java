@@ -87,6 +87,11 @@ public abstract class BaseRecommendationIndexer
 		}
 	}
 
+	@Override
+	public String getIndexName(long companyId) {
+		return indexNameBuilder.getIndexName(companyId) + "-" + _name;
+	}
+
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;
 

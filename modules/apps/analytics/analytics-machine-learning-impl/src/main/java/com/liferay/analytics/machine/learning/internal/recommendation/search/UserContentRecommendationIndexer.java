@@ -20,10 +20,4 @@ public class UserContentRecommendationIndexer
 		super("user-content-recommendation");
 	}
 
-	@Override
-	public String getIndexName(long companyId) {
-		return indexNameBuilder.getIndexName(companyId) +
-			"-user-content-recommendation";
-	}
-
 }

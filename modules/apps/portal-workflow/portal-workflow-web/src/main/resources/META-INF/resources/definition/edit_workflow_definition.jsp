@@ -16,7 +16,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)request.getAttribute
 
 String name = BeanParamUtil.getString(workflowDefinition, request, "name");
 int version = BeanParamUtil.getInteger(workflowDefinition, request, "version");
-String content = BeanParamUtil.getString(workflowDefinition, request, "content");
+String content = BeanParamUtil.getString(workflowDefinition, request, "contentAsXML");
 boolean active = BeanParamUtil.getBoolean(workflowDefinition, request, "active");
 
 String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workflowDefinition);

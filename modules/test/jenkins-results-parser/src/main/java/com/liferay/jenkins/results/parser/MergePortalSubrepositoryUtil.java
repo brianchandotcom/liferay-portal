@@ -30,7 +30,7 @@ public class MergePortalSubrepositoryUtil {
 			String targetGitRepoCommitSHA)
 		throws IOException {
 
-		_mergeStarted(jenkinsBuildURL, portalPullRequest);
+		_onMergeStarted(jenkinsBuildURL, portalPullRequest);
 
 		_checkPassingTestSuites(jenkinsBuildURL, portalPullRequest);
 
@@ -74,7 +74,7 @@ public class MergePortalSubrepositoryUtil {
 		String endingPortalCommitSHA =
 			portalGitWorkingDirectory.getLatestCommitSHA();
 
-		_mergeCompleted(
+		_onMergeCompleted(
 			jenkinsBuildURL, portalPullRequest, subrepositoryGitHubURL,
 			targetGitRepoCommitSHA, startingPortalCommitSHA,
 			endingPortalCommitSHA);
@@ -423,7 +423,7 @@ public class MergePortalSubrepositoryUtil {
 		return relativeFilePath.replaceAll("/\\.gitrepo", "");
 	}
 
-	private static void _mergeCompleted(
+	private static void _onMergeCompleted(
 		URL jenkinsBuildURL, PullRequest portalPullRequest,
 		URL subrepositoryGitHubURL, String targetGitRepoCommitSHA,
 		String startingPortalCommitSHA, String endingPortalCommitSHA) {
@@ -473,7 +473,7 @@ public class MergePortalSubrepositoryUtil {
 		portalPullRequest.close();
 	}
 
-	private static void _mergeStarted(
+	private static void _onMergeStarted(
 		URL jenkinsBuildURL, PullRequest portalPullRequest) {
 
 		portalPullRequest.addComment(

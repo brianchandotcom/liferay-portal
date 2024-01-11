@@ -5666,6 +5666,8 @@ public class DataFactory {
 			virtualHostModel.setHostname(_webId);
 		}
 
+		virtualHostModel.setDefaultVirtualHost(true);
+
 		return virtualHostModel;
 	}
 

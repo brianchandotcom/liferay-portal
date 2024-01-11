@@ -350,6 +350,10 @@ public class AssetCategoryLocalServiceTest {
 			StringBundler.concat(
 				assetCategoryProperty1.getKey(),
 				AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR,
+				assetCategoryProperty1.getValue()),
+			StringBundler.concat(
+				assetCategoryProperty1.getKey(),
+				AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR,
 				assetCategoryProperty1.getValue())
 		};
 

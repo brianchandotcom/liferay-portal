@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Jeyvison Nascimento
  */
@@ -27,6 +29,7 @@ public class DataDefinitionUtil {
 			DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 			DDMStructure ddmStructure,
 			DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
+			HttpServletRequest httpServletRequest,
 			SPIDDMFormRuleConverter spiDDMFormRuleConverter)
 		throws Exception {
 
@@ -42,7 +45,7 @@ public class DataDefinitionUtil {
 					ddmFormField ->
 						DataDefinitionFieldUtil.toDataDefinitionField(
 							ddmFormField, ddmFormFieldTypeServicesRegistry,
-							ddmStructureLayoutLocalService),
+							ddmStructureLayoutLocalService, httpServletRequest),
 					DataDefinitionField.class);
 				dataDefinitionKey = ddmStructure.getStructureKey();
 				dateCreated = ddmStructure.getCreateDate();

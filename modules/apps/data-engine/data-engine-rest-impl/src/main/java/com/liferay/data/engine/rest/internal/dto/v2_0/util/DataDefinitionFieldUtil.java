@@ -106,7 +106,8 @@ public class DataDefinitionFieldUtil {
 	public static DataDefinitionField toDataDefinitionField(
 			DDMFormField ddmFormField,
 			DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
-			DDMStructureLayoutLocalService ddmStructureLayoutLocalService)
+			DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		return new DataDefinitionField() {
@@ -114,7 +115,7 @@ public class DataDefinitionFieldUtil {
 				customProperties = _getCustomProperties(
 					ddmFormField.getProperties(), ddmFormField.getType(),
 					ddmFormField.getProperty("ddmStructureLayoutId"),
-					ddmStructureLayoutLocalService,
+					ddmStructureLayoutLocalService, httpServletRequest,
 					SettingsDDMFormFieldsUtil.getSettingsDDMFormFields(
 						ddmFormFieldTypeServicesRegistry,
 						ddmFormField.getType()));
@@ -132,7 +133,7 @@ public class DataDefinitionFieldUtil {
 					ddmFormField.getNestedDDMFormFields(),
 					ddmFormField -> toDataDefinitionField(
 						ddmFormField, ddmFormFieldTypeServicesRegistry,
-						ddmStructureLayoutLocalService),
+						ddmStructureLayoutLocalService, httpServletRequest),
 					DataDefinitionField.class);
 				readOnly = ddmFormField.isReadOnly();
 				repeatable = ddmFormField.isRepeatable();
@@ -148,6 +149,7 @@ public class DataDefinitionFieldUtil {
 			Map<String, Object> ddmFormFieldProperties, String ddmFormFieldType,
 			Object ddmStructureLayoutId,
 			DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
+			HttpServletRequest httpServletRequest,
 			Map<String, DDMFormField> settingsDDMFormFieldsMap)
 		throws Exception {
 
@@ -316,6 +318,14 @@ public class DataDefinitionFieldUtil {
 			}
 
 			customProperties.put("rows", rows);
+		}
+
+		if (StringUtil.equals(
+				ddmFormFieldType, DDMFormFieldTypeConstants.RICH_TEXT)) {
+
+			customProperties.put(
+				"editorConfig",
+				getEditorConfig(ddmFormFieldType, httpServletRequest));
 		}
 
 		return customProperties;

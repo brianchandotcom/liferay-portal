@@ -29,7 +29,7 @@ export const test = mergeTests(
 const siteTestObjectDefinitionData = {
 	active: true,
 	externalReferenceCode: 'Test',
-  label: {'en-US': 'Test'},
+	label: {'en-US': 'Test'},
 	name: 'Test',
 	objectFields: [
 		{

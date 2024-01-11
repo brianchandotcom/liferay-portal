@@ -11,7 +11,7 @@
 	"keywords": [
 	],
 	"license": "ISC",
-	"name": "@liferay/liferay-dotcom-global-js",
+	"name": "@liferay/liferay-dotcom-js-import-maps-entry",
 	"scripts": {
 		"build": "webpack"
 	},

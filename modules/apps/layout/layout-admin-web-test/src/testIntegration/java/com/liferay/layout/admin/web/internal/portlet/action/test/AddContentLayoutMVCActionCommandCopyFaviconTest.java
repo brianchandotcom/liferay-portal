@@ -114,8 +114,9 @@ public class AddContentLayoutMVCActionCommandCopyFaviconTest {
 		return _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.IMAGE_JPEG, bytes, null,
-			null, ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+			StringUtil.randomString(), ContentTypes.APPLICATION_TEXT, bytes,
+			null, null,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	private byte[] _getBytes(String favicon) throws Exception {

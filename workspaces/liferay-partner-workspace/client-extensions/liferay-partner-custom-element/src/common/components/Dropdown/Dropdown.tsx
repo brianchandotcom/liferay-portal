@@ -8,24 +8,30 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 
 export interface DropdownOption {
-	icon: string;
+	icon?: string;
 	key: string;
 	label: string;
 	onClick: () => void;
 }
 
 interface Props {
+	className?: string;
 	closeOnClick?: boolean;
+	icon?: string;
+	label?: string;
 	onClick?: () => void;
 	options: DropdownOption[];
 }
-
-const DropDown = ({closeOnClick, options}: Props) => (
+const DropDown = ({className, closeOnClick, icon, label, options}: Props) => (
 	<ClayDropDown
+		className={className}
 		closeOnClick={closeOnClick}
 		trigger={
 			<ClayButton displayType="unstyled">
-				<ClayIcon symbol="ellipsis-v"></ClayIcon>
+				{label && (
+					<span className="dislay-inline-block mr-1"> {label} </span>
+				)}
+				{icon && <ClayIcon symbol={icon}></ClayIcon>}
 			</ClayButton>
 		}
 	>
@@ -33,7 +39,7 @@ const DropDown = ({closeOnClick, options}: Props) => (
 			<ClayDropDown.Group>
 				{options.map((item, index) => (
 					<ClayDropDown.Item key={index} onClick={item.onClick}>
-						<ClayIcon symbol={item.icon}></ClayIcon>
+						{item.icon && <ClayIcon symbol={item.icon}></ClayIcon>}
 
 						{item.label}
 					</ClayDropDown.Item>

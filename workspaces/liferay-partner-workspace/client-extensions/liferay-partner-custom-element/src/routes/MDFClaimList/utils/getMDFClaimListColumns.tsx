@@ -102,8 +102,7 @@ export default function getMDFClaimListColumns(
 											});
 
 											mutate(mutated);
-										}
-										catch (error: unknown) {
+										} catch (error: unknown) {
 											Liferay.Util.openToast({
 												message:
 													'Fail to delete MDF Claim.',
@@ -124,7 +123,11 @@ export default function getMDFClaimListColumns(
 		);
 
 		return (
-			<Dropdown closeOnClick={true} options={options || []}></Dropdown>
+			<Dropdown
+				closeOnClick={true}
+				icon="ellipsis-v"
+				options={options || []}
+			></Dropdown>
 		);
 	};
 

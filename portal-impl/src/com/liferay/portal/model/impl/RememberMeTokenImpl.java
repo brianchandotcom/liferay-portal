@@ -5,8 +5,22 @@
 
 package com.liferay.portal.model.impl;
 
+import java.util.Date;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class RememberMeTokenImpl extends RememberMeTokenBaseImpl {
+
+	@Override
+	public boolean isExpired() {
+		Date expirationDate = getExpirationDate();
+
+		if ((expirationDate != null) && expirationDate.before(new Date())) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

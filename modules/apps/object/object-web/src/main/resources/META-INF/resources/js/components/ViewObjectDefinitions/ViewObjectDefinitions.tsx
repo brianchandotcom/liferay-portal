@@ -625,7 +625,7 @@ export default function ViewObjectDefinitions({
 					}}
 					objectDefinitionId={moveObjectDefinition?.id as number}
 					objectFolders={objectFoldersRequestInfo.items}
-					onAfterSubmit={() =>
+					onAfterMoveObjectDefinition={() =>
 						setTimeout(() => window.location.reload(), 1000)
 					}
 					setMoveObjectDefinition={setMoveObjectDefinition}

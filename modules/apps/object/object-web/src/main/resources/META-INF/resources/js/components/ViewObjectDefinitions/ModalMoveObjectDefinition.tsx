@@ -27,7 +27,7 @@ interface ModalMoveObjectDefinitionProps {
 	handleOnClose: () => void;
 	objectDefinitionId: number;
 	objectFolders: ObjectFolder[];
-	onAfterSubmit: () => void;
+	onAfterMoveObjectDefinition: () => void;
 	setMoveObjectDefinition: (value: ObjectDefinition | null) => void;
 }
 
@@ -35,7 +35,7 @@ export function ModalMoveObjectDefinition({
 	handleOnClose,
 	objectDefinitionId,
 	objectFolders,
-	onAfterSubmit,
+	onAfterMoveObjectDefinition,
 	setMoveObjectDefinition,
 }: ModalMoveObjectDefinitionProps) {
 	const [objectDefinition, setObjectDefinition] = useState<
@@ -103,8 +103,8 @@ export function ModalMoveObjectDefinition({
 				type: 'success',
 			});
 
-			if (onAfterSubmit) {
-				onAfterSubmit();
+			if (onAfterMoveObjectDefinition) {
+				onAfterMoveObjectDefinition();
 			}
 		}
 		catch (error) {

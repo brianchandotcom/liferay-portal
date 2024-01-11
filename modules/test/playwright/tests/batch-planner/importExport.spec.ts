@@ -11,10 +11,10 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPages.fix
 import {dataMigrationCenterPageTest} from '../../fixtures/dataMigrationCenterPages.fixture';
 import {objectPagesTest} from '../../fixtures/objectPages.fixture';
 import {
-	C_TEST,
-	C_TESTCOMPANY,
+	COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 	INSERT,
 	PARTIAL_UPDATE,
+	SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 	UPDATE,
 	UPSERT,
 } from './utils/constants';
@@ -324,7 +324,9 @@ test('can map all imported fields', async ({
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
 
-	await _dataMigrationCenterPage.selectImportEntityType(C_TEST);
+	await _dataMigrationCenterPage.selectImportEntityType(
+		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE
+	);
 
 	await expect(page.getByText('externalReferenceCode')).toBeVisible();
 	await expect(page.getByText('keywords', {exact: true})).toBeVisible();
@@ -365,7 +367,9 @@ test('cannot import CSV file without headers and an unexisting field header', as
 	);
 	await _dataMigrationCenterPage.selectFile(fileWithPath);
 
-	await _dataMigrationCenterPage.selectImportEntityType(C_TEST);
+	await _dataMigrationCenterPage.selectImportEntityType(
+		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE
+	);
 
 	await page.waitForTimeout(2000);
 
@@ -401,7 +405,9 @@ test('can preview CSV file', async ({
 	const fileWithPath = path.join(__dirname, '/dependencies/c_test.csv');
 	await _dataMigrationCenterPage.selectFile(fileWithPath);
 
-	await _dataMigrationCenterPage.selectImportEntityType(C_TEST);
+	await _dataMigrationCenterPage.selectImportEntityType(
+		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE
+	);
 
 	await page.waitForTimeout(2000);
 
@@ -470,7 +476,7 @@ test('can import CSV file with custom columns order', async ({
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
 	await _dataMigrationCenterPage.importFile(
-		C_TEST,
+		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(__dirname, '/dependencies/c_test-CustomColumnsOrder.csv'),
 		UPSERT,
 		UPDATE
@@ -540,7 +546,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 		'/dependencies/c_test-TwoEntries.csv'
 	);
 	await _dataMigrationCenterPage.importFile(
-		C_TEST,
+		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPath,
 		UPSERT,
 		UPDATE
@@ -708,7 +714,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 
 	const fileWithPath = path.join(__dirname, '/dependencies/c_test.csv');
 	await _dataMigrationCenterPage.importFile(
-		C_TEST,
+		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPath,
 		UPSERT,
 		UPDATE
@@ -721,7 +727,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 		'/dependencies/c_test-TwoEntries.csv'
 	);
 	await _dataMigrationCenterPage.importFile(
-		C_TEST,
+		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPathTwoEntries,
 		UPSERT,
 		UPDATE
@@ -889,7 +895,9 @@ test('cannot import empty CSV file', async ({
 	const fileWithPath = path.join(__dirname, '/dependencies/c_test-Empty.csv');
 	await _dataMigrationCenterPage.selectFile(fileWithPath);
 
-	await _dataMigrationCenterPage.selectImportEntityType(C_TESTCOMPANY);
+	await _dataMigrationCenterPage.selectImportEntityType(
+		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE
+	);
 
 	await page.waitForTimeout(2000);
 
@@ -922,7 +930,7 @@ test('cannot import CSV file with object entry with UPSERT strategy', async ({
 		'/dependencies/c_test.csv'
 	);
 	await _dataMigrationCenterPage.importFile(
-		C_TESTCOMPANY,
+		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPathTwoEntries,
 		UPSERT,
 		PARTIAL_UPDATE
@@ -956,7 +964,7 @@ test('can show duplicate error message with import existing entry and only add n
 
 	const fileWithPathFirst = path.join(__dirname, '/dependencies/c_test.csv');
 	await _dataMigrationCenterPage.importFile(
-		C_TESTCOMPANY,
+		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPathFirst,
 		UPSERT,
 		UPDATE
@@ -966,7 +974,7 @@ test('can show duplicate error message with import existing entry and only add n
 
 	const fileWithPathSecond = path.join(__dirname, '/dependencies/c_test.csv');
 	await _dataMigrationCenterPage.importFile(
-		C_TESTCOMPANY,
+		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPathSecond,
 		INSERT,
 		UPDATE
@@ -1004,7 +1012,7 @@ test('can import CSV file with an unexisting field', async ({
 		'/dependencies/c_test-NonExistingField.csv'
 	);
 	await _dataMigrationCenterPage.importFile(
-		C_TESTCOMPANY,
+		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPathTwoEntries,
 		UPSERT,
 		UPDATE
@@ -1140,7 +1148,7 @@ test('can import CSV file with new and existing company scoped object entries', 
 
 	const fileWithPath = path.join(__dirname, '/dependencies/c_test.csv');
 	await _dataMigrationCenterPage.importFile(
-		C_TESTCOMPANY,
+		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPath,
 		UPSERT,
 		UPDATE
@@ -1153,7 +1161,7 @@ test('can import CSV file with new and existing company scoped object entries', 
 		'/dependencies/c_test-TwoEntriesExistingModified.csv'
 	);
 	await _dataMigrationCenterPage.importFile(
-		C_TESTCOMPANY,
+		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPathTwoEntries,
 		UPSERT,
 		UPDATE

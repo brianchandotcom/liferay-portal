@@ -6,7 +6,7 @@
 const path = require('path');
 
 module.exports = {
-	entry: './src/global.js',
+	entry: './assets/index.js',
 	output: {
 		filename: '[name]-[hash].js',
 		globalObject: 'this',

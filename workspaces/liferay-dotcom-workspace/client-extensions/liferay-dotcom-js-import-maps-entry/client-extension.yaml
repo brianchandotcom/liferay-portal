@@ -1,0 +1,8 @@
+assemble:
+    - from: assets
+      into: static
+liferay-dotcom-js-import-maps-entry:
+    bareSpecifier: liferay-dotcom-utils
+    name: Liferay Dotcom JS Import Maps Entry
+    type: jsImportMapsEntry
+    url: index.js

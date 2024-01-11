@@ -1,3 +1,6 @@
+assemble:
+    - from: assets
+      into: static
 liferay-dotcom-global-favicon:
     name: Liferay Dotcom Global Favicon
     type: themeFavicon

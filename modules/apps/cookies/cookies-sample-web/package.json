@@ -5,6 +5,7 @@
 		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},
+	"main": "js/Cookies.js",
 	"name": "@liferay/cookies-sample-web",
 	"private": true,
 	"scripts": {

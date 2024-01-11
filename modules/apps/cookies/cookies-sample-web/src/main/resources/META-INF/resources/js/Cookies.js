@@ -11,7 +11,7 @@ import {
 import {COOKIE_TYPES, openAlertModal} from 'frontend-js-web';
 import React from 'react';
 
-const Cookie = () => {
+export function Cookies() {
 	return (
 		<>
 			<ClayButton
@@ -66,6 +66,4 @@ const Cookie = () => {
 			</ClayButton>
 		</>
 	);
-};
-
-export default Cookie;
+}

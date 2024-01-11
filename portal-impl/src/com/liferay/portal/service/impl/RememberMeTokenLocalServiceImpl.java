@@ -5,11 +5,94 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.exception.NoSuchRememberMeTokenException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.RememberMeToken;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.persistence.RememberMeTokenUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.service.base.RememberMeTokenLocalServiceBaseImpl;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Manuele Castro
+ * @author Pedro Silvestre
  */
 public class RememberMeTokenLocalServiceImpl
 	extends RememberMeTokenLocalServiceBaseImpl {
+
+	@Override
+	public RememberMeToken addRememberMeToken(
+		long companyId, long userId, Date expirationDate) {
+
+		long rememberMeTokenId = counterLocalService.increment();
+
+		RememberMeToken rememberMeToken = rememberMeTokenPersistence.create(
+			rememberMeTokenId);
+
+		rememberMeToken.setCompanyId(companyId);
+		rememberMeToken.setUserId(userId);
+		rememberMeToken.setCreateDate(new Date());
+		rememberMeToken.setToken(PortalUUIDUtil.generate());
+		rememberMeToken.setExpirationDate(expirationDate);
+
+		return rememberMeTokenPersistence.update(rememberMeToken);
+	}
+
+	@Override
+	public void checkUserExpiredRememberMeTokens(long userId) {
+		List<RememberMeToken> userRememberMeTokens = getUserRememberMeTokens(
+			userId);
+
+		for (RememberMeToken rememberMeToken : userRememberMeTokens) {
+			if (rememberMeToken.isExpired()) {
+				deleteRememberMeToken(rememberMeToken);
+			}
+		}
+	}
+
+	@Override
+	public List<RememberMeToken> getUserRememberMeTokens(long userId) {
+		return RememberMeTokenUtil.findByUserId(userId);
+	}
+
+	@Override
+	public KeyValuePair validateToken(long rememberMeTokenId, String token)
+		throws PortalException {
+
+		RememberMeToken rememberMeToken = fetchRememberMeToken(
+			rememberMeTokenId);
+
+		if (rememberMeToken.isExpired()) {
+			deleteRememberMeToken(rememberMeToken);
+
+			throw new NoSuchRememberMeTokenException();
+		}
+
+		String rememberMeTokenToken = rememberMeToken.getToken();
+
+		String encToken = PasswordEncryptorUtil.encrypt(
+			token, rememberMeTokenToken);
+
+		if (rememberMeTokenToken.equals(encToken)) {
+			long userId = rememberMeToken.getUserId();
+
+			User user = _userLocalService.getUserById(userId);
+
+			return new KeyValuePair(String.valueOf(userId), user.getPassword());
+		}
+
+		throw new NoSuchRememberMeTokenException();
+	}
+
+	@BeanReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
+
 }

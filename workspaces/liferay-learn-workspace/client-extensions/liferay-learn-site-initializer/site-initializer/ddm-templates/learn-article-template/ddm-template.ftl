@@ -431,7 +431,7 @@
 								<#list navigationMenuItems as key, value>
 									<a
 										class="adt-submenu-item-link color-black text-decoration-none"
-										href="/w/${navigationMenuItems[key].url}/index"
+										href="${groupFriendlyURL}/w/${navigationMenuItems[key].url}/index"
 										tabindex="4"
 									>
 										<div class="align-items-center br-13 br-5 col-sm-12 d-flex dropdown-item justify-content-between ml-0 mr-0">

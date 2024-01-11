@@ -67,7 +67,9 @@ export function FormImage({portletNamespace}: Props) {
 				<ClayLayout.Col>
 					<ClayForm.Group>
 						<label htmlFor={numberOfImagesId}>
-							{Liferay.Language.get('number-of-images-to-generate')}
+							{Liferay.Language.get(
+								'number-of-images-to-generate'
+							)}
 						</label>
 
 						<ClaySelectWithOption

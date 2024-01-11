@@ -16,16 +16,10 @@ import java.lang.reflect.Method;
 
 import java.util.function.Function;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Carlos Correa
  * @author Stian Sigvartsen
  */
-@Component(
-	property = "oauth2.scope.checker.type=annotations",
-	service = ScopeLogic.class
-)
 public class AnnotationScopeLogic implements ScopeLogic {
 
 	@Override

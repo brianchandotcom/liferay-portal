@@ -5,6 +5,8 @@
 
 package com.liferay.oauth2.provider.rest.internal.vulcan.graphql.validation;
 
+import com.liferay.oauth2.provider.rest.internal.scope.logic.AnnotationScopeLogic;
+import com.liferay.oauth2.provider.rest.internal.scope.logic.HttpMethodScopeLogic;
 import com.liferay.oauth2.provider.rest.internal.scope.logic.ScopeLogic;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.liferay.OAuth2ProviderScopeLiferayAccessControlContext;
@@ -24,7 +26,7 @@ import com.liferay.portal.vulcan.graphql.validation.GraphQLRequestContextValidat
 import java.lang.annotation.Annotation;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -77,6 +79,10 @@ public class OAuth2GraphQLRequestContextValidator
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		_scopeLogics.put("annotations", new AnnotationScopeLogic());
+		_scopeLogics.put(
+			"http.method", new HttpMethodScopeLogic(bundleContext));
 	}
 
 	private void _checkScope(
@@ -93,10 +99,11 @@ public class OAuth2GraphQLRequestContextValidator
 				applicationServiceReference);
 		}
 
-		Collection<ServiceReference<ScopeLogic>> serviceReferences =
-			_bundleContext.getServiceReferences(
-				ScopeLogic.class,
-				"(oauth2.scope.checker.type=" + scopeSheckerType + ")");
+		ScopeLogic scopeLogic = _scopeLogics.get(scopeSheckerType);
+
+		if (scopeLogic == null) {
+			throw new ForbiddenException();
+		}
 
 		_scopeContext.setApplicationName(
 			graphQLRequestContext.getApplicationName());
@@ -105,24 +112,12 @@ public class OAuth2GraphQLRequestContextValidator
 		_scopeContext.setCompanyId(graphQLRequestContext.getCompanyId());
 
 		try {
-			if (serviceReferences.isEmpty()) {
+			if (!scopeLogic.check(
+					applicationServiceReference::getProperty,
+					graphQLRequestContext.getResourceClass(),
+					graphQLRequestContext.getResourceMethod(), _scopeChecker)) {
+
 				throw new ForbiddenException();
-			}
-
-			for (ServiceReference<ScopeLogic> serviceReference :
-					serviceReferences) {
-
-				ScopeLogic scopeLogic = _bundleContext.getService(
-					serviceReference);
-
-				if (!scopeLogic.check(
-						applicationServiceReference::getProperty,
-						graphQLRequestContext.getResourceClass(),
-						graphQLRequestContext.getResourceMethod(),
-						_scopeChecker)) {
-
-					throw new ForbiddenException();
-				}
 			}
 		}
 		catch (Exception exception) {
@@ -242,5 +237,7 @@ public class OAuth2GraphQLRequestContextValidator
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile ScopeContext _scopeContext;
+
+	private final Map<String, ScopeLogic> _scopeLogics = new HashMap<>();
 
 }

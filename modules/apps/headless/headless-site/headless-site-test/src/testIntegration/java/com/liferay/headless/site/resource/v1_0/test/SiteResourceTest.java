@@ -97,7 +97,8 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
 			Assert.assertEquals(
-				"No site exists for site ID " + siteId, problem.getTitle());
+				"Unable to get a valid site with ID " + siteId,
+				problem.getTitle());
 		}
 	}
 

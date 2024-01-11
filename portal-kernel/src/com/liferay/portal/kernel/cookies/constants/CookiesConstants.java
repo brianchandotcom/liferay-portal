@@ -53,6 +53,12 @@ public class CookiesConstants {
 
 	public static final String NAME_REMEMBER_ME = "REMEMBER_ME";
 
+	public static final String NAME_REMEMBER_ME_TOKEN_ID =
+		"REMEMBER_ME_TOKEN_ID";
+
+	public static final String NAME_REMEMBER_ME_TOKEN_TOKEN =
+		"REMEMBER_ME_TOKEN_TOKEN";
+
 	public static final String NAME_USER_CONSENT_CONFIGURED =
 		"USER_CONSENT_CONFIGURED";
 

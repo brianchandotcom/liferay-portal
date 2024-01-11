@@ -81,6 +81,10 @@
 		<finder name="CommerceVirtualOrderItemId" return-type="Collection" >
 			<finder-column name="commerceVirtualOrderItemId" />
 		</finder>
+		<finder name="C_F" return-type="Collection" >
+			<finder-column name="commerceVirtualOrderItemId" />
+			<finder-column name="fileEntryId" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>CommerceVirtualOrderItem</exception>

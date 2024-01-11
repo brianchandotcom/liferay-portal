@@ -106,6 +106,7 @@
 			<property name="documentationLocation" value="coding/multiplevariabledeclarations.html" />
 		</module>
 		<module name="NeedBracesCheck">
+			<property name="allowEmptyLoopBody" value="true" />
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks for braces around code blocks." />
 			<property name="documentationLocation" value="blocks/needbraces.html" />

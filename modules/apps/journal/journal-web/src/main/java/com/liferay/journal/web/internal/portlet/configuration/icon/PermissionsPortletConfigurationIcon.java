@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"path=/edit_article.jsp"
+		"path=/journal/edit_article"
 	},
 	service = PortletConfigurationIcon.class
 )

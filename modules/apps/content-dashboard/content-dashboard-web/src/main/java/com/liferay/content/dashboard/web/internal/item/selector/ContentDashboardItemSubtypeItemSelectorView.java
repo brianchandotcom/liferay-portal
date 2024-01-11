@@ -15,7 +15,6 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFacto
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemReference;
@@ -109,12 +108,9 @@ public class ContentDashboardItemSubtypeItemSelectorView
 
 		printWriter.write("<section class=\"h-100\">");
 
-		String moduleName = _npmResolver.resolveModuleName(
-			"@liferay/content-dashboard-web");
-
 		_reactRenderer.renderReact(
 			new ComponentDescriptor(
-				moduleName + "/js/components/SelectTypeAndSubtype"),
+				"{SelectTypeAndSubtype} from content-dashboard-web"),
 			HashMapBuilder.<String, Object>put(
 				"contentDashboardItemTypes",
 				_getContentDashboardItemTypesJSONArray(servletRequest)
@@ -432,9 +428,6 @@ public class ContentDashboardItemSubtypeItemSelectorView
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference
 	private ReactRenderer _reactRenderer;

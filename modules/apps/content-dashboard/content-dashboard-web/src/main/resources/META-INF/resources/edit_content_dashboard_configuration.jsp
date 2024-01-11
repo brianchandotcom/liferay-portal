@@ -42,7 +42,7 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 					</span>
 
 					<react:component
-						module="js/components/VocabulariesSelectionBox"
+						module="{VocabulariesSelectionBox} from content-dashboard-web"
 						props='<%=
 							HashMapBuilder.<String, Object>put(
 								"leftBoxName", "availableAssetVocabularyIds"

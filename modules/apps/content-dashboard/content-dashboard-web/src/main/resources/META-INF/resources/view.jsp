@@ -62,7 +62,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 								cssClass="component-action"
 								displayType="secondary"
 								icon="cog"
-								propsTransformer="js/ConfigurationButtonPropsTransformer"
+								propsTransformer="{ConfigurationButtonPropsTransformer} from content-dashboard-web"
 								small="<%= true %>"
 							/>
 						</span>
@@ -76,7 +76,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 				</div>
 
 				<react:component
-					module="js/components/AuditGraphApp/AuditGraphApp"
+					module="{AuditGraphApp} from content-dashboard-web"
 					props="<%= contentDashboardAdminDisplayContext.getData() %>"
 				/>
 			</div>
@@ -95,7 +95,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 
 				<div>
 					<react:component
-						module="js/components/DownloadSpreadsheetButton/DownloadSpreadsheetButton"
+						module="{DownloadSpreadsheetButton} from content-dashboard-web"
 						props="<%= contentDashboardAdminDisplayContext.getXlsProps() %>"
 					/>
 				</div>
@@ -103,7 +103,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 
 			<clay:management-toolbar
 				managementToolbarDisplayContext="<%= (ContentDashboardAdminManagementToolbarDisplayContext)request.getAttribute(ContentDashboardAdminManagementToolbarDisplayContext.class.getName()) %>"
-				propsTransformer="js/ContentDashboardManagementToolbarPropsTransformer"
+				propsTransformer="{ContentDashboardManagementToolbarPropsTransformer} from content-dashboard-web"
 			/>
 
 			<liferay-ui:search-container
@@ -238,7 +238,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 
 									<div>
 										<react:component
-											module="js/components/CategoriesPopover"
+											module="{CategoriesPopover} from content-dashboard-web"
 											props='<%=
 												HashMapBuilder.<String, Object>put(
 													"categories", restOfAssetCategories
@@ -316,7 +316,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 							%>'
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= contentDashboardAdminDisplayContext.getDropdownItems(contentDashboardItem) %>"
-							propsTransformer="js/transformers/ActionsComponentPropsTransformer"
+							propsTransformer="{ActionsComponentPropsTransformer} from content-dashboard-web"
 						/>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>

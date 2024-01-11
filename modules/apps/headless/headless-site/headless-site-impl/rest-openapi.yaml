@@ -83,6 +83,23 @@ paths:
             # @review
             tags: ["Site"]
     /sites/by-external-reference-code/{externalReferenceCode}:
+        delete:
+            # @review
+            description:
+                Deletes a site and all of its associated content.
+            operationId: deleteSiteByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Site"]
         put:
             description:
                 Adds or update a new site

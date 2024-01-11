@@ -37,9 +37,17 @@ export default {
 		icon: 'date-time',
 		title: Liferay.Language.get('date-and-time'),
 	},
+	document_library: {
+		icon: 'upload',
+		title: Liferay.Language.get('upload'),
+	},
 	grid: {
 		icon: 'table2',
 		title: Liferay.Language.get('grid-field-type-label'),
+	},
+	image: {
+		icon: 'picture',
+		title: Liferay.Language.get('image'),
 	},
 	numeric: {
 		icon: 'integer',

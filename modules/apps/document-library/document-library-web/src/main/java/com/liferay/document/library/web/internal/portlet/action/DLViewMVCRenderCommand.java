@@ -6,7 +6,6 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -21,7 +20,6 @@ import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
@@ -80,23 +78,10 @@ public class DLViewMVCRenderCommand extends BaseFolderMVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FOLDER, _getFolder(renderRequest));
 
-			DLAdminDisplayContext dlAdminDisplayContext = null;
-
-			try {
-				dlAdminDisplayContext =
-					_dlAdminDisplayContextProvider.getDLAdminDisplayContext(
-						_portal.getHttpServletRequest(renderRequest),
-						_portal.getHttpServletResponse(renderResponse));
-			}
-			catch (SystemException systemException) {
-				if (systemException.getCause() instanceof
-						NoSuchFolderException) {
-
-					throw new NoSuchFolderException(systemException);
-				}
-
-				throw systemException;
-			}
+			DLAdminDisplayContext dlAdminDisplayContext =
+				_dlAdminDisplayContextProvider.getDLAdminDisplayContext(
+					_portal.getHttpServletRequest(renderRequest),
+					_portal.getHttpServletResponse(renderResponse));
 
 			renderRequest.setAttribute(
 				DLAdminDisplayContext.class.getName(), dlAdminDisplayContext);

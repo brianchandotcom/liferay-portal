@@ -22,6 +22,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection;
 import com.liferay.data.engine.rest.dto.v2_0.util.DataDefinitionDDMFormUtil;
 import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistryUtil;
+import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataDefinitionFieldUtil;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataLayoutUtil;
 import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataDefinitionEntityModel;
@@ -77,15 +78,12 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTAware;
-import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -94,7 +92,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -769,7 +766,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	}
 
 	private JSONObject _getFieldTypeMetadataJSONObject(
-		String ddmFormFieldName, ResourceBundle resourceBundle) {
+			String ddmFormFieldName, ResourceBundle resourceBundle)
+		throws Exception {
 
 		Map<String, Object> ddmFormFieldTypeProperties =
 			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
@@ -824,22 +822,14 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				ddmFormFieldTypeProperties, "ddm.form.field.type.system")
 		);
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
+		if (StringUtil.equals(
+				ddmFormFieldType.getName(),
+				DDMFormFieldTypeConstants.RICH_TEXT)) {
 
-		if ((themeDisplay != null) &&
-			StringUtil.equals(ddmFormFieldType.getName(), "rich_text")) {
-
-			EditorConfiguration editorConfiguration =
-				EditorConfigurationFactoryUtil.getEditorConfiguration(
-					StringPool.BLANK, ddmFormFieldType.getName(),
-					"ckeditor_classic", new HashMap<String, Object>(),
-					themeDisplay,
-					RequestBackedPortletURLFactoryUtil.create(
-						contextHttpServletRequest));
-
-			Map<String, Object> data = editorConfiguration.getData();
-
-			jsonObject.put("editorConfig", data.get("editorConfig"));
+			jsonObject.put(
+				"editorConfig",
+				DataDefinitionFieldUtil.getEditorConfig(
+					ddmFormFieldType.getName(), contextHttpServletRequest));
 		}
 
 		return jsonObject;
@@ -920,15 +910,6 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale, ddmFormFieldType.getClass()),
 			_portal.getResourceBundle(locale));
-	}
-
-	private ThemeDisplay _getThemeDisplay() {
-		if (contextHttpServletRequest == null) {
-			return null;
-		}
-
-		return (ThemeDisplay)contextHttpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	private void _normalizeDataDefinitionFields(

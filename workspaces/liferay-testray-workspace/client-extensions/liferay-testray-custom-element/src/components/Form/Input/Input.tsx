@@ -4,7 +4,7 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import {InputHTMLAttributes} from 'react';
+import {InputHTMLAttributes, forwardRef} from 'react';
 
 import {BaseWrapper} from '../Base';
 
@@ -19,38 +19,44 @@ type InputProps = {
 	type?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const Input: React.FC<InputProps> = ({
-	disabled = false,
-	errors = {},
-	label,
-	name,
-	register = () => {},
-	id = name,
-	type,
-	value,
-	required = false,
-	onBlur,
-	...otherProps
-}) => (
-	<BaseWrapper
-		disabled={disabled}
-		error={errors[name]?.message}
-		id={id}
-		label={label}
-		required={required}
-	>
-		<ClayInput
-			className="rounded-xs"
-			component={type === 'textarea' ? 'textarea' : 'input'}
+const Input: React.FC<InputProps> = forwardRef(
+	(
+		{
+			disabled = false,
+			errors = {},
+			label,
+			name,
+			register = () => {},
+			id = name,
+			type,
+			value,
+			required = false,
+			onBlur,
+			...otherProps
+		},
+		ref
+	) => (
+		<BaseWrapper
 			disabled={disabled}
+			error={errors[name]?.message}
 			id={id}
-			name={name}
-			type={type}
-			value={value}
-			{...otherProps}
-			{...register(name, {onBlur, required})}
-		/>
-	</BaseWrapper>
+			label={label}
+			required={required}
+		>
+			<ClayInput
+				className="rounded-xs"
+				component={type === 'textarea' ? 'textarea' : 'input'}
+				disabled={disabled}
+				id={id}
+				name={name}
+				ref={ref}
+				type={type}
+				value={value}
+				{...otherProps}
+				{...register(name, {onBlur, required})}
+			/>
+		</BaseWrapper>
+	)
 );
 
 export default Input;

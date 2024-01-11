@@ -1,0 +1,412 @@
+{
+	"aspectRatio1": {
+		"cssVariableMapping": "aspect-ratio-1",
+		"value": "calc(1 / 1 * 100%);"
+	},
+	"bodyBgColor": {
+		"name": "colorNeutral0",
+		"cssVariableMapping": "body-bg",
+		"value": "#fff"
+	},
+	"bodyColor": {
+		"name": "colorBrandPrimaryDarken4",
+		"cssVariableMapping": "body-color",
+		"value": "#00318F"
+	},
+	"borderRadius": {
+		"cssVariableMapping": "border-radius",
+		"value": "10px"
+	},
+	"borderRadiusCircle": {
+		"cssVariableMapping": "border-radius-circle",
+		"value": "999px"
+	},
+	"borderRadiusLg": {
+		"cssVariableMapping": "border-radius-lg",
+		"value": "16px"
+	},
+	"borderRadiusPill": {
+		"cssVariableMapping": "border-radius-pill",
+		"value": "999px"
+	},
+	"borderRadiusSm": {
+		"cssVariableMapping": "border-radius-sm",
+		"value": "4px"
+	},
+	"borderRadiusXl": {
+		"cssVariableMapping": "border-radius-xl",
+		"value": "24px"
+	},
+	"borderRadiusXs": {
+		"cssVariableMapping": "border-radius-xs",
+		"value": "2px"
+	},
+	"borderRadiusXxl": {
+		"cssVariableMapping": "border-radius-xxl",
+		"value": "48px"
+	},
+	"btnBorderRadius": {
+		"cssVariableMapping": "btn-border-radius",
+		"value": "var(--border-radius)"
+	},
+	"btnFontSize": {
+		"cssVariableMapping": "btn-font-size",
+		"value": "16px"
+	},
+	"btnLgFontSize": {
+		"cssVariableMapping": "btn-lg-font-size",
+		"value": "18px"
+	},
+	"btnLgLineHeight": {
+		"cssVariableMapping": "btn-lg-line-height",
+		"value": "24px"
+	},
+	"btnLgPaddingX": {
+		"cssVariableMapping": "btn-lg-padding-x",
+		"value": "16px"
+	},
+	"btnLgPaddingY": {
+		"cssVariableMapping": "btn-lg-padding-y",
+		"value": "12px"
+	},
+	"btnPaddingX": {
+		"cssVariableMapping": "btn-padding-x",
+		"value": "16px"
+	},
+	"btnPaddingY": {
+		"cssVariableMapping": "btn-padding-y",
+		"value": "8px"
+	},
+	"btnSmBorderRadius": {
+		"cssVariableMapping": "btn-sm-border-radius",
+		"value": "var(--border-radius)"
+	},
+	"btnSmFontSize": {
+		"cssVariableMapping": "btn-sm-font-size",
+		"value": "14px"
+	},
+	"btnSmLineHeight": {
+		"cssVariableMapping": "btn-sm-line-height",
+		"value": "16px"
+	},
+	"btnSmPaddingX": {
+		"cssVariableMapping": "btn-sm-padding-x",
+		"value": "12px"
+	},
+	"btnSmPaddingY": {
+		"cssVariableMapping": "btn-sm-padding-y",
+		"value": "8px"
+	},
+	"colorAccent1": {
+		"cssVariableMapping": "color-accent-1",
+		"value": "#BACCEE"
+	},
+	"colorAccent1Lighten": {
+		"cssVariableMapping": "color-accent-1-lighten",
+		"value": "#E7EFFF"
+	},
+	"colorAccent2": {
+		"cssVariableMapping": "color-accent-2",
+		"value": "#1514A4"
+	},
+	"colorAccent2Lighten": {
+		"cssVariableMapping": "color-accent-2-lighten",
+		"value": "#00C2FB"
+	},
+	"colorAccent3": {
+		"cssVariableMapping": "color-accent-3",
+		"value": "#1514A4"
+	},
+	"colorAccent3Lighten": {
+		"cssVariableMapping": "color-accent-3-lighten",
+		"value": "#0A70D2"
+	},
+	"colorActionPrimaryActive": {
+		"cssVariableMapping": "color-action-primary-active",
+		"value": "#004AD7"
+	},
+	"colorActionPrimaryActiveLighten": {
+		"cssVariableMapping": "color-action-primary-active-lighten",
+		"value": "#E6EDFB"
+	},
+	"colorActionPrimaryDefault": {
+		"cssVariableMapping": "color-action-primary-default",
+		"value": "#0B5FFF"
+	},
+	"colorActionPrimaryDisabled": {
+		"cssVariableMapping": "color-action-primary-disabled",
+		"value": "#6D9FFF"
+	},
+	"colorActionPrimaryHover": {
+		"cssVariableMapping": "color-action-primary-hover",
+		"value": "#0053F0"
+	},
+	"colorActionPrimaryHoverLighten": {
+		"cssVariableMapping": "color-action-primary-hover-lighten",
+		"value": "#EDF3FE"
+	},
+	"colorBrandPrimary": {
+		"cssVariableMapping": "color-brand-primary",
+		"value": "#0B5FFF"
+	},
+	"colorBrandPrimaryDarken1": {
+		"cssVariableMapping": "color-brand-primary-darken-1",
+		"value": "#0053F0"
+	},
+	"colorBrandPrimaryDarken2": {
+		"cssVariableMapping": "color-brand-primary-darken-2",
+		"value": "#004AD7"
+	},
+	"colorBrandPrimaryDarken3": {
+		"cssVariableMapping": "color-brand-primary-darken-3",
+		"value": "#003EB3"
+	},
+	"colorBrandPrimaryDarken4": {
+		"cssVariableMapping": "color-brand-primary-darken-4",
+		"value": "#00318F"
+	},
+	"colorBrandPrimaryDarken5": {
+		"cssVariableMapping": "color-brand-primary-darken-5",
+		"value": "#00256C"
+	},
+	"colorBrandPrimaryLighten1": {
+		"cssVariableMapping": "color-brand-primary-lighten-1",
+		"value": "#377CFF"
+	},
+	"colorBrandPrimaryLighten2": {
+		"cssVariableMapping": "color-brand-primary-lighten-2",
+		"value": "#6399FF"
+	},
+	"colorBrandPrimaryLighten3": {
+		"cssVariableMapping": "color-brand-primary-lighten-3",
+		"value": "#8FB5FF"
+	},
+	"colorBrandPrimaryLighten4": {
+		"cssVariableMapping": "color-brand-primary-lighten-4",
+		"value": "#BBD2FF"
+	},
+	"colorBrandPrimaryLighten5": {
+		"cssVariableMapping": "color-brand-primary-lighten-5",
+		"value": "#E7EFFF"
+	},
+	"colorBrandPrimaryLighten6": {
+		"cssVariableMapping": "color-brand-primary-lighten-6",
+		"value": "#FBFCFE"
+	},
+	"colorBrandSecondary": {
+		"cssVariableMapping": "color-brand-secondary",
+		"value": "#00318F"
+	},
+	"colorBrandSecondaryDarken1": {
+		"cssVariableMapping": "color-brand-secondary-darken-1",
+		"value": "#00318F"
+	},
+	"colorBrandSecondaryDarken2": {
+		"cssVariableMapping": "color-brand-secondary-darken-2",
+		"value": "#00318F"
+	},
+	"colorBrandSecondaryDarken3": {
+		"cssVariableMapping": "color-brand-secondary-darken-3",
+		"value": "#00318F"
+	},
+	"colorBrandSecondaryDarken4": {
+		"cssVariableMapping": "color-brand-secondary-darken-4",
+		"value": "#00318F"
+	},
+	"colorBrandSecondaryDarken5": {
+		"cssVariableMapping": "color-brand-secondary-darken-5",
+		"value": "#00318F"
+	},
+	"colorBrandSecondaryLighten1": {
+		"cssVariableMapping": "color-brand-secondary-lighten-1",
+		"value": "#00318F"
+	},
+	"colorBrandSecondaryLighten2": {
+		"cssVariableMapping": "color-brand-secondary-lighten-2",
+		"value": "#00318F"
+	},
+	"colorBrandSecondaryLighten3": {
+		"cssVariableMapping": "color-brand-secondary-lighten-3",
+		"value": "#00318F"
+	},
+	"colorBrandSecondaryLighten4": {
+		"cssVariableMapping": "color-brand-secondary-lighten-4",
+		"value": "#00318F"
+	},
+	"colorBrandSecondaryLighten5": {
+		"cssVariableMapping": "color-brand-secondary-lighten-5",
+		"value": "#00318F"
+	},
+	"colorBrandSecondaryLighten6": {
+		"cssVariableMapping": "color-brand-secondary-lighten-6",
+		"value": "#00318F"
+	},
+	"colorNeutral1": {
+		"cssVariableMapping": "color-neutral-1",
+		"value": "#F7F7F8"
+	},
+	"colorNeutral10": {
+		"cssVariableMapping": "color-neutral-10",
+		"value": "#282934"
+	},
+	"colorNeutral2": {
+		"cssVariableMapping": "color-neutral-2",
+		"value": "#E2E2E4"
+	},
+	"colorNeutral3": {
+		"cssVariableMapping": "color-neutral-3",
+		"value": "#C9C9CF"
+	},
+	"colorNeutral4": {
+		"cssVariableMapping": "color-neutral-4",
+		"value": "#B1B2B9"
+	},
+	"colorNeutral5": {
+		"cssVariableMapping": "color-neutral-5",
+		"value": "#999AA3"
+	},
+	"colorNeutral6": {
+		"cssVariableMapping": "color-neutral-6",
+		"value": "#82828C"
+	},
+	"colorNeutral7": {
+		"cssVariableMapping": "color-neutral-7",
+		"value": "#6C6C75"
+	},
+	"colorNeutral8": {
+		"cssVariableMapping": "color-neutral-8",
+		"value": "#54555F"
+	},
+	"colorNeutral9": {
+		"cssVariableMapping": "color-neutral-9",
+		"value": "#3F404B"
+	},
+	"containerMaxXl": {
+		"cssVariableMapping": "container-max-xl",
+		"value": "1600px"
+	},
+	"display1Size": {
+		"cssVariableMapping": "display1-size",
+		"value": "3.0625rem"
+	},
+	"display1Weight": {
+		"cssVariableMapping": "display1-weight",
+		"value": "var(--font-weight-semi-bold)"
+	},
+	"display2Size": {
+		"cssVariableMapping": "display2-size",
+		"value": "2.6875rem"
+	},
+	"display2Weight": {
+		"cssVariableMapping": "display2-weight",
+		"value": "var(--font-weight-semi-bold)"
+	},
+	"display3Size": {
+		"cssVariableMapping": "display3-size",
+		"value": "2.6875rem"
+	},
+	"display3Weight": {
+		"cssVariableMapping": "display3-weight",
+		"value": "var(--font-weight-semi-bold)"
+	},
+	"display4Weight": {
+		"cssVariableMapping": "display4-weight",
+		"value": "var(--font-weight-semi-bold)"
+	},
+	"fontFamilyBase": {
+		"cssVariableMapping": "font-family-base",
+		"value": "'Source Sans 3', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+	},
+	"fontFamilyMonospace": {
+		"cssVariableMapping": "font-family-monospace",
+		"value": "'Source Code Pro', SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
+	},
+	"fontFamilySansSerif": {
+		"cssVariableMapping": "font-family-sans-serif",
+		"value": "'Source Sans 3', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+	},
+	"fontWeightLighter": {
+		"cssVariableMapping": "font-weight-lighter",
+		"value": "200"
+	},
+	"fontWeightNormal": {
+		"cssVariableMapping": "font-weight-normal",
+		"value": "400"
+	},
+	"h1FontWeight": {
+		"cssVariableMapping": "h1-font-weight",
+		"value": "var(--font-weight-semi-bold)"
+	},
+	"linkHoverTextDecoration": {
+		"cssVariableMapping": "link-hover-text-decoration",
+		"value": "none"
+	},
+	"spacer1": {
+		"cssVariableMapping": "spacer-1",
+		"value": "4px"
+	},
+	"spacer10": {
+		"cssVariableMapping": "spacer-10",
+		"value": "80px"
+	},
+	"spacer2": {
+		"cssVariableMapping": "spacer-2",
+		"value": "8px"
+	},
+	"spacer3": {
+		"cssVariableMapping": "spacer-3",
+		"value": "12px"
+	},
+	"spacer4": {
+		"cssVariableMapping": "spacer-4",
+		"value": "16px"
+	},
+	"spacer5": {
+		"cssVariableMapping": "spacer-5",
+		"value": "24px"
+	},
+	"spacer6": {
+		"cssVariableMapping": "spacer-6",
+		"value": "32px"
+	},
+	"spacer7": {
+		"cssVariableMapping": "spacer-7",
+		"value": "40px"
+	},
+	"spacer8": {
+		"cssVariableMapping": "spacer-8",
+		"value": "48px"
+	},
+	"spacer9": {
+		"cssVariableMapping": "spacer-9",
+		"value": "64px"
+	},
+	"textLinkLgFontSize": {
+		"cssVariableMapping": "text-link-lg-font-size",
+		"value": "20px"
+	},
+	"textLinkLgLineHeight": {
+		"cssVariableMapping": "text-link-lg-line-height",
+		"value": "24px"
+	},
+	"textLinkMdFontSize": {
+		"cssVariableMapping": "text-link-md-font-size",
+		"value": "16px"
+	},
+	"textLinkSmFontSize": {
+		"cssVariableMapping": "text-link-sm-font-size",
+		"value": "14px"
+	},
+	"textLinkSmLineHeight": {
+		"cssVariableMapping": "text-link-sm-line-height",
+		"value": "16px"
+	},
+	"textParagraphLgFontSize": {
+		"cssVariableMapping": "text-paragraph-lg-font-size",
+		"value": "1.3125rem"
+	},
+	"transitionBase": {
+		"cssVariableMapping": "transition-base",
+		"value": "0.15s ease-in-out"
+	}
+}

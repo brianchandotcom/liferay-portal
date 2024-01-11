@@ -7,7 +7,6 @@ package com.liferay.frontend.js.a11y.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.a11y.web.internal.configuration.A11yConfiguration;
 import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -161,8 +160,5 @@ public class A11yBottomJSPDynamicInclude implements DynamicInclude {
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 }

@@ -8,7 +8,7 @@ package com.liferay.analytics.machine.learning.internal.recommendation;
 import com.liferay.analytics.machine.learning.content.UserContentRecommendation;
 import com.liferay.analytics.machine.learning.content.UserContentRecommendationManager;
 import com.liferay.analytics.machine.learning.internal.recommendation.search.RecommendationField;
-import com.liferay.analytics.machine.learning.internal.search.api.RecommendationIndexer;
+import com.liferay.analytics.machine.learning.internal.recommendation.search.RecommendationIndexer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -23,11 +23,14 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -72,6 +75,13 @@ public class UserContentRecommendationManagerImpl
 
 		return getSearchResultsCount(
 			_getSearchSearchRequest(assetCategoryIds, companyId, userId));
+	}
+
+	@Activate
+	protected void activate() {
+		_recommendationIndexer = new RecommendationIndexer(
+			RecommendationIndexNames.USER_CONTENT_RECOMMENDATION,
+			_indexNameBuilder, _searchCapabilities, searchEngineAdapter);
 	}
 
 	@Override
@@ -181,9 +191,12 @@ public class UserContentRecommendationManagerImpl
 
 	private static final int _SEARCH_SEARCH_REQUEST_SIZE = 10;
 
-	@Reference(
-		target = "(component.name=com.liferay.analytics.machine.learning.internal.recommendation.search.UserContentRecommendationIndexer)"
-	)
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
+
 	private RecommendationIndexer _recommendationIndexer;
+
+	@Reference
+	private SearchCapabilities _searchCapabilities;
 
 }

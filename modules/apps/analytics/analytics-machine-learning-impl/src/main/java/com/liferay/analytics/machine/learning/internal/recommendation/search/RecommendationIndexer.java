@@ -5,9 +5,8 @@
 
 package com.liferay.analytics.machine.learning.internal.recommendation.search;
 
-import com.liferay.analytics.machine.learning.internal.search.api.RecommendationIndexer;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -20,21 +19,24 @@ import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Riccardo Ferrari
  */
-public abstract class BaseRecommendationIndexer
-	implements RecommendationIndexer {
+public class RecommendationIndexer {
 
-	public BaseRecommendationIndexer(String name) {
+	public RecommendationIndexer(
+		String name, IndexNameBuilder indexNameBuilder,
+		SearchCapabilities searchCapabilities,
+		SearchEngineAdapter searchEngineAdapter) {
+
 		_name = name;
+		_indexNameBuilder = indexNameBuilder;
+		_searchCapabilities = searchCapabilities;
+		_searchEngineAdapter = searchEngineAdapter;
 	}
 
-	@Override
 	public void createIndex(long companyId) {
-		if (!searchCapabilities.isAnalyticsSupported()) {
+		if (!_searchCapabilities.isAnalyticsSupported()) {
 			return;
 		}
 
@@ -54,16 +56,15 @@ public abstract class BaseRecommendationIndexer
 		createIndexRequest.setMappings(_readJSON(_getIndexMappingFileName()));
 		createIndexRequest.setSettings(_readJSON("settings.json"));
 
-		searchEngineAdapter.execute(createIndexRequest);
+		_searchEngineAdapter.execute(createIndexRequest);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Index " + indexName + " created successfully");
 		}
 	}
 
-	@Override
 	public void dropIndex(long companyId) {
-		if (!searchCapabilities.isAnalyticsSupported()) {
+		if (!_searchCapabilities.isAnalyticsSupported()) {
 			return;
 		}
 
@@ -80,29 +81,16 @@ public abstract class BaseRecommendationIndexer
 		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(
 			indexName);
 
-		searchEngineAdapter.execute(deleteIndexRequest);
+		_searchEngineAdapter.execute(deleteIndexRequest);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Index " + indexName + " dropped successfully");
 		}
 	}
 
-	@Override
 	public String getIndexName(long companyId) {
-		return indexNameBuilder.getIndexName(companyId) + "-" + _name;
+		return _indexNameBuilder.getIndexName(companyId) + "-" + _name;
 	}
-
-	@Reference
-	protected IndexNameBuilder indexNameBuilder;
-
-	@Reference
-	protected JSONFactory jsonFactory;
-
-	@Reference
-	protected SearchCapabilities searchCapabilities;
-
-	@Reference
-	protected SearchEngineAdapter searchEngineAdapter;
 
 	private String _getIndexMappingFileName() {
 		return _name.concat("-mappings.json");
@@ -113,14 +101,14 @@ public abstract class BaseRecommendationIndexer
 			new IndicesExistsIndexRequest(indexName);
 
 		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			searchEngineAdapter.execute(indicesExistsIndexRequest);
+			_searchEngineAdapter.execute(indicesExistsIndexRequest);
 
 		return indicesExistsIndexResponse.isExists();
 	}
 
 	private String _readJSON(String fileName) {
 		try {
-			JSONObject jsonObject = jsonFactory.createJSONObject(
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				StringUtil.read(getClass(), "/META-INF/search/" + fileName));
 
 			return jsonObject.toString();
@@ -133,8 +121,11 @@ public abstract class BaseRecommendationIndexer
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseRecommendationIndexer.class);
+		RecommendationIndexer.class);
 
+	private final IndexNameBuilder _indexNameBuilder;
 	private final String _name;
+	private final SearchCapabilities _searchCapabilities;
+	private final SearchEngineAdapter _searchEngineAdapter;
 
 }

@@ -5,16 +5,20 @@
 
 package com.liferay.analytics.machine.learning.internal.search.instance.lifecycle;
 
-import com.liferay.analytics.machine.learning.internal.search.api.RecommendationIndexer;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.analytics.machine.learning.internal.recommendation.RecommendationIndexNames;
+import com.liferay.analytics.machine.learning.internal.recommendation.search.RecommendationIndexer;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.index.IndexNameBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -31,13 +35,9 @@ public class RecommendationIndexerPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		if (_serviceTrackerList == null) {
-			return;
-		}
-
 		try {
 			for (RecommendationIndexer recommendationIndexer :
-					_serviceTrackerList) {
+					_recommendationIndexers) {
 
 				recommendationIndexer.createIndex(company.getCompanyId());
 			}
@@ -52,13 +52,9 @@ public class RecommendationIndexerPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
-		if (_serviceTrackerList == null) {
-			return;
-		}
-
 		try {
 			for (RecommendationIndexer recommendationIndexer :
-					_serviceTrackerList) {
+					_recommendationIndexers) {
 
 				recommendationIndexer.dropIndex(company.getCompanyId());
 			}
@@ -74,30 +70,37 @@ public class RecommendationIndexerPortalInstanceLifecycleListener
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		if (!FeatureFlagManagerUtil.isEnabled("LRAC-14771")) {
-			_serviceTrackerList = null;
-
 			return;
 		}
 
-		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, RecommendationIndexer.class);
+		_recommendationIndexers.add(
+			new RecommendationIndexer(
+				RecommendationIndexNames.MOST_VIEWED_CONTENT_RECOMMENDATION,
+				_indexNameBuilder, _searchCapabilities, _searchEngineAdapter));
+		_recommendationIndexers.add(
+			new RecommendationIndexer(
+				RecommendationIndexNames.USER_CONTENT_RECOMMENDATION,
+				_indexNameBuilder, _searchCapabilities, _searchEngineAdapter));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (_serviceTrackerList == null) {
-			return;
-		}
-
-		_serviceTrackerList.close();
+		_recommendationIndexers.clear();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RecommendationIndexerPortalInstanceLifecycleListener.class);
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
-	private ServiceTrackerList<RecommendationIndexer> _serviceTrackerList;
+	private final List<RecommendationIndexer> _recommendationIndexers =
+		new ArrayList<>();
+
+	@Reference
+	private SearchCapabilities _searchCapabilities;
+
+	@Reference
+	private SearchEngineAdapter _searchEngineAdapter;
 
 }

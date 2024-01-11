@@ -49,6 +49,12 @@ public class HttpInvoker {
 		return this;
 	}
 
+	public HttpInvoker chunkSize(int chunkSize) {
+		_chunkSize = chunkSize;
+
+		return this;
+	}
+
 	public HttpInvoker header(String name, String value) {
 		_headers.put(name, value);
 
@@ -331,6 +337,10 @@ public class HttpInvoker {
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)url.openConnection();
 
+		if (_chunkSize != null) {
+			httpURLConnection.setChunkedStreamingMode(_chunkSize);
+		}
+
 		httpURLConnection.setRequestMethod(_httpMethod.name());
 
 		if (_encodedUserNameAndPassword != null) {
@@ -424,6 +434,7 @@ public class HttpInvoker {
 	private static final Logger _logger = Logger.getLogger(HttpInvoker.class.getName());
 
 	private String _body;
+	private Integer _chunkSize;
 	private String _contentType;
 	private String _encodedUserNameAndPassword;
 	private final Map<String, File> _files = new LinkedHashMap<>();

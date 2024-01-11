@@ -306,6 +306,12 @@
 					"VIEW_CONTROL_PANEL"
 				],
 				"resource": "90"
+			},
+			{
+				"actionIds": [
+					"MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS"
+				],
+				"resource": "com.liferay.commerce.product"
 			}
 		],
 		"name": "Operations Manager",

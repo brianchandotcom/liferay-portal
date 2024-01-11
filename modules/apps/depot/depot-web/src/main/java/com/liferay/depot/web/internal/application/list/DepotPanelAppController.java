@@ -7,17 +7,13 @@ package com.liferay.depot.web.internal.application.list;
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelAppShowFilter;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -45,28 +41,9 @@ public class DepotPanelAppController {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate() {
 		_panelCategoryHelper = new PanelCategoryHelper(
 			_panelAppRegistry, _panelCategoryRegistry);
-
-		_serviceRegistration = bundleContext.registerService(
-			PanelAppShowFilter.class,
-			(panelApp, permissionChecker, group) -> {
-				if (group.isDepot() &&
-					!DepotPanelAppController.this.isShow(
-						panelApp, group.getGroupId())) {
-
-					return false;
-				}
-
-				return panelApp.isShow(permissionChecker, group);
-			},
-			null);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceRegistration.unregister();
 	}
 
 	private boolean _isAlwaysShow(String portletId) {
@@ -91,7 +68,5 @@ public class DepotPanelAppController {
 
 	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;
-
-	private ServiceRegistration<?> _serviceRegistration;
 
 }

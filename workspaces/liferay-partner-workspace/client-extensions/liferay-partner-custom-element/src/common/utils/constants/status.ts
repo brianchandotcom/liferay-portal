@@ -45,7 +45,7 @@ export const Status = {
 	},
 	PENDING: {
 		key: 'pendingMarketingReview',
-		name: 'PendingMarketingReview',
+		name: 'Pending Marketing Review',
 	},
 	REJECT: {
 		key: 'rejected',

@@ -16,9 +16,11 @@ export default function propsTransformer({
 	const PublicationHistoryStatusRenderer = (props) => {
 		const [percentage, setPercentage] = useState(0);
 
-		const [status, setStatus] = useState(null);
-
 		useEffect(() => {
+			if (props.value.label !== 'in-progress') {
+				return;
+			}
+
 			const publicationStatusURL = createPortletURL(
 				getPublicationStatusURL,
 				{
@@ -26,66 +28,42 @@ export default function propsTransformer({
 				}
 			);
 
-			fetch(publicationStatusURL)
-				.then((response) => response.json())
-				.then((json) => {
-					if (json) {
-						if (json.label) {
-							setStatus({
-								label: json.label,
-							});
+			let label = null;
+
+			const interval = setInterval(() => {
+				if (label) {
+					clearInterval(interval);
+
+					props.loadData();
+				}
+
+				fetch(publicationStatusURL)
+					.then((response) => response.json())
+					.then((json) => {
+						if (json) {
+							if (json.label) {
+								setPercentage(100);
+
+								label = json.label;
+							}
+							else if (
+								Object.hasOwnProperty.call(json, 'percentage')
+							) {
+								setPercentage(json.percentage);
+							}
 						}
-						else if (
-							Object.hasOwnProperty.call(json, 'percentage')
-						) {
-							setPercentage(json.percentage);
+					})
+					.catch(() => {});
+			}, 1000);
 
-							let label = null;
-
-							const interval = setInterval(() => {
-								if (label) {
-									setStatus({label});
-
-									clearInterval(interval);
-
-									props.loadData();
-
-									return;
-								}
-
-								fetch(publicationStatusURL)
-									.then((response) => response.json())
-									.then((json) => {
-										if (json) {
-											if (json.label) {
-												setPercentage(100);
-
-												label = json.label;
-											}
-											else if (
-												Object.hasOwnProperty.call(
-													json,
-													'percentage'
-												)
-											) {
-												setPercentage(json.percentage);
-											}
-										}
-									})
-									.catch(() => {});
-							}, 1000);
-
-							return () => clearInterval(interval);
-						}
-					}
-				});
+			return () => clearInterval(interval);
 		}, [props]);
 
-		if (props.value.label !== 'in-progress' || status) {
-			return StatusRenderer(props);
-		}
-
-		return <ClayProgressBar value={percentage} />;
+		return props.value.label === 'in-progress' ? (
+			<ClayProgressBar value={percentage} />
+		) : (
+			<StatusRenderer value={props.value} />
+		);
 	};
 
 	const customPublicationHistoryStatusRenderer = {

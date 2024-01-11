@@ -216,9 +216,7 @@ public class ViewChangesDisplayContext {
 				_language.get(_httpServletRequest, "review-change"), "get",
 				"get", null));
 
-		if ((_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
-			(_ctCollection.getStatus() == WorkflowConstants.STATUS_PENDING)) {
-
+		if (_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
 			fdsActionDropdownItems.add(
 				new FDSActionDropdownItem(
 					PortletURLBuilder.createRenderURL(
@@ -492,10 +490,8 @@ public class ViewChangesDisplayContext {
 		).put(
 			"discardURL",
 			() -> {
-				if ((_ctCollection.getStatus() !=
-						WorkflowConstants.STATUS_DRAFT) &&
-					(_ctCollection.getStatus() !=
-						WorkflowConstants.STATUS_PENDING)) {
+				if (_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_DRAFT) {
 
 					return null;
 				}
@@ -540,10 +536,8 @@ public class ViewChangesDisplayContext {
 			"moveChangesURL",
 			() -> {
 				if (!FeatureFlagManagerUtil.isEnabled("LPS-171364") ||
-					((_ctCollection.getStatus() !=
-						WorkflowConstants.STATUS_DRAFT) &&
-					 (_ctCollection.getStatus() !=
-						 WorkflowConstants.STATUS_PENDING))) {
+					(_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_DRAFT)) {
 
 					return null;
 				}

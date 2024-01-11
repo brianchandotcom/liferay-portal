@@ -189,10 +189,8 @@ public class GetEntryRenderDataMVCResourceCommand
 				ctEntry.getModelClassPK());
 
 			if (rightModel != null) {
-				if ((ctCollection.getStatus() ==
-						WorkflowConstants.STATUS_DRAFT) ||
-					(ctCollection.getStatus() ==
-						WorkflowConstants.STATUS_PENDING)) {
+				if (ctCollection.getStatus() ==
+						WorkflowConstants.STATUS_DRAFT) {
 
 					String editURL = _ctDisplayRendererRegistry.getEditURL(
 						ctCollectionId, ctSQLMode, httpServletRequest,

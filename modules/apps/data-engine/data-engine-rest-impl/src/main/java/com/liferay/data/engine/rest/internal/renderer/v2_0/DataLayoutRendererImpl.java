@@ -16,7 +16,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -131,12 +130,6 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 
 	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"
-	)
-	private ModelResourcePermission<DDMStructure>
-		_ddmStructureModelResourcePermission;
 
 	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;

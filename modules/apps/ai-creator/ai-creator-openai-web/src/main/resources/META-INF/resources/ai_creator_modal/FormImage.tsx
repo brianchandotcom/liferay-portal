@@ -53,7 +53,7 @@ export function FormImage({portletNamespace}: Props) {
 				<ClayLayout.Col>
 					<ClayForm.Group>
 						<label htmlFor={sizeId}>
-							{Liferay.Language.get('size')}
+							{Liferay.Language.get('image-size')}
 						</label>
 
 						<ClaySelectWithOption
@@ -67,7 +67,7 @@ export function FormImage({portletNamespace}: Props) {
 				<ClayLayout.Col>
 					<ClayForm.Group>
 						<label htmlFor={numberOfImagesId}>
-							{Liferay.Language.get('number-of-images')}
+							{Liferay.Language.get('number-of-images-to-generate')}
 						</label>
 
 						<ClaySelectWithOption

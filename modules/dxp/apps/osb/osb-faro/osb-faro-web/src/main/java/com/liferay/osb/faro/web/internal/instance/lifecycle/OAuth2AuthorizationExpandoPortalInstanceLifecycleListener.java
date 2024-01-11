@@ -12,8 +12,6 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
-import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandler;
-import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandlerFactory;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
 import com.liferay.osb.faro.web.internal.application.ApiApplication;
@@ -41,7 +39,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -55,20 +52,13 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.jaxrs.name=Liferay.Analytics.Cloud.REST", "sap.scope.finder=true"
 	},
 	service = {
-		PortalInstanceLifecycleListener.class, PrefixHandlerFactory.class,
-		ScopeFinder.class, ScopeMapper.class
+		PortalInstanceLifecycleListener.class, ScopeFinder.class,
+		ScopeMapper.class
 	}
 )
 public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener
-	implements PrefixHandlerFactory, ScopeFinder, ScopeMapper {
-
-	@Override
-	public PrefixHandler create(
-		Function<String, Object> propertyAccessorFunction) {
-
-		return PrefixHandler.PASS_THROUGH_PREFIX_HANDLER;
-	}
+	implements ScopeFinder, ScopeMapper {
 
 	@Override
 	public Collection<String> findScopes() {

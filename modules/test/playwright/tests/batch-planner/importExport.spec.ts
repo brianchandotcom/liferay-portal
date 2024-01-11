@@ -308,474 +308,6 @@ const companyTestObjectDefinitionData = {
 	status: {code: 0},
 };
 
-const CanImportCSVFileWithCustomColumnsOrder = [
-	{
-		actions: {
-			delete: {
-				href: 'http://localhost:8080/o/c/tests/35234',
-				method: 'DELETE',
-			},
-			get: {
-				href: 'http://localhost:8080/o/c/tests/35234',
-				method: 'GET',
-			},
-			permissions: {
-				href: 'http://localhost:8080/o/c/tests/35234/permissions',
-				method: 'GET',
-			},
-			replace: {
-				href: 'http://localhost:8080/o/c/tests/35234',
-				method: 'PUT',
-			},
-			update: {
-				href: 'http://localhost:8080/o/c/tests/35234',
-				method: 'PATCH',
-			},
-		},
-		creator: {
-			additionalName: '',
-			contentType: 'UserAccount',
-			familyName: 'Test',
-			givenName: 'Test',
-			id: 20122,
-			name: 'Test Test',
-		},
-		dateCreated: '2024-01-10T10:41:27Z',
-		dateModified: '2024-01-10T10:41:27Z',
-		externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-		id: 35234,
-		keywords: [],
-		name: 'TestName',
-		scopeKey: 'Guest',
-		status: {
-			code: 0,
-			label: 'approved',
-			label_i18n: 'Aprobado',
-		},
-		taxonomyCategoryBriefs: [],
-		testDateField: '2024-01-05T00:00:00Z',
-		testDateTimeField: '2024-01-05T15:00:00.000Z',
-		testDecimalField: 10.2,
-		testIntegerField: 100,
-		testLongInteger: 123456789,
-		testLongTextField: 'This is a long text to test testLongTextField',
-		testPrecisionDecimalField: 321.123,
-		testRichTextField:
-			'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField  </p>',
-		testRichTextFieldRawText:
-			'This is a long text with some fomatting to text testRichTextField',
-	},
-];
-
-const CanImportMultipleObjectEntriesWithSite = [
-	{
-		actions: {
-			delete: {
-				href: 'http://localhost:8080/o/c/tests/35330',
-				method: 'DELETE',
-			},
-			get: {
-				href: 'http://localhost:8080/o/c/tests/35330',
-				method: 'GET',
-			},
-			permissions: {
-				href: 'http://localhost:8080/o/c/tests/35330/permissions',
-				method: 'GET',
-			},
-			replace: {
-				href: 'http://localhost:8080/o/c/tests/35330',
-				method: 'PUT',
-			},
-			update: {
-				href: 'http://localhost:8080/o/c/tests/35330',
-				method: 'PATCH',
-			},
-		},
-		creator: {
-			additionalName: '',
-			contentType: 'UserAccount',
-			familyName: 'Test',
-			givenName: 'Test',
-			id: 20122,
-			name: 'Test Test',
-		},
-		dateCreated: '2024-01-10T10:48:33Z',
-		dateModified: '2024-01-10T10:48:33Z',
-		externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-		id: 35330,
-		keywords: [],
-		name: 'TestName_FirstEntry',
-		scopeKey: 'Guest',
-		status: {
-			code: 0,
-			label: 'approved',
-			label_i18n: 'Aprobado',
-		},
-		taxonomyCategoryBriefs: [],
-		testDateField: '2024-01-05T00:00:00Z',
-		testDateTimeField: '2024-01-05T15:00:00.000Z',
-		testDecimalField: 10.2,
-		testIntegerField: 100,
-		testLongInteger: 123456789,
-		testLongTextField:
-			'This is a long text to test testLongTextField. The first entry',
-		testPrecisionDecimalField: 321.123,
-		testRichTextField:
-			'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The first entry.  </p>',
-		testRichTextFieldRawText:
-			'This is a long text with some fomatting to text testRichTextField. The first entry.',
-	},
-	{
-		actions: {
-			delete: {
-				href: 'http://localhost:8080/o/c/tests/35332',
-				method: 'DELETE',
-			},
-			get: {
-				href: 'http://localhost:8080/o/c/tests/35332',
-				method: 'GET',
-			},
-			permissions: {
-				href: 'http://localhost:8080/o/c/tests/35332/permissions',
-				method: 'GET',
-			},
-
-			replace: {
-				href: 'http://localhost:8080/o/c/tests/35332',
-				method: 'PUT',
-			},
-			update: {
-				href: 'http://localhost:8080/o/c/tests/35332',
-				method: 'PATCH',
-			},
-		},
-		creator: {
-			additionalName: '',
-			contentType: 'UserAccount',
-			familyName: 'Test',
-			givenName: 'Test',
-			id: 20122,
-			name: 'Test Test',
-		},
-		dateCreated: '2024-01-10T10:48:33Z',
-		dateModified: '2024-01-10T10:48:33Z',
-		externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
-		id: 35332,
-		keywords: [],
-		name: 'TestName_SecondEntry',
-		scopeKey: 'Guest',
-		status: {
-			code: 0,
-			label: 'approved',
-			label_i18n: 'Aprobado',
-		},
-		taxonomyCategoryBriefs: [],
-		testDateField: '2024-01-06T00:00:00Z',
-		testDateTimeField: '2024-01-06T15:00:00.000Z',
-		testDecimalField: 11.2,
-		testIntegerField: 101,
-		testLongInteger: 123456790,
-		testLongTextField:
-			'This is a long text to test testLongTextField. The second entry',
-		testPrecisionDecimalField: 123.321,
-		testRichTextField:
-			'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The second entry.  </p>',
-		testRichTextFieldRawText:
-			'This is a long text with some fomatting to text testRichTextField. The second entry.',
-	},
-];
-
-const CanCreateObjectEntryFromCSVFileContainingExistingAndNewWithUncheckedStopImportOnError = [
-	{
-		actions: {
-			delete: {
-				href: 'http://localhost:8080/o/c/tests/35430',
-				method: 'DELETE',
-			},
-			get: {
-				href: 'http://localhost:8080/o/c/tests/35430',
-				method: 'GET',
-			},
-			permissions: {
-				href: 'http://localhost:8080/o/c/tests/35430/permissions',
-				method: 'GET',
-			},
-			replace: {
-				href: 'http://localhost:8080/o/c/tests/35430',
-				method: 'PUT',
-			},
-			update: {
-				href: 'http://localhost:8080/o/c/tests/35430',
-				method: 'PATCH',
-			},
-		},
-		creator: {
-			additionalName: '',
-			contentType: 'UserAccount',
-			familyName: 'Test',
-			givenName: 'Test',
-			id: 20122,
-			name: 'Test Test',
-		},
-		dateCreated: '2024-01-10T10:51:11Z',
-		dateModified: '2024-01-10T10:51:14Z',
-		externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-		id: 35430,
-		keywords: [],
-		name: 'TestName_FirstEntry',
-		scopeKey: 'Guest',
-		status: {
-			code: 0,
-			label: 'approved',
-			label_i18n: 'Aprobado',
-		},
-		taxonomyCategoryBriefs: [],
-		testDateField: '2024-01-05T00:00:00Z',
-		testDateTimeField: '2024-01-05T15:00:00.000Z',
-		testDecimalField: 10.2,
-		testIntegerField: 100,
-		testLongInteger: 123456789,
-		testLongTextField:
-			'This is a long text to test testLongTextField. The first entry',
-		testPrecisionDecimalField: 321.123,
-		testRichTextField:
-			'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The first entry.  </p>',
-		testRichTextFieldRawText:
-			'This is a long text with some fomatting to text testRichTextField. The first entry.',
-	},
-	{
-		actions: {
-			delete: {
-				href: 'http://localhost:8080/o/c/tests/35440',
-				method: 'DELETE',
-			},
-			get: {
-				href: 'http://localhost:8080/o/c/tests/35440',
-				method: 'GET',
-			},
-			permissions: {
-				href: 'http://localhost:8080/o/c/tests/35440/permissions',
-				method: 'GET',
-			},
-			replace: {
-				href: 'http://localhost:8080/o/c/tests/35440',
-				method: 'PUT',
-			},
-			update: {
-				href: 'http://localhost:8080/o/c/tests/35440',
-				method: 'PATCH',
-			},
-		},
-		creator: {
-			additionalName: '',
-			contentType: 'UserAccount',
-			familyName: 'Test',
-			givenName: 'Test',
-			id: 20122,
-			name: 'Test Test',
-		},
-		dateCreated: '2024-01-10T10:51:15Z',
-		dateModified: '2024-01-10T10:51:15Z',
-		externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
-		id: 35440,
-		keywords: [],
-		name: 'TestName_SecondEntry',
-		scopeKey: 'Guest',
-		status: {
-			code: 0,
-			label: 'approved',
-			label_i18n: 'Aprobado',
-		},
-		taxonomyCategoryBriefs: [],
-		testDateField: '2024-01-06T00:00:00Z',
-		testDateTimeField: '2024-01-06T15:00:00.000Z',
-		testDecimalField: 11.2,
-		testIntegerField: 101,
-		testLongInteger: 123456790,
-		testLongTextField:
-			'This is a long text to test testLongTextField. The second entry',
-		testPrecisionDecimalField: 123.321,
-		testRichTextField:
-			'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The second entry.  </p>',
-		testRichTextFieldRawText:
-			'This is a long text with some fomatting to text testRichTextField. The second entry.',
-	},
-];
-
-const CanImportCSVFileWithAnUnexistingField = [
-	{
-		actions: {
-			delete: {
-				href: 'http://localhost:8080/o/c/testcompanies/35537',
-				method: 'DELETE',
-			},
-			get: {
-				href: 'http://localhost:8080/o/c/testcompanies/35537',
-				method: 'GET',
-			},
-			permissions: {
-				href:
-					'http://localhost:8080/o/c/testcompanies/35537/permissions',
-				method: 'GET',
-			},
-			replace: {
-				href: 'http://localhost:8080/o/c/testcompanies/35537',
-				method: 'PUT',
-			},
-			update: {
-				href: 'http://localhost:8080/o/c/testcompanies/35537',
-				method: 'PATCH',
-			},
-		},
-		creator: {
-			additionalName: '',
-			contentType: 'UserAccount',
-			familyName: 'Test',
-			givenName: 'Test',
-			id: 20122,
-			name: 'Test Test',
-		},
-		dateCreated: '2024-01-10T10:54:16Z',
-		dateModified: '2024-01-10T10:54:16Z',
-		externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-		id: 35537,
-		keywords: [],
-		name: 'TestName',
-		status: {
-			code: 0,
-			label: 'approved',
-			label_i18n: 'Aprobado',
-		},
-		taxonomyCategoryBriefs: [],
-		testDateField: '2024-01-05T00:00:00Z',
-		testDateTimeField: '2024-01-05T15:00:00.000Z',
-		testDecimalField: 10.2,
-		testIntegerField: 100,
-		testLongInteger: 123456789,
-		testLongTextField: 'This is a long text to test testLongTextField',
-		testPrecisionDecimalField: 321.123,
-		testRichTextField: 'null',
-		testRichTextFieldRawText: 'null',
-	},
-];
-
-const CanUpdateAndCreateObjectEntriesExistingObjectEntriesWithSameCSVFile = [
-	{
-		actions: {
-			delete: {
-				href: 'http://localhost:8080/o/c/testcompanies/35728',
-				method: 'DELETE',
-			},
-			get: {
-				href: 'http://localhost:8080/o/c/testcompanies/35728',
-				method: 'GET',
-			},
-			permissions: {
-				href:
-					'http://localhost:8080/o/c/testcompanies/35728/permissions',
-				method: 'GET',
-			},
-			replace: {
-				href: 'http://localhost:8080/o/c/testcompanies/35728',
-				method: 'PUT',
-			},
-			update: {
-				href: 'http://localhost:8080/o/c/testcompanies/35728',
-				method: 'PATCH',
-			},
-		},
-		creator: {
-			additionalName: '',
-			contentType: 'UserAccount',
-			familyName: 'Test',
-			givenName: 'Test',
-			id: 20122,
-			name: 'Test Test',
-		},
-		dateCreated: '2024-01-10T11:09:14Z',
-		dateModified: '2024-01-10T11:09:17Z',
-		externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-		id: 35728,
-		keywords: [],
-		name: 'TestName_Modified',
-		status: {
-			code: 0,
-			label: 'approved',
-			label_i18n: 'Aprobado',
-		},
-		taxonomyCategoryBriefs: [],
-		testDateField: '2024-01-05T00:00:00Z',
-		testDateTimeField: '2024-01-05T15:00:00.000Z',
-		testDecimalField: 10.2,
-		testIntegerField: 100,
-		testLongInteger: 123456789,
-		testLongTextField:
-			'This is a long text to test testLongTextField. The first entry',
-		testPrecisionDecimalField: 321.123,
-		testRichTextField:
-			'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The modified entry.  </p>',
-		testRichTextFieldRawText:
-			'This is a long text with some fomatting to text testRichTextField. The modified entry.',
-	},
-	{
-		actions: {
-			delete: {
-				href: 'http://localhost:8080/o/c/testcompanies/35737',
-				method: 'DELETE',
-			},
-			get: {
-				href: 'http://localhost:8080/o/c/testcompanies/35737',
-				method: 'GET',
-			},
-			permissions: {
-				href:
-					'http://localhost:8080/o/c/testcompanies/35737/permissions',
-				method: 'GET',
-			},
-			replace: {
-				href: 'http://localhost:8080/o/c/testcompanies/35737',
-				method: 'PUT',
-			},
-			update: {
-				href: 'http://localhost:8080/o/c/testcompanies/35737',
-				method: 'PATCH',
-			},
-		},
-		creator: {
-			additionalName: '',
-			contentType: 'UserAccount',
-			familyName: 'Test',
-			givenName: 'Test',
-			id: 20122,
-			name: 'Test Test',
-		},
-		dateCreated: '2024-01-10T11:09:17Z',
-		dateModified: '2024-01-10T11:09:17Z',
-		externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
-		id: 35737,
-		keywords: [],
-		name: 'TestName_NewEntry',
-		status: {
-			code: 0,
-			label: 'approved',
-			label_i18n: 'Aprobado',
-		},
-		taxonomyCategoryBriefs: [],
-		testDateField: '2024-01-06T00:00:00Z',
-		testDateTimeField: '2024-01-06T15:00:00.000Z',
-		testDecimalField: 11.2,
-		testIntegerField: 101,
-		testLongInteger: 123456790,
-		testLongTextField:
-			'This is a long text to test testLongTextField. The second entry',
-		testPrecisionDecimalField: 123.321,
-		testRichTextField:
-			'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The new entry.  </p>',
-		testRichTextFieldRawText:
-			'This is a long text with some fomatting to text testRichTextField. The new entry.',
-	},
-];
-
 test('Can map all imported fields', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
@@ -959,7 +491,64 @@ test('Can import CSV file with custom columns order', async ({
 		'Guest'
 	);
 
-	expect(CanImportCSVFileWithCustomColumnsOrder).toEqual(
+	expect([
+		{
+			actions: {
+				delete: {
+					href: 'http://localhost:8080/o/c/tests/35234',
+					method: 'DELETE',
+				},
+				get: {
+					href: 'http://localhost:8080/o/c/tests/35234',
+					method: 'GET',
+				},
+				permissions: {
+					href: 'http://localhost:8080/o/c/tests/35234/permissions',
+					method: 'GET',
+				},
+				replace: {
+					href: 'http://localhost:8080/o/c/tests/35234',
+					method: 'PUT',
+				},
+				update: {
+					href: 'http://localhost:8080/o/c/tests/35234',
+					method: 'PATCH',
+				},
+			},
+			creator: {
+				additionalName: '',
+				contentType: 'UserAccount',
+				familyName: 'Test',
+				givenName: 'Test',
+				id: 20122,
+				name: 'Test Test',
+			},
+			dateCreated: '2024-01-10T10:41:27Z',
+			dateModified: '2024-01-10T10:41:27Z',
+			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
+			id: 35234,
+			keywords: [],
+			name: 'TestName',
+			scopeKey: 'Guest',
+			status: {
+				code: 0,
+				label: 'approved',
+				label_i18n: 'Aprobado',
+			},
+			taxonomyCategoryBriefs: [],
+			testDateField: '2024-01-05T00:00:00Z',
+			testDateTimeField: '2024-01-05T15:00:00.000Z',
+			testDecimalField: 10.2,
+			testIntegerField: 100,
+			testLongInteger: 123456789,
+			testLongTextField: 'This is a long text to test testLongTextField',
+			testPrecisionDecimalField: 321.123,
+			testRichTextField:
+				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField  </p>',
+			testRichTextFieldRawText:
+				'This is a long text with some fomatting to text testRichTextField',
+		},
+	]).toEqual(
 		testObjectEntries.items.map((item) =>
 			expect.objectContaining({
 				...item,
@@ -1014,7 +603,123 @@ test('Can Import Multiple Object Entries With Site Scope', async ({
 		'Guest'
 	);
 
-	expect(CanImportMultipleObjectEntriesWithSite).toEqual(
+	expect([
+		{
+			actions: {
+				delete: {
+					href: 'http://localhost:8080/o/c/tests/35330',
+					method: 'DELETE',
+				},
+				get: {
+					href: 'http://localhost:8080/o/c/tests/35330',
+					method: 'GET',
+				},
+				permissions: {
+					href: 'http://localhost:8080/o/c/tests/35330/permissions',
+					method: 'GET',
+				},
+				replace: {
+					href: 'http://localhost:8080/o/c/tests/35330',
+					method: 'PUT',
+				},
+				update: {
+					href: 'http://localhost:8080/o/c/tests/35330',
+					method: 'PATCH',
+				},
+			},
+			creator: {
+				additionalName: '',
+				contentType: 'UserAccount',
+				familyName: 'Test',
+				givenName: 'Test',
+				id: 20122,
+				name: 'Test Test',
+			},
+			dateCreated: '2024-01-10T10:48:33Z',
+			dateModified: '2024-01-10T10:48:33Z',
+			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
+			id: 35330,
+			keywords: [],
+			name: 'TestName_FirstEntry',
+			scopeKey: 'Guest',
+			status: {
+				code: 0,
+				label: 'approved',
+				label_i18n: 'Aprobado',
+			},
+			taxonomyCategoryBriefs: [],
+			testDateField: '2024-01-05T00:00:00Z',
+			testDateTimeField: '2024-01-05T15:00:00.000Z',
+			testDecimalField: 10.2,
+			testIntegerField: 100,
+			testLongInteger: 123456789,
+			testLongTextField:
+				'This is a long text to test testLongTextField. The first entry',
+			testPrecisionDecimalField: 321.123,
+			testRichTextField:
+				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The first entry.  </p>',
+			testRichTextFieldRawText:
+				'This is a long text with some fomatting to text testRichTextField. The first entry.',
+		},
+		{
+			actions: {
+				delete: {
+					href: 'http://localhost:8080/o/c/tests/35332',
+					method: 'DELETE',
+				},
+				get: {
+					href: 'http://localhost:8080/o/c/tests/35332',
+					method: 'GET',
+				},
+				permissions: {
+					href: 'http://localhost:8080/o/c/tests/35332/permissions',
+					method: 'GET',
+				},
+
+				replace: {
+					href: 'http://localhost:8080/o/c/tests/35332',
+					method: 'PUT',
+				},
+				update: {
+					href: 'http://localhost:8080/o/c/tests/35332',
+					method: 'PATCH',
+				},
+			},
+			creator: {
+				additionalName: '',
+				contentType: 'UserAccount',
+				familyName: 'Test',
+				givenName: 'Test',
+				id: 20122,
+				name: 'Test Test',
+			},
+			dateCreated: '2024-01-10T10:48:33Z',
+			dateModified: '2024-01-10T10:48:33Z',
+			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
+			id: 35332,
+			keywords: [],
+			name: 'TestName_SecondEntry',
+			scopeKey: 'Guest',
+			status: {
+				code: 0,
+				label: 'approved',
+				label_i18n: 'Aprobado',
+			},
+			taxonomyCategoryBriefs: [],
+			testDateField: '2024-01-06T00:00:00Z',
+			testDateTimeField: '2024-01-06T15:00:00.000Z',
+			testDecimalField: 11.2,
+			testIntegerField: 101,
+			testLongInteger: 123456790,
+			testLongTextField:
+				'This is a long text to test testLongTextField. The second entry',
+			testPrecisionDecimalField: 123.321,
+			testRichTextField:
+				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The second entry.  </p>',
+			testRichTextFieldRawText:
+				'This is a long text with some fomatting to text testRichTextField. The second entry.',
+		},
+	]).toEqual(
 		testObjectEntries.items.map((item) =>
 			expect.objectContaining({
 				...item,
@@ -1079,9 +784,122 @@ test('Can Create ObjectEntry From CSV File Containing Existing And New With Unch
 		'Guest'
 	);
 
-	expect(
-		CanCreateObjectEntryFromCSVFileContainingExistingAndNewWithUncheckedStopImportOnError
-	).toEqual(
+	expect([
+		{
+			actions: {
+				delete: {
+					href: 'http://localhost:8080/o/c/tests/35430',
+					method: 'DELETE',
+				},
+				get: {
+					href: 'http://localhost:8080/o/c/tests/35430',
+					method: 'GET',
+				},
+				permissions: {
+					href: 'http://localhost:8080/o/c/tests/35430/permissions',
+					method: 'GET',
+				},
+				replace: {
+					href: 'http://localhost:8080/o/c/tests/35430',
+					method: 'PUT',
+				},
+				update: {
+					href: 'http://localhost:8080/o/c/tests/35430',
+					method: 'PATCH',
+				},
+			},
+			creator: {
+				additionalName: '',
+				contentType: 'UserAccount',
+				familyName: 'Test',
+				givenName: 'Test',
+				id: 20122,
+				name: 'Test Test',
+			},
+			dateCreated: '2024-01-10T10:51:11Z',
+			dateModified: '2024-01-10T10:51:14Z',
+			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
+			id: 35430,
+			keywords: [],
+			name: 'TestName_FirstEntry',
+			scopeKey: 'Guest',
+			status: {
+				code: 0,
+				label: 'approved',
+				label_i18n: 'Aprobado',
+			},
+			taxonomyCategoryBriefs: [],
+			testDateField: '2024-01-05T00:00:00Z',
+			testDateTimeField: '2024-01-05T15:00:00.000Z',
+			testDecimalField: 10.2,
+			testIntegerField: 100,
+			testLongInteger: 123456789,
+			testLongTextField:
+				'This is a long text to test testLongTextField. The first entry',
+			testPrecisionDecimalField: 321.123,
+			testRichTextField:
+				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The first entry.  </p>',
+			testRichTextFieldRawText:
+				'This is a long text with some fomatting to text testRichTextField. The first entry.',
+		},
+		{
+			actions: {
+				delete: {
+					href: 'http://localhost:8080/o/c/tests/35440',
+					method: 'DELETE',
+				},
+				get: {
+					href: 'http://localhost:8080/o/c/tests/35440',
+					method: 'GET',
+				},
+				permissions: {
+					href: 'http://localhost:8080/o/c/tests/35440/permissions',
+					method: 'GET',
+				},
+				replace: {
+					href: 'http://localhost:8080/o/c/tests/35440',
+					method: 'PUT',
+				},
+				update: {
+					href: 'http://localhost:8080/o/c/tests/35440',
+					method: 'PATCH',
+				},
+			},
+			creator: {
+				additionalName: '',
+				contentType: 'UserAccount',
+				familyName: 'Test',
+				givenName: 'Test',
+				id: 20122,
+				name: 'Test Test',
+			},
+			dateCreated: '2024-01-10T10:51:15Z',
+			dateModified: '2024-01-10T10:51:15Z',
+			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
+			id: 35440,
+			keywords: [],
+			name: 'TestName_SecondEntry',
+			scopeKey: 'Guest',
+			status: {
+				code: 0,
+				label: 'approved',
+				label_i18n: 'Aprobado',
+			},
+			taxonomyCategoryBriefs: [],
+			testDateField: '2024-01-06T00:00:00Z',
+			testDateTimeField: '2024-01-06T15:00:00.000Z',
+			testDecimalField: 11.2,
+			testIntegerField: 101,
+			testLongInteger: 123456790,
+			testLongTextField:
+				'This is a long text to test testLongTextField. The second entry',
+			testPrecisionDecimalField: 123.321,
+			testRichTextField:
+				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The second entry.  </p>',
+			testRichTextFieldRawText:
+				'This is a long text with some fomatting to text testRichTextField. The second entry.',
+		},
+	]).toEqual(
 		testObjectEntries.items.map((item) =>
 			expect.objectContaining({
 				...item,
@@ -1248,7 +1066,62 @@ test('Can Import CSV File With An Unexisting Field', async ({
 		'c/testcompanies'
 	);
 
-	expect(CanImportCSVFileWithAnUnexistingField).toEqual(
+	expect([
+		{
+			actions: {
+				delete: {
+					href: 'http://localhost:8080/o/c/testcompanies/35537',
+					method: 'DELETE',
+				},
+				get: {
+					href: 'http://localhost:8080/o/c/testcompanies/35537',
+					method: 'GET',
+				},
+				permissions: {
+					href:
+						'http://localhost:8080/o/c/testcompanies/35537/permissions',
+					method: 'GET',
+				},
+				replace: {
+					href: 'http://localhost:8080/o/c/testcompanies/35537',
+					method: 'PUT',
+				},
+				update: {
+					href: 'http://localhost:8080/o/c/testcompanies/35537',
+					method: 'PATCH',
+				},
+			},
+			creator: {
+				additionalName: '',
+				contentType: 'UserAccount',
+				familyName: 'Test',
+				givenName: 'Test',
+				id: 20122,
+				name: 'Test Test',
+			},
+			dateCreated: '2024-01-10T10:54:16Z',
+			dateModified: '2024-01-10T10:54:16Z',
+			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
+			id: 35537,
+			keywords: [],
+			name: 'TestName',
+			status: {
+				code: 0,
+				label: 'approved',
+				label_i18n: 'Aprobado',
+			},
+			taxonomyCategoryBriefs: [],
+			testDateField: '2024-01-05T00:00:00Z',
+			testDateTimeField: '2024-01-05T15:00:00.000Z',
+			testDecimalField: 10.2,
+			testIntegerField: 100,
+			testLongInteger: 123456789,
+			testLongTextField: 'This is a long text to test testLongTextField',
+			testPrecisionDecimalField: 321.123,
+			testRichTextField: 'null',
+			testRichTextFieldRawText: 'null',
+		},
+	]).toEqual(
 		testObjectEntries.items.map((item) =>
 			expect.objectContaining({
 				...item,
@@ -1342,9 +1215,122 @@ test('Can Update And Create ObjectEntries Existing ObjectEntries With Same CSV F
 		'c/testcompanies'
 	);
 
-	expect(
-		CanUpdateAndCreateObjectEntriesExistingObjectEntriesWithSameCSVFile
-	).toEqual(
+	expect([
+		{
+			actions: {
+				delete: {
+					href: 'http://localhost:8080/o/c/testcompanies/35728',
+					method: 'DELETE',
+				},
+				get: {
+					href: 'http://localhost:8080/o/c/testcompanies/35728',
+					method: 'GET',
+				},
+				permissions: {
+					href:
+						'http://localhost:8080/o/c/testcompanies/35728/permissions',
+					method: 'GET',
+				},
+				replace: {
+					href: 'http://localhost:8080/o/c/testcompanies/35728',
+					method: 'PUT',
+				},
+				update: {
+					href: 'http://localhost:8080/o/c/testcompanies/35728',
+					method: 'PATCH',
+				},
+			},
+			creator: {
+				additionalName: '',
+				contentType: 'UserAccount',
+				familyName: 'Test',
+				givenName: 'Test',
+				id: 20122,
+				name: 'Test Test',
+			},
+			dateCreated: '2024-01-10T11:09:14Z',
+			dateModified: '2024-01-10T11:09:17Z',
+			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
+			id: 35728,
+			keywords: [],
+			name: 'TestName_Modified',
+			status: {
+				code: 0,
+				label: 'approved',
+				label_i18n: 'Aprobado',
+			},
+			taxonomyCategoryBriefs: [],
+			testDateField: '2024-01-05T00:00:00Z',
+			testDateTimeField: '2024-01-05T15:00:00.000Z',
+			testDecimalField: 10.2,
+			testIntegerField: 100,
+			testLongInteger: 123456789,
+			testLongTextField:
+				'This is a long text to test testLongTextField. The first entry',
+			testPrecisionDecimalField: 321.123,
+			testRichTextField:
+				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The modified entry.  </p>',
+			testRichTextFieldRawText:
+				'This is a long text with some fomatting to text testRichTextField. The modified entry.',
+		},
+		{
+			actions: {
+				delete: {
+					href: 'http://localhost:8080/o/c/testcompanies/35737',
+					method: 'DELETE',
+				},
+				get: {
+					href: 'http://localhost:8080/o/c/testcompanies/35737',
+					method: 'GET',
+				},
+				permissions: {
+					href:
+						'http://localhost:8080/o/c/testcompanies/35737/permissions',
+					method: 'GET',
+				},
+				replace: {
+					href: 'http://localhost:8080/o/c/testcompanies/35737',
+					method: 'PUT',
+				},
+				update: {
+					href: 'http://localhost:8080/o/c/testcompanies/35737',
+					method: 'PATCH',
+				},
+			},
+			creator: {
+				additionalName: '',
+				contentType: 'UserAccount',
+				familyName: 'Test',
+				givenName: 'Test',
+				id: 20122,
+				name: 'Test Test',
+			},
+			dateCreated: '2024-01-10T11:09:17Z',
+			dateModified: '2024-01-10T11:09:17Z',
+			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
+			id: 35737,
+			keywords: [],
+			name: 'TestName_NewEntry',
+			status: {
+				code: 0,
+				label: 'approved',
+				label_i18n: 'Aprobado',
+			},
+			taxonomyCategoryBriefs: [],
+			testDateField: '2024-01-06T00:00:00Z',
+			testDateTimeField: '2024-01-06T15:00:00.000Z',
+			testDecimalField: 11.2,
+			testIntegerField: 101,
+			testLongInteger: 123456790,
+			testLongTextField:
+				'This is a long text to test testLongTextField. The second entry',
+			testPrecisionDecimalField: 123.321,
+			testRichTextField:
+				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The new entry.  </p>',
+			testRichTextFieldRawText:
+				'This is a long text with some fomatting to text testRichTextField. The new entry.',
+		},
+	]).toEqual(
 		testObjectEntries.items.map((item) =>
 			expect.objectContaining({
 				...item,

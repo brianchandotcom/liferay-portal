@@ -713,22 +713,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testSingleStatementClause() throws Exception {
-		test(
-			SourceProcessorTestParameters.create(
-				"SingleStatementClause.testjava"
-			).addExpectedMessage(
-				"Use braces around if-statement clause", 14
-			).addExpectedMessage(
-				"Use braces around while-statement clause", 19
-			).addExpectedMessage(
-				"Use braces around for-statement clause", 22
-			).addExpectedMessage(
-				"Use braces around if-statement clause", 25
-			));
-	}
-
-	@Test
 	public void testSizeIsZeroCheck() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(

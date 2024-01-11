@@ -47,7 +47,7 @@
 <div class="m-0 product-cards row">
 	<#list restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${capabilityId}/taxonomy-categories?fields=description%2Cid%2Cname%2CtaxonomyCategoryProperties").items?sort_by("name") as taxonomyCategory>
 		<div class="card-container col-12 col-md-4 col-sm-6 d-flex justify-content-center p-2">
-			<a class="d-flex home-card p-3" href="/search?category=${taxonomyCategory.id}">
+			<a class="d-flex home-card p-3" href="${portalUtil.getGroupFriendlyURL(themeDisplay.getLayoutSet(), themeDisplay, true, false)}/search?category=${taxonomyCategory.id}">
 				<#if taxonomyCategory.taxonomyCategoryProperties?has_content>
 					<#list taxonomyCategory.taxonomyCategoryProperties as taxonomyCategoryProperty>
 						<#if taxonomyCategoryProperty.key == 'icon'>

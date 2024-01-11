@@ -22,8 +22,7 @@ const FilterOrderControls = ({
 	sortingOrder,
 	sortingURL,
 }) => {
-	const showOrderToggle =
-		!orderDropdownItems || orderDropdownItems.length <= 1;
+	const showOrderToggle = orderDropdownItems && orderDropdownItems.length > 1;
 
 	return (
 		<>
@@ -101,7 +100,7 @@ const FilterOrderControls = ({
 				</ManagementToolbar.Item>
 			)}
 
-			{!showOrderToggle && (
+			{showOrderToggle && (
 				<ManagementToolbar.Item>
 					<ClayDropDownWithItems
 						items={addActiveIcons([
@@ -178,7 +177,7 @@ const FilterOrderControls = ({
 				</ManagementToolbar.Item>
 			)}
 
-			{sortingURL && showOrderToggle && (
+			{sortingURL && !showOrderToggle && (
 				<ManagementToolbar.Item>
 					<LinkOrButton
 						aria-label={sub(

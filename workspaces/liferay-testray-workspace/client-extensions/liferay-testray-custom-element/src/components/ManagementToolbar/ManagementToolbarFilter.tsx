@@ -42,6 +42,14 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 	setVisible,
 }) => {
 	const [filter, setFilter] = useState('');
+	const inputRef = useRef<HTMLInputElement>(null);
+	const {current} = inputRef;
+
+	useEffect(() => {
+		if (current) {
+			inputRef?.current?.focus();
+		}
+	}, [current]);
 
 	const fields = useMemo(() => filterSchema?.fields as RendererFields[], [
 		filterSchema?.fields,
@@ -120,6 +128,10 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		setVisible(false);
 	}, [dispatch, fields, form, setVisible]);
 
+	const searchFilterInputRef = {
+		ref: inputRef,
+	};
+
 	return (
 		<div className="align-content-between d-flex flex-column">
 			<div className="dropdown-header">
@@ -134,6 +146,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 							onChange={({target: {value}}) => setFilter(value)}
 							placeholder={i18n.translate('search-filters')}
 							value={filter}
+							{...searchFilterInputRef}
 						/>
 
 						<ClayButtonWithIcon

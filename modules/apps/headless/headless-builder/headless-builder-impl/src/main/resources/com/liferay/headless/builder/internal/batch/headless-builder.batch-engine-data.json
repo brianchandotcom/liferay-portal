@@ -373,6 +373,65 @@
 			"objectFields": [
 				{
 					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "normal",
+					"externalReferenceCode": "API_PROPERTY_TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "API Property Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "API_PROPERTY_TYPE_PICKLIST",
+					"name": "apiPropertyType",
+					"objectFieldSettings": [
+						{
+							"name": "stateFlow",
+							"value": {
+								"objectStates": [
+									{
+										"key": "arrayContainer",
+										"objectStateTransitions": [
+											{
+												"key": "normal"
+											},
+											{
+												"key": "singleContainer"
+											}
+										]
+									},
+									{
+										"key": "normal",
+										"objectStateTransitions": [
+											{
+												"key": "arrayContainer"
+											},
+											{
+												"key": "singleContainer"
+											}
+										]
+									},
+									{
+										"key": "singleContainer",
+										"objectStateTransitions": [
+											{
+												"key": "arrayContainer"
+											},
+											{
+												"key": "normal"
+											}
+										]
+									}
+								]
+							}
+						}
+					],
+					"required": true,
+					"state": true,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "DESCRIPTION",
 					"indexed": true,
@@ -411,7 +470,7 @@
 						"en_US": "Object Field ERC"
 					},
 					"name": "objectFieldERC",
-					"required": true,
+					"required": false,
 					"state": false,
 					"system": true,
 					"type": "String"

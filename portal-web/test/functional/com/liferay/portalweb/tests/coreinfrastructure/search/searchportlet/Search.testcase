@@ -1343,9 +1343,13 @@ definition {
 
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "Content",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
 		AssertTextEquals.assertPartialText(
-			locator1 = "Portlet#HEADER",
-			value1 = "WC Title");
+			locator1 = "CKEditor#BODY",
+			value1 = "WC Content");
 	}
 
 	@priority = 4

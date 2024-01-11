@@ -158,12 +158,10 @@ public class ObjectDefinitionResourceTest
 		testGetObjectDefinitionsPage_addObjectDefinition(
 			randomObjectDefinition);
 
-		page =
-			objectDefinitionResource.getObjectDefinitionsPage(
-				null, null, "status/any(k:k eq 2)", Pagination.of(1, 20), null);
+		page = objectDefinitionResource.getObjectDefinitionsPage(
+			null, null, "status/any(k:k eq 2)", Pagination.of(1, 20), null);
 
-		Assert.assertEquals(
-			totalCount + 1, page.getTotalCount());
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
 		assertContains(
 			objectDefinition, (List<ObjectDefinition>)page.getItems());

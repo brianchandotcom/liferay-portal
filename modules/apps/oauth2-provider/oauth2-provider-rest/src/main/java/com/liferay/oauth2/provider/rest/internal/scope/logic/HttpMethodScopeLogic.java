@@ -13,24 +13,21 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import java.util.Map;
 import java.util.function.Function;
 
 import javax.ws.rs.HttpMethod;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Carlos Correa
  * @author Stian Sigvartsen
  */
-@Component(
-	property = "oauth2.scope.checker.type=http.method",
-	service = ScopeLogic.class
-)
 public class HttpMethodScopeLogic implements ScopeLogic {
+
+	public HttpMethodScopeLogic(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
 
 	@Override
 	public boolean check(
@@ -41,13 +38,6 @@ public class HttpMethodScopeLogic implements ScopeLogic {
 		return HttpMethodScopeLogicUtil.check(
 			_bundleContext, propertyAccessorFunction, scopeChecker,
 			_getHttpMethod(resourceMethod));
-	}
-
-	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		_bundleContext = bundleContext;
 	}
 
 	private String _getHttpMethod(Method method) {
@@ -97,6 +87,6 @@ public class HttpMethodScopeLogic implements ScopeLogic {
 	private static final Log _log = LogFactoryUtil.getLog(
 		HttpMethodScopeLogic.class);
 
-	private BundleContext _bundleContext;
+	private final BundleContext _bundleContext;
 
 }

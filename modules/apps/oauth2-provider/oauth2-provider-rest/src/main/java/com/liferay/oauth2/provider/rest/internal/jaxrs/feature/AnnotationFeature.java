@@ -5,6 +5,7 @@
 
 package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
 
+import com.liferay.oauth2.provider.rest.internal.scope.logic.AnnotationScopeLogic;
 import com.liferay.oauth2.provider.rest.internal.scope.logic.ScopeLogic;
 import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filter.BaseScopeCheckerContainerRequestFilter;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
@@ -94,9 +95,7 @@ public class AnnotationFeature implements Feature {
 	@Reference
 	private ScopeChecker _scopeChecker;
 
-	@Reference(target = "(oauth2.scope.checker.type=annotations)")
-	private ScopeLogic _scopeLogic;
-
+	private final ScopeLogic _scopeLogic = new AnnotationScopeLogic();
 	private ServiceRegistration<ScopeFinder> _serviceRegistration;
 
 	private class AnnotationContainerScopeCheckerContainerRequestFilter

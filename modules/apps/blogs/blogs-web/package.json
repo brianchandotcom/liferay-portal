@@ -4,6 +4,7 @@
 		"frontend-js-web": "*",
 		"item-selector-taglib": "*"
 	},
+	"main": "js/index.js",
 	"name": "blogs-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

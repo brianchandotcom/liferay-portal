@@ -357,12 +357,12 @@ public class BaseContainerTag extends AttributesTagSupport {
 			String propsTransformer = null;
 
 			if (Validator.isNotNull(_propsTransformer)) {
-
 				if (ESImportUtil.isESImport(_propsTransformer)) {
 					propsTransformer = _propsTransformer;
-				} else {
-				String resolvedPackageName = NPMResolvedPackageNameUtil.get(
-					getPropsTransformerServletContext());
+				}
+				else {
+					String resolvedPackageName = NPMResolvedPackageNameUtil.get(
+						getPropsTransformerServletContext());
 
 					propsTransformer =
 						resolvedPackageName + "/" + _propsTransformer;

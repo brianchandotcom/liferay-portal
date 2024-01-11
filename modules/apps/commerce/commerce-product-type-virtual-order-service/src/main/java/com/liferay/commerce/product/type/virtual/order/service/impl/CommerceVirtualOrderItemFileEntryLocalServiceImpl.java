@@ -70,6 +70,15 @@ public class CommerceVirtualOrderItemFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public CommerceVirtualOrderItemFileEntry
+		fetchCommerceVirtualOrderItemFileEntry(
+			long commerceVirtualOrderItemId, long fileEntryId) {
+
+		return commerceVirtualOrderItemFileEntryPersistence.fetchByC_F_First(
+			commerceVirtualOrderItemId, fileEntryId, null);
+	}
+
+	@Override
 	public List<CommerceVirtualOrderItemFileEntry>
 		getCommerceVirtualOrderItemFileEntries(
 			long commerceVirtualOrderItemId) {

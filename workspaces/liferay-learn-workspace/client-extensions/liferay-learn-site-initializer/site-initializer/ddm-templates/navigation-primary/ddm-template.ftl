@@ -117,6 +117,8 @@
 </#list>
 
 <div class="adt-navigation">
+	<#assign groupFriendlyURL = portalUtil.getGroupFriendlyURL(themeDisplay.getLayoutSet(), themeDisplay, true, false) />
+
 	<#list entries as navPrimaryItem>
 		<#if navPrimaryItem.hasChildren()>
 			<#assign
@@ -164,7 +166,7 @@
 								<#if taxonomyVocabulary?has_content && stringUtil.equals(navItemType, "CAPABILITIES")>
 									<#assign capabilityFields = taxonomyVocabulary[navSecondaryItem.getName()] />
 
-									<a class="d-flex dropdown-item p-3 text-decoration-none" href="${portalUtil.getGroupFriendlyURL(themeDisplay.getLayoutSet(), themeDisplay, true, false)}/search?category=${capabilityFields['id']}" tabindex="4">
+									<a class="d-flex dropdown-item p-3 text-decoration-none" href="${groupFriendlyURL}/search?category=${capabilityFields['id']}" tabindex="4">
 										<img
 											alt="${navSecondaryItem.getName()} icon"
 											class="icon mr-3"
@@ -190,7 +192,7 @@
 										navItemIcon = customFields["Icon URL"]!""
 									/>
 
-									<a class="d-flex dropdown-item maxh-90 p-3 text-decoration-none" href="${portalUtil.getGroupFriendlyURL(themeDisplay.getLayoutSet(), themeDisplay, true, false)}${navSecondaryItem.getRegularURL()}" tabindex="4">
+									<a class="d-flex dropdown-item maxh-90 p-3 text-decoration-none" href="${groupFriendlyURL}${navSecondaryItem.getRegularURL()}" tabindex="4">
 										<img
 											alt="${navSecondaryItem.getName()} icon"
 											class="icon mr-3"
@@ -214,7 +216,7 @@
 				</div>
 			</div>
 		<#else>
-			<a class="adt-nav-item w-100" href="${portalUtil.getGroupFriendlyURL(themeDisplay.getLayoutSet(), themeDisplay, true, false)}${navPrimaryItem.getRegularURL()}">
+			<a class="adt-nav-item w-100" href="${groupFriendlyURL}${navPrimaryItem.getRegularURL()}">
 				<div class="adt-nav-text d-flex pr-3">
 					<span class="adt-nav-title text-truncate">
 			  			${navPrimaryItem.getName()}

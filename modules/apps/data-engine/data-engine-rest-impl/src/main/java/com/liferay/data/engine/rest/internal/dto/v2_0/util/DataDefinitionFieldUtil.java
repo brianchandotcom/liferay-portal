@@ -19,6 +19,10 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.util.SettingsDDMFormFieldsUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.ServicePreAction;
+import com.liferay.portal.events.ThemeServicePreAction;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -27,12 +31,16 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,10 +50,58 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Carolina Barbosa
  */
 public class DataDefinitionFieldUtil {
+
+	public static Object getEditorConfig(
+			String ddmFormFieldType, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		if (httpServletRequest == null) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			ServicePreAction servicePreAction = new ServicePreAction();
+
+			HttpServletResponse httpServletResponse =
+				new DummyHttpServletResponse();
+
+			servicePreAction.servicePre(
+				httpServletRequest, httpServletResponse, false);
+
+			ThemeServicePreAction themeServicePreAction =
+				new ThemeServicePreAction();
+
+			themeServicePreAction.run(httpServletRequest, httpServletResponse);
+
+			themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			if (themeDisplay == null) {
+				return null;
+			}
+		}
+
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				StringPool.BLANK, ddmFormFieldType, "ckeditor_classic",
+				new HashMap<>(), themeDisplay,
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest));
+
+		Map<String, Object> data = editorConfiguration.getData();
+
+		return data.get("editorConfig");
+	}
 
 	public static DataDefinitionField toDataDefinitionField(
 			DDMFormField ddmFormField,

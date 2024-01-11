@@ -6,17 +6,20 @@
 import {Page} from '@playwright/test';
 
 import {liferayConfig} from '../liferay.config';
+import {CustomObjectApiHelper} from './CustomObjectApiHelper';
 import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
 import {ObjectAdminApiHelper} from './ObjectAdminApiHelper';
 
 export class ApiHelpers {
 	readonly baseUrl: string;
+	readonly customObject: CustomObjectApiHelper;
 	readonly featureFlag: FeatureFlagApiHelper;
 	readonly objectAdmin: ObjectAdminApiHelper;
 	readonly page: Page;
 
 	constructor(page: Page) {
 		this.baseUrl = liferayConfig.environment.baseUrl + '/o/';
+		this.customObject = new CustomObjectApiHelper(this);
 		this.featureFlag = new FeatureFlagApiHelper(page);
 		this.objectAdmin = new ObjectAdminApiHelper(this);
 		this.page = page;
@@ -26,6 +29,14 @@ export class ApiHelpers {
 		return this.page.request.delete(url, {
 			headers: await this.getHeader(),
 		});
+	}
+
+	async get(url: string) {
+		const response = await this.page.request.get(url, {
+			headers: await this.getHeader(),
+		});
+
+		return response.json();
 	}
 
 	async post(url: string, data: DataObject) {

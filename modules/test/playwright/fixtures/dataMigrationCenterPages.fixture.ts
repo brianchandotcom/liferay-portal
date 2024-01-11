@@ -8,7 +8,7 @@ import {test} from '@playwright/test';
 import {DataMigrationCenterPage} from '../pages/batch-planner/dataMigrationCenter.page';
 
 const dataMigrationCenterPageTest = test.extend<{
-	_dataMigrationCenterPage: DataMigrationCenterPage
+	_dataMigrationCenterPage: DataMigrationCenterPage;
 }>({
 	_dataMigrationCenterPage: async ({page}, use) => {
 		await use(new DataMigrationCenterPage(page));

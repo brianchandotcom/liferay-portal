@@ -8,14 +8,15 @@ import {Observer, Size} from '@clayui/modal/lib/types';
 import {ReactNode} from 'react';
 
 interface ModalProps {
+	center?: boolean;
 	children: ReactNode;
 	observer: Observer;
-	size: Size;
+	size?: Size;
 }
 
-const ModalDetails = ({children, observer, size}: ModalProps) => {
+const ModalDetails = ({children, observer, size, ...props}: ModalProps) => {
 	return (
-		<ClayModal center observer={observer} size={size}>
+		<ClayModal center observer={observer} size={size} {...props}>
 			{children}
 		</ClayModal>
 	);

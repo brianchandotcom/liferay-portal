@@ -307,6 +307,12 @@ public interface OrganizationResource {
 			return new OrganizationResourceImpl(this);
 		}
 
+		public Builder chunkSize(int chunkSize) {
+			_chunkSize = chunkSize;
+
+			return this;
+		}
+
 		public Builder contextPath(String contextPath) {
 			_contextPath = contextPath;
 
@@ -384,6 +390,7 @@ public interface OrganizationResource {
 		private Builder() {
 		}
 
+		private Integer _chunkSize;
 		private String _contextPath = "";
 		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
@@ -478,6 +485,10 @@ public interface OrganizationResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -604,6 +615,10 @@ public interface OrganizationResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -710,6 +725,10 @@ public interface OrganizationResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -820,6 +839,10 @@ public interface OrganizationResource {
 
 			httpInvoker.body("[]", "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -927,6 +950,10 @@ public interface OrganizationResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1048,6 +1075,10 @@ public interface OrganizationResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body("[]", "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1180,6 +1211,10 @@ public interface OrganizationResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1284,6 +1319,10 @@ public interface OrganizationResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1392,6 +1431,10 @@ public interface OrganizationResource {
 
 			httpInvoker.body("[]", "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1499,6 +1542,10 @@ public interface OrganizationResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1620,6 +1667,10 @@ public interface OrganizationResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body("[]", "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1750,6 +1801,10 @@ public interface OrganizationResource {
 
 			httpInvoker.body(organization.toString(), "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1841,6 +1896,10 @@ public interface OrganizationResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1951,6 +2010,10 @@ public interface OrganizationResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -2056,6 +2119,10 @@ public interface OrganizationResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2165,6 +2232,10 @@ public interface OrganizationResource {
 
 			httpInvoker.body(organization.toString(), "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -2273,6 +2344,10 @@ public interface OrganizationResource {
 
 			httpInvoker.body(organization.toString(), "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -2374,6 +2449,10 @@ public interface OrganizationResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -2467,6 +2546,10 @@ public interface OrganizationResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2574,6 +2657,10 @@ public interface OrganizationResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -2679,6 +2766,10 @@ public interface OrganizationResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(organization.toString(), "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2786,6 +2877,10 @@ public interface OrganizationResource {
 
 			httpInvoker.body(organization.toString(), "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -2879,6 +2974,10 @@ public interface OrganizationResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2992,6 +3091,10 @@ public interface OrganizationResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -3130,6 +3233,10 @@ public interface OrganizationResource {
 
 			httpInvoker.body(values.toString(), "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -3246,6 +3353,10 @@ public interface OrganizationResource {
 
 			httpInvoker.body(values.toString(), "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -3357,6 +3468,10 @@ public interface OrganizationResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -3465,6 +3580,10 @@ public interface OrganizationResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body("[]", "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -3576,6 +3695,10 @@ public interface OrganizationResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

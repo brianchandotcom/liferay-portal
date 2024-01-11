@@ -135,6 +135,12 @@ public interface OrderRuleResource {
 			return new OrderRuleResourceImpl(this);
 		}
 
+		public Builder chunkSize(int chunkSize) {
+			_chunkSize = chunkSize;
+
+			return this;
+		}
+
 		public Builder contextPath(String contextPath) {
 			_contextPath = contextPath;
 
@@ -212,6 +218,7 @@ public interface OrderRuleResource {
 		private Builder() {
 		}
 
+		private Integer _chunkSize;
 		private String _contextPath = "";
 		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
@@ -300,6 +307,10 @@ public interface OrderRuleResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -417,6 +428,10 @@ public interface OrderRuleResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body("[]", "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -545,6 +560,10 @@ public interface OrderRuleResource {
 
 			httpInvoker.body(orderRule.toString(), "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -636,6 +655,10 @@ public interface OrderRuleResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -746,6 +769,10 @@ public interface OrderRuleResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -851,6 +878,10 @@ public interface OrderRuleResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -960,6 +991,10 @@ public interface OrderRuleResource {
 
 			httpInvoker.body(orderRule.toString(), "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1060,6 +1095,10 @@ public interface OrderRuleResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1153,6 +1192,10 @@ public interface OrderRuleResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1256,6 +1299,10 @@ public interface OrderRuleResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1361,6 +1408,10 @@ public interface OrderRuleResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(orderRule.toString(), "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

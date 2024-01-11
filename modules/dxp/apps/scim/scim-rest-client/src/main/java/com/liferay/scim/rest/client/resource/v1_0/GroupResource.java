@@ -84,6 +84,12 @@ public interface GroupResource {
 			return new GroupResourceImpl(this);
 		}
 
+		public Builder chunkSize(int chunkSize) {
+			_chunkSize = chunkSize;
+
+			return this;
+		}
+
 		public Builder contextPath(String contextPath) {
 			_contextPath = contextPath;
 
@@ -161,6 +167,7 @@ public interface GroupResource {
 		private Builder() {
 		}
 
+		private Integer _chunkSize;
 		private String _contextPath = "";
 		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
@@ -245,6 +252,10 @@ public interface GroupResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -343,6 +354,10 @@ public interface GroupResource {
 
 			httpInvoker.body(group.toString(), "application/scim+json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -436,6 +451,10 @@ public interface GroupResource {
 			httpInvoker.body(
 				queryAttributes.toString(), "application/scim+json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -522,6 +541,10 @@ public interface GroupResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -623,6 +646,10 @@ public interface GroupResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -714,6 +741,10 @@ public interface GroupResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(group.toString(), "application/scim+json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

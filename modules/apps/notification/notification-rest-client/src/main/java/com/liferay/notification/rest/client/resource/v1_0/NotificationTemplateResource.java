@@ -166,6 +166,12 @@ public interface NotificationTemplateResource {
 			return new NotificationTemplateResourceImpl(this);
 		}
 
+		public Builder chunkSize(int chunkSize) {
+			_chunkSize = chunkSize;
+
+			return this;
+		}
+
 		public Builder contextPath(String contextPath) {
 			_contextPath = contextPath;
 
@@ -243,6 +249,7 @@ public interface NotificationTemplateResource {
 		private Builder() {
 		}
 
+		private Integer _chunkSize;
 		private String _contextPath = "";
 		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
@@ -334,6 +341,10 @@ public interface NotificationTemplateResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -451,6 +462,10 @@ public interface NotificationTemplateResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body("[]", "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -583,6 +598,10 @@ public interface NotificationTemplateResource {
 			httpInvoker.body(
 				notificationTemplate.toString(), "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -676,6 +695,10 @@ public interface NotificationTemplateResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -786,6 +809,10 @@ public interface NotificationTemplateResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -899,6 +926,10 @@ public interface NotificationTemplateResource {
 			httpInvoker.body(
 				notificationTemplate.toString(), "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1002,6 +1033,10 @@ public interface NotificationTemplateResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1098,6 +1133,10 @@ public interface NotificationTemplateResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1205,6 +1244,10 @@ public interface NotificationTemplateResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1316,6 +1359,10 @@ public interface NotificationTemplateResource {
 			httpInvoker.body(
 				notificationTemplate.toString(), "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1426,6 +1473,10 @@ public interface NotificationTemplateResource {
 			httpInvoker.body(
 				notificationTemplate.toString(), "application/json");
 
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
+
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1521,6 +1572,10 @@ public interface NotificationTemplateResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1632,6 +1687,10 @@ public interface NotificationTemplateResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body("[]", "application/json");
+
+			if (_builder._chunkSize != null) {
+				httpInvoker.chunkSize(_builder._chunkSize);
+			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

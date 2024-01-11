@@ -6,10 +6,11 @@
 /// <reference types="react" />
 
 import {SidebarCategory} from '@liferay/object-js-components-web';
+import {ILearnResourceContext} from 'frontend-js-components-web';
 interface EditObjectValidationProps {
 	baseResourceURL: string;
 	creationLanguageId: Liferay.Language.Locale;
-	learnResources: ObjectWebLearnResources;
+	learnResources: ILearnResourceContext;
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectValidationRuleElements: SidebarCategory[];

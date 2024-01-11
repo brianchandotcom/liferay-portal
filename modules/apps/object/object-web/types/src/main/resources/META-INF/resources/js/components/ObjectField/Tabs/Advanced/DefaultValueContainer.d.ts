@@ -6,11 +6,12 @@
 /// <reference types="react" />
 
 import {SidebarCategory} from '@liferay/object-js-components-web';
+import {ILearnResourceContext} from 'frontend-js-components-web';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 interface DefaultValueContainerProps {
 	creationLanguageId: Liferay.Language.Locale;
 	errors: ObjectFieldErrors;
-	learnResources: ObjectWebLearnResources;
+	learnResources: ILearnResourceContext;
 	modelBuilder?: boolean;
 	onSubmit?: (values?: Partial<ObjectField>) => void;
 	setValues: (value: Partial<ObjectField>) => void;

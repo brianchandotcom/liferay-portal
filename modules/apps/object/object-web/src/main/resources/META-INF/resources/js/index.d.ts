@@ -463,17 +463,6 @@ interface ObjectValidationRuleSetting {
 	value: string;
 }
 
-type ObjectWebLearnResources = {
-	'object-web': {
-		general: {
-			[key: string]: {
-				message: string;
-				url: string;
-			};
-		};
-	};
-};
-
 interface PickListItem {
 	externalReferenceCode: string;
 	id: number;

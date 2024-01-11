@@ -23,6 +23,8 @@ public class ObjectDefinitionEntityModel implements EntityModel {
 
 	public ObjectDefinitionEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+			new CollectionEntityField(
+				new IntegerEntityField("status", locale -> Field.STATUS)),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
@@ -41,9 +43,7 @@ public class ObjectDefinitionEntityModel implements EntityModel {
 				"name", locale -> Field.getSortableFieldName("name")),
 			new StringEntityField(
 				"objectFolderExternalReferenceCode",
-				locale -> "objectFolderExternalReferenceCode"),
-			new CollectionEntityField(
-				new IntegerEntityField("status", locale -> Field.STATUS)));
+				locale -> "objectFolderExternalReferenceCode"));
 	}
 
 	@Override

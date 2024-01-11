@@ -27,12 +27,12 @@ public class ObjectDefinitionModelDocumentContributor
 		Document document, ObjectDefinition objectDefinition) {
 
 		document.addText(Field.NAME, objectDefinition.getShortName());
+		document.addKeyword(Field.STATUS, objectDefinition.getStatus());
 		document.addLocalizedKeyword(
 			"localized_label", objectDefinition.getLabelMap(), true, true);
 		document.addKeyword(
 			"objectFolderExternalReferenceCode",
 			objectDefinition.getObjectFolderExternalReferenceCode(), true);
-		document.addKeyword(Field.STATUS, objectDefinition.getStatus());
 
 		document.remove(Field.USER_NAME);
 	}

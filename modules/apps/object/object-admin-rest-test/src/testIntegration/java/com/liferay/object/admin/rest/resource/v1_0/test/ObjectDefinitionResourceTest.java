@@ -128,11 +128,11 @@ public class ObjectDefinitionResourceTest
 	public void testGetObjectDefinitionsPage() throws Exception {
 		super.testGetObjectDefinitionsPage();
 
-		Page<ObjectDefinition> objectDefinitionsPage =
+		Page<ObjectDefinition> page =
 			objectDefinitionResource.getObjectDefinitionsPage(
 				null, null, "status/any(k:k eq 2)", Pagination.of(1, 20), null);
 
-		long totalCount = objectDefinitionsPage.getTotalCount();
+		long totalCount = page.getTotalCount();
 
 		ObjectDefinition objectDefinition =
 			testGetObjectDefinitionsPage_addObjectDefinition(
@@ -158,18 +158,15 @@ public class ObjectDefinitionResourceTest
 		testGetObjectDefinitionsPage_addObjectDefinition(
 			randomObjectDefinition);
 
-		// Filter by status
-
-		objectDefinitionsPage =
+		page =
 			objectDefinitionResource.getObjectDefinitionsPage(
 				null, null, "status/any(k:k eq 2)", Pagination.of(1, 20), null);
 
 		Assert.assertEquals(
-			totalCount + 1, objectDefinitionsPage.getTotalCount());
+			totalCount + 1, page.getTotalCount());
 
 		assertContains(
-			objectDefinition,
-			(List<ObjectDefinition>)objectDefinitionsPage.getItems());
+			objectDefinition, (List<ObjectDefinition>)page.getItems());
 	}
 
 	@Override

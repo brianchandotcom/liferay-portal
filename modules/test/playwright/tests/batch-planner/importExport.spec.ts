@@ -308,7 +308,7 @@ const companyObjectDefinition = {
 	status: {code: 0},
 };
 
-test('Can map all imported fields', async ({
+test('can map all imported fields', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -343,7 +343,7 @@ test('Can map all imported fields', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('Cannot import CSV file without headers and an unexisting field header', async ({
+test('cannot import CSV file without headers and an unexisting field header', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -382,7 +382,7 @@ test('Cannot import CSV file without headers and an unexisting field header', as
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('Can see object entry info on preview modal', async ({
+test('can preview CSV file', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -455,7 +455,7 @@ test('Can see object entry info on preview modal', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('Can import CSV file with custom columns order', async ({
+test('can import CSV file with custom columns order', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -519,7 +519,7 @@ test('Can import CSV file with custom columns order', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('Can Import Multiple Object Entries With Site Scope', async ({
+test('can import CSV file with multiple site scoped object entries', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -690,7 +690,7 @@ test('Can Import Multiple Object Entries With Site Scope', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('Can Create ObjectEntry From CSV File Containing Existing And New With Unchecked Stop Import On Error', async ({
+test('can import CSV file with new and existing site scoped object entries', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -870,7 +870,7 @@ test('Can Create ObjectEntry From CSV File Containing Existing And New With Unch
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('Cannot Import With Empty File', async ({
+test('cannot import empty CSV file', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -902,7 +902,7 @@ test('Cannot Import With Empty File', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('Cannot Import ObjectEntry With Update Changed Records Fiels', async ({
+test('cannot import CSV file with object entry with UPSERT strategy', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -939,7 +939,7 @@ test('Cannot Import ObjectEntry With Update Changed Records Fiels', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('Can See Duplicate Error Message With Import Existing Entry And Only Add New Record siels', async ({
+test('can show duplicate error message with import existing entry and only add new record fields', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -983,7 +983,7 @@ test('Can See Duplicate Error Message With Import Existing Entry And Only Add Ne
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('Can Import CSV File With An Unexisting Field', async ({
+test('can import CSV file with an unexisting field', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -1092,7 +1092,7 @@ test('Can Import CSV File With An Unexisting Field', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('Cannot Import Without Headers', async ({
+test('cannot import CSV file without headers', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -1122,7 +1122,7 @@ test('Cannot Import Without Headers', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('Can Update And Create ObjectEntries Existing ObjectEntries With Same CSV File', async ({
+test('can import CSV file with new and existing company scoped object entries', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,

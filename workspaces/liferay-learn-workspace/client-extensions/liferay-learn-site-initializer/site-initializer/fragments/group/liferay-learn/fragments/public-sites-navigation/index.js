@@ -106,7 +106,8 @@ function updateSearch() {
 	const searchSuggestionsInputValue = searchSuggestionsInput.value;
 
 	if (searchSuggestionsInputValue) {
-		seeAllResultsLink.href = searchURL + '?q=' + searchSuggestionsInputValue;
+		seeAllResultsLink.href =
+			searchURL + '?q=' + searchSuggestionsInputValue;
 		searchSubmitLink.href = searchURL + '?q=' + searchSuggestionsInputValue;
 		suggestions.classList.add('performing-search');
 		performSearch(searchSuggestionsInputValue);

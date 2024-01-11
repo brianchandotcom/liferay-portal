@@ -523,10 +523,11 @@ public class Main {
 		TextCollectingVisitor textCollectingVisitor =
 			new TextCollectingVisitor();
 
-		String parsedContent = textCollectingVisitor.collectAndGetText(_parser.parse(text));
+		String parsedContent = textCollectingVisitor.collectAndGetText(
+			_parser.parse(text));
 
-		if(parsedContent.length() > 300) {
-			parsedContent = StringBundler.concat(parsedContent.substring(0, 301), "...");
+		if (parsedContent.length() > 300) {
+			parsedContent = parsedContent.substring(0, 301) + "...";
 		}
 
 		return parsedContent;

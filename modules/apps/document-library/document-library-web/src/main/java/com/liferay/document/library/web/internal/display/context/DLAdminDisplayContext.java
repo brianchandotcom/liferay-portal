@@ -544,13 +544,11 @@ public class DLAdminDisplayContext {
 				}
 			}
 		}
+		catch (NoSuchFolderException noSuchFolderException) {
+			ReflectionUtil.throwException(noSuchFolderException);
+		}
 		catch (PortalException portalException) {
-			if (portalException instanceof NoSuchFolderException) {
-				ReflectionUtil.throwException(portalException);
-			}
-			else {
-				throw new SystemException(portalException);
-			}
+			throw new SystemException(portalException);
 		}
 	}
 

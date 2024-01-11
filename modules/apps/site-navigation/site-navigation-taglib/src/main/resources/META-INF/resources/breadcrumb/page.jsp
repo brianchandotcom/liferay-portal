@@ -26,7 +26,7 @@ List<BreadcrumbEntry> breadcrumbEntries = (List<BreadcrumbEntry>)request.getAttr
 				</li>
 			</c:when>
 			<c:otherwise>
-				<li class="active breadcrumb-item">
+				<li aria-current="page" class="active breadcrumb-item">
 					<span class="breadcrumb-text-truncate"><%= HtmlUtil.escape(breadcrumbEntry.getTitle()) %></span>
 				</li>
 			</c:otherwise>

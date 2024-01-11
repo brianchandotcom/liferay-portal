@@ -32,15 +32,9 @@ public class AuthorizeRestController extends BaseRestController {
 
 		log(jwt, _log, json);
 
-		JSONObject jsonObject = new JSONObject(json);
+		JSONObject jsonObject = new JSONObject();
 
-		JSONObject commercePaymentEntryJSONObject = new JSONObject(
-			jsonObject.getString("commercePaymentEntry"));
-
-		commercePaymentEntryJSONObject.put("paymentStatus", 2);
-
-		jsonObject.put(
-			"commercePaymentEntry", commercePaymentEntryJSONObject);
+		jsonObject.put("paymentStatus", 2);
 
 		return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
 	}

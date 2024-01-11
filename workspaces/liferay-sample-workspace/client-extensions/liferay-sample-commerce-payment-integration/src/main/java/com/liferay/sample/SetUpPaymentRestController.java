@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -32,15 +32,9 @@ public class SetUpPaymentRestController extends BaseRestController {
 
 		log(jwt, _log, json);
 
-		JSONObject jsonObject = new JSONObject(json);
+		JSONObject jsonObject = new JSONObject();
 
-		JSONObject commercePaymentEntryJSONObject = new JSONObject(
-			jsonObject.getString("commercePaymentEntry"));
-
-		commercePaymentEntryJSONObject.put("paymentStatus", 18);
-
-		jsonObject.put(
-			"commercePaymentEntry", commercePaymentEntryJSONObject);
+		jsonObject.put("paymentStatus", 18);
 
 		return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
 	}

@@ -111,6 +111,7 @@ MethodEqualsCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases w
 MissingParenthesesCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds missing parentheses in conditional statement. |
 [ModifierOrderCheck](https://checkstyle.sourceforge.io/checks/modifier/modifierorder.html) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that the order of modifiers conforms to the suggestions in the Java Language specification, § 8.1.1, 8.3.1, 8.4.3 and 9.4. |
 [MultipleVariableDeclarationsCheck](https://checkstyle.sourceforge.io/checks/coding/multiplevariabledeclarations.html) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that each variable declaration is in its own statement and on its own line. |
+[NeedBracesCheck](https://checkstyle.sourceforge.io/checks/blocks/needbraces.html) | .java | Checks for braces around code blocks. |
 NestedIfStatementCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds nested if statements that can be combined. |
 [NoLineWrapCheck](https://checkstyle.sourceforge.io/checks/whitespace/nolinewrap.html) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that chosen statements are not line-wrapped. |
 [NoWhitespaceAfterCheck](https://checkstyle.sourceforge.io/checks/whitespace/nowhitespaceafter.html) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that there is no whitespace after a token. |

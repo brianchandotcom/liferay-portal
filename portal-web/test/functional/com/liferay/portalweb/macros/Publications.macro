@@ -379,8 +379,6 @@ definition {
 			WaitForElementPresent(
 				locator1 = "Publications#PUBLISHED_STATUS",
 				value1 = "Published");
-
-			Refresh();
 		}
 
 		AssertTextEquals(

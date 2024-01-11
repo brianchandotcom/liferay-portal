@@ -80,6 +80,32 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteSiteByExternalReferenceCode() throws Exception {
+		super.testDeleteSiteByExternalReferenceCode();
+
+		// Nonexistent external reference code
+
+		String externalReferenceCode = RandomTestUtil.randomString(10);
+
+		try {
+			siteResource.deleteSiteByExternalReferenceCode(
+				externalReferenceCode);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertEquals(
+				"No site exists for external reference code " +
+					externalReferenceCode,
+				problem.getTitle());
+		}
+	}
+
+	@Override
+	@Test
 	public void testPostSite() throws Exception {
 		super.testPostSite();
 
@@ -124,12 +150,9 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	}
 
 	@Override
-	protected Site testDeleteSite_addSite()
-		throws Exception {
-
+	protected Site testDeleteSite_addSite() throws Exception {
 		return testPutSiteByExternalReferenceCode_addSite();
 	}
-
 
 	@Override
 	protected Site testDeleteSiteByExternalReferenceCode_addSite()

@@ -941,8 +941,6 @@ definition {
 
 	@priority = 4
 	test ContentPageChangesCanBeAutomaticallyResolved {
-		property test.assert.warning.exceptions = "true";
-
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(

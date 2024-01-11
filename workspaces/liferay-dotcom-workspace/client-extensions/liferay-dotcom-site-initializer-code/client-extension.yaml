@@ -1,4 +1,4 @@
-liferay-dotcom-site-initializer:
+liferay-dotcom-site-initializer-code:
     name: Liferay Dotcom Site Initializer Code
     oAuthApplicationHeadlessServer: liferay-dotcom-site-initializer-code-oauth-application-headless-server
     siteExternalReferenceCode: liferayDotcom

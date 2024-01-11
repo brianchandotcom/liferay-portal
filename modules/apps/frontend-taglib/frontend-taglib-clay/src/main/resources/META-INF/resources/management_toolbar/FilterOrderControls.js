@@ -27,7 +27,7 @@ const FilterOrderControls = ({
 
 	return (
 		<>
-			{filterDropdownItems && (
+			{Boolean(filterDropdownItems?.length) && (
 				<ManagementToolbar.Item>
 					<ClayDropDownWithItems
 						items={addActiveIcons(

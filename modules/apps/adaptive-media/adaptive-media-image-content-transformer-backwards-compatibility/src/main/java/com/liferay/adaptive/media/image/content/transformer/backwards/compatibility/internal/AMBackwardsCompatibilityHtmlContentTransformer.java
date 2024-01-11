@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ContentTransformer.class)
 public class AMBackwardsCompatibilityHtmlContentTransformer
-	implements ContentTransformer<String> {
+	implements ContentTransformer {
 
 	@Override
 	public String transform(String html) throws PortalException {

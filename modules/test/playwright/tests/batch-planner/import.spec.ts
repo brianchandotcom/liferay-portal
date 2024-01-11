@@ -1037,8 +1037,7 @@ test('can import CSV file with an unexisting field', async ({
 					method: 'GET',
 				},
 				permissions: {
-					href:
-						'http://localhost:8080/o/c/tests/35537/permissions',
+					href: 'http://localhost:8080/o/c/tests/35537/permissions',
 					method: 'GET',
 				},
 				replace: {
@@ -1186,8 +1185,7 @@ test('can import CSV file with new and existing company scoped object entries', 
 					method: 'GET',
 				},
 				permissions: {
-					href:
-						'http://localhost:8080/o/c/tests/35728/permissions',
+					href: 'http://localhost:8080/o/c/tests/35728/permissions',
 					method: 'GET',
 				},
 				replace: {
@@ -1243,8 +1241,7 @@ test('can import CSV file with new and existing company scoped object entries', 
 					method: 'GET',
 				},
 				permissions: {
-					href:
-						'http://localhost:8080/o/c/tests/35737/permissions',
+					href: 'http://localhost:8080/o/c/tests/35737/permissions',
 					method: 'GET',
 				},
 				replace: {

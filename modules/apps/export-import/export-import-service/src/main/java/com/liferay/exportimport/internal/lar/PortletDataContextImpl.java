@@ -1313,7 +1313,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 		}
 
-		_importWorkflowDefinitionLink(newClassedModel);
+		_importWorkflowDefinitionLink(clazz, newClassedModel);
 
 		importLocks(
 			clazz, String.valueOf(primaryKeyObj),
@@ -2484,15 +2484,18 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return StringBundler.concat(className, StringPool.POUND, classPK);
 	}
 
-	private void _importWorkflowDefinitionLink(ClassedModel classedModel)
+	private void _importWorkflowDefinitionLink(
+			Class<?> clazz, ClassedModel classedModel)
 		throws PortletDataException {
 
 		Element stagedGroupedWorkflowDefinitionLinkElements =
 			getImportDataGroupElement(
 				StagedGroupedWorkflowDefinitionLink.class);
 
+		String className = clazz.getName();
+
 		Map<Long, Long> primaryKeys = (Map<Long, Long>)getNewPrimaryKeysMap(
-			classedModel.getModelClass());
+			className);
 
 		for (Element stagedGroupedWorkflowDefinitionLinkElement :
 				stagedGroupedWorkflowDefinitionLinkElements.elements()) {
@@ -2503,8 +2506,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 			long referrerClassPK = GetterUtil.getLong(
 				stagedGroupedWorkflowDefinitionLinkElement.attributeValue(
 					"referrer-class-pk"));
-
-			String className = classedModel.getModelClassName();
 
 			long newPrimaryKey = GetterUtil.getLong(
 				classedModel.getPrimaryKeyObj());

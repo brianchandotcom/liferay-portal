@@ -5,7 +5,7 @@
 
 import {ApiHelpers} from './ApiHelpers';
 
-export class CustomObjectApiHelper {
+export class ObjectApiHelper {
 	readonly apiHelpers: ApiHelpers;
 
 	constructor(apiHelpers: ApiHelpers) {

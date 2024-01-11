@@ -12,7 +12,6 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
-import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
 import com.liferay.osb.faro.web.internal.constants.FaroSAPConstants;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -31,7 +30,6 @@ import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalSe
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,17 +37,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(
-	property = "osgi.jaxrs.name=Liferay.Analytics.Cloud.REST",
-	service = {PortalInstanceLifecycleListener.class, ScopeMapper.class}
-)
+@Component(service = PortalInstanceLifecycleListener.class)
 public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener implements ScopeMapper {
-
-	@Override
-	public Set<String> map(String scope) {
-		return Collections.singleton(scope);
-	}
+	extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {

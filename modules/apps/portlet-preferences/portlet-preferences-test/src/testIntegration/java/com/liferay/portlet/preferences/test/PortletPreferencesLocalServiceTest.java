@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.PortletAppImpl;
@@ -1363,8 +1362,8 @@ public class PortletPreferencesLocalServiceTest
 				(PortletPreferencesLocalService)previousService);
 
 		_serviceBag = new ServiceBag<>(
-			PortalClassLoaderUtil.getClassLoader(), aopInvocationHandler,
-			PortletPreferencesLocalService.class, serviceWrapper);
+			aopInvocationHandler, PortletPreferencesLocalService.class,
+			serviceWrapper, null, null);
 	}
 
 	protected void resetService() throws Exception {

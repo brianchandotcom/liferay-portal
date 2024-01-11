@@ -6,6 +6,8 @@
 export const C_TEST = 'com.liferay.object.rest.dto.v1_0.ObjectEntry#C_Test';
 export const C_TESTCOMPANY =
 	'com.liferay.object.rest.dto.v1_0.ObjectEntry#C_TestCompany';
+
+// TODO Inline all these ones
 export const INSERT = 'INSERT';
 export const PARTIAL_UPDATE = 'PARTIAL_UPDATE';
 export const UPSERT = 'UPSERT';

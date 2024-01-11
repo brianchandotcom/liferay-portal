@@ -135,7 +135,7 @@ export default function _JournalPortlet({
 		updateContextualSidebarAriaAttributes();
 
 		if (isContextualSidebarOpen()) {
-			contextualSidebarContainer.focus();
+			contextualSidebarContainer.focus({preventScroll: true});
 		}
 	};
 

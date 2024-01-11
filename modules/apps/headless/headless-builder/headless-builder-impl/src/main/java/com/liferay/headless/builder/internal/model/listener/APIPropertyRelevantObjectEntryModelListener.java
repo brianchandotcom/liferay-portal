@@ -5,24 +5,31 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
+import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.headless.builder.internal.helper.ValidationHelper;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
+import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,7 +62,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 		_validate(objectEntry);
 	}
 
-	private boolean _validate(
+	private boolean _isValidAPIProperty(
 			long apiSchemaId, String objectFieldExternalReferenceCode,
 			String objectRelationshipName)
 		throws Exception {
@@ -113,22 +120,168 @@ public class APIPropertyRelevantObjectEntryModelListener
 					"an-api-property-must-be-related-to-an-api-schema");
 			}
 
-			if (!_validate(
-					apiSchemaId, (String)values.get("objectFieldERC"),
-					(String)values.get("objectRelationshipNames"))) {
+			APIApplication.Property.PropertyType apiPropertyType =
+				APIApplication.Property.PropertyType.parse(
+					(String)values.get("apiPropertyType"));
 
-				throw new ObjectEntryValuesException.InvalidObjectField(
-					null,
-					"An API property must be related to an existing object " +
-						"field",
-					"an-api-property-must-be-related-to-an-existing-object-" +
-						"field");
+			String objectFieldERC = (String)values.get("objectFieldERC");
+
+			String objectRelationshipNames = (String)values.get(
+				"objectRelationshipNames");
+
+			if (Objects.equals(
+					apiPropertyType,
+					APIApplication.Property.PropertyType.ARRAY_CONTAINER)) {
+
+				throw new UnsupportedOperationException(
+					"Array container is not supported");
 			}
+			else if (Objects.equals(
+						apiPropertyType,
+						APIApplication.Property.PropertyType.
+							SINGLE_CONTAINER)) {
+
+				if (!Validator.isBlank(objectFieldERC) ||
+					!Validator.isBlank(objectRelationshipNames)) {
+
+					throw new ObjectEntryValuesException.InvalidObjectField(
+						null,
+						"A single container API property can have neither an " +
+							"Object Field ERC nor Object Relationship Names " +
+								"properties associated",
+						"a-single-container-api-property-can-have-neither-an-" +
+							"object-field-erc-nor-object-relationship-names-" +
+								"properties-associated");
+				}
+
+				String filterString = StringBundler.concat(
+					"id ne '", objectEntry.getObjectEntryId(),
+					"' and apiPropertyType eq '", apiPropertyType.getValue(),
+					"' and name eq '", values.get("name"),
+					"' and r_apiSchemaToAPIProperties_c_apiSchemaId eq '",
+					apiSchemaId, "'");
+
+				ObjectDefinition apiPropertyObjectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectEntry.getObjectDefinitionId());
+
+				if (ListUtil.isNotEmpty(
+						_objectEntryLocalService.getValuesList(
+							objectEntry.getGroupId(),
+							objectEntry.getCompanyId(), objectEntry.getUserId(),
+							objectEntry.getObjectDefinitionId(),
+							_filterFactory.create(
+								filterString, apiPropertyObjectDefinition),
+							null, -1, -1, null))) {
+
+					throw new ObjectEntryValuesException.InvalidObjectField(
+						null, "Single container name must be unique",
+						"single-container-name-must-be-unique");
+				}
+			}
+			else {
+				if (Validator.isNull(objectFieldERC)) {
+					throw new ObjectEntryValuesException.InvalidObjectField(
+						null,
+						"A normal type API property cannot have empty Object " +
+							"Field ERC value",
+						"a-normal-type-api-property-cannot-have-empty-object-" +
+							"field-erc-value");
+				}
+
+				if (!_isValidAPIProperty(
+						apiSchemaId, objectFieldERC, objectRelationshipNames)) {
+
+					throw new ObjectEntryValuesException.InvalidObjectField(
+						null,
+						"An API property must be related to an existing " +
+							"object field",
+						"an-api-property-must-be-related-to-an-existing-" +
+							"object-field");
+				}
+			}
+
+			_validateRelatedAPIProperty(
+				(long)values.get(
+					"r_apiPropertyToAPIProperties_c_apiPropertyId"),
+				apiPropertyType, apiSchemaId);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
 		}
 	}
+
+	private void _validateRelatedAPIProperty(
+			long apiPropertyId,
+			APIApplication.Property.PropertyType apiPropertyType,
+			long apiSchemaId)
+		throws Exception {
+
+		if (apiPropertyId != 0) {
+			if (!_validationHelper.isValidObjectEntry(
+					"L_API_PROPERTY", apiPropertyId)) {
+
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					null, "An API property must be related to an API property",
+					"an-api-property-must-be-related-to-an-api-property");
+			}
+
+			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+				apiPropertyId);
+
+			Map<String, Serializable> apiPropertyValues =
+				objectEntry.getValues();
+
+			if (!Objects.equals(
+					apiPropertyValues.get(
+						"r_apiSchemaToAPIProperties_c_apiSchemaId"),
+					apiSchemaId)) {
+
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					null,
+					"A related API property must belong to the same API schema",
+					"a-related-api-property-must-belong-to-the-same-api-" +
+						"schema");
+			}
+
+			if (Objects.equals(
+					apiPropertyType,
+					APIApplication.Property.PropertyType.NORMAL) &&
+				Objects.equals(
+					APIApplication.Property.PropertyType.parse(
+						(String)apiPropertyValues.get("apiPropertyType")),
+					APIApplication.Property.PropertyType.NORMAL)) {
+
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					null,
+					"A normal type API property must be related to a " +
+						"container API property",
+					"a-normal-type-api-property-must-be-related-to-a-" +
+						"container-api-property");
+			}
+
+			if (Objects.equals(
+					apiPropertyType,
+					APIApplication.Property.PropertyType.SINGLE_CONTAINER) &&
+				Objects.equals(
+					APIApplication.Property.PropertyType.parse(
+						(String)apiPropertyValues.get("apiPropertyType")),
+					APIApplication.Property.PropertyType.NORMAL)) {
+
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					null,
+					"A single container API property must be related to " +
+						"another container API property",
+					"a-single-container-api-property-must-be-related-to-" +
+						"another-container-api-property");
+			}
+		}
+	}
+
+	@Reference(
+		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
+	)
+	private FilterFactory<Predicate> _filterFactory;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

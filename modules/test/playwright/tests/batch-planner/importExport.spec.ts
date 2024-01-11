@@ -463,10 +463,9 @@ test('Can import CSV file with custom columns order', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
-	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
+	const objectDefinition = await _apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
 	);
-	const objectDefinitionId = await response.id;
 
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
@@ -515,7 +514,7 @@ test('Can import CSV file with custom columns order', async ({
 		},
 	]);
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinitionId);
+	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });

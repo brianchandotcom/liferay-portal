@@ -1,0 +1,20 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"contentType": "journal",
+	"dataDefinitionFields": [
+		{
+			"fieldType": "rich_text",
+			"indexType": "text",
+			"name": "aField"
+		}
+	],
+	"dataDefinitionKey": "test-data-definition-2",
+	"description": {
+		"en_US": "Test Data Definition Description 2 Update"
+	},
+	"name": {
+		"en_US": "Test Data Definition Name 2 Update"
+	}
+}

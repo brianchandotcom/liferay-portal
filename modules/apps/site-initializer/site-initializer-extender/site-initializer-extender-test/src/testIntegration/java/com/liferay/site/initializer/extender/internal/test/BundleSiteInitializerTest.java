@@ -1063,7 +1063,7 @@ public class BundleSiteInitializerTest {
 			cpOptionCategory.getTitle(LocaleUtil.getSiteDefault()));
 	}
 
-	private void _assertDataDefinition() throws Exception {
+	private void _assertDataDefinition1() throws Exception {
 		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
 			_dataDefinitionResourceFactory.create();
 
@@ -1077,8 +1077,6 @@ public class BundleSiteInitializerTest {
 				getSiteDataDefinitionByContentTypeByDataDefinitionKey(
 					_serviceContext.getScopeGroupId(), "journal",
 					"test-data-definition-1");
-
-		Assert.assertNotNull(dataDefinition);
 
 		Assert.assertEquals(
 			"Test Data Definition Name 1",
@@ -1100,8 +1098,6 @@ public class BundleSiteInitializerTest {
 					_serviceContext.getScopeGroupId(), "journal",
 					"test-data-definition-2");
 
-		Assert.assertNotNull(dataDefinition);
-
 		Assert.assertEquals(
 			"Test Data Definition Name 2",
 			dataDefinition.getName(
@@ -1111,6 +1107,56 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"Test Data Definition Description 2",
+			dataDefinition.getDescription(
+			).get(
+				"en_US"
+			));
+	}
+
+	private void _assertDataDefinition2() throws Exception {
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
+
+		DataDefinitionResource dataDefinitionResource =
+			dataDefinitionResourceBuilder.user(
+				_serviceContext.fetchUser()
+			).build();
+
+		DataDefinition dataDefinition =
+			dataDefinitionResource.
+				getSiteDataDefinitionByContentTypeByDataDefinitionKey(
+					_serviceContext.getScopeGroupId(), "journal",
+					"test-data-definition-1");
+
+		Assert.assertEquals(
+			"Test Data Definition Name 1",
+			dataDefinition.getName(
+			).get(
+				"en_US"
+			));
+
+		Assert.assertEquals(
+			"Test Data Definition Description 1",
+			dataDefinition.getDescription(
+			).get(
+				"en_US"
+			));
+
+		dataDefinition =
+			dataDefinitionResource.
+				getSiteDataDefinitionByContentTypeByDataDefinitionKey(
+					_serviceContext.getScopeGroupId(), "journal",
+					"test-data-definition-2");
+
+		Assert.assertEquals(
+			"Test Data Definition Name 2 Update",
+			dataDefinition.getName(
+			).get(
+				"en_US"
+			));
+
+		Assert.assertEquals(
+			"Test Data Definition Description 2 Update",
 			dataDefinition.getDescription(
 			).get(
 				"en_US"
@@ -3809,7 +3855,7 @@ public class BundleSiteInitializerTest {
 		_assertCPDefinition();
 		_assertCPInstanceProperties();
 		_assertCPOptionCategory();
-		_assertDataDefinition();
+		_assertDataDefinition1();
 		_assertDDMStructure();
 		_assertDDMTemplate1();
 		_assertDLFileEntry();
@@ -3851,6 +3897,7 @@ public class BundleSiteInitializerTest {
 		_assertCommerceChannel2();
 		_assertCommerceOrderType2();
 		_assertCommerceSpecificationProducts2();
+		_assertDataDefinition2();
 		_assertDDMTemplate2();
 		_assertExpandoColumns2();
 		_assertExpandoValues2();

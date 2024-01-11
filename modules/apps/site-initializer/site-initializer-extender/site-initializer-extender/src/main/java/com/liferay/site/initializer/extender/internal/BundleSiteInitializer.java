@@ -504,7 +504,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(
 				() -> _addOrUpdateDataDefinition(
 					serviceContext, stringUtilReplaceValues));
-
 			_invoke(
 				() -> _addOrUpdateDDMStructures(
 					serviceContext, stringUtilReplaceValues));
@@ -1569,6 +1568,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
+		List<DDMStructure> ddmStructures =
+			_ddmStructureLocalService.getStructures(
+				serviceContext.getScopeGroupId());
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			stringUtilReplaceValues.put(
+				"DDM_STRUCTURE_ID:" + ddmStructure.getStructureKey(),
+				String.valueOf(ddmStructure.getStructureId()));
+		}
+
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/data-definitions");
 
@@ -1585,10 +1594,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
-			String json = SiteInitializerUtil.read(
-				resourcePath, _servletContext);
-
-			json = _replace(json, stringUtilReplaceValues);
+			String json = _replace(
+				SiteInitializerUtil.read(resourcePath, _servletContext),
+				stringUtilReplaceValues);
 
 			DataDefinition dataDefinition = DataDefinition.toDTO(json);
 
@@ -1607,13 +1615,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 							dataDefinition.getContentType(),
 							dataDefinition.getDataDefinitionKey());
 
-				dataDefinitionResource.patchDataDefinition(
+				dataDefinition = dataDefinitionResource.putDataDefinition(
 					existingDataDefinition.getId(), dataDefinition);
 			}
 			catch (NoSuchStructureException noSuchStructureException) {
-				dataDefinitionResource.postSiteDataDefinitionByContentType(
-					serviceContext.getScopeGroupId(),
-					dataDefinition.getContentType(), dataDefinition);
+				dataDefinition =
+					dataDefinitionResource.postSiteDataDefinitionByContentType(
+						serviceContext.getScopeGroupId(),
+						dataDefinition.getContentType(), dataDefinition);
 			}
 
 			stringUtilReplaceValues.put(

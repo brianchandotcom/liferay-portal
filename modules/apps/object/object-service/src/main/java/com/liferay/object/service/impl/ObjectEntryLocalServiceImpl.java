@@ -4443,6 +4443,82 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private void _validateUniqueValues(
+			long groupId, ObjectEntry existingObjectEntry,
+			ObjectDefinition objectDefinition, ObjectField objectField,
+			long userId, Object value)
+		throws PortalException {
+
+		long objectEntriesCount = 0;
+		Table<?> table = null;
+
+		try {
+			table = _objectFieldLocalService.getTable(
+				objectDefinition.getObjectDefinitionId(),
+				objectField.getName());
+
+			Column<?, Object> column = (Column<?, Object>)table.getColumn(
+				objectField.getDBColumnName());
+
+			Predicate predicate = null;
+
+			if (objectField.isLocalized()) {
+				Map.Entry<String, String> entry =
+					(Map.Entry<String, String>)value;
+
+				DynamicObjectDefinitionLocalizationTable
+					dynamicObjectDefinitionLocalizationTable =
+						(DynamicObjectDefinitionLocalizationTable)table;
+
+				predicate = ObjectEntryTable.INSTANCE.objectEntryId.in(
+					DSLQueryFactoryUtil.select(
+						dynamicObjectDefinitionLocalizationTable.
+							getForeignKeyColumn()
+					).from(
+						dynamicObjectDefinitionLocalizationTable
+					).where(
+						dynamicObjectDefinitionLocalizationTable.
+							getLanguageIdColumn(
+							).eq(
+								entry.getKey()
+							).and(
+								column.eq(entry.getValue())
+							)
+					));
+
+				value = entry.getValue();
+			}
+			else {
+				predicate =
+					ObjectEntrySearchUtil.
+						getUniqueCompositeKeyObjectFieldPredicate(
+							column, objectField.getDBType(), value);
+			}
+
+			if (existingObjectEntry != null) {
+				predicate = predicate.and(
+					ObjectEntryTable.INSTANCE.objectEntryId.neq(
+						existingObjectEntry.getObjectEntryId()));
+			}
+
+			objectEntriesCount = getObjectEntriesCount(
+				groupId, objectDefinition, predicate);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+
+		if (objectEntriesCount == 0) {
+			return;
+		}
+
+		User user = _userLocalService.getUser(userId);
+
+		throw new ObjectEntryValuesException.UniqueValueConstraintViolation(
+			objectField.getDBColumnName(), (Serializable)value,
+			objectField.getLabel(user.getLocale()), table.getTableName(), null);
+	}
+
 	private void _validateValues(
 			Map.Entry<String, Serializable> entry,
 			ObjectEntry existingObjectEntry, boolean guestUser, long groupId,
@@ -4650,39 +4726,13 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 
-		if (objectField.hasUniqueValues()) {
-			long objectEntriesCount = 0;
-			Table<?> table = null;
-
-			try {
-				table = _objectFieldLocalService.getTable(
-					objectDefinition.getObjectDefinitionId(),
-					objectField.getName());
-
-				Column<?, ?> column = table.getColumn(
-					objectField.getDBColumnName());
-
-				objectEntriesCount = getObjectEntriesCount(
-					groupId, objectDefinition,
-					ObjectEntrySearchUtil.
-						getUniqueCompositeKeyObjectFieldPredicate(
-							(Column<?, Object>)column, objectField.getDBType(),
-							entry.getValue()));
-			}
-			catch (PortalException portalException) {
-				throw new RuntimeException(portalException);
-			}
-
-			if (objectEntriesCount > 0) {
-				User user = _userLocalService.getUser(userId);
-
-				throw new ObjectEntryValuesException.
-					UniqueValueConstraintViolation(
-						objectField.getDBColumnName(), entry.getValue(),
-						objectField.getLabel(user.getLocale()),
-						table.getTableName(), null);
-			}
+		if (!objectField.hasUniqueValues()) {
+			return;
 		}
+
+		_validateUniqueValues(
+			groupId, existingObjectEntry, objectDefinition, objectField, userId,
+			entry.getValue());
 	}
 
 	private void _validateValues(
@@ -4725,61 +4775,9 @@ public class ObjectEntryLocalServiceImpl
 					continue;
 				}
 
-				long objectEntriesCount = 0;
-				Table<?> table = null;
-
-				try {
-					table = _objectFieldLocalService.getTable(
-						objectDefinition.getObjectDefinitionId(),
-						objectField.getName());
-
-					Column<?, Object> column =
-						(Column<?, Object>)table.getColumn(
-							objectField.getDBColumnName());
-
-					DynamicObjectDefinitionLocalizationTable
-						dynamicObjectDefinitionLocalizationTable =
-							(DynamicObjectDefinitionLocalizationTable)table;
-
-					Predicate predicate =
-						ObjectEntryTable.INSTANCE.objectEntryId.in(
-							DSLQueryFactoryUtil.select(
-								dynamicObjectDefinitionLocalizationTable.
-									getForeignKeyColumn()
-							).from(
-								dynamicObjectDefinitionLocalizationTable
-							).where(
-								dynamicObjectDefinitionLocalizationTable.
-									getLanguageIdColumn(
-									).eq(
-										entry.getKey()
-									).and(
-										column.eq(entry.getValue())
-									)
-							));
-
-					if (existingObjectEntry != null) {
-						predicate = predicate.and(
-							ObjectEntryTable.INSTANCE.objectEntryId.neq(
-								existingObjectEntry.getObjectEntryId()));
-					}
-
-					objectEntriesCount = getObjectEntriesCount(
-						groupId, objectDefinition, predicate);
-				}
-				catch (PortalException portalException) {
-					throw new RuntimeException(portalException);
-				}
-
-				if (objectEntriesCount > 0) {
-					User user = _userLocalService.getUser(userId);
-
-					throw new ObjectEntryValuesException.
-						UniqueValueConstraintViolation(
-							objectField.getDBColumnName(), entry.getValue(),
-							objectField.getLabel(user.getLocale()),
-							table.getTableName(), null);
-				}
+				_validateUniqueValues(
+					groupId, existingObjectEntry, objectDefinition, objectField,
+					userId, entry);
 			}
 		}
 

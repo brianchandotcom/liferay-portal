@@ -133,5 +133,5 @@ else {
 			"searchContainerId", "entries"
 		).build()
 	%>'
-	module="bookmarks/js/BookmarksDragAndDrop"
+	module="{BookmarksDragAndDrop} from bookmarks-web"
 />

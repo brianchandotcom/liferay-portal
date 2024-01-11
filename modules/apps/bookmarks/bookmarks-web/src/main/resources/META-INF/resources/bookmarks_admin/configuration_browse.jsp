@@ -103,7 +103,7 @@ portletDisplay.setURLBackTitle("bookmarks");
 											displayType="secondary"
 											id='<%= liferayPortletResponse.getNamespace() + "selectFolderButton" %>'
 											label="select"
-											propsTransformer="js/SelectRootFolderButtonPropsTransformer"
+											propsTransformer="{SelectRootFolderButtonPropsTransformer} from bookmarks-web"
 										/>
 
 										<%
@@ -264,7 +264,7 @@ portletDisplay.setURLBackTitle("bookmarks");
 						<clay:button
 							cssClass="c-mr-2"
 							label="save"
-							propsTransformer="js/SaveConfigurationButtonPropsTransformer"
+							propsTransformer="{SaveConfigurationButtonPropsTransformer} from bookmarks-web"
 						/>
 
 						<clay:link

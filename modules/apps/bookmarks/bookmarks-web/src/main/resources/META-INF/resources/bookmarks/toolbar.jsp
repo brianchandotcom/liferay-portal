@@ -33,7 +33,7 @@ BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContex
 	filterLabelItems="<%= bookmarksManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= bookmarksManagementToolbarDisplayContext.getTotalItems() %>"
-	propsTransformer="bookmarks/js/BookmarksManagementToolbarPropsTransformer"
+	propsTransformer="{BookmarksManagementToolbarPropsTransformer} from bookmarks-web"
 	searchActionURL="<%= String.valueOf(bookmarksManagementToolbarDisplayContext.getSearchActionURL()) %>"
 	searchContainerId="<%= bookmarksManagementToolbarDisplayContext.getSearchContainerId() %>"
 	selectable="<%= bookmarksManagementToolbarDisplayContext.isSelectable() %>"

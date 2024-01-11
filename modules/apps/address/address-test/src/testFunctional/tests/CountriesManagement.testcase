@@ -75,7 +75,7 @@ definition {
 			CountriesManagement.openCountriesManagementPortlet();
 
 			CountriesManagement.addRegion(
-				countryName = "Philippines",
+				countryName = "American Samoa",
 				regionCode = 06,
 				regionName = "Western Visayas");
 
@@ -98,7 +98,7 @@ definition {
 		task ("Then the country is in active status") {
 			CountriesManagement.openCountriesManagementPortlet();
 
-			CountriesManagement.goToRegions(countryName = "Philippines");
+			CountriesManagement.goToRegions(countryName = "American Samoa");
 
 			CountriesManagement.viewRegionsInTable(
 				regionCode = 06,
@@ -111,7 +111,7 @@ definition {
 
 			ManagementBar.setFilterAndOrder(filterBy = "Active");
 
-			CountriesManagement.goToRegions(countryName = "Philippines");
+			CountriesManagement.goToRegions(countryName = "American Samoa");
 
 			Search.searchCP(searchTerm = "Western Visayas");
 
@@ -199,7 +199,7 @@ definition {
 
 		task ("When a user adds a region to a country") {
 			CountriesManagement.addRegion(
-				countryName = "Philippines",
+				countryName = "American Samoa",
 				regionCode = 13,
 				regionName = "National Capital Region",
 				regionPriority = "1.0");
@@ -208,7 +208,7 @@ definition {
 		task ("Then region is successfully saved") {
 			CountriesManagement.openCountriesManagementPortlet();
 
-			CountriesManagement.goToRegions(countryName = "Philippines");
+			CountriesManagement.goToRegions(countryName = "American Samoa");
 
 			CountriesManagement.viewRegionsInTable(
 				regionCode = 13,
@@ -334,7 +334,7 @@ definition {
 			CountriesManagement.openCountriesManagementPortlet();
 
 			CountriesManagement.addRegion(
-				countryName = "Philippines",
+				countryName = "American Samoa",
 				regionCode = 14,
 				regionName = "Cordillera Administrative Region");
 		}
@@ -342,7 +342,7 @@ definition {
 		task ("When a user deletes this region") {
 			CountriesManagement.openCountriesManagementPortlet();
 
-			CountriesManagement.goToRegions(countryName = "Philippines");
+			CountriesManagement.goToRegions(countryName = "American Samoa");
 
 			CountriesManagement.deleteRegion(regionName = "Cordillera Administrative Region");
 		}
@@ -350,7 +350,7 @@ definition {
 		task ("Then region is successfully deleted") {
 			CountriesManagement.openCountriesManagementPortlet();
 
-			CountriesManagement.goToRegions(countryName = "Philippines");
+			CountriesManagement.goToRegions(countryName = "American Samoa");
 
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
@@ -411,7 +411,7 @@ definition {
 			CountriesManagement.openCountriesManagementPortlet();
 
 			CountriesManagement.addRegion(
-				countryName = "Philippines",
+				countryName = "American Samoa",
 				regionCode = 04,
 				regionName = "Calabarzon");
 		}
@@ -419,7 +419,7 @@ definition {
 		task ("When a user edits this region") {
 			CountriesManagement.openCountriesManagementPortlet();
 
-			CountriesManagement.goToRegions(countryName = "Philippines");
+			CountriesManagement.goToRegions(countryName = "American Samoa");
 
 			CountriesManagement.editRegion(
 				regionCodeEdit = 05,
@@ -433,7 +433,7 @@ definition {
 		task ("Then region is successfully updated") {
 			CountriesManagement.openCountriesManagementPortlet();
 
-			CountriesManagement.goToRegions(countryName = "Philippines");
+			CountriesManagement.goToRegions(countryName = "American Samoa");
 
 			CountriesManagement.viewRegionsInTable(
 				regionCode = 05,
@@ -914,7 +914,7 @@ definition {
 
 			CountriesManagement.goToRegions(countryName = "United States");
 
-			Pagination.viewResults(results = "Showing 1 to 20 of 52 entries.");
+			Pagination.viewResults(results = "Showing 1 to 20 of 57 entries.");
 		}
 
 		task ("When pagination is changed to 4") {
@@ -922,13 +922,13 @@ definition {
 		}
 
 		task ("Then only 4 entries display") {
-			for (var regionName : list "Alabama,Alaska,Arizona,Arkansas") {
+			for (var regionName : list "Alabama,Alaska,American Samoa,Arizona") {
 				LexiconEntry.viewEntryName(rowEntry = ${regionName});
 			}
 
 			LexiconEntry.viewNoEntry(rowEntry = "California");
 
-			Pagination.viewResults(results = "Showing 1 to 4 of 52 entries.");
+			Pagination.viewResults(results = "Showing 1 to 4 of 57 entries.");
 		}
 
 		task ("When pagination is changed to 8") {
@@ -936,13 +936,13 @@ definition {
 		}
 
 		task ("Then 8 entries display") {
-			for (var regionName : list "Alabama,Alaska,Arizona,Arkansas,California,Colorado,Connecticut,Delaware") {
+			for (var regionName : list "Alabama,Alaska,American Samoa,Arizona,Arkansas,California,Colorado,Connecticut") {
 				LexiconEntry.viewEntryName(rowEntry = ${regionName});
 			}
 
 			LexiconEntry.viewNoEntry(rowEntry = "District of Columbia");
 
-			Pagination.viewResults(results = "Showing 1 to 8 of 52 entries.");
+			Pagination.viewResults(results = "Showing 1 to 8 of 57 entries.");
 		}
 	}
 

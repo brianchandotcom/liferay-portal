@@ -1996,6 +1996,7 @@ definition {
 				addressCountry = "Cuba",
 				addressName = "Address Entry Name",
 				addressPostalCode = 116023,
+				addressRegion = "Granma",
 				addressStreet1 = "537 Huangpu Road Taide Building,");
 		}
 
@@ -2005,6 +2006,7 @@ definition {
 				addressCountry = "Chile",
 				addressName = "Address Entry Name",
 				addressPostalCode = 123456,
+				addressRegion = "Atacama",
 				addressStreet1 = "Street address one");
 		}
 

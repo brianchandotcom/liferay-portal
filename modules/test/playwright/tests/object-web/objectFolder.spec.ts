@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpers.fixture';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPages.fixture';
-import {objectPagesTest} from '../../fixtures/objectPages.fixture';
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/util';
 
 export const test = mergeTests(
@@ -17,47 +17,47 @@ export const test = mergeTests(
 );
 
 test('created object folders are on the left side bar', async ({
-	_apiHelpers,
-	_objectDefinitionsPage,
+	apiHelpers,
+	objectDefinitionsPage,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
 
-	await _objectDefinitionsPage.goto();
+	await objectDefinitionsPage.goto();
 
 	const objectFolderExternalReferenceCode = 'objectFolder' + getRandomInt();
 
-	const objectFolder = await _objectDefinitionsPage.createObjectFolder(
+	const objectFolder = await objectDefinitionsPage.createObjectFolder(
 		objectFolderExternalReferenceCode
 	);
 
 	await expect(
-		_objectDefinitionsPage.page
+		objectDefinitionsPage.page
 			.locator('li')
 			.filter({hasText: objectFolderExternalReferenceCode})
 	).toBeVisible();
 
 	// Clean up
 
-	await _apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+	await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
 });
 
 test('default folder does not contains delete and edit options', async ({
-	_apiHelpers,
-	_objectDefinitionsPage,
+	apiHelpers,
+	objectDefinitionsPage,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
 
-	await _objectDefinitionsPage.goto();
+	await objectDefinitionsPage.goto();
 
-	await _objectDefinitionsPage.clickDefaultObjectFolder();
+	await objectDefinitionsPage.clickDefaultObjectFolder();
 
-	await _objectDefinitionsPage.openObjectFolderActions();
+	await objectDefinitionsPage.openObjectFolderActions();
 
 	await expect(
-		_objectDefinitionsPage.objectFolderDeleteFolderOption
+		objectDefinitionsPage.objectFolderDeleteFolderOption
 	).toBeHidden();
 
 	await expect(
-		_objectDefinitionsPage.objectFolderEditLabelAndERCOption
+		objectDefinitionsPage.objectFolderEditLabelAndERCOption
 	).toBeHidden();
 });

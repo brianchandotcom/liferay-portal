@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/applicationsMenu.page';
+import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class ObjectDefinitionsPage {
 	readonly addObjectFolderButton: Locator;

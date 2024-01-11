@@ -5,7 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {ObjectDefinitionsPage} from './objectDefinitions.page';
+import {ObjectDefinitionsPage} from './ObjectDefinitionsPage';
 
 export class ModelBuilderPage {
 	readonly fitViewButton: Locator;

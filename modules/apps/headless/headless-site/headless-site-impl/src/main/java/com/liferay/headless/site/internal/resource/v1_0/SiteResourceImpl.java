@@ -120,7 +120,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		else {
 			if (!group.isSite()) {
 				throw new IllegalArgumentException(
-					"No site exists with external reference code " +
+					"No site exists for external reference code " +
 						externalReferenceCode);
 			}
 

@@ -80,6 +80,29 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteSite() throws Exception {
+		super.testDeleteSite();
+
+		// Nonexistent site ID
+
+		long siteId = RandomTestUtil.randomLong();
+
+		try {
+			siteResource.deleteSite(siteId);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertEquals(
+				"No site exists for site ID " + siteId, problem.getTitle());
+		}
+	}
+
+	@Override
+	@Test
 	public void testDeleteSiteByExternalReferenceCode() throws Exception {
 		super.testDeleteSiteByExternalReferenceCode();
 

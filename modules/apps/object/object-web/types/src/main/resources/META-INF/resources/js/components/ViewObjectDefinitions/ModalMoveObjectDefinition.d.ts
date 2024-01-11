@@ -10,14 +10,14 @@ interface ModalMoveObjectDefinitionProps {
 	handleOnClose: () => void;
 	objectDefinitionId: number;
 	objectFolders: ObjectFolder[];
-	onAfterSubmit: () => void;
+	onAfterMoveObjectDefinition: () => void;
 	setMoveObjectDefinition: (value: ObjectDefinition | null) => void;
 }
 export declare function ModalMoveObjectDefinition({
 	handleOnClose,
 	objectDefinitionId,
 	objectFolders,
-	onAfterSubmit,
+	onAfterMoveObjectDefinition,
 	setMoveObjectDefinition,
 }: ModalMoveObjectDefinitionProps): JSX.Element;
 export {};

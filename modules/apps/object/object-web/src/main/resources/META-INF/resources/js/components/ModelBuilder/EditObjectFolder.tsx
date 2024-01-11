@@ -503,7 +503,7 @@ export default function EditObjectFolder({
 						}}
 						objectDefinitionId={movedObjectDefinitionId}
 						objectFolders={objectFolders}
-						onAfterSubmit={() => {
+						onAfterMoveObjectDefinition={() => {
 							setTimeout(async () => {
 								const payload = await getUpdatedModelBuilderStructurePayload(
 									baseResourceURL,

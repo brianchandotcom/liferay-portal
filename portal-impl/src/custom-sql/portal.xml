@@ -198,7 +198,7 @@
 				ResourcePermission ON
 					ResourcePermission.roleId = Roles.roleId
 			WHERE
-			(? = true) OR
+			(? = 1) OR
 			(
 				(Roles.userId = ?) AND
 				(

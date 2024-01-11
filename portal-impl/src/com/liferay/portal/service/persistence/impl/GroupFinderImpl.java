@@ -1188,9 +1188,15 @@ public class GroupFinderImpl
 					ResourceActionLocalServiceUtil.getResourceAction(
 						Group.class.getName(), (String)entry.getValue());
 
-				queryPos.add(
-					RoleLocalServiceUtil.hasUserRole(
-						userId, adminRole.getRoleId()));
+				int isAdmin = 0;
+
+				if (RoleLocalServiceUtil.hasUserRole(
+						userId, adminRole.getRoleId())) {
+
+					isAdmin = 1;
+				}
+
+				queryPos.add(isAdmin);
 				queryPos.add(userId);
 
 				queryPos.add(siteAdminRole.getRoleId());

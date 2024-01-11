@@ -5,17 +5,17 @@
 
 import {test} from '@playwright/test';
 
-import {ModelBuilderPage} from '../pages/object-web/modelBuilder.page';
-import {ObjectDefinitionsPage} from '../pages/object-web/objectDefinitions.page';
+import {ModelBuilderPage} from '../pages/object-web/ModelBuilderPage';
+import {ObjectDefinitionsPage} from '../pages/object-web/ObjectDefinitionsPage';
 
 const objectPagesTest = test.extend<{
-	_modelBuilderPage: ModelBuilderPage;
-	_objectDefinitionsPage: ObjectDefinitionsPage;
+	modelBuilderPage: ModelBuilderPage;
+	objectDefinitionsPage: ObjectDefinitionsPage;
 }>({
-	_modelBuilderPage: async ({page}, use) => {
+	modelBuilderPage: async ({page}, use) => {
 		await use(new ModelBuilderPage(page));
 	},
-	_objectDefinitionsPage: async ({page}, use) => {
+	objectDefinitionsPage: async ({page}, use) => {
 		await use(new ObjectDefinitionsPage(page));
 	},
 });

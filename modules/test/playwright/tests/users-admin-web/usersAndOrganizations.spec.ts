@@ -7,34 +7,34 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPages.fixture';
+import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 
 export const test = mergeTests(usersAndOrganizationsPagesTest);
 
 test('LPS-204541 check export/import menu visibility', async ({
-	_usersAndOrganizationsPage,
+	usersAndOrganizationsPage,
 }) => {
-	await _usersAndOrganizationsPage.goToUsers();
-	await _usersAndOrganizationsPage.openOptionsMenu();
+	await usersAndOrganizationsPage.goToUsers();
+	await usersAndOrganizationsPage.openOptionsMenu();
 	await expect(
-		_usersAndOrganizationsPage.exportImportOptionsMenuItem
+		usersAndOrganizationsPage.exportImportOptionsMenuItem
 	).toHaveCount(0);
 	await expect(
-		_usersAndOrganizationsPage.exportUsersOptionsMenuItem
+		usersAndOrganizationsPage.exportUsersOptionsMenuItem
 	).toBeVisible();
 	await expect(
-		_usersAndOrganizationsPage.manageCustomFieldsOptionsMenuItem
+		usersAndOrganizationsPage.manageCustomFieldsOptionsMenuItem
 	).toBeVisible();
 
-	await _usersAndOrganizationsPage.goToOrganizations();
-	await _usersAndOrganizationsPage.openOptionsMenu();
+	await usersAndOrganizationsPage.goToOrganizations();
+	await usersAndOrganizationsPage.openOptionsMenu();
 	await expect(
-		_usersAndOrganizationsPage.exportImportOptionsMenuItem
+		usersAndOrganizationsPage.exportImportOptionsMenuItem
 	).toBeVisible();
 	await expect(
-		_usersAndOrganizationsPage.exportUsersOptionsMenuItem
+		usersAndOrganizationsPage.exportUsersOptionsMenuItem
 	).toBeVisible();
 	await expect(
-		_usersAndOrganizationsPage.manageCustomFieldsOptionsMenuItem
+		usersAndOrganizationsPage.manageCustomFieldsOptionsMenuItem
 	).toHaveCount(0);
 });

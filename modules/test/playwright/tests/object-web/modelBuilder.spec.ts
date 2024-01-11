@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpers.fixture';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPages.fixture';
-import {objectPagesTest} from '../../fixtures/objectPages.fixture';
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/util';
 
 export const test = mergeTests(
@@ -17,38 +17,36 @@ export const test = mergeTests(
 );
 
 test('can create relationship by dragging node handles', async ({
-	_apiHelpers,
-	_modelBuilderPage,
-	_objectDefinitionsPage,
+	apiHelpers,
+	modelBuilderPage,
+	objectDefinitionsPage,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
 
-	const objectFolder = await _apiHelpers.objectAdmin.postRandomObjectFolder();
+	const objectFolder = await apiHelpers.objectAdmin.postRandomObjectFolder();
 
-	const objectDefinition1 =
-		await _apiHelpers.objectAdmin.postRandomObjectDefinition(
-			objectFolder.externalReferenceCode
-		);
-	const objectDefinition2 =
-		await _apiHelpers.objectAdmin.postRandomObjectDefinition(
-			objectFolder.externalReferenceCode
-		);
-
-	await _objectDefinitionsPage.goto();
-
-	await _objectDefinitionsPage.openObjectFolder(
+	const objectDefinition1 = await apiHelpers.objectAdmin.postRandomObjectDefinition(
+		objectFolder.externalReferenceCode
+	);
+	const objectDefinition2 = await apiHelpers.objectAdmin.postRandomObjectDefinition(
 		objectFolder.externalReferenceCode
 	);
 
-	await _objectDefinitionsPage.viewInModelBuilder();
+	await objectDefinitionsPage.goto();
 
-	await _modelBuilderPage.clickToggleSidebarsButton();
+	await objectDefinitionsPage.openObjectFolder(
+		objectFolder.externalReferenceCode
+	);
 
-	await _modelBuilderPage.clickFitViewButton();
+	await objectDefinitionsPage.viewInModelBuilder();
+
+	await modelBuilderPage.clickToggleSidebarsButton();
+
+	await modelBuilderPage.clickFitViewButton();
 
 	const objectRelationshipLabel = 'objectRelationship' + getRandomInt();
 
-	const objectRelationship = await _modelBuilderPage.createObjectRelationship(
+	const objectRelationship = await modelBuilderPage.createObjectRelationship(
 		objectDefinition1.id,
 		objectDefinition2.id,
 		objectRelationshipLabel,
@@ -56,31 +54,31 @@ test('can create relationship by dragging node handles', async ({
 	);
 
 	await expect(
-		_modelBuilderPage.objectRelationshipEdges.filter({
+		modelBuilderPage.objectRelationshipEdges.filter({
 			hasText: objectRelationshipLabel,
 		})
 	).toBeVisible();
 
-	await _modelBuilderPage.clickObjectDefinitionShowAllFieldsButton(
+	await modelBuilderPage.clickObjectDefinitionShowAllFieldsButton(
 		objectDefinition2.name
 	);
 
-	await _modelBuilderPage.clickFitViewButton();
+	await modelBuilderPage.clickFitViewButton();
 
 	await expect(
-		_modelBuilderPage.objectDefinitionNodes
+		modelBuilderPage.objectDefinitionNodes
 			.filter({hasText: objectDefinition2.name})
 			.getByText(objectRelationshipLabel)
 	).toBeVisible();
 
 	// Clean up
 
-	await _apiHelpers.objectAdmin.deleteObjectRelationship(
+	await apiHelpers.objectAdmin.deleteObjectRelationship(
 		objectRelationship.id
 	);
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition1.id);
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition2.id);
+	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition1.id);
+	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition2.id);
 
-	await _apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+	await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
 });

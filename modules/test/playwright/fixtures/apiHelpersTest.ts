@@ -7,8 +7,8 @@ import {test} from '@playwright/test';
 
 import {ApiHelpers} from '../helpers/ApiHelpers';
 
-const apiHelpersTest = test.extend<{_apiHelpers: ApiHelpers}>({
-	_apiHelpers: async ({page}, use) => {
+const apiHelpersTest = test.extend<{apiHelpers: ApiHelpers}>({
+	apiHelpers: async ({page}, use) => {
 		await use(new ApiHelpers(page));
 	},
 });

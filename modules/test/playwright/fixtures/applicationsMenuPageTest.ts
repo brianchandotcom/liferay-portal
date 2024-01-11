@@ -5,12 +5,12 @@
 
 import {test} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../pages/product-navigation-applications-menu/applicationsMenu.page';
+import {ApplicationsMenuPage} from '../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 
 const applicationsMenuPageTest = test.extend<{
-	_applicationsMenuPage: ApplicationsMenuPage;
+	applicationsMenuPage: ApplicationsMenuPage;
 }>({
-	_applicationsMenuPage: async ({page}, use) => {
+	applicationsMenuPage: async ({page}, use) => {
 		await use(new ApplicationsMenuPage(page));
 	},
 });

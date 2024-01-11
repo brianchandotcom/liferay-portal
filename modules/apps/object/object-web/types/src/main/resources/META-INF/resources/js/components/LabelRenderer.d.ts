@@ -5,6 +5,7 @@
 
 /// <reference types="react" />
 
+import './LabelRenderer.scss';
 interface IProps {
 	onClick: () => void;
 	value: LocalizedValue<string>;

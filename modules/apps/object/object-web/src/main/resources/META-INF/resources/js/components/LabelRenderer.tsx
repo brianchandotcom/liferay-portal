@@ -6,6 +6,8 @@
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
+import './LabelRenderer.scss';
+
 interface IProps {
 	onClick: () => void;
 	value: LocalizedValue<string>;
@@ -14,13 +16,17 @@ interface IProps {
 export default function LabelRenderer({onClick, value}: IProps) {
 	return (
 		<div className="table-list-title">
-			<a href="#" onClick={onClick}>
+			<span
+				className="lfr__object-label-renderer"
+				onClick={onClick}
+				role="link"
+			>
 				{Object.keys(value).length !== 0 ? (
 					value
 				) : (
 					<ClayIcon symbol="view" />
 				)}
-			</a>
+			</span>
 		</div>
 	);
 }

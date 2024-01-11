@@ -188,6 +188,22 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = (JournalEdit
 
 	<div aria-label="<%= LanguageUtil.get(request, "configuration-panel") %>" class="contextual-sidebar edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer" role="tabpanel" tabindex="-1">
 		<div class="overflow-hidden sidebar-body">
+			<div class="d-flex d-sm-none justify-content-end">
+				<clay:button
+					aria-controls='<%= liferayPortletResponse.getNamespace() + "contextualSidebarContainer" %>'
+					aria-label='<%= LanguageUtil.get(request, "close-configuration-panel") %>'
+					borderless="<%= true %>"
+					cssClass="lfr-portal-tooltip"
+					displayType="secondary"
+					icon="times"
+					monospaced="<%= true %>"
+					propsTransformer="js/CloseConfigurationPanelPropsTransformer"
+					small="<%= true %>"
+					title="close-configuration-panel"
+					type="button"
+				/>
+			</div>
+
 			<div class="sheet-row">
 				<clay:tabs
 					tabsItems="<%= journalEditArticleDisplayContext.getTabsItems() %>"

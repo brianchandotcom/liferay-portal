@@ -44,7 +44,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SiteResource {
 
+	public void deleteSite(Long siteId) throws Exception;
+
 	public Site postSite(Site site) throws Exception;
+
+	public void deleteSiteByExternalReferenceCode(String externalReferenceCode)
+		throws Exception;
 
 	public Site putSiteByExternalReferenceCode(
 			String externalReferenceCode, MultipartBody multipartBody)

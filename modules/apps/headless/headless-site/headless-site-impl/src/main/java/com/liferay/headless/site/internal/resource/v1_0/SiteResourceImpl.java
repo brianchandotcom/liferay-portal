@@ -10,6 +10,7 @@ import com.liferay.headless.site.resource.v1_0.SiteResource;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -61,6 +62,22 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 @CTAware
 public class SiteResourceImpl extends BaseSiteResourceImpl {
+
+	@Override
+	public void deleteSiteByExternalReferenceCode(String externalReferenceCode)
+		throws Exception {
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, contextCompany.getCompanyId());
+
+		if (group == null) {
+			throw new NoSuchGroupException(
+				"No site exists for external reference code " +
+					externalReferenceCode);
+		}
+
+		_groupService.deleteGroup(group.getGroupId());
+	}
 
 	@Override
 	public Site postSite(Site site) throws Exception {

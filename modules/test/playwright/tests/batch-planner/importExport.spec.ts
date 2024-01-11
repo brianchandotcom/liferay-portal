@@ -491,50 +491,18 @@ test('Can import CSV file with custom columns order', async ({
 		'Guest'
 	);
 
-	expect([
+	expect(testObjectEntries.items).toEqual([
 		{
-			actions: {
-				delete: {
-					href: 'http://localhost:8080/o/c/tests/35234',
-					method: 'DELETE',
-				},
-				get: {
-					href: 'http://localhost:8080/o/c/tests/35234',
-					method: 'GET',
-				},
-				permissions: {
-					href: 'http://localhost:8080/o/c/tests/35234/permissions',
-					method: 'GET',
-				},
-				replace: {
-					href: 'http://localhost:8080/o/c/tests/35234',
-					method: 'PUT',
-				},
-				update: {
-					href: 'http://localhost:8080/o/c/tests/35234',
-					method: 'PATCH',
-				},
-			},
-			creator: {
-				additionalName: '',
-				contentType: 'UserAccount',
-				familyName: 'Test',
-				givenName: 'Test',
-				id: 20122,
-				name: 'Test Test',
-			},
-			dateCreated: '2024-01-10T10:41:27Z',
-			dateModified: '2024-01-10T10:41:27Z',
+			actions: expect.any(Object),
+			creator: expect.any(Object),
+			dateCreated: expect.any(String),
+			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			id: 35234,
+			id: expect.any(Number),
 			keywords: [],
 			name: 'TestName',
 			scopeKey: 'Guest',
-			status: {
-				code: 0,
-				label: 'approved',
-				label_i18n: 'Aprobado',
-			},
+			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testDateField: '2024-01-05T00:00:00Z',
 			testDateTimeField: '2024-01-05T15:00:00.000Z',
@@ -548,19 +516,7 @@ test('Can import CSV file with custom columns order', async ({
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField',
 		},
-	]).toEqual(
-		testObjectEntries.items.map((item) =>
-			expect.objectContaining({
-				...item,
-				actions: expect.any(Object),
-				creator: expect.any(Object),
-				dateCreated: expect.any(String),
-				dateModified: expect.any(String),
-				id: expect.any(Number),
-				status: expect.any(Object),
-			})
-		)
-	);
+	]);
 
 	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinitionId);
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);

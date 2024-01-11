@@ -3,10 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export const SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE =
+export const OBJECT_ENTRY_ENTITY_TYPE =
 	'com.liferay.object.rest.dto.v1_0.ObjectEntry#C_Test';
-export const COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE =
-	'com.liferay.object.rest.dto.v1_0.ObjectEntry#C_TestCompany';
 
 // TODO Inline all these ones
 

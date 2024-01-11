@@ -11,10 +11,9 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPages.fix
 import {dataMigrationCenterPageTest} from '../../fixtures/dataMigrationCenterPages.fixture';
 import {objectPagesTest} from '../../fixtures/objectPages.fixture';
 import {
-	COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 	INSERT,
+	OBJECT_ENTRY_ENTITY_TYPE,
 	PARTIAL_UPDATE,
-	SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
 	UPDATE,
 	UPSERT,
 } from './utils/constants';
@@ -169,9 +168,9 @@ const siteObjectDefinition = {
 
 const companyObjectDefinition = {
 	active: true,
-	externalReferenceCode: 'TestCompany',
-	label: {'en-US': 'TestCompany'},
-	name: 'TestCompany',
+	externalReferenceCode: 'Test',
+	label: {'en-US': 'Test'},
+	name: 'Test',
 	objectFields: [
 		{
 			DBType: 'Date',
@@ -302,7 +301,7 @@ const companyObjectDefinition = {
 		},
 	],
 	panelCategoryKey: 'control_panel.users',
-	pluralLabel: {'en-US': 'TestsCompanies'},
+	pluralLabel: {'en-US': 'Tests'},
 	portlet: true,
 	scope: 'company',
 	status: {code: 0},
@@ -325,7 +324,7 @@ test('can map all imported fields', async ({
 	await _dataMigrationCenterPage.goToImportFile();
 
 	await _dataMigrationCenterPage.selectImportEntityType(
-		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE
+		OBJECT_ENTRY_ENTITY_TYPE
 	);
 
 	await expect(page.getByText('externalReferenceCode')).toBeVisible();
@@ -368,7 +367,7 @@ test('cannot import CSV file without headers and an unexisting field header', as
 	await _dataMigrationCenterPage.selectFile(fileWithPath);
 
 	await _dataMigrationCenterPage.selectImportEntityType(
-		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE
+		OBJECT_ENTRY_ENTITY_TYPE
 	);
 
 	await page.waitForTimeout(2000);
@@ -406,7 +405,7 @@ test('can preview CSV file', async ({
 	await _dataMigrationCenterPage.selectFile(fileWithPath);
 
 	await _dataMigrationCenterPage.selectImportEntityType(
-		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE
+		OBJECT_ENTRY_ENTITY_TYPE
 	);
 
 	await page.waitForTimeout(2000);
@@ -476,7 +475,7 @@ test('can import CSV file with custom columns order', async ({
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
 	await _dataMigrationCenterPage.importFile(
-		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
+		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(__dirname, '/dependencies/c_test-CustomColumnsOrder.csv'),
 		UPSERT,
 		UPDATE
@@ -546,7 +545,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 		'/dependencies/c_test-TwoEntries.csv'
 	);
 	await _dataMigrationCenterPage.importFile(
-		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
+		OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPath,
 		UPSERT,
 		UPDATE
@@ -714,7 +713,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 
 	const fileWithPath = path.join(__dirname, '/dependencies/c_test.csv');
 	await _dataMigrationCenterPage.importFile(
-		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
+		OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPath,
 		UPSERT,
 		UPDATE
@@ -727,7 +726,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 		'/dependencies/c_test-TwoEntries.csv'
 	);
 	await _dataMigrationCenterPage.importFile(
-		SITE_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
+		OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPathTwoEntries,
 		UPSERT,
 		UPDATE
@@ -896,7 +895,7 @@ test('cannot import empty CSV file', async ({
 	await _dataMigrationCenterPage.selectFile(fileWithPath);
 
 	await _dataMigrationCenterPage.selectImportEntityType(
-		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE
+		OBJECT_ENTRY_ENTITY_TYPE
 	);
 
 	await page.waitForTimeout(2000);
@@ -930,7 +929,7 @@ test('cannot import CSV file with object entry with UPSERT strategy', async ({
 		'/dependencies/c_test.csv'
 	);
 	await _dataMigrationCenterPage.importFile(
-		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
+		OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPathTwoEntries,
 		UPSERT,
 		PARTIAL_UPDATE
@@ -964,7 +963,7 @@ test('can show duplicate error message with import existing entry and only add n
 
 	const fileWithPathFirst = path.join(__dirname, '/dependencies/c_test.csv');
 	await _dataMigrationCenterPage.importFile(
-		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
+		OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPathFirst,
 		UPSERT,
 		UPDATE
@@ -974,7 +973,7 @@ test('can show duplicate error message with import existing entry and only add n
 
 	const fileWithPathSecond = path.join(__dirname, '/dependencies/c_test.csv');
 	await _dataMigrationCenterPage.importFile(
-		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
+		OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPathSecond,
 		INSERT,
 		UPDATE
@@ -1012,7 +1011,7 @@ test('can import CSV file with an unexisting field', async ({
 		'/dependencies/c_test-NonExistingField.csv'
 	);
 	await _dataMigrationCenterPage.importFile(
-		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
+		OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPathTwoEntries,
 		UPSERT,
 		UPDATE
@@ -1023,31 +1022,31 @@ test('can import CSV file with an unexisting field', async ({
 	).toBeVisible();
 
 	const testObjectEntries = await _apiHelpers.customObject.getObjectDefinitionObjectEntries(
-		'c/testcompanies'
+		'c/tests'
 	);
 
 	expect([
 		{
 			actions: {
 				delete: {
-					href: 'http://localhost:8080/o/c/testcompanies/35537',
+					href: 'http://localhost:8080/o/c/tests/35537',
 					method: 'DELETE',
 				},
 				get: {
-					href: 'http://localhost:8080/o/c/testcompanies/35537',
+					href: 'http://localhost:8080/o/c/tests/35537',
 					method: 'GET',
 				},
 				permissions: {
 					href:
-						'http://localhost:8080/o/c/testcompanies/35537/permissions',
+						'http://localhost:8080/o/c/tests/35537/permissions',
 					method: 'GET',
 				},
 				replace: {
-					href: 'http://localhost:8080/o/c/testcompanies/35537',
+					href: 'http://localhost:8080/o/c/tests/35537',
 					method: 'PUT',
 				},
 				update: {
-					href: 'http://localhost:8080/o/c/testcompanies/35537',
+					href: 'http://localhost:8080/o/c/tests/35537',
 					method: 'PATCH',
 				},
 			},
@@ -1148,7 +1147,7 @@ test('can import CSV file with new and existing company scoped object entries', 
 
 	const fileWithPath = path.join(__dirname, '/dependencies/c_test.csv');
 	await _dataMigrationCenterPage.importFile(
-		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
+		OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPath,
 		UPSERT,
 		UPDATE
@@ -1161,7 +1160,7 @@ test('can import CSV file with new and existing company scoped object entries', 
 		'/dependencies/c_test-TwoEntriesExistingModified.csv'
 	);
 	await _dataMigrationCenterPage.importFile(
-		COMPANY_SCOPED_OBJECT_ENTRY_ENTITY_TYPE,
+		OBJECT_ENTRY_ENTITY_TYPE,
 		fileWithPathTwoEntries,
 		UPSERT,
 		UPDATE
@@ -1172,31 +1171,31 @@ test('can import CSV file with new and existing company scoped object entries', 
 	).toBeVisible();
 
 	const testObjectEntries = await _apiHelpers.customObject.getObjectDefinitionObjectEntries(
-		'c/testcompanies'
+		'c/tests'
 	);
 
 	expect([
 		{
 			actions: {
 				delete: {
-					href: 'http://localhost:8080/o/c/testcompanies/35728',
+					href: 'http://localhost:8080/o/c/tests/35728',
 					method: 'DELETE',
 				},
 				get: {
-					href: 'http://localhost:8080/o/c/testcompanies/35728',
+					href: 'http://localhost:8080/o/c/tests/35728',
 					method: 'GET',
 				},
 				permissions: {
 					href:
-						'http://localhost:8080/o/c/testcompanies/35728/permissions',
+						'http://localhost:8080/o/c/tests/35728/permissions',
 					method: 'GET',
 				},
 				replace: {
-					href: 'http://localhost:8080/o/c/testcompanies/35728',
+					href: 'http://localhost:8080/o/c/tests/35728',
 					method: 'PUT',
 				},
 				update: {
-					href: 'http://localhost:8080/o/c/testcompanies/35728',
+					href: 'http://localhost:8080/o/c/tests/35728',
 					method: 'PATCH',
 				},
 			},
@@ -1236,24 +1235,24 @@ test('can import CSV file with new and existing company scoped object entries', 
 		{
 			actions: {
 				delete: {
-					href: 'http://localhost:8080/o/c/testcompanies/35737',
+					href: 'http://localhost:8080/o/c/tests/35737',
 					method: 'DELETE',
 				},
 				get: {
-					href: 'http://localhost:8080/o/c/testcompanies/35737',
+					href: 'http://localhost:8080/o/c/tests/35737',
 					method: 'GET',
 				},
 				permissions: {
 					href:
-						'http://localhost:8080/o/c/testcompanies/35737/permissions',
+						'http://localhost:8080/o/c/tests/35737/permissions',
 					method: 'GET',
 				},
 				replace: {
-					href: 'http://localhost:8080/o/c/testcompanies/35737',
+					href: 'http://localhost:8080/o/c/tests/35737',
 					method: 'PUT',
 				},
 				update: {
-					href: 'http://localhost:8080/o/c/testcompanies/35737',
+					href: 'http://localhost:8080/o/c/tests/35737',
 					method: 'PATCH',
 				},
 			},

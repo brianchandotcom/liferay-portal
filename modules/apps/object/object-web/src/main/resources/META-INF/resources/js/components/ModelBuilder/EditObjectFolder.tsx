@@ -45,14 +45,12 @@ import './EditObjectFolder.scss';
 
 interface EditObjectFolder {
 	companies: Scope[];
-	learnResourceContext: any;
 	objectRelationshipDeletionTypes: LabelValueObject[];
 	sites: Scope[];
 }
 
 export default function EditObjectFolder({
 	companies,
-	learnResourceContext,
 	objectRelationshipDeletionTypes,
 	sites,
 }: EditObjectFolder) {
@@ -63,6 +61,7 @@ export default function EditObjectFolder({
 			editObjectDefinitionURL,
 			elements,
 			isLoadingObjectFolder,
+			learnResourceContext,
 			leftSidebarItems,
 			modelBuilderModals,
 			objectDefinitionsStorageTypes,

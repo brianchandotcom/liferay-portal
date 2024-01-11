@@ -13,7 +13,11 @@ import {
 	SingleSelect,
 	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
-import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
+import {
+	ILearnResourceContext,
+	LearnMessage,
+	LearnResourcesContext,
+} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
 
 import {NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE} from '../../utils/constants';
@@ -23,7 +27,7 @@ import {TabProps} from './useObjectValidationForm';
 export interface ConditionsProps extends TabProps {
 	creationLanguageId: Liferay.Language.Locale;
 	customObjectFields: ObjectField[];
-	learnResources: ObjectWebLearnResources;
+	learnResources: ILearnResourceContext;
 	objectValidationRuleElements: SidebarCategory[];
 }
 

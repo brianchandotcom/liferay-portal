@@ -4,6 +4,7 @@
  */
 
 import {SidebarCategory} from '@liferay/object-js-components-web';
+import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {ElementType} from 'react';
 
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
@@ -16,7 +17,7 @@ interface AdvancedTabProps {
 	errors: ObjectFieldErrors;
 	isDefaultStorageType: boolean;
 	isRootDescendantNode: boolean;
-	learnResources: ObjectWebLearnResources;
+	learnResources: ILearnResourceContext;
 	modelBuilder?: boolean;
 	onSubmit?: () => void;
 	readOnlySidebarElements: SidebarCategory[];

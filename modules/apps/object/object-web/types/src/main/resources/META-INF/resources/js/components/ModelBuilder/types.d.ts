@@ -5,6 +5,7 @@
 
 /// <reference types="react" />
 
+import {ILearnResourceContext} from 'frontend-js-components-web';
 import {Edge, Elements, Node} from 'react-flow-renderer';
 import {TYPES} from './ModelBuilderContext/typesEnum';
 declare type TDropDownType =
@@ -223,6 +224,7 @@ export declare type TState = {
 	forbiddenNames: string[];
 	isLoadingObjectFolder: boolean;
 	isRootDescendantNode: boolean;
+	learnResourceContext: ILearnResourceContext;
 	leftSidebarItems: LeftSidebarItem[];
 	modelBuilderModals: ModelBuilderModals;
 	nodeHandleConnectable: boolean;
@@ -231,7 +233,6 @@ export declare type TState = {
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectFolderName: string;
 	objectFolders: ObjectFolder[];
-	objectWebLearnResources: ObjectWebLearnResources;
 	rightSidebarType: RightSidebarType;
 	selectedObjectDefinitionNode: Node<ObjectDefinitionNodeData> | null;
 	selectedObjectField?: ObjectFieldNodeRow;

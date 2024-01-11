@@ -75,6 +75,24 @@ export declare function getObjectFolderDiagramCenterPosition(): {
 	x: number;
 	y: number;
 };
+export declare function getUnsupportedRelationshipErrorMessage(
+	nodes: Node<ObjectDefinitionNodeData>[],
+	sourceNode: Node<ObjectDefinitionNodeData>,
+	targetNode: Node<ObjectDefinitionNodeData>
+):
+	| {
+			errorMessage: string;
+			learnMessage?: undefined;
+	  }
+	| {
+			errorMessage: string;
+			learnMessage: string;
+	  }
+	| undefined;
+export declare function updatePreviousURLParam(
+	paramType: string,
+	paramValue: string
+): void;
 export declare function updateURLParam(
 	paramType: string,
 	paramValue: string

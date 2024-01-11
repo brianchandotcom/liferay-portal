@@ -10,6 +10,7 @@ import {
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
+import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {useEffect} from 'react';
 
 import {EditObjectFieldContent} from './EditObjectFieldContent';
@@ -27,7 +28,7 @@ export interface EditObjectFieldProps {
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
 	isRootDescendantNode: boolean;
-	learnResources: ObjectWebLearnResources;
+	learnResources: ILearnResourceContext;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldId: number;
 	readOnly: boolean;

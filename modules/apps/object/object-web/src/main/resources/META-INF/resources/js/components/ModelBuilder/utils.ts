@@ -5,6 +5,40 @@
 
 import {ArrowHeadType, Node, Position, XYPosition} from 'react-flow-renderer';
 
+function checkPostalAddressUnsupportedRelationship(
+	nodes: Node<ObjectDefinitionNodeData>[],
+	sourceNode: Node<ObjectDefinitionNodeData>,
+	targetNode: Node<ObjectDefinitionNodeData>
+) {
+	const {name: sourceName} = sourceNode.data || {};
+	const {
+		externalReferenceCode: targetExternalReferenceCode,
+		name: targetName,
+	} = targetNode.data || {};
+
+	if (targetName === 'Address') {
+		return true;
+	}
+
+	const accountObjectDefinition = nodes.find(
+		(node) => node.data?.name === 'AccountEntry'
+	) as Node<ObjectDefinitionNodeData>;
+
+	const targetHasAccountRelationship =
+		accountObjectDefinition &&
+		accountObjectDefinition.data?.objectRelationships.some(
+			(objectRelationship) => {
+				return (
+					objectRelationship.objectDefinitionExternalReferenceCode2 ===
+						targetExternalReferenceCode &&
+					objectRelationship.type === 'oneToMany'
+				);
+			}
+		);
+
+	return sourceName === 'Address' && !targetHasAccountRelationship;
+}
+
 // this helper function returns the intersection point
 // of the line between the center of the intersectionNode and the target node
 
@@ -316,6 +350,66 @@ function getDefaultPredefinedPosition(
 	}
 
 	return {x, y};
+}
+
+export function getUnsupportedRelationshipErrorMessage(
+	nodes: Node<ObjectDefinitionNodeData>[],
+	sourceNode: Node<ObjectDefinitionNodeData>,
+	targetNode: Node<ObjectDefinitionNodeData>
+) {
+	if (
+		sourceNode.data?.modifiable === false &&
+		targetNode.data?.modifiable === false
+	) {
+		return {
+			errorMessage: Liferay.Language.get(
+				'unmodifiable-system-objects-cannot-be-related'
+			),
+		};
+	}
+	if (sourceNode.data?.linkedObjectDefinition) {
+		return {
+			errorMessage: Liferay.Language.get(
+				'adding-relationships-directly-to-linked-objects-is-currently-not-allowed'
+			),
+		};
+	}
+	if (
+		sourceNode.data?.storageType === 'salesforce' ||
+		targetNode.data?.storageType === 'salesforce'
+	) {
+		return {
+			errorMessage: Liferay.Language.get(
+				'salesforce-objects-do-not-support-relationships'
+			),
+		};
+	}
+	if (
+		checkPostalAddressUnsupportedRelationship(nodes, sourceNode, targetNode)
+	) {
+		return {
+			errorMessage: Liferay.Language.get(
+				'not-possible-to-create-this-relationship'
+			),
+			learnMessage: 'accessing-accounts-data-from-custom-objects',
+		};
+	}
+}
+
+export function updatePreviousURLParam(paramType: string, paramValue: string) {
+	const previousPath = document.referrer;
+
+	const newPreviousURL = new URL(previousPath);
+
+	const objectFolderNameParam = newPreviousURL.searchParams.get(paramType);
+
+	if (objectFolderNameParam) {
+		newPreviousURL.searchParams.set(paramType, paramValue);
+
+		window.history.pushState(null, '', newPreviousURL.toString());
+
+		window.location.href = newPreviousURL.toString();
+	}
 }
 
 export function updateURLParam(paramType: string, paramValue: string) {

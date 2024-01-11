@@ -44,7 +44,7 @@ export function RightSidebarObjectFieldDetails() {
 			forbiddenLastChars,
 			forbiddenNames,
 			isRootDescendantNode,
-			objectWebLearnResources,
+			learnResourceContext,
 			selectedObjectDefinitionNode,
 			selectedObjectField,
 			workflowStatuses,
@@ -229,7 +229,7 @@ export function RightSidebarObjectFieldDetails() {
 								'default' ?? true
 						}
 						isRootDescendantNode={isRootDescendantNode}
-						learnResources={objectWebLearnResources}
+						learnResources={learnResourceContext}
 						modelBuilder
 						objectDefinitionExternalReferenceCode={
 							selectedObjectDefinitionNode?.data

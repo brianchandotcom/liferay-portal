@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ILearnResourceContext} from 'frontend-js-components-web';
 import {Edge, Elements, Node} from 'react-flow-renderer';
 
 import {TYPES} from './ModelBuilderContext/typesEnum';
@@ -226,6 +227,7 @@ export type TState = {
 	forbiddenNames: string[];
 	isLoadingObjectFolder: boolean;
 	isRootDescendantNode: boolean;
+	learnResourceContext: ILearnResourceContext;
 	leftSidebarItems: LeftSidebarItem[];
 	modelBuilderModals: ModelBuilderModals;
 	nodeHandleConnectable: boolean;
@@ -234,7 +236,6 @@ export type TState = {
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectFolderName: string;
 	objectFolders: ObjectFolder[];
-	objectWebLearnResources: ObjectWebLearnResources;
 	rightSidebarType: RightSidebarType;
 	selectedObjectDefinitionNode: Node<ObjectDefinitionNodeData> | null;
 	selectedObjectField?: ObjectFieldNodeRow;

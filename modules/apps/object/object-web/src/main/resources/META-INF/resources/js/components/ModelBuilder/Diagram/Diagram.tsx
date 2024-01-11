@@ -5,6 +5,8 @@
 
 import {API} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
+import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
+import {openToast} from 'frontend-js-web';
 import React, {useCallback, useState} from 'react';
 import ReactFlow, {
 	Background,
@@ -15,8 +17,8 @@ import ReactFlow, {
 	Edge,
 	MiniMap,
 	Node,
+	isEdge,
 	isNode,
-	useStore,
 } from 'react-flow-renderer';
 
 import {ModalAddObjectRelationship} from '../../ObjectRelationship/ModalAddObjectRelationship';
@@ -26,6 +28,8 @@ import SelfObjectRelationshipEdge from '../Edges/SelfObjectRelationshipEdge';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {ObjectDefinitionNode} from '../ObjectDefinitionNode/ObjectDefinitionNode';
+import {ObjectRelationshipEdgeData} from '../types';
+import {getUnsupportedRelationshipErrorMessage} from '../utils';
 
 import './Diagram.scss';
 
@@ -44,6 +48,7 @@ function DiagramBuilder() {
 			baseResourceURL,
 			elements,
 			isLoadingObjectFolder,
+			learnResourceContext,
 			selectedObjectFolder,
 			showChangesSaved,
 			showSidebars,
@@ -68,10 +73,25 @@ function DiagramBuilder() {
 		};
 	}>();
 
-	const store = useStore();
+	const edges: Edge<ObjectRelationshipEdgeData>[] = [];
+
+	const nodes: Node<ObjectDefinitionNodeData>[] = [];
+
+	elements.forEach((element) => {
+		if (isEdge(element)) {
+			edges.push(element as Edge<ObjectRelationshipEdgeData>);
+		}
+		else {
+			nodes.push(element as Node<ObjectDefinitionNodeData>);
+		}
+	});
 
 	const onConnect = useCallback(
 		(connection: Connection | Edge) => {
+			if (connection.targetHandle === connection.sourceHandle) {
+				return;
+			}
+
 			const sourceNode = elements.find(
 				(node) => isNode(node) && node.id === connection.source
 			) as Node<ObjectDefinitionNodeData>;
@@ -80,30 +100,48 @@ function DiagramBuilder() {
 				(node) => isNode(node) && node.id === connection.target
 			) as Node<ObjectDefinitionNodeData>;
 
-			if (
-				connection.targetHandle === connection.sourceHandle ||
-				(sourceNode.data?.modifiable === false &&
-					targetNode.data?.modifiable === false) ||
-				(sourceNode.data?.system && targetNode.data?.system) ||
-				sourceNode.data?.storageType === 'salesforce' ||
-				targetNode.data?.storageType === 'salesforce' ||
-				targetNode.data?.name === 'Address' ||
-				sourceNode.data?.linkedObjectDefinition
-			) {
-				return;
-			}
+			const unsupportedRelationship = getUnsupportedRelationshipErrorMessage(
+				nodes,
+				sourceNode,
+				targetNode
+			);
 
-			setShowAddObjectRelationshipModal(true);
-			setNewObjectRelationshipSourceNodeProps({
-				parameterRequired: sourceNode?.data?.parameterRequired!,
-				sourceNode: {
-					erc: sourceNode?.data?.externalReferenceCode!,
-				},
-				targetNode: {
-					erc: targetNode?.data?.externalReferenceCode!,
-				},
-			});
+			if (unsupportedRelationship?.errorMessage) {
+				openToast({
+					message: unsupportedRelationship?.errorMessage,
+					toastProps: unsupportedRelationship.learnMessage && {
+						actions: (
+							<LearnResourcesContext.Provider
+								value={learnResourceContext}
+							>
+								<LearnMessage
+									className="alert-link"
+									resource="object-web"
+									resourceKey={
+										unsupportedRelationship.learnMessage
+									}
+								/>
+							</LearnResourcesContext.Provider>
+						),
+					},
+					type: 'warning',
+				});
+			}
+			else {
+				setShowAddObjectRelationshipModal(true);
+				setNewObjectRelationshipSourceNodeProps({
+					parameterRequired: sourceNode?.data?.parameterRequired!,
+					sourceNode: {
+						erc: sourceNode?.data?.externalReferenceCode!,
+					},
+					targetNode: {
+						erc: targetNode?.data?.externalReferenceCode!,
+					},
+				});
+			}
 		},
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[elements]
 	);
 
@@ -137,8 +175,6 @@ function DiagramBuilder() {
 			name: updatedObjectFolder.name,
 			objectFolderItems: updatedObjectFolder.objectFolderItems,
 		});
-
-		const {edges, nodes} = store.getState();
 
 		dispatch({
 			payload: {

@@ -106,6 +106,12 @@ For example, to use [the `search-experiences-web.json` file's `advanced-configur
 
 	The `LearnMessage` component renders a `ClayLink` and additional props will be passed into it.
 
+## Consuming Changes
+
+Presently, modifications made to JSON files in `learn-resources` are not incorporated into the portal's deployment process. The `learn-api` serves as the interface connecting the stored information, which is then read through a Content Delivery Network (CDN). Consequently, there is no need to execute a deployment for any module.
+
+Up to this point, updating the information stored on the server providing these details is a manual process. Simply submit a PR with your modifications to the JSON files and await their integration on the server. Once updated, we can access this information as clients without the need for additional deployment.
+
 ## Guidelines
 
 Here are some guidelines for writing the JSON files and tags.

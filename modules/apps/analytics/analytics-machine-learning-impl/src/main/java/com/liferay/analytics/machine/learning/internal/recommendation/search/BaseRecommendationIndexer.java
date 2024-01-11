@@ -28,6 +28,10 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseRecommendationIndexer
 	implements RecommendationIndexer {
 
+	public BaseRecommendationIndexer(String name) {
+		_name = name;
+	}
+
 	@Override
 	public void createIndex(long companyId) {
 		if (!searchCapabilities.isAnalyticsSupported()) {
@@ -47,7 +51,7 @@ public abstract class BaseRecommendationIndexer
 		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
 			indexName);
 
-		createIndexRequest.setMappings(_readJSON(getIndexMappingFileName()));
+		createIndexRequest.setMappings(_readJSON(_getIndexMappingFileName()));
 		createIndexRequest.setSettings(_readJSON("settings.json"));
 
 		searchEngineAdapter.execute(createIndexRequest);
@@ -83,8 +87,6 @@ public abstract class BaseRecommendationIndexer
 		}
 	}
 
-	protected abstract String getIndexMappingFileName();
-
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;
 
@@ -96,6 +98,10 @@ public abstract class BaseRecommendationIndexer
 
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
+
+	private String _getIndexMappingFileName() {
+		return _name.concat("-mappings.json");
+	}
 
 	private boolean _indexExists(String indexName) {
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
@@ -123,5 +129,7 @@ public abstract class BaseRecommendationIndexer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseRecommendationIndexer.class);
+
+	private final String _name;
 
 }

@@ -16,15 +16,14 @@ import org.osgi.service.component.annotations.Component;
 public class MostViewedContentRecommendationIndexer
 	extends BaseRecommendationIndexer {
 
+	public MostViewedContentRecommendationIndexer() {
+		super("most-viewed-content-recommendation");
+	}
+
 	@Override
 	public String getIndexName(long companyId) {
 		return indexNameBuilder.getIndexName(companyId) +
 			"-most-viewed-content-recommendation";
-	}
-
-	@Override
-	protected String getIndexMappingFileName() {
-		return "most-viewed-content-recommendation-mappings.json";
 	}
 
 }

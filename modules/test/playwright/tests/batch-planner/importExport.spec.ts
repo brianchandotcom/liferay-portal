@@ -26,7 +26,7 @@ export const test = mergeTests(
 	objectPagesTest
 );
 
-const siteTestObjectDefinitionData = {
+const siteObjectDefinition = {
 	active: true,
 	externalReferenceCode: 'Test',
 	label: {'en-US': 'Test'},
@@ -167,7 +167,7 @@ const siteTestObjectDefinitionData = {
 	status: {code: 0},
 };
 
-const companyTestObjectDefinitionData = {
+const companyObjectDefinition = {
 	active: true,
 	externalReferenceCode: 'TestCompany',
 	label: {'en-US': 'TestCompany'},
@@ -317,7 +317,7 @@ test('Can map all imported fields', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
-		siteTestObjectDefinitionData
+		siteObjectDefinition
 	);
 	const objectDefinitionId = await response.id;
 
@@ -352,7 +352,7 @@ test('Cannot import CSV file without headers and an unexisting field header', as
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
-		siteTestObjectDefinitionData
+		siteObjectDefinition
 	);
 	const objectDefinitionId = await response.id;
 
@@ -391,7 +391,7 @@ test('Can see object entry info on preview modal', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
-		siteTestObjectDefinitionData
+		siteObjectDefinition
 	);
 	const objectDefinitionId = await response.id;
 
@@ -464,7 +464,7 @@ test('Can import CSV file with custom columns order', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
-		siteTestObjectDefinitionData
+		siteObjectDefinition
 	);
 	const objectDefinitionId = await response.id;
 
@@ -576,7 +576,7 @@ test('Can Import Multiple Object Entries With Site Scope', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
-		siteTestObjectDefinitionData
+		siteObjectDefinition
 	);
 	const objectDefinitionId = await response.id;
 
@@ -747,7 +747,7 @@ test('Can Create ObjectEntry From CSV File Containing Existing And New With Unch
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
-		siteTestObjectDefinitionData
+		siteObjectDefinition
 	);
 	const objectDefinitionId = await response.id;
 
@@ -927,7 +927,7 @@ test('Cannot Import With Empty File', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
-		companyTestObjectDefinitionData
+		companyObjectDefinition
 	);
 	const objectDefinitionId = await response.id;
 
@@ -958,7 +958,7 @@ test('Cannot Import ObjectEntry With Update Changed Records Fiels', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
-		companyTestObjectDefinitionData
+		companyObjectDefinition
 	);
 	const objectDefinitionId = await response.id;
 
@@ -995,7 +995,7 @@ test('Can See Duplicate Error Message With Import Existing Entry And Only Add Ne
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
-		companyTestObjectDefinitionData
+		companyObjectDefinition
 	);
 	const objectDefinitionId = await response.id;
 
@@ -1040,7 +1040,7 @@ test('Can Import CSV File With An Unexisting Field', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
-		companyTestObjectDefinitionData
+		companyObjectDefinition
 	);
 	const objectDefinitionId = await response.id;
 
@@ -1179,7 +1179,7 @@ test('Can Update And Create ObjectEntries Existing ObjectEntries With Same CSV F
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
-		companyTestObjectDefinitionData
+		companyObjectDefinition
 	);
 	const objectDefinitionId = await response.id;
 

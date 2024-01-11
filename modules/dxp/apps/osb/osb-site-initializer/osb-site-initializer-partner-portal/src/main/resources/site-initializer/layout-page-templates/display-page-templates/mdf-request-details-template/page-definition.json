@@ -629,28 +629,17 @@
 							},
 							{
 								"definition": {
-									"fragment": {
-										"key": "mdf-request-manager-status"
+									"fragmentStyle": {
+										"height": "51px"
 									},
-									"fragmentConfig": {
-									},
-									"fragmentFields": [
-									],
-									"indexed": true
-								},
-								"pageElements": [
-									{
-										"definition": {
+									"widgetInstance": {
+										"widgetConfig": {
+											"properties": "path=mdf-request-manager-status"
 										},
-										"type": "FragmentDropZone"
-									},
-									{
-										"definition": {
-										},
-										"type": "FragmentDropZone"
+										"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_partner_custom_element"
 									}
-								],
-								"type": "Fragment"
+								},
+								"type": "Widget"
 							}
 						],
 						"type": "Section"

@@ -17,6 +17,7 @@ import MDFClaimForm from './routes/MDFClaimForm';
 import MDFClaimList from './routes/MDFClaimList';
 import MDFRequestForm from './routes/MDFRequestForm';
 import MDFRequestList from './routes/MDFRequestList';
+import MDFRequestManagerStatus from './routes/MDFRequestManagerStatus';
 import PartnerOpportunitiesList from './routes/PartnerOpportunitiesList';
 import DealsChart from './routes/dashboard/DealsChart';
 import LevelChart from './routes/dashboard/LevelChart';
@@ -38,6 +39,7 @@ const appRoutes: AppRouteComponent = {
 	[AppRouteType.MDF_REQUEST_LIST]: <MDFRequestList />,
 	[AppRouteType.MDF_CLAIM_FORM]: <MDFClaimForm />,
 	[AppRouteType.MDF_CLAIM_LIST]: <MDFClaimList />,
+	[AppRouteType.MDF_REQUEST_MANAGER_STATUS]: <MDFRequestManagerStatus />,
 	[AppRouteType.DEAL_REGISTRATION_FORM]: <DealRegistrationForm />,
 	[AppRouteType.DEAL_REGISTRATION_LIST]: (
 		<DealRegistrationList

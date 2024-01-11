@@ -8,8 +8,10 @@ import {useModal} from '@clayui/modal';
 import {useState} from 'react';
 
 import Dropdown from '../../common/components/Dropdown';
+import ManagerStatusModalContent from '../../common/components/ManagerStatusModalContent';
 import Modal from '../../common/components/Modal';
 import {ObjectActionName} from '../../common/enums/objectActionName';
+import useGetObjectIdBySlash from '../../common/hooks/useGetObjectIdBySlash';
 import usePermissionActions from '../../common/hooks/usePermissionActions';
 import MDFRequestDTO from '../../common/interfaces/dto/mdfRequestDTO';
 import LiferayPicklist from '../../common/interfaces/liferayPicklist';
@@ -17,8 +19,6 @@ import {LiferayAPIs} from '../../common/services/liferay/common/enums/apis';
 import {ResourceName} from '../../common/services/liferay/object/enum/resourceName';
 import useGet from '../../common/services/liferay/object/useGet';
 import {Status} from '../../common/utils/constants/status';
-import ModalContent from './components/ModalContent';
-import useGetObjectIdBySlash from './hooks/useGetObjectIdBySlash';
 import getDropdownOptions from './util/getDropdownOptions';
 import patchRequestStatus from './util/patchRequestStatus';
 
@@ -67,8 +67,10 @@ const MDFRequestManagerStatus = () => {
 			mdfRequest?.mdfReqToActs
 		);
 
+		if (newRequestStatus) {
+			setPatchedStatus(newRequestStatus);
+		}
 		setIsSubmitting(false);
-		setPatchedStatus(newRequestStatus);
 
 		return;
 	};
@@ -91,10 +93,11 @@ const MDFRequestManagerStatus = () => {
 	) => {
 		return (
 			<Modal center={false} observer={observer}>
-				<ModalContent
+				<ManagerStatusModalContent
 					displayModalStatus={displayModalStatus}
-					mdfRequestId={mdfRequestId}
+					id={mdfRequestId}
 					onClose={onClose}
+					patchStatus={patchRequestStatus}
 					setIsSubmitting={setIsSubmitting}
 					setPatchedStatus={setPatchedStatus}
 				/>

@@ -10,22 +10,26 @@ import {Dispatch, SetStateAction, useState} from 'react';
 
 import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import {Liferay} from '../../../common/services/liferay';
-import patchRequestStatus from '../util/patchRequestStatus';
 
 interface IProps {
 	displayModalStatus: LiferayPicklist;
-	mdfRequestId: string;
+	id: string;
 	onClose: () => void;
+	patchStatus: (
+		mdfStatus: LiferayPicklist,
+		id: string
+	) => Promise<LiferayPicklist | undefined>;
 	setIsSubmitting: Dispatch<SetStateAction<boolean>>;
 	setPatchedStatus: Dispatch<
 		React.SetStateAction<LiferayPicklist | undefined>
 	>;
 }
 
-export default function ModalContent({
+export default function ManagerStatusModalContent({
 	displayModalStatus,
-	mdfRequestId,
+	id,
 	onClose,
+	patchStatus,
 	setIsSubmitting,
 	setPatchedStatus,
 }: IProps) {
@@ -51,17 +55,16 @@ export default function ModalContent({
 
 			setIsSubmitting(true);
 
-			const newRequestStatus = await patchRequestStatus(
-				displayModalStatus,
-				mdfRequestId
-			);
+			const newStatus = await patchStatus(displayModalStatus, id);
 
-			newRequestStatus && setPatchedStatus(newRequestStatus);
-			newRequestStatus && onClose();
+			if (newStatus) {
+				setPatchedStatus(newStatus);
+				onClose();
+			}
 		} else {
 			Liferay.Util.openToast({
 				message:
-					'The MDF Request Status cannot be changed without a motivation.',
+					'The MDF Status cannot be changed without a motivation.',
 				type: 'danger',
 			});
 		}

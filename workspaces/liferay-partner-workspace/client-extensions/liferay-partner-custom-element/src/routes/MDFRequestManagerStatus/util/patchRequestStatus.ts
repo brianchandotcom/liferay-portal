@@ -11,7 +11,7 @@ import {Status} from '../../../common/utils/constants/status';
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 const patchRequestStatus = async (
-	status: LiferayPicklist,
+	mdfRequestStatus: LiferayPicklist,
 	mdfRequestId: string,
 	mdfReqToActs?: MDFRequestActivityDTO[]
 ) => {
@@ -20,7 +20,7 @@ const patchRequestStatus = async (
 			ResourceName.MDF_REQUEST_DXP,
 			mdfRequestId,
 			{
-				mdfRequestStatus: status,
+				mdfRequestStatus,
 			}
 		);
 

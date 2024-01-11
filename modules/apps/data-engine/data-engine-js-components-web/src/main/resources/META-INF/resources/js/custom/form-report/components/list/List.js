@@ -36,6 +36,22 @@ export default function List({data, field, summary, totalEntries, type}) {
 		return `${date} ${time}`;
 	};
 
+	const formatDocument = (field) => {
+		const {title: documentTitle, url: documentURL} = JSON.parse(field);
+
+		return (
+			<div>
+				<a
+					className="document-title-link"
+					download={documentTitle}
+					href={documentURL}
+				>
+					{documentTitle}
+				</a>
+			</div>
+		);
+	};
+
 	const checkType = (field, type) => {
 		switch (type) {
 			case 'color':
@@ -44,6 +60,10 @@ export default function List({data, field, summary, totalEntries, type}) {
 				return formatDate(field);
 			case 'date_time':
 				return formatDate(field, true);
+			case 'document_library':
+				return formatDocument(field);
+			case 'image':
+				return formatDocument(field);
 			default:
 				return field;
 		}

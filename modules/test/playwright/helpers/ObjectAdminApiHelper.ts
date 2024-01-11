@@ -33,6 +33,13 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
+	async postObjectDefinition(data: DataObject) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions`,
+			data
+		);
+	}
+
 	async postRandomObjectDefinition(
 		objectFolderExternalReferenceCode: string
 	) {

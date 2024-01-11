@@ -43,6 +43,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 }) => {
 	const [filter, setFilter] = useState('');
 	const inputRef = useRef<HTMLInputElement>(null);
+	
 	const {current} = inputRef;
 
 	useEffect(() => {

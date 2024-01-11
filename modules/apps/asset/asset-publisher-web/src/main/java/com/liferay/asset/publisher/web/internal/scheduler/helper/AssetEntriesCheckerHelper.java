@@ -85,10 +85,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
-	service = AssetEntriesCheckerHelper.class
-)
+@Component(service = AssetEntriesCheckerHelper.class)
 public class AssetEntriesCheckerHelper {
 
 	public void checkAssetEntries() throws Exception {

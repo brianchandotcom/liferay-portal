@@ -7283,7 +7283,7 @@ ${output.content}</echo>
 
 								<local name="playwright.command" />
 
-								<property name="playwright.command" value="npx playwright test ${playwright.test.project} ${playwright.test.shard}" />
+								<property name="playwright.command" value="npm run playwright test ${playwright.test.project} ${playwright.test.shard}" />
 
 								<echo>Running "${playwright.command}" from ${playwright.dir}</echo>
 

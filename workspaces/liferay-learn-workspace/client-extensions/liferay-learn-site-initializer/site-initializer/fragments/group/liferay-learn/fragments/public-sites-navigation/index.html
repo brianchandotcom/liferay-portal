@@ -328,10 +328,10 @@
 	</header>
 
 	<div class="search-wrapper">
-		<form action="/search" class="mb-5 search" id="siteSearch" name="siteSearch">
+		<form action="${layoutSetCanonicalURL}/search" class="mb-5 search" id="siteSearch" name="siteSearch">
 			<input class="search-input search-suggestions-input w-100" id="searchInput" name="q" placeholder="${languageUtil.get(locale, 'search')}" type="text" />
 
-			<a class="search-submit" href="/search" id="searchSubmitBtn" type="submit">
+			<a class="search-submit" href="${layoutSetCanonicalURL}/search" id="searchSubmitBtn" type="submit">
 				<span>[@clay["icon"] symbol="search"/]
 			</a>
 		</form>
@@ -399,7 +399,7 @@
 			</div>
 
 			<div class="mt-3 search-suggestions-see-all-results">
-				<a class="d-inline-block search-suggestions-see-all-results-text text-decoration-none" data-lfr-editable-id="searchSeeAllResultsButton" data-lfr-editable-type="link" href="/search">
+				<a class="d-inline-block search-suggestions-see-all-results-text text-decoration-none" data-lfr-editable-id="searchSeeAllResultsButton" data-lfr-editable-type="link" href="${layoutSetCanonicalURL}/search">
 					${languageUtil.get(locale, "see-all-results", "See All Results")}
 				</a>
 

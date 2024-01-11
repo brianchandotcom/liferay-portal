@@ -5,6 +5,8 @@
 
 /* eslint-disable no-undef */
 
+const searchURL = fragmentElement.querySelector('.search-submit').href;
+
 window.addEventListener('load', () => {
 	const searchInput = fragmentElement.querySelector('.search-input');
 
@@ -104,8 +106,8 @@ function updateSearch() {
 	const searchSuggestionsInputValue = searchSuggestionsInput.value;
 
 	if (searchSuggestionsInputValue) {
-		seeAllResultsLink.href = '/search?q=' + searchSuggestionsInputValue;
-		searchSubmitLink.href = '/search?q=' + searchSuggestionsInputValue;
+		seeAllResultsLink.href = searchURL + '?q=' + searchSuggestionsInputValue;
+		searchSubmitLink.href = searchURL + '?q=' + searchSuggestionsInputValue;
 		suggestions.classList.add('performing-search');
 		performSearch(searchSuggestionsInputValue);
 	}

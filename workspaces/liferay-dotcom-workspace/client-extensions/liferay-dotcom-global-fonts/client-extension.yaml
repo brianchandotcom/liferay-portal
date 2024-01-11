@@ -1,0 +1,4 @@
+liferay-dotcom-global-fonts:
+    name: Liferay Dotcom Global Fonts
+    type: globalCSS
+    url: fonts.css

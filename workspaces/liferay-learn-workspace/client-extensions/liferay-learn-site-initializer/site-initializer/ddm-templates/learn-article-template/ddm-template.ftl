@@ -1,12 +1,16 @@
 <#include "${templatesPath}/SVG">
 
 <script>
-	let href = window.location.href;
+	function removeEndSlash() {
+		let href = window.location.href;
 
-	if (href.endsWith("/")) {
-		href = href.substring(0, href.length - 1);
-		window.location.assign(href);
+		if (href.endsWith("/")) {
+			href = href.substring(0, href.length - 1);
+			window.location.href = href;
+		}
 	}
+
+	removeEndSlash();
 </script>
 
 <style>

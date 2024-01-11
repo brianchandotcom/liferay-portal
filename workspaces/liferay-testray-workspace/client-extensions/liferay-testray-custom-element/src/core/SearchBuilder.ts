@@ -10,7 +10,7 @@ type Filter = {
 	[key: string]: string | number | string[] | number[];
 };
 type Key = string;
-type Value = string | number | boolean;
+type Value = string | number | boolean | null;
 
 export type Operators =
 	| 'contains'
@@ -134,12 +134,15 @@ export default class SearchBuilder {
 			if (!value) {
 				continue;
 			}
+
 			const schema = filterSchema.fields.find(
 				({name}) => key === name
 			) as RendererFields;
 
 			const removeQuoteMark =
-				schema?.removeQuoteMark || schema?.type === 'number';
+				schema?.removeQuoteMark ||
+				schema?.type === 'number' ||
+				schema?.optionalOperator === 'ne';
 
 			const customOperator = schema?.operator;
 
@@ -148,12 +151,29 @@ export default class SearchBuilder {
 					value = new Date(value).toISOString();
 				}
 
-				searchCondition = SearchBuilder[customOperator](
-					key.replace('$', ''),
-					value
-				);
-			}
-			else {
+				const formatSearchCondition = () => {
+					const isFilterChange =
+						value.includes('false') || value.includes('No');
+					const formattedKey = key.replace('$', '');
+
+					if (schema?.optionalOperator === 'ne') {
+						if (isFilterChange) {
+							return `not (${SearchBuilder[
+								schema.optionalOperator
+							](formattedKey, null)})`;
+						} else if (value.includes('true')) {
+							return SearchBuilder[schema.optionalOperator](
+								formattedKey,
+								null
+							);
+						}
+					}
+
+					return SearchBuilder[customOperator](formattedKey, value);
+				};
+
+				searchCondition = formatSearchCondition();
+			} else {
 				searchCondition = Array.isArray(value)
 					? SearchBuilder.in(
 							key,

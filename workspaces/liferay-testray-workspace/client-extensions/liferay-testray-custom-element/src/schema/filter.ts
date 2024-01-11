@@ -75,7 +75,7 @@ const baseFilters: Filter = {
 			return dataToOptions(
 				transformData<UserAccount>(item),
 				(userAccount) => ({
-					label: `${userAccount.givenName} ${userAccount.additionalName}`,
+					label: `${userAccount.name}`,
 					value: userAccount.id,
 				})
 			);
@@ -107,6 +107,8 @@ const baseFilters: Filter = {
 	description: {
 		label: i18n.translate('description'),
 		name: 'description',
+		operator: 'contains',
+		optionalOperator: 'ne',
 		type: 'textarea',
 	},
 	dueStatus: {
@@ -117,18 +119,22 @@ const baseFilters: Filter = {
 	erros: {
 		label: i18n.translate('errors'),
 		name: 'errors',
+		operator: 'contains',
+		optionalOperator: 'ne',
 		type: 'textarea',
 	},
 	hasRequirements: {
-		disabled: true,
 		label: i18n.translate('has-requirements'),
-		name: 'caseToRequirementsCases',
+		name: 'caseToRequirementsCases/id',
+		operator: 'eq',
+		optionalOperator: 'ne',
 		options: ['true', 'false'],
 		type: 'select',
 	},
 	issues: {
 		label: i18n.translate('issues'),
 		name: 'issues',
+		optionalOperator: 'ne',
 		type: 'textarea',
 	},
 	priority: {
@@ -187,6 +193,8 @@ const baseFilters: Filter = {
 	steps: {
 		label: i18n.translate('steps'),
 		name: 'steps',
+		operator: 'contains',
+		optionalOperator: 'ne',
 		type: 'textarea',
 	},
 	team: {
@@ -310,6 +318,7 @@ const filterSchema = {
 				],
 			}),
 			overrides(baseFilters.issues, {
+				name: 'caseResultToCaseResultsIssues/name',
 				operator: 'contains',
 			}),
 			overrides(baseFilters.erros, {
@@ -372,6 +381,7 @@ const filterSchema = {
 				],
 			}),
 			overrides(baseFilters.issues, {
+				name: 'caseResultToCaseResultsIssues/name',
 				operator: 'contains',
 			}),
 			overrides(baseFilters.erros, {
@@ -530,7 +540,10 @@ const filterSchema = {
 			}),
 			baseFilters.description,
 			baseFilters.steps,
-			overrides(baseFilters.issues, {disabled: true}),
+			overrides(baseFilters.issues, {
+				name: 'caseToCaseResult/caseResultToCaseResultsIssues/name',
+				operator: 'contains',
+			}),
 			baseFilters.hasRequirements,
 		] as RendererFields[],
 	},
@@ -683,6 +696,8 @@ const filterSchema = {
 				disabled: true,
 				label: i18n.translate('case'),
 				name: 'case',
+				operator: 'contains',
+				optionalOperators: 'ne',
 				type: 'textarea',
 			},
 		] as RendererFields[],

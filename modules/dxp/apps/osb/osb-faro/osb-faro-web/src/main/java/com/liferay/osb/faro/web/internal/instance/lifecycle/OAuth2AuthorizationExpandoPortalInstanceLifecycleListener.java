@@ -12,13 +12,8 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
-import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
-import com.liferay.osb.faro.web.internal.application.ApiApplication;
-import com.liferay.osb.faro.web.internal.controller.api.RecommendationController;
-import com.liferay.osb.faro.web.internal.controller.api.ReportController;
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringPool;
+import com.liferay.osb.faro.web.internal.constants.FaroSAPConstants;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,16 +26,13 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -48,22 +40,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
-	property = {
-		"osgi.jaxrs.name=Liferay.Analytics.Cloud.REST", "sap.scope.finder=true"
-	},
-	service = {
-		PortalInstanceLifecycleListener.class, ScopeFinder.class,
-		ScopeMapper.class
-	}
+	property = "osgi.jaxrs.name=Liferay.Analytics.Cloud.REST",
+	service = {PortalInstanceLifecycleListener.class, ScopeMapper.class}
 )
 public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener
-	implements ScopeFinder, ScopeMapper {
-
-	@Override
-	public Collection<String> findScopes() {
-		return _scopeAliasesList;
-	}
+	extends BasePortalInstanceLifecycleListener implements ScopeMapper {
 
 	@Override
 	public Set<String> map(String scope) {
@@ -123,14 +104,6 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 		}
 	}
 
-	@Activate
-	protected void activate() {
-		_scopeAliasesList = TransformUtil.transformToList(
-			_SAP_ENTRY_OBJECT_ARRAYS,
-			sapEntryObject -> StringUtil.replaceFirst(
-				sapEntryObject[0], "OAUTH2_", StringPool.BLANK));
-	}
-
 	protected void addExpandoColumn(
 			ExpandoTable expandoTable, String name, int type)
 		throws Exception {
@@ -147,7 +120,9 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 	}
 
 	private void _addSAPEntries(long companyId) throws Exception {
-		for (String[] sapEntryObjectArray : _SAP_ENTRY_OBJECT_ARRAYS) {
+		for (String[] sapEntryObjectArray :
+				FaroSAPConstants.SAP_ENTRY_OBJECT_ARRAYS) {
+
 			String sapEntryName = sapEntryObjectArray[0];
 
 			SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
@@ -166,7 +141,9 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 	}
 
 	private void _deleteSAPEntries(long companyId) {
-		for (String[] sapEntryObjectArray : _SAP_ENTRY_OBJECT_ARRAYS) {
+		for (String[] sapEntryObjectArray :
+				FaroSAPConstants.SAP_ENTRY_OBJECT_ARRAYS) {
+
 			try {
 				SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
 					companyId, sapEntryObjectArray[0]);
@@ -180,18 +157,6 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 			}
 		}
 	}
-
-	private static final String[][] _SAP_ENTRY_OBJECT_ARRAYS = {
-		{
-			"OAUTH2_" +
-				ApiApplication.OAuth2ScopeAliases.RECOMMENDATIONS_EVERYTHING,
-			RecommendationController.class.getName() + "*"
-		},
-		{
-			"OAUTH2_" + ApiApplication.OAuth2ScopeAliases.REPORTS_EVERYTHING,
-			ReportController.class.getName() + "*"
-		}
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OAuth2AuthorizationExpandoPortalInstanceLifecycleListener.class);
@@ -210,8 +175,6 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 
 	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;
-
-	private List<String> _scopeAliasesList;
 
 	@Reference
 	private UserLocalService _userLocalService;

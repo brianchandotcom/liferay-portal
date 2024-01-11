@@ -721,6 +721,8 @@ definition {
 
 		task ("Delete the first page from the navigation menu") {
 			NavigationMenusAdmin.deleteItem(itemName = "Test Page Name 1");
+
+			NavigationMenusAdmin.viewItemNotPresent(itemNameList = "Test Page Name 1");
 		}
 
 		task ("Navigate to the Navigation Menu widget in the staging site") {

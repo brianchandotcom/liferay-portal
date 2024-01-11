@@ -8,6 +8,7 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
+import com.liferay.headless.delivery.client.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.File;
@@ -144,6 +146,43 @@ public class KnowledgeBaseAttachmentResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPostKnowledgeBaseArticleKnowledgeBaseAttachment()
+		throws Exception {
+
+		super.testPostKnowledgeBaseArticleKnowledgeBaseAttachment();
+
+		KnowledgeBaseAttachment randomKnowledgeBaseAttachment =
+			randomKnowledgeBaseAttachment();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		KnowledgeBaseAttachmentResource.Builder builder =
+			KnowledgeBaseAttachmentResource.builder();
+
+		KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource =
+			builder.authentication(
+				"test@liferay.com", "test"
+			).header(
+				"Transfer-Encoding", "chunked"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+
+		KnowledgeBaseAttachment postKnowledgeBaseAttachment =
+			knowledgeBaseAttachmentResource.
+				postKnowledgeBaseArticleKnowledgeBaseAttachment(
+					testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId(),
+					randomKnowledgeBaseAttachment, multipartFiles);
+
+		assertEquals(
+			postKnowledgeBaseAttachment, randomKnowledgeBaseAttachment);
+		assertValid(postKnowledgeBaseAttachment);
+
+		assertValid(postKnowledgeBaseAttachment, multipartFiles);
+	}
+
+	@Override
 	protected void assertValid(
 			KnowledgeBaseAttachment knowledgeBaseAttachment,
 			Map<String, File> multipartFiles)
@@ -158,7 +197,7 @@ public class KnowledgeBaseAttachmentResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"title"};
+		return new String[] {"externalReferenceCode", "title"};
 	}
 
 	@Override

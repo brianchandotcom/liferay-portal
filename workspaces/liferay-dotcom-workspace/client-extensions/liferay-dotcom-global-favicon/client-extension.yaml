@@ -1,0 +1,4 @@
+liferay-dotcom-global-favicon:
+    name: Liferay Dotcom Global Favicon
+    type: themeFavicon
+    url: favicon.ico

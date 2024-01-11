@@ -62,6 +62,12 @@ export function getDDMFormField({
 				: value;
 		}
 	});
+
+	if (ddmFormField.type === 'rich_text' && !ddmFormField.editorConfig) {
+		ddmFormField.editorConfig =
+			dataDefinitionField.customProperties.editorConfig;
+	}
+
 	if (!ddmFormField.instanceId) {
 		ddmFormField.instanceId = FieldSupport.generateInstanceId();
 	}

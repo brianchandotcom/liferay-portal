@@ -163,8 +163,8 @@ public class KnowledgeBaseAttachmentResourceTest
 		KnowledgeBaseAttachmentResource knowledgeBaseAttachmentResource =
 			builder.authentication(
 				"test@liferay.com", "test"
-			).header(
-				"Transfer-Encoding", "chunked"
+			).chunkSize(
+				50
 			).locale(
 				LocaleUtil.getDefault()
 			).build();

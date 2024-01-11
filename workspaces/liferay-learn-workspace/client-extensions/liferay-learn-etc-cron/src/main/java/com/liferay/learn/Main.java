@@ -523,7 +523,13 @@ public class Main {
 		TextCollectingVisitor textCollectingVisitor =
 			new TextCollectingVisitor();
 
-		return textCollectingVisitor.collectAndGetText(_parser.parse(text));
+		String parsedContent = textCollectingVisitor.collectAndGetText(_parser.parse(text));
+
+		if(parsedContent.length() > 300) {
+			parsedContent = StringBundler.concat(parsedContent.substring(0, 301), "...");
+		}
+
+		return parsedContent;
 	}
 
 	private String[] _getDirNames(String fileName) {

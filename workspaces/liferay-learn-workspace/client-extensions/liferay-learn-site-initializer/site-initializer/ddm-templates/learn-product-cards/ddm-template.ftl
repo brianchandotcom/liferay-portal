@@ -60,7 +60,7 @@
 			/>
 
 			<div class="card-container col-12 col-md-4 col-sm-6 d-flex justify-content-center p-2">
-				<a class="d-flex home-card p-3" href="${navigationEntry.getURL()}">
+				<a class="d-flex home-card p-3" href="${portalUtil.getGroupFriendlyURL(themeDisplay.getLayoutSet(), themeDisplay, true, false)}${navigationEntry.getRegularURL()}">
 					<#if navItemIcon?has_content>
 						<img
 							alt="${navigationEntry.getName()} icon"

@@ -9,6 +9,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectFolder;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFolderResource;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.exception.ObjectFolderItemObjectDefinitionIdException;
+import com.liferay.object.exception.ObjectFolderNameException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -73,8 +74,15 @@ public class ImportObjectFolderMVCActionCommand extends BaseMVCActionCommand {
 
 			JSONObject jsonObject = null;
 
-			if (exception instanceof
-					ObjectFolderItemObjectDefinitionIdException) {
+			if (exception instanceof ObjectFolderNameException) {
+				Class<?> clazz = exception.getClass();
+
+				jsonObject = JSONUtil.put(
+					"type",
+					"ObjectFolderNameException." + clazz.getSimpleName());
+			}
+			else if (exception instanceof
+						ObjectFolderItemObjectDefinitionIdException) {
 
 				ObjectFolderItemObjectDefinitionIdException
 					objectFolderItemObjectDefinitionIdException =

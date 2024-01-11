@@ -54,6 +54,10 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	Build a custom element that uses `@clayui/badge`, `react`, and `react-dom` packages that Liferay makes publicly available through import maps.
 
+- *liferay-sample-editor-config-contributor*
+
+	TODO
+
 - *liferay-sample-etc-cron*
 
 	Use Spring Boot and OAuth (server to server) to read from and write to Liferay in timed intervals.
@@ -81,6 +85,10 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 - *liferay-sample-etc-frontend-3*
 
 	Share code through an import map client extension.
+
+- *liferay-sample-etc-node*
+
+	TODO
 
 - *liferay-sample-etc-spring-boot*
 
@@ -113,6 +121,10 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 - *liferay-sample-instance-settings*
 
 	Customize instance settings with YAML by overridding OSGi configurations.
+
+- *liferay-sample-site-initializer*
+
+	TODO
 
 - *liferay-sample-static-content*
 

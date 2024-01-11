@@ -8,6 +8,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {Input} from '@liferay/object-js-components-web';
+import {ErrorDetails} from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/utils/api';
 import React, {FormEvent, useRef} from 'react';
 
 import {ModalImportProperties} from '../ViewObjectDefinitions/ViewObjectDefinitions';
@@ -18,7 +19,7 @@ import {
 } from './modalImportLanguageUtil';
 
 interface ModalImportContentProps extends ModalImportProperties {
-	error: string;
+	error?: ErrorDetails;
 	externalReferenceCode: string;
 	fileName: string;
 	handleOnClose: () => void;
@@ -28,7 +29,7 @@ interface ModalImportContentProps extends ModalImportProperties {
 	name: string;
 	nameMaxLength: string;
 	portletNamespace: string;
-	setError: (value: string) => void;
+	setError: (value?: ErrorDetails) => void;
 	setExternalReferenceCode: (value: string) => void;
 	setFile: (value: TFile) => void;
 	setName: (value: string) => void;
@@ -55,6 +56,27 @@ export function ModalImportContent({
 	const inputFileRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 	const nameInputId = `${portletNamespace}name`;
 
+	const getImportButtonDisableState = () => {
+		if (!inputFile || !name) {
+			return true;
+		}
+
+		if (error && error?.message !== '') {
+			if (
+				error?.type?.includes('ObjectDefinitionNameException') ||
+				error?.type?.includes('ObjectFolderNameException')
+			) {
+				return false;
+			}
+
+			if (modalImportKey === 'objectFolder') {
+				return true;
+			}
+		}
+
+		return false;
+	};
+
 	return (
 		<>
 			<ClayModal.Header>
@@ -63,8 +85,10 @@ export function ModalImportContent({
 
 			<ClayModal.Body>
 				<ClayForm id={importFormId} onSubmit={handleSubmit}>
-					{error && (
-						<ClayAlert displayType="danger">{error}</ClayAlert>
+					{error?.message && (
+						<ClayAlert displayType="danger">
+							{error.message}
+						</ClayAlert>
 					)}
 
 					<ClayAlert
@@ -172,17 +196,18 @@ export function ModalImportContent({
 										const JSONFile = JSON.parse(
 											fileReader.result as string
 										) as {externalReferenceCode: string};
-										setError('');
+										setError(undefined);
 										setExternalReferenceCode(
 											JSONFile.externalReferenceCode
 										);
 									}
 									catch (error) {
-										setError(
-											Liferay.Language.get(
+										setError({
+											message: Liferay.Language.get(
 												'the-structure-failed-to-import'
-											)
-										);
+											),
+											name: '',
+										});
 										setExternalReferenceCode('');
 										setFile({
 											fileName: '',
@@ -209,7 +234,7 @@ export function ModalImportContent({
 						</ClayButton>
 
 						<ClayButton
-							disabled={!inputFile || !name || error !== ''}
+							disabled={getImportButtonDisableState()}
 							form={importFormId}
 							type="submit"
 						>

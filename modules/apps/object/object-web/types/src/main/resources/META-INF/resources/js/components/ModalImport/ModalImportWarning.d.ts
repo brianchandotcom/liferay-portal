@@ -6,13 +6,13 @@
 /// <reference types="react" />
 
 interface ModalImportWarningProps {
-	error: string;
+	errorMessage: string;
 	handleImport: () => void;
 	handleOnClose: () => void;
 	modalImportKey: string;
 }
 export declare function ModalImportWarning({
-	error,
+	errorMessage,
 	handleImport,
 	handleOnClose,
 	modalImportKey,

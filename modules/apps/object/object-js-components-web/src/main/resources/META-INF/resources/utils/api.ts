@@ -15,8 +15,9 @@ interface Actions {
 	update?: HTTPMethod;
 }
 
-interface ErrorDetails extends Error {
+export interface ErrorDetails extends Error {
 	detail?: string;
+	type?: string;
 }
 
 interface HTTPMethod {
@@ -473,7 +474,7 @@ export async function save<T>({
 			return {
 				detail,
 				message: errorMessage,
-				name: '',
+				type,
 			} as ErrorDetails;
 		};
 		throw ErrorDetails();

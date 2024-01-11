@@ -15,14 +15,14 @@ import {
 } from './modalImportLanguageUtil';
 
 interface ModalImportWarningProps {
-	error: string;
+	errorMessage: string;
 	handleImport: () => void;
 	handleOnClose: () => void;
 	modalImportKey: string;
 }
 
 export function ModalImportWarning({
-	error,
+	errorMessage,
 	handleImport,
 	handleOnClose,
 	modalImportKey,
@@ -34,7 +34,9 @@ export function ModalImportWarning({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				{error && <ClayAlert displayType="danger">{error}</ClayAlert>}
+				{errorMessage && (
+					<ClayAlert displayType="danger">{errorMessage}</ClayAlert>
+				)}
 
 				<div className="text-secondary">
 					{modalImportWarningBodyTexts.map(
@@ -66,7 +68,7 @@ export function ModalImportWarning({
 						</ClayButton>
 
 						<ClayButton
-							disabled={error !== ''}
+							disabled={errorMessage !== ''}
 							displayType="warning"
 							onClick={() => {
 								handleImport();

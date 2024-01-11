@@ -9,6 +9,10 @@ interface Actions {
 	permissions?: HTTPMethod;
 	update?: HTTPMethod;
 }
+export interface ErrorDetails extends Error {
+	detail?: string;
+	type?: string;
+}
 interface HTTPMethod {
 	href: string;
 	method: string;

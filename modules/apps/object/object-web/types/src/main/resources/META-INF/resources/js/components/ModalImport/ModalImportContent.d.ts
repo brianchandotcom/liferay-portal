@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ErrorDetails} from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/utils/api';
 import {FormEvent} from 'react';
 import {ModalImportProperties} from '../ViewObjectDefinitions/ViewObjectDefinitions';
 import {TFile} from './ModalImport';
 interface ModalImportContentProps extends ModalImportProperties {
-	error: string;
+	error?: ErrorDetails;
 	externalReferenceCode: string;
 	fileName: string;
 	handleOnClose: () => void;
@@ -17,7 +18,7 @@ interface ModalImportContentProps extends ModalImportProperties {
 	name: string;
 	nameMaxLength: string;
 	portletNamespace: string;
-	setError: (value: string) => void;
+	setError: (value?: ErrorDetails) => void;
 	setExternalReferenceCode: (value: string) => void;
 	setFile: (value: TFile) => void;
 	setName: (value: string) => void;

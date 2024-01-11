@@ -5,6 +5,7 @@
 
 import ClayModal, {useModal} from '@clayui/modal';
 import {API} from '@liferay/object-js-components-web';
+import {ErrorDetails} from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/utils/api';
 import {fetch} from 'frontend-js-web';
 import React, {FormEvent, useEffect, useState} from 'react';
 
@@ -45,7 +46,7 @@ export default function ModalImport({
 	portletNamespace,
 	showModal,
 }: ModalImportProps) {
-	const [error, setError] = useState<string>('');
+	const [error, setError] = useState<ErrorDetails>();
 	const [externalReferenceCode, setExternalReferenceCode] = useState<string>(
 		''
 	);
@@ -59,7 +60,7 @@ export default function ModalImport({
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			setVisible(false);
-			setError('');
+			setError(undefined);
 			setExternalReferenceCode('');
 			setFile({
 				fileName: '',
@@ -70,6 +71,15 @@ export default function ModalImport({
 
 			if (handleOnClose) {
 				handleOnClose();
+			}
+
+			if (
+				error &&
+				error?.message !== '' &&
+				!error?.type?.includes('ObjectFolderNameException') &&
+				modalImportKey === 'objectFolder'
+			) {
+				window.location.reload();
 			}
 		},
 	});
@@ -92,7 +102,7 @@ export default function ModalImport({
 			}
 		}
 		catch (error) {
-			setError((error as Error).message);
+			setError(error as ErrorDetails);
 		}
 	};
 
@@ -154,7 +164,7 @@ export default function ModalImport({
 		>
 			{warningModalVisible ? (
 				<ModalImportWarning
-					error={error}
+					errorMessage={error?.message ?? ''}
 					handleImport={() =>
 						handleImport(importFormData as FormData)
 					}

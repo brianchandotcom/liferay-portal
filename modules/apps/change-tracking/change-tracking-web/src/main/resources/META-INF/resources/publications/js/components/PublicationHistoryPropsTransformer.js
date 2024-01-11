@@ -7,6 +7,8 @@ import ClayProgressBar from '@clayui/progress-bar';
 import {createPortletURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import StatusRenderer from './StatusRenderer';
+
 export default function propsTransformer({
 	additionalProps: {getPublicationStatusURL},
 	...otherProps
@@ -46,6 +48,8 @@ export default function propsTransformer({
 
 									clearInterval(interval);
 
+									props.loadData();
+
 									return;
 								}
 
@@ -75,10 +79,10 @@ export default function propsTransformer({
 						}
 					}
 				});
-		}, [props.itemId]);
+		}, [props]);
 
-		if (status) {
-			return <span className="workflow-status">{status.label}</span>;
+		if (props.value.label !== 'in-progress' || status) {
+			return StatusRenderer(props);
 		}
 
 		return <ClayProgressBar value={percentage} />;

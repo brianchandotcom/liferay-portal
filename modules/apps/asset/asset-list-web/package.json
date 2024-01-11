@@ -21,6 +21,7 @@
 			"test/js/mocks/*"
 		]
 	},
+	"main": "js/index.js",
 	"name": "asset-list-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

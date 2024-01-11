@@ -25,6 +25,7 @@
 			"<rootDir>/test/setup.js"
 		]
 	},
+	"main": "js/index.js",
 	"name": "@liferay/batch-planner-web",
 	"private": true,
 	"scripts": {

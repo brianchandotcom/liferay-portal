@@ -1,5 +1,5 @@
 {
-	"@generated": "109e0c993736e731aa262b77a67d3150df8056fc",
+	"@generated": "f74271c582b5e3f6430d545aeb9227eb00c16598",
 	"@overrides": {
 		"compilerOptions": {
 			"lib": [
@@ -42,7 +42,7 @@
 				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
 			],
 			"item-selector-taglib": [
-				"../../item-selector/item-selector-taglib/src/main/resources/META-INF/resources/index.d.ts"
+				"../../item-selector/item-selector-taglib/src/main/resources/META-INF/resources/js/index.d.ts"
 			]
 		},
 		"sourceMap": false,

@@ -219,21 +219,21 @@ public class ObjectStateFlowLocalServiceImpl
 			for (ObjectStateTransition objectStateTransition :
 					sourceObjectState.getObjectStateTransitions()) {
 
-				long targetObjectStateId;
+				long targetObjectStateListTypeEntryId;
 
 				if (listTypeEntryIds.isEmpty()) {
-					targetObjectStateId =
+					targetObjectStateListTypeEntryId =
 						objectStateTransition.
 							getTargetObjectStateListTypeEntryId();
 				}
 				else {
-					targetObjectStateId = listTypeEntryIds.get(
+					targetObjectStateListTypeEntryId = listTypeEntryIds.get(
 						objectStateTransition.getTargetObjectStateId());
 				}
 
 				ObjectState targetObjectState =
 					_objectStateLocalService.getObjectStateFlowObjectState(
-						targetObjectStateId, objectStateFlowId);
+						targetObjectStateListTypeEntryId, objectStateFlowId);
 
 				_objectStateTransitionLocalService.addObjectStateTransition(
 					userId, objectStateFlowId,

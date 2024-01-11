@@ -3,7 +3,7 @@
 	[#assign layoutPath = currentURL?ends_with("/")?then("home", "/home") /]
 
 	<script>
-		window.location.assign("${currentURL + layoutPath}");
+		window.location.pathname = "${layoutPath}";
 	</script>
 [/#if]
 

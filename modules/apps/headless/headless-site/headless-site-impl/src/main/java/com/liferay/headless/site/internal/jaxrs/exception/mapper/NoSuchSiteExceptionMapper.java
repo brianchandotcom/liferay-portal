@@ -47,13 +47,22 @@ public class NoSuchSiteExceptionMapper
 			return title;
 		}
 
-		Matcher matcher = _pattern.matcher(noSuchGroupException.getMessage());
+		Matcher externalReferenceCodeMatcher =
+			_externalReferenceCodePattern.matcher(
+				noSuchGroupException.getMessage());
 
-		if (!matcher.matches()) {
+		if (externalReferenceCodeMatcher.matches()) {
+			return noSuchGroupException.getMessage();
+		}
+
+		Matcher groupKeyMatcher = _groupKeypattern.matcher(
+			noSuchGroupException.getMessage());
+
+		if (!groupKeyMatcher.matches()) {
 			return title;
 		}
 
-		String siteKey = matcher.group(1);
+		String siteKey = groupKeyMatcher.group(1);
 
 		if (Validator.isNotNull(siteKey)) {
 			title = title + " for site key " + siteKey;
@@ -62,6 +71,9 @@ public class NoSuchSiteExceptionMapper
 		return title;
 	}
 
-	private static final Pattern _pattern = Pattern.compile(".+groupKey=(.+)}");
+	private static final Pattern _externalReferenceCodePattern =
+		Pattern.compile(".+external reference code (.+)");
+	private static final Pattern _groupKeypattern = Pattern.compile(
+		".+groupKey=(.+)}");
 
 }

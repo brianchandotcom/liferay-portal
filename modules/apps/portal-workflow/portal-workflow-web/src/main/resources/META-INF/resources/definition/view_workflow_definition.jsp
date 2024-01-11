@@ -12,7 +12,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 WorkflowDefinition workflowDefinition = (WorkflowDefinition)request.getAttribute(WebKeys.WORKFLOW_DEFINITION);
 
-String content = workflowDefinition.getContent();
+String content = workflowDefinition.getContentAsXML();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

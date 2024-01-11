@@ -287,6 +287,10 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 	private Map<Long, List<Long>> _getGroupIdsMap(Long[] userIds) {
 		Map<Long, List<Long>> idsMap = new HashMap<>();
 
+		if (userIds.length == 0) {
+			return idsMap;
+		}
+
 		for (Object[] array :
 				_userLocalService.<List<Object[]>>dslQuery(
 					DSLQueryFactoryUtil.select(
@@ -309,6 +313,10 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 	private Map<Long, List<Long>> _getOrganizationIdsMap(Long[] userIds) {
 		Map<Long, List<Long>> idsMap = new HashMap<>();
+
+		if (userIds.length == 0) {
+			return idsMap;
+		}
 
 		for (Object[] array :
 				_userLocalService.<List<Object[]>>dslQuery(
@@ -333,6 +341,10 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 	private Map<Long, List<Long>> _getRoleIdsMap(Long[] userIds) {
 		Map<Long, List<Long>> idsMap = new HashMap<>();
 
+		if (userIds.length == 0) {
+			return idsMap;
+		}
+
 		for (Object[] array :
 				_userLocalService.<List<Object[]>>dslQuery(
 					DSLQueryFactoryUtil.select(
@@ -356,6 +368,10 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 	private Map<Long, List<Long>> _getTeamIdsMap(Long[] userIds) {
 		Map<Long, List<Long>> idsMap = new HashMap<>();
 
+		if (userIds.length == 0) {
+			return idsMap;
+		}
+
 		for (Object[] array :
 				_userLocalService.<List<Object[]>>dslQuery(
 					DSLQueryFactoryUtil.select(
@@ -378,6 +394,10 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 	private Map<Long, List<Long>> _getUserGroupIdsMap(Long[] userIds) {
 		Map<Long, List<Long>> idsMap = new HashMap<>();
+
+		if (userIds.length == 0) {
+			return idsMap;
+		}
 
 		for (Object[] array :
 				_userLocalService.<List<Object[]>>dslQuery(

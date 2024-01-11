@@ -753,11 +753,6 @@
 			<property name="enabled" value="false" />
 			<message key="update.call.reassign" value="Update call should be reassigned to variable ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.check.SingleStatementClauseCheck">
-			<property name="category" value="Styling" />
-			<property name="description" value="Verifies that `for`, `if` or `while` statement always uses curly braces." />
-			<message key="braces.missing" value="Use braces around {0}-statement clause" />
-		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.SizeIsZeroCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds cases of calls like `list.size() == 0` (use `list.isEmpty()` instead)." />

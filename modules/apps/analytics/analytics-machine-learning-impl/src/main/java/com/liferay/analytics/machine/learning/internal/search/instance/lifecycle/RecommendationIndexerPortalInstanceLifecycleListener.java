@@ -5,7 +5,7 @@
 
 package com.liferay.analytics.machine.learning.internal.search.instance.lifecycle;
 
-import com.liferay.analytics.machine.learning.internal.recommendation.RecommendationIndexNames;
+import com.liferay.analytics.machine.learning.internal.recommendation.constants.RecommendationIndexNames;
 import com.liferay.analytics.machine.learning.internal.recommendation.search.RecommendationIndexer;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;

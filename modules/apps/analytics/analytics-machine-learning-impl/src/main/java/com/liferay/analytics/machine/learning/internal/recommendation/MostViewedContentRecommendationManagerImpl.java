@@ -7,6 +7,7 @@ package com.liferay.analytics.machine.learning.internal.recommendation;
 
 import com.liferay.analytics.machine.learning.content.MostViewedContentRecommendation;
 import com.liferay.analytics.machine.learning.content.MostViewedContentRecommendationManager;
+import com.liferay.analytics.machine.learning.internal.recommendation.constants.RecommendationIndexNames;
 import com.liferay.analytics.machine.learning.internal.recommendation.search.RecommendationField;
 import com.liferay.analytics.machine.learning.internal.recommendation.search.RecommendationIndexer;
 import com.liferay.portal.kernel.exception.PortalException;

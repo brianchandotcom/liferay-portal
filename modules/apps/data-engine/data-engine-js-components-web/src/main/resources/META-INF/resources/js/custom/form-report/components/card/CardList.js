@@ -63,6 +63,8 @@ const chartFactory = (
 		case 'country':
 		case 'date':
 		case 'date_time':
+		case 'document_library':
+		case 'image':
 		case 'place':
 		case 'postal-code':
 		case 'state':

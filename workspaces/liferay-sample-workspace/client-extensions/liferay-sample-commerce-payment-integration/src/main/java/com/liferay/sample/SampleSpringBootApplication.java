@@ -16,11 +16,10 @@ import org.springframework.context.annotation.Import;
  */
 @Import(ClientExtensionUtilSpringBootComponentScan.class)
 @SpringBootApplication
-public class SampleCommercePaymentIntegrationApplication {
+public class SampleSpringBootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(
-			SampleCommercePaymentIntegrationApplication.class, args);
+		SpringApplication.run(SampleSpringBootApplication.class, args);
 	}
 
 }

@@ -203,7 +203,7 @@ $productMenuWidth: 320px;
 		.edit-article-sidebar {
 			border-left: 1px #e7e7ed solid;
 			box-shadow: none;
-			max-width: 90vw;
+			max-width: 320px;
 			outline: 0;
 			overflow-y: scroll;
 			padding-top: 0;
@@ -212,11 +212,25 @@ $productMenuWidth: 320px;
 			z-index: 1;
 
 			@include media-breakpoint-down(xs) {
-				display: none;
 				height: auto;
-				&.contextual-sidebar-visible {
-					display: block;
+				overflow: hidden;
+				top: 0;
+
+				&.contextual-sidebar {
 					position: absolute;
+				}
+			}
+
+			@include media-breakpoint-between(sm, md) {
+				$management-bar-height: 110px;
+
+				&.contextual-sidebar {
+					height: calc(
+						100vh - var(--control-menu-container-height) - #{$management-bar-height}
+					);
+					top: calc(
+						var(--control-menu-container-height) + #{$management-bar-height}
+					);
 				}
 			}
 

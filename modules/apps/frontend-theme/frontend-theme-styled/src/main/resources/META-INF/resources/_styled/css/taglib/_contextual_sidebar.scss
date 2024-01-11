@@ -46,26 +46,3 @@ $transition-timing-function: ease;
 		}
 	}
 }
-
-@include media-breakpoint-between(sm, md) {
-	$management-bar-height: 110px;
-
-	.contextual-sidebar {
-		height: calc(
-			100vh - var(--control-menu-container-height) - #{$management-bar-height}
-		);
-		top: calc(
-			var(--control-menu-container-height) + #{$management-bar-height}
-		);
-	}
-}
-
-@include media-breakpoint-down(xs) {
-	$management-bar-height: 64px;
-
-	.contextual-sidebar {
-		top: calc(
-			var(--control-menu-container-height) + #{$management-bar-height}
-		);
-	}
-}

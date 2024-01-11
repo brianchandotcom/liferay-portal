@@ -60,6 +60,6 @@ public class OASExtensions {
 	}
 
 	private static final Pattern _objectDefinitionReferenceFieldNamePattern =
-		Pattern.compile("r_.+_c_.+Id");
+		Pattern.compile("r_[a-zA-Z0-9]+(_c)?_[a-zA-Z0-9]+Id");
 
 }

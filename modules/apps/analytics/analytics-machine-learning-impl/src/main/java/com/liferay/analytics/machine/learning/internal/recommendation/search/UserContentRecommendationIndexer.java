@@ -16,15 +16,14 @@ import org.osgi.service.component.annotations.Component;
 public class UserContentRecommendationIndexer
 	extends BaseRecommendationIndexer {
 
+	public UserContentRecommendationIndexer() {
+		super("user-content-recommendation");
+	}
+
 	@Override
 	public String getIndexName(long companyId) {
 		return indexNameBuilder.getIndexName(companyId) +
 			"-user-content-recommendation";
-	}
-
-	@Override
-	protected String getIndexMappingFileName() {
-		return "user-content-recommendation-mappings.json";
 	}
 
 }

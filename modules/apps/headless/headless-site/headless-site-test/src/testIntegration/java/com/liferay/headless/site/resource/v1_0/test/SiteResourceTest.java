@@ -124,6 +124,14 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	}
 
 	@Override
+	protected Site testDeleteSite_addSite()
+		throws Exception {
+
+		return testPutSiteByExternalReferenceCode_addSite();
+	}
+
+
+	@Override
 	protected Site testDeleteSiteByExternalReferenceCode_addSite()
 		throws Exception {
 

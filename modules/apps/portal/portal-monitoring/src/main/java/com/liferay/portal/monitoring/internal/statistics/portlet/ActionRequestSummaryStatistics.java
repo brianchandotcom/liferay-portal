@@ -10,16 +10,18 @@ import com.liferay.portal.monitoring.internal.statistics.RequestStatistics;
 
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-@Component(enabled = false, service = PortletSummaryStatistics.class)
 public class ActionRequestSummaryStatistics
 	implements PortletSummaryStatistics {
+
+	public ActionRequestSummaryStatistics(
+		ServerStatisticsHelper serverStatisticsHelper) {
+
+		_serverStatisticsHelper = serverStatisticsHelper;
+	}
 
 	@Override
 	public long getAverageTime() {
@@ -639,7 +641,6 @@ public class ActionRequestSummaryStatistics
 		return requestStatistics.getTimeoutCount();
 	}
 
-	@Reference
-	private ServerStatisticsHelper _serverStatisticsHelper;
+	private final ServerStatisticsHelper _serverStatisticsHelper;
 
 }

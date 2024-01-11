@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.monitoring.internal.statistics.SummaryStatistics;
 import com.liferay.portal.monitoring.internal.statistics.portal.CompanyStatistics;
 import com.liferay.portal.monitoring.internal.statistics.portal.ServerStatisticsHelper;
+import com.liferay.portal.monitoring.internal.statistics.portal.ServerSummaryStatistics;
 
 import java.util.Set;
 
@@ -17,6 +18,7 @@ import javax.management.DynamicMBean;
 import javax.management.NotCompliantMBeanException;
 import javax.management.StandardMBean;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -222,12 +224,15 @@ public class PortalManager extends StandardMBean implements PortalManagerMBean {
 		_serverStatisticsHelper.reset(webId);
 	}
 
+	@Activate
+	protected void activate() {
+		_serverSummaryStatistics = new ServerSummaryStatistics(
+			_serverStatisticsHelper);
+	}
+
 	@Reference
 	private ServerStatisticsHelper _serverStatisticsHelper;
 
-	@Reference(
-		target = "(component.name=com.liferay.portal.monitoring.internal.statistics.portal.ServerSummaryStatistics)"
-	)
 	private SummaryStatistics _serverSummaryStatistics;
 
 }

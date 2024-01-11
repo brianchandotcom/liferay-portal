@@ -7,6 +7,7 @@
 		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},
+	"main": "js/index.ts",
 	"name": "@liferay/client-extension-web",
 	"private": true,
 	"scripts": {

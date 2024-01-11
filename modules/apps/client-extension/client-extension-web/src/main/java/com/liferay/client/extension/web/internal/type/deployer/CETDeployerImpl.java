@@ -6,6 +6,8 @@
 package com.liferay.client.extension.web.internal.type.deployer;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.CommerceCheckoutStepCET;
 import com.liferay.client.extension.type.CustomElementCET;
@@ -22,7 +24,6 @@ import com.liferay.client.extension.web.internal.portlet.IFrameCETPortlet;
 import com.liferay.client.extension.web.internal.portlet.action.CETPortletConfigurationAction;
 import com.liferay.client.extension.web.internal.portlet.editor.config.contributor.CETEditorConfigContributor;
 import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -136,7 +138,7 @@ public class CETDeployerImpl implements CETDeployer {
 			_register(
 				Portlet.class,
 				new CustomElementCETPortlet(
-					customElementCET, _npmResolver, portletId)));
+					customElementCET, portletId)));
 
 		return serviceRegistrations;
 	}
@@ -180,7 +182,7 @@ public class CETDeployerImpl implements CETDeployer {
 		serviceRegistrations.add(
 			_register(
 				Portlet.class,
-				new IFrameCETPortlet(iFrameCET, _npmResolver, portletId)));
+				new IFrameCETPortlet(iFrameCET, _absolutePortalURLBuilderFactory, portletId, _portal)));
 
 		return serviceRegistrations;
 	}
@@ -216,13 +218,16 @@ public class CETDeployerImpl implements CETDeployer {
 		_commerceCETDeployerSnapshot = new Snapshot<>(
 			CETDeployer.class, CommerceCETDeployer.class);
 
-	private BundleContext _bundleContext;
-
 	@Reference
 	private JSONFactory _jsonFactory;
 
+	private BundleContext _bundleContext;
+
 	@Reference
-	private NPMResolver _npmResolver;
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.client.extension.web)(release.schema.version>=2.0.0))"

@@ -13,7 +13,7 @@ ClientExtensionAdminDisplayContext clientExtensionAdminDisplayContext = (ClientE
 
 <div>
 	<react:component
-		module="js/components/ModalImportClientExtensionEntry"
+		module="{ModalImportClientExtensionEntry} from client-extension-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"importClientExtensionEntryURL", clientExtensionAdminDisplayContext.getImportClientExtensionEntryURL()

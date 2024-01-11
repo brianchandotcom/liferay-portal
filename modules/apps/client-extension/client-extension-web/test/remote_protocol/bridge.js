@@ -6,7 +6,7 @@
 import {
 	REMOTE_APP_PROTOCOL,
 	VERSION,
-} from '../../src/main/resources/META-INF/resources/remote_protocol/bridge';
+} from '../../src/main/resources/META-INF/resources/js/remote_protocol/bridge';
 
 const originalAddEventListener = window.__proto__.addEventListener;
 
@@ -21,7 +21,7 @@ describe('client-extension-web', () => {
 		jest.clearAllMocks();
 		jest.resetModules();
 
-		init = require('../../src/main/resources/META-INF/resources/remote_protocol/bridge')
+		init = require('../../src/main/resources/META-INF/resources/js/remote_protocol/bridge')
 			.default;
 
 		iframe = document.createElement('iframe');

@@ -56,6 +56,25 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/sites/{siteId}":
+        delete:
+            description:
+                # @review
+                Deletes a site and all of its associated content.
+            operationId: deleteSite
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Site"]
     /sites:
         post:
             description:

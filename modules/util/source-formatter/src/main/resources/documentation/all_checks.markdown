@@ -333,7 +333,7 @@ MissingParenthesesCheck | [Styling](styling_checks.markdown#styling-checks) | .j
 ModifiedMethodCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks for incorrect `modified` method with `@Modified` annotation. |
 [ModifierOrderCheck](https://checkstyle.sourceforge.io/checks/modifier/modifierorder.html) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that the order of modifiers conforms to the suggestions in the Java Language specification, § 8.1.1, 8.3.1, 8.4.3 and 9.4. |
 [MultipleVariableDeclarationsCheck](https://checkstyle.sourceforge.io/checks/coding/multiplevariabledeclarations.html) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that each variable declaration is in its own statement and on its own line. |
-[NeedBracesCheck](https://checkstyle.sourceforge.io/checks/blocks/needbraces.html) | [Styling](styling_checks.markdown#styling-checks) | .java | Checks for braces around code blocks. |
+[NeedBracesCheck](https://checkstyle.sourceforge.io/checks/blocks/needbraces.html) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for braces around code blocks. |
 NestedFieldAnnotationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks for `nested.field.support` in the `property` attribute of the `Component` annotation |
 NestedIfStatementCheck | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds nested if statements that can be combined. |
 [NoLineWrapCheck](https://checkstyle.sourceforge.io/checks/whitespace/nolinewrap.html) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that chosen statements are not line-wrapped. |
@@ -420,7 +420,6 @@ SemiColonCheck | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp
 ServiceUpdateCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks that there are no stale references in service code from service updates. |
 SessionKeysCheck | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | .java | Checks that messages send to `SessionsErrors` or `SessionMessages` follow naming conventions. |
 SetUtilMethodsCheck | [Performance](performance_checks.markdown#performance-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of inefficient SetUtil operations. |
-SingleStatementClauseCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Verifies that `for`, `if` or `while` statement always uses curly braces. |
 SizeIsZeroCheck | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of calls like `list.size() == 0` (use `list.isEmpty()` instead). |
 SlantedQuotesCheck | [Styling](styling_checks.markdown#styling-checks) | | Finds `slanted quote` (`\u201a`, `\u201b`, `\u201c`, `\u201d`, `\u201e`, `\u201f`, `\u2018` or `\u2019`) characters. |
 SoyEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | .soy | Finds missing and unnecessary empty lines. |

@@ -84,6 +84,7 @@ MissingDiamondOperatorCheck | [Bug Prevention](bug_prevention_checks.markdown#bu
 MissingParenthesesCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing parentheses in conditional statement. |
 [ModifierOrderCheck](https://checkstyle.sourceforge.io/checks/modifier/modifierorder.html) | [Styling](styling_checks.markdown#styling-checks) | Checks that the order of modifiers conforms to the suggestions in the Java Language specification, § 8.1.1, 8.3.1, 8.4.3 and 9.4. |
 [MultipleVariableDeclarationsCheck](https://checkstyle.sourceforge.io/checks/coding/multiplevariabledeclarations.html) | [Styling](styling_checks.markdown#styling-checks) | Checks that each variable declaration is in its own statement and on its own line. |
+[NeedBracesCheck](https://checkstyle.sourceforge.io/checks/blocks/needbraces.html) | [Styling](styling_checks.markdown#styling-checks) | Checks for braces around code blocks. |
 NestedIfStatementCheck | [Styling](styling_checks.markdown#styling-checks) | Finds nested if statements that can be combined. |
 [NoLineWrapCheck](https://checkstyle.sourceforge.io/checks/whitespace/nolinewrap.html) | [Styling](styling_checks.markdown#styling-checks) | Checks that chosen statements are not line-wrapped. |
 [NoWhitespaceAfterCheck](https://checkstyle.sourceforge.io/checks/whitespace/nowhitespaceafter.html) | [Styling](styling_checks.markdown#styling-checks) | Checks that there is no whitespace after a token. |

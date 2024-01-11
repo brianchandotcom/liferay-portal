@@ -109,8 +109,6 @@
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks for braces around code blocks." />
 			<property name="documentationLocation" value="blocks/needbraces.html" />
-			<property name="tokens" value="LITERAL_IF, LITERAL_ELSE" />
-			<message key="needBraces" value="''{0}'' construct must use '''{}'''" />
 		</module>
 		<module name="NoLineWrapCheck">
 			<property name="category" value="Styling" />

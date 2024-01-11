@@ -98,7 +98,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			return null;
 		}
 
-		return _getPermissionPredicate(
+		return _getPermissionWherePredicate(
 			permissionChecker, modelClassName, classPKColumn, groupIds);
 	}
 
@@ -173,14 +173,15 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		DSLQuery dslQuery, Class<?> modelClass, Column<T, Long> classPKColumn,
 		long... groupIds) {
 
-		Predicate permissionPredicate = getPermissionWherePredicate(
+		Predicate permissionWherePredicate = getPermissionWherePredicate(
 			modelClass, classPKColumn, groupIds);
 
-		if (permissionPredicate == null) {
+		if (permissionWherePredicate == null) {
 			return dslQuery;
 		}
 
-		return _insertResourcePermissionQuery(dslQuery, permissionPredicate);
+		return _insertResourcePermissionQuery(
+			dslQuery, permissionWherePredicate);
 	}
 
 	@Override
@@ -410,14 +411,14 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 	}
 
-	private <T extends Table<T>> Predicate _getPermissionPredicate(
+	private <T extends Table<T>> Predicate _getPermissionWherePredicate(
 		PermissionChecker permissionChecker, String modelClassName,
 		Column<T, Long> classPKColumn, long[] groupIds) {
 
 		DSLQuery resourcePermissionDSLQuery = _getResourcePermissionQuery(
 			permissionChecker, modelClassName, groupIds);
 
-		Predicate permissionPredicate = classPKColumn.in(
+		Predicate permissionWherePredicate = classPKColumn.in(
 			resourcePermissionDSLQuery);
 
 		List<PermissionSQLContributor> permissionSQLContributors =
@@ -429,16 +430,16 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			for (PermissionSQLContributor permissionSQLContributor :
 					permissionSQLContributors) {
 
-				Predicate contributorPermissionPredicate =
-					permissionSQLContributor.getPermissionPredicate(
+				Predicate contributorPermissionWherePredicate =
+					permissionSQLContributor.getPermissionWherePredicate(
 						permissionChecker, modelClassName, classPKColumn,
 						groupIds);
 
-				permissionPredicate =
-					permissionPredicate = permissionPredicate.or(
+				permissionWherePredicate =
+					permissionWherePredicate = permissionWherePredicate.or(
 						() -> {
-							if (contributorPermissionPredicate != null) {
-								return contributorPermissionPredicate.
+							if (contributorPermissionWherePredicate != null) {
+								return contributorPermissionWherePredicate.
 									withParentheses();
 							}
 
@@ -470,13 +471,14 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 					"No groupId column for table " + table.getTableName());
 			}
 
-			permissionPredicate = permissionPredicate.or(
+			permissionWherePredicate = permissionWherePredicate.or(
 				groupIdColumn.in(groupIdSet.toArray(new Long[0])));
 
-			permissionPredicate = permissionPredicate.withParentheses();
+			permissionWherePredicate =
+				permissionWherePredicate.withParentheses();
 		}
 
-		return permissionPredicate;
+		return permissionWherePredicate;
 	}
 
 	private DSLQuery _getResourcePermissionQuery(
@@ -628,12 +630,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private DSLQuery _insertResourcePermissionQuery(
-		DSLQuery dslQuery, Predicate permissionPredicate) {
+		DSLQuery dslQuery, Predicate permissionWherePredicate) {
 
 		if (dslQuery instanceof WhereStep) {
 			WhereStep whereStep = (WhereStep)dslQuery;
 
-			return whereStep.where(permissionPredicate);
+			return whereStep.where(permissionWherePredicate);
 		}
 
 		WhereStep whereStep = null;
@@ -674,13 +676,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		ASTNode childASTNode = null;
 
 		if (where == null) {
-			childASTNode = whereStep.where(permissionPredicate);
+			childASTNode = whereStep.where(permissionWherePredicate);
 		}
 		else {
 			Predicate predicate = where.getPredicate();
 
 			childASTNode = new Where(
-				whereStep, predicate.and(permissionPredicate));
+				whereStep, predicate.and(permissionWherePredicate));
 		}
 
 		for (BaseASTNode baseASTNode : baseASTNodes) {

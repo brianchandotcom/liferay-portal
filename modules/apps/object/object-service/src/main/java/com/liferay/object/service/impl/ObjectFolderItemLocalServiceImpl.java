@@ -173,13 +173,13 @@ public class ObjectFolderItemLocalServiceImpl
 					return predicate;
 				}
 
-				Predicate permissionPredicate =
+				Predicate permissionWherePredicate =
 					_inlineSQLHelper.getPermissionWherePredicate(
 						ObjectDefinition.class.getName(),
 						ObjectFolderItemTable.INSTANCE.objectDefinitionId);
 
-				if (permissionPredicate != null) {
-					predicate = predicate.and(permissionPredicate);
+				if (permissionWherePredicate != null) {
+					predicate = predicate.and(permissionWherePredicate);
 				}
 
 				return predicate;

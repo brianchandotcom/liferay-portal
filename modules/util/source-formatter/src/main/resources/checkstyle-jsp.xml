@@ -84,6 +84,11 @@
 			<property name="description" value="Checks that each variable declaration is in its own statement and on its own line." />
 			<property name="documentationLocation" value="coding/multiplevariabledeclarations.html" />
 		</module>
+		<module name="NeedBracesCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Checks for braces around code blocks." />
+			<property name="documentationLocation" value="blocks/needbraces.html" />
+		</module>
 		<module name="NoLineWrapCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks that chosen statements are not line-wrapped." />

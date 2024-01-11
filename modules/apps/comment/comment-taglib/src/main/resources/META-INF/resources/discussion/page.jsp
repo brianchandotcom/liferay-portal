@@ -294,7 +294,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					"userId", discussionTaglibHelper.getUserId()
 				).build()
 			%>'
-			module="discussion/js/Comments"
+			module="{Comments} from comment-taglib"
 		/>
 	</c:if>
 </section>

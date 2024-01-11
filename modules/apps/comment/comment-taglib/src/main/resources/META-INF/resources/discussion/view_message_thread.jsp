@@ -91,7 +91,7 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 										/>
 
 										<react:component
-											module="discussion/js/components/ReplyPopover"
+											module="{ReplyPopover} from comment-taglib"
 											props='<%=
 												HashMapBuilder.<String, Object>put(
 													"ariaLabel", LanguageUtil.format(request, "in-reply-to-x", parentDiscussionComment.getUserName(), false)
@@ -297,6 +297,6 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 				"portletNamespace", namespace
 			).build()
 		%>'
-		module="discussion/js/ViewMessageThread"
+		module="{ViewMessageThread} from comment-taglib"
 	/>
 </c:if>

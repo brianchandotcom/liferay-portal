@@ -63,5 +63,5 @@ DiscussionCommentIterator discussionCommentIterator = (rootDiscussionComment == 
 			"rootIndexPage", rootIndexPage
 		).build()
 	%>'
-	module="discussion/js/PageResources"
+	module="{PageResources} from comment-taglib"
 />

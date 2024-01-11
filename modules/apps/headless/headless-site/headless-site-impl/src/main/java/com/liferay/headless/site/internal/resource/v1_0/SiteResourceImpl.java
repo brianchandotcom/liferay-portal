@@ -64,6 +64,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
+	public void deleteSite(Long siteId) throws Exception {
+		_groupService.deleteGroup(siteId);
+	}
+
+	@Override
 	public void deleteSiteByExternalReferenceCode(String externalReferenceCode)
 		throws Exception {
 

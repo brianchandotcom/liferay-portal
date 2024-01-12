@@ -1,13 +1,7 @@
 {
-	"dynamic-data-lists-is-deprecated-and-replaced-by-object": {
+	"to-avoid-data-loss-you-must-migrate-your-data-to-liferay-objects": {
 		"en_US": {
-			"message": "Dynamic Data Lists is deprecated and replaced by Object.",
-			"url": "https://learn.liferay.com/en/w/dxp/installation-and-upgrades/upgrading-liferay/reference/maintenance-mode-and-deprecations-in-7-3"
-		}
-	},
-	"please-migrate-your-data-to-object-before-then": {
-		"en_US": {
-			"message": "Please migrate your data to Object before then.",
+			"message": "To avoid data loss, you must migrate your data to Liferay Objects.",
 			"url": "https://learn.liferay.com/web/guest/w/dxp/process-automation/forms/dynamic-data-lists/migrating-to-liferay-objects"
 		}
 	}

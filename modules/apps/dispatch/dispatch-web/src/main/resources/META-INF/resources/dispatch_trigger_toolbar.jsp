@@ -25,7 +25,7 @@ DispatchTriggerDisplayContext dispatchTriggerDisplayContext = (DispatchTriggerDi
 		).build()
 	%>'
 	creationMenu="<%= dispatchTriggerDisplayContext.getCreationMenu() %>"
-	propsTransformer="js/DispatchTriggerManagementToolbarPropsTransformer"
+	propsTransformer="{DispatchTriggerManagementToolbarPropsTransformer} from dispatch-web"
 	searchContainerId='<%= ParamUtil.getString(request, "searchContainerId", "dispatchTrigger") %>'
 	showSearch="<%= false %>"
 	viewTypeItems="<%= dispatchTriggerDisplayContext.getViewTypeItems() %>"

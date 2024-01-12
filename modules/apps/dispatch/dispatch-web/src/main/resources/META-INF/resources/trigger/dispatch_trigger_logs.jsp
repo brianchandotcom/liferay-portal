@@ -25,7 +25,7 @@ SearchContainer<DispatchLog> dispatchLogSearchContainer = DispatchLogSearchConta
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new ViewDispatchLogManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dispatchLogSearchContainer) %>"
-	propsTransformer="trigger/js/DispatchLogManagementToolbarPropsTransformer"
+	propsTransformer="{DispatchLogManagementToolbarPropsTransformer} from dispatch-web"
 />
 
 <div id="<portlet:namespace />triggerLogsContainer">

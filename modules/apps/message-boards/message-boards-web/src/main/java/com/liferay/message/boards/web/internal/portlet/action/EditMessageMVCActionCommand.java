@@ -32,11 +32,11 @@ import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandler;
+import com.liferay.message.boards.web.internal.upload.format.handlers.MBMessageBBCodeFormatUploadHandler;
+import com.liferay.message.boards.web.internal.upload.format.handlers.MBMessageHTMLFormatUploadHandler;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryUtil;
 import com.liferay.message.boards.web.internal.util.MBRequestUtil;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
@@ -82,7 +82,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -91,7 +93,6 @@ import javax.portlet.WindowState;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -111,13 +112,12 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, MBMessageFormatUploadHandler.class, "format");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_mbMessageFormatUploadHandlers.put(
+			"bbcode",
+			new MBMessageBBCodeFormatUploadHandler(_portletFileRepository));
+		_mbMessageFormatUploadHandlers.put(
+			"html",
+			new MBMessageHTMLFormatUploadHandler(_portletFileRepository));
 	}
 
 	@Override
@@ -558,7 +558,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				}
 
 				MBMessageFormatUploadHandler formatHandler =
-					_serviceTrackerMap.getService(message.getFormat());
+					_mbMessageFormatUploadHandlers.get(message.getFormat());
 
 				if (formatHandler != null) {
 					List<FileEntry> tempMBAttachmentFileEntries =
@@ -581,7 +581,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				message = _mbMessageService.getMessage(messageId);
 
 				MBMessageFormatUploadHandler formatHandler =
-					_serviceTrackerMap.getService(message.getFormat());
+					_mbMessageFormatUploadHandlers.get(message.getFormat());
 
 				if (formatHandler != null) {
 					List<FileEntry> tempMBAttachmentFileEntries =
@@ -655,6 +655,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private MBCategoryService _mbCategoryService;
 
+	private final Map<String, MBMessageFormatUploadHandler>
+		_mbMessageFormatUploadHandlers = new HashMap<>();
+
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
@@ -677,9 +680,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
-
-	private ServiceTrackerMap<String, MBMessageFormatUploadHandler>
-		_serviceTrackerMap;
 
 	@Reference
 	private UniqueFileNameProvider _uniqueFileNameProvider;

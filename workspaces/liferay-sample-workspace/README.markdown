@@ -38,6 +38,10 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	TODO
 
+- *liferay-sample-commerce-shipping-engine*
+
+	Use Spring Boot and OAuth to add a new shipping engine (shipping options provider) to Liferay.
+
 - *liferay-sample-custom-element-1*
 
 	A custom element can be self contained (i.e. does not depend on any external packages).

@@ -100,7 +100,7 @@ public abstract class GitRepositoryJob extends BaseJob {
 			}
 		}
 
-		if (upstreamBranchName.contains("release")) {
+		if (upstreamBranchName.equals("release")) {
 			String githubUpstreamBranchName = System.getenv(
 				"GITHUB_UPSTREAM_BRANCH_NAME");
 

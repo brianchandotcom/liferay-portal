@@ -193,6 +193,9 @@ $h4 liferay.workspace.modules.jsp.precompile.enabled
 Set this to true to compile the JSP files in OSGi modules and have them added
 to the distributable Zip/Tar. The default value is `false`.
 
+$h4 liferay.workspace.node.lts.codename
+Set this property to a Node.js LTS release codename to automatically use the latest Node version and NPM version for that LTS release. See https://github.com/nodejs/Release/blob/main/CODENAMES.md for the list of valid codenames.
+
 $h4 liferay.workspace.node.package.manager
 Set this property to `npm` to build Node.js-style projects using NPM. The
 default value is `yarn`.

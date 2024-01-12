@@ -27,7 +27,7 @@ function ExecutionOptions({
 	concurrentModeSupported,
 	executionMode,
 	executionScope,
-	omniAdmin,
+	omniadmin,
 	onExecutionModeChange,
 	onExecutionScopeChange,
 	onSelectedCompanyIdsChange,
@@ -162,7 +162,7 @@ function ExecutionOptions({
 				</div>
 			)}
 
-			{omniAdmin && (
+			{omniadmin && (
 				<div className="sheet-section">
 					<div
 						className="sheet-subtitle text-secondary"

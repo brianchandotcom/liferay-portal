@@ -129,7 +129,7 @@ public class IndexActionsDisplayContextBuilder {
 		).put(
 			"initialScope", _getInitialScope()
 		).put(
-			"omniAdmin", _permissionChecker.isOmniadmin()
+			"omniadmin", _permissionChecker.isOmniadmin()
 		).put(
 			"virtualInstances", _getVirtualInstancesJSONArray()
 		).build();

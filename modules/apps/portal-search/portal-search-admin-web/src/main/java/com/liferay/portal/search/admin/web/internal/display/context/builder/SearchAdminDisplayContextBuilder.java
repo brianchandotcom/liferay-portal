@@ -44,7 +44,6 @@ public class SearchAdminDisplayContextBuilder {
 			_indexReindexerClassNames);
 
 		NavigationItemList navigationItemList = new NavigationItemList();
-		String selectedTab = "index-actions";
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -52,9 +51,9 @@ public class SearchAdminDisplayContextBuilder {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (permissionChecker.isOmniadmin()) {
-			selectedTab = getSelectedTab();
+		String selectedTab = getSelectedTab(permissionChecker);
 
+		if (permissionChecker.isOmniadmin()) {
 			_addNavigationItemList(
 				navigationItemList, "connections", selectedTab);
 		}
@@ -84,7 +83,11 @@ public class SearchAdminDisplayContextBuilder {
 		_indexReindexerClassNames = indexReindexerClassNames;
 	}
 
-	protected String getSelectedTab() {
+	protected String getSelectedTab(PermissionChecker permissionChecker) {
+		if (!permissionChecker.isOmniadmin()) {
+			return "index-actions";
+		}
+
 		String selectedTab = ParamUtil.getString(
 			_renderRequest, "tabs1", "connections");
 

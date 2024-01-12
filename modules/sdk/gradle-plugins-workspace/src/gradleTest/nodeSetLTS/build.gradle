@@ -1,0 +1,17 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":with-invalid-lts-value:downloadNode", ":with-valid-lts-value:downloadNode"
+
+	doLast {
+		Project withInvalidLTSValueProject = project(":with-invalid-lts-value")
+
+		assert withInvalidLTSValueProject.node.nodeVersion == "16.13.0"
+		assert withInvalidLTSValueProject.node.npmVersion == "8.1.0"
+
+		Project withValidLTSValueProject = project(":with-valid-lts-value")
+
+		assert withValidLTSValueProject.node.nodeVersion == "12.22.12"
+		assert withValidLTSValueProject.node.npmVersion == "6.14.16"
+	}
+}

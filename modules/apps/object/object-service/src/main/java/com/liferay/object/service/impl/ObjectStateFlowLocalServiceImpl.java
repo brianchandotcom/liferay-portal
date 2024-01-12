@@ -21,6 +21,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -219,17 +220,11 @@ public class ObjectStateFlowLocalServiceImpl
 			for (ObjectStateTransition objectStateTransition :
 					sourceObjectState.getObjectStateTransitions()) {
 
-				long targetObjectStateListTypeEntryId;
-
-				if (listTypeEntryIds.isEmpty()) {
-					targetObjectStateListTypeEntryId =
-						objectStateTransition.
-							getTargetObjectStateListTypeEntryId();
-				}
-				else {
-					targetObjectStateListTypeEntryId = listTypeEntryIds.get(
-						objectStateTransition.getTargetObjectStateId());
-				}
+				long targetObjectStateListTypeEntryId = MapUtil.getLong(
+					listTypeEntryIds,
+					objectStateTransition.getTargetObjectStateId(),
+					objectStateTransition.
+						getTargetObjectStateListTypeEntryId());
 
 				ObjectState targetObjectState =
 					_objectStateLocalService.getObjectStateFlowObjectState(

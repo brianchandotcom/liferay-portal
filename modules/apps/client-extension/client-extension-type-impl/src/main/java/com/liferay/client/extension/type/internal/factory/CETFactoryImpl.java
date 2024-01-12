@@ -55,8 +55,8 @@ public class CETFactoryImpl implements CETFactory {
 
 	public CETFactoryImpl() {
 		_cetImplFactories = HashMapBuilder.<String, CETImplFactory>put(
-			ClientExtensionEntryConstants.TYPE_CUSTOM_CHECKOUT_STEP,
-			new CustomCheckoutStepCETImplFactoryImpl()
+			ClientExtensionEntryConstants.TYPE_COMMERCE_CHECKOUT_STEP,
+			new CommerceCheckoutStepCETImplFactoryImpl()
 		).put(
 			ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT,
 			new CustomElementCETImplFactoryImpl()

@@ -1,7 +1,7 @@
 [
 	{
 		"description": "This is a description.",
-		"name": "customCheckoutStep",
+		"name": "commerceCheckoutStep",
 		"properties": [
 			{
 				"name": "description",
@@ -18,11 +18,6 @@
 			},
 			{
 				"name": "type",
-				"type": "CETProperty.Type.String"
-			},
-			{
-				"default": "",
-				"name": "actionURL",
 				"type": "CETProperty.Type.String"
 			},
 			{
@@ -54,16 +49,6 @@
 				"default": "",
 				"name": "order",
 				"type": "CETProperty.Type.Boolean"
-			},
-			{
-				"default": "",
-				"name": "readyURL",
-				"type": "CETProperty.Type.String"
-			},
-			{
-				"default": "",
-				"name": "renderURL",
-				"type": "CETProperty.Type.URL"
 			},
 			{
 				"default": "",

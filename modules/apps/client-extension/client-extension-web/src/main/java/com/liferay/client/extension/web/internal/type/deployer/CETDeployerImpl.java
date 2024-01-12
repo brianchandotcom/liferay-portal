@@ -7,7 +7,7 @@ package com.liferay.client.extension.web.internal.type.deployer;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.CET;
-import com.liferay.client.extension.type.CustomCheckoutStepCET;
+import com.liferay.client.extension.type.CommerceCheckoutStepCET;
 import com.liferay.client.extension.type.CustomElementCET;
 import com.liferay.client.extension.type.EditorConfigContributorCET;
 import com.liferay.client.extension.type.IFrameCET;
@@ -57,9 +57,9 @@ public class CETDeployerImpl implements CETDeployer {
 	public List<ServiceRegistration<?>> deploy(CET cet) {
 		if (Objects.equals(
 				cet.getType(),
-				ClientExtensionEntryConstants.TYPE_CUSTOM_CHECKOUT_STEP)) {
+				ClientExtensionEntryConstants.TYPE_COMMERCE_CHECKOUT_STEP)) {
 
-			return _deploy((CustomCheckoutStepCET)cet);
+			return _deploy((CommerceCheckoutStepCET)cet);
 		}
 		else if (Objects.equals(
 					cet.getType(),
@@ -95,7 +95,7 @@ public class CETDeployerImpl implements CETDeployer {
 	}
 
 	private List<ServiceRegistration<?>> _deploy(
-		CustomCheckoutStepCET customCheckoutStepCET) {
+		CommerceCheckoutStepCET commerceCheckoutStepCET) {
 
 		CommerceCETDeployer commerceCETDeployer =
 			_commerceCETDeployerSnapshot.get();
@@ -104,7 +104,7 @@ public class CETDeployerImpl implements CETDeployer {
 			return Collections.emptyList();
 		}
 
-		return commerceCETDeployer.deploy(customCheckoutStepCET);
+		return commerceCETDeployer.deploy(commerceCheckoutStepCET);
 	}
 
 	private List<ServiceRegistration<?>> _deploy(

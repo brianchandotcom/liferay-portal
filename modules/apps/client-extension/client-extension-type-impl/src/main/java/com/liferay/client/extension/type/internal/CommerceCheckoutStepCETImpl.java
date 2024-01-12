@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.client.extension.type.internal;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.type.CustomCheckoutStepCET;
+import com.liferay.client.extension.type.CommerceCheckoutStepCET;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Date;
@@ -15,10 +15,10 @@ import java.util.Properties;
 /**
  * @author Andrea Sbarra
  */
-public class CustomCheckoutStepCETImpl
-	extends BaseCETImpl implements CustomCheckoutStepCET {
+public class CommerceCheckoutStepCETImpl
+	extends BaseCETImpl implements CommerceCheckoutStepCET {
 
-	public CustomCheckoutStepCETImpl(
+	public CommerceCheckoutStepCETImpl(
 		String baseURL, long companyId, Date createDate, String description,
 		String externalReferenceCode, Date modifiedDate, String name,
 		Properties properties, boolean readOnly, String sourceCodeURL,
@@ -28,11 +28,6 @@ public class CustomCheckoutStepCETImpl
 			baseURL, companyId, createDate, description, externalReferenceCode,
 			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
 			typeSettingsUnicodeProperties);
-	}
-
-	@Override
-	public String getActionURL() {
-		return getString("actionURL");
 	}
 
 	@Override
@@ -57,7 +52,7 @@ public class CustomCheckoutStepCETImpl
 
 	@Override
 	public String getEditJSP() {
-		return "/admin/edit_custom_checkout_step.jsp";
+		return "/admin/edit_commerce_checkout_step.jsp";
 	}
 
 	@Override
@@ -68,16 +63,6 @@ public class CustomCheckoutStepCETImpl
 	@Override
 	public boolean getOrder() {
 		return getBoolean("order");
-	}
-
-	@Override
-	public String getReadyURL() {
-		return getString("readyURL");
-	}
-
-	@Override
-	public String getRenderURL() {
-		return getString("renderURL");
 	}
 
 	@Override
@@ -92,7 +77,7 @@ public class CustomCheckoutStepCETImpl
 
 	@Override
 	public String getType() {
-		return ClientExtensionEntryConstants.TYPE_CUSTOM_CHECKOUT_STEP;
+		return ClientExtensionEntryConstants.TYPE_COMMERCE_CHECKOUT_STEP;
 	}
 
 	@Override

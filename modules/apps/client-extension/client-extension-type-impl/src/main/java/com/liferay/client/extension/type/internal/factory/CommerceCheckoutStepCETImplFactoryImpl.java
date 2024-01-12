@@ -1,18 +1,16 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.client.extension.type.internal.factory;
 
-import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
-import com.liferay.client.extension.type.CustomCheckoutStepCET;
-import com.liferay.client.extension.type.internal.CustomCheckoutStepCETImpl;
+import com.liferay.client.extension.type.CommerceCheckoutStepCET;
+import com.liferay.client.extension.type.internal.CommerceCheckoutStepCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.Properties;
@@ -22,21 +20,21 @@ import javax.portlet.PortletRequest;
 /**
  * @author Andrea Sbarra
  */
-public class CustomCheckoutStepCETImplFactoryImpl
-	extends BaseCETImplFactoryImpl<CustomCheckoutStepCET> {
+public class CommerceCheckoutStepCETImplFactoryImpl
+	extends BaseCETImplFactoryImpl<CommerceCheckoutStepCET> {
 
-	public CustomCheckoutStepCETImplFactoryImpl() {
-		super(CustomCheckoutStepCET.class);
+	public CommerceCheckoutStepCETImplFactoryImpl() {
+		super(CommerceCheckoutStepCET.class);
 	}
 
 	@Override
-	public CustomCheckoutStepCET create(
+	public CommerceCheckoutStepCET create(
 		String baseURL, long companyId, Date createDate, String description,
 		String externalReferenceCode, Date modifiedDate, String name,
 		Properties properties, boolean readOnly, String sourceCodeURL,
 		int status, UnicodeProperties typeSettingsUnicodeProperties) {
 
-		return new CustomCheckoutStepCETImpl(
+		return new CommerceCheckoutStepCETImpl(
 			baseURL, companyId, createDate, description, externalReferenceCode,
 			modifiedDate, name, properties, readOnly, sourceCodeURL, status,
 			typeSettingsUnicodeProperties);
@@ -48,8 +46,6 @@ public class CustomCheckoutStepCETImplFactoryImpl
 
 		return UnicodePropertiesBuilder.create(
 			true
-		).put(
-			"actionURL", ParamUtil.getString(portletRequest, "actionURL")
 		).put(
 			"active", ParamUtil.getBoolean(portletRequest, "active")
 		).put(
@@ -69,10 +65,6 @@ public class CustomCheckoutStepCETImplFactoryImpl
 		).put(
 			"order", ParamUtil.getBoolean(portletRequest, "order")
 		).put(
-			"readyURL", ParamUtil.getString(portletRequest, "readyURL")
-		).put(
-			"renderURL", ParamUtil.getString(portletRequest, "renderURL")
-		).put(
 			"sennaDisabled",
 			ParamUtil.getBoolean(portletRequest, "sennaDisabled")
 		).put(
@@ -84,33 +76,8 @@ public class CustomCheckoutStepCETImplFactoryImpl
 
 	@Override
 	public void validate(
-			CustomCheckoutStepCET newCET, CustomCheckoutStepCET oldCET)
+			CommerceCheckoutStepCET newCET, CommerceCheckoutStepCET oldCET)
 		throws PortalException {
-
-		String readyURL = newCET.getReadyURL();
-
-		if (Validator.isNotNull(readyURL) && !Validator.isUrl(readyURL, true)) {
-			throw new ClientExtensionEntryTypeSettingsException(
-				"Invalid Ready URL: " + readyURL, "readyURL", readyURL);
-		}
-
-		String renderURL = newCET.getRenderURL();
-
-		if (Validator.isNotNull(renderURL) &&
-			!Validator.isUrl(renderURL, true)) {
-
-			throw new ClientExtensionEntryTypeSettingsException(
-				"Invalid Render URL: " + renderURL, "renderURL", renderURL);
-		}
-
-		String actionURL = newCET.getActionURL();
-
-		if (Validator.isNotNull(actionURL) &&
-			!Validator.isUrl(actionURL, true)) {
-
-			throw new ClientExtensionEntryTypeSettingsException(
-				"Invalid Action URL: " + actionURL, "actionURL", actionURL);
-		}
 	}
 
 }

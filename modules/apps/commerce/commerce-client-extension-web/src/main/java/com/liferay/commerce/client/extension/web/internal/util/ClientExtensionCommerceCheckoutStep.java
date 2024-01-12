@@ -1,10 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.client.extension.web.internal.util;
 
+import com.liferay.client.extension.type.CommerceCheckoutStepCET;
+import com.liferay.commerce.client.extension.web.internal.type.deployer.Registrable;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
@@ -19,8 +21,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 
+import java.util.Dictionary;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -35,34 +39,44 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Andrea Sbarra
  */
-public class CustomCheckoutStep implements CommerceCheckoutStep {
+public class ClientExtensionCommerceCheckoutStep
+	implements CommerceCheckoutStep, Registrable {
 
-	public CustomCheckoutStep(
-		boolean active, String actionURL, String baseURL,
-		JSONFactory jsonFactory, JSPRenderer jspRenderer, String label,
-		String name, String oAuth2ApplicationExternalReferenceCode,
-		boolean order, PortalCatapult portalCatapult, String readyURL,
-		String renderURL, boolean sennaDisabled, ServletContext servletContext,
-		boolean showControls, UserService userService, boolean visible) {
+	public ClientExtensionCommerceCheckoutStep(
+		CommerceCheckoutStepCET commerceCheckoutStepCET,
+		JSONFactory jsonFactory, JSPRenderer jspRenderer,
+		PortalCatapult portalCatapult, ServletContext servletContext,
+		UserService userService) {
 
-		_active = active;
-		_actionURL = actionURL;
-		_baseURL = baseURL;
 		_jsonFactory = jsonFactory;
 		_jspRenderer = jspRenderer;
-		_label = label;
-		_name = name;
-		_oAuth2ApplicationExternalReferenceCode =
-			oAuth2ApplicationExternalReferenceCode;
-		_order = order;
 		_portalCatapult = portalCatapult;
-		_readyURL = readyURL;
-		_renderURL = renderURL;
-		_sennaDisabled = sennaDisabled;
 		_servletContext = servletContext;
-		_showControls = showControls;
 		_userService = userService;
-		_visible = visible;
+
+		_active = commerceCheckoutStepCET.getActive();
+		_baseURL = commerceCheckoutStepCET.getBaseURL();
+		_commerceCheckoutStepOrder =
+			commerceCheckoutStepCET.getCheckoutStepOrder();
+		_label = commerceCheckoutStepCET.getCheckoutStepLabel();
+		_name = commerceCheckoutStepCET.getCheckoutStepName();
+		_oAuth2ApplicationExternalReferenceCode =
+			commerceCheckoutStepCET.getOAuth2ApplicationExternalReferenceCode();
+		_order = commerceCheckoutStepCET.getOrder();
+		_sennaDisabled = commerceCheckoutStepCET.getSennaDisabled();
+		_showControls = commerceCheckoutStepCET.getShowControls();
+		_visible = commerceCheckoutStepCET.getVisible();
+
+		_dictionary = HashMapDictionaryBuilder.<String, Object>put(
+			"commerce.checkout.step.name", _name
+		).put(
+			"commerce.checkout.step.order", _commerceCheckoutStepOrder
+		).build();
+	}
+
+	@Override
+	public Dictionary<String, Object> getDictionary() {
+		return _dictionary;
 	}
 
 	@Override
@@ -94,7 +108,7 @@ public class CustomCheckoutStep implements CommerceCheckoutStep {
 				_portalCatapult.launch(
 					commerceOrder.getCompanyId(), Http.Method.GET,
 					_oAuth2ApplicationExternalReferenceCode,
-					_jsonFactory.createJSONObject(), _readyURL,
+					_jsonFactory.createJSONObject(), "/ready",
 					currentUser.getUserId()
 				).get());
 
@@ -156,7 +170,7 @@ public class CustomCheckoutStep implements CommerceCheckoutStep {
 
 		_portalCatapult.launch(
 			commerceOrder.getCompanyId(), Http.Method.POST,
-			_oAuth2ApplicationExternalReferenceCode, jsonObject, _actionURL,
+			_oAuth2ApplicationExternalReferenceCode, jsonObject, "/action",
 			currentUser.getUserId()
 		).get();
 	}
@@ -167,11 +181,12 @@ public class CustomCheckoutStep implements CommerceCheckoutStep {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		httpServletRequest.setAttribute("renderURL", _renderURL);
+		httpServletRequest.setAttribute(
+			WebKeys.RENDER_URL, _baseURL + "/index.js");
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/checkout_step/cx_checkout_step.jsp");
+			"/checkout_step/client_extension.jsp");
 	}
 
 	@Override
@@ -183,11 +198,12 @@ public class CustomCheckoutStep implements CommerceCheckoutStep {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomCheckoutStep.class);
+		ClientExtensionCommerceCheckoutStep.class);
 
-	private final String _actionURL;
 	private final boolean _active;
 	private final String _baseURL;
+	private final int _commerceCheckoutStepOrder;
+	private final Dictionary<String, Object> _dictionary;
 	private final JSONFactory _jsonFactory;
 	private final JSPRenderer _jspRenderer;
 	private final String _label;
@@ -195,8 +211,6 @@ public class CustomCheckoutStep implements CommerceCheckoutStep {
 	private final String _oAuth2ApplicationExternalReferenceCode;
 	private final boolean _order;
 	private final PortalCatapult _portalCatapult;
-	private final String _readyURL;
-	private final String _renderURL;
 	private final boolean _sennaDisabled;
 	private final ServletContext _servletContext;
 	private final boolean _showControls;

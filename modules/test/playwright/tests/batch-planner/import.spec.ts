@@ -480,7 +480,7 @@ test('can import CSV file with custom columns order', async ({
 
 	expect(
 		(
-			await _apiHelpers.customObject.getObjectDefinitionObjectEntriesByScope(
+			await _apiHelpers.object.getObjectDefinitionObjectEntriesByScope(
 				'c/tests',
 				'Guest'
 			)
@@ -545,7 +545,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 
 	expect(
 		(
-			await _apiHelpers.customObject.getObjectDefinitionObjectEntriesByScope(
+			await _apiHelpers.object.getObjectDefinitionObjectEntriesByScope(
 				'c/tests',
 				'Guest'
 			)
@@ -648,7 +648,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 
 	expect(
 		(
-			await _apiHelpers.customObject.getObjectDefinitionObjectEntriesByScope(
+			await _apiHelpers.object.getObjectDefinitionObjectEntriesByScope(
 				'c/tests',
 				'Guest'
 			)
@@ -846,7 +846,7 @@ test('can import CSV file with an unexisting field', async ({
 
 	expect(
 		(
-			await _apiHelpers.customObject.getObjectDefinitionObjectEntries(
+			await _apiHelpers.object.getObjectDefinitionObjectEntries(
 				'c/tests'
 			)
 		).items
@@ -947,7 +947,7 @@ test('can import CSV file with new and modified existing company scoped object e
 
 	expect(
 		(
-			await _apiHelpers.customObject.getObjectDefinitionObjectEntries(
+			await _apiHelpers.object.getObjectDefinitionObjectEntries(
 				'c/tests'
 			)
 		).items

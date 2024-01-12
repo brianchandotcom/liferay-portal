@@ -14,14 +14,14 @@ import {ObjectApiHelper} from './ObjectApiHelper';
 export class ApiHelpers {
 	readonly baseUrl: string;
 	readonly headlessDelivery: HeadlessDeliveryApiHelper;
-	readonly customObject: ObjectApiHelper;
+	readonly object: ObjectApiHelper;
 	readonly featureFlag: FeatureFlagApiHelper;
 	readonly objectAdmin: ObjectAdminApiHelper;
 	readonly page: Page;
 
 	constructor(page: Page) {
 		this.baseUrl = liferayConfig.environment.baseUrl + '/o/';
-		this.customObject = new ObjectApiHelper(this);
+		this.object = new ObjectApiHelper(this);
 		this.featureFlag = new FeatureFlagApiHelper(page);
 		this.headlessDelivery = new HeadlessDeliveryApiHelper(this);
 		this.objectAdmin = new ObjectAdminApiHelper(this);

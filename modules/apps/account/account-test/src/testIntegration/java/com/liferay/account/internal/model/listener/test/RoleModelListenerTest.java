@@ -10,7 +10,6 @@ import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.model.AccountRoleTable;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -58,7 +58,8 @@ public class RoleModelListenerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		_company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
 	}
 
 	@Test
@@ -208,9 +209,6 @@ public class RoleModelListenerTest {
 	}
 
 	private static Company _company;
-
-	@Inject
-	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private AccountRoleLocalService _accountRoleLocalService;

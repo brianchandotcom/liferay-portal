@@ -1854,14 +1854,8 @@ definition {
 		}
 
 		task ("View assets are shown in collection items via page tree") {
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				Page.viewCollectionItem(
-					itemName = ${title},
-					key_rowNumber = ${n});
-
-				var n = ${n} + 1;
+				LexiconTable.viewTableEntryTitle(tableEntry = ${title});
 			}
 		}
 
@@ -1884,14 +1878,8 @@ definition {
 		}
 
 		task ("View assets are shown in collection items via Pages admin") {
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				Page.viewCollectionItem(
-					itemName = ${title},
-					key_rowNumber = ${n});
-
-				var n = ${n} + 1;
+				LexiconTable.viewTableEntryTitle(tableEntry = ${title});
 			}
 		}
 	}

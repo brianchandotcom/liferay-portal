@@ -140,6 +140,8 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 
 	public Map<String, Object> getSeparatorFieldsProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"errors", getErrorsJSONObject()
+		).put(
 			"fields", getConfigurableFriendlyURLSeparatorsJSONArray()
 		).put(
 			"url", _themeDisplay.getPortalURL()

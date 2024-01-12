@@ -63,19 +63,20 @@ public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 				"(component.name=com.liferay.portal.language.override." +
 					"internal.PLOEntryModelListener)");
 
-		ModelListener<PLOEntry> modelListener =
-			(ModelListener<PLOEntry>)_bundleContext.getService(
-				serviceReferences[0]);
+		PLOEntryModelListener ploEntryModelListener = null;
 
 		try {
-			PLOEntryModelListener ploEntryModelListener =
-				(PLOEntryModelListener)modelListener;
+			ploEntryModelListener =
+				(PLOEntryModelListener)_bundleContext.getService(
+					serviceReferences[0]);
 
 			ploEntryModelListener._updatePLOLanguageOverrideProvider(
 				methodType, ploEntry);
 		}
 		finally {
-			_bundleContext.ungetService(serviceReferences[0]);
+			if (ploEntryModelListener != null) {
+				_bundleContext.ungetService(serviceReferences[0]);
+			}
 		}
 	}
 

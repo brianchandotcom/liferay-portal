@@ -449,12 +449,6 @@ public interface StructuredContentResource {
 			return new StructuredContentResourceImpl(this);
 		}
 
-		public Builder chunkSize(int chunkSize) {
-			_chunkSize = chunkSize;
-
-			return this;
-		}
-
 		public Builder contextPath(String contextPath) {
 			_contextPath = contextPath;
 
@@ -532,7 +526,6 @@ public interface StructuredContentResource {
 		private Builder() {
 		}
 
-		private Integer _chunkSize;
 		private String _contextPath = "";
 		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
@@ -626,10 +619,6 @@ public interface StructuredContentResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -755,10 +744,6 @@ public interface StructuredContentResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body("[]", "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -894,10 +879,6 @@ public interface StructuredContentResource {
 
 			httpInvoker.body(structuredContent.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -994,10 +975,6 @@ public interface StructuredContentResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1110,10 +1087,6 @@ public interface StructuredContentResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1221,10 +1194,6 @@ public interface StructuredContentResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1338,10 +1307,6 @@ public interface StructuredContentResource {
 
 			httpInvoker.body(structuredContent.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1448,10 +1413,6 @@ public interface StructuredContentResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1571,10 +1532,6 @@ public interface StructuredContentResource {
 
 			httpInvoker.body(values.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1686,10 +1643,6 @@ public interface StructuredContentResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1811,10 +1764,6 @@ public interface StructuredContentResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body("[]", "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1953,10 +1902,6 @@ public interface StructuredContentResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -2081,10 +2026,6 @@ public interface StructuredContentResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body("[]", "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2219,10 +2160,6 @@ public interface StructuredContentResource {
 
 			httpInvoker.body(structuredContent.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -2319,10 +2256,6 @@ public interface StructuredContentResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2435,10 +2368,6 @@ public interface StructuredContentResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -2546,10 +2475,6 @@ public interface StructuredContentResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2663,10 +2588,6 @@ public interface StructuredContentResource {
 
 			httpInvoker.body(structuredContent.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -2772,10 +2693,6 @@ public interface StructuredContentResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2883,10 +2800,6 @@ public interface StructuredContentResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -2993,10 +2906,6 @@ public interface StructuredContentResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -3116,10 +3025,6 @@ public interface StructuredContentResource {
 
 			httpInvoker.body(values.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -3233,10 +3138,6 @@ public interface StructuredContentResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -3364,10 +3265,6 @@ public interface StructuredContentResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body("[]", "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -3506,10 +3403,6 @@ public interface StructuredContentResource {
 
 			httpInvoker.body(structuredContent.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -3609,10 +3502,6 @@ public interface StructuredContentResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -3723,10 +3612,6 @@ public interface StructuredContentResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -3822,10 +3707,6 @@ public interface StructuredContentResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -3932,10 +3813,6 @@ public interface StructuredContentResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -4044,10 +3921,6 @@ public interface StructuredContentResource {
 
 			httpInvoker.body(structuredContent.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -4155,10 +4028,6 @@ public interface StructuredContentResource {
 
 			httpInvoker.body(structuredContent.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -4252,10 +4121,6 @@ public interface StructuredContentResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -4365,10 +4230,6 @@ public interface StructuredContentResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -4472,10 +4333,6 @@ public interface StructuredContentResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -4585,10 +4442,6 @@ public interface StructuredContentResource {
 
 			httpInvoker.body(rating.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -4697,10 +4550,6 @@ public interface StructuredContentResource {
 
 			httpInvoker.body(rating.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -4806,10 +4655,6 @@ public interface StructuredContentResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -4929,10 +4774,6 @@ public interface StructuredContentResource {
 
 			httpInvoker.body(values.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -5039,10 +4880,6 @@ public interface StructuredContentResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -5151,10 +4988,6 @@ public interface StructuredContentResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -5262,10 +5095,6 @@ public interface StructuredContentResource {
 
 			httpInvoker.body("[]", "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -5372,10 +5201,6 @@ public interface StructuredContentResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body("[]", "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

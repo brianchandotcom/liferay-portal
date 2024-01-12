@@ -173,12 +173,6 @@ public interface AccountResource {
 			return new AccountResourceImpl(this);
 		}
 
-		public Builder chunkSize(int chunkSize) {
-			_chunkSize = chunkSize;
-
-			return this;
-		}
-
 		public Builder contextPath(String contextPath) {
 			_contextPath = contextPath;
 
@@ -256,7 +250,6 @@ public interface AccountResource {
 		private Builder() {
 		}
 
-		private Integer _chunkSize;
 		private String _contextPath = "";
 		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
@@ -335,10 +328,6 @@ public interface AccountResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(account.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -436,10 +425,6 @@ public interface AccountResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -548,10 +533,6 @@ public interface AccountResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -668,10 +649,6 @@ public interface AccountResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body("[]", "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -799,10 +776,6 @@ public interface AccountResource {
 
 			httpInvoker.body(account.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -894,10 +867,6 @@ public interface AccountResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -996,10 +965,6 @@ public interface AccountResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1107,10 +1072,6 @@ public interface AccountResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1207,10 +1168,6 @@ public interface AccountResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(account.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1317,10 +1274,6 @@ public interface AccountResource {
 				httpInvoker.part(entry.getKey(), entry.getValue());
 			}
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1409,10 +1362,6 @@ public interface AccountResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1507,10 +1456,6 @@ public interface AccountResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1614,10 +1559,6 @@ public interface AccountResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1709,10 +1650,6 @@ public interface AccountResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(account.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1813,10 +1750,6 @@ public interface AccountResource {
 
 			for (Map.Entry<String, File> entry : multipartFiles.entrySet()) {
 				httpInvoker.part(entry.getKey(), entry.getValue());
-			}
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
 			}
 
 			if (_builder._locale != null) {

@@ -59,12 +59,6 @@ public interface AssigneeResource {
 			return new AssigneeResourceImpl(this);
 		}
 
-		public Builder chunkSize(int chunkSize) {
-			_chunkSize = chunkSize;
-
-			return this;
-		}
-
 		public Builder contextPath(String contextPath) {
 			_contextPath = contextPath;
 
@@ -142,7 +136,6 @@ public interface AssigneeResource {
 		private Builder() {
 		}
 
-		private Integer _chunkSize;
 		private String _contextPath = "";
 		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
@@ -232,10 +225,6 @@ public interface AssigneeResource {
 
 			httpInvoker.body(
 				assigneeBulkSelection.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

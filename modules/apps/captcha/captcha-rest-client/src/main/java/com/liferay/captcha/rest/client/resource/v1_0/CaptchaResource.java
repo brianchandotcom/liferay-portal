@@ -60,12 +60,6 @@ public interface CaptchaResource {
 			return new CaptchaResourceImpl(this);
 		}
 
-		public Builder chunkSize(int chunkSize) {
-			_chunkSize = chunkSize;
-
-			return this;
-		}
-
 		public Builder contextPath(String contextPath) {
 			_contextPath = contextPath;
 
@@ -143,7 +137,6 @@ public interface CaptchaResource {
 		private Builder() {
 		}
 
-		private Integer _chunkSize;
 		private String _contextPath = "";
 		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
@@ -225,10 +218,6 @@ public interface CaptchaResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -330,10 +319,6 @@ public interface CaptchaResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(captcha.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

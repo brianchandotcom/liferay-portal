@@ -222,12 +222,6 @@ public interface TaxonomyCategoryResource {
 			return new TaxonomyCategoryResourceImpl(this);
 		}
 
-		public Builder chunkSize(int chunkSize) {
-			_chunkSize = chunkSize;
-
-			return this;
-		}
-
 		public Builder contextPath(String contextPath) {
 			_contextPath = contextPath;
 
@@ -305,7 +299,6 @@ public interface TaxonomyCategoryResource {
 		private Builder() {
 		}
 
-		private Integer _chunkSize;
 		private String _contextPath = "";
 		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
@@ -393,10 +386,6 @@ public interface TaxonomyCategoryResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -517,10 +506,6 @@ public interface TaxonomyCategoryResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -652,10 +637,6 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.body(taxonomyCategory.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -760,10 +741,6 @@ public interface TaxonomyCategoryResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -858,10 +835,6 @@ public interface TaxonomyCategoryResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -968,10 +941,6 @@ public interface TaxonomyCategoryResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1080,10 +1049,6 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.body(taxonomyCategory.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1191,10 +1156,6 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.body(taxonomyCategory.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1288,10 +1249,6 @@ public interface TaxonomyCategoryResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1401,10 +1358,6 @@ public interface TaxonomyCategoryResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1524,10 +1477,6 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.body(values.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -1639,10 +1588,6 @@ public interface TaxonomyCategoryResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1768,10 +1713,6 @@ public interface TaxonomyCategoryResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body("[]", "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1908,10 +1849,6 @@ public interface TaxonomyCategoryResource {
 
 			httpInvoker.body(taxonomyCategory.toString(), "application/json");
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -2009,10 +1946,6 @@ public interface TaxonomyCategoryResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2126,10 +2059,6 @@ public interface TaxonomyCategoryResource {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
-
 			if (_builder._locale != null) {
 				httpInvoker.header(
 					"Accept-Language", _builder._locale.toLanguageTag());
@@ -2237,10 +2166,6 @@ public interface TaxonomyCategoryResource {
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2354,10 +2279,6 @@ public interface TaxonomyCategoryResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(taxonomyCategory.toString(), "application/json");
-
-			if (_builder._chunkSize != null) {
-				httpInvoker.chunkSize(_builder._chunkSize);
-			}
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

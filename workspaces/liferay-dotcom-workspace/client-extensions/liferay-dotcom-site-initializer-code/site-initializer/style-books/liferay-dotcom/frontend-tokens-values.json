@@ -4,13 +4,13 @@
 		"value": "calc(1 / 1 * 100%);"
 	},
 	"bodyBgColor": {
-		"name": "colorNeutral0",
 		"cssVariableMapping": "body-bg",
+		"name": "colorNeutral0",
 		"value": "#fff"
 	},
 	"bodyColor": {
-		"name": "colorBrandPrimaryDarken4",
 		"cssVariableMapping": "body-color",
+		"name": "colorBrandPrimaryDarken4",
 		"value": "#00318F"
 	},
 	"borderRadius": {

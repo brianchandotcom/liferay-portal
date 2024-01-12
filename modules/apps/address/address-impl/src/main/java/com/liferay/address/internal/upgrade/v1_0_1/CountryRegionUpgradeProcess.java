@@ -184,6 +184,70 @@ public class CountryRegionUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	private void _updateRegion(Country country, JSONObject regionJSONObject)
+		throws Exception {
+
+		String newRegionCode = regionJSONObject.getString("regionCode");
+
+		Region region = _regionLocalService.fetchRegion(
+			country.getCountryId(), newRegionCode);
+
+		if (region == null) {
+			region = _regionLocalService.fetchRegion(
+				country.getCountryId(),
+				StringUtil.removeLast(newRegionCode, ".0"));
+		}
+
+		if (region == null) {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(country.getCompanyId());
+			serviceContext.setUserId(country.getUserId());
+
+			region = _regionLocalService.addRegion(
+				country.getCountryId(), true,
+				regionJSONObject.getString("name"), 0,
+				regionJSONObject.getString("regionCode"), serviceContext);
+		}
+		else {
+			String oldRegionCode = region.getRegionCode();
+
+			region.setName(regionJSONObject.getString("name"));
+			region.setRegionCode(newRegionCode);
+
+			region = _regionLocalService.updateRegion(region);
+
+			if (!Objects.equals(oldRegionCode, newRegionCode)) {
+				_updateData(
+					country.getA2(), region.getRegionCode(), oldRegionCode,
+					"CIWarehouse");
+			}
+		}
+
+		JSONObject localizationsJSONObject = regionJSONObject.getJSONObject(
+			"localizations");
+
+		if (localizationsJSONObject == null) {
+			Map<String, String> titleMap = new HashMap<>();
+
+			for (Locale locale :
+					LanguageUtil.getCompanyAvailableLocales(
+						country.getCompanyId())) {
+
+				titleMap.put(
+					LanguageUtil.getLanguageId(locale), region.getName());
+			}
+
+			_regionLocalService.updateRegionLocalizations(region, titleMap);
+		}
+		else {
+			for (String key : localizationsJSONObject.keySet()) {
+				_regionLocalService.updateRegionLocalization(
+					region, key, localizationsJSONObject.getString(key));
+			}
+		}
+	}
+
 	private void _updateRegion(
 			String countryA2, String newRegionCode, String oldRegionCode,
 			String oldRegionName)
@@ -220,73 +284,7 @@ public class CountryRegionUpgradeProcess extends UpgradeProcess {
 
 			for (int i = 0; i < regionsJSONArray.length(); i++) {
 				try {
-					JSONObject regionJSONObject =
-						regionsJSONArray.getJSONObject(i);
-
-					String newRegionCode = regionJSONObject.getString(
-						"regionCode");
-
-					Region region = _regionLocalService.fetchRegion(
-						country.getCountryId(), newRegionCode);
-
-					if (region == null) {
-						region = _regionLocalService.fetchRegion(
-							country.getCountryId(),
-							StringUtil.removeLast(newRegionCode, ".0"));
-					}
-
-					if (region == null) {
-						ServiceContext serviceContext = new ServiceContext();
-
-						serviceContext.setCompanyId(country.getCompanyId());
-						serviceContext.setUserId(country.getUserId());
-
-						region = _regionLocalService.addRegion(
-							country.getCountryId(), true,
-							regionJSONObject.getString("name"), 0,
-							regionJSONObject.getString("regionCode"),
-							serviceContext);
-					}
-					else {
-						String oldRegionCode = region.getRegionCode();
-
-						region.setName(regionJSONObject.getString("name"));
-						region.setRegionCode(newRegionCode);
-
-						region = _regionLocalService.updateRegion(region);
-
-						if (!Objects.equals(oldRegionCode, newRegionCode)) {
-							_updateData(
-								country.getA2(), region.getRegionCode(),
-								oldRegionCode, "CIWarehouse");
-						}
-					}
-
-					JSONObject localizationsJSONObject =
-						regionJSONObject.getJSONObject("localizations");
-
-					if (localizationsJSONObject == null) {
-						Map<String, String> titleMap = new HashMap<>();
-
-						for (Locale locale :
-								LanguageUtil.getCompanyAvailableLocales(
-									country.getCompanyId())) {
-
-							titleMap.put(
-								LanguageUtil.getLanguageId(locale),
-								region.getName());
-						}
-
-						_regionLocalService.updateRegionLocalizations(
-							region, titleMap);
-					}
-					else {
-						for (String key : localizationsJSONObject.keySet()) {
-							_regionLocalService.updateRegionLocalization(
-								region, key,
-								localizationsJSONObject.getString(key));
-						}
-					}
+					_updateRegion(country, regionsJSONArray.getJSONObject(i));
 				}
 				catch (PortalException portalException) {
 					_log.error(portalException);

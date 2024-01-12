@@ -5,23 +5,21 @@
 
 package com.liferay.object.internal.field.setting.contributor;
 
-import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectStateTransitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Feliphe Marinho
  */
-@Component(
-	property = "object.field.setting.type.key=" + ObjectFieldSettingConstants.NAME_STATE_FLOW,
-	service = ObjectFieldSettingContributor.class
-)
 public class StateFlowObjectFieldSettingContributor
 	implements ObjectFieldSettingContributor {
+
+	public StateFlowObjectFieldSettingContributor(
+		ObjectStateTransitionLocalService objectStateTransitionLocalService) {
+
+		_objectStateTransitionLocalService = objectStateTransitionLocalService;
+	}
 
 	@Override
 	public void updateObjectFieldSetting(
@@ -33,8 +31,7 @@ public class StateFlowObjectFieldSettingContributor
 			newObjectFieldSetting.getObjectStateFlow());
 	}
 
-	@Reference
-	private ObjectStateTransitionLocalService
+	private final ObjectStateTransitionLocalService
 		_objectStateTransitionLocalService;
 
 }

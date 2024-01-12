@@ -10,6 +10,7 @@ import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
@@ -33,7 +34,10 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
+import com.liferay.object.internal.field.setting.contributor.DefaultObjectFieldSettingContributor;
+import com.liferay.object.internal.field.setting.contributor.FiltersObjectFieldSettingsContributor;
 import com.liferay.object.internal.field.setting.contributor.ObjectFieldSettingContributor;
+import com.liferay.object.internal.field.setting.contributor.StateFlowObjectFieldSettingContributor;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -44,8 +48,10 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
+import com.liferay.object.service.ObjectStateTransitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectValidationRuleSettingLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
@@ -57,8 +63,6 @@ import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.Column;
@@ -97,6 +101,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -108,7 +113,6 @@ import javax.crypto.spec.SecretKeySpec;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -756,14 +760,18 @@ public class ObjectFieldLocalServiceImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ObjectFieldSettingContributor.class,
-			"object.field.setting.type.key");
-	}
+		_defaultObjectFieldSettingContributor =
+			new DefaultObjectFieldSettingContributor(
+				_objectFieldSettingLocalService);
 
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_objectFieldSettingContributors.put(
+			ObjectFieldSettingConstants.NAME_FILTERS,
+			new FiltersObjectFieldSettingsContributor(
+				_objectFilterLocalService));
+		_objectFieldSettingContributors.put(
+			ObjectFieldSettingConstants.NAME_STATE_FLOW,
+			new StateFlowObjectFieldSettingContributor(
+				_objectStateTransitionLocalService));
 	}
 
 	private ObjectField _addObjectField(
@@ -1213,13 +1221,13 @@ public class ObjectFieldLocalServiceImpl
 		String key) {
 
 		ObjectFieldSettingContributor objectFieldSettingContributor =
-			_serviceTrackerMap.getService(key);
+			_objectFieldSettingContributors.get(key);
 
 		if (objectFieldSettingContributor != null) {
 			return objectFieldSettingContributor;
 		}
 
-		return _serviceTrackerMap.getService("default");
+		return _defaultObjectFieldSettingContributor;
 	}
 
 	private ObjectField _getObjectRelationshipField(
@@ -1736,6 +1744,8 @@ public class ObjectFieldLocalServiceImpl
 	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;
 
+	private ObjectFieldSettingContributor _defaultObjectFieldSettingContributor;
+
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
@@ -1751,11 +1761,17 @@ public class ObjectFieldLocalServiceImpl
 	@Reference
 	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
 
+	private final Map<String, ObjectFieldSettingContributor>
+		_objectFieldSettingContributors = new HashMap<>();
+
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Reference
 	private ObjectFieldSettingPersistence _objectFieldSettingPersistence;
+
+	@Reference
+	private ObjectFilterLocalService _objectFilterLocalService;
 
 	@Reference
 	private ObjectLayoutColumnPersistence _objectLayoutColumnPersistence;
@@ -1765,6 +1781,10 @@ public class ObjectFieldLocalServiceImpl
 
 	@Reference
 	private ObjectStateFlowLocalService _objectStateFlowLocalService;
+
+	@Reference
+	private ObjectStateTransitionLocalService
+		_objectStateTransitionLocalService;
 
 	@Reference
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
@@ -1783,8 +1803,6 @@ public class ObjectFieldLocalServiceImpl
 		"datecreated", "datemodified", "externalreferencecode", "groupid", "id",
 		"lastpublishdate", "modifieddate", "status", "statusbyuserid",
 		"statusbyusername", "statusdate", "userid", "username");
-	private ServiceTrackerMap<String, ObjectFieldSettingContributor>
-		_serviceTrackerMap;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry

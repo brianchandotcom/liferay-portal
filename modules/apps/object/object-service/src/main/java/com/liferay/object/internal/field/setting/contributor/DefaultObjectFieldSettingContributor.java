@@ -9,18 +9,17 @@ import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Feliphe Marinho
  */
-@Component(
-	property = "object.field.setting.type.key=default",
-	service = ObjectFieldSettingContributor.class
-)
 public class DefaultObjectFieldSettingContributor
 	implements ObjectFieldSettingContributor {
+
+	public DefaultObjectFieldSettingContributor(
+		ObjectFieldSettingLocalService objectFieldSettingLocalService) {
+
+		_objectFieldSettingLocalService = objectFieldSettingLocalService;
+	}
 
 	@Override
 	public void addObjectFieldSetting(
@@ -42,7 +41,7 @@ public class DefaultObjectFieldSettingContributor
 			objectFieldSettingId, objectFieldSetting.getValue());
 	}
 
-	@Reference
-	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+	private final ObjectFieldSettingLocalService
+		_objectFieldSettingLocalService;
 
 }

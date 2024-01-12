@@ -5,24 +5,22 @@
 
 package com.liferay.object.internal.field.setting.contributor;
 
-import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectFilter;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Gabriel Albuquerque
  */
-@Component(
-	property = "object.field.setting.type.key=" + ObjectFieldSettingConstants.NAME_FILTERS,
-	service = ObjectFieldSettingContributor.class
-)
 public class FiltersObjectFieldSettingsContributor
 	implements ObjectFieldSettingContributor {
+
+	public FiltersObjectFieldSettingsContributor(
+		ObjectFilterLocalService objectFilterLocalService) {
+
+		_objectFilterLocalService = objectFilterLocalService;
+	}
 
 	@Override
 	public void addObjectFieldSetting(
@@ -41,7 +39,6 @@ public class FiltersObjectFieldSettingsContributor
 		}
 	}
 
-	@Reference
-	private ObjectFilterLocalService _objectFilterLocalService;
+	private final ObjectFilterLocalService _objectFilterLocalService;
 
 }

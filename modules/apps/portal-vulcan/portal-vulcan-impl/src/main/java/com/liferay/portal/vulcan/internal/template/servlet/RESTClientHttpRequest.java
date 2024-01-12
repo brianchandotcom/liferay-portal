@@ -7,6 +7,7 @@ package com.liferay.portal.vulcan.internal.template.servlet;
 
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -67,6 +68,19 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 				Locale locale = PortalUtil.getLocale(httpServletRequest);
 
 				return locale.toLanguageTag();
+			}
+		).put(
+			"X-CSRF-Token",
+			() -> {
+				HttpSession httpSession =
+					PortalSessionThreadLocal.getHttpSession();
+
+				if (httpSession != null) {
+					return (String)httpSession.getAttribute(
+						WebKeys.AUTHENTICATION_TOKEN + "#CSRF");
+				}
+
+				return null;
 			}
 		).build();
 		_httpServletRequest = httpServletRequest;

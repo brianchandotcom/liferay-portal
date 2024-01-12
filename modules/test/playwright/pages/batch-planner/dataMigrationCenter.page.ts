@@ -30,7 +30,9 @@ export class DataMigrationCenterPage {
 			name: 'Import File',
 		});
 		this.importStrategySelector = page.getByLabel('Import Strategy');
-		this.fileSelector = page.getByLabel('File ( .csv, .json, .jsonl)');
+		this.fileSelector = page.locator(
+			'#_com_liferay_batch_planner_web_internal_portlet_BatchPlannerPortlet_importFile'
+		);
 		this.nextButton = page.getByRole('button', {name: 'Next'});
 		this.scopeSelector = page.getByLabel('Scope');
 		this.startImportButton = page.getByTestId('start-import');
@@ -46,7 +48,12 @@ export class DataMigrationCenterPage {
 		await this.importFileMenuItem.click();
 	}
 
-	async importFile(entitType, filePath, importStrategy, updateStrategy) {
+	async importFile(
+		entitType: string,
+		filePath: string,
+		importStrategy: string,
+		updateStrategy: string
+	) {
 		await this.selectFile(filePath);
 		await this.selectImportEntityType(entitType);
 		await this.importStrategySelector.selectOption(importStrategy);
@@ -56,17 +63,15 @@ export class DataMigrationCenterPage {
 			this.scopeSelector.selectOption('Liferay DXP');
 		}
 
-		await this.page.waitForTimeout(2000);
-
 		await this.nextButton.click();
 		await this.startImportButton.click();
 	}
 
-	async selectImportEntityType(entityTypeName) {
+	async selectImportEntityType(entityTypeName: string) {
 		await this.entityTypeSelector.selectOption(entityTypeName);
 	}
 
-	async selectFile(filePath) {
+	async selectFile(filePath: string) {
 		const fileChooserPromise = this.page.waitForEvent('filechooser');
 		await this.fileSelector.click();
 		const fileChooser = await fileChooserPromise;

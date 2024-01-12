@@ -11,7 +11,7 @@
 
 <div class="digital-signature">
 	<react:component
-		module="js/pages/DigitalSignature"
+		module="{DigitalSignature} from digital-signature-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"allowedFileExtensions", StringUtil.merge(DigitalSignatureConstants.ALLOWED_FILE_EXTENSIONS)

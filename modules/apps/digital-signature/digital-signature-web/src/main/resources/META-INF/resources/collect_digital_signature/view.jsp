@@ -19,7 +19,7 @@ if (digitalSignatureTitle != null) {
 
 <div class="digital-signature">
 	<react:component
-		module="js/pages/CollectDigitalSignature"
+		module="{CollectDigitalSignature} from digital-signature-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"allowedFileExtensions", StringUtil.merge(DigitalSignatureConstants.ALLOWED_FILE_EXTENSIONS)

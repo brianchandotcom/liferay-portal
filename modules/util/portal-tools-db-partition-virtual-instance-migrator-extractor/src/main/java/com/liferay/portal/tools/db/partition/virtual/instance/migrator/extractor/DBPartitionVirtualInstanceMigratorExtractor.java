@@ -71,6 +71,8 @@ public class DBPartitionVirtualInstanceMigratorExtractor {
 		options.addRequiredOption(
 			"pass", "password", true, "Set the password.");
 		options.addRequiredOption("user", "user", true, "Set the user.");
+		options.addRequiredOption(
+			"partition", "partition-id", true, "Set the partition to extract.");
 		options.addOption("path", "path", true, "Set the output directory.");
 
 		return options;
@@ -97,10 +99,13 @@ public class DBPartitionVirtualInstanceMigratorExtractor {
 
 			CommandLine commandLine = commandLineParser.parse(options, args);
 
+			String jdbcUrl = DatabaseUtil.replaceSchemaName(
+				commandLine.getOptionValue("jdbc-url"),
+				commandLine.getOptionValue("partition-id"));
+
 			try {
 				_connection = DriverManager.getConnection(
-					commandLine.getOptionValue("jdbc-url"),
-					commandLine.getOptionValue("user"),
+					jdbcUrl, commandLine.getOptionValue("user"),
 					commandLine.getOptionValue("password"));
 			}
 			catch (SQLException sqlException) {

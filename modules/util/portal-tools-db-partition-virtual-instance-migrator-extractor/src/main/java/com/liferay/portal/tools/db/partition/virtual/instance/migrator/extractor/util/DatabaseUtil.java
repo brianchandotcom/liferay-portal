@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.db.partition.virtual.instance.migrator.extractor.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.common.Company;
@@ -43,6 +44,30 @@ public class DatabaseUtil {
 		instanceData.setCompanies(_getCompanies(connection));
 
 		return instanceData;
+	}
+
+	public static String replaceSchemaName(String jdbcUrl, String schemaName) {
+		if (schemaName == null) {
+			return jdbcUrl;
+		}
+
+		String replacedJdbcUrl;
+
+		int paramsIndex = jdbcUrl.indexOf("?");
+
+		if (paramsIndex == -1) {
+			replacedJdbcUrl =
+				jdbcUrl.substring(0, jdbcUrl.lastIndexOf("/") + 1) + schemaName;
+		}
+		else {
+			String onlyUrl = jdbcUrl.substring(0, paramsIndex);
+
+			replacedJdbcUrl = StringBundler.concat(
+				jdbcUrl.substring(0, onlyUrl.lastIndexOf("/") + 1), schemaName,
+				jdbcUrl.substring(paramsIndex));
+		}
+
+		return replacedJdbcUrl;
 	}
 
 	private static List<Company> _getCompanies(Connection connection)

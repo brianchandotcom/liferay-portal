@@ -1022,7 +1022,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
 
-		AssertNotVisible(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+		AssertNotVisible(locator1 = "Icon#DELETE");
 
 		AssertElementNotPresent(locator1 = "Button#EDIT");
 
@@ -1324,7 +1324,7 @@ definition {
 			key_questionTitle = ${questionTitle},
 			locator1 = "Questions#QUESTIONS_ELLIPSIS_ICON");
 
-		AssertVisible(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+		AssertVisible(locator1 = "Icon#DELETE");
 
 		AssertVisible(locator1 = "Button#EDIT");
 

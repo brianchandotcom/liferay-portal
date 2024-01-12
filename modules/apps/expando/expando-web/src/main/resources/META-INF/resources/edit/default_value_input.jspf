@@ -129,7 +129,7 @@
 					"mapName", "<portlet:namespace /><%= name %>"
 				).build()
 			%>'
-			module="js/GeoLocationField"
+			module="{GeoLocationField} from expando-web"
 		/>
 
 		<aui:input name="<%= name %>" type="hidden" value="<%= value.toString() %>" />

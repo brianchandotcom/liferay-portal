@@ -3,6 +3,7 @@
 		"@liferay/map-common": "*",
 		"frontend-js-web": "*"
 	},
+	"main": "js/main.js",
 	"name": "expando-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

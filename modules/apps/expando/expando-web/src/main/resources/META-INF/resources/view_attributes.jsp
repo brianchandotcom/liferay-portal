@@ -50,7 +50,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 	creationMenu="<%= expandoDisplayContext.getCreationMenu() %>"
 	disabled="<%= attributeNames.size() == 0 %>"
 	itemsTotal="<%= attributeNames.size() %>"
-	propsTransformer="js/ExpandoManagementToolbarPropsTransformer"
+	propsTransformer="{ExpandoManagementToolbarPropsTransformer} from expando-web"
 	searchContainerId="customFields"
 	selectable="<%= true %>"
 	showCreationMenu="<%= expandoDisplayContext.showCreationMenu() %>"

@@ -7,6 +7,22 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+FriendlyURLSeparatorCompanyConfigurationDisplayContext friendlyURLSeparatorCompanyConfigurationDisplayContext = (FriendlyURLSeparatorCompanyConfigurationDisplayContext)request.getAttribute(FriendlyURLSeparatorCompanyConfigurationDisplayContext.class.getName());
+
+JSONObject errorsJSONObject = friendlyURLSeparatorCompanyConfigurationDisplayContext.getErrorsJSONObject();
+
+String errorMessage = errorsJSONObject.getString("errorMessage");
+%>
+
+<c:if test="<%= Validator.isNotNull(errorMessage) %>">
+	<clay:alert
+		cssClass="mt-4"
+		displayType="danger"
+		message="<%= errorMessage %>"
+	/>
+</c:if>
+
 <p class="mt-4 sheet-subtitle text-secondary" id="<portlet:namespace />header">
 	<liferay-ui:message key="url-separator" />
 </p>
@@ -20,8 +36,6 @@
 <div role="group" aria-labelledby="<portlet:namespace />header">
 
 	<%
-	FriendlyURLSeparatorCompanyConfigurationDisplayContext friendlyURLSeparatorCompanyConfigurationDisplayContext = (FriendlyURLSeparatorCompanyConfigurationDisplayContext)request.getAttribute(FriendlyURLSeparatorCompanyConfigurationDisplayContext.class.getName());
-
 	JSONArray friendlyURLSeparatorsJSONArray = friendlyURLSeparatorCompanyConfigurationDisplayContext.getConfigurableFriendlyURLSeparatorsJSONArray();
 
 	for (int i = 0; i < friendlyURLSeparatorsJSONArray.length(); i++) {

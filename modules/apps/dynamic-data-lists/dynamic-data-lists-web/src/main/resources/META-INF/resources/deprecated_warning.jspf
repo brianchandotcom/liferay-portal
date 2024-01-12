@@ -8,15 +8,10 @@
 <clay:alert
 	displayType="warning"
 >
-	<liferay-learn:message
-		key="dynamic-data-lists-is-deprecated-and-replaced-by-object"
-		resource="dynamic-data-lists-web"
-	/>
-
-	<liferay-ui:message key="ddl-will-be-removed-in-2024" />
+	<liferay-ui:message key="dynamic-data-lists-is-deprecated-and-will-be-removed-in-2024" />
 
 	<liferay-learn:message
-		key="please-migrate-your-data-to-object-before-then"
+		key="to-avoid-data-loss-you-must-migrate-your-data-to-liferay-objects"
 		resource="dynamic-data-lists-web"
 	/>
 </clay:alert>

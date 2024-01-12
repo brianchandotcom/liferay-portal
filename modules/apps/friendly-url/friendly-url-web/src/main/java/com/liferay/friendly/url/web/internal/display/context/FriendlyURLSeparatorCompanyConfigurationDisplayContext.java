@@ -7,6 +7,7 @@ package com.liferay.friendly.url.web.internal.display.context;
 
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -80,10 +81,12 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 								friendlyURLResolver.getKey());
 
 						if (Validator.isNull(friendlyURLSeparator)) {
-							return friendlyURLResolver.getDefaultURLSeparator();
+							friendlyURLSeparator =
+								friendlyURLResolver.getDefaultURLSeparator();
 						}
 
-						return friendlyURLSeparator;
+						return friendlyURLSeparator.replaceAll(
+							StringPool.SLASH, StringPool.BLANK);
 					}
 				);
 			});

@@ -5,10 +5,3 @@
 
 export const OBJECT_ENTRY_ENTITY_TYPE =
 	'com.liferay.object.rest.dto.v1_0.ObjectEntry#C_Test';
-
-// TODO Inline all these ones
-
-export const INSERT = 'INSERT';
-export const PARTIAL_UPDATE = 'PARTIAL_UPDATE';
-export const UPSERT = 'UPSERT';
-export const UPDATE = 'UPDATE';

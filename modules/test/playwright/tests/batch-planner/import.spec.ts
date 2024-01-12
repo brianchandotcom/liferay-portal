@@ -10,13 +10,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpers.fixture';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPages.fixture';
 import {dataMigrationCenterPageTest} from '../../fixtures/dataMigrationCenterPages.fixture';
 import {objectPagesTest} from '../../fixtures/objectPages.fixture';
-import {
-	INSERT,
-	OBJECT_ENTRY_ENTITY_TYPE,
-	PARTIAL_UPDATE,
-	UPDATE,
-	UPSERT,
-} from './utils/constants';
+import {OBJECT_ENTRY_ENTITY_TYPE} from './utils/constants';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -318,7 +312,6 @@ test('can map all imported fields', async ({
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
 	);
-	const objectDefinitionId = await response.id;
 
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
@@ -339,12 +332,12 @@ test('can map all imported fields', async ({
 	await expect(page.getByText('testRichTextField')).toBeVisible();
 	await expect(page.getByText('name', {exact: true})).toBeVisible();
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinitionId);
+	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('cannot import CSV file without headers and an unexisting field header', async ({
+test('cannot import CSV file with empty headers row', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -355,16 +348,13 @@ test('cannot import CSV file without headers and an unexisting field header', as
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
 	);
-	const objectDefinitionId = await response.id;
 
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
 
-	const fileWithPath = path.join(
-		__dirname,
-		'/dependencies/c_test-NoHeaders.csv'
+	await _dataMigrationCenterPage.selectFile(
+		path.join(__dirname, '/dependencies/emptyHeaderValuesObjectEntries.csv')
 	);
-	await _dataMigrationCenterPage.selectFile(fileWithPath);
 
 	await _dataMigrationCenterPage.selectImportEntityType(
 		OBJECT_ENTRY_ENTITY_TYPE
@@ -380,7 +370,7 @@ test('cannot import CSV file without headers and an unexisting field header', as
 		)
 	).toBeVisible();
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinitionId);
+	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
@@ -396,13 +386,13 @@ test('can preview CSV file', async ({
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
 	);
-	const objectDefinitionId = await response.id;
 
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
 
-	const fileWithPath = path.join(__dirname, '/dependencies/c_test.csv');
-	await _dataMigrationCenterPage.selectFile(fileWithPath);
+	await _dataMigrationCenterPage.selectFile(
+		path.join(__dirname, '/dependencies/objectEntries.csv')
+	);
 
 	await _dataMigrationCenterPage.selectImportEntityType(
 		OBJECT_ENTRY_ENTITY_TYPE
@@ -455,7 +445,7 @@ test('can preview CSV file', async ({
 			.getByRole('cell', {exact: true, name: 'testRichTextField'})
 	).toBeVisible();
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinitionId);
+	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
@@ -476,9 +466,12 @@ test('can import CSV file with custom columns order', async ({
 	await _dataMigrationCenterPage.goToImportFile();
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		path.join(__dirname, '/dependencies/c_test-CustomColumnsOrder.csv'),
-		UPSERT,
-		UPDATE
+		path.join(
+			__dirname,
+			'/dependencies/customColumnOrderObjectEntries.csv'
+		),
+		'UPSERT',
+		'UPDATE'
 	);
 
 	await expect(
@@ -535,75 +528,40 @@ test('can import CSV file with multiple site scoped object entries', async ({
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
 	);
-	const objectDefinitionId = await response.id;
 
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
 
-	const fileWithPath = path.join(
-		__dirname,
-		'/dependencies/c_test-TwoEntries.csv'
-	);
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		fileWithPath,
-		UPSERT,
-		UPDATE
+		path.join(__dirname, '/dependencies/twoEntriesObjectEntries.csv'),
+		'UPSERT',
+		'UPDATE'
 	);
 
 	await expect(
 		page.getByText('The import process completed successfully.')
 	).toBeVisible();
 
-	const testObjectEntries = await _apiHelpers.customObject.getObjectDefinitionObjectEntriesByScope(
-		'c/tests',
-		'Guest'
-	);
-
-	expect([
+	expect(
+		(
+			await _apiHelpers.customObject.getObjectDefinitionObjectEntriesByScope(
+				'c/tests',
+				'Guest'
+			)
+		).items
+	).toEqual([
 		{
-			actions: {
-				delete: {
-					href: 'http://localhost:8080/o/c/tests/35330',
-					method: 'DELETE',
-				},
-				get: {
-					href: 'http://localhost:8080/o/c/tests/35330',
-					method: 'GET',
-				},
-				permissions: {
-					href: 'http://localhost:8080/o/c/tests/35330/permissions',
-					method: 'GET',
-				},
-				replace: {
-					href: 'http://localhost:8080/o/c/tests/35330',
-					method: 'PUT',
-				},
-				update: {
-					href: 'http://localhost:8080/o/c/tests/35330',
-					method: 'PATCH',
-				},
-			},
-			creator: {
-				additionalName: '',
-				contentType: 'UserAccount',
-				familyName: 'Test',
-				givenName: 'Test',
-				id: 20122,
-				name: 'Test Test',
-			},
-			dateCreated: '2024-01-10T10:48:33Z',
-			dateModified: '2024-01-10T10:48:33Z',
+			actions: expect.any(Object),
+			creator: expect.any(Object),
+			dateCreated: expect.any(String),
+			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			id: 35330,
+			id: expect.any(Number),
 			keywords: [],
 			name: 'TestName_FirstEntry',
 			scopeKey: 'Guest',
-			status: {
-				code: 0,
-				label: 'approved',
-				label_i18n: 'Aprobado',
-			},
+			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testDateField: '2024-01-05T00:00:00Z',
 			testDateTimeField: '2024-01-05T15:00:00.000Z',
@@ -619,49 +577,16 @@ test('can import CSV file with multiple site scoped object entries', async ({
 				'This is a long text with some fomatting to text testRichTextField. The first entry.',
 		},
 		{
-			actions: {
-				delete: {
-					href: 'http://localhost:8080/o/c/tests/35332',
-					method: 'DELETE',
-				},
-				get: {
-					href: 'http://localhost:8080/o/c/tests/35332',
-					method: 'GET',
-				},
-				permissions: {
-					href: 'http://localhost:8080/o/c/tests/35332/permissions',
-					method: 'GET',
-				},
-
-				replace: {
-					href: 'http://localhost:8080/o/c/tests/35332',
-					method: 'PUT',
-				},
-				update: {
-					href: 'http://localhost:8080/o/c/tests/35332',
-					method: 'PATCH',
-				},
-			},
-			creator: {
-				additionalName: '',
-				contentType: 'UserAccount',
-				familyName: 'Test',
-				givenName: 'Test',
-				id: 20122,
-				name: 'Test Test',
-			},
-			dateCreated: '2024-01-10T10:48:33Z',
-			dateModified: '2024-01-10T10:48:33Z',
+			actions: expect.any(Object),
+			creator: expect.any(Object),
+			dateCreated: expect.any(String),
+			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
-			id: 35332,
+			id: expect.any(Number),
 			keywords: [],
 			name: 'TestName_SecondEntry',
 			scopeKey: 'Guest',
-			status: {
-				code: 0,
-				label: 'approved',
-				label_i18n: 'Aprobado',
-			},
+			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testDateField: '2024-01-06T00:00:00Z',
 			testDateTimeField: '2024-01-06T15:00:00.000Z',
@@ -676,21 +601,9 @@ test('can import CSV file with multiple site scoped object entries', async ({
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField. The second entry.',
 		},
-	]).toEqual(
-		testObjectEntries.items.map((item) =>
-			expect.objectContaining({
-				...item,
-				actions: expect.any(Object),
-				creator: expect.any(Object),
-				dateCreated: expect.any(String),
-				dateModified: expect.any(String),
-				id: expect.any(Number),
-				status: expect.any(Object),
-			})
-		)
-	);
+	]);
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinitionId);
+	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
@@ -706,85 +619,52 @@ test('can import CSV file with new and existing site scoped object entries', asy
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
 	);
-	const objectDefinitionId = await response.id;
 
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
 
-	const fileWithPath = path.join(__dirname, '/dependencies/c_test.csv');
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		fileWithPath,
-		UPSERT,
-		UPDATE
+		path.join(__dirname, '/dependencies/objectEntries.csv'),
+		'UPSERT',
+		'UPDATE'
 	);
 
 	await page.getByRole('button', {exact: true, name: 'Close'}).click();
 
-	const fileWithPathTwoEntries = path.join(
-		__dirname,
-		'/dependencies/c_test-TwoEntries.csv'
-	);
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		fileWithPathTwoEntries,
-		UPSERT,
-		UPDATE
+		path.join(
+			__dirname,
+			'/dependencies/twoEntriesExistingNonModifiedObjectEntries.csv'
+		),
+		'UPSERT',
+		'UPDATE'
 	);
 
 	await expect(
 		page.getByText('The import process completed successfully.')
 	).toBeVisible();
 
-	const testObjectEntries = await _apiHelpers.customObject.getObjectDefinitionObjectEntriesByScope(
-		'c/tests',
-		'Guest'
-	);
-
-	expect([
+	expect(
+		(
+			await _apiHelpers.customObject.getObjectDefinitionObjectEntriesByScope(
+				'c/tests',
+				'Guest'
+			)
+		).items
+	).toEqual([
 		{
-			actions: {
-				delete: {
-					href: 'http://localhost:8080/o/c/tests/35430',
-					method: 'DELETE',
-				},
-				get: {
-					href: 'http://localhost:8080/o/c/tests/35430',
-					method: 'GET',
-				},
-				permissions: {
-					href: 'http://localhost:8080/o/c/tests/35430/permissions',
-					method: 'GET',
-				},
-				replace: {
-					href: 'http://localhost:8080/o/c/tests/35430',
-					method: 'PUT',
-				},
-				update: {
-					href: 'http://localhost:8080/o/c/tests/35430',
-					method: 'PATCH',
-				},
-			},
-			creator: {
-				additionalName: '',
-				contentType: 'UserAccount',
-				familyName: 'Test',
-				givenName: 'Test',
-				id: 20122,
-				name: 'Test Test',
-			},
-			dateCreated: '2024-01-10T10:51:11Z',
-			dateModified: '2024-01-10T10:51:14Z',
+			actions: expect.any(Object),
+			creator: expect.any(Object),
+			dateCreated: expect.any(String),
+			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			id: 35430,
+			id: expect.any(Number),
 			keywords: [],
-			name: 'TestName_FirstEntry',
+			name: 'TestName',
 			scopeKey: 'Guest',
-			status: {
-				code: 0,
-				label: 'approved',
-				label_i18n: 'Aprobado',
-			},
+			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testDateField: '2024-01-05T00:00:00Z',
 			testDateTimeField: '2024-01-05T15:00:00.000Z',
@@ -795,53 +675,21 @@ test('can import CSV file with new and existing site scoped object entries', asy
 				'This is a long text to test testLongTextField. The first entry',
 			testPrecisionDecimalField: 321.123,
 			testRichTextField:
-				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The first entry.  </p>',
+				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField.  </p>',
 			testRichTextFieldRawText:
-				'This is a long text with some fomatting to text testRichTextField. The first entry.',
+				'This is a long text with some fomatting to text testRichTextField.',
 		},
 		{
-			actions: {
-				delete: {
-					href: 'http://localhost:8080/o/c/tests/35440',
-					method: 'DELETE',
-				},
-				get: {
-					href: 'http://localhost:8080/o/c/tests/35440',
-					method: 'GET',
-				},
-				permissions: {
-					href: 'http://localhost:8080/o/c/tests/35440/permissions',
-					method: 'GET',
-				},
-				replace: {
-					href: 'http://localhost:8080/o/c/tests/35440',
-					method: 'PUT',
-				},
-				update: {
-					href: 'http://localhost:8080/o/c/tests/35440',
-					method: 'PATCH',
-				},
-			},
-			creator: {
-				additionalName: '',
-				contentType: 'UserAccount',
-				familyName: 'Test',
-				givenName: 'Test',
-				id: 20122,
-				name: 'Test Test',
-			},
-			dateCreated: '2024-01-10T10:51:15Z',
-			dateModified: '2024-01-10T10:51:15Z',
+			actions: expect.any(Object),
+			creator: expect.any(Object),
+			dateCreated: expect.any(String),
+			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
-			id: 35440,
+			id: expect.any(Number),
 			keywords: [],
 			name: 'TestName_SecondEntry',
 			scopeKey: 'Guest',
-			status: {
-				code: 0,
-				label: 'approved',
-				label_i18n: 'Aprobado',
-			},
+			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testDateField: '2024-01-06T00:00:00Z',
 			testDateTimeField: '2024-01-06T15:00:00.000Z',
@@ -852,25 +700,13 @@ test('can import CSV file with new and existing site scoped object entries', asy
 				'This is a long text to test testLongTextField. The second entry',
 			testPrecisionDecimalField: 123.321,
 			testRichTextField:
-				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The second entry.  </p>',
+				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. New entry.  </p>',
 			testRichTextFieldRawText:
-				'This is a long text with some fomatting to text testRichTextField. The second entry.',
+				'This is a long text with some fomatting to text testRichTextField. New entry.',
 		},
-	]).toEqual(
-		testObjectEntries.items.map((item) =>
-			expect.objectContaining({
-				...item,
-				actions: expect.any(Object),
-				creator: expect.any(Object),
-				dateCreated: expect.any(String),
-				dateModified: expect.any(String),
-				id: expect.any(Number),
-				status: expect.any(Object),
-			})
-		)
-	);
+	]);
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinitionId);
+	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
@@ -886,13 +722,13 @@ test('cannot import empty CSV file', async ({
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
 	);
-	const objectDefinitionId = await response.id;
 
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
 
-	const fileWithPath = path.join(__dirname, '/dependencies/c_test-Empty.csv');
-	await _dataMigrationCenterPage.selectFile(fileWithPath);
+	await _dataMigrationCenterPage.selectFile(
+		path.join(__dirname, '/dependencies/emptyObjectEntries.csv')
+	);
 
 	await _dataMigrationCenterPage.selectImportEntityType(
 		OBJECT_ENTRY_ENTITY_TYPE
@@ -904,7 +740,7 @@ test('cannot import empty CSV file', async ({
 
 	await expect(page.getByText('Error:Please upload a file.')).toBeVisible();
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinitionId);
+	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
@@ -919,20 +755,15 @@ test('cannot import CSV file with object entry with UPSERT strategy', async ({
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
 	);
-	const objectDefinitionId = await response.id;
 
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
 
-	const fileWithPathTwoEntries = path.join(
-		__dirname,
-		'/dependencies/c_test.csv'
-	);
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		fileWithPathTwoEntries,
-		UPSERT,
-		PARTIAL_UPDATE
+		path.join(__dirname, '/dependencies/objectEntries.csv'),
+		'UPSERT',
+		'PARTIAL_UPDATE'
 	);
 
 	await expect(
@@ -941,12 +772,12 @@ test('cannot import CSV file with object entry with UPSERT strategy', async ({
 		)
 	).toBeVisible();
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinitionId);
+	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('can show duplicate error message with import existing entry and only add new record fields', async ({
+test('can show duplicate error message with CSV import existing entry and only add new record fields', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -956,27 +787,24 @@ test('can show duplicate error message with import existing entry and only add n
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
 	);
-	const objectDefinitionId = await response.id;
 
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
 
-	const fileWithPathFirst = path.join(__dirname, '/dependencies/c_test.csv');
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		fileWithPathFirst,
-		UPSERT,
-		UPDATE
+		path.join(__dirname, '/dependencies/objectEntries.csv'),
+		'UPSERT',
+		'UPDATE'
 	);
 
 	await page.getByRole('button', {exact: true, name: 'Close'}).click();
 
-	const fileWithPathSecond = path.join(__dirname, '/dependencies/c_test.csv');
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		fileWithPathSecond,
-		INSERT,
-		UPDATE
+		path.join(__dirname, '/dependencies/objectEntries.csv'),
+		'INSERT',
+		'UPDATE'
 	);
 
 	await expect(
@@ -985,7 +813,7 @@ test('can show duplicate error message with import existing entry and only add n
 		)
 	).toBeVisible();
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinitionId);
+	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
@@ -1001,73 +829,38 @@ test('can import CSV file with an unexisting field', async ({
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
 	);
-	const objectDefinitionId = await response.id;
 
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
 
-	const fileWithPathTwoEntries = path.join(
-		__dirname,
-		'/dependencies/c_test-NonExistingField.csv'
-	);
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		fileWithPathTwoEntries,
-		UPSERT,
-		UPDATE
+		path.join(__dirname, '/dependencies/nonExistingFieldObjectEntries.csv'),
+		'UPSERT',
+		'UPDATE'
 	);
 
 	await expect(
 		page.getByText('The import process completed successfully.')
 	).toBeVisible();
 
-	const testObjectEntries = await _apiHelpers.customObject.getObjectDefinitionObjectEntries(
-		'c/tests'
-	);
-
-	expect([
+	expect(
+		(
+			await _apiHelpers.customObject.getObjectDefinitionObjectEntries(
+				'c/tests'
+			)
+		).items
+	).toEqual([
 		{
-			actions: {
-				delete: {
-					href: 'http://localhost:8080/o/c/tests/35537',
-					method: 'DELETE',
-				},
-				get: {
-					href: 'http://localhost:8080/o/c/tests/35537',
-					method: 'GET',
-				},
-				permissions: {
-					href: 'http://localhost:8080/o/c/tests/35537/permissions',
-					method: 'GET',
-				},
-				replace: {
-					href: 'http://localhost:8080/o/c/tests/35537',
-					method: 'PUT',
-				},
-				update: {
-					href: 'http://localhost:8080/o/c/tests/35537',
-					method: 'PATCH',
-				},
-			},
-			creator: {
-				additionalName: '',
-				contentType: 'UserAccount',
-				familyName: 'Test',
-				givenName: 'Test',
-				id: 20122,
-				name: 'Test Test',
-			},
-			dateCreated: '2024-01-10T10:54:16Z',
-			dateModified: '2024-01-10T10:54:16Z',
+			actions: expect.any(Object),
+			creator: expect.any(Object),
+			dateCreated: expect.any(String),
+			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			id: 35537,
+			id: expect.any(Number),
 			keywords: [],
 			name: 'TestName',
-			status: {
-				code: 0,
-				label: 'approved',
-				label_i18n: 'Aprobado',
-			},
+			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testDateField: '2024-01-05T00:00:00Z',
 			testDateTimeField: '2024-01-05T15:00:00.000Z',
@@ -1079,26 +872,14 @@ test('can import CSV file with an unexisting field', async ({
 			testRichTextField: 'null',
 			testRichTextFieldRawText: 'null',
 		},
-	]).toEqual(
-		testObjectEntries.items.map((item) =>
-			expect.objectContaining({
-				...item,
-				actions: expect.any(Object),
-				creator: expect.any(Object),
-				dateCreated: expect.any(String),
-				dateModified: expect.any(String),
-				id: expect.any(Number),
-				status: expect.any(Object),
-			})
-		)
-	);
+	]);
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinitionId);
+	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('cannot import CSV file without headers', async ({
+test('cannot import CSV file without headers row', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -1109,11 +890,9 @@ test('cannot import CSV file without headers', async ({
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
 
-	const fileWithPath = path.join(
-		__dirname,
-		'/dependencies/c_test-NoHeaders2.csv'
+	await _dataMigrationCenterPage.selectFile(
+		path.join(__dirname, '/dependencies/noHeadersObjectEntries.csv')
 	);
-	await _dataMigrationCenterPage.selectFile(fileWithPath);
 
 	await page.getByRole('button', {name: 'Next'}).click();
 
@@ -1128,7 +907,7 @@ test('cannot import CSV file without headers', async ({
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
-test('can import CSV file with new and existing company scoped object entries', async ({
+test('can import CSV file with new and modified existing company scoped object entries', async ({
 	_apiHelpers,
 	_dataMigrationCenterPage,
 	page,
@@ -1139,83 +918,50 @@ test('can import CSV file with new and existing company scoped object entries', 
 	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
 	);
-	const objectDefinitionId = await response.id;
 
 	await _dataMigrationCenterPage.goto();
 	await _dataMigrationCenterPage.goToImportFile();
 
-	const fileWithPath = path.join(__dirname, '/dependencies/c_test.csv');
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		fileWithPath,
-		UPSERT,
-		UPDATE
+		path.join(__dirname, '/dependencies/objectEntries.csv'),
+		'UPSERT',
+		'UPDATE'
 	);
 
 	await page.getByRole('button', {exact: true, name: 'Close'}).click();
 
-	const fileWithPathTwoEntries = path.join(
-		__dirname,
-		'/dependencies/c_test-TwoEntriesExistingModified.csv'
-	);
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		fileWithPathTwoEntries,
-		UPSERT,
-		UPDATE
+		path.join(
+			__dirname,
+			'/dependencies/twoEntriesExistingModifiedObjectEntries.csv'
+		),
+		'UPSERT',
+		'UPDATE'
 	);
 
 	await expect(
 		page.getByText('The import process completed successfully.')
 	).toBeVisible();
 
-	const testObjectEntries = await _apiHelpers.customObject.getObjectDefinitionObjectEntries(
-		'c/tests'
-	);
-
-	expect([
+	expect(
+		(
+			await _apiHelpers.customObject.getObjectDefinitionObjectEntries(
+				'c/tests'
+			)
+		).items
+	).toEqual([
 		{
-			actions: {
-				delete: {
-					href: 'http://localhost:8080/o/c/tests/35728',
-					method: 'DELETE',
-				},
-				get: {
-					href: 'http://localhost:8080/o/c/tests/35728',
-					method: 'GET',
-				},
-				permissions: {
-					href: 'http://localhost:8080/o/c/tests/35728/permissions',
-					method: 'GET',
-				},
-				replace: {
-					href: 'http://localhost:8080/o/c/tests/35728',
-					method: 'PUT',
-				},
-				update: {
-					href: 'http://localhost:8080/o/c/tests/35728',
-					method: 'PATCH',
-				},
-			},
-			creator: {
-				additionalName: '',
-				contentType: 'UserAccount',
-				familyName: 'Test',
-				givenName: 'Test',
-				id: 20122,
-				name: 'Test Test',
-			},
-			dateCreated: '2024-01-10T11:09:14Z',
-			dateModified: '2024-01-10T11:09:17Z',
+			actions: expect.any(Object),
+			creator: expect.any(Object),
+			dateCreated: expect.any(String),
+			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			id: 35728,
+			id: expect.any(Number),
 			keywords: [],
 			name: 'TestName_Modified',
-			status: {
-				code: 0,
-				label: 'approved',
-				label_i18n: 'Aprobado',
-			},
+			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testDateField: '2024-01-05T00:00:00Z',
 			testDateTimeField: '2024-01-05T15:00:00.000Z',
@@ -1231,47 +977,15 @@ test('can import CSV file with new and existing company scoped object entries', 
 				'This is a long text with some fomatting to text testRichTextField. The modified entry.',
 		},
 		{
-			actions: {
-				delete: {
-					href: 'http://localhost:8080/o/c/tests/35737',
-					method: 'DELETE',
-				},
-				get: {
-					href: 'http://localhost:8080/o/c/tests/35737',
-					method: 'GET',
-				},
-				permissions: {
-					href: 'http://localhost:8080/o/c/tests/35737/permissions',
-					method: 'GET',
-				},
-				replace: {
-					href: 'http://localhost:8080/o/c/tests/35737',
-					method: 'PUT',
-				},
-				update: {
-					href: 'http://localhost:8080/o/c/tests/35737',
-					method: 'PATCH',
-				},
-			},
-			creator: {
-				additionalName: '',
-				contentType: 'UserAccount',
-				familyName: 'Test',
-				givenName: 'Test',
-				id: 20122,
-				name: 'Test Test',
-			},
-			dateCreated: '2024-01-10T11:09:17Z',
-			dateModified: '2024-01-10T11:09:17Z',
+			actions: expect.any(Object),
+			creator: expect.any(Object),
+			dateCreated: expect.any(String),
+			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
-			id: 35737,
+			id: expect.any(Number),
 			keywords: [],
 			name: 'TestName_NewEntry',
-			status: {
-				code: 0,
-				label: 'approved',
-				label_i18n: 'Aprobado',
-			},
+			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testDateField: '2024-01-06T00:00:00Z',
 			testDateTimeField: '2024-01-06T15:00:00.000Z',
@@ -1286,21 +1000,9 @@ test('can import CSV file with new and existing company scoped object entries', 
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField. The new entry.',
 		},
-	]).toEqual(
-		testObjectEntries.items.map((item) =>
-			expect.objectContaining({
-				...item,
-				actions: expect.any(Object),
-				creator: expect.any(Object),
-				dateCreated: expect.any(String),
-				dateModified: expect.any(String),
-				id: expect.any(Number),
-				status: expect.any(Object),
-			})
-		)
-	);
+	]);
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinitionId);
+	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
 	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });

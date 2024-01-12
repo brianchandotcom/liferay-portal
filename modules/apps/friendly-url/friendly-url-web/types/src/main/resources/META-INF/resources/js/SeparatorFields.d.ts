@@ -6,6 +6,10 @@
 /// <reference types="react" />
 
 declare type Props = {
+	errors: {
+		errorMessage?: string;
+		fields?: Record<string, string>;
+	};
 	fields: Array<{
 		label: string;
 		name: string;
@@ -13,5 +17,9 @@ declare type Props = {
 	}>;
 	url: string;
 };
-export default function SeparatorFields({fields, url}: Props): JSX.Element;
+export default function SeparatorFields({
+	errors,
+	fields,
+	url,
+}: Props): JSX.Element;
 export {};

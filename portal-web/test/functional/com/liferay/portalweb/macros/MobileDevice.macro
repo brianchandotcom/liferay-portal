@@ -144,6 +144,8 @@ definition {
 			takeScreenshot();
 
 			if (isSet(height)) {
+				WaitForEditable(locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_HEIGHT_FIELD");
+
 				TripleClick(locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_HEIGHT_FIELD");
 
 				Type.sendKeys(
@@ -152,6 +154,8 @@ definition {
 			}
 
 			if (isSet(width)) {
+				WaitForEditable(locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_HEIGHT_FIELD");
+
 				TripleClick(locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_WIDTH_FIELD");
 
 				Type.sendKeys(

@@ -143,9 +143,9 @@ public class AMJournalArticleExportImportContentProcessor
 		return false;
 	}
 
-	@Reference
-	private AMJournalArticleContentHTMLReplacer
-		_amJournalArticleContentHTMLReplacer;
+	private final AMJournalArticleContentHTMLReplacer
+		_amJournalArticleContentHTMLReplacer =
+			new AMJournalArticleContentHTMLReplacer();
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

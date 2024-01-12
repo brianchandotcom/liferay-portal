@@ -303,30 +303,27 @@ definition {
 			Navigator.gotoNavTab(navTab = "SEO");
 		}
 
-		task ("Then the user cannot configure the Robots and Sitemap settings") {
-			Alert.viewInfoMessageSpecific(infoMessage = "Robots can only be defined for display page templates marked as default.");
-
-			AssertNotEditable(
+		task ("Then the user could configure the Robots and Sitemap settings") {
+			AssertEditable(
 				key_label = "Robots",
 				locator1 = "TextArea#ANY_LABELED");
 
-			AssertTextEquals(
+			AssertAttributeValue(
 				key_label = "Robots",
 				locator1 = "TextArea#ANY_LABELED",
-				value1 = "noindex, nofollow");
+				value1 = "placeholder",
+				value2 = "Robots");
 
-			Alert.viewInfoMessageSpecific(infoMessage = "Only display page templates that are marked as default for an asset type will be indexed in order to avoid duplicity.");
-
-			AssertNotEditable(
+			AssertEditable(
 				key_fieldLabel = "Include",
 				locator1 = "Select#GENERIC_SELECT_FIELD");
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Include",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "No");
+				value1 = "Yes");
 
-			AssertNotEditable(
+			AssertEditable(
 				key_text = "Page Priority",
 				locator1 = "TextInput#ANY");
 
@@ -336,7 +333,7 @@ definition {
 				value1 = "placeholder",
 				value2 = "0.0");
 
-			AssertNotEditable(
+			AssertEditable(
 				key_fieldLabel = "Change Frequency",
 				locator1 = "Select#GENERIC_SELECT_FIELD");
 

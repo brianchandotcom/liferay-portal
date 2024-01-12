@@ -1,7 +1,7 @@
 assemble:
     - from: assets
       into: static
-liferay-dotcom-global-favicon:
-    name: Liferay Dotcom Global Favicon
+liferay-dotcom-theme-favicon:
+    name: Liferay Dotcom Theme Favicon
     type: themeFavicon
     url: favicon.ico

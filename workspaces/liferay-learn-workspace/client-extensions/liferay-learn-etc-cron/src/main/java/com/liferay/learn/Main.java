@@ -527,7 +527,7 @@ public class Main {
 			_parser.parse(text));
 
 		if (parsedContent.length() > 300) {
-			parsedContent = parsedContent.substring(0, 301) + "...";
+			return parsedContent.substring(0, 301) + "...";
 		}
 
 		return parsedContent;

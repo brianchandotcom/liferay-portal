@@ -22,11 +22,14 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.RememberMeToken;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTracker;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.Authenticator;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.RememberMeTokenLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,6 +42,7 @@ import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -194,6 +198,9 @@ public class AuthenticatedSessionManagerUtil {
 			CookiesConstants.CONSENT_TYPE_NECESSARY, idCookie,
 			httpServletRequest, httpServletResponse);
 
+		RememberMeTokenLocalServiceUtil.checkUserExpiredRememberMeTokens(
+			user.getUserId());
+
 		if (rememberMe) {
 			Cookie loginCookie = new Cookie(CookiesConstants.NAME_LOGIN, login);
 
@@ -233,6 +240,51 @@ public class AuthenticatedSessionManagerUtil {
 			CookiesManagerUtil.addCookie(
 				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, rememberMeCookie,
 				httpServletRequest, httpServletResponse);
+
+			Date tokenExpirationDate = new Date(
+				System.currentTimeMillis() + ((long)loginMaxAge * 1000));
+
+			RememberMeToken rememberMeToken =
+				RememberMeTokenLocalServiceUtil.addRememberMeToken(
+					user.getCompanyId(), user.getUserId(), tokenExpirationDate);
+
+			Cookie rememberMeTokenIdCookie = new Cookie(
+				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
+				String.valueOf(rememberMeToken.getRememberMeTokenId()));
+
+			if (domain != null) {
+				rememberMeTokenIdCookie.setDomain(domain);
+			}
+
+			rememberMeTokenIdCookie.setMaxAge(loginMaxAge);
+			rememberMeTokenIdCookie.setPath(StringPool.SLASH);
+
+			CookiesManagerUtil.addCookie(
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
+				rememberMeTokenIdCookie, httpServletRequest,
+				httpServletResponse);
+
+			Cookie rememberMeTokenTokenCookie = new Cookie(
+				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
+				rememberMeToken.getToken());
+
+			if (domain != null) {
+				rememberMeTokenTokenCookie.setDomain(domain);
+			}
+
+			rememberMeTokenTokenCookie.setMaxAge(loginMaxAge);
+			rememberMeTokenTokenCookie.setPath(StringPool.SLASH);
+
+			CookiesManagerUtil.addCookie(
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
+				rememberMeTokenTokenCookie, httpServletRequest,
+				httpServletResponse);
+
+			rememberMeToken.setToken(
+				PasswordEncryptorUtil.encrypt(rememberMeToken.getToken()));
+
+			RememberMeTokenLocalServiceUtil.updateRememberMeToken(
+				rememberMeToken);
 		}
 	}
 
@@ -257,17 +309,32 @@ public class AuthenticatedSessionManagerUtil {
 			CookiesManagerUtil.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME, httpServletRequest, false));
 
+		if (rememberMe) {
+			String rememberMeTokenId = CookiesManagerUtil.getCookieValue(
+				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID, httpServletRequest);
+
+			if (Validator.isNotNull(rememberMeTokenId)) {
+				RememberMeTokenLocalServiceUtil.deleteRememberMeToken(
+					GetterUtil.getLong(rememberMeTokenId));
+			}
+		}
+
 		CookiesManagerUtil.deleteCookies(
 			domain, httpServletRequest, httpServletResponse,
 			CookiesConstants.NAME_COMPANY_ID,
 			CookiesConstants.NAME_GUEST_LANGUAGE_ID, CookiesConstants.NAME_ID,
-			CookiesConstants.NAME_PASSWORD, CookiesConstants.NAME_REMEMBER_ME);
+			CookiesConstants.NAME_PASSWORD, CookiesConstants.NAME_REMEMBER_ME,
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN);
 
 		if (!rememberMe) {
 			CookiesManagerUtil.deleteCookies(
 				domain, httpServletRequest, httpServletResponse,
 				CookiesConstants.NAME_LOGIN);
 		}
+
+		RememberMeTokenLocalServiceUtil.checkUserExpiredRememberMeTokens(
+			PortalUtil.getUserId(httpServletRequest));
 
 		try {
 			httpSession.invalidate();

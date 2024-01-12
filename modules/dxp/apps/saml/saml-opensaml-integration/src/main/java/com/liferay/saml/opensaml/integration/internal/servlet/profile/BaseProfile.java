@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.RememberMeTokenLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -390,10 +391,19 @@ public abstract class BaseProfile {
 	}
 
 	public void logout(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
 
 		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
+
+		String rememberMeTokenId = CookiesManagerUtil.getCookieValue(
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID, httpServletRequest);
+
+		if (Validator.isNotNull(rememberMeTokenId)) {
+			RememberMeTokenLocalServiceUtil.deleteRememberMeToken(
+				GetterUtil.getLong(rememberMeTokenId));
+		}
 
 		CookiesManagerUtil.deleteCookies(
 			domain, httpServletRequest, httpServletResponse,
@@ -410,6 +420,14 @@ public abstract class BaseProfile {
 		CookiesManagerUtil.deleteCookies(
 			domain, httpServletRequest, httpServletResponse,
 			CookiesConstants.NAME_REMEMBER_ME);
+
+		CookiesManagerUtil.deleteCookies(
+			domain, httpServletRequest, httpServletResponse,
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID);
+
+		CookiesManagerUtil.deleteCookies(
+			domain, httpServletRequest, httpServletResponse,
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN);
 
 		boolean rememberMe = GetterUtil.getBoolean(
 			CookiesManagerUtil.getCookieValue(

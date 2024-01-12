@@ -2,6 +2,7 @@
 	"dependencies": {
 		"@liferay/map-common": "*"
 	},
+	"main": "js/GeoLocationField.js",
 	"name": "@liferay/expando-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

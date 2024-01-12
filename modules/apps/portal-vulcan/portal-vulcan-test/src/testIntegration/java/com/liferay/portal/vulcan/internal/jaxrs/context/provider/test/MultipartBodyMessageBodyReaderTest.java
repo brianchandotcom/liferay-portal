@@ -6,9 +6,11 @@
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import java.io.OutputStream;
@@ -21,6 +23,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.Consumes;
@@ -127,8 +130,21 @@ public class MultipartBodyMessageBodyReaderTest {
 		@Path("/test-class")
 		@POST
 		@Produces(MediaType.APPLICATION_JSON)
-		public Response testClass(MultipartBody multipartBody) {
-			if (MapUtil.isEmpty(multipartBody.getValues())) {
+		public Response testClass(MultipartBody multipartBody)
+			throws Exception {
+
+			BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+			Map<String, String> values = multipartBody.getValues();
+
+			if ((binaryFile == null) ||
+				!StringUtil.equals("text/plain", binaryFile.getContentType()) ||
+				!StringUtil.equals("filename.txt", binaryFile.getFileName()) ||
+				!StringUtil.equals(
+					"file content",
+					StreamUtil.toString(binaryFile.getInputStream())) ||
+				(values == null) ||
+				!StringUtil.equals(values.get("param"), "value")) {
+
 				return Response.serverError(
 				).build();
 			}

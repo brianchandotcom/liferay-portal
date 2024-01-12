@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
+import com.liferay.portal.kernel.service.RememberMeTokenLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -53,12 +54,14 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String autoUserId = CookiesManagerUtil.getCookieValue(
-			CookiesConstants.NAME_ID, httpServletRequest, false);
-		String autoPassword = CookiesManagerUtil.getCookieValue(
-			CookiesConstants.NAME_PASSWORD, httpServletRequest, false);
 		String rememberMe = CookiesManagerUtil.getCookieValue(
 			CookiesConstants.NAME_REMEMBER_ME, httpServletRequest, false);
+		String rememberMeTokenId = CookiesManagerUtil.getCookieValue(
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID, httpServletRequest,
+			false);
+		String rememberMeTokenToken = CookiesManagerUtil.getCookieValue(
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN, httpServletRequest,
+			false);
 
 		// LEP-5188
 
@@ -78,21 +81,22 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 
 		String[] credentials = null;
 
-		if (Validator.isNotNull(autoUserId) &&
-			Validator.isNotNull(autoPassword) &&
-			Validator.isNotNull(rememberMe)) {
+		if (Validator.isNotNull(rememberMe) &&
+			Validator.isNotNull(rememberMeTokenId) &&
+			Validator.isNotNull(rememberMeTokenToken)) {
 
 			Company company = _portal.getCompany(httpServletRequest);
 
 			if (company.isAutoLogin()) {
-				KeyValuePair kvp = _userLocalService.decryptUserId(
-					company.getCompanyId(), autoUserId, autoPassword);
+				KeyValuePair kvp = _rememberMeTokenLocalService.validateToken(
+					GetterUtil.getLong(rememberMeTokenId),
+					rememberMeTokenToken);
 
 				credentials = new String[3];
 
 				credentials[0] = kvp.getKey();
 				credentials[1] = kvp.getValue();
-				credentials[2] = Boolean.FALSE.toString();
+				credentials[2] = Boolean.TRUE.toString();
 			}
 		}
 
@@ -113,6 +117,9 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 
 				removeCookies(httpServletRequest, httpServletResponse);
 
+				_rememberMeTokenLocalService.deleteRememberMeToken(
+					GetterUtil.getLong(rememberMeTokenId));
+
 				return null;
 			}
 		}
@@ -128,10 +135,10 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 
 		CookiesManagerUtil.deleteCookies(
 			domain, httpServletRequest, httpServletResponse,
-			CookiesConstants.NAME_ID);
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID);
 		CookiesManagerUtil.deleteCookies(
 			domain, httpServletRequest, httpServletResponse,
-			CookiesConstants.NAME_PASSWORD);
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -139,6 +146,9 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RememberMeTokenLocalService _rememberMeTokenLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

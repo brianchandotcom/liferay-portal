@@ -122,7 +122,7 @@ public class JournalEditArticleDisplayContext {
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_setViewAttributes();
+		setViewAttributes();
 	}
 
 	public String getArticleId() {
@@ -1311,6 +1311,42 @@ public class JournalEditArticleDisplayContext {
 		return _showSelectFolder;
 	}
 
+	public void setViewAttributes() {
+		if (!_isShowHeader()) {
+			return;
+		}
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBackTitle(
+			ParamUtil.getString(_httpServletRequest, "backURLTitle"));
+
+		if (Validator.isNotNull(getBackURL())) {
+			portletDisplay.setURLBack(getBackURL());
+		}
+		else if ((getClassNameId() ==
+					JournalArticleConstants.CLASS_NAME_ID_DEFAULT) &&
+				 (_article != null)) {
+
+			portletDisplay.setURLBack(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setParameter(
+					"folderId", _article.getFolderId()
+				).setParameter(
+					"groupId", _article.getGroupId()
+				).buildString());
+		}
+
+		if (_liferayPortletResponse instanceof RenderResponse) {
+			RenderResponse renderResponse =
+				(RenderResponse)_liferayPortletResponse;
+
+			renderResponse.setTitle(_getTitle());
+		}
+	}
+
 	private AssetDisplayPageEntry _getAssetDisplayPageEntry() {
 		if (_assetDisplayPageEntry != null) {
 			return _assetDisplayPageEntry;
@@ -1624,42 +1660,6 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		return false;
-	}
-
-	private void _setViewAttributes() {
-		if (!_isShowHeader()) {
-			return;
-		}
-
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBackTitle(
-			ParamUtil.getString(_httpServletRequest, "backURLTitle"));
-
-		if (Validator.isNotNull(getBackURL())) {
-			portletDisplay.setURLBack(getBackURL());
-		}
-		else if ((getClassNameId() ==
-					JournalArticleConstants.CLASS_NAME_ID_DEFAULT) &&
-				 (_article != null)) {
-
-			portletDisplay.setURLBack(
-				PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setParameter(
-					"folderId", _article.getFolderId()
-				).setParameter(
-					"groupId", _article.getGroupId()
-				).buildString());
-		}
-
-		if (_liferayPortletResponse instanceof RenderResponse) {
-			RenderResponse renderResponse =
-				(RenderResponse)_liferayPortletResponse;
-
-			renderResponse.setTitle(_getTitle());
-		}
 	}
 
 	private static final int _MAX_SITES = 6;

@@ -51,6 +51,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.definition.security.permission.resource.ObjectDefinitionPortletResourcePermissionRegistryUtil;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.field.attachment.AttachmentManager;
+import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -555,6 +556,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		_objectFieldFDSFilterFactoryRegistry =
+			new ObjectFieldFDSFilterFactoryRegistry(
+				_language, _objectFieldFilterContributorRegistry,
+				_objectFieldLocalService);
 	}
 
 	private PortletResourcePermission _getPortletResourcePermission(
@@ -681,9 +687,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private ObjectEntryService _objectEntryService;
 
-	@Reference
 	private ObjectFieldFDSFilterFactoryRegistry
 		_objectFieldFDSFilterFactoryRegistry;
+
+	@Reference
+	private ObjectFieldFilterContributorRegistry
+		_objectFieldFilterContributorRegistry;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

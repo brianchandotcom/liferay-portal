@@ -19,16 +19,52 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Feliphe Marinho
  */
 @Component(service = ObjectFieldFDSFilterFactoryRegistry.class)
 public class ObjectFieldFDSFilterFactoryRegistry {
+
+	public ObjectFieldFDSFilterFactoryRegistry(
+		Language language,
+		ObjectFieldFilterContributorRegistry
+			objectFieldFilterContributorRegistry,
+		ObjectFieldLocalService objectFieldLocalService) {
+
+		_objectFieldLocalService = objectFieldLocalService;
+
+		ObjectFieldDateRangeFDSFilterFactory
+			objectFieldDateRangeFDSFilterFactory =
+				new ObjectFieldDateRangeFDSFilterFactory(
+					language, _objectFieldLocalService);
+
+		_objectFieldBusinessTypeKeyMap.put(
+			ObjectFieldConstants.BUSINESS_TYPE_DATE,
+			objectFieldDateRangeFDSFilterFactory);
+		_objectFieldFilterTypeKeyMap.put(
+			ObjectViewFilterColumnConstants.FILTER_TYPE_DATE_RANGE,
+			objectFieldDateRangeFDSFilterFactory);
+
+		ListTypeEntryObjectFieldFDSFilterFactory
+			listTypeEntryObjectFieldFDSFilterFactory =
+				new ListTypeEntryObjectFieldFDSFilterFactory(
+					objectFieldFilterContributorRegistry);
+
+		_objectFieldBusinessTypeKeyMap.put(
+			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
+			listTypeEntryObjectFieldFDSFilterFactory);
+		_objectFieldBusinessTypeKeyMap.put(
+			ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP,
+			listTypeEntryObjectFieldFDSFilterFactory);
+		_objectFieldFilterTypeKeyMap.put(
+			ObjectViewFilterColumnConstants.FILTER_TYPE_EXCLUDES,
+			listTypeEntryObjectFieldFDSFilterFactory);
+		_objectFieldFilterTypeKeyMap.put(
+			ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
+			listTypeEntryObjectFieldFDSFilterFactory);
+	}
 
 	public ObjectFieldFDSFilterFactory getObjectFieldFDSFilterFactory(
 			long objectDefinitionId,
@@ -63,53 +99,10 @@ public class ObjectFieldFDSFilterFactoryRegistry {
 			objectField.getBusinessType());
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		ObjectFieldDateRangeFDSFilterFactory
-			objectFieldDateRangeFDSFilterFactory =
-				new ObjectFieldDateRangeFDSFilterFactory(
-					_language, _objectFieldLocalService);
-
-		_objectFieldBusinessTypeKeyMap.put(
-			ObjectFieldConstants.BUSINESS_TYPE_DATE,
-			objectFieldDateRangeFDSFilterFactory);
-		_objectFieldFilterTypeKeyMap.put(
-			ObjectViewFilterColumnConstants.FILTER_TYPE_DATE_RANGE,
-			objectFieldDateRangeFDSFilterFactory);
-
-		ListTypeEntryObjectFieldFDSFilterFactory
-			listTypeEntryObjectFieldFDSFilterFactory =
-				new ListTypeEntryObjectFieldFDSFilterFactory(
-					_objectFieldFilterContributorRegistry);
-
-		_objectFieldBusinessTypeKeyMap.put(
-			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-			listTypeEntryObjectFieldFDSFilterFactory);
-		_objectFieldBusinessTypeKeyMap.put(
-			ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP,
-			listTypeEntryObjectFieldFDSFilterFactory);
-		_objectFieldFilterTypeKeyMap.put(
-			ObjectViewFilterColumnConstants.FILTER_TYPE_EXCLUDES,
-			listTypeEntryObjectFieldFDSFilterFactory);
-		_objectFieldFilterTypeKeyMap.put(
-			ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
-			listTypeEntryObjectFieldFDSFilterFactory);
-	}
-
-	@Reference
-	private Language _language;
-
 	private final Map<String, ObjectFieldFDSFilterFactory>
 		_objectFieldBusinessTypeKeyMap = new HashMap<>();
-
-	@Reference
-	private ObjectFieldFilterContributorRegistry
-		_objectFieldFilterContributorRegistry;
-
 	private final Map<String, ObjectFieldFDSFilterFactory>
 		_objectFieldFilterTypeKeyMap = new HashMap<>();
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectFieldLocalService _objectFieldLocalService;
 
 }

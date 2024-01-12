@@ -153,8 +153,7 @@ function TreeItem({
 		<ClayTreeView.Item onKeyDown={(event) => handleKeyDown(event, item)}>
 			<ClayTreeView.ItemStack>
 				<ClayCheckbox
-					aria-labelledby={getId(namespace, item.id)}
-					containerProps={{className: 'mb-0'}}
+					containerProps={{className: 'my-0'}}
 					onChange={(event) => {
 						onSelectedChange(event.target.checked, item);
 					}}
@@ -163,25 +162,36 @@ function TreeItem({
 
 				{item.icon && <ClayIcon symbol={item.icon} />}
 
-				<span
-					className={classNames({
-						'layout-incomplete': item.incomplete,
+				<div
+					className={classNames('d-flex', {
+						'align-items-center c-ml-1':
+							Liferay.FeatureFlags['LPS-196847'],
 					})}
-					id={getId(namespace, item.id)}
-					title={getItemTitle(item)}
 				>
-					{getItemName(item)}
-				</span>
+					<span
+						className={classNames('flex-grow-0', {
+							'layout-incomplete': item.incomplete,
+						})}
+						title={getItemTitle(item)}
+					>
+						{getItemName(item)}
+					</span>
 
-				{Liferay.FeatureFlags['LPS-196847'] &&
-				item.id !== '0' &&
-				!item.hasGuestViewPermission ? (
-					<ClayIcon
-						className="c-ml-2 lfr-portal-tooltip"
-						data-title={Liferay.Language.get('restricted-page')}
-						symbol="lock"
-					/>
-				) : null}
+					{Liferay.FeatureFlags['LPS-196847'] &&
+					item.id !== '0' &&
+					!item.hasGuestViewPermission ? (
+						<span
+							aria-label={Liferay.Language.get('restricted-page')}
+							className="c-ml-2 lfr-portal-tooltip"
+							title={Liferay.Language.get('restricted-page')}
+						>
+							<ClayIcon
+								className="c-mt-0 lfr-portal-tooltip text-4"
+								symbol="lock"
+							/>
+						</span>
+					) : null}
+				</div>
 			</ClayTreeView.ItemStack>
 
 			<ClayTreeView.Group items={item.children}>
@@ -192,7 +202,7 @@ function TreeItem({
 					>
 						<ClayCheckbox
 							aria-labelledby={getId(namespace, childItem.id)}
-							containerProps={{className: 'mb-0'}}
+							containerProps={{className: 'my-0'}}
 							onChange={(event) =>
 								onSelectedChange(
 									event.target.checked,
@@ -204,26 +214,40 @@ function TreeItem({
 
 						{childItem.icon && <ClayIcon symbol={childItem.icon} />}
 
-						<span
-							className={classNames({
-								'layout-incomplete': childItem.incomplete,
+						<div
+							className={classNames('d-flex', {
+								'align-items-center c-ml-1':
+									Liferay.FeatureFlags['LPS-196847'],
 							})}
-							id={getId(namespace, childItem.id)}
-							title={getItemTitle(childItem)}
 						>
-							{getItemName(childItem)}
-						</span>
+							<span
+								className={classNames({
+									'layout-incomplete': childItem.incomplete,
+								})}
+								id={getId(namespace, childItem.id)}
+								title={getItemTitle(childItem)}
+							>
+								{getItemName(childItem)}
+							</span>
 
-						{Liferay.FeatureFlags['LPS-196847'] &&
-						!childItem.hasGuestViewPermission ? (
-							<ClayIcon
-								className="c-ml-2 lfr-portal-tooltip"
-								data-title={Liferay.Language.get(
-									'restricted-page'
-								)}
-								symbol="lock"
-							/>
-						) : null}
+							{Liferay.FeatureFlags['LPS-196847'] &&
+							!childItem.hasGuestViewPermission ? (
+								<span
+									aria-label={Liferay.Language.get(
+										'restricted-page'
+									)}
+									className="c-ml-2 lfr-portal-tooltip"
+									title={Liferay.Language.get(
+										'restricted-page'
+									)}
+								>
+									<ClayIcon
+										className="c-mt-0 lfr-portal-tooltip text-4"
+										symbol="lock"
+									/>
+								</span>
+							) : null}
+						</div>
 					</ClayTreeView.Item>
 				)}
 			</ClayTreeView.Group>

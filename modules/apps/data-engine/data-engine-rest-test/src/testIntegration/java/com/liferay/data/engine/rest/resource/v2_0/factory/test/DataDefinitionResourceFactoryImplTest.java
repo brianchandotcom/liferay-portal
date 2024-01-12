@@ -62,7 +62,10 @@ public class DataDefinitionResourceFactoryImplTest {
 
 					@Override
 					public Object getAttribute(String name) {
-						if (StringUtil.equals(name, WebKeys.LOCALE)) {
+						if (StringUtil.equals(name, WebKeys.CURRENT_URL)) {
+							return "http://localhost:8080/currentURL";
+						}
+						else if (StringUtil.equals(name, WebKeys.LOCALE)) {
 							return LocaleUtil.BRAZIL;
 						}
 

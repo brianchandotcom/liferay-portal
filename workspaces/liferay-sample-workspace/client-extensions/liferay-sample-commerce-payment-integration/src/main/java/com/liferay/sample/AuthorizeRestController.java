@@ -5,6 +5,8 @@
 
 package com.liferay.sample;
 
+import java.util.UUID;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -32,11 +34,14 @@ public class AuthorizeRestController extends BaseRestController {
 
 		log(jwt, _log, json);
 
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("paymentStatus", 2);
-
-		return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
+		return new ResponseEntity<>(
+			new JSONObject(
+			).put(
+				"paymentStatus", 2
+			).put(
+				"transactionCode", UUID.randomUUID()
+			).toString(),
+			HttpStatus.OK);
 	}
 
 	private static final Log _log = LogFactory.getLog(

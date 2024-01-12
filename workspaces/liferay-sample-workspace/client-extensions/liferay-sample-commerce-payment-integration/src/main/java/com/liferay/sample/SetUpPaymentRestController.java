@@ -32,11 +32,12 @@ public class SetUpPaymentRestController extends BaseRestController {
 
 		log(jwt, _log, json);
 
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("paymentStatus", 18);
-
-		return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
+		return new ResponseEntity<>(
+			new JSONObject(
+			).put(
+				"paymentStatus", 18
+			).toString(),
+			HttpStatus.OK);
 	}
 
 	private static final Log _log = LogFactory.getLog(

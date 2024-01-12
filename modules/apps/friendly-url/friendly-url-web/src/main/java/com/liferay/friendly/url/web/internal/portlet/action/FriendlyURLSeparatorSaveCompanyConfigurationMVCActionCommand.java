@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -123,6 +124,10 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 						return null;
 					}
 
+					friendlyURLSeparator =
+						_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+							friendlyURLSeparator);
+
 					return StringUtils.substringBetween(
 						friendlyURLSeparator, StringPool.SLASH);
 				});
@@ -188,6 +193,9 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 
 		return redirect;
 	}
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private FriendlyURLSeparatorConfigurationManager

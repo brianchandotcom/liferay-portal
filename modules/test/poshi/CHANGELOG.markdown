@@ -1,5 +1,19 @@
 # Poshi Runner Change Log
 
+## 1.0.483
+
+### Prose
+
+* [POSHI-654](https://liferay.atlassian.net/browse/POSHI-654) - Delete poshi prose 
+
+### Validation
+
+* [POSHI-629](https://liferay.atlassian.net/browse/POSHI-629) - Validate for double quoted or variable reference arguments in util methods
+
+### WebDriver
+
+* [POSHI-687](https://liferay.atlassian.net/browse/POSHI-687) - Make DEFAULT_PATH_LEAF_TO_NULL work
+
 ## 1.0.481
 
 ### Documentation

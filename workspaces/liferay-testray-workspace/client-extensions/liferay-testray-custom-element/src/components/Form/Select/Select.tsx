@@ -61,6 +61,7 @@ const InputSelect: React.FC<InputSelectProps> = ({
 				{options.map(({label, value}, index) => (
 					<option
 						key={index}
+						label={label}
 						selected={
 							forceSelectOption
 								? value === defaultValue

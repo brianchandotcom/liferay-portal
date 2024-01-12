@@ -413,7 +413,7 @@ public class JournalEditArticleDisplayContext {
 		).build();
 	}
 
-	public DDMFormValues getDDMFormValues() {
+	public DDMFormValues getDDMFormValues() throws Exception {
 		if (_ddmFormValues != null) {
 			return _ddmFormValues;
 		}
@@ -436,13 +436,11 @@ public class JournalEditArticleDisplayContext {
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT)) {
 
 			JournalArticle ddmStructureArticle =
-				JournalArticleLocalServiceUtil.fetchArticle(
+				JournalArticleLocalServiceUtil.getArticle(
 					ddmStructure.getGroupId(), DDMStructure.class.getName(),
 					ddmStructure.getStructureId());
 
-			if (ddmStructureArticle != null) {
-				ddmFormValues = ddmStructureArticle.getDDMFormValues();
-			}
+			ddmFormValues = ddmStructureArticle.getDDMFormValues();
 		}
 
 		if (ddmFormValues != null) {
@@ -560,7 +558,7 @@ public class JournalEditArticleDisplayContext {
 		String defaultArticleLanguageId = null;
 
 		if (Validator.isNotNull(getArticleId())) {
-			DDMFormValues ddmFormValues = getDDMFormValues();
+			DDMFormValues ddmFormValues = _article.getDDMFormValues();
 
 			defaultArticleLanguageId = LocaleUtil.toLanguageId(
 				ddmFormValues.getDefaultLocale());
@@ -1192,7 +1190,7 @@ public class JournalEditArticleDisplayContext {
 		).build();
 	}
 
-	public Map<String, Object> getValues() throws PortalException {
+	public Map<String, Object> getValues() throws Exception {
 		DDMFormValuesToMapConverter ddmFormValuesToMapConverter =
 			(DDMFormValuesToMapConverter)_httpServletRequest.getAttribute(
 				DDMFormValuesToMapConverter.class.getName());

@@ -83,9 +83,9 @@ public class MultipartBodyMessageBodyReaderTest {
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)url.openConnection();
 
-		httpURLConnection.setRequestMethod(Http.Method.POST.name());
 		httpURLConnection.setChunkedStreamingMode(50);
 		httpURLConnection.setDoOutput(true);
+		httpURLConnection.setRequestMethod(Http.Method.POST.name());
 
 		String boundary = "__MULTIPART_BOUNDARY__";
 

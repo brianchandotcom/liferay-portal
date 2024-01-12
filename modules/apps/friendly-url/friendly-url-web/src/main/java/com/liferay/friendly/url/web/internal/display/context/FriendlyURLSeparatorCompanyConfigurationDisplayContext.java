@@ -9,6 +9,7 @@ import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfig
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -16,15 +17,19 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Mikel Lorza
@@ -34,13 +39,18 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 	public FriendlyURLSeparatorCompanyConfigurationDisplayContext(
 		FriendlyURLSeparatorConfigurationManager
 			friendlyURLSeparatorConfigurationManager,
-		JSONFactory jsonFactory, Language language, ThemeDisplay themeDisplay) {
+		HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
+		Language language, Portal portal) {
 
 		_friendlyURLSeparatorConfigurationManager =
 			friendlyURLSeparatorConfigurationManager;
+		_httpServletRequest = httpServletRequest;
 		_jsonFactory = jsonFactory;
 		_language = language;
-		_themeDisplay = themeDisplay;
+		_portal = portal;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public JSONArray getConfigurableFriendlyURLSeparatorsJSONArray()
@@ -53,7 +63,10 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 		JSONObject configuredFriendlyURLSeparatorsJSONObject =
 			_getConfiguredFriendlyURLSeparatorsJSONObject();
 
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		String namespace = _portal.getPortletNamespace(_themeDisplay.getPpid());
+
+		Map<String, String[]> parameters =
+			_httpServletRequest.getParameterMap();
 
 		List<JSONObject> list = TransformUtil.transform(
 			FriendlyURLResolverRegistryUtil.
@@ -71,11 +84,18 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 						_themeDisplay.getLocale(),
 						friendlyURLResolver.getKey() + "-url-separator")
 				).put(
-					"name",
-					portletDisplay.getNamespace() + friendlyURLResolver.getKey()
+					"name", namespace + friendlyURLResolver.getKey()
 				).put(
 					"value",
 					() -> {
+						if (parameters.containsKey(
+								friendlyURLResolver.getKey())) {
+
+							return ParamUtil.getString(
+								_httpServletRequest,
+								friendlyURLResolver.getKey());
+						}
+
 						String friendlyURLSeparator =
 							configuredFriendlyURLSeparatorsJSONObject.getString(
 								friendlyURLResolver.getKey());
@@ -99,6 +119,23 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 			list, jsonObject -> jsonObject);
 
 		return _configurableFriendlyURLSeparatorsJSONArray;
+	}
+
+	public JSONObject getErrorsJSONObject() {
+		String errors = ParamUtil.getString(_httpServletRequest, "errors");
+
+		try {
+			if (Validator.isNotNull(errors)) {
+				return _jsonFactory.createJSONObject(errors);
+			}
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+		}
+
+		return _jsonFactory.createJSONObject();
 	}
 
 	public Map<String, Object> getSeparatorFieldsProps() throws Exception {
@@ -130,8 +167,10 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 	private JSONArray _configurableFriendlyURLSeparatorsJSONArray;
 	private final FriendlyURLSeparatorConfigurationManager
 		_friendlyURLSeparatorConfigurationManager;
+	private final HttpServletRequest _httpServletRequest;
 	private final JSONFactory _jsonFactory;
 	private final Language _language;
+	private final Portal _portal;
 	private final ThemeDisplay _themeDisplay;
 
 }

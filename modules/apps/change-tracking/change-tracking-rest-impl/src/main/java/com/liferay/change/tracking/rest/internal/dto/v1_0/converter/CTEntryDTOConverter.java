@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -148,9 +147,6 @@ public class CTEntryDTOConverter
 			}
 		};
 	}
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

@@ -10,7 +10,6 @@ import com.liferay.ai.creator.openai.web.internal.upload.AICreatorOpenAIUploadFi
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.util.File;
 import com.liferay.upload.UploadHandler;
 import com.liferay.upload.UploadResponseHandler;
 
@@ -40,7 +39,7 @@ public class UploadGenerationsMVCActionCommand extends BaseMVCActionCommand {
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_aiCreatorOpenAIFileEntryHandler =
-			new AICreatorOpenAIUploadFileEntryHandler(_dlAppService, _file);
+			new AICreatorOpenAIUploadFileEntryHandler(_dlAppService);
 	}
 
 	@Override
@@ -61,9 +60,6 @@ public class UploadGenerationsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLAppService _dlAppService;
-
-	@Reference
-	private File _file;
 
 	@Reference
 	private UploadHandler _uploadHandler;

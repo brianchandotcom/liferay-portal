@@ -105,7 +105,9 @@ public class AICreatorOpenAIUploadFileEntryHandler
 				null, null, file, null, null, serviceContext);
 		}
 		finally {
-			file.delete();
+			if (file != null) {
+				file.delete();
+			}
 		}
 	}
 

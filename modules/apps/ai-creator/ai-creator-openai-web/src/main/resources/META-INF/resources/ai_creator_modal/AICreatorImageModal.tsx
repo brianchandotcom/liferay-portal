@@ -79,13 +79,13 @@ export default function AICreatorImageModal({
 	};
 
 	const onSelectedChange = (imageURL: string) => {
-		const newSelectedImages = [...selectedImages] || [];
+		const newSelectedImages = [...selectedImages];
 
-		if (newSelectedImages?.includes(imageURL)) {
-			newSelectedImages?.splice(newSelectedImages.indexOf(imageURL), 1);
+		if (newSelectedImages.includes(imageURL)) {
+			newSelectedImages.splice(newSelectedImages.indexOf(imageURL), 1);
 		}
 		else {
-			newSelectedImages?.push(imageURL);
+			newSelectedImages.push(imageURL);
 		}
 
 		setSelectedImages(newSelectedImages);

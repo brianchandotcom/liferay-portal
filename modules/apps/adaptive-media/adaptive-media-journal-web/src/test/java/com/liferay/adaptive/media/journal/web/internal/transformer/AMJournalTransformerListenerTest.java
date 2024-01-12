@@ -6,7 +6,6 @@
 package com.liferay.adaptive.media.journal.web.internal.transformer;
 
 import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
-import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -67,8 +66,7 @@ public class AMJournalTransformerListenerTest {
 		String transformedOutput = RandomTestUtil.randomString();
 
 		Mockito.when(
-			_contentTransformerHandler.transform(
-				ContentTransformerContentTypes.HTML, originalOutput)
+			_contentTransformerHandler.transform(originalOutput)
 		).thenReturn(
 			transformedOutput
 		);

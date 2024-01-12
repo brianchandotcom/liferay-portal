@@ -919,6 +919,42 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateCompanyLocalesWithLayoutSetPrototype()
+		throws Exception {
+
+		Company company = addCompany();
+
+		long companyId = company.getCompanyId();
+
+		String languageId = "ca_ES";
+
+		try {
+			long userId = _userLocalService.getGuestUserId(companyId);
+
+			addLayoutSetPrototype(
+				companyId, userId, RandomTestUtil.randomString());
+
+			TimeZone timeZone = company.getTimeZone();
+
+			_companyLocalService.updateDisplay(
+				company.getCompanyId(), languageId, timeZone.getID());
+
+			_companyLocalService.updatePreferences(
+				company.getCompanyId(),
+				UnicodePropertiesBuilder.put(
+					PropsKeys.LOCALES, languageId
+				).build());
+
+			Assert.assertEquals(
+				Collections.singleton(LocaleUtil.fromLanguageId(languageId)),
+				_language.getAvailableLocales());
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
+	}
+
+	@Test
 	public void testUpdateDisplay() throws Exception {
 		Company company = addCompany();
 

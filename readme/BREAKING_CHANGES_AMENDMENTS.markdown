@@ -344,3 +344,22 @@ Class ConfigurationProvider is only used in modules.
 Add portal-configuration-module-configuration-api in build dependency and use the same class.
 ----
 ```
+----
+
+# 5eeb81045e4c30d7f0b253fc3e282ec67a12c306
+
+Missing breaking change
+
+Correct message should be:
+```
+LPS-196524 Move Snapshot and its test to module portal-kernel
+    
+# breaking
+## What osgi-util/src/main/java/com/liferay/osgi/util/service/Snapshot.java
+CLass Snapshot is moving into portal-kernel.
+## Why
+We're trying to replace all ServiceProxyFactory usages in portal with class Snapshot.
+## Alternatives
+Use com.liferay.portal.kernel.module.service.Snapshot instead.
+----
+```

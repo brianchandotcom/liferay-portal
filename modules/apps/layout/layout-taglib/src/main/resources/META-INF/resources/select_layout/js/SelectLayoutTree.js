@@ -9,7 +9,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import {debounce, fetch, getOpener, openToast, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
@@ -290,7 +290,7 @@ export function SelectLayoutTree({
 								<ClayIcon symbol={item.icon} />
 
 								<div
-									className={classnames('d-flex', {
+									className={classNames('d-flex', {
 										'align-items-center c-ml-1':
 											Liferay.FeatureFlags['LPS-196847'],
 									})}
@@ -370,7 +370,7 @@ export function SelectLayoutTree({
 										<ClayIcon symbol={item.icon} />
 
 										<div
-											className={classnames('d-flex', {
+											className={classNames('d-flex', {
 												'align-items-center c-ml-1':
 													Liferay.FeatureFlags[
 														'LPS-196847'

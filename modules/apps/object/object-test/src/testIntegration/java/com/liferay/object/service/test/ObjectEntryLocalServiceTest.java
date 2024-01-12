@@ -710,6 +710,69 @@ public class ObjectEntryLocalServiceTest {
 				HashMapBuilder.<String, Serializable>put(
 					"name", "Peter"
 				).build()));
+
+		_addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"nameLocalized"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).localized(
+				true
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+					).value(
+						Boolean.TRUE.toString()
+					).build())
+			).build());
+
+		String randomEnValue = "en_US " + RandomTestUtil.randomString();
+		String randomPtValue = "pt_BR " + RandomTestUtil.randomString();
+
+		Map<String, Serializable> localizedValue =
+			HashMapBuilder.<String, Serializable>put(
+				"nameLocalized_i18n",
+				HashMapBuilder.put(
+					"en_US", randomEnValue
+				).put(
+					"pt_BR", randomPtValue
+				).build()
+			).build();
+
+		_addObjectEntry(
+			group.getGroupId(), objectDefinition.getObjectDefinitionId(),
+			localizedValue);
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
+			StringBundler.concat(
+				"Unique value constraint violation for ",
+				objectDefinition.getLocalizationDBTableName(),
+				".nameLocalized_ with value ", randomEnValue),
+			() -> _addObjectEntry(
+				group.getGroupId(), finalObjectDefinitionId, localizedValue));
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
+			StringBundler.concat(
+				"Unique value constraint violation for ",
+				objectDefinition.getLocalizationDBTableName(),
+				".nameLocalized_ with value ", randomPtValue),
+			() -> _addObjectEntry(
+				group.getGroupId(), finalObjectDefinitionId,
+				HashMapBuilder.<String, Serializable>put(
+					"nameLocalized_i18n",
+					HashMapBuilder.put(
+						"en_US", "en_US " + RandomTestUtil.randomString()
+					).put(
+						"pt_BR", randomPtValue
+					).build()
+				).build()));
 	}
 
 	@Test

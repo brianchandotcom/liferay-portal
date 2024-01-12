@@ -17,17 +17,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "format=bbcode", service = MBMessageFormatUploadHandler.class
-)
 public class MBMessageBBCodeFormatUploadHandler
 	implements MBMessageFormatUploadHandler {
+
+	public MBMessageBBCodeFormatUploadHandler(
+		PortletFileRepository portletFileRepository) {
+
+		_portletFileRepository = portletFileRepository;
+	}
 
 	@Override
 	public String replaceImageReferences(
@@ -67,7 +67,6 @@ public class MBMessageBBCodeFormatUploadHandler
 				"=\"", tempFileId, "\"[^\\]]*\\][^\\[]+\\[/img\\]"));
 	}
 
-	@Reference
-	private PortletFileRepository _portletFileRepository;
+	private final PortletFileRepository _portletFileRepository;
 
 }

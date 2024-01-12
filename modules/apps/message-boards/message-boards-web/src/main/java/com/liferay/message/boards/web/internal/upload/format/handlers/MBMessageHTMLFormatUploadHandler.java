@@ -15,17 +15,17 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "format=html", service = MBMessageFormatUploadHandler.class
-)
 public class MBMessageHTMLFormatUploadHandler
 	implements MBMessageFormatUploadHandler {
+
+	public MBMessageHTMLFormatUploadHandler(
+		PortletFileRepository portletFileRepository) {
+
+		_portletFileRepository = portletFileRepository;
+	}
 
 	@Override
 	public String replaceImageReferences(
@@ -61,7 +61,6 @@ public class MBMessageHTMLFormatUploadHandler
 	private static final String _ATTRIBUTE_LIST_REGEXP =
 		"(\\s*?\\w+\\s*?=\\s*?\"[^\"]*\")*?\\s*?";
 
-	@Reference
-	private PortletFileRepository _portletFileRepository;
+	private final PortletFileRepository _portletFileRepository;
 
 }

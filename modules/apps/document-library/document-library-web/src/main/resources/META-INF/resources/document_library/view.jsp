@@ -77,6 +77,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 				).put(
 					"openViewMoreFileEntryTypesURL", dlViewDisplayContext.getViewMoreFileEntryTypesURL()
 				).put(
+					"redirect", dlViewDisplayContext.getRedirect()
+				).put(
 					"selectAssetCategoriesURL", dlViewDisplayContext.getSelectAssetCategoriesURL()
 				).put(
 					"selectAssetTagsURL", dlViewDisplayContext.getSelectAssetTagsURL()

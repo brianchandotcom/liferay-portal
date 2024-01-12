@@ -27,6 +27,7 @@ export default function propsTransformer({
 		editEntryURL,
 		folderConfiguration,
 		openViewMoreFileEntryTypesURL,
+		redirect,
 		selectAssetCategoriesURL,
 		selectAssetTagsURL,
 		selectExtensionURL,
@@ -315,7 +316,18 @@ export default function propsTransformer({
 				height: '70vh',
 				onSelect: ({selectedItems}) => {
 					if (selectedItems) {
-						window.location.reload();
+						openToast({
+							message: sub(
+								Liferay.Language.get(
+									'x-files-were-successfully-added'
+								),
+								[`<strong>${selectedItems.length}</strong>`]
+							),
+							title: Liferay.Language.get('success'),
+							type: 'success',
+						});
+
+						navigate(redirect);
 					}
 				},
 				selectEventName: `${portletNamespace}selectAIImages`,

@@ -77,7 +77,7 @@ public class DLViewDisplayContext {
 		).setCMD(
 			Constants.ADD
 		).setRedirect(
-			_getRedirect()
+			getRedirect()
 		).setParameter(
 			"folderId", _dlAdminDisplayContext.getFolderId()
 		).setParameter(
@@ -100,7 +100,7 @@ public class DLViewDisplayContext {
 		).setMVCRenderCommandName(
 			"/document_library/copy_dl_objects"
 		).setRedirect(
-			_getRedirect()
+			getRedirect()
 		).setParameter(
 			"sourceFolderId", getFolderId()
 		).setParameter(
@@ -132,7 +132,7 @@ public class DLViewDisplayContext {
 		).setActionName(
 			"/document_library/edit_entry"
 		).setRedirect(
-			_getRedirect()
+			getRedirect()
 		).buildString();
 	}
 
@@ -168,6 +168,12 @@ public class DLViewDisplayContext {
 		return PermissionsURLTag.doTag(
 			null, className, themeDisplay.getScopeGroupId(),
 			LiferayWindowState.POP_UP.toString(), _httpServletRequest);
+	}
+
+	public String getRedirect() {
+		PortletURL portletURL = _getCurrentPortletURL();
+
+		return portletURL.toString();
 	}
 
 	public long getRepositoryId() {
@@ -306,7 +312,7 @@ public class DLViewDisplayContext {
 		).setMVCRenderCommandName(
 			"/document_library/view_file_entry"
 		).setRedirect(
-			_getRedirect()
+			getRedirect()
 		).buildString();
 	}
 
@@ -439,12 +445,6 @@ public class DLViewDisplayContext {
 
 	private String _getNavigation() {
 		return _dlAdminDisplayContext.getNavigation();
-	}
-
-	private String _getRedirect() {
-		PortletURL portletURL = _getCurrentPortletURL();
-
-		return portletURL.toString();
 	}
 
 	private final DLAdminDisplayContext _dlAdminDisplayContext;

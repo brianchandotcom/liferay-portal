@@ -14,18 +14,9 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Feliphe Marinho
  */
-@Component(
-	property = {
-		"filter.type=" + ObjectFilterConstants.TYPE_EQUALS,
-		"filter.type=" + ObjectFilterConstants.TYPE_NOT_EQUALS
-	},
-	service = ObjectFilterParser.class
-)
 public class EqualityOperatorsObjectFilterParser implements ObjectFilterParser {
 
 	@Override

@@ -17,18 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Feliphe Marinho
  */
-@Component(
-	property = {
-		"filter.type=" + ObjectFilterConstants.TYPE_EXCLUDES,
-		"filter.type=" + ObjectFilterConstants.TYPE_INCLUDES
-	},
-	service = ObjectFilterParser.class
-)
 public class InclusionOperatorsObjectFilterParser
 	implements ObjectFilterParser {
 

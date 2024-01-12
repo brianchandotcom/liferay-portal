@@ -5,22 +5,15 @@
 
 package com.liferay.object.internal.filter.parser;
 
-import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.model.ObjectFilter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Gabriel Albuquerque
  */
-@Component(
-	property = "filter.type=" + ObjectFilterConstants.TYPE_CURRENT_USER,
-	service = ObjectFilterParser.class
-)
 public class CurrentUserObjectFilterParser implements ObjectFilterParser {
 
 	@Override

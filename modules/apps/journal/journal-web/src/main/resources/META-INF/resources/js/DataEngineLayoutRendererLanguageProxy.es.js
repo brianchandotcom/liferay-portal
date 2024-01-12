@@ -15,9 +15,9 @@ export default function ({currentLanguageId, namespace}) {
 			localeChangedHandler = Liferay.after(
 				'inputLocalized:localeChanged',
 				(event) => {
-					const selectedLanguageId = event.item.getAttribute(
-						'data-value'
-					);
+					const selectedLanguageId =
+						event.item.getAttribute('data-value') ||
+						event.item.getAttribute('data-languageid');
 
 					switchLanguage({
 						dataEngineReactComponentRef,

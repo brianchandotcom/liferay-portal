@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -40,11 +41,8 @@ import javax.portlet.PortletRequest;
 public class AICreatorOpenAIUploadFileEntryHandler
 	implements UploadFileEntryHandler {
 
-	public AICreatorOpenAIUploadFileEntryHandler(
-		DLAppService dlAppService, com.liferay.portal.kernel.util.File file) {
-
+	public AICreatorOpenAIUploadFileEntryHandler(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
-		_file = file;
 	}
 
 	@Override
@@ -62,57 +60,55 @@ public class AICreatorOpenAIUploadFileEntryHandler
 
 		URL url = new URL(urlPath);
 
-		InputStream inputStream = new BufferedInputStream(url.openStream());
+		File file = null;
 
-		String mimeType = URLConnection.guessContentTypeFromStream(inputStream);
+		try (InputStream inputStream = new BufferedInputStream(
+				url.openStream())) {
 
-		Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
+			long repositoryId = GetterUtil.getLong(
+				ParamUtil.getLong(portletRequest, "repositoryId"));
 
-		String extension = StringPool.BLANK;
+			long folderId = GetterUtil.getLong(
+				ParamUtil.getLong(portletRequest, "folderId"),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		if (!extensions.isEmpty()) {
-			Iterator<String> iterator = extensions.iterator();
+			Date now = new Date();
 
-			extension = iterator.next();
+			String mimeType = URLConnection.guessContentTypeFromStream(
+				inputStream);
+
+			Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
+
+			String extension = StringPool.BLANK;
+
+			if (!extensions.isEmpty()) {
+				Iterator<String> iterator = extensions.iterator();
+
+				extension = iterator.next();
+			}
+
+			String title = StringBundler.concat(
+				"image-", now.getTime(), extension);
+
+			file = FileUtil.createTempFile(inputStream);
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				FileEntry.class.getName(), portletRequest);
+
+			serviceContext.setAttribute(
+				"fileEntryTypeId",
+				GetterUtil.getLong(
+					ParamUtil.getLong(portletRequest, "fileEntryTypeId")));
+
+			return _dlAppService.addFileEntry(
+				null, repositoryId, folderId, title, mimeType, title, title,
+				null, null, file, null, null, serviceContext);
 		}
-
-		File tempFile = _file.createTempFile(inputStream);
-
-		Date now = new Date();
-
-		String title = StringBundler.concat("image-", now.getTime(), extension);
-
-		File file = new File(tempFile.getParent(), title);
-
-		if (file.exists() && !file.delete()) {
-			throw new IOException();
+		finally {
+			file.delete();
 		}
-
-		if (!tempFile.renameTo(file)) {
-			file = tempFile;
-		}
-
-		long repositoryId = GetterUtil.getLong(
-			ParamUtil.getLong(portletRequest, "repositoryId"));
-
-		long folderId = GetterUtil.getLong(
-			ParamUtil.getLong(portletRequest, "folderId"),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			FileEntry.class.getName(), portletRequest);
-
-		serviceContext.setAttribute(
-			"fileEntryTypeId",
-			GetterUtil.getLong(
-				ParamUtil.getLong(portletRequest, "fileEntryTypeId")));
-
-		return _dlAppService.addFileEntry(
-			null, repositoryId, folderId, title, mimeType, title, title, null,
-			null, file, null, null, serviceContext);
 	}
 
 	private final DLAppService _dlAppService;
-	private final com.liferay.portal.kernel.util.File _file;
 
 }

@@ -7,6 +7,7 @@ package com.liferay.friendly.url.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -97,7 +100,8 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 						return null;
 					}
 
-					return friendlyURLSeparator;
+					return StringUtils.substringBetween(
+						friendlyURLSeparator, StringPool.SLASH);
 				});
 		}
 

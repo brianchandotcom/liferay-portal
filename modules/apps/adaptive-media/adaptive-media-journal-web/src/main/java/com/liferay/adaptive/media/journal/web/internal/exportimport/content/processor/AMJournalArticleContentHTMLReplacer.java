@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.xml.XPath;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(service = AMJournalArticleContentHTMLReplacer.class)
 public class AMJournalArticleContentHTMLReplacer {
 
 	public String replace(String content, Replace replace) throws Exception {

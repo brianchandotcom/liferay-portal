@@ -7,6 +7,7 @@ package com.liferay.portal.tools.db.partition.virtual.instance.migrator.extracto
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.common.Company;
 import com.liferay.portal.tools.db.partition.virtual.instance.migrator.common.Release;
@@ -95,7 +96,10 @@ public class DBPartitionVirtualInstanceMigratorExtractorTest
 		content = content.replaceAll("\r", "");
 		content = content.replaceAll(" ", "");
 
-		Assert.assertTrue(content.contains("\"jdbcUrl\":\"" + _URL + "\""));
+		Assert.assertTrue(
+			content.contains(
+				"\"jdbcUrl\":\"" +
+					StringUtil.replace(_URL, "lportal", _PARTITION_ID) + "\""));
 
 		if (companyInfoIds.size() > 1) {
 			Assert.assertTrue(content.contains("\"companyId\":null"));
@@ -135,7 +139,7 @@ public class DBPartitionVirtualInstanceMigratorExtractorTest
 		DBPartitionVirtualInstanceMigratorExtractor.main(
 			new String[] {
 				"-url", _URL, "-user", _USER, "-pass", _PASSWORD, "-path",
-				outputDirectory.getAbsolutePath()
+				outputDirectory.getAbsolutePath(), "-partition", _PARTITION_ID
 			});
 
 		File[] files = outputDirectory.listFiles();
@@ -265,7 +269,9 @@ public class DBPartitionVirtualInstanceMigratorExtractorTest
 		throws SQLException {
 
 		mockCompanies(companies);
-		mockDatabaseConnection(_PASSWORD, _URL, _USER);
+		mockDatabaseConnection(
+			_PASSWORD, StringUtil.replace(_URL, "lportal", _PARTITION_ID),
+			_USER);
 		mockDefaultPartition(defaultPartition);
 		mockGetCompanyIds(companyIds);
 		mockGetCompanyInfoIds(companyInfoIds);
@@ -273,9 +279,12 @@ public class DBPartitionVirtualInstanceMigratorExtractorTest
 		mockTables(tableNames);
 	}
 
+	private static final String _PARTITION_ID = RandomTestUtil.randomString();
+
 	private static final String _PASSWORD = RandomTestUtil.randomString();
 
-	private static final String _URL = RandomTestUtil.randomString();
+	private static final String _URL =
+		"jdbc:mysql://localhost:3306/lportal?useUnicode=true";
 
 	private static final String _USER = RandomTestUtil.randomString();
 

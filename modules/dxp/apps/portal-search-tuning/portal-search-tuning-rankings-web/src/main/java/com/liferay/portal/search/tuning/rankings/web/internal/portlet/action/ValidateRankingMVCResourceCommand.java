@@ -88,9 +88,7 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 			jsonArray.put(
 				_language.format(
 					portal.getHttpServletRequest(resourceRequest),
-					"active-search-queries-and-aliases-with-a-given-scope-" +
-						"must-be-unique-across-all-rankings.-the-following-" +
-							"ones-already-exist-x",
+					"active-rankings-must-be-unique-x",
 					StringUtil.merge(
 						duplicateQueryStrings, StringPool.COMMA_AND_SPACE),
 					false));

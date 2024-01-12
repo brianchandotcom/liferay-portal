@@ -43,7 +43,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -86,18 +88,12 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			_delete(actionRequest, actionResponse, editRankingMVCActionRequest);
 		}
 		else if (editRankingMVCActionRequest.isCmd(
-					ResultRankingsConstants.ACTION_DEACTIVATE)) {
+					ResultRankingsConstants.ACTION_ACTIVATE) ||
+				 editRankingMVCActionRequest.isCmd(
+					 ResultRankingsConstants.ACTION_DEACTIVATE)) {
 
 			_updateStatus(
-				actionRequest, actionResponse, editRankingMVCActionRequest,
-				ResultRankingsConstants.STATUS_INACTIVE);
-		}
-		else if (editRankingMVCActionRequest.isCmd(
-					ResultRankingsConstants.ACTION_ACTIVATE)) {
-
-			_updateStatus(
-				actionRequest, actionResponse, editRankingMVCActionRequest,
-				ResultRankingsConstants.STATUS_ACTIVE);
+				actionRequest, actionResponse, editRankingMVCActionRequest);
 		}
 	}
 
@@ -206,6 +202,20 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		String id = rankingStorageAdapter.create(ranking, rankingIndexName);
 
 		return rankingIndexReader.fetch(id, rankingIndexName);
+	}
+
+	private void _addExcludedName(
+		String key, String name, Map<String, List<String>> excludedNamesMap) {
+
+		List<String> excludedNames = excludedNamesMap.get(key);
+
+		if (excludedNames == null) {
+			excludedNames = new ArrayList<>();
+		}
+
+		excludedNames.add(name);
+
+		excludedNamesMap.put(key, excludedNames);
 	}
 
 	private void _delete(
@@ -353,18 +363,25 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		EditRankingMVCActionRequest editRankingMVCActionRequest,
 		Ranking ranking) {
 
+		_hasDuplicateQueryString(editRankingMVCActionRequest, ranking, true);
+	}
+
+	private boolean _hasDuplicateQueryString(
+		EditRankingMVCActionRequest editRankingMVCActionRequest,
+		Ranking ranking, boolean throwException) {
+
 		if (_resultRankingsConfiguration.allowDuplicateQueryStrings() ||
 			editRankingMVCActionRequest.isCmd(
 				ResultRankingsConstants.ACTION_DEACTIVATE)) {
 
-			return;
+			return false;
 		}
 
 		Collection<String> queryStrings = ranking.getQueryStrings();
 
 		if (editRankingMVCActionRequest.isCmd(Constants.UPDATE)) {
 			if (_isInactive(editRankingMVCActionRequest)) {
-				return;
+				return false;
 			}
 
 			queryStrings = RankingUtil.getQueryStrings(
@@ -373,8 +390,14 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		if (_detectedDuplicateQueryStrings(ranking, queryStrings)) {
-			throw new DuplicateQueryStringException();
+			if (throwException) {
+				throw new DuplicateQueryStringException();
+			}
+
+			return true;
 		}
+
+		return false;
 	}
 
 	private boolean _isInactive(
@@ -520,29 +543,44 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _updateStatus(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			EditRankingMVCActionRequest editRankingMVCActionRequest,
-			String status)
+			EditRankingMVCActionRequest editRankingMVCActionRequest)
 		throws Exception {
 
 		try {
-			_updateStatus(actionRequest, editRankingMVCActionRequest, status);
+			Map<String, List<String>> excludedNames = _updateStatus(
+				actionRequest, editRankingMVCActionRequest);
+
+			if (!excludedNames.isEmpty()) {
+				for (Map.Entry<String, List<String>> entry :
+						excludedNames.entrySet()) {
+
+					String key = entry.getKey();
+
+					if (key.equals(_KEY_DUPLICATE)) {
+						SessionErrors.add(
+							actionRequest, DuplicateQueryStringException.class,
+							ListUtil.unique(entry.getValue()));
+					}
+					else if (key.equals(_KEY_NOT_APPLICABLE)) {
+						SessionErrors.add(
+							actionRequest, NotApplicableStatusException.class,
+							ListUtil.unique(entry.getValue()));
+					}
+				}
+
+				hideDefaultErrorMessage(actionRequest);
+
+				sendRedirect(actionRequest, actionResponse);
+
+				return;
+			}
 
 			sendRedirect(
 				actionRequest, actionResponse,
 				editRankingMVCActionRequest.getRedirect());
 		}
 		catch (Exception exception) {
-			if (exception instanceof DuplicateQueryStringException) {
-				SessionErrors.add(
-					actionRequest, DuplicateQueryStringException.class);
-			}
-			else if (exception instanceof NotApplicableStatusException) {
-				SessionErrors.add(
-					actionRequest, NotApplicableStatusException.class);
-			}
-			else {
-				SessionErrors.add(actionRequest, Exception.class);
-			}
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			hideDefaultErrorMessage(actionRequest);
 
@@ -550,45 +588,60 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _updateStatus(
+	private Map<String, List<String>> _updateStatus(
 			ActionRequest actionRequest,
-			EditRankingMVCActionRequest editRankingMVCActionRequest,
-			String status)
+			EditRankingMVCActionRequest editRankingMVCActionRequest)
 		throws PortalException {
+
+		Map<String, List<String>> excludedNames = new HashMap<>();
 
 		List<Ranking> rankings = _getRankings(
 			actionRequest, editRankingMVCActionRequest);
-
-		boolean notApplicableStatus = false;
 
 		for (Ranking ranking : rankings) {
 			if (Objects.equals(
 					ranking.getStatus(),
 					ResultRankingsConstants.STATUS_NOT_APPLICABLE)) {
 
-				notApplicableStatus = true;
+				_addExcludedName(
+					_KEY_NOT_APPLICABLE, ranking.getName(), excludedNames);
 
 				continue;
 			}
 
-			if (status.equals(ResultRankingsConstants.STATUS_ACTIVE)) {
-				_guardDuplicateQueryStrings(
-					editRankingMVCActionRequest, ranking);
+			if (editRankingMVCActionRequest.isCmd(
+					ResultRankingsConstants.ACTION_ACTIVATE) &&
+				_hasDuplicateQueryString(
+					editRankingMVCActionRequest, ranking, false)) {
+
+				_addExcludedName(
+					_KEY_DUPLICATE, ranking.getName(), excludedNames);
+
+				continue;
 			}
 
 			Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder(
 				ranking);
 
-			rankingBuilder.status(status);
+			if (editRankingMVCActionRequest.isCmd(
+					ResultRankingsConstants.ACTION_ACTIVATE)) {
+
+				rankingBuilder.status(ResultRankingsConstants.STATUS_ACTIVE);
+			}
+			else {
+				rankingBuilder.status(ResultRankingsConstants.STATUS_INACTIVE);
+			}
 
 			rankingStorageAdapter.update(
 				rankingBuilder.build(), getRankingIndexName());
 		}
 
-		if (notApplicableStatus) {
-			throw new NotApplicableStatusException();
-		}
+		return excludedNames;
 	}
+
+	private static final String _KEY_DUPLICATE = "duplicate";
+
+	private static final String _KEY_NOT_APPLICABLE = "not-applicable";
 
 	private static final String _UPDATE_SPECIAL = StringPool.GREATER_THAN;
 

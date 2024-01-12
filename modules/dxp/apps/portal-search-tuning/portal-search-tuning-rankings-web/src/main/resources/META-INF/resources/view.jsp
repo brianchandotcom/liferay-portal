@@ -32,7 +32,8 @@ page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.No
 page import="com.liferay.search.experiences.model.SXPBlueprint" %><%@
 page import="com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil" %>
 
-<%@ page import="java.util.Objects" %>
+<%@ page import="java.util.List" %><%@
+page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 
@@ -40,13 +41,15 @@ page import="com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil
 
 <portlet:defineObjects />
 
-<liferay-ui:error embed="<%= false %>" exception="<%= DuplicateQueryStringException.class %>" message="active-search-queries-and-aliases-with-a-given-scope-must-be-unique-across-all-rankings" />
+<liferay-ui:error embed="<%= false %>" exception="<%= DuplicateQueryStringException.class %>">
+	<liferay-ui:message arguments="<%= (List<String>)SessionErrors.get(renderRequest, DuplicateQueryStringException.class) %>" key="the-following-entries-could-not-be-updated-because-there-are-one-or-more-rankings-with-the-same-search-query-and-or-aliases-and-scope-that-are-already-active-x" />
+</liferay-ui:error>
 
 <c:if test="<%= SessionErrors.contains(renderRequest, NotApplicableStatusException.class) %>">
 	<aui:script>
 		Liferay.Util.openToast({
 			message:
-				'<liferay-ui:message key="the-selected-action-could-not-be-performed-on-the-rankings-with-a-not-applicable-status" />',
+				'<liferay-ui:message arguments="<%= (List<String>)SessionErrors.get(renderRequest, NotApplicableStatusException.class) %>" key="the-selected-action-could-not-be-performed-on-the-following-rankings-because-they-have-a-not-applicable-status-x" />',
 			title: '<liferay-ui:message key="warning" />',
 			toastProps: {
 				autoClose: 5000,

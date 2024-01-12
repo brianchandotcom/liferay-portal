@@ -66,7 +66,7 @@ public class DefaultWorkflowTransitionTest {
 		Assert.assertEquals(
 			"Aprovar", defaultWorkflowTransition.getLabel(LocaleUtil.BRAZIL));
 
-		// Name, labelMap empty
+		// Label map empty
 
 		defaultWorkflowTransition.setLabelMap(new HashMap<>());
 		defaultWorkflowTransition.setName("businessRuleReview");
@@ -75,7 +75,7 @@ public class DefaultWorkflowTransitionTest {
 			"businessRuleReview",
 			defaultWorkflowTransition.getLabel(LocaleUtil.BRAZIL));
 
-		// Name, labelMap null
+		// Label map null
 
 		defaultWorkflowTransition.setLabelMap(null);
 		defaultWorkflowTransition.setName("businessRuleReview");
@@ -84,16 +84,7 @@ public class DefaultWorkflowTransitionTest {
 			"businessRuleReview",
 			defaultWorkflowTransition.getLabel(LocaleUtil.BRAZIL));
 
-		// Name null
-
-		defaultWorkflowTransition.setLabelMap(new HashMap<>());
-		defaultWorkflowTransition.setName(null);
-
-		Assert.assertEquals(
-			"Proceed",
-			defaultWorkflowTransition.getLabel(LocaleUtil.getSiteDefault()));
-
-		// Site default locale, label map
+		// Label map with site default locale
 
 		defaultWorkflowTransition.setLabelMap(
 			HashMapBuilder.put(
@@ -104,6 +95,15 @@ public class DefaultWorkflowTransitionTest {
 		Assert.assertEquals(
 			"Business Rule Review",
 			defaultWorkflowTransition.getLabel(LocaleUtil.BRAZIL));
+
+		// Name null
+
+		defaultWorkflowTransition.setLabelMap(new HashMap<>());
+		defaultWorkflowTransition.setName(null);
+
+		Assert.assertEquals(
+			"Proceed",
+			defaultWorkflowTransition.getLabel(LocaleUtil.getSiteDefault()));
 	}
 
 }

@@ -38,6 +38,9 @@ public class MergePortalSubrepositoryUtil {
 			jenkinsBuildURL, portalPullRequest, portalPullRequest.getBaseURL(),
 			portalPullRequest.getUpstreamRemoteGitBranchName());
 
+		String startingPortalCommitSHA =
+			portalGitWorkingDirectory.getLatestCommitSHA();
+
 		GitWorkingDirectory subrepositoryGitWorkingDirectory =
 			_getGitWorkingDirectory(
 				jenkinsBuildURL, portalPullRequest, subrepositoryGitHubURL,
@@ -46,9 +49,6 @@ public class MergePortalSubrepositoryUtil {
 		String currentGitRepoCommitSHA = _getCurrentGitRepoCommitSHA(
 			jenkinsBuildURL, portalPullRequest, portalGitWorkingDirectory,
 			subrepositoryGitWorkingDirectory, targetGitRepoCommitSHA);
-
-		String startingPortalCommitSHA =
-			portalGitWorkingDirectory.getLatestCommitSHA();
 
 		_fetchSubrepositoryBranchToPortalRepository(
 			jenkinsBuildURL, portalPullRequest, portalGitWorkingDirectory,
@@ -66,7 +66,8 @@ public class MergePortalSubrepositoryUtil {
 
 		_commitGitRepoUpdates(
 			jenkinsBuildURL, portalPullRequest, portalGitWorkingDirectory,
-			subrepositoryGitWorkingDirectory, targetGitRepoCommitSHA);
+			subrepositoryGitWorkingDirectory, startingPortalCommitSHA,
+			targetGitRepoCommitSHA);
 
 		_pushUpdatesToRemoteBranch(
 			jenkinsBuildURL, portalPullRequest, portalGitWorkingDirectory);
@@ -146,12 +147,7 @@ public class MergePortalSubrepositoryUtil {
 		URL jenkinsBuildURL, PullRequest portalPullRequest,
 		GitWorkingDirectory portalGitWorkingDirectory,
 		GitWorkingDirectory subrepositoryGitWorkingDirectory,
-		String targetGitRepoCommitSHA) {
-
-		LocalGitBranch portalCurrentLocalGitBranch =
-			portalGitWorkingDirectory.getCurrentLocalGitBranch();
-
-		String portalCurrentBranchSHA = portalCurrentLocalGitBranch.getSHA();
+		String startingPortalCommitSHA, String targetGitRepoCommitSHA) {
 
 		File gitRepoFile = _getGitRepoFile(
 			portalGitWorkingDirectory, subrepositoryGitWorkingDirectory);
@@ -166,7 +162,7 @@ public class MergePortalSubrepositoryUtil {
 			gitRepoFileContent = gitRepoFileContent.replaceAll(
 				"commit = [0-9a-f]{40}", "commit = " + targetGitRepoCommitSHA);
 			gitRepoFileContent = gitRepoFileContent.replaceAll(
-				"parent = [0-9a-f]{40}", "parent = " + portalCurrentBranchSHA);
+				"parent = [0-9a-f]{40}", "parent = " + startingPortalCommitSHA);
 
 			JenkinsResultsParserUtil.write(gitRepoFile, gitRepoFileContent);
 

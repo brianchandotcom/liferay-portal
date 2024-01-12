@@ -6,6 +6,7 @@
 package com.liferay.friendly.url.web.internal.display.context;
 
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -13,14 +14,12 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -43,69 +42,63 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 		_themeDisplay = themeDisplay;
 	}
 
-	public JSONArray getConfigurableFriendlyURLSeparatorsJSONArray() {
+	public JSONArray getConfigurableFriendlyURLSeparatorsJSONArray()
+		throws Exception {
+
 		if (_configurableFriendlyURLSeparatorsJSONArray != null) {
 			return _configurableFriendlyURLSeparatorsJSONArray;
 		}
 
-		JSONArray configurableFriendlyURLSeparatorsJSONArray =
-			_jsonFactory.createJSONArray();
-
-		List<FriendlyURLSeparator> friendlyURLSeparators = new ArrayList<>();
-
 		JSONObject configuredFriendlyURLSeparatorsJSONObject =
 			_getConfiguredFriendlyURLSeparatorsJSONObject();
 
-		for (FriendlyURLResolver friendlyURLResolver :
-				FriendlyURLResolverRegistryUtil.
-					getFriendlyURLResolversAsCollection()) {
-
-			if (!friendlyURLResolver.isURLSeparatorConfigurable() ||
-				Validator.isNull(friendlyURLResolver.getKey())) {
-
-				continue;
-			}
-
-			friendlyURLSeparators.add(
-				new FriendlyURLSeparator(
-					friendlyURLResolver.getKey(),
-					_language.get(
-						_themeDisplay.getLocale(),
-						friendlyURLResolver.getKey() + "-url-separator"),
-					_getFriendlyURLSeparator(
-						configuredFriendlyURLSeparatorsJSONObject,
-						friendlyURLResolver.getDefaultURLSeparator(),
-						friendlyURLResolver.getKey())));
-		}
-
-		Collections.sort(
-			friendlyURLSeparators,
-			Comparator.comparing(FriendlyURLSeparator::getLabel));
-
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-		for (FriendlyURLSeparator friendlyURLSeparator :
-				friendlyURLSeparators) {
+		List<JSONObject> list = TransformUtil.transform(
+			FriendlyURLResolverRegistryUtil.
+				getFriendlyURLResolversAsCollection(),
+			friendlyURLResolver -> {
+				if (!friendlyURLResolver.isURLSeparatorConfigurable() ||
+					Validator.isNull(friendlyURLResolver.getKey())) {
 
-			configurableFriendlyURLSeparatorsJSONArray.put(
-				JSONUtil.put(
-					"label", friendlyURLSeparator.getLabel()
+					return null;
+				}
+
+				return JSONUtil.put(
+					"label",
+					_language.get(
+						_themeDisplay.getLocale(),
+						friendlyURLResolver.getKey() + "-url-separator")
 				).put(
 					"name",
-					portletDisplay.getNamespace() +
-						friendlyURLSeparator.getKey()
+					portletDisplay.getNamespace() + friendlyURLResolver.getKey()
 				).put(
-					"value", friendlyURLSeparator.getUrlSeparator()
-				));
-		}
+					"value",
+					() -> {
+						String friendlyURLSeparator =
+							configuredFriendlyURLSeparatorsJSONObject.getString(
+								friendlyURLResolver.getKey());
 
-		_configurableFriendlyURLSeparatorsJSONArray =
-			configurableFriendlyURLSeparatorsJSONArray;
+						if (Validator.isNull(friendlyURLSeparator)) {
+							return friendlyURLResolver.getDefaultURLSeparator();
+						}
+
+						return friendlyURLSeparator;
+					}
+				);
+			});
+
+		Collections.sort(
+			list,
+			Comparator.comparing(jsonObject -> jsonObject.getString("label")));
+
+		_configurableFriendlyURLSeparatorsJSONArray = JSONUtil.toJSONArray(
+			list, jsonObject -> jsonObject);
 
 		return _configurableFriendlyURLSeparatorsJSONArray;
 	}
 
-	public Map<String, Object> getSeparatorFieldsProps() {
+	public Map<String, Object> getSeparatorFieldsProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"fields", getConfigurableFriendlyURLSeparatorsJSONArray()
 		).put(
@@ -128,20 +121,6 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 		return _jsonFactory.createJSONObject();
 	}
 
-	private String _getFriendlyURLSeparator(
-		JSONObject configuredURLSeparatorsJSONObject,
-		String defaultURLSeparator, String key) {
-
-		String friendlyURLSeparator =
-			configuredURLSeparatorsJSONObject.getString(key);
-
-		if (Validator.isNull(friendlyURLSeparator)) {
-			return defaultURLSeparator;
-		}
-
-		return friendlyURLSeparator;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLSeparatorCompanyConfigurationDisplayContext.class.getName());
 
@@ -151,33 +130,5 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 	private final JSONFactory _jsonFactory;
 	private final Language _language;
 	private final ThemeDisplay _themeDisplay;
-
-	private class FriendlyURLSeparator {
-
-		public FriendlyURLSeparator(
-			String key, String label, String urlSeparator) {
-
-			_key = key;
-			_label = label;
-			_urlSeparator = urlSeparator;
-		}
-
-		public String getKey() {
-			return _key;
-		}
-
-		public String getLabel() {
-			return _label;
-		}
-
-		public String getUrlSeparator() {
-			return _urlSeparator;
-		}
-
-		private final String _key;
-		private final String _label;
-		private final String _urlSeparator;
-
-	}
 
 }

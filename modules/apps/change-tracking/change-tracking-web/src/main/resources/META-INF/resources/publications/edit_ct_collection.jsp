@@ -61,7 +61,7 @@ portletDisplay.setURLBack(redirect);
 	<liferay-portlet:resourceURL id="/change_tracking/invite_users" var="inviteUsersURL" />
 
 	<react:component
-		module="publications/js/views/ChangeTrackingCollectionEditView"
+		module="{ChangeTrackingCollectionEditView} from change-tracking-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"actionUrl", actionURL

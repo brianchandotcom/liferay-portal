@@ -58,8 +58,8 @@ public class PublicationsOngoingTableFDSView extends BaseTableFDSView {
 			)
 		).add(
 			"status", "status",
-			fdsTableSchemaField ->
-				fdsTableSchemaField.setContentRenderer("status")
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"status")
 		).add(
 			"ownerName", "owner"
 		).build();

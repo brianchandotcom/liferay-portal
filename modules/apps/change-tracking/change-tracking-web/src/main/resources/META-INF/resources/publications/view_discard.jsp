@@ -33,7 +33,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "discard-changes"));
 			<div>
 				<react:component
 					data="<%= viewRelatedEntriesDisplayContext.getReactData() %>"
-					module="publications/js/views/ChangeTrackingRelatedEntriesView"
+					module="{ChangeTrackingRelatedEntriesView} from change-tracking-web"
 				/>
 			</div>
 		</clay:sheet-section>

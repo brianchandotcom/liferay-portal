@@ -27,7 +27,6 @@ import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsC
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.change.tracking.web.internal.timeline.CTCollectionHistoryDataProvider;
 import com.liferay.change.tracking.web.internal.timeline.DefaultCTCollectionHistoryProvider;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -214,12 +213,11 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			String componentId =
 				_portal.getPortletNamespace(CTPortletKeys.PUBLICATIONS) +
 					"IndicatorComponent";
-			String module =
-				_npmResolver.resolveModuleName("change-tracking-web") +
-					"/publications/js/components/ChangeTrackingIndicator";
 
 			_reactRenderer.renderReact(
-				new ComponentDescriptor(module, componentId, null, true),
+				new ComponentDescriptor(
+					"{ChangeTrackingIndicator} from change-tracking-web",
+					componentId, null, true),
 				_getReactData(
 					httpServletRequest, ctCollection, ctPreferences,
 					productionOnlyApplication,
@@ -812,9 +810,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference
 	private Portal _portal;

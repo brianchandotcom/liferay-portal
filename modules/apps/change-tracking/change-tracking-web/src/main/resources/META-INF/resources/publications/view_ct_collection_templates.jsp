@@ -144,7 +144,7 @@ portletDisplay.setShowBackIcon(true);
 					</div>
 
 					<react:component
-						module="publications/js/components/ViewPublicationsDropdownMenu"
+						module="{ViewPublicationsDropdownMenu} from change-tracking-web"
 						props="<%= viewTemplatesDisplayContext.getDropdownReactData(ctCollectionTemplate) %>"
 					/>
 				</div>

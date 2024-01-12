@@ -35,6 +35,7 @@
 		"react": "16.12.0",
 		"react-transition-group": "4.4.1"
 	},
+	"main": "publications/js/index.js",
 	"name": "change-tracking-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

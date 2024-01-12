@@ -56,7 +56,7 @@ portletDisplay.setShowBackIcon(true);
 	%>
 
 	<react:component
-		module="publications/js/views/PublicationTemplateEditView"
+		module="{PublicationTemplateEditView} from change-tracking-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"actionUrl", actionURL

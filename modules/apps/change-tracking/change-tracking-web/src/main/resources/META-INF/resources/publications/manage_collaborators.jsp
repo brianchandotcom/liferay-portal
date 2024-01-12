@@ -24,7 +24,7 @@ long ctCollectionId = ParamUtil.getLong(request, "ctCollectionId");
 
 	<div class="modal-iframe-content">
 		<react:component
-			module="publications/js/components/manage-collaborators-modal/ManageCollaborators"
+			module="{ManageCollaborators} from change-tracking-web"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"onlyForm", true

@@ -42,7 +42,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "move-changes"));
 			<div>
 				<react:component
 					data="<%= viewRelatedEntriesDisplayContext.getReactData() %>"
-					module="publications/js/views/ChangeTrackingRelatedEntriesView"
+					module="{ChangeTrackingRelatedEntriesView} from change-tracking-web"
 				/>
 			</div>
 		</clay:sheet-section>

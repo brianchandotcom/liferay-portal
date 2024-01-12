@@ -66,9 +66,9 @@ public class CountryRegionUpgradeProcess extends UpgradeProcess {
 
 						_updateCountry(company, countryJSONObject);
 
-						_deleteRegion(company, "FR", "973.0", "GF");
 						_deleteRegion(company, "FR", "971.0", "GP");
 						_deleteRegion(company, "FR", "972.0", "MQ");
+						_deleteRegion(company, "FR", "973.0", "GF");
 						_deleteRegion(company, "FR", "974.0", "RE");
 						_deleteRegion(company, "FR", "976.0", "YT");
 						_deleteRegion(company, "GB", "BCP", "POL");

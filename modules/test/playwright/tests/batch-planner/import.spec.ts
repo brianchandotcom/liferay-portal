@@ -328,11 +328,8 @@ test('can import CSV file with an unexisting field', async ({
 	).toBeVisible();
 
 	expect(
-		(
-			await _apiHelpers.object.getObjectDefinitionObjectEntries(
-				'c/tests'
-			)
-		).items
+		(await _apiHelpers.object.getObjectDefinitionObjectEntries('c/tests'))
+			.items
 	).toEqual([
 		{
 			actions: expect.any(Object),
@@ -662,11 +659,8 @@ test('can import CSV file with new and modified existing company scoped object e
 	).toBeVisible();
 
 	expect(
-		(
-			await _apiHelpers.object.getObjectDefinitionObjectEntries(
-				'c/tests'
-			)
-		).items
+		(await _apiHelpers.object.getObjectDefinitionObjectEntries('c/tests'))
+			.items
 	).toEqual([
 		{
 			actions: expect.any(Object),

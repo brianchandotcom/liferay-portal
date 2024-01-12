@@ -22,7 +22,6 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.scope.ObjectDefinitionScoped;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -466,8 +465,5 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 
 	@Reference
 	private CounterLocalService _counterLocalService;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

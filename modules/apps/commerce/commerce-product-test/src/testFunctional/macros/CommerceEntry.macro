@@ -535,13 +535,14 @@ definition {
 
 		for (var priceList : list ${priceLists}) {
 			var priceListName = StringUtil.extractFirst(${priceList}, ":");
-            var priceListAmount = StringUtil.extractLast(${priceList}, ":");
+			var priceListAmount = StringUtil.extractLast(${priceList}, ":");
 
 			Select(
-				key_index = ${i},
 				key_fieldLabel = "Price List",
+				key_index = ${i},
 				locator1 = "CommerceEntry#GENERIC_SELECT_FIELD_N",
 				value1 = ${priceListName});
+
 			Type(
 				key_index = ${i},
 				locator1 = "CommerceEntry#INPUT_INDEX",

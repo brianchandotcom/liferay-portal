@@ -240,12 +240,13 @@ definition {
 
 			for (var priceList : list "Master Base Price List:$ 10.00,Minium Base Price List:$ 20.00") {
 				var priceListName = StringUtil.extractFirst(${value}, ":");
-                var priceListAmount = StringUtil.extractLast(${value}, ":");
+				var priceListAmount = StringUtil.extractLast(${value}, ":");
 
 				AssertElementPresent(
 					key_color = ${priceListName},
 					key_field = "Name",
 					locator1 = "FrontendDataSet#SEARCH_COLUMN_AND_ROW");
+
 				AssertElementPresent(
 					key_color = ${priceListAmount},
 					key_field = "Unit Price",

@@ -26,7 +26,7 @@ SearchContainer<FeatureFlagDisplay> searchContainer = featureFlagsDisplayContext
 		/>
 			<div class="my-4">
 				<react:component
-					module="js/FeatureFlagList"
+					module="{FeatureFlagList} from feature-flag-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
 							"featureFlags", searchContainer.getResults()

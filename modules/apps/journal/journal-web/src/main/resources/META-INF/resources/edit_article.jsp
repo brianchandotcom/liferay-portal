@@ -11,6 +11,8 @@
 JournalArticle article = journalDisplayContext.getArticle();
 
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = (JournalEditArticleDisplayContext)request.getAttribute(JournalEditArticleDisplayContext.class.getName());
+
+journalEditArticleDisplayContext.setViewAttributes();
 %>
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />

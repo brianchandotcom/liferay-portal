@@ -41,9 +41,9 @@ public class CETLabelUtil {
 	private static String _getCETTypeLanguageKey(String type) {
 		if (Objects.equals(
 				type,
-				ClientExtensionEntryConstants.TYPE_CUSTOM_CHECKOUT_STEP)) {
+				ClientExtensionEntryConstants.TYPE_COMMERCE_CHECKOUT_STEP)) {
 
-			return "custom-checkout-step";
+			return "commerce-checkout-step";
 		}
 		else if (Objects.equals(
 					type, ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {

@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_CHECKED</td>
+	<td>//label[contains(.,'${radioLabel}')]/input[@type='radio' and @checked]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPEND</td>
 	<td>//label[contains(.,'Append')]/input</td>
 	<td></td>

@@ -12,8 +12,7 @@ import com.liferay.friendly.url.web.internal.display.context.FriendlyURLSeparato
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
 
@@ -48,6 +47,9 @@ public class FriendlyURLSeparatorPortalSettingsConfigurationScreenWrapper
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortalSettingsConfigurationScreenFactory
@@ -113,10 +115,8 @@ public class FriendlyURLSeparatorPortalSettingsConfigurationScreenWrapper
 				FriendlyURLSeparatorCompanyConfigurationDisplayContext.class.
 					getName(),
 				new FriendlyURLSeparatorCompanyConfigurationDisplayContext(
-					_friendlyURLSeparatorConfigurationManager, _jsonFactory,
-					_language,
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY)));
+					_friendlyURLSeparatorConfigurationManager,
+					httpServletRequest, _jsonFactory, _language, _portal));
 		}
 
 	}

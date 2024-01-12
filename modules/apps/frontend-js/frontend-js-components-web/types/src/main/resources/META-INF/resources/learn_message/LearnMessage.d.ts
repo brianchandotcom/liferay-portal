@@ -18,7 +18,7 @@ interface ILearnResourceKeyItem {
 interface ILearnResourceItem {
 	[resourceKey: string]: ILearnResourceKeyItem;
 }
-interface ILearnResourceContext {
+export interface ILearnResourceContext {
 	[learnResourceName: string]: ILearnResourceItem;
 }
 declare type ClayLinkProps = React.ComponentProps<typeof ClayLink>;

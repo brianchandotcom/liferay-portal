@@ -13,6 +13,7 @@ export {default as useId} from './hooks/useId';
 export {default as useSessionState} from './hooks/useSessionState';
 export {
 	default as LearnMessage,
+	ILearnResourceContext,
 	LearnResourcesContext,
 } from './learn_message/LearnMessage';
 export {default as Treeview} from './treeview/Treeview';

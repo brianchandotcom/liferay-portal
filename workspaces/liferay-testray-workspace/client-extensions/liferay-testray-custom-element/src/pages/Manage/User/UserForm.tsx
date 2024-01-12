@@ -64,7 +64,7 @@ type OutletContext = {
 const UserForm = () => {
 	const [{myUserAccount}] = useContext(TestrayContext);
 
-	const {data} = useFetch(`/roles?types=${RoleTypes.REGULAR}`);
+	const {data} = useFetch(`/roles?search=Testray&types=${RoleTypes.REGULAR}`);
 	const navigate = useNavigate();
 
 	const {pathname} = useLocation();

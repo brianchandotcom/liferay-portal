@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration;
@@ -58,9 +59,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 
 import org.threeten.bp.Duration;
@@ -74,9 +78,9 @@ import org.threeten.bp.Duration;
 	configurationPid = "com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	property = "store.type=com.liferay.portal.store.gcs.GCSStore",
-	service = {Store.class, StoreAreaProcessor.class}
+	service = Store.class
 )
-public class GCSStore implements Store, StoreAreaProcessor {
+public class GCSStore implements Store {
 
 	@Override
 	public void addFile(
@@ -101,104 +105,6 @@ public class GCSStore implements Store, StoreAreaProcessor {
 		}
 		catch (IOException ioException) {
 			throw new PortalException("Unable to add file", ioException);
-		}
-	}
-
-	@Override
-	public String cleanUpDeletedStoreArea(
-		long companyId, int deletionQuota, Predicate<String> predicate,
-		String startOffset, TemporalAmount temporalAmount) {
-
-		return _processStoreArea(
-			companyId, deletionQuota, blob -> predicate.test(blob.getName()),
-			startOffset, StoreArea.DELETED, temporalAmount);
-	}
-
-	@Override
-	public String cleanUpNewStoreArea(
-		long companyId, int evictionQuota, Predicate<String> predicate,
-		String startOffset, TemporalAmount temporalAmount) {
-
-		return _processStoreArea(
-			companyId, evictionQuota,
-			blob -> {
-				if (predicate.test(blob.getName())) {
-					return copy(
-						blob.getName(),
-						StoreArea.NEW.relocate(
-							blob.getName(), StoreArea.DELETED));
-				}
-
-				return copy(
-					blob.getName(),
-					StoreArea.NEW.relocate(blob.getName(), StoreArea.LIVE));
-			},
-			startOffset, StoreArea.NEW, temporalAmount);
-	}
-
-	@Override
-	public boolean copy(String sourceFileName, String destinationFileName) {
-		try {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
-				return true;
-			}
-
-			CopyWriter copyWriter = _gcsStore.copy(
-				Storage.CopyRequest.newBuilder(
-				).setSource(
-					_gcsStoreConfiguration.bucketName(), sourceFileName
-				).setTarget(
-					BlobId.of(
-						_gcsStoreConfiguration.bucketName(),
-						destinationFileName)
-				).build());
-
-			while (!copyWriter.isDone()) {
-				copyWriter.copyChunk();
-			}
-
-			return true;
-		}
-		catch (StorageException storageException) {
-			if (_log.isInfoEnabled()) {
-				_log.info(storageException);
-			}
-
-			return false;
-		}
-	}
-
-	@Override
-	public boolean copyDirectory(
-		long companyId, long repositoryId, String dirName,
-		StoreArea[] sourceStoreAreas, StoreArea destinationStoreArea) {
-
-		try {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
-				return true;
-			}
-
-			for (StoreArea sourceStoreArea : sourceStoreAreas) {
-				String[] filePaths = StoreArea.withStoreArea(
-					sourceStoreArea,
-					() -> _getFilePaths(companyId, repositoryId, dirName));
-
-				for (String filePath : filePaths) {
-					copy(
-						filePath,
-						sourceStoreArea.relocate(
-							filePath, destinationStoreArea));
-				}
-			}
-
-			return true;
-		}
-		catch (StorageException storageException) {
-			if (_log.isInfoEnabled()) {
-				_log.info(storageException);
-			}
-
-			return false;
 		}
 	}
 
@@ -350,8 +256,24 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	}
 
 	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		modified(properties);
+
+		_serviceRegistration = bundleContext.registerService(
+			StoreAreaProcessor.class, new GCSStoreAreaProcessor(),
+			MapUtil.singletonDictionary(
+				"store.type", "com.liferay.portal.store.gcs.GCSStore"));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
+	}
+
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void modified(Map<String, Object> properties) {
 		try {
 			_gcsStoreConfiguration = ConfigurableUtil.createConfigurable(
 				GCSStoreConfiguration.class, properties);
@@ -645,5 +567,109 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	private Storage _gcsStore;
 	private volatile GCSStoreConfiguration _gcsStoreConfiguration;
 	private GoogleCredentials _googleCredentials;
+	private ServiceRegistration<StoreAreaProcessor> _serviceRegistration;
+
+	private class GCSStoreAreaProcessor implements StoreAreaProcessor {
+
+		@Override
+		public String cleanUpDeletedStoreArea(
+			long companyId, int deletionQuota, Predicate<String> predicate,
+			String startOffset, TemporalAmount temporalAmount) {
+
+			return _processStoreArea(
+				companyId, deletionQuota,
+				blob -> predicate.test(blob.getName()), startOffset,
+				StoreArea.DELETED, temporalAmount);
+		}
+
+		@Override
+		public String cleanUpNewStoreArea(
+			long companyId, int evictionQuota, Predicate<String> predicate,
+			String startOffset, TemporalAmount temporalAmount) {
+
+			return _processStoreArea(
+				companyId, evictionQuota,
+				blob -> {
+					if (predicate.test(blob.getName())) {
+						return copy(
+							blob.getName(),
+							StoreArea.NEW.relocate(
+								blob.getName(), StoreArea.DELETED));
+					}
+
+					return copy(
+						blob.getName(),
+						StoreArea.NEW.relocate(blob.getName(), StoreArea.LIVE));
+				},
+				startOffset, StoreArea.NEW, temporalAmount);
+		}
+
+		@Override
+		public boolean copy(String sourceFileName, String destinationFileName) {
+			try {
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+					return true;
+				}
+
+				CopyWriter copyWriter = _gcsStore.copy(
+					Storage.CopyRequest.newBuilder(
+					).setSource(
+						_gcsStoreConfiguration.bucketName(), sourceFileName
+					).setTarget(
+						BlobId.of(
+							_gcsStoreConfiguration.bucketName(),
+							destinationFileName)
+					).build());
+
+				while (!copyWriter.isDone()) {
+					copyWriter.copyChunk();
+				}
+
+				return true;
+			}
+			catch (StorageException storageException) {
+				if (_log.isInfoEnabled()) {
+					_log.info(storageException);
+				}
+
+				return false;
+			}
+		}
+
+		@Override
+		public boolean copyDirectory(
+			long companyId, long repositoryId, String dirName,
+			StoreArea[] sourceStoreAreas, StoreArea destinationStoreArea) {
+
+			try {
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+					return true;
+				}
+
+				for (StoreArea sourceStoreArea : sourceStoreAreas) {
+					String[] filePaths = StoreArea.withStoreArea(
+						sourceStoreArea,
+						() -> _getFilePaths(companyId, repositoryId, dirName));
+
+					for (String filePath : filePaths) {
+						copy(
+							filePath,
+							sourceStoreArea.relocate(
+								filePath, destinationStoreArea));
+					}
+				}
+
+				return true;
+			}
+			catch (StorageException storageException) {
+				if (_log.isInfoEnabled()) {
+					_log.info(storageException);
+				}
+
+				return false;
+			}
+		}
+
+	}
 
 }

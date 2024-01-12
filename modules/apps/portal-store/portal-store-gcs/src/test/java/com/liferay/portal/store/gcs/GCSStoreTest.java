@@ -9,6 +9,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration;
@@ -79,7 +80,8 @@ public class GCSStoreTest {
 
 		_mockServiceAccountKey(new String(serviceAccountKeyBytes));
 
-		_gcsStore.activate(Collections.emptyMap());
+		_gcsStore.activate(
+			SystemBundleUtil.getBundleContext(), Collections.emptyMap());
 
 		_assertGoogleCredentials(
 			ServiceAccountCredentials.fromStream(
@@ -90,7 +92,8 @@ public class GCSStoreTest {
 	public void testActivate2() throws Exception {
 		_mockServiceAccountKey(null);
 
-		_gcsStore.activate(Collections.emptyMap());
+		_gcsStore.activate(
+			SystemBundleUtil.getBundleContext(), Collections.emptyMap());
 
 		_assertGoogleCredentials(
 			ServiceAccountCredentials.getApplicationDefault());

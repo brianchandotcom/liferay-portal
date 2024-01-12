@@ -27,7 +27,9 @@ interface ModalAddObjectRelationshipProps {
 	objectDefinitionExternalReferenceCode1: string;
 	objectDefinitionExternalReferenceCode2?: string;
 	objectRelationshipParameterRequired: boolean;
-	onAfterSubmit?: (objectRelationshipId: number) => void;
+	onAfterAddObjectRelationship?: (
+		objectRelationship: ObjectRelationship
+	) => void;
 	reload?: boolean;
 }
 
@@ -38,7 +40,7 @@ export function ModalAddObjectRelationship({
 	objectDefinitionExternalReferenceCode1,
 	objectDefinitionExternalReferenceCode2,
 	objectRelationshipParameterRequired,
-	onAfterSubmit,
+	onAfterAddObjectRelationship,
 	reload = true,
 }: ModalAddObjectRelationshipProps) {
 	const {observer, onClose} = useModal({
@@ -61,7 +63,7 @@ export function ModalAddObjectRelationship({
 		...others
 	}: ObjectRelationship) => {
 		try {
-			const objectRelationship = await API.save({
+			const objectRelationship = await API.save<ObjectRelationship>({
 				item: {
 					objectDefinitionExternalReferenceCode1,
 					...others,
@@ -79,12 +81,9 @@ export function ModalAddObjectRelationship({
 				setTimeout(() => window.location.reload(), 1500);
 			}
 
-			if (onAfterSubmit) {
+			if (onAfterAddObjectRelationship && objectRelationship) {
 				setTimeout(
-					() =>
-						onAfterSubmit(
-							(objectRelationship as ObjectRelationship).id
-						),
+					() => onAfterAddObjectRelationship(objectRelationship),
 					200
 				);
 			}

@@ -215,8 +215,8 @@ function DiagramBuilder() {
 					objectRelationshipParameterRequired={
 						newObjectRelationshipSourceNodeProps?.parameterRequired!
 					}
-					onAfterSubmit={(newObjectRelationshipId: number) =>
-						updateModelBuilderStructure(newObjectRelationshipId)
+					onAfterAddObjectRelationship={(newObjectRelationship) =>
+						updateModelBuilderStructure(newObjectRelationship.id)
 					}
 					reload={false}
 				/>

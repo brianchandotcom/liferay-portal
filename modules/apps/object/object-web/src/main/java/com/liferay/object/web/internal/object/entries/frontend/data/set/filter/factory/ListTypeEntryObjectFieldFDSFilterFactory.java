@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Feliphe Marinho
@@ -34,6 +33,14 @@ import org.osgi.service.component.annotations.Reference;
 public class ListTypeEntryObjectFieldFDSFilterFactory
 	implements ObjectFieldFDSFilterFactory {
 
+	public ListTypeEntryObjectFieldFDSFilterFactory(
+		ObjectFieldFilterContributorRegistry
+			objectFieldFilterContributorRegistry) {
+
+		_objectFieldFilterContributorRegistry =
+			objectFieldFilterContributorRegistry;
+	}
+
 	public FDSFilter create(
 			Locale locale, long objectDefinitionId,
 			ObjectViewFilterColumn objectViewFilterColumn)
@@ -48,8 +55,7 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 		return objectFieldFilterContributor.getFDSFilter();
 	}
 
-	@Reference
-	private ObjectFieldFilterContributorRegistry
+	private final ObjectFieldFilterContributorRegistry
 		_objectFieldFilterContributorRegistry;
 
 }

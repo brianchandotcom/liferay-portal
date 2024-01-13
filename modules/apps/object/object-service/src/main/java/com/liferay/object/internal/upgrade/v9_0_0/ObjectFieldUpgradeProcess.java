@@ -9,7 +9,6 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -23,8 +22,6 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		DBInspector dbInspector = new DBInspector(connection);
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(
 					StringBundler.concat(
@@ -63,7 +60,7 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 				String indexName = IndexMetadataFactoryUtil.createIndexName(
 					dbTableName, columnNames);
 
-				if (dbInspector.hasIndex(dbTableName, indexName)) {
+				if (hasIndex(dbTableName, indexName)) {
 					runSQL(
 						StringBundler.concat(
 							"drop index ", indexName, " on ", dbTableName));

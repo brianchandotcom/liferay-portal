@@ -148,13 +148,13 @@ const Renderer: React.FC<RendererProps> = ({
 					return disabled ?? isValueIncluded;
 				};
 
-				const getInputValue = () => {
+				const getFieldValue = () => {
 					return currentValue === i18n.sub('no-x', field.label)
 						? ''
 						: currentValue;
 				};
 
-				const handleChange = (
+				const handleFieldChange = (
 					event: React.ChangeEvent<HTMLInputElement>
 				) => {
 					const isChecked = event.target.checked;
@@ -200,7 +200,7 @@ const Renderer: React.FC<RendererProps> = ({
 							<Form.Input
 								disabled={isFieldDisabled()}
 								onChange={onChange}
-								value={getInputValue()}
+								value={getFieldValue()}
 								{...(field as any)}
 							/>
 
@@ -211,7 +211,7 @@ const Renderer: React.FC<RendererProps> = ({
 									)}
 									disabled={disabled}
 									label={i18n.sub('no-x', field.label)}
-									onChange={handleChange}
+									onChange={handleFieldChange}
 								/>
 							)}
 						</div>

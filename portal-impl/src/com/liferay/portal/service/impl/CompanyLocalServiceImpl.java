@@ -1563,9 +1563,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
-	protected Company syncVirtualHost(Company company)
-		throws PortalException {
-
+	protected Company syncVirtualHost(Company company) throws PortalException {
 		if (!PropsValues.COMPANY_DEFAULT_VIRTUAL_HOST_SYNC_ON_STARTUP ||
 			!Objects.equals(
 				PropsValues.COMPANY_DEFAULT_WEB_ID, company.getWebId())) {

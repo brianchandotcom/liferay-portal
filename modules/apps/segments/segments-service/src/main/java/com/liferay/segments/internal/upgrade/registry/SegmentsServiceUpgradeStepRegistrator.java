@@ -90,6 +90,10 @@ public class SegmentsServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.8.0", "2.8.1", new SegmentsExperimentUpgradeProcess());
+
+		registry.register(
+			"2.8.1", "3.0.0",
+			UpgradeProcessFactory.dropColumns("SegmentsEntry", "type_"));
 	}
 
 	@Reference

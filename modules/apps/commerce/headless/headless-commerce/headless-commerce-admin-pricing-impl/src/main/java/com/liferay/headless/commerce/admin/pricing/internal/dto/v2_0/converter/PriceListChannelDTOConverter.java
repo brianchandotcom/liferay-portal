@@ -46,17 +46,17 @@ public class PriceListChannelDTOConverter
 
 		return new PriceListChannel() {
 			{
-				actions = dtoConverterContext.getActions();
-				channelExternalReferenceCode =
-					commerceChannel.getExternalReferenceCode();
-				channelId = commerceChannel.getCommerceChannelId();
-				order = commercePriceListChannelRel.getOrder();
-				priceListChannelId =
-					commercePriceListChannelRel.
-						getCommercePriceListChannelRelId();
-				priceListExternalReferenceCode =
-					commercePriceList.getExternalReferenceCode();
-				priceListId = commercePriceList.getCommercePriceListId();
+				setActions(dtoConverterContext::getActions);
+				setChannelExternalReferenceCode(
+					commerceChannel::getExternalReferenceCode);
+				setChannelId(commerceChannel::getCommerceChannelId);
+				setOrder(commercePriceListChannelRel::getOrder);
+				setPriceListChannelId(
+					commercePriceListChannelRel::
+						getCommercePriceListChannelRelId);
+				setPriceListExternalReferenceCode(
+					commercePriceList::getExternalReferenceCode);
+				setPriceListId(commercePriceList::getCommercePriceListId);
 			}
 		};
 	}

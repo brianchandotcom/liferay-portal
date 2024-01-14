@@ -484,9 +484,9 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		return new FailedItem() {
 			{
-				item = batchEngineImportTaskError.getItem();
-				itemIndex = batchEngineImportTaskError.getItemIndex();
-				message = batchEngineImportTaskError.getMessage();
+				setItem(batchEngineImportTaskError::getItem);
+				setItemIndex(batchEngineImportTaskError::getItemIndex);
+				setMessage(batchEngineImportTaskError::getMessage);
 			}
 		};
 	}
@@ -508,29 +508,33 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		return new ImportTask() {
 			{
-				className = batchEngineImportTask.getClassName();
-				contentType = batchEngineImportTask.getContentType();
-				endTime = batchEngineImportTask.getEndTime();
-				errorMessage = batchEngineImportTask.getErrorMessage();
-				executeStatus = ImportTask.ExecuteStatus.create(
-					batchEngineImportTask.getExecuteStatus());
-				externalReferenceCode =
-					batchEngineImportTask.getExternalReferenceCode();
-				failedItems = transformToArray(
-					batchEngineImportTask.getBatchEngineImportTaskErrors(),
-					batchEngineImportTaskError -> _toFailedItem(
-						batchEngineImportTaskError),
-					FailedItem.class);
-				id = batchEngineImportTask.getBatchEngineImportTaskId();
-				importStrategy = ImportTask.ImportStrategy.create(
-					BatchEngineImportTaskConstants.getImportStrategyString(
-						batchEngineImportTask.getImportStrategy()));
-				operation = ImportTask.Operation.create(
-					batchEngineImportTask.getOperation());
-				processedItemsCount =
-					batchEngineImportTask.getProcessedItemsCount();
-				startTime = batchEngineImportTask.getStartTime();
-				totalItemsCount = batchEngineImportTask.getTotalItemsCount();
+				setClassName(batchEngineImportTask::getClassName);
+				setContentType(batchEngineImportTask::getContentType);
+				setEndTime(batchEngineImportTask::getEndTime);
+				setErrorMessage(batchEngineImportTask::getErrorMessage);
+				setExecuteStatus(
+					() -> ImportTask.ExecuteStatus.create(
+						batchEngineImportTask.getExecuteStatus()));
+				setExternalReferenceCode(
+					batchEngineImportTask::getExternalReferenceCode);
+				setFailedItems(
+					() -> transformToArray(
+						batchEngineImportTask.getBatchEngineImportTaskErrors(),
+						batchEngineImportTaskError -> _toFailedItem(
+							batchEngineImportTaskError),
+						FailedItem.class));
+				setId(batchEngineImportTask::getBatchEngineImportTaskId);
+				setImportStrategy(
+					() -> ImportTask.ImportStrategy.create(
+						BatchEngineImportTaskConstants.getImportStrategyString(
+							batchEngineImportTask.getImportStrategy())));
+				setOperation(
+					() -> ImportTask.Operation.create(
+						batchEngineImportTask.getOperation()));
+				setProcessedItemsCount(
+					batchEngineImportTask::getProcessedItemsCount);
+				setStartTime(batchEngineImportTask::getStartTime);
+				setTotalItemsCount(batchEngineImportTask::getTotalItemsCount);
 			}
 		};
 	}

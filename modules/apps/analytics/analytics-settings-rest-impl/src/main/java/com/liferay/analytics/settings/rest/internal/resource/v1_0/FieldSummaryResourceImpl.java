@@ -60,17 +60,20 @@ public class FieldSummaryResourceImpl extends BaseFieldSummaryResourceImpl {
 
 		return new FieldSummary() {
 			{
-				account = syncedAccountFieldNames.length;
-				order =
-					syncedOrderFieldNames.length +
-						syncedOrderItemFieldNames.length;
-				people =
-					syncedContactFieldNames.length +
-						syncedUserFieldNames.length;
-				product =
-					syncedCategoryFieldNames.length +
-						syncedProductFieldNames.length +
-							syncedProductChannelFieldNames.length;
+				setAccount(() -> syncedAccountFieldNames.length);
+				setOrder(
+					() ->
+						syncedOrderFieldNames.length +
+							syncedOrderItemFieldNames.length);
+				setPeople(
+					() ->
+						syncedContactFieldNames.length +
+							syncedUserFieldNames.length);
+				setProduct(
+					() ->
+						syncedCategoryFieldNames.length +
+							syncedProductFieldNames.length +
+								syncedProductChannelFieldNames.length);
 			}
 		};
 	}

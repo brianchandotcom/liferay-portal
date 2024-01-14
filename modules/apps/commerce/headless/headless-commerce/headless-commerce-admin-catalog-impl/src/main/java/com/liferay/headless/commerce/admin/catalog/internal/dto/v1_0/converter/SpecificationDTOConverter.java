@@ -47,13 +47,15 @@ public class SpecificationDTOConverter
 
 		Specification specification = new Specification() {
 			{
-				description = LanguageUtils.getLanguageIdMap(
-					cpSpecificationOption.getDescriptionMap());
-				facetable = cpSpecificationOption.isFacetable();
-				id = cpSpecificationOption.getCPSpecificationOptionId();
-				key = cpSpecificationOption.getKey();
-				title = LanguageUtils.getLanguageIdMap(
-					cpSpecificationOption.getTitleMap());
+				setDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpSpecificationOption.getDescriptionMap()));
+				setFacetable(cpSpecificationOption::isFacetable);
+				setId(cpSpecificationOption::getCPSpecificationOptionId);
+				setKey(cpSpecificationOption::getKey);
+				setTitle(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpSpecificationOption.getTitleMap()));
 			}
 		};
 

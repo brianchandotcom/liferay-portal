@@ -89,52 +89,27 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 		return new SitePage() {
 			{
-				actions = dtoConverterContext.getActions();
-				aggregateRating = AggregateRatingUtil.toAggregateRating(
-					_ratingsStatsLocalService.fetchStats(
-						Layout.class.getName(), layout.getPlid()));
-				availableLanguages = LocaleUtil.toW3cLanguageIds(
-					layout.getAvailableLanguageIds());
-				creator = CreatorUtil.toCreator(
-					dtoConverterContext, _portal,
-					_userLocalService.fetchUser(layout.getUserId()));
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					Layout.class.getName(), layout.getPlid(),
-					layout.getCompanyId(), dtoConverterContext.getLocale());
-				dateCreated = layout.getCreateDate();
-				dateModified = layout.getModifiedDate();
-				datePublished = layout.getPublishDate();
-				friendlyUrlPath = layout.getFriendlyURL(
-					dtoConverterContext.getLocale());
-				friendlyUrlPath_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					layout.getFriendlyURLMap());
-				id = layout.getPlid();
-				keywords = ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						Layout.class.getName(), layout.getPlid()),
-					AssetTag.NAME_ACCESSOR);
-				pageSettings = PageSettingsUtil.getPageSettings(
-					_ddmStorageEngineManager, _dlAppService, _dlURLHelper,
-					dtoConverterContext, _layoutSEOEntryLocalService, layout);
-				renderedPage = RenderedPageUtil.getRenderedPage(
-					dtoConverterContext, layout,
-					_layoutPageTemplateEntryLocalService, _portal);
-				siteId = layout.getGroupId();
-				taxonomyCategoryBriefs = TransformUtil.transformToArray(
-					_assetCategoryLocalService.getCategories(
-						Layout.class.getName(), layout.getPlid()),
-					assetCategory ->
-						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
-							assetCategory, dtoConverterContext),
-					TaxonomyCategoryBrief.class);
-				title = layout.getName(dtoConverterContext.getLocale());
-				title_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					layout.getNameMap());
-				uuid = layout.getUuid();
-
+				setActions(dtoConverterContext::getActions);
+				setAggregateRating(
+					() -> AggregateRatingUtil.toAggregateRating(
+						_ratingsStatsLocalService.fetchStats(
+							Layout.class.getName(), layout.getPlid())));
+				setAvailableLanguages(
+					() -> LocaleUtil.toW3cLanguageIds(
+						layout.getAvailableLanguageIds()));
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						dtoConverterContext, _portal,
+						_userLocalService.fetchUser(layout.getUserId())));
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						Layout.class.getName(), layout.getPlid(),
+						layout.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setDateCreated(layout::getCreateDate);
+				setDateModified(layout::getModifiedDate);
+				setDatePublished(layout::getPublishDate);
 				setExperience(
 					() -> {
 						boolean showSegmentsExperience = GetterUtil.getBoolean(
@@ -152,6 +127,19 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 						return _experienceDTOConverter.toDTO(
 							dtoConverterContext, segmentsExperience);
 					});
+				setFriendlyUrlPath(
+					() -> layout.getFriendlyURL(
+						dtoConverterContext.getLocale()));
+				setFriendlyUrlPath_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						layout.getFriendlyURLMap()));
+				setId(layout::getPlid);
+				setKeywords(
+					() -> ListUtil.toArray(
+						_assetTagLocalService.getTags(
+							Layout.class.getName(), layout.getPlid()),
+						AssetTag.NAME_ACCESSOR));
 				setPageDefinition(
 					() -> {
 						boolean embeddedPageDefinition = GetterUtil.getBoolean(
@@ -277,15 +265,21 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 							pagePermissions.add(
 								new PagePermission() {
 									{
-										actionKeys = actionIdsSet.toArray(
-											new String[0]);
-										roleKey = finalRoleKey;
+										setActionKeys(
+											() -> actionIdsSet.toArray(
+												new String[0]));
+										setRoleKey(() -> finalRoleKey);
 									}
 								});
 						}
 
 						return pagePermissions.toArray(new PagePermission[0]);
 					});
+				setPageSettings(
+					() -> PageSettingsUtil.getPageSettings(
+						_ddmStorageEngineManager, _dlAppService, _dlURLHelper,
+						dtoConverterContext, _layoutSEOEntryLocalService,
+						layout));
 				setPageType(
 					() -> {
 						LayoutTypeController layoutTypeController =
@@ -313,10 +307,30 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 						return new ParentSitePage() {
 							{
-								friendlyUrlPath = parentLayout.getFriendlyURL();
+								setFriendlyUrlPath(
+									parentLayout::getFriendlyURL);
 							}
 						};
 					});
+				setRenderedPage(
+					() -> RenderedPageUtil.getRenderedPage(
+						dtoConverterContext, layout,
+						_layoutPageTemplateEntryLocalService, _portal));
+				setSiteId(layout::getGroupId);
+				setTaxonomyCategoryBriefs(
+					() -> TransformUtil.transformToArray(
+						_assetCategoryLocalService.getCategories(
+							Layout.class.getName(), layout.getPlid()),
+						assetCategory ->
+							TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
+								assetCategory, dtoConverterContext),
+						TaxonomyCategoryBrief.class));
+				setTitle(() -> layout.getName(dtoConverterContext.getLocale()));
+				setTitle_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						layout.getNameMap()));
+				setUuid(layout::getUuid);
 			}
 		};
 	}

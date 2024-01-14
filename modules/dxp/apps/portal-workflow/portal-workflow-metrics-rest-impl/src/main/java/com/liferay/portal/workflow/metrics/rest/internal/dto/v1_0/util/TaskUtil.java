@@ -43,25 +43,6 @@ public class TaskUtil {
 
 		return new Task() {
 			{
-				assetTitle_i18n = assetTitleMap;
-				assetType_i18n = assetTypeMap;
-				className = document.getString("className");
-				classPK = document.getLong("classPK");
-				completed = document.getBoolean("completed");
-				completionUserId = document.getLong("completionUserId");
-				dateCompletion = _parseDate(document.getDate("completionDate"));
-				dateCreated = _parseDate(document.getDate("createDate"));
-				dateModified = _parseDate(document.getDate("modifiedDate"));
-				duration = document.getLong("duration");
-				id = document.getLong("taskId");
-				instanceId = document.getLong("instanceId");
-				label = language.get(
-					resourceBundle, document.getString("name"));
-				name = document.getString("name");
-				nodeId = document.getLong("nodeId");
-				processId = document.getLong("processId");
-				processVersion = document.getString("version");
-
 				setAssetTitle(
 					() -> {
 						String assetTitle = assetTitleMap.get(
@@ -77,6 +58,7 @@ public class TaskUtil {
 
 						return assetTitle;
 					});
+				setAssetTitle_i18n(() -> assetTitleMap);
 				setAssetType(
 					() -> {
 						String assetType = assetTypeMap.get(
@@ -92,6 +74,7 @@ public class TaskUtil {
 
 						return assetType;
 					});
+				setAssetType_i18n(() -> assetTypeMap);
 				setAssignee(
 					() -> {
 						String assigneeType = document.getString(
@@ -107,6 +90,26 @@ public class TaskUtil {
 
 						return null;
 					});
+				setClassName(() -> document.getString("className"));
+				setClassPK(() -> document.getLong("classPK"));
+				setCompleted(() -> document.getBoolean("completed"));
+				setCompletionUserId(() -> document.getLong("completionUserId"));
+				setDateCompletion(
+					() -> _parseDate(document.getDate("completionDate")));
+				setDateCreated(
+					() -> _parseDate(document.getDate("createDate")));
+				setDateModified(
+					() -> _parseDate(document.getDate("modifiedDate")));
+				setDuration(() -> document.getLong("duration"));
+				setId(() -> document.getLong("taskId"));
+				setInstanceId(() -> document.getLong("instanceId"));
+				setLabel(
+					() -> language.get(
+						resourceBundle, document.getString("name")));
+				setName(() -> document.getString("name"));
+				setNodeId(() -> document.getLong("nodeId"));
+				setProcessId(() -> document.getLong("processId"));
+				setProcessVersion(() -> document.getString("version"));
 			}
 		};
 	}
@@ -122,31 +125,6 @@ public class TaskUtil {
 
 		return new Task() {
 			{
-				assetTitle_i18n = assetTitleMap;
-				assetType_i18n = assetTypeMap;
-				className = GetterUtil.getString(sourcesMap.get("className"));
-				classPK = GetterUtil.getLong(sourcesMap.get("classPK"));
-				completed = GetterUtil.getBoolean(sourcesMap.get("completed"));
-				completionUserId = GetterUtil.getLong(
-					sourcesMap.get("completionUserId"));
-				dateCompletion = _parseDate(
-					GetterUtil.getString(sourcesMap.get("completionDate")));
-				dateCreated = _parseDate(
-					GetterUtil.getString(sourcesMap.get("createDate")));
-				dateModified = _parseDate(
-					GetterUtil.getString(sourcesMap.get("modifiedDate")));
-				duration = GetterUtil.getLong(sourcesMap.get("duration"));
-				id = GetterUtil.getLong(sourcesMap.get("taskId"));
-				instanceId = GetterUtil.getLong(sourcesMap.get("instanceId"));
-				label = language.get(
-					resourceBundle,
-					GetterUtil.getString(sourcesMap.get("name")));
-				name = GetterUtil.getString(sourcesMap.get("name"));
-				nodeId = GetterUtil.getLong(sourcesMap.get("nodeId"));
-				processId = GetterUtil.getLong(sourcesMap.get("processId"));
-				processVersion = GetterUtil.getString(
-					sourcesMap.get("version"));
-
 				setAssetTitle(
 					() -> {
 						String assetTitle = assetTitleMap.get(
@@ -162,6 +140,7 @@ public class TaskUtil {
 
 						return assetTitle;
 					});
+				setAssetTitle_i18n(() -> assetTitleMap);
 				setAssetType(
 					() -> {
 						String assetType = assetTypeMap.get(
@@ -177,6 +156,7 @@ public class TaskUtil {
 
 						return assetType;
 					});
+				setAssetType_i18n(() -> assetTypeMap);
 				setAssignee(
 					() -> {
 						String assigneeType = GetterUtil.getString(
@@ -194,6 +174,39 @@ public class TaskUtil {
 
 						return null;
 					});
+				setClassName(
+					() -> GetterUtil.getString(sourcesMap.get("className")));
+				setClassPK(() -> GetterUtil.getLong(sourcesMap.get("classPK")));
+				setCompleted(
+					() -> GetterUtil.getBoolean(sourcesMap.get("completed")));
+				setCompletionUserId(
+					() -> GetterUtil.getLong(
+						sourcesMap.get("completionUserId")));
+				setDateCompletion(
+					() -> _parseDate(
+						GetterUtil.getString(
+							sourcesMap.get("completionDate"))));
+				setDateCreated(
+					() -> _parseDate(
+						GetterUtil.getString(sourcesMap.get("createDate"))));
+				setDateModified(
+					() -> _parseDate(
+						GetterUtil.getString(sourcesMap.get("modifiedDate"))));
+				setDuration(
+					() -> GetterUtil.getLong(sourcesMap.get("duration")));
+				setId(() -> GetterUtil.getLong(sourcesMap.get("taskId")));
+				setInstanceId(
+					() -> GetterUtil.getLong(sourcesMap.get("instanceId")));
+				setLabel(
+					() -> language.get(
+						resourceBundle,
+						GetterUtil.getString(sourcesMap.get("name"))));
+				setName(() -> GetterUtil.getString(sourcesMap.get("name")));
+				setNodeId(() -> GetterUtil.getLong(sourcesMap.get("nodeId")));
+				setProcessId(
+					() -> GetterUtil.getLong(sourcesMap.get("processId")));
+				setProcessVersion(
+					() -> GetterUtil.getString(sourcesMap.get("version")));
 			}
 		};
 	}
@@ -203,8 +216,8 @@ public class TaskUtil {
 
 		return new Task() {
 			{
-				label = language.get(resourceBundle, taskName);
-				name = taskName;
+				setLabel(() -> language.get(resourceBundle, taskName));
+				setName(() -> taskName);
 			}
 		};
 	}

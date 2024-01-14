@@ -49,16 +49,16 @@ public class DiscountAccountGroupDTOConverter
 
 		return new DiscountAccountGroup() {
 			{
-				accountGroupExternalReferenceCode =
-					discountAccountGroup.getExternalReferenceCode();
-				accountGroupId = discountAccountGroup.getAccountGroupId();
-				actions = dtoConverterContext.getActions();
-				discountAccountGroupId =
-					commerceDiscountCommerceAccountGroupRel.
-						getCommerceDiscountCommerceAccountGroupRelId();
-				discountExternalReferenceCode =
-					commerceDiscount.getExternalReferenceCode();
-				discountId = commerceDiscount.getCommerceDiscountId();
+				setAccountGroupExternalReferenceCode(
+					discountAccountGroup::getExternalReferenceCode);
+				setAccountGroupId(discountAccountGroup::getAccountGroupId);
+				setActions(dtoConverterContext::getActions);
+				setDiscountAccountGroupId(
+					commerceDiscountCommerceAccountGroupRel::
+						getCommerceDiscountCommerceAccountGroupRelId);
+				setDiscountExternalReferenceCode(
+					commerceDiscount::getExternalReferenceCode);
+				setDiscountId(commerceDiscount::getCommerceDiscountId);
 			}
 		};
 	}

@@ -51,9 +51,6 @@ public class RelatedContentUtil {
 
 		return new RelatedContent() {
 			{
-				id = assetEntry.getClassPK();
-				title = assetEntry.getTitle(locale);
-
 				setContentType(
 					() -> {
 						DTOConverter<?, ?> dtoConverter =
@@ -66,6 +63,8 @@ public class RelatedContentUtil {
 
 						return dtoConverter.getContentType();
 					});
+				setId(assetEntry::getClassPK);
+				setTitle(() -> assetEntry.getTitle(locale));
 			}
 		};
 	}

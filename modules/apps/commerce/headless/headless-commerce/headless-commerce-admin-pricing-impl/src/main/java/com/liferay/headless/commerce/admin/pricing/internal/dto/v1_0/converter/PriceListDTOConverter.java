@@ -48,17 +48,17 @@ public class PriceListDTOConverter
 
 		return new PriceList() {
 			{
-				active = !commercePriceList.isInactive();
-				catalogId = _getCatalogId(commercePriceList);
-				currencyCode = commerceCurrency.getCode();
-				customFields = expandoBridge.getAttributes();
-				displayDate = commercePriceList.getDisplayDate();
-				expirationDate = commercePriceList.getExpirationDate();
-				externalReferenceCode =
-					commercePriceList.getExternalReferenceCode();
-				id = commercePriceList.getCommercePriceListId();
-				name = commercePriceList.getName();
-				priority = commercePriceList.getPriority();
+				setActive(() -> !commercePriceList.isInactive());
+				setCatalogId(() -> _getCatalogId(commercePriceList));
+				setCurrencyCode(commerceCurrency::getCode);
+				setCustomFields(expandoBridge::getAttributes);
+				setDisplayDate(commercePriceList::getDisplayDate);
+				setExpirationDate(commercePriceList::getExpirationDate);
+				setExternalReferenceCode(
+					commercePriceList::getExternalReferenceCode);
+				setId(commercePriceList::getCommercePriceListId);
+				setName(commercePriceList::getName);
+				setPriority(commercePriceList::getPriority);
 			}
 		};
 	}

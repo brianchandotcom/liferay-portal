@@ -34,13 +34,13 @@ public class RegionResourceDTOConverter
 
 		return new Region() {
 			{
-				active = serviceBuilderRegion.isActive();
-				countryId = serviceBuilderRegion.getCountryId();
-				id = serviceBuilderRegion.getRegionId();
-				name = serviceBuilderRegion.getName();
-				position = serviceBuilderRegion.getPosition();
-				regionCode = serviceBuilderRegion.getRegionCode();
-				title_i18n = serviceBuilderRegion.getLanguageIdToTitleMap();
+				setActive(serviceBuilderRegion::isActive);
+				setCountryId(serviceBuilderRegion::getCountryId);
+				setId(serviceBuilderRegion::getRegionId);
+				setName(serviceBuilderRegion::getName);
+				setPosition(serviceBuilderRegion::getPosition);
+				setRegionCode(serviceBuilderRegion::getRegionCode);
+				setTitle_i18n(serviceBuilderRegion::getLanguageIdToTitleMap);
 			}
 		};
 	}

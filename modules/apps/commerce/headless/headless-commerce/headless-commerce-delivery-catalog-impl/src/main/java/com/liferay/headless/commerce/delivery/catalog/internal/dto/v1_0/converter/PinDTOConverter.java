@@ -42,11 +42,7 @@ public class PinDTOConverter implements DTOConverter<CSDiagramEntry, Pin> {
 
 		return new Pin() {
 			{
-				id = csDiagramPin.getCSDiagramPinId();
-				positionX = csDiagramPin.getPositionX();
-				positionY = csDiagramPin.getPositionY();
-				sequence = csDiagramPin.getSequence();
-
+				setId(csDiagramPin::getCSDiagramPinId);
 				setMappedProduct(
 					() -> {
 						CSDiagramEntry csDiagramEntry =
@@ -65,6 +61,9 @@ public class PinDTOConverter implements DTOConverter<CSDiagramEntry, Pin> {
 								csDiagramEntry.getCSDiagramEntryId(),
 								dtoConverterContext.getLocale()));
 					});
+				setPositionX(csDiagramPin::getPositionX);
+				setPositionY(csDiagramPin::getPositionY);
+				setSequence(csDiagramPin::getSequence);
 			}
 		};
 	}

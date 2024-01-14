@@ -24,19 +24,22 @@ public class RoleUtil {
 
 		return new Role() {
 			{
-				availableLanguages = LocaleUtil.toW3cLanguageIds(
-					role.getAvailableLanguageIds());
-				creator = CreatorUtil.toCreator(portal, user);
-				dateCreated = role.getCreateDate();
-				dateModified = role.getModifiedDate();
-				description = role.getDescription(locale);
-				description_i18n = LocalizedMapUtil.getI18nMap(
-					acceptAllLanguages, role.getDescriptionMap());
-				id = role.getRoleId();
-				name = role.getTitle(locale);
-				name_i18n = LocalizedMapUtil.getI18nMap(
-					acceptAllLanguages, role.getTitleMap());
-				roleType = role.getTypeLabel();
+				setAvailableLanguages(
+					() -> LocaleUtil.toW3cLanguageIds(
+						role.getAvailableLanguageIds()));
+				setCreator(() -> CreatorUtil.toCreator(portal, user));
+				setDateCreated(role::getCreateDate);
+				setDateModified(role::getModifiedDate);
+				setDescription(() -> role.getDescription(locale));
+				setDescription_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						acceptAllLanguages, role.getDescriptionMap()));
+				setId(role::getRoleId);
+				setName(() -> role.getTitle(locale));
+				setName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						acceptAllLanguages, role.getTitleMap()));
+				setRoleType(role::getTypeLabel);
 			}
 		};
 	}

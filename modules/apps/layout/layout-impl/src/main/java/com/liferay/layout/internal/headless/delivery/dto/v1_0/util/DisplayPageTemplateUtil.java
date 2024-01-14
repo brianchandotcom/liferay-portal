@@ -20,13 +20,6 @@ public class DisplayPageTemplateUtil {
 
 		return new DisplayPageTemplate() {
 			{
-				contentType = new ContentType() {
-					{
-						className = layoutPageTemplateEntry.getClassName();
-					}
-				};
-				name = layoutPageTemplateEntry.getName();
-
 				setContentSubtype(
 					() -> {
 						if (layoutPageTemplateEntry.getClassTypeId() == 0) {
@@ -35,11 +28,20 @@ public class DisplayPageTemplateUtil {
 
 						return new ContentSubtype() {
 							{
-								subtypeId =
-									layoutPageTemplateEntry.getClassTypeId();
+								setSubtypeId(
+									() ->
+										layoutPageTemplateEntry.
+											getClassTypeId());
 							}
 						};
 					});
+				setContentType(
+					() -> new ContentType() {
+						{
+							setClassName(layoutPageTemplateEntry::getClassName);
+						}
+					});
+				setName(layoutPageTemplateEntry::getName);
 			}
 		};
 	}

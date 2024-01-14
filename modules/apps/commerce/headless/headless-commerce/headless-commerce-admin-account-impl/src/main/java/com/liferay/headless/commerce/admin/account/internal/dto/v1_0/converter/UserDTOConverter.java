@@ -41,15 +41,15 @@ public class UserDTOConverter
 
 		return new User() {
 			{
-				email = user.getEmailAddress();
-				externalReferenceCode = user.getExternalReferenceCode();
-				firstName = user.getFirstName();
-				id = user.getUserId();
-				jobTitle = user.getJobTitle();
-				lastName = user.getLastName();
-				male = user.isMale();
-				middleName = user.getMiddleName();
-				roles = _getRoles(user);
+				setEmail(user::getEmailAddress);
+				setExternalReferenceCode(user::getExternalReferenceCode);
+				setFirstName(user::getFirstName);
+				setId(user::getUserId);
+				setJobTitle(user::getJobTitle);
+				setLastName(user::getLastName);
+				setMale(user::isMale);
+				setMiddleName(user::getMiddleName);
+				setRoles(() -> _getRoles(user));
 			}
 		};
 	}

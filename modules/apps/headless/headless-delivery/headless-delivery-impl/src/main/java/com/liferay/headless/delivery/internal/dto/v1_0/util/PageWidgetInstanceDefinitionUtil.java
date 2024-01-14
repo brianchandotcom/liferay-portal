@@ -34,19 +34,23 @@ public class PageWidgetInstanceDefinitionUtil {
 
 		return new PageWidgetInstanceDefinition() {
 			{
-				cssClasses = StyledLayoutStructureItemUtil.getCssClasses(
-					fragmentStyledLayoutStructureItem);
-				customCSS = StyledLayoutStructureItemUtil.getCustomCSS(
-					fragmentStyledLayoutStructureItem);
-				customCSSViewports =
-					StyledLayoutStructureItemUtil.getCustomCSSViewports(
-						fragmentStyledLayoutStructureItem);
-				fragmentStyle = pageWidgetInstanceDefinitionFragmentStyle;
-				fragmentViewports =
-					pageWidgetInstanceDefinitionFragmentViewports;
-				name = nameValue;
-				widgetInstance = widgetInstanceMapper.getWidgetInstance(
-					fragmentEntryLink, portletId);
+				setCssClasses(
+					() -> StyledLayoutStructureItemUtil.getCssClasses(
+						fragmentStyledLayoutStructureItem));
+				setCustomCSS(
+					() -> StyledLayoutStructureItemUtil.getCustomCSS(
+						fragmentStyledLayoutStructureItem));
+				setCustomCSSViewports(
+					() -> StyledLayoutStructureItemUtil.getCustomCSSViewports(
+						fragmentStyledLayoutStructureItem));
+				setFragmentStyle(
+					() -> pageWidgetInstanceDefinitionFragmentStyle);
+				setFragmentViewports(
+					() -> pageWidgetInstanceDefinitionFragmentViewports);
+				setName(() -> nameValue);
+				setWidgetInstance(
+					() -> widgetInstanceMapper.getWidgetInstance(
+						fragmentEntryLink, portletId));
 			}
 		};
 	}

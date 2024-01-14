@@ -145,7 +145,7 @@ public class AddObjectEntryObjectActionExecutorImpl
 			objectDefinition,
 			new ObjectEntry() {
 				{
-					properties = values;
+					setProperties(() -> values);
 				}
 			},
 			String.valueOf(groupId));

@@ -30,12 +30,7 @@ public class CreatorStatisticsUtil {
 
 		return new CreatorStatistics() {
 			{
-				joinDate = user.getCreateDate();
-				postsNumber = Math.toIntExact(
-					mbStatsUserLocalService.getMessageCountByUserId(
-						user.getUserId()));
-				rank = ranks[1].equals(StringPool.BLANK) ? ranks[0] : ranks[1];
-
+				setJoinDate(user::getCreateDate);
 				setLastPostDate(
 					() -> {
 						if (uriInfo != null) {
@@ -56,6 +51,14 @@ public class CreatorStatisticsUtil {
 
 						return null;
 					});
+				setPostsNumber(
+					() -> Math.toIntExact(
+						mbStatsUserLocalService.getMessageCountByUserId(
+							user.getUserId())));
+				setRank(
+					() ->
+						ranks[1].equals(StringPool.BLANK) ? ranks[0] :
+							ranks[1]);
 			}
 		};
 	}

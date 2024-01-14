@@ -186,16 +186,20 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 	private NodeMetric _createNodeMetric(String nodeName) {
 		return new NodeMetric() {
 			{
-				node = new Node() {
-					{
-						label = _language.get(
-							ResourceBundleUtil.getModuleAndPortalResourceBundle(
-								contextAcceptLanguage.getPreferredLocale(),
-								NodeMetricResourceImpl.class),
-							nodeName);
-						name = nodeName;
-					}
-				};
+				setNode(
+					() -> new Node() {
+						{
+							setLabel(
+								() -> _language.get(
+									ResourceBundleUtil.
+										getModuleAndPortalResourceBundle(
+											contextAcceptLanguage.
+												getPreferredLocale(),
+											NodeMetricResourceImpl.class),
+									nodeName));
+							setName(() -> nodeName);
+						}
+					});
 			}
 		};
 	}

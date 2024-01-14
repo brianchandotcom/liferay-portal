@@ -39,16 +39,16 @@ public class CatalogDTOConverter
 
 		return new Catalog() {
 			{
-				accountId = commerceCatalog.getAccountEntryId();
-				actions = dtoConverterContext.getActions();
-				currencyCode = commerceCatalog.getCommerceCurrencyCode();
-				defaultLanguageId =
-					commerceCatalog.getCatalogDefaultLanguageId();
-				externalReferenceCode =
-					commerceCatalog.getExternalReferenceCode();
-				id = commerceCatalog.getCommerceCatalogId();
-				name = commerceCatalog.getName();
-				system = commerceCatalog.isSystem();
+				setAccountId(commerceCatalog::getAccountEntryId);
+				setActions(dtoConverterContext::getActions);
+				setCurrencyCode(commerceCatalog::getCommerceCurrencyCode);
+				setDefaultLanguageId(
+					commerceCatalog::getCatalogDefaultLanguageId);
+				setExternalReferenceCode(
+					commerceCatalog::getExternalReferenceCode);
+				setId(commerceCatalog::getCommerceCatalogId);
+				setName(commerceCatalog::getName);
+				setSystem(commerceCatalog::isSystem);
 			}
 		};
 	}

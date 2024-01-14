@@ -37,22 +37,13 @@ public class OpenGraphSettingsUtil {
 
 		return new OpenGraphSettings() {
 			{
-				description = layoutSEOEntry.getOpenGraphDescription(
-					dtoConverterContext.getLocale());
-				description_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					layoutSEOEntry.getOpenGraphDescriptionMap());
-				imageAlt = layoutSEOEntry.getOpenGraphImageAlt(
-					dtoConverterContext.getLocale());
-				imageAlt_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					layoutSEOEntry.getOpenGraphImageAltMap());
-				title = layoutSEOEntry.getOpenGraphTitle(
-					dtoConverterContext.getLocale());
-				title_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					layoutSEOEntry.getOpenGraphTitleMap());
-
+				setDescription(
+					() -> layoutSEOEntry.getOpenGraphDescription(
+						dtoConverterContext.getLocale()));
+				setDescription_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						layoutSEOEntry.getOpenGraphDescriptionMap()));
 				setImage(
 					() -> {
 						long openGraphImageFileEntryId =
@@ -69,6 +60,20 @@ public class OpenGraphSettingsUtil {
 								openGraphImageFileEntryId),
 							dtoConverterContext.getUriInfo());
 					});
+				setImageAlt(
+					() -> layoutSEOEntry.getOpenGraphImageAlt(
+						dtoConverterContext.getLocale()));
+				setImageAlt_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						layoutSEOEntry.getOpenGraphImageAltMap()));
+				setTitle(
+					() -> layoutSEOEntry.getOpenGraphTitle(
+						dtoConverterContext.getLocale()));
+				setTitle_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						layoutSEOEntry.getOpenGraphTitleMap()));
 			}
 		};
 	}

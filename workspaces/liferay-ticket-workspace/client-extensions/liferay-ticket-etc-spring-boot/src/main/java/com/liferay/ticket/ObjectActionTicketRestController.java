@@ -94,17 +94,18 @@ public class ObjectActionTicketRestController extends BaseRestController {
 
 		return new SuggestionsContributorConfiguration() {
 			{
-				attributes = new JSONObject(
-				).put(
-					"includeAssetSearchSummary", true
-				).put(
-					"includeassetURL", true
-				).put(
-					"sxpBlueprintId", 3628599
-				);
-				contributorName = "sxpBlueprint";
-				displayGroupName = "Public Nav Search Recommendations";
-				size = 3;
+				setAttributes(
+					() -> new JSONObject(
+					).put(
+						"includeAssetSearchSummary", true
+					).put(
+						"includeassetURL", true
+					).put(
+						"sxpBlueprintId", 3628599
+					));
+				setContributorName(() -> "sxpBlueprint");
+				setDisplayGroupName(() -> "Public Nav Search Recommendations");
+				setSize(() -> 3);
 			}
 		};
 	}

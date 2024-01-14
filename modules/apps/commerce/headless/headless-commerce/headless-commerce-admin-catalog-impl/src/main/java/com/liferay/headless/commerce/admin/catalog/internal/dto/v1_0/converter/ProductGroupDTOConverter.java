@@ -48,16 +48,19 @@ public class ProductGroupDTOConverter
 
 		return new ProductGroup() {
 			{
-				customFields = expandoBridge.getAttributes();
-				description = LanguageUtils.getLanguageIdMap(
-					commercePricingClass.getDescriptionMap());
-				externalReferenceCode =
-					commercePricingClass.getExternalReferenceCode();
-				id = commercePricingClass.getCommercePricingClassId();
-				productsCount = _getProductsCount(
-					commercePricingClass.getCommercePricingClassId());
-				title = LanguageUtils.getLanguageIdMap(
-					commercePricingClass.getTitleMap());
+				setCustomFields(expandoBridge::getAttributes);
+				setDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						commercePricingClass.getDescriptionMap()));
+				setExternalReferenceCode(
+					commercePricingClass::getExternalReferenceCode);
+				setId(commercePricingClass::getCommercePricingClassId);
+				setProductsCount(
+					() -> _getProductsCount(
+						commercePricingClass.getCommercePricingClassId()));
+				setTitle(
+					() -> LanguageUtils.getLanguageIdMap(
+						commercePricingClass.getTitleMap()));
 			}
 		};
 	}

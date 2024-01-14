@@ -65,28 +65,34 @@ public class AccountDTOConverter
 
 		return new Account() {
 			{
-				active = _toCommerceAccountActive(accountEntry.getStatus());
-				customFields = expandoBridge.getAttributes();
-				dateCreated = accountEntry.getCreateDate();
-				dateModified = accountEntry.getModifiedDate();
-				defaultBillingAccountAddressId =
-					accountEntry.getDefaultBillingAddressId();
-				defaultShippingAccountAddressId =
-					accountEntry.getDefaultShippingAddressId();
-				emailAddresses = new String[] {accountEntry.getEmailAddress()};
-				externalReferenceCode = accountEntry.getExternalReferenceCode();
-				id = accountEntry.getAccountEntryId();
-				logoId = accountEntry.getLogoId();
-				logoURL = StringBundler.concat(
-					"/image/organization_logo?img_id=",
-					accountEntry.getLogoId(), "&t=",
-					_webServerServletToken.getToken(accountEntry.getLogoId()));
-				name = accountEntry.getName();
-				root =
-					accountEntry.getParentAccountEntryId() ==
-						AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT;
-				taxId = accountEntry.getTaxIdNumber();
-				type = _toCommerceAccountType(accountEntry.getType());
+				setActive(
+					() -> _toCommerceAccountActive(accountEntry.getStatus()));
+				setCustomFields(expandoBridge::getAttributes);
+				setDateCreated(accountEntry::getCreateDate);
+				setDateModified(accountEntry::getModifiedDate);
+				setDefaultBillingAccountAddressId(
+					accountEntry::getDefaultBillingAddressId);
+				setDefaultShippingAccountAddressId(
+					accountEntry::getDefaultShippingAddressId);
+				setEmailAddresses(
+					() -> new String[] {accountEntry.getEmailAddress()});
+				setExternalReferenceCode(
+					accountEntry::getExternalReferenceCode);
+				setId(accountEntry::getAccountEntryId);
+				setLogoId(accountEntry::getLogoId);
+				setLogoURL(
+					() -> StringBundler.concat(
+						"/image/organization_logo?img_id=",
+						accountEntry.getLogoId(), "&t=",
+						_webServerServletToken.getToken(
+							accountEntry.getLogoId())));
+				setName(accountEntry::getName);
+				setRoot(
+					() ->
+						accountEntry.getParentAccountEntryId() ==
+							AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT);
+				setTaxId(accountEntry::getTaxIdNumber);
+				setType(() -> _toCommerceAccountType(accountEntry.getType()));
 			}
 		};
 	}

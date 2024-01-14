@@ -1041,192 +1041,8 @@ public class ObjectDefinitionResourceImpl
 
 		return new ObjectDefinition() {
 			{
-				accountEntryRestricted =
-					objectDefinition.isAccountEntryRestricted();
-				actions = HashMapBuilder.put(
-					"bind",
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-187142") ||
-							(objectDefinition.getRootObjectDefinitionId() !=
-								0) ||
-							objectDefinition.isApproved() ||
-							objectDefinition.isSystem()) {
-
-							return null;
-						}
-
-						return addAction(
-							ActionKeys.UPDATE, "putObjectDefinition",
-							permissionName,
-							objectDefinition.getObjectDefinitionId());
-					}
-				).put(
-					"delete",
-					() -> {
-						if (objectDefinition.isSystem()) {
-							return null;
-						}
-
-						return addAction(
-							ActionKeys.DELETE, "deleteObjectDefinition",
-							permissionName,
-							objectDefinition.getObjectDefinitionId());
-					}
-				).put(
-					"get",
-					addAction(
-						ActionKeys.VIEW, "getObjectDefinition", permissionName,
-						objectDefinition.getObjectDefinitionId())
-				).put(
-					"permissions",
-					addAction(
-						ActionKeys.PERMISSIONS, "patchObjectDefinition",
-						permissionName,
-						objectDefinition.getObjectDefinitionId())
-				).put(
-					"publish",
-					() -> {
-						if (objectDefinition.isApproved()) {
-							return null;
-						}
-
-						return addAction(
-							ActionKeys.UPDATE, "postObjectDefinitionPublish",
-							permissionName,
-							objectDefinition.getObjectDefinitionId());
-					}
-				).put(
-					"unbind",
-					() -> {
-						if ((objectDefinition.getRootObjectDefinitionId() ==
-								0) ||
-							objectDefinition.isApproved()) {
-
-							return null;
-						}
-
-						return addAction(
-							ActionKeys.UPDATE, "putObjectDefinition",
-							permissionName,
-							objectDefinition.getObjectDefinitionId());
-					}
-				).put(
-					"update",
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-148856") &&
-							objectDefinition.isUnmodifiableSystemObject()) {
-
-							return null;
-						}
-
-						return addAction(
-							ActionKeys.UPDATE, "putObjectDefinition",
-							permissionName,
-							objectDefinition.getObjectDefinitionId());
-					}
-				).build();
-				active = objectDefinition.isActive();
-				dateCreated = objectDefinition.getCreateDate();
-				dateModified = objectDefinition.getModifiedDate();
-				defaultLanguageId = _localization.getDefaultLanguageId(
-					objectDefinition.getLabel());
-				enableCategorization =
-					objectDefinition.isEnableCategorization();
-				enableComments = objectDefinition.isEnableComments();
-				enableLocalization = objectDefinition.isEnableLocalization();
-				enableObjectEntryDraft =
-					objectDefinition.isEnableObjectEntryDraft();
-				enableObjectEntryHistory =
-					objectDefinition.isEnableObjectEntryHistory();
-				externalReferenceCode =
-					objectDefinition.getExternalReferenceCode();
-				id = objectDefinition.getObjectDefinitionId();
-				label = LocalizedMapUtil.getLanguageIdMap(
-					objectDefinition.getLabelMap());
-				modifiable = objectDefinition.isModifiable();
-				name = objectDefinition.getShortName();
-				objectActions = transformToArray(
-					_objectActionLocalService.getObjectActions(
-						objectDefinition.getObjectDefinitionId()),
-					objectAction -> ObjectActionUtil.toObjectAction(
-						null, contextAcceptLanguage.getPreferredLocale(),
-						_notificationTemplateLocalService,
-						_objectDefinitionLocalService, objectAction),
-					ObjectAction.class);
-				objectFields = transformToArray(
-					_objectFieldLocalService.getObjectFields(
-						objectDefinition.getObjectDefinitionId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						new ObjectFieldCreateDateComparator(true)),
-					objectField -> _objectFieldDTOConverter.toDTO(
-						new DefaultDTOConverterContext(
-							false, null, null, null,
-							contextAcceptLanguage.getPreferredLocale(), null,
-							null),
-						objectField),
-					ObjectField.class);
-				objectLayouts = transformToArray(
-					_objectLayoutLocalService.getObjectLayouts(
-						objectDefinition.getObjectDefinitionId()),
-					objectLayout -> ObjectLayoutUtil.toObjectLayout(
-						null, _objectDefinitionLocalService,
-						_objectFieldLocalService,
-						_objectRelationshipLocalService, objectLayout),
-					ObjectLayout.class);
-				objectRelationships = transformToArray(
-					_objectRelationshipLocalService.getObjectRelationships(
-						objectDefinition.getObjectDefinitionId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					objectRelationship -> _objectRelationshipDTOConverter.toDTO(
-						new DefaultDTOConverterContext(
-							false, null, null, null,
-							contextAcceptLanguage.getPreferredLocale(), null,
-							null),
-						objectRelationship),
-					ObjectRelationship.class);
-				objectValidationRules = transformToArray(
-					_objectValidationRuleLocalService.getObjectValidationRules(
-						objectDefinition.getObjectDefinitionId()),
-					objectValidationRule ->
-						_objectValidationRuleDTOConverter.toDTO(
-							new DefaultDTOConverterContext(
-								false, null, null, null,
-								contextAcceptLanguage.getPreferredLocale(),
-								null, null),
-							objectValidationRule),
-					ObjectValidationRule.class);
-				objectViews = transformToArray(
-					_objectViewLocalService.getObjectViews(
-						objectDefinition.getObjectDefinitionId()),
-					objectView -> _objectViewDTOConverter.toDTO(
-						new DefaultDTOConverterContext(
-							false, null, null, null,
-							contextAcceptLanguage.getPreferredLocale(), null,
-							null),
-						objectView),
-					ObjectView.class);
-				panelCategoryKey = objectDefinition.getPanelCategoryKey();
-				parameterRequired = finalRESTContextPath.matches(
-					".*/\\{\\w+}/.*");
-				pluralLabel = LocalizedMapUtil.getLanguageIdMap(
-					objectDefinition.getPluralLabelMap());
-				portlet = objectDefinition.isPortlet();
-				restContextPath = finalRESTContextPath;
-				scope = objectDefinition.getScope();
-				status = new Status() {
-					{
-						code = objectDefinition.getStatus();
-						label = WorkflowConstants.getStatusLabel(
-							objectDefinition.getStatus());
-						label_i18n = _language.get(
-							LanguageResources.getResourceBundle(
-								contextAcceptLanguage.getPreferredLocale()),
-							WorkflowConstants.getStatusLabel(
-								objectDefinition.getStatus()));
-					}
-				};
-				system = objectDefinition.isSystem();
-
+				setAccountEntryRestricted(
+					objectDefinition::isAccountEntryRestricted);
 				setAccountEntryRestrictedObjectFieldName(
 					() -> {
 						com.liferay.object.model.ObjectField
@@ -1241,6 +1057,136 @@ public class ObjectDefinitionResourceImpl
 
 						return serviceBuilderObjectField.getName();
 					});
+				setActions(
+					() -> HashMapBuilder.put(
+						"bind",
+						() -> {
+							if (!FeatureFlagManagerUtil.isEnabled(
+									"LPS-187142") ||
+								(objectDefinition.getRootObjectDefinitionId() !=
+									0) ||
+								objectDefinition.isApproved() ||
+								objectDefinition.isSystem()) {
+
+								return null;
+							}
+
+							return addAction(
+								ActionKeys.UPDATE, "putObjectDefinition",
+								permissionName,
+								objectDefinition.getObjectDefinitionId());
+						}
+					).put(
+						"delete",
+						() -> {
+							if (objectDefinition.isSystem()) {
+								return null;
+							}
+
+							return addAction(
+								ActionKeys.DELETE, "deleteObjectDefinition",
+								permissionName,
+								objectDefinition.getObjectDefinitionId());
+						}
+					).put(
+						"get",
+						addAction(
+							ActionKeys.VIEW, "getObjectDefinition",
+							permissionName,
+							objectDefinition.getObjectDefinitionId())
+					).put(
+						"permissions",
+						addAction(
+							ActionKeys.PERMISSIONS, "patchObjectDefinition",
+							permissionName,
+							objectDefinition.getObjectDefinitionId())
+					).put(
+						"publish",
+						() -> {
+							if (objectDefinition.isApproved()) {
+								return null;
+							}
+
+							return addAction(
+								ActionKeys.UPDATE,
+								"postObjectDefinitionPublish", permissionName,
+								objectDefinition.getObjectDefinitionId());
+						}
+					).put(
+						"unbind",
+						() -> {
+							if ((objectDefinition.getRootObjectDefinitionId() ==
+									0) ||
+								objectDefinition.isApproved()) {
+
+								return null;
+							}
+
+							return addAction(
+								ActionKeys.UPDATE, "putObjectDefinition",
+								permissionName,
+								objectDefinition.getObjectDefinitionId());
+						}
+					).put(
+						"update",
+						() -> {
+							if (!FeatureFlagManagerUtil.isEnabled(
+									"LPS-148856") &&
+								objectDefinition.isUnmodifiableSystemObject()) {
+
+								return null;
+							}
+
+							return addAction(
+								ActionKeys.UPDATE, "putObjectDefinition",
+								permissionName,
+								objectDefinition.getObjectDefinitionId());
+						}
+					).build());
+				setActive(objectDefinition::isActive);
+				setDateCreated(objectDefinition::getCreateDate);
+				setDateModified(objectDefinition::getModifiedDate);
+				setDefaultLanguageId(
+					() -> _localization.getDefaultLanguageId(
+						objectDefinition.getLabel()));
+				setEnableCategorization(
+					objectDefinition::isEnableCategorization);
+				setEnableComments(objectDefinition::isEnableComments);
+				setEnableLocalization(objectDefinition::isEnableLocalization);
+				setEnableObjectEntryDraft(
+					objectDefinition::isEnableObjectEntryDraft);
+				setEnableObjectEntryHistory(
+					objectDefinition::isEnableObjectEntryHistory);
+				setExternalReferenceCode(
+					objectDefinition::getExternalReferenceCode);
+				setId(objectDefinition::getObjectDefinitionId);
+				setLabel(
+					() -> LocalizedMapUtil.getLanguageIdMap(
+						objectDefinition.getLabelMap()));
+				setModifiable(objectDefinition::isModifiable);
+				setName(objectDefinition::getShortName);
+				setObjectActions(
+					() -> transformToArray(
+						_objectActionLocalService.getObjectActions(
+							objectDefinition.getObjectDefinitionId()),
+						objectAction -> ObjectActionUtil.toObjectAction(
+							null, contextAcceptLanguage.getPreferredLocale(),
+							_notificationTemplateLocalService,
+							_objectDefinitionLocalService, objectAction),
+						ObjectAction.class));
+				setObjectFields(
+					() -> transformToArray(
+						_objectFieldLocalService.getObjectFields(
+							objectDefinition.getObjectDefinitionId(),
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+							new ObjectFieldCreateDateComparator(true)),
+						objectField -> _objectFieldDTOConverter.toDTO(
+							new DefaultDTOConverterContext(
+								false, null, null, null,
+								contextAcceptLanguage.getPreferredLocale(),
+								null, null),
+							objectField),
+						ObjectField.class));
 				setObjectFolderExternalReferenceCode(
 					() -> {
 						if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
@@ -1250,6 +1196,60 @@ public class ObjectDefinitionResourceImpl
 						return objectDefinition.
 							getObjectFolderExternalReferenceCode();
 					});
+				setObjectLayouts(
+					() -> transformToArray(
+						_objectLayoutLocalService.getObjectLayouts(
+							objectDefinition.getObjectDefinitionId()),
+						objectLayout -> ObjectLayoutUtil.toObjectLayout(
+							null, _objectDefinitionLocalService,
+							_objectFieldLocalService,
+							_objectRelationshipLocalService, objectLayout),
+						ObjectLayout.class));
+				setObjectRelationships(
+					() -> transformToArray(
+						_objectRelationshipLocalService.getObjectRelationships(
+							objectDefinition.getObjectDefinitionId(),
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+						objectRelationship ->
+							_objectRelationshipDTOConverter.toDTO(
+								new DefaultDTOConverterContext(
+									false, null, null, null,
+									contextAcceptLanguage.getPreferredLocale(),
+									null, null),
+								objectRelationship),
+						ObjectRelationship.class));
+				setObjectValidationRules(
+					() -> transformToArray(
+						_objectValidationRuleLocalService.
+							getObjectValidationRules(
+								objectDefinition.getObjectDefinitionId()),
+						objectValidationRule ->
+							_objectValidationRuleDTOConverter.toDTO(
+								new DefaultDTOConverterContext(
+									false, null, null, null,
+									contextAcceptLanguage.getPreferredLocale(),
+									null, null),
+								objectValidationRule),
+						ObjectValidationRule.class));
+				setObjectViews(
+					() -> transformToArray(
+						_objectViewLocalService.getObjectViews(
+							objectDefinition.getObjectDefinitionId()),
+						objectView -> _objectViewDTOConverter.toDTO(
+							new DefaultDTOConverterContext(
+								false, null, null, null,
+								contextAcceptLanguage.getPreferredLocale(),
+								null, null),
+							objectView),
+						ObjectView.class));
+				setPanelCategoryKey(objectDefinition::getPanelCategoryKey);
+				setParameterRequired(
+					() -> finalRESTContextPath.matches(".*/\\{\\w+}/.*"));
+				setPluralLabel(
+					() -> LocalizedMapUtil.getLanguageIdMap(
+						objectDefinition.getPluralLabelMap()));
+				setPortlet(objectDefinition::isPortlet);
+				setRestContextPath(() -> finalRESTContextPath);
 				setRootObjectDefinitionExternalReferenceCode(
 					() -> {
 						if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
@@ -1270,6 +1270,23 @@ public class ObjectDefinitionResourceImpl
 						return serviceBuilderObjectDefinition.
 							getExternalReferenceCode();
 					});
+				setScope(objectDefinition::getScope);
+				setStatus(
+					() -> new Status() {
+						{
+							setCode(objectDefinition::getStatus);
+							setLabel(
+								() -> WorkflowConstants.getStatusLabel(
+									objectDefinition.getStatus()));
+							setLabel_i18n(
+								() -> _language.get(
+									LanguageResources.getResourceBundle(
+										contextAcceptLanguage.
+											getPreferredLocale()),
+									WorkflowConstants.getStatusLabel(
+										objectDefinition.getStatus())));
+						}
+					});
 				setStorageType(
 					() -> {
 						if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
@@ -1278,6 +1295,7 @@ public class ObjectDefinitionResourceImpl
 
 						return objectDefinition.getStorageType();
 					});
+				setSystem(objectDefinition::isSystem);
 				setTitleObjectFieldName(
 					() -> {
 						com.liferay.object.model.ObjectField

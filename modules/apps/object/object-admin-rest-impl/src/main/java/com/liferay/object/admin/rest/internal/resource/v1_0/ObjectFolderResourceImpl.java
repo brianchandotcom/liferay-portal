@@ -353,54 +353,60 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 
 		return new ObjectFolder() {
 			{
-				actions = HashMapBuilder.put(
-					"delete",
-					() -> {
-						if (objectFolder.isDefault()) {
-							return null;
-						}
+				setActions(
+					() -> HashMapBuilder.put(
+						"delete",
+						() -> {
+							if (objectFolder.isDefault()) {
+								return null;
+							}
 
-						return addAction(
-							ActionKeys.DELETE, "deleteObjectFolder",
-							permissionName, objectFolder.getObjectFolderId());
-					}
-				).put(
-					"get",
-					addAction(
-						ActionKeys.VIEW, "getObjectFolder", permissionName,
-						objectFolder.getObjectFolderId())
-				).put(
-					"permissions",
-					addAction(
-						ActionKeys.PERMISSIONS, "patchObjectFolder",
-						permissionName, objectFolder.getObjectFolderId())
-				).put(
-					"update",
-					() -> {
-						if (objectFolder.isDefault()) {
-							return null;
+							return addAction(
+								ActionKeys.DELETE, "deleteObjectFolder",
+								permissionName,
+								objectFolder.getObjectFolderId());
 						}
+					).put(
+						"get",
+						addAction(
+							ActionKeys.VIEW, "getObjectFolder", permissionName,
+							objectFolder.getObjectFolderId())
+					).put(
+						"permissions",
+						addAction(
+							ActionKeys.PERMISSIONS, "patchObjectFolder",
+							permissionName, objectFolder.getObjectFolderId())
+					).put(
+						"update",
+						() -> {
+							if (objectFolder.isDefault()) {
+								return null;
+							}
 
-						return addAction(
-							ActionKeys.UPDATE, "putObjectFolder",
-							permissionName, objectFolder.getObjectFolderId());
-					}
-				).build();
-				dateCreated = objectFolder.getCreateDate();
-				dateModified = objectFolder.getModifiedDate();
-				externalReferenceCode = objectFolder.getExternalReferenceCode();
-				id = objectFolder.getObjectFolderId();
-				label = LocalizedMapUtil.getLanguageIdMap(
-					objectFolder.getLabelMap());
-				name = objectFolder.getName();
-				objectFolderItems = transformToArray(
-					_objectFolderItemLocalService.
-						getObjectFolderItemsByObjectFolderId(
-							objectFolder.getObjectFolderId()),
-					objectFolderItem -> _toObjectFolderItem(
-						objectFolder.getExternalReferenceCode(),
-						objectFolderItem),
-					ObjectFolderItem.class);
+							return addAction(
+								ActionKeys.UPDATE, "putObjectFolder",
+								permissionName,
+								objectFolder.getObjectFolderId());
+						}
+					).build());
+				setDateCreated(objectFolder::getCreateDate);
+				setDateModified(objectFolder::getModifiedDate);
+				setExternalReferenceCode(
+					objectFolder::getExternalReferenceCode);
+				setId(objectFolder::getObjectFolderId);
+				setLabel(
+					() -> LocalizedMapUtil.getLanguageIdMap(
+						objectFolder.getLabelMap()));
+				setName(objectFolder::getName);
+				setObjectFolderItems(
+					() -> transformToArray(
+						_objectFolderItemLocalService.
+							getObjectFolderItemsByObjectFolderId(
+								objectFolder.getObjectFolderId()),
+						objectFolderItem -> _toObjectFolderItem(
+							objectFolder.getExternalReferenceCode(),
+							objectFolderItem),
+						ObjectFolderItem.class));
 			}
 		};
 	}
@@ -427,14 +433,11 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 
 		return new ObjectFolderItem() {
 			{
-				linkedObjectDefinition = !Objects.equals(
-					dtoObjectDefinition.getObjectFolderExternalReferenceCode(),
-					objectFolderExternalReferenceCode);
-				objectDefinitionExternalReferenceCode =
-					dtoObjectDefinition.getExternalReferenceCode();
-				positionX = objectFolderItem.getPositionX();
-				positionY = objectFolderItem.getPositionY();
-
+				setLinkedObjectDefinition(
+					() -> !Objects.equals(
+						dtoObjectDefinition.
+							getObjectFolderExternalReferenceCode(),
+						objectFolderExternalReferenceCode));
 				setObjectDefinition(
 					() -> {
 						if (linkedObjectDefinition) {
@@ -443,6 +446,10 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 
 						return dtoObjectDefinition;
 					});
+				setObjectDefinitionExternalReferenceCode(
+					dtoObjectDefinition::getExternalReferenceCode);
+				setPositionX(objectFolderItem::getPositionX);
+				setPositionY(objectFolderItem::getPositionY);
 			}
 		};
 	}

@@ -88,15 +88,19 @@ public class PageDefinitionDTOConverter
 
 		return new PageDefinition() {
 			{
-				pageElement = PageElementUtil.toPageElement(
-					layout.getGroupId(), layoutStructure,
-					mainLayoutStructureItem, saveInlineContent,
-					saveMappingConfiguration);
-				pageRules = PageRulesUtil.toPageRules(
-					layoutStructure.getLayoutStructureRules());
-				settings = _toSettings(dtoConverterContext, layout);
-				version =
-					LayoutStructureConstants.LATEST_PAGE_DEFINITION_VERSION;
+				setPageElement(
+					() -> PageElementUtil.toPageElement(
+						layout.getGroupId(), layoutStructure,
+						mainLayoutStructureItem, saveInlineContent,
+						saveMappingConfiguration));
+				setPageRules(
+					() -> PageRulesUtil.toPageRules(
+						layoutStructure.getLayoutStructureRules()));
+				setSettings(() -> _toSettings(dtoConverterContext, layout));
+				setVersion(
+					() ->
+						LayoutStructureConstants.
+							LATEST_PAGE_DEFINITION_VERSION);
 			}
 		};
 	}
@@ -158,10 +162,12 @@ public class PageDefinitionDTOConverter
 
 				return new ClientExtension() {
 					{
-						clientExtensionConfig = _getClientExtensionConfig(
-							clientExtensionEntryRel);
-						externalReferenceCode = cet.getExternalReferenceCode();
-						name = cet.getName(dtoConverterContext.getLocale());
+						setClientExtensionConfig(
+							() -> _getClientExtensionConfig(
+								clientExtensionEntryRel));
+						setExternalReferenceCode(cet::getExternalReferenceCode);
+						setName(
+							() -> cet.getName(dtoConverterContext.getLocale()));
 					}
 				};
 			},
@@ -188,8 +194,8 @@ public class PageDefinitionDTOConverter
 
 		return new ClientExtension() {
 			{
-				externalReferenceCode = cet.getExternalReferenceCode();
-				name = cet.getName(dtoConverterContext.getLocale());
+				setExternalReferenceCode(cet::getExternalReferenceCode);
+				setName(() -> cet.getName(dtoConverterContext.getLocale()));
 			}
 		};
 	}
@@ -203,15 +209,6 @@ public class PageDefinitionDTOConverter
 
 		return new Settings() {
 			{
-				globalCSSClientExtensions = _getClientExtensions(
-					classNameId, dtoConverterContext, layout,
-					ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
-				globalJSClientExtensions = _getClientExtensions(
-					classNameId, dtoConverterContext, layout,
-					ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
-				themeCSSClientExtension = _getThemeCSSClientExtension(
-					classNameId, layout, dtoConverterContext);
-
 				setColorSchemeName(
 					() -> {
 						ColorScheme colorScheme = null;
@@ -249,10 +246,11 @@ public class PageDefinitionDTOConverter
 						if (cet != null) {
 							return new ClientExtension() {
 								{
-									externalReferenceCode =
-										cet.getExternalReferenceCode();
-									name = cet.getName(
-										dtoConverterContext.getLocale());
+									setExternalReferenceCode(
+										cet::getExternalReferenceCode);
+									setName(
+										() -> cet.getName(
+											dtoConverterContext.getLocale()));
 								}
 							};
 						}
@@ -269,6 +267,14 @@ public class PageDefinitionDTOConverter
 
 						return null;
 					});
+				setGlobalCSSClientExtensions(
+					() -> _getClientExtensions(
+						classNameId, dtoConverterContext, layout,
+						ClientExtensionEntryConstants.TYPE_GLOBAL_CSS));
+				setGlobalJSClientExtensions(
+					() -> _getClientExtensions(
+						classNameId, dtoConverterContext, layout,
+						ClientExtensionEntryConstants.TYPE_GLOBAL_JS));
 				setJavascript(
 					() -> {
 						for (Map.Entry<String, String> entry :
@@ -296,9 +302,10 @@ public class PageDefinitionDTOConverter
 
 						return new MasterPage() {
 							{
-								key =
-									layoutPageTemplateEntry.
-										getLayoutPageTemplateEntryKey();
+								setKey(
+									() ->
+										layoutPageTemplateEntry.
+											getLayoutPageTemplateEntryKey());
 							}
 						};
 					});
@@ -314,11 +321,16 @@ public class PageDefinitionDTOConverter
 
 						return new StyleBook() {
 							{
-								key = styleBookEntry.getStyleBookEntryKey();
-								name = styleBookEntry.getName();
+								setKey(
+									() ->
+										styleBookEntry.getStyleBookEntryKey());
+								setName(styleBookEntry::getName);
 							}
 						};
 					});
+				setThemeCSSClientExtension(
+					() -> _getThemeCSSClientExtension(
+						classNameId, layout, dtoConverterContext));
 				setThemeName(
 					() -> {
 						Theme theme = layout.getTheme();

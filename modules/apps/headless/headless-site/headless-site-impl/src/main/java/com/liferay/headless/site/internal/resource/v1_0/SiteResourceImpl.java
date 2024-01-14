@@ -91,11 +91,11 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 			return new Site() {
 				{
-					externalReferenceCode = group.getExternalReferenceCode();
-					friendlyUrlPath = group.getFriendlyURL();
-					id = group.getGroupId();
-					key = group.getGroupKey();
-					name = group.getName(LocaleUtil.getDefault());
+					setExternalReferenceCode(group::getExternalReferenceCode);
+					setFriendlyUrlPath(group::getFriendlyURL);
+					setId(group::getGroupId);
+					setKey(group::getGroupKey);
+					setName(() -> group.getName(LocaleUtil.getDefault()));
 				}
 			};
 		}
@@ -179,11 +179,11 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 		return new Site() {
 			{
-				externalReferenceCode = finalGroup.getExternalReferenceCode();
-				friendlyUrlPath = finalGroup.getFriendlyURL();
-				id = finalGroup.getGroupId();
-				key = finalGroup.getGroupKey();
-				name = finalGroup.getName(LocaleUtil.getDefault());
+				setExternalReferenceCode(finalGroup::getExternalReferenceCode);
+				setFriendlyUrlPath(finalGroup::getFriendlyURL);
+				setId(finalGroup::getGroupId);
+				setKey(finalGroup::getGroupKey);
+				setName(() -> finalGroup.getName(LocaleUtil.getDefault()));
 			}
 		};
 	}

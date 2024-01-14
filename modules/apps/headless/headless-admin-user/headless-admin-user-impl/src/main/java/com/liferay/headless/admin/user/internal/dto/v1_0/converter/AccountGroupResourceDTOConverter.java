@@ -63,15 +63,17 @@ public class AccountGroupResourceDTOConverter
 
 		return new AccountGroup() {
 			{
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					com.liferay.account.model.AccountGroup.class.getName(),
-					accountGroup.getAccountGroupId(),
-					accountGroup.getCompanyId(),
-					dtoConverterContext.getLocale());
-				externalReferenceCode = accountGroup.getExternalReferenceCode();
-				id = accountGroup.getAccountGroupId();
-				name = accountGroup.getName();
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						com.liferay.account.model.AccountGroup.class.getName(),
+						accountGroup.getAccountGroupId(),
+						accountGroup.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setExternalReferenceCode(
+					accountGroup::getExternalReferenceCode);
+				setId(accountGroup::getAccountGroupId);
+				setName(accountGroup::getName);
 			}
 		};
 	}

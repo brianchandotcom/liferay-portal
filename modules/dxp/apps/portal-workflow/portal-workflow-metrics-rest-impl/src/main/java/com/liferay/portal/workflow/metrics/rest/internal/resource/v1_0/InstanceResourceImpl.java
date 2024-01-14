@@ -399,19 +399,24 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	private Instance _createInstance(Document document) {
 		Instance instance = new Instance() {
 			{
-				assetTitle = document.getString(
-					_getLocalizedName("assetTitle"));
-				assetType = document.getString(_getLocalizedName("assetType"));
-				classPK = document.getLong("classPK");
-				completed = document.getBoolean("completed");
-				creator = _toCreator(document.getLong("userId"));
-				dateCompletion = _parseDate(document.getDate("completionDate"));
-				dateCreated = _parseDate(document.getDate("createDate"));
-				dateModified = _parseDate(document.getDate("modifiedDate"));
-				id = document.getLong("instanceId");
-				processId = document.getLong("processId");
-				slaStatus = Instance.SLAStatus.create(
-					document.getString("slaStatus"));
+				setAssetTitle(
+					() -> document.getString(_getLocalizedName("assetTitle")));
+				setAssetType(
+					() -> document.getString(_getLocalizedName("assetType")));
+				setClassPK(() -> document.getLong("classPK"));
+				setCompleted(() -> document.getBoolean("completed"));
+				setCreator(() -> _toCreator(document.getLong("userId")));
+				setDateCompletion(
+					() -> _parseDate(document.getDate("completionDate")));
+				setDateCreated(
+					() -> _parseDate(document.getDate("createDate")));
+				setDateModified(
+					() -> _parseDate(document.getDate("modifiedDate")));
+				setId(() -> document.getLong("instanceId"));
+				setProcessId(() -> document.getLong("processId"));
+				setSLAStatus(
+					() -> Instance.SLAStatus.create(
+						document.getString("slaStatus")));
 			}
 		};
 
@@ -1089,8 +1094,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		return new Creator() {
 			{
-				id = userId;
-
+				setId(() -> userId);
 				setName(
 					() -> {
 						if (user == null) {

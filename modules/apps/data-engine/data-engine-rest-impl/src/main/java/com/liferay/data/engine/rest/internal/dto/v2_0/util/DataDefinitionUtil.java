@@ -37,34 +37,10 @@ public class DataDefinitionUtil {
 
 		return new DataDefinition() {
 			{
-				availableLanguageIds = TransformUtil.transformToArray(
-					ddmForm.getAvailableLocales(), LanguageUtil::getLanguageId,
-					String.class);
-				dataDefinitionFields = TransformUtil.transformToArray(
-					ddmForm.getDDMFormFields(),
-					ddmFormField ->
-						DataDefinitionFieldUtil.toDataDefinitionField(
-							ddmFormField, ddmFormFieldTypeServicesRegistry,
-							ddmStructureLayoutLocalService, httpServletRequest),
-					DataDefinitionField.class);
-				dataDefinitionKey = ddmStructure.getStructureKey();
-				dateCreated = ddmStructure.getCreateDate();
-				dateModified = ddmStructure.getModifiedDate();
-				defaultDataLayout = DataLayoutUtil.toDataLayout(
-					ddmFormFieldTypeServicesRegistry,
-					ddmStructure.fetchDDMStructureLayout(),
-					spiDDMFormRuleConverter);
-				defaultLanguageId = LanguageUtil.getLanguageId(
-					ddmForm.getDefaultLocale());
-				description = LocalizedValueUtil.toStringObjectMap(
-					ddmStructure.getDescriptionMap());
-				id = ddmStructure.getStructureId();
-				name = LocalizedValueUtil.toStringObjectMap(
-					ddmStructure.getNameMap());
-				siteId = ddmStructure.getGroupId();
-				storageType = ddmStructure.getStorageType();
-				userId = ddmStructure.getUserId();
-
+				setAvailableLanguageIds(
+					() -> TransformUtil.transformToArray(
+						ddmForm.getAvailableLocales(),
+						LanguageUtil::getLanguageId, String.class));
 				setContentType(
 					() -> {
 						DataDefinitionContentType dataDefinitionContentType =
@@ -78,6 +54,36 @@ public class DataDefinitionUtil {
 
 						return dataDefinitionContentType.getContentType();
 					});
+				setDataDefinitionFields(
+					() -> TransformUtil.transformToArray(
+						ddmForm.getDDMFormFields(),
+						ddmFormField ->
+							DataDefinitionFieldUtil.toDataDefinitionField(
+								ddmFormField, ddmFormFieldTypeServicesRegistry,
+								ddmStructureLayoutLocalService,
+								httpServletRequest),
+						DataDefinitionField.class));
+				setDataDefinitionKey(ddmStructure::getStructureKey);
+				setDateCreated(ddmStructure::getCreateDate);
+				setDateModified(ddmStructure::getModifiedDate);
+				setDefaultDataLayout(
+					() -> DataLayoutUtil.toDataLayout(
+						ddmFormFieldTypeServicesRegistry,
+						ddmStructure.fetchDDMStructureLayout(),
+						spiDDMFormRuleConverter));
+				setDefaultLanguageId(
+					() -> LanguageUtil.getLanguageId(
+						ddmForm.getDefaultLocale()));
+				setDescription(
+					() -> LocalizedValueUtil.toStringObjectMap(
+						ddmStructure.getDescriptionMap()));
+				setId(ddmStructure::getStructureId);
+				setName(
+					() -> LocalizedValueUtil.toStringObjectMap(
+						ddmStructure.getNameMap()));
+				setSiteId(ddmStructure::getGroupId);
+				setStorageType(ddmStructure::getStorageType);
+				setUserId(ddmStructure::getUserId);
 			}
 		};
 	}

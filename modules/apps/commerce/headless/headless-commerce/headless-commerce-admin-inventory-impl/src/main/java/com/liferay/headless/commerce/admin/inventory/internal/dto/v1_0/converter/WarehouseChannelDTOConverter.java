@@ -49,17 +49,20 @@ public class WarehouseChannelDTOConverter
 
 		return new WarehouseChannel() {
 			{
-				actions = dtoConverterContext.getActions();
-				channelExternalReferenceCode =
-					commerceChannel.getExternalReferenceCode();
-				channelId = commerceChannel.getCommerceChannelId();
-				warehouseChannelId =
-					commerceWarehouseChannelRel.getCommerceChannelRelId();
-				warehouseExternalReferenceCode =
-					commerceInventoryWarehouse.getExternalReferenceCode();
-				warehouseId =
-					commerceInventoryWarehouse.
-						getCommerceInventoryWarehouseId();
+				setActions(dtoConverterContext::getActions);
+				setChannelExternalReferenceCode(
+					commerceChannel::getExternalReferenceCode);
+				setChannelId(commerceChannel::getCommerceChannelId);
+				setWarehouseChannelId(
+					() ->
+						commerceWarehouseChannelRel.getCommerceChannelRelId());
+				setWarehouseExternalReferenceCode(
+					() ->
+						commerceInventoryWarehouse.getExternalReferenceCode());
+				setWarehouseId(
+					() ->
+						commerceInventoryWarehouse.
+							getCommerceInventoryWarehouseId());
 			}
 		};
 	}

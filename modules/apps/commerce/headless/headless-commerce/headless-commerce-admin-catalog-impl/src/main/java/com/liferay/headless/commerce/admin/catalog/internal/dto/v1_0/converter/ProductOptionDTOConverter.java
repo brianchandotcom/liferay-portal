@@ -53,25 +53,23 @@ public class ProductOptionDTOConverter
 
 		return new ProductOption() {
 			{
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					CPDefinitionOptionRel.class.getName(),
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-					cpDefinitionOptionRel.getCompanyId(),
-					dtoConverterContext.getLocale());
-				description = LanguageUtils.getLanguageIdMap(
-					cpDefinitionOptionRel.getDescriptionMap());
-				facetable = cpDefinitionOptionRel.isFacetable();
-				fieldType = cpDefinitionOptionRel.getCommerceOptionTypeKey();
-				id = cpDefinitionOptionRel.getCPDefinitionOptionRelId();
-				key = cpDefinitionOptionRel.getKey();
-				name = LanguageUtils.getLanguageIdMap(
-					cpDefinitionOptionRel.getNameMap());
-				priceType = cpDefinitionOptionRel.getPriceType();
-				required = cpDefinitionOptionRel.isRequired();
-				skuContributor = cpDefinitionOptionRel.isSkuContributor();
-				typeSettings = cpDefinitionOptionRel.getTypeSettings();
-
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						CPDefinitionOptionRel.class.getName(),
+						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+						cpDefinitionOptionRel.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinitionOptionRel.getDescriptionMap()));
+				setFacetable(cpDefinitionOptionRel::isFacetable);
+				setFieldType(cpDefinitionOptionRel::getCommerceOptionTypeKey);
+				setId(cpDefinitionOptionRel::getCPDefinitionOptionRelId);
+				setKey(cpDefinitionOptionRel::getKey);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinitionOptionRel.getNameMap()));
 				setOptionId(
 					() -> {
 						CPOption cpOption = _cpOptionLocalService.fetchCPOption(
@@ -83,6 +81,7 @@ public class ProductOptionDTOConverter
 
 						return cpOption.getCPOptionId();
 					});
+				setPriceType(cpDefinitionOptionRel::getPriceType);
 				setProductOptionValues(
 					() -> {
 						if (!GetterUtil.getBoolean(
@@ -95,6 +94,9 @@ public class ProductOptionDTOConverter
 						return _toProductOptionValues(
 							cpDefinitionOptionRel, dtoConverterContext);
 					});
+				setRequired(cpDefinitionOptionRel::isRequired);
+				setSkuContributor(cpDefinitionOptionRel::isSkuContributor);
+				setTypeSettings(cpDefinitionOptionRel::getTypeSettings);
 			}
 		};
 	}

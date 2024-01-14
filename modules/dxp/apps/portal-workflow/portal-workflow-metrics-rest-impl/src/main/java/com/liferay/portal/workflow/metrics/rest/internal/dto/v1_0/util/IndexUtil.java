@@ -23,10 +23,6 @@ public class IndexUtil {
 
 		return new Index() {
 			{
-				key = indexEntityName;
-				label = language.get(
-					resourceBundle, _labelMap.get(indexEntityName));
-
 				setGroup(
 					() -> {
 						if (indexEntityName.startsWith("sla")) {
@@ -35,6 +31,10 @@ public class IndexUtil {
 
 						return Index.Group.METRIC;
 					});
+				setKey(() -> indexEntityName);
+				setLabel(
+					() -> language.get(
+						resourceBundle, _labelMap.get(indexEntityName)));
 			}
 		};
 	}

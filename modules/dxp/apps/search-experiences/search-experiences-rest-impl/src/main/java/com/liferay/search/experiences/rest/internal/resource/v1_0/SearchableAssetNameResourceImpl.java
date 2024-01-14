@@ -35,7 +35,7 @@ public class SearchableAssetNameResourceImpl
 					contextCompany.getCompanyId()),
 				className1 -> new SearchableAssetName() {
 					{
-						className = className1;
+						setClassName(() -> className1);
 					}
 				}));
 	}

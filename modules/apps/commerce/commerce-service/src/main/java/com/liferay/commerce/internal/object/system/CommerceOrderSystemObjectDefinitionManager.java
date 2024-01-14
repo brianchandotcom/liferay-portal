@@ -246,16 +246,20 @@ public class CommerceOrderSystemObjectDefinitionManager
 	private Order _toOrder(Map<String, Object> values) {
 		return new Order() {
 			{
-				accountId = GetterUtil.getLong(values.get("accountId"));
-				channelId = GetterUtil.getLong(values.get("channelId"));
-				currencyCode = GetterUtil.getString(values.get("currencyCode"));
-				externalReferenceCode = GetterUtil.getString(
-					values.get("externalReferenceCode"));
-				orderStatus = GetterUtil.getInteger(values.get("orderStatus"));
-				orderTypeExternalReferenceCode = GetterUtil.getString(
-					values.get("orderTypeExternalReferenceCode"));
-				orderTypeId = GetterUtil.getLong(values.get("orderTypeId"));
-
+				setAccountId(() -> GetterUtil.getLong(values.get("accountId")));
+				setChannelId(() -> GetterUtil.getLong(values.get("channelId")));
+				setCurrencyCode(
+					() -> GetterUtil.getString(values.get("currencyCode")));
+				setExternalReferenceCode(
+					() -> GetterUtil.getString(
+						values.get("externalReferenceCode")));
+				setOrderStatus(
+					() -> GetterUtil.getInteger(values.get("orderStatus")));
+				setOrderTypeExternalReferenceCode(
+					() -> GetterUtil.getString(
+						values.get("orderTypeExternalReferenceCode")));
+				setOrderTypeId(
+					() -> GetterUtil.getLong(values.get("orderTypeId")));
 				setShippingAmount(
 					() -> {
 						String shippingAmountString = GetterUtil.getString(

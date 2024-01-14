@@ -31,14 +31,17 @@ public class TaxonomyCategoryBriefUtil {
 
 		return new TaxonomyCategoryBrief() {
 			{
-				embeddedTaxonomyCategory = _toTaxonomyCategory(
-					assetCategory.getCategoryId(), dtoConverterContext);
-				taxonomyCategoryId = assetCategory.getCategoryId();
-				taxonomyCategoryName = assetCategory.getTitle(
-					dtoConverterContext.getLocale());
-				taxonomyCategoryName_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					assetCategory.getTitleMap());
+				setEmbeddedTaxonomyCategory(
+					() -> _toTaxonomyCategory(
+						assetCategory.getCategoryId(), dtoConverterContext));
+				setTaxonomyCategoryId(assetCategory::getCategoryId);
+				setTaxonomyCategoryName(
+					() -> assetCategory.getTitle(
+						dtoConverterContext.getLocale()));
+				setTaxonomyCategoryName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						assetCategory.getTitleMap()));
 			}
 		};
 	}

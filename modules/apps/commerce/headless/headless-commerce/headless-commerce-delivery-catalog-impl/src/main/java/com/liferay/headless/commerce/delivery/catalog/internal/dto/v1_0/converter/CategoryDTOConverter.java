@@ -43,10 +43,10 @@ public class CategoryDTOConverter
 
 		return new Category() {
 			{
-				id = assetCategory.getCategoryId();
-				name = assetCategory.getName();
-				siteId = assetCategory.getGroupId();
-				vocabulary = assetVocabulary.getName();
+				setId(assetCategory::getCategoryId);
+				setName(assetCategory::getName);
+				setSiteId(assetCategory::getGroupId);
+				setVocabulary(assetVocabulary::getName);
 			}
 		};
 	}

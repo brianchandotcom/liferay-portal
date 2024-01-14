@@ -44,9 +44,6 @@ public class CommerceChannelDTOConverter
 
 		return new CommerceChannel() {
 			{
-				id = group.getClassPK();
-				name = group.getDescriptiveName();
-
 				setChannelName(
 					() -> {
 						String analyticsChannelId =
@@ -57,6 +54,8 @@ public class CommerceChannelDTOConverter
 							getChannelName(
 								GetterUtil.getLong(analyticsChannelId));
 					});
+				setId(group::getClassPK);
+				setName(group::getDescriptiveName);
 				setSiteName(
 					() -> {
 						String siteGroupId =

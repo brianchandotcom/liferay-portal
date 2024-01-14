@@ -39,10 +39,10 @@ public class DiscountRuleDTOConverter
 
 		return new DiscountRule() {
 			{
-				discountId = commerceDiscountRule.getCommerceDiscountId();
-				id = commerceDiscountRule.getCommerceDiscountRuleId();
-				type = commerceDiscountRule.getType();
-				typeSettings = commerceDiscountRule.getTypeSettings();
+				setDiscountId(commerceDiscountRule::getCommerceDiscountId);
+				setId(commerceDiscountRule::getCommerceDiscountRuleId);
+				setType(commerceDiscountRule::getType);
+				setTypeSettings(commerceDiscountRule::getTypeSettings);
 			}
 		};
 	}

@@ -239,9 +239,6 @@ public class CustomFieldsUtil {
 		if (ExpandoColumnConstants.GEOLOCATION == attributeType) {
 			return new CustomField() {
 				{
-					dataType = "Geolocation";
-					name = entry.getKey();
-
 					setCustomValue(
 						() -> {
 							JSONObject jsonObject =
@@ -250,35 +247,44 @@ public class CustomFieldsUtil {
 
 							return new CustomValue() {
 								{
-									geo = new Geo() {
-										{
-											latitude = jsonObject.getDouble(
-												"latitude");
-											longitude = jsonObject.getDouble(
-												"longitude");
-										}
-									};
+									setGeo(
+										() -> new Geo() {
+											{
+												setLatitude(
+													() -> jsonObject.getDouble(
+														"latitude"));
+												setLongitude(
+													() -> jsonObject.getDouble(
+														"longitude"));
+											}
+										});
 								}
 							};
 						});
+					setDataType(() -> "Geolocation");
+					setName(entry::getKey);
 				}
 			};
 		}
 
 		return new CustomField() {
 			{
-				customValue = new CustomValue() {
-					{
-						data = _getValue(
-							attributeType, locale,
-							_getValue(entry, expandoBridge, key));
-						data_i18n = _getLocalizedValues(
-							acceptAllLanguages, attributeType,
-							_getValue(entry, expandoBridge, key));
-					}
-				};
-				dataType = ExpandoColumnConstants.getDataType(attributeType);
-				name = entry.getKey();
+				setCustomValue(
+					() -> new CustomValue() {
+						{
+							setData(
+								() -> _getValue(
+									attributeType, locale,
+									_getValue(entry, expandoBridge, key)));
+							setData_i18n(
+								() -> _getLocalizedValues(
+									acceptAllLanguages, attributeType,
+									_getValue(entry, expandoBridge, key)));
+						}
+					});
+				setDataType(
+					() -> ExpandoColumnConstants.getDataType(attributeType));
+				setName(entry::getKey);
 			}
 		};
 	}

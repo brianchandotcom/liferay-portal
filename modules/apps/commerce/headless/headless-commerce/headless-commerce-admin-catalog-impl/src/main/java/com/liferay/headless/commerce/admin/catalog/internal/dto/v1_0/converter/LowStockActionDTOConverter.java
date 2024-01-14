@@ -40,9 +40,10 @@ public class LowStockActionDTOConverter
 
 		return new LowStockAction() {
 			{
-				key = commerceLowStockActivity.getKey();
-				label = LanguageUtils.getLanguageIdMap(
-					commerceLowStockActivity.getLabelMap());
+				setKey(commerceLowStockActivity::getKey);
+				setLabel(
+					() -> LanguageUtils.getLanguageIdMap(
+						commerceLowStockActivity.getLabelMap()));
 			}
 		};
 	}

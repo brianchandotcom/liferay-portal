@@ -53,19 +53,21 @@ public class GroupedProductDTOConverter
 
 		return new GroupedProduct() {
 			{
-				entryProductExternalReferenceCode =
-					entryCProduct.getExternalReferenceCode();
-				entryProductId = entryCProduct.getCProductId();
-				entryProductName = LanguageUtils.getLanguageIdMap(
-					entryCPDefinition.getNameMap());
-				id = cpDefinitionGroupedEntry.getCPDefinitionGroupedEntryId();
-				priority = cpDefinitionGroupedEntry.getPriority();
-				productExternalReferenceCode =
-					cProduct.getExternalReferenceCode();
-				productId = cProduct.getCProductId();
-				productName = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getNameMap());
-				quantity = cpDefinitionGroupedEntry.getQuantity();
+				setEntryProductExternalReferenceCode(
+					entryCProduct::getExternalReferenceCode);
+				setEntryProductId(entryCProduct::getCProductId);
+				setEntryProductName(
+					() -> LanguageUtils.getLanguageIdMap(
+						entryCPDefinition.getNameMap()));
+				setId(cpDefinitionGroupedEntry::getCPDefinitionGroupedEntryId);
+				setPriority(cpDefinitionGroupedEntry::getPriority);
+				setProductExternalReferenceCode(
+					cProduct::getExternalReferenceCode);
+				setProductId(cProduct::getCProductId);
+				setProductName(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getNameMap()));
+				setQuantity(cpDefinitionGroupedEntry::getQuantity);
 			}
 		};
 	}

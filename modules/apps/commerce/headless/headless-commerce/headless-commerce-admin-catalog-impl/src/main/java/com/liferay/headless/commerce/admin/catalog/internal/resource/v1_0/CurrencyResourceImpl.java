@@ -182,21 +182,24 @@ public class CurrencyResourceImpl extends BaseCurrencyResourceImpl {
 
 		return new Currency() {
 			{
-				active = commerceCurrency.isActive();
-				code = commerceCurrency.getCode();
-				formatPattern = LanguageUtils.getLanguageIdMap(
-					commerceCurrency.getFormatPatternMap());
-				id = commerceCurrency.getCommerceCurrencyId();
-				maxFractionDigits = commerceCurrency.getMaxFractionDigits();
-				minFractionDigits = commerceCurrency.getMinFractionDigits();
-				name = LanguageUtils.getLanguageIdMap(
-					commerceCurrency.getNameMap());
-				primary = commerceCurrency.isPrimary();
-				priority = commerceCurrency.getPriority();
-				rate = commerceCurrency.getRate();
-				roundingMode = RoundingMode.valueOf(
-					commerceCurrency.getRoundingMode());
-				symbol = commerceCurrency.getSymbol();
+				setActive(commerceCurrency::isActive);
+				setCode(commerceCurrency::getCode);
+				setFormatPattern(
+					() -> LanguageUtils.getLanguageIdMap(
+						commerceCurrency.getFormatPatternMap()));
+				setId(commerceCurrency::getCommerceCurrencyId);
+				setMaxFractionDigits(commerceCurrency::getMaxFractionDigits);
+				setMinFractionDigits(commerceCurrency::getMinFractionDigits);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						commerceCurrency.getNameMap()));
+				setPrimary(commerceCurrency::isPrimary);
+				setPriority(commerceCurrency::getPriority);
+				setRate(commerceCurrency::getRate);
+				setRoundingMode(
+					() -> RoundingMode.valueOf(
+						commerceCurrency.getRoundingMode()));
+				setSymbol(commerceCurrency::getSymbol);
 			}
 		};
 	}

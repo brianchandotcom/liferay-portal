@@ -50,9 +50,10 @@ public class SLATimeframeExceptionMapper
 		genericErrors.add(
 			new GenericError() {
 				{
-					message = SLATimeframeExceptionMapper.this.getMessage(
-						"the-time-frame-options-changed-in-the-workflow-" +
-							"definition");
+					setMessage(
+						() -> SLATimeframeExceptionMapper.this.getMessage(
+							"the-time-frame-options-changed-in-the-workflow-" +
+								"definition"));
 				}
 			});
 

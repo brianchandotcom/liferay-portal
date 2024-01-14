@@ -39,12 +39,12 @@ public class ChannelDTOConverter
 
 		return new Channel() {
 			{
-				currencyCode = commerceChannel.getCommerceCurrencyCode();
-				externalReferenceCode =
-					commerceChannel.getExternalReferenceCode();
-				id = commerceChannel.getCommerceChannelId();
-				name = commerceChannel.getName();
-				type = commerceChannel.getType();
+				setCurrencyCode(commerceChannel::getCommerceCurrencyCode);
+				setExternalReferenceCode(
+					commerceChannel::getExternalReferenceCode);
+				setId(commerceChannel::getCommerceChannelId);
+				setName(commerceChannel::getName);
+				setType(commerceChannel::getType);
 			}
 		};
 	}

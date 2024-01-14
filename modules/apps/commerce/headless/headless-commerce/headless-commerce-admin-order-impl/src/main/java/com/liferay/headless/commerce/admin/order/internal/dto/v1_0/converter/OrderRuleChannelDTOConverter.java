@@ -46,14 +46,14 @@ public class OrderRuleChannelDTOConverter
 
 		return new OrderRuleChannel() {
 			{
-				actions = dtoConverterContext.getActions();
-				channelExternalReferenceCode =
-					commerceChannel.getExternalReferenceCode();
-				channelId = commerceChannel.getCommerceChannelId();
-				orderRuleChannelId = corEntryRel.getCOREntryRelId();
-				orderRuleExternalReferenceCode =
-					corEntry.getExternalReferenceCode();
-				orderRuleId = corEntry.getCOREntryId();
+				setActions(dtoConverterContext::getActions);
+				setChannelExternalReferenceCode(
+					commerceChannel::getExternalReferenceCode);
+				setChannelId(commerceChannel::getCommerceChannelId);
+				setOrderRuleChannelId(corEntryRel::getCOREntryRelId);
+				setOrderRuleExternalReferenceCode(
+					corEntry::getExternalReferenceCode);
+				setOrderRuleId(corEntry::getCOREntryId);
 			}
 		};
 	}

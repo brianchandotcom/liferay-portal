@@ -27,13 +27,11 @@ public class CreatorUtil {
 
 		return new Creator() {
 			{
-				additionalName = user.getMiddleName();
-				contentType = "UserAccount";
-				familyName = user.getLastName();
-				givenName = user.getFirstName();
-				id = user.getUserId();
-				name = user.getFullName();
-
+				setAdditionalName(user::getMiddleName);
+				setContentType(() -> "UserAccount");
+				setFamilyName(user::getLastName);
+				setGivenName(user::getFirstName);
+				setId(user::getUserId);
 				setImage(
 					() -> {
 						if (user.getPortraitId() == 0) {
@@ -48,6 +46,7 @@ public class CreatorUtil {
 
 						return user.getPortraitURL(themeDisplay);
 					});
+				setName(user::getFullName);
 				setProfileURL(
 					() -> {
 						if (!dtoConverterContext.containsNestedFieldsValue(

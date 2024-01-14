@@ -46,12 +46,16 @@ public class ProductDTOConverter
 
 		return new Product() {
 			{
-				id = cpDefinition.getCPDefinitionId();
-				name = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getNameMap());
-				sku = _getSku(cpDefinition, dtoConverterContext.getLocale());
-				thumbnail = cpDefinition.getDefaultImageThumbnailSrc(
-					AccountConstants.ACCOUNT_ENTRY_ID_ADMIN);
+				setId(cpDefinition::getCPDefinitionId);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getNameMap()));
+				setSku(
+					() -> _getSku(
+						cpDefinition, dtoConverterContext.getLocale()));
+				setThumbnail(
+					() -> cpDefinition.getDefaultImageThumbnailSrc(
+						AccountConstants.ACCOUNT_ENTRY_ID_ADMIN));
 			}
 		};
 	}

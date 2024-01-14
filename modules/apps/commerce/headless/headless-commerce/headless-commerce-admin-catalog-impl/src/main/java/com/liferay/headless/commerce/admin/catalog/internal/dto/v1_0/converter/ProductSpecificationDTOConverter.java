@@ -50,19 +50,20 @@ public class ProductSpecificationDTOConverter
 
 		return new ProductSpecification() {
 			{
-				id =
-					cpDefinitionSpecificationOptionValue.
-						getCPDefinitionSpecificationOptionValueId();
-				optionCategoryId =
-					cpDefinitionSpecificationOptionValue.
-						getCPOptionCategoryId();
-				priority = cpDefinitionSpecificationOptionValue.getPriority();
-				productId = cpDefinition.getCProductId();
-				specificationId =
-					cpSpecificationOption.getCPSpecificationOptionId();
-				specificationKey = cpSpecificationOption.getKey();
-				value = LanguageUtils.getLanguageIdMap(
-					cpDefinitionSpecificationOptionValue.getValueMap());
+				setId(
+					cpDefinitionSpecificationOptionValue::
+						getCPDefinitionSpecificationOptionValueId);
+				setOptionCategoryId(
+					cpDefinitionSpecificationOptionValue::
+						getCPOptionCategoryId);
+				setPriority(cpDefinitionSpecificationOptionValue::getPriority);
+				setProductId(cpDefinition::getCProductId);
+				setSpecificationId(
+					cpSpecificationOption::getCPSpecificationOptionId);
+				setSpecificationKey(cpSpecificationOption::getKey);
+				setValue(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinitionSpecificationOptionValue.getValueMap()));
 			}
 		};
 	}

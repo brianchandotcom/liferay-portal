@@ -40,20 +40,22 @@ public class OptionValueDTOConverter
 
 		return new OptionValue() {
 			{
-				actions = dtoConverterContext.getActions();
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					CPOptionValue.class.getName(),
-					cpOptionValue.getCPOptionValueId(),
-					cpOptionValue.getCompanyId(),
-					dtoConverterContext.getLocale());
-				externalReferenceCode =
-					cpOptionValue.getExternalReferenceCode();
-				id = cpOptionValue.getCPOptionValueId();
-				key = cpOptionValue.getKey();
-				name = LanguageUtils.getLanguageIdMap(
-					cpOptionValue.getNameMap());
-				priority = cpOptionValue.getPriority();
+				setActions(dtoConverterContext::getActions);
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						CPOptionValue.class.getName(),
+						cpOptionValue.getCPOptionValueId(),
+						cpOptionValue.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setExternalReferenceCode(
+					cpOptionValue::getExternalReferenceCode);
+				setId(cpOptionValue::getCPOptionValueId);
+				setKey(cpOptionValue::getKey);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpOptionValue.getNameMap()));
+				setPriority(cpOptionValue::getPriority);
 			}
 		};
 	}

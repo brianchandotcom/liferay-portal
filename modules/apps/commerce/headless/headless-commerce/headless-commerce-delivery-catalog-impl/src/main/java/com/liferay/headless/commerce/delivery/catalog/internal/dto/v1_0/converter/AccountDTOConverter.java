@@ -63,37 +63,43 @@ public class AccountDTOConverter
 
 		return new Account() {
 			{
-				actions = dtoConverterContext.getActions();
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					AccountEntry.class.getName(),
-					accountEntry.getAccountEntryId(),
-					accountEntry.getCompanyId(),
-					dtoConverterContext.getLocale());
-				dateCreated = accountEntry.getCreateDate();
-				dateModified = accountEntry.getModifiedDate();
-				defaultBillingAddressId =
-					accountEntry.getDefaultBillingAddressId();
-				defaultShippingAddressId =
-					accountEntry.getDefaultShippingAddressId();
-				description = accountEntry.getDescription();
-				domains = StringUtil.split(accountEntry.getDomains());
-				externalReferenceCode = accountEntry.getExternalReferenceCode();
-				id = accountEntry.getAccountEntryId();
-				logoId = accountEntry.getLogoId();
-				logoURL = StringBundler.concat(
-					"/image/organization_logo?img_id=",
-					accountEntry.getLogoId(), "&t=",
-					_webServerServletToken.getToken(accountEntry.getLogoId()));
-				name = accountEntry.getName();
-				organizationIds = TransformUtil.transformToArray(
-					_accountEntryOrganizationRelLocalService.
-						getAccountEntryOrganizationRels(
-							accountEntry.getAccountEntryId()),
-					AccountEntryOrganizationRel::getOrganizationId, Long.class);
-				status = accountEntry.getStatus();
-				taxId = accountEntry.getTaxIdNumber();
-				type = Account.Type.create(accountEntry.getType());
+				setActions(dtoConverterContext::getActions);
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						AccountEntry.class.getName(),
+						accountEntry.getAccountEntryId(),
+						accountEntry.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setDateCreated(accountEntry::getCreateDate);
+				setDateModified(accountEntry::getModifiedDate);
+				setDefaultBillingAddressId(
+					accountEntry::getDefaultBillingAddressId);
+				setDefaultShippingAddressId(
+					accountEntry::getDefaultShippingAddressId);
+				setDescription(accountEntry::getDescription);
+				setDomains(() -> StringUtil.split(accountEntry.getDomains()));
+				setExternalReferenceCode(
+					accountEntry::getExternalReferenceCode);
+				setId(accountEntry::getAccountEntryId);
+				setLogoId(accountEntry::getLogoId);
+				setLogoURL(
+					() -> StringBundler.concat(
+						"/image/organization_logo?img_id=",
+						accountEntry.getLogoId(), "&t=",
+						_webServerServletToken.getToken(
+							accountEntry.getLogoId())));
+				setName(accountEntry::getName);
+				setOrganizationIds(
+					() -> TransformUtil.transformToArray(
+						_accountEntryOrganizationRelLocalService.
+							getAccountEntryOrganizationRels(
+								accountEntry.getAccountEntryId()),
+						AccountEntryOrganizationRel::getOrganizationId,
+						Long.class));
+				setStatus(accountEntry::getStatus);
+				setTaxId(accountEntry::getTaxIdNumber);
+				setType(() -> Account.Type.create(accountEntry.getType()));
 			}
 		};
 	}

@@ -36,7 +36,7 @@ public class KeywordQueryContributorResourceImpl
 						KeywordQueryContributor.class),
 				componentName -> new KeywordQueryContributor() {
 					{
-						className = componentName;
+						setClassName(() -> componentName);
 					}
 				}));
 	}

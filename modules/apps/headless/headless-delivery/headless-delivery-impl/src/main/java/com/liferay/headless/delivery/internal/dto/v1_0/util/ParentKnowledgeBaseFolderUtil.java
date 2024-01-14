@@ -22,8 +22,8 @@ public class ParentKnowledgeBaseFolderUtil {
 
 		return new ParentKnowledgeBaseFolder() {
 			{
-				folderId = kbFolder.getKbFolderId();
-				folderName = kbFolder.getName();
+				setFolderId(kbFolder::getKbFolderId);
+				setFolderName(kbFolder::getName);
 			}
 		};
 	}

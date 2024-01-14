@@ -101,13 +101,17 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 
 		return new ShippingMethod() {
 			{
-				description = commerceShippingMethod.getDescription(
-					contextAcceptLanguage.getPreferredLocale());
-				id = commerceShippingMethod.getCommerceShippingMethodId();
-				name = commerceShippingMethod.getName(
-					contextAcceptLanguage.getPreferredLocale());
-				shippingOptions = _getShippingOptions(
-					commerceShippingMethod, commerceChannel, commerceOrder);
+				setDescription(
+					() -> commerceShippingMethod.getDescription(
+						contextAcceptLanguage.getPreferredLocale()));
+				setId(commerceShippingMethod::getCommerceShippingMethodId);
+				setName(
+					() -> commerceShippingMethod.getName(
+						contextAcceptLanguage.getPreferredLocale()));
+				setShippingOptions(
+					() -> _getShippingOptions(
+						commerceShippingMethod, commerceChannel,
+						commerceOrder));
 			}
 		};
 	}
@@ -122,13 +126,14 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 
 		return new ShippingOption() {
 			{
-				amount = commerceShippingOptionAmount.doubleValue();
-				amountFormatted = _commercePriceFormatter.format(
-					commerceContext.getCommerceCurrency(),
-					commerceShippingOption.getAmount(),
-					contextAcceptLanguage.getPreferredLocale());
-				label = commerceShippingOption.getName();
-				name = commerceShippingOption.getKey();
+				setAmount(commerceShippingOptionAmount::doubleValue);
+				setAmountFormatted(
+					() -> _commercePriceFormatter.format(
+						commerceContext.getCommerceCurrency(),
+						commerceShippingOption.getAmount(),
+						contextAcceptLanguage.getPreferredLocale()));
+				setLabel(commerceShippingOption::getName);
+				setName(commerceShippingOption::getKey);
 			}
 		};
 	}

@@ -47,16 +47,19 @@ public class SXPParameterContributorDefinitionResourceImpl
 				sxpParameterContributorDefinition ->
 					new SXPParameterContributorDefinition() {
 						{
-							className =
-								sxpParameterContributorDefinition.
-									getClassName();
-							description = _language.get(
-								contextAcceptLanguage.getPreferredLocale(),
-								sxpParameterContributorDefinition.
-									getLanguageKey());
-							templateVariable =
-								sxpParameterContributorDefinition.
-									getTemplateVariable();
+							setClassName(
+								() ->
+									sxpParameterContributorDefinition.
+										getClassName());
+							setDescription(
+								() -> _language.get(
+									contextAcceptLanguage.getPreferredLocale(),
+									sxpParameterContributorDefinition.
+										getLanguageKey()));
+							setTemplateVariable(
+								() ->
+									sxpParameterContributorDefinition.
+										getTemplateVariable());
 						}
 					}));
 	}

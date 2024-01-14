@@ -81,33 +81,41 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				Set<Locale> availableLocales = _language.getAvailableLocales(
 					group.getGroupId());
 
-				availableLanguages = LocaleUtil.toW3cLanguageIds(
-					availableLocales.toArray(new Locale[0]));
+				setAvailableLanguages(
+					() -> LocaleUtil.toW3cLanguageIds(
+						availableLocales.toArray(new Locale[0])));
 
-				creator = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.fetchUser(group.getCreatorUserId()));
-				description = group.getDescription(
-					contextAcceptLanguage.getPreferredLocale());
-				description_i18n = LocalizedMapUtil.getI18nMap(
-					contextAcceptLanguage.isAcceptAllLanguages(),
-					group.getDescriptionMap());
-				descriptiveName = group.getDescriptiveName(
-					contextAcceptLanguage.getPreferredLocale());
-				friendlyUrlPath = group.getFriendlyURL();
-				id = group.getGroupId();
-				key = group.getGroupKey();
-				membershipType = group.getTypeLabel();
-				name = group.getName(
-					contextAcceptLanguage.getPreferredLocale());
-				name_i18n = LocalizedMapUtil.getI18nMap(
-					contextAcceptLanguage.isAcceptAllLanguages(),
-					group.getNameMap());
-				parentSiteId = group.getParentGroupId();
-				sites = transformToArray(
-					_groupService.getGroups(
-						group.getCompanyId(), group.getGroupId(), true),
-					SiteResourceImpl.this::_toSite, Site.class);
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						_portal,
+						_userLocalService.fetchUser(group.getCreatorUserId())));
+				setDescription(
+					() -> group.getDescription(
+						contextAcceptLanguage.getPreferredLocale()));
+				setDescription_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						contextAcceptLanguage.isAcceptAllLanguages(),
+						group.getDescriptionMap()));
+				setDescriptiveName(
+					() -> group.getDescriptiveName(
+						contextAcceptLanguage.getPreferredLocale()));
+				setFriendlyUrlPath(group::getFriendlyURL);
+				setId(group::getGroupId);
+				setKey(group::getGroupKey);
+				setMembershipType(group::getTypeLabel);
+				setName(
+					() -> group.getName(
+						contextAcceptLanguage.getPreferredLocale()));
+				setName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						contextAcceptLanguage.isAcceptAllLanguages(),
+						group.getNameMap()));
+				setParentSiteId(group::getParentGroupId);
+				setSites(
+					() -> transformToArray(
+						_groupService.getGroups(
+							group.getCompanyId(), group.getGroupId(), true),
+						SiteResourceImpl.this::_toSite, Site.class));
 			}
 		};
 	}

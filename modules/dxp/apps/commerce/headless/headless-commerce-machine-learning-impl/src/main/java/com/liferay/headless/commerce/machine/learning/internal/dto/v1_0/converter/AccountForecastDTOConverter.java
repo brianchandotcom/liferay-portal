@@ -46,16 +46,16 @@ public class AccountForecastDTOConverter
 
 		return new AccountForecast() {
 			{
-				account =
-					commerceAccountCommerceMLForecast.getCommerceAccountId();
-				actual = commerceAccountCommerceMLForecast.getActual();
-				forecast = commerceAccountCommerceMLForecast.getForecast();
-				forecastLowerBound =
-					commerceAccountCommerceMLForecast.getForecastLowerBound();
-				forecastUpperBound =
-					commerceAccountCommerceMLForecast.getForecastUpperBound();
-				timestamp = commerceAccountCommerceMLForecast.getTimestamp();
-				unit = commerceAccountCommerceMLForecast.getTarget();
+				setAccount(
+					commerceAccountCommerceMLForecast::getCommerceAccountId);
+				setActual(commerceAccountCommerceMLForecast::getActual);
+				setForecast(commerceAccountCommerceMLForecast::getForecast);
+				setForecastLowerBound(
+					commerceAccountCommerceMLForecast::getForecastLowerBound);
+				setForecastUpperBound(
+					commerceAccountCommerceMLForecast::getForecastUpperBound);
+				setTimestamp(commerceAccountCommerceMLForecast::getTimestamp);
+				setUnit(commerceAccountCommerceMLForecast::getTarget);
 			}
 		};
 	}

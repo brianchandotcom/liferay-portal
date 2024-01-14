@@ -45,14 +45,14 @@ public class OrderRuleAccountGroupDTOConverter
 
 		return new OrderRuleAccountGroup() {
 			{
-				accountGroupExternalReferenceCode =
-					orderRuleAccountGroup.getExternalReferenceCode();
-				accountGroupId = orderRuleAccountGroup.getAccountGroupId();
-				actions = dtoConverterContext.getActions();
-				orderRuleAccountGroupId = corEntryRel.getCOREntryRelId();
-				orderRuleExternalReferenceCode =
-					corEntry.getExternalReferenceCode();
-				orderRuleId = corEntry.getCOREntryId();
+				setAccountGroupExternalReferenceCode(
+					orderRuleAccountGroup::getExternalReferenceCode);
+				setAccountGroupId(orderRuleAccountGroup::getAccountGroupId);
+				setActions(dtoConverterContext::getActions);
+				setOrderRuleAccountGroupId(corEntryRel::getCOREntryRelId);
+				setOrderRuleExternalReferenceCode(
+					corEntry::getExternalReferenceCode);
+				setOrderRuleId(corEntry::getCOREntryId);
 			}
 		};
 	}

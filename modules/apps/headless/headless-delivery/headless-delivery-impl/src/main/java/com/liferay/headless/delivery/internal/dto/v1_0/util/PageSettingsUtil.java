@@ -44,21 +44,23 @@ public class PageSettingsUtil {
 
 		return new PageSettings() {
 			{
-				hiddenFromNavigation = layout.isHidden();
-				openGraphSettings = OpenGraphSettingsUtil.getOpenGraphSettings(
-					dlAppService, dlURLHelper, dtoConverterContext,
-					layoutSEOEntryLocalService, layout);
-				seoSettings = SEOSettingsUtil.getSeoSettings(
-					dtoConverterContext, layoutSEOEntryLocalService, layout);
-				sitePageNavigationMenuSettings =
-					_toSitePageNavigationMenuSettings(
-						layout.getTypeSettingsProperties());
-
 				setCustomMetaTags(
 					() -> _getCustomMetaTags(
 						dtoConverterContext, layout, layoutSEOEntryLocalService,
 						dtoConverterContext.getLocale(),
 						ddmStorageEngineManager));
+				setHiddenFromNavigation(layout::isHidden);
+				setOpenGraphSettings(
+					() -> OpenGraphSettingsUtil.getOpenGraphSettings(
+						dlAppService, dlURLHelper, dtoConverterContext,
+						layoutSEOEntryLocalService, layout));
+				setSeoSettings(
+					() -> SEOSettingsUtil.getSeoSettings(
+						dtoConverterContext, layoutSEOEntryLocalService,
+						layout));
+				setSitePageNavigationMenuSettings(
+					() -> _toSitePageNavigationMenuSettings(
+						layout.getTypeSettingsProperties()));
 			}
 		};
 	}
@@ -108,11 +110,12 @@ public class PageSettingsUtil {
 			customMetaTags.add(
 				new CustomMetaTag() {
 					{
-						key = valueString;
-						value = nestedValueString;
-						value_i18n = LocalizedMapUtil.getI18nMap(
-							dtoConverterContext.isAcceptAllLanguages(),
-							nestedValuesLocaleMap);
+						setKey(() -> valueString);
+						setValue(() -> nestedValueString);
+						setValue_i18n(
+							() -> LocalizedMapUtil.getI18nMap(
+								dtoConverterContext.isAcceptAllLanguages(),
+								nestedValuesLocaleMap));
 					}
 				});
 		}
@@ -139,9 +142,8 @@ public class PageSettingsUtil {
 
 		return new SitePageNavigationMenuSettings() {
 			{
-				queryString = queryStringPropertyValue;
-				target = targetPropertyValue;
-
+				setQueryString(() -> queryStringPropertyValue);
+				setTarget(() -> targetPropertyValue);
 				setTargetType(
 					() -> {
 						if (targetTypePropertyValue == null) {

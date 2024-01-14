@@ -38,8 +38,8 @@ public class TermDTOConverter implements DTOConverter<CommerceTermEntry, Term> {
 
 		return new Term() {
 			{
-				id = commerceTermEntry.getCommerceTermEntryId();
-				name = commerceTermEntry.getName();
+				setId(commerceTermEntry::getCommerceTermEntryId);
+				setName(commerceTermEntry::getName);
 			}
 		};
 	}

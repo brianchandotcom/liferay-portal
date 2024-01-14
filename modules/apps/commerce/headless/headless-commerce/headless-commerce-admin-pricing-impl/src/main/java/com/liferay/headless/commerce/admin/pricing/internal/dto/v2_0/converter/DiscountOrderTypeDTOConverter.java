@@ -49,17 +49,17 @@ public class DiscountOrderTypeDTOConverter
 
 		return new DiscountOrderType() {
 			{
-				actions = dtoConverterContext.getActions();
-				discountExternalReferenceCode =
-					commerceDiscount.getExternalReferenceCode();
-				discountId = commerceDiscount.getCommerceDiscountId();
-				discountOrderTypeId =
-					commerceDiscountOrderTypeRel.
-						getCommerceDiscountOrderTypeRelId();
-				orderTypeExternalReferenceCode =
-					commerceOrderType.getExternalReferenceCode();
-				orderTypeId = commerceOrderType.getCommerceOrderTypeId();
-				priority = commerceDiscountOrderTypeRel.getPriority();
+				setActions(dtoConverterContext::getActions);
+				setDiscountExternalReferenceCode(
+					commerceDiscount::getExternalReferenceCode);
+				setDiscountId(commerceDiscount::getCommerceDiscountId);
+				setDiscountOrderTypeId(
+					commerceDiscountOrderTypeRel::
+						getCommerceDiscountOrderTypeRelId);
+				setOrderTypeExternalReferenceCode(
+					commerceOrderType::getExternalReferenceCode);
+				setOrderTypeId(commerceOrderType::getCommerceOrderTypeId);
+				setPriority(commerceDiscountOrderTypeRel::getPriority);
 			}
 		};
 	}

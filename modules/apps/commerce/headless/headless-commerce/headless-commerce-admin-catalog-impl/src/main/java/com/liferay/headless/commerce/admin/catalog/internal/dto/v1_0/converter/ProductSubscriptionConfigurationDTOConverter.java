@@ -39,26 +39,29 @@ public class ProductSubscriptionConfigurationDTOConverter
 
 		return new ProductSubscriptionConfiguration() {
 			{
-				deliverySubscriptionEnable =
-					cpDefinition.isDeliverySubscriptionEnabled();
-				deliverySubscriptionLength =
-					cpDefinition.getDeliverySubscriptionLength();
-				deliverySubscriptionNumberOfLength =
-					cpDefinition.getDeliveryMaxSubscriptionCycles();
-				deliverySubscriptionType =
-					ProductSubscriptionConfiguration.DeliverySubscriptionType.
-						create(cpDefinition.getDeliverySubscriptionType());
-				deliverySubscriptionTypeSettings =
-					cpDefinition.
-						getDeliverySubscriptionTypeSettingsUnicodeProperties();
-				enable = cpDefinition.isSubscriptionEnabled();
-				length = cpDefinition.getSubscriptionLength();
-				numberOfLength = cpDefinition.getMaxSubscriptionCycles();
-				subscriptionType =
-					ProductSubscriptionConfiguration.SubscriptionType.create(
-						cpDefinition.getSubscriptionType());
-				subscriptionTypeSettings =
-					cpDefinition.getSubscriptionTypeSettingsUnicodeProperties();
+				setDeliverySubscriptionEnable(
+					cpDefinition::isDeliverySubscriptionEnabled);
+				setDeliverySubscriptionLength(
+					cpDefinition::getDeliverySubscriptionLength);
+				setDeliverySubscriptionNumberOfLength(
+					cpDefinition::getDeliveryMaxSubscriptionCycles);
+				setDeliverySubscriptionType(
+					() ->
+						ProductSubscriptionConfiguration.
+							DeliverySubscriptionType.create(
+								cpDefinition.getDeliverySubscriptionType()));
+				setDeliverySubscriptionTypeSettings(
+					cpDefinition::
+						getDeliverySubscriptionTypeSettingsUnicodeProperties);
+				setEnable(cpDefinition::isSubscriptionEnabled);
+				setLength(cpDefinition::getSubscriptionLength);
+				setNumberOfLength(cpDefinition::getMaxSubscriptionCycles);
+				setSubscriptionType(
+					() ->
+						ProductSubscriptionConfiguration.SubscriptionType.
+							create(cpDefinition.getSubscriptionType()));
+				setSubscriptionTypeSettings(
+					cpDefinition::getSubscriptionTypeSettingsUnicodeProperties);
 			}
 		};
 	}

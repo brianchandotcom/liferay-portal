@@ -52,15 +52,15 @@ public class SkuForecastDTOConverter
 
 		return new SkuForecast() {
 			{
-				actual = skuCommerceMLForecast.getActual();
-				forecast = skuCommerceMLForecast.getForecast();
-				forecastLowerBound =
-					skuCommerceMLForecast.getForecastLowerBound();
-				forecastUpperBound =
-					skuCommerceMLForecast.getForecastUpperBound();
-				sku = skuCommerceMLForecast.getSku();
-				timestamp = skuCommerceMLForecast.getTimestamp();
-				unit = skuCommerceMLForecast.getTarget();
+				setActual(skuCommerceMLForecast::getActual);
+				setForecast(skuCommerceMLForecast::getForecast);
+				setForecastLowerBound(
+					skuCommerceMLForecast::getForecastLowerBound);
+				setForecastUpperBound(
+					skuCommerceMLForecast::getForecastUpperBound);
+				setSku(skuCommerceMLForecast::getSku);
+				setTimestamp(skuCommerceMLForecast::getTimestamp);
+				setUnit(skuCommerceMLForecast::getTarget);
 			}
 		};
 	}

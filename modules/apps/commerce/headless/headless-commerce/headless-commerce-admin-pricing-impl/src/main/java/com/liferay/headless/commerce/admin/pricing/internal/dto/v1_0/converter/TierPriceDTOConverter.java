@@ -48,16 +48,10 @@ public class TierPriceDTOConverter
 
 		return new TierPrice() {
 			{
-				customFields = expandoBridge.getAttributes();
-				externalReferenceCode =
-					commerceTierPriceEntry.getExternalReferenceCode();
-				id = commerceTierPriceEntry.getCommerceTierPriceEntryId();
-				price = commerceTierPriceEntry.getPrice();
-				priceEntryExternalReferenceCode =
-					commercePriceEntry.getExternalReferenceCode();
-				priceEntryId = commercePriceEntry.getCommercePriceEntryId();
-				promoPrice = commerceTierPriceEntry.getPromoPrice();
-
+				setCustomFields(expandoBridge::getAttributes);
+				setExternalReferenceCode(
+					commerceTierPriceEntry::getExternalReferenceCode);
+				setId(commerceTierPriceEntry::getCommerceTierPriceEntryId);
 				setMinimumQuantity(
 					() -> {
 						BigDecimal minQuantity =
@@ -69,6 +63,11 @@ public class TierPriceDTOConverter
 
 						return minQuantity.intValue();
 					});
+				setPrice(commerceTierPriceEntry::getPrice);
+				setPriceEntryExternalReferenceCode(
+					commercePriceEntry::getExternalReferenceCode);
+				setPriceEntryId(commercePriceEntry::getCommercePriceEntryId);
+				setPromoPrice(commerceTierPriceEntry::getPromoPrice);
 			}
 		};
 	}

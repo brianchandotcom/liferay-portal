@@ -142,38 +142,48 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 
 		return new WorkflowLog() {
 			{
-				auditPerson = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.fetchUser(workflowLog.getAuditUserId()));
-				commentLog = _language.get(
-					ResourceBundleUtil.getBundle(
-						"content.Language",
-						contextAcceptLanguage.getPreferredLocale(), getClass()),
-					workflowLog.getComment());
-				dateCreated = workflowLog.getCreateDate();
-				description = WorkflowLogUtil.getDescription(
-					_language, contextAcceptLanguage.getPreferredLocale(),
-					_portal, _roleLocalService::fetchRole,
-					_userLocalService::fetchUser, workflowLog);
-				id = workflowLog.getWorkflowLogId();
-				person = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.fetchUser(workflowLog.getUserId()));
-				previousPerson = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.fetchUser(
-						workflowLog.getPreviousUserId()));
-				previousRole = _toRole(workflowLog.getPreviousRoleId());
-				previousState = workflowLog.getPreviousWorkflowNodeName();
-				previousStateLabel = workflowLog.getPreviousWorkflowNodeLabel(
-					contextAcceptLanguage.getPreferredLocale());
-				role = _toRole(workflowLog.getRoleId());
-				state = workflowLog.getCurrentWorkflowNodeName();
-				stateLabel = workflowLog.getCurrentWorkflowNodeLabel(
-					contextAcceptLanguage.getPreferredLocale());
-				type = _toWorkflowLogType(
-					KaleoLogUtil.convert(workflowLog.getType()));
-				workflowTaskId = workflowLog.getWorkflowTaskId();
+				setAuditPerson(
+					() -> CreatorUtil.toCreator(
+						_portal,
+						_userLocalService.fetchUser(
+							workflowLog.getAuditUserId())));
+				setCommentLog(
+					() -> _language.get(
+						ResourceBundleUtil.getBundle(
+							"content.Language",
+							contextAcceptLanguage.getPreferredLocale(),
+							getClass()),
+						workflowLog.getComment()));
+				setDateCreated(workflowLog::getCreateDate);
+				setDescription(
+					() -> WorkflowLogUtil.getDescription(
+						_language, contextAcceptLanguage.getPreferredLocale(),
+						_portal, _roleLocalService::fetchRole,
+						_userLocalService::fetchUser, workflowLog));
+				setId(workflowLog::getWorkflowLogId);
+				setPerson(
+					() -> CreatorUtil.toCreator(
+						_portal,
+						_userLocalService.fetchUser(workflowLog.getUserId())));
+				setPreviousPerson(
+					() -> CreatorUtil.toCreator(
+						_portal,
+						_userLocalService.fetchUser(
+							workflowLog.getPreviousUserId())));
+				setPreviousRole(() -> _toRole(workflowLog.getPreviousRoleId()));
+				setPreviousState(workflowLog::getPreviousWorkflowNodeName);
+				setPreviousStateLabel(
+					() -> workflowLog.getPreviousWorkflowNodeLabel(
+						contextAcceptLanguage.getPreferredLocale()));
+				setRole(() -> _toRole(workflowLog.getRoleId()));
+				setState(workflowLog::getCurrentWorkflowNodeName);
+				setStateLabel(
+					() -> workflowLog.getCurrentWorkflowNodeLabel(
+						contextAcceptLanguage.getPreferredLocale()));
+				setType(
+					() -> _toWorkflowLogType(
+						KaleoLogUtil.convert(workflowLog.getType())));
+				setWorkflowTaskId(workflowLog::getWorkflowTaskId);
 			}
 		};
 	}

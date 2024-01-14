@@ -208,12 +208,13 @@ public class CommercePricingClassSystemObjectDefinitionManager
 	private ProductGroup _toProductGroup(Map<String, Object> values) {
 		return new ProductGroup() {
 			{
-				description = getLanguageIdMap("description", values);
-				externalReferenceCode = GetterUtil.getString(
-					values.get("externalReferenceCode"));
-				productsCount = GetterUtil.getInteger(
-					values.get("productsCount"));
-				title = getLanguageIdMap("title", values);
+				setDescription(() -> getLanguageIdMap("description", values));
+				setExternalReferenceCode(
+					() -> GetterUtil.getString(
+						values.get("externalReferenceCode")));
+				setProductsCount(
+					() -> GetterUtil.getInteger(values.get("productsCount")));
+				setTitle(() -> getLanguageIdMap("title", values));
 			}
 		};
 	}

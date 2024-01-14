@@ -78,71 +78,6 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 
 		Order order = new Order() {
 			{
-				accountId = commerceOrder.getCommerceAccountId();
-				actions = dtoConverterContext.getActions();
-				advanceStatus = commerceOrder.getAdvanceStatus();
-				billingAddressId = commerceOrder.getBillingAddressId();
-				channelExternalReferenceCode =
-					commerceChannel.getExternalReferenceCode();
-				channelId = commerceChannel.getCommerceChannelId();
-				couponCode = commerceOrder.getCouponCode();
-				createDate = commerceOrder.getCreateDate();
-				currencyCode = commerceCurrency.getCode();
-				deliveryTermDescription =
-					commerceOrder.getDeliveryCommerceTermEntryDescription();
-				deliveryTermId = commerceOrder.getDeliveryCommerceTermEntryId();
-				deliveryTermName =
-					commerceOrder.getDeliveryCommerceTermEntryName();
-				externalReferenceCode =
-					commerceOrder.getExternalReferenceCode();
-				id = commerceOrder.getCommerceOrderId();
-				lastPriceUpdateDate = commerceOrder.getLastPriceUpdateDate();
-				modifiedDate = commerceOrder.getModifiedDate();
-				orderDate = commerceOrder.getOrderDate();
-				orderStatus = commerceOrder.getOrderStatus();
-				orderStatusInfo = _getOrderStatusInfo(
-					commerceOrder.getOrderStatus(),
-					_getCommerceOrderStatusLabel(
-						commerceOrder.getOrderStatus(), locale),
-					_getCommerceOrderStatusLabelI18n(
-						commerceOrder.getOrderStatus(), locale));
-				orderTypeExternalReferenceCode =
-					_getOrderTypeExternalReferenceCode(
-						commerceOrder.getCommerceOrderTypeId());
-				orderTypeId = commerceOrder.getCommerceOrderTypeId();
-				paymentMethod = commerceOrder.getCommercePaymentMethodKey();
-				paymentStatus = commerceOrder.getPaymentStatus();
-				paymentStatusInfo = _getPaymentStatusInfo(
-					commerceOrder.getPaymentStatus(),
-					CommerceOrderPaymentConstants.getOrderPaymentStatusLabel(
-						commerceOrder.getPaymentStatus()),
-					_language.get(
-						resourceBundle,
-						CommerceOrderPaymentConstants.
-							getOrderPaymentStatusLabel(
-								commerceOrder.getPaymentStatus())));
-				paymentTermDescription =
-					commerceOrder.getPaymentCommerceTermEntryDescription();
-				paymentTermId = commerceOrder.getPaymentCommerceTermEntryId();
-				paymentTermName =
-					commerceOrder.getPaymentCommerceTermEntryName();
-				printedNote = commerceOrder.getPrintedNote();
-				purchaseOrderNumber = commerceOrder.getPurchaseOrderNumber();
-				requestedDeliveryDate =
-					commerceOrder.getRequestedDeliveryDate();
-				shippingAddressId = commerceOrder.getShippingAddressId();
-				shippingMethod = _getShippingMethodEngineKey(
-					commerceOrder.getCommerceShippingMethod());
-				shippingOption = commerceOrder.getShippingOptionName();
-				transactionId = commerceOrder.getTransactionId();
-				workflowStatusInfo = _toStatus(
-					commerceOrder.getStatus(),
-					WorkflowConstants.getStatusLabel(commerceOrder.getStatus()),
-					_language.get(
-						resourceBundle,
-						WorkflowConstants.getStatusLabel(
-							commerceOrder.getStatus())));
-
 				setAccountExternalReferenceCode(
 					() -> {
 						AccountEntry accountEntry =
@@ -150,6 +85,15 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 
 						return accountEntry.getExternalReferenceCode();
 					});
+				setAccountId(commerceOrder::getCommerceAccountId);
+				setActions(dtoConverterContext::getActions);
+				setAdvanceStatus(commerceOrder::getAdvanceStatus);
+				setBillingAddressId(commerceOrder::getBillingAddressId);
+				setChannelExternalReferenceCode(
+					commerceChannel::getExternalReferenceCode);
+				setChannelId(commerceChannel::getCommerceChannelId);
+				setCouponCode(commerceOrder::getCouponCode);
+				setCreateDate(commerceOrder::getCreateDate);
 				setCreatorEmailAddress(
 					() -> {
 						User user = _userLocalService.getUser(
@@ -157,6 +101,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 
 						return user.getEmailAddress();
 					});
+				setCurrencyCode(commerceCurrency::getCode);
 				setCustomFields(
 					() -> {
 						ExpandoBridge expandoBridge =
@@ -164,6 +109,67 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 
 						return expandoBridge.getAttributes();
 					});
+				setDeliveryTermDescription(
+					commerceOrder::getDeliveryCommerceTermEntryDescription);
+				setDeliveryTermId(
+					commerceOrder::getDeliveryCommerceTermEntryId);
+				setDeliveryTermName(
+					commerceOrder::getDeliveryCommerceTermEntryName);
+				setExternalReferenceCode(
+					commerceOrder::getExternalReferenceCode);
+				setId(commerceOrder::getCommerceOrderId);
+				setLastPriceUpdateDate(commerceOrder::getLastPriceUpdateDate);
+				setModifiedDate(commerceOrder::getModifiedDate);
+				setOrderDate(commerceOrder::getOrderDate);
+				setOrderStatus(commerceOrder::getOrderStatus);
+				setOrderStatusInfo(
+					() -> _getOrderStatusInfo(
+						commerceOrder.getOrderStatus(),
+						_getCommerceOrderStatusLabel(
+							commerceOrder.getOrderStatus(), locale),
+						_getCommerceOrderStatusLabelI18n(
+							commerceOrder.getOrderStatus(), locale)));
+				setOrderTypeExternalReferenceCode(
+					() -> _getOrderTypeExternalReferenceCode(
+						commerceOrder.getCommerceOrderTypeId()));
+				setOrderTypeId(commerceOrder::getCommerceOrderTypeId);
+				setPaymentMethod(commerceOrder::getCommercePaymentMethodKey);
+				setPaymentStatus(commerceOrder::getPaymentStatus);
+				setPaymentStatusInfo(
+					() -> _getPaymentStatusInfo(
+						commerceOrder.getPaymentStatus(),
+						CommerceOrderPaymentConstants.
+							getOrderPaymentStatusLabel(
+								commerceOrder.getPaymentStatus()),
+						_language.get(
+							resourceBundle,
+							CommerceOrderPaymentConstants.
+								getOrderPaymentStatusLabel(
+									commerceOrder.getPaymentStatus()))));
+				setPaymentTermDescription(
+					commerceOrder::getPaymentCommerceTermEntryDescription);
+				setPaymentTermId(commerceOrder::getPaymentCommerceTermEntryId);
+				setPaymentTermName(
+					commerceOrder::getPaymentCommerceTermEntryName);
+				setPrintedNote(commerceOrder::getPrintedNote);
+				setPurchaseOrderNumber(commerceOrder::getPurchaseOrderNumber);
+				setRequestedDeliveryDate(
+					commerceOrder::getRequestedDeliveryDate);
+				setShippingAddressId(commerceOrder::getShippingAddressId);
+				setShippingMethod(
+					() -> _getShippingMethodEngineKey(
+						commerceOrder.getCommerceShippingMethod()));
+				setShippingOption(commerceOrder::getShippingOptionName);
+				setTransactionId(commerceOrder::getTransactionId);
+				setWorkflowStatusInfo(
+					() -> _toStatus(
+						commerceOrder.getStatus(),
+						WorkflowConstants.getStatusLabel(
+							commerceOrder.getStatus()),
+						_language.get(
+							resourceBundle,
+							WorkflowConstants.getStatusLabel(
+								commerceOrder.getStatus()))));
 			}
 		};
 
@@ -256,9 +262,9 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 
 		return new Status() {
 			{
-				code = orderStatus;
-				label = commerceOrderStatusLabel;
-				label_i18n = commerceOrderStatusLabelI18n;
+				setCode(() -> orderStatus);
+				setLabel(() -> commerceOrderStatusLabel);
+				setLabel_i18n(() -> commerceOrderStatusLabelI18n);
 			}
 		};
 	}
@@ -283,9 +289,9 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 
 		return new Status() {
 			{
-				code = paymentStatus;
-				label = commerceOrderPaymentStatusLabel;
-				label_i18n = commerceOrderPaymentStatusLabelI18n;
+				setCode(() -> paymentStatus);
+				setLabel(() -> commerceOrderPaymentStatusLabel);
+				setLabel_i18n(() -> commerceOrderPaymentStatusLabelI18n);
 			}
 		};
 	}
@@ -531,9 +537,9 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 
 		return new Status() {
 			{
-				code = orderStatus;
-				label = commerceOrderWorkflowStatusLabel;
-				label_i18n = commerceOrderWorkflowStatusLabelI18n;
+				setCode(() -> orderStatus);
+				setLabel(() -> commerceOrderWorkflowStatusLabel);
+				setLabel_i18n(() -> commerceOrderWorkflowStatusLabelI18n);
 			}
 		};
 	}

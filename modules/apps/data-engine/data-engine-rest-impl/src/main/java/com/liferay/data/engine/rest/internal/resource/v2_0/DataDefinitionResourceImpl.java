@@ -1186,12 +1186,14 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			dataDefinition.getId(),
 			new DataRecordCollection() {
 				{
-					dataDefinitionId = ddmStructure.getStructureId();
-					dataRecordCollectionKey = ddmStructure.getStructureKey();
-					description = LocalizedValueUtil.toStringObjectMap(
-						ddmStructure.getDescriptionMap());
-					name = LocalizedValueUtil.toStringObjectMap(
-						ddmStructure.getNameMap());
+					setDataDefinitionId(ddmStructure::getStructureId);
+					setDataRecordCollectionKey(ddmStructure::getStructureKey);
+					setDescription(
+						() -> LocalizedValueUtil.toStringObjectMap(
+							ddmStructure.getDescriptionMap()));
+					setName(
+						() -> LocalizedValueUtil.toStringObjectMap(
+							ddmStructure.getNameMap()));
 				}
 			});
 

@@ -39,26 +39,28 @@ public class SkuSubscriptionConfigurationDTOConverter
 
 		return new SkuSubscriptionConfiguration() {
 			{
-				deliverySubscriptionEnable =
-					cpInstance.isDeliverySubscriptionEnabled();
-				deliverySubscriptionLength =
-					cpInstance.getDeliverySubscriptionLength();
-				deliverySubscriptionNumberOfLength =
-					cpInstance.getDeliveryMaxSubscriptionCycles();
-				deliverySubscriptionType = DeliverySubscriptionType.create(
-					cpInstance.getDeliverySubscriptionType());
-				deliverySubscriptionTypeSettings =
-					cpInstance.
-						getDeliverySubscriptionTypeSettingsUnicodeProperties();
-				enable = cpInstance.isSubscriptionEnabled();
-				length = cpInstance.getSubscriptionLength();
-				numberOfLength = cpInstance.getMaxSubscriptionCycles();
-				overrideSubscriptionInfo =
-					cpInstance.isOverrideSubscriptionInfo();
-				subscriptionType = SubscriptionType.create(
-					cpInstance.getSubscriptionType());
-				subscriptionTypeSettings =
-					cpInstance.getSubscriptionTypeSettingsUnicodeProperties();
+				setDeliverySubscriptionEnable(
+					cpInstance::isDeliverySubscriptionEnabled);
+				setDeliverySubscriptionLength(
+					cpInstance::getDeliverySubscriptionLength);
+				setDeliverySubscriptionNumberOfLength(
+					cpInstance::getDeliveryMaxSubscriptionCycles);
+				setDeliverySubscriptionType(
+					() -> DeliverySubscriptionType.create(
+						cpInstance.getDeliverySubscriptionType()));
+				setDeliverySubscriptionTypeSettings(
+					cpInstance::
+						getDeliverySubscriptionTypeSettingsUnicodeProperties);
+				setEnable(cpInstance::isSubscriptionEnabled);
+				setLength(cpInstance::getSubscriptionLength);
+				setNumberOfLength(cpInstance::getMaxSubscriptionCycles);
+				setOverrideSubscriptionInfo(
+					cpInstance::isOverrideSubscriptionInfo);
+				setSubscriptionType(
+					() -> SubscriptionType.create(
+						cpInstance.getSubscriptionType()));
+				setSubscriptionTypeSettings(
+					cpInstance::getSubscriptionTypeSettingsUnicodeProperties);
 			}
 		};
 	}

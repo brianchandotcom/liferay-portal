@@ -155,17 +155,19 @@ public class WikiPageAttachmentResourceImpl
 
 		return new WikiPageAttachment() {
 			{
-				contentUrl = _portletFileRepository.getPortletFileEntryURL(
-					null, fileEntry, null);
-				contentValue = ContentValueUtil.toContentValue(
-					"contentValue", fileEntry::getContentStream,
-					contextUriInfo);
-				encodingFormat = fileEntry.getMimeType();
-				externalReferenceCode = fileEntry.getExternalReferenceCode();
-				fileExtension = fileEntry.getExtension();
-				id = fileEntry.getFileEntryId();
-				sizeInBytes = fileEntry.getSize();
-				title = fileEntry.getTitle();
+				setContentUrl(
+					() -> _portletFileRepository.getPortletFileEntryURL(
+						null, fileEntry, null));
+				setContentValue(
+					() -> ContentValueUtil.toContentValue(
+						"contentValue", fileEntry::getContentStream,
+						contextUriInfo));
+				setEncodingFormat(fileEntry::getMimeType);
+				setExternalReferenceCode(fileEntry::getExternalReferenceCode);
+				setFileExtension(fileEntry::getExtension);
+				setId(fileEntry::getFileEntryId);
+				setSizeInBytes(fileEntry::getSize);
+				setTitle(fileEntry::getTitle);
 			}
 		};
 	}

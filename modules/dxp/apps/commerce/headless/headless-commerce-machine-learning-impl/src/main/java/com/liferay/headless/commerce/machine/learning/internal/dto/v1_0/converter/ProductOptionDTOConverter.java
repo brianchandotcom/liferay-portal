@@ -57,14 +57,15 @@ public class ProductOptionDTOConverter
 
 		return new ProductOption() {
 			{
-				key = cpDefinitionOptionRel.getKey();
-				optionKey = cpOption.getKey();
-				values = TransformUtil.transformToArray(
-					cpDefinitionOptionRel.getCPDefinitionOptionValueRels(),
-					cpDefinitionOptionValueRel ->
-						LanguageUtils.getLanguageIdMap(
-							cpDefinitionOptionValueRel.getNameMap()),
-					Map.class);
+				setKey(cpDefinitionOptionRel::getKey);
+				setOptionKey(cpOption::getKey);
+				setValues(
+					() -> TransformUtil.transformToArray(
+						cpDefinitionOptionRel.getCPDefinitionOptionValueRels(),
+						cpDefinitionOptionValueRel ->
+							LanguageUtils.getLanguageIdMap(
+								cpDefinitionOptionValueRel.getNameMap()),
+						Map.class));
 			}
 		};
 	}

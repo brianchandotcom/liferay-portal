@@ -44,10 +44,11 @@ public class ProductTaxConfigurationDTOConverter
 
 		return new ProductTaxConfiguration() {
 			{
-				id = cpDefinition.getCPTaxCategoryId();
-				taxable = !cpDefinition.isTaxExempt();
-				taxCategory = _getTaxCategory(
-					cpTaxCategory, dtoConverterContext.getLocale());
+				setId(cpDefinition::getCPTaxCategoryId);
+				setTaxable(() -> !cpDefinition.isTaxExempt());
+				setTaxCategory(
+					() -> _getTaxCategory(
+						cpTaxCategory, dtoConverterContext.getLocale()));
 			}
 		};
 	}

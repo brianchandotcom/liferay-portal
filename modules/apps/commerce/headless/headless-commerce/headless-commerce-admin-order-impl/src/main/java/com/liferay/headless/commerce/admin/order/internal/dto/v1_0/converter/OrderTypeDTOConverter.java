@@ -47,28 +47,31 @@ public class OrderTypeDTOConverter
 
 		return new OrderType() {
 			{
-				actions = dtoConverterContext.getActions();
-				active = commerceOrderType.isActive();
-				customFields = expandoBridge.getAttributes();
-				description = LanguageUtils.getLanguageIdMap(
-					commerceOrderType.getDescriptionMap());
-				displayDate = commerceOrderType.getDisplayDate();
-				displayOrder = commerceOrderType.getDisplayOrder();
-				expirationDate = commerceOrderType.getExpirationDate();
-				externalReferenceCode =
-					commerceOrderType.getExternalReferenceCode();
-				id = commerceOrderType.getCommerceOrderTypeId();
-				name = LanguageUtils.getLanguageIdMap(
-					commerceOrderType.getNameMap());
-				workflowStatusInfo = _toStatus(
-					WorkflowConstants.getStatusLabel(
-						commerceOrderType.getStatus()),
-					_language.get(
-						LanguageResources.getResourceBundle(
-							dtoConverterContext.getLocale()),
+				setActions(dtoConverterContext::getActions);
+				setActive(commerceOrderType::isActive);
+				setCustomFields(expandoBridge::getAttributes);
+				setDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						commerceOrderType.getDescriptionMap()));
+				setDisplayDate(commerceOrderType::getDisplayDate);
+				setDisplayOrder(commerceOrderType::getDisplayOrder);
+				setExpirationDate(commerceOrderType::getExpirationDate);
+				setExternalReferenceCode(
+					commerceOrderType::getExternalReferenceCode);
+				setId(commerceOrderType::getCommerceOrderTypeId);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						commerceOrderType.getNameMap()));
+				setWorkflowStatusInfo(
+					() -> _toStatus(
 						WorkflowConstants.getStatusLabel(
-							commerceOrderType.getStatus())),
-					commerceOrderType.getStatus());
+							commerceOrderType.getStatus()),
+						_language.get(
+							LanguageResources.getResourceBundle(
+								dtoConverterContext.getLocale()),
+							WorkflowConstants.getStatusLabel(
+								commerceOrderType.getStatus())),
+						commerceOrderType.getStatus()));
 			}
 		};
 	}
@@ -79,9 +82,9 @@ public class OrderTypeDTOConverter
 
 		return new Status() {
 			{
-				code = statusCode;
-				label = orderTypeStatusLabel;
-				label_i18n = orderTypeStatusLabelI18n;
+				setCode(() -> statusCode);
+				setLabel(() -> orderTypeStatusLabel);
+				setLabel_i18n(() -> orderTypeStatusLabelI18n);
 			}
 		};
 	}

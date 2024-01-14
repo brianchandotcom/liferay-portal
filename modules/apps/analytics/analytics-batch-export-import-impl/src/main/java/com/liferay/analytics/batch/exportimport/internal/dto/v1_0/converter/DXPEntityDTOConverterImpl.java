@@ -128,8 +128,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 			Field field = new Field() {
 				{
-					name = entry.getKey();
-
+					setName(entry::getKey);
 					setValue(
 						() -> {
 							Object value = function.apply(baseModel);
@@ -206,39 +205,46 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				add(
 					new Field() {
 						{
-							name = "className";
-							value = className;
+							setName(() -> "className");
+							setValue(() -> className);
 						}
 					});
 				add(
 					new Field() {
 						{
-							name = "columnId";
-							value = String.valueOf(expandoColumn.getColumnId());
+							setName(() -> "columnId");
+							setValue(
+								() -> String.valueOf(
+									expandoColumn.getColumnId()));
 						}
 					});
 				add(
 					new Field() {
 						{
-							name = "dataType";
-							value = dataType;
+							setName(() -> "dataType");
+							setValue(() -> dataType);
 						}
 					});
 				add(
 					new Field() {
 						{
-							name = "modifiedDate";
+							setName(() -> "modifiedDate");
+							setValue(
+								() -> {
+									Date modifiedDate =
+										expandoColumn.getModifiedDate();
 
-							Date modifiedDate = expandoColumn.getModifiedDate();
-
-							value = String.valueOf(modifiedDate.getTime());
+									return String.valueOf(
+										modifiedDate.getTime());
+								});
 						}
 					});
 				add(
 					new Field() {
 						{
-							name = "name";
-							value = expandoColumn.getName() + "-" + dataType;
+							setName(() -> "name");
+							setValue(
+								() -> expandoColumn.getName() + "-" + dataType);
 						}
 					});
 			}
@@ -290,9 +296,9 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 			ExpandoField expandoField = new ExpandoField() {
 				{
-					columnId = expandoColumn.getColumnId();
-					name = key;
-					value = _parseValue(entry.getValue());
+					setColumnId(expandoColumn::getColumnId);
+					setName(() -> key);
+					setValue(() -> _parseValue(entry.getValue()));
 				}
 			};
 
@@ -368,39 +374,45 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 			fields.add(
 				new Field() {
 					{
-						name = "groupIds";
-						value = _getGroupIds(
-							user, organizationIds, userGroupIds);
+						setName(() -> "groupIds");
+						setValue(
+							() -> _getGroupIds(
+								user, organizationIds, userGroupIds));
 					}
 				});
 
 			fields.add(
 				new Field() {
 					{
-						name = "organizationIds";
-						value =
-							"[" + StringUtil.merge(organizationIds, ",") + "]";
+						setName(() -> "organizationIds");
+						setValue(
+							() ->
+								"[" + StringUtil.merge(organizationIds, ",") +
+									"]");
 					}
 				});
 			fields.add(
 				new Field() {
 					{
-						name = "roleIds";
-						value = _getRoleIds(user);
+						setName(() -> "roleIds");
+						setValue(() -> _getRoleIds(user));
 					}
 				});
 			fields.add(
 				new Field() {
 					{
-						name = "teamIds";
-						value = _getTeamIds(user);
+						setName(() -> "teamIds");
+						setValue(() -> _getTeamIds(user));
 					}
 				});
 			fields.add(
 				new Field() {
 					{
-						name = "userGroupIds";
-						value = "[" + StringUtil.merge(userGroupIds, ",") + "]";
+						setName(() -> "userGroupIds");
+						setValue(
+							() ->
+								"[" + StringUtil.merge(userGroupIds, ",") +
+									"]");
 					}
 				});
 		}

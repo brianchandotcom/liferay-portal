@@ -41,10 +41,11 @@ public class AdminAccountGroupDTOConverter
 
 		return new AdminAccountGroup() {
 			{
-				customFields = expandoBridge.getAttributes();
-				externalReferenceCode = accountGroup.getExternalReferenceCode();
-				id = accountGroup.getAccountGroupId();
-				name = accountGroup.getName();
+				setCustomFields(expandoBridge::getAttributes);
+				setExternalReferenceCode(
+					accountGroup::getExternalReferenceCode);
+				setId(accountGroup::getAccountGroupId);
+				setName(accountGroup::getName);
 			}
 		};
 	}

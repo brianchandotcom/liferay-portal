@@ -42,25 +42,34 @@ public class ReplenishmentItemDTOConverter
 
 		return new ReplenishmentItem() {
 			{
-				availabilityDate =
-					commerceInventoryReplenishmentItem.getAvailabilityDate();
-				externalReferenceCode =
-					commerceInventoryReplenishmentItem.
-						getExternalReferenceCode();
-				id =
-					commerceInventoryReplenishmentItem.
-						getCommerceInventoryReplenishmentItemId();
-				quantity = _commerceQuantityFormatter.format(
-					commerceInventoryReplenishmentItem.getCompanyId(),
-					commerceInventoryReplenishmentItem.getQuantity(),
-					commerceInventoryReplenishmentItem.getSku(),
-					commerceInventoryReplenishmentItem.getUnitOfMeasureKey());
-				sku = commerceInventoryReplenishmentItem.getSku();
-				unitOfMeasureKey =
-					commerceInventoryReplenishmentItem.getUnitOfMeasureKey();
-				warehouseId =
-					commerceInventoryReplenishmentItem.
-						getCommerceInventoryWarehouseId();
+				setAvailabilityDate(
+					() ->
+						commerceInventoryReplenishmentItem.
+							getAvailabilityDate());
+				setExternalReferenceCode(
+					() ->
+						commerceInventoryReplenishmentItem.
+							getExternalReferenceCode());
+				setId(
+					() ->
+						commerceInventoryReplenishmentItem.
+							getCommerceInventoryReplenishmentItemId());
+				setQuantity(
+					() -> _commerceQuantityFormatter.format(
+						commerceInventoryReplenishmentItem.getCompanyId(),
+						commerceInventoryReplenishmentItem.getQuantity(),
+						commerceInventoryReplenishmentItem.getSku(),
+						commerceInventoryReplenishmentItem.
+							getUnitOfMeasureKey()));
+				setSku(commerceInventoryReplenishmentItem::getSku);
+				setUnitOfMeasureKey(
+					() ->
+						commerceInventoryReplenishmentItem.
+							getUnitOfMeasureKey());
+				setWarehouseId(
+					() ->
+						commerceInventoryReplenishmentItem.
+							getCommerceInventoryWarehouseId());
 			}
 		};
 	}

@@ -69,32 +69,35 @@ public class AttachmentDTOConverter
 
 		return new Attachment() {
 			{
-				cdnEnabled = cpAttachmentFileEntry.isCDNEnabled();
-				cdnURL = cpAttachmentFileEntry.getCDNURL();
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					CPAttachmentFileEntry.class.getName(),
-					cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
-					cpAttachmentFileEntry.getCompanyId(),
-					dtoConverterContext.getLocale());
-				displayDate = cpAttachmentFileEntry.getDisplayDate();
-				expirationDate = cpAttachmentFileEntry.getExpirationDate();
-				externalReferenceCode =
-					cpAttachmentFileEntry.getExternalReferenceCode();
-				fileEntryId = cpAttachmentFileEntry.getFileEntryId();
-				galleryEnabled = cpAttachmentFileEntry.isGalleryEnabled();
-				id = cpAttachmentFileEntry.getCPAttachmentFileEntryId();
-				options = _getAttachmentOptions(cpAttachmentFileEntry);
-				priority = cpAttachmentFileEntry.getPriority();
-				src = portalURL + downloadURL;
-				tags = TransformUtil.transformToArray(
-					_assetTagService.getTags(
-						cpAttachmentFileEntry.getModelClassName(),
-						cpAttachmentFileEntry.getCPAttachmentFileEntryId()),
-					AssetTag::getName, String.class);
-				title = LanguageUtils.getLanguageIdMap(
-					cpAttachmentFileEntry.getTitleMap());
-				type = cpAttachmentFileEntry.getType();
+				setCdnEnabled(cpAttachmentFileEntry::isCDNEnabled);
+				setCdnURL(cpAttachmentFileEntry::getCDNURL);
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						CPAttachmentFileEntry.class.getName(),
+						cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
+						cpAttachmentFileEntry.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setDisplayDate(cpAttachmentFileEntry::getDisplayDate);
+				setExpirationDate(cpAttachmentFileEntry::getExpirationDate);
+				setExternalReferenceCode(
+					cpAttachmentFileEntry::getExternalReferenceCode);
+				setFileEntryId(cpAttachmentFileEntry::getFileEntryId);
+				setGalleryEnabled(cpAttachmentFileEntry::isGalleryEnabled);
+				setId(cpAttachmentFileEntry::getCPAttachmentFileEntryId);
+				setOptions(() -> _getAttachmentOptions(cpAttachmentFileEntry));
+				setPriority(cpAttachmentFileEntry::getPriority);
+				setSrc(() -> portalURL + downloadURL);
+				setTags(
+					() -> TransformUtil.transformToArray(
+						_assetTagService.getTags(
+							cpAttachmentFileEntry.getModelClassName(),
+							cpAttachmentFileEntry.getCPAttachmentFileEntryId()),
+						AssetTag::getName, String.class));
+				setTitle(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpAttachmentFileEntry.getTitleMap()));
+				setType(cpAttachmentFileEntry::getType);
 			}
 		};
 	}

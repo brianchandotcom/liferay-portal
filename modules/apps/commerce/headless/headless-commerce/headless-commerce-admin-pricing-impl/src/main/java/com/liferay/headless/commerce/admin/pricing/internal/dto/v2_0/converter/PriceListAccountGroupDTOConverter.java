@@ -49,17 +49,17 @@ public class PriceListAccountGroupDTOConverter
 
 		return new PriceListAccountGroup() {
 			{
-				accountGroupExternalReferenceCode =
-					priceListAccountGroup.getExternalReferenceCode();
-				accountGroupId = priceListAccountGroup.getAccountGroupId();
-				actions = dtoConverterContext.getActions();
-				order = commercePriceListCommerceAccountGroupRel.getOrder();
-				priceListAccountGroupId =
-					commercePriceListCommerceAccountGroupRel.
-						getCommercePriceListCommerceAccountGroupRelId();
-				priceListExternalReferenceCode =
-					commercePriceList.getExternalReferenceCode();
-				priceListId = commercePriceList.getCommercePriceListId();
+				setAccountGroupExternalReferenceCode(
+					priceListAccountGroup::getExternalReferenceCode);
+				setAccountGroupId(priceListAccountGroup::getAccountGroupId);
+				setActions(dtoConverterContext::getActions);
+				setOrder(commercePriceListCommerceAccountGroupRel::getOrder);
+				setPriceListAccountGroupId(
+					commercePriceListCommerceAccountGroupRel::
+						getCommercePriceListCommerceAccountGroupRelId);
+				setPriceListExternalReferenceCode(
+					commercePriceList::getExternalReferenceCode);
+				setPriceListId(commercePriceList::getCommercePriceListId);
 			}
 		};
 	}

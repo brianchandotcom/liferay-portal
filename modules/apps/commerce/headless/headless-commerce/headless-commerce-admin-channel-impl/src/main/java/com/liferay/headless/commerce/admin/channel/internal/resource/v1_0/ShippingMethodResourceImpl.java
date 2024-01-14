@@ -69,14 +69,17 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 				new CommerceShippingFixedOptionPriorityComparator()),
 			commerceShippingFixedOption -> new ShippingOption() {
 				{
-					description = LanguageUtils.getLanguageIdMap(
-						commerceShippingFixedOption.getDescriptionMap());
-					id =
-						commerceShippingFixedOption.
-							getCommerceShippingFixedOptionId();
-					name = LanguageUtils.getLanguageIdMap(
-						commerceShippingFixedOption.getNameMap());
-					priority = commerceShippingFixedOption.getPriority();
+					setDescription(
+						() -> LanguageUtils.getLanguageIdMap(
+							commerceShippingFixedOption.getDescriptionMap()));
+					setId(
+						() ->
+							commerceShippingFixedOption.
+								getCommerceShippingFixedOptionId());
+					setName(
+						() -> LanguageUtils.getLanguageIdMap(
+							commerceShippingFixedOption.getNameMap()));
+					setPriority(commerceShippingFixedOption::getPriority);
 				}
 			},
 			ShippingOption.class);
@@ -91,13 +94,7 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 
 		return new ShippingMethod() {
 			{
-				active = commerceShippingMethod.isActive();
-				engineKey = commerceShippingMethod.getEngineKey();
-				id = commerceShippingMethod.getCommerceShippingMethodId();
-				priority = commerceShippingMethod.getPriority();
-				shippingOptions = _getShippingOptions(
-					commerceShippingMethod.getCommerceShippingMethodId());
-
+				setActive(commerceShippingMethod::isActive);
 				setDescription(
 					() -> {
 						if (Validator.isNotNull(
@@ -117,6 +114,8 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 								contextAcceptLanguage.getPreferredLocale())
 						).build();
 					});
+				setEngineKey(commerceShippingMethod::getEngineKey);
+				setId(commerceShippingMethod::getCommerceShippingMethodId);
 				setName(
 					() -> {
 						if (Validator.isNotNull(
@@ -136,6 +135,10 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 								contextAcceptLanguage.getPreferredLocale())
 						).build();
 					});
+				setPriority(commerceShippingMethod::getPriority);
+				setShippingOptions(
+					() -> _getShippingOptions(
+						commerceShippingMethod.getCommerceShippingMethodId()));
 			}
 		};
 	}

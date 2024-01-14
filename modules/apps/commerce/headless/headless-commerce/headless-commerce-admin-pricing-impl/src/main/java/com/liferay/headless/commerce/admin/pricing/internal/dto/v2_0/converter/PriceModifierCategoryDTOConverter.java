@@ -48,16 +48,16 @@ public class PriceModifierCategoryDTOConverter
 
 		return new PriceModifierCategory() {
 			{
-				actions = dtoConverterContext.getActions();
-				categoryExternalReferenceCode =
-					assetCategory.getExternalReferenceCode();
-				categoryId = assetCategory.getCategoryId();
-				priceModifierCategoryId =
-					commercePriceModifierRel.getCommercePriceModifierRelId();
-				priceModifierExternalReferenceCode =
-					commercePriceModifier.getExternalReferenceCode();
-				priceModifierId =
-					commercePriceModifier.getCommercePriceModifierId();
+				setActions(dtoConverterContext::getActions);
+				setCategoryExternalReferenceCode(
+					assetCategory::getExternalReferenceCode);
+				setCategoryId(assetCategory::getCategoryId);
+				setPriceModifierCategoryId(
+					commercePriceModifierRel::getCommercePriceModifierRelId);
+				setPriceModifierExternalReferenceCode(
+					commercePriceModifier::getExternalReferenceCode);
+				setPriceModifierId(
+					commercePriceModifier::getCommercePriceModifierId);
 			}
 		};
 	}

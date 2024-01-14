@@ -46,8 +46,8 @@ public class StrategyResourceImpl extends BaseStrategyResourceImpl {
 			strategies.add(
 				new Strategy() {
 					{
-						name = createStrategy;
-						type = "create";
+						setName(() -> createStrategy);
+						setType(() -> "create");
 					}
 				});
 		}
@@ -58,8 +58,8 @@ public class StrategyResourceImpl extends BaseStrategyResourceImpl {
 			strategies.add(
 				new Strategy() {
 					{
-						name = updateStrategy;
-						type = "update";
+						setName(() -> updateStrategy);
+						setType(() -> "update");
 					}
 				});
 		}

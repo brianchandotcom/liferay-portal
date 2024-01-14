@@ -64,28 +64,29 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 
 		return new Order() {
 			{
-				accountId = commerceOrder.getCommerceAccountId();
-				channelId = commerceChannel.getCommerceChannelId();
-				createDate = commerceOrder.getCreateDate();
-				currencyCode = commerceCurrency.getCode();
-				customFields = expandoBridge.getAttributes();
-				externalReferenceCode =
-					commerceOrder.getExternalReferenceCode();
-				id = commerceOrder.getCommerceOrderId();
-				modifiedDate = commerceOrder.getModifiedDate();
-				orderDate = commerceOrder.getOrderDate();
-				orderItems = TransformUtil.transformToArray(
-					commerceOrder.getCommerceOrderItems(),
-					commerceOrderItem -> _orderItemDTOConverter.toDTO(
-						commerceOrderItem),
-					OrderItem.class);
-				orderStatus = commerceOrder.getOrderStatus();
-				orderTypeId = commerceOrder.getCommerceOrderTypeId();
-				paymentMethod = commerceOrder.getCommercePaymentMethodKey();
-				paymentStatus = commerceOrder.getPaymentStatus();
-				status = commerceOrder.getStatus();
-				total = commerceOrder.getTotal();
-				userId = commerceOrder.getUserId();
+				setAccountId(commerceOrder::getCommerceAccountId);
+				setChannelId(commerceChannel::getCommerceChannelId);
+				setCreateDate(commerceOrder::getCreateDate);
+				setCurrencyCode(commerceCurrency::getCode);
+				setCustomFields(expandoBridge::getAttributes);
+				setExternalReferenceCode(
+					commerceOrder::getExternalReferenceCode);
+				setId(commerceOrder::getCommerceOrderId);
+				setModifiedDate(commerceOrder::getModifiedDate);
+				setOrderDate(commerceOrder::getOrderDate);
+				setOrderItems(
+					() -> TransformUtil.transformToArray(
+						commerceOrder.getCommerceOrderItems(),
+						commerceOrderItem -> _orderItemDTOConverter.toDTO(
+							commerceOrderItem),
+						OrderItem.class));
+				setOrderStatus(commerceOrder::getOrderStatus);
+				setOrderTypeId(commerceOrder::getCommerceOrderTypeId);
+				setPaymentMethod(commerceOrder::getCommercePaymentMethodKey);
+				setPaymentStatus(commerceOrder::getPaymentStatus);
+				setStatus(commerceOrder::getStatus);
+				setTotal(commerceOrder::getTotal);
+				setUserId(commerceOrder::getUserId);
 			}
 		};
 	}

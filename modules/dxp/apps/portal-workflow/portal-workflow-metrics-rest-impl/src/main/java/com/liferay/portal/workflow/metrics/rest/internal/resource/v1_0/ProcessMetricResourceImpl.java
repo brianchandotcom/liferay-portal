@@ -258,11 +258,12 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 	private ProcessMetric _createProcessMetric(Document document) {
 		return new ProcessMetric() {
 			{
-				instanceCount = 0L;
-				onTimeInstanceCount = 0L;
-				overdueInstanceCount = 0L;
-				process = ProcessUtil.toProcess(
-					document, contextAcceptLanguage.getPreferredLocale());
+				setInstanceCount(() -> 0L);
+				setOnTimeInstanceCount(() -> 0L);
+				setOverdueInstanceCount(() -> 0L);
+				setProcess(
+					() -> ProcessUtil.toProcess(
+						document, contextAcceptLanguage.getPreferredLocale()));
 			}
 		};
 	}

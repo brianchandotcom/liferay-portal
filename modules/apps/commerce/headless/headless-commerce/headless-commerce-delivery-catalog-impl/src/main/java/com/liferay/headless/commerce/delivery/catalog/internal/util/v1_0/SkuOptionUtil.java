@@ -51,31 +51,42 @@ public class SkuOptionUtil {
 
 				SkuOption skuOption = new SkuOption() {
 					{
-						key =
-							cpDefinitionOptionRel.getCPDefinitionOptionRelId();
-						price =
-							(priceBigDecimal == null) ?
+						setKey(
+							() ->
+								cpDefinitionOptionRel.
+									getCPDefinitionOptionRelId());
+						setPrice(
+							() -> (priceBigDecimal == null) ?
 								BigDecimal.ZERO.toString() :
-									priceBigDecimal.toString();
-						priceType = cpDefinitionOptionRel.getPriceType();
-						quantity = String.valueOf(
-							cpDefinitionOptionValueRel.getQuantity());
-						skuId = (cpInstance == null) ? null :
-							cpInstance.getCPInstanceId();
-						skuOptionId =
-							cpDefinitionOptionRel.getCPDefinitionOptionRelId();
-						skuOptionKey = cpDefinitionOptionRel.getKey();
-						skuOptionName = cpDefinitionOptionRel.getName(locale);
-						skuOptionValueId =
-							cpDefinitionOptionValueRel.
-								getCPDefinitionOptionValueRelId();
-						skuOptionValueKey = cpDefinitionOptionValueRel.getKey();
-						skuOptionValueNames = new String[] {
-							cpDefinitionOptionValueRel.getName(locale)
-						};
-						value =
-							cpDefinitionOptionValueRel.
-								getCPDefinitionOptionValueRelId();
+									priceBigDecimal.toString());
+						setPriceType(cpDefinitionOptionRel::getPriceType);
+						setQuantity(
+							() -> String.valueOf(
+								cpDefinitionOptionValueRel.getQuantity()));
+						setSkuId(
+							() -> (cpInstance == null) ? null :
+								cpInstance.getCPInstanceId());
+						setSkuOptionId(
+							() ->
+								cpDefinitionOptionRel.
+									getCPDefinitionOptionRelId());
+						setSkuOptionKey(cpDefinitionOptionRel::getKey);
+						setSkuOptionName(
+							() -> cpDefinitionOptionRel.getName(locale));
+						setSkuOptionValueId(
+							() ->
+								cpDefinitionOptionValueRel.
+									getCPDefinitionOptionValueRelId());
+						setSkuOptionValueKey(
+							cpDefinitionOptionValueRel::getKey);
+						setSkuOptionValueNames(
+							() -> new String[] {
+								cpDefinitionOptionValueRel.getName(locale)
+							});
+						setValue(
+							() ->
+								cpDefinitionOptionValueRel.
+									getCPDefinitionOptionValueRelId());
 					}
 				};
 

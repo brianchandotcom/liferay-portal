@@ -59,16 +59,19 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 		return new Sku() {
 			{
-				basePrice = _getPrice(commerceBasePriceListPriceEntry);
-				basePriceFormatted = _formatPrice(
-					cpInstance.getCompanyId(), commerceBasePriceListPriceEntry,
-					locale);
-				basePromoPrice = _getPrice(commerceBasePromotionPriceEntry);
-				basePromoPriceFormatted = _formatPrice(
-					cpInstance.getCompanyId(), commerceBasePromotionPriceEntry,
-					locale);
-				id = cpInstance.getCPInstanceId();
-				name = cpInstance.getSku();
+				setBasePrice(() -> _getPrice(commerceBasePriceListPriceEntry));
+				setBasePriceFormatted(
+					() -> _formatPrice(
+						cpInstance.getCompanyId(),
+						commerceBasePriceListPriceEntry, locale));
+				setBasePromoPrice(
+					() -> _getPrice(commerceBasePromotionPriceEntry));
+				setBasePromoPriceFormatted(
+					() -> _formatPrice(
+						cpInstance.getCompanyId(),
+						commerceBasePromotionPriceEntry, locale));
+				setId(cpInstance::getCPInstanceId);
+				setName(cpInstance::getSku);
 			}
 		};
 	}

@@ -44,10 +44,12 @@ public class CategoryDTOConverter
 
 		return new Category() {
 			{
-				id = assetCategory.getCategoryId();
-				name = assetCategory.getName();
-				path = assetCategory.getPath(dtoConverterContext.getLocale());
-				vocabulary = assetVocabulary.getName();
+				setId(assetCategory::getCategoryId);
+				setName(assetCategory::getName);
+				setPath(
+					() -> assetCategory.getPath(
+						dtoConverterContext.getLocale()));
+				setVocabulary(assetVocabulary::getName);
 			}
 		};
 	}

@@ -57,9 +57,9 @@ public class SegmentUserResourceImpl extends BaseSegmentUserResourceImpl {
 
 		return new SegmentUser() {
 			{
-				emailAddress = user.getEmailAddress();
-				id = user.getUserId();
-				name = user.getFullName();
+				setEmailAddress(user::getEmailAddress);
+				setId(user::getUserId);
+				setName(user::getFullName);
 			}
 		};
 	}

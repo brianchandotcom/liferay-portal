@@ -27,8 +27,8 @@ public class RootLayoutStructureItemMapper
 
 		return new PageElement() {
 			{
-				id = layoutStructureItem.getItemId();
-				type = Type.ROOT;
+				setId(layoutStructureItem::getItemId);
+				setType(() -> Type.ROOT);
 			}
 		};
 	}

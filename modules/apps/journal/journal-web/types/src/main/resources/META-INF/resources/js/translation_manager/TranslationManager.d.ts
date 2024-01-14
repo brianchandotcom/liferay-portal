@@ -19,4 +19,10 @@ export default function TranslationManager({
 	locales,
 	selectedLanguageId: initialSelectedLanguageId,
 }: Props): JSX.Element;
+export declare function fieldToTranslations(
+	fields: Record<string, Field>
+): {
+	fieldName: string;
+	languages: Liferay.Language.Locale[];
+}[];
 export {};

@@ -50,16 +50,16 @@ public class ChannelAccountDTOConverter
 
 		return new ChannelAccount() {
 			{
-				accountExternalReferenceCode =
-					accountEntry.getExternalReferenceCode();
-				accountId = accountEntry.getAccountEntryId();
-				actions = dtoConverterContext.getActions();
-				channelAccountId =
-					commerceChannelAccountEntryRel.
-						getCommerceChannelAccountEntryRelId();
-				channelExternalReferenceCode =
-					commerceChannel.getExternalReferenceCode();
-				channelId = commerceChannel.getCommerceChannelId();
+				setAccountExternalReferenceCode(
+					accountEntry::getExternalReferenceCode);
+				setAccountId(accountEntry::getAccountEntryId);
+				setActions(dtoConverterContext::getActions);
+				setChannelAccountId(
+					commerceChannelAccountEntryRel::
+						getCommerceChannelAccountEntryRelId);
+				setChannelExternalReferenceCode(
+					commerceChannel::getExternalReferenceCode);
+				setChannelId(commerceChannel::getCommerceChannelId);
 			}
 		};
 	}

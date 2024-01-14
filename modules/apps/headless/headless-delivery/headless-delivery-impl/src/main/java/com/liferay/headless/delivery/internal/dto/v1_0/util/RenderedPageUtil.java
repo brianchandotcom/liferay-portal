@@ -44,8 +44,6 @@ public class RenderedPageUtil {
 
 		return new RenderedPage() {
 			{
-				renderedPageURL = _getJaxRsLink(dtoConverterContext, layout);
-
 				setMasterPageId(
 					() -> {
 						if (masterLayout != null) {
@@ -82,6 +80,8 @@ public class RenderedPageUtil {
 
 						return null;
 					});
+				setRenderedPageURL(
+					() -> _getJaxRsLink(dtoConverterContext, layout));
 			}
 		};
 	}

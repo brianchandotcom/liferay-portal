@@ -75,82 +75,83 @@ public class OrderItemDTOConverter
 
 		return new OrderItem() {
 			{
-				bookedQuantityId =
-					commerceOrderItem.getCommerceInventoryBookedQuantityId();
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					CommerceOrderItem.class.getName(),
-					commerceOrderItem.getCommerceOrderItemId(),
-					commerceOrderItem.getCompanyId(),
-					dtoConverterContext.getLocale());
-				decimalQuantity = commerceOrderItem.getQuantity();
-				deliveryGroup = commerceOrderItem.getDeliveryGroup();
-				discountAmount = commerceOrderItem.getDiscountAmount();
-				discountManuallyAdjusted =
-					commerceOrderItem.isDiscountManuallyAdjusted();
-				discountPercentageLevel1 =
-					commerceOrderItem.getDiscountPercentageLevel1();
-				discountPercentageLevel1WithTaxAmount =
-					commerceOrderItem.
-						getDiscountPercentageLevel1WithTaxAmount();
-				discountPercentageLevel2 =
-					commerceOrderItem.getDiscountPercentageLevel2();
-				discountPercentageLevel2WithTaxAmount =
-					commerceOrderItem.
-						getDiscountPercentageLevel2WithTaxAmount();
-				discountPercentageLevel3 =
-					commerceOrderItem.getDiscountPercentageLevel3();
-				discountPercentageLevel3WithTaxAmount =
-					commerceOrderItem.
-						getDiscountPercentageLevel3WithTaxAmount();
-				discountPercentageLevel4 =
-					commerceOrderItem.getDiscountPercentageLevel4();
-				discountPercentageLevel4WithTaxAmount =
-					commerceOrderItem.
-						getDiscountPercentageLevel4WithTaxAmount();
-				discountWithTaxAmount =
-					commerceOrderItem.getDiscountWithTaxAmount();
-				externalReferenceCode =
-					commerceOrderItem.getExternalReferenceCode();
-				finalPrice = commerceOrderItem.getFinalPrice();
-				finalPriceWithTaxAmount =
-					commerceOrderItem.getFinalPriceWithTaxAmount();
-				formattedQuantity = _commerceOrderItemQuantityFormatter.format(
-					commerceOrderItem, cpInstanceUnitOfMeasure,
-					dtoConverterContext.getLocale());
-				id = commerceOrderItem.getCommerceOrderItemId();
-				name = LanguageUtils.getLanguageIdMap(
-					commerceOrderItem.getNameMap());
-				options = commerceOrderItem.getJson();
-				orderExternalReferenceCode =
-					commerceOrder.getExternalReferenceCode();
-				orderId = commerceOrder.getCommerceOrderId();
-				priceManuallyAdjusted =
-					commerceOrderItem.isPriceManuallyAdjusted();
-				printedNote = commerceOrderItem.getPrintedNote();
-				promoPrice = commerceOrderItem.getPromoPrice();
-				promoPriceWithTaxAmount =
-					commerceOrderItem.getPromoPriceWithTaxAmount();
-				quantity = _commerceQuantityFormatter.format(
-					cpInstanceUnitOfMeasure, commerceOrderItem.getQuantity());
-				replacedSku = commerceOrderItem.getReplacedSku();
-				replacedSkuId = commerceOrderItem.getReplacedCPInstanceId();
-				requestedDeliveryDate =
-					commerceOrderItem.getRequestedDeliveryDate();
-				shippedQuantity = _commerceQuantityFormatter.format(
-					cpInstanceUnitOfMeasure,
-					commerceOrderItem.getShippedQuantity());
-				shippingAddressId = commerceOrderItem.getShippingAddressId();
-				sku = commerceOrderItem.getSku();
-				skuExternalReferenceCode = _getSkuExternalReferenceCode(
-					cpInstance);
-				skuId = _getSkuId(cpInstance);
-				subscription = commerceOrderItem.isSubscription();
-				unitOfMeasureKey = commerceOrderItem.getUnitOfMeasureKey();
-				unitPrice = commerceOrderItem.getUnitPrice();
-				unitPriceWithTaxAmount =
-					commerceOrderItem.getUnitPriceWithTaxAmount();
-
+				setBookedQuantityId(
+					commerceOrderItem::getCommerceInventoryBookedQuantityId);
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						CommerceOrderItem.class.getName(),
+						commerceOrderItem.getCommerceOrderItemId(),
+						commerceOrderItem.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setDecimalQuantity(commerceOrderItem::getQuantity);
+				setDeliveryGroup(commerceOrderItem::getDeliveryGroup);
+				setDiscountAmount(commerceOrderItem::getDiscountAmount);
+				setDiscountManuallyAdjusted(
+					commerceOrderItem::isDiscountManuallyAdjusted);
+				setDiscountPercentageLevel1(
+					commerceOrderItem::getDiscountPercentageLevel1);
+				setDiscountPercentageLevel1WithTaxAmount(
+					commerceOrderItem::
+						getDiscountPercentageLevel1WithTaxAmount);
+				setDiscountPercentageLevel2(
+					commerceOrderItem::getDiscountPercentageLevel2);
+				setDiscountPercentageLevel2WithTaxAmount(
+					commerceOrderItem::
+						getDiscountPercentageLevel2WithTaxAmount);
+				setDiscountPercentageLevel3(
+					commerceOrderItem::getDiscountPercentageLevel3);
+				setDiscountPercentageLevel3WithTaxAmount(
+					commerceOrderItem::
+						getDiscountPercentageLevel3WithTaxAmount);
+				setDiscountPercentageLevel4(
+					commerceOrderItem::getDiscountPercentageLevel4);
+				setDiscountPercentageLevel4WithTaxAmount(
+					commerceOrderItem::
+						getDiscountPercentageLevel4WithTaxAmount);
+				setDiscountWithTaxAmount(
+					commerceOrderItem::getDiscountWithTaxAmount);
+				setExternalReferenceCode(
+					commerceOrderItem::getExternalReferenceCode);
+				setFinalPrice(commerceOrderItem::getFinalPrice);
+				setFinalPriceWithTaxAmount(
+					commerceOrderItem::getFinalPriceWithTaxAmount);
+				setFormattedQuantity(
+					() -> _commerceOrderItemQuantityFormatter.format(
+						commerceOrderItem, cpInstanceUnitOfMeasure,
+						dtoConverterContext.getLocale()));
+				setId(commerceOrderItem::getCommerceOrderItemId);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						commerceOrderItem.getNameMap()));
+				setOptions(commerceOrderItem::getJson);
+				setOrderExternalReferenceCode(
+					commerceOrder::getExternalReferenceCode);
+				setOrderId(commerceOrder::getCommerceOrderId);
+				setPriceManuallyAdjusted(
+					commerceOrderItem::isPriceManuallyAdjusted);
+				setPrintedNote(commerceOrderItem::getPrintedNote);
+				setPromoPrice(commerceOrderItem::getPromoPrice);
+				setPromoPriceWithTaxAmount(
+					commerceOrderItem::getPromoPriceWithTaxAmount);
+				setQuantity(
+					() -> _commerceQuantityFormatter.format(
+						cpInstanceUnitOfMeasure,
+						commerceOrderItem.getQuantity()));
+				setReplacedSku(commerceOrderItem::getReplacedSku);
+				setReplacedSkuId(commerceOrderItem::getReplacedCPInstanceId);
+				setRequestedDeliveryDate(
+					commerceOrderItem::getRequestedDeliveryDate);
+				setShippedQuantity(
+					() -> _commerceQuantityFormatter.format(
+						cpInstanceUnitOfMeasure,
+						commerceOrderItem.getShippedQuantity()));
+				setShippingAddressId(commerceOrderItem::getShippingAddressId);
+				setSku(commerceOrderItem::getSku);
+				setSkuExternalReferenceCode(
+					() -> _getSkuExternalReferenceCode(cpInstance));
+				setSkuId(() -> _getSkuId(cpInstance));
+				setSubscription(commerceOrderItem::isSubscription);
 				setUnitOfMeasure(
 					() -> {
 						if (commerceOrderItem.getCPMeasurementUnitId() <= 0) {
@@ -163,6 +164,10 @@ public class OrderItemDTOConverter
 
 						return cpMeasurementUnit.getKey();
 					});
+				setUnitOfMeasureKey(commerceOrderItem::getUnitOfMeasureKey);
+				setUnitPrice(commerceOrderItem::getUnitPrice);
+				setUnitPriceWithTaxAmount(
+					commerceOrderItem::getUnitPriceWithTaxAmount);
 				setVirtualItems(
 					() -> {
 						try {
@@ -289,8 +294,6 @@ public class OrderItemDTOConverter
 			commerceVirtualOrderItemFileEntries,
 			commerceVirtualOrderItemFileEntry -> new VirtualItem() {
 				{
-					usages = commerceVirtualOrderItemFileEntry.getUsages();
-
 					setUrl(
 						() -> {
 							if (Validator.isNull(
@@ -307,6 +310,7 @@ public class OrderItemDTOConverter
 
 							return commerceVirtualOrderItemFileEntry.getUrl();
 						});
+					setUsages(commerceVirtualOrderItemFileEntry::getUsages);
 					setVersion(
 						() -> {
 							if (Validator.isNull(

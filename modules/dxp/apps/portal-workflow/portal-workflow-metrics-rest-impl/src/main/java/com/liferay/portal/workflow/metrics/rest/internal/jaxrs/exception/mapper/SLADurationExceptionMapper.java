@@ -38,9 +38,10 @@ public class SLADurationExceptionMapper
 		return Collections.singletonList(
 			new GenericError() {
 				{
-					fieldName = "duration";
-					message = SLADurationExceptionMapper.this.getMessage(
-						"a-duration-time-is-required");
+					setFieldName(() -> "duration");
+					setMessage(
+						() -> SLADurationExceptionMapper.this.getMessage(
+							"a-duration-time-is-required"));
 				}
 			});
 	}

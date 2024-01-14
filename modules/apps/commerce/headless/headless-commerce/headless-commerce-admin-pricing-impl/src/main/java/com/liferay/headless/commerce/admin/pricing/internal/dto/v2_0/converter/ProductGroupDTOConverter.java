@@ -41,11 +41,13 @@ public class ProductGroupDTOConverter
 
 		return new ProductGroup() {
 			{
-				id = commercePricingClass.getCommercePricingClassId();
-				productsCount = _getProductsCount(
-					commercePricingClass.getCommercePricingClassId());
-				title = LanguageUtils.getLanguageIdMap(
-					commercePricingClass.getTitleMap());
+				setId(commercePricingClass::getCommercePricingClassId);
+				setProductsCount(
+					() -> _getProductsCount(
+						commercePricingClass.getCommercePricingClassId()));
+				setTitle(
+					() -> LanguageUtils.getLanguageIdMap(
+						commercePricingClass.getTitleMap()));
 			}
 		};
 	}

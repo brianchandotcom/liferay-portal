@@ -31,25 +31,33 @@ public class FormUtil {
 
 		return new Form() {
 			{
-				availableLanguages = LocaleUtil.toW3cLanguageIds(
-					ddmFormInstance.getAvailableLanguageIds());
-				creator = CreatorUtil.toCreator(
-					portal,
-					userLocalService.fetchUser(ddmFormInstance.getUserId()));
-				dateCreated = ddmFormInstance.getCreateDate();
-				dateModified = ddmFormInstance.getModifiedDate();
-				datePublished = ddmFormInstance.getLastPublishDate();
-				defaultLanguage = ddmFormInstance.getDefaultLanguageId();
-				description = ddmFormInstance.getDescription(preferredLocale);
-				description_i18n = LocalizedMapUtil.getI18nMap(
-					acceptAllLanguages, ddmFormInstance.getDescriptionMap());
-				id = ddmFormInstance.getFormInstanceId();
-				name = ddmFormInstance.getName(preferredLocale);
-				name_i18n = LocalizedMapUtil.getI18nMap(
-					acceptAllLanguages, ddmFormInstance.getNameMap());
-				structure = StructureUtil.toFormStructure(
-					acceptAllLanguages, ddmFormInstance.getStructure(),
-					preferredLocale, portal, userLocalService);
+				setAvailableLanguages(
+					() -> LocaleUtil.toW3cLanguageIds(
+						ddmFormInstance.getAvailableLanguageIds()));
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						portal,
+						userLocalService.fetchUser(
+							ddmFormInstance.getUserId())));
+				setDateCreated(ddmFormInstance::getCreateDate);
+				setDateModified(ddmFormInstance::getModifiedDate);
+				setDatePublished(ddmFormInstance::getLastPublishDate);
+				setDefaultLanguage(ddmFormInstance::getDefaultLanguageId);
+				setDescription(
+					() -> ddmFormInstance.getDescription(preferredLocale));
+				setDescription_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						acceptAllLanguages,
+						ddmFormInstance.getDescriptionMap()));
+				setId(ddmFormInstance::getFormInstanceId);
+				setName(() -> ddmFormInstance.getName(preferredLocale));
+				setName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						acceptAllLanguages, ddmFormInstance.getNameMap()));
+				setStructure(
+					() -> StructureUtil.toFormStructure(
+						acceptAllLanguages, ddmFormInstance.getStructure(),
+						preferredLocale, portal, userLocalService));
 			}
 		};
 	}

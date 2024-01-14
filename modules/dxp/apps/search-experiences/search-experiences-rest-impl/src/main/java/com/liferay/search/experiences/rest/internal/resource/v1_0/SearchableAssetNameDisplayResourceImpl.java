@@ -43,8 +43,9 @@ public class SearchableAssetNameDisplayResourceImpl
 					contextCompany.getCompanyId()),
 				className1 -> new SearchableAssetNameDisplay() {
 					{
-						className = className1;
-						displayName = _getDisplayName(className1, languageId);
+						setClassName(() -> className1);
+						setDisplayName(
+							() -> _getDisplayName(className1, languageId));
 					}
 				}));
 	}

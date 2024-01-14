@@ -80,9 +80,9 @@ public class FieldMappingInfoResourceImpl
 			fieldMappingInfos.add(
 				new FieldMappingInfo() {
 					{
-						languageIdPosition = languageIdPosition1;
-						name = fieldName;
-						type = jsonObject.getString("type");
+						setLanguageIdPosition(() -> languageIdPosition1);
+						setName(() -> fieldName);
+						setType(() -> jsonObject.getString("type"));
 					}
 				});
 			fieldNames.add(fieldNameWithPosition);

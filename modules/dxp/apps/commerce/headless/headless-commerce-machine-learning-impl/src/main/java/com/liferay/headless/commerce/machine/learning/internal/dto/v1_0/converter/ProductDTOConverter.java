@@ -75,67 +75,80 @@ public class ProductDTOConverter
 
 		return new Product() {
 			{
-				catalogId = commerceCatalog.getCommerceCatalogId();
-				categoryIds = TransformUtil.transformToArray(
-					_assetCategoryLocalService.getCategories(
-						cpDefinition.getModelClassName(),
-						cpDefinition.getCPDefinitionId()),
-					AssetCategory::getCategoryId, Long.class);
-				createDate = cpDefinition.getCreateDate();
-				customFields = expandoBridge.getAttributes();
-				description = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getDescriptionMap());
-				displayDate = cpDefinition.getDisplayDate();
-				expirationDate = cpDefinition.getExpirationDate();
-				externalReferenceCode = cProduct.getExternalReferenceCode();
-				id = cpDefinition.getCPDefinitionId();
-				metaDescription = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getMetaDescriptionMap());
-				metaKeyword = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getMetaKeywordsMap());
-				metaTitle = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getMetaTitleMap());
-				modifiedDate = cpDefinition.getModifiedDate();
-				name = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getNameMap());
-				productChannelIds = TransformUtil.transformToArray(
-					_commerceChannelRelLocalService.getCommerceChannelRels(
-						cpDefinition.getModelClassName(),
-						cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null),
-					commerceChannelRel -> {
-						CommerceChannel commerceChannel =
-							commerceChannelRel.getCommerceChannel();
+				setCatalogId(commerceCatalog::getCommerceCatalogId);
+				setCategoryIds(
+					() -> TransformUtil.transformToArray(
+						_assetCategoryLocalService.getCategories(
+							cpDefinition.getModelClassName(),
+							cpDefinition.getCPDefinitionId()),
+						AssetCategory::getCategoryId, Long.class));
+				setCreateDate(cpDefinition::getCreateDate);
+				setCustomFields(expandoBridge::getAttributes);
+				setDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getDescriptionMap()));
+				setDisplayDate(cpDefinition::getDisplayDate);
+				setExpirationDate(cpDefinition::getExpirationDate);
+				setExternalReferenceCode(cProduct::getExternalReferenceCode);
+				setId(cpDefinition::getCPDefinitionId);
+				setMetaDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getMetaDescriptionMap()));
+				setMetaKeyword(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getMetaKeywordsMap()));
+				setMetaTitle(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getMetaTitleMap()));
+				setModifiedDate(cpDefinition::getModifiedDate);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getNameMap()));
+				setProductChannelIds(
+					() -> TransformUtil.transformToArray(
+						_commerceChannelRelLocalService.getCommerceChannelRels(
+							cpDefinition.getModelClassName(),
+							cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS, null),
+						commerceChannelRel -> {
+							CommerceChannel commerceChannel =
+								commerceChannelRel.getCommerceChannel();
 
-						return commerceChannel.getCommerceChannelId();
-					},
-					Long.class);
-				productId = cProduct.getCProductId();
-				productOptions = TransformUtil.transformToArray(
-					cpDefinition.getCPDefinitionOptionRels(),
-					cpDefinitionOptionRel -> _productOptionDTOConverter.toDTO(
-						cpDefinitionOptionRel),
-					ProductOption.class);
-				productSpecifications = TransformUtil.transformToArray(
-					cpDefinition.getCPDefinitionSpecificationOptionValues(),
-					cpDefinitionSpecificationOptionValue ->
-						_productSpecificationDTOConverter.toDTO(
-							cpDefinitionSpecificationOptionValue),
-					ProductSpecification.class);
-				productType = cpType.getName();
-				skus = TransformUtil.transformToArray(
-					cpDefinition.getCPInstances(),
-					cpInstance -> _skuDTOConverter.toDTO(cpInstance),
-					Sku.class);
-				status = cpDefinition.getStatus();
-				subscriptionEnabled = cpDefinition.isSubscriptionEnabled();
-				tags = TransformUtil.transformToArray(
-					_assetTagLocalService.getTags(
-						CPDefinition.class.getName(),
-						cpDefinition.getCPDefinitionId()),
-					AssetTag::getName, String.class);
-				urls = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getUrlTitleMap());
+							return commerceChannel.getCommerceChannelId();
+						},
+						Long.class));
+				setProductId(cProduct::getCProductId);
+				setProductOptions(
+					() -> TransformUtil.transformToArray(
+						cpDefinition.getCPDefinitionOptionRels(),
+						cpDefinitionOptionRel ->
+							_productOptionDTOConverter.toDTO(
+								cpDefinitionOptionRel),
+						ProductOption.class));
+				setProductSpecifications(
+					() -> TransformUtil.transformToArray(
+						cpDefinition.getCPDefinitionSpecificationOptionValues(),
+						cpDefinitionSpecificationOptionValue ->
+							_productSpecificationDTOConverter.toDTO(
+								cpDefinitionSpecificationOptionValue),
+						ProductSpecification.class));
+				setProductType(cpType::getName);
+				setSkus(
+					() -> TransformUtil.transformToArray(
+						cpDefinition.getCPInstances(),
+						cpInstance -> _skuDTOConverter.toDTO(cpInstance),
+						Sku.class));
+				setStatus(cpDefinition::getStatus);
+				setSubscriptionEnabled(cpDefinition::isSubscriptionEnabled);
+				setTags(
+					() -> TransformUtil.transformToArray(
+						_assetTagLocalService.getTags(
+							CPDefinition.class.getName(),
+							cpDefinition.getCPDefinitionId()),
+						AssetTag::getName, String.class));
+				setUrls(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getUrlTitleMap()));
 			}
 		};
 	}

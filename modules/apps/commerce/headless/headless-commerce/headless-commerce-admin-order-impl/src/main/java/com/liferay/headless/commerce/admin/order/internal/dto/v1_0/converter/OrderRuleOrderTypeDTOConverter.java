@@ -46,14 +46,14 @@ public class OrderRuleOrderTypeDTOConverter
 
 		return new OrderRuleOrderType() {
 			{
-				actions = dtoConverterContext.getActions();
-				orderRuleExternalReferenceCode =
-					corEntry.getExternalReferenceCode();
-				orderRuleId = corEntry.getCOREntryId();
-				orderRuleOrderTypeId = corEntryRel.getCOREntryRelId();
-				orderTypeExternalReferenceCode =
-					commerceOrderType.getExternalReferenceCode();
-				orderTypeId = commerceOrderType.getCommerceOrderTypeId();
+				setActions(dtoConverterContext::getActions);
+				setOrderRuleExternalReferenceCode(
+					corEntry::getExternalReferenceCode);
+				setOrderRuleId(corEntry::getCOREntryId);
+				setOrderRuleOrderTypeId(corEntryRel::getCOREntryRelId);
+				setOrderTypeExternalReferenceCode(
+					commerceOrderType::getExternalReferenceCode);
+				setOrderTypeId(commerceOrderType::getCommerceOrderTypeId);
 			}
 		};
 	}

@@ -163,21 +163,6 @@ public class WorkflowInstanceResourceImpl
 
 		return new WorkflowInstance() {
 			{
-				completed = workflowInstance.isComplete();
-				currentNodeNames = transformToArray(
-					workflowInstance.getCurrentWorkflowNodes(),
-					WorkflowNode::getName, String.class);
-				dateCompletion = workflowInstance.getEndDate();
-				dateCreated = workflowInstance.getStartDate();
-				id = workflowInstance.getWorkflowInstanceId();
-				objectReviewed = ObjectReviewedUtil.toObjectReviewed(
-					contextAcceptLanguage.getPreferredLocale(),
-					workflowInstance.getWorkflowContext());
-				workflowDefinitionName =
-					workflowInstance.getWorkflowDefinitionName();
-				workflowDefinitionVersion = String.valueOf(
-					workflowInstance.getWorkflowDefinitionVersion());
-
 				setActions(
 					() -> HashMapBuilder.put(
 						"changeTransition",
@@ -194,6 +179,23 @@ public class WorkflowInstanceResourceImpl
 							"deleteWorkflowInstance",
 							_kaleoInstanceModelResourcePermission)
 					).build());
+				setCompleted(workflowInstance::isComplete);
+				setCurrentNodeNames(
+					() -> transformToArray(
+						workflowInstance.getCurrentWorkflowNodes(),
+						WorkflowNode::getName, String.class));
+				setDateCompletion(workflowInstance::getEndDate);
+				setDateCreated(workflowInstance::getStartDate);
+				setId(workflowInstance::getWorkflowInstanceId);
+				setObjectReviewed(
+					() -> ObjectReviewedUtil.toObjectReviewed(
+						contextAcceptLanguage.getPreferredLocale(),
+						workflowInstance.getWorkflowContext()));
+				setWorkflowDefinitionName(
+					workflowInstance::getWorkflowDefinitionName);
+				setWorkflowDefinitionVersion(
+					() -> String.valueOf(
+						workflowInstance.getWorkflowDefinitionVersion()));
 			}
 		};
 	}

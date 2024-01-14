@@ -38,10 +38,11 @@ public class ContactUserGroupDTOConverter
 
 		return new ContactUserGroup() {
 			{
-				id = userGroup.getUserGroupId();
-				name = userGroup.getName();
-				selected = contactUserGroupDTOConverterContext.isSelected(
-					String.valueOf(userGroup.getUserGroupId()));
+				setId(userGroup::getUserGroupId);
+				setName(userGroup::getName);
+				setSelected(
+					() -> contactUserGroupDTOConverterContext.isSelected(
+						String.valueOf(userGroup.getUserGroupId())));
 			}
 		};
 	}

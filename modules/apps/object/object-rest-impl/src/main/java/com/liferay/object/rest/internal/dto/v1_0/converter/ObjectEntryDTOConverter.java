@@ -135,10 +135,12 @@ public class ObjectEntryDTOConverter
 			objectEntry.setStatus(
 				new Status() {
 					{
-						code = WorkflowConstants.STATUS_APPROVED;
-						label = WorkflowConstants.LABEL_APPROVED;
-						label_i18n = _language.get(
-							user.getLocale(), WorkflowConstants.LABEL_APPROVED);
+						setCode(() -> WorkflowConstants.STATUS_APPROVED);
+						setLabel(() -> WorkflowConstants.LABEL_APPROVED);
+						setLabel_i18n(
+							() -> _language.get(
+								user.getLocale(),
+								WorkflowConstants.LABEL_APPROVED));
 					}
 				});
 		}
@@ -183,32 +185,18 @@ public class ObjectEntryDTOConverter
 
 		return new ObjectEntry() {
 			{
-				actions = dtoConverterContext.getActions();
-				auditEvents = _toAuditEvents(
-					dtoConverterContext, objectDefinition, objectEntry);
-				creator = CreatorUtil.toCreator(
-					_portal, dtoConverterContext.getUriInfo(),
-					_userLocalService.fetchUser(objectEntry.getUserId()));
-				dateCreated = objectEntry.getCreateDate();
-				dateModified = objectEntry.getModifiedDate();
-				externalReferenceCode = objectEntry.getExternalReferenceCode();
-				id = objectEntry.getObjectEntryId();
-				properties = _toProperties(
-					dtoConverterContext, objectDefinition, objectEntry);
-				scopeKey = _getScopeKey(objectDefinition, objectEntry);
-				status = new Status() {
-					{
-						code = objectEntry.getStatus();
-						label = WorkflowConstants.getStatusLabel(
-							objectEntry.getStatus());
-						label_i18n = _language.get(
-							LanguageResources.getResourceBundle(
-								dtoConverterContext.getLocale()),
-							WorkflowConstants.getStatusLabel(
-								objectEntry.getStatus()));
-					}
-				};
-
+				setActions(dtoConverterContext::getActions);
+				setAuditEvents(
+					() -> _toAuditEvents(
+						dtoConverterContext, objectDefinition, objectEntry));
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						_portal, dtoConverterContext.getUriInfo(),
+						_userLocalService.fetchUser(objectEntry.getUserId())));
+				setDateCreated(objectEntry::getCreateDate);
+				setDateModified(objectEntry::getModifiedDate);
+				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
+				setId(objectEntry::getObjectEntryId);
 				setKeywords(
 					() -> {
 						if (!objectDefinition.isEnableCategorization()) {
@@ -220,6 +208,25 @@ public class ObjectEntryDTOConverter
 								objectDefinition.getClassName(),
 								objectEntry.getObjectEntryId()),
 							AssetTag.NAME_ACCESSOR);
+					});
+				setProperties(
+					() -> _toProperties(
+						dtoConverterContext, objectDefinition, objectEntry));
+				setScopeKey(() -> _getScopeKey(objectDefinition, objectEntry));
+				setStatus(
+					() -> new Status() {
+						{
+							setCode(objectEntry::getStatus);
+							setLabel(
+								() -> WorkflowConstants.getStatusLabel(
+									objectEntry.getStatus()));
+							setLabel_i18n(
+								() -> _language.get(
+									LanguageResources.getResourceBundle(
+										dtoConverterContext.getLocale()),
+									WorkflowConstants.getStatusLabel(
+										objectEntry.getStatus())));
+						}
 					});
 				setTaxonomyCategoryBriefs(
 					() -> {
@@ -438,11 +445,14 @@ public class ObjectEntryDTOConverter
 
 		return new ListEntry() {
 			{
-				key = listTypeEntry.getKey();
-				name = listTypeEntry.getName(dtoConverterContext.getLocale());
-				name_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					listTypeEntry.getNameMap());
+				setKey(listTypeEntry::getKey);
+				setName(
+					() -> listTypeEntry.getName(
+						dtoConverterContext.getLocale()));
+				setName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						listTypeEntry.getNameMap()));
 			}
 		};
 	}
@@ -618,8 +628,8 @@ public class ObjectEntryDTOConverter
 				map.keySet(),
 				key -> new AuditFieldChange() {
 					{
-						name = key;
-						newValue = map.get(key);
+						setName(() -> key);
+						setNewValue(() -> map.get(key));
 					}
 				},
 				AuditFieldChange.class);
@@ -629,9 +639,9 @@ public class ObjectEntryDTOConverter
 			jsonObject.getJSONArray("attributes"),
 			attributeJSONObject -> new AuditFieldChange() {
 				{
-					name = attributeJSONObject.getString("name");
-					newValue = attributeJSONObject.get("newValue");
-					oldValue = attributeJSONObject.get("oldValue");
+					setName(() -> attributeJSONObject.getString("name"));
+					setNewValue(() -> attributeJSONObject.get("newValue"));
+					setOldValue(() -> attributeJSONObject.get("oldValue"));
 				}
 			},
 			AuditFieldChange.class);

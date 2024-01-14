@@ -22,10 +22,10 @@ public class EmailAddressUtil {
 
 		return new EmailAddress() {
 			{
-				emailAddress = serviceBuilderEmailAddress.getAddress();
-				id = serviceBuilderEmailAddress.getEmailAddressId();
-				primary = serviceBuilderEmailAddress.isPrimary();
-				type = listType.getName();
+				setEmailAddress(serviceBuilderEmailAddress::getAddress);
+				setId(serviceBuilderEmailAddress::getEmailAddressId);
+				setPrimary(serviceBuilderEmailAddress::isPrimary);
+				setType(listType::getName);
 			}
 		};
 	}

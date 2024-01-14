@@ -43,8 +43,8 @@ public class SearchIndexResourceImpl extends BaseSearchIndexResourceImpl {
 				getIndexIndexResponse.getIndexNames(),
 				indexName -> new SearchIndex() {
 					{
-						external = false;
-						name = indexName.substring(prefix.length());
+						setExternal(() -> false);
+						setName(() -> indexName.substring(prefix.length()));
 					}
 				}));
 	}

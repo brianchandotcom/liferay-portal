@@ -47,20 +47,12 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 
 		return new Keyword() {
 			{
-				actions = _dtoActionProvider.getActions(
-					assetTag.getGroupId(), assetTag.getTagId(),
-					dtoConverterContext.getUriInfo(),
-					dtoConverterContext.getUserId());
-				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
-				dateCreated = assetTag.getCreateDate();
-				dateModified = assetTag.getModifiedDate();
-				id = assetTag.getTagId();
-				name = assetTag.getName();
-				siteId = GroupUtil.getSiteId(group);
-				subscribed = _subscriptionLocalService.isSubscribed(
-					assetTag.getCompanyId(), dtoConverterContext.getUserId(),
-					AssetTag.class.getName(), assetTag.getTagId());
-
+				setActions(
+					() -> _dtoActionProvider.getActions(
+						assetTag.getGroupId(), assetTag.getTagId(),
+						dtoConverterContext.getUriInfo(),
+						dtoConverterContext.getUserId()));
+				setAssetLibraryKey(() -> GroupUtil.getAssetLibraryKey(group));
 				setCreator(
 					() -> {
 						if (assetTag.getUserId() != 0) {
@@ -72,6 +64,9 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 
 						return null;
 					});
+				setDateCreated(assetTag::getCreateDate);
+				setDateModified(assetTag::getModifiedDate);
+				setId(assetTag::getTagId);
 				setKeywordUsageCount(
 					() -> {
 						Hits hits = _assetEntryLocalService.search(
@@ -88,6 +83,13 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 
 						return hits.getLength();
 					});
+				setName(assetTag::getName);
+				setSiteId(() -> GroupUtil.getSiteId(group));
+				setSubscribed(
+					() -> _subscriptionLocalService.isSubscribed(
+						assetTag.getCompanyId(),
+						dtoConverterContext.getUserId(),
+						AssetTag.class.getName(), assetTag.getTagId()));
 			}
 		};
 	}

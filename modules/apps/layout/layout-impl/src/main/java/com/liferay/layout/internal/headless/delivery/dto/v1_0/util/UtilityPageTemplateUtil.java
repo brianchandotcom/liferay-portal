@@ -19,14 +19,16 @@ public class UtilityPageTemplateUtil {
 
 		return new UtilityPageTemplate() {
 			{
-				defaultTemplate =
-					layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry();
-				externalReferenceCode =
-					layoutUtilityPageEntry.getExternalReferenceCode();
-				name = layoutUtilityPageEntry.getName();
-				type = Type.create(
-					LayoutUtilityPageEntryTypeConverter.convertToExternalValue(
-						layoutUtilityPageEntry.getType()));
+				setDefaultTemplate(
+					layoutUtilityPageEntry::isDefaultLayoutUtilityPageEntry);
+				setExternalReferenceCode(
+					layoutUtilityPageEntry::getExternalReferenceCode);
+				setName(layoutUtilityPageEntry::getName);
+				setType(
+					() -> Type.create(
+						LayoutUtilityPageEntryTypeConverter.
+							convertToExternalValue(
+								layoutUtilityPageEntry.getType())));
 			}
 		};
 	}

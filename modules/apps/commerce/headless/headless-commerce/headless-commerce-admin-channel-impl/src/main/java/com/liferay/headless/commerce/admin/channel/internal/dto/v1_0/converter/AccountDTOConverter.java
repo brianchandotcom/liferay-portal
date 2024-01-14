@@ -38,8 +38,8 @@ public class AccountDTOConverter
 
 		return new Account() {
 			{
-				id = accountEntry.getAccountEntryId();
-				name = accountEntry.getName();
+				setId(accountEntry::getAccountEntryId);
+				setName(accountEntry::getName);
 			}
 		};
 	}

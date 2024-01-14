@@ -80,14 +80,18 @@ public class DataLayoutUtil {
 
 		return new DataLayout() {
 			{
-				dataLayoutFields = _toDataLayoutFields(
-					ddmFormLayout.getDDMFormFields(),
-					ddmFormFieldTypeServicesRegistry);
-				dataLayoutPages = _toDataLayoutPages(
-					ddmFormLayout.getDDMFormLayoutPages());
-				dataRules = _toDataRules(
-					ddmFormLayout.getDDMFormRules(), spiDDMFormRuleConverter);
-				paginationMode = ddmFormLayout.getPaginationMode();
+				setDataLayoutFields(
+					() -> _toDataLayoutFields(
+						ddmFormLayout.getDDMFormFields(),
+						ddmFormFieldTypeServicesRegistry));
+				setDataLayoutPages(
+					() -> _toDataLayoutPages(
+						ddmFormLayout.getDDMFormLayoutPages()));
+				setDataRules(
+					() -> _toDataRules(
+						ddmFormLayout.getDDMFormRules(),
+						spiDDMFormRuleConverter));
+				setPaginationMode(ddmFormLayout::getPaginationMode);
 			}
 		};
 	}
@@ -174,9 +178,10 @@ public class DataLayoutUtil {
 
 		return new DataLayoutColumn() {
 			{
-				columnSize = ddmFormLayoutColumn.getSize();
-				fieldNames = ArrayUtil.toStringArray(
-					ddmFormLayoutColumn.getDDMFormFieldNames());
+				setColumnSize(ddmFormLayoutColumn::getSize);
+				setFieldNames(
+					() -> ArrayUtil.toStringArray(
+						ddmFormLayoutColumn.getDDMFormFieldNames()));
 			}
 		};
 	}
@@ -242,12 +247,15 @@ public class DataLayoutUtil {
 
 		return new DataLayoutPage() {
 			{
-				dataLayoutRows = _toDataLayoutRows(
-					ddmFormLayoutPage.getDDMFormLayoutRows());
-				description = LocalizedValueUtil.toLocalizedValuesMap(
-					ddmFormLayoutPage.getDescription());
-				title = LocalizedValueUtil.toLocalizedValuesMap(
-					ddmFormLayoutPage.getTitle());
+				setDataLayoutRows(
+					() -> _toDataLayoutRows(
+						ddmFormLayoutPage.getDDMFormLayoutRows()));
+				setDescription(
+					() -> LocalizedValueUtil.toLocalizedValuesMap(
+						ddmFormLayoutPage.getDescription()));
+				setTitle(
+					() -> LocalizedValueUtil.toLocalizedValuesMap(
+						ddmFormLayoutPage.getTitle()));
 			}
 		};
 	}
@@ -270,8 +278,9 @@ public class DataLayoutUtil {
 
 		return new DataLayoutRow() {
 			{
-				dataLayoutColumns = _toDataLayoutColumns(
-					ddmFormLayoutRow.getDDMFormLayoutColumns());
+				setDataLayoutColumns(
+					() -> _toDataLayoutColumns(
+						ddmFormLayoutRow.getDDMFormLayoutColumns()));
 			}
 		};
 	}

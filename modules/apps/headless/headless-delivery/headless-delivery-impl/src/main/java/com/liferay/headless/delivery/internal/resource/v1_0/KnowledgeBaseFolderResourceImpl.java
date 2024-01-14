@@ -273,45 +273,52 @@ public class KnowledgeBaseFolderResourceImpl
 
 		return new KnowledgeBaseFolder() {
 			{
-				actions = HashMapBuilder.put(
-					"delete",
-					addAction(
-						ActionKeys.DELETE, kbFolder,
-						"deleteKnowledgeBaseFolder")
-				).put(
-					"get",
-					addAction(
-						ActionKeys.VIEW, kbFolder, "getKnowledgeBaseFolder")
-				).put(
-					"replace",
-					addAction(
-						ActionKeys.UPDATE, kbFolder, "putKnowledgeBaseFolder")
-				).build();
-				creator = CreatorUtil.toCreator(
-					new DefaultDTOConverterContext(
-						null, null, null, contextUriInfo, null),
-					_portal, _userLocalService.fetchUser(kbFolder.getUserId()));
-				customFields = CustomFieldsUtil.toCustomFields(
-					contextAcceptLanguage.isAcceptAllLanguages(),
-					KBFolder.class.getName(), kbFolder.getKbFolderId(),
-					kbFolder.getCompanyId(),
-					contextAcceptLanguage.getPreferredLocale());
-				dateCreated = kbFolder.getCreateDate();
-				dateModified = kbFolder.getModifiedDate();
-				description = kbFolder.getDescription();
-				externalReferenceCode = kbFolder.getExternalReferenceCode();
-				id = kbFolder.getKbFolderId();
-				name = kbFolder.getName();
-				numberOfKnowledgeBaseArticles =
-					_kbArticleService.getKBArticlesCount(
-						kbFolder.getGroupId(), kbFolder.getKbFolderId(), 0);
-				numberOfKnowledgeBaseFolders =
-					_kbFolderService.getKBFoldersCount(
-						kbFolder.getGroupId(), kbFolder.getKbFolderId());
-				parentKnowledgeBaseFolder =
-					ParentKnowledgeBaseFolderUtil.toParentKnowledgeBaseFolder(
-						kbFolder.getParentKBFolder());
-				siteId = kbFolder.getGroupId();
+				setActions(
+					() -> HashMapBuilder.put(
+						"delete",
+						addAction(
+							ActionKeys.DELETE, kbFolder,
+							"deleteKnowledgeBaseFolder")
+					).put(
+						"get",
+						addAction(
+							ActionKeys.VIEW, kbFolder, "getKnowledgeBaseFolder")
+					).put(
+						"replace",
+						addAction(
+							ActionKeys.UPDATE, kbFolder,
+							"putKnowledgeBaseFolder")
+					).build());
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						new DefaultDTOConverterContext(
+							null, null, null, contextUriInfo, null),
+						_portal,
+						_userLocalService.fetchUser(kbFolder.getUserId())));
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						contextAcceptLanguage.isAcceptAllLanguages(),
+						KBFolder.class.getName(), kbFolder.getKbFolderId(),
+						kbFolder.getCompanyId(),
+						contextAcceptLanguage.getPreferredLocale()));
+				setDateCreated(kbFolder::getCreateDate);
+				setDateModified(kbFolder::getModifiedDate);
+				setDescription(kbFolder::getDescription);
+				setExternalReferenceCode(kbFolder::getExternalReferenceCode);
+				setId(kbFolder::getKbFolderId);
+				setName(kbFolder::getName);
+				setNumberOfKnowledgeBaseArticles(
+					() -> _kbArticleService.getKBArticlesCount(
+						kbFolder.getGroupId(), kbFolder.getKbFolderId(), 0));
+				setNumberOfKnowledgeBaseFolders(
+					() -> _kbFolderService.getKBFoldersCount(
+						kbFolder.getGroupId(), kbFolder.getKbFolderId()));
+				setParentKnowledgeBaseFolder(
+					() ->
+						ParentKnowledgeBaseFolderUtil.
+							toParentKnowledgeBaseFolder(
+								kbFolder.getParentKBFolder()));
+				setSiteId(kbFolder::getGroupId);
 			}
 		};
 	}

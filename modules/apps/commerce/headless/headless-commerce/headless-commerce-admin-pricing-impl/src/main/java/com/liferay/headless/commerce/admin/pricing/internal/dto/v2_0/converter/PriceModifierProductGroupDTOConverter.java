@@ -51,17 +51,17 @@ public class PriceModifierProductGroupDTOConverter
 
 		return new PriceModifierProductGroup() {
 			{
-				actions = dtoConverterContext.getActions();
-				priceModifierExternalReferenceCode =
-					commercePriceModifier.getExternalReferenceCode();
-				priceModifierId =
-					commercePriceModifier.getCommercePriceModifierId();
-				priceModifierProductGroupId =
-					commercePriceModifierRel.getCommercePriceModifierRelId();
-				productGroupExternalReferenceCode =
-					commercePricingClass.getExternalReferenceCode();
-				productGroupId =
-					commercePricingClass.getCommercePricingClassId();
+				setActions(dtoConverterContext::getActions);
+				setPriceModifierExternalReferenceCode(
+					commercePriceModifier::getExternalReferenceCode);
+				setPriceModifierId(
+					commercePriceModifier::getCommercePriceModifierId);
+				setPriceModifierProductGroupId(
+					commercePriceModifierRel::getCommercePriceModifierRelId);
+				setProductGroupExternalReferenceCode(
+					commercePricingClass::getExternalReferenceCode);
+				setProductGroupId(
+					commercePricingClass::getCommercePricingClassId);
 			}
 		};
 	}

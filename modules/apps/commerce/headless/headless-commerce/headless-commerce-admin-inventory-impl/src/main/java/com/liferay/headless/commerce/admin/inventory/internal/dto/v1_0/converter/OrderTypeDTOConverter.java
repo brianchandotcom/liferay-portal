@@ -40,9 +40,10 @@ public class OrderTypeDTOConverter
 
 		return new OrderType() {
 			{
-				id = commerceOrderType.getCommerceOrderTypeId();
-				name = LanguageUtils.getLanguageIdMap(
-					commerceOrderType.getNameMap());
+				setId(commerceOrderType::getCommerceOrderTypeId);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						commerceOrderType.getNameMap()));
 			}
 		};
 	}

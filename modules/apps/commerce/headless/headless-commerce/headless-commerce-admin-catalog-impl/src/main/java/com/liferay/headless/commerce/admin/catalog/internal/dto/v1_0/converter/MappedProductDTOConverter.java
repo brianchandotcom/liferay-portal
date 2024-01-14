@@ -52,20 +52,15 @@ public class MappedProductDTOConverter
 
 		return new MappedProduct() {
 			{
-				actions = dtoConverterContext.getActions();
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					CSDiagramEntry.class.getName(),
-					csDiagramEntry.getCSDiagramEntryId(),
-					csDiagramEntry.getCompanyId(),
-					dtoConverterContext.getLocale());
-				id = csDiagramEntry.getCSDiagramEntryId();
-				productId = csDiagramEntry.getCProductId();
-				quantity = csDiagramEntry.getQuantity();
-				sequence = csDiagramEntry.getSequence();
-				sku = csDiagramEntry.getSku();
-				skuId = GetterUtil.getLong(csDiagramEntry.getCPInstanceId());
-
+				setActions(dtoConverterContext::getActions);
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						CSDiagramEntry.class.getName(),
+						csDiagramEntry.getCSDiagramEntryId(),
+						csDiagramEntry.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setId(csDiagramEntry::getCSDiagramEntryId);
 				setProductExternalReferenceCode(
 					() -> {
 						if (cpDefinition == null) {
@@ -76,6 +71,7 @@ public class MappedProductDTOConverter
 
 						return cProduct.getExternalReferenceCode();
 					});
+				setProductId(csDiagramEntry::getCProductId);
 				setProductName(
 					() -> {
 						if (cpDefinition == null) {
@@ -85,6 +81,9 @@ public class MappedProductDTOConverter
 						return LanguageUtils.getLanguageIdMap(
 							cpDefinition.getNameMap());
 					});
+				setQuantity(csDiagramEntry::getQuantity);
+				setSequence(csDiagramEntry::getSequence);
+				setSku(csDiagramEntry::getSku);
 				setSkuExternalReferenceCode(
 					() -> {
 						CPInstance cpInstance =
@@ -98,6 +97,8 @@ public class MappedProductDTOConverter
 
 						return cpInstance.getExternalReferenceCode();
 					});
+				setSkuId(
+					() -> GetterUtil.getLong(csDiagramEntry.getCPInstanceId()));
 				setType(
 					() -> {
 						if (csDiagramEntry.isDiagram()) {

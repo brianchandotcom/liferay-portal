@@ -53,22 +53,27 @@ public class CaptchaResourceImpl extends BaseCaptchaResourceImpl {
 
 			return new Captcha() {
 				{
-					image =
-						"data:image/png;base64," +
-							Base64.encode(byteArrayOutputStream.toByteArray());
-					token = EncryptorUtil.encrypt(
-						contextCompany.getKeyObj(),
-						JSONUtil.put(
-							"answer", expectedAnswer
-						).put(
-							"expiryTime",
-							System.currentTimeMillis() + (Time.MINUTE * 5)
-						).put(
-							"nonce",
-							NonceUtil.generate(
-								contextCompany.getCompanyId(),
-								contextHttpServletRequest.getRemoteAddr())
-						).toString());
+					setImage(
+						() -> {
+							String data = Base64.encode(
+								byteArrayOutputStream.toByteArray());
+
+							return "data:image/png;base64," + data;
+						});
+					setToken(
+						() -> EncryptorUtil.encrypt(
+							contextCompany.getKeyObj(),
+							JSONUtil.put(
+								"answer", expectedAnswer
+							).put(
+								"expiryTime",
+								System.currentTimeMillis() + (Time.MINUTE * 5)
+							).put(
+								"nonce",
+								NonceUtil.generate(
+									contextCompany.getCompanyId(),
+									contextHttpServletRequest.getRemoteAddr())
+							).toString()));
 				}
 			};
 		}

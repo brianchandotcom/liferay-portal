@@ -49,18 +49,18 @@ public class PriceListOrderTypeDTOConverter
 
 		return new PriceListOrderType() {
 			{
-				actions = dtoConverterContext.getActions();
-				orderTypeExternalReferenceCode =
-					commerceOrderType.getExternalReferenceCode();
-				orderTypeId =
-					commercePriceListOrderTypeRel.getCommerceOrderTypeId();
-				priceListExternalReferenceCode =
-					commercePriceList.getExternalReferenceCode();
-				priceListId = commercePriceList.getCommercePriceListId();
-				priceListOrderTypeId =
-					commercePriceListOrderTypeRel.
-						getCommercePriceListOrderTypeRelId();
-				priority = commercePriceListOrderTypeRel.getPriority();
+				setActions(dtoConverterContext::getActions);
+				setOrderTypeExternalReferenceCode(
+					commerceOrderType::getExternalReferenceCode);
+				setOrderTypeId(
+					commercePriceListOrderTypeRel::getCommerceOrderTypeId);
+				setPriceListExternalReferenceCode(
+					commercePriceList::getExternalReferenceCode);
+				setPriceListId(commercePriceList::getCommercePriceListId);
+				setPriceListOrderTypeId(
+					commercePriceListOrderTypeRel::
+						getCommercePriceListOrderTypeRelId);
+				setPriority(commercePriceListOrderTypeRel::getPriority);
 			}
 		};
 	}

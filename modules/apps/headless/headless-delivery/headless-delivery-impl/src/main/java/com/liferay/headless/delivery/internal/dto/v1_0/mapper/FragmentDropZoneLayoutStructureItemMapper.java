@@ -27,16 +27,17 @@ public class FragmentDropZoneLayoutStructureItemMapper
 
 		return new PageElement() {
 			{
-				definition = new PageFragmentDropZoneDefinition() {
-					{
-						fragmentDropZoneId =
-							fragmentDropZoneLayoutStructureItem.
-								getFragmentDropZoneId();
-					}
-				};
-				id = layoutStructureItem.getItemId();
-
-				type = Type.FRAGMENT_DROP_ZONE;
+				setDefinition(
+					() -> new PageFragmentDropZoneDefinition() {
+						{
+							setFragmentDropZoneId(
+								() ->
+									fragmentDropZoneLayoutStructureItem.
+										getFragmentDropZoneId());
+						}
+					});
+				setId(layoutStructureItem::getItemId);
+				setType(() -> Type.FRAGMENT_DROP_ZONE);
 			}
 		};
 	}

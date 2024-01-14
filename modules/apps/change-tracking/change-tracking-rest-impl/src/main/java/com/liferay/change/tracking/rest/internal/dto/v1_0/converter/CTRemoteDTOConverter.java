@@ -39,16 +39,16 @@ public class CTRemoteDTOConverter
 
 		return new CTRemote() {
 			{
-				actions = dtoConverterContext.getActions();
-				clientId = ctRemote.getClientId();
-				clientSecret = ctRemote.getClientSecret();
-				dateCreated = ctRemote.getCreateDate();
-				dateModified = ctRemote.getModifiedDate();
-				description = ctRemote.getDescription();
-				id = ctRemote.getCtRemoteId();
-				name = ctRemote.getName();
-				ownerName = ctRemote.getUserName();
-				url = ctRemote.getUrl();
+				setActions(dtoConverterContext::getActions);
+				setClientId(ctRemote::getClientId);
+				setClientSecret(ctRemote::getClientSecret);
+				setDateCreated(ctRemote::getCreateDate);
+				setDateModified(ctRemote::getModifiedDate);
+				setDescription(ctRemote::getDescription);
+				setId(ctRemote::getCtRemoteId);
+				setName(ctRemote::getName);
+				setOwnerName(ctRemote::getUserName);
+				setUrl(ctRemote::getUrl);
 			}
 		};
 	}

@@ -19,9 +19,9 @@ public class WebUrlUtil {
 
 		return new WebUrl() {
 			{
-				id = website.getWebsiteId();
-				url = website.getUrl();
-				urlType = listType.getName();
+				setId(website::getWebsiteId);
+				setUrl(website::getUrl);
+				setUrlType(listType::getName);
 			}
 		};
 	}

@@ -38,9 +38,10 @@ public class SLADuplicateNameExceptionMapper
 		return Collections.singletonList(
 			new GenericError() {
 				{
-					fieldName = "name";
-					message = SLADuplicateNameExceptionMapper.this.getMessage(
-						"an-sla-with-the-same-name-already-exists");
+					setFieldName(() -> "name");
+					setMessage(
+						() -> SLADuplicateNameExceptionMapper.this.getMessage(
+							"an-sla-with-the-same-name-already-exists"));
 				}
 			});
 	}

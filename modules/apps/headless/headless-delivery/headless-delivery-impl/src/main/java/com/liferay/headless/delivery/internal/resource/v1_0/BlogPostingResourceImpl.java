@@ -292,8 +292,8 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 			existingBlogPosting.setImage(
 				new Image() {
 					{
-						caption = image.getCaption();
-						imageId = image.getImageId();
+						setCaption(image::getCaption);
+						setImageId(image::getImageId);
 					}
 				});
 		}

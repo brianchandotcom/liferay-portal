@@ -41,10 +41,10 @@ public class RelatedProductDTOConverter
 
 		return new RelatedProduct() {
 			{
-				id = cpDefinitionLink.getCPDefinitionLinkId();
-				priority = cpDefinitionLink.getPriority();
-				productId = cProduct.getCProductId();
-				type = cpDefinitionLink.getType();
+				setId(cpDefinitionLink::getCPDefinitionLinkId);
+				setPriority(cpDefinitionLink::getPriority);
+				setProductId(cProduct::getCProductId);
+				setType(cpDefinitionLink::getType);
 			}
 		};
 	}

@@ -149,19 +149,20 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 
 		return new ExportTask() {
 			{
-				className = batchEngineExportTask.getClassName();
-				contentType = batchEngineExportTask.getContentType();
-				endTime = batchEngineExportTask.getEndTime();
-				errorMessage = batchEngineExportTask.getErrorMessage();
-				executeStatus = ExportTask.ExecuteStatus.create(
-					batchEngineExportTask.getExecuteStatus());
-				externalReferenceCode =
-					batchEngineExportTask.getExternalReferenceCode();
-				id = batchEngineExportTask.getBatchEngineExportTaskId();
-				processedItemsCount =
-					batchEngineExportTask.getProcessedItemsCount();
-				startTime = batchEngineExportTask.getStartTime();
-				totalItemsCount = batchEngineExportTask.getTotalItemsCount();
+				setClassName(batchEngineExportTask::getClassName);
+				setContentType(batchEngineExportTask::getContentType);
+				setEndTime(batchEngineExportTask::getEndTime);
+				setErrorMessage(batchEngineExportTask::getErrorMessage);
+				setExecuteStatus(
+					() -> ExportTask.ExecuteStatus.create(
+						batchEngineExportTask.getExecuteStatus()));
+				setExternalReferenceCode(
+					batchEngineExportTask::getExternalReferenceCode);
+				setId(batchEngineExportTask::getBatchEngineExportTaskId);
+				setProcessedItemsCount(
+					batchEngineExportTask::getProcessedItemsCount);
+				setStartTime(batchEngineExportTask::getStartTime);
+				setTotalItemsCount(batchEngineExportTask::getTotalItemsCount);
 			}
 		};
 	}

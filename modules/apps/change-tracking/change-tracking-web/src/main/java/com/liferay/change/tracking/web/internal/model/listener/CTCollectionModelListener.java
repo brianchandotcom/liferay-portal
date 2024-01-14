@@ -42,10 +42,10 @@ public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
 					CTCollection() {
 
 					{
-						description = ctCollection.getDescription();
-						externalReferenceCode =
-							ctCollection.getExternalReferenceCode();
-						name = ctCollection.getName();
+						setDescription(ctCollection::getDescription);
+						setExternalReferenceCode(
+							ctCollection::getExternalReferenceCode);
+						setName(ctCollection::getName);
 					}
 				});
 		}
@@ -93,10 +93,10 @@ public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
 					CTCollection() {
 
 					{
-						description = ctCollection.getDescription();
-						externalReferenceCode =
-							ctCollection.getExternalReferenceCode();
-						name = ctCollection.getName();
+						setDescription(ctCollection::getDescription);
+						setExternalReferenceCode(
+							ctCollection::getExternalReferenceCode);
+						setName(ctCollection::getName);
 					}
 				});
 		}

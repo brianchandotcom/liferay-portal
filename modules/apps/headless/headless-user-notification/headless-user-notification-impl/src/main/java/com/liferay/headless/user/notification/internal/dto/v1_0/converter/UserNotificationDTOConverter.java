@@ -63,12 +63,6 @@ public class UserNotificationDTOConverter
 
 		return new UserNotification() {
 			{
-				dateCreated = new Date(userNotificationEvent.getTimestamp());
-				id = userNotificationEvent.getUserNotificationEventId();
-				message = _getNotificationMessage(
-					dtoConverterContext, userNotificationEvent);
-				read = userNotificationEvent.isArchived();
-
 				setActions(
 					() -> {
 						if (dtoConverterContext == null) {
@@ -77,6 +71,13 @@ public class UserNotificationDTOConverter
 
 						return dtoConverterContext.getActions();
 					});
+				setDateCreated(
+					() -> new Date(userNotificationEvent.getTimestamp()));
+				setId(userNotificationEvent::getUserNotificationEventId);
+				setMessage(
+					() -> _getNotificationMessage(
+						dtoConverterContext, userNotificationEvent));
+				setRead(userNotificationEvent::isArchived);
 				setType(
 					() -> {
 						if (!jsonObject.has("notificationType")) {

@@ -44,15 +44,15 @@ public class OrderNoteDTOConverter
 
 		return new OrderNote() {
 			{
-				author = commerceOrderNote.getUserName();
-				content = commerceOrderNote.getContent();
-				externalReferenceCode =
-					commerceOrderNote.getExternalReferenceCode();
-				id = commerceOrderNote.getCommerceOrderNoteId();
-				orderExternalReferenceCode =
-					commerceOrder.getExternalReferenceCode();
-				orderId = commerceOrder.getCommerceOrderId();
-				restricted = commerceOrderNote.isRestricted();
+				setAuthor(commerceOrderNote::getUserName);
+				setContent(commerceOrderNote::getContent);
+				setExternalReferenceCode(
+					commerceOrderNote::getExternalReferenceCode);
+				setId(commerceOrderNote::getCommerceOrderNoteId);
+				setOrderExternalReferenceCode(
+					commerceOrder::getExternalReferenceCode);
+				setOrderId(commerceOrder::getCommerceOrderId);
+				setRestricted(commerceOrderNote::isRestricted);
 			}
 		};
 	}

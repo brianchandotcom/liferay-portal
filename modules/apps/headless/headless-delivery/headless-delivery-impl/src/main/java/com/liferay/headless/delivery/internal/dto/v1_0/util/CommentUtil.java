@@ -27,16 +27,19 @@ public class CommentUtil {
 
 		return new Comment() {
 			{
-				creator = CreatorUtil.toCreator(
-					null, portal, comment.getUser());
-				dateCreated = comment.getCreateDate();
-				dateModified = comment.getModifiedDate();
-				externalReferenceCode = comment.getExternalReferenceCode();
-				id = comment.getCommentId();
-				numberOfComments = commentManager.getChildCommentsCount(
-					comment.getCommentId(), WorkflowConstants.STATUS_APPROVED);
-				parentCommentId = comment.getParentCommentId();
-				text = comment.getBody();
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						null, portal, comment.getUser()));
+				setDateCreated(comment::getCreateDate);
+				setDateModified(comment::getModifiedDate);
+				setExternalReferenceCode(comment::getExternalReferenceCode);
+				setId(comment::getCommentId);
+				setNumberOfComments(
+					() -> commentManager.getChildCommentsCount(
+						comment.getCommentId(),
+						WorkflowConstants.STATUS_APPROVED));
+				setParentCommentId(comment::getParentCommentId);
+				setText(comment::getBody);
 			}
 		};
 	}

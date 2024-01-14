@@ -51,15 +51,15 @@ public class TermOrderTypeDTOConverter
 
 		return new TermOrderType() {
 			{
-				actions = dtoConverterContext.getActions();
-				orderTypeExternalReferenceCode =
-					commerceOrderType.getExternalReferenceCode();
-				orderTypeId = commerceOrderType.getCommerceOrderTypeId();
-				termExternalReferenceCode =
-					commerceTermEntry.getExternalReferenceCode();
-				termId = commerceTermEntry.getCommerceTermEntryId();
-				termOrderTypeId =
-					commerceTermEntryRel.getCommerceTermEntryRelId();
+				setActions(dtoConverterContext::getActions);
+				setOrderTypeExternalReferenceCode(
+					commerceOrderType::getExternalReferenceCode);
+				setOrderTypeId(commerceOrderType::getCommerceOrderTypeId);
+				setTermExternalReferenceCode(
+					commerceTermEntry::getExternalReferenceCode);
+				setTermId(commerceTermEntry::getCommerceTermEntryId);
+				setTermOrderTypeId(
+					commerceTermEntryRel::getCommerceTermEntryRelId);
 			}
 		};
 	}

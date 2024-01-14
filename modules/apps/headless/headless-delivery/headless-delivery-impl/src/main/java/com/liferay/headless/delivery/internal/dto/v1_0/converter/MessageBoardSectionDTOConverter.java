@@ -44,30 +44,27 @@ public class MessageBoardSectionDTOConverter
 
 		return new MessageBoardSection() {
 			{
-				actions = dtoConverterContext.getActions();
-				creator = CreatorUtil.toCreator(
-					dtoConverterContext, _portal,
-					_userLocalService.fetchUser(mbCategory.getUserId()));
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					MBCategory.class.getName(), mbCategory.getCategoryId(),
-					mbCategory.getCompanyId(), dtoConverterContext.getLocale());
-				dateCreated = mbCategory.getCreateDate();
-				dateModified = mbCategory.getModifiedDate();
-				description = mbCategory.getDescription();
-				friendlyUrlPath = mbCategory.getFriendlyURL();
-				id = mbCategory.getCategoryId();
-				numberOfMessageBoardSections =
-					_mbCategoryService.getCategoriesCount(
+				setActions(dtoConverterContext::getActions);
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						dtoConverterContext, _portal,
+						_userLocalService.fetchUser(mbCategory.getUserId())));
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						MBCategory.class.getName(), mbCategory.getCategoryId(),
+						mbCategory.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setDateCreated(mbCategory::getCreateDate);
+				setDateModified(mbCategory::getModifiedDate);
+				setDescription(mbCategory::getDescription);
+				setFriendlyUrlPath(mbCategory::getFriendlyURL);
+				setId(mbCategory::getCategoryId);
+				setNumberOfMessageBoardSections(
+					() -> _mbCategoryService.getCategoriesCount(
 						mbCategory.getGroupId(), mbCategory.getCategoryId(),
-						WorkflowConstants.STATUS_APPROVED);
-				numberOfMessageBoardThreads = mbCategory.getThreadCount();
-				siteId = mbCategory.getGroupId();
-				subscribed = _subscriptionLocalService.isSubscribed(
-					mbCategory.getCompanyId(), dtoConverterContext.getUserId(),
-					MBCategory.class.getName(), mbCategory.getCategoryId());
-				title = mbCategory.getName();
-
+						WorkflowConstants.STATUS_APPROVED));
+				setNumberOfMessageBoardThreads(mbCategory::getThreadCount);
 				setParentMessageBoardSectionId(
 					() -> {
 						if (mbCategory.getParentCategoryId() == 0L) {
@@ -76,6 +73,14 @@ public class MessageBoardSectionDTOConverter
 
 						return mbCategory.getParentCategoryId();
 					});
+				setSiteId(mbCategory::getGroupId);
+				setSubscribed(
+					() -> _subscriptionLocalService.isSubscribed(
+						mbCategory.getCompanyId(),
+						dtoConverterContext.getUserId(),
+						MBCategory.class.getName(),
+						mbCategory.getCategoryId()));
+				setTitle(mbCategory::getName);
 			}
 		};
 	}

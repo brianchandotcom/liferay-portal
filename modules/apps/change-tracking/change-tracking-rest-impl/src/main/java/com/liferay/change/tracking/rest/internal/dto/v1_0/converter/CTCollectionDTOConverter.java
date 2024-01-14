@@ -52,17 +52,20 @@ public class CTCollectionDTOConverter
 
 		return new CTCollection() {
 			{
-				actions = dtoConverterContext.getActions();
-				dateCreated = ctCollection.getCreateDate();
-				dateModified = ctCollection.getModifiedDate();
-				dateScheduled = _getDateScheduled(ctCollection);
-				description = ctCollection.getDescription();
-				externalReferenceCode = ctCollection.getExternalReferenceCode();
-				id = ctCollection.getCtCollectionId();
-				name = ctCollection.getName();
-				ownerName = ctCollection.getUserName();
-				status = _toStatus(
-					dtoConverterContext.getLocale(), ctCollection.getStatus());
+				setActions(dtoConverterContext::getActions);
+				setDateCreated(ctCollection::getCreateDate);
+				setDateModified(ctCollection::getModifiedDate);
+				setDateScheduled(() -> _getDateScheduled(ctCollection));
+				setDescription(ctCollection::getDescription);
+				setExternalReferenceCode(
+					ctCollection::getExternalReferenceCode);
+				setId(ctCollection::getCtCollectionId);
+				setName(ctCollection::getName);
+				setOwnerName(ctCollection::getUserName);
+				setStatus(
+					() -> _toStatus(
+						dtoConverterContext.getLocale(),
+						ctCollection.getStatus()));
 			}
 		};
 	}
@@ -114,9 +117,9 @@ public class CTCollectionDTOConverter
 
 		return new Status() {
 			{
-				code = status;
-				label = statusLabel;
-				label_i18n = _language.get(locale, statusLabel);
+				setCode(() -> status);
+				setLabel(() -> statusLabel);
+				setLabel_i18n(() -> _language.get(locale, statusLabel));
 			}
 		};
 	}

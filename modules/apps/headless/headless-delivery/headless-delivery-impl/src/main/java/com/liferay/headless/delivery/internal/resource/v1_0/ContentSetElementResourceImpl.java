@@ -165,13 +165,6 @@ public class ContentSetElementResourceImpl
 
 		return new ContentSetElement() {
 			{
-				id = assetEntry.getClassPK();
-				title = assetEntry.getTitle(
-					contextAcceptLanguage.getPreferredLocale());
-				title_i18n = LocalizedMapUtil.getI18nMap(
-					contextAcceptLanguage.isAcceptAllLanguages(),
-					assetEntry.getTitleMap());
-
 				setContent(
 					() -> {
 						if (dtoConverter == null) {
@@ -195,6 +188,14 @@ public class ContentSetElementResourceImpl
 
 						return dtoConverter.getContentType();
 					});
+				setId(assetEntry::getClassPK);
+				setTitle(
+					() -> assetEntry.getTitle(
+						contextAcceptLanguage.getPreferredLocale()));
+				setTitle_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						contextAcceptLanguage.isAcceptAllLanguages(),
+						assetEntry.getTitleMap()));
 			}
 		};
 	}

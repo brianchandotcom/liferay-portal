@@ -38,10 +38,11 @@ public class ContactAccountGroupDTOConverter
 
 		return new ContactAccountGroup() {
 			{
-				id = accountGroup.getAccountGroupId();
-				name = accountGroup.getName();
-				selected = contactAccountGroupDTOConverterContext.isSelected(
-					String.valueOf(accountGroup.getAccountGroupId()));
+				setId(accountGroup::getAccountGroupId);
+				setName(accountGroup::getName);
+				setSelected(
+					() -> contactAccountGroupDTOConverterContext.isSelected(
+						String.valueOf(accountGroup.getAccountGroupId())));
 			}
 		};
 	}

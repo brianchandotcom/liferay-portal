@@ -43,11 +43,13 @@ public class AccountRoleDTOConverter
 
 		return new AccountRole() {
 			{
-				description = LanguageUtils.getLanguageIdMap(
-					role.getDescriptionMap());
-				name = role.getName();
-				roleId = role.getRoleId();
-				title = LanguageUtils.getLanguageIdMap(role.getTitleMap());
+				setDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						role.getDescriptionMap()));
+				setName(role::getName);
+				setRoleId(role::getRoleId);
+				setTitle(
+					() -> LanguageUtils.getLanguageIdMap(role.getTitleMap()));
 			}
 		};
 	}

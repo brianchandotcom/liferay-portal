@@ -44,10 +44,10 @@ public class AccountOrganizationDTOConverter
 
 		return new AccountOrganization() {
 			{
-				accountId = accountEntryOrganizationRel.getAccountEntryId();
-				name = organization.getName();
-				organizationId = organization.getOrganizationId();
-				treePath = organization.getTreePath();
+				setAccountId(accountEntryOrganizationRel::getAccountEntryId);
+				setName(organization::getName);
+				setOrganizationId(organization::getOrganizationId);
+				setTreePath(organization::getTreePath);
 			}
 		};
 	}

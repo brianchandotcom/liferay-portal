@@ -42,23 +42,25 @@ public class OrderRuleDTOConverter
 
 		return new OrderRule() {
 			{
-				actions = dtoConverterContext.getActions();
-				active = corEntry.isActive();
-				description = corEntry.getDescription();
-				displayDate = corEntry.getDisplayDate();
-				expirationDate = corEntry.getExpirationDate();
-				externalReferenceCode = corEntry.getExternalReferenceCode();
-				id = corEntry.getCOREntryId();
-				name = corEntry.getName();
-				type = corEntry.getType();
-				typeSettings = corEntry.getTypeSettings();
-				workflowStatusInfo = _toStatus(
-					WorkflowConstants.getStatusLabel(corEntry.getStatus()),
-					_language.get(
-						LanguageResources.getResourceBundle(
-							dtoConverterContext.getLocale()),
-						WorkflowConstants.getStatusLabel(corEntry.getStatus())),
-					corEntry.getStatus());
+				setActions(dtoConverterContext::getActions);
+				setActive(corEntry::isActive);
+				setDescription(corEntry::getDescription);
+				setDisplayDate(corEntry::getDisplayDate);
+				setExpirationDate(corEntry::getExpirationDate);
+				setExternalReferenceCode(corEntry::getExternalReferenceCode);
+				setId(corEntry::getCOREntryId);
+				setName(corEntry::getName);
+				setType(corEntry::getType);
+				setTypeSettings(corEntry::getTypeSettings);
+				setWorkflowStatusInfo(
+					() -> _toStatus(
+						WorkflowConstants.getStatusLabel(corEntry.getStatus()),
+						_language.get(
+							LanguageResources.getResourceBundle(
+								dtoConverterContext.getLocale()),
+							WorkflowConstants.getStatusLabel(
+								corEntry.getStatus())),
+						corEntry.getStatus()));
 			}
 		};
 	}
@@ -69,9 +71,9 @@ public class OrderRuleDTOConverter
 
 		return new Status() {
 			{
-				code = statusCode;
-				label = orderTypeStatusLabel;
-				label_i18n = orderTypeStatusLabelI18n;
+				setCode(() -> statusCode);
+				setLabel(() -> orderTypeStatusLabel);
+				setLabel_i18n(() -> orderTypeStatusLabelI18n);
 			}
 		};
 	}

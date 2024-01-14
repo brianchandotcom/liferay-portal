@@ -31,12 +31,11 @@ public class CreatorUtil {
 
 		return new Creator() {
 			{
-				additionalName = user.getMiddleName();
-				contentType = "UserAccount";
-				familyName = user.getLastName();
-				givenName = user.getFirstName();
-
-				setId(user.getUserId());
+				setAdditionalName(user::getMiddleName);
+				setContentType(() -> "UserAccount");
+				setFamilyName(user::getLastName);
+				setGivenName(user::getFirstName);
+				setId(user::getUserId);
 				setImage(
 					() -> {
 						if (user.getPortraitId() == 0) {
@@ -51,7 +50,7 @@ public class CreatorUtil {
 
 						return user.getPortraitURL(themeDisplay);
 					});
-				setName(user.getFullName());
+				setName(user::getFullName);
 				setProfileURL(
 					() -> {
 						if ((dtoConverterContext == null) ||
@@ -89,8 +88,8 @@ public class CreatorUtil {
 							user.getUserGroups(),
 							userGroup -> new UserGroupBrief() {
 								{
-									id = userGroup.getUserGroupId();
-									name = userGroup.getName();
+									setId(userGroup::getUserGroupId);
+									setName(userGroup::getName);
 								}
 							},
 							UserGroupBrief.class);

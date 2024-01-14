@@ -41,13 +41,14 @@ public class ExperienceDTOConverter
 
 		return new Experience() {
 			{
-				key = segmentsExperience.getSegmentsExperienceKey();
-				name = segmentsExperience.getName(
-					dtoConverterContext.getLocale());
-				name_i18n = LocalizedMapUtil.getI18nMap(
-					dtoConverterContext.isAcceptAllLanguages(),
-					segmentsExperience.getNameMap());
-
+				setKey(segmentsExperience::getSegmentsExperienceKey);
+				setName(
+					() -> segmentsExperience.getName(
+						dtoConverterContext.getLocale()));
+				setName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						segmentsExperience.getNameMap()));
 				setSegments(
 					() -> {
 						if (segmentsExperience.getSegmentsEntryId() ==

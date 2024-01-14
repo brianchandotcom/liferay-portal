@@ -44,11 +44,11 @@ public class NoteDTOConverter
 
 		return new CartComment() {
 			{
-				author = commerceOrderNote.getUserName();
-				content = commerceOrderNote.getContent();
-				id = commerceOrderNote.getCommerceOrderNoteId();
-				orderId = commerceOrder.getCommerceOrderId();
-				restricted = commerceOrderNote.isRestricted();
+				setAuthor(commerceOrderNote::getUserName);
+				setContent(commerceOrderNote::getContent);
+				setId(commerceOrderNote::getCommerceOrderNoteId);
+				setOrderId(commerceOrder::getCommerceOrderId);
+				setRestricted(commerceOrderNote::isRestricted);
 			}
 		};
 	}

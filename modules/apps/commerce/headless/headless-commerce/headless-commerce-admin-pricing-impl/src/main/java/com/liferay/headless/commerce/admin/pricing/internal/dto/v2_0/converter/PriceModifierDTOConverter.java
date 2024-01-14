@@ -45,21 +45,21 @@ public class PriceModifierDTOConverter
 
 		return new PriceModifier() {
 			{
-				actions = dtoConverterContext.getActions();
-				active = !commercePriceModifier.isInactive();
-				displayDate = commercePriceModifier.getDisplayDate();
-				expirationDate = commercePriceModifier.getExpirationDate();
-				externalReferenceCode =
-					commercePriceModifier.getExternalReferenceCode();
-				id = commercePriceModifier.getCommercePriceModifierId();
-				modifierAmount = commercePriceModifier.getModifierAmount();
-				modifierType = commercePriceModifier.getModifierType();
-				priceListExternalReferenceCode =
-					commercePriceList.getExternalReferenceCode();
-				priceListId = commercePriceList.getCommercePriceListId();
-				priority = commercePriceModifier.getPriority();
-				target = commercePriceModifier.getTarget();
-				title = commercePriceModifier.getTitle();
+				setActions(dtoConverterContext::getActions);
+				setActive(() -> !commercePriceModifier.isInactive());
+				setDisplayDate(commercePriceModifier::getDisplayDate);
+				setExpirationDate(commercePriceModifier::getExpirationDate);
+				setExternalReferenceCode(
+					commercePriceModifier::getExternalReferenceCode);
+				setId(commercePriceModifier::getCommercePriceModifierId);
+				setModifierAmount(commercePriceModifier::getModifierAmount);
+				setModifierType(commercePriceModifier::getModifierType);
+				setPriceListExternalReferenceCode(
+					commercePriceList::getExternalReferenceCode);
+				setPriceListId(commercePriceList::getCommercePriceListId);
+				setPriority(commercePriceModifier::getPriority);
+				setTarget(commercePriceModifier::getTarget);
+				setTitle(commercePriceModifier::getTitle);
 			}
 		};
 	}

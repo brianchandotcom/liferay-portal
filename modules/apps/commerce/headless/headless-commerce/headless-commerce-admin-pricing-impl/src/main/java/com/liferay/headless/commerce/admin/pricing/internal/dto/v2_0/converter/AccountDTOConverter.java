@@ -56,9 +56,9 @@ public class AccountDTOConverter
 
 		return new Account() {
 			{
-				id = accountEntry.getAccountEntryId();
-				logoId = accountEntry.getLogoId();
-				name = accountEntry.getName();
+				setId(accountEntry::getAccountEntryId);
+				setLogoId(accountEntry::getLogoId);
+				setName(accountEntry::getName);
 			}
 		};
 	}

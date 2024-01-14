@@ -74,7 +74,7 @@ public class ProcessVersionResourceImpl extends BaseProcessVersionResourceImpl {
 					document.getStrings("versions"),
 					version -> new ProcessVersion() {
 						{
-							name = version;
+							setName(() -> version);
 						}
 					}));
 		}

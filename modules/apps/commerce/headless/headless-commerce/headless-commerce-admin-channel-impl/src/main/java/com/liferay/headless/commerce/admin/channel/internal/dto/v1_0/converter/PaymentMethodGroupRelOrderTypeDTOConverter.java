@@ -50,16 +50,16 @@ public class PaymentMethodGroupRelOrderTypeDTOConverter
 
 		return new PaymentMethodGroupRelOrderType() {
 			{
-				actions = dtoConverterContext.getActions();
-				orderTypeExternalReferenceCode =
-					commerceOrderType.getExternalReferenceCode();
-				orderTypeId = commerceOrderType.getCommerceOrderTypeId();
-				paymentMethodGroupRelId =
-					commercePaymentMethodGroupRelQualifier.
-						getCommercePaymentMethodGroupRelId();
-				paymentMethodGroupRelOrderTypeId =
-					commercePaymentMethodGroupRelQualifier.
-						getCommercePaymentMethodGroupRelQualifierId();
+				setActions(dtoConverterContext::getActions);
+				setOrderTypeExternalReferenceCode(
+					commerceOrderType::getExternalReferenceCode);
+				setOrderTypeId(commerceOrderType::getCommerceOrderTypeId);
+				setPaymentMethodGroupRelId(
+					commercePaymentMethodGroupRelQualifier::
+						getCommercePaymentMethodGroupRelId);
+				setPaymentMethodGroupRelOrderTypeId(
+					commercePaymentMethodGroupRelQualifier::
+						getCommercePaymentMethodGroupRelQualifierId);
 			}
 		};
 	}

@@ -24,12 +24,15 @@ public class ObjectStateFlowUtil {
 
 		return new ObjectStateFlow() {
 			{
-				id = objectStateFlow.getObjectStateFlowId();
-				objectStates = TransformUtil.transformToArray(
-					ObjectStateLocalServiceUtil.getObjectStateFlowObjectStates(
-						objectStateFlow.getObjectStateFlowId()),
-					ObjectStateFlowUtil::_toObjectState,
-					com.liferay.object.admin.rest.dto.v1_0.ObjectState.class);
+				setId(objectStateFlow::getObjectStateFlowId);
+				setObjectStates(
+					() -> TransformUtil.transformToArray(
+						ObjectStateLocalServiceUtil.
+							getObjectStateFlowObjectStates(
+								objectStateFlow.getObjectStateFlowId()),
+						ObjectStateFlowUtil::_toObjectState,
+						com.liferay.object.admin.rest.dto.v1_0.ObjectState.
+							class));
 			}
 		};
 	}
@@ -44,13 +47,14 @@ public class ObjectStateFlowUtil {
 
 		return new com.liferay.object.admin.rest.dto.v1_0.ObjectState() {
 			{
-				id = objectState.getObjectStateId();
-				key = listTypeEntry.getKey();
-				objectStateTransitions = TransformUtil.transformToArray(
-					ObjectStateLocalServiceUtil.getNextObjectStates(
-						objectState.getObjectStateId()),
-					ObjectStateFlowUtil::_toObjectStateTransition,
-					ObjectStateTransition.class);
+				setId(objectState::getObjectStateId);
+				setKey(listTypeEntry::getKey);
+				setObjectStateTransitions(
+					() -> TransformUtil.transformToArray(
+						ObjectStateLocalServiceUtil.getNextObjectStates(
+							objectState.getObjectStateId()),
+						ObjectStateFlowUtil::_toObjectStateTransition,
+						ObjectStateTransition.class));
 			}
 		};
 	}
@@ -65,7 +69,7 @@ public class ObjectStateFlowUtil {
 
 		return new ObjectStateTransition() {
 			{
-				key = listTypeEntry.getKey();
+				setKey(listTypeEntry::getKey);
 			}
 		};
 	}

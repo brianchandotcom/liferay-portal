@@ -87,8 +87,8 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 				siteScopes.add(
 					new SiteScope() {
 						{
-							label = group.getDescriptiveName();
-							value = group.getGroupId();
+							setLabel(group::getDescriptiveName);
+							setValue(group::getGroupId);
 						}
 					});
 			}

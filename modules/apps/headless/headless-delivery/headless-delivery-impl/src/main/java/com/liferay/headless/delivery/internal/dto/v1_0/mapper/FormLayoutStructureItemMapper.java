@@ -55,50 +55,61 @@ public class FormLayoutStructureItemMapper
 
 		return new PageElement() {
 			{
-				definition = new PageFormDefinition() {
-					{
-						cssClasses =
-							StyledLayoutStructureItemUtil.getCssClasses(
-								formStyledLayoutStructureItem);
-						customCSS = StyledLayoutStructureItemUtil.getCustomCSS(
-							formStyledLayoutStructureItem);
-						customCSSViewports =
-							StyledLayoutStructureItemUtil.getCustomCSSViewports(
-								formStyledLayoutStructureItem);
-						formConfig = new FormConfig() {
-							{
-								formReference = _toFormReference(
-									formStyledLayoutStructureItem);
-								formSuccessSubmissionResult =
-									_toFormSuccessSubmissionResult(
-										saveInlineContent,
-										saveMappingConfiguration,
-										formStyledLayoutStructureItem);
-							}
-						};
-						indexed = formStyledLayoutStructureItem.isIndexed();
-						layout = _toLayout(formStyledLayoutStructureItem);
-						name = formStyledLayoutStructureItem.getName();
+				setDefinition(
+					() -> new PageFormDefinition() {
+						{
+							setCssClasses(
+								() ->
+									StyledLayoutStructureItemUtil.getCssClasses(
+										formStyledLayoutStructureItem));
+							setCustomCSS(
+								() ->
+									StyledLayoutStructureItemUtil.getCustomCSS(
+										formStyledLayoutStructureItem));
+							setCustomCSSViewports(
+								() ->
+									StyledLayoutStructureItemUtil.
+										getCustomCSSViewports(
+											formStyledLayoutStructureItem));
+							setFormConfig(
+								() -> new FormConfig() {
+									{
+										setFormReference(
+											() -> _toFormReference(
+												formStyledLayoutStructureItem));
+										setFormSuccessSubmissionResult(
+											() ->
+												_toFormSuccessSubmissionResult(
+													saveInlineContent,
+													saveMappingConfiguration,
+													formStyledLayoutStructureItem));
+									}
+								});
+							setFragmentStyle(
+								() -> {
+									JSONObject itemConfigJSONObject =
+										formStyledLayoutStructureItem.
+											getItemConfigJSONObject();
 
-						setFragmentStyle(
-							() -> {
-								JSONObject itemConfigJSONObject =
+									return toFragmentStyle(
+										itemConfigJSONObject.getJSONObject(
+											"styles"),
+										saveMappingConfiguration);
+								});
+							setFragmentViewports(
+								() -> getFragmentViewPorts(
 									formStyledLayoutStructureItem.
-										getItemConfigJSONObject();
-
-								return toFragmentStyle(
-									itemConfigJSONObject.getJSONObject(
-										"styles"),
-									saveMappingConfiguration);
-							});
-						setFragmentViewports(
-							() -> getFragmentViewPorts(
-								formStyledLayoutStructureItem.
-									getItemConfigJSONObject()));
-					}
-				};
-				id = layoutStructureItem.getItemId();
-				type = Type.FORM;
+										getItemConfigJSONObject()));
+							setIndexed(
+								() ->
+									formStyledLayoutStructureItem.isIndexed());
+							setLayout(
+								() -> _toLayout(formStyledLayoutStructureItem));
+							setName(formStyledLayoutStructureItem::getName);
+						}
+					});
+				setId(layoutStructureItem::getItemId);
+				setType(() -> Type.FORM);
 			}
 		};
 	}
@@ -111,16 +122,17 @@ public class FormLayoutStructureItemMapper
 
 			return new ClassTypeReference() {
 				{
-					className = portal.getClassName(
-						formStyledLayoutStructureItem.getClassNameId());
-					classType = formStyledLayoutStructureItem.getClassTypeId();
+					setClassName(
+						() -> _portal.getClassName(
+							formStyledLayoutStructureItem.getClassNameId()));
+					setClassType(formStyledLayoutStructureItem::getClassTypeId);
 				}
 			};
 		}
 
 		return new ContextReference() {
 			{
-				contextSource = ContextSource.DISPLAY_PAGE_ITEM;
+				setContextSource(() -> ContextSource.DISPLAY_PAGE_ITEM);
 			}
 		};
 	}
@@ -141,9 +153,10 @@ public class FormLayoutStructureItemMapper
 		if (saveInlineContent && successMessageJSONObject.has("message")) {
 			return new MessageFormSubmissionResult() {
 				{
-					message = _toFragmentInlineValue(
-						successMessageJSONObject.getJSONObject("message"));
-					messageType = MessageType.EMBEDDED;
+					setMessage(
+						() -> _toFragmentInlineValue(
+							successMessageJSONObject.getJSONObject("message")));
+					setMessageType(() -> MessageType.EMBEDDED);
 				}
 			};
 		}
@@ -153,8 +166,6 @@ public class FormLayoutStructureItemMapper
 		if (saveInlineContent && Objects.equals(type, "none")) {
 			return new MessageFormSubmissionResult() {
 				{
-					messageType = MessageType.NONE;
-
 					setMessage(
 						() -> {
 							if (successMessageJSONObject.has(
@@ -167,6 +178,7 @@ public class FormLayoutStructureItemMapper
 
 							return null;
 						});
+					setMessageType(() -> MessageType.NONE);
 					setShowNotification(
 						() -> {
 							if (successMessageJSONObject.has(
@@ -185,8 +197,9 @@ public class FormLayoutStructureItemMapper
 		if (saveInlineContent && successMessageJSONObject.has("url")) {
 			return new URLFormSubmissionResult() {
 				{
-					url = _toFragmentInlineValue(
-						successMessageJSONObject.getJSONObject("url"));
+					setUrl(
+						() -> _toFragmentInlineValue(
+							successMessageJSONObject.getJSONObject("url")));
 				}
 			};
 		}
@@ -199,9 +212,10 @@ public class FormLayoutStructureItemMapper
 
 			return new SitePageFormSubmissionResult() {
 				{
-					itemReference =
-						FragmentMappedValueUtil.toLayoutClassFieldsReference(
-							layoutJSONObject);
+					setItemReference(
+						() ->
+							FragmentMappedValueUtil.
+								toLayoutClassFieldsReference(layoutJSONObject));
 				}
 			};
 		}
@@ -212,7 +226,8 @@ public class FormLayoutStructureItemMapper
 	private FragmentInlineValue _toFragmentInlineValue(JSONObject jsonObject) {
 		return new FragmentInlineValue() {
 			{
-				value_i18n = LocalizedValueUtil.toLocalizedValues(jsonObject);
+				setValue_i18n(
+					() -> LocalizedValueUtil.toLocalizedValues(jsonObject));
 			}
 		};
 	}

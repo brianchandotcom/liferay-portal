@@ -59,34 +59,10 @@ public class ObjectRelationshipDTOConverter
 
 		return new ObjectRelationship() {
 			{
-				actions = dtoConverterContext.getActions();
-				deletionType = ObjectRelationship.DeletionType.create(
-					serviceBuilderObjectRelationship.getDeletionType());
-				externalReferenceCode =
-					serviceBuilderObjectRelationship.getExternalReferenceCode();
-				id = serviceBuilderObjectRelationship.getObjectRelationshipId();
-				label = LocalizedMapUtil.getLanguageIdMap(
-					serviceBuilderObjectRelationship.getLabelMap());
-				name = serviceBuilderObjectRelationship.getName();
-				objectDefinitionExternalReferenceCode1 =
-					objectDefinition1.getExternalReferenceCode();
-				objectDefinitionExternalReferenceCode2 =
-					objectDefinition2.getExternalReferenceCode();
-				objectDefinitionId1 =
-					serviceBuilderObjectRelationship.getObjectDefinitionId1();
-				objectDefinitionId2 =
-					serviceBuilderObjectRelationship.getObjectDefinitionId2();
-				objectDefinitionModifiable2 = objectDefinition2.isModifiable();
-				objectDefinitionName2 = objectDefinition2.getShortName();
-				objectDefinitionSystem2 = objectDefinition2.isSystem();
-				parameterObjectFieldId =
-					serviceBuilderObjectRelationship.
-						getParameterObjectFieldId();
-				reverse = serviceBuilderObjectRelationship.isReverse();
-				system = serviceBuilderObjectRelationship.isSystem();
-				type = ObjectRelationship.Type.create(
-					serviceBuilderObjectRelationship.getType());
-
+				setActions(dtoConverterContext::getActions);
+				setDeletionType(
+					() -> ObjectRelationship.DeletionType.create(
+						serviceBuilderObjectRelationship.getDeletionType()));
 				setEdge(
 					() -> {
 						if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
@@ -95,6 +71,33 @@ public class ObjectRelationshipDTOConverter
 
 						return serviceBuilderObjectRelationship.isEdge();
 					});
+				setExternalReferenceCode(
+					() ->
+						serviceBuilderObjectRelationship.
+							getExternalReferenceCode());
+				setId(
+					() ->
+						serviceBuilderObjectRelationship.
+							getObjectRelationshipId());
+				setLabel(
+					() -> LocalizedMapUtil.getLanguageIdMap(
+						serviceBuilderObjectRelationship.getLabelMap()));
+				setName(serviceBuilderObjectRelationship::getName);
+				setObjectDefinitionExternalReferenceCode1(
+					objectDefinition1::getExternalReferenceCode);
+				setObjectDefinitionExternalReferenceCode2(
+					objectDefinition2::getExternalReferenceCode);
+				setObjectDefinitionId1(
+					() ->
+						serviceBuilderObjectRelationship.
+							getObjectDefinitionId1());
+				setObjectDefinitionId2(
+					() ->
+						serviceBuilderObjectRelationship.
+							getObjectDefinitionId2());
+				setObjectDefinitionModifiable2(objectDefinition2::isModifiable);
+				setObjectDefinitionName2(objectDefinition2::getShortName);
+				setObjectDefinitionSystem2(objectDefinition2::isSystem);
 				setObjectField(
 					() -> {
 						ObjectField objectField =
@@ -112,6 +115,10 @@ public class ObjectRelationshipDTOConverter
 								dtoConverterContext.getLocale(), null, null),
 							objectField);
 					});
+				setParameterObjectFieldId(
+					() ->
+						serviceBuilderObjectRelationship.
+							getParameterObjectFieldId());
 				setParameterObjectFieldName(
 					() -> {
 						if (Validator.isNull(
@@ -128,6 +135,11 @@ public class ObjectRelationshipDTOConverter
 
 						return objectField.getName();
 					});
+				setReverse(serviceBuilderObjectRelationship::isReverse);
+				setSystem(serviceBuilderObjectRelationship::isSystem);
+				setType(
+					() -> ObjectRelationship.Type.create(
+						serviceBuilderObjectRelationship.getType()));
 			}
 		};
 	}

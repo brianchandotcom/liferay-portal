@@ -38,8 +38,8 @@ public class PricingAccountGroupDTOConverter
 
 		return new PricingAccountGroup() {
 			{
-				id = accountGroup.getAccountGroupId();
-				name = accountGroup.getName();
+				setId(accountGroup::getAccountGroupId);
+				setName(accountGroup::getName);
 			}
 		};
 	}

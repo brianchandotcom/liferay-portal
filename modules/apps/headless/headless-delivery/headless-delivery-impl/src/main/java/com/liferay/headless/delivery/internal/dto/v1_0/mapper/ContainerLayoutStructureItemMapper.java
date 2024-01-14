@@ -58,60 +58,74 @@ public class ContainerLayoutStructureItemMapper
 
 		return new PageElement() {
 			{
-				definition = new PageSectionDefinition() {
-					{
-						cssClasses =
-							StyledLayoutStructureItemUtil.getCssClasses(
-								containerStyledLayoutStructureItem);
-						customCSS = StyledLayoutStructureItemUtil.getCustomCSS(
-							containerStyledLayoutStructureItem);
-						customCSSViewports =
-							StyledLayoutStructureItemUtil.getCustomCSSViewports(
-								containerStyledLayoutStructureItem);
-						fragmentLink = _toFragmentLink(
-							containerStyledLayoutStructureItem.
-								getLinkJSONObject(),
-							saveMappingConfiguration);
-						indexed =
-							containerStyledLayoutStructureItem.isIndexed();
-						layout = _toLayout(containerStyledLayoutStructureItem);
-						name = containerStyledLayoutStructureItem.getName();
+				setDefinition(
+					() -> new PageSectionDefinition() {
+						{
+							setContentVisibility(
+								() -> {
+									String contentVisibility =
+										containerStyledLayoutStructureItem.
+											getContentVisibility();
 
-						setContentVisibility(
-							() -> {
-								String contentVisibility =
+									if (Validator.isNull(contentVisibility)) {
+										return null;
+									}
+
+									return ContentVisibilityConverter.
+										convertToExternalValue(
+											contentVisibility);
+								});
+							setCssClasses(
+								() ->
+									StyledLayoutStructureItemUtil.getCssClasses(
+										containerStyledLayoutStructureItem));
+							setCustomCSS(
+								() ->
+									StyledLayoutStructureItemUtil.getCustomCSS(
+										containerStyledLayoutStructureItem));
+							setCustomCSSViewports(
+								() ->
+									StyledLayoutStructureItemUtil.
+										getCustomCSSViewports(
+											containerStyledLayoutStructureItem));
+							setFragmentLink(
+								() -> _toFragmentLink(
 									containerStyledLayoutStructureItem.
-										getContentVisibility();
+										getLinkJSONObject(),
+									saveMappingConfiguration));
+							setFragmentStyle(
+								() -> {
+									JSONObject itemConfigJSONObject =
+										containerStyledLayoutStructureItem.
+											getItemConfigJSONObject();
 
-								if (Validator.isNull(contentVisibility)) {
-									return null;
-								}
-
-								return ContentVisibilityConverter.
-									convertToExternalValue(contentVisibility);
-							});
-						setFragmentStyle(
-							() -> {
-								JSONObject itemConfigJSONObject =
+									return toFragmentStyle(
+										itemConfigJSONObject.getJSONObject(
+											"styles"),
+										saveMappingConfiguration);
+								});
+							setFragmentViewports(
+								() -> getFragmentViewPorts(
 									containerStyledLayoutStructureItem.
-										getItemConfigJSONObject();
-
-								return toFragmentStyle(
-									itemConfigJSONObject.getJSONObject(
-										"styles"),
-									saveMappingConfiguration);
-							});
-						setFragmentViewports(
-							() -> getFragmentViewPorts(
-								containerStyledLayoutStructureItem.
-									getItemConfigJSONObject()));
-						setHtmlProperties(
-							() -> _toHtmlProperties(
-								containerStyledLayoutStructureItem));
-					}
-				};
-				id = layoutStructureItem.getItemId();
-				type = Type.SECTION;
+										getItemConfigJSONObject()));
+							setHtmlProperties(
+								() -> _toHtmlProperties(
+									containerStyledLayoutStructureItem));
+							setIndexed(
+								() ->
+									containerStyledLayoutStructureItem.
+										isIndexed());
+							setLayout(
+								() -> _toLayout(
+									containerStyledLayoutStructureItem));
+							setName(
+								() ->
+									containerStyledLayoutStructureItem.
+										getName());
+						}
+					});
+				setId(layoutStructureItem::getItemId);
+				setType(() -> Type.SECTION);
 			}
 		};
 	}
@@ -149,9 +163,9 @@ public class ContainerLayoutStructureItemMapper
 
 						return new FragmentInlineValue() {
 							{
-								value_i18n =
-									LocalizedValueUtil.toLocalizedValues(
-										jsonObject.getJSONObject("href"));
+								setValue_i18n(
+									() -> LocalizedValueUtil.toLocalizedValues(
+										jsonObject.getJSONObject("href")));
 							}
 						};
 					});

@@ -83,37 +83,46 @@ public class PlacedOrderItemDTOConverter
 
 		return new PlacedOrderItem() {
 			{
-				adaptiveMediaImageHTMLTag =
-					_cpInstanceHelper.getCPInstanceAdaptiveMediaImageHTMLTag(
+				setAdaptiveMediaImageHTMLTag(
+					() ->
+						_cpInstanceHelper.
+							getCPInstanceAdaptiveMediaImageHTMLTag(
+								placedOrderItemDTOConverterContext.
+									getAccountId(),
+								commerceOrderItem.getCompanyId(),
+								commerceOrderItem.getCPInstanceId()));
+				setCustomFields(expandoBridge::getAttributes);
+				setErrorMessages(
+					() -> _getErrorMessages(commerceOrderItem, locale));
+				setId(commerceOrderItem::getCommerceOrderItemId);
+				setName(
+					() -> commerceOrderItem.getName(
+						_language.getLanguageId(locale)));
+				setOptions(commerceOrderItem::getJson);
+				setParentOrderItemId(
+					commerceOrderItem::getParentCommerceOrderItemId);
+				setPrice(() -> _getPrice(commerceOrderItem, locale));
+				setProductId(commerceOrderItem::getCProductId);
+				setProductURLs(
+					() -> LanguageUtils.getLanguageIdMap(
+						_cpDefinitionLocalService.getUrlTitleMap(
+							commerceOrderItem.getCPDefinitionId())));
+				setQuantity(
+					() -> _commerceQuantityFormatter.format(
+						commerceOrderItem.getCPInstanceId(),
+						commerceOrderItem.getQuantity(),
+						commerceOrderItem.getUnitOfMeasureKey()));
+				setReplacedSku(commerceOrderItem::getReplacedSku);
+				setSettings(
+					() -> _getSettings(commerceOrderItem.getCPInstanceId()));
+				setSku(commerceOrderItem::getSku);
+				setSkuId(commerceOrderItem::getCPInstanceId);
+				setSubscription(commerceOrderItem::isSubscription);
+				setThumbnail(
+					() -> _cpInstanceHelper.getCPInstanceThumbnailSrc(
 						placedOrderItemDTOConverterContext.getAccountId(),
-						commerceOrderItem.getCompanyId(),
-						commerceOrderItem.getCPInstanceId());
-				customFields = expandoBridge.getAttributes();
-				errorMessages = _getErrorMessages(commerceOrderItem, locale);
-				id = commerceOrderItem.getCommerceOrderItemId();
-				name = commerceOrderItem.getName(
-					_language.getLanguageId(locale));
-				options = commerceOrderItem.getJson();
-				parentOrderItemId =
-					commerceOrderItem.getParentCommerceOrderItemId();
-				price = _getPrice(commerceOrderItem, locale);
-				productId = commerceOrderItem.getCProductId();
-				productURLs = LanguageUtils.getLanguageIdMap(
-					_cpDefinitionLocalService.getUrlTitleMap(
-						commerceOrderItem.getCPDefinitionId()));
-				quantity = _commerceQuantityFormatter.format(
-					commerceOrderItem.getCPInstanceId(),
-					commerceOrderItem.getQuantity(),
-					commerceOrderItem.getUnitOfMeasureKey());
-				replacedSku = commerceOrderItem.getReplacedSku();
-				settings = _getSettings(commerceOrderItem.getCPInstanceId());
-				sku = commerceOrderItem.getSku();
-				skuId = commerceOrderItem.getCPInstanceId();
-				subscription = commerceOrderItem.isSubscription();
-				thumbnail = _cpInstanceHelper.getCPInstanceThumbnailSrc(
-					placedOrderItemDTOConverterContext.getAccountId(),
-					commerceOrderItem.getCPInstanceId());
-				unitOfMeasureKey = commerceOrderItem.getUnitOfMeasureKey();
+						commerceOrderItem.getCPInstanceId()));
+				setUnitOfMeasureKey(commerceOrderItem::getUnitOfMeasureKey);
 
 				setVirtualItems(
 					() -> {
@@ -230,9 +239,9 @@ public class PlacedOrderItemDTOConverter
 
 		Price price = new Price() {
 			{
-				currency = commerceCurrency.getName(locale);
-				price = unitPrice.doubleValue();
-				priceFormatted = unitPriceCommerceMoney.format(locale);
+				setCurrency(() -> commerceCurrency.getName(locale));
+				setPrice(unitPrice::doubleValue);
+				setPriceFormatted(() -> unitPriceCommerceMoney.format(locale));
 			}
 		};
 
@@ -362,8 +371,6 @@ public class PlacedOrderItemDTOConverter
 			commerceVirtualOrderItemFileEntries,
 			commerceVirtualOrderItemFileEntry -> new VirtualItem() {
 				{
-					usages = commerceVirtualOrderItemFileEntry.getUsages();
-
 					setUrl(
 						() -> {
 							if (Validator.isNull(
@@ -380,6 +387,7 @@ public class PlacedOrderItemDTOConverter
 
 							return commerceVirtualOrderItemFileEntry.getUrl();
 						});
+					setUsages(commerceVirtualOrderItemFileEntry::getUsages);
 					setVersion(
 						() -> {
 							if (Validator.isNull(

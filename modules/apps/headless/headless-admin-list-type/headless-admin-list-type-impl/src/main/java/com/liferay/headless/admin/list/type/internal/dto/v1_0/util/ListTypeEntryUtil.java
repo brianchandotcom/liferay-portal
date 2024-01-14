@@ -39,16 +39,17 @@ public class ListTypeEntryUtil {
 
 		ListTypeEntry listTypeEntry = new ListTypeEntry() {
 			{
-				dateCreated = serviceBuilderListTypeEntry.getCreateDate();
-				dateModified = serviceBuilderListTypeEntry.getModifiedDate();
-				externalReferenceCode =
-					serviceBuilderListTypeEntry.getExternalReferenceCode();
-				id = serviceBuilderListTypeEntry.getListTypeEntryId();
-				key = serviceBuilderListTypeEntry.getKey();
-				name = serviceBuilderListTypeEntry.getName(locale);
-				name_i18n = LocalizedMapUtil.getI18nMap(
-					serviceBuilderListTypeEntry.getNameMap());
-				type = serviceBuilderListTypeEntry.getType();
+				setDateCreated(serviceBuilderListTypeEntry::getCreateDate);
+				setDateModified(serviceBuilderListTypeEntry::getModifiedDate);
+				setExternalReferenceCode(
+					serviceBuilderListTypeEntry::getExternalReferenceCode);
+				setId(serviceBuilderListTypeEntry::getListTypeEntryId);
+				setKey(serviceBuilderListTypeEntry::getKey);
+				setName(() -> serviceBuilderListTypeEntry.getName(locale));
+				setName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						serviceBuilderListTypeEntry.getNameMap()));
+				setType(serviceBuilderListTypeEntry::getType);
 			}
 		};
 

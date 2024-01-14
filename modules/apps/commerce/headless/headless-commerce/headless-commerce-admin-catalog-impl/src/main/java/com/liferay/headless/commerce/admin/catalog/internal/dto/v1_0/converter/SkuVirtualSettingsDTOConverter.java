@@ -76,23 +76,8 @@ public class SkuVirtualSettingsDTOConverter
 
 		return new SkuVirtualSettings() {
 			{
-				activationStatus =
-					cpDefinitionVirtualSetting.getActivationStatus();
-				duration = TimeUnit.MILLISECONDS.toDays(
-					cpDefinitionVirtualSetting.getDuration());
-				maxUsages = cpDefinitionVirtualSetting.getMaxUsages();
-				override = cpDefinitionVirtualSetting.isOverride();
-				sampleURL = cpDefinitionVirtualSetting.getSampleURL();
-				skuVirtualSettingsFileEntries =
-					_toSkuVirtualSettingsFileEntries(
-						cpdVirtualSettingFileEntries, cpInstance);
-				termsOfUseContent = LanguageUtils.getLanguageIdMap(
-					cpDefinitionVirtualSetting.getTermsOfUseContentMap());
-				termsOfUseRequired =
-					cpDefinitionVirtualSetting.isTermsOfUseRequired();
-
-				useSample = cpDefinitionVirtualSetting.isUseSample();
-
+				setActivationStatus(
+					cpDefinitionVirtualSetting::getActivationStatus);
 				setActivationStatusInfo(
 					() -> {
 						String orderStatusLabel =
@@ -102,16 +87,22 @@ public class SkuVirtualSettingsDTOConverter
 
 						return new Status() {
 							{
-								code =
-									cpDefinitionVirtualSetting.
-										getActivationStatus();
-								label = orderStatusLabel;
-								label_i18n = _language.get(
-									dtoConverterContext.getLocale(),
-									orderStatusLabel);
+								setCode(
+									cpDefinitionVirtualSetting::
+										getActivationStatus);
+								setLabel(() -> orderStatusLabel);
+								setLabel_i18n(
+									() -> _language.get(
+										dtoConverterContext.getLocale(),
+										orderStatusLabel));
 							}
 						};
 					});
+				setDuration(
+					() -> TimeUnit.MILLISECONDS.toDays(
+						cpDefinitionVirtualSetting.getDuration()));
+				setMaxUsages(cpDefinitionVirtualSetting::getMaxUsages);
+				setOverride(cpDefinitionVirtualSetting::isOverride);
 				setSampleSrc(
 					() -> {
 						FileEntry fileEntry =
@@ -128,6 +119,10 @@ public class SkuVirtualSettingsDTOConverter
 								AccountConstants.ACCOUNT_ENTRY_ID_ADMIN,
 								fileEntry.getFileEntryId());
 					});
+				setSampleURL(cpDefinitionVirtualSetting::getSampleURL);
+				setSkuVirtualSettingsFileEntries(
+					() -> _toSkuVirtualSettingsFileEntries(
+						cpdVirtualSettingFileEntries, cpInstance));
 				setSrc(
 					() -> {
 						if (cpdVirtualSettingFileEntries.isEmpty()) {
@@ -151,6 +146,9 @@ public class SkuVirtualSettingsDTOConverter
 								AccountConstants.ACCOUNT_ENTRY_ID_ADMIN,
 								fileEntryId);
 					});
+				setTermsOfUseContent(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinitionVirtualSetting.getTermsOfUseContentMap()));
 				setTermsOfUseJournalArticleId(
 					() -> {
 						JournalArticle journalArticle =
@@ -163,6 +161,8 @@ public class SkuVirtualSettingsDTOConverter
 
 						return journalArticle.getResourcePrimKey();
 					});
+				setTermsOfUseRequired(
+					cpDefinitionVirtualSetting::isTermsOfUseRequired);
 				setUrl(
 					() -> {
 						if (cpdVirtualSettingFileEntries.isEmpty()) {
@@ -180,6 +180,7 @@ public class SkuVirtualSettingsDTOConverter
 
 						return cpdVirtualSettingFileEntry.getUrl();
 					});
+				setUseSample(cpDefinitionVirtualSetting::isUseSample);
 			}
 		};
 	}

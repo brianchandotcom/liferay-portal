@@ -36,7 +36,7 @@ public class ModelPrefilterContributorResourceImpl
 					ModelPreFilterContributor.class),
 				componentName -> new ModelPrefilterContributor() {
 					{
-						className = componentName;
+						setClassName(() -> componentName);
 					}
 				}));
 	}

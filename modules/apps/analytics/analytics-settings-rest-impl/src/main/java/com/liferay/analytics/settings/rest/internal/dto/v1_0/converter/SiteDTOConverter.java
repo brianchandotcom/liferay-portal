@@ -37,10 +37,6 @@ public class SiteDTOConverter implements DTOConverter<Group, Site> {
 
 		return new Site() {
 			{
-				friendlyURL = group.getFriendlyURL();
-				id = group.getGroupId();
-				name = group.getDescriptiveName();
-
 				setChannelName(
 					() -> {
 						UnicodeProperties typeSettingsUnicodeProperties =
@@ -53,6 +49,9 @@ public class SiteDTOConverter implements DTOConverter<Group, Site> {
 						return siteDTOConverterContext.getChannelName(
 							GetterUtil.getLong(analyticsChannelId));
 					});
+				setFriendlyURL(group::getFriendlyURL);
+				setId(group::getGroupId);
+				setName(group::getDescriptiveName);
 			}
 		};
 	}

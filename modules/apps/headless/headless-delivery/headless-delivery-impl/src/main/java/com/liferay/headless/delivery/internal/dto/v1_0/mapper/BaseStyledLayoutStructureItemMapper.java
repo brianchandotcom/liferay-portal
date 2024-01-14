@@ -157,7 +157,7 @@ public abstract class BaseStyledLayoutStructureItemMapper
 
 			return new FragmentInlineValue() {
 				{
-					value = valueString;
+					setValue(() -> valueString);
 				}
 			};
 		}
@@ -173,15 +173,19 @@ public abstract class BaseStyledLayoutStructureItemMapper
 
 		return new FragmentMappedValue() {
 			{
-				mapping = new Mapping() {
-					{
-						defaultFragmentInlineValue = fragmentInlineValue;
-						fieldKey = FragmentMappedValueUtil.getFieldKey(
-							jsonObject);
-						itemReference = FragmentMappedValueUtil.toItemReference(
-							jsonObject);
-					}
-				};
+				setMapping(
+					() -> new Mapping() {
+						{
+							setDefaultFragmentInlineValue(
+								() -> fragmentInlineValue);
+							setFieldKey(
+								() -> FragmentMappedValueUtil.getFieldKey(
+									jsonObject));
+							setItemReference(
+								() -> FragmentMappedValueUtil.toItemReference(
+									jsonObject));
+						}
+					});
 			}
 		};
 	}
@@ -195,33 +199,8 @@ public abstract class BaseStyledLayoutStructureItemMapper
 
 		return new FragmentStyle() {
 			{
-				backgroundColor = jsonObject.getString("backgroundColor", null);
-				borderColor = jsonObject.getString("borderColor", null);
-				borderRadius = jsonObject.getString("borderRadius", null);
-				borderWidth = jsonObject.getString("borderWidth", null);
-				fontFamily = jsonObject.getString("fontFamily", null);
-				fontSize = jsonObject.getString("fontSize", null);
-				fontWeight = jsonObject.getString("fontWeight", null);
-				height = jsonObject.getString("height", null);
-				marginBottom = jsonObject.getString("marginBottom", null);
-				marginLeft = jsonObject.getString("marginLeft", null);
-				marginRight = jsonObject.getString("marginRight", null);
-				marginTop = jsonObject.getString("marginTop", null);
-				maxHeight = jsonObject.getString("maxHeight", null);
-				maxWidth = jsonObject.getString("maxWidth", null);
-				minHeight = jsonObject.getString("minHeight", null);
-				minWidth = jsonObject.getString("minWidth", null);
-				opacity = jsonObject.getString("opacity", null);
-				overflow = jsonObject.getString("overflow", null);
-				paddingBottom = jsonObject.getString("paddingBottom", null);
-				paddingLeft = jsonObject.getString("paddingLeft", null);
-				paddingRight = jsonObject.getString("paddingRight", null);
-				paddingTop = jsonObject.getString("paddingTop", null);
-				shadow = jsonObject.getString("shadow", null);
-				textAlign = jsonObject.getString("textAlign", null);
-				textColor = jsonObject.getString("textColor", null);
-				width = jsonObject.getString("width", null);
-
+				setBackgroundColor(
+					() -> jsonObject.getString("backgroundColor", null));
 				setBackgroundFragmentImage(
 					() -> {
 						Object backgroundImage = jsonObject.get(
@@ -238,7 +217,14 @@ public abstract class BaseStyledLayoutStructureItemMapper
 							backgroundImageJSONObject,
 							saveMappingConfiguration);
 					});
-
+				setBorderColor(() -> jsonObject.getString("borderColor", null));
+				setBorderRadius(
+					() -> jsonObject.getString("borderRadius", null));
+				setBorderWidth(() -> jsonObject.getString("borderWidth", null));
+				setFontFamily(() -> jsonObject.getString("fontFamily", null));
+				setFontSize(() -> jsonObject.getString("fontSize", null));
+				setFontWeight(() -> jsonObject.getString("fontWeight", null));
+				setHeight(() -> jsonObject.getString("height", null));
 				setHidden(
 					() -> {
 						if (Objects.equals(
@@ -255,6 +241,27 @@ public abstract class BaseStyledLayoutStructureItemMapper
 
 						return null;
 					});
+				setMarginBottom(
+					() -> jsonObject.getString("marginBottom", null));
+				setMarginLeft(() -> jsonObject.getString("marginLeft", null));
+				setMarginRight(() -> jsonObject.getString("marginRight", null));
+				setMarginTop(() -> jsonObject.getString("marginTop", null));
+				setMaxHeight(() -> jsonObject.getString("maxHeight", null));
+				setMaxWidth(() -> jsonObject.getString("maxWidth", null));
+				setMinHeight(() -> jsonObject.getString("minHeight", null));
+				setMinWidth(() -> jsonObject.getString("minWidth", null));
+				setOpacity(() -> jsonObject.getString("opacity", null));
+				setOverflow(() -> jsonObject.getString("overflow", null));
+				setPaddingBottom(
+					() -> jsonObject.getString("paddingBottom", null));
+				setPaddingLeft(() -> jsonObject.getString("paddingLeft", null));
+				setPaddingRight(
+					() -> jsonObject.getString("paddingRight", null));
+				setPaddingTop(() -> jsonObject.getString("paddingTop", null));
+				setShadow(() -> jsonObject.getString("shadow", null));
+				setTextAlign(() -> jsonObject.getString("textAlign", null));
+				setTextColor(() -> jsonObject.getString("textColor", null));
+				setWidth(() -> jsonObject.getString("width", null));
 			}
 		};
 	}
@@ -289,8 +296,8 @@ public abstract class BaseStyledLayoutStructureItemMapper
 
 		return new FragmentImage() {
 			{
-				title = _toTitleFragmentInlineValue(jsonObject, urlValue);
-
+				setTitle(
+					() -> _toTitleFragmentInlineValue(jsonObject, urlValue));
 				setUrl(
 					() -> {
 						if (FragmentMappedValueUtil.isSaveFragmentMappedValue(
@@ -309,7 +316,7 @@ public abstract class BaseStyledLayoutStructureItemMapper
 
 						return new FragmentInlineValue() {
 							{
-								value = urlValue;
+								setValue(() -> urlValue);
 							}
 						};
 					});
@@ -337,61 +344,33 @@ public abstract class BaseStyledLayoutStructureItemMapper
 
 		return new FragmentViewport() {
 			{
-				id = viewportSize.getViewportSizeId();
-
 				setFragmentViewportStyle(
 					() -> new FragmentViewportStyle() {
 						{
-							backgroundColor = styleJSONObject.getString(
-								"backgroundColor", null);
-							borderColor = styleJSONObject.getString(
-								"borderColor", null);
-							borderRadius = styleJSONObject.getString(
-								"borderRadius", null);
-							borderWidth = styleJSONObject.getString(
-								"borderWidth", null);
-							fontFamily = styleJSONObject.getString(
-								"fontFamily", null);
-							fontSize = styleJSONObject.getString(
-								"fontSize", null);
-							fontWeight = styleJSONObject.getString(
-								"fontWeight", null);
-							height = styleJSONObject.getString("height", null);
-							marginBottom = styleJSONObject.getString(
-								"marginBottom", null);
-							marginLeft = styleJSONObject.getString(
-								"marginLeft", null);
-							marginRight = styleJSONObject.getString(
-								"marginRight", null);
-							marginTop = styleJSONObject.getString(
-								"marginTop", null);
-							maxHeight = styleJSONObject.getString(
-								"maxHeight", null);
-							maxWidth = styleJSONObject.getString(
-								"maxWidth", null);
-							minHeight = styleJSONObject.getString(
-								"minHeight", null);
-							minWidth = styleJSONObject.getString(
-								"minWidth", null);
-							opacity = styleJSONObject.getString(
-								"opacity", null);
-							overflow = styleJSONObject.getString(
-								"overflow", null);
-							paddingBottom = styleJSONObject.getString(
-								"paddingBottom", null);
-							paddingLeft = styleJSONObject.getString(
-								"paddingLeft", null);
-							paddingRight = styleJSONObject.getString(
-								"paddingRight", null);
-							paddingTop = styleJSONObject.getString(
-								"paddingTop", null);
-							shadow = styleJSONObject.getString("shadow", null);
-							textAlign = styleJSONObject.getString(
-								"textAlign", null);
-							textColor = styleJSONObject.getString(
-								"textColor", null);
-							width = styleJSONObject.getString("width", null);
-
+							setBackgroundColor(
+								() -> styleJSONObject.getString(
+									"backgroundColor", null));
+							setBorderColor(
+								() -> styleJSONObject.getString(
+									"borderColor", null));
+							setBorderRadius(
+								() -> styleJSONObject.getString(
+									"borderRadius", null));
+							setBorderWidth(
+								() -> styleJSONObject.getString(
+									"borderWidth", null));
+							setFontFamily(
+								() -> styleJSONObject.getString(
+									"fontFamily", null));
+							setFontSize(
+								() -> styleJSONObject.getString(
+									"fontSize", null));
+							setFontWeight(
+								() -> styleJSONObject.getString(
+									"fontWeight", null));
+							setHeight(
+								() -> styleJSONObject.getString(
+									"height", null));
 							setHidden(
 								() -> {
 									if (Objects.equals(
@@ -412,8 +391,62 @@ public abstract class BaseStyledLayoutStructureItemMapper
 
 									return null;
 								});
+							setMarginBottom(
+								() -> styleJSONObject.getString(
+									"marginBottom", null));
+							setMarginLeft(
+								() -> styleJSONObject.getString(
+									"marginLeft", null));
+							setMarginRight(
+								() -> styleJSONObject.getString(
+									"marginRight", null));
+							setMarginTop(
+								() -> styleJSONObject.getString(
+									"marginTop", null));
+							setMaxHeight(
+								() -> styleJSONObject.getString(
+									"maxHeight", null));
+							setMaxWidth(
+								() -> styleJSONObject.getString(
+									"maxWidth", null));
+							setMinHeight(
+								() -> styleJSONObject.getString(
+									"minHeight", null));
+							setMinWidth(
+								() -> styleJSONObject.getString(
+									"minWidth", null));
+							setOpacity(
+								() -> styleJSONObject.getString(
+									"opacity", null));
+							setOverflow(
+								() -> styleJSONObject.getString(
+									"overflow", null));
+							setPaddingBottom(
+								() -> styleJSONObject.getString(
+									"paddingBottom", null));
+							setPaddingLeft(
+								() -> styleJSONObject.getString(
+									"paddingLeft", null));
+							setPaddingRight(
+								() -> styleJSONObject.getString(
+									"paddingRight", null));
+							setPaddingTop(
+								() -> styleJSONObject.getString(
+									"paddingTop", null));
+							setShadow(
+								() -> styleJSONObject.getString(
+									"shadow", null));
+							setTextAlign(
+								() -> styleJSONObject.getString(
+									"textAlign", null));
+							setTextColor(
+								() -> styleJSONObject.getString(
+									"textColor", null));
+							setWidth(
+								() -> styleJSONObject.getString("width", null));
 						}
 					});
+				setId(viewportSize::getViewportSizeId);
 			}
 		};
 	}
@@ -429,7 +462,7 @@ public abstract class BaseStyledLayoutStructureItemMapper
 
 		return new FragmentInlineValue() {
 			{
-				value = title;
+				setValue(() -> title);
 			}
 		};
 	}

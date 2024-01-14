@@ -64,18 +64,18 @@ public class ProductGroupProductDTOConverter
 
 		return new ProductGroupProduct() {
 			{
-				id =
-					commercePricingClassCPDefinitionRel.
-						getCommercePricingClassCPDefinitionRelId();
-				productExternalReferenceCode =
-					cProduct.getExternalReferenceCode();
-				productGroupExternalReferenceCode =
-					commercePricingClass.getExternalReferenceCode();
-				productGroupId =
-					commercePricingClass.getCommercePricingClassId();
-				productId = cProduct.getCProductId();
-				productName = cpDefinition.getName(languageId);
-				sku = _getSku(cpDefinition, locale);
+				setId(
+					commercePricingClassCPDefinitionRel::
+						getCommercePricingClassCPDefinitionRelId);
+				setProductExternalReferenceCode(
+					cProduct::getExternalReferenceCode);
+				setProductGroupExternalReferenceCode(
+					commercePricingClass::getExternalReferenceCode);
+				setProductGroupId(
+					commercePricingClass::getCommercePricingClassId);
+				setProductId(cProduct::getCProductId);
+				setProductName(() -> cpDefinition.getName(languageId));
+				setSku(() -> _getSku(cpDefinition, locale));
 			}
 		};
 	}

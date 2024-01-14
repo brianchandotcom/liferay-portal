@@ -37,9 +37,10 @@ public class SLANameExceptionMapper
 		return Collections.singletonList(
 			new GenericError() {
 				{
-					fieldName = "name";
-					message = SLANameExceptionMapper.this.getMessage(
-						"a-name-is-required");
+					setFieldName(() -> "name");
+					setMessage(
+						() -> SLANameExceptionMapper.this.getMessage(
+							"a-name-is-required"));
 				}
 			});
 	}

@@ -39,12 +39,14 @@ public class CalendarResourceImpl extends BaseCalendarResourceImpl {
 			calendars.add(
 				new Calendar() {
 					{
-						defaultCalendar = Objects.equals(
-							workflowMetricsSLACalendar.getKey(),
-							WorkflowMetricsSLACalendar.DEFAULT_KEY);
-						key = workflowMetricsSLACalendar.getKey();
-						title = workflowMetricsSLACalendar.getTitle(
-							contextAcceptLanguage.getPreferredLocale());
+						setDefaultCalendar(
+							() -> Objects.equals(
+								workflowMetricsSLACalendar.getKey(),
+								WorkflowMetricsSLACalendar.DEFAULT_KEY));
+						setKey(workflowMetricsSLACalendar::getKey);
+						setTitle(
+							() -> workflowMetricsSLACalendar.getTitle(
+								contextAcceptLanguage.getPreferredLocale()));
 					}
 				});
 		}

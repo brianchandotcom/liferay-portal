@@ -20,11 +20,11 @@ public class PhoneUtil {
 
 		return new Phone() {
 			{
-				extension = phone.getExtension();
-				id = phone.getPhoneId();
-				phoneNumber = phone.getNumber();
-				phoneType = listType.getName();
-				primary = phone.isPrimary();
+				setExtension(phone::getExtension);
+				setId(phone::getPhoneId);
+				setPhoneNumber(phone::getNumber);
+				setPhoneType(listType::getName);
+				setPrimary(phone::isPrimary);
 			}
 		};
 	}

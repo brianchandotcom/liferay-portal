@@ -41,15 +41,16 @@ public class ProductShippingConfigurationDTOConverter
 
 		return new ProductShippingConfiguration() {
 			{
-				depth = BigDecimal.valueOf(cpDefinition.getDepth());
-				freeShipping = cpDefinition.isFreeShipping();
-				height = BigDecimal.valueOf(cpDefinition.getHeight());
-				shippable = cpDefinition.isShippable();
-				shippingExtraPrice = BigDecimal.valueOf(
-					cpDefinition.getShippingExtraPrice());
-				shippingSeparately = cpDefinition.isShipSeparately();
-				weight = BigDecimal.valueOf(cpDefinition.getWeight());
-				width = BigDecimal.valueOf(cpDefinition.getWidth());
+				setDepth(() -> BigDecimal.valueOf(cpDefinition.getDepth()));
+				setFreeShipping(cpDefinition::isFreeShipping);
+				setHeight(() -> BigDecimal.valueOf(cpDefinition.getHeight()));
+				setShippable(cpDefinition::isShippable);
+				setShippingExtraPrice(
+					() -> BigDecimal.valueOf(
+						cpDefinition.getShippingExtraPrice()));
+				setShippingSeparately(cpDefinition::isShipSeparately);
+				setWeight(() -> BigDecimal.valueOf(cpDefinition.getWeight()));
+				setWidth(() -> BigDecimal.valueOf(cpDefinition.getWidth()));
 			}
 		};
 	}

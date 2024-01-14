@@ -107,13 +107,13 @@ public class ProductChannelResourceImpl extends BaseProductChannelResourceImpl {
 
 		return new ProductChannel() {
 			{
-				channelId = commerceChannel.getCommerceChannelId();
-				currencyCode = commerceChannel.getCommerceCurrencyCode();
-				externalReferenceCode =
-					commerceChannel.getExternalReferenceCode();
-				id = commerceChannelRel.getCommerceChannelRelId();
-				name = commerceChannel.getName();
-				type = commerceChannel.getType();
+				setChannelId(commerceChannel::getCommerceChannelId);
+				setCurrencyCode(commerceChannel::getCommerceCurrencyCode);
+				setExternalReferenceCode(
+					commerceChannel::getExternalReferenceCode);
+				setId(commerceChannelRel::getCommerceChannelRelId);
+				setName(commerceChannel::getName);
+				setType(commerceChannel::getType);
 			}
 		};
 	}

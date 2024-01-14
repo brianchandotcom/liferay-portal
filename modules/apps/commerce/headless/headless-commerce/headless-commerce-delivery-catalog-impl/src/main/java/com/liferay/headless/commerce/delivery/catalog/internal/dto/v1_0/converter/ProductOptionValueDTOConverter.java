@@ -103,24 +103,9 @@ public class ProductOptionValueDTOConverter
 
 		return new ProductOptionValue() {
 			{
-				id =
-					cpDefinitionOptionValueRel.
-						getCPDefinitionOptionValueRelId();
-				key = cpDefinitionOptionValueRel.getKey();
-				name = cpDefinitionOptionValueRel.getName(
-					_language.getLanguageId(dtoConverterContext.getLocale()));
-				preselected = cpDefinitionOptionValueRel.isPreselected();
-				price = (priceBigDecimal == null) ? BigDecimal.ZERO.toString() :
-					priceBigDecimal.toString();
-				priceType = cpDefinitionOptionRel.getPriceType();
-				priority = cpDefinitionOptionValueRel.getPriority();
-				productOptionId =
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId();
-				quantity = String.valueOf(
-					cpDefinitionOptionValueRel.getQuantity());
-				unitOfMeasureKey =
-					cpDefinitionOptionValueRel.getUnitOfMeasureKey();
-
+				setId(
+					cpDefinitionOptionValueRel::
+						getCPDefinitionOptionValueRelId);
 				setInfoMessage(
 					() -> {
 						if (cpInstance == null) {
@@ -202,6 +187,23 @@ public class ProductOptionValueDTOConverter
 
 						return null;
 					});
+				setKey(cpDefinitionOptionValueRel::getKey);
+				setName(
+					() -> cpDefinitionOptionValueRel.getName(
+						_language.getLanguageId(
+							dtoConverterContext.getLocale())));
+				setPreselected(cpDefinitionOptionValueRel::isPreselected);
+				setPrice(
+					() ->
+						(priceBigDecimal == null) ? BigDecimal.ZERO.toString() :
+							priceBigDecimal.toString());
+				setPriceType(cpDefinitionOptionRel::getPriceType);
+				setPriority(cpDefinitionOptionValueRel::getPriority);
+				setProductOptionId(
+					cpDefinitionOptionRel::getCPDefinitionOptionRelId);
+				setQuantity(
+					() -> String.valueOf(
+						cpDefinitionOptionValueRel.getQuantity()));
 				setRelativePriceFormatted(
 					() -> {
 						CommerceContext commerceContext =
@@ -382,6 +384,8 @@ public class ProductOptionValueDTOConverter
 
 						return cpInstance.getCPInstanceId();
 					});
+				setUnitOfMeasureKey(
+					cpDefinitionOptionValueRel::getUnitOfMeasureKey);
 				setVisible(
 					() -> {
 						if (!cpDefinitionOptionRel.isSkuContributor() ||
@@ -519,7 +523,7 @@ public class ProductOptionValueDTOConverter
 							typeSettingsUnicodeProperties.getProperty(
 								COREntryConstants.
 									TYPE_PRODUCTS_LIMIT_FIELD_PRODUCT_IDS)),
-						curCProductId -> Long.valueOf(curCProductId)));
+						Long::valueOf));
 			}
 		}
 

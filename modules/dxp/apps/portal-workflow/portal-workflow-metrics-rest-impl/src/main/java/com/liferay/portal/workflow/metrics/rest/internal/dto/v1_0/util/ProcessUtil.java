@@ -31,14 +31,13 @@ public class ProcessUtil {
 
 		return new Process() {
 			{
-				active = document.getBoolean("active");
-				dateCreated = _parseDate(document.getDate("createDate"));
-				dateModified = _parseDate(document.getDate("modifiedDate"));
-				description = document.getString("description");
-				id = document.getLong("processId");
-				title_i18n = titleMap;
-				version = document.getString("version");
-
+				setActive(() -> document.getBoolean("active"));
+				setDateCreated(
+					() -> _parseDate(document.getDate("createDate")));
+				setDateModified(
+					() -> _parseDate(document.getDate("modifiedDate")));
+				setDescription(() -> document.getString("description"));
+				setId(() -> document.getLong("processId"));
 				setTitle(
 					() -> {
 						String title = titleMap.get(locale.toLanguageTag());
@@ -52,6 +51,8 @@ public class ProcessUtil {
 
 						return title;
 					});
+				setTitle_i18n(() -> titleMap);
+				setVersion(() -> document.getString("version"));
 			}
 		};
 	}

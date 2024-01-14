@@ -200,13 +200,16 @@ public class AccountEntrySystemObjectDefinitionManager
 	private Account _toAccount(Map<String, Object> values) {
 		return new Account() {
 			{
-				description = GetterUtil.getString(values.get("description"));
-				externalReferenceCode = GetterUtil.getString(
-					values.get("externalReferenceCode"));
-				name = GetterUtil.getString(values.get("name"));
-				type = Account.Type.create(
-					StringUtil.toLowerCase(
-						GetterUtil.getString(values.get("type"))));
+				setDescription(
+					() -> GetterUtil.getString(values.get("description")));
+				setExternalReferenceCode(
+					() -> GetterUtil.getString(
+						values.get("externalReferenceCode")));
+				setName(() -> GetterUtil.getString(values.get("name")));
+				setType(
+					() -> Account.Type.create(
+						StringUtil.toLowerCase(
+							GetterUtil.getString(values.get("type")))));
 			}
 		};
 	}

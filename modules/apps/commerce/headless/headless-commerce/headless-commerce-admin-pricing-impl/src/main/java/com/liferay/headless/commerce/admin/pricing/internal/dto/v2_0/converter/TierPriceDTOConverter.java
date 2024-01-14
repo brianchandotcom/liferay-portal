@@ -65,45 +65,44 @@ public class TierPriceDTOConverter
 
 		return new TierPrice() {
 			{
-				actions = dtoConverterContext.getActions();
-				customFields = expandoBridge.getAttributes();
-				discountDiscovery =
-					commerceTierPriceEntry.isDiscountDiscovery();
-				discountLevel1 = commerceTierPriceEntry.getDiscountLevel1();
-				discountLevel2 = commerceTierPriceEntry.getDiscountLevel2();
-				discountLevel3 = commerceTierPriceEntry.getDiscountLevel3();
-				discountLevel4 = commerceTierPriceEntry.getDiscountLevel4();
-				displayDate = commerceTierPriceEntry.getDisplayDate();
-				expirationDate = commerceTierPriceEntry.getExpirationDate();
-				externalReferenceCode =
-					commerceTierPriceEntry.getExternalReferenceCode();
-				id = commerceTierPriceEntry.getCommerceTierPriceEntryId();
-				minimumQuantity = _commerceQuantityFormatter.format(
-					_cpInstanceLocalService.fetchCPInstance(
-						commercePriceEntry.getCProductId(),
-						commercePriceEntry.getCPInstanceUuid()),
-					commerceTierPriceEntry.getMinQuantity(),
-					commercePriceEntry.getUnitOfMeasureKey());
-				price = tierPriceEntryPrice.doubleValue();
-				priceEntryExternalReferenceCode =
-					commercePriceEntry.getExternalReferenceCode();
-				priceEntryId = commercePriceEntry.getCommercePriceEntryId();
-				priceFormatted = _formatPrice(
-					tierPriceEntryPrice, commerceCurrency, locale);
-				unitOfMeasureKey = commercePriceEntry.getUnitOfMeasureKey();
+				setActions(dtoConverterContext::getActions);
+				setCustomFields(expandoBridge::getAttributes);
+				setDiscountDiscovery(
+					commerceTierPriceEntry::isDiscountDiscovery);
+				setDiscountLevel1(commerceTierPriceEntry::getDiscountLevel1);
+				setDiscountLevel2(commerceTierPriceEntry::getDiscountLevel2);
+				setDiscountLevel3(commerceTierPriceEntry::getDiscountLevel3);
+				setDiscountLevel4(commerceTierPriceEntry::getDiscountLevel4);
+				setDisplayDate(commerceTierPriceEntry::getDisplayDate);
+				setExpirationDate(commerceTierPriceEntry::getExpirationDate);
+				setExternalReferenceCode(
+					commerceTierPriceEntry::getExternalReferenceCode);
+				setId(commerceTierPriceEntry::getCommerceTierPriceEntryId);
+				setMinimumQuantity(
+					() -> _commerceQuantityFormatter.format(
+						_cpInstanceLocalService.fetchCPInstance(
+							commercePriceEntry.getCProductId(),
+							commercePriceEntry.getCPInstanceUuid()),
+						commerceTierPriceEntry.getMinQuantity(),
+						commercePriceEntry.getUnitOfMeasureKey()));
+				setPrice(tierPriceEntryPrice::doubleValue);
+				setPriceEntryExternalReferenceCode(
+					commercePriceEntry::getExternalReferenceCode);
+				setPriceEntryId(commercePriceEntry::getCommercePriceEntryId);
+				setPriceFormatted(
+					() -> {
+						BigDecimal price = tierPriceEntryPrice;
+
+						if (price == null) {
+							price = BigDecimal.ZERO;
+						}
+
+						return _commercePriceFormatter.format(
+							commerceCurrency, price, locale);
+					});
+				setUnitOfMeasureKey(commercePriceEntry::getUnitOfMeasureKey);
 			}
 		};
-	}
-
-	private String _formatPrice(
-			BigDecimal price, CommerceCurrency commerceCurrency, Locale locale)
-		throws Exception {
-
-		if (price == null) {
-			price = BigDecimal.ZERO;
-		}
-
-		return _commercePriceFormatter.format(commerceCurrency, price, locale);
 	}
 
 	@Reference

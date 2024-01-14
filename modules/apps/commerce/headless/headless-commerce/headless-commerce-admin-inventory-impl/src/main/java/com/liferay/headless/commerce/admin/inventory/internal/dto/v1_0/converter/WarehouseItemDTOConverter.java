@@ -53,25 +53,32 @@ public class WarehouseItemDTOConverter
 
 		return new WarehouseItem() {
 			{
-				externalReferenceCode =
-					commerceInventoryWarehouseItem.getExternalReferenceCode();
-				id =
-					commerceInventoryWarehouseItem.
-						getCommerceInventoryWarehouseItemId();
-				quantity = _commerceQuantityFormatter.format(
-					cpInstanceUnitOfMeasure,
-					commerceInventoryWarehouseItem.getQuantity());
-				reservedQuantity = _commerceQuantityFormatter.format(
-					cpInstanceUnitOfMeasure,
-					commerceInventoryWarehouseItem.getReservedQuantity());
-				sku = commerceInventoryWarehouseItem.getSku();
-				unitOfMeasureKey =
-					commerceInventoryWarehouseItem.getUnitOfMeasureKey();
-				warehouseExternalReferenceCode =
-					commerceInventoryWarehouse.getExternalReferenceCode();
-				warehouseId =
-					commerceInventoryWarehouseItem.
-						getCommerceInventoryWarehouseId();
+				setExternalReferenceCode(
+					() ->
+						commerceInventoryWarehouseItem.
+							getExternalReferenceCode());
+				setId(
+					() ->
+						commerceInventoryWarehouseItem.
+							getCommerceInventoryWarehouseItemId());
+				setQuantity(
+					() -> _commerceQuantityFormatter.format(
+						cpInstanceUnitOfMeasure,
+						commerceInventoryWarehouseItem.getQuantity()));
+				setReservedQuantity(
+					() -> _commerceQuantityFormatter.format(
+						cpInstanceUnitOfMeasure,
+						commerceInventoryWarehouseItem.getReservedQuantity()));
+				setSku(commerceInventoryWarehouseItem::getSku);
+				setUnitOfMeasureKey(
+					commerceInventoryWarehouseItem::getUnitOfMeasureKey);
+				setWarehouseExternalReferenceCode(
+					() ->
+						commerceInventoryWarehouse.getExternalReferenceCode());
+				setWarehouseId(
+					() ->
+						commerceInventoryWarehouseItem.
+							getCommerceInventoryWarehouseId());
 			}
 		};
 	}

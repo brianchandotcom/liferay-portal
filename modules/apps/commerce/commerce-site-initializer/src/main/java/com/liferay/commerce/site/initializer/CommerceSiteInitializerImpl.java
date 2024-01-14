@@ -376,11 +376,12 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 			ProductSpecification productSpecification =
 				new ProductSpecification() {
 					{
-						productId = cpDefinition.getCPDefinitionId();
-						specificationKey = jsonObject.getString("key");
-						value = JSONUtil.toStringMap(
-							jsonObject.getJSONObject(
-								"productSpecificationValue"));
+						setProductId(cpDefinition::getCPDefinitionId);
+						setSpecificationKey(() -> jsonObject.getString("key"));
+						setValue(
+							() -> JSONUtil.toStringMap(
+								jsonObject.getJSONObject(
+									"productSpecificationValue")));
 					}
 				};
 
@@ -508,14 +509,15 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				new ProductOption[] {
 					new ProductOption() {
 						{
-							facetable = cpOption.isFacetable();
-							fieldType = cpOption.getCommerceOptionTypeKey();
-							key = cpOption.getKey();
-							name = LocalizedMapUtil.getI18nMap(
-								cpOption.getNameMap());
-							optionId = cpOption.getCPOptionId();
-							required = cpOption.isRequired();
-							skuContributor = cpOption.isSkuContributor();
+							setFacetable(cpOption::isFacetable);
+							setFieldType(cpOption::getCommerceOptionTypeKey);
+							setKey(cpOption::getKey);
+							setName(
+								() -> LocalizedMapUtil.getI18nMap(
+									cpOption.getNameMap()));
+							setOptionId(cpOption::getCPOptionId);
+							setRequired(cpOption::isRequired);
+							setSkuContributor(cpOption::isSkuContributor);
 						}
 					}
 				});

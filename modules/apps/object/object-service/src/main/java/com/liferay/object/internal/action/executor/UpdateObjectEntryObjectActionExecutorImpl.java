@@ -119,22 +119,22 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 				objectDefinition, primaryKey,
 				new ObjectEntry() {
 					{
-						properties = values;
-
+						setProperties(() -> values);
 						setStatus(
-							() -> {
-								com.liferay.object.model.ObjectEntry
-									serviceBuilderObjectEntry =
-										_objectEntryService.getObjectEntry(
-											primaryKey);
+							() -> new Status() {
+								{
+									setCode(
+										() -> {
+											com.liferay.object.model.ObjectEntry
+												serviceBuilderObjectEntry =
+													_objectEntryService.
+														getObjectEntry(
+															primaryKey);
 
-								return new Status() {
-									{
-										code =
-											serviceBuilderObjectEntry.
+											return serviceBuilderObjectEntry.
 												getStatus();
-									}
-								};
+										});
+								}
 							});
 					}
 				});

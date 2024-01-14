@@ -53,18 +53,21 @@ public class WarehouseOrderTypeDTOConverter
 
 		return new WarehouseOrderType() {
 			{
-				actions = dtoConverterContext.getActions();
-				orderTypeExternalReferenceCode =
-					commerceOrderType.getExternalReferenceCode();
-				orderTypeId = commerceOrderType.getCommerceOrderTypeId();
-				warehouseExternalReferenceCode =
-					commerceInventoryWarehouse.getExternalReferenceCode();
-				warehouseId =
-					commerceInventoryWarehouse.
-						getCommerceInventoryWarehouseId();
-				warehouseOrderTypeId =
-					commerceInventoryWarehouseRel.
-						getCommerceInventoryWarehouseRelId();
+				setActions(dtoConverterContext::getActions);
+				setOrderTypeExternalReferenceCode(
+					commerceOrderType::getExternalReferenceCode);
+				setOrderTypeId(commerceOrderType::getCommerceOrderTypeId);
+				setWarehouseExternalReferenceCode(
+					() ->
+						commerceInventoryWarehouse.getExternalReferenceCode());
+				setWarehouseId(
+					() ->
+						commerceInventoryWarehouse.
+							getCommerceInventoryWarehouseId());
+				setWarehouseOrderTypeId(
+					() ->
+						commerceInventoryWarehouseRel.
+							getCommerceInventoryWarehouseRelId());
 			}
 		};
 	}

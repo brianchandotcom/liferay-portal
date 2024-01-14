@@ -18,7 +18,7 @@ public class PageTemplateUtil {
 
 		return new PageTemplate() {
 			{
-				name = layoutPageTemplateEntry.getName();
+				setName(layoutPageTemplateEntry::getName);
 			}
 		};
 	}

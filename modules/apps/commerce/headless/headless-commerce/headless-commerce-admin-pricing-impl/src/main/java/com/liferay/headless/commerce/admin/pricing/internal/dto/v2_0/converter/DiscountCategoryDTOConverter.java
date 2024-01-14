@@ -48,15 +48,15 @@ public class DiscountCategoryDTOConverter
 
 		return new DiscountCategory() {
 			{
-				actions = dtoConverterContext.getActions();
-				categoryExternalReferenceCode =
-					assetCategory.getExternalReferenceCode();
-				categoryId = assetCategory.getCategoryId();
-				discountCategoryId =
-					commerceDiscountRel.getCommerceDiscountRelId();
-				discountExternalReferenceCode =
-					commerceDiscount.getExternalReferenceCode();
-				discountId = commerceDiscount.getCommerceDiscountId();
+				setActions(dtoConverterContext::getActions);
+				setCategoryExternalReferenceCode(
+					assetCategory::getExternalReferenceCode);
+				setCategoryId(assetCategory::getCategoryId);
+				setDiscountCategoryId(
+					commerceDiscountRel::getCommerceDiscountRelId);
+				setDiscountExternalReferenceCode(
+					commerceDiscount::getExternalReferenceCode);
+				setDiscountId(commerceDiscount::getCommerceDiscountId);
 			}
 		};
 	}

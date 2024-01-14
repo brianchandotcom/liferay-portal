@@ -18,7 +18,7 @@ public class MasterPageUtil {
 
 		return new MasterPage() {
 			{
-				name = layoutPageTemplateEntry.getName();
+				setName(layoutPageTemplateEntry::getName);
 			}
 		};
 	}

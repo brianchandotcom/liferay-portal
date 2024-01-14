@@ -86,63 +86,76 @@ public class ProductDTOConverter
 
 		return new Product() {
 			{
-				actions = dtoConverterContext.getActions();
-				active = !cpDefinition.isInactive();
-				catalogId = _getCommerceCatalogId(cpDefinition);
-				categories = TransformUtil.transformToArray(
-					_assetCategoryLocalService.getCategories(
-						cpDefinition.getModelClassName(),
-						cpDefinition.getCPDefinitionId()),
-					assetCategory -> _toCategory(assetCategory),
-					Category.class);
-				createDate = cpDefinition.getCreateDate();
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					CPDefinition.class.getName(),
-					cpDefinition.getCPDefinitionId(),
-					cpDefinition.getCompanyId(),
-					dtoConverterContext.getLocale());
-				description = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getDescriptionMap());
-				displayDate = cpDefinition.getDisplayDate();
-				expando = expandoBridge.getAttributes();
-				expirationDate = cpDefinition.getExpirationDate();
-				externalReferenceCode = cProduct.getExternalReferenceCode();
-				id = cpDefinition.getCPDefinitionId();
-				metaDescription = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getMetaDescriptionMap());
-				metaKeyword = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getMetaKeywordsMap());
-				metaTitle = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getMetaTitleMap());
-				modifiedDate = cpDefinition.getModifiedDate();
-				name = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getNameMap());
-				productAccountGroupFilter =
-					cpDefinition.isAccountGroupFilterEnabled();
-				productChannelFilter = cpDefinition.isChannelFilterEnabled();
-				productId = cProduct.getCProductId();
-				productStatus = cpDefinition.getStatus();
-				productType = cpType.getName();
-				productTypeI18n = cpType.getLabel(locale);
-				shortDescription = LanguageUtils.getLanguageIdMap(
-					cpDefinition.getShortDescriptionMap());
-				skuFormatted = _getSku(
-					cpDefinition, dtoConverterContext.getLocale());
-				tags = TransformUtil.transformToArray(
-					_assetTagService.getTags(
-						cpDefinition.getModelClassName(),
-						cpDefinition.getCPDefinitionId()),
-					AssetTag::getName, String.class);
-				thumbnail = cpDefinition.getDefaultImageThumbnailSrc(
-					AccountConstants.ACCOUNT_ENTRY_ID_ADMIN);
-				urls = LanguageUtils.getLanguageIdMap(
-					_cpDefinitionService.getUrlTitleMap(
-						cpDefinition.getCPDefinitionId()));
-				version = cpDefinition.getVersion();
-				workflowStatusInfo = _toStatus(
-					cpDefinition.getStatus(), productStatusLabel,
-					productStatusLabelI18n);
+				setActions(dtoConverterContext::getActions);
+				setActive(() -> !cpDefinition.isInactive());
+				setCatalogId(() -> _getCommerceCatalogId(cpDefinition));
+				setCategories(
+					() -> TransformUtil.transformToArray(
+						_assetCategoryLocalService.getCategories(
+							cpDefinition.getModelClassName(),
+							cpDefinition.getCPDefinitionId()),
+						assetCategory -> _toCategory(assetCategory),
+						Category.class));
+				setCreateDate(cpDefinition::getCreateDate);
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						CPDefinition.class.getName(),
+						cpDefinition.getCPDefinitionId(),
+						cpDefinition.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getDescriptionMap()));
+				setDisplayDate(cpDefinition::getDisplayDate);
+				setExpando(expandoBridge::getAttributes);
+				setExpirationDate(cpDefinition::getExpirationDate);
+				setExternalReferenceCode(cProduct::getExternalReferenceCode);
+				setId(cpDefinition::getCPDefinitionId);
+				setMetaDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getMetaDescriptionMap()));
+				setMetaKeyword(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getMetaKeywordsMap()));
+				setMetaTitle(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getMetaTitleMap()));
+				setModifiedDate(cpDefinition::getModifiedDate);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getNameMap()));
+				setProductAccountGroupFilter(
+					cpDefinition::isAccountGroupFilterEnabled);
+				setProductChannelFilter(cpDefinition::isChannelFilterEnabled);
+				setProductId(cProduct::getCProductId);
+				setProductStatus(cpDefinition::getStatus);
+				setProductType(cpType::getName);
+				setProductTypeI18n(() -> cpType.getLabel(locale));
+				setShortDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpDefinition.getShortDescriptionMap()));
+				setSkuFormatted(
+					() -> _getSku(
+						cpDefinition, dtoConverterContext.getLocale()));
+				setTags(
+					() -> TransformUtil.transformToArray(
+						_assetTagService.getTags(
+							cpDefinition.getModelClassName(),
+							cpDefinition.getCPDefinitionId()),
+						AssetTag::getName, String.class));
+				setThumbnail(
+					() -> cpDefinition.getDefaultImageThumbnailSrc(
+						AccountConstants.ACCOUNT_ENTRY_ID_ADMIN));
+				setUrls(
+					() -> LanguageUtils.getLanguageIdMap(
+						_cpDefinitionService.getUrlTitleMap(
+							cpDefinition.getCPDefinitionId())));
+				setVersion(cpDefinition::getVersion);
+				setWorkflowStatusInfo(
+					() -> _toStatus(
+						cpDefinition.getStatus(), productStatusLabel,
+						productStatusLabelI18n));
 			}
 		};
 	}
@@ -180,11 +193,10 @@ public class ProductDTOConverter
 	private Category _toCategory(AssetCategory assetCategory) {
 		return new Category() {
 			{
-				externalReferenceCode =
-					assetCategory.getExternalReferenceCode();
-				id = assetCategory.getCategoryId();
-				name = assetCategory.getName();
-
+				setExternalReferenceCode(
+					assetCategory::getExternalReferenceCode);
+				setId(assetCategory::getCategoryId);
+				setName(assetCategory::getName);
 				setVocabulary(
 					() -> {
 						AssetVocabulary assetVocabulary =
@@ -207,9 +219,9 @@ public class ProductDTOConverter
 
 		return new Status() {
 			{
-				code = statusCode;
-				label = productStatusLabel;
-				label_i18n = productStatusLabelI18n;
+				setCode(() -> statusCode);
+				setLabel(() -> productStatusLabel);
+				setLabel_i18n(() -> productStatusLabelI18n);
 			}
 		};
 	}

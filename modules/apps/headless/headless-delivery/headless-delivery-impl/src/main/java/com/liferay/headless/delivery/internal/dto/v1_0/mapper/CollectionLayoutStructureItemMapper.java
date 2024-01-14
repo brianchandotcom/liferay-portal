@@ -57,55 +57,77 @@ public class CollectionLayoutStructureItemMapper
 
 		return new PageElement() {
 			{
-				definition = new PageCollectionDefinition() {
-					{
-						collectionConfig = _getCollectionConfig(
-							collectionStyledLayoutStructureItem);
-						collectionViewports = _getCollectionViewports(
-							collectionStyledLayoutStructureItem);
-						displayAllItems =
-							collectionStyledLayoutStructureItem.
-								isDisplayAllItems();
-						displayAllPages =
-							collectionStyledLayoutStructureItem.
-								isDisplayAllPages();
-						emptyCollectionConfig = _getEmptyCollectionConfig(
-							collectionStyledLayoutStructureItem);
-						fragmentViewports = getFragmentViewPorts(
-							collectionStyledLayoutStructureItem.
-								getItemConfigJSONObject());
-						layout = _toLayout(collectionStyledLayoutStructureItem);
-						listItemStyle =
-							collectionStyledLayoutStructureItem.
-								getListItemStyle();
-						listStyle =
-							collectionStyledLayoutStructureItem.getListStyle();
-						name = collectionStyledLayoutStructureItem.getName();
-						numberOfColumns =
-							collectionStyledLayoutStructureItem.
-								getNumberOfColumns();
-						numberOfItems =
-							collectionStyledLayoutStructureItem.
-								getNumberOfItems();
-						numberOfItemsPerPage =
-							collectionStyledLayoutStructureItem.
-								getNumberOfItemsPerPage();
-						numberOfPages =
-							collectionStyledLayoutStructureItem.
-								getNumberOfPages();
-						paginationType = _getPaginationType(
-							collectionStyledLayoutStructureItem.
-								getPaginationType());
-						showAllItems =
-							collectionStyledLayoutStructureItem.
-								isShowAllItems();
-						templateKey =
-							collectionStyledLayoutStructureItem.
-								getTemplateKey();
-					}
-				};
-				id = layoutStructureItem.getItemId();
-				type = Type.COLLECTION;
+				setDefinition(
+					() -> new PageCollectionDefinition() {
+						{
+							setCollectionConfig(
+								() -> _getCollectionConfig(
+									collectionStyledLayoutStructureItem));
+							setCollectionViewports(
+								() -> _getCollectionViewports(
+									collectionStyledLayoutStructureItem));
+							setDisplayAllItems(
+								() ->
+									collectionStyledLayoutStructureItem.
+										isDisplayAllItems());
+							setDisplayAllPages(
+								() ->
+									collectionStyledLayoutStructureItem.
+										isDisplayAllPages());
+							setEmptyCollectionConfig(
+								() -> _getEmptyCollectionConfig(
+									collectionStyledLayoutStructureItem));
+							setFragmentViewports(
+								() -> getFragmentViewPorts(
+									collectionStyledLayoutStructureItem.
+										getItemConfigJSONObject()));
+							setLayout(
+								() -> _toLayout(
+									collectionStyledLayoutStructureItem));
+							setListItemStyle(
+								() ->
+									collectionStyledLayoutStructureItem.
+										getListItemStyle());
+							setListStyle(
+								() ->
+									collectionStyledLayoutStructureItem.
+										getListStyle());
+							setName(
+								() ->
+									collectionStyledLayoutStructureItem.
+										getName());
+							setNumberOfColumns(
+								() ->
+									collectionStyledLayoutStructureItem.
+										getNumberOfColumns());
+							setNumberOfItems(
+								() ->
+									collectionStyledLayoutStructureItem.
+										getNumberOfItems());
+							setNumberOfItemsPerPage(
+								() ->
+									collectionStyledLayoutStructureItem.
+										getNumberOfItemsPerPage());
+							setNumberOfPages(
+								() ->
+									collectionStyledLayoutStructureItem.
+										getNumberOfPages());
+							setPaginationType(
+								() -> _getPaginationType(
+									collectionStyledLayoutStructureItem.
+										getPaginationType()));
+							setShowAllItems(
+								() ->
+									collectionStyledLayoutStructureItem.
+										isShowAllItems());
+							setTemplateKey(
+								() ->
+									collectionStyledLayoutStructureItem.
+										getTemplateKey());
+						}
+					});
+				setId(layoutStructureItem::getItemId);
+				setType(() -> Type.COLLECTION);
 			}
 		};
 	}
@@ -132,14 +154,16 @@ public class CollectionLayoutStructureItemMapper
 
 			return new CollectionConfig() {
 				{
-					collectionReference = new ClassPKReference() {
-						{
-							className = portal.getClassName(
-								jsonObject.getInt("classNameId"));
-							classPK = jsonObject.getLong("classPK");
-						}
-					};
-					collectionType = CollectionType.COLLECTION;
+					setCollectionReference(
+						() -> new ClassPKReference() {
+							{
+								setClassName(
+									() -> portal.getClassName(
+										jsonObject.getInt("classNameId")));
+								setClassPK(() -> jsonObject.getLong("classPK"));
+							}
+						});
+					setCollectionType(() -> CollectionType.COLLECTION);
 				}
 			};
 		}
@@ -149,12 +173,13 @@ public class CollectionLayoutStructureItemMapper
 
 			return new CollectionConfig() {
 				{
-					collectionReference = new ClassNameReference() {
-						{
-							className = jsonObject.getString("key");
-						}
-					};
-					collectionType = CollectionType.COLLECTION_PROVIDER;
+					setCollectionReference(
+						() -> new ClassNameReference() {
+							{
+								setClassName(() -> jsonObject.getString("key"));
+							}
+						});
+					setCollectionType(() -> CollectionType.COLLECTION_PROVIDER);
 				}
 			};
 		}
@@ -179,31 +204,34 @@ public class CollectionLayoutStructureItemMapper
 		collectionViewports.add(
 			new CollectionViewport() {
 				{
-					collectionViewportDefinition =
-						_toCollectionViewportDefinition(
+					setCollectionViewportDefinition(
+						() -> _toCollectionViewportDefinition(
 							collectionViewportConfigurationJSONObjects,
-							ViewportSize.MOBILE_LANDSCAPE);
-					id = ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId();
+							ViewportSize.MOBILE_LANDSCAPE));
+					setId(
+						() ->
+							ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId());
 				}
 			});
 		collectionViewports.add(
 			new CollectionViewport() {
 				{
-					collectionViewportDefinition =
-						_toCollectionViewportDefinition(
+					setCollectionViewportDefinition(
+						() -> _toCollectionViewportDefinition(
 							collectionViewportConfigurationJSONObjects,
-							ViewportSize.PORTRAIT_MOBILE);
-					id = ViewportSize.PORTRAIT_MOBILE.getViewportSizeId();
+							ViewportSize.PORTRAIT_MOBILE));
+					setId(
+						() -> ViewportSize.PORTRAIT_MOBILE.getViewportSizeId());
 				}
 			});
 		collectionViewports.add(
 			new CollectionViewport() {
 				{
-					collectionViewportDefinition =
-						_toCollectionViewportDefinition(
+					setCollectionViewportDefinition(
+						() -> _toCollectionViewportDefinition(
 							collectionViewportConfigurationJSONObjects,
-							ViewportSize.TABLET);
-					id = ViewportSize.TABLET.getViewportSizeId();
+							ViewportSize.TABLET));
+					setId(() -> ViewportSize.TABLET.getViewportSizeId());
 				}
 			});
 
@@ -223,8 +251,8 @@ public class CollectionLayoutStructureItemMapper
 
 		return new EmptyCollectionConfig() {
 			{
-				displayMessage = emptyCollectionOptions.isDisplayMessage();
-				message_i18n = emptyCollectionOptions.getMessage();
+				setDisplayMessage(emptyCollectionOptions::isDisplayMessage);
+				setMessage_i18n(emptyCollectionOptions::getMessage);
 			}
 		};
 	}

@@ -54,85 +54,99 @@ public class RoleDTOConverter
 
 		return new Role() {
 			{
-				actions = dtoConverterContext.getActions();
-				availableLanguages = LocaleUtil.toW3cLanguageIds(
-					role.getAvailableLanguageIds());
-				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.fetchUser(role.getUserId()));
-				dateCreated = role.getCreateDate();
-				dateModified = role.getModifiedDate();
-				description = role.getDescription(
-					dtoConverterContext.getLocale());
-				description_i18n = LocalizedMapUtil.getI18nMap(
-					role.getDescriptionMap());
-				externalReferenceCode = role.getName();
-				id = role.getRoleId();
-				name = role.getTitle(dtoConverterContext.getLocale());
-				name_i18n = LocalizedMapUtil.getI18nMap(role.getTitleMap());
-				rolePermissions = TransformUtil.transformToArray(
-					_resourcePermissionLocalService.getRoleResourcePermissions(
-						id),
-					resourcePermission -> new RolePermission() {
-						{
-							id = resourcePermission.getRoleId();
-							primaryKey = resourcePermission.getPrimKey();
-							resourceName = resourcePermission.getName();
-							roleId = resourcePermission.getRoleId();
-							scope = (long)resourcePermission.getScope();
+				setActions(dtoConverterContext::getActions);
+				setAvailableLanguages(
+					() -> LocaleUtil.toW3cLanguageIds(
+						role.getAvailableLanguageIds()));
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						_portal,
+						_userLocalService.fetchUser(role.getUserId())));
+				setDateCreated(role::getCreateDate);
+				setDateModified(role::getModifiedDate);
+				setDescription(
+					() -> role.getDescription(dtoConverterContext.getLocale()));
+				setDescription_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						role.getDescriptionMap()));
+				setExternalReferenceCode(role::getName);
+				setId(role::getRoleId);
+				setName(() -> role.getTitle(dtoConverterContext.getLocale()));
+				setName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(role.getTitleMap()));
+				setRolePermissions(
+					() -> TransformUtil.transformToArray(
+						_resourcePermissionLocalService.
+							getRoleResourcePermissions(role.getRoleId()),
+						resourcePermission -> new RolePermission() {
+							{
+								setActionIds(
+									() -> {
+										List<ResourceAction> resourceActions =
+											_resourceActionLocalService.
+												getResourceActions(
+													resourcePermission.
+														getName());
 
-							setActionIds(
-								() -> {
-									List<ResourceAction> resourceActions =
-										_resourceActionLocalService.
-											getResourceActions(
-												resourcePermission.getName());
+										Set<String> actionIdsSet =
+											new HashSet<>();
 
-									Set<String> actionIdsSet = new HashSet<>();
+										long actionIds =
+											resourcePermission.getActionIds();
 
-									long actionIds =
-										resourcePermission.getActionIds();
+										for (ResourceAction resourceAction :
+												resourceActions) {
 
-									for (ResourceAction resourceAction :
-											resourceActions) {
+											long bitwiseValue =
+												resourceAction.
+													getBitwiseValue();
 
-										long bitwiseValue =
-											resourceAction.getBitwiseValue();
+											if ((actionIds & bitwiseValue) ==
+													bitwiseValue) {
 
-										if ((actionIds & bitwiseValue) ==
-												bitwiseValue) {
-
-											actionIdsSet.add(
-												resourceAction.getActionId());
+												actionIdsSet.add(
+													resourceAction.
+														getActionId());
+											}
 										}
-									}
 
-									return actionIdsSet.toArray(new String[0]);
-								});
-							setLabel(
-								() -> {
-									if (Validator.isBlank(resourceName)) {
-										return null;
-									}
+										return actionIdsSet.toArray(
+											new String[0]);
+									});
+								setId(resourcePermission::getRoleId);
+								setLabel(
+									() -> {
+										String resourceName = getResourceName();
 
-									if (resourceName.contains("model")) {
-										return _language.get(
-											dtoConverterContext.getLocale(),
-											"model.resource." + resourceName);
-									}
+										if (Validator.isBlank(resourceName)) {
+											return null;
+										}
 
-									if (resourceName.contains("portlet")) {
-										return _language.get(
-											dtoConverterContext.getLocale(),
-											"javax.portlet.title." +
-												resourceName);
-									}
+										if (resourceName.contains("model")) {
+											return _language.get(
+												dtoConverterContext.getLocale(),
+												"model.resource." +
+													resourceName);
+										}
 
-									return resourceName;
-								});
-						}
-					},
-					RolePermission.class);
-				roleType = role.getTypeLabel();
+										if (resourceName.contains("portlet")) {
+											return _language.get(
+												dtoConverterContext.getLocale(),
+												"javax.portlet.title." +
+													resourceName);
+										}
+
+										return resourceName;
+									});
+								setPrimaryKey(resourcePermission::getPrimKey);
+								setResourceName(resourcePermission::getName);
+								setRoleId(resourcePermission::getRoleId);
+								setScope(
+									() -> (long)resourcePermission.getScope());
+							}
+						},
+						RolePermission.class));
+				setRoleType(role::getTypeLabel);
 			}
 		};
 	}

@@ -21,8 +21,8 @@ public class AssigneeUtil {
 
 		return new Assignee() {
 			{
-				id = user.getUserId();
-				name = user.getFullName();
+				setId(user::getUserId);
+				setName(user::getFullName);
 			}
 		};
 	}

@@ -33,42 +33,42 @@ public class ColumnLayoutStructureItemMapper
 
 		return new PageElement() {
 			{
-				definition = new PageColumnDefinition() {
-					{
-						size = columnLayoutStructureItem.getSize();
+				setDefinition(
+					() -> new PageColumnDefinition() {
+						{
+							setColumnViewports(
+								() -> {
+									Map<String, JSONObject>
+										columnViewportConfigurationJSONObjects =
+											columnLayoutStructureItem.
+												getViewportConfigurationJSONObjects();
 
-						setColumnViewports(
-							() -> {
-								Map<String, JSONObject>
-									columnViewportConfigurationJSONObjects =
-										columnLayoutStructureItem.
-											getViewportConfigurationJSONObjects();
+									if (MapUtil.isEmpty(
+											columnViewportConfigurationJSONObjects)) {
 
-								if (MapUtil.isEmpty(
-										columnViewportConfigurationJSONObjects)) {
+										return null;
+									}
 
-									return null;
-								}
+									ColumnViewport[] columnViewports =
+										new ColumnViewport[3];
 
-								ColumnViewport[] columnViewports =
-									new ColumnViewport[3];
+									columnViewports[0] = _toColumnViewport(
+										columnViewportConfigurationJSONObjects,
+										ViewportSize.MOBILE_LANDSCAPE);
+									columnViewports[1] = _toColumnViewport(
+										columnViewportConfigurationJSONObjects,
+										ViewportSize.PORTRAIT_MOBILE);
+									columnViewports[2] = _toColumnViewport(
+										columnViewportConfigurationJSONObjects,
+										ViewportSize.TABLET);
 
-								columnViewports[0] = _toColumnViewport(
-									columnViewportConfigurationJSONObjects,
-									ViewportSize.MOBILE_LANDSCAPE);
-								columnViewports[1] = _toColumnViewport(
-									columnViewportConfigurationJSONObjects,
-									ViewportSize.PORTRAIT_MOBILE);
-								columnViewports[2] = _toColumnViewport(
-									columnViewportConfigurationJSONObjects,
-									ViewportSize.TABLET);
-
-								return columnViewports;
-							});
-					}
-				};
-				id = layoutStructureItem.getItemId();
-				type = Type.COLUMN;
+									return columnViewports;
+								});
+							setSize(columnLayoutStructureItem::getSize);
+						}
+					});
+				setId(layoutStructureItem::getItemId);
+				setType(() -> Type.COLUMN);
 			}
 		};
 	}
@@ -79,10 +79,10 @@ public class ColumnLayoutStructureItemMapper
 
 		return new ColumnViewport() {
 			{
-				columnViewportDefinition =
-					_toColumnViewportColumnViewportDefinition(
-						columnViewportConfigurationJSONObjects, viewportSize);
-				id = viewportSize.getViewportSizeId();
+				setColumnViewportDefinition(
+					() -> _toColumnViewportColumnViewportDefinition(
+						columnViewportConfigurationJSONObjects, viewportSize));
+				setId(viewportSize::getViewportSizeId);
 			}
 		};
 	}

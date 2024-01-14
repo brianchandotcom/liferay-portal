@@ -71,13 +71,16 @@ public class WidgetInstanceMapper {
 
 		return new WidgetInstance() {
 			{
-				widgetConfig = _getWidgetConfig(
-					fragmentEntryLink.getPlid(), portletId);
-				widgetInstanceId = _getWidgetInstanceId(
-					fragmentEntryLink, portletId);
-				widgetName = PortletIdCodec.decodePortletName(portletId);
-				widgetPermissions = _getWidgetPermissions(
-					fragmentEntryLink.getPlid(), portletId);
+				setWidgetConfig(
+					() -> _getWidgetConfig(
+						fragmentEntryLink.getPlid(), portletId));
+				setWidgetInstanceId(
+					() -> _getWidgetInstanceId(fragmentEntryLink, portletId));
+				setWidgetName(
+					() -> PortletIdCodec.decodePortletName(portletId));
+				setWidgetPermissions(
+					() -> _getWidgetPermissions(
+						fragmentEntryLink.getPlid(), portletId));
 			}
 		};
 	}
@@ -205,8 +208,9 @@ public class WidgetInstanceMapper {
 			widgetPermissions.add(
 				new WidgetPermission() {
 					{
-						actionKeys = actionIdsSet.toArray(new String[0]);
-						roleKey = finalRoleKey;
+						setActionKeys(
+							() -> actionIdsSet.toArray(new String[0]));
+						setRoleKey(() -> finalRoleKey);
 					}
 				});
 		}

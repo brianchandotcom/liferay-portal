@@ -58,24 +58,22 @@ public class AssetEntityDTOConverter
 
 		return new AssetEntity() {
 			{
-				assetCategoryIds = TransformUtil.transformToArray(
-					_assetCategoryLocalService.getCategories(
-						assetEntry.getClassNameId(), assetEntry.getClassPK()),
-					AssetCategory::getCategoryId, Long.class);
-				assetTagNames = TransformUtil.transformToArray(
-					_assetTagLocalService.getTags(
-						assetEntry.getClassNameId(), assetEntry.getClassPK()),
-					AssetTag::getName, String.class);
-				className = _portal.getClassName(assetEntry.getClassNameId());
-				classPK = assetEntry.getClassPK();
-				classTypeId = assetEntry.getClassTypeId();
-				createDate = assetEntry.getCreateDate();
-				expirationDate = assetEntry.getExpirationDate();
-				groupId = assetEntry.getGroupId();
-				id = assetEntry.getEntryId();
-				modifiedDate = assetEntry.getModifiedDate();
-				publishDate = assetEntry.getPublishDate();
-
+				setAssetCategoryIds(
+					() -> TransformUtil.transformToArray(
+						_assetCategoryLocalService.getCategories(
+							assetEntry.getClassNameId(),
+							assetEntry.getClassPK()),
+						AssetCategory::getCategoryId, Long.class));
+				setAssetTagNames(
+					() -> TransformUtil.transformToArray(
+						_assetTagLocalService.getTags(
+							assetEntry.getClassNameId(),
+							assetEntry.getClassPK()),
+						AssetTag::getName, String.class));
+				setClassName(
+					() -> _portal.getClassName(assetEntry.getClassNameId()));
+				setClassPK(assetEntry::getClassPK);
+				setClassTypeId(assetEntry::getClassTypeId);
 				setClassTypeName(
 					() -> {
 						if (ddmStructure == null) {
@@ -84,6 +82,12 @@ public class AssetEntityDTOConverter
 
 						return ddmStructure.getStructureKey();
 					});
+				setCreateDate(assetEntry::getCreateDate);
+				setExpirationDate(assetEntry::getExpirationDate);
+				setGroupId(assetEntry::getGroupId);
+				setId(assetEntry::getEntryId);
+				setModifiedDate(assetEntry::getModifiedDate);
+				setPublishDate(assetEntry::getPublishDate);
 			}
 		};
 	}

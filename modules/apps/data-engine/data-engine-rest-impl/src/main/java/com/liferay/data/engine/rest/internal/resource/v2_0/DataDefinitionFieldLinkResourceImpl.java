@@ -120,9 +120,12 @@ public class DataDefinitionFieldLinkResourceImpl
 					dataDefinitionFieldLink.getDataLayouts(),
 					new DataLayout() {
 						{
-							id = ddmStructureLayout.getStructureLayoutId();
-							name = LocalizedValueUtil.toStringObjectMap(
-								ddmStructureLayout.getNameMap());
+							setId(
+								() ->
+									ddmStructureLayout.getStructureLayoutId());
+							setName(
+								() -> LocalizedValueUtil.toStringObjectMap(
+									ddmStructureLayout.getNameMap()));
 						}
 					}));
 
@@ -148,11 +151,13 @@ public class DataDefinitionFieldLinkResourceImpl
 					dataDefinitionFieldLink.getDataListViews(),
 					new DataListView() {
 						{
-							id =
-								deDataDefinitionFieldLink.
-									getDeDataDefinitionFieldLinkId();
-							name = LocalizedValueUtil.toStringObjectMap(
-								deDataListView.getNameMap());
+							setId(
+								() ->
+									deDataDefinitionFieldLink.
+										getDeDataDefinitionFieldLinkId());
+							setName(
+								() -> LocalizedValueUtil.toStringObjectMap(
+									deDataListView.getNameMap()));
 						}
 					}));
 
@@ -167,13 +172,15 @@ public class DataDefinitionFieldLinkResourceImpl
 
 		return new DataDefinitionFieldLink() {
 			{
-				dataDefinition = DataDefinitionUtil.toDataDefinition(
-					_ddmFormFieldTypeServicesRegistry,
-					_ddmStructureLocalService.getDDMStructure(dataDefinitionId),
-					_ddmStructureLayoutLocalService, contextHttpServletRequest,
-					_spiDDMFormRuleConverter);
-				dataLayouts = new DataLayout[0];
-				dataListViews = new DataListView[0];
+				setDataDefinition(
+					() -> DataDefinitionUtil.toDataDefinition(
+						_ddmFormFieldTypeServicesRegistry,
+						_ddmStructureLocalService.getDDMStructure(
+							dataDefinitionId),
+						_ddmStructureLayoutLocalService,
+						contextHttpServletRequest, _spiDDMFormRuleConverter));
+				setDataLayouts(() -> new DataLayout[0]);
+				setDataListViews(() -> new DataListView[0]);
 			}
 		};
 	}

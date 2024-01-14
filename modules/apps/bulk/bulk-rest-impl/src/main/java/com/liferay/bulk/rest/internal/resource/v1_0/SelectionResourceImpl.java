@@ -36,7 +36,7 @@ public class SelectionResourceImpl extends BaseSelectionResourceImpl {
 
 		return new Selection() {
 			{
-				size = bulkSelection.getSize();
+				setSize(bulkSelection::getSize);
 			}
 		};
 	}

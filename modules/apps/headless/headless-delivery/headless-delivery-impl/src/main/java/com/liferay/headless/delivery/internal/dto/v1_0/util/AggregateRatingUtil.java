@@ -20,11 +20,11 @@ public class AggregateRatingUtil {
 
 		return new AggregateRating() {
 			{
-				bestRating = 1D;
-				ratingAverage = ratingsStats.getAverageScore();
-				ratingCount = ratingsStats.getTotalEntries();
-				ratingValue = ratingsStats.getTotalScore();
-				worstRating = 0D;
+				setBestRating(() -> 1D);
+				setRatingAverage(ratingsStats::getAverageScore);
+				setRatingCount(ratingsStats::getTotalEntries);
+				setRatingValue(ratingsStats::getTotalScore);
+				setWorstRating(() -> 0D);
 			}
 		};
 	}

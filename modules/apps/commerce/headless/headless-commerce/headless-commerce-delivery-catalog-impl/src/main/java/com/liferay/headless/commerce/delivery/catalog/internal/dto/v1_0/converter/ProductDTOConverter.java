@@ -63,34 +63,6 @@ public class ProductDTOConverter
 
 		return new Product() {
 			{
-				createDate = cpDefinition.getCreateDate();
-				customFields = CustomFieldsUtil.toCustomFields(
-					dtoConverterContext.isAcceptAllLanguages(),
-					CPDefinition.class.getName(),
-					cpDefinition.getCPDefinitionId(),
-					cpDefinition.getCompanyId(),
-					dtoConverterContext.getLocale());
-				description = cpDefinition.getDescription(languageId);
-				expando = expandoBridge.getAttributes();
-				id = cpDefinition.getCPDefinitionId();
-				metaDescription = cpDefinition.getMetaDescription(languageId);
-				metaKeyword = cpDefinition.getMetaKeywords(languageId);
-				metaTitle = cpDefinition.getMetaTitle(languageId);
-				modifiedDate = cpDefinition.getModifiedDate();
-				name = cpDefinition.getName(languageId);
-				productId = cpDefinition.getCProductId();
-				productType = cpDefinition.getProductTypeName();
-				shortDescription = cpDefinition.getShortDescription(languageId);
-				slug = cpDefinition.getURL(languageId);
-				tags = TransformUtil.transformToArray(
-					_assetTagLocalService.getTags(
-						cpDefinition.getModelClassName(),
-						cpDefinition.getCPDefinitionId()),
-					AssetTag::getName, String.class);
-				urls = LanguageUtils.getLanguageIdMap(
-					_cpDefinitionLocalService.getUrlTitleMap(
-						cpDefinition.getCPDefinitionId()));
-
 				setCatalogName(
 					() -> {
 						CommerceCatalog commerceCatalog =
@@ -98,12 +70,29 @@ public class ProductDTOConverter
 
 						return commerceCatalog.getName();
 					});
+				setCreateDate(cpDefinition::getCreateDate);
+				setCustomFields(
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						CPDefinition.class.getName(),
+						cpDefinition.getCPDefinitionId(),
+						cpDefinition.getCompanyId(),
+						dtoConverterContext.getLocale()));
+				setDescription(() -> cpDefinition.getDescription(languageId));
+				setExpando(expandoBridge::getAttributes);
 				setExternalReferenceCode(
 					() -> {
 						CProduct cProduct = cpDefinition.getCProduct();
 
 						return cProduct.getExternalReferenceCode();
 					});
+				setId(cpDefinition::getCPDefinitionId);
+				setMetaDescription(
+					() -> cpDefinition.getMetaDescription(languageId));
+				setMetaKeyword(() -> cpDefinition.getMetaKeywords(languageId));
+				setMetaTitle(() -> cpDefinition.getMetaTitle(languageId));
+				setModifiedDate(cpDefinition::getModifiedDate);
+				setName(() -> cpDefinition.getName(languageId));
 				setProductConfiguration(
 					() -> _productConfigurationDTOConverter.toDTO(
 						new DefaultDTOConverterContext(
@@ -111,6 +100,17 @@ public class ProductDTOConverter
 							cpDefinition.getCPDefinitionId(),
 							productDTOConverterContext.getLocale(), null,
 							null)));
+				setProductId(cpDefinition::getCProductId);
+				setProductType(cpDefinition::getProductTypeName);
+				setShortDescription(
+					() -> cpDefinition.getShortDescription(languageId));
+				setSlug(() -> cpDefinition.getURL(languageId));
+				setTags(
+					() -> TransformUtil.transformToArray(
+						_assetTagLocalService.getTags(
+							cpDefinition.getModelClassName(),
+							cpDefinition.getCPDefinitionId()),
+						AssetTag::getName, String.class));
 				setUrlImage(
 					() -> {
 						Company company = _companyLocalService.getCompany(
@@ -129,6 +129,10 @@ public class ProductDTOConverter
 
 						return portalURL + defaultImageFileURL;
 					});
+				setUrls(
+					() -> LanguageUtils.getLanguageIdMap(
+						_cpDefinitionLocalService.getUrlTitleMap(
+							cpDefinition.getCPDefinitionId())));
 			}
 		};
 	}

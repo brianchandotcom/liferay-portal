@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.service.TicketLocalService;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,6 +36,13 @@ public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
 	public void onAfterUpdate(
 			CTCollection originalCTCollection, CTCollection ctCollection)
 		throws ModelListenerException {
+
+		if ((originalCTCollection.getStatus() != ctCollection.getStatus()) &&
+			(ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED)) {
+
+			_ctPreferencesLocalService.resetCTPreferences(
+				ctCollection.getCtCollectionId());
+		}
 
 		if (ctCollection.isShareable() ||
 			(ctCollection.isShareable() ==

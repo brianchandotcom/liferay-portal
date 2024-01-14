@@ -13,10 +13,19 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.test.util.JournalFolderFixture;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
@@ -64,7 +73,7 @@ public class ReleaseModelListenerTest {
 	}
 
 	@Test
-	public void testStalePublishIsRejected() throws Exception {
+	public void testNewReleaseDoesNotExpirePublication() throws Exception {
 		Assert.assertTrue(
 			_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 				_ctCollection.getSchemaVersionId()));
@@ -72,8 +81,76 @@ public class ReleaseModelListenerTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, _ctCollection.getStatus());
 
+		_releaseLocalService.addRelease(RandomTestUtil.randomString(), "1.0.0");
+
+		_ctCollection = _ctCollectionLocalService.getCTCollection(
+			_ctCollection.getCtCollectionId());
+
+		Assert.assertTrue(
+			_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
+				_ctCollection.getSchemaVersionId()));
+
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.getCTPreferences(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
+
+		Assert.assertEquals(
+			_ctCollection.getCtCollectionId(),
+			ctPreferences.getCtCollectionId());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR)) {
+
+			_ctProcessLocalService.addCTProcess(
+				TestPropsValues.getUserId(), _ctCollection.getCtCollectionId());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+		}
+
+		_ctCollection = _ctCollectionLocalService.getCTCollection(
+			_ctCollection.getCtCollectionId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, _ctCollection.getStatus());
+	}
+
+	@Test
+	public void testUpdatedReleaseWithConflictExpiresPublication()
+		throws Exception {
+
+		Assert.assertTrue(
+			_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
+				_ctCollection.getSchemaVersionId()));
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, _ctCollection.getStatus());
+
+		Group group = GroupTestUtil.addGroup();
+
+		JournalFolder productionJournalFolder = _journalFolderFixture.addFolder(
+			group.getGroupId(), RandomTestUtil.randomString());
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			_journalFolderFixture.addFolder(
+				group.getGroupId(), productionJournalFolder.getFolderId(),
+				RandomTestUtil.randomString());
+		}
+
+		_journalFolderLocalService.deleteFolder(
+			productionJournalFolder.getFolderId());
+
 		_releaseLocalService.updateRelease(
 			ReleaseModelListenerTest.class.getSimpleName(), "1.1.0", "1.0.0");
+
+		_ctCollection = _ctCollectionLocalService.getCTCollection(
+			_ctCollection.getCtCollectionId());
 
 		Assert.assertFalse(
 			_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
@@ -117,6 +194,55 @@ public class ReleaseModelListenerTest {
 			WorkflowConstants.STATUS_EXPIRED, _ctCollection.getStatus());
 	}
 
+	@Test
+	public void testUpdatedReleaseWithoutConflictDoesNotExpirePublication()
+		throws Exception {
+
+		Assert.assertTrue(
+			_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
+				_ctCollection.getSchemaVersionId()));
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, _ctCollection.getStatus());
+
+		_releaseLocalService.updateRelease(
+			ReleaseModelListenerTest.class.getSimpleName(), "1.1.0", "1.0.0");
+
+		_ctCollection = _ctCollectionLocalService.getCTCollection(
+			_ctCollection.getCtCollectionId());
+
+		Assert.assertTrue(
+			_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
+				_ctCollection.getSchemaVersionId()));
+
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.getCTPreferences(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
+
+		Assert.assertEquals(
+			_ctCollection.getCtCollectionId(),
+			ctPreferences.getCtCollectionId());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR)) {
+
+			_ctProcessLocalService.addCTProcess(
+				TestPropsValues.getUserId(), _ctCollection.getCtCollectionId());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+		}
+
+		_ctCollection = _ctCollectionLocalService.getCTCollection(
+			_ctCollection.getCtCollectionId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, _ctCollection.getStatus());
+	}
+
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;
 
@@ -130,6 +256,12 @@ public class ReleaseModelListenerTest {
 	private static CTSchemaVersionLocalService _ctSchemaVersionLocalService;
 
 	@Inject
+	private static DLFolderLocalService _dlFolderLocalService;
+
+	@Inject
+	private static JournalFolderLocalService _journalFolderLocalService;
+
+	@Inject
 	private static ReleaseLocalService _releaseLocalService;
 
 	@DeleteAfterTestRun
@@ -137,6 +269,9 @@ public class ReleaseModelListenerTest {
 
 	@DeleteAfterTestRun
 	private CTPreferences _ctPreferences;
+
+	private final JournalFolderFixture _journalFolderFixture =
+		new JournalFolderFixture(_journalFolderLocalService);
 
 	@DeleteAfterTestRun
 	private Release _release;

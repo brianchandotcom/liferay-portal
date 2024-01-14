@@ -355,4 +355,24 @@ describe('TranslationAdminSelector', () => {
 
 		expect(asFragment()).toMatchSnapshot();
 	});
+
+	it('renders horizontal selector when the display type is HORIZONTAL', () => {
+		Liferay.FeatureFlags['LPS-114700'] = true;
+
+		render(
+			<TranslationAdminSelector
+				displayType="HORIZONTAL"
+				selectedLanguageId="ca_ES"
+				{...props}
+			/>
+		);
+
+		const horizontalSelector = document.querySelector(
+			'.form-control-select'
+		);
+
+		expect(horizontalSelector).toBeInTheDocument();
+
+		Liferay.FeatureFlags['LPS-114700'] = false;
+	});
 });

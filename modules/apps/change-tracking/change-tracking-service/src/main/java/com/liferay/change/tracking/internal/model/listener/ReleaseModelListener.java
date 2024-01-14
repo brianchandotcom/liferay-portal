@@ -5,30 +5,28 @@
 
 package com.liferay.change.tracking.internal.model.listener;
 
-import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.conflict.ConflictInfo;
+import com.liferay.change.tracking.internal.conflict.MissingRequirementConflictInfo;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionTable;
-import com.liferay.change.tracking.model.CTPreferences;
-import com.liferay.change.tracking.model.CTPreferencesTable;
 import com.liferay.change.tracking.model.CTSchemaVersion;
-import com.liferay.change.tracking.model.CTSchemaVersionTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.model.ReleaseTable;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.impl.ReleaseImpl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -39,84 +37,83 @@ import org.osgi.service.component.annotations.Reference;
 public class ReleaseModelListener extends BaseModelListener<Release> {
 
 	@Override
-	public void onBeforeCreate(Release release) {
+	public void onAfterCreate(Release release) {
 		if (!Objects.equals(release.getSchemaVersion(), "0.0.0")) {
-			_resetCTPreferences();
+			_expireCTCollections();
 		}
 	}
 
 	@Override
-	public void onBeforeRemove(Release release) {
-		_resetCTPreferences();
+	public void onAfterRemove(Release release) {
+		_expireCTCollections();
 	}
 
 	@Override
-	public void onBeforeUpdate(Release originalRelease, Release release) {
-		ReleaseImpl releaseImpl = (ReleaseImpl)release;
-
-		String originalSchemaVersion = releaseImpl.getColumnOriginalValue(
-			ReleaseTable.INSTANCE.schemaVersion.getName());
-
+	public void onAfterUpdate(Release originalRelease, Release release) {
 		if (!Objects.equals(
-				originalSchemaVersion, releaseImpl.getSchemaVersion())) {
+				originalRelease.getSchemaVersion(),
+				release.getSchemaVersion())) {
 
-			Version version1 = Version.parseVersion(originalSchemaVersion);
+			Version version1 = Version.parseVersion(
+				originalRelease.getSchemaVersion());
 			Version version2 = Version.parseVersion(release.getSchemaVersion());
 
 			if ((version1.getMajor() != version2.getMajor()) ||
 				(version1.getMinor() != version2.getMinor())) {
 
-				_resetCTPreferences();
+				_expireCTCollections();
 			}
 		}
 	}
 
-	@Activate
-	protected void activate() {
-		List<CTSchemaVersion> ctSchemaVersions =
-			_ctSchemaVersionLocalService.dslQuery(
-				DSLQueryFactoryUtil.select(
-					CTSchemaVersionTable.INSTANCE
-				).from(
-					CTSchemaVersionTable.INSTANCE
-				).orderBy(
-					CTSchemaVersionTable.INSTANCE.schemaVersionId.descending()
-				).limit(
-					0, 1
-				));
+	private void _expireCTCollection(CTCollection ctCollection) {
+		try {
+			Map<Long, List<ConflictInfo>> conflictMap =
+				_ctCollectionLocalService.checkConflicts(ctCollection);
 
-		if (!ctSchemaVersions.isEmpty() &&
-			!_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
-				ctSchemaVersions.get(0), false)) {
+			for (Map.Entry<Long, List<ConflictInfo>> entry :
+					conflictMap.entrySet()) {
 
-			_resetCTPreferences();
+				List<ConflictInfo> conflictInfos = entry.getValue();
+
+				for (ConflictInfo conflictInfo : conflictInfos) {
+					if (conflictInfo instanceof
+							MissingRequirementConflictInfo) {
+
+						ctCollection.setStatus(
+							WorkflowConstants.STATUS_EXPIRED);
+
+						ctCollection =
+							_ctCollectionLocalService.updateCTCollection(
+								ctCollection);
+
+						return;
+					}
+				}
+			}
+
+			CTSchemaVersion ctSchemaVersion =
+				_ctSchemaVersionLocalService.getLatestCTSchemaVersion(
+					ctCollection.getCompanyId());
+
+			ctCollection.setSchemaVersionId(
+				ctSchemaVersion.getSchemaVersionId());
+
+			ctCollection = _ctCollectionLocalService.updateCTCollection(
+				ctCollection);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
+			ctCollection.setStatus(WorkflowConstants.STATUS_EXPIRED);
+
+			_ctCollectionLocalService.updateCTCollection(ctCollection);
 		}
 	}
 
-	private void _resetCTPreferences() {
-		for (CTPreferences ctPreferences :
-				_ctPreferencesLocalService.<List<CTPreferences>>dslQuery(
-					DSLQueryFactoryUtil.select(
-						CTPreferencesTable.INSTANCE
-					).from(
-						CTPreferencesTable.INSTANCE
-					).where(
-						CTPreferencesTable.INSTANCE.previousCtCollectionId.neq(
-							CTConstants.CT_COLLECTION_ID_PRODUCTION
-						).or(
-							CTPreferencesTable.INSTANCE.ctCollectionId.neq(
-								CTConstants.CT_COLLECTION_ID_PRODUCTION)
-						)
-					))) {
-
-			ctPreferences.setCtCollectionId(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION);
-			ctPreferences.setPreviousCtCollectionId(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION);
-
-			_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
-		}
-
+	private void _expireCTCollections() {
 		for (CTCollection ctCollection :
 				_ctCollectionLocalService.<List<CTCollection>>dslQuery(
 					DSLQueryFactoryUtil.select(
@@ -128,17 +125,15 @@ public class ReleaseModelListener extends BaseModelListener<Release> {
 							WorkflowConstants.STATUS_DRAFT)
 					))) {
 
-			ctCollection.setStatus(WorkflowConstants.STATUS_EXPIRED);
-
-			_ctCollectionLocalService.updateCTCollection(ctCollection);
+			_expireCTCollection(ctCollection);
 		}
 	}
 
-	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
+	private static final Log _log = LogFactoryUtil.getLog(
+		ReleaseModelListener.class);
 
 	@Reference
-	private CTPreferencesLocalService _ctPreferencesLocalService;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private CTSchemaVersionLocalService _ctSchemaVersionLocalService;

@@ -30,34 +30,35 @@ import FolderNode from './controls/custom-node/FolderNode';
 
 import './Diagram.css';
 
-const dagreGraph = new dagre.graphlib.Graph();
+const DAGRE_GRAPH = new dagre.graphlib.Graph();
 
-dagreGraph.setDefaultEdgeLabel(() => ({}));
+DAGRE_GRAPH.setDefaultEdgeLabel(() => ({}));
 
-const nodeWidth = 172;
+const NODE_WIDTH = 172;
 
-const nodeHeight = 36;
+const NODE_HEIGHT = 36;
 
-const position = {x: 0, y: 0};
+const POSITION = {x: 0, y: 0};
 
-const edgeType = 'SmoothStep';
+const EDGE_TYPE = 'SmoothStep';
 
-const getLayoutedElements = (nodes, edges, direction = 'TB') => {
-	dagreGraph.setGraph({
-		rankdir: direction,
+const getLayoutedElements = (nodes, edges) => {
+	DAGRE_GRAPH.setGraph({
+		rankdir: 'TB',
 	});
 
 	nodes.forEach((node) => {
-		dagreGraph.setNode(node.id, {height: nodeHeight, width: nodeWidth});
+		DAGRE_GRAPH.setNode(node.id, {height: NODE_HEIGHT, width: NODE_WIDTH});
 	});
 
 	edges.forEach((edge) => {
-		dagreGraph.setEdge(edge.source, edge.target);
+		DAGRE_GRAPH.setEdge(edge.source, edge.target);
 	});
 
-	dagre.layout(dagreGraph);
+	dagre.layout(DAGRE_GRAPH);
+
 	nodes.forEach((node) => {
-		const nodeWithPosition = dagreGraph.node(node.id);
+		const nodeWithPosition = DAGRE_GRAPH.node(node.id);
 
 		node.targetPosition = 'top';
 
@@ -66,9 +67,9 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
 		node.draggable = false;
 
 		node.position = {
-			x: nodeWithPosition.x - nodeWidth / 2,
+			x: nodeWithPosition.x - NODE_WIDTH / 2,
 
-			y: nodeWithPosition.y - nodeHeight / 2,
+			y: nodeWithPosition.y - NODE_HEIGHT / 2,
 		};
 
 		return node;
@@ -78,17 +79,18 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
 };
 
 const getNodesFromHeadless = async (templateId) => {
-	const dBNodesPage = await getAvailableTemplatesNodesPage(templateId);
+	const templateNodesPage = await getAvailableTemplatesNodesPage(templateId);
 
-	const dBNodes = dBNodesPage.items;
+	const templateNodes = templateNodesPage.items;
 
-	if (!dBNodes.length) {
-		const root = await addNode(0, true, 'Root Node', templateId);
-		dBNodes.push(root);
+	if (!templateNodes.length) {
+		const rootNode = await addNode(0, true, 'Root Node', templateId);
+		templateNodes.push(rootNode);
 	}
 
-	const dbNormalizedNodes = dBNodes.map((node) => {
+	const normalizedNodes = templateNodes.map((node) => {
 		return {
+			POSITION,
 			data: {
 				description: node.description,
 				label: node.name,
@@ -99,34 +101,33 @@ const getNodesFromHeadless = async (templateId) => {
 			deletable: !node.root,
 			id: `${node.id}`,
 			parent: node.root ? null : `${node.parentID}`,
-			position,
 			type: node.root ? 'folderNode' : 'folderNode',
 		};
 	});
 
-	const dBEdges = [];
+	const templateEdges = [];
 
-	dBNodes.forEach((node) => {
+	templateNodes.forEach((node) => {
 		if (node.parentID !== 0) {
 			const edge = {
 				animated: false,
 				id: `e${node.id}${node.parentID}`,
 				source: `${node.parentID}`,
 				target: `${node.id}`,
-				type: edgeType,
+				type: EDGE_TYPE,
 			};
-			dBEdges.push(edge);
+			templateEdges.push(edge);
 		}
 	});
 
-	return getLayoutedElements(dbNormalizedNodes, dBEdges);
+	return getLayoutedElements(normalizedNodes, templateEdges);
 };
 
-const getSubNodes = (parentNodeId) => {
+const getChildNodeIds = (nodeId) => {
 	const subNodes = [];
 
 	const checkSubNodes = (parentNode) => {
-		const childrenNodes = dagreGraph.successors(parentNode);
+		const childrenNodes = DAGRE_GRAPH.successors(parentNode);
 
 		subNodes.push(parentNode);
 
@@ -137,25 +138,26 @@ const getSubNodes = (parentNodeId) => {
 		}
 	};
 
-	checkSubNodes(parentNodeId);
+	checkSubNodes(nodeId);
 
 	return subNodes;
 };
 
-const deleteNodes = async (nodes) => {
-	const liferayNodes = nodes.map((node) => {
-		return {
-			id: node,
-		};
-	});
-
-	await deleteFolderTemplateBatch(liferayNodes);
+const deleteNodes = async (nodeIds) => {
+	await deleteFolderTemplateBatch(
+		nodeIds.map((nodeId) => {
+			return {
+				id: nodeId,
+			};
+		})
+	);
 };
 
 const addNewNode = async (parentNodeId, templateId, nodes, edges) => {
 	const newNode = await addNode(parentNodeId, false, 'New Node', templateId);
 
 	const newDiagramNode = {
+		POSITION,
 		data: {
 			description: newNode.description,
 			label: newNode.name,
@@ -166,7 +168,6 @@ const addNewNode = async (parentNodeId, templateId, nodes, edges) => {
 		deletable: !newNode.root,
 		id: `${newNode.id}`,
 		parent: newNode.root ? null : `${parentNodeId}`,
-		position,
 		type: newNode.root ? 'folderNode' : 'folderNode',
 	};
 
@@ -175,7 +176,7 @@ const addNewNode = async (parentNodeId, templateId, nodes, edges) => {
 		id: `e${newDiagramNode.id}${parentNodeId}`,
 		source: `${parentNodeId}`,
 		target: `${newDiagramNode.id}`,
-		type: edgeType,
+		type: EDGE_TYPE,
 	};
 
 	nodes.push(newDiagramNode);
@@ -195,7 +196,7 @@ const Diagram = ({key, templateId}) => {
 
 	const [form] = Form.useForm();
 
-	const onNodeSelect = (data) => {
+	const handleNodeSelect = (data) => {
 		form.setFieldsValue({
 			description: data.description,
 			id: data.nodeId,
@@ -207,7 +208,7 @@ const Diagram = ({key, templateId}) => {
 		setSelectedNode(data);
 	};
 
-	const onPaneClick = () => {
+	const handlePaneClick = () => {
 		setSelectedNode(null);
 	};
 
@@ -248,7 +249,7 @@ const Diagram = ({key, templateId}) => {
 		[nodes]
 	);
 
-	const onAdd = useCallback(
+	const handleAdd = useCallback(
 		(parentNodeId) => {
 			const addNodeAsync = async () => {
 				const {
@@ -266,12 +267,12 @@ const Diagram = ({key, templateId}) => {
 		[nodes, edges, setNodes, setEdges, templateId]
 	);
 
-	const onDelete = useCallback(
+	const handleDelete = useCallback(
 		(params) => {
 			try {
 				const nodeId = params[0].id || params || selectedNode.id;
 
-				const nodesToBeDeleted = getSubNodes(nodeId);
+				const nodesToBeDeleted = getChildNodeIds(nodeId);
 
 				updateDiagramDataSourceLocally(nodes, edges, nodesToBeDeleted);
 
@@ -304,7 +305,7 @@ const Diagram = ({key, templateId}) => {
 		loadNodes(templateId);
 	}, [templateId, loadNodes]);
 
-	const onSave = () => {
+	const handleSave = () => {
 		form.validateFields()
 			.then(
 				async (values) => {
@@ -344,16 +345,16 @@ const Diagram = ({key, templateId}) => {
 						folderNode: (props) => (
 							<FolderNode
 								{...props}
-								onAdd={onAdd}
-								onDelete={onDelete}
-								onSelect={onNodeSelect}
+								onAdd={handleAdd}
+								onDelete={handleDelete}
+								onSelect={handleNodeSelect}
 							/>
 						),
 					}}
 					nodes={nodes}
 					onConnect={null}
-					onNodesDelete={onDelete}
-					onPaneClick={onPaneClick}
+					onNodesDelete={handleDelete}
+					onPaneClick={handlePaneClick}
 				>
 					<Controls />
 					<Background className="background" />
@@ -374,7 +375,7 @@ const Diagram = ({key, templateId}) => {
 												aria-label="Close"
 												displayType="unstyled"
 												onClick={() => {
-													onPaneClick(null);
+													handlePaneClick(null);
 												}}
 												symbol="times"
 												title="Close"
@@ -478,7 +479,9 @@ const Diagram = ({key, templateId}) => {
 											disabled={isLoading}
 											displayType="danger"
 											onClick={() => {
-												onDelete(selectedNode.nodeId);
+												handleDelete(
+													selectedNode.nodeId
+												);
 											}}
 										>
 											Delete
@@ -487,7 +490,7 @@ const Diagram = ({key, templateId}) => {
 									<ClayButton
 										disabled={isLoading}
 										onClick={() => {
-											onSave();
+											handleSave();
 										}}
 									>
 										Save

@@ -1,6 +1,7 @@
 .background {
 	background-color: var(--gray-200);
 }
+
 .side-panel {
 	margin: 0;
 	z-index: 6 !important;
@@ -11,10 +12,12 @@
 	border-width: 1px;
 	border-color: var(--light);
 }
+
 .fixed-bottom {
 	position: absolute;
 	bottom: 0;
 }
+
 .actions {
 	display: flex;
 	width: 100%;

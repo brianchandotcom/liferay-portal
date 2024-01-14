@@ -107,7 +107,7 @@ export default function TranslationManager({
 	);
 }
 
-function fieldToTranslations(fields: Record<string, Field>) {
+export function fieldToTranslations(fields: Record<string, Field>) {
 	const translations = [];
 
 	for (const fieldName in fields) {

@@ -140,7 +140,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								</c:choose>
 							</c:if>
 
-							<span class="text-default">
+							<span class="align-items-center d-flex text-default">
 								<c:if test="<%= !curArticle.isApproved() && curArticle.hasApprovedVersion() %>">
 									<clay:label
 										displayType="success"
@@ -152,7 +152,24 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 									displayType="<%= WorkflowConstants.getStatusStyle(curArticle.getStatus()) %>"
 									label="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>"
 								/>
-							</span>
+
+							<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-198959") && curArticle.isScheduled() %>'>
+
+								<%
+								String scheduledArticleMessage = journalDisplayContext.getScheduledArticleMessage(curArticle);
+								%>
+
+									<span
+										aria-label='<%= scheduledArticleMessage %>'
+										class="icon-tooltip lfr-portal-tooltip"
+										title='<%= scheduledArticleMessage %>'
+									>
+										<clay:icon
+											cssClass="mt-0"
+											symbol="question-circle-full"
+										/>
+								</span>
+							</c:if>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text>

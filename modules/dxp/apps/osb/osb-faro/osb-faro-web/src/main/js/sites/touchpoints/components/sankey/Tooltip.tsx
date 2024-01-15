@@ -41,10 +41,6 @@ export const Tooltip: React.FC<any> = ({payload}) => {
 
 					<div>{toLocale(payload[0].value)}</div>
 				</div>
-
-				{!!data.url && (
-					<div className='d-block mt-3 text-3'>{data.url}</div>
-				)}
 			</div>
 		</div>
 	);

@@ -12,6 +12,8 @@ import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstan
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -51,6 +53,14 @@ public abstract class BaseLayoutScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			layoutUtilityPageEntryLocalService.
+				fetchLayoutUtilityPageEntryByPlid(layout.getPlid());
+
+		if (layoutUtilityPageEntry != null) {
+			return false;
+		}
+
 		List<FormNavigatorCategory> formNavigatorCategories =
 			formNavigatorCategoryProvider.getFormNavigatorCategories(
 				FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT);
@@ -93,5 +103,9 @@ public abstract class BaseLayoutScreenNavigationEntry
 
 	@Reference
 	protected Language language;
+
+	@Reference
+	protected LayoutUtilityPageEntryLocalService
+		layoutUtilityPageEntryLocalService;
 
 }

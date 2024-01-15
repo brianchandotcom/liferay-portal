@@ -24,24 +24,43 @@ export default function PublishModal({
 		},
 	});
 
+	const [{button, description, heading}, setLabels] = useState(() => {
+		if (actionButton === 'publish') {
+			return {
+				button: Liferay.Language.get('publish'),
+				description: Liferay.Language.get(
+					'confirm-the-web-content-visibility-before-publishing'
+				),
+				heading: Liferay.Language.get('publish-web-content'),
+			};
+		}
+		else if (actionButton === 'schedule') {
+			return {
+				button: Liferay.Language.get('schedule'),
+				description: Liferay.Language.get(
+					'set-the-date-and-time-you-want-the-web-content-to-be-published'
+				),
+				heading: Liferay.Language.get('schedule-publication'),
+			};
+		}
+		else {
+			return {
+				button: Liferay.Language.get('save-as-draft'),
+				description: Liferay.Language.get(
+					'confirm-the-web-content-visibility-before-saving-as-draft'
+				),
+				heading: Liferay.Language.get('save-as-draft'),
+			};
+		}
+	});
+	const {button, description, heading} = getLabels(actionButton);
+
 	return (
 		<ClayModal className="m-0" observer={observer} size="lg">
-			<ClayModal.Header>
-				{actionButton === 'publish'
-					? Liferay.Language.get('publish-web-content')
-					: Liferay.Language.get('save-as-draft')}
-			</ClayModal.Header>
+			<ClayModal.Header>{heading}</ClayModal.Header>
 
 			<ClayModal.Body className="m-0">
-				<p className="text-secondary">
-					{actionButton === 'publish'
-						? Liferay.Language.get(
-								'confirm-the-web-content-visibility-before-publishing'
-						  )
-						: Liferay.Language.get(
-								'confirm-the-web-content-visibility-before-saving-as-draft'
-						  )}
-				</p>
+				<p className="text-secondary">{description}</p>
 
 				<PermissionsOptions
 					formId={formId}
@@ -67,13 +86,41 @@ export default function PublishModal({
 							onClick={onPublishButtonClick}
 							type="submit"
 						>
-							{actionButton === 'publish'
-								? Liferay.Language.get('publish')
-								: Liferay.Language.get('save-as-draft')}
+							{button}
 						</ClayButton>
 					</ClayButton.Group>
 				}
 			/>
 		</ClayModal>
 	);
+}
+
+function getLabels(actionButton) {
+	if (actionButton === 'publish') {
+		return {
+			button: Liferay.Language.get('publish'),
+			description: Liferay.Language.get(
+				'confirm-the-web-content-visibility-before-publishing'
+			),
+			heading: Liferay.Language.get('publish-web-content'),
+		};
+	}
+	else if (actionButton === 'schedule') {
+		return {
+			button: Liferay.Language.get('schedule'),
+			description: Liferay.Language.get(
+				'set-the-date-and-time-you-want-the-web-content-to-be-published'
+			),
+			heading: Liferay.Language.get('schedule-publication'),
+		};
+	}
+	else {
+		return {
+			button: Liferay.Language.get('save-as-draft'),
+			description: Liferay.Language.get(
+				'confirm-the-web-content-visibility-before-saving-as-draft'
+			),
+			heading: Liferay.Language.get('save-as-draft'),
+		};
+	}
 }

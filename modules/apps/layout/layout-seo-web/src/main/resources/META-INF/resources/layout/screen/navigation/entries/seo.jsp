@@ -54,16 +54,16 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 						<liferay-ui:message key="settings" />
 					</h3>
 
-					<clay:alert
-						cssClass="mb-4"
-						displayType="info"
-						message="add-multiple-fields-to-define-how-the-meta-tags-will-be-filled"
-					/>
-
 					<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 					<c:choose>
 						<c:when test="<%= selLayout.isTypeAssetDisplay() %>">
+							<clay:alert
+								cssClass="mb-4"
+								displayType="info"
+								message="add-multiple-fields-to-define-how-the-meta-tags-will-be-filled"
+							/>
+
 							<div class="dpt-mapping">
 								<div class="dpt-mapping-placeholder">
 									<aui:model-context bean="<%= null %>" model="<%= null %>" />

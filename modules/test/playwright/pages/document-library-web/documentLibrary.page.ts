@@ -37,6 +37,7 @@ export class DocumentLibraryPage {
 	}
 
 	async openOptionsMenu() {
+		await this.page.waitForLoadState('networkidle');
 		await this.optionsMenu.click();
 	}
 }

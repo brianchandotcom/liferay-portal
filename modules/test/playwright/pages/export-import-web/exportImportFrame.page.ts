@@ -21,6 +21,7 @@ export class ExportImportFramePage {
 			'iframe[title="Export \\/ Import"]'
 		);
 
+		await this.page.waitForLoadState('networkidle');
 		await exportImportFrame.getByRole('link', {name: 'Import'}).click();
 
 		const fileChooserPromise = this.page.waitForEvent('filechooser');

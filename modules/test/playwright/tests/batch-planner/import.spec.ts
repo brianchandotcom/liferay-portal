@@ -318,7 +318,7 @@ test('can import CSV file with an unexisting field', async ({
 
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		path.join(__dirname, '/dependencies/nonExistingFieldObjectEntries.csv'),
+		path.join(__dirname, '/dependencies/non_existing_field_object_entries.csv'),
 		'UPSERT',
 		'UPDATE'
 	);
@@ -378,7 +378,7 @@ test('can import CSV file with custom columns order', async ({
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(
 			__dirname,
-			'/dependencies/customColumnOrderObjectEntries.csv'
+			'/dependencies/custom_column_order_object_entries.csv'
 		),
 		'UPSERT',
 		'UPDATE'
@@ -444,7 +444,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		path.join(__dirname, '/dependencies/twoEntriesObjectEntries.csv'),
+		path.join(__dirname, '/dependencies/two_entries_object_entries.csv'),
 		'UPSERT',
 		'UPDATE'
 	);
@@ -535,7 +535,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		path.join(__dirname, '/dependencies/objectEntries.csv'),
+		path.join(__dirname, '/dependencies/object_entries.csv'),
 		'UPSERT',
 		'UPDATE'
 	);
@@ -546,7 +546,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(
 			__dirname,
-			'/dependencies/twoEntriesExistingNonModifiedObjectEntries.csv'
+			'/dependencies/two_entries_existing_non_modified_object_entries.csv'
 		),
 		'UPSERT',
 		'UPDATE'
@@ -638,7 +638,7 @@ test('can import CSV file with new and modified existing company scoped object e
 
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		path.join(__dirname, '/dependencies/objectEntries.csv'),
+		path.join(__dirname, '/dependencies/object_entries.csv'),
 		'UPSERT',
 		'UPDATE'
 	);
@@ -649,7 +649,7 @@ test('can import CSV file with new and modified existing company scoped object e
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(
 			__dirname,
-			'/dependencies/twoEntriesExistingModifiedObjectEntries.csv'
+			'/dependencies/two_entries_existing_modified_object_entries.csv'
 		),
 		'UPSERT',
 		'UPDATE'
@@ -770,7 +770,7 @@ test('can preview CSV file', async ({
 	await _dataMigrationCenterPage.goToImportFile();
 
 	await _dataMigrationCenterPage.selectFile(
-		path.join(__dirname, '/dependencies/objectEntries.csv')
+		path.join(__dirname, '/dependencies/object_entries.csv')
 	);
 
 	await _dataMigrationCenterPage.selectImportEntityType(
@@ -845,7 +845,7 @@ test('can show duplicate error message with CSV import existing entry and only a
 
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		path.join(__dirname, '/dependencies/objectEntries.csv'),
+		path.join(__dirname, '/dependencies/object_entries.csv'),
 		'UPSERT',
 		'UPDATE'
 	);
@@ -854,7 +854,7 @@ test('can show duplicate error message with CSV import existing entry and only a
 
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		path.join(__dirname, '/dependencies/objectEntries.csv'),
+		path.join(__dirname, '/dependencies/object_entries.csv'),
 		'INSERT',
 		'UPDATE'
 	);
@@ -882,7 +882,7 @@ test('cannot import CSV file without headers row', async ({
 	await _dataMigrationCenterPage.goToImportFile();
 
 	await _dataMigrationCenterPage.selectFile(
-		path.join(__dirname, '/dependencies/noHeadersObjectEntries.csv')
+		path.join(__dirname, '/dependencies/no_headers_object_entries.csv')
 	);
 
 	await page.getByRole('button', {name: 'Next'}).click();
@@ -914,7 +914,7 @@ test('cannot import CSV file with empty headers row', async ({
 	await _dataMigrationCenterPage.goToImportFile();
 
 	await _dataMigrationCenterPage.selectFile(
-		path.join(__dirname, '/dependencies/emptyHeaderValuesObjectEntries.csv')
+		path.join(__dirname, '/dependencies/empty_header_values_object_entries.csv')
 	);
 
 	await _dataMigrationCenterPage.selectImportEntityType(
@@ -952,7 +952,7 @@ test('cannot import CSV file with object entry with UPSERT strategy', async ({
 
 	await _dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		path.join(__dirname, '/dependencies/objectEntries.csv'),
+		path.join(__dirname, '/dependencies/object_entries.csv'),
 		'UPSERT',
 		'PARTIAL_UPDATE'
 	);
@@ -984,7 +984,7 @@ test('cannot import empty CSV file', async ({
 	await _dataMigrationCenterPage.goToImportFile();
 
 	await _dataMigrationCenterPage.selectFile(
-		path.join(__dirname, '/dependencies/emptyObjectEntries.csv')
+		path.join(__dirname, '/dependencies/empty_object_entries.csv')
 	);
 
 	await _dataMigrationCenterPage.selectImportEntityType(

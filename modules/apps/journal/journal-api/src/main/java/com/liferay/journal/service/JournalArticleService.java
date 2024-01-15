@@ -487,6 +487,10 @@ public interface JournalArticleService extends BaseService {
 		long groupId, String articleId, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getArticlesByArticleIdCount(
+		long groupId, String articleId, int status);
+
 	/**
 	 * Returns all the web content articles matching the group and layout UUID.
 	 *

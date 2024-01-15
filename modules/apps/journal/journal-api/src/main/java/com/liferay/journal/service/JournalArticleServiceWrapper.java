@@ -583,6 +583,14 @@ public class JournalArticleServiceWrapper
 			groupId, articleId, start, end, orderByComparator);
 	}
 
+	@Override
+	public int getArticlesByArticleIdCount(
+		long groupId, String articleId, int status) {
+
+		return _journalArticleService.getArticlesByArticleIdCount(
+			groupId, articleId, status);
+	}
+
 	/**
 	 * Returns all the web content articles matching the group and layout UUID.
 	 *

@@ -559,6 +559,13 @@ public class JournalArticleServiceUtil {
 			groupId, articleId, start, end, orderByComparator);
 	}
 
+	public static int getArticlesByArticleIdCount(
+		long groupId, String articleId, int status) {
+
+		return getService().getArticlesByArticleIdCount(
+			groupId, articleId, status);
+	}
+
 	/**
 	 * Returns all the web content articles matching the group and layout UUID.
 	 *

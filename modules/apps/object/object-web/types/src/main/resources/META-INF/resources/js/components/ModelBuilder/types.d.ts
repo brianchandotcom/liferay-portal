@@ -292,8 +292,6 @@ export interface ObjectRelationshipEdgeData {
 	objectRelationshipId: number;
 	selected: boolean;
 	selfObjectRelationships?: ObjectRelationship[];
-	sourceY: number;
-	targetY: number;
 	type: string;
 }
 export declare type nonRelationshipObjectFieldsInfo = {

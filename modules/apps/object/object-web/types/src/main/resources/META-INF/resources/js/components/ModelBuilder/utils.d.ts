@@ -31,9 +31,7 @@ export declare function createElements(): (
 )[];
 export declare function getEdgeParams(
 	source: Node,
-	sourceIncrementY: number,
-	target: Node,
-	targetIncrementY: number
+	target: Node
 ): {
 	sourcePos: Position;
 	sourceX: number;

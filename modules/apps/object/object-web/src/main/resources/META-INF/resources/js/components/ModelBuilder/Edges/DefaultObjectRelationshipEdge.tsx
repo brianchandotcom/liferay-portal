@@ -49,8 +49,6 @@ export default function DefaultObjectRelationshipEdge({
 		markerStartId,
 		objectRelationshipId,
 		selected,
-		sourceY: currentSourceY,
-		targetY: currentTargetY,
 	} = data!;
 
 	const [_, dispatch] = useObjectFolderContext();
@@ -111,36 +109,31 @@ export default function DefaultObjectRelationshipEdge({
 		targetPos,
 		targetX,
 		targetY,
-	} = getEdgeParams(
-		sourceNode,
-		currentSourceY as number,
-		targetNode,
-		currentTargetY as number
-	);
+	} = getEdgeParams(sourceNode, targetNode);
 
 	const edgePath = getSmoothStepPath({
 		sourcePosition: sourcePos,
 		sourceX,
-		sourceY: sourceY + currentSourceY,
+		sourceY,
 		targetPosition: targetPos,
 		targetX,
-		targetY: targetY + currentTargetY,
+		targetY,
 	});
 
 	const reverseEdgePath = getSmoothStepPath({
 		sourcePosition: targetPos,
 		sourceX: targetX,
-		sourceY: targetY + currentTargetY,
+		sourceY: targetY,
 		targetPosition: sourcePos,
 		targetX: sourceX,
-		targetY: sourceY + currentSourceY,
+		targetY: sourceY,
 	});
 
 	const [edgeCenterX, edgeCenterY] = getEdgeCenter({
 		sourceX,
-		sourceY: sourceY + currentSourceY,
+		sourceY,
 		targetX,
-		targetY: targetY + currentTargetY,
+		targetY,
 	});
 
 	return (

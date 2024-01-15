@@ -127,7 +127,7 @@ const TokenItem = ({children, label, sample}) => {
 	);
 };
 
-export default function App() {
+export function App() {
 	const [fade, setFade] = useState(false);
 	const [collapse, setCollapse] = useState(false);
 

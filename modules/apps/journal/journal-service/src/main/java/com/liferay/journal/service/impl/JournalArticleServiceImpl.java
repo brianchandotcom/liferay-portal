@@ -735,6 +735,18 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, articleId, start, end, orderByComparator);
 	}
 
+	@Override
+	public int getArticlesByArticleIdCount(
+		long groupId, String articleId, int status) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return journalArticlePersistence.countByG_A(groupId, articleId);
+		}
+
+		return journalArticlePersistence.countByG_A_ST(
+			groupId, articleId, status);
+	}
+
 	/**
 	 * Returns all the web content articles matching the group and layout UUID.
 	 *

@@ -104,4 +104,9 @@ public class ContentPageEditorLayoutUtilityPageEntryDisplayContext
 		return false;
 	}
 
+	@Override
+	protected Object getLookAndFeelURL() {
+		return null;
+	}
+
 }

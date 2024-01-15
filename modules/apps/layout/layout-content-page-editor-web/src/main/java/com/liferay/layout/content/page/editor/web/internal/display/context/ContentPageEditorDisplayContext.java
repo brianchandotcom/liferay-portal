@@ -558,7 +558,7 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"layoutType", String.valueOf(_getLayoutType())
 			).put(
-				"lookAndFeelURL", _getLookAndFeelURL()
+				"lookAndFeelURL", getLookAndFeelURL()
 			).put(
 				"mappingFieldsURL",
 				_getResourceURL(
@@ -948,6 +948,48 @@ public class ContentPageEditorDisplayContext {
 			httpServletRequest, "groupId", themeDisplay.getScopeGroupId());
 
 		return _groupId;
+	}
+
+	protected Object getLookAndFeelURL() throws Exception {
+		return layoutLockManager.getUnlockDraftLayoutURL(
+			portal.getLiferayPortletResponse(renderResponse),
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				Layout layout = themeDisplay.getLayout();
+
+				return PortletURLBuilder.create(
+					portal.getControlPanelPortletURL(
+						httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/layout_admin/edit_layout"
+				).setRedirect(
+					themeDisplay.getURLCurrent()
+				).setBackURL(
+					themeDisplay.getURLCurrent()
+				).setParameter(
+					"backURLTitle", layout.getName(themeDisplay.getLocale())
+				).setParameter(
+					"groupId", layout.getGroupId()
+				).setParameter(
+					"privateLayout", layout.isPrivateLayout()
+				).setParameter(
+					"screenNavigationEntryKey",
+					LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN
+				).setParameter(
+					"selPlid",
+					() -> {
+						if (layout.isDraftLayout()) {
+							return layout.getClassPK();
+						}
+
+						return layout.getPlid();
+					}
+				).buildString();
+			});
 	}
 
 	protected long getSegmentsExperienceId() {
@@ -1575,48 +1617,6 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return _layoutType;
-	}
-
-	private Object _getLookAndFeelURL() throws Exception {
-		return layoutLockManager.getUnlockDraftLayoutURL(
-			portal.getLiferayPortletResponse(renderResponse),
-			() -> {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				Layout layout = themeDisplay.getLayout();
-
-				return PortletURLBuilder.create(
-					portal.getControlPanelPortletURL(
-						httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-						PortletRequest.RENDER_PHASE)
-				).setMVCRenderCommandName(
-					"/layout_admin/edit_layout"
-				).setRedirect(
-					themeDisplay.getURLCurrent()
-				).setBackURL(
-					themeDisplay.getURLCurrent()
-				).setParameter(
-					"backURLTitle", layout.getName(themeDisplay.getLocale())
-				).setParameter(
-					"groupId", layout.getGroupId()
-				).setParameter(
-					"privateLayout", layout.isPrivateLayout()
-				).setParameter(
-					"screenNavigationEntryKey",
-					LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN
-				).setParameter(
-					"selPlid",
-					() -> {
-						if (layout.isDraftLayout()) {
-							return layout.getClassPK();
-						}
-
-						return layout.getPlid();
-					}
-				).buildString();
-			});
 	}
 
 	private JSONObject _getMappingFieldsJSONObject() throws Exception {

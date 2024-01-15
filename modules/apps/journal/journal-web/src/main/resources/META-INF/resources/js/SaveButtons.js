@@ -4,6 +4,8 @@
  */
 
 import ClayButton from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
 import PermissionsModal from './modals/PermissionsModal';
@@ -97,8 +99,25 @@ export default function SaveButtons({
 		);
 	};
 
+	const dropdownItems = [
+		{
+			label: Liferay.Language.get('publish'),
+			onClick: () => onClick('publish'),
+			symbolLeft: 'arrow-right-full',
+		},
+		{
+			label: Liferay.Language.get('schedule-publication'),
+			onClick: () =>
+				setPermissionsModalState({
+					permissionsModalAction: 'schedule',
+					permissionsModalVisible: false,
+				}),
+			symbolLeft: 'date-time',
+		},
+	];
+
 	return (
-		<>
+		<div className="d-flex">
 			{!Liferay.FeatureFlags['LPS-141392'] && !editingDefaultValues ? (
 				<ClayButton
 					className="mr-1"
@@ -108,9 +127,19 @@ export default function SaveButtons({
 					{saveButtonLabel}
 				</ClayButton>
 			) : null}
-			<ClayButton onClick={() => onClick('publish')}>
-				{publishButtonLabel}
-			</ClayButton>
+
+			<ClayDropDownWithItems
+				items={dropdownItems}
+				trigger={
+					<ClayButton>
+						{publishButtonLabel}
+
+						<span className="inline-item inline-item-after">
+							<ClayIcon symbol="caret-bottom" />
+						</span>
+					</ClayButton>
+				}
+			/>
 
 			{permissionsModalVisible ? (
 				<PermissionsModal
@@ -126,6 +155,6 @@ export default function SaveButtons({
 					portletNamespace={portletNamespace}
 				/>
 			) : null}
-		</>
+		</div>
 	);
 }

@@ -23,7 +23,7 @@ boolean localizable = (boolean)request.getAttribute("liferay-friendly-url:histor
 
 <div class="btn-url-history-wrapper">
 	<react:component
-		module="js/FriendlyURLHistory"
+		module="{FriendlyURLHistory} from friendly-url-taglib"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"defaultLanguageId", defaultLanguageId

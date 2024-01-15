@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.LayoutParentLayoutIdException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLEntryValidator;
@@ -453,16 +455,45 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			throw layoutFriendlyURLException;
 		}
 
-		String[] urlSeparators =
-			FriendlyURLResolverRegistryUtil.getURLSeparators();
+		String keywordConflict = null;
 
-		for (String urlSeparator : urlSeparators) {
-			if (urlSeparator.contains(friendlyURL)) {
+		for (FriendlyURLResolver friendlyURLResolver :
+				FriendlyURLResolverRegistryUtil.
+					getFriendlyURLResolversAsCollection()) {
+
+			String urlSeparator = friendlyURLResolver.getURLSeparator();
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-203351") &&
+				urlSeparator.contains(friendlyURL)) {
+
+				keywordConflict = urlSeparator;
+			}
+
+			if (FeatureFlagManagerUtil.isEnabled("LPS-203351")) {
+				if (urlSeparator.contains(friendlyURL) ||
+					friendlyURL.startsWith(urlSeparator)) {
+
+					keywordConflict = urlSeparator;
+				}
+
+				String defaultURLSeparator =
+					friendlyURLResolver.getDefaultURLSeparator();
+
+				if (Validator.isNull(keywordConflict) &&
+					friendlyURLResolver.isURLSeparatorConfigurable() &&
+					(defaultURLSeparator.contains(friendlyURL) ||
+					 friendlyURL.startsWith(defaultURLSeparator))) {
+
+					keywordConflict = defaultURLSeparator;
+				}
+			}
+
+			if (Validator.isNotNull(keywordConflict)) {
 				LayoutFriendlyURLException layoutFriendlyURLException =
 					new LayoutFriendlyURLException(
 						LayoutFriendlyURLException.KEYWORD_CONFLICT);
 
-				layoutFriendlyURLException.setKeywordConflict(urlSeparator);
+				layoutFriendlyURLException.setKeywordConflict(keywordConflict);
 
 				throw layoutFriendlyURLException;
 			}

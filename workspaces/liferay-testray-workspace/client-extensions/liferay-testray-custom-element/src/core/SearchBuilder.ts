@@ -161,7 +161,9 @@ export default class SearchBuilder {
 							return `not (${SearchBuilder[
 								schema.optionalOperator
 							](formattedKey, null)})`;
-						} else if (value.includes('true')) {
+						}
+
+						if (value.includes('true')) {
 							return SearchBuilder[schema.optionalOperator](
 								formattedKey,
 								null
@@ -173,7 +175,8 @@ export default class SearchBuilder {
 				};
 
 				searchCondition = getOptionalSearchCondition();
-			} else {
+			}
+			else {
 				searchCondition = Array.isArray(value)
 					? SearchBuilder.in(
 							key,

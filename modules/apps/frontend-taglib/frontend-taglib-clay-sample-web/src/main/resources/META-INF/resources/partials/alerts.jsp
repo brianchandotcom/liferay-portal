@@ -84,6 +84,6 @@
 
 <div>
 	<react:component
-		module="js/ClaySampleToastAlert"
+		module="{ClaySampleToastAlert} from frontend-taglib-clay-sample-web"
 	/>
 </div>

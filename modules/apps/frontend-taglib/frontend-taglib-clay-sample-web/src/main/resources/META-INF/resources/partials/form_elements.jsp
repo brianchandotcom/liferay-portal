@@ -59,7 +59,7 @@
 
 <div>
 	<react:component
-		module="js/ClaySampleTreeViewWithCheckbox"
+		module="{ClaySampleTreeViewWithCheckbox} from frontend-taglib-clay-sample-web"
 	/>
 </div>
 
@@ -159,7 +159,7 @@ for (int i = 0; i < 8; i++) {
 	id="multiselect-2"
 	inputName="multiSelectInput2"
 	label="Multiselect with Custom Menu Renderer"
-	propsTransformer="js/ClaySampleMultiselectPropsTransformer"
+	propsTransformer="{ClaySampleMultiselectPropsTransformer} from frontend-taglib-clay-sample-web"
 	selectedMultiselectItems="<%= multiselectDisplayContext.getSelectedMultiselectItems() %>"
 	sourceMultiselectItems="<%= multiselectDisplayContext.getSourceMultiselectItems() %>"
 />

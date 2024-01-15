@@ -63,5 +63,5 @@ ClaySampleManagementToolbarsDisplayContext managementToolbarsDisplayContext = ne
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= managementToolbarsDisplayContext %>"
-	propsTransformer="js/ClaySampleManagementToolbarPropsTransformer"
+	propsTransformer="{ClaySampleManagementToolbarPropsTransformer} from frontend-taglib-clay-sample-web"
 />

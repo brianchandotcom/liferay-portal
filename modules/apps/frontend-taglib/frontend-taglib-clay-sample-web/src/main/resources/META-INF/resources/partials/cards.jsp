@@ -710,7 +710,7 @@ ClaySampleVerticalCard claySampleVerticalCard = new ClaySampleVerticalCard();
 	>
 		<clay:navigation-card
 			icon="page"
-			propsTransformer="js/ClaySampleNavigationCardPropsTransformer"
+			propsTransformer="{ClaySampleNavigationCardPropsTransformer} from frontend-taglib-clay-sample-web"
 			small="<%= true %>"
 			title="add-page"
 		/>

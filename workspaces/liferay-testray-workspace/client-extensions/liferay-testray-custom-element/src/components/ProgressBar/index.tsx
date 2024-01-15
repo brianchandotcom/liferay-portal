@@ -9,18 +9,26 @@ import {Progress, Tasks} from '../../util/mock';
 import TaskbarProgress from './TaskbarProgress';
 
 type ProgressBarProps = {
+	chartOrder?: string[];
 	displayTotalCompleted?: boolean;
 	items: Tasks | Progress;
 	legend?: boolean;
 };
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
+	chartOrder,
 	displayTotalCompleted = true,
 	items,
 	legend,
 }) => {
 	const sortedItems = Object.entries(items).sort(
-		([, valueA], [, valueB]) => valueB - valueA
+		([keyA, valueA], [keyB, valueB]) => {
+			if (chartOrder) {
+				return chartOrder.indexOf(keyA) - chartOrder.indexOf(keyB);
+			}
+
+			return valueB - valueA;
+		}
 	);
 
 	const totalCompleted = useMemo(() => {

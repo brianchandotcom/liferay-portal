@@ -179,6 +179,13 @@ const Routine = () => {
 							key: 'metrics',
 							render: (_, build: TestrayBuild) => (
 								<ProgressBar
+									chartOrder={[
+										'passed',
+										'failed',
+										'blocked',
+										'test_fix',
+										'incomplete',
+									]}
 									items={{
 										blocked: build.caseResultBlocked as number,
 										failed: build.caseResultFailed as number,

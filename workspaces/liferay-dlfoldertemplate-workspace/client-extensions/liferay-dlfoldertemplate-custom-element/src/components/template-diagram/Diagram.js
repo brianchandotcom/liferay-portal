@@ -57,25 +57,23 @@ const getLayoutedElements = (nodes, edges) => {
 
 	dagre.layout(DAGRE_GRAPH);
 
-	nodes.forEach((node) => {
-		const nodeWithPosition = DAGRE_GRAPH.node(node.id);
+	let updatedNodes = nodes.map((node) => {
 
-		node.targetPosition = 'top';
+		let nodeWithPosition = DAGRE_GRAPH.node(node.id);
 
-		node.sourcePosition = 'bottom';
-
-		node.draggable = false;
-
-		node.position = {
-			x: nodeWithPosition.x - NODE_WIDTH / 2,
-
-			y: nodeWithPosition.y - NODE_HEIGHT / 2,
+		return {
+			...node,
+			targetPosition: 'top',
+			sourcePosition: 'bottom',
+			draggable: false,
+			position: {
+				x: nodeWithPosition.x - NODE_WIDTH / 2,
+				y: nodeWithPosition.y - NODE_HEIGHT / 2,
+			},
 		};
-
-		return node;
 	});
 
-	return {edges, nodes};
+	return {edges, updatedNodes};
 };
 
 const getNodesFromHeadless = async (templateId) => {
@@ -84,11 +82,27 @@ const getNodesFromHeadless = async (templateId) => {
 	const templateNodes = templateNodesPage.items;
 
 	if (!templateNodes.length) {
+
 		const rootNode = await addNode(0, true, 'Root Node', templateId);
+
 		templateNodes.push(rootNode);
 	}
 
+	const templateEdges = [];
+
 	const normalizedNodes = templateNodes.map((node) => {
+
+		if (node.parentID !== 0) {
+			const edge = {
+				animated: false,
+				id: `e${node.id}${node.parentID}`,
+				source: `${node.parentID}`,
+				target: `${node.id}`,
+				type: EDGE_TYPE,
+			};
+			templateEdges.push(edge);
+		}
+
 		return {
 			POSITION,
 			data: {
@@ -101,44 +115,26 @@ const getNodesFromHeadless = async (templateId) => {
 			deletable: !node.root,
 			id: `${node.id}`,
 			parent: node.root ? null : `${node.parentID}`,
-			type: node.root ? 'folderNode' : 'folderNode',
+			type: 'folderNode',
 		};
-	});
-
-	const templateEdges = [];
-
-	templateNodes.forEach((node) => {
-		if (node.parentID !== 0) {
-			const edge = {
-				animated: false,
-				id: `e${node.id}${node.parentID}`,
-				source: `${node.parentID}`,
-				target: `${node.id}`,
-				type: EDGE_TYPE,
-			};
-			templateEdges.push(edge);
-		}
 	});
 
 	return getLayoutedElements(normalizedNodes, templateEdges);
 };
 
-const getChildNodeIds = (nodeId) => {
-	const subNodes = [];
+const getChildNodeIds = (nodeId,subNodes = []) => {
+	subNodes.push(nodeId);
 
-	const checkSubNodes = (parentNode) => {
-		const childrenNodes = DAGRE_GRAPH.successors(parentNode);
+	const childrenNodes = DAGRE_GRAPH.successors(nodeId);
 
-		subNodes.push(parentNode);
+	if (childrenNodes && childrenNodes.length) {
 
-		if (childrenNodes && childrenNodes.length) {
-			childrenNodes.forEach((node) => {
-				checkSubNodes(node);
-			});
-		}
-	};
+		childrenNodes.forEach((node) => {
 
-	checkSubNodes(nodeId);
+			getChildNodeIds(node, subNodes);
+
+		});
+	}
 
 	return subNodes;
 };
@@ -224,7 +220,7 @@ const Diagram = ({key, templateId}) => {
 
 			const {
 				edges: layoutedEdges,
-				nodes: layoutedNodes,
+				updatedNodes: layoutedNodes,
 			} = getLayoutedElements(filteredNodes, filteredEdges);
 
 			setNodes([...layoutedNodes]);
@@ -254,7 +250,7 @@ const Diagram = ({key, templateId}) => {
 			const addNodeAsync = async () => {
 				const {
 					edges: layoutedEdges,
-					nodes: layoutedNodes,
+					updatedNodes: layoutedNodes,
 				} = await addNewNode(parentNodeId, templateId, nodes, edges);
 
 				setNodes([...layoutedNodes]);
@@ -291,7 +287,7 @@ const Diagram = ({key, templateId}) => {
 		async (templateId) => {
 			const {
 				edges: layoutedEdges,
-				nodes: layoutedNodes,
+				updatedNodes: layoutedNodes,
 			} = await getNodesFromHeadless(templateId);
 
 			setNodes([...layoutedNodes]);

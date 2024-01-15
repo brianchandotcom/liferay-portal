@@ -14,7 +14,7 @@ const options = [
 	},
 	{
 		actionType: 'timerNotifications',
-		disabled: true,
+		disabled: false,
 		label: Liferay.Language.get('notification'),
 	},
 	{

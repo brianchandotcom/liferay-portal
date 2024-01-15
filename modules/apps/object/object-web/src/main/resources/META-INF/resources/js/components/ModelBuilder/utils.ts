@@ -76,37 +76,14 @@ export function createElements() {
 	return elements;
 }
 
-export function getEdgeParams(
-	source: Node,
-	sourceIncrementY: number,
-	target: Node,
-	targetIncrementY: number
-) {
-	const sourceIntersectionPoint = getNodeIntersection(
-		source,
-		sourceIncrementY,
-		targetIncrementY,
-		target
-	);
+export function getEdgeParams(source: Node, target: Node) {
+	const sourceIntersectionPoint = getNodeIntersection(source, target);
 
-	const targetIntersectionPoint = getNodeIntersection(
-		target,
-		sourceIncrementY,
-		targetIncrementY,
-		source
-	);
+	const targetIntersectionPoint = getNodeIntersection(target, source);
 
-	const sourcePos = getEdgePosition(
-		sourceIntersectionPoint,
-		source,
-		sourceIncrementY
-	);
+	const sourcePos = getEdgePosition(sourceIntersectionPoint, source);
 
-	const targetPos = getEdgePosition(
-		targetIntersectionPoint,
-		target,
-		targetIncrementY
-	);
+	const targetPos = getEdgePosition(targetIntersectionPoint, target);
 
 	return {
 		sourcePos,
@@ -118,14 +95,10 @@ export function getEdgeParams(
 	};
 }
 
-function getEdgePosition(
-	intersectionPoint: XYPosition,
-	node: Node,
-	nodeIncrementY: number
-) {
+function getEdgePosition(intersectionPoint: XYPosition, node: Node) {
 	const nodeProperties = {...node.__rf.position, ...node.__rf};
 	const nodePositionX = Math.round(nodeProperties.x);
-	const nodePositionY = Math.round(nodeProperties.y + nodeIncrementY);
+	const nodePositionY = Math.round(nodeProperties.y);
 	const intersectionPointX = Math.round(intersectionPoint.x);
 	const intersectionPointY = Math.round(intersectionPoint.y);
 
@@ -147,8 +120,6 @@ function getEdgePosition(
 
 function getNodeIntersection(
 	intersectionNode: Node,
-	sourceIncrementY: number,
-	targetIncrementY: number,
 	targetNode: Node
 ): XYPosition {
 
@@ -165,11 +136,9 @@ function getNodeIntersection(
 	const nodeHalfHeight = intersectionNodeHeight / 2;
 
 	const sourceCoordinateX = intersectionNodePosition.x + nodeHalfWidth;
-	const sourceCoordinateY =
-		intersectionNodePosition.y + sourceIncrementY + nodeHalfHeight;
+	const sourceCoordinateY = intersectionNodePosition.y + nodeHalfHeight;
 	const targetCoordinateX = targetPosition.x + nodeHalfWidth;
-	const targetCoordinateY =
-		targetPosition.y + targetIncrementY + nodeHalfHeight;
+	const targetCoordinateY = targetPosition.y + nodeHalfHeight;
 
 	const sourceToTargetXDifference =
 		(targetCoordinateX - sourceCoordinateX) / (2 * nodeHalfWidth) -

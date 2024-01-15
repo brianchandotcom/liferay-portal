@@ -69,7 +69,7 @@ function AddToCart({
 	});
 	const inputRef = useRef(null);
 
-	const buttonDisabled = useMemo(() => {
+	const inputDisabled = useMemo(() => {
 		if (
 			initialDisabled ||
 			!account?.id ||
@@ -78,14 +78,21 @@ function AddToCart({
 			cpInstance.purchasable === false ||
 			(cpInstance.availability?.stockQuantity !== undefined &&
 				cpInstance.backOrderAllowed === false &&
-				cpInstance.availability?.stockQuantity <= 0) ||
-			!cpInstance.quantity
+				cpInstance.availability?.stockQuantity <= 0)
 		) {
 			return true;
 		}
 
 		return false;
 	}, [account, cpInstance, initialDisabled]);
+
+	const buttonDisabled = useMemo(() => {
+		if (inputDisabled || !cpInstance.quantity) {
+			return true;
+		}
+
+		return false;
+	}, [cpInstance, inputDisabled]);
 
 	useEffect(() => {
 		setCpInstance({
@@ -227,7 +234,7 @@ function AddToCart({
 					allowedQuantities={
 						settings.productConfiguration?.allowedOrderQuantities
 					}
-					disabled={initialDisabled || !account?.id}
+					disabled={inputDisabled}
 					max={settings.productConfiguration?.maxOrderQuantity}
 					min={settings.productConfiguration?.minOrderQuantity}
 					namespace={settings.namespace}

@@ -1,0 +1,8 @@
+/* generated using openapi-typescript-codegen -- do no edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+export type HeadlessDelivery_v1_0_Permission = {
+	actionIds?: Array<string>;
+	roleName?: string;
+};

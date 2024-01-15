@@ -1,0 +1,27 @@
+/* generated using openapi-typescript-codegen -- do no edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+export type HeadlessCommerceDeliveryCatalog_v1_0_ProductConfiguration = {
+	'allowBackOrder'?: boolean;
+	'allowedOrderQuantities'?: Array<number>;
+	readonly 'availabilityEstimateId'?: number;
+	readonly 'availabilityEstimateName'?: string;
+	'displayAvailability'?: boolean;
+	'displayStockQuantity'?: boolean;
+
+	/**
+	 * The inventory engine that will be used to manage the product inventory
+	 */
+	'inventoryEngine'?: string;
+
+	/**
+	 * The low stock action that will be performed when a product is out of stock
+	 */
+	'lowStockAction'?: string;
+	'maxOrderQuantity'?: number;
+	'minOrderQuantity'?: number;
+	'minStockQuantity'?: number;
+	'multipleOrderQuantity'?: number;
+	readonly 'x-class-name'?: string;
+};

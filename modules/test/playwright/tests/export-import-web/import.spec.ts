@@ -22,7 +22,7 @@ test('can import a folder with document type restrictions and workflow', async (
 	await _documentLibraryPage.openOptionsMenu();
 	await _documentLibraryPage.exportImportOptionsMenuItem.click();
 	await _exportImportFramePage.importLARFile(
-		path.join(__dirname, '/dependencies/folder.portlet.lar')
+		path.join(__dirname, 'dependencies', 'folder.portlet.lar')
 	);
 	await _exportImportFramePage.close();
 	await _documentLibraryPage.editEntry('LPS-205933');

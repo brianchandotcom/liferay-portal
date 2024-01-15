@@ -14,7 +14,7 @@ import {
 	STATUS_LOGIN,
 	STATUS_REPORT,
 	STATUS_SUCCESS,
-} from '../constants.es';
+} from '../constants';
 
 const useFlags = ({
 	baseData,

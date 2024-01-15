@@ -6,13 +6,13 @@
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import FlagsModal from '../../../src/main/resources/META-INF/resources/flags/js/components/FlagsModal.es';
+import FlagsModal from '../../../src/main/resources/META-INF/resources/flags/js/components/FlagsModal';
 import {
 	STATUS_ERROR,
 	STATUS_LOGIN,
 	STATUS_REPORT,
 	STATUS_SUCCESS,
-} from '../../../src/main/resources/META-INF/resources/flags/js/constants.es';
+} from '../../../src/main/resources/META-INF/resources/flags/js/constants';
 
 function _renderFlagsModalComponent({
 	captchaURI = '',

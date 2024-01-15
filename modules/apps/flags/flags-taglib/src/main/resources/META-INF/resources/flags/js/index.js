@@ -5,12 +5,12 @@
 
 import React from 'react';
 
-import Flags from './components/Flags.es';
-import FlagsModal from './components/FlagsModal.es';
-import useFlags from './hooks/useFlags.es';
+import Flags from './components/Flags';
+import FlagsModal from './components/FlagsModal';
+import useFlags from './hooks/useFlags';
 
-export default function ({context, props}) {
+function App({context, props}) {
 	return <Flags namespace={context.namespace} {...props} />;
 }
 
-export {FlagsModal, useFlags};
+export {FlagsModal, App, useFlags};

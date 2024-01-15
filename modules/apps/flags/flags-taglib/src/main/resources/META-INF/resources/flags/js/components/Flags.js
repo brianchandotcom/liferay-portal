@@ -8,8 +8,8 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import useFlags from '../hooks/useFlags.es';
-import FlagsModal from './FlagsModal.es';
+import useFlags from '../hooks/useFlags';
+import FlagsModal from './FlagsModal';
 
 const Flags = ({
 	namespace,

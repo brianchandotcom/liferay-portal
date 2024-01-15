@@ -37,7 +37,7 @@ String elementClasses = (String)request.getAttribute("liferay-flags:flags:elemen
 	</c:choose>
 
 	<react:component
-		module="flags/js/index.es"
+		module="{App} from flags-taglib"
 		props='<%= (Map<String, Object>)request.getAttribute("liferay-flags:flags:data") %>'
 	/>
 </div>

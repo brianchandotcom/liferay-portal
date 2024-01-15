@@ -15,9 +15,9 @@ import {
 	STATUS_LOGIN,
 	STATUS_REPORT,
 	STATUS_SUCCESS,
-} from '../constants.es';
-import {sub} from '../utils.es';
-import Captcha from './Captcha.es';
+} from '../constants';
+import {sub} from '../utils';
+import Captcha from './Captcha';
 
 const OTHER_REASON_MAX_LENGTH = 75;
 

@@ -8,7 +8,7 @@ import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import Flags from '../../../src/main/resources/META-INF/resources/flags/js/components/Flags.es';
+import Flags from '../../../src/main/resources/META-INF/resources/flags/js/components/Flags';
 
 const formDataToObject = (formData) =>
 	Array.from(formData).reduce(

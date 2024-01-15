@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {ObjectAdminRestClient} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -23,7 +24,7 @@ export const test = mergeTests(
 );
 
 test('created object folders are on the left side bar', async ({
-	apiHelpers,
+	authenticate,
 	objectDefinitionsPage,
 }) => {
 	await objectDefinitionsPage.goto();
@@ -42,7 +43,9 @@ test('created object folders are on the left side bar', async ({
 
 	// Clean up
 
-	await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+	await authenticate(ObjectAdminRestClient).objectFolder.deleteObjectFolder({
+		objectFolderId: objectFolder.id,
+	});
 });
 
 test('default folder does not contains delete and edit options', async ({

@@ -44,7 +44,9 @@ public class JavaModuleInheritableVariableAccessModifierCheck
 			String fileContent)
 		throws Exception {
 
-		if (javaTerm.getParentJavaClass() != null) {
+		if ((javaTerm.getParentJavaClass() != null) ||
+			!fileContent.contains("@Reference")) {
+
 			return javaTerm.getContent();
 		}
 

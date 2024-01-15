@@ -151,13 +151,13 @@ export default class SearchBuilder {
 					value = new Date(value).toISOString();
 				}
 
-				const formatSearchCondition = () => {
-					const isFilterChange =
+				const getOptionalSearchCondition = () => {
+					const isFilterChanged =
 						value.includes('false') || value.includes('No');
 					const formattedKey = key.replace('$', '');
 
 					if (schema?.optionalOperator === 'ne') {
-						if (isFilterChange) {
+						if (isFilterChanged) {
 							return `not (${SearchBuilder[
 								schema.optionalOperator
 							](formattedKey, null)})`;
@@ -172,7 +172,7 @@ export default class SearchBuilder {
 					return SearchBuilder[customOperator](formattedKey, value);
 				};
 
-				searchCondition = formatSearchCondition();
+				searchCondition = getOptionalSearchCondition();
 			} else {
 				searchCondition = Array.isArray(value)
 					? SearchBuilder.in(

@@ -66,7 +66,7 @@ const TABS = [
 	},
 ];
 
-export default function App() {
+export function App() {
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(
 		TABS.findIndex((tab) => tab.hash === location.hash) >= 0
 			? location.hash

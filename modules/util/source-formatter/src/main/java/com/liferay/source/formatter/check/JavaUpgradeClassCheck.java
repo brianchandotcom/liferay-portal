@@ -34,7 +34,9 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 		_checkServiceUtil(fileName, absolutePath, content);
 		_checkTimestamp(fileName, content);
 
-		if (!fileName.endsWith("Upgrade.java")) {
+		if (!fileName.endsWith("Upgrade.java") &&
+			!fileName.endsWith("UpgradeStepRegistrator.java")) {
+
 			return content;
 		}
 

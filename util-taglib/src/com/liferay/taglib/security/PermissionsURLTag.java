@@ -38,15 +38,14 @@ public class PermissionsURLTag extends TagSupport {
 
 		redirect = _getRedirect(httpServletRequest, redirect, windowState);
 
-		PortletURL portletURL = _getPorletURL(
-			httpServletRequest, modelResource, resourceGroupId, windowState);
-
-		if (Validator.isNotNull(redirect)) {
-			portletURL.setParameter("redirect", redirect);
-			portletURL.setParameter("returnToFullPageURL", redirect);
-		}
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			_getPorletURL(
+				httpServletRequest, modelResource, resourceGroupId, windowState)
+		).setParameter(
+			"redirect", redirect
+		).setParameter(
+			"returnToFullPageURL", redirect
+		).buildString();
 	}
 
 	/**
@@ -82,32 +81,39 @@ public class PermissionsURLTag extends TagSupport {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		redirect = _getRedirect(httpServletRequest, redirect, windowState);
+		return PortletURLBuilder.create(
+			_getPorletURL(
+				httpServletRequest, modelResource, resourceGroupId, windowState)
+		).setParameter(
+			"modelResourceDescription", modelResourceDescription
+		).setParameter(
+			"redirect", _getRedirect(httpServletRequest, redirect, windowState)
+		).setParameter(
+			"resourcePrimKey", resourcePrimKey
+		).setParameter(
+			"returnToFullPageURL",
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = _getPorletURL(
-			httpServletRequest, modelResource, resourceGroupId, windowState);
+				if (!themeDisplay.isStateMaximized()) {
+					return _getRedirect(
+						httpServletRequest, redirect, windowState);
+				}
 
-		if (Validator.isNotNull(redirect)) {
-			portletURL.setParameter("redirect", redirect);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			if (!themeDisplay.isStateMaximized()) {
-				portletURL.setParameter("returnToFullPageURL", redirect);
+				return null;
 			}
-		}
+		).setParameter(
+			"roleTypes",
+			() -> {
+				if (roleTypes != null) {
+					return StringUtil.merge(roleTypes);
+				}
 
-		portletURL.setParameter(
-			"modelResourceDescription", modelResourceDescription);
-		portletURL.setParameter("resourcePrimKey", resourcePrimKey);
-
-		if (roleTypes != null) {
-			portletURL.setParameter("roleTypes", StringUtil.merge(roleTypes));
-		}
-
-		return portletURL.toString();
+				return null;
+			}
+		).buildString();
 	}
 
 	@Override

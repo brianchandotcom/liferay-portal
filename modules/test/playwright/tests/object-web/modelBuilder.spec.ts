@@ -7,17 +7,20 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpers.fixture';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPages.fixture';
+import {loginTest} from '../../fixtures/login.fixture';
 import {objectPagesTest} from '../../fixtures/objectPages.fixture';
 import {getRandomInt} from '../../utils/util';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
+	loginTest,
 	objectPagesTest
 );
 
 test('can create relationship by dragging node handles', async ({
 	_apiHelpers,
+	_login,
 	_modelBuilderPage,
 	_objectDefinitionsPage,
 }) => {

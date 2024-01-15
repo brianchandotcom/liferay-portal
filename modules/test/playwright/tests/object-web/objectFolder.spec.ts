@@ -7,17 +7,20 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpers.fixture';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPages.fixture';
+import {loginTest} from '../../fixtures/login.fixture';
 import {objectPagesTest} from '../../fixtures/objectPages.fixture';
 import {getRandomInt} from '../../utils/util';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
+	loginTest,
 	objectPagesTest
 );
 
 test('created object folders are on the left side bar', async ({
 	_apiHelpers,
+	_login,
 	_objectDefinitionsPage,
 }) => {
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
@@ -43,6 +46,7 @@ test('created object folders are on the left side bar', async ({
 
 test('default folder does not contains delete and edit options', async ({
 	_apiHelpers,
+	_login,
 	_objectDefinitionsPage,
 }) => {
 	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);

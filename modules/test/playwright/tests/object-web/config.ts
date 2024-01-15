@@ -6,11 +6,9 @@
 import {devices} from '@playwright/test';
 
 export const config = {
-	dependencies: ['setup'],
 	name: 'object',
 	testDir: 'tests/object-web',
 	use: {
 		...devices['Desktop Chrome'],
-		storageState: 'tmp/.auth/user.json',
 	},
 };

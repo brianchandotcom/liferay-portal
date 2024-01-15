@@ -321,11 +321,11 @@ export default function ViewObjectDefinitions({
 		],
 	};
 
-	const setUncategorizedToSearchParams = (
+	const setDefaultToSearchParams = (
 		allObjectFolders: ObjectFoldersRequestInfo,
 		currentUrl: URL
 	) => {
-		currentUrl.searchParams.set('objectFolderName', 'Uncategorized');
+		currentUrl.searchParams.set('objectFolderName', 'Default');
 
 		window.history.replaceState(null, '', currentUrl.href);
 
@@ -350,10 +350,7 @@ export default function ViewObjectDefinitions({
 				);
 
 				if (objectFolderNameSearchParam === null) {
-					setUncategorizedToSearchParams(
-						allObjectFolders,
-						currentUrl
-					);
+					setDefaultToSearchParams(allObjectFolders, currentUrl);
 				}
 				else {
 					const newSelectedFolder = allObjectFolders.items.find(
@@ -364,10 +361,7 @@ export default function ViewObjectDefinitions({
 						setSelectedObjectFolder(newSelectedFolder);
 					}
 					else {
-						setUncategorizedToSearchParams(
-							allObjectFolders,
-							currentUrl
-						);
+						setDefaultToSearchParams(allObjectFolders, currentUrl);
 					}
 				}
 

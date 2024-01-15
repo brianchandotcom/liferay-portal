@@ -432,12 +432,14 @@ const Collection = React.memo(
 			selectedViewportSize
 		);
 
-		const showEmptyMessage =
-			collectionConfig.listStyle !== '' && collection.fakeCollection;
-
 		const flexEnabled =
 			collectionConfig.listStyle === CONTENT_DISPLAY_OPTIONS.flexColumn ||
 			collectionConfig.listStyle === CONTENT_DISPLAY_OPTIONS.flexRow;
+
+		const showEmptyMessage =
+			collection.fakeCollection &&
+			collectionConfig.listStyle !== '' &&
+			!flexEnabled;
 
 		let CollectionContent = null;
 

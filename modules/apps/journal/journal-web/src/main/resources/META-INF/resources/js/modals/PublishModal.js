@@ -4,11 +4,10 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
-import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch, runScriptsInElement} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
+
+import PermissionsOptions from '../PermissionsOptions';
 
 export default function PublishModal({
 	actionButton,
@@ -17,32 +16,13 @@ export default function PublishModal({
 	permissionsURL,
 	portletNamespace,
 }) {
-	const form = `${portletNamespace}fm1`;
+	const formId = `${portletNamespace}fm1`;
 
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			onCloseModal();
 		},
 	});
-	const [loading, setLoading] = useState(true);
-	const [content, setContent] = useState('');
-	const isMounted = useIsMounted();
-
-	useEffect(() => {
-		fetch(permissionsURL)
-			.then((response) => response.text())
-			.then((content) => {
-				if (isMounted()) {
-					setContent(content);
-					setLoading(false);
-				}
-			})
-			.catch((error) => {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
-			});
-	}, [isMounted, permissionsURL]);
 
 	return (
 		<ClayModal className="m-0" observer={observer} size="lg">
@@ -63,11 +43,10 @@ export default function PublishModal({
 						  )}
 				</p>
 
-				{loading ? (
-					<ClayLoadingIndicator />
-				) : (
-					<PermissionsModalBody content={content} form={form} />
-				)}
+				<PermissionsOptions
+					formId={formId}
+					permissionsURL={permissionsURL}
+				/>
 			</ClayModal.Body>
 
 			<ClayModal.Footer
@@ -84,7 +63,7 @@ export default function PublishModal({
 
 						<ClayButton
 							displayType="primary"
-							form={form}
+							form={formId}
 							onClick={onPublishButtonClick}
 							type="submit"
 						>
@@ -97,36 +76,4 @@ export default function PublishModal({
 			/>
 		</ClayModal>
 	);
-}
-
-class PermissionsModalBody extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this._ref = React.createRef();
-	}
-
-	componentDidMount() {
-		if (this._ref.current) {
-			runScriptsInElement(this._ref.current);
-
-			const inputs = this._ref.current.querySelectorAll('input');
-
-			inputs.forEach((input) => {
-				input.setAttribute('form', this.props.form);
-			});
-		}
-	}
-	shouldComponentUpdate() {
-		return false;
-	}
-
-	render() {
-		return (
-			<div
-				dangerouslySetInnerHTML={{__html: this.props.content}}
-				ref={this._ref}
-			/>
-		);
-	}
 }

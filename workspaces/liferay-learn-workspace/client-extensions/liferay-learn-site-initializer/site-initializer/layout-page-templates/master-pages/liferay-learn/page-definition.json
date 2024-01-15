@@ -216,14 +216,6 @@
 					"loadType": "default",
 					"scriptLocation": "head"
 				},
-				"externalReferenceCode": "LXC:liferay-dotcom-global-js",
-				"name": "Liferay Dotcom Global JS"
-			},
-			{
-				"clientExtensionConfig": {
-					"loadType": "default",
-					"scriptLocation": "head"
-				},
 				"externalReferenceCode": "LXC:liferay-learn-global-js",
 				"name": "Liferay Learn Global JS"
 			}

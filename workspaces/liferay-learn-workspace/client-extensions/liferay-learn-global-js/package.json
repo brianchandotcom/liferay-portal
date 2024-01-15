@@ -38,7 +38,8 @@
 	},
 	"dependencies": {
 		"mark.js": "^8.11.1",
-		"prismjs": "^1.29.0"
+		"prismjs": "^1.29.0",
+		"spatial-navigation-js": "^1.0.0"
 	},
 	"description": "",
 	"devDependencies": {

@@ -20,6 +20,8 @@ import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.seo.web.internal.constants.LayoutSEOWebKeys;
 import com.liferay.layout.seo.web.internal.display.context.LayoutsSEODisplayContext;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -82,6 +84,14 @@ public abstract class BaseLayoutScreenNavigationEntry
 				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
 
 		if (layoutPageTemplateEntry != null) {
+			return false;
+		}
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			layoutUtilityPageEntryLocalService.
+				fetchLayoutUtilityPageEntryByPlid(layout.getPlid());
+
+		if (layoutUtilityPageEntry != null) {
 			return false;
 		}
 
@@ -149,6 +159,10 @@ public abstract class BaseLayoutScreenNavigationEntry
 
 	@Reference
 	protected LayoutSEOSiteLocalService layoutSEOSiteLocalService;
+
+	@Reference
+	protected LayoutUtilityPageEntryLocalService
+		layoutUtilityPageEntryLocalService;
 
 	@Reference
 	protected Portal portal;

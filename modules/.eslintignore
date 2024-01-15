@@ -43,6 +43,15 @@
     testIntegration/**
 
 ##
+## Playwright Tests
+##
+
+    #
+    # Tests have their own formatting rules.
+    #
+    /test/playwright/**
+
+##
 ## Third-Party
 ##
 

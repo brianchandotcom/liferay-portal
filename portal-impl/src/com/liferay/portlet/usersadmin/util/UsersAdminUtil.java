@@ -336,8 +336,7 @@ public class UsersAdminUtil {
 			String.valueOf(unescapedOrganization.getOrganizationId()));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			httpServletRequest, unescapedOrganization.getName(),
-			portletURL.toString());
+			httpServletRequest, unescapedOrganization.getName(), null);
 	}
 
 	public static long[] addRequiredRoles(long userId, long[] roleIds)

@@ -218,10 +218,10 @@ public class CountryRegionUpgradeProcess extends UpgradeProcess {
 			JSONArray regionsJSONArray = CompanyCountriesUtil.getJSONArray(
 				path);
 
-			for (int i = 0; i < regionsJSONArray.length(); i++) {
+			for (int j = 0; j < regionsJSONArray.length(); j++) {
 				try {
 					JSONObject regionJSONObject =
-						regionsJSONArray.getJSONObject(i);
+						regionsJSONArray.getJSONObject(j);
 
 					String newRegionCode = regionJSONObject.getString(
 						"regionCode");

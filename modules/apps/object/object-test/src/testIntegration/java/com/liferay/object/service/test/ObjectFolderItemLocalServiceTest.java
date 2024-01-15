@@ -303,7 +303,7 @@ public class ObjectFolderItemLocalServiceTest {
 			_userLocalService.addRoleUser(role.getRoleId(), user);
 
 			ObjectFolder objectFolder =
-				_objectFolderLocalService.getUncategorizedObjectFolder(
+				_objectFolderLocalService.getDefaultObjectFolder(
 					TestPropsValues.getCompanyId());
 
 			List<ObjectFolderItem> objectFolderItems =

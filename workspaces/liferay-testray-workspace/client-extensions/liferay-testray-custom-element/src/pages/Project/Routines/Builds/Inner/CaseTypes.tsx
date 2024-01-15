@@ -19,6 +19,10 @@ const CaseTypes = () => (
 					untested: false,
 				},
 				columnsFixed: ['name'],
+				sort: {
+					direction: 'ASC',
+					key: 'name',
+				},
 			}}
 			managementToolbarProps={{
 				filterSchema: 'buildCaseTypes',

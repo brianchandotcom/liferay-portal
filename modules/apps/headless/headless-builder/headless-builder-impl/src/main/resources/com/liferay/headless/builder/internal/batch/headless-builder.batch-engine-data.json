@@ -494,11 +494,11 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "L_API_PROPERTIES_TO_API_PROPERTIES",
+					"externalReferenceCode": "L_API_PROPERTY_TO_API_PROPERTIES",
 					"label": {
-						"en_US": "API Properties to API Properties"
+						"en_US": "API Property to API Properties"
 					},
-					"name": "apiPropertiesToAPIProperties",
+					"name": "apiPropertyToAPIProperties",
 					"objectDefinitionExternalReferenceCode1": "L_API_PROPERTY",
 					"objectDefinitionExternalReferenceCode2": "L_API_PROPERTY",
 					"objectDefinitionName2": "APIProperty",
@@ -506,7 +506,7 @@
 					"parameterObjectFieldName": "",
 					"reverse": false,
 					"system": true,
-					"type": "manyToMany"
+					"type": "oneToMany"
 				}
 			],
 			"panelCategoryKey": "",

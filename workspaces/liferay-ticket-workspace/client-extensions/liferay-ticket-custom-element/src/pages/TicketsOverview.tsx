@@ -20,14 +20,9 @@ import {useTickets} from '../hooks/useTickets';
 import {Liferay} from '../services/liferay';
 import {generateNewTicket} from '../services/tickets';
 import {Filter} from '../types';
+import {INITIAL_FILTER_STATE} from '../utils/constants';
 
-const DEBOUNCE_DELAY: number = 300;
-
-const INITIAL_FILTER_STATE: Filter = {
-	field: '',
-	label: '',
-	value: '',
-};
+const DEBOUNCE_DELAY = 300;
 
 const FILTERS: Filter[] = [
 	{
@@ -71,10 +66,10 @@ const TicketsOverview: React.FC = () => {
 	const recentTickets = useRecentTickets();
 
 	const {rows: tickets, totalCount} = useTickets({
-		debouncedPage,
-		debouncedSearch,
 		filter,
+		page: debouncedPage,
 		pageSize,
+		search: debouncedSearch,
 	});
 
 	const generateNewTicketMutation = useMutation({
@@ -93,10 +88,7 @@ const TicketsOverview: React.FC = () => {
 
 	return (
 		<>
-			<ClayLayout.ContentRow
-				className="bg-neutral-1 justify-content-between mb-3 p-3 rounded"
-				padded
-			>
+			<ClayLayout.ContentRow className="bg-neutral-1 justify-content-between mb-3 p-3 rounded">
 				<ClayLayout.ContentCol className="text-11">
 					Your Tickets
 				</ClayLayout.ContentCol>

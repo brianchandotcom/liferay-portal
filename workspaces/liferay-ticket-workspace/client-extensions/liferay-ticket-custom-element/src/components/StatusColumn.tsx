@@ -19,7 +19,7 @@ const StatusColumn: React.FC<{
 
 	return (
 		<div
-			className="bg-neutral-1 h-100 min-vh-100 px-3 py-3 rounded"
+			className="bg-neutral-1 h-100 min-vh-100 p-3 rounded"
 			ref={setNodeRef}
 		>
 			<p className="font-weight-bold">{name}</p>

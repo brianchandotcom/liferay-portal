@@ -31,10 +31,8 @@ ROUTES.forEach((route) => {
 	HREF_COMPONENT_MAP[route.href] = route.element;
 });
 
-const defaultRoute: string = '#dashboard';
-
 const AllScreens: React.FC = () => {
-	const {hash} = useHash(defaultRoute);
+	const {hash} = useHash('#dashboard');
 
 	return (
 		<ClayLayout.ContentRow padded>

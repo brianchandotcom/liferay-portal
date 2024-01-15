@@ -13,7 +13,8 @@ import StatusColumn from '../components/StatusColumn';
 import {useTickets} from '../hooks/useTickets';
 import {Liferay} from '../services/liferay';
 import {updateTicketStatus} from '../services/tickets';
-import {Filter, ScreenType, Ticket} from '../types';
+import {ScreenType, Ticket} from '../types';
+import {INITIAL_FILTER_STATE} from '../utils/constants';
 
 type RelatedTicketsMap = {
 	[key: string]: Ticket[];
@@ -30,12 +31,6 @@ const ALLOWED_DASHBOARD_STATUSES = [
 	'Answered',
 	'Closed',
 ];
-
-const INITIAL_FILTER_STATE: Filter = {
-	field: '',
-	label: '',
-	value: '',
-};
 
 const DASHBOARD_STYLE_WHILE_LOADING: React.CSSProperties = {
 	opacity: 0.5,
@@ -55,10 +50,10 @@ const TicketsDashboard: React.FC<{screenType?: ScreenType}> = ({
 	const [isLoading, setIsLoading] = useState(false);
 
 	const {rows: tickets} = useTickets({
-		debouncedPage: 0,
-		debouncedSearch: '',
 		filter: INITIAL_FILTER_STATE,
+		page: 0,
 		pageSize: 1000,
+		search: '',
 	});
 
 	const relatedTicketsMap: RelatedTicketsMap = useMemo<
@@ -134,10 +129,7 @@ const TicketsDashboard: React.FC<{screenType?: ScreenType}> = ({
 	return (
 		<div className="position-relative">
 			{screenType === ScreenType.INTEGRATED && (
-				<ClayLayout.ContentRow
-					className="align-items-center bg-neutral-1 mb-3 p-3 rounded"
-					padded
-				>
+				<ClayLayout.ContentRow className="align-items-center bg-neutral-1 mb-3 p-3 rounded">
 					{isLoading && (
 						<ClayLoadingIndicator
 							className="m-0 mr-2"

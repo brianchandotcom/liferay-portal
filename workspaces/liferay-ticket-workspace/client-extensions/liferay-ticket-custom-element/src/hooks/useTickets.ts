@@ -8,24 +8,21 @@ import {useQuery} from 'react-query';
 
 import {FetchTicketsQueryKey, fetchTickets} from '../services/tickets';
 import {Ticket} from '../types';
-import {TicketPayloadMapper} from '../utils/TicketPayloadMapper';
+import {normalizeTicket} from '../utils/normalizeTicket';
 
 const useTickets = ({
-	debouncedPage,
-	debouncedSearch,
 	filter,
+	page,
 	pageSize,
+	search,
 }: {
-	debouncedPage: string | number;
-	debouncedSearch?: string | number;
 	filter: {field: string; value: string};
+	page: string | number;
 	pageSize: number;
+	search?: string | number;
 }) => {
 	const tickets = useQuery(
-		[
-			'tickets',
-			{filter, page: debouncedPage, pageSize, search: debouncedSearch},
-		],
+		['tickets', {filter, page, pageSize, search}],
 		({queryKey}) => fetchTickets({queryKey} as FetchTicketsQueryKey),
 		{refetchInterval: 5000, refetchOnMount: true}
 	);
@@ -33,7 +30,7 @@ const useTickets = ({
 	const ticketsMemoized = useMemo(() => {
 		if (tickets.isSuccess) {
 			return {
-				rows: tickets?.data?.items?.map(TicketPayloadMapper),
+				rows: tickets?.data?.items?.map(normalizeTicket),
 				totalCount: tickets?.data?.totalCount,
 			};
 		}

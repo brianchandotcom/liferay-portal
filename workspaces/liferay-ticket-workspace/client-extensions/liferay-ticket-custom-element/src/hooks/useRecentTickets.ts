@@ -7,7 +7,7 @@ import {useMemo} from 'react';
 import {useQuery} from 'react-query';
 
 import {fetchRecentTickets} from '../services/tickets';
-import {TicketPayloadMapper} from '../utils/TicketPayloadMapper';
+import {normalizeTicket} from '../utils/normalizeTicket';
 
 const useRecentTickets = () => {
 	const recentTickets = useQuery(['recentTickets'], fetchRecentTickets, {
@@ -17,7 +17,7 @@ const useRecentTickets = () => {
 
 	const recentTicketsMemoized = useMemo(() => {
 		if (recentTickets.isSuccess) {
-			return recentTickets.data?.items.map(TicketPayloadMapper);
+			return recentTickets.data?.items.map(normalizeTicket);
 		}
 
 		return [];

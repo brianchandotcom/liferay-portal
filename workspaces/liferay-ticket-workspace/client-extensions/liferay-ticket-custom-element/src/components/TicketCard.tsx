@@ -67,7 +67,7 @@ const TicketCard: React.FC<{ticket: Ticket}> = ({ticket}) => {
 	return (
 		<div
 			{...attributes}
-			className={`border border-neutral-2 card mb-4 py-2 shadow-none ${
+			className={`border border-neutral-2 mb-4 py-2 ${
 				isDragging ? 'bg-brand-primary-lighten-6' : 'bg-neutral-0'
 			}`}
 			ref={setNodeRef}
@@ -107,9 +107,9 @@ const TicketCard: React.FC<{ticket: Ticket}> = ({ticket}) => {
 												symbol="user"
 											></ClayIcon>
 
-											<div className="d-inline">
+											<span>
 												{`${ticket.assignee?.givenName} ${ticket.assignee?.familyName}`}
-											</div>
+											</span>
 										</>
 									) : (
 										<div className="ml-2">

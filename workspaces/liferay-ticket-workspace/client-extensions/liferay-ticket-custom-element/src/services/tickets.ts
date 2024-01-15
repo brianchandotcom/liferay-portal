@@ -31,12 +31,12 @@ export type FetchTicketsQueryKey = {
 const LIST_TYPE_DEFINITIONS: ListTypeDefinitions = await fetchListTypeDefinitions();
 
 const TICKET_SUBJECTS = [
-	'My object definition is not deploying in my batch client extension',
-	'A theme CSS client extension is not showing on my search page',
-	"I would like to change my site's icon through a client extension",
-	'When updating a custom element React app, the URL metadata is not specified correctly',
-	'Liferay is not triggering my Spring Boot app from an Object Action',
-	'Client Extensions are amazing - how can I learn more?',
+	'My Object Definition Is Not Deploying in My Batch Client Extension',
+	'A Theme CSS Client Extension Is Not Showing on My Search Page',
+	'I Would Like to Change My Site’s Icon Through a Client Extension',
+	'When Updating a Custom Element React App, the URL Metadata Is Not Specified Correctly',
+	'Liferay Is Not Triggering My Spring Boot App From an Object Action',
+	'Client Extensions Are Amazing - How Can I Learn More?',
 ];
 
 function getRandomElement(array: any[]) {

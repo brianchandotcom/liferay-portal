@@ -157,10 +157,7 @@ nav.navigation-header .language-selector-container .language-selector {
 	display: inline-block;
 	padding-right: 0;
 }
-nav.navigation-header
-	.language-selector-container
-	.language-selector
-	svg {
+nav.navigation-header .language-selector-container .language-selector svg {
 	margin-right: 0.25rem;
 }
 nav.navigation-header
@@ -180,9 +177,7 @@ nav.navigation-header
 	.language-caret-icon {
 	opacity: 0.7;
 }
-nav.navigation-header
-	.language-selector-container
-	.language-selector:hover {
+nav.navigation-header .language-selector-container .language-selector:hover {
 	background-color: var(--color-action-primary-hover-lighten);
 }
 nav.navigation-header
@@ -195,9 +190,7 @@ nav.navigation-header
 	.language-caret-icon {
 	opacity: 1;
 }
-nav.navigation-header
-	.language-selector-container
-	.language-selector:hover,
+nav.navigation-header .language-selector-container .language-selector:hover,
 nav.navigation-header
 	.language-selector-container
 	.language-selector.list-open {
@@ -213,10 +206,7 @@ nav.navigation-header
 	.language-selector-text {
 	opacity: 1;
 }
-nav.navigation-header
-	.language-selector-container
-	.language-selector:hover
-	svg,
+nav.navigation-header .language-selector-container .language-selector:hover svg,
 nav.navigation-header
 	.language-selector-container
 	.language-selector.list-open
@@ -397,10 +387,7 @@ nav.navigation-header .account .account-info:focus .user-icon,
 nav.navigation-header .account .account-info:focus .account-dropdown-icon,
 nav.navigation-header .account .account-info:focus .account-text,
 nav.navigation-header .account .account-info.menu-open .user-icon,
-nav.navigation-header
-	.account
-	.account-info.menu-open
-	.account-dropdown-icon,
+nav.navigation-header .account .account-info.menu-open .account-dropdown-icon,
 nav.navigation-header .account .account-info.menu-open .account-text {
 	color: var(--color-action-primary-hover);
 }
@@ -415,10 +402,7 @@ nav.navigation-header .account .account-info.menu-open .account-dropdown {
 nav.navigation-header .account .account-info.menu-open .user-icon {
 	opacity: 0.7;
 }
-nav.navigation-header
-	.account
-	.account-info.menu-open
-	.account-dropdown-icon {
+nav.navigation-header .account .account-info.menu-open .account-dropdown-icon {
 	opacity: 0.7;
 	transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(180deg)
 		rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
@@ -430,10 +414,7 @@ nav.navigation-header .account .account-info:focus {
 nav.navigation-header .account .account-info:hover .user-icon,
 nav.navigation-header .account .account-info:hover .account-dropdown-icon,
 nav.navigation-header .account .account-info:focus .user-icon,
-nav.navigation-header
-	.account
-	.account-info:focus
-	.account-dropdown-icon {
+nav.navigation-header .account .account-info:focus .account-dropdown-icon {
 	opacity: 1;
 }
 nav.navigation-header .account .account-info.mobile .dropdown-content {
@@ -686,10 +667,7 @@ nav.navigation-header .opacity-80 {
 		width: 100%;
 		z-index: 3;
 	}
-	nav.navigation-header
-		.nav-items-wrapper
-		.adt-nav-text
-		.adt-nav-title {
+	nav.navigation-header .nav-items-wrapper .adt-nav-text .adt-nav-title {
 		padding-left: 1rem;
 	}
 	nav.navigation-header .menu-button-group {

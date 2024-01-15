@@ -1,22 +1,26 @@
-document.addEventListener('DOMContentLoaded', function() {
-	var anchors = document.querySelectorAll('.f-anchor-target');
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+document.addEventListener('DOMContentLoaded', () => {
+	const anchors = document.querySelectorAll('.f-anchor-target');
 
-	var anchorNavLinks = document.querySelectorAll('.anchor-nav-link');
+	const anchorNavLinks = document.querySelectorAll('.anchor-nav-link');
 
-	window.onscroll = function() {
-		var current = '';
+	window.onscroll = function () {
+		let current = '';
 
-		anchors.forEach(function(anchor) {
-			var sectionTop = anchor.offsetTop;
+		anchors.forEach((anchor) => {
+			const sectionTop = anchor.offsetTop;
 
-			var windowHeight = window.innerHeight;
+			const windowHeight = window.innerHeight;
 
-			if (scrollY >= sectionTop - (windowHeight*0.33)) {
+			if (scrollY >= sectionTop - windowHeight * 0.33) {
 				current = anchor.getAttribute('id');
 			}
 		});
 
-		anchorNavLinks.forEach(function(anchorNavLink) {
+		anchorNavLinks.forEach((anchorNavLink) => {
 			anchorNavLink.classList.remove('active');
 			if (
 				anchorNavLink.classList.contains('anchor-nav-link-#' + current)

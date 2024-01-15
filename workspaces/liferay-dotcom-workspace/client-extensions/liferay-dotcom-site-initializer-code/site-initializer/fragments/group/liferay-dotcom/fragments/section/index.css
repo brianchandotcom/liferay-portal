@@ -7,7 +7,7 @@
 	max-width: var(--container-max-xl);
 }
 
-.f-section .section-dropzone-container>div:first-of-type {
+.f-section .section-dropzone-container > div:first-of-type {
 	width: 100%;
 }
 

@@ -26,7 +26,12 @@ html {
 	overflow-x: auto;
 }
 
-.f-anchor-nav-container .anchor-nav-container>div,
-.f-anchor-nav-container .anchor-nav-container>lfr-drop-zone>.lfr-tooltip-scope>.page-editor>.page-editor__root {
+.f-anchor-nav-container .anchor-nav-container > div,
+.f-anchor-nav-container
+	.anchor-nav-container
+	> lfr-drop-zone
+	> .lfr-tooltip-scope
+	> .page-editor
+	> .page-editor__root {
 	display: flex;
 }

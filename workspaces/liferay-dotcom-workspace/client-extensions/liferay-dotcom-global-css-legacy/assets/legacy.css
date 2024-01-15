@@ -1,40 +1,40 @@
 :root {
-	--accent-1:  var(--color-accent-1:);
-	--accent-2:  var(--color-accent-2:);
-	--accent-3:  var(--color-accent-3:);
-	--accent-4:  var(--color-accent-4:);
-	--accent-5:  var(--color-accent-5:);
-	--accent-6:  var(--color-accent-6:);
-	--accent-7:  var(--color-accent-7:);
-	--accent-8:  var(--color-accent-8:);
-	--accent-9:  var(--color-accent-9:);
+	--accent-1: var(--color-accent-1: );
+	--accent-2: var(--color-accent-2: );
+	--accent-3: var(--color-accent-3: );
+	--accent-4: var(--color-accent-4: );
+	--accent-5: var(--color-accent-5: );
+	--accent-6: var(--color-accent-6: );
+	--accent-7: var(--color-accent-7: );
+	--accent-8: var(--color-accent-8: );
+	--accent-9: var(--color-accent-9: );
 	--accent-10: var(--color-accent-10);
-	--action-default-active:  var(--color-action-primary-active);
-	--action-default-hover:  var(--color-action-primary-hover);
-	--action-default:  var(--color-action-primary-default);
-	--action-primary-dark-active:  var(--color-brand-primary-darken-4);
-	--action-primary-dark-hover:  var(--color-brand-primary-darken-3);
-	--action-secondary-active:  var(--color-brand-secondary-lighten-2);
-	--action-secondary-hover:  var(--color-brand-secondary-lighten-1);
-	--action-secondary:  var(--color-brand-secondary);
-	--action-visited:  var(--color-brand-secondary-lighten-2);
-	--black:  var(--body-color);
-	--neutral-1:  var(--color-neutral-1);
-	--neutral-2:  var(--color-neutral-2);
-	--neutral-3:  var(--color-neutral-3);
-	--neutral-4:  var(--color-neutral-4);
-	--neutral-5:  var(--color-neutral-5);
-	--neutral-6:  var(--color-neutral-6);
-	--neutral-7:  var(--color-neutral-7);
-	--neutral-8:  var(--color-neutral-8);
-	--neutral-9:  var(--color-neutral-9);
-	--primary-10:  var(--color-brand-primary-lighten-6);
-	--primary-5:  var(--color-brand-primary-lighten-5);
-	--primary-7:  var(--color-brand-primary-lighten-4);
-	--primary-dark:  var(--color-brand-primary-darken-5);
-	--primary:  var(--color-brand-primary);
+	--action-default-active: var(--color-action-primary-active);
+	--action-default-hover: var(--color-action-primary-hover);
+	--action-default: var(--color-action-primary-default);
+	--action-primary-dark-active: var(--color-brand-primary-darken-4);
+	--action-primary-dark-hover: var(--color-brand-primary-darken-3);
+	--action-secondary-active: var(--color-brand-secondary-lighten-2);
+	--action-secondary-hover: var(--color-brand-secondary-lighten-1);
+	--action-secondary: var(--color-brand-secondary);
+	--action-visited: var(--color-brand-secondary-lighten-2);
+	--black: var(--body-color);
+	--neutral-1: var(--color-neutral-1);
+	--neutral-2: var(--color-neutral-2);
+	--neutral-3: var(--color-neutral-3);
+	--neutral-4: var(--color-neutral-4);
+	--neutral-5: var(--color-neutral-5);
+	--neutral-6: var(--color-neutral-6);
+	--neutral-7: var(--color-neutral-7);
+	--neutral-8: var(--color-neutral-8);
+	--neutral-9: var(--color-neutral-9);
+	--primary-10: var(--color-brand-primary-lighten-6);
+	--primary-5: var(--color-brand-primary-lighten-5);
+	--primary-7: var(--color-brand-primary-lighten-4);
+	--primary-dark: var(--color-brand-primary-darken-5);
+	--primary: var(--color-brand-primary);
 	--transparent: transparent;
-	--white:  var(--color-neutral-0);
+	--white: var(--color-neutral-0);
 }
 
 .f-navigation-primary.nav-wrapper {
@@ -45,7 +45,8 @@
 	max-width: var(--container-max-xl);
 }
 
-.f-navigation-primary .nav .utility-nav .content-wrapper, .f-navigation-primary .primary-nav .content-wrapper {
+.f-navigation-primary .nav .utility-nav .content-wrapper,
+.f-navigation-primary .primary-nav .content-wrapper {
 	margin: 0;
 }
 
@@ -53,6 +54,9 @@
 	background-color: var(--color-brand-primary-darken-5);
 }
 
-.bg-primary-dark .lfr-layout-structure-item-osb-www-components-global-textheading, .bg-primary-dark .lfr-layout-structure-item-osb-www-components-global-textcontent {
+.bg-primary-dark
+	.lfr-layout-structure-item-osb-www-components-global-textheading,
+.bg-primary-dark
+	.lfr-layout-structure-item-osb-www-components-global-textcontent {
 	color: var(--color-neutral-0);
 }

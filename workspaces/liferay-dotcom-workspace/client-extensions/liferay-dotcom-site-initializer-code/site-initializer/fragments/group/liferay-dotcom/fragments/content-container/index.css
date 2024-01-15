@@ -90,7 +90,8 @@
 
 .f-content-container .content-container-gradient-light.interactive:hover,
 .f-content-container .content-container-gradient-light.interactive:focus,
-.f-content-container .content-container-gradient-light.interactive:focus-visible,
+.f-content-container
+	.content-container-gradient-light.interactive:focus-visible,
 .f-content-container .content-container-gradient-light.interactive:active {
 	background: linear-gradient(115deg, #122aaf 0%, #01bbf8 84.37%);
 }

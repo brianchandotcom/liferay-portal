@@ -7,7 +7,7 @@
 }
 
 .f-text.displaySmall {
-	font-size: calc(var(--display2-size) * 0.8372)
+	font-size: calc(var(--display2-size) * 0.8372);
 }
 
 .f-text.heading1 {
@@ -15,15 +15,15 @@
 }
 
 .f-text.heading2 {
-	font-size: calc(var(--h2-font-size) * 0.9063)
+	font-size: calc(var(--h2-font-size) * 0.9063);
 }
 
 .f-text.heading3 {
-	font-size: calc(var(--h3-font-size) * 0.9286)
+	font-size: calc(var(--h3-font-size) * 0.9286);
 }
 
 .f-text.heading4 {
-	font-size: calc(var(--h4-font-size) * 0.9583)
+	font-size: calc(var(--h4-font-size) * 0.9583);
 }
 
 .f-text.heading5 {
@@ -56,11 +56,11 @@
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
 	.f-text.displayLarge {
-		font-size: calc(var(--display1-size) * 0.8980);
+		font-size: calc(var(--display1-size) * 0.898);
 	}
 
 	.f-text.displaySmall {
-		font-size: calc(var(--display2-size) * 0.9070)
+		font-size: calc(var(--display2-size) * 0.907);
 	}
 
 	.f-text.heading1 {
@@ -68,15 +68,15 @@
 	}
 
 	.f-text.heading2 {
-		font-size: calc(var(--h2-font-size) * 0.9375)
+		font-size: calc(var(--h2-font-size) * 0.9375);
 	}
 
 	.f-text.heading3 {
-		font-size: calc(var(--h3-font-size) * 0.9286)
+		font-size: calc(var(--h3-font-size) * 0.9286);
 	}
 
 	.f-text.heading4 {
-		font-size: calc(var(--h4-font-size) * 0.9583)
+		font-size: calc(var(--h4-font-size) * 0.9583);
 	}
 
 	.f-text.heading5 {

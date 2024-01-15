@@ -1,4 +1,8 @@
-window.addEventListener('load', function () {
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+window.addEventListener('load', () => {
 	if (document.querySelector('body.has-edit-mode-menu')) {
 		return;
 	}
@@ -17,22 +21,22 @@ window.addEventListener('load', function () {
 });
 
 function loadModalContent() {
-	var modalTriggers = document.querySelectorAll(
+	const modalTriggers = document.querySelectorAll(
 		'[href="#' + configuration.modalId + '"]'
 	);
-	var modal = document.getElementById(configuration.modalId);
-	var modalContent = modal.firstElementChild;
+	const modal = document.getElementById(configuration.modalId);
+	const modalContent = modal.firstElementChild;
 
-	for (var i = 0; i < modalTriggers.length; i++) {
-		modalTriggers[i].addEventListener('click', function () {
+	for (let i = 0; i < modalTriggers.length; i++) {
+		modalTriggers[i].addEventListener('click', () => {
 			Liferay.Util.openModal({
 				bodyHTML: '<div></div>',
 				containerProps: {
 					className: '',
 				},
 				id: 'f-modal',
-				onOpen: function () {
-					var modalBody = document.querySelector(
+				onOpen() {
+					const modalBody = document.querySelector(
 						'#f-modal .liferay-modal-body'
 					);
 					modalBody.appendChild(modalContent);

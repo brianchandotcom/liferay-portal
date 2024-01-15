@@ -1,15 +1,18 @@
-/*global _wq */
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-var overlay = fragmentElement.querySelector('.f-video-embed-overlay');
+const overlay = fragmentElement.querySelector('.f-video-embed-overlay');
 
 if (overlay) {
 	if (configuration.wistiaId) {
 		window._wq = window._wq || [];
 
-		_wq.push({
-			id: overlay.getAttribute('data-wistia-id'),
-			onReady: function (video) {
-				overlay.addEventListener('click', function () {
+		window._wq.push({
+			id: overlay.dataset.wistiaId,
+			onReady(video) {
+				overlay.addEventListener('click', () => {
 					overlay.classList.add('inline-video');
 					video.play();
 				});
@@ -17,17 +20,19 @@ if (overlay) {
 		});
 	}
 	else if (configuration.html5videoUrl) {
-		var video = fragmentElement.querySelector('video');
+		const video = fragmentElement.querySelector('video');
 
-		overlay.addEventListener('click', function () {
+		overlay.addEventListener('click', () => {
 			overlay.classList.add('inline-video');
 			video.play();
 		});
 	}
 	else if (configuration.youtubeId) {
-		var videoPlayer = fragmentElement.querySelector('.f-video-embed-player');
+		const videoPlayer = fragmentElement.querySelector(
+			'.f-video-embed-player'
+		);
 
-		overlay.addEventListener('click', function () {
+		overlay.addEventListener('click', () => {
 			videoPlayer.src += '&autoplay=1';
 			overlay.classList.add('inline-video');
 		});

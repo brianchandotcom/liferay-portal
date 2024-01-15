@@ -10,7 +10,7 @@ import React from 'react';
 
 import '../css/main.scss';
 
-export default function App() {
+function App() {
 	const onClickSuccess = () => {
 		openToast({
 			message: Liferay.Language.get(
@@ -53,3 +53,5 @@ export default function App() {
 		</div>
 	);
 }
+
+export {App};

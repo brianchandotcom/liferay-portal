@@ -12111,10 +12111,6 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: nestedFields
-                  schema:
-                      type: string
-                - in: query
                   name: filter
                   schema:
                       type: string

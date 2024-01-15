@@ -30,8 +30,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
-import org.apache.commons.lang.StringUtils;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -128,8 +126,20 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 						_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
 							friendlyURLSeparator);
 
-					return StringUtils.substringBetween(
-						friendlyURLSeparator, StringPool.SLASH);
+					friendlyURLSeparator =
+						StringPool.SLASH + friendlyURLSeparator +
+							StringPool.SLASH;
+
+					_validateURLSeparator(
+						fieldsValidationErrorsJSONObject,
+						friendlyURLResolver.getKey(), themeDisplay,
+						friendlyURLSeparator);
+
+					if (fieldsValidationErrorsJSONObject.length() > 0) {
+						return null;
+					}
+
+					return friendlyURLSeparator;
 				});
 		}
 
@@ -192,6 +202,31 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 		}
 
 		return redirect;
+	}
+
+	private void _validateURLSeparator(
+		JSONObject fieldsValidationErrorsJSONObject, String key,
+		ThemeDisplay themeDisplay, String urlSeparator) {
+
+		String namespace = _portal.getPortletNamespace(themeDisplay.getPpid());
+
+		if (urlSeparator.length() < 3) {
+			fieldsValidationErrorsJSONObject.put(
+				namespace + key,
+				_language.get(
+					themeDisplay.getLocale(),
+					"friendly-url-separator-error-too-short"));
+
+			return;
+		}
+
+		if (urlSeparator.length() > 255) {
+			fieldsValidationErrorsJSONObject.put(
+				namespace + key,
+				_language.get(
+					themeDisplay.getLocale(),
+					"friendly-url-separator-error-too-long"));
+		}
 	}
 
 	@Reference

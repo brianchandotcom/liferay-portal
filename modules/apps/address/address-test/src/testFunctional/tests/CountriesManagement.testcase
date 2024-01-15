@@ -75,7 +75,7 @@ definition {
 			CountriesManagement.openCountriesManagementPortlet();
 
 			CountriesManagement.addRegion(
-				countryName = "American Samoa",
+				countryName = "Philippines",
 				regionCode = 06,
 				regionName = "Western Visayas");
 
@@ -98,7 +98,7 @@ definition {
 		task ("Then the country is in active status") {
 			CountriesManagement.openCountriesManagementPortlet();
 
-			CountriesManagement.goToRegions(countryName = "American Samoa");
+			CountriesManagement.goToRegions(countryName = "Philippines");
 
 			CountriesManagement.viewRegionsInTable(
 				regionCode = 06,
@@ -111,7 +111,7 @@ definition {
 
 			ManagementBar.setFilterAndOrder(filterBy = "Active");
 
-			CountriesManagement.goToRegions(countryName = "American Samoa");
+			CountriesManagement.goToRegions(countryName = "Philippines");
 
 			Search.searchCP(searchTerm = "Western Visayas");
 
@@ -334,7 +334,7 @@ definition {
 			CountriesManagement.openCountriesManagementPortlet();
 
 			CountriesManagement.addRegion(
-				countryName = "American Samoa",
+				countryName = "Philippines",
 				regionCode = 14,
 				regionName = "Cordillera Administrative Region");
 		}
@@ -342,7 +342,7 @@ definition {
 		task ("When a user deletes this region") {
 			CountriesManagement.openCountriesManagementPortlet();
 
-			CountriesManagement.goToRegions(countryName = "American Samoa");
+			CountriesManagement.goToRegions(countryName = "Philippines");
 
 			CountriesManagement.deleteRegion(regionName = "Cordillera Administrative Region");
 		}
@@ -350,7 +350,7 @@ definition {
 		task ("Then region is successfully deleted") {
 			CountriesManagement.openCountriesManagementPortlet();
 
-			CountriesManagement.goToRegions(countryName = "American Samoa");
+			CountriesManagement.goToRegions(countryName = "Philippines");
 
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",

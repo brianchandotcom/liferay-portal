@@ -7,7 +7,7 @@ import React from 'react';
 
 import '../css/main.scss';
 
-export default function App() {
+function App() {
 	return (
 		<div>
 			<h2>Cadmin Test Portlet</h2>
@@ -39,3 +39,5 @@ export default function App() {
 		</div>
 	);
 }
+
+export {App};

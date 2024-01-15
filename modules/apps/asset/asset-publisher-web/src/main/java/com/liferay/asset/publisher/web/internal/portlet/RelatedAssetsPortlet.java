@@ -6,12 +6,17 @@
 package com.liferay.asset.publisher.web.internal.portlet;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.fragment.processor.PortletRegistry;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
+
+import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -21,12 +26,14 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
+	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.ajaxable=true",
@@ -73,12 +80,21 @@ public class RelatedAssetsPortlet extends AssetPublisherPortlet {
 	}
 
 	@Activate
-	protected void activate() {
+	@Modified
+	@Override
+	protected void activate(Map<String, Object> properties) {
+		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
+			AssetPublisherWebConfiguration.class, properties);
+
+		assetPublisherCustomizerRegistry = new AssetPublisherCustomizerRegistry(
+			assetPublisherHelper, assetPublisherWebConfiguration);
+
 		_portletRegistry.registerAlias(
 			_ALIAS, AssetPublisherPortletKeys.RELATED_ASSETS);
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
 		_portletRegistry.unregisterAlias(_ALIAS);
 	}

@@ -279,7 +279,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 				new AssetPublisherDisplayContext(
 					assetHelper, assetListAssetEntryProvider,
 					assetListEntrySegmentsEntryRelLocalService,
-					_assetPublisherCustomizerRegistry.
+					assetPublisherCustomizerRegistry.
 						getAssetPublisherCustomizer(rootPortletId),
 					assetPublisherHelper, assetPublisherWebConfiguration,
 					assetPublisherWebHelper, infoItemServiceRegistry,
@@ -362,9 +362,8 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
 			AssetPublisherWebConfiguration.class, properties);
 
-		_assetPublisherCustomizerRegistry =
-			new AssetPublisherCustomizerRegistry(
-				assetPublisherHelper, assetPublisherWebConfiguration);
+		assetPublisherCustomizerRegistry = new AssetPublisherCustomizerRegistry(
+			assetPublisherHelper, assetPublisherWebConfiguration);
 
 		portletRegistry.registerAlias(
 			_ALIAS, AssetPublisherPortletKeys.ASSET_PUBLISHER);
@@ -402,7 +401,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 				new AssetPublisherDisplayContext(
 					assetHelper, assetListAssetEntryProvider,
 					assetListEntrySegmentsEntryRelLocalService,
-					_assetPublisherCustomizerRegistry.
+					assetPublisherCustomizerRegistry.
 						getAssetPublisherCustomizer(rootPortletId),
 					assetPublisherHelper, assetPublisherWebConfiguration,
 					assetPublisherWebHelper, infoItemServiceRegistry,
@@ -456,6 +455,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 	@Reference
 	protected AssetListEntrySegmentsEntryRelLocalService
 		assetListEntrySegmentsEntryRelLocalService;
+
+	protected volatile AssetPublisherCustomizerRegistry
+		assetPublisherCustomizerRegistry;
 
 	@Reference
 	protected AssetPublisherHelper assetPublisherHelper;
@@ -525,8 +527,5 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherPortlet.class);
-
-	private volatile AssetPublisherCustomizerRegistry
-		_assetPublisherCustomizerRegistry;
 
 }

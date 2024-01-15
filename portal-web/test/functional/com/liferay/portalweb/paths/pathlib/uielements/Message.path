@@ -472,12 +472,12 @@
 </tr>
 <tr>
 	<td>SUCCESS_IMPORT_TRANSLATIONS_ITEM</td>
-	<td>//div[contains(@class,'translation-import-body-form')]//div[contains(@class,'panel-body')]//ul//li/p</td>
+	<td>//div[contains(@class,'panel')]//div[contains(@class,'panel-body')]//ul//li/p</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_IMPORT_TRANSLATIONS_ITEM_N</td>
-	<td>//div[contains(@class,'translation-import-body-form')]//div[contains(@class,'panel-body')]//ul//li[${key_indexNumber}]/p</td>
+	<td>//div[contains(@class,'panel')]//div[contains(@class,'panel-body')]//ul//li[${key_indexNumber}]/p</td>
 	<td></td>
 </tr>
 <tr>

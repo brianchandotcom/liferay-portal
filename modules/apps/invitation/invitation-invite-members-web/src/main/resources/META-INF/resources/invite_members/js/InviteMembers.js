@@ -14,7 +14,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {debounce, fetch, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
-export default function InviteMembers({
+export function InviteMembers({
 	assignRolesPermission,
 	getAvailableUsersURL,
 	manageTeamsPermission,

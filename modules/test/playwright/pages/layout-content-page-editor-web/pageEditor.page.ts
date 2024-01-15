@@ -7,6 +7,9 @@
 
 import {Page} from '@playwright/test';
 
+import {SitePage} from '../../../../apps/headless/headless-delivery/headless-delivery-client-js/src/main/resources/META-INF/resources/node';
+import {Site} from '../../../../apps/headless/headless-site/headless-site-client-js/src/main/resources/META-INF/resources/node';
+
 type Viewport = 'Desktop' | 'Landscape Phone' | 'Portrait Phone' | 'Tablet';
 
 export class PageEditorPage {
@@ -20,7 +23,7 @@ export class PageEditorPage {
 		await this.page.getByRole('tab', {name: tab}).click();
 	}
 
-	async goToEditMode(site: Site, layout: Layout) {
+	async goToEditMode(site: Site, layout: SitePage) {
 		await this.page.goto(
 			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
 		);

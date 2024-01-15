@@ -12,9 +12,6 @@ import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
 import {HeadlessAdminUserApiHelper} from './HeadlessAdminUserApiHelper';
 import {HeadlessCommerceAdminCatalogApiHelper} from './HeadlessCommerceAdminCatalogApiHelper';
 import {HeadlessCommerceAdminChannelApiHelper} from './HeadlessCommerceAdminChannelApiHelper';
-import {HeadlessDeliveryApiHelper} from './HeadlessDeliveryApiHelper';
-import {HeadlessSiteApiHelper} from './HeadlessSiteApiHelper';
-import {ObjectAdminApiHelper} from './ObjectAdminApiHelper';
 import {ObjectApiHelper} from './ObjectApiHelper';
 
 export class ApiHelpers {
@@ -23,10 +20,7 @@ export class ApiHelpers {
 	readonly headlessAdminUser: HeadlessAdminUserApiHelper;
 	readonly headlessCommerceAdminCatalog: HeadlessCommerceAdminCatalogApiHelper;
 	readonly headlessCommerceAdminChannel: HeadlessCommerceAdminChannelApiHelper;
-	readonly headlessDelivery: HeadlessDeliveryApiHelper;
-	readonly headlessSite: HeadlessSiteApiHelper;
 	readonly object: ObjectApiHelper;
-	readonly objectAdmin: ObjectAdminApiHelper;
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -37,10 +31,7 @@ export class ApiHelpers {
 			new HeadlessCommerceAdminCatalogApiHelper(this);
 		this.headlessCommerceAdminChannel =
 			new HeadlessCommerceAdminChannelApiHelper(this);
-		this.headlessDelivery = new HeadlessDeliveryApiHelper(this);
-		this.headlessSite = new HeadlessSiteApiHelper(this);
 		this.object = new ObjectApiHelper(this);
-		this.objectAdmin = new ObjectAdminApiHelper(this);
 		this.page = page;
 	}
 

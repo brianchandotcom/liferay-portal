@@ -5,6 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {HeadlessDeliveryClient} from '../../../../apps/headless/headless-delivery/headless-delivery-client-js/src/main/resources/META-INF/resources/node';
+import {HeadlessSiteClient} from '../../../../apps/headless/headless-site/headless-site-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -53,7 +55,7 @@ const NON_DESKTOP_PANELS: NonDesktopPanels = [
 ];
 
 test('shows correct sections on each configuration panel when viewport is not Desktop', async ({
-	apiHelpers,
+	authenticate,
 	page,
 	pageEditorPage,
 }) => {
@@ -61,7 +63,9 @@ test('shows correct sections on each configuration panel when viewport is not De
 
 	// Create a site
 
-	const site = await apiHelpers.headlessSite.createSite(getRandomId());
+	const site = await authenticate(HeadlessSiteClient).site.postSite({
+		requestBody: {name: getRandomId()},
+	});
 
 	// Create a page with a Heading fragment
 
@@ -72,11 +76,15 @@ test('shows correct sections on each configuration panel when viewport is not De
 		'BASIC_COMPONENT-heading'
 	);
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomId(),
-		getPageDefinition([headingFragment])
-	);
+	const layout = await authenticate(
+		HeadlessDeliveryClient
+	).sitePage.postSiteSitePage({
+		requestBody: {
+			pageDefinition: getPageDefinition([headingFragment]),
+			title: getRandomId(),
+		},
+		siteId: site.id,
+	});
 
 	// Go to edit mode of page
 
@@ -106,5 +114,5 @@ test('shows correct sections on each configuration panel when viewport is not De
 
 	// Delete the site
 
-	await apiHelpers.headlessSite.deleteSite(site.id);
+	await authenticate(HeadlessSiteClient).site.deleteSite({siteId: site.id});
 });

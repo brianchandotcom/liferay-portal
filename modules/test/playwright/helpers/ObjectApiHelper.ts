@@ -23,7 +23,7 @@ export class ObjectApiHelper {
 		scopeKey: string
 	) {
 		return this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}/${applicationName}/scopes/${scopeKey}`
+			`${this.apiHelpers.baseUrl}${applicationName}/scopes/${scopeKey}`
 		);
 	}
 }

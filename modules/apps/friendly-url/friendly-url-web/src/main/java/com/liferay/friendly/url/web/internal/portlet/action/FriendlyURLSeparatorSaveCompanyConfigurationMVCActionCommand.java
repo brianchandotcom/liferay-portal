@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -100,6 +103,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 			_jsonFactory.createJSONObject();
 
 		String namespace = _portal.getPortletNamespace(themeDisplay.getPpid());
+		List<String> friendlyURLSeparators = new ArrayList<>();
 
 		for (FriendlyURLResolver friendlyURLResolver :
 				FriendlyURLResolverRegistryUtil.
@@ -133,6 +137,19 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 					friendlyURLSeparator =
 						StringPool.SLASH + friendlyURLSeparator +
 							StringPool.SLASH;
+
+					if (friendlyURLSeparators.contains(friendlyURLSeparator)) {
+						fieldsValidationErrorsJSONObject.put(
+							namespace + friendlyURLResolver.getKey(),
+							_language.get(
+								themeDisplay.getLocale(),
+								"friendly-url-separator-error-other-asset-" +
+									"type-may-use-this-prefix"));
+
+						return null;
+					}
+
+					friendlyURLSeparators.add(friendlyURLSeparator);
 
 					_validateURLSeparator(
 						fieldsValidationErrorsJSONObject,
@@ -234,9 +251,11 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 			return;
 		}
 
+		String friendlyURL = urlSeparator.substring(
+			0, urlSeparator.length() - 1);
+
 		try {
-			_layoutLocalServiceHelper.validateFriendlyURLKeyword(
-				urlSeparator.substring(0, urlSeparator.length() - 1));
+			_layoutLocalServiceHelper.validateFriendlyURLKeyword(friendlyURL);
 		}
 		catch (LayoutFriendlyURLException layoutFriendlyURLException) {
 			String keywordConflict =
@@ -261,6 +280,25 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 							"use-this-prefix"));
 			}
 		}
+
+		int layoutFriendlyURLCountContainsURLSeparator =
+			_layoutFriendlyURLLocalService.getLayoutFriendlyURLsCount(
+				themeDisplay.getCompanyId(), urlSeparator, false);
+
+		int layoutFriendlyURLCountExactMatch =
+			_layoutFriendlyURLLocalService.getLayoutFriendlyURLsCount(
+				themeDisplay.getCompanyId(), friendlyURL, true);
+
+		if ((layoutFriendlyURLCountContainsURLSeparator > 0) ||
+			(layoutFriendlyURLCountExactMatch > 0)) {
+
+			fieldsValidationErrorsJSONObject.put(
+				namespace + key,
+				_language.get(
+					themeDisplay.getLocale(),
+					"friendly-url-separator-error-other-asset-type-may-use-" +
+						"this-prefix"));
+		}
 	}
 
 	@Reference
@@ -275,6 +313,9 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 
 	@Reference
 	private LayoutLocalServiceHelper _layoutLocalServiceHelper;

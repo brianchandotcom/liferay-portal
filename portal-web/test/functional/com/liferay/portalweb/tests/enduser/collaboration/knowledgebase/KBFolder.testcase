@@ -188,7 +188,7 @@ definition {
 
 		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder");
 
-		Button.viewNotPresent(button = "New");
+		AssertElementNotPresent(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
 	}
 
 	@description = "This test checks that all articles in a folder can be deleted via Toolbar."

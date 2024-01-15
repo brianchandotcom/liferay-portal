@@ -15,7 +15,7 @@ renderResponse.setTitle(ParamUtil.getString(request, "fdsEntryLabel"));
 %>
 
 <react:component
-	module="js/FDSViews"
+	module="{FDSViews} from frontend-data-set-views-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"fdsEntryId", ParamUtil.getString(request, "fdsEntryId")

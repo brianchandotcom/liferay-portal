@@ -17,7 +17,7 @@ renderResponse.setTitle(ParamUtil.getString(request, "fdsViewLabel"));
 %>
 
 <react:component
-	module="js/FDSView"
+	module="{FDSView} from frontend-data-set-views-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"fdsClientExtensionCellRenderers", fdsViewsDisplayContext.getFDSCellRendererCETsJSONArray()

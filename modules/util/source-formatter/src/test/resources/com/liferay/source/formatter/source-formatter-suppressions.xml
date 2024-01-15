@@ -30,5 +30,6 @@
 		<suppress checks="JavaPackagePathCheck" files="com/liferay/source/formatter/dependencies/MajorUpgradeByDropTable\.java" />
 		<suppress checks="JavaPackagePathCheck" files="com/liferay/source/formatter/dependencies/MinorUpgradeByAlterTableAddColumn\.java" />
 		<suppress checks="JavaPackagePathCheck" files="com/liferay/source/formatter/dependencies/MinorUpgradeByAlterTableAddColumnClause\.java" />
+		<suppress checks="JavaModuleInheritableVariableAccessModifierCheck" files="com/liferay/source/formatter/dependencies/.*" />
 	</source-check>
 </suppressions>

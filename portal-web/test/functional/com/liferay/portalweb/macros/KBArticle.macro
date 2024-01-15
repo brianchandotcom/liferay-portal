@@ -1463,7 +1463,7 @@ definition {
 
 		AssertVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
 
-		AssertVisible(locator1 = "ManagementBar#FILTER");
+		AssertElementNotPresent(locator1 = "ManagementBar#FILTER");
 
 		AssertVisible(locator1 = "ManagementBar#ORDER_ICON_GENERIC_BUTTON");
 

@@ -4,328 +4,328 @@
 			"ja_JP": "愛知県"
 		},
 		"name": "Aichi",
-		"regionCode": "23.0"
+		"regionCode": 23.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "秋田県"
 		},
 		"name": "Akita",
-		"regionCode": "5.0"
+		"regionCode": 5.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "青森県"
 		},
 		"name": "Aomori",
-		"regionCode": "2.0"
+		"regionCode": 2.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "千葉県"
 		},
 		"name": "Chiba",
-		"regionCode": "12.0"
+		"regionCode": 12.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "愛媛県"
 		},
 		"name": "Ehime",
-		"regionCode": "38.0"
+		"regionCode": 38.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "福井県"
 		},
 		"name": "Fukui",
-		"regionCode": "18.0"
+		"regionCode": 18.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "福岡県"
 		},
 		"name": "Fukuoka",
-		"regionCode": "40.0"
+		"regionCode": 40.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "福島県"
 		},
 		"name": "Fukushima",
-		"regionCode": "7.0"
+		"regionCode": 7.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "岐阜県"
 		},
 		"name": "Gifu",
-		"regionCode": "21.0"
+		"regionCode": 21.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "群馬県"
 		},
 		"name": "Gunma",
-		"regionCode": "10.0"
+		"regionCode": 10.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "広島県"
 		},
 		"name": "Hiroshima",
-		"regionCode": "34.0"
+		"regionCode": 34.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "北海道"
 		},
 		"name": "Hokkaido",
-		"regionCode": "1.0"
+		"regionCode": 1.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "兵庫県"
 		},
 		"name": "Hyogo",
-		"regionCode": "28.0"
+		"regionCode": 28.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "茨城県"
 		},
 		"name": "Ibaraki",
-		"regionCode": "8.0"
+		"regionCode": 8.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "石川県"
 		},
 		"name": "Ishikawa",
-		"regionCode": "17.0"
+		"regionCode": 17.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "岩手県"
 		},
 		"name": "Iwate",
-		"regionCode": "3.0"
+		"regionCode": 3.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "香川県 "
 		},
 		"name": "Kagawa",
-		"regionCode": "37.0"
+		"regionCode": 37.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "鹿児島県"
 		},
 		"name": "Kagoshima",
-		"regionCode": "46.0"
+		"regionCode": 46.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "神奈川県"
 		},
 		"name": "Kanagawa",
-		"regionCode": "14.0"
+		"regionCode": 14.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "高知県"
 		},
 		"name": "Kochi",
-		"regionCode": "39.0"
+		"regionCode": 39.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "熊本県"
 		},
 		"name": "Kumamoto",
-		"regionCode": "43.0"
+		"regionCode": 43.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "京都府"
 		},
 		"name": "Kyoto",
-		"regionCode": "26.0"
+		"regionCode": 26.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "三重県"
 		},
 		"name": "Mie",
-		"regionCode": "24.0"
+		"regionCode": 24.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "宮城県"
 		},
 		"name": "Miyagi",
-		"regionCode": "4.0"
+		"regionCode": 4.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "宮崎県"
 		},
 		"name": "Miyazaki",
-		"regionCode": "45.0"
+		"regionCode": 45.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "長野県"
 		},
 		"name": "Nagano",
-		"regionCode": "20.0"
+		"regionCode": 20.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "長崎県"
 		},
 		"name": "Nagasaki",
-		"regionCode": "42.0"
+		"regionCode": 42.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "奈良県"
 		},
 		"name": "Nara",
-		"regionCode": "29.0"
+		"regionCode": 29.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "新潟県"
 		},
 		"name": "Niigata",
-		"regionCode": "15.0"
+		"regionCode": 15.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "大分県"
 		},
 		"name": "Oita",
-		"regionCode": "44.0"
+		"regionCode": 44.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "岡山県"
 		},
 		"name": "Okayama",
-		"regionCode": "33.0"
+		"regionCode": 33.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "沖縄県"
 		},
 		"name": "Okinawa",
-		"regionCode": "47.0"
+		"regionCode": 47.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "大阪府"
 		},
 		"name": "Osaka",
-		"regionCode": "27.0"
+		"regionCode": 27.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "佐賀県"
 		},
 		"name": "Saga",
-		"regionCode": "41.0"
+		"regionCode": 41.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "埼玉県"
 		},
 		"name": "Saitama",
-		"regionCode": "11.0"
+		"regionCode": 11.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "滋賀県"
 		},
 		"name": "Shiga",
-		"regionCode": "25.0"
+		"regionCode": 25.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "島根県"
 		},
 		"name": "Shimane",
-		"regionCode": "32.0"
+		"regionCode": 32.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "静岡県"
 		},
 		"name": "Shizuoka",
-		"regionCode": "22.0"
+		"regionCode": 22.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "栃木県"
 		},
 		"name": "Tochigi",
-		"regionCode": "9.0"
+		"regionCode": 9.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "徳島県"
 		},
 		"name": "Tokushima",
-		"regionCode": "36.0"
+		"regionCode": 36.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "東京都"
 		},
 		"name": "Tokyo",
-		"regionCode": "13.0"
+		"regionCode": 13.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "鳥取県"
 		},
 		"name": "Tottori",
-		"regionCode": "31.0"
+		"regionCode": 31.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "富山県"
 		},
 		"name": "Toyama",
-		"regionCode": "16.0"
+		"regionCode": 16.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "和歌山県"
 		},
 		"name": "Wakayama",
-		"regionCode": "30.0"
+		"regionCode": 30.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "山形県"
 		},
 		"name": "Yamagata",
-		"regionCode": "6.0"
+		"regionCode": 6.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "山口県"
 		},
 		"name": "Yamaguchi",
-		"regionCode": "35.0"
+		"regionCode": 35.0
 	},
 	{
 		"localizations": {
 			"ja_JP": "山梨県"
 		},
 		"name": "Yamanashi",
-		"regionCode": "19.0"
+		"regionCode": 19.0
 	}
 ]

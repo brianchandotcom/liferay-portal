@@ -24,7 +24,7 @@
 		"regionCode": "AGB"
 	},
 	{
-		"name": "Armagh City, Banbridge and Craigavon",
+		"name": "Armagh, Banbridge and Craigavon",
 		"regionCode": "ABC"
 	},
 	{
@@ -48,7 +48,7 @@
 		"regionCode": "BDF"
 	},
 	{
-		"name": "Belfast City",
+		"name": "Belfast",
 		"regionCode": "BFS"
 	},
 	{
@@ -76,7 +76,7 @@
 		"regionCode": "BOL"
 	},
 	{
-		"name": "Bournemouth, Christchurch and Poole",
+		"name": "Bournemouth",
 		"regionCode": "BCP"
 	},
 	{
@@ -148,7 +148,7 @@
 		"regionCode": "CBF"
 	},
 	{
-		"name": "Ceredigion [Sir Ceredigion]",
+		"name": "Ceredigion",
 		"regionCode": "CGN"
 	},
 	{
@@ -228,7 +228,7 @@
 		"regionCode": "DND"
 	},
 	{
-		"name": "Durham, County",
+		"name": "Durham County",
 		"regionCode": "DUR"
 	},
 	{
@@ -270,10 +270,6 @@
 	{
 		"name": "Enfield",
 		"regionCode": "ENF"
-	},
-	{
-		"name": "England",
-		"regionCode": "ENG"
 	},
 	{
 		"name": "Essex",
@@ -476,7 +472,7 @@
 		"regionCode": "MEA"
 	},
 	{
-		"name": "Mid-Ulster",
+		"name": "Mid Ulster",
 		"regionCode": "MUL"
 	},
 	{
@@ -540,10 +536,6 @@
 		"regionCode": "NLN"
 	},
 	{
-		"name": "North Northamptonshire",
-		"regionCode": "NNH"
-	},
-	{
 		"name": "North Somerset",
 		"regionCode": "NSM"
 	},
@@ -558,10 +550,6 @@
 	{
 		"name": "Northamptonshire",
 		"regionCode": "NTH"
-	},
-	{
-		"name": "Northern Ireland",
-		"regionCode": "NIR"
 	},
 	{
 		"name": "Northumberland",
@@ -604,6 +592,10 @@
 		"regionCode": "PLY"
 	},
 	{
+		"name": "Poole",
+		"regionCode": "POL"
+	},
+	{
 		"name": "Portsmouth",
 		"regionCode": "POR"
 	},
@@ -628,7 +620,7 @@
 		"regionCode": "RFW"
 	},
 	{
-		"name": "Rhondda Cynon Taff",
+		"name": "Rhondda, Cynon, Taff",
 		"regionCode": "RCT"
 	},
 	{
@@ -656,11 +648,7 @@
 		"regionCode": "SAW"
 	},
 	{
-		"name": "Scotland",
-		"regionCode": "SCT"
-	},
-	{
-		"name": "Scottish Borders",
+		"name": "Scottish Borders, The",
 		"regionCode": "SCB"
 	},
 	{
@@ -784,7 +772,7 @@
 		"regionCode": "TOB"
 	},
 	{
-		"name": "Torfaen",
+		"name": "Torfaen [Tor-faen]",
 		"regionCode": "TOF"
 	},
 	{
@@ -802,10 +790,6 @@
 	{
 		"name": "Wakefield",
 		"regionCode": "WKF"
-	},
-	{
-		"name": "Wales",
-		"regionCode": "WLS"
 	},
 	{
 		"name": "Walsall",
@@ -838,10 +822,6 @@
 	{
 		"name": "West Lothian",
 		"regionCode": "WLN"
-	},
-	{
-		"name": "West Northamptonshire",
-		"regionCode": "WNH"
 	},
 	{
 		"name": "West Sussex",

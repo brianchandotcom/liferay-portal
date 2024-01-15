@@ -1,7 +1,7 @@
 [
 	{
 		"name": "Abruzzo",
-		"regionCode": "65.0"
+		"regionCode": "65"
 	},
 	{
 		"name": "Agrigento",
@@ -41,7 +41,7 @@
 	},
 	{
 		"name": "Basilicata",
-		"regionCode": "77.0"
+		"regionCode": "77"
 	},
 	{
 		"name": "Belluno",
@@ -81,7 +81,7 @@
 	},
 	{
 		"name": "Calabria",
-		"regionCode": "78.0"
+		"regionCode": "78"
 	},
 	{
 		"name": "Caltanissetta",
@@ -89,7 +89,7 @@
 	},
 	{
 		"name": "Campania",
-		"regionCode": "72.0"
+		"regionCode": "72"
 	},
 	{
 		"name": "Campobasso",
@@ -133,7 +133,7 @@
 	},
 	{
 		"name": "Emilia-Romagna",
-		"regionCode": "45.0"
+		"regionCode": "45"
 	},
 	{
 		"name": "Enna",
@@ -158,10 +158,6 @@
 	{
 		"name": "Forlì-Cesena",
 		"regionCode": "FC"
-	},
-	{
-		"name": "Friuli Venezia Giulia",
-		"regionCode": "36.0"
 	},
 	{
 		"name": "Frosinone",
@@ -201,7 +197,7 @@
 	},
 	{
 		"name": "Lazio",
-		"regionCode": "62.0"
+		"regionCode": "62"
 	},
 	{
 		"name": "Lecce",
@@ -213,7 +209,7 @@
 	},
 	{
 		"name": "Liguria",
-		"regionCode": "42.0"
+		"regionCode": "42"
 	},
 	{
 		"name": "Livorno",
@@ -225,7 +221,7 @@
 	},
 	{
 		"name": "Lombardia",
-		"regionCode": "25.0"
+		"regionCode": "25"
 	},
 	{
 		"name": "Lucca",
@@ -241,7 +237,7 @@
 	},
 	{
 		"name": "Marche",
-		"regionCode": "57.0"
+		"regionCode": "57"
 	},
 	{
 		"name": "Massa-Carrara",
@@ -265,7 +261,7 @@
 	},
 	{
 		"name": "Molise",
-		"regionCode": "67.0"
+		"regionCode": "67"
 	},
 	{
 		"name": "Monza e Brianza",
@@ -321,7 +317,7 @@
 	},
 	{
 		"name": "Piemonte",
-		"regionCode": "21.0"
+		"regionCode": "21"
 	},
 	{
 		"name": "Pisa",
@@ -345,7 +341,7 @@
 	},
 	{
 		"name": "Puglia",
-		"regionCode": "75.0"
+		"regionCode": "75"
 	},
 	{
 		"name": "Ragusa",
@@ -384,20 +380,12 @@
 		"regionCode": "SA"
 	},
 	{
-		"name": "Sardegna",
-		"regionCode": "88.0"
-	},
-	{
 		"name": "Sassari",
 		"regionCode": "SS"
 	},
 	{
 		"name": "Savona",
 		"regionCode": "SV"
-	},
-	{
-		"name": "Sicilia",
-		"regionCode": "82.0"
 	},
 	{
 		"name": "Siena",
@@ -433,15 +421,11 @@
 	},
 	{
 		"name": "Toscana",
-		"regionCode": "52.0"
+		"regionCode": "52"
 	},
 	{
 		"name": "Trapani",
 		"regionCode": "TP"
-	},
-	{
-		"name": "Trentino-Südtirol",
-		"regionCode": "32.0"
 	},
 	{
 		"name": "Trento",
@@ -461,11 +445,7 @@
 	},
 	{
 		"name": "Umbria",
-		"regionCode": "55.0"
-	},
-	{
-		"name": "Valle d'Aosta",
-		"regionCode": "23.0"
+		"regionCode": "55"
 	},
 	{
 		"name": "Varese",
@@ -473,7 +453,7 @@
 	},
 	{
 		"name": "Veneto",
-		"regionCode": "34.0"
+		"regionCode": "34"
 	},
 	{
 		"name": "Venezia",

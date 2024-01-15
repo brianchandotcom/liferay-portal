@@ -4,12 +4,12 @@
 		"regionCode": "C"
 	},
 	{
-		"name": "Alicante",
-		"regionCode": "A"
-	},
-	{
 		"name": "Albacete",
 		"regionCode": "AB"
+	},
+	{
+		"name": "Alicante",
+		"regionCode": "A"
 	},
 	{
 		"name": "Almería",
@@ -44,6 +44,10 @@
 		"regionCode": "BA"
 	},
 	{
+		"name": "Balears",
+		"regionCode": "PM"
+	},
+	{
 		"name": "Barcelona",
 		"regionCode": "B"
 	},
@@ -69,14 +73,14 @@
 	},
 	{
 		"name": "Cantabria",
-		"regionCode": "S"
-	},
-	{
-		"name": "Cantabria (autonomous)",
 		"regionCode": "CB"
 	},
 	{
-		"name": "Castellón",
+		"name": "Cantabria (autonomous)",
+		"regionCode": "S"
+	},
+	{
+		"name": "Castelló",
 		"regionCode": "CS"
 	},
 	{
@@ -140,24 +144,20 @@
 		"regionCode": "HU"
 	},
 	{
-		"name": "Islas Balears (autonomous)",
+		"name": "Illes Balears",
 		"regionCode": "IB"
-	},
-	{
-		"name": "Islas Balears",
-		"regionCode": "PM"
 	},
 	{
 		"name": "Jaén",
 		"regionCode": "J"
 	},
 	{
-		"name": "La Rioja (autonomous)",
-		"regionCode": "RI"
-	},
-	{
 		"name": "La Rioja",
 		"regionCode": "LO"
+	},
+	{
+		"name": "La Rioja (autonomous)",
+		"regionCode": "RI"
 	},
 	{
 		"name": "Las Palmas",
@@ -212,12 +212,12 @@
 		"regionCode": "OR"
 	},
 	{
-		"name": "Palencia",
-		"regionCode": "P"
+		"name": "Pais Vasco",
+		"regionCode": "PV"
 	},
 	{
-		"name": "País Vasco",
-		"regionCode": "PV"
+		"name": "Palencia",
+		"regionCode": "P"
 	},
 	{
 		"name": "Pontevedra",

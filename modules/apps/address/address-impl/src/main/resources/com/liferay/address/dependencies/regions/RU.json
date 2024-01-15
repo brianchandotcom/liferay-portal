@@ -4,11 +4,11 @@
 		"regionCode": "AD"
 	},
 	{
-		"name": "Altaj, Respublika",
+		"name": "Altay, Respublika",
 		"regionCode": "AL"
 	},
 	{
-		"name": "Altajskij kraj",
+		"name": "Altayskiy kray",
 		"regionCode": "ALT"
 	},
 	{
@@ -24,7 +24,7 @@
 		"regionCode": "AST"
 	},
 	{
-		"name": "Baškortostan, Respublika",
+		"name": "Bashkortostan, Respublika",
 		"regionCode": "BA"
 	},
 	{
@@ -40,11 +40,11 @@
 		"regionCode": "BU"
 	},
 	{
-		"name": "Čečenskaja Respublika",
+		"name": "Chechenskaya Respublika",
 		"regionCode": "CE"
 	},
 	{
-		"name": "Čeljabinskaja oblast'",
+		"name": "Chelyabinskaya oblast'",
 		"regionCode": "CHE"
 	},
 	{
@@ -52,7 +52,7 @@
 		"regionCode": "CHU"
 	},
 	{
-		"name": "Čuvašskaja Respublika",
+		"name": "Chuvashskaya Respublika",
 		"regionCode": "CU"
 	},
 	{
@@ -60,11 +60,7 @@
 		"regionCode": "DA"
 	},
 	{
-		"name": "Hakasija, Respublika",
-		"regionCode": "KK"
-	},
-	{
-		"name": "Ingušetija, Respublika",
+		"name": "Ingushetiya, Respublika",
 		"regionCode": "IN"
 	},
 	{
@@ -76,14 +72,6 @@
 		"regionCode": "IVA"
 	},
 	{
-		"name": "Jamalo-Neneckij avtonomnyj okrug",
-		"regionCode": "YAN"
-	},
-	{
-		"name": "Jaroslavskaja oblast'",
-		"regionCode": "YAR"
-	},
-	{
 		"name": "Kabardino-Balkarskaya Respublika",
 		"regionCode": "KB"
 	},
@@ -92,11 +80,11 @@
 		"regionCode": "KGD"
 	},
 	{
-		"name": "Kalmykija, Respublika",
+		"name": "Kalmykiya, Respublika",
 		"regionCode": "KL"
 	},
 	{
-		"name": "Kalužskaja oblast'",
+		"name": "Kaluzhskaya oblast'",
 		"regionCode": "KLU"
 	},
 	{
@@ -120,11 +108,15 @@
 		"regionCode": "KHA"
 	},
 	{
+		"name": "Khakasiya, Respublika",
+		"regionCode": "KK"
+	},
+	{
 		"name": "Khanty-Mansiyskiy avtonomnyy okrug",
 		"regionCode": "KHM"
 	},
 	{
-		"name": "Kirovskaja oblast'",
+		"name": "Kirovskaya oblast'",
 		"regionCode": "KIR"
 	},
 	{
@@ -140,23 +132,23 @@
 		"regionCode": "KDA"
 	},
 	{
-		"name": "Krasnojarskij kraj",
+		"name": "Krasnoyarskiy kray",
 		"regionCode": "KYA"
 	},
 	{
-		"name": "Kurganskaja oblast'",
+		"name": "Kurganskaya oblast'",
 		"regionCode": "KGN"
 	},
 	{
-		"name": "Kurskaja oblast'",
+		"name": "Kurskaya oblast'",
 		"regionCode": "KRS"
 	},
 	{
-		"name": "Leningradskaja oblast'",
+		"name": "Leningradskaya oblast'",
 		"regionCode": "LEN"
 	},
 	{
-		"name": "Lipeckaja oblast'",
+		"name": "Lipetskaya oblast'",
 		"regionCode": "LIP"
 	},
 	{
@@ -188,11 +180,11 @@
 		"regionCode": "NEN"
 	},
 	{
-		"name": "Nižegorodskaja oblast'",
+		"name": "Nizhegorodskaya oblast'",
 		"regionCode": "NIZ"
 	},
 	{
-		"name": "Novgorodskaja oblast'",
+		"name": "Novgorodskaya oblast'",
 		"regionCode": "NGR"
 	},
 	{
@@ -204,11 +196,11 @@
 		"regionCode": "OMS"
 	},
 	{
-		"name": "Orenburgskaja oblast'",
+		"name": "Orenburgskaya oblast'",
 		"regionCode": "ORE"
 	},
 	{
-		"name": "Orlovskaja oblast'",
+		"name": "Orlovskaya oblast'",
 		"regionCode": "ORL"
 	},
 	{
@@ -220,27 +212,27 @@
 		"regionCode": "PER"
 	},
 	{
-		"name": "Primorskij kraj",
+		"name": "Primorskiy kray",
 		"regionCode": "PRI"
 	},
 	{
-		"name": "Pskovskaja oblast'",
+		"name": "Pskovskaya oblast'",
 		"regionCode": "PSK"
 	},
 	{
-		"name": "Rjazanskaja oblast'",
-		"regionCode": "RYA"
+		"name": "Rostovskaya oblast'",
+		"regionCode": "ROS"
 	},
 	{
-		"name": "Rostovskaja oblast'",
-		"regionCode": "ROS"
+		"name": "Ryazanskaya oblast'",
+		"regionCode": "RYA"
 	},
 	{
 		"name": "Saha, Respublika",
 		"regionCode": "SA"
 	},
 	{
-		"name": "Sahalinskaja oblast'",
+		"name": "Sakhalinskaya oblast'",
 		"regionCode": "SAK"
 	},
 	{
@@ -260,7 +252,7 @@
 		"regionCode": "SE"
 	},
 	{
-		"name": "Smolenskaja oblast'",
+		"name": "Smolenskaya oblast'",
 		"regionCode": "SMO"
 	},
 	{
@@ -284,11 +276,11 @@
 		"regionCode": "TOM"
 	},
 	{
-		"name": "Tul'skaja oblast'",
+		"name": "Tul'skaya oblast'",
 		"regionCode": "TUL"
 	},
 	{
-		"name": "Tverskaja oblast'",
+		"name": "Tverskaya oblast'",
 		"regionCode": "TVE"
 	},
 	{
@@ -304,7 +296,7 @@
 		"regionCode": "UD"
 	},
 	{
-		"name": "Ul'janovskaja oblast'",
+		"name": "Ul'yanovskaya oblast'",
 		"regionCode": "ULY"
 	},
 	{
@@ -312,7 +304,7 @@
 		"regionCode": "VLA"
 	},
 	{
-		"name": "Volgogradskaja oblast'",
+		"name": "Volgogradskaya oblast'",
 		"regionCode": "VGG"
 	},
 	{
@@ -320,8 +312,16 @@
 		"regionCode": "VLG"
 	},
 	{
-		"name": "Voronežskaja oblast'",
+		"name": "Voronezhskaya oblast'",
 		"regionCode": "VOR"
+	},
+	{
+		"name": "Yamalo-Nenetskiy avtonomnyy okrug",
+		"regionCode": "YAN"
+	},
+	{
+		"name": "Yaroslavskaya oblast'",
+		"regionCode": "YAR"
 	},
 	{
 		"name": "Yevreyskaya avtonomnaya oblast'",

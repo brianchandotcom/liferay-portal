@@ -105,6 +105,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -123,6 +124,8 @@ import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
+
+import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -961,6 +964,21 @@ public class JournalDisplayContext {
 		return _restrictionType;
 	}
 
+	public String getScheduledArticleMessage(JournalArticle journalArticle) {
+		int count = JournalArticleServiceUtil.getArticlesCountByArticleId(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			WorkflowConstants.STATUS_SCHEDULED);
+
+		if (count > 1) {
+			return LanguageUtil.get(
+				_themeDisplay.getLocale(),
+				"multiple-publications-scheduled.-view-history-for-more-" +
+					"details");
+		}
+
+		return _dateTimeFormat.format(journalArticle.getDisplayDate());
+	}
+
 	public SearchContainer<?> getSearchContainer() throws PortalException {
 		if (_searchContainer != null) {
 			return _searchContainer;
@@ -1455,8 +1473,12 @@ public class JournalDisplayContext {
 				JournalWebConfiguration.class.getName());
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			httpServletRequest);
+
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+			_themeDisplay.getLocale(), _themeDisplay.getTimeZone());
 	}
 
 	private SearchContainer<Object> _getArticleAndFolderSearchContainer()
@@ -2309,6 +2331,7 @@ public class JournalDisplayContext {
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private String[] _assetTagNames;
+	private final Format _dateTimeFormat;
 	private Long _ddmStructureId;
 	private String _ddmStructureName;
 	private List<DDMStructure> _ddmStructures;

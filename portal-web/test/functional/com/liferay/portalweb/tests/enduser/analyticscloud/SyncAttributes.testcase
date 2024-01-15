@@ -195,7 +195,7 @@ definition {
 		}
 
 		task ("Change filter to Data type") {
-			ManagementBar.setFilterAndOrder(orderBy = "Data Type");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Data Type");
 		}
 
 		task ("Change the pagination to 5") {
@@ -578,7 +578,7 @@ definition {
 		}
 
 		task ("See that the list is sorted by attributes in the ascending order") {
-			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Attribute");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 
@@ -588,7 +588,7 @@ definition {
 		}
 
 		task ("See that the list is sorted by attributes in the descending order") {
-			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Attribute");
 
 			ACDXPSettings.setSortDirection(sortDirection = "down");
 
@@ -598,7 +598,7 @@ definition {
 		}
 
 		task ("See that the list is sorted by the data type of the attributes in ascending order") {
-			ManagementBar.setFilterAndOrder(orderBy = "Data Type");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Data Type");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 
@@ -667,7 +667,7 @@ definition {
 		}
 
 		task ("See that the list is sorted by attributes in the ascending order") {
-			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Attribute");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 
@@ -685,7 +685,7 @@ definition {
 		}
 
 		task ("See that the list is sorted by attributes in the descending order") {
-			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Attribute");
 
 			ACDXPSettings.setSortDirection(sortDirection = "down");
 
@@ -703,7 +703,7 @@ definition {
 		}
 
 		task ("See that the list is sorted by the data type of the attributes in ascending order") {
-			ManagementBar.setFilterAndOrder(orderBy = "Data Type");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Data Type");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 
@@ -776,7 +776,7 @@ definition {
 		}
 
 		task ("Sort the list by the Attribute Name column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Attribute");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}
@@ -798,7 +798,7 @@ definition {
 		}
 
 		task ("Sort the list by the Data Type column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "Data Type");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Data Type");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}
@@ -857,7 +857,7 @@ definition {
 		}
 
 		task ("Sort the list by the Attribute Name column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Attribute");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}
@@ -879,7 +879,7 @@ definition {
 		}
 
 		task ("Sort the list by the Data Type column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "Data Type");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Data Type");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}

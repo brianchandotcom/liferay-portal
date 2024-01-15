@@ -774,7 +774,7 @@ definition {
 		}
 
 		task ("Sort the list by the Account Groups column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "Account Group");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Account Group");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}
@@ -814,7 +814,7 @@ definition {
 		}
 
 		task ("Sort the list by the Account Groups column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "Account Group");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Account Group");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}
@@ -886,7 +886,7 @@ definition {
 		}
 
 		task ("Sort the list by the Organizations column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "Organizations");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Organizations");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}
@@ -926,7 +926,7 @@ definition {
 		}
 
 		task ("Sort the list by the Organizations column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "Organizations");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Organizations");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}
@@ -1000,7 +1000,7 @@ definition {
 		}
 
 		task ("Sort the list by the User Groups column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "User Groups");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "User Groups");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}
@@ -1040,7 +1040,7 @@ definition {
 		}
 
 		task ("Sort the list by the User Groups column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "User Groups");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "User Groups");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}

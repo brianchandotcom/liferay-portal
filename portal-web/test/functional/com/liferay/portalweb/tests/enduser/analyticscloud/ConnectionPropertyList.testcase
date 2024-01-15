@@ -256,7 +256,7 @@ definition {
 		}
 
 		task ("Sort the list by the Create Date column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "Create Date");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Create Date");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}
@@ -278,7 +278,7 @@ definition {
 		}
 
 		task ("Sort the list by the Available Properties column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "Available Properties");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Available Properties");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}
@@ -312,7 +312,7 @@ definition {
 		}
 
 		task ("Sort the list by the Create Date column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "Create Date");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Create Date");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}
@@ -334,7 +334,7 @@ definition {
 		}
 
 		task ("Sort the list by the Available Properties column (Ascending)") {
-			ManagementBar.setFilterAndOrder(orderBy = "Available Properties");
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Available Properties");
 
 			ACDXPSettings.setSortDirection(sortDirection = "up");
 		}

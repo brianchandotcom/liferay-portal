@@ -22,7 +22,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		%>
 
 		<react:component
-			module="invite_members/js/InviteMembers"
+			module="{InviteMembers} from invitation-invite-members-web"
 			props="<%= inviteMembersDisplayContext.getInviteMembersProps() %>"
 		/>
 	</c:when>

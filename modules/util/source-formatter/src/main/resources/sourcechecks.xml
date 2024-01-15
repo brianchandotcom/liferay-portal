@@ -943,6 +943,10 @@
 			<description name="Checks package name for `*TestUtil.java`." />
 			<property name="enabled" value="false" />
 		</check>
+		<check name="JavaModuleUniqueUpgradeStepRegistratorCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that a module can not have more than 1 upgrade step registrator class (class implements UpgradeStepRegistrator)." />
+		</check>
 		<check name="JavaModuleUniqueVerifyProcessCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that a module can not have more than 1 verify process class (class extends VerifyProcess)." />

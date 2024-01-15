@@ -5,60 +5,29 @@
 
 // @ts-ignore
 
-import {expect, test} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 import * as path from 'path';
 
-import {zipFolder} from '../../utils/util';
+import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
+import {exportImportPagesTest} from '../../fixtures/exportImportPages.fixtures';
+
+export const test = mergeTests(documentLibraryPagesTest, exportImportPagesTest);
 
 test('can import a folder with document type restrictions and workflow', async ({
-	page,
+	_documentLibraryEditFolderPage,
+	_documentLibraryPage,
+	_exportImportFramePage,
 }) => {
-	await page.goto('/');
-	const openProductMenu = page.getByLabel('Open Product Menu');
-	if (await openProductMenu.isVisible()) {
-		await openProductMenu.click();
-	}
-	await page.getByRole('menuitem', {name: 'Content & Data'}).click();
-	await page.getByRole('menuitem', {name: 'Documents and Media'}).click();
-	await page.getByTestId('headerOptions').getByLabel('Options').click();
-	await page.getByRole('menuitem', {name: 'Export / Import'}).click();
-
-	const exportImportFrame = page.frameLocator(
-		'iframe[title="Export \\/ Import"]'
+	await _documentLibraryPage.goto();
+	await _documentLibraryPage.openOptionsMenu();
+	await _documentLibraryPage.exportImportOptionsMenuItem.click();
+	await _exportImportFramePage.importLARFile(
+		path.join(__dirname, '/dependencies/folder.portlet.lar')
 	);
-
-	await exportImportFrame.getByRole('link', {name: 'Import'}).click();
-
-	const fileChooserPromise = page.waitForEvent('filechooser');
-
-	await exportImportFrame.getByRole('button', {name: 'Select File'}).click();
-
-	const fileChooser = await fileChooserPromise;
-
-	await fileChooser.setFiles(
-		await zipFolder(
-			path.join(__dirname, '/dependencies/folder.portlet.lar')
-		)
-	);
-
-	await exportImportFrame.getByRole('button', {name: 'Continue'}).click();
-	await exportImportFrame.getByRole('button', {name: 'Import'}).click();
-
-	await page.getByLabel('close', {exact: true}).click();
-	await page
-		.locator(
-			'[id="_com_liferay_document_library_web_portlet_DLAdminPortlet_entries_1"]'
-		)
-		.getByLabel('More actions')
-		.click();
-	await page.getByRole('menuitem', {name: 'Edit'}).click();
+	await _exportImportFramePage.close();
+	await _documentLibraryPage.editEntry('LPS-205933');
 
 	expect(
-		await page
-			.getByTitle('Workflow Definition')
-			.evaluate(
-				(select: HTMLSelectElement) =>
-					select.options[select.selectedIndex].value
-			)
+		await _documentLibraryEditFolderPage.getSelectedWorkflowDefinition()
 	).toBe('Single Approver@1');
 });

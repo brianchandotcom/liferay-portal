@@ -322,7 +322,8 @@
 </#list>
 
 <#assign
-	groupFriendlyURL = "/web" + themeDisplay.getScopeGroup().getFriendlyURL()
+	groupFriendlyURL = themeDisplay.getScopeGroup().getFriendlyURL()
+	groupPathFriendlyURLPublic = themeDisplay.getPathFriendlyURLPublic() + groupFriendlyURL
 	isLandingPage = false
 	topLevelArticle = true
 />
@@ -358,27 +359,27 @@
 							"analytics-cloud": {
 								"title": "Analytics Cloud",
 								"url": "analytics-cloud",
-								"image": "/documents/d/guest/analytics_c-svg"
+								"image": "/documents/d${groupFriendlyURL}/analytics_c-svg"
 							},
 							"commerce": {
 								"title": "Commerce",
 								"url": "commerce",
-								"image": "/documents/d/guest/commerce_product-svg"
+								"image": "/documents/d${groupFriendlyURL}/commerce_product-svg"
 							},
 							"dxp": {
 								"title": "DXP / Portal",
 								"url": "dxp",
-								"image": "/documents/d/guest/dxp_p-svg"
+								"image": "/documents/d${groupFriendlyURL}/dxp_p-svg"
 							},
 							"liferay-cloud": {
 								"title": "DXP Cloud",
 								"url": "liferay-cloud",
-								"image": "/documents/d/guest/dxp_c-svg"
+								"image": "/documents/d${groupFriendlyURL}/dxp_c-svg"
 							},
 							"reference": {
 								"title": "Reference",
 								"url": "reference",
-								"image": "/documents/d/guest/reference-svg"
+								"image": "/documents/d${groupFriendlyURL}/reference-svg"
 							}
 						}
 
@@ -435,7 +436,7 @@
 								<#list navigationMenuItems as key, value>
 									<a
 										class="adt-submenu-item-link color-black text-decoration-none"
-										href="${groupFriendlyURL}/w/${navigationMenuItems[key].url}/index"
+										href="${groupPathFriendlyURLPublic}/w/${navigationMenuItems[key].url}/index"
 										tabindex="4"
 									>
 										<div class="align-items-center br-13 br-5 col-sm-12 d-flex dropdown-item justify-content-between ml-0 mr-0">
@@ -547,7 +548,7 @@
 						role="navigation"
 					>
 						<li>
-							<a href="${groupFriendlyURL}"><@clay["icon"] symbol="home-full" /></a>
+							<a href="${groupPathFriendlyURLPublic}"><@clay["icon"] symbol="home-full" /></a>
 						</li>
 
 						<#if !topLevelArticle>

@@ -48,7 +48,7 @@ public class LayoutDesignScreenNavigationEntry
 					LayoutTypeSettingsConstants.
 						KEY_DESIGN_CONFIGURATION_MODIFIED))) {
 
-			return language.get(getResourceBundle(locale), "draft");
+			return language.get(locale, "draft");
 		}
 
 		return null;

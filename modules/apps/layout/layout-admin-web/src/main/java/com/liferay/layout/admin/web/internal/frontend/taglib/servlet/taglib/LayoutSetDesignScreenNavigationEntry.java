@@ -10,14 +10,10 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,7 +43,7 @@ public class LayoutSetDesignScreenNavigationEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(_getResourceBundle(locale), getEntryKey());
+		return _language.get(locale, getEntryKey());
 	}
 
 	@Override
@@ -67,21 +63,10 @@ public class LayoutSetDesignScreenNavigationEntry
 			"/layout_set/screen/navigation/entries/design.jsp");
 	}
 
-	private ResourceBundle _getResourceBundle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return new AggregateResourceBundle(
-			resourceBundle, _portal.getResourceBundle(locale));
-	}
-
 	@Reference
 	private JSPRenderer _jspRenderer;
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 }

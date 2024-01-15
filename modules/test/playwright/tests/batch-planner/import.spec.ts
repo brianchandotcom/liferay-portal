@@ -6,6 +6,10 @@
 import {expect, mergeTests} from '@playwright/test';
 import * as path from 'path';
 
+import {
+	ObjectAdminRestClient,
+	ObjectDefinition,
+} from '../../../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataMigrationCenterPagesTest} from '../../fixtures/dataMigrationCenterPages';
@@ -25,7 +29,7 @@ export const test = mergeTests(
 	objectPagesTest
 );
 
-const companyObjectDefinition = {
+const companyObjectDefinition: ObjectDefinition = {
 	active: true,
 	externalReferenceCode: 'Test',
 	label: {'en-US': 'Test'},
@@ -41,6 +45,7 @@ const companyObjectDefinition = {
 			label: {en_US: 'testDateField'},
 			listTypeDefinitionId: 0,
 			name: 'testDateField',
+
 			required: false,
 			system: false,
 			type: 'Date',
@@ -55,7 +60,9 @@ const companyObjectDefinition = {
 			label: {en_US: 'testDateTimeField'},
 			listTypeDefinitionId: 0,
 			name: 'testDateTimeField',
-			objectFieldSettings: [{name: 'timeStorage', value: 'convertToUTC'}],
+			objectFieldSettings: [
+				{name: 'timeStorage', value: 'convertToUTC'} as any,
+			],
 			required: false,
 			system: false,
 			type: 'DateTime',
@@ -166,7 +173,7 @@ const companyObjectDefinition = {
 	status: {code: 0},
 };
 
-const siteObjectDefinition = {
+const siteObjectDefinition: ObjectDefinition = {
 	active: true,
 	externalReferenceCode: 'Test',
 	label: {'en-US': 'Test'},
@@ -196,7 +203,9 @@ const siteObjectDefinition = {
 			label: {en_US: 'testDateTimeField'},
 			listTypeDefinitionId: 0,
 			name: 'testDateTimeField',
-			objectFieldSettings: [{name: 'timeStorage', value: 'convertToUTC'}],
+			objectFieldSettings: [
+				{name: 'timeStorage', value: 'convertToUTC'} as any,
+			],
 			required: false,
 			system: false,
 			type: 'DateTime',
@@ -309,12 +318,15 @@ const siteObjectDefinition = {
 
 test('can import CSV file with an unexisting field', async ({
 	apiHelpers,
+	authenticate,
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		companyObjectDefinition
-	);
+	const objectDefinition = await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.postObjectDefinition({
+		requestBody: companyObjectDefinition,
+	});
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -360,17 +372,24 @@ test('can import CSV file with an unexisting field', async ({
 		},
 	]);
 
-	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
 });
 
 test('can import CSV file with custom columns order', async ({
 	apiHelpers,
+	authenticate,
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectDefinition = await apiHelpers.objectAdmin.postObjectDefinition(
-		siteObjectDefinition
-	);
+	const objectDefinition = await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.postObjectDefinition({
+		requestBody: siteObjectDefinition,
+	});
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -422,17 +441,24 @@ test('can import CSV file with custom columns order', async ({
 		},
 	]);
 
-	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
+	await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
 });
 
 test('can import CSV file with multiple site scoped object entries', async ({
 	apiHelpers,
+	authenticate,
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		siteObjectDefinition
-	);
+	const objectDefinition = await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.postObjectDefinition({
+		requestBody: siteObjectDefinition,
+	});
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -508,17 +534,24 @@ test('can import CSV file with multiple site scoped object entries', async ({
 		},
 	]);
 
-	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
 });
 
 test('can import CSV file with new and existing site scoped object entries', async ({
 	apiHelpers,
+	authenticate,
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		siteObjectDefinition
-	);
+	const objectDefinition = await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.postObjectDefinition({
+		requestBody: siteObjectDefinition,
+	});
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -606,17 +639,24 @@ test('can import CSV file with new and existing site scoped object entries', asy
 		},
 	]);
 
-	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
 });
 
 test('can import CSV file with new and modified existing company scoped object entries', async ({
 	apiHelpers,
+	authenticate,
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		companyObjectDefinition
-	);
+	const objectDefinition = await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.postObjectDefinition({
+		requestBody: companyObjectDefinition,
+	});
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -698,17 +738,23 @@ test('can import CSV file with new and modified existing company scoped object e
 		},
 	]);
 
-	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
 });
 
 test('can map all imported fields', async ({
-	apiHelpers,
+	authenticate,
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		siteObjectDefinition
-	);
+	const objectDefinition = await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.postObjectDefinition({
+		requestBody: siteObjectDefinition,
+	});
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -729,17 +775,23 @@ test('can map all imported fields', async ({
 	await expect(page.getByText('testRichTextField')).toBeVisible();
 	await expect(page.getByText('name', {exact: true})).toBeVisible();
 
-	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
 });
 
 test('can preview CSV file', async ({
-	apiHelpers,
+	authenticate,
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		siteObjectDefinition
-	);
+	const objectDefinition = await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.postObjectDefinition({
+		requestBody: siteObjectDefinition,
+	});
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -799,17 +851,23 @@ test('can preview CSV file', async ({
 			.getByRole('cell', {exact: true, name: 'testRichTextField'})
 	).toBeVisible();
 
-	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
 });
 
 test('can show duplicate error message with CSV import existing entry and only add new record fields', async ({
-	apiHelpers,
+	authenticate,
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		companyObjectDefinition
-	);
+	const objectDefinition = await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.postObjectDefinition({
+		requestBody: companyObjectDefinition,
+	});
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -836,7 +894,11 @@ test('can show duplicate error message with CSV import existing entry and only a
 		)
 	).toBeVisible();
 
-	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
 });
 
 test('cannot import CSV file without headers row', async ({
@@ -861,13 +923,15 @@ test('cannot import CSV file without headers row', async ({
 });
 
 test('cannot import CSV file with empty headers row', async ({
-	apiHelpers,
+	authenticate,
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		siteObjectDefinition
-	);
+	const objectDefinition = await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.postObjectDefinition({
+		requestBody: siteObjectDefinition,
+	});
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -893,17 +957,23 @@ test('cannot import CSV file with empty headers row', async ({
 		)
 	).toBeVisible();
 
-	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
 });
 
 test('cannot import CSV file with object entry with UPSERT strategy', async ({
-	apiHelpers,
+	authenticate,
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		companyObjectDefinition
-	);
+	const objectDefinition = await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.postObjectDefinition({
+		requestBody: companyObjectDefinition,
+	});
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -921,17 +991,23 @@ test('cannot import CSV file with object entry with UPSERT strategy', async ({
 		)
 	).toBeVisible();
 
-	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
 });
 
 test('cannot import empty CSV file', async ({
-	apiHelpers,
+	authenticate,
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		companyObjectDefinition
-	);
+	const objectDefinition = await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.postObjectDefinition({
+		requestBody: companyObjectDefinition,
+	});
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -950,5 +1026,9 @@ test('cannot import empty CSV file', async ({
 
 	await expect(page.getByText('Error:Please upload a file.')).toBeVisible();
 
-	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await authenticate(
+		ObjectAdminRestClient
+	).objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: objectDefinition.id,
+	});
 });

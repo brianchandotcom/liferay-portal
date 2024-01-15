@@ -37,7 +37,7 @@ if (Validator.isNotNull(namespace)) {
 		<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
 
 		<react:component
-			module="js/ItemSelectorRepositoryEntryBrowser"
+			module="{ItemSelectorRepositoryEntryBrowser} from item-selector-upload-web"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"closeCaption", itemSelectorUploadViewDisplayContext.getTitle(locale)

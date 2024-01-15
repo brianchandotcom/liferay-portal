@@ -2,6 +2,7 @@
 	"dependencies": {
 		"item-selector-taglib": "*"
 	},
+	"main": "js/ItemSelectorRepositoryEntryBrowser.js",
 	"name": "item-selector-upload-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

@@ -107,18 +107,18 @@ definition {
 		task ("Search the Pages") {
 			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
 
-			ACUtils.searchBar(searchItem = "AC Page - Site Name - ${dataSourceName}");
+			ACUtils.searchBar(searchItem = "Blogs AC Title - Site Name - ${dataSourceName}");
 		}
 
 		task ("View Page Metric of Unique Visitors in Page List") {
 			ACSites.viewPageMetricFromPagesList(
 				metricName = "Unique Visitors",
 				metricValue = ${metricNum},
-				pageName = "AC Page - Site Name - ${dataSourceName}");
+				pageName = "Blogs AC Title - Site Name - ${dataSourceName}");
 		}
 
 		task ("Navigate to page") {
-			ACNavigation.openItem(itemName = "AC Page - Site Name - ${dataSourceName}");
+			ACNavigation.openItem(itemName = "Blogs AC Title - Site Name - ${dataSourceName}");
 		}
 
 		task ("View Unique Visitors metric value in Visitors Behavior card") {

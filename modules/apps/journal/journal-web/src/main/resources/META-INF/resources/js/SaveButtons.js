@@ -8,7 +8,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
-import PermissionsModal from './modals/PermissionsModal';
+import PublishModal from './modals/PublishModal';
 
 export default function SaveButtons({
 	articleId,
@@ -21,14 +21,14 @@ export default function SaveButtons({
 	selectedLanguageId,
 }) {
 	const [
-		{permissionsModalAction, permissionsModalVisible},
-		setPermissionsModalState,
-	] = useState({permissionsModalAction: '', permissionsModalVisible: false});
+		{publishModalAction, publishModalVisible},
+		setPublishModalState,
+	] = useState({publishModalAction: '', publishModalVisible: false});
 
 	const onClick = (action) => {
-		setPermissionsModalState({
-			permissionsModalAction: action,
-			permissionsModalVisible: true,
+		setPublishModalState({
+			publishModalAction: action,
+			publishModalVisible: true,
 		});
 	};
 
@@ -43,7 +43,7 @@ export default function SaveButtons({
 			`${portletNamespace}workflowAction`
 		);
 
-		if (permissionsModalAction === 'publish') {
+		if (publishModalAction === 'publish') {
 			workflowActionInput.value = Liferay.Workflow.ACTION_PUBLISH;
 		}
 
@@ -108,9 +108,9 @@ export default function SaveButtons({
 		{
 			label: Liferay.Language.get('schedule-publication'),
 			onClick: () =>
-				setPermissionsModalState({
-					permissionsModalAction: 'schedule',
-					permissionsModalVisible: false,
+				setPublishModalState({
+					publishModalAction: 'schedule',
+					publishModalVisible: false,
 				}),
 			symbolLeft: 'date-time',
 		},
@@ -141,13 +141,13 @@ export default function SaveButtons({
 				}
 			/>
 
-			{permissionsModalVisible ? (
-				<PermissionsModal
-					actionButton={permissionsModalAction}
+			{publishModalVisible ? (
+				<PublishModal
+					actionButton={publishModalAction}
 					onCloseModal={() =>
-						setPermissionsModalState({
-							permissionsModalAction: '',
-							permissionsModalVisible: false,
+						setPublishModalState({
+							publishModalAction: '',
+							publishModalVisible: false,
 						})
 					}
 					onPublishButtonClick={handleButtonClick}

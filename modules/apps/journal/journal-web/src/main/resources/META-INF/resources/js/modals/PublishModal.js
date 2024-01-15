@@ -10,7 +10,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch, runScriptsInElement} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-export default function PermissionsModal({
+export default function PublishModal({
 	actionButton,
 	onCloseModal,
 	onPublishButtonClick,

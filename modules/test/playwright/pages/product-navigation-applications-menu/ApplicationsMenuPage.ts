@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 export class ApplicationsMenuPage {
 	readonly applicationMenuButton: Locator;
 	readonly applicationsMenuTabButton: Locator;
+	readonly clientExtensionsLink: Locator;
 	readonly controlPanelButton: Locator;
 	readonly dataMigrationCenterMenuItem: Locator;
 	readonly instanceSettingsLink: Locator;
@@ -23,6 +24,9 @@ export class ApplicationsMenuPage {
 		);
 		this.applicationsMenuTabButton = page.getByRole('tab', {
 			name: 'Applications',
+		});
+		this.clientExtensionsLink = page.getByRole('menuitem', {
+			name: 'Client Extensions',
 		});
 		this.controlPanelButton = page.getByRole('tab', {
 			name: 'Control Panel',
@@ -54,6 +58,12 @@ export class ApplicationsMenuPage {
 		await this.goto();
 		await this.applicationMenuButton.click();
 		await this.applicationsMenuTabButton.click();
+	}
+
+	async goToClientExtensions() {
+		await this.goto();
+		await this.applicationMenuButton.click();
+		await this.clientExtensionsLink.click();
 	}
 
 	async goToDataMigrationCenter() {

@@ -149,6 +149,7 @@ export function ModalImportContent({
 												fileName: '',
 												inputFile: null,
 											});
+											inputFileRef.current.value = '';
 										}}
 									>
 										{Liferay.Language.get('clear')}
@@ -213,6 +214,7 @@ export function ModalImportContent({
 											fileName: '',
 											inputFile: null,
 										});
+										inputFileRef.current.value = '';
 									}
 								};
 							}

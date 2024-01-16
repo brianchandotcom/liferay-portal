@@ -5,13 +5,18 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.FragmentStyle;
 import com.liferay.headless.delivery.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.StyledLayoutStructureItemUtil;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONException;
@@ -20,8 +25,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -108,6 +116,17 @@ public class FragmentLayoutStructureItemMapper
 		};
 	}
 
+	@Activate
+	protected void activate() {
+		_pageFragmentInstanceDefinitionMapper =
+			new PageFragmentInstanceDefinitionMapper(
+				_fragmentCollectionContributorRegistry,
+				_fragmentEntryConfigurationParser,
+				_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
+				_groupLocalService, infoItemServiceRegistry, _jsonFactory,
+				portal, _portletRegistry, _widgetInstanceMapper);
+	}
+
 	private PageWidgetInstanceDefinition _toPageWidgetInstanceDefinition(
 		FragmentEntryLink fragmentEntryLink,
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
@@ -143,14 +162,35 @@ public class FragmentLayoutStructureItemMapper
 		FragmentLayoutStructureItemMapper.class);
 
 	@Reference
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
+
+	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	@Reference
 	private PageFragmentInstanceDefinitionMapper
 		_pageFragmentInstanceDefinitionMapper;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
 
 	@Reference
 	private WidgetInstanceMapper _widgetInstanceMapper;

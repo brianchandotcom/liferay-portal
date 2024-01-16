@@ -79,15 +79,35 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rubén Pulido
  * @author Javier de Arcos
  */
-@Component(service = PageFragmentInstanceDefinitionMapper.class)
 public class PageFragmentInstanceDefinitionMapper {
+
+	public PageFragmentInstanceDefinitionMapper(
+		FragmentCollectionContributorRegistry
+			fragmentCollectionContributorRegistry,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
+		FragmentEntryLocalService fragmentEntryLocalService,
+		GroupLocalService groupLocalService,
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		JSONFactory jsonFactory, Portal portal, PortletRegistry portletRegistry,
+		WidgetInstanceMapper widgetInstanceMapper) {
+
+		_fragmentCollectionContributorRegistry =
+			fragmentCollectionContributorRegistry;
+		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
+		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
+		_fragmentEntryLocalService = fragmentEntryLocalService;
+		_groupLocalService = groupLocalService;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
+		_jsonFactory = jsonFactory;
+		_portal = portal;
+		_portletRegistry = portletRegistry;
+		_widgetInstanceMapper = widgetInstanceMapper;
+	}
 
 	public PageFragmentInstanceDefinition getPageFragmentInstanceDefinition(
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
@@ -1187,35 +1207,17 @@ public class PageFragmentInstanceDefinitionMapper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageFragmentInstanceDefinitionMapper.class);
 
-	@Reference
-	private FragmentCollectionContributorRegistry
+	private final FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
-
-	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private PortletRegistry _portletRegistry;
-
-	@Reference
-	private WidgetInstanceMapper _widgetInstanceMapper;
+	private final FragmentEntryConfigurationParser
+		_fragmentEntryConfigurationParser;
+	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+	private final FragmentEntryLocalService _fragmentEntryLocalService;
+	private final GroupLocalService _groupLocalService;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
+	private final JSONFactory _jsonFactory;
+	private final Portal _portal;
+	private final PortletRegistry _portletRegistry;
+	private final WidgetInstanceMapper _widgetInstanceMapper;
 
 }

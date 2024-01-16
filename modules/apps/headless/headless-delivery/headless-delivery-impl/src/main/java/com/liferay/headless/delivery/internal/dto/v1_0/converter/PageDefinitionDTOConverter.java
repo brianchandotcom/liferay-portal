@@ -15,10 +15,10 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.delivery.dto.v1_0.ClientExtension;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.headless.delivery.dto.v1_0.StyleBook;
 import com.liferay.headless.delivery.dto.v1_0.util.ContentDocumentUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.PageElementUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.PageRulesUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -88,10 +89,19 @@ public class PageDefinitionDTOConverter
 
 		return new PageDefinition() {
 			{
-				pageElement = PageElementUtil.toPageElement(
-					layout.getGroupId(), layoutStructure,
-					mainLayoutStructureItem, saveInlineContent,
-					saveMappingConfiguration);
+				pageElement = _pageElementDTOConverter.toDTO(
+					new AttributesDTOConverterContext(
+						HashMapBuilder.put(
+							"groupId", (Object)layout.getGroupId()
+						).put(
+							"layoutStructure", layoutStructure
+						).put(
+							"saveInlineContent", saveInlineContent
+						).put(
+							"saveMappingConfiguration", saveMappingConfiguration
+						).build()),
+					mainLayoutStructureItem);
+
 				pageRules = PageRulesUtil.toPageRules(
 					layoutStructure.getLayoutStructureRules());
 				settings = _toSettings(dtoConverterContext, layout);
@@ -375,10 +385,32 @@ public class PageDefinitionDTOConverter
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
+	@Reference(
+		target = "(dto.class.name=com.liferay.layout.util.structure.LayoutStructureItem)"
+	)
+	private DTOConverter<LayoutStructureItem, PageElement>
+		_pageElementDTOConverter;
+
 	@Reference
 	private Portal _portal;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	private static class AttributesDTOConverterContext
+		implements DTOConverterContext {
+
+		@Override
+		public Object getAttribute(String name) {
+			return _attributes.get(name);
+		}
+
+		private AttributesDTOConverterContext(Map<String, Object> attributes) {
+			_attributes = attributes;
+		}
+
+		private final Map<String, Object> _attributes;
+
+	}
 
 }

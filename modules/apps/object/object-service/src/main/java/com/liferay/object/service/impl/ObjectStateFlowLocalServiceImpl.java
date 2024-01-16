@@ -220,15 +220,14 @@ public class ObjectStateFlowLocalServiceImpl
 			for (ObjectStateTransition objectStateTransition :
 					sourceObjectState.getObjectStateTransitions()) {
 
-				long targetObjectStateListTypeEntryId = MapUtil.getLong(
-					listTypeEntryIds,
-					objectStateTransition.getTargetObjectStateId(),
-					objectStateTransition.
-						getTargetObjectStateListTypeEntryId());
-
 				ObjectState targetObjectState =
 					_objectStateLocalService.getObjectStateFlowObjectState(
-						targetObjectStateListTypeEntryId, objectStateFlowId);
+						MapUtil.getLong(
+							listTypeEntryIds,
+							objectStateTransition.getTargetObjectStateId(),
+							objectStateTransition.
+								getTargetObjectStateListTypeEntryId()),
+						objectStateFlowId);
 
 				_objectStateTransitionLocalService.addObjectStateTransition(
 					userId, objectStateFlowId,

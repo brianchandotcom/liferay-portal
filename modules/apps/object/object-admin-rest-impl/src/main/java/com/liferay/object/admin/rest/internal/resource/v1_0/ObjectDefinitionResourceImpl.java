@@ -709,7 +709,24 @@ public class ObjectDefinitionResourceImpl
 			objectValidationRules.toArray(new ObjectValidationRule[0]),
 			objectViews);
 
-		return _toObjectDefinition(serviceBuilderObjectDefinition);
+		Status status = objectDefinition.getStatus();
+
+		if ((status == null) ||
+			(status.getCode() != WorkflowConstants.STATUS_APPROVED)) {
+
+			return _toObjectDefinition(serviceBuilderObjectDefinition);
+		}
+
+		serviceBuilderObjectDefinition =
+			_objectDefinitionService.getObjectDefinition(objectDefinitionId);
+
+		if (serviceBuilderObjectDefinition.isApproved()) {
+			return _toObjectDefinition(serviceBuilderObjectDefinition);
+		}
+
+		return _toObjectDefinition(
+			_objectDefinitionService.publishCustomObjectDefinition(
+				serviceBuilderObjectDefinition.getObjectDefinitionId()));
 	}
 
 	@Override

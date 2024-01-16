@@ -55,7 +55,7 @@ public class NoSuchSiteExceptionMapper
 			return noSuchGroupException.getMessage();
 		}
 
-		Matcher groupKeyMatcher = _groupKeyPattern .matcher(
+		Matcher groupKeyMatcher = _groupKeyPattern.matcher(
 			noSuchGroupException.getMessage());
 
 		if (!groupKeyMatcher.matches()) {
@@ -73,7 +73,7 @@ public class NoSuchSiteExceptionMapper
 
 	private static final Pattern _externalReferenceCodePattern =
 		Pattern.compile(".+external reference code (.+)");
-	private static final Pattern _groupKeyPattern  = Pattern.compile(
+	private static final Pattern _groupKeyPattern = Pattern.compile(
 		".+groupKey=(.+)}");
 
 }

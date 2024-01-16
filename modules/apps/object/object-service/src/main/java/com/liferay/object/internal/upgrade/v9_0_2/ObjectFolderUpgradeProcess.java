@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.internal.upgrade.v8_8_4;
+package com.liferay.object.internal.upgrade.v9_0_2;
 
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.petra.string.StringBundler;

@@ -30,11 +30,6 @@ public class JournalArticleAssetDisplayPageFriendlyURLResolver
 	}
 
 	@Override
-	public String getURLSeparator() {
-		return FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE;
-	}
-
-	@Override
 	public boolean isURLSeparatorConfigurable() {
 		return true;
 	}

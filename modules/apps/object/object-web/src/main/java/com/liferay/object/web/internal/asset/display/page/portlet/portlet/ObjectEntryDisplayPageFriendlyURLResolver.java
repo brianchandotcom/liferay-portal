@@ -30,11 +30,6 @@ public class ObjectEntryDisplayPageFriendlyURLResolver
 	}
 
 	@Override
-	public String getURLSeparator() {
-		return FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY;
-	}
-
-	@Override
 	public boolean isURLSeparatorConfigurable() {
 		return true;
 	}

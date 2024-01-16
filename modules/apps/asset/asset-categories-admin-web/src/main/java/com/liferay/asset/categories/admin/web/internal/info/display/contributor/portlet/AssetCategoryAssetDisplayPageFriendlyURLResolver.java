@@ -30,11 +30,6 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 	}
 
 	@Override
-	public String getURLSeparator() {
-		return FriendlyURLResolverConstants.URL_SEPARATOR_ASSET_CATEGORY;
-	}
-
-	@Override
 	public boolean isURLSeparatorConfigurable() {
 		return true;
 	}

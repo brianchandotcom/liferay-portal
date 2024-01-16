@@ -344,6 +344,40 @@ public class ReflectionTestUtil {
 		}
 	}
 
+	public static AutoCloseable setFieldValueWithAutoCloseable(
+		Class<?> clazz, String fieldName, Object newValue) {
+
+		Field field = getField(clazz, fieldName);
+
+		try {
+			Object value = field.get(null);
+
+			field.set(null, newValue);
+
+			return () -> field.set(null, value);
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
+	}
+
+	public static AutoCloseable setFieldValueWithAutoCloseable(
+		Object instance, String fieldName, Object newValue) {
+
+		Field field = getField(instance.getClass(), fieldName);
+
+		try {
+			Object value = field.get(instance);
+
+			field.set(instance, newValue);
+
+			return () -> field.set(instance, value);
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
+	}
+
 	private static Method _findBridgeMethod(Method[] methods, Method method) {
 		String name = method.getName();
 		Class<?>[] parameterTypes = method.getParameterTypes();

@@ -222,7 +222,7 @@ public class DownstreamBuild extends BaseBuild {
 			for (URL url : getTestrayAttachmentURLs()) {
 				String urlString = url.toString();
 
-				if (urlString.contains("playwright-report")) {
+				if (urlString.contains("playwright-report/index.html")) {
 					Dom4JUtil.addToElement(
 						messageElement, " - ",
 						Dom4JUtil.getNewAnchorElement(

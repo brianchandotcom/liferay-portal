@@ -79,6 +79,7 @@ CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext = (CPPriceRang
 									for (TermCollector termCollector : termCollectors) {
 										i++;
 									%>
+
 									<c:if test="<%= termCollector.getFrequency() > 0 %>">
 										<li class="facet-value">
 											<div class="custom-checkbox custom-control">
@@ -104,6 +105,7 @@ CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext = (CPPriceRang
 											</div>
 										</li>
 									</c:if>
+
 									<%
 									}
 									%>
@@ -113,10 +115,10 @@ CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext = (CPPriceRang
 						</c:if>
 
 						<c:if test="<%= cpPriceRangeFacetsDisplayContext.showInputRange() %>">
-							<div class="mt-3 ml-0 row">
+							<div class="ml-0 mt-3 row">
 								<aui:input cssClass="price-range-input" label="<%= StringPool.BLANK %>" min="0" name="minimum" prefix="<%= HtmlUtil.escape(cpPriceRangeFacetsDisplayContext.getCurrentCommerceCurrencySymbol()) %>" type="number" value="<%= min %>" wrapperCssClass="col-md-5 price-range-input-wrapper" />
 
-								<span class="mt-auto price-range-seperator text-center">-</span>
+								<span class="mt-auto price-range-separator text-center">-</span>
 
 								<aui:input cssClass="price-range-input" label="<%= StringPool.BLANK %>" name="maximum" prefix="<%= HtmlUtil.escape(cpPriceRangeFacetsDisplayContext.getCurrentCommerceCurrencySymbol()) %>" type="number" value="<%= max %>" wrapperCssClass="col-md-5 price-range-input-wrapper" />
 

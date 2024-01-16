@@ -119,36 +119,6 @@ if (workspacesYarnLockFile.exists()) {
 	portalYarnFormat.finalizedBy portalWorkspacesYarnFormat
 }
 
-File playwrightPackageLockJsonFile = new File(rootDir.parentFile, "modules/test/playwright/package-lock.json")
-
-if (playwrightPackageLockJsonFile.exists()) {
-	task playwrightCheckFormat(type: PackageRunTask)
-	task playwrightFormat(type: PackageRunTask)
-	task playwrightInstall(type: ExecutePackageManagerTask)
-
-	playwrightCheckFormat {
-		dependsOn playwrightInstall
-
-		scriptName = "checkFormat"
-		workingDir = new File(rootDir.parentFile, "modules/test/playwright")
-	}
-
-	playwrightFormat {
-		dependsOn playwrightInstall
-
-		scriptName = "format"
-		workingDir = new File(rootDir.parentFile, "modules/test/playwright")
-	}
-
-	playwrightInstall {
-		args "install", "--frozen-lockfile", "--ignore-engines"
-		workingDir = new File(rootDir.parentFile, "modules/test/playwright")
-	}
-
-	portalYarnCheckFormat.finalizedBy playwrightCheckFormat
-	portalYarnFormat.finalizedBy playwrightFormat
-}
-
 buildDir = new File(rootDir.parentFile, "build")
 
 for (String gradleVersion in ["7.3.3"]) {

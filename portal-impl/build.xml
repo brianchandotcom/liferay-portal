@@ -593,6 +593,15 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 								<property name="skip.node.task" value="true" />
 							</then>
 						</if>
+
+						<if>
+							<not>
+								<matches pattern="modules/test/playwright" string="${baseline.current.branch.file.names}" />
+							</not>
+							<then>
+								<property name="skip.playwright.task" value="true" />
+							</then>
+						</if>
 					</then>
 					<else>
 						<if>
@@ -706,11 +715,29 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 								<gradle-execute dir="${project.dir}/modules" task=":portalYarnCheckFormat">
 									<env key="LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME" value="${git.working.branch.name}" />
 								</gradle-execute>
+
+								<if>
+									<not>
+										<isset property="skip.playwright.task" />
+									</not>
+									<then>
+										<gradle-execute dir="${project.dir}/modules/test/playwright" task="packageRunCheckFormat" />
+									</then>
+								</if>
 							</then>
 							<else>
 								<gradle-execute dir="${project.dir}/modules" task=":portalYarnFormat">
 									<env key="LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME" value="${git.working.branch.name}" />
 								</gradle-execute>
+
+								<if>
+									<not>
+										<isset property="skip.playwright.task" />
+									</not>
+									<then>
+										<gradle-execute dir="${project.dir}/modules/test/playwright" task="packageRunFormat" />
+									</then>
+								</if>
 							</else>
 						</if>
 					</then>

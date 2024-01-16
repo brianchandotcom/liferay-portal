@@ -12,6 +12,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.layout.display.page.BaseLayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.petra.string.CharPool;
@@ -30,11 +31,17 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutDisplayPageProvider.class)
 public class KBArticleLayoutDisplayPageProvider
-	implements LayoutDisplayPageProvider<KBArticle> {
+	extends BaseLayoutDisplayPageProvider<KBArticle> {
 
 	@Override
 	public String getClassName() {
 		return KBArticle.class.getName();
+	}
+
+	@Override
+	public String getDefaultURLSeparator() {
+		return FriendlyURLResolverConstants.
+			URL_SEPARATOR_KNOWLEDGE_BASE_ARTICLE;
 	}
 
 	@Override
@@ -126,12 +133,6 @@ public class KBArticleLayoutDisplayPageProvider
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
-	}
-
-	@Override
-	public String getURLSeparator() {
-		return FriendlyURLResolverConstants.
-			URL_SEPARATOR_KNOWLEDGE_BASE_ARTICLE;
 	}
 
 	private long _getKBFolderId(long groupId, List<String> urlTitleParts) {

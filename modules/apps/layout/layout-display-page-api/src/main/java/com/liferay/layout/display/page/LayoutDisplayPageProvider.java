@@ -14,6 +14,10 @@ public interface LayoutDisplayPageProvider<T> {
 
 	public String getClassName();
 
+	public default String getDefaultURLSeparator() {
+		return null;
+	}
+
 	public LayoutDisplayPageObjectProvider<T>
 		getLayoutDisplayPageObjectProvider(InfoItemReference infoItemReference);
 

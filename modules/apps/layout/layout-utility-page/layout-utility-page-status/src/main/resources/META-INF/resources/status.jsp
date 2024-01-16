@@ -35,6 +35,10 @@
 			<br /><br />
 
 			<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
+
+			<hr class="separator" />
+
+			<a href="javascript:history.go(-1);">&laquo; <liferay-ui:message key="back" /></a>
 		</c:when>
 		<c:when test="<%= SessionErrors.contains(request, PortalException.class.getName()) || SessionErrors.contains(request, SystemException.class.getName()) %>">
 			<clay:alert
@@ -47,6 +51,10 @@
 			<br /><br />
 
 			<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
+
+			<hr class="separator" />
+
+			<a href="javascript:history.go(-1);">&laquo; <liferay-ui:message key="back" /></a>
 		</c:when>
 		<c:when test="<%= SessionErrors.contains(request, TransformException.class.getName()) %>">
 			<clay:alert
@@ -69,6 +77,10 @@
 			<div>
 				<%= StringUtil.replace(HtmlUtil.escape(te.getMessage()), '\n', "<br />\n") %>
 			</div>
+
+			<hr class="separator" />
+
+			<a href="javascript:history.go(-1);">&laquo; <liferay-ui:message key="back" /></a>
 		</c:when>
 		<c:when test="<%= statusDisplayContext.isNoSuchResourceException() %>">
 			<liferay-layout:render-layout-utility-page-entry
@@ -125,10 +137,9 @@
 			statusDisplayContext.logSessionErrors();
 			%>
 
+			<hr class="separator" />
+
+			<a href="javascript:history.go(-1);">&laquo; <liferay-ui:message key="back" /></a>
 		</c:otherwise>
 	</c:choose>
-
-	<hr class="separator" />
-
-	<a href="javascript:history.go(-1);">&laquo; <liferay-ui:message key="back" /></a>
 </liferay-layout:render-layout-utility-page-entry>

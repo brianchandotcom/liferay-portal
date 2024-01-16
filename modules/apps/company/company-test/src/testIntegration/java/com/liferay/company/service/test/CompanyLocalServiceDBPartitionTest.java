@@ -165,14 +165,73 @@ public class CompanyLocalServiceDBPartitionTest
 	}
 
 	@Test
-	public void testAddDBPartitionCompanyWhenRenamingFails() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+	public void testAddDBPartitionCompanyWhenInsertDBPartitionFails()
+		throws Exception {
+
+		Company company = CompanyTestUtil.addCompany();
 
 		boolean standaloneDBPartition = false;
 
 		try {
 			_companyLocalService.extractDBPartitionCompany(
-				_company.getCompanyId());
+				company.getCompanyId());
+
+			standaloneDBPartition = true;
+
+			try (AutoCloseable autoCloseable =
+					ReflectionTestUtil.setFieldValueWithAutoCloseable(
+						DBPartitionUtil.class, "_dbPartitionDB",
+						ProxyUtil.newProxyInstance(
+							DBPartitionDB.class.getClassLoader(),
+							new Class<?>[] {DBPartitionDB.class},
+							(proxy, method, args) -> {
+								if (Objects.equals(
+										method.getName(), "getCreateViewSQL") &&
+									StringUtil.equalsIgnoreCase(
+										(String)args[2], "VirtualHost")) {
+
+									throw new Exception();
+								}
+
+								return method.invoke(dbPartitionDB, args);
+							}))) {
+
+				company = _companyLocalService.addDBPartitionCompany(
+					company.getCompanyId(), null, null, null);
+
+				standaloneDBPartition = false;
+
+				Assert.fail("Should fail due to duplicate web ID");
+			}
+			catch (PortalException portalException) {
+				long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+
+				Assert.assertFalse(
+					ArrayUtil.contains(companyIds, company.getCompanyId()));
+
+				_checkStandaloneDBPartitionTables(
+					company.getCompanyId(), "Company", "VirtualHost");
+			}
+		}
+		finally {
+			if (standaloneDBPartition) {
+				removeDBPartitions(new long[] {company.getCompanyId()});
+			}
+			else {
+				_companyLocalService.deleteCompany(company);
+			}
+		}
+	}
+
+	@Test
+	public void testAddDBPartitionCompanyWhenRenamingFails() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		boolean standaloneDBPartition = false;
+
+		try {
+			_companyLocalService.extractDBPartitionCompany(
+				company.getCompanyId());
 
 			standaloneDBPartition = true;
 
@@ -180,8 +239,8 @@ public class CompanyLocalServiceDBPartitionTest
 				PortalInstances.getDefaultCompanyId());
 
 			try {
-				_company = _companyLocalService.addDBPartitionCompany(
-					_company.getCompanyId(), null, null,
+				_companyLocalService.addDBPartitionCompany(
+					company.getCompanyId(), null, null,
 					defaultCompany.getWebId());
 
 				standaloneDBPartition = false;
@@ -192,15 +251,18 @@ public class CompanyLocalServiceDBPartitionTest
 				long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 				Assert.assertFalse(
-					ArrayUtil.contains(companyIds, _company.getCompanyId()));
+					ArrayUtil.contains(companyIds, company.getCompanyId()));
 
 				_checkStandaloneDBPartitionTables(
-					_company.getCompanyId(), "Company", "VirtualHost");
+					company.getCompanyId(), "Company", "VirtualHost");
 			}
 		}
 		finally {
 			if (standaloneDBPartition) {
-				removeDBPartitions(new long[] {_company.getCompanyId()});
+				removeDBPartitions(new long[] {company.getCompanyId()});
+			}
+			else {
+				_companyLocalService.deleteCompany(company);
 			}
 		}
 	}
@@ -250,34 +312,37 @@ public class CompanyLocalServiceDBPartitionTest
 
 	@Test
 	public void testExtractAndAddDBPartitionCompany() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		Company company = CompanyTestUtil.addCompany();
 
-		_companyLocalService.extractDBPartitionCompany(_company.getCompanyId());
+		_companyLocalService.extractDBPartitionCompany(company.getCompanyId());
 
-		String name = "new" + _company.getName();
-		String virtualHostName = "new" + _company.getVirtualHostname();
-		String webId = "new" + _company.getWebId();
+		String name = "new" + company.getName();
+		String virtualHostName = "new" + company.getVirtualHostname();
+		String webId = "new" + company.getWebId();
 
 		boolean standaloneDBPartition = true;
 
 		try {
-			_company = _companyLocalService.addDBPartitionCompany(
-				_company.getCompanyId(), name, virtualHostName, webId);
+			company = _companyLocalService.addDBPartitionCompany(
+				company.getCompanyId(), name, virtualHostName, webId);
 
 			standaloneDBPartition = false;
 
 			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 			Assert.assertTrue(
-				ArrayUtil.contains(companyIds, _company.getCompanyId()));
+				ArrayUtil.contains(companyIds, company.getCompanyId()));
 
-			Assert.assertEquals(name, _company.getName());
-			Assert.assertEquals(virtualHostName, _company.getVirtualHostname());
-			Assert.assertEquals(webId, _company.getWebId());
+			Assert.assertEquals(name, company.getName());
+			Assert.assertEquals(virtualHostName, company.getVirtualHostname());
+			Assert.assertEquals(webId, company.getWebId());
 		}
 		finally {
 			if (standaloneDBPartition) {
-				removeDBPartitions(new long[] {_company.getCompanyId()});
+				removeDBPartitions(new long[] {company.getCompanyId()});
+			}
+			else {
+				_companyLocalService.deleteCompany(company);
 			}
 		}
 	}

@@ -152,6 +152,10 @@ export default function ViewObjectDefinitions({
 		unbindFromRootObjectDefinition: false,
 	});
 
+	const [updatedFDSItemsActions, setUpdatedFDSItemsActions] = useState(
+		objectDefinitionsFDSActionDropdownItems
+	);
+
 	function handleShowDeleteObjectDefinitionModal() {
 		setShowModal((previousState: ViewObjectDefinitionsModals) => ({
 			...previousState,
@@ -187,6 +191,26 @@ export default function ViewObjectDefinitions({
 		return url;
 	};
 
+	useEffect(() => {
+		if (objectFoldersRequestInfo?.items.length > 1) {
+			const itemsActions = [...objectDefinitionsFDSActionDropdownItems];
+			itemsActions.push({
+				data: {
+					id: 'moveObjectDefinition',
+					method: 'update',
+					permissionKey: 'update',
+				},
+				href: null,
+				icon: 'move-folder',
+				label: 'Move',
+				target: null,
+				type: 'item',
+			});
+			setUpdatedFDSItemsActions(itemsActions);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [objectFoldersRequestInfo?.items.length]);
+
 	const dataSetProps = {
 		...defaultDataSetProps,
 		apiURL: Liferay.FeatureFlags['LPS-148856']
@@ -207,7 +231,7 @@ export default function ViewObjectDefinitions({
 			title: Liferay.Language.get('no-objects-created-yet'),
 		},
 		id: objectDefinitionsFDSName,
-		itemsActions: objectDefinitionsFDSActionDropdownItems,
+		itemsActions: updatedFDSItemsActions,
 		namespace:
 			'_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_',
 		onActionDropdownItemClick({

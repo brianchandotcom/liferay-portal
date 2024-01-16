@@ -537,9 +537,9 @@ public class DLAdminDisplayContext {
 			if ((_folder != null) && (_folderId != _rootFolderId) &&
 				(_rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-				List<Long> ancestors = _folder.getAncestorFolderIds();
+				List<Long> ancestorFolderIds = _folder.getAncestorFolderIds();
 
-				if (!ancestors.contains(_rootFolderId)) {
+				if (!ancestorFolderIds.contains(_rootFolderId)) {
 					throw new NoSuchFolderException();
 				}
 			}

@@ -36,6 +36,7 @@ type AICreatorModalLearnResources = {
 };
 
 type RequestStatus =
+	| {type: 'adding'}
 	| {type: 'idle'}
 	| {type: 'loading'}
 	| {errorMessage: string; type: 'error'};
@@ -60,6 +61,8 @@ export default function AICreatorImageModal({
 
 	const onAdd = () => {
 		if (selectedImages.length) {
+			setStatus({type: 'adding'});
+
 			Promise.all(
 				selectedImages.map((imageURL) => {
 					const formData = new FormData();
@@ -71,6 +74,8 @@ export default function AICreatorImageModal({
 					});
 				})
 			).then(() => {
+				setStatus({type: 'idle'});
+
 				const opener = Liferay.Util.getOpener();
 
 				opener.Liferay.fire(eventName, {selectedItems: selectedImages});
@@ -187,7 +192,10 @@ export default function AICreatorImageModal({
 							addButtonLabel={Liferay.Language.get(
 								'add-selected'
 							)}
-							disabledAddButton={Boolean(!selectedImages?.length)}
+							disabledAddButton={Boolean(
+								!selectedImages?.length ||
+									status.type === 'adding'
+							)}
 							onAdd={onAdd}
 							onClose={closeModal}
 							showAddButton={Boolean(imagesURL?.length)}

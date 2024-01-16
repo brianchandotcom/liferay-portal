@@ -21,7 +21,7 @@ export type OpenAPIConfig = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-	BASE: 'http://localhost:8080/o',
+	BASE: liferayConfig.environment.baseUrl + '/o',
 	VERSION: '1.0',
 	WITH_CREDENTIALS: false,
 	CREDENTIALS: 'include',

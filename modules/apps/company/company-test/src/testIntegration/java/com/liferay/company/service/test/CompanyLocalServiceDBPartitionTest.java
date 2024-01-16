@@ -7,6 +7,7 @@ package com.liferay.company.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.db.partition.DBPartitionUtil;
+import com.liferay.portal.db.partition.sql.DBPartitionDB;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -19,9 +20,13 @@ import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
 import com.liferay.portal.service.impl.ResourceActionLocalServiceImpl;
+import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -30,10 +35,14 @@ import com.liferay.portal.util.PortalInstances;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -74,6 +83,85 @@ public class CompanyLocalServiceDBPartitionTest
 		disableDBPartition();
 
 		_regenerateResourceActions();
+	}
+
+	@Test
+	public void testAddCompany() throws Exception {
+		int schemasSize = _getSchemasAndCatalogsSize();
+
+		_company = CompanyTestUtil.addCompany();
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				PortalInstances.getCompanyIdsBySQL(), _company.getCompanyId()));
+
+		Assert.assertEquals(schemasSize + 1, _getSchemasAndCatalogsSize());
+	}
+
+	@Test
+	public void testAddCompanyWhenAddDBPartitionFails() throws Exception {
+		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+		int schemasSize = _getSchemasAndCatalogsSize();
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					DBPartitionUtil.class, "_dbPartitionDB",
+					ProxyUtil.newProxyInstance(
+						DBPartitionDB.class.getClassLoader(),
+						new Class<?>[] {DBPartitionDB.class},
+						(proxy, method, args) -> {
+							if (Objects.equals(
+									method.getName(), "getCreateTableSQL")) {
+
+								throw new Exception();
+							}
+
+							return method.invoke(dbPartitionDB, args);
+						}))) {
+
+			Company company = CompanyTestUtil.addCompany();
+
+			_companyLocalService.deleteCompany(company);
+
+			Assert.fail("Should fail when adding partition");
+		}
+		catch (Exception exception) {
+			Assert.assertArrayEquals(
+				companyIds, PortalInstances.getCompanyIdsBySQL());
+			Assert.assertEquals(schemasSize, _getSchemasAndCatalogsSize());
+		}
+	}
+
+	@Test
+	public void testAddCompanyWhenCompanyCreationFails() throws Exception {
+		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+		int schemasSize = _getSchemasAndCatalogsSize();
+
+		long companyId = RandomTestUtil.randomLong();
+		String webId = "test.com";
+
+		AopInvocationHandler aopInvocationHandler =
+			ProxyUtil.fetchInvocationHandler(
+				_companyLocalService, AopInvocationHandler.class);
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					(CompanyLocalServiceImpl)aopInvocationHandler.getTarget(),
+					"_dlFileEntryTypeLocalService", null)) {
+
+			_companyLocalService.addCompany(
+				companyId, webId, webId, webId, 0, true, null, null, null, null,
+				null, null);
+
+			removeDBPartitions(new long[] {companyId});
+
+			Assert.fail("Should fail due to null _dlFileEntryTypeLocalService");
+		}
+		catch (Exception exception) {
+			Assert.assertArrayEquals(
+				companyIds, PortalInstances.getCompanyIdsBySQL());
+			Assert.assertEquals(schemasSize, _getSchemasAndCatalogsSize());
+		}
 	}
 
 	@Test
@@ -181,6 +269,29 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertTrue(
 				tableNames.contains(StringUtil.toUpperCase(expectedTableName)));
 		}
+	}
+
+	private int _getSchemasAndCatalogsSize() throws SQLException {
+		Set<String> schemaAndCatalogNames = new HashSet<>();
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		try (ResultSet resultSet = databaseMetaData.getSchemas()) {
+			while (resultSet.next()) {
+				schemaAndCatalogNames.add(resultSet.getString("TABLE_SCHEM"));
+				schemaAndCatalogNames.add(resultSet.getString("TABLE_CATALOG"));
+			}
+		}
+
+		try (ResultSet resultSet = databaseMetaData.getCatalogs()) {
+			while (resultSet.next()) {
+				schemaAndCatalogNames.add(resultSet.getString("TABLE_CAT"));
+			}
+		}
+
+		schemaAndCatalogNames.remove(null);
+
+		return schemaAndCatalogNames.size();
 	}
 
 	@Inject

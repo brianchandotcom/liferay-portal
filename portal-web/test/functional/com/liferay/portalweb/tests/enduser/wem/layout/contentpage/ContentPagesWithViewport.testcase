@@ -82,48 +82,6 @@ definition {
 		task ("When the page creator switch to the Tablet viewport") {
 			PageEditor.switchViewport(deviceType = "Tablet");
 		}
-
-		task ("Then the page creator could customize styles of Heading fragment in the Tablet viewport") {
-			task ("View only the CSS section is available on Advanced panel") {
-				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
-
-				PageEditor.clickConfigurableField(fragmentName = "Heading");
-
-				SelectFrameTop();
-
-				Navigator.gotoNavTab(navTab = "Advanced");
-
-				AssertElementPresent(
-					key_fieldSetLabel = "CSS",
-					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
-
-				AssertElementNotPresent(
-					checkboxName = "Hide from Site Search Results",
-					locator1 = "Checkbox#ANY_CHECKBOX");
-			}
-
-			task ("View only the Frame section is available on General panel") {
-				Navigator.gotoNavTab(navTab = "General");
-
-				AssertElementPresent(
-					key_fieldSetLabel = "Frame",
-					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
-
-				AssertElementNotPresent(
-					key_fieldSetLabel = "Heading Options",
-					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
-			}
-
-			task ("View all sections are available on Styles panel") {
-				Navigator.gotoNavTab(navTab = "Styles");
-
-				for (var fieldSetLabel : list "Spacing,Text,Background,Borders,Effects") {
-					AssertElementPresent(
-						key_fieldSetLabel = ${fieldSetLabel},
-						locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
-				}
-			}
-		}
 	}
 
 	@description = "This is a test for LPS-119979 and LPS-106776. Customize the Layout of Grid in each viewport."

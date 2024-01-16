@@ -248,6 +248,12 @@ public class PortletPreferencesLocalServiceUtil {
 			ownerId, ownerType, plid, portletId);
 	}
 
+	public static List<PortletPreferences> fetchPortletPreferences(
+		String portletId) {
+
+		return getService().fetchPortletPreferences(portletId);
+	}
+
 	public static javax.portlet.PortletPreferences fetchPreferences(
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId) {

@@ -233,6 +233,9 @@ public interface PortletPreferencesLocalService
 		long ownerId, int ownerType, long plid, String portletId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PortletPreferences> fetchPortletPreferences(String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences fetchPreferences(
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId);

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -163,6 +164,12 @@ public class DDMIndexerImplTest {
 	}
 
 	@Test
+	public void testFormWithRepeatableField() {
+		_testFormWithRepeatableField("keyword");
+		_testFormWithRepeatableField("text");
+	}
+
+	@Test
 	public void testFormWithTwoAvailableLocalesAndFieldWithNondefaultLocale() {
 		Document document = _createDocument();
 
@@ -243,12 +250,14 @@ public class DDMIndexerImplTest {
 	}
 
 	private DDMFormValues _createDDMFormValues(
-		DDMForm ddmForm, DDMFormFieldValue ddmFormFieldValue) {
+		DDMForm ddmForm, DDMFormFieldValue... ddmFormFieldValues) {
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
-		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+		}
 
 		return ddmFormValues;
 	}
@@ -370,6 +379,51 @@ public class DDMIndexerImplTest {
 						DDMFormValuesTestUtil.createLocalizedValue(
 							fieldValue, LocaleUtil.US))),
 				LocaleUtil.US));
+	}
+
+	private void _testFormWithRepeatableField(String indexType) {
+		Document document = _createDocument();
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = _createDDMFormField();
+
+		ddmFormField.setIndexType(indexType);
+		ddmFormField.setRepeatable(true);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		List<LocalizedValue> localizedValues = ListUtil.fromArray(
+			new LocalizedValue() {
+				{
+					addString(LocaleUtil.US, "able");
+				}
+			},
+			new LocalizedValue() {
+				{
+					addString(LocaleUtil.US, "baker");
+				}
+			});
+
+		_ddmIndexer.addAttributes(
+			document, _createDDMStructure(ddmForm),
+			_createDDMFormValues(
+				ddmForm,
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME, localizedValues.get(0)),
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME, localizedValues.get(1))));
+
+		indexType = StringUtil.upperCaseFirstLetter(indexType);
+
+		FieldValuesAssert.assertFieldValues(
+			_getSortableValues(
+				Collections.singletonMap(
+					"ddmFieldArray.ddmFieldValue" + indexType + "_en_US",
+					"[able, baker]")),
+			"ddmFieldArray.ddmFieldValue" + indexType, document,
+			StringPool.BLANK);
 	}
 
 	private static final String _FIELD_NAME = RandomTestUtil.randomString();

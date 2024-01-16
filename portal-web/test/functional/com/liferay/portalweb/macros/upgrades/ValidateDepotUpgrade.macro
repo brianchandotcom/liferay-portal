@@ -105,6 +105,18 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "DM Document Title Without Publish");
 
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Collections",
+			siteName = "Site Name Local Staging");
+
+		AssetPublisherPortlet.gotoConfigurationPG(portletIndex = 1);
+
+		Button.click(button = "Clear");
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+
 		DepotNavigator.openDepotAssetListsAdminStaging(depotName = "Test Depot Name Local Staging");
 
 		AssetListsAdmin.deleteEntry(assetListTitle = "Depot Manual Asset List");

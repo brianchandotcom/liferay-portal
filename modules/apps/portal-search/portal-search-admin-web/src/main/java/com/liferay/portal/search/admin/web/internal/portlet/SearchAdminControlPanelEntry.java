@@ -6,6 +6,7 @@
 package com.liferay.portal.search.admin.web.internal.portlet;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
@@ -55,10 +56,11 @@ public class SearchAdminControlPanelEntry extends BaseControlPanelEntry {
 	}
 
 	private boolean _isSystemSettingsEnabledForCompany(Group group) {
-		if (_reindexConfiguration.indexActionsInAllVirtualInstancesEnabled() ||
-			ArrayUtil.contains(
-				_reindexConfiguration.indexActionsVirtualInstance(),
-				String.valueOf(group.getCompanyId()))) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-183672") &&
+			(_reindexConfiguration.indexActionsInAllVirtualInstancesEnabled() ||
+			 ArrayUtil.contains(
+				 _reindexConfiguration.indexActionsVirtualInstance(),
+				 String.valueOf(group.getCompanyId())))) {
 
 			return true;
 		}

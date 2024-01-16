@@ -9,7 +9,7 @@ const findRequestIdUrl = (paramsUrl) => {
 	return splitParamsUrl[0];
 };
 
-const currentPath = Liferay.currentURL.split('/');
+const currentPath = Liferay.ThemeDisplay.getLayoutRelativeURL().split('/');
 const mdfRequestId = findRequestIdUrl(currentPath.at(-1));
 
 const updateMDFDetailsSummary = async () => {

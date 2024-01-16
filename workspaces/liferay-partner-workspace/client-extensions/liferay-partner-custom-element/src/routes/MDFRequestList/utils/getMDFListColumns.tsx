@@ -55,7 +55,9 @@ export default function getMDFListColumns(
 						label: ' View',
 						onClick: () =>
 							Liferay.Util.navigate(
-								`${siteURL}/l/${row[MDFColumnKey.ID]}`
+								`${siteURL}/l/${
+									row[MDFColumnKey.ID]
+								}?&returnurl=${Liferay.ThemeDisplay.getLayoutRelativeURL()}`
 							),
 					});
 				}
@@ -143,7 +145,9 @@ export default function getMDFListColumns(
 					className="link"
 					onClick={() =>
 						Liferay.Util.navigate(
-							`${siteURL}/l/${row[MDFColumnKey.ID]}`
+							`${siteURL}/l/${
+								row[MDFColumnKey.ID]
+							}?&returnurl=${Liferay.ThemeDisplay.getLayoutRelativeURL()}`
 						)
 					}
 				>{`Request-${data}`}</a>

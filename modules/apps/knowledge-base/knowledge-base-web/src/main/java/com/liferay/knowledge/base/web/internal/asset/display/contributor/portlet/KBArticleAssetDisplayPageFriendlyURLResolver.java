@@ -33,12 +33,6 @@ public class KBArticleAssetDisplayPageFriendlyURLResolver
 	}
 
 	@Override
-	public String getURLSeparator() {
-		return FriendlyURLResolverConstants.
-			URL_SEPARATOR_KNOWLEDGE_BASE_ARTICLE;
-	}
-
-	@Override
 	public boolean isURLSeparatorConfigurable() {
 		return true;
 	}

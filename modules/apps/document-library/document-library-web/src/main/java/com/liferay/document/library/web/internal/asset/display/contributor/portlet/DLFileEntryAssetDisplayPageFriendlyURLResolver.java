@@ -30,11 +30,6 @@ public class DLFileEntryAssetDisplayPageFriendlyURLResolver
 	}
 
 	@Override
-	public String getURLSeparator() {
-		return FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY;
-	}
-
-	@Override
 	public boolean isURLSeparatorConfigurable() {
 		return true;
 	}

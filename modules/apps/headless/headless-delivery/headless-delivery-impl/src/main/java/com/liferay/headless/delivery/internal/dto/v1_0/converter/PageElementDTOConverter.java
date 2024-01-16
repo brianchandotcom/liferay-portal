@@ -6,14 +6,22 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.PageElementUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Jürgen Kappler
@@ -61,9 +69,83 @@ public class PageElementDTOConverter
 		boolean saveMappingConfiguration = GetterUtil.getBoolean(
 			dtoConverterContext.getAttribute("saveMappingConfiguration"), true);
 
-		return PageElementUtil.toPageElement(
+		return _toPageElement(
 			groupId, layoutStructure, layoutStructureItem, saveInlineContent,
 			saveMappingConfiguration);
 	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, LayoutStructureItemMapper.class, "class.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	private PageElement _toPageElement(
+		long groupId, LayoutStructure layoutStructure,
+		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
+		boolean saveMappingConfiguration) {
+
+		List<PageElement> pageElements = new ArrayList<>();
+
+		List<String> childrenItemIds = layoutStructureItem.getChildrenItemIds();
+
+		for (String childItemId : childrenItemIds) {
+			LayoutStructureItem childLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childItemId);
+
+			List<String> grandChildrenItemIds =
+				childLayoutStructureItem.getChildrenItemIds();
+
+			if (grandChildrenItemIds.isEmpty()) {
+				pageElements.add(
+					_toPageElement(
+						groupId, childLayoutStructureItem, saveInlineContent,
+						saveMappingConfiguration));
+			}
+			else {
+				pageElements.add(
+					_toPageElement(
+						groupId, layoutStructure, childLayoutStructureItem,
+						saveInlineContent, saveMappingConfiguration));
+			}
+		}
+
+		PageElement pageElement = _toPageElement(
+			groupId, layoutStructureItem, saveInlineContent,
+			saveMappingConfiguration);
+
+		if ((pageElement != null) && !pageElements.isEmpty()) {
+			pageElement.setPageElements(
+				pageElements.toArray(new PageElement[0]));
+		}
+
+		return pageElement;
+	}
+
+	private PageElement _toPageElement(
+		long groupId, LayoutStructureItem layoutStructureItem,
+		boolean saveInlineContent, boolean saveMappingConfiguration) {
+
+		Class<?> clazz = layoutStructureItem.getClass();
+
+		LayoutStructureItemMapper layoutStructureItemMapper =
+			_serviceTrackerMap.getService(clazz.getName());
+
+		if (layoutStructureItemMapper == null) {
+			return null;
+		}
+
+		return layoutStructureItemMapper.getPageElement(
+			groupId, layoutStructureItem, saveInlineContent,
+			saveMappingConfiguration);
+	}
+
+	private ServiceTrackerMap<String, LayoutStructureItemMapper>
+		_serviceTrackerMap;
 
 }

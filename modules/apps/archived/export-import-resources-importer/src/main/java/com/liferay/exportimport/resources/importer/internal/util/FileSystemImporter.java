@@ -1513,7 +1513,7 @@ public class FileSystemImporter extends BaseImporter {
 		}
 
 		if (portletPreferencesTranslator != null) {
-			PortletPreferences portletSetup =
+			PortletPreferences portletPreferences =
 				PortletPreferencesLocalServiceUtil.getPreferences(
 					PortletPreferencesFactoryUtil.getPortletPreferencesIds(
 						layout.getGroupId(), 0, layout, portletId, false));
@@ -1524,10 +1524,10 @@ public class FileSystemImporter extends BaseImporter {
 				String key = iterator.next();
 
 				portletPreferencesTranslator.translate(
-					portletPreferencesJSONObject, key, portletSetup);
+					portletPreferencesJSONObject, key, portletPreferences);
 			}
 
-			portletSetup.store();
+			portletPreferences.store();
 		}
 
 		if (rootPortletId.equals(PortletKeys.NESTED_PORTLETS)) {

@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import {liferayConfig} from '../../liferay.config';
 import type {ApiRequestOptions} from './ApiRequestOptions';
 
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
@@ -25,8 +26,8 @@ export const OpenAPI: OpenAPIConfig = {
 	WITH_CREDENTIALS: false,
 	CREDENTIALS: 'include',
 	TOKEN: undefined,
-	USERNAME: undefined,
-	PASSWORD: undefined,
+	USERNAME: liferayConfig.user.login,
+	PASSWORD: liferayConfig.user.password,
 	HEADERS: undefined,
 	ENCODE_PATH: undefined,
 };

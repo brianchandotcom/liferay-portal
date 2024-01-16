@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.layout.display.page.BaseLayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
@@ -24,11 +25,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutDisplayPageProvider.class)
 public class AssetCategoryLayoutDisplayPageProvider
-	implements LayoutDisplayPageProvider<AssetCategory> {
+	extends BaseLayoutDisplayPageProvider<AssetCategory> {
 
 	@Override
 	public String getClassName() {
 		return AssetCategory.class.getName();
+	}
+
+	@Override
+	public String getDefaultURLSeparator() {
+		return FriendlyURLResolverConstants.URL_SEPARATOR_ASSET_CATEGORY;
 	}
 
 	@Override
@@ -107,11 +113,6 @@ public class AssetCategoryLayoutDisplayPageProvider
 
 		return new AssetCategoryLayoutDisplayPageObjectProvider(
 			parentCategory, _portal);
-	}
-
-	@Override
-	public String getURLSeparator() {
-		return FriendlyURLResolverConstants.URL_SEPARATOR_ASSET_CATEGORY;
 	}
 
 	@Override

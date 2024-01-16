@@ -12,6 +12,7 @@ import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.layout.display.page.BaseLayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.petra.string.StringPool;
@@ -29,11 +30,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutDisplayPageProvider.class)
 public class BlogsLayoutDisplayPageProvider
-	implements LayoutDisplayPageProvider<BlogsEntry> {
+	extends BaseLayoutDisplayPageProvider<BlogsEntry> {
 
 	@Override
 	public String getClassName() {
 		return BlogsEntry.class.getName();
+	}
+
+	@Override
+	public String getDefaultURLSeparator() {
+		return FriendlyURLResolverConstants.URL_SEPARATOR_BLOGS_ENTRY;
 	}
 
 	@Override
@@ -107,11 +113,6 @@ public class BlogsLayoutDisplayPageProvider
 
 		return new BlogsLayoutDisplayPageObjectProvider(
 			_assetHelper, blogsEntry, _infoItemFriendlyURLProvider, _language);
-	}
-
-	@Override
-	public String getURLSeparator() {
-		return FriendlyURLResolverConstants.URL_SEPARATOR_BLOGS_ENTRY;
 	}
 
 	@Reference

@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
@@ -1064,12 +1065,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), targetGroupId, ActionKeys.PUBLISH_STAGING);
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			PortalUUIDUtil.generate(), groupName, schedulerStartDate,
-			schedulerEndDate, cronText,
-			TimeZone.getTimeZone(
-				MapUtil.getString(parameterMap, "timeZoneId")));
-
 		User user = _userPersistence.findByPrimaryKey(getUserId());
 
 		Map<String, Serializable> publishLayoutLocalSettingsMap =
@@ -1086,9 +1081,18 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 						TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL,
 					publishLayoutLocalSettingsMap);
 
+		long companyId = exportImportConfiguration.getCompanyId();
+
+		Trigger trigger = TriggerFactoryUtil.createTrigger(
+			StringBundler.concat(
+				PortalUUIDUtil.generate(), StringPool.AT, companyId),
+			groupName, schedulerStartDate, schedulerEndDate, cronText,
+			TimeZone.getTimeZone(
+				MapUtil.getString(parameterMap, "timeZoneId")));
+
 		Message message = new Message();
 
-		message.put("companyId", exportImportConfiguration.getCompanyId());
+		message.put("companyId", companyId);
 
 		message.setPayload(
 			exportImportConfiguration.getExportImportConfigurationId());
@@ -1140,12 +1144,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), sourceGroupId, ActionKeys.PUBLISH_STAGING);
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			PortalUUIDUtil.generate(), groupName, schedulerStartDate,
-			schedulerEndDate, cronText,
-			TimeZone.getTimeZone(
-				MapUtil.getString(parameterMap, "timeZoneId")));
-
 		User user = _userPersistence.findByPrimaryKey(getUserId());
 
 		Map<String, Serializable> publishLayoutRemoteSettingsMap =
@@ -1164,9 +1162,18 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 						TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE,
 					publishLayoutRemoteSettingsMap);
 
+		long companyId = exportImportConfiguration.getCompanyId();
+
+		Trigger trigger = TriggerFactoryUtil.createTrigger(
+			StringBundler.concat(
+				PortalUUIDUtil.generate(), StringPool.AT, companyId),
+			groupName, schedulerStartDate, schedulerEndDate, cronText,
+			TimeZone.getTimeZone(
+				MapUtil.getString(parameterMap, "timeZoneId")));
+
 		Message message = new Message();
 
-		message.put("companyId", exportImportConfiguration.getCompanyId());
+		message.put("companyId", companyId);
 
 		message.setPayload(
 			exportImportConfiguration.getExportImportConfigurationId());

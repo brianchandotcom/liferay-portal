@@ -5,6 +5,7 @@ dependencies {
 	testIntegrationImplementation group: "commons-io", name: "commons-io", version: "2.11.0"
 	testIntegrationImplementation project(":apps:portal:portal-db-partition-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":util:portal-tools-db-partition-virtual-instance-migrator-common")
 	testIntegrationImplementation project(":util:portal-tools-db-partition-virtual-instance-migrator-extractor")
 	testIntegrationImplementation project(":util:portal-tools-db-partition-virtual-instance-migrator-validator")
 }

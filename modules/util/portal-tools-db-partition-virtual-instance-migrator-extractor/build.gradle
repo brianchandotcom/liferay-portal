@@ -2,12 +2,12 @@ dependencies {
 	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
 	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
 	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
-	compileInclude group: "com.mysql", name: "mysql-connector-j", version: "8.0.33"
+	compileInclude group: "com.mysql", name: "mysql-connector-j", version: "8.3.0"
 	compileInclude group: "commons-cli", name: "commons-cli", version: "1.4"
 	compileInclude project(":util:portal-tools-db-partition-virtual-instance-migrator-common")
 
 	compileOnly group: "com.liferay", name: "com.liferay.petra.function", version: "5.5.0"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "5.2.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "5.3.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.mockito", name: "mockito-core", version: "4.5.1"
@@ -21,19 +21,18 @@ distZip {
 	filesMatching("**/*.jar") {
 		it.path = it.name
 	}
+	rename('(.*)-(.*)(.jar)', '$1$3')
 }
 
 distributions {
 	main {
 		contents {
-			from "scripts"
-			into "/"
+			into("/") {
+				from "scripts"
+				from "README.markdown"
+			}
 		}
 	}
-}
-
-jar {
-	archiveName "$baseName" + ".jar"
 }
 
 liferayOSGi {

@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Portal Tools DB Partition Virtual Instance Migrator Validator
 Bundle-SymbolicName: com.liferay.portal.tools.db.partition.virtual.instance.migrator.validator
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.tools.db.partition.virtual.instance.migrator.validator
 Main-Class: com.liferay.portal.tools.db.partition.virtual.instance.migrator.validator.DBPartitionVirtualInstanceMigratorValidator
 -includeresource:\
 	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\

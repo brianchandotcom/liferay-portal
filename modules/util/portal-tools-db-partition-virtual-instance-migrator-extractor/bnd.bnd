@@ -1,6 +1,9 @@
 Bundle-Name: Liferay Portal Tools DB Partition Virtual Instance Migrator Extractor
 Bundle-SymbolicName: com.liferay.portal.tools.db.partition.virtual.instance.migrator.extractor
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.tools.db.partition.virtual.instance.migrator.extractor,\
+	com.liferay.portal.tools.db.partition.virtual.instance.migrator.extractor.util
 Main-Class: com.liferay.portal.tools.db.partition.virtual.instance.migrator.extractor.DBPartitionVirtualInstanceMigratorExtractor
 -includeresource:\
 	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\

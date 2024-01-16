@@ -532,7 +532,7 @@ public class ObjectDefinitionServiceTest {
 					false, false, false, false,
 					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
 					null, false, LocalizedMapUtil.getLocalizedMap("Ables"),
-					objectDefinition.getScope());
+					objectDefinition.getScope(), objectDefinition.getStatus());
 		}
 		finally {
 			if (objectDefinition != null) {

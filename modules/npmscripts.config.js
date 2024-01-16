@@ -370,6 +370,7 @@ module.exports = {
 			'@liferay/cookies-banner-web': [],
 			'@liferay/flags-taglib': [],
 			'@liferay/frontend-data-set-web': [],
+			'@liferay/frontend-icons-web': [],
 			'@liferay/frontend-js-dependencies-web': [
 				'html-to-image',
 				'jspdf',

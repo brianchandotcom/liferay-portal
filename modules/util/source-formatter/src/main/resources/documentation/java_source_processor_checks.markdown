@@ -119,6 +119,7 @@ JavaModuleJavaxPortletInitParamTemplatePathCheck | [Bug Prevention](bug_preventi
 JavaModuleServiceReferenceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases where `@BeanReference` annotation should be used instead of `@ServiceReference` annotation. |
 [JavaModuleTestCheck](check/java_module_test_check.markdown#javamoduletestcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks package names in tests. |
 JavaModuleTestUtilCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks package name for `*TestUtil.java`. |
+JavaModuleUniqueUpgradeStepRegistratorCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that a module can not have more than 1 upgrade step registrator class (class implements UpgradeStepRegistrator). |
 JavaModuleUniqueVerifyProcessCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that a module can not have more than 1 verify process class (class extends VerifyProcess). |
 [JavaMultiPlusConcatCheck](check/java_multi_plus_concat_check.markdown#javamultiplusconcatcheck) | [Performance](performance_checks.markdown#performance-checks) | Checks that we do not concatenate more than 3 String objects. |
 JavaNewProblemInstantiationParametersCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases where `new Problem` can be simplified. |

@@ -14,7 +14,7 @@ HeadlessBuilderWebDisplayContext headlessBuilderWebDisplayContext = (HeadlessBui
 %>
 
 <react:component
-	module="js/components/ViewAPIApplications"
+	module="{ViewAPIApplications} from headless-builder-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"apiURLPaths", headlessBuilderWebDisplayContext.getAPIURLPaths()

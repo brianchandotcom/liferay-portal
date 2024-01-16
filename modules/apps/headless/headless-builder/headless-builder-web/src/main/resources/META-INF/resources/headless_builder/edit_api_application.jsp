@@ -19,7 +19,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-api-application"));
 %>
 
 <react:component
-	module="js/components/EditAPIApplication"
+	module="{EditAPIApplication} from headless-builder-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"apiURLPaths", headlessBuilderWebDisplayContext.getAPIURLPaths()

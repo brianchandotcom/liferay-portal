@@ -11,6 +11,7 @@ import com.liferay.headless.builder.internal.application.endpoint.EndpointMatche
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -151,7 +152,8 @@ public class HeadlessBuilderResourceImpl {
 				successUnsafeFunction)
 		throws Exception {
 
-		APIApplication.Endpoint endpoint = _getEndpoint(path, scope);
+		APIApplication.Endpoint endpoint = _getEndpoint(
+			Http.Method.GET, path, scope);
 
 		if (endpoint == null) {
 			return Response.status(
@@ -178,7 +180,7 @@ public class HeadlessBuilderResourceImpl {
 	}
 
 	private APIApplication.Endpoint _getEndpoint(
-		String path, APIApplication.Endpoint.Scope scope) {
+		Http.Method method, String path, APIApplication.Endpoint.Scope scope) {
 
 		EndpointMatcher endpointMatcher = _endpointMatcherFunction.apply(
 			_company.getCompanyId());
@@ -187,7 +189,7 @@ public class HeadlessBuilderResourceImpl {
 			return null;
 		}
 
-		return endpointMatcher.getEndpoint("/" + path, scope);
+		return endpointMatcher.getEndpoint(method, "/" + path, scope);
 	}
 
 	private <T> Response _post(
@@ -196,7 +198,8 @@ public class HeadlessBuilderResourceImpl {
 				successUnsafeFunction)
 		throws Exception {
 
-		APIApplication.Endpoint endpoint = _getEndpoint(path, scope);
+		APIApplication.Endpoint endpoint = _getEndpoint(
+			Http.Method.POST, path, scope);
 
 		if (endpoint == null) {
 			return Response.status(

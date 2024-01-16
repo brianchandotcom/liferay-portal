@@ -4,6 +4,8 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useForm} from 'react-hook-form';
 import {useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
@@ -82,9 +84,25 @@ const RoutineForm = () => {
 
 			<ClayCheckbox
 				checked={autoanalyze}
+				className="d-flex"
 				label={i18n.translate('autoanalyze')}
 				onChange={() => setValue('autoanalyze', !autoanalyze)}
-			/>
+			>
+				<ClayTooltipProvider>
+					<span
+						data-tooltip-floating="true"
+						title={i18n.translate(
+							'allow-testray-to-automatically-populate-assignee-comments-and-issues-when-an-error-matches-the-previous-result'
+						)}
+					>
+						<ClayIcon
+							className="align-bottom ml-2 text-primary"
+							data-tooltip-align="left"
+							symbol="question-circle-full"
+						/>
+					</span>
+				</ClayTooltipProvider>
+			</ClayCheckbox>
 
 			<Form.Footer
 				onClose={onClose}

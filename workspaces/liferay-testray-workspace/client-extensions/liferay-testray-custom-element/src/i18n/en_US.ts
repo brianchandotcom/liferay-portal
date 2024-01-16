@@ -26,6 +26,8 @@ export default {
 	'add-user-account': 'Add User Account',
 	'add-x': 'Add {0}',
 	'all-issues-found': 'All Issues Found',
+	'allow-testray-to-automatically-populate-assignee-comments-and-issues-when-an-error-matches-the-previous-result':
+		'Allow Testray to automatically populate assignee, comments, and issues when an error matches the previous result.',
 	'an-unexpected-error-occurred': 'An unexpected error ocurred',
 	'analyse': 'Analyse',
 	'analyze': 'Analyze',

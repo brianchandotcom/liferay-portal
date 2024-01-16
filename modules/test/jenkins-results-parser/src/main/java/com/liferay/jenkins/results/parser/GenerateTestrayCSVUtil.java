@@ -169,7 +169,7 @@ public class GenerateTestrayCSVUtil {
 				_CSV_DELIMITER, _cleanCSVData(getTestrayCaseName()),
 				_cleanCSVData(getHistoryURL()),
 				_cleanCSVData(getErrorMessage()),
-				_cleanCSVData(getType().toString()));
+				_cleanCSVData(String.valueOf(getType())));
 		}
 
 		public String getErrorMessage() {

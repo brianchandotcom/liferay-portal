@@ -157,7 +157,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 									type="submit"
 								/>
 
-								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-198959") && (article == null) %>'>
+								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-198959") %>'>
 									<react:component
 										module="js/SaveButtons"
 										props="<%= journalEditArticleDisplayContext.getSaveButtonsContext() %>"

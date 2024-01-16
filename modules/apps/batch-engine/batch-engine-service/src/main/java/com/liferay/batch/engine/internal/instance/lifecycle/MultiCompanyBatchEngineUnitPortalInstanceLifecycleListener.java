@@ -43,9 +43,4 @@ public class MultiCompanyBatchEngineUnitPortalInstanceLifecycleListener
 	private MultiCompanyBatchEngineUnitProcessor
 		_multiCompanyBatchEngineUnitProcessor;
 
-	@Reference(
-		target = "(component.name=com.liferay.object.internal.instance.lifecycle.DefaultObjectFolderPortalInstanceLifecycleListener)"
-	)
-	private PortalInstanceLifecycleListener _portalInstanceLifecycleListener;
-
 }

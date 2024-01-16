@@ -132,14 +132,16 @@ public class DBPartitionUtil {
 			connection.commit();
 		}
 		catch (Exception exception) {
-			try (Statement statement = connection.createStatement()) {
-				statement.executeUpdate(
-					_dbPartitionDB.getDropPartitionSQL(
-						_getPartitionName(companyId)));
-			}
-			catch (SQLException sqlException) {
-				throw new PortalException(
-					"Unable to rollback schema creation", sqlException);
+			if (!_dbPartitionDB.isTransactionAbortedOnFailure()) {
+				try (Statement statement = connection.createStatement()) {
+					statement.executeUpdate(
+						_dbPartitionDB.getDropPartitionSQL(
+							_getPartitionName(companyId)));
+				}
+				catch (SQLException sqlException) {
+					throw new PortalException(
+						"Unable to rollback schema creation", sqlException);
+				}
 			}
 
 			throw new PortalException(exception);
@@ -445,7 +447,9 @@ public class DBPartitionUtil {
 			}
 		}
 		catch (Exception exception1) {
-			if (ListUtil.isEmpty(controlTableNames)) {
+			if (ListUtil.isEmpty(controlTableNames) ||
+				_dbPartitionDB.isTransactionAbortedOnFailure()) {
+
 				throw new PortalException(exception1);
 			}
 
@@ -794,6 +798,10 @@ public class DBPartitionUtil {
 			}
 		}
 		catch (Exception exception1) {
+			if (_dbPartitionDB.isTransactionAbortedOnFailure()) {
+				throw new PortalException(exception1);
+			}
+
 			try (Statement statement = connection.createStatement()) {
 				DBInspector dbInspector = new DBInspector(connection);
 

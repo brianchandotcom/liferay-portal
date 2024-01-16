@@ -58,6 +58,11 @@ public class DBPartitionMySQLDB implements DBPartitionDB {
 	}
 
 	@Override
+	public boolean isTransactionAbortedOnFailure() {
+		return false;
+	}
+
+	@Override
 	public void setPartition(Connection connection, String partitionName)
 		throws SQLException {
 

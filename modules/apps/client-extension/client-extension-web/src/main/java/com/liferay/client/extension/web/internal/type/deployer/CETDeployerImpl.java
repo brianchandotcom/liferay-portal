@@ -6,8 +6,6 @@
 package com.liferay.client.extension.web.internal.type.deployer;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.CommerceCheckoutStepCET;
 import com.liferay.client.extension.type.CustomElementCET;
@@ -34,7 +32,7 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;

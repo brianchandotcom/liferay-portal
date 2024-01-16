@@ -449,6 +449,15 @@ public class DBPartitionUtil {
 				throw new PortalException(exception1);
 			}
 
+			boolean autoCommit = _executeCallable(connection::getAutoCommit);
+
+			_executeCallable(
+				() -> {
+					connection.setAutoCommit(false);
+
+					return null;
+				});
+
 			try {
 				for (String tableName : controlTableNames) {
 					try (Statement statement = connection.createStatement()) {
@@ -456,6 +465,8 @@ public class DBPartitionUtil {
 							companyId, tableName, statement, dbInspector);
 					}
 				}
+
+				connection.commit();
 			}
 			catch (Exception exception2) {
 				throw new PortalException(
@@ -464,6 +475,14 @@ public class DBPartitionUtil {
 						"partition. Recover a backup of the database ",
 						"partition ", _getPartitionName(companyId), "."),
 					exception2);
+			}
+			finally {
+				_executeCallable(
+					() -> {
+						connection.setAutoCommit(autoCommit);
+
+						return null;
+					});
 			}
 
 			throw new PortalException(
@@ -776,12 +795,28 @@ public class DBPartitionUtil {
 		}
 		catch (Exception exception1) {
 			try (Statement statement = connection.createStatement()) {
+				DBInspector dbInspector = new DBInspector(connection);
+
 				for (String companyIdControlTable :
 						companyIdControlTableNames) {
 
 					_deleteCompanyData(
 						companyId, companyIdControlTable, _defaultPartitionName,
 						statement);
+
+					statement.executeUpdate(
+						_dbPartitionDB.getDropTableSQL(
+							_getPartitionName(companyId),
+							companyIdControlTable));
+
+					statement.executeUpdate(
+						_dbPartitionDB.getDropViewSQL(
+							_getPartitionName(companyId),
+							companyIdControlTable));
+
+					_extractTable(
+						companyId, companyIdControlTable, statement,
+						dbInspector);
 				}
 
 				connection.commit();

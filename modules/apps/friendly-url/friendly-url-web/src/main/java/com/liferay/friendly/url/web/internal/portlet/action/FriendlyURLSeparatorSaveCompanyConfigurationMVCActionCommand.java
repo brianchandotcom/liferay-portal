@@ -252,6 +252,16 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 			return;
 		}
 
+		if (urlSeparator.contains(Portal.FRIENDLY_URL_SEPARATOR)) {
+			fieldsValidationErrorsJSONObject.put(
+				namespace + key,
+				_language.get(
+					themeDisplay.getLocale(),
+					"friendly-url-separator-error-invalid-characters"));
+
+			return;
+		}
+
 		if (Validator.isNumber(
 				urlSeparator.substring(1, urlSeparator.length() - 1))) {
 

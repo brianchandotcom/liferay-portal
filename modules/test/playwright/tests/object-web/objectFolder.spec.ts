@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
+import {ObjectAdminV10ObjectFolderService} from '../../headless';
 import {getRandomInt} from '../../utils/util';
 
 export const test = mergeTests(
@@ -40,7 +41,9 @@ test('created object folders are on the left side bar', async ({
 
 	// Clean up
 
-	await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+	await ObjectAdminV10ObjectFolderService.objectAdminV10DeleteObjectFolder(
+		objectFolder.id
+	);
 });
 
 test('default folder does not contains delete and edit options', async ({

@@ -7,27 +7,17 @@ import {Page} from '@playwright/test';
 
 import {liferayConfig} from '../liferay.config';
 import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
-import {HeadlessDeliveryApiHelper} from './HeadlessDeliveryApiHelper';
-import {HeadlessSiteApiHelper} from './HeadlessSiteApiHelper';
-import {ObjectAdminApiHelper} from './ObjectAdminApiHelper';
 import {ObjectApiHelper} from './ObjectApiHelper';
 
 export class ApiHelpers {
 	readonly baseUrl: string;
-	readonly featureFlag: FeatureFlagApiHelper;
-	readonly headlessDelivery: HeadlessDeliveryApiHelper;
-	readonly headlessSite: HeadlessSiteApiHelper;
 	readonly object: ObjectApiHelper;
-	readonly objectAdmin: ObjectAdminApiHelper;
+	readonly featureFlag: FeatureFlagApiHelper;
 	readonly page: Page;
 
 	constructor(page: Page) {
 		this.baseUrl = liferayConfig.environment.baseUrl + '/o/';
 		this.featureFlag = new FeatureFlagApiHelper(page);
-		this.headlessDelivery = new HeadlessDeliveryApiHelper(this);
-		this.headlessSite = new HeadlessSiteApiHelper(this);
-		this.object = new ObjectApiHelper(this);
-		this.objectAdmin = new ObjectAdminApiHelper(this);
 		this.page = page;
 	}
 

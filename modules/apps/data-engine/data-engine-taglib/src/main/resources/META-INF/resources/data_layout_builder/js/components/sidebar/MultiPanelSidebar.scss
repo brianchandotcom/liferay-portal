@@ -7,9 +7,9 @@ $toolbarHeight: 110px;
 
 // z-indexes for children of page-editor-sidebar (which is a stacking context).
 
-$zIndexPanel: 1;
 $zIndexButtons: 1;
 $zIndexContent: 0;
+$zIndexPanel: 1;
 
 .multi-panel-sidebar {
 	display: flex;

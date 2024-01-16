@@ -170,8 +170,6 @@ public class BlogsManagementToolbarDisplayContext
 			ParamUtil.getString(httpServletRequest, "navigation", "entries")
 		).setParameter(
 			"orderByCol", "relevance"
-		).setParameter(
-			"orderByType", "desc"
 		).buildString();
 	}
 
@@ -185,10 +183,7 @@ public class BlogsManagementToolbarDisplayContext
 			sortingURL.setParameter(getOrderByColParam(), orderByCol);
 		}
 
-		if (Objects.equals(orderByCol, "relevance")) {
-			sortingURL.setParameter(getOrderByTypeParam(), "desc");
-		}
-		else {
+		if (!Objects.equals(orderByCol, "relevance")) {
 			sortingURL.setParameter(
 				getOrderByTypeParam(),
 				Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
@@ -267,8 +262,7 @@ public class BlogsManagementToolbarDisplayContext
 				dropdownItem.setActive(
 					Objects.equals(getOrderByCol(), "relevance"));
 				dropdownItem.setHref(
-					_getCurrentSortingURL(), "orderByCol", "relevance",
-					"orderByType", "desc");
+					_getCurrentSortingURL(), "orderByCol", "relevance");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "relevance"));
 			}

@@ -167,7 +167,7 @@ public class BlogsViewEntriesDisplayContext {
 		}
 
 		if (_isOrderByColRelevance()) {
-			_orderByType = "desc";
+			_orderByType = "";
 		}
 		else {
 			_orderByType = SearchOrderByUtil.getOrderByType(

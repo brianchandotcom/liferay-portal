@@ -14,6 +14,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
+import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -37,13 +38,17 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.model.LayoutQueryStringComposite;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -203,6 +208,39 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		}
 
 		return new LayoutFriendlyURLComposite(layout, friendlyURL, false);
+	}
+
+	@Override
+	public String getURLSeparator() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-203351") ||
+			!isURLSeparatorConfigurable()) {
+
+			return getDefaultURLSeparator();
+		}
+
+		FriendlyURLSeparatorProvider friendlyURLSeparatorProvider =
+			_friendlyURLSeparatorProvider.get();
+
+		if (friendlyURLSeparatorProvider == null) {
+			return getDefaultURLSeparator();
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return getDefaultURLSeparator();
+		}
+
+		String urlSeparator =
+			friendlyURLSeparatorProvider.getFriendlyURLSeparator(
+				serviceContext.getCompanyId(), getKey());
+
+		if (Validator.isNull(urlSeparator)) {
+			return getDefaultURLSeparator();
+		}
+
+		return urlSeparator;
 	}
 
 	protected AssetDisplayPageEntry getAssetDisplayPageEntry(
@@ -505,5 +543,10 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAssetDisplayPageFriendlyURLResolver.class);
+
+	private static final Snapshot<FriendlyURLSeparatorProvider>
+		_friendlyURLSeparatorProvider = new Snapshot<>(
+			BaseAssetDisplayPageFriendlyURLResolver.class,
+			FriendlyURLSeparatorProvider.class);
 
 }

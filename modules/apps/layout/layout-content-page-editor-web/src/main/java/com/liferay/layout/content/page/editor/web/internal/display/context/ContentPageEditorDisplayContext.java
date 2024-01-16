@@ -950,7 +950,7 @@ public class ContentPageEditorDisplayContext {
 		return _groupId;
 	}
 
-	protected Object getLookAndFeelURL() throws Exception {
+	protected String getLookAndFeelURL() throws Exception {
 		return layoutLockManager.getUnlockDraftLayoutURL(
 			portal.getLiferayPortletResponse(renderResponse),
 			() -> {

@@ -105,7 +105,7 @@ public class ContentPageEditorLayoutUtilityPageEntryDisplayContext
 	}
 
 	@Override
-	protected Object getLookAndFeelURL() {
+	protected String getLookAndFeelURL() {
 		return null;
 	}
 

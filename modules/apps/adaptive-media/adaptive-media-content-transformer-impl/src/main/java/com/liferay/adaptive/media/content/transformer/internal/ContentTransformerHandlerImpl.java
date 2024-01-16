@@ -8,6 +8,7 @@ package com.liferay.adaptive.media.content.transformer.internal;
 import com.liferay.adaptive.media.content.transformer.ContentTransformer;
 import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
+import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -66,7 +67,8 @@ public class ContentTransformerHandlerImpl
 			bundleContext, ContentTransformer.class);
 
 		_htmlContentTransformer = new HtmlContentTransformerImpl(
-			_amImageHTMLTagFactory, _dlAppLocalService);
+			_amImageHTMLTagFactory, _amImageMimeTypeProvider,
+			_dlAppLocalService);
 	}
 
 	@Deactivate
@@ -85,6 +87,9 @@ public class ContentTransformerHandlerImpl
 
 	@Reference
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
+
+	@Reference
+	private AMImageMimeTypeProvider _amImageMimeTypeProvider;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

@@ -37,10 +37,6 @@
 							'liferay-search-facet-util',
 						],
 					},
-					'liferay-search-modified-facet-configuration': {
-						path: 'modified_facet_configuration.js',
-						requires: ['aui-node'],
-					},
 					'liferay-search-sort-configuration': {
 						path: 'sort_configuration.js',
 						requires: ['aui-node'],

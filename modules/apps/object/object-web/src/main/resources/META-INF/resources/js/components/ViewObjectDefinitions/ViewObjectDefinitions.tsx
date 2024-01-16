@@ -21,9 +21,9 @@ import {
 	formatActionURL,
 } from '../../utils/fds';
 import statusDataRenderer from '../FDSPropsTransformer/FDSDataRenderers/StatusDataRenderer';
-import LabelRenderer from '../LabelRenderer';
 import ModalImport from '../ModalImport/ModalImport';
 import ModalObjectFieldDeletionNotAllowed from '../ModalObjectFieldDeletionNotAllowed';
+import ViewObjectDefinitionsLabelRenderer from '../ViewObjectDefinitionsLabelRenderer';
 import objectDefinitionModifiedDateDataRenderer from './FDSDataRenderers/ObjectDefinitionModifiedDateDataRenderer';
 import objectDefinitionSystemDataRenderer from './FDSDataRenderers/ObjectDefinitionSystemDataRenderer';
 import {ModalAddObjectDefinition} from './ModalAddObjectDefinition';
@@ -168,13 +168,8 @@ export default function ViewObjectDefinitions({
 		value,
 	}: fdsItem<ObjectDefinition>) {
 		return (
-			<LabelRenderer
-				onClick={() => {
-					window.location.href = formatActionURL(
-						editObjectDefinitionURL,
-						itemData.id
-					);
-				}}
+			<ViewObjectDefinitionsLabelRenderer
+				url={formatActionURL(editObjectDefinitionURL, itemData.id)}
 				value={value}
 			/>
 		);

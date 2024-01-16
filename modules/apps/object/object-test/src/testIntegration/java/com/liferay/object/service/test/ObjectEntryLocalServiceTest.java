@@ -731,16 +731,16 @@ public class ObjectEntryLocalServiceTest {
 					).build())
 			).build());
 
-		String randomEnValue = "en_US " + RandomTestUtil.randomString();
-		String randomPtValue = "pt_BR " + RandomTestUtil.randomString();
+		String value1 = "en_US " + RandomTestUtil.randomString();
+		String value2 = "pt_BR " + RandomTestUtil.randomString();
 
 		Map<String, Serializable> localizedValue =
 			HashMapBuilder.<String, Serializable>put(
 				"nameLocalized_i18n",
 				HashMapBuilder.put(
-					"en_US", randomEnValue
+					"en_US", value1
 				).put(
-					"pt_BR", randomPtValue
+					"pt_BR", value2
 				).build()
 			).build();
 
@@ -753,7 +753,7 @@ public class ObjectEntryLocalServiceTest {
 			StringBundler.concat(
 				"Unique value constraint violation for ",
 				objectDefinition.getLocalizationDBTableName(),
-				".nameLocalized_ with value ", randomEnValue),
+				".nameLocalized_ with value ", value1),
 			() -> _addObjectEntry(
 				group.getGroupId(), finalObjectDefinitionId, localizedValue));
 
@@ -762,7 +762,7 @@ public class ObjectEntryLocalServiceTest {
 			StringBundler.concat(
 				"Unique value constraint violation for ",
 				objectDefinition.getLocalizationDBTableName(),
-				".nameLocalized_ with value ", randomPtValue),
+				".nameLocalized_ with value ", value2),
 			() -> _addObjectEntry(
 				group.getGroupId(), finalObjectDefinitionId,
 				HashMapBuilder.<String, Serializable>put(
@@ -770,7 +770,7 @@ public class ObjectEntryLocalServiceTest {
 					HashMapBuilder.put(
 						"en_US", "en_US " + RandomTestUtil.randomString()
 					).put(
-						"pt_BR", randomPtValue
+						"pt_BR", value2
 					).build()
 				).build()));
 	}

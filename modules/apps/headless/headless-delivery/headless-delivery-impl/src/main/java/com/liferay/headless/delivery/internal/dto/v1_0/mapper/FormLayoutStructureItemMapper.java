@@ -26,14 +26,12 @@ import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -111,7 +109,7 @@ public class FormLayoutStructureItemMapper
 
 			return new ClassTypeReference() {
 				{
-					className = _portal.getClassName(
+					className = portal.getClassName(
 						formStyledLayoutStructureItem.getClassNameId());
 					classType = formStyledLayoutStructureItem.getClassTypeId();
 				}
@@ -289,8 +287,5 @@ public class FormLayoutStructureItemMapper
 			}
 		};
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

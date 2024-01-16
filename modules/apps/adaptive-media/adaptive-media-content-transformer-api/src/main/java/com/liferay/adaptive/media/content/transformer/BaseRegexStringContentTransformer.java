@@ -35,8 +35,13 @@ public abstract class BaseRegexStringContentTransformer
 				sb = new StringBuffer(content.length());
 			}
 
-			String replacement = getReplacement(
-				matcher.group(0), getFileEntry(matcher));
+			FileEntry fileEntry = getFileEntry(matcher);
+
+			if (!isSupported(fileEntry)) {
+				return content;
+			}
+
+			String replacement = getReplacement(matcher.group(0), fileEntry);
 
 			matcher.appendReplacement(
 				sb, Matcher.quoteReplacement(replacement));
@@ -59,5 +64,7 @@ public abstract class BaseRegexStringContentTransformer
 	protected abstract String getReplacement(
 			String originalImgTag, FileEntry fileEntry)
 		throws PortalException;
+
+	protected abstract boolean isSupported(FileEntry fileEntry);
 
 }

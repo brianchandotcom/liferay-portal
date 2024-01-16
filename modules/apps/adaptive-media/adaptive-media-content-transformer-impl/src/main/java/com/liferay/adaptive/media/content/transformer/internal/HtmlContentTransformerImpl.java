@@ -8,6 +8,7 @@ package com.liferay.adaptive.media.content.transformer.internal;
 import com.liferay.adaptive.media.content.transformer.BaseRegexStringContentTransformer;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
+import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -24,9 +25,11 @@ public class HtmlContentTransformerImpl
 
 	public HtmlContentTransformerImpl(
 		AMImageHTMLTagFactory amImageHTMLTagFactory,
+		AMImageMimeTypeProvider amImageMimeTypeProvider,
 		DLAppLocalService dlAppLocalService) {
 
 		_amImageHTMLTagFactory = amImageHTMLTagFactory;
+		_amImageMimeTypeProvider = amImageMimeTypeProvider;
 		_dlAppLocalService = dlAppLocalService;
 	}
 
@@ -62,12 +65,19 @@ public class HtmlContentTransformerImpl
 		return _amImageHTMLTagFactory.create(originalImgTag, fileEntry);
 	}
 
+	@Override
+	protected boolean isSupported(FileEntry fileEntry) {
+		return _amImageMimeTypeProvider.isMimeTypeSupported(
+			fileEntry.getMimeType());
+	}
+
 	private static final Pattern _pattern = Pattern.compile(
 		"<img [^>]*?\\s*" + AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID +
 			"=\"(\\d+)\".*?/?>",
 		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
 	private final AMImageHTMLTagFactory _amImageHTMLTagFactory;
+	private final AMImageMimeTypeProvider _amImageMimeTypeProvider;
 	private final DLAppLocalService _dlAppLocalService;
 
 }

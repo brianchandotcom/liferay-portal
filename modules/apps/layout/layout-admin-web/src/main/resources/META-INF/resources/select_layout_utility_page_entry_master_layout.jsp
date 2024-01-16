@@ -47,7 +47,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 								).setRedirect(
 									themeDisplay.getURLCurrent()
 								).setParameter(
-									"masterLayoutPlid", selectLayoutPageTemplateEntryDisplayContext.getMasterLayoutPlid()
+									"masterLayoutPlid", masterLayoutPageTemplateEntry.getPlid()
 								).setParameter(
 									"type", selectLayoutPageTemplateEntryDisplayContext.getType()
 								).buildString()

@@ -92,8 +92,7 @@ const MDFClaimForm = () => {
 
 	const siteURL = useLiferayNavigate();
 
-	const onCancel = () =>
-		Liferay.Util.navigate(`${siteURL}/l/${mdfRequestId}`);
+	const onCancel = () => history.back();
 
 	const mdfClaim =
 		mdfClaimDTO && getMDFClaimFromDTO(mdfClaimDTO as MDFClaimDTO);

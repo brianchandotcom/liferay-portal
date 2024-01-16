@@ -61,20 +61,8 @@
 								"key": "back-button"
 							},
 							"fragmentConfig": {
-								"buttonSize": "",
-								"inverted": false,
-								"style": "neutral",
-								"type": "ghost",
-								"uppercase": false
 							},
 							"fragmentFields": [
-								{
-									"id": "link",
-									"value": {
-										"fragmentLink": {
-										}
-									}
-								}
 							],
 							"fragmentStyle": {
 								"marginBottom": "3"

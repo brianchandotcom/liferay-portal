@@ -85,14 +85,10 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -111,39 +107,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class ObjectDefinitionResourceImpl
 	extends BaseObjectDefinitionResourceImpl {
-
-	@Override
-	public void create(
-			Collection<ObjectDefinition> objectDefinitions,
-			Map<String, Serializable> parameters)
-		throws Exception {
-
-		super.create(objectDefinitions, parameters);
-
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			Status status = objectDefinition.getStatus();
-
-			if ((status == null) ||
-				(status.getCode() != WorkflowConstants.STATUS_APPROVED)) {
-
-				continue;
-			}
-
-			com.liferay.object.model.ObjectDefinition
-				serviceBuilderObjectDefinition =
-					_objectDefinitionService.
-						getObjectDefinitionByExternalReferenceCode(
-							objectDefinition.getExternalReferenceCode(),
-							contextCompany.getCompanyId());
-
-			if (serviceBuilderObjectDefinition.isApproved()) {
-				continue;
-			}
-
-			_objectDefinitionService.publishCustomObjectDefinition(
-				serviceBuilderObjectDefinition.getObjectDefinitionId());
-		}
-	}
 
 	@Override
 	public void deleteObjectDefinition(Long objectDefinitionId)

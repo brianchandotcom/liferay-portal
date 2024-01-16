@@ -165,6 +165,43 @@ public class CompanyLocalServiceDBPartitionTest
 	}
 
 	@Test
+	public void testAddDBPartitionCompany() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		_companyLocalService.extractDBPartitionCompany(company.getCompanyId());
+
+		String name = "new" + company.getName();
+		String virtualHostName = "new" + company.getVirtualHostname();
+		String webId = "new" + company.getWebId();
+
+		boolean standaloneDBPartition = true;
+
+		try {
+			company = _companyLocalService.addDBPartitionCompany(
+				company.getCompanyId(), name, virtualHostName, webId);
+
+			standaloneDBPartition = false;
+
+			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+
+			Assert.assertTrue(
+				ArrayUtil.contains(companyIds, company.getCompanyId()));
+
+			Assert.assertEquals(name, company.getName());
+			Assert.assertEquals(virtualHostName, company.getVirtualHostname());
+			Assert.assertEquals(webId, company.getWebId());
+		}
+		finally {
+			if (standaloneDBPartition) {
+				removeDBPartitions(new long[] {company.getCompanyId()});
+			}
+			else {
+				_companyLocalService.deleteCompany(company);
+			}
+		}
+	}
+
+	@Test
 	public void testAddDBPartitionCompanyWhenInsertDBPartitionFails()
 		throws Exception {
 
@@ -307,43 +344,6 @@ public class CompanyLocalServiceDBPartitionTest
 				ArrayUtil.contains(
 					PortalInstances.getCompanyIdsBySQL(),
 					_company.getCompanyId()));
-		}
-	}
-
-	@Test
-	public void testExtractAndAddDBPartitionCompany() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		_companyLocalService.extractDBPartitionCompany(company.getCompanyId());
-
-		String name = "new" + company.getName();
-		String virtualHostName = "new" + company.getVirtualHostname();
-		String webId = "new" + company.getWebId();
-
-		boolean standaloneDBPartition = true;
-
-		try {
-			company = _companyLocalService.addDBPartitionCompany(
-				company.getCompanyId(), name, virtualHostName, webId);
-
-			standaloneDBPartition = false;
-
-			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-
-			Assert.assertTrue(
-				ArrayUtil.contains(companyIds, company.getCompanyId()));
-
-			Assert.assertEquals(name, company.getName());
-			Assert.assertEquals(virtualHostName, company.getVirtualHostname());
-			Assert.assertEquals(webId, company.getWebId());
-		}
-		finally {
-			if (standaloneDBPartition) {
-				removeDBPartitions(new long[] {company.getCompanyId()});
-			}
-			else {
-				_companyLocalService.deleteCompany(company);
-			}
 		}
 	}
 

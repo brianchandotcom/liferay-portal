@@ -42,6 +42,26 @@ public class FriendlyURLResolverRegistryUtil {
 		return null;
 	}
 
+	public static FriendlyURLResolver
+		getFriendlyURLResolverByDefaultURLSeparator(
+			String defaultURLSeparator) {
+
+		for (String key : _serviceTrackerMap.keySet()) {
+			FriendlyURLResolver friendlyURLResolver =
+				_serviceTrackerMap.getService(key);
+
+			if ((friendlyURLResolver != null) &&
+				Objects.equals(
+					friendlyURLResolver.getDefaultURLSeparator(),
+					defaultURLSeparator)) {
+
+				return friendlyURLResolver;
+			}
+		}
+
+		return null;
+	}
+
 	public static Collection<FriendlyURLResolver>
 		getFriendlyURLResolversAsCollection() {
 

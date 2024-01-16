@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 interface Props {
+	addButtonLabel?: string;
 	disabledAddButton?: boolean;
 	onAdd: () => void;
 	onClose: () => void;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export function FormFooter({
+	addButtonLabel = Liferay.Language.get('add'),
 	disabledAddButton = false,
 	onAdd,
 	onClose,
@@ -52,7 +54,7 @@ export function FormFooter({
 				key="add"
 				onClick={onAdd}
 			>
-				{Liferay.Language.get('add')}
+				{addButtonLabel}
 			</ClayButton>
 		);
 	}

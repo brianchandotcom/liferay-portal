@@ -184,6 +184,9 @@ export default function AICreatorImageModal({
 
 					<div className="d-flex flex-column flex-shrink-0">
 						<FormFooter
+							addButtonLabel={Liferay.Language.get(
+								'add-selected'
+							)}
 							disabledAddButton={Boolean(!selectedImages?.length)}
 							onAdd={onAdd}
 							onClose={closeModal}

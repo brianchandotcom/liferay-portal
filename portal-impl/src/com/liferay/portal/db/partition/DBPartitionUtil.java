@@ -98,7 +98,7 @@ public class DBPartitionUtil {
 							_getCompanyIds(), tableName)) {
 
 						statement.executeUpdate(
-							_getCreateViewSQL(
+							_dbPartitionDB.getCreateViewSQL(
 								_defaultPartitionName,
 								_getPartitionName(companyId), tableName));
 					}
@@ -233,7 +233,8 @@ public class DBPartitionUtil {
 
 		try (Statement statement = connection.createStatement()) {
 			statement.execute(
-				_getDropViewSQL(_getPartitionName(companyId), viewName));
+				_dbPartitionDB.getDropViewSQL(
+					_getPartitionName(companyId), viewName));
 
 			statement.execute(
 				_dbPartitionDB.getCreateTableSQL(
@@ -441,7 +442,8 @@ public class DBPartitionUtil {
 		throws Exception {
 
 		statement.executeUpdate(
-			_getDropViewSQL(_getPartitionName(companyId), tableName));
+			_dbPartitionDB.getDropViewSQL(
+				_getPartitionName(companyId), tableName));
 
 		statement.executeUpdate(
 			_dbPartitionDB.getCreateTableSQL(
@@ -671,30 +673,6 @@ public class DBPartitionUtil {
 			whereClause);
 	}
 
-	private static String _getCreateViewSQL(
-		String fromPartitionName, String toPartitionName, String viewName) {
-
-		return StringBundler.concat(
-			"create or replace view ", toPartitionName, StringPool.PERIOD,
-			viewName, " as select * from ", fromPartitionName,
-			StringPool.PERIOD, viewName);
-	}
-
-	private static String _getDropTableSQL(
-		String partitionName, String tableName) {
-
-		return StringBundler.concat(
-			"drop table if exists ", partitionName, StringPool.PERIOD,
-			tableName, " cascade");
-	}
-
-	private static String _getDropViewSQL(
-		String partitionName, String viewName) {
-
-		return StringBundler.concat(
-			"drop view if exists ", partitionName, StringPool.PERIOD, viewName);
-	}
-
 	private static String _getPartitionName(long companyId) {
 		if ((companyId == CompanyConstants.SYSTEM) ||
 			(companyId == _defaultCompanyId)) {
@@ -741,11 +719,11 @@ public class DBPartitionUtil {
 						}
 
 						statement.executeUpdate(
-							_getDropTableSQL(
+							_dbPartitionDB.getDropTableSQL(
 								_getPartitionName(companyId), tableName));
 
 						statement.executeUpdate(
-							_getCreateViewSQL(
+							_dbPartitionDB.getCreateViewSQL(
 								_defaultPartitionName,
 								_getPartitionName(companyId), tableName));
 					}
@@ -830,10 +808,11 @@ public class DBPartitionUtil {
 		}
 
 		statement.executeUpdate(
-			_getDropTableSQL(_getPartitionName(companyId), tableName));
+			_dbPartitionDB.getDropTableSQL(
+				_getPartitionName(companyId), tableName));
 
 		statement.executeUpdate(
-			_getCreateViewSQL(
+			_dbPartitionDB.getCreateViewSQL(
 				_defaultPartitionName, _getPartitionName(companyId),
 				tableName));
 	}
@@ -896,7 +875,7 @@ public class DBPartitionUtil {
 						}
 
 						super.execute(
-							_getCreateViewSQL(
+							_dbPartitionDB.getCreateViewSQL(
 								_defaultPartitionName,
 								_getPartitionName(companyId), tableName));
 					}

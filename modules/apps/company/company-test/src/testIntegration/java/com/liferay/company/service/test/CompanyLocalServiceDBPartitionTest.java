@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -45,6 +46,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Mariano Álvaro Sáiz
  */
+@DataGuard(scope = DataGuard.Scope.NONE)
 @RunWith(Arquillian.class)
 public class CompanyLocalServiceDBPartitionTest
 	extends BaseDBPartitionTestCase {

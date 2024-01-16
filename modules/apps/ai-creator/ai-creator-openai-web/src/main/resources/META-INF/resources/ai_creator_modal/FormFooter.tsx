@@ -9,7 +9,8 @@ import React from 'react';
 
 interface Props {
 	addButtonLabel?: string;
-	disabledAddButton?: boolean;
+	disableAddButton?: boolean;
+	disableRetryButton?: boolean;
 	onAdd: () => void;
 	onClose: () => void;
 	showAddButton: boolean;
@@ -19,7 +20,8 @@ interface Props {
 
 export function FormFooter({
 	addButtonLabel = Liferay.Language.get('add'),
-	disabledAddButton = false,
+	disableAddButton = false,
+	disableRetryButton = false,
 	onAdd,
 	onClose,
 	showAddButton,
@@ -40,7 +42,12 @@ export function FormFooter({
 
 	if (showRetryButton) {
 		children.push(
-			<ClayButton displayType="secondary" key="try-again" type="submit">
+			<ClayButton
+				disabled={disableRetryButton}
+				displayType="secondary"
+				key="try-again"
+				type="submit"
+			>
 				{Liferay.Language.get('try-again')}
 			</ClayButton>
 		);
@@ -49,7 +56,7 @@ export function FormFooter({
 	if (showAddButton) {
 		children.push(
 			<ClayButton
-				disabled={disabledAddButton}
+				disabled={disableAddButton}
 				displayType="primary"
 				key="add"
 				onClick={onAdd}

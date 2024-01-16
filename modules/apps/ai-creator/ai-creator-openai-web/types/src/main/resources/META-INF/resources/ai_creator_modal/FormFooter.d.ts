@@ -7,7 +7,8 @@
 
 interface Props {
 	addButtonLabel?: string;
-	disabledAddButton?: boolean;
+	disableAddButton?: boolean;
+	disableRetryButton?: boolean;
 	onAdd: () => void;
 	onClose: () => void;
 	showAddButton: boolean;
@@ -16,7 +17,8 @@ interface Props {
 }
 export declare function FormFooter({
 	addButtonLabel,
-	disabledAddButton,
+	disableAddButton,
+	disableRetryButton,
 	onAdd,
 	onClose,
 	showAddButton,

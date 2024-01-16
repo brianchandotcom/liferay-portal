@@ -210,9 +210,12 @@ export default function AICreatorImageModal({
 							addButtonLabel={Liferay.Language.get(
 								'add-selected'
 							)}
-							disabledAddButton={Boolean(
+							disableAddButton={Boolean(
 								!selectedImages?.length ||
 									status.type === 'adding'
+							)}
+							disableRetryButton={Boolean(
+								status.type === 'adding'
 							)}
 							onAdd={onAdd}
 							onClose={closeModal}

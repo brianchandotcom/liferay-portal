@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -37,9 +36,8 @@ public class MBMessageHTMLFormatUploadHandlerTest {
 
 	@Before
 	public void setUp() {
-		ReflectionTestUtil.setFieldValue(
-			_mbMessageHTMLFormatUploadHandler, "_portletFileRepository",
-			_portletFileRepository);
+		_mbMessageHTMLFormatUploadHandler =
+			new MBMessageHTMLFormatUploadHandler(_portletFileRepository);
 	}
 
 	@Test
@@ -150,9 +148,7 @@ public class MBMessageHTMLFormatUploadHandlerTest {
 		Assert.assertEquals(expectedContentSB.toString(), finalContent);
 	}
 
-	private final MBMessageHTMLFormatUploadHandler
-		_mbMessageHTMLFormatUploadHandler =
-			new MBMessageHTMLFormatUploadHandler();
+	private MBMessageHTMLFormatUploadHandler _mbMessageHTMLFormatUploadHandler;
 	private final PortletFileRepository _portletFileRepository = Mockito.mock(
 		PortletFileRepository.class);
 

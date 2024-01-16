@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -37,9 +36,8 @@ public class MBMessageBBCodeFormatUploadHandlerTest {
 
 	@Before
 	public void setUp() {
-		ReflectionTestUtil.setFieldValue(
-			_mbMessageBBCodeFormatUploadHandler, "_portletFileRepository",
-			_portletFileRepository);
+		_mbMessageBBCodeFormatUploadHandler =
+			new MBMessageBBCodeFormatUploadHandler(_portletFileRepository);
 	}
 
 	@Test
@@ -150,9 +148,8 @@ public class MBMessageBBCodeFormatUploadHandlerTest {
 		Assert.assertEquals(expectedContentSB.toString(), finalContent);
 	}
 
-	private final MBMessageBBCodeFormatUploadHandler
-		_mbMessageBBCodeFormatUploadHandler =
-			new MBMessageBBCodeFormatUploadHandler();
+	private MBMessageBBCodeFormatUploadHandler
+		_mbMessageBBCodeFormatUploadHandler;
 	private final PortletFileRepository _portletFileRepository = Mockito.mock(
 		PortletFileRepository.class);
 

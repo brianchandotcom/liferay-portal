@@ -7,8 +7,11 @@ package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.headless.delivery.dto.v1_0.FragmentStyle;
+import com.liferay.headless.delivery.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.PageWidgetInstanceDefinitionUtil;
+import com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.StyledLayoutStructureItemUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONException;
@@ -90,21 +93,48 @@ public class FragmentLayoutStructureItemMapper
 
 		return new PageElement() {
 			{
-				definition =
-					PageWidgetInstanceDefinitionUtil.
-						toPageWidgetInstanceDefinition(
-							fragmentEntryLink,
-							fragmentStyledLayoutStructureItem,
-							itemConfigJSONObject.getString("name", null),
-							toFragmentStyle(
-								itemConfigJSONObject.getJSONObject("styles"),
-								saveMappingConfiguration),
-							getFragmentViewPorts(
-								itemConfigJSONObject.getJSONObject("style")),
-							PortletIdCodec.encode(portletId, instanceId),
-							_widgetInstanceMapper);
+				definition = _toPageWidgetInstanceDefinition(
+					fragmentEntryLink, fragmentStyledLayoutStructureItem,
+					itemConfigJSONObject.getString("name", null),
+					toFragmentStyle(
+						itemConfigJSONObject.getJSONObject("styles"),
+						saveMappingConfiguration),
+					getFragmentViewPorts(
+						itemConfigJSONObject.getJSONObject("style")),
+					PortletIdCodec.encode(portletId, instanceId));
 				id = layoutStructureItem.getItemId();
 				type = Type.WIDGET;
+			}
+		};
+	}
+
+	private PageWidgetInstanceDefinition _toPageWidgetInstanceDefinition(
+		FragmentEntryLink fragmentEntryLink,
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
+		String nameValue,
+		FragmentStyle pageWidgetInstanceDefinitionFragmentStyle,
+		FragmentViewport[] pageWidgetInstanceDefinitionFragmentViewports,
+		String portletId) {
+
+		if (Validator.isNull(portletId)) {
+			return null;
+		}
+
+		return new PageWidgetInstanceDefinition() {
+			{
+				cssClasses = StyledLayoutStructureItemUtil.getCssClasses(
+					fragmentStyledLayoutStructureItem);
+				customCSS = StyledLayoutStructureItemUtil.getCustomCSS(
+					fragmentStyledLayoutStructureItem);
+				customCSSViewports =
+					StyledLayoutStructureItemUtil.getCustomCSSViewports(
+						fragmentStyledLayoutStructureItem);
+				fragmentStyle = pageWidgetInstanceDefinitionFragmentStyle;
+				fragmentViewports =
+					pageWidgetInstanceDefinitionFragmentViewports;
+				name = nameValue;
+				widgetInstance = _widgetInstanceMapper.getWidgetInstance(
+					fragmentEntryLink, portletId);
 			}
 		};
 	}

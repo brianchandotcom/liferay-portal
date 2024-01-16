@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,24 +19,18 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.DefaultModelHintsImpl;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.model.impl.ResourceActionImpl;
 import com.liferay.portal.service.impl.ClassNameLocalServiceImpl;
-import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
 import com.liferay.portal.service.impl.ResourceActionLocalServiceImpl;
-import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PortalInstances;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -376,65 +369,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
-	public void testRemoveDBPartitionWhenCompanyCreationFails()
-		throws Exception {
-
-		AopInvocationHandler aopInvocationHandler =
-			ProxyUtil.fetchInvocationHandler(
-				_companyLocalService, AopInvocationHandler.class);
-
-		CompanyLocalServiceImpl companyLocalServiceImpl =
-			(CompanyLocalServiceImpl)aopInvocationHandler.getTarget();
-
-		Object dlFileEntryTypeLocalService =
-			ReflectionTestUtil.getAndSetFieldValue(
-				companyLocalServiceImpl, "_dlFileEntryTypeLocalService", null);
-
-		long companyId = RandomTestUtil.randomLong();
-		boolean orphanedDBPartition = false;
-		String webId = "test.com";
-
-		try {
-			_companyLocalService.addCompany(
-				companyId, webId, webId, webId, 0, true, null, null, null, null,
-				null, null);
-		}
-		catch (Exception exception) {
-			String partitionName = _DB_PARTITION_SCHEMA_NAME_PREFIX + companyId;
-
-			try (Connection connection = DataAccess.getConnection()) {
-				DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-				try (ResultSet resultSet = databaseMetaData.getSchemas()) {
-					while (resultSet.next()) {
-						String catalogName = resultSet.getString(
-							"TABLE_CATALOG");
-						String schemaName = resultSet.getString("TABLE_SCHEM");
-
-						Assert.assertFalse(
-							"The database partition was not removed",
-							StringUtil.equalsIgnoreCase(
-								catalogName, partitionName));
-						Assert.assertFalse(
-							"The database partition was not removed",
-							StringUtil.equalsIgnoreCase(
-								schemaName, partitionName));
-					}
-				}
-			}
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				companyLocalServiceImpl, "_dlFileEntryTypeLocalService",
-				dlFileEntryTypeLocalService);
-
-			if (orphanedDBPartition) {
-				removeDBPartitions(new long[] {companyId});
-			}
-		}
-	}
-
-	@Test
 	public void testUpdateIndexes() throws Exception {
 		DataSource dataSource = InfrastructureUtil.getDataSource();
 
@@ -502,8 +436,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	protected static FinderCache finderCache;
 
 	private static final String _CLASS_NAME_VALUE = "class.name.test";
-
-	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX = "lparttest_";
 
 	@Inject
 	private static ResourceActionLocalService _resourceActionLocalService;

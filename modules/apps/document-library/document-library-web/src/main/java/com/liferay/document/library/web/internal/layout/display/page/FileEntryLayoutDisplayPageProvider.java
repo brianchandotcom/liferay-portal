@@ -11,6 +11,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.layout.display.page.BaseLayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.petra.string.StringPool;
@@ -34,11 +35,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutDisplayPageProvider.class)
 public class FileEntryLayoutDisplayPageProvider
-	implements LayoutDisplayPageProvider<FileEntry> {
+	extends BaseLayoutDisplayPageProvider<FileEntry> {
 
 	@Override
 	public String getClassName() {
 		return FileEntry.class.getName();
+	}
+
+	@Override
+	public String getDefaultURLSeparator() {
+		return FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY;
 	}
 
 	@Override
@@ -129,11 +135,6 @@ public class FileEntryLayoutDisplayPageProvider
 		}
 
 		return null;
-	}
-
-	@Override
-	public String getURLSeparator() {
-		return FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY;
 	}
 
 	@Reference

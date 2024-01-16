@@ -15,15 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	property = "class.name=com.liferay.layout.util.structure.CollectionItemLayoutStructureItem",
-	service = LayoutStructureItemMapper.class
-)
 public class CollectionItemLayoutStructureItemMapper
 	implements LayoutStructureItemMapper {
 

@@ -34,13 +34,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Pavel Savinov
  */
 public abstract class BaseStyledLayoutStructureItemMapper
 	implements LayoutStructureItemMapper {
+
+	public BaseStyledLayoutStructureItemMapper(
+		InfoItemServiceRegistry infoItemServiceRegistry, Portal portal) {
+
+		this.infoItemServiceRegistry = infoItemServiceRegistry;
+		this.portal = portal;
+	}
 
 	protected FragmentViewport[] getFragmentViewPorts(JSONObject jsonObject) {
 		if ((jsonObject == null) || (jsonObject.length() == 0)) {
@@ -254,11 +259,8 @@ public abstract class BaseStyledLayoutStructureItemMapper
 		};
 	}
 
-	@Reference
-	protected InfoItemServiceRegistry infoItemServiceRegistry;
-
-	@Reference
-	protected Portal portal;
+	protected final InfoItemServiceRegistry infoItemServiceRegistry;
+	protected final Portal portal;
 
 	private Function<Object, String> _getImageURLTransformerFunction() {
 		return object -> {

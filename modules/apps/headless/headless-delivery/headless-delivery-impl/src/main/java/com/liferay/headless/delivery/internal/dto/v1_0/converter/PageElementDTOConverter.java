@@ -5,23 +5,58 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
+import com.liferay.fragment.processor.PortletRegistry;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.CollectionItemLayoutStructureItemMapper;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.CollectionLayoutStructureItemMapper;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.ColumnLayoutStructureItemMapper;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.ContainerLayoutStructureItemMapper;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.DropZoneLayoutStructureItemMapper;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.FormLayoutStructureItemMapper;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.FragmentDropZoneLayoutStructureItemMapper;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.FragmentLayoutStructureItemMapper;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapper;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.RootLayoutStructureItemMapper;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.RowLayoutStructureItemMapper;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.layout.exporter.PortletPreferencesPortletConfigurationExporter;
+import com.liferay.layout.util.structure.CollectionItemLayoutStructureItem;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
+import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.layout.util.structure.RootLayoutStructureItem;
+import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -75,14 +110,49 @@ public class PageElementDTOConverter
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, LayoutStructureItemMapper.class, "class.name");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
+	protected void activate() {
+		_layoutStructureItemMappers.put(
+			CollectionItemLayoutStructureItem.class,
+			new CollectionItemLayoutStructureItemMapper());
+		_layoutStructureItemMappers.put(
+			CollectionStyledLayoutStructureItem.class,
+			new CollectionLayoutStructureItemMapper(
+				_infoItemServiceRegistry, _portal));
+		_layoutStructureItemMappers.put(
+			ColumnLayoutStructureItem.class,
+			new ColumnLayoutStructureItemMapper());
+		_layoutStructureItemMappers.put(
+			ContainerStyledLayoutStructureItem.class,
+			new ContainerLayoutStructureItemMapper(
+				_infoItemServiceRegistry, _portal));
+		_layoutStructureItemMappers.put(
+			DropZoneLayoutStructureItem.class,
+			new DropZoneLayoutStructureItemMapper());
+		_layoutStructureItemMappers.put(
+			FormStyledLayoutStructureItem.class,
+			new FormLayoutStructureItemMapper(
+				_infoItemServiceRegistry, _portal));
+		_layoutStructureItemMappers.put(
+			FragmentDropZoneLayoutStructureItem.class,
+			new FragmentDropZoneLayoutStructureItemMapper());
+		_layoutStructureItemMappers.put(
+			FragmentStyledLayoutStructureItem.class,
+			new FragmentLayoutStructureItemMapper(
+				_fragmentCollectionContributorRegistry,
+				_fragmentEntryConfigurationParser,
+				_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
+				_groupLocalService, _jsonFactory, _layoutLocalService,
+				_portletLocalService,
+				_portletPreferencesPortletConfigurationExporter,
+				_portletRegistry, _resourceActionLocalService,
+				_resourcePermissionLocalService, _roleLocalService,
+				_teamLocalService, _infoItemServiceRegistry, _portal));
+		_layoutStructureItemMappers.put(
+			RootLayoutStructureItem.class, new RootLayoutStructureItemMapper());
+		_layoutStructureItemMappers.put(
+			RowStyledLayoutStructureItem.class,
+			new RowLayoutStructureItemMapper(
+				_infoItemServiceRegistry, _portal));
 	}
 
 	private PageElement _toPageElement(
@@ -131,10 +201,8 @@ public class PageElementDTOConverter
 		long groupId, LayoutStructureItem layoutStructureItem,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {
 
-		Class<?> clazz = layoutStructureItem.getClass();
-
 		LayoutStructureItemMapper layoutStructureItemMapper =
-			_serviceTrackerMap.getService(clazz.getName());
+			_layoutStructureItemMappers.get(layoutStructureItem.getClass());
 
 		if (layoutStructureItemMapper == null) {
 			return null;
@@ -145,7 +213,57 @@ public class PageElementDTOConverter
 			saveMappingConfiguration);
 	}
 
-	private ServiceTrackerMap<String, LayoutStructureItemMapper>
-		_serviceTrackerMap;
+	@Reference
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
+
+	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	private final Map<Class<?>, LayoutStructureItemMapper>
+		_layoutStructureItemMappers = new HashMap<>();
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPreferencesPortletConfigurationExporter
+		_portletPreferencesPortletConfigurationExporter;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private TeamLocalService _teamLocalService;
 
 }

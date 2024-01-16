@@ -17,15 +17,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	property = "class.name=com.liferay.layout.util.structure.ColumnLayoutStructureItem",
-	service = LayoutStructureItemMapper.class
-)
 public class ColumnLayoutStructureItemMapper
 	implements LayoutStructureItemMapper {
 

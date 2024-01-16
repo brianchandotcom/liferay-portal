@@ -10,15 +10,9 @@ import com.liferay.headless.delivery.dto.v1_0.PageFragmentDropZoneDefinition;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	property = "class.name=com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem",
-	service = LayoutStructureItemMapper.class
-)
 public class FragmentDropZoneLayoutStructureItemMapper
 	implements LayoutStructureItemMapper {
 

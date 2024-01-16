@@ -16,15 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	property = "class.name=com.liferay.layout.util.structure.DropZoneLayoutStructureItem",
-	service = LayoutStructureItemMapper.class
-)
 public class DropZoneLayoutStructureItemMapper
 	implements LayoutStructureItemMapper {
 

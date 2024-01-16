@@ -16,6 +16,7 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.StyledLayoutStructureItemUtil;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.exporter.PortletPreferencesPortletConfigurationExporter;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -32,21 +33,51 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.TeamLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	property = "class.name=com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem",
-	service = LayoutStructureItemMapper.class
-)
 public class FragmentLayoutStructureItemMapper
 	extends BaseStyledLayoutStructureItemMapper {
+
+	public FragmentLayoutStructureItemMapper(
+		FragmentCollectionContributorRegistry
+			fragmentCollectionContributorRegistry,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
+		FragmentEntryLocalService fragmentEntryLocalService,
+		GroupLocalService groupLocalService, JSONFactory jsonFactory,
+		LayoutLocalService layoutLocalService,
+		PortletLocalService portletLocalService,
+		PortletPreferencesPortletConfigurationExporter
+			portletPreferencesPortletConfigurationExporter,
+		PortletRegistry portletRegistry,
+		ResourceActionLocalService resourceActionLocalService,
+		ResourcePermissionLocalService resourcePermissionLocalService,
+		RoleLocalService roleLocalService, TeamLocalService teamLocalService,
+		InfoItemServiceRegistry infoItemServiceRegistry, Portal portal) {
+
+		super(infoItemServiceRegistry, portal);
+
+		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
+		_jsonFactory = jsonFactory;
+
+		_widgetInstanceMapper = new WidgetInstanceMapper(
+			layoutLocalService, portal, portletLocalService,
+			portletPreferencesPortletConfigurationExporter,
+			resourceActionLocalService, resourcePermissionLocalService,
+			roleLocalService, teamLocalService);
+
+		_pageFragmentInstanceDefinitionMapper =
+			new PageFragmentInstanceDefinitionMapper(
+				fragmentCollectionContributorRegistry,
+				fragmentEntryConfigurationParser,
+				_fragmentEntryLinkLocalService, fragmentEntryLocalService,
+				groupLocalService, infoItemServiceRegistry, _jsonFactory,
+				portal, portletRegistry, _widgetInstanceMapper);
+	}
 
 	@Override
 	public PageElement getPageElement(
@@ -121,23 +152,6 @@ public class FragmentLayoutStructureItemMapper
 		};
 	}
 
-	@Activate
-	protected void activate() {
-		_widgetInstanceMapper = new WidgetInstanceMapper(
-			_layoutLocalService, portal, _portletLocalService,
-			_portletPreferencesPortletConfigurationExporter,
-			_resourceActionLocalService, _resourcePermissionLocalService,
-			_roleLocalService, _teamLocalService);
-
-		_pageFragmentInstanceDefinitionMapper =
-			new PageFragmentInstanceDefinitionMapper(
-				_fragmentCollectionContributorRegistry,
-				_fragmentEntryConfigurationParser,
-				_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
-				_groupLocalService, infoItemServiceRegistry, _jsonFactory,
-				portal, _portletRegistry, _widgetInstanceMapper);
-	}
-
 	private PageWidgetInstanceDefinition _toPageWidgetInstanceDefinition(
 		FragmentEntryLink fragmentEntryLink,
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
@@ -172,53 +186,10 @@ public class FragmentLayoutStructureItemMapper
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentLayoutStructureItemMapper.class);
 
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
-
-	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	private PageFragmentInstanceDefinitionMapper
+	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+	private final JSONFactory _jsonFactory;
+	private final PageFragmentInstanceDefinitionMapper
 		_pageFragmentInstanceDefinitionMapper;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
-
-	@Reference
-	private PortletPreferencesPortletConfigurationExporter
-		_portletPreferencesPortletConfigurationExporter;
-
-	@Reference
-	private PortletRegistry _portletRegistry;
-
-	@Reference
-	private ResourceActionLocalService _resourceActionLocalService;
-
-	@Reference
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private TeamLocalService _teamLocalService;
-
-	private WidgetInstanceMapper _widgetInstanceMapper;
+	private final WidgetInstanceMapper _widgetInstanceMapper;
 
 }

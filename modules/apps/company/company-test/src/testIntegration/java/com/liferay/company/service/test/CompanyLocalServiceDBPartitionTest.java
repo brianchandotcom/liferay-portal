@@ -206,6 +206,49 @@ public class CompanyLocalServiceDBPartitionTest
 	}
 
 	@Test
+	public void testDeleteCompany() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		_companyLocalService.deleteCompany(company);
+
+		Assert.assertFalse(
+			ArrayUtil.contains(
+				PortalInstances.getCompanyIdsBySQL(), company.getCompanyId()));
+	}
+
+	@Test
+	public void testDeleteCompanyWhenDropPartitionFails() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					DBPartitionUtil.class, "_dbPartitionDB",
+					ProxyUtil.newProxyInstance(
+						DBPartitionDB.class.getClassLoader(),
+						new Class<?>[] {DBPartitionDB.class},
+						(proxy, method, args) -> {
+							if (Objects.equals(
+									method.getName(), "getDropPartitionSQL")) {
+
+								throw new Exception();
+							}
+
+							return method.invoke(dbPartitionDB, args);
+						}))) {
+
+			_companyLocalService.deleteCompany(_company);
+
+			Assert.fail("Should fail when dropping partition");
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(
+				ArrayUtil.contains(
+					PortalInstances.getCompanyIdsBySQL(),
+					_company.getCompanyId()));
+		}
+	}
+
+	@Test
 	public void testExtractAndAddDBPartitionCompany() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 

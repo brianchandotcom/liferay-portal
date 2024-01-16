@@ -5,7 +5,7 @@
 
 // @ts-ignore
 
-import {Page} from '@playwright/test';
+import {expect, Page} from '@playwright/test';
 
 import {zipFolder} from '../../utils/util';
 
@@ -17,11 +17,12 @@ export class ExportImportFramePage {
 	}
 
 	async importLARFile(folderPath: string) {
+		await this.page.frame({url: /.*localhost.*/}).waitForLoadState();
+
 		const exportImportFrame = this.page.frameLocator(
 			'iframe[title="Export \\/ Import"]'
 		);
 
-		await this.page.waitForLoadState('networkidle');
 		await exportImportFrame.getByRole('link', {name: 'Import'}).click();
 
 		const fileChooserPromise = this.page.waitForEvent('filechooser');
@@ -36,6 +37,12 @@ export class ExportImportFramePage {
 
 		await exportImportFrame.getByRole('button', {name: 'Continue'}).click();
 		await exportImportFrame.getByRole('button', {name: 'Import'}).click();
+		await expect(
+			exportImportFrame
+				.getByTestId('row')
+				.nth(0)
+				.locator('.background-task-status-successful')
+		).toBeVisible();
 	}
 
 	async close() {

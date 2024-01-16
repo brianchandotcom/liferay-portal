@@ -26,6 +26,7 @@ export class DocumentLibraryPage {
 		await this.page.goto(
 			'/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet'
 		);
+		await this.page.waitForLoadState();
 	}
 
 	async editEntry(entryTitle: string) {
@@ -37,7 +38,6 @@ export class DocumentLibraryPage {
 	}
 
 	async openOptionsMenu() {
-		await this.page.waitForLoadState('networkidle');
 		await this.optionsMenu.click();
 	}
 }

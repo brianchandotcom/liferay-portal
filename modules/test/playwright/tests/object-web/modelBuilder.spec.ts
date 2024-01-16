@@ -9,7 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpers.fixture';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPages.fixture';
 import {loginTest} from '../../fixtures/login.fixture';
 import {objectPagesTest} from '../../fixtures/objectPages.fixture';
-import {getRandomInt} from '../../utils/util';
+import getRandomInt from '../../utils/getRandomInt';
 
 export const test = mergeTests(
 	apiHelpersTest,

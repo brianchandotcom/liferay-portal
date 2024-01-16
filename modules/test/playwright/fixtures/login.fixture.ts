@@ -6,7 +6,7 @@
 import {Page, expect, test} from '@playwright/test';
 
 import {liferayConfig} from '../liferay.config';
-import {createTempFile, readTempFile} from '../utils/util';
+import createTempFile, {readTempFile} from '../utils/createTempFile';
 
 export interface Login {
 	password: string;

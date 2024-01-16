@@ -6,9 +6,20 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
+import onExit from './onExit';
+
 const TMP_DIR = `tmp/${process.pid}`;
 
-export function createTempFile(name: string, content: string = ''): string {
+onExit(() => {
+	if (fs.existsSync(TMP_DIR)) {
+		fs.rmdirSync(TMP_DIR, {recursive: true});
+	}
+});
+
+export default function createTempFile(
+	name: string,
+	content: string = ''
+): string {
 	fs.mkdirSync(TMP_DIR, {recursive: true});
 
 	const filePath = path.join(TMP_DIR, name);
@@ -20,10 +31,6 @@ export function createTempFile(name: string, content: string = ''): string {
 	fs.writeFileSync(filePath, content, 'utf-8');
 
 	return filePath;
-}
-
-export function getRandomInt(): number {
-	return Math.floor(Math.random() * 9999999999);
 }
 
 export function readTempFile(name: string): string {

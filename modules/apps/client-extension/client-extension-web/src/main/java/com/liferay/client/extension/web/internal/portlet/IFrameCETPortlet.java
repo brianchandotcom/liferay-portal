@@ -7,24 +7,23 @@ package com.liferay.client.extension.web.internal.portlet;
 
 import com.liferay.client.extension.type.IFrameCET;
 import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
-import javax.servlet.http.HttpServletRequest;
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
 import com.liferay.portal.kernel.util.Portal;
-import java.util.Arrays;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Map;
 import java.util.Properties;
@@ -45,8 +44,8 @@ public class IFrameCETPortlet extends BaseCETPortlet<IFrameCET> {
 		super(iFrameCET);
 
 		_absolutePortalURLBuilderFactory = absolutePortalURLBuilderFactory;
-		_portal = portal;
 		_portletId = portletId;
+		_portal = portal;
 	}
 
 	@Override
@@ -81,12 +80,9 @@ public class IFrameCETPortlet extends BaseCETPortlet<IFrameCET> {
 
 		ScriptData scriptData = new ScriptData();
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-				httpServletRequest);
+				_portal.getHttpServletRequest(renderRequest));
 
 		scriptData.append(
 			null,
@@ -95,8 +91,7 @@ public class IFrameCETPortlet extends BaseCETPortlet<IFrameCET> {
 				Arrays.asList(
 					ESImportUtil.getESImport(
 						absolutePortalURLBuilder,
-						"{remoteProtocol} from " +
-							"client-extension-web"))));
+						"{remoteProtocol} from client-extension-web"))));
 
 		StringWriter stringWriter = new StringWriter();
 
@@ -128,8 +123,9 @@ public class IFrameCETPortlet extends BaseCETPortlet<IFrameCET> {
 		printWriter.flush();
 	}
 
-	private final AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
-	private final String _portletId;
+	private final AbsolutePortalURLBuilderFactory
+		_absolutePortalURLBuilderFactory;
 	private final Portal _portal;
+	private final String _portletId;
 
 }

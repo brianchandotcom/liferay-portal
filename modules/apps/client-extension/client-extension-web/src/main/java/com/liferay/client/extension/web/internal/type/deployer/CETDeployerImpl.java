@@ -6,8 +6,6 @@
 package com.liferay.client.extension.web.internal.type.deployer;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.CommerceCheckoutStepCET;
 import com.liferay.client.extension.type.CustomElementCET;
@@ -32,8 +30,9 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -137,8 +136,7 @@ public class CETDeployerImpl implements CETDeployer {
 		serviceRegistrations.add(
 			_register(
 				Portlet.class,
-				new CustomElementCETPortlet(
-					customElementCET, portletId)));
+				new CustomElementCETPortlet(customElementCET, portletId)));
 
 		return serviceRegistrations;
 	}
@@ -182,7 +180,9 @@ public class CETDeployerImpl implements CETDeployer {
 		serviceRegistrations.add(
 			_register(
 				Portlet.class,
-				new IFrameCETPortlet(iFrameCET, _absolutePortalURLBuilderFactory, portletId, _portal)));
+				new IFrameCETPortlet(
+					iFrameCET, _absolutePortalURLBuilderFactory, portletId,
+					_portal)));
 
 		return serviceRegistrations;
 	}
@@ -219,12 +219,12 @@ public class CETDeployerImpl implements CETDeployer {
 			CETDeployer.class, CommerceCETDeployer.class);
 
 	@Reference
-	private JSONFactory _jsonFactory;
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private BundleContext _bundleContext;
 
 	@Reference
-	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

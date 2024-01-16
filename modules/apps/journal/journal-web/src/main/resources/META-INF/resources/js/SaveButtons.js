@@ -19,6 +19,7 @@ export default function SaveButtons({
 	publishButtonLabel,
 	saveButtonLabel,
 	selectedLanguageId,
+	timeZone,
 }) {
 	const [
 		{publishModalAction, publishModalVisible},
@@ -43,7 +44,10 @@ export default function SaveButtons({
 			`${portletNamespace}workflowAction`
 		);
 
-		if (publishModalAction === 'publish') {
+		if (
+			publishModalAction === 'publish' ||
+			publishModalAction === 'schedule'
+		) {
 			workflowActionInput.value = Liferay.Workflow.ACTION_PUBLISH;
 		}
 
@@ -155,6 +159,7 @@ export default function SaveButtons({
 					onPublishButtonClick={handleButtonClick}
 					permissionsURL={permissionsURL}
 					portletNamespace={portletNamespace}
+					timeZone={timeZone}
 				/>
 			) : null}
 		</div>

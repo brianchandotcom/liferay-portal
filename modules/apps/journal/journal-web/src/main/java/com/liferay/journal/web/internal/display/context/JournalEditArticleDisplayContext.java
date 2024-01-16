@@ -1034,6 +1034,8 @@ public class JournalEditArticleDisplayContext {
 			() -> LanguageUtil.get(_httpServletRequest, getSaveButtonLabel())
 		).put(
 			"selectedLanguageId", getSelectedLanguageId()
+		).put(
+			"timeZone", getTimeZoneName()
 		).build();
 	}
 

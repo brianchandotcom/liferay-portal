@@ -30,26 +30,35 @@ public class EndpointMatcherTest {
 	@Test
 	public void testGetEndpoint() {
 		List<APIApplication.Endpoint> endpoints = Arrays.asList(
-			_getEndpoint("/path-name", false),
-			_getEndpoint("/path-name2", false),
-			_getEndpoint("/path/{parameter}", true));
+			_getEndpoint(Http.Method.GET, "/path-name", false),
+			_getEndpoint(Http.Method.POST, "/path-name", false),
+			_getEndpoint(Http.Method.GET, "/path-name2", false),
+			_getEndpoint(Http.Method.GET, "/path/{parameter}", true));
 
 		EndpointMatcher endpointMatcher = new EndpointMatcher(endpoints);
 
-		Assert.assertNull(endpointMatcher.getEndpoint("/path", null));
+		Assert.assertNull(
+			endpointMatcher.getEndpoint(Http.Method.GET, "/path", null));
 		Assert.assertNull(
 			endpointMatcher.getEndpoint(
-				"/path-name", APIApplication.Endpoint.Scope.SITE));
+				Http.Method.GET, "/path-name",
+				APIApplication.Endpoint.Scope.SITE));
 		Assert.assertEquals(
-			endpoints.get(0), endpointMatcher.getEndpoint("/path-name", null));
+			endpoints.get(0),
+			endpointMatcher.getEndpoint(Http.Method.GET, "/path-name", null));
 		Assert.assertEquals(
-			endpoints.get(1), endpointMatcher.getEndpoint("/path-name2", null));
+			endpoints.get(1),
+			endpointMatcher.getEndpoint(Http.Method.POST, "/path-name", null));
 		Assert.assertEquals(
-			endpoints.get(2), endpointMatcher.getEndpoint("/path/1234", null));
+			endpoints.get(2),
+			endpointMatcher.getEndpoint(Http.Method.GET, "/path-name2", null));
+		Assert.assertEquals(
+			endpoints.get(3),
+			endpointMatcher.getEndpoint(Http.Method.GET, "/path/1234", null));
 	}
 
 	private APIApplication.Endpoint _getEndpoint(
-		String path, boolean singleElement) {
+		Http.Method method, String path, boolean singleElement) {
 
 		return new APIApplication.Endpoint() {
 
@@ -60,7 +69,7 @@ public class EndpointMatcherTest {
 
 			@Override
 			public Http.Method getMethod() {
-				return null;
+				return method;
 			}
 
 			@Override

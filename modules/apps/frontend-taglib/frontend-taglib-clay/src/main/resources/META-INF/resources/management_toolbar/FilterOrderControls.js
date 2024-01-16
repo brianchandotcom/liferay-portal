@@ -24,6 +24,22 @@ const FilterOrderControls = ({
 }) => {
 	const showOrderToggle = orderDropdownItems && orderDropdownItems.length > 1;
 
+	const sortingDirectionOptions = [
+		{type: 'divider'},
+		{
+			active: sortingOrder === 'asc',
+			href: sortingOrder === 'asc' ? null : sortingURL,
+			label: Liferay.Language.get('ascending'),
+			type: 'item',
+		},
+		{
+			active: sortingOrder === 'desc',
+			href: sortingOrder === 'desc' ? null : sortingURL,
+			label: Liferay.Language.get('descending'),
+			type: 'item',
+		},
+	];
+
 	return (
 		<>
 			{Boolean(filterDropdownItems?.length) && (
@@ -104,31 +120,20 @@ const FilterOrderControls = ({
 				<ManagementToolbar.Item>
 					<ClayDropDownWithItems
 						items={addActiveIcons([
-							...orderDropdownItems.map((item) => {
-								return {
-									...item,
-									onClick: (event) => {
-										onOrderDropdownItemClick(event, {
-											item,
-										});
-									},
-								};
-							}),
-							{type: 'divider'},
-							{
-								active: sortingOrder === 'asc',
-								href:
-									sortingOrder === 'asc' ? null : sortingURL,
-								label: Liferay.Language.get('ascending'),
-								type: 'item',
-							},
-							{
-								active: sortingOrder !== 'asc',
-								href:
-									sortingOrder !== 'asc' ? null : sortingURL,
-								label: Liferay.Language.get('descending'),
-								type: 'item',
-							},
+							...orderDropdownItems
+								.map((item) => {
+									return {
+										...item,
+										onClick: (event) => {
+											onOrderDropdownItemClick(event, {
+												item,
+											});
+										},
+									};
+								})
+								.concat(
+									sortingOrder ? sortingDirectionOptions : []
+								),
 						])}
 						trigger={
 							<ClayButton

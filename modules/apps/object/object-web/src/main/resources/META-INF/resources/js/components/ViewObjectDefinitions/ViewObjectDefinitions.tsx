@@ -345,6 +345,17 @@ export default function ViewObjectDefinitions({
 		],
 	};
 
+	const setDefaultToSearchParams = (
+		allObjectFolders: ObjectFoldersRequestInfo,
+		currentURL: URL
+	) => {
+		currentURL.searchParams.set('objectFolderName', 'Default');
+
+		window.history.replaceState(null, '', currentURL.href);
+
+		setSelectedObjectFolder(allObjectFolders.items[0]);
+	};
+
 	useEffect(() => {
 		if (Liferay.FeatureFlags['LPS-148856']) {
 			const makeFetch = async () => {
@@ -356,29 +367,25 @@ export default function ViewObjectDefinitions({
 
 				setObjectDefinitionActions(objectDefinitions.actions);
 
-				const currentUrl = new URL(window.location.href);
+				const currentURL = new URL(window.location.href);
 
-				const objectFolderNameSearchParam = currentUrl.searchParams.get(
+				const objectFolderNameSearchParam = currentURL.searchParams.get(
 					'objectFolderName'
 				);
 
 				if (objectFolderNameSearchParam === null) {
-					currentUrl.searchParams.set(
-						'objectFolderName',
-						'Uncategorized'
-					);
-
-					window.history.replaceState(null, '', currentUrl.href);
-
-					setSelectedObjectFolder(allObjectFolders.items[0]);
+					setDefaultToSearchParams(allObjectFolders, currentURL);
 				}
 				else {
-					const newSelectedFolder = allObjectFolders.items.find(
+					const newSelectedObjectFolder = allObjectFolders.items.find(
 						(folder) => folder.name === objectFolderNameSearchParam
 					);
 
-					if (newSelectedFolder) {
-						setSelectedObjectFolder(newSelectedFolder);
+					if (newSelectedObjectFolder) {
+						setSelectedObjectFolder(newSelectedObjectFolder);
+					}
+					else {
+						setDefaultToSearchParams(allObjectFolders, currentURL);
 					}
 				}
 

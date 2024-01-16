@@ -147,9 +147,9 @@ export default function ObjectFoldersSideBar({
 						onClick={() => {
 							setSelectedObjectFolder(currentObjectFolder);
 
-							const currentUrl = new URL(window.location.href);
+							const currentURL = new URL(window.location.href);
 
-							currentUrl.searchParams.set(
+							currentURL.searchParams.set(
 								'objectFolderName',
 								currentObjectFolder.name
 							);
@@ -157,7 +157,7 @@ export default function ObjectFoldersSideBar({
 							window.history.replaceState(
 								null,
 								'',
-								currentUrl.href
+								currentURL.href
 							);
 						}}
 					>

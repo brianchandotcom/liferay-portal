@@ -84,7 +84,17 @@ export function ModalAddObjectFolder({
 					};
 				}
 			);
+
 			setSelectedObjectFolder(newObjectFolder);
+
+			const currentURL = new URL(window.location.href);
+
+			currentURL.searchParams.set(
+				'objectFolderName',
+				newObjectFolder.name
+			);
+
+			window.history.replaceState(null, '', currentURL.href);
 		}
 		catch (error) {
 			setError((error as Error).message);

@@ -148,7 +148,7 @@ public class AICreatorOpenAIClientImpl implements AICreatorOpenAIClient {
 		"https://api.openai.com/v1/images/generations";
 
 	protected static final String ENDPOINT_VALIDATION =
-		"https://api.openai.com/v1/models/text-davinci-003";
+		"https://api.openai.com/v1/models/gpt-3.5-turbo";
 
 	private JSONObject _getResponseJSONObject(Http.Options options)
 		throws Exception {

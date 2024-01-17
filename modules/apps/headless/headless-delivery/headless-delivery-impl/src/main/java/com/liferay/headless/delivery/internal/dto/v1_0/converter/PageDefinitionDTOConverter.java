@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -82,19 +83,33 @@ public class PageDefinitionDTOConverter
 		return new PageDefinition() {
 			{
 				setPageElement(
-					() -> _pageElementDTOConverter.toDTO(
-						new AttributesDTOConverterContext(
-							HashMapBuilder.put(
-								"groupId", (Object)layout.getGroupId()
-							).put(
-								"layoutStructure", layoutStructure
-							).put(
-								"saveInlineContent", saveInlineContent
-							).put(
-								"saveMappingConfiguration",
-								saveMappingConfiguration
-							).build()),
-						mainLayoutStructureItem));
+					() -> {
+						LayoutStructureItem mainLayoutStructureItem =
+							layoutStructure.getMainLayoutStructureItem();
+						boolean saveInlineContent = GetterUtil.getBoolean(
+							dtoConverterContext.getAttribute(
+								"saveInlineContent"),
+							true);
+						boolean saveMappingConfiguration =
+							GetterUtil.getBoolean(
+								dtoConverterContext.getAttribute(
+									"saveMappingConfiguration"),
+								true);
+
+						return _pageElementDTOConverter.toDTO(
+							new AttributesDTOConverterContext(
+								HashMapBuilder.put(
+									"groupId", (Object)layout.getGroupId()
+								).put(
+									"layoutStructure", layoutStructure
+								).put(
+									"saveInlineContent", saveInlineContent
+								).put(
+									"saveMappingConfiguration",
+									saveMappingConfiguration
+								).build()),
+							mainLayoutStructureItem);
+					});
 				setPageRules(
 					() -> PageRulesUtil.toPageRules(
 						layoutStructure.getLayoutStructureRules()));

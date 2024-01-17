@@ -123,7 +123,7 @@ public class FormLayoutStructureItemMapper
 			return new ClassTypeReference() {
 				{
 					setClassName(
-						() -> _portal.getClassName(
+						() -> portal.getClassName(
 							formStyledLayoutStructureItem.getClassNameId()));
 					setClassType(formStyledLayoutStructureItem::getClassTypeId);
 				}

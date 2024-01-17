@@ -154,7 +154,8 @@ public class ObjectDefinitionServiceUtil {
 			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
 			Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey, boolean portlet,
-			Map<java.util.Locale, String> pluralLabelMap, String scope)
+			Map<java.util.Locale, String> pluralLabelMap, String scope,
+			int status)
 		throws PortalException {
 
 		return getService().updateCustomObjectDefinition(
@@ -163,7 +164,8 @@ public class ObjectDefinitionServiceUtil {
 			objectFolderId, titleObjectFieldId, accountEntryRestricted, active,
 			enableCategorization, enableComments, enableLocalization,
 			enableObjectEntryDraft, enableObjectEntryHistory, labelMap, name,
-			panelAppOrder, panelCategoryKey, portlet, pluralLabelMap, scope);
+			panelAppOrder, panelCategoryKey, portlet, pluralLabelMap, scope,
+			status);
 	}
 
 	public static ObjectDefinition updateExternalReferenceCode(

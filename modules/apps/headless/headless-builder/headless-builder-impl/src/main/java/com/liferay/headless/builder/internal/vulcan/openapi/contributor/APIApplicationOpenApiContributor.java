@@ -11,6 +11,7 @@ import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.util.OpenAPIUtil;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,6 +50,7 @@ import io.swagger.v3.oas.models.responses.ApiResponses;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -208,6 +210,26 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 		return path;
 	}
 
+	private Set<String> _getChildPropertiesERCSet(
+		Set<APIApplication.Property> orphanPropertySet,
+		APIApplication.Property property) {
+
+		Set<String> propertyERCSet = new HashSet<>();
+
+		for (APIApplication.Property orphanProperty : orphanPropertySet) {
+			if (Objects.equals(
+					property.getExternalReferenceCode(),
+					orphanProperty.getRelatedPropertyERC())) {
+
+				propertyERCSet.add(orphanProperty.getExternalReferenceCode());
+
+				orphanPropertySet.remove(orphanProperty);
+			}
+		}
+
+		return propertyERCSet;
+	}
+
 	private Map<String, Schema> _removedUnusedPageSchema(
 		Map<String, Schema> schemas, Set<String> schemasSet) {
 
@@ -224,6 +246,101 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 		}
 
 		return schemasMap;
+	}
+
+	private Schema _setPropertySchema(
+		APIApplication.Property property, Map<String, Schema> schemas) {
+
+		APIApplication.Property.Type type = property.getType();
+
+		Schema schema = null;
+
+		if (type == null) {
+			schema = new ObjectSchema();
+		}
+
+		if (type == APIApplication.Property.Type.AGGREGATION) {
+			schema = new StringSchema();
+		}
+		else if (type == APIApplication.Property.Type.ATTACHMENT) {
+			_addSchemas(FileEntry.class, schemas);
+
+			schema = new Schema() {
+				{
+					set$ref("FileEntry");
+				}
+			};
+		}
+		else if (type == APIApplication.Property.Type.BOOLEAN) {
+			schema = new BooleanSchema();
+		}
+		else if (type == APIApplication.Property.Type.DATE) {
+			schema = new DateSchema();
+		}
+		else if (type == APIApplication.Property.Type.DATE_TIME) {
+			schema = new DateTimeSchema();
+		}
+		else if (type == APIApplication.Property.Type.DECIMAL) {
+			schema = new NumberSchema() {
+				{
+					setFormat("double");
+				}
+			};
+		}
+		else if (type == APIApplication.Property.Type.INTEGER) {
+			schema = new IntegerSchema();
+		}
+		else if (type == APIApplication.Property.Type.LONG_INTEGER) {
+			schema = new IntegerSchema() {
+				{
+					setFormat("int64");
+				}
+			};
+		}
+		else if (type == APIApplication.Property.Type.LONG_TEXT) {
+			schema = new StringSchema();
+		}
+		else if (type == APIApplication.Property.Type.MULTISELECT_PICKLIST) {
+			_addSchemas(ListEntry.class, schemas);
+
+			schema = new ArraySchema() {
+				{
+					setItems(
+						new Schema() {
+							{
+								set$ref("ListEntry");
+							}
+						});
+				}
+			};
+		}
+		else if (type == APIApplication.Property.Type.PICKLIST) {
+			_addSchemas(ListEntry.class, schemas);
+
+			schema = new Schema() {
+				{
+					set$ref("ListEntry");
+				}
+			};
+		}
+		else if (type == APIApplication.Property.Type.PRECISION_DECIMAL) {
+			schema = new NumberSchema() {
+				{
+					setFormat("double");
+				}
+			};
+		}
+		else if (type == APIApplication.Property.Type.RICH_TEXT) {
+			schema = new StringSchema();
+		}
+		else if (type == APIApplication.Property.Type.TEXT) {
+			schema = new StringSchema();
+		}
+
+		schema.setDescription(property.getDescription());
+		schema.setName(property.getName());
+
+		return schema;
 	}
 
 	private PathItem _toOpenAPIPathItem(APIApplication.Endpoint endpoint) {
@@ -427,99 +544,49 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 
 		Map<String, Schema> schemas = new TreeMap<>();
 
+		Set<APIApplication.Property> orphanPropertySet = new HashSet<>();
+
 		Map<String, Schema> properties = new TreeMap<>();
 
+		Map<String, Schema> propertySchemaMap = new TreeMap<>();
+
+		Map<String, APIApplication.Property> registeredPropertyMap =
+			new HashMap<>();
+
 		for (APIApplication.Property property : schema.getProperties()) {
-			Schema propertySchema = null;
+			Schema propertySchema = _setPropertySchema(property, schemas);
 
-			APIApplication.Property.Type type = property.getType();
+			registeredPropertyMap.put(
+				property.getExternalReferenceCode(), property);
 
-			if (type == APIApplication.Property.Type.AGGREGATION) {
-				propertySchema = new StringSchema();
-			}
-			else if (type == APIApplication.Property.Type.ATTACHMENT) {
-				_addSchemas(FileEntry.class, schemas);
+			Set<String> childPropertiesERCSet = _getChildPropertiesERCSet(
+				orphanPropertySet, property);
 
-				propertySchema = new Schema() {
-					{
-						set$ref("FileEntry");
-					}
-				};
-			}
-			else if (type == APIApplication.Property.Type.BOOLEAN) {
-				propertySchema = new BooleanSchema();
-			}
-			else if (type == APIApplication.Property.Type.DATE) {
-				propertySchema = new DateSchema();
-			}
-			else if (type == APIApplication.Property.Type.DATE_TIME) {
-				propertySchema = new DateTimeSchema();
-			}
-			else if (type == APIApplication.Property.Type.DECIMAL) {
-				propertySchema = new NumberSchema() {
-					{
-						setFormat("double");
-					}
-				};
-			}
-			else if (type == APIApplication.Property.Type.INTEGER) {
-				propertySchema = new IntegerSchema();
-			}
-			else if (type == APIApplication.Property.Type.LONG_INTEGER) {
-				propertySchema = new IntegerSchema() {
-					{
-						setFormat("int64");
-					}
-				};
-			}
-			else if (type == APIApplication.Property.Type.LONG_TEXT) {
-				propertySchema = new StringSchema();
-			}
-			else if (type ==
-						APIApplication.Property.Type.MULTISELECT_PICKLIST) {
-
-				_addSchemas(ListEntry.class, schemas);
-
-				propertySchema = new ArraySchema() {
-					{
-						setItems(
-							new Schema() {
-								{
-									set$ref("ListEntry");
-								}
-							});
-					}
-				};
-			}
-			else if (type == APIApplication.Property.Type.PICKLIST) {
-				_addSchemas(ListEntry.class, schemas);
-
-				propertySchema = new Schema() {
-					{
-						set$ref("ListEntry");
-					}
-				};
-			}
-			else if (type == APIApplication.Property.Type.PRECISION_DECIMAL) {
-				propertySchema = new NumberSchema() {
-					{
-						setFormat("double");
-					}
-				};
-			}
-			else if (type == APIApplication.Property.Type.RICH_TEXT) {
-				propertySchema = new StringSchema();
-			}
-			else if (type == APIApplication.Property.Type.TEXT) {
-				propertySchema = new StringSchema();
+			if (!childPropertiesERCSet.isEmpty()) {
+				_updateSchemaProperties(
+					childPropertiesERCSet, propertySchema, propertySchemaMap);
 			}
 
-			if (propertySchema != null) {
-				propertySchema.setDescription(property.getDescription());
-				propertySchema.setName(property.getName());
+			String relatedPropertyERC = property.getRelatedPropertyERC();
 
+			if (Validator.isNull(relatedPropertyERC)) {
 				properties.put(property.getName(), propertySchema);
 			}
+			else {
+				if (registeredPropertyMap.containsKey(
+						property.getRelatedPropertyERC())) {
+
+					_updateRelatedSchemaProperties(
+						propertySchema, relatedPropertyERC, properties,
+						propertySchemaMap, registeredPropertyMap);
+				}
+				else {
+					orphanPropertySet.add(property);
+				}
+			}
+
+			propertySchemaMap.put(
+				property.getExternalReferenceCode(), propertySchema);
 		}
 
 		schemas.put(
@@ -555,8 +622,60 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 		return schemas;
 	}
 
+	private void _updateRelatedSchemaProperties(
+		Schema childPropertySchema, String propertyERC,
+		Map<String, Schema> properties, Map<String, Schema> propertySchemaMap,
+		Map<String, APIApplication.Property> registeredProperties) {
+
+		Schema schema = propertySchemaMap.get(propertyERC);
+
+		schema.setProperties(
+			HashMapBuilder.put(
+				childPropertySchema.getName(), childPropertySchema
+			).putAll(
+				schema.getProperties()
+			).build());
+
+		propertySchemaMap.put(propertyERC, schema);
+
+		APIApplication.Property property = registeredProperties.get(
+			propertyERC);
+
+		String relatedPropertyERC = property.getRelatedPropertyERC();
+
+		if (Validator.isNotNull(relatedPropertyERC)) {
+			if (registeredProperties.containsKey(relatedPropertyERC)) {
+				_updateRelatedSchemaProperties(
+					schema, relatedPropertyERC, properties, propertySchemaMap,
+					registeredProperties);
+			}
+		}
+		else {
+			properties.put(property.getName(), schema);
+		}
+	}
+
+	private void _updateSchemaProperties(
+		Set<String> propertyERCSet, Schema propertySchema,
+		Map<String, Schema> propertySchemaMap) {
+
+		for (String propertyERC : propertyERCSet) {
+			Schema childPropertySchema = propertySchemaMap.get(propertyERC);
+
+			propertySchema.setProperties(
+				HashMapBuilder.put(
+					childPropertySchema.getName(), childPropertySchema
+				).putAll(
+					propertySchema.getProperties()
+				).build());
+		}
+	}
+
 	@Reference
 	private APIApplicationProvider _apiApplicationProvider;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private OpenAPIResource _openAPIResource;

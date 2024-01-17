@@ -467,6 +467,20 @@ public interface DLFileVersionModel
 	public void setStoreUUID(String storeUUID);
 
 	/**
+	 * Returns the display date of this document library file version.
+	 *
+	 * @return the display date of this document library file version
+	 */
+	public Date getDisplayDate();
+
+	/**
+	 * Sets the display date of this document library file version.
+	 *
+	 * @param displayDate the display date of this document library file version
+	 */
+	public void setDisplayDate(Date displayDate);
+
+	/**
 	 * Returns the expiration date of this document library file version.
 	 *
 	 * @return the expiration date of this document library file version

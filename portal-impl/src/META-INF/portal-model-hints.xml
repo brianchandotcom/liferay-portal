@@ -346,6 +346,7 @@
 		<field name="storeUUID" type="String">
 			<hint name="max-length">255</hint>
 		</field>
+		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date">
 			<hint name="default-year-delta">1</hint>
 		</field>

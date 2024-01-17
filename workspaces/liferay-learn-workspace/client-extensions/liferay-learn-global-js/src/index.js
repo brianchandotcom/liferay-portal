@@ -5,8 +5,11 @@
 
 import DropdownProvider from './DropdownProvider';
 import SpatialNavigationProvider from './SpatialNavigation';
+
 import 'prismjs';
+
 import './article';
+
 import './highlighting-alert';
 
 export default {

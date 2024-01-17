@@ -108,7 +108,8 @@ function updateSearch() {
 	if (searchSuggestionsInputValue) {
 		seeAllResultsLink.href =
 			searchSubmitURL + '?q=' + searchSuggestionsInputValue;
-		searchSubmitLink.href = searchSubmitURL + '?q=' + searchSuggestionsInputValue;
+		searchSubmitLink.href =
+			searchSubmitURL + '?q=' + searchSuggestionsInputValue;
 		suggestions.classList.add('performing-search');
 		performSearch(searchSuggestionsInputValue);
 	}

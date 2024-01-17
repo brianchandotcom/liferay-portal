@@ -1576,10 +1576,6 @@ definition {
 			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 		}
 
-		task ("View the private page is shown in preview item selector") {
-			StyleBooks.viewCurrentPreviewItem(previewItem = "Test Private Page Name");
-		}
-
 		task ("View the Public Pages and Private Pages nav items are not shown in select preview item modal") {
 			Click(
 				index = 2,

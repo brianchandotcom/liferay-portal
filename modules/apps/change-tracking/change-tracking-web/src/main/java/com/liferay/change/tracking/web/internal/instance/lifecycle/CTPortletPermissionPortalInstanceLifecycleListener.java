@@ -11,6 +11,8 @@ import com.liferay.change.tracking.constants.CTRoleConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Portlet;
@@ -40,6 +42,12 @@ public class CTPortletPermissionPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Initializing " + _portlet.getPortletId() +
+					" permissions for publications roles");
+		}
+
 		_checkPublicationsReviewerRole(company);
 
 		_checkPublicationsUserRole(company.getCompanyId());
@@ -124,6 +132,9 @@ public class CTPortletPermissionPortalInstanceLifecycleListener
 			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
 			role.getRoleId(), ActionKeys.VIEW);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTPortletPermissionPortalInstanceLifecycleListener.class);
 
 	@Reference(
 		target = "(javax.portlet.name=" + CTPortletKeys.PUBLICATIONS + ")"

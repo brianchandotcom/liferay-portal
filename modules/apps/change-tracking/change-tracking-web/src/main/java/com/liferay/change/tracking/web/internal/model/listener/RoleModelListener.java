@@ -7,8 +7,11 @@ package com.liferay.change.tracking.web.internal.model.listener;
 
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Portlet;
@@ -38,6 +41,13 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			return;
 		}
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Initializing ", _portlet.getPortletId(),
+					" permissions for role ", role.getRoleId()));
+		}
+
 		try {
 			_resourcePermissionLocalService.addResourcePermission(
 				role.getCompanyId(),
@@ -61,6 +71,9 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			throw new ModelListenerException(portalException);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RoleModelListener.class);
 
 	@Reference(
 		target = "(javax.portlet.name=" + CTPortletKeys.PUBLICATIONS + ")"

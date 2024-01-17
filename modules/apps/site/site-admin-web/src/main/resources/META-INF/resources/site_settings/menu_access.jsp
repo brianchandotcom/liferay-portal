@@ -127,7 +127,7 @@ String textCssClass = menuAccessDisplayContext.isShowControlMenuByRole() ? "modi
 </clay:sheet-section>
 
 <liferay-frontend:component
-	module="js/MenuAccess"
+	module="{MenuAccess} from site-admin-web"
 />
 
 <aui:script use="liferay-search-container">

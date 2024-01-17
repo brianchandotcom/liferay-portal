@@ -71,5 +71,5 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "ratings" %>'
-	module="js/site/Ratings"
+	module="{Ratings} from site-admin-web"
 />

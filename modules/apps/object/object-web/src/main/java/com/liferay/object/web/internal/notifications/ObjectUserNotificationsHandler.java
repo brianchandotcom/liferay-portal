@@ -62,20 +62,6 @@ public class ObjectUserNotificationsHandler
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		if (serviceContext.getThemeDisplay() != null) {
-			String friendlyURL =
-				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					new InfoItemReference(
-						_objectDefinition.getClassName(),
-						new ClassPKInfoItemIdentifier(
-							jsonObject.getLong("classPK"))),
-					serviceContext.getThemeDisplay());
-
-			if (friendlyURL != null) {
-				return friendlyURL;
-			}
-		}
-
 		if (GetterUtil.getBoolean(jsonObject.get("exceedsObjectEntryLimit"))) {
 			RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 				RequestBackedPortletURLFactoryUtil.create(
@@ -94,6 +80,20 @@ public class ObjectUserNotificationsHandler
 			).setWindowState(
 				WindowState.MAXIMIZED
 			).buildString();
+		}
+
+		if (serviceContext.getThemeDisplay() != null) {
+			String friendlyURL =
+				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					new InfoItemReference(
+						_objectDefinition.getClassName(),
+						new ClassPKInfoItemIdentifier(
+							jsonObject.getLong("classPK"))),
+					serviceContext.getThemeDisplay());
+
+			if (friendlyURL != null) {
+				return friendlyURL;
+			}
 		}
 
 		return PortletURLBuilder.create(

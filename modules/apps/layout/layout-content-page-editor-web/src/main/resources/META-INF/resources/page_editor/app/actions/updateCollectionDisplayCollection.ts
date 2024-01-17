@@ -7,24 +7,20 @@ import {UPDATE_COLLECTION_DISPLAY_COLLECTION} from './types';
 
 import type {LayoutData} from '../../types/layout_data/LayoutData';
 import type {FragmentEntryLink} from './addFragmentEntryLinks';
-import type {PageContent} from './addItem';
 
 export default function updateCollectionDisplayCollection({
 	fragmentEntryLinks,
 	itemId,
 	layoutData,
-	pageContents,
 }: {
 	fragmentEntryLinks: FragmentEntryLink[];
 	itemId: string;
 	layoutData: LayoutData;
-	pageContents: PageContent[];
 }) {
 	return {
 		fragmentEntryLinks,
 		itemId,
 		layoutData,
-		pageContents,
 		type: UPDATE_COLLECTION_DISPLAY_COLLECTION,
 	} as const;
 }

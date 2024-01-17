@@ -1036,6 +1036,8 @@ public class JournalEditArticleDisplayContext {
 			"selectedLanguageId", getSelectedLanguageId()
 		).put(
 			"timeZone", getTimeZoneName()
+		).put(
+			"workflowEnabled", () -> _isWorkflowEnabled()
 		).build();
 	}
 

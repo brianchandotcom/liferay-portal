@@ -4,21 +4,17 @@
  */
 
 import type {LayoutData} from '../../types/layout_data/LayoutData';
-import type {PageContent} from './addItem';
 export default function updateRowColumns({
 	itemId,
 	layoutData,
 	numberOfColumns,
-	pageContents,
 }: {
 	itemId: string;
 	layoutData: LayoutData;
 	numberOfColumns: number;
-	pageContents: PageContent[];
 }): {
 	readonly itemId: string;
 	readonly layoutData: LayoutData;
 	readonly numberOfColumns: number;
-	readonly pageContents: PageContent[];
 	readonly type: 'UPDATE_ROW_COLUMNS';
 };

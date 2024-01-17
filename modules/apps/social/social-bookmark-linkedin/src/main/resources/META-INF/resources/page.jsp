@@ -23,7 +23,7 @@ String url = GetterUtil.getString((String)request.getAttribute("liferay-social-b
 	icon="social-linkedin"
 	monospaced="<%= true %>"
 	outline="<%= true %>"
-	propsTransformer="js/OpenSocialBookmarkPropsTransformer"
+	propsTransformer="{OpenSocialBookmarkPropsTransformer} from social-bookmarks-taglib"
 	small="<%= true %>"
 	title="<%= socialBookmark.getName(request.getLocale()) %>"
 	type="button"

@@ -5,11 +5,11 @@
 import type {HeadlessAdminContent_v1_0_DisplayPageTemplate} from './HeadlessAdminContent_v1_0_DisplayPageTemplate';
 import type {HeadlessAdminContent_v1_0_Facet} from './HeadlessAdminContent_v1_0_Facet';
 export type HeadlessAdminContent_v1_0_PageDisplayPageTemplate = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessAdminContent_v1_0_DisplayPageTemplate>;
-	pageSize?: number;
 	facets?: Array<HeadlessAdminContent_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type {HeadlessCommerceAdminOrder_v1_0_CustomField} from './HeadlessCommerceAdminOrder_v1_0_CustomField';
 import type {HeadlessCommerceAdminOrder_v1_0_ShippingAddress} from './HeadlessCommerceAdminOrder_v1_0_ShippingAddress';
+import type {HeadlessCommerceAdminOrder_v1_0_VirtualItem} from './HeadlessCommerceAdminOrder_v1_0_VirtualItem';
 export type HeadlessCommerceAdminOrder_v1_0_OrderItem = {
 	'bookedQuantityId'?: number;
 	'customFields'?: Array<HeadlessCommerceAdminOrder_v1_0_CustomField>;
@@ -49,5 +50,6 @@ export type HeadlessCommerceAdminOrder_v1_0_OrderItem = {
 	'unitPrice'?: number;
 	'unitPriceWithTaxAmount'?: number;
 	readonly 'virtualItemURLs'?: Array<string>;
+	'virtualItems'?: Array<HeadlessCommerceAdminOrder_v1_0_VirtualItem>;
 	readonly 'x-class-name'?: string;
 };

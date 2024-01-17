@@ -25,25 +25,17 @@ export type HeadlessDelivery_v1_0_PageElement = {
 	/**
 	 * The page element's type (collection, collection item, column, drop zone, form, fragment, fragment drop zone, root, row, section or widget).
 	 */
-	'type'?: HeadlessDelivery_v1_0_PageElement.type;
+	'type'?:
+		| 'Collection'
+		| 'CollectionItem'
+		| 'Column'
+		| 'DropZone'
+		| 'Form'
+		| 'Fragment'
+		| 'FragmentDropZone'
+		| 'Root'
+		| 'Row'
+		| 'Section'
+		| 'Widget';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_PageElement {
-
-	/**
-	 * The page element's type (collection, collection item, column, drop zone, form, fragment, fragment drop zone, root, row, section or widget).
-	 */
-	export enum type {
-		COLLECTION = 'Collection',
-		COLLECTION_ITEM = 'CollectionItem',
-		COLUMN = 'Column',
-		DROP_ZONE = 'DropZone',
-		FORM = 'Form',
-		FRAGMENT = 'Fragment',
-		FRAGMENT_DROP_ZONE = 'FragmentDropZone',
-		ROOT = 'Root',
-		ROW = 'Row',
-		SECTION = 'Section',
-		WIDGET = 'Widget',
-	}
-}

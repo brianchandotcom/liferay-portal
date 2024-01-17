@@ -9,12 +9,6 @@ export type ObjectAdmin_v1_0_ObjectLayoutBox = {
 	'name'?: Record<string, string>;
 	'objectLayoutRows'?: Array<ObjectAdmin_v1_0_ObjectLayoutRow>;
 	'priority'?: number;
-	'type'?: ObjectAdmin_v1_0_ObjectLayoutBox.type;
+	'type'?: 'categorization' | 'regular';
 	readonly 'x-class-name'?: string;
 };
-export namespace ObjectAdmin_v1_0_ObjectLayoutBox {
-	export enum type {
-		CATEGORIZATION = 'categorization',
-		REGULAR = 'regular',
-	}
-}

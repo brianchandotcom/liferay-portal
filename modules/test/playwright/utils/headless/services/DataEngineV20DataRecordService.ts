@@ -65,32 +65,6 @@ export class DataEngineV20DataRecordService {
 	}
 
 	/**
-	 * @param dataRecordCollectionId
-	 * @param callbackUrl
-	 * @param requestBody
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static dataEngineV20PostDataRecordCollectionDataRecordBatch(
-		dataRecordCollectionId: string,
-		callbackUrl?: string,
-		requestBody?: Record<string, any>
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'POST',
-			url: '/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/data-records/batch',
-			path: {
-				dataRecordCollectionId: dataRecordCollectionId,
-			},
-			query: {
-				callbackURL: callbackUrl,
-			},
-			body: requestBody,
-			mediaType: 'application/json',
-		});
-	}
-
-	/**
 	 * @param dataDefinitionId
 	 * @param dataListViewId
 	 * @param keywords
@@ -124,6 +98,32 @@ export class DataEngineV20DataRecordService {
 				contentType: contentType,
 				fieldNames: fieldNames,
 			},
+		});
+	}
+
+	/**
+	 * @param dataRecordCollectionId
+	 * @param callbackUrl
+	 * @param requestBody
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static dataEngineV20PostDataRecordCollectionDataRecordBatch(
+		dataRecordCollectionId: string,
+		callbackUrl?: string,
+		requestBody?: Record<string, any>
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'POST',
+			url: '/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/data-records/batch',
+			path: {
+				dataRecordCollectionId: dataRecordCollectionId,
+			},
+			query: {
+				callbackURL: callbackUrl,
+			},
+			body: requestBody,
+			mediaType: 'application/json',
 		});
 	}
 

@@ -4,9 +4,36 @@
 /* eslint-disable */
 import type {ObjectAdmin_v1_0_ObjectFieldSetting} from './ObjectAdmin_v1_0_ObjectFieldSetting';
 export type ObjectAdmin_v1_0_ObjectField = {
-	'DBType'?: ObjectAdmin_v1_0_ObjectField.DBType;
+	'DBType'?:
+		| 'BigDecimal'
+		| 'Boolean'
+		| 'Clob'
+		| 'Date'
+		| 'DateTime'
+		| 'Double'
+		| 'Integer'
+		| 'Long'
+		| 'String';
 	readonly 'actions'?: Record<string, Record<string, string>>;
-	'businessType'?: ObjectAdmin_v1_0_ObjectField.businessType;
+	'businessType'?:
+		| 'Aggregation'
+		| 'Attachment'
+		| 'AutoIncrement'
+		| 'Boolean'
+		| 'Date'
+		| 'DateTime'
+		| 'Decimal'
+		| 'Encrypted'
+		| 'Formula'
+		| 'Integer'
+		| 'LongInteger'
+		| 'LongText'
+		| 'MultiselectPicklist'
+		| 'Picklist'
+		| 'PrecisionDecimal'
+		| 'Relationship'
+		| 'RichText'
+		| 'Text';
 
 	/**
 	 * @deprecated
@@ -23,9 +50,9 @@ export type ObjectAdmin_v1_0_ObjectField = {
 	'localized'?: boolean;
 	'name'?: string;
 	'objectFieldSettings'?: Array<ObjectAdmin_v1_0_ObjectFieldSetting>;
-	'readOnly'?: ObjectAdmin_v1_0_ObjectField.readOnly;
+	'readOnly'?: 'conditional' | 'false' | 'true';
 	'readOnlyConditionExpression'?: string;
-	readonly 'relationshipType'?: ObjectAdmin_v1_0_ObjectField.relationshipType;
+	readonly 'relationshipType'?: 'oneToMany' | 'oneToOne';
 	'required'?: boolean;
 	'state'?: boolean;
 	'system'?: boolean;
@@ -33,60 +60,16 @@ export type ObjectAdmin_v1_0_ObjectField = {
 	/**
 	 * @deprecated
 	 */
-	'type'?: ObjectAdmin_v1_0_ObjectField.type;
+	'type'?:
+		| 'BigDecimal'
+		| 'Boolean'
+		| 'Clob'
+		| 'Date'
+		| 'DateTime'
+		| 'Double'
+		| 'Integer'
+		| 'Long'
+		| 'String';
 	readonly 'unique'?: boolean;
 	readonly 'x-class-name'?: string;
 };
-export namespace ObjectAdmin_v1_0_ObjectField {
-	export enum DBType {
-		BIG_DECIMAL = 'BigDecimal',
-		BOOLEAN = 'Boolean',
-		CLOB = 'Clob',
-		DATE = 'Date',
-		DATE_TIME = 'DateTime',
-		DOUBLE = 'Double',
-		INTEGER = 'Integer',
-		LONG = 'Long',
-		STRING = 'String',
-	}
-	export enum businessType {
-		AGGREGATION = 'Aggregation',
-		ATTACHMENT = 'Attachment',
-		AUTO_INCREMENT = 'AutoIncrement',
-		BOOLEAN = 'Boolean',
-		DATE = 'Date',
-		DATE_TIME = 'DateTime',
-		DECIMAL = 'Decimal',
-		ENCRYPTED = 'Encrypted',
-		FORMULA = 'Formula',
-		INTEGER = 'Integer',
-		LONG_INTEGER = 'LongInteger',
-		LONG_TEXT = 'LongText',
-		MULTISELECT_PICKLIST = 'MultiselectPicklist',
-		PICKLIST = 'Picklist',
-		PRECISION_DECIMAL = 'PrecisionDecimal',
-		RELATIONSHIP = 'Relationship',
-		RICH_TEXT = 'RichText',
-		TEXT = 'Text',
-	}
-	export enum readOnly {
-		CONDITIONAL = 'conditional',
-		FALSE = 'false',
-		TRUE = 'true',
-	}
-	export enum relationshipType {
-		ONE_TO_MANY = 'oneToMany',
-		ONE_TO_ONE = 'oneToOne',
-	}
-	export enum type {
-		BIG_DECIMAL = 'BigDecimal',
-		BOOLEAN = 'Boolean',
-		CLOB = 'Clob',
-		DATE = 'Date',
-		DATE_TIME = 'DateTime',
-		DOUBLE = 'Double',
-		INTEGER = 'Integer',
-		LONG = 'Long',
-		STRING = 'String',
-	}
-}

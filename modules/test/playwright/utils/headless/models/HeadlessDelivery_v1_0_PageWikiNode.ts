@@ -5,11 +5,11 @@
 import type {HeadlessDelivery_v1_0_Facet} from './HeadlessDelivery_v1_0_Facet';
 import type {HeadlessDelivery_v1_0_WikiNode} from './HeadlessDelivery_v1_0_WikiNode';
 export type HeadlessDelivery_v1_0_PageWikiNode = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessDelivery_v1_0_WikiNode>;
-	pageSize?: number;
 	facets?: Array<HeadlessDelivery_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

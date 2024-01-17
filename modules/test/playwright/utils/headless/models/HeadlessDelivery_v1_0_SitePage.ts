@@ -110,13 +110,6 @@ export type HeadlessDelivery_v1_0_SitePage = {
 	 * A valid external identifier to reference this page.
 	 */
 	readonly 'uuid'?: string;
-	'viewableBy'?: HeadlessDelivery_v1_0_SitePage.viewableBy;
+	'viewableBy'?: 'Anyone' | 'Members' | 'Owner';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_SitePage {
-	export enum viewableBy {
-		ANYONE = 'Anyone',
-		MEMBERS = 'Members',
-		OWNER = 'Owner',
-	}
-}

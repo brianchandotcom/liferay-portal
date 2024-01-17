@@ -13,43 +13,6 @@ import {request as __request} from '../core/request';
 export class HeadlessDeliveryV10KnowledgeBaseArticleService {
 
 	/**
-	 * @param knowledgeBaseFolderId
-	 * @param filter
-	 * @param search
-	 * @param sort
-	 * @param callbackUrl
-	 * @param contentType
-	 * @param fieldNames
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessDeliveryV10PostKnowledgeBaseFolderKnowledgeBaseArticlesPageExportBatch(
-		knowledgeBaseFolderId: string,
-		filter?: string,
-		search?: string,
-		sort?: string,
-		callbackUrl?: string,
-		contentType?: string,
-		fieldNames?: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'POST',
-			url: '/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles/export-batch',
-			path: {
-				knowledgeBaseFolderId: knowledgeBaseFolderId,
-			},
-			query: {
-				filter: filter,
-				search: search,
-				sort: sort,
-				callbackURL: callbackUrl,
-				contentType: contentType,
-				fieldNames: fieldNames,
-			},
-		});
-	}
-
-	/**
 	 * @param knowledgeBaseArticleId
 	 * @param fields
 	 * @param nestedFields
@@ -98,6 +61,43 @@ export class HeadlessDeliveryV10KnowledgeBaseArticleService {
 			},
 			body: requestBody,
 			mediaType: 'application/json',
+		});
+	}
+
+	/**
+	 * @param knowledgeBaseFolderId
+	 * @param filter
+	 * @param search
+	 * @param sort
+	 * @param callbackUrl
+	 * @param contentType
+	 * @param fieldNames
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessDeliveryV10PostKnowledgeBaseFolderKnowledgeBaseArticlesPageExportBatch(
+		knowledgeBaseFolderId: string,
+		filter?: string,
+		search?: string,
+		sort?: string,
+		callbackUrl?: string,
+		contentType?: string,
+		fieldNames?: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'POST',
+			url: '/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles/export-batch',
+			path: {
+				knowledgeBaseFolderId: knowledgeBaseFolderId,
+			},
+			query: {
+				filter: filter,
+				search: search,
+				sort: sort,
+				callbackURL: callbackUrl,
+				contentType: contentType,
+				fieldNames: fieldNames,
+			},
 		});
 	}
 

@@ -36,14 +36,7 @@ export type HeadlessCommerceAdminPricing_v2_0_PriceList = {
 	'priceListOrderTypes'?: Array<HeadlessCommerceAdminPricing_v2_0_PriceListOrderType>;
 	'priceModifiers'?: Array<HeadlessCommerceAdminPricing_v2_0_PriceModifier>;
 	'priority'?: number;
-	'type': HeadlessCommerceAdminPricing_v2_0_PriceList.type;
+	'type': 'price-list' | 'promotion' | 'contract';
 	'workflowStatusInfo'?: HeadlessCommerceAdminPricing_v2_0_Status;
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessCommerceAdminPricing_v2_0_PriceList {
-	export enum type {
-		PRICE_LIST = 'price-list',
-		PROMOTION = 'promotion',
-		CONTRACT = 'contract',
-	}
-}

@@ -14,21 +14,10 @@ export type HeadlessSite_v1_0_Site = {
 	readonly 'friendlyUrlPath'?: string;
 	readonly 'id'?: number;
 	readonly 'key'?: string;
-	'membershipType'?: HeadlessSite_v1_0_Site.membershipType;
+	'membershipType'?: 'open' | 'private' | 'restricted';
 	'name': string;
 	'parentSiteKey'?: string;
 	'templateKey'?: string;
-	'templateType'?: HeadlessSite_v1_0_Site.templateType;
+	'templateType'?: 'site-initializer' | 'site-template';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessSite_v1_0_Site {
-	export enum membershipType {
-		OPEN = 'open',
-		PRIVATE = 'private',
-		RESTRICTED = 'restricted',
-	}
-	export enum templateType {
-		SITE_INITIALIZER = 'site-initializer',
-		SITE_TEMPLATE = 'site-template',
-	}
-}

@@ -5,11 +5,11 @@
 import type {HeadlessPortalInstances_v1_0_Facet} from './HeadlessPortalInstances_v1_0_Facet';
 import type {HeadlessPortalInstances_v1_0_PortalInstance} from './HeadlessPortalInstances_v1_0_PortalInstance';
 export type HeadlessPortalInstances_v1_0_PagePortalInstance = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessPortalInstances_v1_0_PortalInstance>;
-	pageSize?: number;
 	facets?: Array<HeadlessPortalInstances_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

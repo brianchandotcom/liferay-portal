@@ -20,16 +20,6 @@ export type HeadlessDelivery_v1_0_SitePageNavigationMenuSettings = {
 	/**
 	 * The target's type (specific frame or new tab).
 	 */
-	'targetType'?: HeadlessDelivery_v1_0_SitePageNavigationMenuSettings.targetType;
+	'targetType'?: 'SpecificFrame' | 'NewTab';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_SitePageNavigationMenuSettings {
-
-	/**
-	 * The target's type (specific frame or new tab).
-	 */
-	export enum targetType {
-		SPECIFIC_FRAME = 'SpecificFrame',
-		NEW_TAB = 'NewTab',
-	}
-}

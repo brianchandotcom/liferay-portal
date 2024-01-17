@@ -5,11 +5,11 @@
 import type {HeadlessDelivery_v1_0_Comment} from './HeadlessDelivery_v1_0_Comment';
 import type {HeadlessDelivery_v1_0_Facet} from './HeadlessDelivery_v1_0_Facet';
 export type HeadlessDelivery_v1_0_PageComment = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessDelivery_v1_0_Comment>;
-	pageSize?: number;
 	facets?: Array<HeadlessDelivery_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

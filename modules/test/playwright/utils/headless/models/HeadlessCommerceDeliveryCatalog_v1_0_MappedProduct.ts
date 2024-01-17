@@ -28,14 +28,7 @@ export type HeadlessCommerceDeliveryCatalog_v1_0_MappedProduct = {
 	'skuId'?: number;
 	'skuOptions'?: Array<HeadlessCommerceDeliveryCatalog_v1_0_SkuOption>;
 	readonly 'thumbnail'?: string;
-	'type'?: HeadlessCommerceDeliveryCatalog_v1_0_MappedProduct.type;
+	'type'?: 'diagram' | 'external' | 'sku';
 	'urls'?: Record<string, string>;
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessCommerceDeliveryCatalog_v1_0_MappedProduct {
-	export enum type {
-		DIAGRAM = 'diagram',
-		EXTERNAL = 'external',
-		SKU = 'sku',
-	}
-}

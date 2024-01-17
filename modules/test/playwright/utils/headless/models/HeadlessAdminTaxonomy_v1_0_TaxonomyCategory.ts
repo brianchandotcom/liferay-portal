@@ -73,13 +73,6 @@ export type HeadlessAdminTaxonomy_v1_0_TaxonomyCategory = {
 	 * The `TaxonomyVocabulary` id, only if the category does not have a parent category.
 	 */
 	'taxonomyVocabularyId'?: number;
-	'viewableBy'?: HeadlessAdminTaxonomy_v1_0_TaxonomyCategory.viewableBy;
+	'viewableBy'?: 'Anyone' | 'Members' | 'Owner';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessAdminTaxonomy_v1_0_TaxonomyCategory {
-	export enum viewableBy {
-		ANYONE = 'Anyone',
-		MEMBERS = 'Members',
-		OWNER = 'Owner',
-	}
-}

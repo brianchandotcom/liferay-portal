@@ -5,11 +5,11 @@
 import type {HeadlessAdminWorkflow_v1_0_Facet} from './HeadlessAdminWorkflow_v1_0_Facet';
 import type {HeadlessAdminWorkflow_v1_0_WorkflowTask} from './HeadlessAdminWorkflow_v1_0_WorkflowTask';
 export type HeadlessAdminWorkflow_v1_0_PageWorkflowTask = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessAdminWorkflow_v1_0_WorkflowTask>;
-	pageSize?: number;
 	facets?: Array<HeadlessAdminWorkflow_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

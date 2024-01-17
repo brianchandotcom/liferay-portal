@@ -55,13 +55,6 @@ export type HeadlessDelivery_v1_0_WikiNode = {
 	 * A flag that indicates whether the user making the requests is subscribed to this wiki node.
 	 */
 	readonly 'subscribed'?: boolean;
-	'viewableBy'?: HeadlessDelivery_v1_0_WikiNode.viewableBy;
+	'viewableBy'?: 'Anyone' | 'Members' | 'Owner';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_WikiNode {
-	export enum viewableBy {
-		ANYONE = 'Anyone',
-		MEMBERS = 'Members',
-		OWNER = 'Owner',
-	}
-}

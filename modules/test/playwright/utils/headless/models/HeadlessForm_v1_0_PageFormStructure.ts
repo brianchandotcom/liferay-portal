@@ -5,11 +5,11 @@
 import type {HeadlessForm_v1_0_Facet} from './HeadlessForm_v1_0_Facet';
 import type {HeadlessForm_v1_0_FormStructure} from './HeadlessForm_v1_0_FormStructure';
 export type HeadlessForm_v1_0_PageFormStructure = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessForm_v1_0_FormStructure>;
-	pageSize?: number;
 	facets?: Array<HeadlessForm_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

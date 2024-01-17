@@ -7,7 +7,7 @@ export type DataEngine_v2_0_DataDefinitionField = {
 	'defaultValue'?: Record<string, Record<string, any>>;
 	'fieldType'?: string;
 	'id'?: number;
-	'indexType'?: DataEngine_v2_0_DataDefinitionField.indexType;
+	'indexType'?: 'all' | 'keyword' | 'none' | 'text';
 	'indexable'?: boolean;
 	'label'?: Record<string, Record<string, any>>;
 	'localizable'?: boolean;
@@ -25,11 +25,3 @@ export type DataEngine_v2_0_DataDefinitionField = {
 	'visible'?: boolean;
 	readonly 'x-class-name'?: string;
 };
-export namespace DataEngine_v2_0_DataDefinitionField {
-	export enum indexType {
-		ALL = 'all',
-		KEYWORD = 'keyword',
-		NONE = 'none',
-		TEXT = 'text',
-	}
-}

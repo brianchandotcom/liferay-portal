@@ -13,19 +13,15 @@ export type HeadlessCommerceAdminCatalog_v1_0_Currency = {
 	'primary'?: boolean;
 	'priority'?: number;
 	'rate'?: number;
-	'roundingMode'?: HeadlessCommerceAdminCatalog_v1_0_Currency.roundingMode;
+	'roundingMode'?:
+		| 'UP'
+		| 'DOWN'
+		| 'CEILING'
+		| 'FLOOR'
+		| 'HALF_UP'
+		| 'HALF_DOWN'
+		| 'HALF_EVEN'
+		| 'UNNECESSARY';
 	'symbol'?: string;
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessCommerceAdminCatalog_v1_0_Currency {
-	export enum roundingMode {
-		UP = 'UP',
-		DOWN = 'DOWN',
-		CEILING = 'CEILING',
-		FLOOR = 'FLOOR',
-		HALF_UP = 'HALF_UP',
-		HALF_DOWN = 'HALF_DOWN',
-		HALF_EVEN = 'HALF_EVEN',
-		UNNECESSARY = 'UNNECESSARY',
-	}
-}

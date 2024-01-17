@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type {HeadlessCommerceAdminCatalog_v1_0_SkuVirtualSettingsFileEntry} from './HeadlessCommerceAdminCatalog_v1_0_SkuVirtualSettingsFileEntry';
 import type {HeadlessCommerceAdminCatalog_v1_0_Status} from './HeadlessCommerceAdminCatalog_v1_0_Status';
 export type HeadlessCommerceAdminCatalog_v1_0_SkuVirtualSettings = {
 	'activationStatus'?: number;
@@ -41,6 +42,7 @@ export type HeadlessCommerceAdminCatalog_v1_0_SkuVirtualSettings = {
 	 * URL of the sample file
 	 */
 	'sampleURL'?: string;
+	'skuVirtualSettingsFileEntries'?: Array<HeadlessCommerceAdminCatalog_v1_0_SkuVirtualSettingsFileEntry>;
 
 	/**
 	 * URL to download the file

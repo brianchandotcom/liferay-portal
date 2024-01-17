@@ -62,14 +62,6 @@ export type HeadlessAdminUser_v1_0_Account = {
 	'postalAddresses'?: Array<HeadlessAdminUser_v1_0_PostalAddress>;
 	'status'?: number;
 	'taxId'?: string;
-	'type'?: HeadlessAdminUser_v1_0_Account.type;
+	'type'?: 'business' | 'guest' | 'person' | 'supplier';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessAdminUser_v1_0_Account {
-	export enum type {
-		BUSINESS = 'business',
-		GUEST = 'guest',
-		PERSON = 'person',
-		SUPPLIER = 'supplier',
-	}
-}

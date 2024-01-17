@@ -5,6 +5,5 @@
 /**
  * A unique reference to a taxonomy category.
  */
-export enum HeadlessDelivery_v1_0_TaxonomyCategoryReference {
-	EXTERNAL_REFERENCE_CODE = 'externalReferenceCode',
-}
+export type HeadlessDelivery_v1_0_TaxonomyCategoryReference =
+	'externalReferenceCode';

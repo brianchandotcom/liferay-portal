@@ -5,11 +5,11 @@
 import type {Bulk_v1_0_Facet} from './Bulk_v1_0_Facet';
 import type {Bulk_v1_0_TaxonomyVocabulary} from './Bulk_v1_0_TaxonomyVocabulary';
 export type Bulk_v1_0_PageTaxonomyVocabulary = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<Bulk_v1_0_TaxonomyVocabulary>;
-	pageSize?: number;
 	facets?: Array<Bulk_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

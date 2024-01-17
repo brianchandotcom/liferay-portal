@@ -10,7 +10,14 @@ export type HeadlessDelivery_v1_0_SiteMapSettings = {
 	/**
 	 * Indicates how often a page is updated.
 	 */
-	'changeFrequency'?: HeadlessDelivery_v1_0_SiteMapSettings.changeFrequency;
+	'changeFrequency'?:
+		| 'Always'
+		| 'Hourly'
+		| 'Daily'
+		| 'Weekly'
+		| 'Monthly'
+		| 'Yearly'
+		| 'Never';
 
 	/**
 	 * Whether search engines should crawl and index the page.
@@ -23,18 +30,3 @@ export type HeadlessDelivery_v1_0_SiteMapSettings = {
 	'pagePriority'?: number;
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_SiteMapSettings {
-
-	/**
-	 * Indicates how often a page is updated.
-	 */
-	export enum changeFrequency {
-		ALWAYS = 'Always',
-		HOURLY = 'Hourly',
-		DAILY = 'Daily',
-		WEEKLY = 'Weekly',
-		MONTHLY = 'Monthly',
-		YEARLY = 'Yearly',
-		NEVER = 'Never',
-	}
-}

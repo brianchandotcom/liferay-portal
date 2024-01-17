@@ -105,7 +105,7 @@ export type HeadlessDelivery_v1_0_WikiPage = {
 	 */
 	readonly 'taxonomyCategoryBriefs'?: Array<HeadlessDelivery_v1_0_TaxonomyCategoryBrief>;
 	'taxonomyCategoryIds'?: Array<number>;
-	'viewableBy'?: HeadlessDelivery_v1_0_WikiPage.viewableBy;
+	'viewableBy'?: 'Anyone' | 'Members' | 'Owner';
 
 	/**
 	 * The ID of the wiki node to which the wiki page belongs.
@@ -113,10 +113,3 @@ export type HeadlessDelivery_v1_0_WikiPage = {
 	'wikiNodeId'?: number;
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_WikiPage {
-	export enum viewableBy {
-		ANYONE = 'Anyone',
-		MEMBERS = 'Members',
-		OWNER = 'Owner',
-	}
-}

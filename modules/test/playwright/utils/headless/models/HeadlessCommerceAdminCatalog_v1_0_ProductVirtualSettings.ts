@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type {HeadlessCommerceAdminCatalog_v1_0_ProductVirtualSettingsFileEntry} from './HeadlessCommerceAdminCatalog_v1_0_ProductVirtualSettingsFileEntry';
 import type {HeadlessCommerceAdminCatalog_v1_0_Status} from './HeadlessCommerceAdminCatalog_v1_0_Status';
 export type HeadlessCommerceAdminCatalog_v1_0_ProductVirtualSettings = {
 	'activationStatus'?: number;
@@ -21,6 +22,7 @@ export type HeadlessCommerceAdminCatalog_v1_0_ProductVirtualSettings = {
 	 * Number of downloads available for attachment
 	 */
 	'maxUsages'?: number;
+	'productVirtualSettingsFileEntries'?: Array<HeadlessCommerceAdminCatalog_v1_0_ProductVirtualSettingsFileEntry>;
 
 	/**
 	 * Base64 encoded sample file

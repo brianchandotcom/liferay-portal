@@ -17,14 +17,8 @@ export type ObjectAdmin_v1_0_ObjectValidationRule = {
 	'objectDefinitionExternalReferenceCode'?: string;
 	'objectDefinitionId'?: number;
 	'objectValidationRuleSettings'?: Array<ObjectAdmin_v1_0_ObjectValidationRuleSetting>;
-	'outputType'?: ObjectAdmin_v1_0_ObjectValidationRule.outputType;
+	'outputType'?: 'fullValidation' | 'partialValidation';
 	'script'?: string;
 	'system'?: boolean;
 	readonly 'x-class-name'?: string;
 };
-export namespace ObjectAdmin_v1_0_ObjectValidationRule {
-	export enum outputType {
-		FULL_VALIDATION = 'fullValidation',
-		PARTIAL_VALIDATION = 'partialValidation',
-	}
-}

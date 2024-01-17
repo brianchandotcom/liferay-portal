@@ -54,7 +54,12 @@ export type HeadlessAdminWorkflow_v1_0_WorkflowLog = {
 	/**
 	 * The workflow log's type.
 	 */
-	readonly 'type'?: HeadlessAdminWorkflow_v1_0_WorkflowLog.type;
+	readonly 'type'?:
+		| 'NodeEntry'
+		| 'TaskAssign'
+		| 'TaskCompletion'
+		| 'TaskUpdate'
+		| 'Transition';
 
 	/**
 	 * The task associated with this workflow log.
@@ -62,16 +67,3 @@ export type HeadlessAdminWorkflow_v1_0_WorkflowLog = {
 	readonly 'workflowTaskId'?: number;
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessAdminWorkflow_v1_0_WorkflowLog {
-
-	/**
-	 * The workflow log's type.
-	 */
-	export enum type {
-		NODE_ENTRY = 'NodeEntry',
-		TASK_ASSIGN = 'TaskAssign',
-		TASK_COMPLETION = 'TaskCompletion',
-		TASK_UPDATE = 'TaskUpdate',
-		TRANSITION = 'Transition',
-	}
-}

@@ -5,11 +5,11 @@
 import type {HeadlessAdminUser_v1_0_Facet} from './HeadlessAdminUser_v1_0_Facet';
 import type {HeadlessAdminUser_v1_0_PostalAddress} from './HeadlessAdminUser_v1_0_PostalAddress';
 export type HeadlessAdminUser_v1_0_PagePostalAddress = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessAdminUser_v1_0_PostalAddress>;
-	pageSize?: number;
 	facets?: Array<HeadlessAdminUser_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

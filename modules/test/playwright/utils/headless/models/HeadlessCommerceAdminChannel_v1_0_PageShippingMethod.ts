@@ -5,11 +5,11 @@
 import type {HeadlessCommerceAdminChannel_v1_0_Facet} from './HeadlessCommerceAdminChannel_v1_0_Facet';
 import type {HeadlessCommerceAdminChannel_v1_0_ShippingMethod} from './HeadlessCommerceAdminChannel_v1_0_ShippingMethod';
 export type HeadlessCommerceAdminChannel_v1_0_PageShippingMethod = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessCommerceAdminChannel_v1_0_ShippingMethod>;
-	pageSize?: number;
 	facets?: Array<HeadlessCommerceAdminChannel_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

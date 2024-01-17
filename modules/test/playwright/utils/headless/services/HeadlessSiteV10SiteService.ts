@@ -10,6 +10,24 @@ import {request as __request} from '../core/request';
 export class HeadlessSiteV10SiteService {
 
 	/**
+	 * Deletes a site and all of its associated content.
+	 * @param siteId
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessSiteV10DeleteSite(
+		siteId: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/headless-site/v1.0/sites/{siteId}',
+			path: {
+				siteId: siteId,
+			},
+		});
+	}
+
+	/**
 	 * Adds or update a new site
 	 * @param externalReferenceCode
 	 * @param formData
@@ -28,6 +46,24 @@ export class HeadlessSiteV10SiteService {
 			},
 			formData: formData,
 			mediaType: 'multipart/form-data',
+		});
+	}
+
+	/**
+	 * Deletes a site and all of its associated content.
+	 * @param externalReferenceCode
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessSiteV10DeleteSiteByExternalReferenceCode(
+		externalReferenceCode: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/headless-site/v1.0/sites/by-external-reference-code/{externalReferenceCode}',
+			path: {
+				externalReferenceCode: externalReferenceCode,
+			},
 		});
 	}
 

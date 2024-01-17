@@ -80,13 +80,6 @@ export type HeadlessDelivery_v1_0_StructuredContentFolder = {
 	 * A flag that indicates whether the user making the requests is subscribed to this folder.
 	 */
 	readonly 'subscribed'?: boolean;
-	'viewableBy'?: HeadlessDelivery_v1_0_StructuredContentFolder.viewableBy;
+	'viewableBy'?: 'Anyone' | 'Members' | 'Owner';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_StructuredContentFolder {
-	export enum viewableBy {
-		ANYONE = 'Anyone',
-		MEMBERS = 'Members',
-		OWNER = 'Owner',
-	}
-}

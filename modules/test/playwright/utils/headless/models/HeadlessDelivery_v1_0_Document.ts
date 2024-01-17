@@ -130,13 +130,6 @@ export type HeadlessDelivery_v1_0_Document = {
 	 * The document's main title/name.
 	 */
 	'title'?: string;
-	'viewableBy'?: HeadlessDelivery_v1_0_Document.viewableBy;
+	'viewableBy'?: 'Anyone' | 'Members' | 'Owner';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_Document {
-	export enum viewableBy {
-		ANYONE = 'Anyone',
-		MEMBERS = 'Members',
-		OWNER = 'Owner',
-	}
-}

@@ -2,10 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type HeadlessBatchEngine_v1_0_PostImportTaskRequestBody = {
-
-	/**
-	 * File
-	 */
-	file?: Blob;
+export type HeadlessCommerceAdminChannel_v1_0_Account = {
+	'id'?: number;
+	'name'?: string;
+	readonly 'x-class-name'?: string;
 };

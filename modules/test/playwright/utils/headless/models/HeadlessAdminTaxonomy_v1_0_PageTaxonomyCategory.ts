@@ -5,11 +5,11 @@
 import type {HeadlessAdminTaxonomy_v1_0_Facet} from './HeadlessAdminTaxonomy_v1_0_Facet';
 import type {HeadlessAdminTaxonomy_v1_0_TaxonomyCategory} from './HeadlessAdminTaxonomy_v1_0_TaxonomyCategory';
 export type HeadlessAdminTaxonomy_v1_0_PageTaxonomyCategory = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessAdminTaxonomy_v1_0_TaxonomyCategory>;
-	pageSize?: number;
 	facets?: Array<HeadlessAdminTaxonomy_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

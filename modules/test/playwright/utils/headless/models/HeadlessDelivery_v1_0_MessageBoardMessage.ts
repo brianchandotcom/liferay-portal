@@ -119,13 +119,6 @@ export type HeadlessDelivery_v1_0_MessageBoardMessage = {
 	 * A flag that indicates whether the user making the requests is subscribed to this message.
 	 */
 	readonly 'subscribed'?: boolean;
-	'viewableBy'?: HeadlessDelivery_v1_0_MessageBoardMessage.viewableBy;
+	'viewableBy'?: 'Anyone' | 'Members' | 'Owner';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_MessageBoardMessage {
-	export enum viewableBy {
-		ANYONE = 'Anyone',
-		MEMBERS = 'Members',
-		OWNER = 'Owner',
-	}
-}

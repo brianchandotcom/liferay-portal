@@ -5,11 +5,11 @@
 import type {ObjectAdmin_v1_0_Facet} from './ObjectAdmin_v1_0_Facet';
 import type {ObjectAdmin_v1_0_ObjectDefinition} from './ObjectAdmin_v1_0_ObjectDefinition';
 export type ObjectAdmin_v1_0_PageObjectDefinition = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<ObjectAdmin_v1_0_ObjectDefinition>;
-	pageSize?: number;
 	facets?: Array<ObjectAdmin_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

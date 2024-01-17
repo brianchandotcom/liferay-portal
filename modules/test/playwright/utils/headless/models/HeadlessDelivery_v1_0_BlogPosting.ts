@@ -113,13 +113,6 @@ export type HeadlessDelivery_v1_0_BlogPosting = {
 	 */
 	readonly 'taxonomyCategoryBriefs'?: Array<HeadlessDelivery_v1_0_TaxonomyCategoryBrief>;
 	'taxonomyCategoryIds'?: Array<number>;
-	'viewableBy'?: HeadlessDelivery_v1_0_BlogPosting.viewableBy;
+	'viewableBy'?: 'Anyone' | 'Members' | 'Owner';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_BlogPosting {
-	export enum viewableBy {
-		ANYONE = 'Anyone',
-		MEMBERS = 'Members',
-		OWNER = 'Owner',
-	}
-}

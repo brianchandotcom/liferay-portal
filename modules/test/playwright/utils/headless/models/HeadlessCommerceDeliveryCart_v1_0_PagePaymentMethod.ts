@@ -5,11 +5,11 @@
 import type {HeadlessCommerceDeliveryCart_v1_0_Facet} from './HeadlessCommerceDeliveryCart_v1_0_Facet';
 import type {HeadlessCommerceDeliveryCart_v1_0_PaymentMethod} from './HeadlessCommerceDeliveryCart_v1_0_PaymentMethod';
 export type HeadlessCommerceDeliveryCart_v1_0_PagePaymentMethod = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessCommerceDeliveryCart_v1_0_PaymentMethod>;
-	pageSize?: number;
 	facets?: Array<HeadlessCommerceDeliveryCart_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

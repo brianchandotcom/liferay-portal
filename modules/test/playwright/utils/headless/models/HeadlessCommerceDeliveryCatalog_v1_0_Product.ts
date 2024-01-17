@@ -16,7 +16,7 @@ export type HeadlessCommerceDeliveryCatalog_v1_0_Product = {
 	readonly 'catalogName'?: string;
 	'categories'?: Array<HeadlessCommerceDeliveryCatalog_v1_0_Category>;
 	'createDate'?: string;
-	readonly 'customFields'?: Array<HeadlessCommerceDeliveryCatalog_v1_0_CustomField>;
+	'customFields'?: Array<HeadlessCommerceDeliveryCatalog_v1_0_CustomField>;
 	'description'?: string;
 	'expando'?: Record<string, Record<string, any>>;
 	'externalReferenceCode'?: string;

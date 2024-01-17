@@ -11,7 +11,14 @@ export type HeadlessCommerceAdminCatalog_v1_0_Option = {
 	'description'?: Record<string, string>;
 	'externalReferenceCode'?: string;
 	'facetable'?: boolean;
-	'fieldType': HeadlessCommerceAdminCatalog_v1_0_Option.fieldType;
+	'fieldType':
+		| 'checkbox'
+		| 'checkbox_multiple'
+		| 'date'
+		| 'numeric'
+		| 'radio'
+		| 'select'
+		| 'text';
 	readonly 'id'?: number;
 	'key': string;
 	'name': Record<string, string>;
@@ -21,14 +28,3 @@ export type HeadlessCommerceAdminCatalog_v1_0_Option = {
 	'skuContributor'?: boolean;
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessCommerceAdminCatalog_v1_0_Option {
-	export enum fieldType {
-		CHECKBOX = 'checkbox',
-		CHECKBOX_MULTIPLE = 'checkbox_multiple',
-		DATE = 'date',
-		NUMERIC = 'numeric',
-		RADIO = 'radio',
-		SELECT = 'select',
-		TEXT = 'text',
-	}
-}

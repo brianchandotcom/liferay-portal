@@ -40,7 +40,7 @@ export type HeadlessDelivery_v1_0_NavigationMenu = {
 	/**
 	 * The navigation menu's type (primary, secondary, social).
 	 */
-	'navigationType'?: HeadlessDelivery_v1_0_NavigationMenu.navigationType;
+	'navigationType'?: 'Primary' | 'Secondary' | 'Social';
 
 	/**
 	 * The ID of the site to which this navigation menu is scoped.
@@ -48,14 +48,3 @@ export type HeadlessDelivery_v1_0_NavigationMenu = {
 	readonly 'siteId'?: number;
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_NavigationMenu {
-
-	/**
-	 * The navigation menu's type (primary, secondary, social).
-	 */
-	export enum navigationType {
-		PRIMARY = 'Primary',
-		SECONDARY = 'Secondary',
-		SOCIAL = 'Social',
-	}
-}

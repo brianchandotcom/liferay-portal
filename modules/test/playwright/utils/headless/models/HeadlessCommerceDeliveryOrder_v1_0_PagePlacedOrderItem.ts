@@ -5,11 +5,11 @@
 import type {HeadlessCommerceDeliveryOrder_v1_0_Facet} from './HeadlessCommerceDeliveryOrder_v1_0_Facet';
 import type {HeadlessCommerceDeliveryOrder_v1_0_PlacedOrderItem} from './HeadlessCommerceDeliveryOrder_v1_0_PlacedOrderItem';
 export type HeadlessCommerceDeliveryOrder_v1_0_PagePlacedOrderItem = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessCommerceDeliveryOrder_v1_0_PlacedOrderItem>;
-	pageSize?: number;
 	facets?: Array<HeadlessCommerceDeliveryOrder_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

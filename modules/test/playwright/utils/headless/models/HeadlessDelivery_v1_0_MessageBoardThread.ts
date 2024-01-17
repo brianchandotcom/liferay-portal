@@ -139,13 +139,6 @@ export type HeadlessDelivery_v1_0_MessageBoardThread = {
 	 * The number of views of this thread.
 	 */
 	readonly 'viewCount'?: number;
-	'viewableBy'?: HeadlessDelivery_v1_0_MessageBoardThread.viewableBy;
+	'viewableBy'?: 'Anyone' | 'Members' | 'Owner';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_MessageBoardThread {
-	export enum viewableBy {
-		ANYONE = 'Anyone',
-		MEMBERS = 'Members',
-		OWNER = 'Owner',
-	}
-}

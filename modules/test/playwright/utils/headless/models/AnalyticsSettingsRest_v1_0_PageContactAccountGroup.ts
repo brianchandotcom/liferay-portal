@@ -5,11 +5,11 @@
 import type {AnalyticsSettingsRest_v1_0_ContactAccountGroup} from './AnalyticsSettingsRest_v1_0_ContactAccountGroup';
 import type {AnalyticsSettingsRest_v1_0_Facet} from './AnalyticsSettingsRest_v1_0_Facet';
 export type AnalyticsSettingsRest_v1_0_PageContactAccountGroup = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<AnalyticsSettingsRest_v1_0_ContactAccountGroup>;
-	pageSize?: number;
 	facets?: Array<AnalyticsSettingsRest_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

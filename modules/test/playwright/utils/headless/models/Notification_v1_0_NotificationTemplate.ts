@@ -10,7 +10,7 @@ export type Notification_v1_0_NotificationTemplate = {
 	readonly 'dateCreated'?: string;
 	readonly 'dateModified'?: string;
 	'description'?: string;
-	'editorType'?: Notification_v1_0_NotificationTemplate.editorType;
+	'editorType'?: 'freeMarker' | 'richText';
 	'externalReferenceCode'?: string;
 	readonly 'id'?: number;
 	'name'?: string;
@@ -25,9 +25,3 @@ export type Notification_v1_0_NotificationTemplate = {
 	'typeLabel'?: string;
 	readonly 'x-class-name'?: string;
 };
-export namespace Notification_v1_0_NotificationTemplate {
-	export enum editorType {
-		FREE_MARKER = 'freeMarker',
-		RICH_TEXT = 'richText',
-	}
-}

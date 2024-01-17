@@ -5,7 +5,4 @@
 /**
  * Represents a set of users that meet certain criteria. Segments may be used to create customized experiences for users.
  */
-export enum HeadlessDelivery_v1_0_Segment {
-	CRITERIA = 'criteria',
-	NAME = 'name',
-}
+export type HeadlessDelivery_v1_0_Segment = 'criteria' | 'name';

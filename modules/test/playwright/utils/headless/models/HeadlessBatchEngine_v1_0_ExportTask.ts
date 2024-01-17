@@ -27,7 +27,7 @@ export type HeadlessBatchEngine_v1_0_ExportTask = {
 	/**
 	 * The status of export task's execution.
 	 */
-	'executeStatus'?: HeadlessBatchEngine_v1_0_ExportTask.executeStatus;
+	'executeStatus'?: 'COMPLETED' | 'FAILED' | 'INITIAL' | 'STARTED';
 
 	/**
 	 * The optional external key of this account.
@@ -55,15 +55,3 @@ export type HeadlessBatchEngine_v1_0_ExportTask = {
 	'totalItemsCount'?: number;
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessBatchEngine_v1_0_ExportTask {
-
-	/**
-	 * The status of export task's execution.
-	 */
-	export enum executeStatus {
-		COMPLETED = 'COMPLETED',
-		FAILED = 'FAILED',
-		INITIAL = 'INITIAL',
-		STARTED = 'STARTED',
-	}
-}

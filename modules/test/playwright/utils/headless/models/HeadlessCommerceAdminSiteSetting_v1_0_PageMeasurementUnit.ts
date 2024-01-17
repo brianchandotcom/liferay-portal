@@ -5,11 +5,11 @@
 import type {HeadlessCommerceAdminSiteSetting_v1_0_Facet} from './HeadlessCommerceAdminSiteSetting_v1_0_Facet';
 import type {HeadlessCommerceAdminSiteSetting_v1_0_MeasurementUnit} from './HeadlessCommerceAdminSiteSetting_v1_0_MeasurementUnit';
 export type HeadlessCommerceAdminSiteSetting_v1_0_PageMeasurementUnit = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessCommerceAdminSiteSetting_v1_0_MeasurementUnit>;
-	pageSize?: number;
 	facets?: Array<HeadlessCommerceAdminSiteSetting_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

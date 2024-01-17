@@ -71,13 +71,6 @@ export type HeadlessDelivery_v1_0_MessageBoardSection = {
 	 * The section's main title.
 	 */
 	'title': string;
-	'viewableBy'?: HeadlessDelivery_v1_0_MessageBoardSection.viewableBy;
+	'viewableBy'?: 'Anyone' | 'Members' | 'Owner';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_MessageBoardSection {
-	export enum viewableBy {
-		ANYONE = 'Anyone',
-		MEMBERS = 'Members',
-		OWNER = 'Owner',
-	}
-}

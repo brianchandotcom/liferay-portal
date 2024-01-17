@@ -7,26 +7,12 @@ export type HeadlessCommerceAdminCatalog_v1_0_ProductSubscriptionConfiguration =
 		'deliverySubscriptionEnable'?: boolean;
 		'deliverySubscriptionLength'?: number;
 		'deliverySubscriptionNumberOfLength'?: number;
-		'deliverySubscriptionType'?: HeadlessCommerceAdminCatalog_v1_0_ProductSubscriptionConfiguration.deliverySubscriptionType;
+		'deliverySubscriptionType'?: 'daily' | 'monthly' | 'weekly' | 'yearly';
 		'deliverySubscriptionTypeSettings'?: Record<string, string>;
 		'enable'?: boolean;
 		'length'?: number;
 		'numberOfLength'?: number;
-		'subscriptionType'?: HeadlessCommerceAdminCatalog_v1_0_ProductSubscriptionConfiguration.subscriptionType;
+		'subscriptionType'?: 'daily' | 'monthly' | 'weekly' | 'yearly';
 		'subscriptionTypeSettings'?: Record<string, string>;
 		readonly 'x-class-name'?: string;
 	};
-export namespace HeadlessCommerceAdminCatalog_v1_0_ProductSubscriptionConfiguration {
-	export enum deliverySubscriptionType {
-		DAILY = 'daily',
-		MONTHLY = 'monthly',
-		WEEKLY = 'weekly',
-		YEARLY = 'yearly',
-	}
-	export enum subscriptionType {
-		DAILY = 'daily',
-		MONTHLY = 'monthly',
-		WEEKLY = 'weekly',
-		YEARLY = 'yearly',
-	}
-}

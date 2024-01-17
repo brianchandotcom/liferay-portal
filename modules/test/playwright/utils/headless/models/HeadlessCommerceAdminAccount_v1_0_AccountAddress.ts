@@ -2,9 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export enum HeadlessCommerceAdminAccount_v1_0_AccountAddress {
-	CITY = 'city',
-	COUNTRY_ISOCODE = 'countryISOCode',
-	NAME = 'name',
-	STREET1 = 'street1',
-}
+export type HeadlessCommerceAdminAccount_v1_0_AccountAddress =
+	| 'city'
+	| 'countryISOCode'
+	| 'name'
+	| 'street1';

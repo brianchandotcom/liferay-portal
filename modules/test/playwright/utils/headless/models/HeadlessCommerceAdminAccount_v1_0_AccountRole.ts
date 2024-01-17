@@ -2,6 +2,4 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export enum HeadlessCommerceAdminAccount_v1_0_AccountRole {
-	NAME = 'name',
-}
+export type HeadlessCommerceAdminAccount_v1_0_AccountRole = 'name';

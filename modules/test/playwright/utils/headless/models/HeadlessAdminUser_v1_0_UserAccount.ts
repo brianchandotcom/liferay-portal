@@ -148,7 +148,7 @@ export type HeadlessAdminUser_v1_0_UserAccount = {
 	/**
 	 * The user's status.
 	 */
-	'status'?: HeadlessAdminUser_v1_0_UserAccount.status;
+	'status'?: 'Active' | 'Inactive';
 	'userAccountContactInformation'?: HeadlessAdminUser_v1_0_UserAccountContactInformation;
 
 	/**
@@ -157,13 +157,3 @@ export type HeadlessAdminUser_v1_0_UserAccount = {
 	readonly 'userGroupBriefs'?: Array<HeadlessAdminUser_v1_0_UserGroupBrief>;
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessAdminUser_v1_0_UserAccount {
-
-	/**
-	 * The user's status.
-	 */
-	export enum status {
-		ACTIVE = 'Active',
-		INACTIVE = 'Inactive',
-	}
-}

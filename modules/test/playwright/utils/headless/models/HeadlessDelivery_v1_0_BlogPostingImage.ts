@@ -38,13 +38,6 @@ export type HeadlessDelivery_v1_0_BlogPostingImage = {
 	 * The image's title text.
 	 */
 	'title'?: string;
-	'viewableBy'?: HeadlessDelivery_v1_0_BlogPostingImage.viewableBy;
+	'viewableBy'?: 'Anyone' | 'Members' | 'Owner';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_BlogPostingImage {
-	export enum viewableBy {
-		ANYONE = 'Anyone',
-		MEMBERS = 'Members',
-		OWNER = 'Owner',
-	}
-}

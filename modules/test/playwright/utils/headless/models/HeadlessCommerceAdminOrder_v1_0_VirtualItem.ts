@@ -2,8 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type CUniversities_AuditFieldChange = {
-	'name'?: string;
-	'oldValue'?: Record<string, any>;
+export type HeadlessCommerceAdminOrder_v1_0_VirtualItem = {
+	'url'?: string;
+	'usages'?: number;
+	'version'?: string;
 	readonly 'x-class-name'?: string;
 };

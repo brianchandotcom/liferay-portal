@@ -68,13 +68,6 @@ export type HeadlessDelivery_v1_0_KnowledgeBaseFolder = {
 	 * The ID of the site to which this folder is scoped.
 	 */
 	readonly 'siteId'?: number;
-	'viewableBy'?: HeadlessDelivery_v1_0_KnowledgeBaseFolder.viewableBy;
+	'viewableBy'?: 'Anyone' | 'Members' | 'Owner';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_KnowledgeBaseFolder {
-	export enum viewableBy {
-		ANYONE = 'Anyone',
-		MEMBERS = 'Members',
-		OWNER = 'Owner',
-	}
-}

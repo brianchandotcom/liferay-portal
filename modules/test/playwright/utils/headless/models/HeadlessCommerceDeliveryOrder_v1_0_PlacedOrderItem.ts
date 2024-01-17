@@ -5,6 +5,7 @@
 import type {HeadlessCommerceDeliveryOrder_v1_0_PlacedOrderItemShipment} from './HeadlessCommerceDeliveryOrder_v1_0_PlacedOrderItemShipment';
 import type {HeadlessCommerceDeliveryOrder_v1_0_Price} from './HeadlessCommerceDeliveryOrder_v1_0_Price';
 import type {HeadlessCommerceDeliveryOrder_v1_0_Settings} from './HeadlessCommerceDeliveryOrder_v1_0_Settings';
+import type {HeadlessCommerceDeliveryOrder_v1_0_VirtualItem} from './HeadlessCommerceDeliveryOrder_v1_0_VirtualItem';
 export type HeadlessCommerceDeliveryOrder_v1_0_PlacedOrderItem = {
 	readonly 'adaptiveMediaImageHTMLTag'?: string;
 	readonly 'customFields'?: Record<string, Record<string, any>>;
@@ -27,5 +28,6 @@ export type HeadlessCommerceDeliveryOrder_v1_0_PlacedOrderItem = {
 	readonly 'unitOfMeasureKey'?: string;
 	readonly 'valid'?: boolean;
 	readonly 'virtualItemURLs'?: Array<string>;
+	readonly 'virtualItems'?: Array<HeadlessCommerceDeliveryOrder_v1_0_VirtualItem>;
 	readonly 'x-class-name'?: string;
 };

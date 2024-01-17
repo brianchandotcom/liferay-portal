@@ -5,11 +5,11 @@
 import type {HeadlessDelivery_v1_0_ContentTemplate} from './HeadlessDelivery_v1_0_ContentTemplate';
 import type {HeadlessDelivery_v1_0_Facet} from './HeadlessDelivery_v1_0_Facet';
 export type HeadlessDelivery_v1_0_PageContentTemplate = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessDelivery_v1_0_ContentTemplate>;
-	pageSize?: number;
 	facets?: Array<HeadlessDelivery_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

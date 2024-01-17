@@ -5,11 +5,11 @@
 import type {Notification_v1_0_Facet} from './Notification_v1_0_Facet';
 import type {Notification_v1_0_NotificationQueueEntry} from './Notification_v1_0_NotificationQueueEntry';
 export type Notification_v1_0_PageNotificationQueueEntry = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<Notification_v1_0_NotificationQueueEntry>;
-	pageSize?: number;
 	facets?: Array<Notification_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

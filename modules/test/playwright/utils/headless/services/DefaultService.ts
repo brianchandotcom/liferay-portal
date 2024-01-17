@@ -17,283 +17,12 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static cUniversitiesGetOpenApi(
+	public static headlessPortalInstancesV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/c/universities/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessDeliveryV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-delivery/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static frontendViewStateV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/frontend-view-state/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceAdminCatalogV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-commerce-admin-catalog/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static dataEngineV20GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/data-engine/v2.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessAdminContentV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-admin-content/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessAdminTaxonomyV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-admin-taxonomy/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceAdminInventoryV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-commerce-admin-inventory/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceAdminOrderV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-commerce-admin-order/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param id
-	 * @param requestBody
-	 * @returns HeadlessCommerceAdminOrder_v1_0_OrderRuleAccount default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceAdminOrderV10PostOrderRuleIdOrderRuleAccount(
-		id: string,
-		requestBody?: HeadlessCommerceAdminOrder_v1_0_OrderRuleAccount
-	): CancelablePromise<HeadlessCommerceAdminOrder_v1_0_OrderRuleAccount> {
-		return __request(OpenAPI, {
-			method: 'POST',
-			url: '/headless-commerce-admin-order/v1.0/order-rules/{id}/order-rule-accounts',
-			path: {
-				id: id,
-			},
-			body: requestBody,
-			mediaType: 'application/json',
-		});
-	}
-
-	/**
-	 * @param callbackUrl
-	 * @param requestBody
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceAdminOrderV10PostOrderRuleIdOrderRuleAccountGroupBatch(
-		callbackUrl?: string,
-		requestBody?: Record<string, any>
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'POST',
-			url: '/headless-commerce-admin-order/v1.0/order-rules/order-rule-account-groups/batch',
-			query: {
-				callbackURL: callbackUrl,
-			},
-			body: requestBody,
-			mediaType: 'application/json',
-		});
-	}
-
-	/**
-	 * @param callbackUrl
-	 * @param requestBody
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceAdminOrderV10PostOrderRuleIdOrderRuleAccountBatch(
-		callbackUrl?: string,
-		requestBody?: Record<string, any>
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'POST',
-			url: '/headless-commerce-admin-order/v1.0/order-rules/order-rule-accounts/batch',
-			query: {
-				callbackURL: callbackUrl,
-			},
-			body: requestBody,
-			mediaType: 'application/json',
-		});
-	}
-
-	/**
-	 * @param id
-	 * @param requestBody
-	 * @returns HeadlessCommerceAdminOrder_v1_0_OrderRuleAccountGroup default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceAdminOrderV10PostOrderRuleIdOrderRuleAccountGroup(
-		id: string,
-		requestBody?: HeadlessCommerceAdminOrder_v1_0_OrderRuleAccountGroup
-	): CancelablePromise<HeadlessCommerceAdminOrder_v1_0_OrderRuleAccountGroup> {
-		return __request(OpenAPI, {
-			method: 'POST',
-			url: '/headless-commerce-admin-order/v1.0/order-rules/{id}/order-rule-account-groups',
-			path: {
-				id: id,
-			},
-			body: requestBody,
-			mediaType: 'application/json',
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceAdminPaymentV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-commerce-admin-payment/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static notificationV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/notification/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessAdminUserV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-admin-user/v1.0/openapi.{type}',
+			url: '/headless-portal-instances/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -322,12 +51,12 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static batchPlannerV10GetOpenApi(
+	public static headlessUserNotificationV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/batch-planner/v1.0/openapi.{type}',
+			url: '/headless-user-notification/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -339,12 +68,12 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static headlessCommerceAdminSiteSettingV10GetOpenApi(
+	public static dispatchRestV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/headless-commerce-admin-site-setting/v1.0/openapi.{type}',
+			url: '/dispatch-rest/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -356,12 +85,46 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static portalSearchRestV10GetOpenApi(
+	public static headlessCommerceDeliveryOrderV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/portal-search-rest/v1.0/openapi.{type}',
+			url: '/headless-commerce-delivery-order/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static frontendViewStateV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/frontend-view-state/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceAdminChannelV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-commerce-admin-channel/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -390,12 +153,112 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static headlessCommerceAdminPricingV10GetOpenApi(
+	public static headlessCommerceAdminShipmentV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/headless-commerce-admin-pricing/v1.0/openapi.{type}',
+			url: '/headless-commerce-admin-shipment/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessSiteV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-site/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static bulkV10GetOpenApi(type: string): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/bulk/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static dataEngineV20GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/data-engine/v2.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceDeliveryCatalogV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-commerce-delivery-catalog/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static notificationV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/notification/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceAdminInventoryV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-commerce-admin-inventory/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -550,61 +413,12 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static headlessUserNotificationV10GetOpenApi(
+	public static headlessAdminTaxonomyV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/headless-user-notification/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static captchaV10GetOpenApi(type: string): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/captcha/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceDeliveryCartV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-commerce-delivery-cart/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceAdminShipmentV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-commerce-admin-shipment/v1.0/openapi.{type}',
+			url: '/headless-admin-taxonomy/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -633,12 +447,12 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static headlessCommerceDeliveryCatalogV10GetOpenApi(
+	public static headlessCommerceAdminCatalogV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/headless-commerce-delivery-catalog/v1.0/openapi.{type}',
+			url: '/headless-commerce-admin-catalog/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -650,12 +464,113 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static objectAdminV10GetOpenApi(
+	public static headlessCommerceAdminOrderV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/object-admin/v1.0/openapi.{type}',
+			url: '/headless-commerce-admin-order/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param id
+	 * @param requestBody
+	 * @returns HeadlessCommerceAdminOrder_v1_0_OrderRuleAccount default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceAdminOrderV10PostOrderRuleIdOrderRuleAccount(
+		id: string,
+		requestBody?: HeadlessCommerceAdminOrder_v1_0_OrderRuleAccount
+	): CancelablePromise<HeadlessCommerceAdminOrder_v1_0_OrderRuleAccount> {
+		return __request(OpenAPI, {
+			method: 'POST',
+			url: '/headless-commerce-admin-order/v1.0/order-rules/{id}/order-rule-accounts',
+			path: {
+				id: id,
+			},
+			body: requestBody,
+			mediaType: 'application/json',
+		});
+	}
+
+	/**
+	 * @param callbackUrl
+	 * @param requestBody
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceAdminOrderV10PostOrderRuleIdOrderRuleAccountGroupBatch(
+		callbackUrl?: string,
+		requestBody?: Record<string, any>
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'POST',
+			url: '/headless-commerce-admin-order/v1.0/order-rules/order-rule-account-groups/batch',
+			query: {
+				callbackURL: callbackUrl,
+			},
+			body: requestBody,
+			mediaType: 'application/json',
+		});
+	}
+
+	/**
+	 * @param callbackUrl
+	 * @param requestBody
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceAdminOrderV10PostOrderRuleIdOrderRuleAccountBatch(
+		callbackUrl?: string,
+		requestBody?: Record<string, any>
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'POST',
+			url: '/headless-commerce-admin-order/v1.0/order-rules/order-rule-accounts/batch',
+			query: {
+				callbackURL: callbackUrl,
+			},
+			body: requestBody,
+			mediaType: 'application/json',
+		});
+	}
+
+	/**
+	 * @param id
+	 * @param requestBody
+	 * @returns HeadlessCommerceAdminOrder_v1_0_OrderRuleAccountGroup default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceAdminOrderV10PostOrderRuleIdOrderRuleAccountGroup(
+		id: string,
+		requestBody?: HeadlessCommerceAdminOrder_v1_0_OrderRuleAccountGroup
+	): CancelablePromise<HeadlessCommerceAdminOrder_v1_0_OrderRuleAccountGroup> {
+		return __request(OpenAPI, {
+			method: 'POST',
+			url: '/headless-commerce-admin-order/v1.0/order-rules/{id}/order-rule-account-groups',
+			path: {
+				id: id,
+			},
+			body: requestBody,
+			mediaType: 'application/json',
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceAdminPaymentV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-commerce-admin-payment/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -667,29 +582,10 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static headlessAdminAddressV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
+	public static captchaV10GetOpenApi(type: string): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/headless-admin-address/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static dispatchRestV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/dispatch-rest/v1.0/openapi.{type}',
+			url: '/captcha/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -718,12 +614,12 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static headlessCommerceDeliveryOrderV10GetOpenApi(
+	public static headlessCommerceAdminPricingV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/headless-commerce-delivery-order/v1.0/openapi.{type}',
+			url: '/headless-commerce-admin-pricing/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -735,12 +631,12 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static headlessPortalInstancesV10GetOpenApi(
+	public static objectAdminV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/headless-portal-instances/v1.0/openapi.{type}',
+			url: '/object-admin/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -752,12 +648,12 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static headlessCommerceAdminChannelV10GetOpenApi(
+	public static portalSearchRestV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/headless-commerce-admin-channel/v1.0/openapi.{type}',
+			url: '/portal-search-rest/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -769,12 +665,12 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static headlessFormV10GetOpenApi(
+	public static batchPlannerV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/headless-form/v1.0/openapi.{type}',
+			url: '/batch-planner/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -786,44 +682,12 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
-	public static bulkV10GetOpenApi(type: string): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/bulk/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessSiteV10GetOpenApi(
+	public static headlessDeliveryV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/headless-site/v1.0/openapi.{type}',
-			path: {
-				type: type,
-			},
-		});
-	}
-
-	/**
-	 * @param type
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static analyticsSettingsRestV10GetOpenApi(
-		type: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/analytics-settings-rest/v1.0/openapi.{type}',
+			url: '/headless-delivery/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},
@@ -852,12 +716,131 @@ export class DefaultService {
 	 * @returns any default response
 	 * @throws ApiError
 	 */
+	public static headlessAdminUserV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-admin-user/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceDeliveryCartV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-commerce-delivery-cart/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessFormV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-form/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static analyticsSettingsRestV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/analytics-settings-rest/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessAdminContentV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-admin-content/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
 	public static headlessAdminWorkflowV10GetOpenApi(
 		type: string
 	): CancelablePromise<any> {
 		return __request(OpenAPI, {
 			method: 'GET',
 			url: '/headless-admin-workflow/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceAdminSiteSettingV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-commerce-admin-site-setting/v1.0/openapi.{type}',
+			path: {
+				type: type,
+			},
+		});
+	}
+
+	/**
+	 * @param type
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessAdminAddressV10GetOpenApi(
+		type: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-admin-address/v1.0/openapi.{type}',
 			path: {
 				type: type,
 			},

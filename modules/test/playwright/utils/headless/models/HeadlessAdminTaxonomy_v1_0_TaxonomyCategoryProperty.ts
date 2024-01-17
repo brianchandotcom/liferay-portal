@@ -5,6 +5,4 @@
 /**
  * Key value pair to associate detailed information with a category.
  */
-export enum HeadlessAdminTaxonomy_v1_0_TaxonomyCategoryProperty {
-	KEY = 'key',
-}
+export type HeadlessAdminTaxonomy_v1_0_TaxonomyCategoryProperty = 'key';

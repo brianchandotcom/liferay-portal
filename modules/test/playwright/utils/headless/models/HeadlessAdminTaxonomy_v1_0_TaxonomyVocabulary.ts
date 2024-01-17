@@ -64,13 +64,6 @@ export type HeadlessAdminTaxonomy_v1_0_TaxonomyVocabulary = {
 	 * The ID of the site to which this vocabulary is scoped.
 	 */
 	readonly 'siteId'?: number;
-	'viewableBy'?: HeadlessAdminTaxonomy_v1_0_TaxonomyVocabulary.viewableBy;
+	'viewableBy'?: 'Anyone' | 'Members' | 'Owner';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessAdminTaxonomy_v1_0_TaxonomyVocabulary {
-	export enum viewableBy {
-		ANYONE = 'Anyone',
-		MEMBERS = 'Members',
-		OWNER = 'Owner',
-	}
-}

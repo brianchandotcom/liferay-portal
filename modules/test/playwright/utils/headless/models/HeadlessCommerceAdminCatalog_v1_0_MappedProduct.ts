@@ -15,13 +15,6 @@ export type HeadlessCommerceAdminCatalog_v1_0_MappedProduct = {
 	'sku'?: string;
 	'skuExternalReferenceCode'?: string;
 	'skuId'?: number;
-	'type'?: HeadlessCommerceAdminCatalog_v1_0_MappedProduct.type;
+	'type'?: 'diagram' | 'external' | 'sku';
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessCommerceAdminCatalog_v1_0_MappedProduct {
-	export enum type {
-		DIAGRAM = 'diagram',
-		EXTERNAL = 'external',
-		SKU = 'sku',
-	}
-}

@@ -5,11 +5,11 @@
 import type {HeadlessUserNotification_v1_0_Facet} from './HeadlessUserNotification_v1_0_Facet';
 import type {HeadlessUserNotification_v1_0_UserNotification} from './HeadlessUserNotification_v1_0_UserNotification';
 export type HeadlessUserNotification_v1_0_PageUserNotification = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessUserNotification_v1_0_UserNotification>;
-	pageSize?: number;
 	facets?: Array<HeadlessUserNotification_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

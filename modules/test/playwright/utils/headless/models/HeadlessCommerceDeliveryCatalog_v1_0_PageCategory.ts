@@ -5,11 +5,11 @@
 import type {HeadlessCommerceDeliveryCatalog_v1_0_Category} from './HeadlessCommerceDeliveryCatalog_v1_0_Category';
 import type {HeadlessCommerceDeliveryCatalog_v1_0_Facet} from './HeadlessCommerceDeliveryCatalog_v1_0_Facet';
 export type HeadlessCommerceDeliveryCatalog_v1_0_PageCategory = {
-	totalCount?: number;
 	lastPage?: number;
+	totalCount?: number;
 	items?: Array<HeadlessCommerceDeliveryCatalog_v1_0_Category>;
-	pageSize?: number;
 	facets?: Array<HeadlessCommerceDeliveryCatalog_v1_0_Facet>;
+	pageSize?: number;
 	page?: number;
 	actions?: Record<string, Record<string, string>>;
 };

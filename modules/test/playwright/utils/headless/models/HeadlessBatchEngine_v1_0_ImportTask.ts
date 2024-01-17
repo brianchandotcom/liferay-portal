@@ -28,7 +28,7 @@ export type HeadlessBatchEngine_v1_0_ImportTask = {
 	/**
 	 * The status of import task's execution.
 	 */
-	'executeStatus'?: HeadlessBatchEngine_v1_0_ImportTask.executeStatus;
+	'executeStatus'?: 'COMPLETED' | 'FAILED' | 'INITIAL' | 'STARTED';
 
 	/**
 	 * The optional external key of this account.
@@ -44,12 +44,12 @@ export type HeadlessBatchEngine_v1_0_ImportTask = {
 	/**
 	 * Defines if import task will fail when error occurs or continue importing rest of the items.
 	 */
-	'importStrategy'?: HeadlessBatchEngine_v1_0_ImportTask.importStrategy;
+	'importStrategy'?: 'ON_ERROR_CONTINUE' | 'ON_ERROR_FAIL';
 
 	/**
 	 * The operation of import task.
 	 */
-	'operation'?: HeadlessBatchEngine_v1_0_ImportTask.operation;
+	'operation'?: 'CREATE' | 'DELETE' | 'UPDATE';
 
 	/**
 	 * Number of items processed by import task opeartion.
@@ -67,32 +67,3 @@ export type HeadlessBatchEngine_v1_0_ImportTask = {
 	'totalItemsCount'?: number;
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessBatchEngine_v1_0_ImportTask {
-
-	/**
-	 * The status of import task's execution.
-	 */
-	export enum executeStatus {
-		COMPLETED = 'COMPLETED',
-		FAILED = 'FAILED',
-		INITIAL = 'INITIAL',
-		STARTED = 'STARTED',
-	}
-
-	/**
-	 * Defines if import task will fail when error occurs or continue importing rest of the items.
-	 */
-	export enum importStrategy {
-		ON_ERROR_CONTINUE = 'ON_ERROR_CONTINUE',
-		ON_ERROR_FAIL = 'ON_ERROR_FAIL',
-	}
-
-	/**
-	 * The operation of import task.
-	 */
-	export enum operation {
-		CREATE = 'CREATE',
-		DELETE = 'DELETE',
-		UPDATE = 'UPDATE',
-	}
-}

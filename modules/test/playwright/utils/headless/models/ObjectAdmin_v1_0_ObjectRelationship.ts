@@ -5,7 +5,7 @@
 import type {ObjectAdmin_v1_0_ObjectField} from './ObjectAdmin_v1_0_ObjectField';
 export type ObjectAdmin_v1_0_ObjectRelationship = {
 	readonly 'actions'?: Record<string, Record<string, string>>;
-	'deletionType'?: ObjectAdmin_v1_0_ObjectRelationship.deletionType;
+	'deletionType'?: 'cascade' | 'disassociate' | 'prevent';
 	'edge'?: boolean;
 	'externalReferenceCode'?: string;
 	readonly 'id'?: number;
@@ -23,18 +23,6 @@ export type ObjectAdmin_v1_0_ObjectRelationship = {
 	'parameterObjectFieldName'?: string;
 	readonly 'reverse'?: boolean;
 	'system'?: boolean;
-	'type'?: ObjectAdmin_v1_0_ObjectRelationship.type;
+	'type'?: 'oneToMany' | 'oneToOne' | 'manyToMany';
 	readonly 'x-class-name'?: string;
 };
-export namespace ObjectAdmin_v1_0_ObjectRelationship {
-	export enum deletionType {
-		CASCADE = 'cascade',
-		DISASSOCIATE = 'disassociate',
-		PREVENT = 'prevent',
-	}
-	export enum type {
-		ONE_TO_MANY = 'oneToMany',
-		ONE_TO_ONE = 'oneToOne',
-		MANY_TO_MANY = 'manyToMany',
-	}
-}

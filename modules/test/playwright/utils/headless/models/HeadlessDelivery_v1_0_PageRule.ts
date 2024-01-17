@@ -13,7 +13,7 @@ export type HeadlessDelivery_v1_0_PageRule = {
 	/**
 	 * The custom name of a Page rule.
 	 */
-	'conditionType'?: HeadlessDelivery_v1_0_PageRule.conditionType;
+	'conditionType'?: 'All' | 'Any';
 
 	/**
 	 * The page rule ID.
@@ -36,13 +36,3 @@ export type HeadlessDelivery_v1_0_PageRule = {
 	'pageRuleConditions'?: Array<HeadlessDelivery_v1_0_PageRuleCondition>;
 	readonly 'x-class-name'?: string;
 };
-export namespace HeadlessDelivery_v1_0_PageRule {
-
-	/**
-	 * The custom name of a Page rule.
-	 */
-	export enum conditionType {
-		ALL = 'All',
-		ANY = 'Any',
-	}
-}

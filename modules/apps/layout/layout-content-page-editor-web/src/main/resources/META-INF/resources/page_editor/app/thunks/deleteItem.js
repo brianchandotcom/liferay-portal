@@ -37,34 +37,31 @@ export default function deleteItem({itemId, selectItem = () => {}}) {
 			layoutData,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
-		}).then(
-			({pageContents, portletIds = [], layoutData: nextLayoutData}) => {
-				const [firstChild] = nextLayoutData.items[
-					nextLayoutData.rootItems.main
-				].children;
+		}).then(({portletIds = [], layoutData: nextLayoutData}) => {
+			const [firstChild] = nextLayoutData.items[
+				nextLayoutData.rootItems.main
+			].children;
 
-				selectItem(firstChild, {
-					origin: ITEM_ACTIVATION_ORIGINS.itemActions,
-				});
+			selectItem(firstChild, {
+				origin: ITEM_ACTIVATION_ORIGINS.itemActions,
+			});
 
-				const fragmentEntryLinkIds = getFragmentEntryLinkIdsFromItemId({
+			const fragmentEntryLinkIds = getFragmentEntryLinkIdsFromItemId({
+				itemId,
+				layoutData: nextLayoutData,
+			});
+
+			dispatch(
+				deleteItemAction({
+					fragmentEntryLinkIds,
 					itemId,
 					layoutData: nextLayoutData,
-				});
+					portletIds,
+				})
+			);
 
-				dispatch(
-					deleteItemAction({
-						fragmentEntryLinkIds,
-						itemId,
-						layoutData: nextLayoutData,
-						pageContents,
-						portletIds,
-					})
-				);
-
-				maybeShowAlert(layoutData, itemId, fragmentEntryLinks);
-			}
-		);
+			maybeShowAlert(layoutData, itemId, fragmentEntryLinks);
+		});
 	};
 }
 

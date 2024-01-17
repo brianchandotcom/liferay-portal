@@ -53,7 +53,6 @@ describe('UsageOverview', () => {
 		);
 
 		expect(container.querySelector('.alert-warning')).toBeInTheDocument();
-		expect(container.querySelector('.alert-danger')).toBeInTheDocument();
 	});
 
 	it('should render with an approaching limit warning if a metric is approaching plan limit', () => {
@@ -126,7 +125,7 @@ describe('UsageOverview', () => {
 			getByText('Enterprise Plan 2,000,000 + 5,000,000 Add-On (1x)')
 		).toBeInTheDocument();
 
-		expect(container.querySelector('.alert-danger')).toBeInTheDocument();
+		expect(container.querySelector('.alert-warning')).toBeInTheDocument();
 
 		expect(getByText('Enterprise')).toBeInTheDocument();
 
@@ -171,7 +170,7 @@ describe('UsageOverview', () => {
 			<WrappedComponent {...defaultProps} project={mockProject} />
 		);
 
-		expect(container.querySelector('.alert-danger')).toBeInTheDocument();
+		expect(container.querySelector('.alert-warning')).toBeInTheDocument();
 	});
 
 	it('should render with a member-specific message overage warning if a metric is approaching plan limit and the user is a member role', () => {
@@ -196,7 +195,11 @@ describe('UsageOverview', () => {
 		);
 
 		expect(container.querySelector('.alert-warning')).toBeInTheDocument();
-		expect(getByText('Usage Limit Approaching:')).toBeInTheDocument();
+		expect(
+			getByText(
+				'Usage limit is approaching. Please contact your workspace administrator at the earliest conveninece.'
+			)
+		).toBeInTheDocument();
 	});
 
 	it('should use default addons for basic plans', () => {

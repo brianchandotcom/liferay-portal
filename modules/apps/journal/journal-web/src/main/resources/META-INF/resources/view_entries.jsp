@@ -323,6 +323,16 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 									name="display-date"
 									value="<%= curArticle.getDisplayDate() %>"
 								/>
+
+								<c:choose>
+									<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-202534") %>'>
+										<liferay-ui:search-container-column-date
+											cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+											name="create-date"
+											value="<%= curArticle.getCreateDate() %>"
+										/>
+									</c:when>
+								</c:choose>
 							</c:when>
 							<c:otherwise>
 								<liferay-ui:search-container-column-text
@@ -344,6 +354,16 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 									name="display-date"
 									value="<%= curArticle.getDisplayDate() %>"
 								/>
+
+								<c:choose>
+									<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-202534") %>'>
+										<liferay-ui:search-container-column-date
+											cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+											name="create-date"
+											value="<%= curArticle.getCreateDate() %>"
+										/>
+									</c:when>
+								</c:choose>
 
 								<%
 								DDMStructure ddmStructure = curArticle.getDDMStructure();
@@ -552,6 +572,16 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							name="display-date"
 							value="--"
 						/>
+
+						<c:choose>
+							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-202534") %>'>
+								<liferay-ui:search-container-column-date
+									cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+									name="create-date"
+									value="<%= curFolder.getCreateDate() %>"
+								/>
+							</c:when>
+						</c:choose>
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand-smallest table-cell-minw-150"

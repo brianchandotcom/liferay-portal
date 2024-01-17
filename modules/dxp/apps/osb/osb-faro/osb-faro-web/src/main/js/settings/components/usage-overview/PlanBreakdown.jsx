@@ -1,13 +1,7 @@
 import ClayIcon from '@clayui/icon';
 import React from 'react';
-import {
-	getPropIcon,
-	getPropLabel,
-	INDIVIDUALS,
-	PAGEVIEWS
-} from 'shared/util/subscriptions';
+import {getPropIcon, getPropLabel} from 'shared/util/subscriptions';
 import {PropTypes} from 'prop-types';
-import {sub} from 'shared/util/lang';
 
 class PlanBreakdown extends React.Component {
 	static defaultProps = {
@@ -21,7 +15,7 @@ class PlanBreakdown extends React.Component {
 	};
 
 	render() {
-		const {addOns, limits} = this.props;
+		const {limits} = this.props;
 
 		return (
 			<div
@@ -61,64 +55,6 @@ class PlanBreakdown extends React.Component {
 						</li>
 					</ul>
 				</div>
-
-				{!!addOns.length && (
-					<div className='addons'>
-						<p className='text-secondary semibold addon-list-header'>
-							{Liferay.Language.get('add-ons')}
-						</p>
-
-						<ul>
-							{addOns.map(({limits, name, price}) => {
-								const {entityLabel, value} = [
-									{
-										entityLabel: INDIVIDUALS,
-										value: limits[INDIVIDUALS]
-									},
-									{
-										entityLabel: PAGEVIEWS,
-										value: limits[PAGEVIEWS]
-									}
-								].find(limit => limit.value);
-
-								return (
-									<li
-										className={`extra-small${
-											this.props.className
-												? ` ${this.props.className}`
-												: ''
-										}`}
-										key={name}
-									>
-										<span className='limit-amount semibold'>
-											{value.toLocaleString()}
-										</span>
-
-										<span className='text-secondary'>
-											{sub(
-												Liferay.Language.get(
-													'x-for-x-usd'
-												),
-												[
-													<b
-														className='addon-name'
-														key={entityLabel}
-													>
-														{getPropLabel(
-															entityLabel
-														)}
-													</b>,
-													price.toLocaleString()
-												],
-												false
-											)}
-										</span>
-									</li>
-								);
-							})}
-						</ul>
-					</div>
-				)}
 			</div>
 		);
 	}

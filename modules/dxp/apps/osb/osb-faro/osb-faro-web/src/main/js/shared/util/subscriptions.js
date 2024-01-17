@@ -68,8 +68,7 @@ function formatSubscriptions(allPlans) {
 				baseSubscriptionPlan,
 				individualsLimit,
 				name,
-				pageViewsLimit,
-				price
+				pageViewsLimit
 			} = allPlans[key];
 
 			const planType = PLAN_TYPES[key];
@@ -80,8 +79,7 @@ function formatSubscriptions(allPlans) {
 					[INDIVIDUALS]: individualsLimit,
 					[PAGEVIEWS]: pageViewsLimit
 				},
-				name,
-				price
+				name
 			};
 
 			const parentPlanType = PLAN_TYPES[baseSubscriptionPlan];

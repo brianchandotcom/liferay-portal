@@ -2,14 +2,7 @@ import Panel from 'shared/components/Panel';
 import PlanBreakdown from './PlanBreakdown';
 import React from 'react';
 import SubscriptionTitle from './SubscriptionTitle';
-import {
-	getPlanAddOns,
-	getPropLabel,
-	INDIVIDUALS,
-	PAGEVIEWS,
-	PLAN_TYPES,
-	PLANS
-} from 'shared/util/subscriptions';
+import {getPropLabel, INDIVIDUALS, PAGEVIEWS} from 'shared/util/subscriptions';
 import {PropTypes} from 'prop-types';
 
 class PlansList extends React.Component {
@@ -26,8 +19,7 @@ class PlansList extends React.Component {
 					[INDIVIDUALS]: PropTypes.number,
 					[PAGEVIEWS]: PropTypes.number
 				}),
-				name: PropTypes.string,
-				price: PropTypes.number
+				name: PropTypes.string
 			})
 		)
 	};
@@ -41,7 +33,7 @@ class PlansList extends React.Component {
 					this.props.className ? ` ${this.props.className}` : ''
 				}`}
 			>
-				{plans.map(({limits, name, price}, index) => {
+				{plans.map(({limits, name}, index) => {
 					const isCurrentPlan = currentPlanName === name;
 
 					return (
@@ -64,16 +56,10 @@ class PlansList extends React.Component {
 											: ''
 									}
 									name={getPropLabel(name)}
-									price={!isCurrentPlan ? price : -1}
 								/>
 							}
 						>
 							<PlanBreakdown
-								addOns={
-									name === PLANS.basic.name
-										? []
-										: getPlanAddOns(PLAN_TYPES[name])
-								}
 								limits={[
 									{
 										entityLabel: INDIVIDUALS,

@@ -36,7 +36,7 @@ export default class AddOnsList extends React.Component {
 
 		return (
 			<div className={classes}>
-				{addOns.map(({limits, name, price}) => {
+				{addOns.map(({limits, name}) => {
 					const addOnLimit = [
 						{
 							entityLabel: INDIVIDUALS,
@@ -85,7 +85,6 @@ export default class AddOnsList extends React.Component {
 										</span>
 									</span>
 								}
-								price={active ? price : -1}
 							/>
 						</Panel>
 					);

@@ -4,6 +4,7 @@
  */
 
 import {useOutletContext, useParams} from 'react-router-dom';
+import PreviewInformation from '~/components/Markdown/PreviewChangeType';
 
 import JiraLink from '../../../components/JiraLink';
 import Container from '../../../components/Layout/Container';
@@ -45,7 +46,12 @@ const Case = () => {
 						},
 						{
 							title: i18n.translate('description'),
-							value: testrayCase.description,
+							value: (
+								<PreviewInformation
+									data={testrayCase.description}
+									displayType={testrayCase.descriptionType}
+								/>
+							),
 						},
 						{
 							title: i18n.translate('estimated-duration'),
@@ -53,7 +59,12 @@ const Case = () => {
 						},
 						{
 							title: i18n.translate('steps'),
-							value: testrayCase.steps,
+							value: (
+								<PreviewInformation
+									data={testrayCase.steps}
+									displayType={testrayCase.stepsType}
+								/>
+							),
 						},
 						{
 							title: i18n.translate('date-created'),

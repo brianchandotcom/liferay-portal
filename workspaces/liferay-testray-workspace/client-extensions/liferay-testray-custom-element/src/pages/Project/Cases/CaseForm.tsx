@@ -7,12 +7,12 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
+import PreviewInformation from '~/components/Markdown/PreviewChangeType';
 import SearchBuilder from '~/core/SearchBuilder';
 import {withPagePermission} from '~/hoc/withPagePermission';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
-import MarkdownPreview from '../../../components/Markdown';
 import {useHeader} from '../../../hooks';
 import {useFetch} from '../../../hooks/useFetch';
 import useFormActions from '../../../hooks/useFormActions';
@@ -144,6 +144,8 @@ const CaseForm = () => {
 	const componentId = watch('componentId');
 	const description = watch('description');
 	const steps = watch('steps');
+	const descriptionType = watch('descriptionType');
+	const stepsType = watch('stepsType');
 
 	const inputProps = {
 		errors,
@@ -230,7 +232,10 @@ const CaseForm = () => {
 					type="textarea"
 				/>
 
-				<MarkdownPreview markdown={description} />
+				<PreviewInformation
+					data={description}
+					displayType={descriptionType}
+				/>
 
 				<Form.Divider />
 
@@ -252,7 +257,7 @@ const CaseForm = () => {
 					type="textarea"
 				/>
 
-				<MarkdownPreview markdown={steps} />
+				<PreviewInformation data={steps} displayType={stepsType} />
 
 				<Form.Divider />
 

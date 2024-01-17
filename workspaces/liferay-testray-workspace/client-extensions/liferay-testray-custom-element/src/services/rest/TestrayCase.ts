@@ -61,7 +61,7 @@ class TestrayCaseImpl extends Rest<Case, TestrayCase> {
 	}
 
 	protected async validate(Case: Case, id?: number) {
-		const searchBuilder = new SearchBuilder();
+		const searchBuilder = new SearchBuilder({useURIEncode: true});
 
 		if (id) {
 			searchBuilder.ne('id', id).and();

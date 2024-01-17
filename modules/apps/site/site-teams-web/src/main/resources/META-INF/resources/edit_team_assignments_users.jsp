@@ -18,7 +18,7 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, editSiteTeamAssignmentsUsersDisplayContext) %>"
-	propsTransformer="js/EditTeamAssignmentsUsersManagementToolbarPropsTransformer"
+	propsTransformer="{EditTeamAssignmentsUsersManagementToolbarPropsTransformer} from site-teams-web"
 />
 
 <portlet:actionURL name="deleteTeamUsers" var="deleteTeamUsersURL" />
@@ -43,7 +43,7 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 				<c:when test='<%= Objects.equals(editSiteTeamAssignmentsUsersDisplayContext.getDisplayStyle(), "icon") %>'>
 					<liferay-ui:search-container-column-text>
 						<clay:user-card
-							propsTransformer="js/UserDropdownDefaultPropsTransformer"
+							propsTransformer="{UserDropdownDefaultPropsTransformer} from site-teams-web"
 							userCard="<%= new UserUserCard(user2, editSiteTeamAssignmentsUsersDisplayContext.getTeamId(), renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>
 					</liferay-ui:search-container-column-text>
@@ -74,7 +74,7 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 						<clay:dropdown-actions
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
-							propsTransformer="js/UserDropdownDefaultPropsTransformer"
+							propsTransformer="{UserDropdownDefaultPropsTransformer} from site-teams-web"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
@@ -100,7 +100,7 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 						<clay:dropdown-actions
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
-							propsTransformer="js/UserDropdownDefaultPropsTransformer"
+							propsTransformer="{UserDropdownDefaultPropsTransformer} from site-teams-web"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>

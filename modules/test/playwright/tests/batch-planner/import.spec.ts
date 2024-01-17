@@ -318,7 +318,10 @@ test('can import CSV file with an unexisting field', async ({
 
 	await dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		path.join(__dirname, '/dependencies/non_existing_field_object_entries.csv'),
+		path.join(
+			__dirname,
+			'/dependencies/non_existing_field_object_entries.csv'
+		),
 		'UPSERT',
 		'UPDATE'
 	);
@@ -913,7 +916,10 @@ test('cannot import CSV file with empty headers row', async ({
 	await dataMigrationCenterPage.goToImportFile();
 
 	await dataMigrationCenterPage.selectFile(
-		path.join(__dirname, '/dependencies/empty_header_values_object_entries.csv')
+		path.join(
+			__dirname,
+			'/dependencies/empty_header_values_object_entries.csv'
+		)
 	);
 
 	await dataMigrationCenterPage.selectImportEntityType(

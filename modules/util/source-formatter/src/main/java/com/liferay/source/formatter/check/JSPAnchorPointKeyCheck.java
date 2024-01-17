@@ -5,27 +5,15 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
-import com.liferay.source.formatter.check.util.JSPSourceUtil;
-import com.liferay.source.formatter.check.util.JavaSourceUtil;
-import com.liferay.source.formatter.check.util.SourceUtil;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Qi Zhang
@@ -43,12 +31,12 @@ public class JSPAnchorPointKeyCheck extends BaseTagAttributesCheck {
 		throws IOException {
 
 		List<String> anchorPointTags = getAttributeValues(
-				_ANCHOR_POINT_TAGS, absolutePath);
+			_ANCHOR_POINT_TAGS, absolutePath);
 
 		outerLoop:
 		for (String anchorPointTag : anchorPointTags) {
 			String[] anchorPointTagArray = StringUtil.split(
-					anchorPointTag, "->");
+				anchorPointTag, "->");
 
 			if (anchorPointTagArray.length != 2) {
 				continue;
@@ -73,7 +61,11 @@ public class JSPAnchorPointKeyCheck extends BaseTagAttributesCheck {
 
 				Map<String, String> attributesMap = tag.getAttributesMap();
 
-				for (String attribute : attributesMap.keySet()) {
+				for (Map.Entry<String, String> entry :
+						attributesMap.entrySet()) {
+
+					String attribute = entry.getKey();
+
 					if (!StringUtil.equals(attribute, anchorPointTagArray[1])) {
 						continue;
 					}
@@ -81,23 +73,40 @@ public class JSPAnchorPointKeyCheck extends BaseTagAttributesCheck {
 					String expectValue = null;
 
 					if (fileName.contains("/portal-web/docroot")) {
-						int index = fileName.indexOf("/portal-web/docroot") + 19;
+						int index =
+							fileName.indexOf("/portal-web/docroot") + 19;
 
 						expectValue = fileName.substring(index);
-					} else {
-						String symbolicName = getSymbolicName(fileName);
+					}
+					else {
+						String symbolicName = _getSymbolicName(fileName);
 
 						if (symbolicName == null) {
 							continue outerLoop;
 						}
 
-						expectValue = symbolicName + "#" + _getFileName(fileName);
+						int index = fileName.indexOf(
+							"/src/main/resources/META-INF");
+
+						if (index == -1) {
+							continue outerLoop;
+						}
+
+						expectValue = StringBundler.concat(
+							symbolicName, "#", fileName.substring(index + 28));
 					}
 
 					String value = attributesMap.get(attribute);
 
-					if (!value.contains("<%") && !value.startsWith(expectValue)) {
-						addMessage(fileName, "Tag '" + tag.getName() + "' attribute '" + attribute + "' value '" + value + "' should start with '" + expectValue + "'");
+					if (!value.contains("<%") &&
+						!value.startsWith(expectValue)) {
+
+						addMessage(
+							fileName,
+							StringBundler.concat(
+								"Tag '", tag.getName(), "' attribute '",
+								attribute, "' value '", value,
+								"' should start with '", expectValue, "'"));
 					}
 				}
 
@@ -108,25 +117,17 @@ public class JSPAnchorPointKeyCheck extends BaseTagAttributesCheck {
 		return content;
 	}
 
-	private String getSymbolicName(String fileName) throws IOException {
-
+	private String _getSymbolicName(String fileName) throws IOException {
 		BNDSettings bndSettings = getBNDSettings(fileName);
 
 		if (bndSettings == null) {
 			return null;
 		}
 
-        return BNDSourceUtil.getDefinitionValue(bndSettings.getContent(), "Bundle-SymbolicName");
-    }
-
-	private String _getFileName(String fileName) {
-
-		int x = fileName.lastIndexOf(CharPool.SLASH);
-
-		return fileName.substring(x + 1);
+		return BNDSourceUtil.getDefinitionValue(
+			bndSettings.getContent(), "Bundle-SymbolicName");
 	}
 
-	private static final String _ANCHOR_POINT_TAGS =
-			"anchorPointTags";
+	private static final String _ANCHOR_POINT_TAGS = "anchorPointTags";
 
 }

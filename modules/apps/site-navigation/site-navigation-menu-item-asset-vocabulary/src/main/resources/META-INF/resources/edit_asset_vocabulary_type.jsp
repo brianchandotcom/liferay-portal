@@ -13,7 +13,7 @@ AssetVocabularySiteNavigationMenuTypeDisplayContext assetVocabularySiteNavigatio
 
 <div>
 	<react:component
-		module="js/AssetVocabularyContextualSidebar"
+		module="{AssetVocabularyContextualSidebar} from site-navigation-menu-item-asset-vocabulary"
 		props="<%= assetVocabularySiteNavigationMenuTypeDisplayContext.getAssetVocabularyContextualSidebarContext() %>"
 	/>
 </div>

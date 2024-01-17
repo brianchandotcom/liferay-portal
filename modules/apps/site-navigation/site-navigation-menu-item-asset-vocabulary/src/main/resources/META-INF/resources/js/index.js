@@ -415,4 +415,4 @@ function getFieldName(namespace, fieldName) {
 	return `${namespace}TypeSettingsProperties--${fieldName}--`;
 }
 
-export default AssetVocabularyContextualSidebar;
+export {AssetVocabularyContextualSidebar};

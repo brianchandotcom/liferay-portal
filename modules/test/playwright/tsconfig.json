@@ -1,8 +1,12 @@
 {
 	"compilerOptions": {
+		"noEmit": true,
 		"types": [
-			"../../global.d.ts",
 			"node"
 		]
-	}
+	},
+	"include": [
+		"../../global.d.ts",
+		"**/*.ts"
+	]
 }

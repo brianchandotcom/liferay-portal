@@ -18,8 +18,8 @@
 		"prettier": "2.1.2"
 	},
 	"scripts": {
-		"checkFormat": "liferay-npm-scripts lint && liferay-npm-scripts format:check",
-		"format": "liferay-npm-scripts lint:fix && liferay-npm-scripts format",
+		"checkFormat": "tsc && liferay-npm-scripts lint && liferay-npm-scripts format:check",
+		"format": "tsc && liferay-npm-scripts lint:fix && liferay-npm-scripts format",
 		"playwright": "playwright",
 		"test": "playwright test"
 	},

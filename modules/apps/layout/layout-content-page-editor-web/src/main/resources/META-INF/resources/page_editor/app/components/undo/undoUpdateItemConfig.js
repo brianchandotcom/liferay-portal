@@ -8,7 +8,7 @@ import LayoutService from '../../services/LayoutService';
 import {setIn} from '../../utils/setIn';
 
 function undoAction({action, store}) {
-	const {config, itemId, pageContents} = action;
+	const {config, itemId} = action;
 	const {layoutData} = store;
 
 	const nextLayoutData = setIn(
@@ -28,7 +28,6 @@ function undoAction({action, store}) {
 					itemId,
 					layoutData: nextLayoutData,
 					overridePreviousConfig: true,
-					pageContents,
 				})
 			);
 		});
@@ -36,7 +35,7 @@ function undoAction({action, store}) {
 }
 
 function getDerivedStateForUndo({action, state}) {
-	const {itemId, pageContents} = action;
+	const {itemId} = action;
 	const {layoutData} = state;
 
 	const item = layoutData.items[itemId];
@@ -44,7 +43,6 @@ function getDerivedStateForUndo({action, state}) {
 	return {
 		config: item.config,
 		itemId,
-		pageContents,
 	};
 }
 

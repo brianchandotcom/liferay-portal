@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -44,7 +45,57 @@ public class ObjectUserNotificationsHandlerTest {
 
 	@Before
 	public void setUp() throws PortalException {
+		_objectDefinition = Mockito.mock(ObjectDefinition.class);
+
+		_objectUserNotificationsHandler = new ObjectUserNotificationsHandler(
+			_assetDisplayPageFriendlyURLProvider, _objectDefinition);
+
 		_setUpServiceContext();
+	}
+
+	@Test
+	public void testGetLinkWhenGuestUserObjectEntrySubmissionsExceedsLimits()
+		throws Exception {
+
+		Mockito.when(
+			_userNotificationEvent.getPayload()
+		).thenReturn(
+			"{ \"exceedsObjectEntryLimit\": true }"
+		);
+
+		try (MockedStatic<RequestBackedPortletURLFactoryUtil>
+				requestBackedPortletURLFactoryUtilMockedStatic =
+					Mockito.mockStatic(
+						RequestBackedPortletURLFactoryUtil.class);
+			MockedStatic<PortletURLBuilder> portletURLBuilderMockedStatic =
+				Mockito.mockStatic(PortletURLBuilder.class)) {
+
+			requestBackedPortletURLFactoryUtilMockedStatic.when(
+				() -> RequestBackedPortletURLFactoryUtil.create(
+					Mockito.any(HttpServletRequest.class))
+			).thenReturn(
+				_requestBackedPortletURLFactory
+			);
+
+			MockLiferayPortletURL mockLiferayPortletURL =
+				new MockLiferayPortletURL();
+
+			portletURLBuilderMockedStatic.when(
+				() -> PortletURLBuilder.create(Mockito.any())
+			).thenReturn(
+				new PortletURLBuilder.PortletURLStep(mockLiferayPortletURL)
+			);
+
+			_objectUserNotificationsHandler.getLink(
+				_userNotificationEvent, _serviceContext);
+
+			Assert.assertEquals(
+				"com.liferay.object.configuration.ObjectConfiguration",
+				mockLiferayPortletURL.getParameter("factoryPid"));
+			Assert.assertEquals(
+				"/configuration_admin/edit_configuration",
+				mockLiferayPortletURL.getParameter("mvcRenderCommandName"));
+		}
 	}
 
 	@Test
@@ -76,40 +127,56 @@ public class ObjectUserNotificationsHandlerTest {
 	}
 
 	@Test
-	public void testGetLinkWhenGuestUserObjectEntrySubmissionsExceedsLimits()
+	public void testGetLinkWhenObjectEntryHasNotDisplayPageFriendlyURL()
 		throws Exception {
 
 		Mockito.when(
 			_userNotificationEvent.getPayload()
 		).thenReturn(
-			"{ \"exceedsObjectEntryLimit\": true }"
+			"{ \"externalReferenceCode\": \"externalReferenceCode\" }"
 		);
 
-		try (MockedStatic<RequestBackedPortletURLFactoryUtil>
-				 requestBackedPortletURLFactoryUtilMockedStatic = Mockito.mockStatic(
-					RequestBackedPortletURLFactoryUtil.class);
-			 MockedStatic<PortletURLBuilder> portletURLBuilderMockedStatic =
-				 Mockito.mockStatic(PortletURLBuilder.class)) {
+		try (MockedStatic<PortletURLBuilder> portletURLBuilderMockedStatic =
+				Mockito.mockStatic(PortletURLBuilder.class);
+			MockedStatic<PortalUtil> portalUtilMockedStatic =
+				Mockito.mockStatic(PortalUtil.class)) {
 
-			 requestBackedPortletURLFactoryUtilMockedStatic.when(
-				() -> RequestBackedPortletURLFactoryUtil.create(
-					Mockito.any(HttpServletRequest.class))
-			).thenReturn(
-				_requestBackedPortletURLFactory
-			);
+			MockLiferayPortletURL mockLiferayPortletURL =
+				new MockLiferayPortletURL();
 
 			portletURLBuilderMockedStatic.when(
 				() -> PortletURLBuilder.create(Mockito.any())
 			).thenReturn(
-				_portletURLStep
+				new PortletURLBuilder.PortletURLStep(mockLiferayPortletURL)
+			);
+
+			portalUtilMockedStatic.when(
+				() -> PortalUtil.getControlPanelPortletURL(
+					Mockito.any(HttpServletRequest.class),
+					Mockito.any(Group.class), Mockito.anyString(),
+					Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
+			).thenReturn(
+				Mockito.mock(PortletURL.class)
+			);
+
+			Mockito.when(
+				_objectDefinition.getObjectDefinitionId()
+			).thenReturn(
+				1L
 			);
 
 			_objectUserNotificationsHandler.getLink(
 				_userNotificationEvent, _serviceContext);
 
-			portletURLBuilderMockedStatic.verify(
-				() -> PortletURLBuilder.create(Mockito.any()));
-			Assert.assertTrue(true);
+			Assert.assertEquals(
+				"externalReferenceCode",
+				mockLiferayPortletURL.getParameter("externalReferenceCode"));
+			Assert.assertEquals(
+				"/object_entries/edit_object_entry",
+				mockLiferayPortletURL.getParameter("mvcRenderCommandName"));
+			Assert.assertEquals(
+				String.valueOf(_objectDefinition.getObjectDefinitionId()),
+				mockLiferayPortletURL.getParameter("objectDefinitionId"));
 		}
 	}
 
@@ -139,56 +206,11 @@ public class ObjectUserNotificationsHandlerTest {
 		);
 	}
 
-	@Test
-	public void testGetLinkWhenObjectEntryHasNotDisplayPageFriendlyURL()
-		throws Exception {
-
-		Mockito.when(
-			_userNotificationEvent.getPayload()
-		).thenReturn(
-			StringPool.BLANK
-		);
-
-		try (MockedStatic<PortletURLBuilder> portletURLBuilderMockedStatic =
-				Mockito.mockStatic(PortletURLBuilder.class);
-			 MockedStatic<PortalUtil> portalUtilMockedStatic =
-				 Mockito.mockStatic(PortalUtil.class)) {
-
-			portletURLBuilderMockedStatic.when(
-				() -> PortletURLBuilder.create(Mockito.any())
-			).thenReturn(
-				_portletURLStep
-			);
-
-			portalUtilMockedStatic.when(
-				() -> PortalUtil.getControlPanelPortletURL(
-					Mockito.any(HttpServletRequest.class),
-					Mockito.any(Group.class), Mockito.anyString(),
-					Mockito.anyLong(), Mockito.anyLong(),
-					Mockito.anyString())
-			).thenReturn(
-				Mockito.mock(PortletURL.class)
-			);
-
-			_objectUserNotificationsHandler.getLink(
-				_userNotificationEvent, _serviceContext);
-
-			portletURLBuilderMockedStatic.verify(
-				() -> PortletURLBuilder.create(Mockito.any()));
-			Assert.assertTrue(true);
-		}
-	}
-
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider = Mockito.mock(
 			AssetDisplayPageFriendlyURLProvider.class);
-	private final ObjectUserNotificationsHandler _objectUserNotificationsHandler =
-		new ObjectUserNotificationsHandler(
-			_assetDisplayPageFriendlyURLProvider,
-			Mockito.mock(ObjectDefinition.class));
-
-	private final PortletURLBuilder.PortletURLStep _portletURLStep = new PortletURLBuilder.PortletURLStep(
-		Mockito.mock(PortletURL.class));
+	private ObjectDefinition _objectDefinition;
+	private ObjectUserNotificationsHandler _objectUserNotificationsHandler;
 	private final RequestBackedPortletURLFactory
 		_requestBackedPortletURLFactory = Mockito.mock(
 			RequestBackedPortletURLFactory.class);

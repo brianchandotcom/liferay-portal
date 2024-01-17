@@ -35,13 +35,6 @@ jest.mock(
 	})
 );
 
-jest.mock(
-	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/InfoItemService',
-	() => ({
-		getPageContents: jest.fn(),
-	})
-);
-
 const PAGE_CONTENTS = [
 	{
 		subtype: 'Basic Web Content',

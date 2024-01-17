@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.audit.AuditEvent;
-import com.liferay.portal.security.audit.storage.service.AuditEventLocalService;
 import com.liferay.portal.security.audit.web.internal.constants.AuditPortletKeys;
 import com.liferay.portal.security.audit.web.internal.display.context.AuditDisplayContext;
 
@@ -177,9 +176,6 @@ public class ExportAuditEventsMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportAuditEventsMVCResourceCommand.class);
-
-	@Reference
-	private AuditEventLocalService _auditEventLocalService;
 
 	private final LinkedHashMap<String, Function<AuditEvent, String>>
 		_functions =

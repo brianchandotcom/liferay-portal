@@ -11,8 +11,7 @@ const mockPlans = [
 			individuals: 0,
 			pageViews: 0
 		},
-		name: 'Liferay Analytics Cloud Business',
-		price: 0
+		name: 'Liferay Analytics Cloud Business'
 	},
 	{
 		baseSubscriptionPlan: null,
@@ -20,8 +19,7 @@ const mockPlans = [
 			individuals: 5,
 			pageViews: 30
 		},
-		name: 'Liferay Limited Business',
-		price: 45
+		name: 'Liferay Limited Business'
 	}
 ];
 

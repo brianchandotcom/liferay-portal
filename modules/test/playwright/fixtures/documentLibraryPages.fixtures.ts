@@ -11,13 +11,13 @@ import {DocumentLibraryPage} from '../pages/document-library-web/documentLibrary
 import {DocumentLibraryEditFolderPage} from '../pages/document-library-web/documentLibraryEditFolder.page';
 
 const documentLibraryPagesTest = test.extend<{
-	_documentLibraryEditFolderPage: DocumentLibraryEditFolderPage;
-	_documentLibraryPage: DocumentLibraryPage;
+	documentLibraryEditFolderPage: DocumentLibraryEditFolderPage;
+	documentLibraryPage: DocumentLibraryPage;
 }>({
-	_documentLibraryEditFolderPage: async ({page}, use) => {
+	documentLibraryEditFolderPage: async ({page}, use) => {
 		await use(new DocumentLibraryEditFolderPage(page));
 	},
-	_documentLibraryPage: async ({page}, use) => {
+	documentLibraryPage: async ({page}, use) => {
 		await use(new DocumentLibraryPage(page));
 	},
 });

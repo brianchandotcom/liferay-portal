@@ -86,13 +86,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>KEYWORD_TEXTFIELD</td>
-	<td>//*[@class='form-control-inset']</td>
+	<td>INVITED_USER</td>
+	<td>//td[contains(.,'${key_userInvite}')]//following-sibling::td//button[contains(.,'${key_publicationRole}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITED_USER</td>
-	<td>//td[contains(.,'${key_userInvite}')]//following-sibling::td//button[contains(.,'${key_publicationRole}')]</td>
+	<td>IN_PROGRESS_STATUS</td>
+	<td>//div[contains(.,'${key_publicationName}')]//div[(@class="dnd-td") and contains(.,'In Progress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEYWORD_TEXTFIELD</td>
+	<td>//*[@class='form-control-inset']</td>
 	<td></td>
 </tr>
 <tr>

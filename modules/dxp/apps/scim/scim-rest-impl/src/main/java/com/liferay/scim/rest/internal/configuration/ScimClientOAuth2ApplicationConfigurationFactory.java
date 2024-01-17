@@ -5,7 +5,6 @@
 
 package com.liferay.scim.rest.internal.configuration;
 
-import com.liferay.oauth.client.LocalOAuthClient;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
@@ -16,7 +15,6 @@ import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -163,12 +161,6 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private LocalOAuthClient _localOAuthClient;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

@@ -208,7 +208,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 									).build()
 								%>'
 								propsTransformer="js/ElementsDefaultPropsTransformer"
-								verticalCard="<%= new JournalArticleVerticalCard(curArticle, renderRequest, renderResponse, searchContainer.getRowChecker(), assetDisplayPageFriendlyURLProvider, trashHelper) %>"
+								verticalCard="<%= new JournalArticleVerticalCard(curArticle, renderRequest, renderResponse, searchContainer.getRowChecker(), assetDisplayPageFriendlyURLProvider, trashHelper, journalDisplayContext.isNavigationMine()) %>"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>

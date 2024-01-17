@@ -12,6 +12,10 @@ import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -60,44 +64,72 @@ public class AnalyticsDispatchTriggersUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
+			long companyThreadLocalCompanyId =
+				CompanyThreadLocal.getCompanyId();
+
 			long companyId = GetterUtil.getLong(properties.get("companyId"));
 
-			DispatchTrigger dispatchTrigger =
-				_dispatchTriggerLocalService.fetchDispatchTrigger(
-					companyId, "export-analytics-dxp-entities");
+			CompanyThreadLocal.setCompanyId(companyId);
 
-			if (dispatchTrigger != null) {
-				continue;
+			try {
+				_doUpgrade(companyId);
 			}
-
-			long userId = _userLocalService.getUserIdByScreenName(
-				companyId,
-				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
-
-			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
-				null, userId, "export-analytics-dxp-entities", null,
-				"export-analytics-dxp-entities", false);
-
-			LocalDateTime localDateTime = LocalDateTime.now();
-
-			_dispatchTriggerLocalService.updateDispatchTrigger(
-				dispatchTrigger.getDispatchTriggerId(), true, "0 0 * * * ?",
-				DispatchTaskClusterMode.NOT_APPLICABLE, 0, 0, 0, 0, 0, true,
-				false, localDateTime.getMonthValue() - 1,
-				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), "UTC");
-
-			Calendar calendar = Calendar.getInstance();
-
-			calendar.setTime(new Date());
-			calendar.add(Calendar.HOUR, -2);
-
-			_dispatchLogLocalService.addDispatchLog(
-				userId, dispatchTrigger.getDispatchTriggerId(),
-				calendar.getTime(), null, null, null,
-				DispatchTaskStatus.SUCCESSFUL);
+			finally {
+				CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
+			}
 		}
 	}
+
+	private void _doUpgrade(long companyId) throws PortalException {
+		long userId;
+
+		try {
+			userId = _userLocalService.getUserIdByScreenName(
+				companyId,
+				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Analytics Administrator was not found for company ID " +
+					companyId,
+				portalException);
+
+			return;
+		}
+
+		DispatchTrigger dispatchTrigger =
+			_dispatchTriggerLocalService.fetchDispatchTrigger(
+				companyId, "export-analytics-dxp-entities");
+
+		if (dispatchTrigger != null) {
+			return;
+		}
+
+		dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
+			null, userId, "export-analytics-dxp-entities", null,
+			"export-analytics-dxp-entities", false);
+
+		LocalDateTime localDateTime = LocalDateTime.now();
+
+		_dispatchTriggerLocalService.updateDispatchTrigger(
+			dispatchTrigger.getDispatchTriggerId(), true, "0 0 * * * ?",
+			DispatchTaskClusterMode.NOT_APPLICABLE, 0, 0, 0, 0, 0, true, false,
+			localDateTime.getMonthValue() - 1, localDateTime.getDayOfMonth(),
+			localDateTime.getYear(), localDateTime.getHour(),
+			localDateTime.getMinute(), "UTC");
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(new Date());
+		calendar.add(Calendar.HOUR, -2);
+
+		_dispatchLogLocalService.addDispatchLog(
+			userId, dispatchTrigger.getDispatchTriggerId(), calendar.getTime(),
+			null, null, null, DispatchTaskStatus.SUCCESSFUL);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AnalyticsDispatchTriggersUpgradeProcess.class);
 
 	private final ConfigurationAdmin _configurationAdmin;
 	private final DispatchLogLocalService _dispatchLogLocalService;

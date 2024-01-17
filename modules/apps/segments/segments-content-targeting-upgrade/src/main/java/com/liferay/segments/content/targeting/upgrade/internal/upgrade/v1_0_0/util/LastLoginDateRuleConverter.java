@@ -25,17 +25,21 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.Date;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eduardo García
  */
-@Component(
-	property = "rule.converter.key=LastLoginDateRule",
-	service = RuleConverter.class
-)
 public class LastLoginDateRuleConverter implements RuleConverter {
+
+	public static final String RULE_CONVERTER_KEY = "LastLoginDateRule";
+
+	public LastLoginDateRuleConverter(
+		SegmentsCriteriaContributor contextSegmentsCriteriaContributor,
+		JSONFactory jsonFactory) {
+
+		_contextSegmentsCriteriaContributor =
+			contextSegmentsCriteriaContributor;
+		_jsonFactory = jsonFactory;
+	}
 
 	@Override
 	public void convert(
@@ -119,10 +123,8 @@ public class LastLoginDateRuleConverter implements RuleConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LastLoginDateRuleConverter.class);
 
-	@Reference(target = "(segments.criteria.contributor.key=context)")
-	private SegmentsCriteriaContributor _contextSegmentsCriteriaContributor;
-
-	@Reference
-	private JSONFactory _jsonFactory;
+	private final SegmentsCriteriaContributor
+		_contextSegmentsCriteriaContributor;
+	private final JSONFactory _jsonFactory;
 
 }

@@ -8,17 +8,18 @@ package com.liferay.segments.content.targeting.upgrade.internal.upgrade.v1_0_0.u
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eduardo García
  */
-@Component(
-	property = "rule.converter.key=RegularRoleRule",
-	service = RuleConverter.class
-)
 public class RegularRoleRuleConverter implements RuleConverter {
+
+	public static final String RULE_CONVERTER_KEY = "RegularRoleRule";
+
+	public RegularRoleRuleConverter(
+		SegmentsCriteriaContributor userSegmentsCriteriaContributor) {
+
+		_userSegmentsCriteriaContributor = userSegmentsCriteriaContributor;
+	}
 
 	@Override
 	public void convert(
@@ -29,7 +30,6 @@ public class RegularRoleRuleConverter implements RuleConverter {
 			Criteria.Conjunction.AND);
 	}
 
-	@Reference(target = "(segments.criteria.contributor.key=user)")
-	private SegmentsCriteriaContributor _userSegmentsCriteriaContributor;
+	private final SegmentsCriteriaContributor _userSegmentsCriteriaContributor;
 
 }

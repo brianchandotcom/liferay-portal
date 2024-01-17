@@ -14,17 +14,21 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eduardo García
  */
-@Component(
-	property = "rule.converter.key=PreviousVisitedSiteRule",
-	service = RuleConverter.class
-)
 public class PreviousVisitedSiteRuleConverter implements RuleConverter {
+
+	public static final String RULE_CONVERTER_KEY = "PreviousVisitedSiteRule";
+
+	public PreviousVisitedSiteRuleConverter(
+		SegmentsCriteriaContributor contextSegmentsCriteriaContributor,
+		JSONFactory jsonFactory) {
+
+		_contextSegmentsCriteriaContributor =
+			contextSegmentsCriteriaContributor;
+		_jsonFactory = jsonFactory;
+	}
 
 	@Override
 	public void convert(
@@ -54,10 +58,8 @@ public class PreviousVisitedSiteRuleConverter implements RuleConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PreviousVisitedSiteRuleConverter.class);
 
-	@Reference(target = "(segments.criteria.contributor.key=context)")
-	private SegmentsCriteriaContributor _contextSegmentsCriteriaContributor;
-
-	@Reference
-	private JSONFactory _jsonFactory;
+	private final SegmentsCriteriaContributor
+		_contextSegmentsCriteriaContributor;
+	private final JSONFactory _jsonFactory;
 
 }

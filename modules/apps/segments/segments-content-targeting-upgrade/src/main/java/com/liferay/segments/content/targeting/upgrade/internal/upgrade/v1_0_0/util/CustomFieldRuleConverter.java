@@ -21,17 +21,24 @@ import com.liferay.portal.odata.normalizer.Normalizer;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eduardo García
  */
-@Component(
-	property = "rule.converter.key=CustomFieldRule",
-	service = RuleConverter.class
-)
 public class CustomFieldRuleConverter implements RuleConverter {
+
+	public static final String RULE_CONVERTER_KEY = "CustomFieldRule";
+
+	public CustomFieldRuleConverter(
+		ExpandoColumnLocalService expandoColumnLocalService,
+		ExpandoTableLocalService expandoTableLocalService,
+		JSONFactory jsonFactory,
+		SegmentsCriteriaContributor userSegmentsCriteriaContributor) {
+
+		_expandoColumnLocalService = expandoColumnLocalService;
+		_expandoTableLocalService = expandoTableLocalService;
+		_jsonFactory = jsonFactory;
+		_userSegmentsCriteriaContributor = userSegmentsCriteriaContributor;
+	}
 
 	@Override
 	public void convert(
@@ -85,16 +92,9 @@ public class CustomFieldRuleConverter implements RuleConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CustomFieldRuleConverter.class);
 
-	@Reference
-	private ExpandoColumnLocalService _expandoColumnLocalService;
-
-	@Reference
-	private ExpandoTableLocalService _expandoTableLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference(target = "(segments.criteria.contributor.key=user)")
-	private SegmentsCriteriaContributor _userSegmentsCriteriaContributor;
+	private final ExpandoColumnLocalService _expandoColumnLocalService;
+	private final ExpandoTableLocalService _expandoTableLocalService;
+	private final JSONFactory _jsonFactory;
+	private final SegmentsCriteriaContributor _userSegmentsCriteriaContributor;
 
 }

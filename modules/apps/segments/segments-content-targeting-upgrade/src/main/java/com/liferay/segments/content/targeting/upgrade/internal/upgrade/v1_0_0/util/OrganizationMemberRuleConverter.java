@@ -8,17 +8,20 @@ package com.liferay.segments.content.targeting.upgrade.internal.upgrade.v1_0_0.u
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eduardo García
  */
-@Component(
-	property = "rule.converter.key=OrganizationMemberRule",
-	service = RuleConverter.class
-)
 public class OrganizationMemberRuleConverter implements RuleConverter {
+
+	public static final String RULE_CONVERTER_KEY = "OrganizationMemberRule";
+
+	public OrganizationMemberRuleConverter(
+		SegmentsCriteriaContributor
+			userOrganizationSegmentsCriteriaContributor) {
+
+		_userOrganizationSegmentsCriteriaContributor =
+			userOrganizationSegmentsCriteriaContributor;
+	}
 
 	@Override
 	public void convert(
@@ -29,8 +32,7 @@ public class OrganizationMemberRuleConverter implements RuleConverter {
 			Criteria.Conjunction.AND);
 	}
 
-	@Reference(target = "(segments.criteria.contributor.key=user-organization)")
-	private SegmentsCriteriaContributor
+	private final SegmentsCriteriaContributor
 		_userOrganizationSegmentsCriteriaContributor;
 
 }

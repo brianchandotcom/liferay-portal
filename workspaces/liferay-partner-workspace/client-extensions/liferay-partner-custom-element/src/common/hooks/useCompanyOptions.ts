@@ -81,7 +81,7 @@ export default function useCompanyOptions(
 							name: currencyPicklist.label as string,
 					  }) ||
 							{},
-				partnerLevel?.claimPercent || 0
+				partnerLevel?.claimPercent || 0.5
 			);
 		}
 	}, [

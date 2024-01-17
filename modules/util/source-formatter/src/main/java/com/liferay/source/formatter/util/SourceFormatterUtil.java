@@ -368,7 +368,9 @@ public class SourceFormatterUtil {
 			new String[0], includes, new SourceFormatterExcludes());
 
 		for (String untrackedFileName : _getUntrackedFileNames()) {
-			if (fileNames.contains(untrackedFileName)) {
+			if (!untrackedFileName.startsWith(baseDirName) ||
+				fileNames.contains(untrackedFileName)) {
+
 				continue;
 			}
 

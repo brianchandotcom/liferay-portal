@@ -787,8 +787,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 						getExportImportPortletPreferencesProcessor(
 							portlet.getRootPortletId());
 
-			return exportImportPortletPreferencesProcessor.
-				isPublishDisplayedContent();
+			if (exportImportPortletPreferencesProcessor != null) {
+				return exportImportPortletPreferencesProcessor.
+					isPublishDisplayedContent();
+			}
+
+			return true;
 		}
 		catch (Exception exception) {
 			_log.error(exception);

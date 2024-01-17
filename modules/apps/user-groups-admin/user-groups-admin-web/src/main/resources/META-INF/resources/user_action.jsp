@@ -18,5 +18,5 @@ UserActionDropdownItems userActionDropdownItems = new UserActionDropdownItems(re
 <clay:dropdown-actions
 	aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 	dropdownItems="<%= userActionDropdownItems.getActionDropdownItems() %>"
-	propsTransformer="js/UserDropdownDefaultPropsTransformer"
+	propsTransformer="{UserDropdownDefaultPropsTransformer} from user-groups-admin-web"
 />

@@ -2,6 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
+	"main": "js/index.js",
 	"name": "user-groups-admin-web",
 	"private": true,
 	"scripts": {

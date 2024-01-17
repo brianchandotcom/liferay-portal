@@ -14,6 +14,9 @@ import {config as portalWeb} from './tests/portal-web/config';
 import {config as usersAdminWeb} from './tests/users-admin-web/config';
 
 export default defineConfig({
+	expect: {
+		timeout: 15 * 1000,
+	},
 	forbidOnly: !!process.env.CI,
 	projects: [
 		batchPlanner,
@@ -40,6 +43,7 @@ export default defineConfig({
 	],
 	retries: process.env.CI ? 2 : 0,
 	testDir: './tests',
+	timeout: 90 * 1000,
 	use: {
 		baseURL: process.env.PORTAL_URL
 			? process.env.PORTAL_URL

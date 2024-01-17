@@ -68,5 +68,5 @@ if (addURL == null) {
 			"parentSiteNavigationMenuItemId", ParamUtil.getLong(request, "parentSiteNavigationMenuItemId")
 		).build()
 	%>'
-	module="js/AddSiteNavigationMenuItem"
+	module="{AddSiteNavigationMenuItem} from site-navigation-admin-web"
 />

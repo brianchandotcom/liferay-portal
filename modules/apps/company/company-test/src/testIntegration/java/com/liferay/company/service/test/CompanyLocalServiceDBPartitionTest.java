@@ -282,6 +282,88 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
+	@Test
+	public void testExtractDBPartitionCompany() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		try {
+			_companyLocalService.extractDBPartitionCompany(
+				company.getCompanyId());
+
+			Assert.assertFalse(
+				ArrayUtil.contains(
+					PortalInstances.getCompanyIdsBySQL(),
+					company.getCompanyId()));
+
+			_checkStandaloneDBPartitionTables(
+				company.getCompanyId(), "Company", "VirtualHost");
+
+			removeDBPartitions(new long[] {company.getCompanyId()});
+		}
+		catch (Exception exception) {
+			_companyLocalService.deleteCompany(company);
+
+			throw exception;
+		}
+	}
+
+	@Test
+	public void testExtractDBPartitionCompanyWhenExtractionFails()
+		throws Exception {
+
+		Company company = CompanyTestUtil.addCompany();
+
+		int tablesCount = _getTablesCount(company.getCompanyId());
+		int viewsCount = _getViewsCount(company.getCompanyId());
+
+		boolean standaloneDBPartition = false;
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					DBPartitionUtil.class, "_dbPartitionDB",
+					ProxyUtil.newProxyInstance(
+						DBPartitionDB.class.getClassLoader(),
+						new Class<?>[] {DBPartitionDB.class},
+						(proxy, method, args) -> {
+							if (Objects.equals(
+									method.getName(), "getCreateTableSQL") &&
+								StringUtil.equalsIgnoreCase(
+									(String)args[2], "VirtualHost")) {
+
+								throw new Exception();
+							}
+
+							return method.invoke(dbPartitionDB, args);
+						}))) {
+
+			_companyLocalService.extractDBPartitionCompany(
+				company.getCompanyId());
+
+			standaloneDBPartition = true;
+
+			Assert.fail("Should fail when extracting partition");
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				tablesCount, _getTablesCount(company.getCompanyId()));
+			Assert.assertEquals(
+				viewsCount, _getViewsCount(company.getCompanyId()));
+
+			Assert.assertTrue(
+				ArrayUtil.contains(
+					PortalInstances.getCompanyIdsBySQL(),
+					company.getCompanyId()));
+		}
+		finally {
+			if (standaloneDBPartition) {
+				removeDBPartitions(new long[] {company.getCompanyId()});
+			}
+			else {
+				_companyLocalService.deleteCompany(company);
+			}
+		}
+	}
+
 	private static void _regenerateResourceActions() throws Exception {
 		_resourceActions.clear();
 
@@ -314,6 +396,28 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
+	private List<String> _getObjectNames(String objectType, long companyId)
+		throws Exception {
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		List<String> objectNames = new ArrayList<>();
+
+		String partitionName = getPartitionName(companyId);
+
+		try (ResultSet resultSet = databaseMetaData.getTables(
+				dbPartitionDB.getCatalog(connection, partitionName),
+				dbPartitionDB.getSchema(connection, partitionName), null,
+				new String[] {objectType})) {
+
+			while (resultSet.next()) {
+				objectNames.add(resultSet.getString("TABLE_NAME"));
+			}
+		}
+
+		return objectNames;
+	}
+
 	private int _getSchemasAndCatalogsSize() throws SQLException {
 		Set<String> schemaAndCatalogNames = new HashSet<>();
 
@@ -335,6 +439,18 @@ public class CompanyLocalServiceDBPartitionTest
 		schemaAndCatalogNames.remove(null);
 
 		return schemaAndCatalogNames.size();
+	}
+
+	private int _getTablesCount(long companyId) throws Exception {
+		List<String> tableNames = _getObjectNames("TABLE", companyId);
+
+		return tableNames.size();
+	}
+
+	private int _getViewsCount(long companyId) throws Exception {
+		List<String> viewNames = _getObjectNames("VIEW", companyId);
+
+		return viewNames.size();
 	}
 
 	@Inject

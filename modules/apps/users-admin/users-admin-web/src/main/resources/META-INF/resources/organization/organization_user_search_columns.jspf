@@ -45,14 +45,14 @@
 					<clay:dropdown-actions
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= organizationActionDropdownItems.getActionDropdownItems() %>"
-						propsTransformer="js/OrganizationAndUserDropdownDefaultPropsTransformer"
+						propsTransformer="{OrganizationAndUserDropdownDefaultPropsTransformer} from users-admin-web"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:when test='<%= displayStyle.equals("icon") %>'>
 				<liferay-ui:search-container-column-text>
 					<clay:vertical-card
-						propsTransformer="js/OrganizationAndUserDropdownDefaultPropsTransformer"
+						propsTransformer="{OrganizationAndUserDropdownDefaultPropsTransformer} from users-admin-web"
 						verticalCard="<%= new OrganizationVerticalCard(organizationActionDropdownItems.getActionDropdownItems(), curOrganization, renderRequest, organizationUserSearchContainer.getRowChecker(), rowURL) %>"
 					/>
 				</liferay-ui:search-container-column-text>
@@ -83,7 +83,7 @@
 					<clay:dropdown-actions
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= organizationActionDropdownItems.getActionDropdownItems() %>"
-						propsTransformer="js/OrganizationAndUserDropdownDefaultPropsTransformer"
+						propsTransformer="{OrganizationAndUserDropdownDefaultPropsTransformer} from users-admin-web"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:otherwise>
@@ -138,14 +138,14 @@
 					<clay:dropdown-actions
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= userActionDropdownItems.getActionDropdownItems() %>"
-						propsTransformer="js/OrganizationAndUserDropdownDefaultPropsTransformer"
+						propsTransformer="{OrganizationAndUserDropdownDefaultPropsTransformer} from users-admin-web"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:when test='<%= displayStyle.equals("icon") %>'>
 				<liferay-ui:search-container-column-text>
 					<clay:user-card
-						propsTransformer="js/OrganizationAndUserDropdownDefaultPropsTransformer"
+						propsTransformer="{OrganizationAndUserDropdownDefaultPropsTransformer} from users-admin-web"
 						userCard="<%= new UserVerticalCard(renderRequest, renderResponse, organizationUserSearchContainer.getRowChecker(), true, user2) %>"
 					/>
 				</liferay-ui:search-container-column-text>
@@ -181,7 +181,7 @@
 					<clay:dropdown-actions
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= userActionDropdownItems.getActionDropdownItems() %>"
-						propsTransformer="js/OrganizationAndUserDropdownDefaultPropsTransformer"
+						propsTransformer="{OrganizationAndUserDropdownDefaultPropsTransformer} from users-admin-web"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:otherwise>

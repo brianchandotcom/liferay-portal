@@ -142,7 +142,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 				"regionSelectVal", regionId
 			).build()
 		%>'
-		module="js/CountryRegionDynamicSelect"
+		module="{CountryRegionDynamicSelect} from users-admin-web"
 	/>
 </aui:form>
 

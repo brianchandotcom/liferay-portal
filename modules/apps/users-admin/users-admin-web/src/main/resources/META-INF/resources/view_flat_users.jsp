@@ -22,7 +22,7 @@ String displayStyle = viewFlatUsersDisplayContext.getDisplayStyle();
 <clay:management-toolbar
 	itemsType="users"
 	managementToolbarDisplayContext="<%= viewFlatUsersDisplayContext.getManagementToolbarDisplayContext() %>"
-	propsTransformer="js/ViewFlatOrganizationsAndUsersManagementToolbarPropsTransformer"
+	propsTransformer="{ViewFlatOrganizationsAndUsersManagementToolbarPropsTransformer} from users-admin-web"
 />
 
 <aui:form action="<%= currentURLObj.toString() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "search();" %>'>

@@ -78,7 +78,7 @@ if (parentOrganizationId != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID
 
 <div>
 	<react:component
-		module="js/ParentOrganization"
+		module="{ParentOrganization} from users-admin-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"label", (parentOrganization != null) ? parentOrganization.getName() : ""

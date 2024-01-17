@@ -78,7 +78,7 @@ if (organization != null) {
 			filterLabelItems="<%= viewTreeManagementToolbarDisplayContext.getFilterLabelItems() %>"
 			itemsTotal="<%= searchContainer.getTotal() %>"
 			orderDropdownItems="<%= viewTreeManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-			propsTransformer="js/ViewTreeManagementToolbarPropsTransformer"
+			propsTransformer="{ViewTreeManagementToolbarPropsTransformer} from users-admin-web"
 			searchActionURL="<%= viewTreeManagementToolbarDisplayContext.getSearchActionURL() %>"
 			searchContainerId="organizationUsers"
 			searchFormName="searchFm"

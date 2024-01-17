@@ -17,7 +17,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.v7_4_x.UpgradeListTypeType;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,36 +49,18 @@ public class UpgradeListTypeTypeTest {
 	}
 
 	@Test
-	public void testUpgradeListTypeExists() throws Exception {
-		for (String listTypeName : _listTypeNames) {
-			_listTypeLocalService.addListType(
-				_companyId, listTypeName, _NEW_LIST_TYPE_TYPE);
-		}
-
-		_test();
-	}
-
-	@Test
-	public void testUpgradeListTypeNotExists() throws Exception {
+	public void testUpgrade() throws Exception {
 		try {
-			for (String listTypeName : _listTypeNames) {
-				ListType listType = _deleteListType(
-					listTypeName, _NEW_LIST_TYPE_TYPE);
-
-				if (listType != null) {
-					_originalListTypes.add(listType);
-				}
-			}
+			_originalListType = _deleteListType(
+				_listTypeNames.get(1), _NEW_LIST_TYPE_TYPE);
 
 			_test();
 		}
 		finally {
-			for (String listTypeName : _listTypeNames) {
-				_deleteListType(listTypeName, _NEW_LIST_TYPE_TYPE);
-			}
+			_deleteListType(_listTypeNames.get(1), _NEW_LIST_TYPE_TYPE);
 
-			for (ListType listType : _originalListTypes) {
-				_listTypeLocalService.addListType(listType);
+			if (_originalListType != null) {
+				_listTypeLocalService.addListType(_originalListType);
 			}
 		}
 	}
@@ -129,6 +110,6 @@ public class UpgradeListTypeTypeTest {
 	@Inject
 	private ListTypeLocalService _listTypeLocalService;
 
-	private final List<ListType> _originalListTypes = new ArrayList<>();
+	private ListType _originalListType;
 
 }

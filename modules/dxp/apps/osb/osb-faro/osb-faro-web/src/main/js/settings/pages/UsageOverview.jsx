@@ -9,18 +9,15 @@ import {compose, withCurrentUser, withProject} from 'shared/hoc';
 import {
 	formatPlanData,
 	getPlanAddOns,
-	getPropLabel,
 	INDIVIDUALS,
 	PAGEVIEWS,
 	PLAN_TYPES,
-	PLANS,
-	STATUS_DISPLAY_MAP
+	PLANS
 } from 'shared/util/subscriptions';
 import {Project, User} from 'shared/util/records';
 import {PropTypes} from 'prop-types';
 import {Routes, toRoute} from 'shared/util/router';
 import {sortBy} from 'lodash';
-import {sub} from 'shared/util/lang';
 import {SubscriptionStatuses} from 'shared/util/constants';
 
 const PLAN_LEVEL_MAP = {
@@ -34,51 +31,34 @@ const getPlans = ({name}) =>
 		.filter(plan => PLAN_LEVEL_MAP[plan.name] >= PLAN_LEVEL_MAP[name])
 		.reverse();
 
-const getAlertContent = (alert, currentUser) => {
+const getAlertContent = (alertStatusCode, currentUser) => {
 	const admin = currentUser.isAdmin();
 
-	switch (alert.statusCode) {
+	switch (alertStatusCode) {
 		case SubscriptionStatuses.Approaching:
 			return {
-				message: sub(
-					admin
-						? Liferay.Language.get(
-								'the-current-plan-can-only-support-another-x-x.-please-contact-a-sales-representative-to-upgrade-the-plan'
-						  )
-						: Liferay.Language.get(
-								'the-current-plan-can-only-support-another-x-x.-please-contact-your-site-administrator-to-upgrade-the-plan'
-						  ),
-					[
-						<b key={alert.type}>
-							{(alert.limit - alert.current).toLocaleString()}
-						</b>,
-						getPropLabel(alert.type).toLowerCase()
-					],
-					false
-				),
-				title: Liferay.Language.get('usage-limit-approaching')
+				message: admin
+					? Liferay.Language.get(
+							'usage-limit-approaching.-please-contact-your-sales-representative-at-the-earliest-convenience'
+					  )
+					: Liferay.Language.get(
+							'usage-limit-approaching.-please-contact-your-workspace-administrator-at-the-earliest-convenience'
+					  ),
+				title: Liferay.Language.get('alert')
 			};
 		case SubscriptionStatuses.Over:
 			return {
-				message: sub(
-					admin
-						? Liferay.Language.get(
-								'the-current-plans-x-limit-has-been-exceeded.-please-contact-a-sales-representative-at-the-earliest-convenience'
-						  )
-						: Liferay.Language.get(
-								'the-current-plans-x-limit-has-been-exceeded.-please-contact-your-site-administrator-at-the-earliest-convenience'
-						  ),
-					[
-						<b key={alert.type}>
-							{getPropLabel(alert.type).toLowerCase()}
-						</b>
-					],
-					false
-				),
-				title: Liferay.Language.get('usage-limit-exceeded')
+				message: admin
+					? Liferay.Language.get(
+							'usage-limit-exceeded.-please-contact-your-sales-representative-to-upgrade-the-plan'
+					  )
+					: Liferay.Language.get(
+							'usage-limit-exceeded.-please-contact-your-workspace-administrator-to-upgrade-the-plan'
+					  ),
+				title: Liferay.Language.get('alert')
 			};
 		default:
-			return '';
+			return null;
 	}
 };
 
@@ -100,43 +80,34 @@ export class UsageOverview extends React.Component {
 		const individuals = metrics.get('individuals');
 		const pageViews = metrics.get('pageViews');
 
-		const noAlerts =
-			individuals.status === SubscriptionStatuses.Ok &&
-			pageViews.status === SubscriptionStatuses.Ok;
+		let alertStatusCode = individuals.status;
 
-		const alerts = [
-			{
-				current: individuals.count,
-				limit: individuals.limit,
-				statusCode: individuals.status,
-				type: INDIVIDUALS
-			},
-			{
-				current: pageViews.count,
-				limit: pageViews.limit,
-				statusCode: pageViews.status,
-				type: PAGEVIEWS
+		if (individuals.status !== pageViews.status) {
+			if (individuals.status !== SubscriptionStatuses.Ok) {
+				alertStatusCode = individuals.status;
 			}
-		].filter(alert => alert.statusCode > SubscriptionStatuses.Ok);
 
-		return noAlerts ? null : (
+			if (
+				individuals.status === SubscriptionStatuses.Ok ||
+				pageViews.status === SubscriptionStatuses.Over
+			) {
+				alertStatusCode = pageViews.status;
+			}
+		}
+
+		const alertContent = getAlertContent(alertStatusCode, currentUser);
+
+		return alertContent ? (
 			<div>
-				{alerts.map(alert => {
-					const alertContent = getAlertContent(alert, currentUser);
-
-					return (
-						<Alert
-							iconSymbol='exclamation-full'
-							key={alert.type}
-							title={alertContent.title}
-							type={STATUS_DISPLAY_MAP[alert.statusCode]}
-						>
-							{alertContent.message}
-						</Alert>
-					);
-				})}
+				<Alert
+					iconSymbol='exclamation-full'
+					title={alertContent.title}
+					type='warning'
+				>
+					{alertContent.message}
+				</Alert>
 			</div>
-		);
+		) : null;
 	}
 
 	render() {

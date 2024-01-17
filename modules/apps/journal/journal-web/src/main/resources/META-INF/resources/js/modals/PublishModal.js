@@ -12,6 +12,7 @@ import ScheduleOptions from '../ScheduleOptions';
 
 export default function PublishModal({
 	actionButton,
+	articleId,
 	onCloseModal,
 	onPublishButtonClick,
 	permissionsURL,
@@ -27,9 +28,6 @@ export default function PublishModal({
 	});
 
 	const {button, description, heading} = getLabels(actionButton);
-
-	const articleId = document.getElementById(`${portletNamespace}articleId`)
-		.value;
 
 	return (
 		<ClayModal className="m-0" observer={observer} size="lg">

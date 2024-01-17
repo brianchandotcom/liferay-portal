@@ -164,6 +164,7 @@ export default function SaveButtons({
 			{publishModalVisible ? (
 				<PublishModal
 					actionButton={publishModalAction}
+					articleId={articleId}
 					onCloseModal={() =>
 						setPublishModalState({
 							publishModalAction: '',

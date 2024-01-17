@@ -8,7 +8,7 @@
 import {expect, mergeTests} from '@playwright/test';
 import * as path from 'path';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpers.fixture';
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {exportImportPagesTest} from '../../fixtures/exportImportPages.fixtures';
 
@@ -19,25 +19,25 @@ export const test = mergeTests(
 );
 
 test('can import a folder with document type restrictions and workflow', async ({
-	_apiHelpers,
-	_documentLibraryEditFolderPage,
-	_documentLibraryPage,
-	_exportImportFramePage,
+	apiHelpers,
+	documentLibraryEditFolderPage,
+	documentLibraryPage,
+	exportImportFramePage,
 }) => {
-	await _documentLibraryPage.goto();
-	await _documentLibraryPage.openOptionsMenu();
-	await _documentLibraryPage.exportImportOptionsMenuItem.click();
-	await _exportImportFramePage.importLARFile(
+	await documentLibraryPage.goto();
+	await documentLibraryPage.openOptionsMenu();
+	await documentLibraryPage.exportImportOptionsMenuItem.click();
+	await exportImportFramePage.importLARFile(
 		path.join(__dirname, 'dependencies', 'folder.portlet.lar')
 	);
-	await _exportImportFramePage.close();
-	await _documentLibraryPage.editEntry('LPS-205933');
+	await exportImportFramePage.close();
+	await documentLibraryPage.editEntry('LPS-205933');
 
 	expect(
-		await _documentLibraryEditFolderPage.getSelectedWorkflowDefinition()
+		await documentLibraryEditFolderPage.getSelectedWorkflowDefinition()
 	).toBe('Single Approver@1');
 
-	await _apiHelpers.headlessDelivery.deleteSiteDocumentsFolderByExternalReferenceCode(
+	await apiHelpers.headlessDelivery.deleteSiteDocumentsFolderByExternalReferenceCode(
 		'LPS-205933'
 	);
 });

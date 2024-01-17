@@ -10,9 +10,9 @@ import {test} from '@playwright/test';
 import {ExportImportFramePage} from '../pages/export-import-web/exportImportFrame.page';
 
 const exportImportPagesTest = test.extend<{
-	_exportImportFramePage: ExportImportFramePage;
+	exportImportFramePage: ExportImportFramePage;
 }>({
-	_exportImportFramePage: async ({page}, use) => {
+	exportImportFramePage: async ({page}, use) => {
 		await use(new ExportImportFramePage(page));
 	},
 });

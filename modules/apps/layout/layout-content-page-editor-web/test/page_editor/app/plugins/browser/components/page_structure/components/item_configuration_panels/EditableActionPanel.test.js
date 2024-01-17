@@ -4,12 +4,14 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+import {State} from '@liferay/frontend-js-state-web';
 import {render, screen} from '@testing-library/react';
 import React from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableTypes';
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import {pageContentsAtom} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
 import EditableActionPanel from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page_structure/components/item_configuration_panels/EditableActionPanel';
 
 jest.mock('frontend-js-web', () => ({
@@ -95,6 +97,13 @@ function renderActionPanel(
 }
 
 describe('EditableActionPanel', () => {
+	beforeAll(() => {
+		State.writeAtom(pageContentsAtom, {
+			data: [],
+			status: 'saved',
+		});
+	});
+
 	it('does not render interaction selector when no action is selected', () => {
 		renderActionPanel();
 

@@ -59,6 +59,7 @@ config = {
 		'@liferay/portal/no-react-dom-render': 'off',
 		'@liferay/portal/no-side-navigation': 'off',
 		'@liferay/portal/unexecuted-ismounted': 'off',
+		'@typescript-eslint/no-unused-vars': 'off',
 		'no-empty': ['error', {allowEmptyCatch: true}],
 		'notice/notice': [
 			'error',

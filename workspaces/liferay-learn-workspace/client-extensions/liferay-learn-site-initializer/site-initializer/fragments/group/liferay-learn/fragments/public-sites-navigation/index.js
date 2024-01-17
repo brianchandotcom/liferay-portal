@@ -96,9 +96,12 @@ const seeAllResultsLink = fragmentElement.querySelector(
 
 const searchSubmitLink = fragmentElement.querySelector('.search-submit');
 
-const searchSuggestionItem = searchSuggestionItemTemplate.content.querySelector(
-	'a'
-);
+const searchSuggestionItem =
+	searchSuggestionItemTemplate.content.querySelector('a');
+
+function changeFocus() {
+	document.getElementById('searchInput').focus();
+}
 
 function updateSearch() {
 	searchSuggestions.innerHTML = '';
@@ -112,8 +115,7 @@ function updateSearch() {
 			searchSubmitURL + '?q=' + searchSuggestionsInputValue;
 		suggestions.classList.add('performing-search');
 		performSearch(searchSuggestionsInputValue);
-	}
-	else {
+	} else {
 		suggestions.classList.remove(
 			'loading-search',
 			'performing-search',
@@ -196,15 +198,14 @@ function performSearch(query) {
 							suggestion.attributes.assetSearchSummary;
 
 						if (suggestionContentTextValue) {
-							suggestionContentTextValue = suggestionContentTextValue.substring(
-								0,
-								500
-							);
+							suggestionContentTextValue =
+								suggestionContentTextValue.substring(0, 500);
 
-							suggestionContent.innerHTML = suggestionContentTextValue.replace(
-								searchTermRegExp,
-								`<b>$1</b>`
-							);
+							suggestionContent.innerHTML =
+								suggestionContentTextValue.replace(
+									searchTermRegExp,
+									`<b>$1</b>`
+								);
 						}
 
 						const suggestionURL = suggestionLink.querySelector(
@@ -223,8 +224,7 @@ function performSearch(query) {
 						suggestions.classList.remove('loading-search');
 					}
 				}
-			}
-			else {
+			} else {
 				suggestions.classList.remove('search-results-found');
 				suggestions.classList.remove('loading-search');
 			}
@@ -284,5 +284,7 @@ function getBreadcrumbFromURL(url) {
 		})
 		.join(' ');
 }
+
+document.getElementById('searchIcon').addEventListener('click', changeFocus);
 
 fragmentElement.querySelector('.public-sites-navigation').style.zIndex = '4';

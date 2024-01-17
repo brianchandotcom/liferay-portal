@@ -43,32 +43,43 @@ const Components = () => {
 					columns: [
 						{
 							key: 'name',
-							size: 'md',
+							size: 'lg',
 							value: i18n.translate('component'),
 						},
 						{
 							clickable: true,
+							key: 'caseResultUntested',
+							size: 'md',
+							value: i18n.translate('untested'),
+						},
+						{
+							clickable: true,
 							key: 'caseResultFailed',
+							size: 'md',
 							value: i18n.translate('failed'),
 						},
 						{
 							clickable: true,
 							key: 'caseResultBlocked',
+							size: 'md',
 							value: i18n.translate('blocked'),
 						},
 						{
 							clickable: true,
-							key: 'caseResultsInProgress',
+							key: 'caseResultInProgress',
+							size: 'md',
 							value: i18n.translate('in-progress'),
 						},
 						{
 							clickable: true,
 							key: 'caseResultPassed',
+							size: 'md',
 							value: i18n.translate('passed'),
 						},
 						{
 							clickable: true,
 							key: 'caseResultTestFix',
+							size: 'md',
 							value: i18n.translate('test-fix'),
 						},
 						{
@@ -79,7 +90,6 @@ const Components = () => {
 									testrayComponent?.caseResultBlocked,
 									testrayComponent?.caseResultFailed,
 									testrayComponent?.caseResultInProgress,
-									testrayComponent?.caseResultIncomplete,
 									testrayComponent?.caseResultPassed,
 									testrayComponent?.caseResultTestFix,
 									testrayComponent?.caseResultUntested,
@@ -87,7 +97,7 @@ const Components = () => {
 									(prevCount, currentCount) =>
 										prevCount + currentCount
 								),
-							size: 'sm',
+							size: 'md',
 							value: i18n.translate('total'),
 						},
 						{

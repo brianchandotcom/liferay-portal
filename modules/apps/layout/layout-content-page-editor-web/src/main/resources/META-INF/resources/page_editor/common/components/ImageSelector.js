@@ -12,7 +12,7 @@ import React from 'react';
 
 import {VIEWPORT_SIZES} from '../../app/config/constants/viewportSizes';
 import {useSelector} from '../../app/contexts/StoreContext';
-import {selectPageContents} from '../../app/selectors/selectPageContents';
+import usePageContents from '../../app/utils/usePageContents';
 import {openImageSelector} from '../openImageSelector';
 
 export function ImageSelector({
@@ -28,7 +28,7 @@ export function ImageSelector({
 		(state) => state.selectedViewportSize
 	);
 
-	const pageContents = useSelector(selectPageContents);
+	const pageContents = usePageContents();
 
 	const selectedImageTitle =
 		pageContents.find((pageContent) => pageContent.classPK === fileEntryId)

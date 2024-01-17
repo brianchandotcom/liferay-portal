@@ -17,21 +17,11 @@
 					},
 					'liferay-search-date-facet': {
 						path: 'date_facet.js',
-						requires: [
-							'aui-form-validator',
-							'liferay-search-facet-util',
-						],
-					},
-					'liferay-search-facet-util': {
-						path: 'facet_util.js',
-						requires: [],
+						requires: ['aui-form-validator'],
 					},
 					'liferay-search-modified-facet': {
 						path: 'modified_facet.js',
-						requires: [
-							'aui-form-validator',
-							'liferay-search-facet-util',
-						],
+						requires: ['aui-form-validator'],
 					},
 					'liferay-search-sort-configuration': {
 						path: 'sort_configuration.js',

@@ -8,7 +8,6 @@ AUI.add(
 	(A) => {
 		const DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
-		const FacetUtil = Liferay.Search.FacetUtil;
 		const Util = Liferay.Util;
 
 		const DateFacetFilter = function (config) {
@@ -41,6 +40,25 @@ AUI.add(
 		};
 
 		const DateFacetFilterUtil = {
+			addURLParameter(key, value, parameterArray) {
+				key = encodeURIComponent(key);
+				value = encodeURIComponent(value);
+
+				parameterArray[parameterArray.length] = [key, value].join('=');
+
+				return parameterArray;
+			},
+
+			removeURLParameters(key, parameterArray) {
+				key = encodeURIComponent(key);
+
+				return parameterArray.filter((item) => {
+					const itemSplit = item.split('=');
+
+					return !(itemSplit && itemSplit[0] === key);
+				});
+			},
+
 			submitSearch(parameterString) {
 				document.location.search = parameterString;
 			},
@@ -164,18 +182,18 @@ AUI.add(
 				);
 
 				if (!searchCustomRangeToggle?.hasAttribute('data-term-id')) {
-					parameterArray = FacetUtil.removeURLParameters(
+					parameterArray = DateFacetFilterUtil.removeURLParameters(
 						param,
 						parameterArray
 					);
 				}
 
-				parameterArray = FacetUtil.removeURLParameters(
+				parameterArray = DateFacetFilterUtil.removeURLParameters(
 					paramFrom,
 					parameterArray
 				);
 
-				parameterArray = FacetUtil.removeURLParameters(
+				parameterArray = DateFacetFilterUtil.removeURLParameters(
 					paramTo,
 					parameterArray
 				);
@@ -185,19 +203,19 @@ AUI.add(
 				);
 
 				if (startParameterNameElement) {
-					parameterArray = FacetUtil.removeURLParameters(
+					parameterArray = DateFacetFilterUtil.removeURLParameters(
 						startParameterNameElement.value,
 						parameterArray
 					);
 				}
 
-				parameterArray = FacetUtil.addURLParameter(
+				parameterArray = DateFacetFilterUtil.addURLParameter(
 					paramFrom,
 					dateFromParameter,
 					parameterArray
 				);
 
-				parameterArray = FacetUtil.addURLParameter(
+				parameterArray = DateFacetFilterUtil.addURLParameter(
 					paramTo,
 					dateToParameter,
 					parameterArray
@@ -213,6 +231,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-validator', 'liferay-search-facet-util'],
+		requires: ['aui-form-validator'],
 	}
 );

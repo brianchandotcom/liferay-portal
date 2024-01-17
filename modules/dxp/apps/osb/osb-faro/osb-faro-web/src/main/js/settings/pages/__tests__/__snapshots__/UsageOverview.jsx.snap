@@ -204,13 +204,6 @@ exports[`UsageOverview should render 1`] = `
               Plans
             </h4>
             <div
-              class="text-secondary"
-            >
-              <p>
-                Balance pricing and value. Higher tiers offer more flexibility through cheaper add-ons and higher limits.
-              </p>
-            </div>
-            <div
               class="plans-list-root"
             >
               <div
@@ -328,59 +321,6 @@ exports[`UsageOverview should render 1`] = `
                         </li>
                       </ul>
                     </div>
-                    <div
-                      class="addons"
-                    >
-                      <p
-                        class="text-secondary semibold addon-list-header"
-                      >
-                        Add-ons
-                      </p>
-                      <ul>
-                        <li
-                          class="extra-small"
-                        >
-                          <span
-                            class="limit-amount semibold"
-                          >
-                            5,000
-                          </span>
-                          <span
-                            class="text-secondary"
-                          >
-                            <b
-                              class="addon-name"
-                            >
-                              Individuals
-                            </b>
-                             for 
-                            500
-                             USD
-                          </span>
-                        </li>
-                        <li
-                          class="extra-small"
-                        >
-                          <span
-                            class="limit-amount semibold"
-                          >
-                            5,000,000
-                          </span>
-                          <span
-                            class="text-secondary"
-                          >
-                            <b
-                              class="addon-name"
-                            >
-                              Page Views
-                            </b>
-                             for 
-                            250
-                             USD
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -451,20 +391,6 @@ exports[`UsageOverview should render 1`] = `
                         2X
                       </span>
                     </div>
-                    <div
-                      class="annual-price"
-                    >
-                      <div>
-                        <strong>
-                          500 USD
-                        </strong>
-                        <span
-                          class="text-secondary small"
-                        >
-                           / year
-                        </span>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -518,20 +444,6 @@ exports[`UsageOverview should render 1`] = `
                       >
                         1X
                       </span>
-                    </div>
-                    <div
-                      class="annual-price"
-                    >
-                      <div>
-                        <strong>
-                          250 USD
-                        </strong>
-                        <span
-                          class="text-secondary small"
-                        >
-                           / year
-                        </span>
-                      </div>
                     </div>
                   </div>
                 </div>

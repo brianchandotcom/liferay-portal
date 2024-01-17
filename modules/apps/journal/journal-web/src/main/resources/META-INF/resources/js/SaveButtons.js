@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
@@ -21,19 +21,26 @@ export default function SaveButtons({
 	selectedLanguageId,
 	timeZone,
 }) {
+	const formId = `${portletNamespace}fm1`;
+
 	const [
 		{publishModalAction, publishModalVisible},
 		setPublishModalState,
 	] = useState({publishModalAction: '', publishModalVisible: false});
 
 	const onClick = (action) => {
-		setPublishModalState({
-			publishModalAction: action,
-			publishModalVisible: true,
-		});
+		if (articleId) {
+			handleButtonClick(action);
+		}
+		else {
+			setPublishModalState({
+				publishModalAction: action,
+				publishModalVisible: true,
+			});
+		}
 	};
 
-	const handleButtonClick = () => {
+	const handleButtonClick = (action) => {
 		document
 			.querySelectorAll('.journal-alert-container')
 			.forEach((alertElement) => {
@@ -45,6 +52,7 @@ export default function SaveButtons({
 		);
 
 		if (
+			action === 'publish' ||
 			publishModalAction === 'publish' ||
 			publishModalAction === 'schedule'
 		) {
@@ -94,7 +102,7 @@ export default function SaveButtons({
 				) {
 					inputComponent.updateInput('');
 
-					Liferay.Form.get(`${portletNamespace}fm1`).removeRule(
+					Liferay.Form.get(formId).removeRule(
 						`${portletNamespace}${inputComponent.get('id')}`,
 						'required'
 					);
@@ -103,39 +111,22 @@ export default function SaveButtons({
 		);
 	};
 
-	const dropdownItems = [
-		{
-			label: Liferay.Language.get('publish'),
-			onClick: () => onClick('publish'),
-			symbolLeft: 'arrow-right-full',
-		},
-		{
-			label: Liferay.Language.get('schedule-publication'),
-			onClick: () => {
-				setPublishModalState({
-					publishModalAction: 'schedule',
-					publishModalVisible: false,
-				});
-				onClick('schedule');
-			},
-			symbolLeft: 'date-time',
-		},
-	];
-
 	return (
 		<div className="d-flex">
 			{!Liferay.FeatureFlags['LPS-141392'] && !editingDefaultValues ? (
 				<ClayButton
 					className="mr-1"
 					displayType="secondary"
+					form={formId}
 					onClick={() => onClick('draft')}
+					type={articleId ? 'submit' : 'button'}
 				>
 					{saveButtonLabel}
 				</ClayButton>
 			) : null}
 
-			<ClayDropDownWithItems
-				items={dropdownItems}
+			<ClayDropDown
+				hasLeftSymbols
 				trigger={
 					<ClayButton>
 						{publishButtonLabel}
@@ -145,7 +136,30 @@ export default function SaveButtons({
 						</span>
 					</ClayButton>
 				}
-			/>
+			>
+				<ClayDropDown.ItemList>
+					<ClayDropDown.Item
+						form={formId}
+						onClick={() => onClick('publish')}
+						symbolLeft="arrow-right-full"
+						type={articleId ? 'submit' : 'button'}
+					>
+						{Liferay.Language.get('publish')}
+					</ClayDropDown.Item>
+
+					<ClayDropDown.Item
+						onClick={() => {
+							setPublishModalState({
+								publishModalAction: 'schedule',
+								publishModalVisible: true,
+							});
+						}}
+						symbolLeft="date-time"
+					>
+						{Liferay.Language.get('schedule-publication')}
+					</ClayDropDown.Item>
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
 
 			{publishModalVisible ? (
 				<PublishModal

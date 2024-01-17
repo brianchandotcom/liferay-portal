@@ -15,6 +15,7 @@ import com.liferay.journal.web.internal.security.permission.resource.JournalArti
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItemsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,7 +51,7 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 		BaseModel<?> baseModel, RenderRequest renderRequest,
 		RenderResponse renderResponse, RowChecker rowChecker,
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
-		TrashHelper trashHelper) {
+		TrashHelper trashHelper, boolean navigationMine) {
 
 		super(baseModel, renderRequest, rowChecker);
 
@@ -58,6 +59,7 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
 		_trashHelper = trashHelper;
+		_navigationMine = navigationMine;
 
 		_article = (JournalArticle)baseModel;
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
@@ -199,18 +201,23 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		Date createDate = _article.getModifiedDate();
+		Date date = _article.getModifiedDate();
+		String key = "modified-x-ago-by-x";
+		String userName = _article.getStatusByUserName();
 
-		String modifiedDateDescription = LanguageUtil.getTimeDescription(
-			_httpServletRequest,
-			System.currentTimeMillis() - createDate.getTime(), true);
+		if (FeatureFlagManagerUtil.isEnabled("LPS-202534") && _navigationMine) {
+			date = _article.getCreateDate();
+			key = "created-x-ago-by-x";
+			userName = _article.getUserName();
+		}
+
+		String dateDescription = LanguageUtil.getTimeDescription(
+			_httpServletRequest, System.currentTimeMillis() - date.getTime(),
+			true);
 
 		return LanguageUtil.format(
-			_httpServletRequest, "modified-x-ago-by-x",
-			new String[] {
-				modifiedDateDescription,
-				HtmlUtil.escape(_article.getStatusByUserName())
-			});
+			_httpServletRequest, key,
+			new String[] {dateDescription, HtmlUtil.escape(userName)});
 	}
 
 	@Override
@@ -234,6 +241,7 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private final HttpServletRequest _httpServletRequest;
+	private final boolean _navigationMine;
 	private final RenderResponse _renderResponse;
 	private final TrashHelper _trashHelper;
 

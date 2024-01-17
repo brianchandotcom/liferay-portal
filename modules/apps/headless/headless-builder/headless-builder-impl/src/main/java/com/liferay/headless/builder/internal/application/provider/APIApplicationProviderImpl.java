@@ -7,6 +7,7 @@ package com.liferay.headless.builder.internal.application.provider;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
+import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -28,6 +29,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -202,7 +204,7 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 				}
 
 				ObjectField objectField =
-					_objectFieldLocalService.getObjectField(
+					_objectFieldLocalService.fetchObjectField(
 						(String)properties.get("objectFieldERC"),
 						objectDefinition.getObjectDefinitionId());
 
@@ -242,20 +244,43 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					}
 
 					@Override
+					public String getRelatedPropertyERC() {
+						return (String)properties.get(
+							"apiPropertyToAPIPropertiesERC");
+					}
+
+					@Override
 					public String getSourceFieldName() {
+						if (objectField == null) {
+							return null;
+						}
+
 						return objectField.getName();
 					}
 
 					@Override
 					public Type getType() {
-						Type type = _propertyTypes.get(
-							objectField.getBusinessType());
+						Type type = null;
+
+						if (objectField == null) {
+							ListEntry listEntry = (ListEntry)properties.get(
+								"apiPropertyType");
+
+							type = _propertyTypes.get(listEntry.getKey());
+						}
+						else {
+							type = _propertyTypes.get(
+								objectField.getBusinessType());
+						}
+
+						if (Objects.equals(type, Type.ARRAY_CONTAINER)) {
+							throw new UnsupportedOperationException(
+								"Array type is not supported");
+						}
 
 						if (type == null) {
 							throw new IllegalStateException(
-								"Object field business type " +
-									objectField.getBusinessType() +
-										" not supported");
+								"Property type is not supported");
 						}
 
 						return type;
@@ -420,6 +445,12 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 
 	private static final Map<String, APIApplication.Property.Type>
 		_propertyTypes = HashMapBuilder.put(
+			HeadlessBuilderConstants.PROPERTY_TYPE_ARRAY_CONTAINER,
+			APIApplication.Property.Type.ARRAY_CONTAINER
+		).put(
+			HeadlessBuilderConstants.PROPERTY_TYPE_SINGLE_CONTAINER,
+			APIApplication.Property.Type.SINGLE_CONTAINER
+		).put(
 			ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION,
 			APIApplication.Property.Type.AGGREGATION
 		).put(

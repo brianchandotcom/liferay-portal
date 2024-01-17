@@ -8,6 +8,7 @@ package com.liferay.document.library.web.internal.util;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -205,8 +206,7 @@ public class DLBreadcrumbUtil {
 			Folder unescapedFolder = folder.toUnescapedModel();
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				httpServletRequest, unescapedFolder.getName(),
-				portletURL.toString(),
+				httpServletRequest, unescapedFolder.getName(), StringPool.BLANK,
 				HashMapBuilder.<String, Object>put(
 					"direction-right", Boolean.TRUE.toString()
 				).put(

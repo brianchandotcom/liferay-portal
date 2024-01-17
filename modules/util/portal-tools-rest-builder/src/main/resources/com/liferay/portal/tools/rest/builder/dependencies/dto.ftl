@@ -236,22 +236,22 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 				try {
 					${propertyName} = ${propertyName}UnsafeSupplier.get();
 				}
-				catch (RuntimeException re) {
-					throw re;
+				catch (RuntimeException runtimeException) {
+					throw runtimeException;
 				}
-				catch (Exception e) {
-					throw new RuntimeException(e);
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
 				}
 			<#else>
 				_${propertyName}Supplier = () -> {
 					try {
 						return ${propertyName}UnsafeSupplier.get();
 					}
-					catch (RuntimeException re) {
-						throw re;
+					catch (RuntimeException runtimeException) {
+						throw runtimeException;
 					}
-					catch (Exception e) {
-						throw new RuntimeException(e);
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
 					}
 				};
 			</#if>

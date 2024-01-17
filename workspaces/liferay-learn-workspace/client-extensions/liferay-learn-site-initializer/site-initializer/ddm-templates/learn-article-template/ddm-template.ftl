@@ -268,7 +268,7 @@
 		width: 25px;
 	}
 
-	#send-feedback {
+	#submit-feedback {
 		color: var(--color-brand-primary, #0B5FFF);
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 1rem;
@@ -566,12 +566,12 @@
 						</li>
 					</ul>
 
-					<div id="send-feedback">
+					<div id="submit-feedback">
 						<a
 							class="text-decoration-none"
 							href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
 						>
-							${languageUtil.get(locale, "send-feedback", "Send Feedback")}
+							${languageUtil.get(locale, "submit-feedback", "Submit Feedback")}
 							<@clay["icon"] symbol="message-boards" />
 						</a>
 					</div>

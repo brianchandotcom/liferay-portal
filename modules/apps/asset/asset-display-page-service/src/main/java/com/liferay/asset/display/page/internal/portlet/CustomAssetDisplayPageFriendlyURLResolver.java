@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -59,7 +60,7 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public String getDefaultURLSeparator() {
-		return "/e/";
+		return FriendlyURLResolverConstants.URL_SEPARATOR_CUSTOM_ASSET;
 	}
 
 	@Override

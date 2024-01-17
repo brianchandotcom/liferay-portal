@@ -6,7 +6,6 @@
 package com.liferay.portal.security.content.security.policy.internal;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -99,9 +98,6 @@ public class ContentSecurityPolicyNonceManager {
 
 	private static final String _NONCE =
 		ContentSecurityPolicyNonceManager.class.getName() + "#NONCE";
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Portal _portal;

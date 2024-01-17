@@ -4,51 +4,20 @@
  */
 
 import type {LayoutData} from '../../types/layout_data/LayoutData';
-export interface PageContent {
-	actions: {
-		editImage?: {
-			editImageURL: string;
-			fileEntryId: string;
-			previewURL: string;
-		};
-		editURL?: string;
-		permissionsURL?: string;
-		viewUsagesURL?: string;
-	};
-	className: string;
-	classNameId: string;
-	classPK: string;
-	classTypeId: string;
-	externalReferenceCode: string;
-	icon: string;
-	isRestricted: boolean;
-	status: {
-		hasApprovedVersion: boolean;
-		label: string;
-		style: string;
-	};
-	subtype: string;
-	title: string;
-	type: string;
-	usagesCount: number;
-}
 export default function addItem({
 	fragmentEntryLinkIds,
 	itemId,
 	layoutData,
-	pageContents,
 	portletIds,
 }: {
 	fragmentEntryLinkIds: string[];
 	itemId: string;
 	layoutData: LayoutData;
-	pageContents: PageContent[];
 	portletIds: string[];
 }): {
 	readonly fragmentEntryLinkIds: string[];
 	readonly itemId: string;
 	readonly layoutData: LayoutData;
-	readonly pageContents: PageContent[];
 	readonly portletIds: string[];
 	readonly type: 'ADD_ITEM';
 };

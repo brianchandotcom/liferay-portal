@@ -5,21 +5,17 @@
 
 import type {LayoutData} from '../../types/layout_data/LayoutData';
 import type {FragmentEntryLink} from './addFragmentEntryLinks';
-import type {PageContent} from './addItem';
 export default function updateCollectionDisplayCollection({
 	fragmentEntryLinks,
 	itemId,
 	layoutData,
-	pageContents,
 }: {
 	fragmentEntryLinks: FragmentEntryLink[];
 	itemId: string;
 	layoutData: LayoutData;
-	pageContents: PageContent[];
 }): {
 	readonly fragmentEntryLinks: FragmentEntryLink<string, string>[];
 	readonly itemId: string;
 	readonly layoutData: LayoutData;
-	readonly pageContents: PageContent[];
 	readonly type: 'UPDATE_COLLECTION_DISPLAY_COLLECTION';
 };

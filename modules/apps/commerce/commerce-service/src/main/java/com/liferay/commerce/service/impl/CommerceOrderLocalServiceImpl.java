@@ -2444,7 +2444,7 @@ public class CommerceOrderLocalServiceImpl
 							commerceOrder, commerceOrderDTOConverter,
 							commerceOrder.getUserId())
 					).put(
-						"original" + CommerceOrder.class.getSimpleName(),
+						"originalCommerceOrder",
 						originalCommerceOrder.getModelAttributes()
 					).put(
 						"paymentStatus", commerceOrder.getPaymentStatus()

@@ -122,6 +122,11 @@ public class ChangeTrackingServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"2.12.1", "2.12.2",
+			UpgradeProcessFactory.alterColumnType(
+				"CTCollectionTemplate", "description", "VARCHAR(200) null"));
 	}
 
 }

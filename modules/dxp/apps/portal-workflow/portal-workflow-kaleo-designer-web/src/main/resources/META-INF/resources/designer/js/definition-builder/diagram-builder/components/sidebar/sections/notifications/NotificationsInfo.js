@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
+import SidebarPanel from '../../SidebarPanel';
 import BaseNotificationsInfo from '../shared-components/BaseNotificationsInfo';
 import {getRecipientType} from './utils';
 
@@ -398,37 +399,41 @@ const NotificationsInfo = ({
 	}, []);
 
 	return (
-		<BaseNotificationsInfo
-			deleteSection={deleteSection}
-			executionType={executionType}
-			executionTypeOptions={executionTypeOptions}
-			identifier={identifier}
-			internalSections={internalSections}
-			items={items}
-			notificationDescription={notificationDescription}
-			notificationIndex={notificationIndex}
-			notificationName={notificationName}
-			notificationTypeEmail={notificationTypeEmail}
-			notificationTypeUserNotification={notificationTypeUserNotification}
-			recipientType={recipientType}
-			recipientTypeOptions={recipientTypeOptions}
-			sectionsLength={sectionsLength}
-			selectedItem={selectedItem}
-			setExecutionType={setExecutionType}
-			setInternalSections={setInternalSections}
-			setItems={setItems}
-			setNotificationDescription={setNotificationDescription}
-			setNotificationName={setNotificationName}
-			setRecipientType={setRecipientType}
-			setSections={setSections}
-			setSelectedItem={setSelectedItem}
-			setTemplate={setTemplate}
-			setTemplateLanguage={setTemplateLanguage}
-			template={template}
-			templateLanguage={templateLanguage}
-			updateNotificationType={updateNotificationType}
-			{...restProps}
-		/>
+		<SidebarPanel panelTitle={Liferay.Language.get('information')}>
+			<BaseNotificationsInfo
+				deleteSection={deleteSection}
+				executionType={executionType}
+				executionTypeOptions={executionTypeOptions}
+				identifier={identifier}
+				internalSections={internalSections}
+				items={items}
+				notificationDescription={notificationDescription}
+				notificationIndex={notificationIndex}
+				notificationName={notificationName}
+				notificationTypeEmail={notificationTypeEmail}
+				notificationTypeUserNotification={
+					notificationTypeUserNotification
+				}
+				recipientType={recipientType}
+				recipientTypeOptions={recipientTypeOptions}
+				sectionsLength={sectionsLength}
+				selectedItem={selectedItem}
+				setExecutionType={setExecutionType}
+				setInternalSections={setInternalSections}
+				setItems={setItems}
+				setNotificationDescription={setNotificationDescription}
+				setNotificationName={setNotificationName}
+				setRecipientType={setRecipientType}
+				setSections={setSections}
+				setSelectedItem={setSelectedItem}
+				setTemplate={setTemplate}
+				setTemplateLanguage={setTemplateLanguage}
+				template={template}
+				templateLanguage={templateLanguage}
+				updateNotificationType={updateNotificationType}
+				{...restProps}
+			/>
+		</SidebarPanel>
 	);
 };
 

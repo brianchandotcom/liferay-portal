@@ -85,7 +85,7 @@ const BaseNotificationsInfo = ({
 	];
 
 	return (
-		<SidebarPanel panelTitle={Liferay.Language.get('information')}>
+		<>
 			<ClayForm.Group>
 				<label htmlFor="notificationName">
 					{Liferay.Language.get('name')}
@@ -315,7 +315,7 @@ const BaseNotificationsInfo = ({
 					/>
 				)}
 			</div>
-		</SidebarPanel>
+		</>
 	);
 };
 

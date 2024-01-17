@@ -11,7 +11,7 @@
 
 <aui:script senna="temporary" type="text/javascript">
 	var runMiddlewares = function () {
-		<liferay-util:dynamic-include key="/dynamic_include/top_head.jsp#analytics" />
+		<liferay-util:dynamic-include key="com.liferay.analytics.web#/dynamic_include/top_head.jsp#analytics" />
 	};
 
 	var analyticsClientChannelId =

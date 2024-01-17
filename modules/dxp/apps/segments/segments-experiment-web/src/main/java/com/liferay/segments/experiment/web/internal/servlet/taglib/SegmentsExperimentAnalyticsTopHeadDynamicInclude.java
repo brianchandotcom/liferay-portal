@@ -80,7 +80,8 @@ public class SegmentsExperimentAnalyticsTopHeadDynamicInclude
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
-			"/dynamic_include/top_head.jsp#analytics");
+			"com.liferay.analytics.web#/dynamic_include/top_head.jsp#" +
+				"analytics");
 	}
 
 	private String _getSegmentsExperienceKey(long segmentsExperienceId) {

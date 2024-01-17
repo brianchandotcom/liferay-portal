@@ -30,7 +30,6 @@ const undoAction = ({action, store}) => (dispatch) =>
 					['items', action.itemId, 'config'],
 					action.itemConfig
 				),
-				pageContents: action.pageContents,
 			})
 		);
 	});
@@ -50,7 +49,6 @@ const getDerivedStateForUndo = ({action, state}) => ({
 	),
 	itemConfig: state.layoutData.items[action.itemId].config,
 	itemId: action.itemId,
-	pageContents: state.pageContents,
 });
 
 export {undoAction, getDerivedStateForUndo};

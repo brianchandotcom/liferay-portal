@@ -156,7 +156,7 @@ definition {
 		task ("Change embedded type URL") {
 			PagesAdmin.configurePage(
 				pageName = "Test Page Name 1",
-				pageTypeURL = "http://whereiscaliforniaonfire.com",
+				pageTypeURL = "https://www.fire.ca.gov",
 				sitePageType = "Embedded");
 		}
 
@@ -184,7 +184,7 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_IFRAME");
 
 			AssertVisible(
-				key_title = "Fires",
+				key_title = "CalFire",
 				locator1 = "Header#H1_TITLE");
 		}
 

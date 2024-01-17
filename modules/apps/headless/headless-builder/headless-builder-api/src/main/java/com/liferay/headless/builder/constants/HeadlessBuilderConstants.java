@@ -23,4 +23,11 @@ public class HeadlessBuilderConstants {
 
 	public static final String PATH_PARAMETER_ID = "id";
 
+	public static final String PROPERTY_TYPE_ARRAY_CONTAINER = "arrayContainer";
+
+	public static final String PROPERTY_TYPE_NORMAL = "normal";
+
+	public static final String PROPERTY_TYPE_SINGLE_CONTAINER =
+		"singleContainer";
+
 }

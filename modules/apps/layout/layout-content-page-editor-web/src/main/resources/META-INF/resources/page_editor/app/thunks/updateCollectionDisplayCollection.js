@@ -25,13 +25,12 @@ export default function updateCollectionDisplayCollection({
 			languageId: getState().languageId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: getState().segmentsExperienceId,
-		}).then(({fragmentEntryLinks, layoutData, pageContents}) =>
+		}).then(({fragmentEntryLinks, layoutData}) =>
 			dispatch(
 				updateCollectionDisplayCollectionAction({
 					fragmentEntryLinks,
 					itemId,
 					layoutData,
-					pageContents,
 				})
 			)
 		);

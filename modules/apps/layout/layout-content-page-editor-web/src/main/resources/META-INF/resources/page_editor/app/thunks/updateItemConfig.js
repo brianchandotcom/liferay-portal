@@ -19,13 +19,12 @@ export default function updateItemConfig({
 			itemId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
-		}).then(({layoutData, pageContents}) => {
+		}).then(({layoutData}) => {
 			dispatch(
 				updateItemConfigAction({
 					itemId,
 					layoutData,
 					overridePreviousConfig,
-					pageContents,
 				})
 			);
 		});

@@ -12,12 +12,11 @@ export default function updateRowColumns(payload) {
 			...payload,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: getState().segmentsExperienceId,
-		}).then(({layoutData, pageContents}) => {
+		}).then(({layoutData}) => {
 			dispatch(
 				updateRowColumnsAction({
 					...payload,
 					layoutData,
-					pageContents,
 				})
 			);
 		});

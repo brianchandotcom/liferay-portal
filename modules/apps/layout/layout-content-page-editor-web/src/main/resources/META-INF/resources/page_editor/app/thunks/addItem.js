@@ -13,7 +13,7 @@ export default function addItem({
 	selectItem = () => {},
 }) {
 	return (dispatch, getState) => {
-		const {pageContents, segmentsExperienceId} = getState();
+		const {segmentsExperienceId} = getState();
 
 		return LayoutService.addItem({
 			itemType,
@@ -22,9 +22,7 @@ export default function addItem({
 			position,
 			segmentsExperienceId,
 		}).then(({addedItemId, layoutData}) => {
-			dispatch(
-				addItemAction({itemId: addedItemId, layoutData, pageContents})
-			);
+			dispatch(addItemAction({itemId: addedItemId, layoutData}));
 
 			if (addedItemId) {
 				selectItem(addedItemId);

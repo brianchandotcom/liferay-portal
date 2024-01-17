@@ -54,52 +54,7 @@ public class ObjectUserNotificationsHandlerTest {
 	}
 
 	@Test
-	public void testGetLinkWhenGuestUserObjectEntrySubmissionsExceedsLimits()
-		throws Exception {
-
-		Mockito.when(
-			_userNotificationEvent.getPayload()
-		).thenReturn(
-			"{ \"exceedsObjectEntryLimit\": true }"
-		);
-
-		try (MockedStatic<RequestBackedPortletURLFactoryUtil>
-				requestBackedPortletURLFactoryUtilMockedStatic =
-					Mockito.mockStatic(
-						RequestBackedPortletURLFactoryUtil.class);
-			MockedStatic<PortletURLBuilder> portletURLBuilderMockedStatic =
-				Mockito.mockStatic(PortletURLBuilder.class)) {
-
-			requestBackedPortletURLFactoryUtilMockedStatic.when(
-				() -> RequestBackedPortletURLFactoryUtil.create(
-					Mockito.any(HttpServletRequest.class))
-			).thenReturn(
-				_requestBackedPortletURLFactory
-			);
-
-			MockLiferayPortletURL mockLiferayPortletURL =
-				new MockLiferayPortletURL();
-
-			portletURLBuilderMockedStatic.when(
-				() -> PortletURLBuilder.create(Mockito.any())
-			).thenReturn(
-				new PortletURLBuilder.PortletURLStep(mockLiferayPortletURL)
-			);
-
-			_objectUserNotificationsHandler.getLink(
-				_userNotificationEvent, _serviceContext);
-
-			Assert.assertEquals(
-				"com.liferay.object.configuration.ObjectConfiguration",
-				mockLiferayPortletURL.getParameter("factoryPid"));
-			Assert.assertEquals(
-				"/configuration_admin/edit_configuration",
-				mockLiferayPortletURL.getParameter("mvcRenderCommandName"));
-		}
-	}
-
-	@Test
-	public void testGetLinkWhenNotificationHasFriendlyURL() throws Exception {
+	public void testGetLinkToAccessSubmittedObjectEntry1() throws Exception {
 		Mockito.when(
 			_userNotificationEvent.getPayload()
 		).thenReturn(
@@ -127,9 +82,7 @@ public class ObjectUserNotificationsHandlerTest {
 	}
 
 	@Test
-	public void testGetLinkWhenObjectEntryHasNotDisplayPageFriendlyURL()
-		throws Exception {
-
+	public void testGetLinkToAccessSubmittedObjectEntry2() throws Exception {
 		Mockito.when(
 			_userNotificationEvent.getPayload()
 		).thenReturn(
@@ -177,6 +130,51 @@ public class ObjectUserNotificationsHandlerTest {
 			Assert.assertEquals(
 				String.valueOf(_objectDefinition.getObjectDefinitionId()),
 				mockLiferayPortletURL.getParameter("objectDefinitionId"));
+		}
+	}
+
+	@Test
+	public void testGetLinkToAccessSystemSettingObjectConfiguration()
+		throws Exception {
+
+		Mockito.when(
+			_userNotificationEvent.getPayload()
+		).thenReturn(
+			"{ \"exceedsObjectEntryLimit\": true }"
+		);
+
+		try (MockedStatic<RequestBackedPortletURLFactoryUtil>
+				requestBackedPortletURLFactoryUtilMockedStatic =
+					Mockito.mockStatic(
+						RequestBackedPortletURLFactoryUtil.class);
+			MockedStatic<PortletURLBuilder> portletURLBuilderMockedStatic =
+				Mockito.mockStatic(PortletURLBuilder.class)) {
+
+			requestBackedPortletURLFactoryUtilMockedStatic.when(
+				() -> RequestBackedPortletURLFactoryUtil.create(
+					Mockito.any(HttpServletRequest.class))
+			).thenReturn(
+				_requestBackedPortletURLFactory
+			);
+
+			MockLiferayPortletURL mockLiferayPortletURL =
+				new MockLiferayPortletURL();
+
+			portletURLBuilderMockedStatic.when(
+				() -> PortletURLBuilder.create(Mockito.any())
+			).thenReturn(
+				new PortletURLBuilder.PortletURLStep(mockLiferayPortletURL)
+			);
+
+			_objectUserNotificationsHandler.getLink(
+				_userNotificationEvent, _serviceContext);
+
+			Assert.assertEquals(
+				"com.liferay.object.configuration.ObjectConfiguration",
+				mockLiferayPortletURL.getParameter("factoryPid"));
+			Assert.assertEquals(
+				"/configuration_admin/edit_configuration",
+				mockLiferayPortletURL.getParameter("mvcRenderCommandName"));
 		}
 	}
 

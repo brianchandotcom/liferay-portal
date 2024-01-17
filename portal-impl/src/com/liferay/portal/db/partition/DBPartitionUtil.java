@@ -887,7 +887,7 @@ public class DBPartitionUtil {
 
 		statement.executeUpdate(
 			_getCopyDataSQL(
-				_defaultPartitionName, toPartitionName, tableName,
+				fromPartitionName, toPartitionName, tableName,
 				" where companyId = " + companyId));
 
 		_deleteCompanyData(companyId, tableName, fromPartitionName, statement);

@@ -19,7 +19,7 @@ name = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse) + nam
 %>
 
 <liferay-util:html-top
-	outputKey="js_maps_openstreet_skip_loading"
+	outputKey="com.liferay.map.openstreetmap#/view.jsp"
 >
 	<link crossorigin="anonymous" href="https://npmcdn.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha384-VzLXTJGPSyTLX6d96AxgkKvE/LRb7ECGyTxuwtpjHnVWVZs2gp5RDjeM/tgBnVdM" rel="stylesheet" />
 

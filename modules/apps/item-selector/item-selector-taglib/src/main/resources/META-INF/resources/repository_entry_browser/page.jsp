@@ -45,7 +45,7 @@ if (uploadURL != null) {
 %>
 
 <liferay-util:html-top
-	outputKey="item_selector_repository_entry_browser"
+	outputKey="com.liferay.item.selector.taglib#/repository_entry_browser/page.jsp"
 >
 	<link href="<%= ServletContextUtil.getContextPath() %>/repository_entry_browser/css/main.css" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

@@ -18,7 +18,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 %>
 
 <liferay-util:html-top
-	outputKey="configuration_css"
+	outputKey="com.liferay.segments.web#/segments_configuration.jsp"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/configuration.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

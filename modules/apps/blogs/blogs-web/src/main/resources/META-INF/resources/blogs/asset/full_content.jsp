@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-util:html-top
-	outputKey="blogs_css"
+	outputKey="com.liferay.blogs.web#/blogs/asset/full_content.jsp"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/blogs/css/common_main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

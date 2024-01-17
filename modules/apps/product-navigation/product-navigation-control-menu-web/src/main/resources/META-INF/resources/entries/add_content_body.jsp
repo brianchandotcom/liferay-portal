@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-util:body-bottom
-	outputKey="addContentMenu"
+	outputKey="com.liferay.product.navigation.control.menu.web#/entries/add_content_body.jsp"
 >
 
 	<%

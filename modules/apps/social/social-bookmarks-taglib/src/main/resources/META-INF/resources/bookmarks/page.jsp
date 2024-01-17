@@ -8,7 +8,7 @@
 <%@ include file="/bookmarks/init.jsp" %>
 
 <liferay-util:html-top
-	outputKey="social_bookmarks_css"
+	outputKey="com.liferay.social.bookmarks.taglib#/bookmarks/page.jsp"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

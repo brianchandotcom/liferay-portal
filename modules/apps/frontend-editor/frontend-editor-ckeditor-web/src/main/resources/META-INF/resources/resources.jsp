@@ -14,7 +14,7 @@ String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKE
 %>
 
 <liferay-util:html-top
-	outputKey="js_editor_ckeditor_skip_editor_loading"
+	outputKey="com.liferay.frontend.editor.ckeditor.web#/resources.jsp"
 >
 	<style type="text/css">
 		table.cke_dialog {

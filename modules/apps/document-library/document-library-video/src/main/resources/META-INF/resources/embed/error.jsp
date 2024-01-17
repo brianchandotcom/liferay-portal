@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-util:html-top
-	outputKey="document_library_video_embed_css"
+	outputKey="com.liferay.document.library.video#/embed/error.jsp"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/embed.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

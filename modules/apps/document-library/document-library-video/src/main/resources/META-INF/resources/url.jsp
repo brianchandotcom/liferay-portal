@@ -12,7 +12,7 @@ String eventName = (String)request.getAttribute(DLVideoWebKeys.EVENT_NAME);
 %>
 
 <liferay-util:html-top
-	outputKey="document_library_video_css"
+	outputKey="com.liferay.document.library.video#/url.jsp"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

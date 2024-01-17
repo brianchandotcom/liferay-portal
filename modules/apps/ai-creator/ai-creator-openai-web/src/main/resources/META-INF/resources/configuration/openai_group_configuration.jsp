@@ -15,7 +15,7 @@ boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.is
 %>
 
 <liferay-util:html-top
-	outputKey="ai_creator_openai_css"
+	outputKey="com.liferay.ai.creator.openai.web#/configuration/openai_group_configuration.jsp"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/configuration.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

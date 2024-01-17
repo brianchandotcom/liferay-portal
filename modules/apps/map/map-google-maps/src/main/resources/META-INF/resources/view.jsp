@@ -21,7 +21,7 @@ name = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse) + nam
 %>
 
 <liferay-util:html-top
-	outputKey="js_maps_google_skip_map_loading"
+	outputKey="com.liferay.map.google.maps#/view.jsp"
 >
 	<aui:script>
 		Liferay.namespace('Maps').onGMapsReady = function (event) {

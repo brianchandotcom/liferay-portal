@@ -8,7 +8,7 @@
 <%@ include file="/collaborators/init.jsp" %>
 
 <liferay-util:html-top
-	outputKey="collaborators_css"
+	outputKey="com.liferay.sharing.taglib#/collaborators/page.jsp"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/collaborators/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

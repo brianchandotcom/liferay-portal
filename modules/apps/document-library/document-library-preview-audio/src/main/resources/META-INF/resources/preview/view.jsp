@@ -12,7 +12,7 @@ List<String> previewFileURLs = (List<String>)request.getAttribute(DLPreviewAudio
 %>
 
 <liferay-util:html-top
-	outputKey="document_library_preview_audio_css"
+	outputKey="com.liferay.document.library.preview.audio#/preview/view.jsp"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/document-library-preview-css/css/main.css") %>" rel="stylesheet" />
 </liferay-util:html-top>

@@ -49,7 +49,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						</portlet:renderURL>
 
 						<liferay-util:html-top
-							outputKey="blogs_previous_entry_link"
+							outputKey="com.liferay.blogs.web#/blogs/view_entry_related.jsp"
 						>
 							<link href="<%= blogsEntryURL.toString() %>" rel="prev" />
 						</liferay-util:html-top>

@@ -13,7 +13,7 @@ String onFilePickCallback = (String)request.getAttribute(DLVideoWebKeys.ON_FILE_
 %>
 
 <liferay-util:html-top
-	outputKey="document_library_video_css"
+	outputKey="com.liferay.document.library.video#/file_picker.jsp"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

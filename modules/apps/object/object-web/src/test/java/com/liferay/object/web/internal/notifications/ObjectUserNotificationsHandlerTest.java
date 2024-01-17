@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
@@ -101,15 +99,6 @@ public class ObjectUserNotificationsHandlerTest {
 				() -> PortletURLBuilder.create(Mockito.any())
 			).thenReturn(
 				new PortletURLBuilder.PortletURLStep(mockLiferayPortletURL)
-			);
-
-			portalUtilMockedStatic.when(
-				() -> PortalUtil.getControlPanelPortletURL(
-					Mockito.any(HttpServletRequest.class),
-					Mockito.any(Group.class), Mockito.anyString(),
-					Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString())
-			).thenReturn(
-				Mockito.mock(PortletURL.class)
 			);
 
 			Mockito.when(

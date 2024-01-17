@@ -5,7 +5,7 @@ import {render} from '@testing-library/react';
 jest.unmock('react-dom');
 
 const DefaultComponent = props => (
-	<SubscriptionTitle name='Business' price={750} {...props} />
+	<SubscriptionTitle name='Business' {...props} />
 );
 
 describe('SubscriptionTitle', () => {

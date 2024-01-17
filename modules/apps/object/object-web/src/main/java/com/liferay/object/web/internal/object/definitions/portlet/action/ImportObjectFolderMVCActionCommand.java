@@ -74,15 +74,8 @@ public class ImportObjectFolderMVCActionCommand extends BaseMVCActionCommand {
 
 			JSONObject jsonObject = null;
 
-			if (exception instanceof ObjectFolderNameException) {
-				Class<?> clazz = exception.getClass();
-
-				jsonObject = JSONUtil.put(
-					"type",
-					"ObjectFolderNameException." + clazz.getSimpleName());
-			}
-			else if (exception instanceof
-						ObjectFolderItemObjectDefinitionIdException) {
+			if (exception instanceof
+					ObjectFolderItemObjectDefinitionIdException) {
 
 				ObjectFolderItemObjectDefinitionIdException
 					objectFolderItemObjectDefinitionIdException =
@@ -97,6 +90,13 @@ public class ImportObjectFolderMVCActionCommand extends BaseMVCActionCommand {
 							objectFolderItemObjectDefinitionIdException.
 								getObjectDefinitionNames(),
 							StringPool.COMMA_AND_SPACE)));
+			}
+			else if (exception instanceof ObjectFolderNameException) {
+				Class<?> clazz = exception.getClass();
+
+				jsonObject = JSONUtil.put(
+					"type",
+					"ObjectFolderNameException." + clazz.getSimpleName());
 			}
 			else {
 				jsonObject = JSONUtil.put(

@@ -139,7 +139,7 @@
 							<clay:dropdown-actions
 								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= dropdownItems %>"
-								propsTransformer="js/SiteDropdownDefaultPropsTransformer"
+								propsTransformer="{SiteDropdownDefaultPropsTransformer} from site-my-sites-web"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:if>
@@ -240,7 +240,7 @@
 							<clay:dropdown-actions
 								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= dropdownItems %>"
-								propsTransformer="js/SiteDropdownDefaultPropsTransformer"
+								propsTransformer="{SiteDropdownDefaultPropsTransformer} from site-my-sites-web"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:if>

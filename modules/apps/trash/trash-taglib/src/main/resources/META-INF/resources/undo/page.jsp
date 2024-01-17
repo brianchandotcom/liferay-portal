@@ -100,5 +100,5 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 			"alertMessage", alertMessage
 		).build()
 	%>'
-	module="js/undo"
+	module="{undo} from trash-taglib"
 />

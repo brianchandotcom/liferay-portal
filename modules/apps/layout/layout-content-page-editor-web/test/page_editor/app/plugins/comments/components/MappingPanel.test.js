@@ -4,12 +4,14 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+import {State} from '@liferay/frontend-js-state-web';
 import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import {pageContentsAtom} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
 import {MappingPanel} from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page_structure/components/item_configuration_panels/MappingPanel';
 
 const dateEditableItem = {
@@ -78,6 +80,13 @@ function renderMappingPanel(item) {
 }
 
 describe('MappingPanel', () => {
+	beforeAll(() => {
+		State.writeAtom(pageContentsAtom, {
+			data: [],
+			status: 'saved',
+		});
+	});
+
 	it('displays date format dropdown when type is date-time', () => {
 		renderMappingPanel(dateEditableItem);
 

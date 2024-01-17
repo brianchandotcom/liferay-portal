@@ -4,6 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+import {State} from '@liferay/frontend-js-state-web';
 import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -17,6 +18,7 @@ import {VIEWPORT_SIZES} from '../../../../../../../../src/main/resources/META-IN
 import {ControlsProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import {StoreAPIContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateItemConfig from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
+import {pageContentsAtom} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
 import PageStructureSidebar from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page_structure/components/PageStructureSidebar';
 
 jest.mock(
@@ -258,6 +260,13 @@ const renderComponent = ({
 };
 
 describe('PageStructureSidebar', () => {
+	beforeAll(() => {
+		State.writeAtom(pageContentsAtom, {
+			data: [],
+			status: 'saved',
+		});
+	});
+
 	it('has a warning message when there is no content', () => {
 		renderComponent({
 			masterRootItemChildren: [],

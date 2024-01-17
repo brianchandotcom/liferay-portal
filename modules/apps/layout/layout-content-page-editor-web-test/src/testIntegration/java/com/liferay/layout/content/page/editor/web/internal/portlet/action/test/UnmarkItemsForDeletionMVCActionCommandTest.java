@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -39,7 +38,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -113,12 +111,11 @@ public class UnmarkItemsForDeletionMVCActionCommandTest {
 
 		JSONObject unmarkItemsForDeletionJSONObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_unmarkItemsForDeletion",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			new Class<?>[] {ActionRequest.class},
 			_getMockLiferayPortletActionRequest(
 				JSONUtil.put(
 					containerItemId
-				).toString()),
-			new MockLiferayPortletActionResponse());
+				).toString()));
 
 		layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
@@ -177,12 +174,11 @@ public class UnmarkItemsForDeletionMVCActionCommandTest {
 
 		JSONObject unmarkItemsForDeletionJSONObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_unmarkItemsForDeletion",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			new Class<?>[] {ActionRequest.class},
 			_getMockLiferayPortletActionRequest(
 				JSONUtil.putAll(
 					originalChildrenItemIds[1], originalChildrenItemIds[2]
-				).toString()),
-			new MockLiferayPortletActionResponse());
+				).toString()));
 
 		layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());

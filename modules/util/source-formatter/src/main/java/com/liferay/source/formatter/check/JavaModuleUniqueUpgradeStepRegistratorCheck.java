@@ -86,6 +86,8 @@ public class JavaModuleUniqueUpgradeStepRegistratorCheck
 					"A module can not have more than 1 upgrade step " +
 						"registrator class (class implements " +
 							"UpgradeStepRegistrator)");
+
+				return javaTerm.getContent();
 			}
 		}
 

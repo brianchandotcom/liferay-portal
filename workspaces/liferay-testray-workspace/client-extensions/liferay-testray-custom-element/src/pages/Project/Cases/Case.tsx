@@ -4,10 +4,10 @@
  */
 
 import {useOutletContext, useParams} from 'react-router-dom';
-import PreviewInformation from '~/components/Markdown/PreviewChangeType';
 
 import JiraLink from '../../../components/JiraLink';
 import Container from '../../../components/Layout/Container';
+import PreviewInformation from '../../../components/Markdown/PreviewChangeType';
 import QATable from '../../../components/Table/QATable';
 import SearchBuilder from '../../../core/SearchBuilder';
 import useIssuesFound from '../../../hooks/data/useIssuesFound';

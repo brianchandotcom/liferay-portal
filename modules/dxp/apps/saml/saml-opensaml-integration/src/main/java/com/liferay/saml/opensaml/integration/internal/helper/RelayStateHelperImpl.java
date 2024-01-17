@@ -26,13 +26,13 @@ import org.osgi.service.component.annotations.Component;
 public class RelayStateHelperImpl implements RelayStateHelper {
 
 	public String getRedirectFromRelayStateToken(String relayStateToken) {
-		String redirect = _relayStateTokensToRedirects.get(relayStateToken);
+		if (Validator.isNotNull(relayStateToken) &&
+			relayStateToken.startsWith("RDR_")) {
 
-		if (Validator.isNull(redirect)) {
-			return relayStateToken;
+			return _relayStateTokensToRedirects.get(relayStateToken);
 		}
 
-		return redirect;
+		return relayStateToken;
 	}
 
 	public String getRelayStateTokenFromRedirect(String redirect) {
@@ -50,7 +50,7 @@ public class RelayStateHelperImpl implements RelayStateHelper {
 			_relayStateTokensToRedirects.remove(relayStateToken);
 		}
 
-		relayStateToken = PortalUUIDUtil.generate();
+		relayStateToken = "RDR_" + PortalUUIDUtil.generate();
 
 		_redirectsToRelayStateTokens.put(redirect, relayStateToken);
 

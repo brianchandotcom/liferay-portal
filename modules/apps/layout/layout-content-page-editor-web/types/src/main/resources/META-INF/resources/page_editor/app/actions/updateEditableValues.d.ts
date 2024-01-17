@@ -4,18 +4,15 @@
  */
 
 import type {FragmentEntryLink} from './addFragmentEntryLinks';
-import type {PageContent} from './addItem';
 export default function updateEditableValues({
 	content,
 	editableValues,
 	fragmentEntryLinkId,
-	pageContents,
 	segmentsExperienceId,
 }: {
 	content: string;
 	editableValues: FragmentEntryLink['editableValues'];
 	fragmentEntryLinkId: string;
-	pageContents: PageContent[];
 	segmentsExperienceId: string;
 }): {
 	readonly content: string;
@@ -37,7 +34,6 @@ export default function updateEditableValues({
 		};
 	};
 	readonly fragmentEntryLinkId: string;
-	readonly pageContents: PageContent[];
 	readonly segmentsExperienceId: string;
 	readonly type: 'UPDATE_EDITABLE_VALUES';
 };

@@ -13,7 +13,6 @@ import layoutDataReducer from './layoutDataReducer';
 import mappingFieldsReducer from './mappingFieldsReducer';
 import masterLayoutReducer from './masterLayoutReducer';
 import networkReducer from './networkReducer';
-import pageContentsReducer from './pageContentsReducer';
 import permissionsReducer from './permissionsReducer';
 import restrictedItemIdsReducer from './restrictedItemIdsReducer';
 import selectedViewportSizeReducer from './selectedViewportSizeReducer';
@@ -30,7 +29,6 @@ declare const REDUCER_MAP: {
 	readonly mappingFields: typeof mappingFieldsReducer;
 	readonly masterLayout: typeof masterLayoutReducer;
 	readonly network: typeof networkReducer;
-	readonly pageContents: typeof pageContentsReducer;
 	readonly permissions: typeof permissionsReducer;
 	readonly reducers: typeof baseReducer;
 	readonly restrictedItemIds: typeof restrictedItemIdsReducer;
@@ -44,6 +42,8 @@ export declare type Action = Parameters<
 >[1];
 export declare type State = {
 	[key in keyof typeof REDUCER_MAP]: ReturnType<typeof REDUCER_MAP[key]>;
+} & {
+	segmentsExperienceId: string | null;
 };
 
 /**

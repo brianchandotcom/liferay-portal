@@ -64,5 +64,5 @@ SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMe
 <liferay-frontend:component
 	componentId="SelectEntityHandler"
 	context="<%= siteNavigationMenuContextualMenusItemSelectorViewDisplayContext.getContext(liferayPortletResponse) %>"
-	module="js/SelectEntityHandler"
+	module="{SelectEntityHandler} from site-navigation-item-selector-web"
 />

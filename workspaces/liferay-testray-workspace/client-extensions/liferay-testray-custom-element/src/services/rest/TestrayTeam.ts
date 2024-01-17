@@ -21,9 +21,12 @@ class TestrayTeamImpl extends Rest<Team, TestrayTeam> {
 				name,
 				r_projectToTeams_c_projectId,
 			}),
-			nestedFields: 'project',
+			nestedFields: 'project,teamToComponents',
 			transformData: (team) => ({
 				...team,
+				component: team.teamToComponents?.map(({teamToComponents}) =>
+					testrayComponentImpl.transformData(teamToComponents)
+				),
 				project: team?.r_projectToTeams_c_project,
 			}),
 			uri: 'teams',

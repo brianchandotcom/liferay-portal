@@ -94,13 +94,6 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						<liferay-ui:search-container-column-text
 							colspan="<%= 2 %>"
 						>
-
-							<%
-							Date createDate = curArticle.getModifiedDate();
-
-							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-							%>
-
 							<div class="d-flex">
 								<c:choose>
 									<c:when test="<%= editURL != StringPool.BLANK %>">
@@ -120,7 +113,28 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							</div>
 
 							<span class="c-pt-1 text-secondary">
-								<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription, HtmlUtil.escape(curArticle.getStatusByUserName())} %>" key="modified-x-ago-by-x" />
+								<c:choose>
+									<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-202534") && journalDisplayContext.isNavigationMine() %>'>
+
+										<%
+										Date createDate = curArticle.getCreateDate();
+
+										String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+										%>
+
+										<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription, HtmlUtil.escape(curArticle.getUserName())} %>" key="created-x-ago-by-x" />
+									</c:when>
+									<c:otherwise>
+
+										<%
+										Date modifiedDate = curArticle.getModifiedDate();
+
+										String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+										%>
+
+										<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription, HtmlUtil.escape(curArticle.getStatusByUserName())} %>" key="modified-x-ago-by-x" />
+									</c:otherwise>
+								</c:choose>
 							</span>
 
 							<c:if test="<%= journalDisplayContext.isSearch() && ((curArticle.getFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curArticle.getFolder(), ActionKeys.VIEW)) %>">

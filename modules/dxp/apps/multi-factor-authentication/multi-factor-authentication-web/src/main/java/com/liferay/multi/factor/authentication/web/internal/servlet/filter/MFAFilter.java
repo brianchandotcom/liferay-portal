@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.TryFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
@@ -75,8 +74,5 @@ public class MFAFilter extends BaseFilter implements TryFilter {
 
 	@Reference
 	private MFAPolicy _mfaPolicy;
-
-	@Reference
-	private Portal _portal;
 
 }

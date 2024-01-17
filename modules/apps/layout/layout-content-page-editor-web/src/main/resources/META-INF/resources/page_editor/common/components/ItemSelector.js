@@ -10,13 +10,13 @@ import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 
 import {config} from '../../app/config/index';
-import {useSelectorCallback} from '../../app/contexts/StoreContext';
-import {selectPageContentDropdownItems} from '../../app/selectors/selectPageContentDropdownItems';
 import findPageContent from '../../app/utils/findPageContent';
 import getEditableId from '../../app/utils/getEditableId';
+import {getPageContentDropdownItems} from '../../app/utils/getPageContentDropdownItems';
+import usePageContents from '../../app/utils/usePageContents';
 import {openItemSelector} from '../openItemSelector';
 
 const DEFAULT_BEFORE_ITEM_SELECT = () => {};
@@ -73,118 +73,104 @@ export default function ItemSelector({
 		transformValueCallback,
 	]);
 
-	const mappedItemsMenu = useSelectorCallback(
-		(state) => {
-			let transformedMappedItems = [];
+	const pageContents = usePageContents();
 
-			if (!showMappedItems) {
-				return transformedMappedItems;
-			}
+	const mappedItemsMenu = useMemo(() => {
+		let transformedMappedItems = [];
 
-			const transformMappedItem = (item) => ({
-				'data-item-id': getEditableId(item),
-				'label': item.title,
-				'onClick': () => onItemSelect(item),
-			});
-
-			if (quickMappedInfoItems.length) {
-				transformedMappedItems = quickMappedInfoItems.map(
-					transformMappedItem
-				);
-			}
-			else if (state.pageContents?.length > 0) {
-				transformedMappedItems = state.pageContents.map(
-					transformMappedItem
-				);
-			}
-
-			if (transformedMappedItems.length) {
-				transformedMappedItems = [
-					{
-						items: transformedMappedItems,
-						label: Liferay.Language.get('recent'),
-						type: 'group',
-					},
-				];
-
-				transformedMappedItems.push(
-					{
-						type: 'divider',
-					},
-					{
-						label: `${sub(
-							Liferay.Language.get('select-x'),
-							label
-						)}...`,
-						onClick: () => openModal(),
-					}
-				);
-			}
-
+		if (!showMappedItems) {
 			return transformedMappedItems;
-		},
-		[onItemSelect, openModal, quickMappedInfoItems, showMappedItems],
-		(a, b) =>
-			a.length === b.length &&
-			a.every(
-				(item, index) =>
-					item['data-item-id'] === b[index]['data-item-id']
-			)
-	);
+		}
 
-	const optionsMenu = useSelectorCallback(
-		(state) => {
-			const menuItems = [];
+		const transformMappedItem = (item) => ({
+			'data-item-id': getEditableId(item),
+			'label': item.title,
+			'onClick': () => onItemSelect(item),
+		});
 
-			if (selectedItem?.classPK || selectedItem?.externalReferenceCode) {
-				const contentMenuItems = selectPageContentDropdownItems(
-					selectedItem,
-					label
-				)(state)?.filter(
-					(item) => item.label !== Liferay.Language.get('edit-image')
-				);
+		if (quickMappedInfoItems.length) {
+			transformedMappedItems = quickMappedInfoItems.map(
+				transformMappedItem
+			);
+		}
+		else if (pageContents.length) {
+			transformedMappedItems = pageContents.map(transformMappedItem);
+		}
 
-				if (contentMenuItems?.length) {
-					menuItems.push(...contentMenuItems, {type: 'divider'});
+		if (transformedMappedItems.length) {
+			transformedMappedItems = [
+				{
+					items: transformedMappedItems,
+					label: Liferay.Language.get('recent'),
+					type: 'group',
+				},
+			];
+
+			transformedMappedItems.push(
+				{
+					type: 'divider',
+				},
+				{
+					label: `${sub(Liferay.Language.get('select-x'), label)}...`,
+					onClick: () => openModal(),
 				}
-			}
+			);
+		}
 
-			if (optionsMenuItems.length) {
-				menuItems.push(...optionsMenuItems, {type: 'divider'});
-			}
+		return transformedMappedItems;
+	}, [
+		label,
+		onItemSelect,
+		openModal,
+		pageContents,
+		quickMappedInfoItems,
+		showMappedItems,
+	]);
 
-			menuItems.push({
-				label: sub(Liferay.Language.get('remove-x'), label),
-				onClick: () => onItemSelect({}),
-				symbolLeft:
-					label === Liferay.Language.get('collection')
-						? 'trash'
-						: null,
-			});
+	const optionsMenu = useMemo(() => {
+		const menuItems = [];
 
-			return menuItems;
-		},
-		[label, onItemSelect, optionsMenuItems, selectedItem]
-	);
+		if (selectedItem?.classPK || selectedItem?.externalReferenceCode) {
+			const pageContent = findPageContent(pageContents, selectedItem);
 
-	const selectedItemTitle = useSelectorCallback(
-		(state) => {
-			if (!selectedItem) {
-				return '';
-			}
-
-			const content = findPageContent(
-				[
-					...(quickMappedInfoItems || []),
-					...(state.pageContents || []),
-				],
-				selectedItem
+			const contentMenuItems = getPageContentDropdownItems(
+				pageContent,
+				label
+			)?.filter(
+				(item) => item.label !== Liferay.Language.get('edit-image')
 			);
 
-			return content?.title || selectedItem.title || '';
-		},
-		[quickMappedInfoItems, selectedItem]
-	);
+			if (contentMenuItems?.length) {
+				menuItems.push(...contentMenuItems, {type: 'divider'});
+			}
+		}
+
+		if (optionsMenuItems.length) {
+			menuItems.push(...optionsMenuItems, {type: 'divider'});
+		}
+
+		menuItems.push({
+			label: sub(Liferay.Language.get('remove-x'), label),
+			onClick: () => onItemSelect({}),
+			symbolLeft:
+				label === Liferay.Language.get('collection') ? 'trash' : null,
+		});
+
+		return menuItems;
+	}, [label, onItemSelect, optionsMenuItems, pageContents, selectedItem]);
+
+	const selectedItemTitle = useMemo(() => {
+		if (!selectedItem) {
+			return '';
+		}
+
+		const content = findPageContent(
+			[...(quickMappedInfoItems || []), ...(pageContents || [])],
+			selectedItem
+		);
+
+		return content?.title || selectedItem.title || '';
+	}, [quickMappedInfoItems, pageContents, selectedItem]);
 
 	const selectContentButtonIcon = selectedItem?.title ? 'change' : 'plus';
 

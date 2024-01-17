@@ -13,7 +13,7 @@ DisplayPageTypeSiteNavigationMenuTypeDisplayContext displayPageTypeSiteNavigatio
 
 <div>
 	<react:component
-		module="js/DisplayPageItemContextualSidebar"
+		module="{DisplayPageItemContextualSidebar} from site-navigation-menu-item-display-page"
 		props="<%= displayPageTypeSiteNavigationMenuTypeDisplayContext.getDisplayPageItemContextualSidebarContext() %>"
 	/>
 </div>

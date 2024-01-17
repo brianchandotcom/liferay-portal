@@ -73,7 +73,6 @@ public class FunctionCommercePaymentIntegration
 
 			commercePaymentEntry.setPaymentStatus(
 				jsonObject.getInt("paymentStatus"));
-
 			commercePaymentEntry.setTransactionCode(
 				jsonObject.getString("transactionCode"));
 		}

@@ -4963,7 +4963,9 @@ definition {
 		task ("Check location at web content editor") {
 			AssertLocation.assertPartialLocation(value1 = "com_liferay_journal_web_portlet_JournalPortlet");
 
-			AssertLocation.assertPartialLocation(value1 = "edit_article.jsp");
+			AssertLocation.assertPartialLocation(value1 = "edit_article");
+
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 		}
 	}
 

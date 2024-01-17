@@ -142,16 +142,23 @@ public class FragmentLayoutStructureItemMapper
 		return new PageElement() {
 			{
 				setDefinition(
-					() -> _toPageWidgetInstanceDefinition(
-						fragmentEntryLink, fragmentStyledLayoutStructureItem,
-						itemConfigJSONObject.getString("name", null),
-						toFragmentStyle(
-							itemConfigJSONObject.getJSONObject("styles"),
-							saveMappingConfiguration),
-						getFragmentViewPorts(
-							itemConfigJSONObject.getJSONObject("style")),
-						PortletIdCodec.encode(portletId, instanceId)));
-				setId(() -> layoutStructureItem::getItemId);
+					() -> {
+						JSONObject itemConfigJSONObject =
+							fragmentStyledLayoutStructureItem.
+								getItemConfigJSONObject();
+
+						return _toPageWidgetInstanceDefinition(
+							fragmentEntryLink,
+							fragmentStyledLayoutStructureItem,
+							itemConfigJSONObject.getString("name", null),
+							toFragmentStyle(
+								itemConfigJSONObject.getJSONObject("styles"),
+								saveMappingConfiguration),
+							getFragmentViewPorts(
+								itemConfigJSONObject.getJSONObject("style")),
+							PortletIdCodec.encode(portletId, instanceId));
+					});
+				setId(layoutStructureItem::getItemId);
 				setType(() -> Type.WIDGET);
 			}
 		};

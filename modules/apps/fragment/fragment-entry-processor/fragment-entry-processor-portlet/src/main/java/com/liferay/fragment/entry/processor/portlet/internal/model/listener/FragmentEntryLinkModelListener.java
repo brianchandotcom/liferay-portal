@@ -66,14 +66,14 @@ public class FragmentEntryLinkModelListener
 						layoutPageTemplateEntry.getType(),
 						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
+					List<Long> masterPagePlids = new ArrayList<>();
+
+					masterPagePlids.add(fragmentEntryLink.getPlid());
+
 					Layout masterPageDraftLayout =
 						_layoutLocalService.fetchLayout(
 							_portal.getClassNameId(Layout.class),
 							fragmentEntryLink.getPlid());
-
-					List<Long> masterPagePlids = new ArrayList<>();
-
-					masterPagePlids.add(fragmentEntryLink.getPlid());
 
 					if (masterPageDraftLayout != null) {
 						masterPagePlids.add(masterPageDraftLayout.getPlid());

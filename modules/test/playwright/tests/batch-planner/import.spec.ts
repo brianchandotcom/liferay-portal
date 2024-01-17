@@ -6,16 +6,16 @@
 import {expect, mergeTests} from '@playwright/test';
 import * as path from 'path';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpers.fixture';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPages.fixture';
-import {dataMigrationCenterPageTest} from '../../fixtures/dataMigrationCenterPages.fixture';
-import {objectPagesTest} from '../../fixtures/objectPages.fixture';
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {dataMigrationCenterPagesTest} from '../../fixtures/dataMigrationCenterPages';
+import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {OBJECT_ENTRY_ENTITY_TYPE} from './utils/constants';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
-	dataMigrationCenterPageTest,
+	dataMigrationCenterPagesTest,
 	objectPagesTest
 );
 
@@ -302,21 +302,21 @@ const siteObjectDefinition = {
 };
 
 test('can import CSV file with an unexisting field', async ({
-	_apiHelpers,
-	_dataMigrationCenterPage,
+	apiHelpers,
+	dataMigrationCenterPage,
 	page,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
-	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
+	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
 	);
 
-	await _dataMigrationCenterPage.goto();
-	await _dataMigrationCenterPage.goToImportFile();
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
 
-	await _dataMigrationCenterPage.importFile(
+	await dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(__dirname, '/dependencies/non_existing_field_object_entries.csv'),
 		'UPSERT',
@@ -328,7 +328,7 @@ test('can import CSV file with an unexisting field', async ({
 	).toBeVisible();
 
 	expect(
-		(await _apiHelpers.object.getObjectDefinitionObjectEntries('c/tests'))
+		(await apiHelpers.object.getObjectDefinitionObjectEntries('c/tests'))
 			.items
 	).toEqual([
 		{
@@ -354,26 +354,26 @@ test('can import CSV file with an unexisting field', async ({
 		},
 	]);
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
+	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
 test('can import CSV file with custom columns order', async ({
-	_apiHelpers,
-	_dataMigrationCenterPage,
+	apiHelpers,
+	dataMigrationCenterPage,
 	page,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
-	const objectDefinition = await _apiHelpers.objectAdmin.postObjectDefinition(
+	const objectDefinition = await apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
 	);
 
-	await _dataMigrationCenterPage.goto();
-	await _dataMigrationCenterPage.goToImportFile();
-	await _dataMigrationCenterPage.importFile(
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
+	await dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(
 			__dirname,
@@ -389,7 +389,7 @@ test('can import CSV file with custom columns order', async ({
 
 	expect(
 		(
-			await _apiHelpers.object.getObjectDefinitionObjectEntriesByScope(
+			await apiHelpers.object.getObjectDefinitionObjectEntriesByScope(
 				'c/tests',
 				'Guest'
 			)
@@ -421,27 +421,27 @@ test('can import CSV file with custom columns order', async ({
 		},
 	]);
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
+	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
 test('can import CSV file with multiple site scoped object entries', async ({
-	_apiHelpers,
-	_dataMigrationCenterPage,
+	apiHelpers,
+	dataMigrationCenterPage,
 	page,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
-	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
+	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
 	);
 
-	await _dataMigrationCenterPage.goto();
-	await _dataMigrationCenterPage.goToImportFile();
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
 
-	await _dataMigrationCenterPage.importFile(
+	await dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(__dirname, '/dependencies/two_entries_object_entries.csv'),
 		'UPSERT',
@@ -454,7 +454,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 
 	expect(
 		(
-			await _apiHelpers.object.getObjectDefinitionObjectEntriesByScope(
+			await apiHelpers.object.getObjectDefinitionObjectEntriesByScope(
 				'c/tests',
 				'Guest'
 			)
@@ -512,27 +512,27 @@ test('can import CSV file with multiple site scoped object entries', async ({
 		},
 	]);
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
+	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
 test('can import CSV file with new and existing site scoped object entries', async ({
-	_apiHelpers,
-	_dataMigrationCenterPage,
+	apiHelpers,
+	dataMigrationCenterPage,
 	page,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
-	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
+	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
 	);
 
-	await _dataMigrationCenterPage.goto();
-	await _dataMigrationCenterPage.goToImportFile();
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
 
-	await _dataMigrationCenterPage.importFile(
+	await dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(__dirname, '/dependencies/object_entries.csv'),
 		'UPSERT',
@@ -541,7 +541,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 
 	await page.getByRole('button', {exact: true, name: 'Close'}).click();
 
-	await _dataMigrationCenterPage.importFile(
+	await dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(
 			__dirname,
@@ -557,7 +557,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 
 	expect(
 		(
-			await _apiHelpers.object.getObjectDefinitionObjectEntriesByScope(
+			await apiHelpers.object.getObjectDefinitionObjectEntriesByScope(
 				'c/tests',
 				'Guest'
 			)
@@ -615,27 +615,27 @@ test('can import CSV file with new and existing site scoped object entries', asy
 		},
 	]);
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
+	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
 test('can import CSV file with new and modified existing company scoped object entries', async ({
-	_apiHelpers,
-	_dataMigrationCenterPage,
+	apiHelpers,
+	dataMigrationCenterPage,
 	page,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
-	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
+	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
 	);
 
-	await _dataMigrationCenterPage.goto();
-	await _dataMigrationCenterPage.goToImportFile();
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
 
-	await _dataMigrationCenterPage.importFile(
+	await dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(__dirname, '/dependencies/object_entries.csv'),
 		'UPSERT',
@@ -644,7 +644,7 @@ test('can import CSV file with new and modified existing company scoped object e
 
 	await page.getByRole('button', {exact: true, name: 'Close'}).click();
 
-	await _dataMigrationCenterPage.importFile(
+	await dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(
 			__dirname,
@@ -659,7 +659,7 @@ test('can import CSV file with new and modified existing company scoped object e
 	).toBeVisible();
 
 	expect(
-		(await _apiHelpers.object.getObjectDefinitionObjectEntries('c/tests'))
+		(await apiHelpers.object.getObjectDefinitionObjectEntries('c/tests'))
 			.items
 	).toEqual([
 		{
@@ -712,27 +712,27 @@ test('can import CSV file with new and modified existing company scoped object e
 		},
 	]);
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
+	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
 test('can map all imported fields', async ({
-	_apiHelpers,
-	_dataMigrationCenterPage,
+	apiHelpers,
+	dataMigrationCenterPage,
 	page,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
-	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
+	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
 	);
 
-	await _dataMigrationCenterPage.goto();
-	await _dataMigrationCenterPage.goToImportFile();
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
 
-	await _dataMigrationCenterPage.selectImportEntityType(
+	await dataMigrationCenterPage.selectImportEntityType(
 		OBJECT_ENTRY_ENTITY_TYPE
 	);
 
@@ -748,31 +748,31 @@ test('can map all imported fields', async ({
 	await expect(page.getByText('testRichTextField')).toBeVisible();
 	await expect(page.getByText('name', {exact: true})).toBeVisible();
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
+	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
 test('can preview CSV file', async ({
-	_apiHelpers,
-	_dataMigrationCenterPage,
+	apiHelpers,
+	dataMigrationCenterPage,
 	page,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
-	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
+	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
 	);
 
-	await _dataMigrationCenterPage.goto();
-	await _dataMigrationCenterPage.goToImportFile();
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
 
-	await _dataMigrationCenterPage.selectFile(
+	await dataMigrationCenterPage.selectFile(
 		path.join(__dirname, '/dependencies/object_entries.csv')
 	);
 
-	await _dataMigrationCenterPage.selectImportEntityType(
+	await dataMigrationCenterPage.selectImportEntityType(
 		OBJECT_ENTRY_ENTITY_TYPE
 	);
 
@@ -823,26 +823,26 @@ test('can preview CSV file', async ({
 			.getByRole('cell', {exact: true, name: 'testRichTextField'})
 	).toBeVisible();
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
+	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
 test('can show duplicate error message with CSV import existing entry and only add new record fields', async ({
-	_apiHelpers,
-	_dataMigrationCenterPage,
+	apiHelpers,
+	dataMigrationCenterPage,
 	page,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
-	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
 	);
 
-	await _dataMigrationCenterPage.goto();
-	await _dataMigrationCenterPage.goToImportFile();
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
 
-	await _dataMigrationCenterPage.importFile(
+	await dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(__dirname, '/dependencies/object_entries.csv'),
 		'UPSERT',
@@ -851,7 +851,7 @@ test('can show duplicate error message with CSV import existing entry and only a
 
 	await page.getByRole('button', {exact: true, name: 'Close'}).click();
 
-	await _dataMigrationCenterPage.importFile(
+	await dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(__dirname, '/dependencies/object_entries.csv'),
 		'INSERT',
@@ -864,23 +864,23 @@ test('can show duplicate error message with CSV import existing entry and only a
 		)
 	).toBeVisible();
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
+	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
 test('cannot import CSV file without headers row', async ({
-	_apiHelpers,
-	_dataMigrationCenterPage,
+	apiHelpers,
+	dataMigrationCenterPage,
 	page,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
-	await _dataMigrationCenterPage.goto();
-	await _dataMigrationCenterPage.goToImportFile();
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
 
-	await _dataMigrationCenterPage.selectFile(
+	await dataMigrationCenterPage.selectFile(
 		path.join(__dirname, '/dependencies/no_headers_object_entries.csv')
 	);
 
@@ -893,30 +893,30 @@ test('cannot import CSV file without headers row', async ({
 		)
 	).toBeVisible();
 
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
 test('cannot import CSV file with empty headers row', async ({
-	_apiHelpers,
-	_dataMigrationCenterPage,
+	apiHelpers,
+	dataMigrationCenterPage,
 	page,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
-	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
+	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
 	);
 
-	await _dataMigrationCenterPage.goto();
-	await _dataMigrationCenterPage.goToImportFile();
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
 
-	await _dataMigrationCenterPage.selectFile(
+	await dataMigrationCenterPage.selectFile(
 		path.join(__dirname, '/dependencies/empty_header_values_object_entries.csv')
 	);
 
-	await _dataMigrationCenterPage.selectImportEntityType(
+	await dataMigrationCenterPage.selectImportEntityType(
 		OBJECT_ENTRY_ENTITY_TYPE
 	);
 
@@ -930,26 +930,26 @@ test('cannot import CSV file with empty headers row', async ({
 		)
 	).toBeVisible();
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
+	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
 test('cannot import CSV file with object entry with UPSERT strategy', async ({
-	_apiHelpers,
-	_dataMigrationCenterPage,
+	apiHelpers,
+	dataMigrationCenterPage,
 	page,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
-	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
 	);
 
-	await _dataMigrationCenterPage.goto();
-	await _dataMigrationCenterPage.goToImportFile();
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
 
-	await _dataMigrationCenterPage.importFile(
+	await dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(__dirname, '/dependencies/object_entries.csv'),
 		'UPSERT',
@@ -962,31 +962,31 @@ test('cannot import CSV file with object entry with UPSERT strategy', async ({
 		)
 	).toBeVisible();
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
+	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });
 
 test('cannot import empty CSV file', async ({
-	_apiHelpers,
-	_dataMigrationCenterPage,
+	apiHelpers,
+	dataMigrationCenterPage,
 	page,
 }) => {
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
-	const response = await _apiHelpers.objectAdmin.postObjectDefinition(
+	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
 	);
 
-	await _dataMigrationCenterPage.goto();
-	await _dataMigrationCenterPage.goToImportFile();
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
 
-	await _dataMigrationCenterPage.selectFile(
+	await dataMigrationCenterPage.selectFile(
 		path.join(__dirname, '/dependencies/empty_object_entries.csv')
 	);
 
-	await _dataMigrationCenterPage.selectImportEntityType(
+	await dataMigrationCenterPage.selectImportEntityType(
 		OBJECT_ENTRY_ENTITY_TYPE
 	);
 
@@ -996,7 +996,7 @@ test('cannot import empty CSV file', async ({
 
 	await expect(page.getByText('Error:Please upload a file.')).toBeVisible();
 
-	await _apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
-	await _apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
-	await _apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
+	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', false);
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', false);
 });

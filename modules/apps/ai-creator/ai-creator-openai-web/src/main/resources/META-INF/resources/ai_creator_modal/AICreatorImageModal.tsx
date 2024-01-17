@@ -7,7 +7,7 @@ import ClayForm from '@clayui/form';
 import {Container} from '@clayui/layout';
 import classNames from 'classnames';
 import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
+import {fetch, getOpener} from 'frontend-js-web';
 import React, {FormEvent, useState} from 'react';
 
 import {ErrorMessage} from './ErrorMessage';
@@ -49,9 +49,7 @@ export default function AICreatorImageModal({
 	uploadGenerationsURL,
 }: Props) {
 	const closeModal = () => {
-		const opener = Liferay.Util.getOpener();
-
-		opener.Liferay.fire('closeModal');
+		getOpener().Liferay.fire('closeModal');
 	};
 
 	const [status, setStatus] = useState<RequestStatus>({type: 'idle'});
@@ -103,9 +101,9 @@ export default function AICreatorImageModal({
 			).then(() => {
 				setStatus({type: 'idle'});
 
-				const opener = Liferay.Util.getOpener();
-
-				opener.Liferay.fire(eventName, {selectedItems: addedImages});
+				getOpener().Liferay.fire(eventName, {
+					selectedItems: addedImages,
+				});
 			});
 		}
 	};

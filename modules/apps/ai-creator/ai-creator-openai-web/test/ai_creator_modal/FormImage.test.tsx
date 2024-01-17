@@ -16,6 +16,8 @@ describe('FormImage', () => {
 
 		expect(screen.getByLabelText('description')).toBeInTheDocument();
 		expect(screen.getByLabelText('image-size')).toBeInTheDocument();
-		expect(screen.getByLabelText('number-of-images-to-generate')).toBeInTheDocument();
+		expect(
+			screen.getByLabelText('number-of-images-to-generate')
+		).toBeInTheDocument();
 	});
 });

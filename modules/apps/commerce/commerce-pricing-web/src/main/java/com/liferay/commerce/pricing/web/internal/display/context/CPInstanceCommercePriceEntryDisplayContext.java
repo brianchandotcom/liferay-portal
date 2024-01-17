@@ -14,7 +14,6 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
-import com.liferay.commerce.price.list.util.comparator.CommercePriceListPriorityComparator;
 import com.liferay.commerce.pricing.web.internal.constants.CommercePricingFDSNames;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.model.CPInstance;
@@ -37,6 +36,9 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -338,6 +340,14 @@ public class CPInstanceCommercePriceEntryDisplayContext
 			maxFractionDigits = commerceCurrency.getMaxFractionDigits();
 		}
 
+		BaseModelSearchResult<CommercePriceList>
+			commercePriceListBaseModelSearchResult =
+				_commercePriceListService.searchCommercePriceLists(
+					cpInstance.getCompanyId(), StringPool.BLANK,
+					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS,
+					new Sort(Field.PRIORITY, Sort.DOUBLE_TYPE, false));
+
 		return HashMapBuilder.<String, Object>put(
 			"basePrice", basePrice
 		).put(
@@ -353,12 +363,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		).put(
 			"priceLists",
 			TransformUtil.transform(
-				_commercePriceListService.getCommercePriceLists(
-					cpInstance.getCompanyId(),
-					CommercePriceListConstants.TYPE_PRICE_LIST,
-					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS,
-					new CommercePriceListPriorityComparator()),
+				commercePriceListBaseModelSearchResult.getBaseModels(),
 				commercePriceList -> HashMapBuilder.<String, Object>put(
 					"label", commercePriceList.getName()
 				).put(

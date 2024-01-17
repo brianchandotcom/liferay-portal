@@ -8,8 +8,6 @@ import React, {useMemo} from 'react';
 
 import {FragmentPreview} from './FragmentPreview';
 
-import '../../css/FragmentCollectionPreview.scss';
-
 const FRAGMENT_COLLECTION_BLOCKLIST = {
 	BASIC_COMPONENT: [
 		'BASIC_COMPONENT-external-video',

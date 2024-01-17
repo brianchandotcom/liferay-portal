@@ -96,7 +96,7 @@ const RoutineForm = () => {
 						)}
 					>
 						<ClayIcon
-							className="align-bottom ml-2 text-primary"
+							className="align-bottom ml-2"
 							data-tooltip-align="left"
 							symbol="question-circle-full"
 						/>

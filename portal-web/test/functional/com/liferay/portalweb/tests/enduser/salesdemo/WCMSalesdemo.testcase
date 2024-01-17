@@ -12,21 +12,6 @@ definition {
 		User.firstLoginPG();
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONUser.tearDownNonAdminUsers();
-
-			Site.tearDownCP();
-
-			PagesAdmin.tearDownCP();
-		}
-	}
-
 	@priority = 4
 	test IFrameDemo {
 		property testray.component.names = "IFrame Portlet";

@@ -13,17 +13,6 @@ definition {
 		User.firstLoginPG();
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			PagesAdmin.tearDownCP();
-		}
-	}
-
 	@priority = 4
 	@refactorneeded
 	test WebProxyDemo {

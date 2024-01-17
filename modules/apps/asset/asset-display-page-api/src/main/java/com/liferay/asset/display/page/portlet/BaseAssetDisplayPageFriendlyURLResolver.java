@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.model.LayoutQueryStringComposite;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -469,6 +470,16 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		throws PortalException {
 
 		String urlSeparator = _getURLSeparator(friendlyURL);
+
+		FriendlyURLResolver friendlyURLResolver =
+			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+				urlSeparator);
+
+		if ((friendlyURLResolver != null) &&
+			friendlyURLResolver.isURLSeparatorConfigurable()) {
+
+			urlSeparator = friendlyURLResolver.getDefaultURLSeparator();
+		}
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderRegistry.

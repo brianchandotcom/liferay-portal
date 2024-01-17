@@ -10,6 +10,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,13 +80,25 @@ public class LayoutDisplayPageProviderRegistryImpl
 
 					try {
 						emitter.emit(
-							layoutDisplayPageProvider.getURLSeparator());
+							_getURLSeparator(layoutDisplayPageProvider));
 					}
 					finally {
 						bundleContext.ungetService(serviceReference);
 					}
 				},
 				new PropertyServiceReferenceComparator<>("service.ranking"));
+	}
+
+	private String _getURLSeparator(
+		LayoutDisplayPageProvider layoutDisplayPageProvider) {
+
+		if (Validator.isNotNull(
+				layoutDisplayPageProvider.getDefaultURLSeparator())) {
+
+			return layoutDisplayPageProvider.getDefaultURLSeparator();
+		}
+
+		return layoutDisplayPageProvider.getURLSeparator();
 	}
 
 	private ServiceTrackerMap<String, LayoutDisplayPageProvider<?>>

@@ -13,7 +13,7 @@ import {
 	ObjectAdminV10ObjectDefinitionService,
 	ObjectAdminV10ObjectFolderService,
 	ObjectAdminV10ObjectRelationshipService,
-} from '../../headless';
+} from '../../utils/headless';
 import {getRandomInt} from '../../utils/util';
 
 export const test = mergeTests(

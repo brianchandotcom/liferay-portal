@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import {liferayConfig} from '../../liferay.config';
+import {liferayConfig} from '../../../liferay.config';
 import type {ApiRequestOptions} from './ApiRequestOptions';
 
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;

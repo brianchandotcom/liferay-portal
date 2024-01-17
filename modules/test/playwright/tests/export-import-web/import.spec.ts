@@ -11,7 +11,7 @@ import * as path from 'path';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {exportImportPagesTest} from '../../fixtures/exportImportPages.fixtures';
 import {loginTest} from '../../fixtures/loginTest';
-import { HeadlessDeliveryV10DocumentFolderService } from '../../headless';
+import { HeadlessDeliveryV10DocumentFolderService } from '../../utils/headless';
 
 export const test = mergeTests(
 	documentLibraryPagesTest,
@@ -37,7 +37,7 @@ test('can import a folder with document type restrictions and workflow', async (
 		await documentLibraryEditFolderPage.getSelectedWorkflowDefinition()
 	).toBe('Single Approver@1');
 
-	await HeadlessDeliveryV10DocumentFolderServicegit.headlessDeliveryV10DeleteSiteDocumentsFolderByExternalReferenceCode(
+	await HeadlessDeliveryV10DocumentFolderService.headlessDeliveryV10DeleteSiteDocumentsFolderByExternalReferenceCode(
 		'Guest',
 		'LPS-205933'
 	);

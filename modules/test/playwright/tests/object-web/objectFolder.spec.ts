@@ -9,7 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
-import {ObjectAdminV10ObjectFolderService} from '../../headless';
+import {ObjectAdminV10ObjectFolderService} from '../../utils/headless';
 import {getRandomInt} from '../../utils/util';
 
 export const test = mergeTests(

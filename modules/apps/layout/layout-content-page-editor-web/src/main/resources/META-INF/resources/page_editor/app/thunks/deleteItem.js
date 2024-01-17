@@ -22,6 +22,7 @@ import getFragmentEntryLinkIdsFromItemId from '../utils/getFragmentEntryLinkIdsF
 import getPortletId from '../utils/getPortletId';
 import {hasFormParent} from '../utils/hasFormParent';
 import {isRequiredFormInput} from '../utils/isRequiredFormInput';
+import {clearPageContents} from '../utils/usePageContents';
 
 export default function deleteItem({itemId, selectItem = () => {}}) {
 	return (dispatch, getState) => {
@@ -59,6 +60,8 @@ export default function deleteItem({itemId, selectItem = () => {}}) {
 					portletIds,
 				})
 			);
+
+			clearPageContents();
 
 			maybeShowAlert(layoutData, itemId, fragmentEntryLinks);
 		});

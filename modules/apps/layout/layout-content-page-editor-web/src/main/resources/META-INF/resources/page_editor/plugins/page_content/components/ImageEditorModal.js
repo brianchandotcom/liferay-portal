@@ -15,6 +15,7 @@ import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../app/selectors/selectLanguageId';
 import FragmentService from '../../../app/services/FragmentService';
 import ImageService from '../../../app/services/ImageService';
+import {clearPageContents} from '../../../app/utils/usePageContents';
 
 export function updateFragmentsPreviewImage({
 	dispatch,
@@ -58,6 +59,8 @@ export function updateFragmentsPreviewImage({
 		getFileEntryPromise,
 		...getFragmentEntryLinkContentPromises,
 	]).then(([{fileEntryURL}, ...contents]) => {
+		clearPageContents();
+
 		dispatch(
 			updatePreviewImage({
 				contents,

@@ -5,6 +5,7 @@
 
 import updateEditableValuesAction from '../actions/updateEditableValues';
 import FragmentService from '../services/FragmentService';
+import {clearPageContents} from '../utils/usePageContents';
 
 export default function updateEditableValues({
 	editableValues,
@@ -28,6 +29,8 @@ export default function updateEditableValues({
 					segmentsExperienceId,
 				})
 			);
+
+			clearPageContents();
 		});
 	};
 }

@@ -5,6 +5,7 @@
 
 import updateRowColumnsAction from '../actions/updateRowColumns';
 import LayoutService from '../services/LayoutService';
+import {clearPageContents} from '../utils/usePageContents';
 
 export default function updateRowColumns(payload) {
 	return (dispatch, getState) =>
@@ -19,5 +20,7 @@ export default function updateRowColumns(payload) {
 					layoutData,
 				})
 			);
+
+			clearPageContents();
 		});
 }

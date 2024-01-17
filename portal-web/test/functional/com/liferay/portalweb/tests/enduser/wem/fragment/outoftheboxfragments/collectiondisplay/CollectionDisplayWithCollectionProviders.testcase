@@ -448,9 +448,9 @@ definition {
 		}
 
 		task ("Then the page creator sees the empty message shown in Collection Display") {
-			PageEditor.viewFragmentMessageInfo(
-				fragmentName = "Collection Display",
-				messageInfo = "There are no items to display.");
+			AssertVisible(
+				key_infoMessage = "The collection is empty. To display your items, add them to the collection or choose a different collection.",
+				locator1 = "Message#INFO_SPECIFIC");
 		}
 
 		task ("When the page creator adds the Heading and Image fragments into Collection Display with collection items") {
@@ -567,9 +567,9 @@ definition {
 		}
 
 		task ("Then the page creator sees the empty message shown in Collection Display") {
-			PageEditor.viewFragmentMessageInfo(
-				fragmentName = "Collection Display",
-				messageInfo = "There are no items to display.");
+			AssertVisible(
+				key_infoMessage = "The collection is empty. To display your items, add them to the collection or choose a different collection.",
+				locator1 = "Message#INFO_SPECIFIC");
 		}
 
 		task ("When the page creator adds the Button and Paragraph fragments into Collection Display with collection items") {

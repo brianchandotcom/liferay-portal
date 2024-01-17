@@ -6,24 +6,20 @@
 import {UPDATE_ITEM_CONFIG} from './types';
 
 import type {LayoutData} from '../../types/layout_data/LayoutData';
-import type {PageContent} from './addItem';
 
 export default function updateItemConfig({
 	itemId,
 	layoutData,
 	overridePreviousConfig = false,
-	pageContents,
 }: {
 	itemId: string;
 	layoutData: LayoutData;
 	overridePreviousConfig?: boolean;
-	pageContents: PageContent[];
 }) {
 	return {
 		itemId,
 		layoutData,
 		overridePreviousConfig,
-		pageContents,
 		type: UPDATE_ITEM_CONFIG,
 	} as const;
 }

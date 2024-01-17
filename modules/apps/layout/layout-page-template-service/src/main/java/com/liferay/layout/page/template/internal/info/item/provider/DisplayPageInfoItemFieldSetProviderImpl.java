@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -104,10 +106,6 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		String groupFriendlyURL = _portal.getGroupFriendlyURL(
 			group.getPublicLayoutSet(), themeDisplay, false, false);
 
-		String url =
-			groupFriendlyURL +
-				FriendlyURLResolverConstants.URL_SEPARATOR_X_CUSTOM_ASSET;
-
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 				themeDisplay.getScopeGroupId(),
@@ -142,7 +140,8 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 						locale -> {
 							WebURL webURL = new WebURL(
 								StringBundler.concat(
-									url, layout.getFriendlyURL(locale),
+									groupFriendlyURL + _getURLSeparator(),
+									layout.getFriendlyURL(locale),
 									StringPool.SLASH,
 									_portal.getClassNameId(
 										infoItemReference.getClassName()),
@@ -286,6 +285,24 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 	private String _getUniqueId(String layoutPageTemplateEntryKey) {
 		return LayoutPageTemplateEntry.class.getSimpleName() +
 			StringPool.UNDERLINE + layoutPageTemplateEntryKey;
+	}
+
+	private String _getURLSeparator() {
+		FriendlyURLResolver friendlyURLResolver =
+			FriendlyURLResolverRegistryUtil.
+				getFriendlyURLResolverByDefaultURLSeparator(
+					FriendlyURLResolverConstants.URL_SEPARATOR_CUSTOM_ASSET);
+
+		if (friendlyURLResolver != null) {
+			return friendlyURLResolver.getURLSeparator(
+			).substring(
+				0,
+				friendlyURLResolver.getURLSeparator(
+				).length() - 1
+			);
+		}
+
+		return FriendlyURLResolverConstants.URL_SEPARATOR_X_CUSTOM_ASSET;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

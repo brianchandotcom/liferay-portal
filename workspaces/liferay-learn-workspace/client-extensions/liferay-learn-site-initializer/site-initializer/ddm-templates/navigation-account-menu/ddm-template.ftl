@@ -25,7 +25,7 @@
 	.account-menu-item:active,
 	.account-menu-item:focus {
 		background: var(--color-action-primary-hover-lighten);
-		color: var(--color-action-primary-default, #0B5FFF);
+		color: var(--color-action-primary-hover);
 	}
 </style>
 
@@ -39,10 +39,6 @@
 
 			<a class="account-menu-item d-flex justify-content-between p-3 text-decoration-none" href="${menuItem.getURL()}">
 				<div class="account-menu-item-group d-flex">
-					<div class="account-menu-item-icon mr-1 pr-1">
-						<img class="account-menu-item-icon-image" src=${iconURL}>
-					</div>
-
 					<div class="account-menu-item-text ml-2">
 						${menuItem.getName()}
 					</div>

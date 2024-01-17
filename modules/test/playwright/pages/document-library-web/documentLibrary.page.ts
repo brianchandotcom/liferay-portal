@@ -38,6 +38,8 @@ export class DocumentLibraryPage {
 	}
 
 	async openOptionsMenu() {
-		await this.optionsMenu.click();
+		await this.optionsMenu
+			.and(this.page.locator('[aria-haspopup]'))
+			.click();
 	}
 }

@@ -71,6 +71,8 @@ portletDisplay.setShowBackIcon(true);
 			).put(
 				"description", description
 			).put(
+				"descriptionFieldMaxLength", ModelHintsUtil.getMaxLength(CTCollectionTemplate.class.getName(), "description")
+			).put(
 				"getTemplateCollaboratorsURL",
 				() -> {
 					if (finalCTCollectionTemplateId == 0) {

@@ -21,6 +21,7 @@ export default function PublicationTemplateEditView({
 	defaultCTCollectionTemplate,
 	defaultSandboxCTCollectionTemplate,
 	description,
+	descriptionFieldMaxLength,
 	getTemplateCollaboratorsURL,
 	name,
 	namespace,
@@ -145,6 +146,7 @@ export default function PublicationTemplateEditView({
 				componentType="textarea"
 				fieldValue={descriptionField}
 				label={Liferay.Language.get('description')}
+				maxLength={descriptionFieldMaxLength}
 				onChange={(event) => {
 					setDescriptionField(event.target.value);
 				}}
@@ -152,6 +154,7 @@ export default function PublicationTemplateEditView({
 					'publication-template-description-placeholder'
 				)}
 				required={false}
+				validateLength={true}
 			/>
 
 			<ClayCheckbox
@@ -259,7 +262,9 @@ export default function PublicationTemplateEditView({
 					disabled={
 						!nameField.length ||
 						!publicationNameField.length ||
-						nameField.length > 75
+						nameField.length > 75 ||
+						(descriptionField &&
+							descriptionField.length > descriptionFieldMaxLength)
 					}
 					displayType="primary"
 					id="saveButton"

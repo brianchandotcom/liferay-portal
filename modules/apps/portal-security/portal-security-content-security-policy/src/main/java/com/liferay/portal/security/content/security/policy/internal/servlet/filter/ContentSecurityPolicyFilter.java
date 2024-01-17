@@ -96,17 +96,19 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			filterChain.doFilter(
 				httpServletRequest, contentSecurityPolicyHttpServletResponse);
 
+			String nonceAttribute = "nonce=\"" + nonce + "\"";
+
 			String content =
 				contentSecurityPolicyHttpServletResponse.getContent();
 
 			content = content.replaceAll(
-				"<(?i)link ", "<link nonce=\"" + nonce + "\" ");
+				"<(?i)link ", "<link " + nonceAttribute + " ");
 			content = content.replaceAll(
-				"<(?i)link>", "<link nonce=\"" + nonce + "\">");
+				"<(?i)link>", "<link " + nonceAttribute + "");
 			content = content.replaceAll(
-				"<(?i)style ", "<style nonce=\"" + nonce + "\" ");
+				"<(?i)style ", "<style " + nonceAttribute + " ");
 			content = content.replaceAll(
-				"<(?i)style>", "<style nonce=\"" + nonce + "\">");
+				"<(?i)style>", "<style " + nonceAttribute + ">");
 
 			printWriter.write(content);
 

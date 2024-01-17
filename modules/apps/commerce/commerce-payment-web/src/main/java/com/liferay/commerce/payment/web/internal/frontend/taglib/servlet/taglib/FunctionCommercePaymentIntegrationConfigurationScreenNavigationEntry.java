@@ -18,7 +18,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -89,11 +89,9 @@ public class
 			return false;
 		}
 
-		return ListUtil.fromArray(
-			CommercePaymentIntegrationConstants.TYPES_FUNCTION
-		).contains(
-			commercePaymentIntegration.getPaymentIntegrationType()
-		);
+		return ArrayUtil.contains(
+			CommercePaymentIntegrationConstants.TYPES_FUNCTION,
+			commercePaymentIntegration.getPaymentIntegrationType());
 	}
 
 	@Override

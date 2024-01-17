@@ -7,6 +7,7 @@ package com.liferay.commerce.channel.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.channel.web.internal.constants.CommerceChannelFDSNames;
 import com.liferay.commerce.channel.web.internal.model.PaymentMethod;
+import com.liferay.commerce.payment.constants.CommercePaymentWebKeys;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -66,10 +67,10 @@ public class CommercePaymentMethodFDSActionProvider
 							CommercePaymentMethodGroupRel.class.getName(),
 							PortletProvider.Action.EDIT)
 					).setParameter(
-						"commerceChannelId", commerceChannelId
-					).setParameter(
-						"commercePaymentIntegrationKey",
+						CommercePaymentWebKeys.COMMERCE_PAYMENT_INTEGRATION_KEY,
 						paymentMethod.getIntegrationKey()
+					).setParameter(
+						"commerceChannelId", commerceChannelId
 					).setParameter(
 						"commercePaymentMethodEngineKey", paymentMethod.getKey()
 					).setWindowState(

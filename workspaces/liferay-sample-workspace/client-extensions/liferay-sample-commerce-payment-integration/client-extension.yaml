@@ -1,9 +1,6 @@
 assemble:
     - fromTask: bootJar
 liferay-sample-commerce-payment-integration:
-    authorizePath: /authorize
-    cancelPath: /cancel
-    capturePath: /capture
     key: liferay-sample-commerce-payment-integration
     name: Liferay Sample Commerce Payment Integration
     oAuth2ApplicationExternalReferenceCode: liferay-sample-commerce-payment-integration-oauth-application-user-agent
@@ -14,8 +11,6 @@ liferay-sample-commerce-payment-integration:
         key3: value3
         key4: value4
         key5: value5
-    refundPath: /refund
-    setUpPaymentPath: /set-up-payment
     type: commercePaymentIntegration
 liferay-sample-commerce-payment-integration-oauth-application-user-agent:
     .serviceAddress: localhost:58081

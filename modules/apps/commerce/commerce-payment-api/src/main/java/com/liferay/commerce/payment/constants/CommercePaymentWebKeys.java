@@ -10,6 +10,9 @@ package com.liferay.commerce.payment.constants;
  */
 public class CommercePaymentWebKeys {
 
+	public static final String COMMERCE_PAYMENT_INTEGRATION_KEY =
+		"COMMERCE_PAYMENT_INTEGRATION_KEY";
+
 	public static final String IS_DEFAULT_PAYMENT_INTEGRATION_TYPE_SETTINGS =
 		"IS_DEFAULT_PAYMENT_INTEGRATION_TYPE_SETTINGS";
 

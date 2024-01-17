@@ -6,6 +6,7 @@
 package com.liferay.commerce.payment.web.internal.portlet.action;
 
 import com.liferay.commerce.exception.NoSuchPaymentMethodException;
+import com.liferay.commerce.payment.constants.CommercePaymentWebKeys;
 import com.liferay.commerce.payment.exception.CommercePaymentMethodGroupRelNameException;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
@@ -145,7 +146,9 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 							commerceChannel.getGroupId(), nameMap,
 							descriptionMap, active, imageFile,
 							ParamUtil.getString(
-								actionRequest, "commercePaymentIntegrationKey"),
+								actionRequest,
+								CommercePaymentWebKeys.
+									COMMERCE_PAYMENT_INTEGRATION_KEY),
 							priority, null);
 			}
 			else {

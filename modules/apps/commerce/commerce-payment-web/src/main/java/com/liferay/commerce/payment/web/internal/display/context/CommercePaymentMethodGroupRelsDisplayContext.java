@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.payment.web.internal.display.context;
 
+import com.liferay.commerce.payment.constants.CommercePaymentWebKeys;
 import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
 import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
@@ -67,7 +68,7 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 
 		return ParamUtil.getString(
 			commercePaymentRequestHelper.getRequest(),
-			"commercePaymentIntegrationKey");
+			CommercePaymentWebKeys.COMMERCE_PAYMENT_INTEGRATION_KEY);
 	}
 
 	public String getCommercePaymentMethodEngineDescription(Locale locale) {

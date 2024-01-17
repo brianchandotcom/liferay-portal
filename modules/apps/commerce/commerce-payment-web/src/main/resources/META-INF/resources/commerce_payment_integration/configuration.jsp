@@ -13,7 +13,7 @@
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceChannelId" type="hidden" value='<%= ParamUtil.getLong(request, "commerceChannelId") %>' />
-	<aui:input name="commercePaymentIntegrationKey" type="hidden" value='<%= ParamUtil.getString(request, "commercePaymentIntegrationKey") %>' />
+	<aui:input name="<%= CommercePaymentWebKeys.COMMERCE_PAYMENT_INTEGRATION_KEY %>" type="hidden" value="<%= ParamUtil.getString(request, CommercePaymentWebKeys.COMMERCE_PAYMENT_INTEGRATION_KEY) %>" />
 
 	<c:if test="<%= (boolean)request.getAttribute(CommercePaymentWebKeys.IS_DEFAULT_PAYMENT_INTEGRATION_TYPE_SETTINGS) %>">
 		<div class="alert alert-info">

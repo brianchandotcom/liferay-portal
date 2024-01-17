@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.payment.web.internal.portlet.action;
 
+import com.liferay.commerce.payment.constants.CommercePaymentWebKeys;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
@@ -59,7 +60,9 @@ public class EditFunctionCommercePaymentIntegrationConfigurationMVCActionCommand
 				getCommercePaymentMethodGroupRel(
 					commerceChannel.getGroupId(),
 					ParamUtil.getString(
-						actionRequest, "commercePaymentIntegrationKey"));
+						actionRequest,
+						CommercePaymentWebKeys.
+							COMMERCE_PAYMENT_INTEGRATION_KEY));
 
 		commercePaymentMethodGroupRel.setTypeSettings(
 			ParamUtil.getString(

@@ -10,20 +10,6 @@ exports[`SubscriptionTitle should render 1`] = `
     >
       Business
     </div>
-    <div
-      class="annual-price"
-    >
-      <div>
-        <strong>
-          750 USD
-        </strong>
-        <span
-          class="text-secondary small"
-        >
-           / year
-        </span>
-      </div>
-    </div>
   </div>
 </div>
 `;

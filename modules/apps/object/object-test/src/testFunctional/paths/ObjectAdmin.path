@@ -352,7 +352,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_OBJECT_FIELD</td>
-		<td>//span[@role='link'][contains(text(),'${key_label}')]</td>
+		<td>//a[contains(text(),'${key_label}')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -12,13 +12,12 @@ public class FaroSubscriptionPlan {
 
 	public FaroSubscriptionPlan(
 		String baseSubscriptionPlan, String name, int individualsLimit,
-		int pageViewsLimit, int price) {
+		int pageViewsLimit) {
 
 		_baseSubscriptionPlan = baseSubscriptionPlan;
 		_name = name;
 		_individualsLimit = individualsLimit;
 		_pageViewsLimit = pageViewsLimit;
-		_price = price;
 	}
 
 	public String getBaseSubscriptionPlan() {
@@ -37,10 +36,6 @@ public class FaroSubscriptionPlan {
 		return _pageViewsLimit;
 	}
 
-	public int getPrice() {
-		return _price;
-	}
-
 	public void setBaseSubscriptionPlan(String baseSubscriptionPlan) {
 		_baseSubscriptionPlan = baseSubscriptionPlan;
 	}
@@ -57,14 +52,9 @@ public class FaroSubscriptionPlan {
 		_pageViewsLimit = pageViewsLimit;
 	}
 
-	public void setPrice(int price) {
-		_price = price;
-	}
-
 	private String _baseSubscriptionPlan;
 	private int _individualsLimit;
 	private String _name;
 	private int _pageViewsLimit;
-	private int _price;
 
 }

@@ -53,6 +53,9 @@ public class EndpointMatcherTest {
 			endpoints.get(2),
 			endpointMatcher.getEndpoint(Http.Method.GET, "/path-name2", null));
 		Assert.assertEquals(
+			null,
+			endpointMatcher.getEndpoint(Http.Method.POST, "/path-name2", null));
+		Assert.assertEquals(
 			endpoints.get(3),
 			endpointMatcher.getEndpoint(Http.Method.GET, "/path/1234", null));
 	}

@@ -341,9 +341,9 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								>
 
 									<%
-									Date createDate = curArticle.getModifiedDate();
+									Date modifiedDate = curArticle.getModifiedDate();
 
-									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 									%>
 
 									<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription, HtmlUtil.escape(curArticle.getStatusByUserName())} %>" key="modified-x-ago-by-x" />

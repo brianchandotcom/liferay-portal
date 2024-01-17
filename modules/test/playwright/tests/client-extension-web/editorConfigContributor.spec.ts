@@ -81,6 +81,8 @@ test('Create, edit and delete editor config contributor client extension', async
 
 	const sampleName2 = 'Sample Name 2';
 
+	await newEditorConfigContributorPage.nameInput.click();
+
 	await newEditorConfigContributorPage.nameInput.fill(sampleName2);
 
 	await newEditorConfigContributorPage.publishButton.click();

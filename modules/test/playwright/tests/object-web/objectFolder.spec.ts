@@ -22,8 +22,6 @@ test('created object folders are on the left side bar', async ({
 	apiHelpers,
 	objectDefinitionsPage,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
-
 	await objectDefinitionsPage.goto();
 
 	const objectFolderExternalReferenceCode = 'objectFolder' + getRandomInt();
@@ -44,11 +42,8 @@ test('created object folders are on the left side bar', async ({
 });
 
 test('default folder does not contains delete and edit options', async ({
-	apiHelpers,
 	objectDefinitionsPage,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
-
 	await objectDefinitionsPage.goto();
 
 	await objectDefinitionsPage.clickDefaultObjectFolder();

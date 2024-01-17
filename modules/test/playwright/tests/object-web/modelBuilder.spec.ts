@@ -23,8 +23,6 @@ test('can create relationship by dragging node handles', async ({
 	modelBuilderPage,
 	objectDefinitionsPage,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
-
 	const objectFolder = await apiHelpers.objectAdmin.postRandomObjectFolder();
 
 	const objectDefinition1 =

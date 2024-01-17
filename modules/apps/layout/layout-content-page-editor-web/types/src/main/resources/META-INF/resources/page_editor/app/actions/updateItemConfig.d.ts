@@ -4,21 +4,17 @@
  */
 
 import type {LayoutData} from '../../types/layout_data/LayoutData';
-import type {PageContent} from './addItem';
 export default function updateItemConfig({
 	itemId,
 	layoutData,
 	overridePreviousConfig,
-	pageContents,
 }: {
 	itemId: string;
 	layoutData: LayoutData;
 	overridePreviousConfig?: boolean;
-	pageContents: PageContent[];
 }): {
 	readonly itemId: string;
 	readonly layoutData: LayoutData;
 	readonly overridePreviousConfig: boolean;
-	readonly pageContents: PageContent[];
 	readonly type: 'UPDATE_ITEM_CONFIG';
 };

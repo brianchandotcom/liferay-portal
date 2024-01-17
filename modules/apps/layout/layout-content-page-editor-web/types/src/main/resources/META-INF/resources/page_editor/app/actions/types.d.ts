@@ -51,7 +51,6 @@ export declare const UPDATE_NETWORK = 'UPDATE_NETWORK';
 export declare const UPDATE_REDO_ACTIONS = 'UPDATE_REDO_ACTIONS';
 export declare const UPDATE_ROW_COLUMNS = 'UPDATE_ROW_COLUMNS';
 export declare const UPDATE_UNDO_ACTIONS = 'UPDATE_UNDO_ACTIONS';
-export declare const UPDATE_PAGE_CONTENTS = 'UPDATE_PAGE_CONTENTS';
 export declare const UPDATE_PREVIEW_IMAGE = 'UPDATE_PREVIEW_IMAGE';
 export declare const UPDATE_RULE = 'UPDATE_RULE';
 export declare const UPDATE_WIDGETS = 'UPDATE_WIDGETS';

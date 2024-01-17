@@ -74,5 +74,5 @@ AddGroupDisplayContext addGroupDisplayContext = (AddGroupDisplayContext)request.
 
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "addGroup" %>'
-	module="js/AddGroup"
+	module="{AddGroup} from site-admin-web"
 />

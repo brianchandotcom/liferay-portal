@@ -399,6 +399,7 @@ export type TestrayTeam = {
 	name: string;
 	project?: TestrayProject;
 	r_projectToTeams_c_project?: TestrayProject;
+	teamToComponents?: TestrayTeam[];
 };
 
 export type TestrayComponent = {

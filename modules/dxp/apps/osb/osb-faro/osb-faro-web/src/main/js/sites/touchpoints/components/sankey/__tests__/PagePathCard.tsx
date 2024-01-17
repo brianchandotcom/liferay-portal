@@ -3,7 +3,7 @@ import PagePathCard from '../PagePathCard';
 import React from 'react';
 import {ApolloProvider} from '@apollo/react-components';
 import {CHART_COLORS, MAIN_NODE_COLOR, SECONDARY_NODE_COLOR} from '../utils';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import {MockedProvider} from '@apollo/react-testing';
 import {mockPagePathReq} from 'test/graphql-data';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
@@ -206,5 +206,33 @@ describe('PagePathCard', () => {
 				CHART_COLORS[index - 1]
 			);
 		});
+	});
+
+	it('should render popover when a URL is hovered', async () => {
+		const {container, getByText} = render(<WrapperComponent data={DATA} />);
+
+		await waitForLoadingToBeRemoved(container);
+
+		const nodes = container.querySelectorAll(
+			'.recharts-sankey-nodes > .recharts-layer'
+		);
+
+		/**
+		 * 5 previous node +
+		 * 5 following node +
+		 * 1 main node
+		 */
+
+		expect(nodes).toHaveLength(11);
+
+		const url = getByText('https://www.site3.com');
+
+		fireEvent.mouseOver(url);
+
+		expect(container.querySelector('.popover-body')).toBeInTheDocument();
+
+		expect(getByText('Page Views | Exit Pages')).toBeInTheDocument();
+
+		expect(getByText('5,000')).toBeInTheDocument();
 	});
 });

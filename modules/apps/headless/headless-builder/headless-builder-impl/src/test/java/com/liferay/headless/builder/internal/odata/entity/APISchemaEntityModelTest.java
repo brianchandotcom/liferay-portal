@@ -158,6 +158,11 @@ public class APISchemaEntityModelTest {
 					}
 
 					@Override
+					public String getRelatedPropertyERC() {
+						return null;
+					}
+
+					@Override
 					public String getSourceFieldName() {
 						return entry.getValue();
 					}

@@ -33,14 +33,16 @@ definition {
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		IFrame.addCP(sourceURL = "http://whereiscaliforniaonfire.com");
+		IFrame.addCP(sourceURL = "https://www.fire.ca.gov");
 
 		Navigator.gotoPage(pageName = "IFrame Page");
+
+		WaitForElementPresent(locator1 = "IFrame#IFRAME_PORTLET");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#IFRAME_PORTLET");
 
 		AssertVisible(
-			key_title = "Fires",
+			key_title = "CalFire",
 			locator1 = "Header#H1_TITLE");
 
 		SelectFrameTop();
@@ -68,14 +70,16 @@ definition {
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		IFrame.addCP(sourceURL = "http://whereiscaliforniaonfire.com");
+		IFrame.addCP(sourceURL = "https://www.fire.ca.gov");
 
 		Navigator.gotoPage(pageName = "IFrame Page");
+
+		WaitForElementPresent(locator1 = "IFrame#IFRAME_PORTLET");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#IFRAME_PORTLET");
 
 		AssertVisible(
-			key_title = "Fires",
+			key_title = "CalFire",
 			locator1 = "Header#H1_TITLE");
 
 		SelectFrameTop();

@@ -13,7 +13,6 @@ import layoutDataReducer from './layoutDataReducer';
 import mappingFieldsReducer from './mappingFieldsReducer';
 import masterLayoutReducer from './masterLayoutReducer';
 import networkReducer from './networkReducer';
-import pageContentsReducer from './pageContentsReducer';
 import permissionsReducer from './permissionsReducer';
 import restrictedItemIdsReducer from './restrictedItemIdsReducer';
 import selectedViewportSizeReducer from './selectedViewportSizeReducer';
@@ -33,7 +32,6 @@ const combinedReducer = (state, action) =>
 		mappingFields: mappingFieldsReducer,
 		masterLayout: masterLayoutReducer,
 		network: networkReducer,
-		pageContents: pageContentsReducer,
 		permissions: permissionsReducer,
 		reducers: baseReducer,
 		restrictedItemIds: restrictedItemIdsReducer,

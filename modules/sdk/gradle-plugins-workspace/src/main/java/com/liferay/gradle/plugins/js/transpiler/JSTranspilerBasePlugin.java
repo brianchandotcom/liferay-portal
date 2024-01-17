@@ -11,6 +11,7 @@ import com.liferay.gradle.plugins.node.YarnPlugin;
 import com.liferay.gradle.plugins.node.task.NpmInstallTask;
 import com.liferay.gradle.plugins.node.task.PackageRunTask;
 import com.liferay.gradle.plugins.node.task.YarnInstallTask;
+import com.liferay.gradle.plugins.workspace.LiferayWorkspaceNodePlugin;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.copy.RenameDependencyClosure;
 
@@ -39,7 +40,7 @@ public class JSTranspilerBasePlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		GradleUtil.applyPlugin(project, NodePlugin.class);
+		LiferayWorkspaceNodePlugin.INSTANCE.apply(project);
 
 		final NpmInstallTask npmInstallTask =
 			(NpmInstallTask)GradleUtil.getTask(

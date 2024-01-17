@@ -7,6 +7,7 @@ package com.liferay.gradle.plugins.workspace.internal.client.extension;
 
 import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.workspace.LiferayWorkspaceNodePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 
 import groovy.json.JsonSlurper;
@@ -38,7 +39,7 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 			return;
 		}
 
-		GradleUtil.applyPlugin(project, NodePlugin.class);
+		LiferayWorkspaceNodePlugin.INSTANCE.apply(project);
 
 		NodeExtension nodeExtension = GradleUtil.getExtension(
 			project, NodeExtension.class);

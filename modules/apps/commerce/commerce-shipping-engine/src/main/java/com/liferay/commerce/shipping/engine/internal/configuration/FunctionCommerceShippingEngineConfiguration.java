@@ -22,21 +22,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface FunctionCommerceShippingEngineConfiguration {
 
-	@Meta.AD(required = false, type = Meta.Type.String)
-	public String shippingEngineOptionLabelPath();
-
-	@Meta.AD(required = false, type = Meta.Type.String)
-	public String shippingEngineLocalizedNamePath();
-
-	@Meta.AD(required = false, type = Meta.Type.String)
-	public String shippingEngineLocalizedDescriptionPath();
-
-	@Meta.AD(required = false, type = Meta.Type.String)
-	public String shippingEngineOptionsPath();
-
-	@Meta.AD(required = false, type = Meta.Type.String)
-	public String enabledShippingEngineOptionsPath();
-
 	@Meta.AD(name = "key", required = false)
 	public String key();
 

@@ -78,9 +78,7 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 						).put(
 							"name", name
 						),
-						_functionCommerceShippingEngineConfiguration.
-							shippingEngineOptionLabelPath(),
-						currentUser.getUserId()
+						"/option-label", currentUser.getUserId()
 					).get()));
 
 			return jsonObject.getString(name);
@@ -108,9 +106,7 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 						_functionCommerceShippingEngineConfiguration.
 							oAuth2ApplicationExternalReferenceCode(),
 						_getPayloadJSONObject(commerceContext, commerceOrder),
-						_functionCommerceShippingEngineConfiguration.
-							shippingEngineOptionsPath(),
-						currentUser.getUserId()
+						"/options", currentUser.getUserId()
 					).get()));
 
 			return _getCommerceShippingOptions(jsonObject);
@@ -133,9 +129,7 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 						currentUser.getCompanyId(), Http.Method.POST,
 						_functionCommerceShippingEngineConfiguration.
 							oAuth2ApplicationExternalReferenceCode(),
-						JSONUtil.put("locale", locale),
-						_functionCommerceShippingEngineConfiguration.
-							shippingEngineLocalizedDescriptionPath(),
+						JSONUtil.put("locale", locale), "/description",
 						currentUser.getUserId()
 					).get()));
 
@@ -164,9 +158,7 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 						_functionCommerceShippingEngineConfiguration.
 							oAuth2ApplicationExternalReferenceCode(),
 						_getPayloadJSONObject(commerceContext, commerceOrder),
-						_functionCommerceShippingEngineConfiguration.
-							enabledShippingEngineOptionsPath(),
-						currentUser.getUserId()
+						"/options-enabled", currentUser.getUserId()
 					).get()));
 
 			return _getCommerceShippingOptions(jsonObject);
@@ -194,9 +186,7 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 						currentUser.getCompanyId(), Http.Method.POST,
 						_functionCommerceShippingEngineConfiguration.
 							oAuth2ApplicationExternalReferenceCode(),
-						JSONUtil.put("locale", locale),
-						_functionCommerceShippingEngineConfiguration.
-							shippingEngineLocalizedNamePath(),
+						JSONUtil.put("locale", locale), "/name",
 						currentUser.getUserId()
 					).get()));
 

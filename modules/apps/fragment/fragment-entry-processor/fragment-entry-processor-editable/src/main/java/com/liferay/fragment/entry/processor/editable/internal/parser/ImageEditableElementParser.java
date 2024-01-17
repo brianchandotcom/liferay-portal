@@ -188,10 +188,10 @@ public class ImageEditableElementParser extends BaseEditableElementParser {
 		value = value.trim();
 
 		if (fileEntryId > 0) {
-			String previewURL = _getPreviewURL(fileEntryId);
+			String imagePreviewURL = _getImagePreviewURL(fileEntryId);
 
-			if (Validator.isNotNull(previewURL)) {
-				value = previewURL;
+			if (Validator.isNotNull(imagePreviewURL)) {
+				value = imagePreviewURL;
 			}
 
 			replaceableElement.attr(
@@ -280,7 +280,7 @@ public class ImageEditableElementParser extends BaseEditableElementParser {
 		super.validate(element);
 	}
 
-	private String _getPreviewURL(long fileEntryId) {
+	private String _getImagePreviewURL(long fileEntryId) {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -297,7 +297,7 @@ public class ImageEditableElementParser extends BaseEditableElementParser {
 		try {
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
-			return _dlURLHelper.getPreviewURL(
+			return _dlURLHelper.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
 				StringPool.BLANK, false, false);
 		}

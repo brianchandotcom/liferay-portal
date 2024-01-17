@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 	},
-	"main": "index.js",
+	"main": "js/index.js",
 	"name": "social-bookmarks-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

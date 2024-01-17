@@ -208,6 +208,7 @@ export default function PublicationTemplateEditView({
 						'publication-name-placeholder'
 					)}
 					required={true}
+					validateLength={true}
 				/>
 
 				<TextField
@@ -217,6 +218,7 @@ export default function PublicationTemplateEditView({
 					componentType="textarea"
 					fieldValue={publicationDescriptionField}
 					label={Liferay.Language.get('publication-description')}
+					maxLength={descriptionFieldMaxLength}
 					onChange={(event) => {
 						setPublicationDescriptionField(event.target.value);
 					}}
@@ -224,6 +226,7 @@ export default function PublicationTemplateEditView({
 						'publication-description-placeholder'
 					)}
 					required={false}
+					validateLength={true}
 				/>
 			</CollapsablePanel>
 
@@ -263,8 +266,13 @@ export default function PublicationTemplateEditView({
 						!nameField.length ||
 						!publicationNameField.length ||
 						nameField.length > 75 ||
+						publicationNameField.length > 75 ||
 						(descriptionField &&
-							descriptionField.length > descriptionFieldMaxLength)
+							descriptionField.length >
+								descriptionFieldMaxLength) ||
+						(publicationDescriptionField &&
+							publicationDescriptionField.length >
+								descriptionFieldMaxLength)
 					}
 					displayType="primary"
 					id="saveButton"

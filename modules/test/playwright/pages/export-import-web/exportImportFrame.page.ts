@@ -5,7 +5,7 @@
 
 // @ts-ignore
 
-import {expect, Page} from '@playwright/test';
+import {Page, expect} from '@playwright/test';
 
 import {zipFolder} from '../../utils/util';
 

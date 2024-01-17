@@ -19,13 +19,6 @@ apply plugin: "com.liferay.source.formatter"
 apply plugin: "java-library"
 apply plugin: "org.springframework.boot"
 
-bootRun {
-	String liferayVirtualInstanceId = project.hasProperty("liferay.virtual.instance.id") ? project.getProperty("liferay.virtual.instance.id") : "default"
-
-	environment "LIFERAY_ROUTES_CLIENT_EXTENSION", "${gradle.liferayWorkspace.homeDir}/routes/${liferayVirtualInstanceId}/${project.name}"
-	environment "LIFERAY_ROUTES_DXP", "${gradle.liferayWorkspace.homeDir}/routes/${liferayVirtualInstanceId}/dxp"
-}
-
 dependencies {
 	implementation group: "com.google.auth", name: "google-auth-library-credentials", version: "1.0.0"
 	implementation group: "com.google.auth", name: "google-auth-library-oauth2-http", version: "1.0.0"

@@ -107,11 +107,13 @@ export default function SaveButtons({
 		},
 		{
 			label: Liferay.Language.get('schedule-publication'),
-			onClick: () =>
+			onClick: () => {
 				setPublishModalState({
 					publishModalAction: 'schedule',
 					publishModalVisible: false,
-				}),
+				});
+				onClick('schedule');
+			},
 			symbolLeft: 'date-time',
 		},
 	];

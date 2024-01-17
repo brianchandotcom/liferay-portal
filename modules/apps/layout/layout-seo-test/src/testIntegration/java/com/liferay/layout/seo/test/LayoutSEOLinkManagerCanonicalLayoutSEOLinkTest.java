@@ -33,6 +33,7 @@ import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -326,7 +327,8 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 		return StringBundler.concat(
 			_portal.getGroupFriendlyURL(
 				_group.getPublicLayoutSet(), themeDisplay, false, false),
-			"/e", layout.getFriendlyURL(LocaleUtil.getSiteDefault()),
+			FriendlyURLResolverConstants.URL_SEPARATOR_X_CUSTOM_ASSET,
+			layout.getFriendlyURL(LocaleUtil.getSiteDefault()),
 			StringPool.SLASH, classNameId, StringPool.SLASH,
 			journalArticle.getResourcePrimKey());
 	}

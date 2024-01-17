@@ -31,6 +31,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -149,7 +150,8 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 						_portal.getGroupFriendlyURL(
 							_group.getPublicLayoutSet(), _themeDisplay, false,
 							false),
-						"/e",
+						FriendlyURLResolverConstants.
+							URL_SEPARATOR_X_CUSTOM_ASSET,
 						_layout.getFriendlyURL(LocaleUtil.getSiteDefault()),
 						StringPool.SLASH, _classNameId, StringPool.SLASH,
 						_journalArticle.getResourcePrimKey()),

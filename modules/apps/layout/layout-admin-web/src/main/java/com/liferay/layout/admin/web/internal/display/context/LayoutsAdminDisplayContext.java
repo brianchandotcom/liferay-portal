@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -629,7 +630,8 @@ public class LayoutsAdminDisplayContext {
 		Layout selLayout = getSelLayout();
 
 		if (selLayout.isTypeAssetDisplay()) {
-			friendlyURLBase.append("/e");
+			friendlyURLBase.append(
+				FriendlyURLResolverConstants.URL_SEPARATOR_X_CUSTOM_ASSET);
 
 			return friendlyURLBase.toString();
 		}

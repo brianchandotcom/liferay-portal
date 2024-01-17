@@ -1,31 +1,14 @@
 import Label from 'shared/components/Label';
 import React from 'react';
 import {PropTypes} from 'prop-types';
-import {sub} from 'shared/util/lang';
-
-const AnnualPrice = ({price}) => (
-	<div className='annual-price'>
-		<div>
-			<strong>
-				{sub(Liferay.Language.get('x-usd'), [price.toLocaleString()])}
-			</strong>
-
-			<span className='text-secondary small'>{` / ${Liferay.Language.get(
-				'year'
-			).toLowerCase()}`}</span>
-		</div>
-	</div>
-);
-
 class SubscriptionTitle extends React.Component {
 	static propTypes = {
 		labelText: PropTypes.string,
-		name: PropTypes.node,
-		price: PropTypes.number
+		name: PropTypes.node
 	};
 
 	render() {
-		const {labelText, name, price} = this.props;
+		const {labelText, name} = this.props;
 
 		return (
 			<div
@@ -40,8 +23,6 @@ class SubscriptionTitle extends React.Component {
 						{labelText}
 					</Label>
 				)}
-
-				{price > -1 && <AnnualPrice price={price} />}
 			</div>
 		);
 	}

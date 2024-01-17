@@ -364,10 +364,6 @@
 			<category name="Performance" />
 			<description name="Checks if performance can be improved by using different methods that can be used by collections." />
 		</check>
-		<check name="CopyrightCheck">
-			<category name="Styling" />
-			<description name="Validates `copyright` header." />
-		</check>
 		<check name="EmptyCollectionCheck">
 			<category name="Styling" />
 			<description name="Checks that there are no calls to `Collections.EMPTY_LIST`, `Collections.EMPTY_MAP` or `Collections.EMPTY_SET`." />
@@ -634,6 +630,10 @@
 
 		<!-- Liferay Source Checks -->
 
+		<check name="CopyrightCheck">
+			<category name="Styling" />
+			<description name="Validates `copyright` header." />
+		</check>
 		<check name="IllegalImportsCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases of incorrect use of certain classes." />

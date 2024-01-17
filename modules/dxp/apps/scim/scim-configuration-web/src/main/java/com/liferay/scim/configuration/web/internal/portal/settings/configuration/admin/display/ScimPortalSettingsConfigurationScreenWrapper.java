@@ -14,7 +14,6 @@ import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -62,9 +61,6 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

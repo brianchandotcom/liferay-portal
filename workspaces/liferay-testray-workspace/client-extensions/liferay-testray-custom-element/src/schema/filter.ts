@@ -140,7 +140,7 @@ const baseFilters: Filter = {
 	priority: {
 		label: i18n.translate('priority'),
 		name: 'priority',
-		options: ['1', '2', '3', '4', '5'],
+		options: ['5', '4', '3', '2', '1'],
 		type: 'multiselect',
 	},
 	productVersion: {

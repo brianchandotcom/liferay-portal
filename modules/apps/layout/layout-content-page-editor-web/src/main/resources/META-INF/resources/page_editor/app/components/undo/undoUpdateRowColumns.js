@@ -24,10 +24,7 @@ function undoAction({action}) {
 				segmentsExperienceId,
 			});
 
-			const {
-				layoutData,
-				pageContents,
-			} = await LayoutService.updateItemConfig({
+			const {layoutData} = await LayoutService.updateItemConfig({
 				itemConfig: setIn(
 					layoutDataItem.config,
 					'numberOfColumns',
@@ -43,15 +40,11 @@ function undoAction({action}) {
 					itemId: layoutDataItem.itemId,
 					layoutData,
 					numberOfColumns: previousNumberOfColumns,
-					pageContents,
 				})
 			);
 		}
 		else {
-			const {
-				layoutData,
-				pageContents,
-			} = await LayoutService.updateRowColumns({
+			const {layoutData} = await LayoutService.updateRowColumns({
 				itemId: layoutDataItem.itemId,
 				numberOfColumns: previousNumberOfColumns,
 				onNetworkStatus: dispatch,
@@ -63,7 +56,6 @@ function undoAction({action}) {
 					itemId: layoutDataItem.itemId,
 					layoutData,
 					numberOfColumns: previousNumberOfColumns,
-					pageContents,
 				})
 			);
 		}

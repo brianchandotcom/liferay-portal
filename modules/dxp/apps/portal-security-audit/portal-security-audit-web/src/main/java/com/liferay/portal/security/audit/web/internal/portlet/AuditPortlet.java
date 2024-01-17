@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.security.audit.AuditEventManager;
 import com.liferay.portal.security.audit.web.internal.constants.AuditPortletKeys;
 
 import java.io.IOException;
@@ -24,7 +23,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Greenwald
@@ -90,8 +88,5 @@ public class AuditPortlet extends MVCPortlet {
 			throw new PortletException(principalException);
 		}
 	}
-
-	@Reference
-	private AuditEventManager _auditEventManager;
 
 }

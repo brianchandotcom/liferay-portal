@@ -20,6 +20,7 @@ export default function SaveButtons({
 	saveButtonLabel,
 	selectedLanguageId,
 	timeZone,
+	workflowEnabled,
 }) {
 	const formId = `${portletNamespace}fm1`;
 
@@ -144,7 +145,7 @@ export default function SaveButtons({
 						symbolLeft="arrow-right-full"
 						type={articleId ? 'submit' : 'button'}
 					>
-						{Liferay.Language.get('publish')}
+						{publishButtonLabel}
 					</ClayDropDown.Item>
 
 					<ClayDropDown.Item
@@ -156,7 +157,11 @@ export default function SaveButtons({
 						}}
 						symbolLeft="date-time"
 					>
-						{Liferay.Language.get('schedule-publication')}
+						{workflowEnabled
+							? Liferay.Language.get(
+									'schedule-publication-and-submit-for-workflow'
+							  )
+							: Liferay.Language.get('schedule-publication')}
 					</ClayDropDown.Item>
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
@@ -175,6 +180,7 @@ export default function SaveButtons({
 					permissionsURL={permissionsURL}
 					portletNamespace={portletNamespace}
 					timeZone={timeZone}
+					workflowEnabled={workflowEnabled}
 				/>
 			) : null}
 		</div>

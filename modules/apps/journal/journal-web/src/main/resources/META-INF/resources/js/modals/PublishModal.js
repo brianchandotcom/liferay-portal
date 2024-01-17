@@ -18,6 +18,7 @@ export default function PublishModal({
 	permissionsURL,
 	portletNamespace,
 	timeZone,
+	workflowEnabled,
 }) {
 	const formId = `${portletNamespace}fm1`;
 
@@ -27,7 +28,11 @@ export default function PublishModal({
 		},
 	});
 
-	const {button, description, heading} = getLabels(actionButton);
+	const {button, description, heading} = getLabels({
+		actionButton,
+		articleId,
+		workflowEnabled,
+	});
 
 	return (
 		<ClayModal className="m-0" observer={observer} size="lg">
@@ -76,23 +81,45 @@ export default function PublishModal({
 	);
 }
 
-function getLabels(actionButton) {
+function getLabels({actionButton, articleId, workflowEnabled}) {
 	if (actionButton === 'publish') {
 		return {
-			button: Liferay.Language.get('publish'),
+			button: workflowEnabled
+				? Liferay.Language.get('submit-for-workflow')
+				: Liferay.Language.get('publish'),
 			description: Liferay.Language.get(
 				'confirm-the-web-content-visibility-before-publishing'
 			),
-			heading: Liferay.Language.get('publish-web-content'),
+			heading: workflowEnabled
+				? Liferay.Language.get('submit-for-workflow')
+				: Liferay.Language.get('publish'),
 		};
 	}
 	else if (actionButton === 'schedule') {
 		return {
-			button: Liferay.Language.get('schedule'),
-			description: Liferay.Language.get(
-				'set-the-date-and-time-you-want-the-web-content-to-be-published'
-			),
-			heading: Liferay.Language.get('schedule-publication'),
+			button: workflowEnabled
+				? Liferay.Language.get('submit-for-workflow')
+				: Liferay.Language.get('schedule'),
+			description: articleId
+				? workflowEnabled
+					? Liferay.Language.get(
+							'set-the-publication-date-and-time-for-the-web-content-and-submit-it-for-workflow'
+					  )
+					: Liferay.Language.get(
+							'set-the-date-and-time-you-want-the-web-content-to-be-published'
+					  )
+				: workflowEnabled
+				? Liferay.Language.get(
+						'set-the-publication-date-and-time-for-the-web-content-confirm-the-visibility-and-submit-it-for-workflow'
+				  )
+				: Liferay.Language.get(
+						'set-the-date-and-time-you-want-the-web-content-to-be-published-and-confirm-the-visibility-before-scheduling'
+				  ),
+			heading: workflowEnabled
+				? Liferay.Language.get(
+						'schedule-publication-and-submit-for-workflow'
+				  )
+				: Liferay.Language.get('schedule-publication'),
 		};
 	}
 	else {

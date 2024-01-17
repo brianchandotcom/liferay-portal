@@ -42,7 +42,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 							%>'
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= trashContainerActionDropdownItemsProvider.getActionDropdownItems() %>"
-							propsTransformer="js/EntriesPropsTransformer"
+							propsTransformer="{EntriesPropsTransformer} from trash-web"
 						/>
 					</li>
 				</ul>

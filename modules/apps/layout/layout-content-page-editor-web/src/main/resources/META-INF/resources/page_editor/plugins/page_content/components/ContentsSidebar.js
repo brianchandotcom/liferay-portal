@@ -9,11 +9,11 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/e
 import {EDITABLE_TYPES} from '../../../app/config/constants/editableTypes';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../app/selectors/selectLanguageId';
-import {selectPageContents} from '../../../app/selectors/selectPageContents';
 import isMapped from '../../../app/utils/editable_value/isMapped';
 import {getEditableLocalizedValue} from '../../../app/utils/getEditableLocalizedValue';
 import getFragmentItem from '../../../app/utils/getFragmentItem';
 import {hasRestrictedParent} from '../../../app/utils/hasRestrictedParent';
+import usePageContents from '../../../app/utils/usePageContents';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
@@ -104,7 +104,7 @@ export default function ContentsSidebar() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const languageId = useSelector(selectLanguageId);
 	const layoutData = useSelector((state) => state.layoutData);
-	const pageContents = useSelector(selectPageContents);
+	const pageContents = usePageContents();
 	const restrictedItemIds = useSelector((state) => state.restrictedItemIds);
 	const segmentsExperienceId = useSelector(
 		(state) => state.segmentsExperienceId

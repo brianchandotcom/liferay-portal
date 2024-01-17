@@ -47,7 +47,6 @@ import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpda
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../../../../app/selectors/selectCanUpdatePageStructure';
 import selectLayoutDataItemLabel from '../../../../../app/selectors/selectLayoutDataItemLabel';
-import {selectPageContents} from '../../../../../app/selectors/selectPageContents';
 import canActivateEditable from '../../../../../app/utils/canActivateEditable';
 import {DragAndDropContextProvider} from '../../../../../app/utils/drag_and_drop/useDragAndDrop';
 import isMapped from '../../../../../app/utils/editable_value/isMapped';
@@ -59,6 +58,7 @@ import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import {getResponsiveConfig} from '../../../../../app/utils/getResponsiveConfig';
 import getSelectedField from '../../../../../app/utils/getSelectedField';
+import usePageContents from '../../../../../app/utils/usePageContents';
 import StructureTreeNode from './StructureTreeNode';
 import StructureTreeNodeActions from './StructureTreeNodeActions';
 import VisibilityButton from './VisibilityButton';
@@ -93,7 +93,7 @@ export default function PageStructureSidebar() {
 	);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
-	const pageContents = useSelector(selectPageContents);
+	const pageContents = usePageContents();
 	const hoverItem = useHoverItem();
 	const hoveredItemId = useHoveredItemId();
 	const selectItem = useSelectItem();

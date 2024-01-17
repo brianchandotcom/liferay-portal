@@ -16,7 +16,6 @@ import {LAYOUT_TYPES} from '../../app/config/constants/layoutTypes';
 import {config} from '../../app/config/index';
 import {useCollectionConfig} from '../../app/contexts/CollectionItemContext';
 import {useDispatch, useSelector} from '../../app/contexts/StoreContext';
-import {selectPageContents} from '../../app/selectors/selectPageContents';
 import InfoItemService from '../../app/services/InfoItemService';
 import isMapped from '../../app/utils/editable_value/isMapped';
 import isMappedToInfoItem from '../../app/utils/editable_value/isMappedToInfoItem';
@@ -24,6 +23,7 @@ import isMappedToStructure from '../../app/utils/editable_value/isMappedToStruct
 import findPageContent from '../../app/utils/findPageContent';
 import getMappingFieldsKey from '../../app/utils/getMappingFieldsKey';
 import itemSelectorValueToInfoItem from '../../app/utils/item_selector_value/itemSelectorValueToInfoItem';
+import usePageContents from '../../app/utils/usePageContents';
 import ItemSelector from './ItemSelector';
 import MappingFieldSelector from './MappingFieldSelector';
 
@@ -134,7 +134,7 @@ export default function MappingSelectorWrapper({
 		itemType: '',
 	});
 	const mappingFields = useSelector((state) => state.mappingFields);
-	const pageContents = useSelector(selectPageContents);
+	const pageContents = usePageContents();
 
 	useEffect(() => {
 		if (!collectionConfig) {
@@ -254,7 +254,7 @@ function MappingSelector({
 }) {
 	const dispatch = useDispatch();
 	const mappingFields = useSelector((state) => state.mappingFields);
-	const pageContents = useSelector(selectPageContents);
+	const pageContents = usePageContents();
 	const mappingSelectorSourceSelectId = useId();
 
 	const {selectedMappingTypes} = config;

@@ -12,8 +12,11 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
+import com.liferay.petra.string.StringPool;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -64,11 +67,19 @@ public class CalendarBookingInfoItemFormProvider
 		return InfoForm.builder(
 		).infoFieldSetEntry(
 			_getBasicInformationInfoFieldSet()
+		).infoFieldSetEntry(
+			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+				CalendarBooking.class.getName(), StringPool.BLANK,
+				CalendarBooking.class.getSimpleName(), 0)
 		).labelInfoLocalizedValue(
 			new ModelResourceLocalizedValue(CalendarBooking.class.getName())
 		).name(
 			CalendarBooking.class.getName()
 		).build();
 	}
+
+	@Reference
+	private DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
 
 }

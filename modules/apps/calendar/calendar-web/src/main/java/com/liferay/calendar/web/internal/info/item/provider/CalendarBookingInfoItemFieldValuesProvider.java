@@ -13,6 +13,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -22,6 +23,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -50,6 +54,13 @@ public class CalendarBookingInfoItemFieldValuesProvider
 			return InfoItemFieldValues.builder(
 			).infoFieldValues(
 				_getCalendarBookingInfoFieldValues(calendarBooking)
+			).infoFieldValues(
+				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
+					new InfoItemReference(
+						CalendarBooking.class.getName(),
+						calendarBooking.getCalendarBookingId()),
+					StringPool.BLANK, CalendarBooking.class.getSimpleName(),
+					calendarBooking, _getThemeDisplay())
 			).infoItemReference(
 				new InfoItemReference(
 					CalendarBooking.class.getName(),
@@ -147,11 +158,26 @@ public class CalendarBookingInfoItemFieldValuesProvider
 		}
 	}
 
+	private ThemeDisplay _getThemeDisplay() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getThemeDisplay();
+		}
+
+		return null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingInfoItemFieldValuesProvider.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

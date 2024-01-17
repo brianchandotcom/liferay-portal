@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -51,14 +50,6 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) {
-		String type = message.getString("type");
-
-		Indexer<Object> indexer = _indexerRegistry.getIndexer(type);
-
-		if (indexer == null) {
-			return;
-		}
-
 		long segmentsEntryId = message.getLong("segmentsEntryId");
 
 		if (segmentsEntryId == 0) {
@@ -71,8 +62,7 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 			_updateDatabase(segmentsEntryId, newClassPKs);
 
 			_updateIndex(
-				message.getLong("companyId"), segmentsEntryId, type,
-				newClassPKs, indexer);
+				message.getLong("companyId"), segmentsEntryId, newClassPKs);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -105,8 +95,7 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 		return SetUtil.fromIterator(iterable.iterator());
 	}
 
-	private Set<Long> _getOldIndexClassPKs(
-			long companyId, long segmentsEntryId, Indexer<Object> indexer)
+	private Set<Long> _getOldIndexClassPKs(long companyId, long segmentsEntryId)
 		throws SearchException {
 
 		SearchContext searchContext = new SearchContext();
@@ -115,7 +104,7 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 			"segmentsEntryIds", new long[] {segmentsEntryId});
 		searchContext.setCompanyId(companyId);
 
-		Hits hits = indexer.search(searchContext);
+		Hits hits = _indexer.search(searchContext);
 
 		Set<Long> classPKsSet = new HashSet<>();
 
@@ -167,24 +156,24 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 	}
 
 	private void _updateIndex(
-			long companyId, long segmentsEntryId, String type,
-			Set<Long> newClassPKs, Indexer<Object> indexer)
+			long companyId, long segmentsEntryId, Set<Long> newClassPKs)
 		throws PortalException {
 
 		Set<Long> classPKs = SetUtil.symmetricDifference(
-			_getOldIndexClassPKs(companyId, segmentsEntryId, indexer),
-			newClassPKs);
+			_getOldIndexClassPKs(companyId, segmentsEntryId), newClassPKs);
 
 		for (long classPK : classPKs) {
-			indexer.reindex(type, classPK);
+			_indexer.reindex(User.class.getName(), classPK);
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsEntryReindexMessageListener.class);
 
-	@Reference
-	private IndexerRegistry _indexerRegistry;
+	@Reference(
+		target = "(indexer.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private Indexer<User> _indexer;
 
 	@Reference
 	private Portal _portal;

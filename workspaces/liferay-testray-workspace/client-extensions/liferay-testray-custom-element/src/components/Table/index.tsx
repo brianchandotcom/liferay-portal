@@ -119,6 +119,7 @@ const Table: React.FC<TableProps> = ({
 				className="tr-table"
 				hover
 				responsive={responsive}
+				striped={false}
 				tableVerticalAlignment={bodyVerticalAlignment}
 			>
 				<ClayTable.Head>

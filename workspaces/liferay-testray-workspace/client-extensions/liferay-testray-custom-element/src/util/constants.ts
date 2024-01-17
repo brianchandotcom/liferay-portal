@@ -28,6 +28,16 @@ export enum Statuses {
 	OTHER = 'OTHERS COMPLETED',
 }
 
+export enum CaseResultStatuses {
+	BLOCKED = 'caseResultBlocked',
+	FAILED = 'caseResultFailed',
+	INCOMPLETE = 'caseResultIncomplete',
+	INPROGRESS = 'caseResultInProgress',
+	PASSED = 'caseResultPassed',
+	TEST_FIX = 'caseResultTestFix',
+	UNTESTED = 'caseResultUntested',
+}
+
 export enum StatusesProgressScore {
 	SELF = 'SELF COMPLETED',
 	OTHER = 'OTHERS COMPLETED',

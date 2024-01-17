@@ -78,12 +78,12 @@ if (selLayout != null) {
 	displayType="secondary"
 	id='<%= liferayPortletResponse.getNamespace() + "chooseLayout" %>'
 	label="choose"
-	propsTransformer="js/ChooseLayoutButtonPropsTransformer"
+	propsTransformer="{ChooseLayoutButtonPropsTransformer} from site-navigation-menu-item-layout"
 	small="<%= true %>"
 />
 
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "editLayout" %>'
-	module="js/EditLayout"
+	module="{EditLayout} from site-navigation-menu-item-layout"
 	servletContext="<%= application %>"
 />

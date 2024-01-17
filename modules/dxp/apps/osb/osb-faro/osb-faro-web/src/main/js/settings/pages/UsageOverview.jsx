@@ -215,14 +215,6 @@ export class UsageOverview extends React.Component {
 								<div>
 									<h4>{Liferay.Language.get('plans')}</h4>
 
-									<div className='text-secondary'>
-										<p>
-											{Liferay.Language.get(
-												'balance-pricing-and-value.-higher-tiers-offer-more-flexibility-through-cheaper-add-ons-and-higher-limits'
-											)}
-										</p>
-									</div>
-
 									<PlansList
 										currentPlanName={currentPlan.name}
 										plans={getPlans(currentPlan)}

@@ -1,0 +1,30 @@
+[
+	{
+		"key": "not-finding-what-you-are-looking-for",
+		"value": {
+			"en-US": "Not finding what you're looking for?",
+			"ja-JP": "探しているものが見つかりませんか?"
+		}
+	},
+	{
+		"key": "pardon-our-dust-as-we-revamp",
+		"value": {
+			"en-US": "Pardon our dust as we are in the process of revamping the documentation to the site. If something seems missing, cross reference the Liferay Help Center for a more thorough set of documentation on Liferay DXP 7.2 and previous versions.",
+			"ja-JP": "現在、サイトのドキュメントを改良中のため、多少の汚れはご容赦ください。何かが足りないと思われる場合は、Liferay ヘルプセンターを相互参照して、Liferay DXP 7.2 および以前のバージョンに関するより詳細なドキュメントを参照してください。"
+		}
+	},
+	{
+		"key": "submit-feedback",
+		"value": {
+			"en-US": "Submit Feedback",
+			"ja-JP": "フィードバックを送信"
+		}
+	},
+	{
+		"key": "try-liferays-help-center",
+		"value": {
+			"en-US": "Try Liferay’s Help Center",
+			"ja-JP": "Liferay のヘルプセンターをお試しください"
+		}
+	}
+]

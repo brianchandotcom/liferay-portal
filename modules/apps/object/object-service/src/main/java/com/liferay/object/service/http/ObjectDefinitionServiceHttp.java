@@ -595,7 +595,7 @@ public class ObjectDefinitionServiceHttp {
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				String panelAppOrder, String panelCategoryKey, boolean portlet,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
-				String scope)
+				String scope, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -611,7 +611,7 @@ public class ObjectDefinitionServiceHttp {
 				active, enableCategorization, enableComments,
 				enableLocalization, enableObjectEntryDraft,
 				enableObjectEntryHistory, labelMap, name, panelAppOrder,
-				panelCategoryKey, portlet, pluralLabelMap, scope);
+				panelCategoryKey, portlet, pluralLabelMap, scope, status);
 
 			Object returnObj = null;
 
@@ -864,7 +864,7 @@ public class ObjectDefinitionServiceHttp {
 			long.class, boolean.class, boolean.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
 			java.util.Map.class, String.class, String.class, String.class,
-			boolean.class, java.util.Map.class, String.class
+			boolean.class, java.util.Map.class, String.class, int.class
 		};
 	private static final Class<?>[]
 		_updateExternalReferenceCodeParameterTypes14 = new Class[] {

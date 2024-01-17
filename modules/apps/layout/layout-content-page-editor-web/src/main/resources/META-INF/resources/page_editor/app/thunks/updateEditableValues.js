@@ -19,13 +19,12 @@ export default function updateEditableValues({
 			languageId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
-		}).then(({fragmentEntryLink, pageContents}) => {
+		}).then(({fragmentEntryLink}) => {
 			dispatch(
 				updateEditableValuesAction({
 					content: fragmentEntryLink.content,
 					editableValues,
 					fragmentEntryLinkId,
-					pageContents,
 					segmentsExperienceId,
 				})
 			);

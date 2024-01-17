@@ -27,13 +27,12 @@ export default function updateFragmentConfiguration({
 			languageId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
-		}).then(({fragmentEntryLink, layoutData, pageContents}) => {
+		}).then(({fragmentEntryLink, layoutData}) => {
 			dispatch(
 				updateFragmentEntryLinkConfiguration({
 					fragmentEntryLink,
 					fragmentEntryLinkId,
 					layoutData,
-					pageContents,
 				})
 			);
 		});

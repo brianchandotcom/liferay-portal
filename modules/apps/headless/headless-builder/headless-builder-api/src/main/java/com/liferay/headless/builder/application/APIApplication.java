@@ -122,6 +122,8 @@ public interface APIApplication {
 
 		public PropertyType getPropertyType();
 
+		public String getRelatedPropertyERC();
+
 		public String getSourceFieldName();
 
 		public Type getType();
@@ -160,9 +162,9 @@ public interface APIApplication {
 
 		public enum Type {
 
-			AGGREGATION, ATTACHMENT, BOOLEAN, DATE, DATE_TIME, DECIMAL, INTEGER,
-			LONG_INTEGER, LONG_TEXT, MULTISELECT_PICKLIST, PICKLIST,
-			PRECISION_DECIMAL, RICH_TEXT, TEXT
+			AGGREGATION, ARRAY_CONTAINER, ATTACHMENT, BOOLEAN, DATE, DATE_TIME,
+			DECIMAL, INTEGER, LONG_INTEGER, LONG_TEXT, MULTISELECT_PICKLIST,
+			PICKLIST, PRECISION_DECIMAL, RICH_TEXT, SINGLE_CONTAINER, TEXT
 
 		}
 

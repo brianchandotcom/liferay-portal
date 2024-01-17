@@ -5,6 +5,7 @@
 
 import updateFragmentEntryLinkConfiguration from '../../actions/updateFragmentEntryLinkConfiguration';
 import FragmentService from '../../services/FragmentService';
+import {clearPageContents} from '../../utils/usePageContents';
 
 function undoAction({action}) {
 	const {editableValues, fragmentEntryLinkId} = action;
@@ -26,6 +27,8 @@ function undoAction({action}) {
 					layoutData,
 				})
 			);
+
+			clearPageContents();
 		});
 	};
 }

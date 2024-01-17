@@ -5,6 +5,7 @@
 
 import addItemAction from '../actions/addItem';
 import LayoutService from '../services/LayoutService';
+import {clearPageContents} from '../utils/usePageContents';
 
 export default function addItem({
 	itemType,
@@ -23,6 +24,8 @@ export default function addItem({
 			segmentsExperienceId,
 		}).then(({addedItemId, layoutData}) => {
 			dispatch(addItemAction({itemId: addedItemId, layoutData}));
+
+			clearPageContents();
 
 			if (addedItemId) {
 				selectItem(addedItemId);

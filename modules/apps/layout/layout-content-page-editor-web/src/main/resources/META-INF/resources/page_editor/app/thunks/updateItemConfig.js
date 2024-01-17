@@ -5,6 +5,7 @@
 
 import updateItemConfigAction from '../actions/updateItemConfig';
 import LayoutService from '../services/LayoutService';
+import {clearPageContents} from '../utils/usePageContents';
 
 export default function updateItemConfig({
 	itemConfig,
@@ -27,6 +28,8 @@ export default function updateItemConfig({
 					overridePreviousConfig,
 				})
 			);
+
+			clearPageContents();
 		});
 	};
 }

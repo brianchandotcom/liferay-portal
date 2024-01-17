@@ -26,5 +26,5 @@ WikiPage wikiPage = ActionUtil.getPage(liferayPortletRequest);
 			"printPageURL", printURL
 		).build()
 	%>'
-	module="wiki/js/printPageButtonEventListener"
+	module="{printPageButtonEventListener} from wiki-web"
 />

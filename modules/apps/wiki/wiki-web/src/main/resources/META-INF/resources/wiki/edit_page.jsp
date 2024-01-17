@@ -415,7 +415,7 @@ if (portletTitleBasedNavigation) {
 			"rootNodeId", liferayPortletResponse.getNamespace() + "wikiEditPageContainer"
 		).build()
 	%>'
-	module="wiki/js/WikiPortlet.es"
+	module="{WikiPortlet} from wiki-web"
 />
 
 <%

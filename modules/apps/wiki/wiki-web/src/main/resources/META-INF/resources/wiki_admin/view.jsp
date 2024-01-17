@@ -28,7 +28,7 @@ request.setAttribute("view.jsp-orderByType", wikiNodesManagementToolbarDisplayCo
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= wikiNodesManagementToolbarDisplayContext.getTotalItems() %>"
 	orderDropdownItems="<%= wikiNodesManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
-	propsTransformer="wiki_admin/js/WikiNodesManagementToolbarPropsTransformer"
+	propsTransformer="{WikiNodesManagementToolbarPropsTransformer} from wiki-web"
 	searchContainerId="wikiNodes"
 	selectable="<%= wikiNodesManagementToolbarDisplayContext.isSelectable() %>"
 	showInfoButton="<%= true %>"

@@ -1,5 +1,5 @@
-.public-sites-navigation-padding {
-	padding-top: 7rem;
+a.sign-in > span {
+	color: var(--color-neutral-10);
 }
 .has-control-menu nav.public-sites-navigation {
 	margin-top: 3.5rem;
@@ -13,6 +13,18 @@
 }
 .has-control-menu .search-wrapper {
 	padding-top: 8rem;
+}
+.public-sites-navigation-padding {
+	padding-top: 7rem;
+}
+.pbt-1{
+	padding-bottom:0.5rem !important
+}
+.prg-1{
+	padding-right:0.5rem !important
+}
+.plf-1{
+	padding-left:0.5rem !important
 }
 nav.public-sites-navigation {
 	font-size: var(--font-size-base);
@@ -545,11 +557,18 @@ nav.public-sites-navigation .account-dropdown .account-configurables {
 	border-bottom: 1px solid var(--color-neutral-3);
 }
 nav.public-sites-navigation .account-dropdown .settings {
-	color: var(--color-neutral-10, #282934);
-}
-nav.public-sites-navigation .account-dropdown .sign-out {
 	border-radius: var(--border-radius);
-	color: var(--color-neutral-10, #282934);
+	color: var(--color-neutral-10);
+}
+nav.public-sites-navigation .account-dropdown .settings:hover,
+nav.public-sites-navigation .account-dropdown .settings:active,
+nav.public-sites-navigation .account-dropdown .settings:focus {
+	background: var(--color-action-primary-hover-lighten);
+}
+nav.public-sites-navigation .account-dropdown .settings:hover .settings-icon,
+nav.public-sites-navigation .account-dropdown .settings:active .settings-icon,
+nav.public-sites-navigation .account-dropdown .settings:focus .settings-icon {
+	opacity: 1;
 }
 nav.public-sites-navigation .account-dropdown .sign-out:hover,
 nav.public-sites-navigation .account-dropdown .sign-out:active,

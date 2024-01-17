@@ -8,6 +8,8 @@ package com.liferay.dispatch.internal.helper;
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.exception.DispatchTriggerSchedulerException;
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -125,14 +127,20 @@ public class DispatchTriggerHelper {
 	}
 
 	private String _getGroupName(DispatchTrigger dispatchTrigger) {
-		return String.format(
-			"DISPATCH_GROUP_%07d@%d", dispatchTrigger.getDispatchTriggerId(),
+		String dispatchTriggerId = String.format(
+			"%07d", dispatchTrigger.getDispatchTriggerId());
+
+		return StringBundler.concat(
+			"DISPATCH_GROUP_", dispatchTriggerId, StringPool.AT,
 			dispatchTrigger.getCompanyId());
 	}
 
 	private String _getJobName(DispatchTrigger dispatchTrigger) {
-		return String.format(
-			"DISPATCH_JOB_%07d@%d", dispatchTrigger.getDispatchTriggerId(),
+		String dispatchTriggerId = String.format(
+			"%07d", dispatchTrigger.getDispatchTriggerId());
+
+		return StringBundler.concat(
+			"DISPATCH_JOB_", dispatchTriggerId, StringPool.AT,
 			dispatchTrigger.getCompanyId());
 	}
 

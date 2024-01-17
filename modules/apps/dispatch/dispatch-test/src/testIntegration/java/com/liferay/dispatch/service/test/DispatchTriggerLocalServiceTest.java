@@ -20,6 +20,8 @@ import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.service.test.util.CronExpressionUtil;
 import com.liferay.dispatch.service.test.util.DispatchTriggerTestUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -484,14 +486,20 @@ public class DispatchTriggerLocalServiceTest {
 	}
 
 	private String _getGroupName(DispatchTrigger dispatchTrigger) {
-		return String.format(
-			"DISPATCH_GROUP_%07d@%d", dispatchTrigger.getDispatchTriggerId(),
+		String dispatchTriggerId = String.format(
+			"%07d", dispatchTrigger.getDispatchTriggerId());
+
+		return StringBundler.concat(
+			"DISPATCH_GROUP_", dispatchTriggerId, StringPool.AT,
 			dispatchTrigger.getCompanyId());
 	}
 
 	private String _getJobName(DispatchTrigger dispatchTrigger) {
-		return String.format(
-			"DISPATCH_JOB_%07d@%d", dispatchTrigger.getDispatchTriggerId(),
+		String dispatchTriggerId = String.format(
+			"%07d", dispatchTrigger.getDispatchTriggerId());
+
+		return StringBundler.concat(
+			"DISPATCH_JOB_", dispatchTriggerId, StringPool.AT,
 			dispatchTrigger.getCompanyId());
 	}
 

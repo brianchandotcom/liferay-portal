@@ -112,6 +112,7 @@ create unique index IX_10E504DF on DLFileVersion (fileEntryId, version[$COLUMN_L
 create index IX_BC5541ED on DLFileVersion (groupId, folderId, version[$COLUMN_LENGTH:75$], title[$COLUMN_LENGTH:255$]);
 create index IX_FFB3395C on DLFileVersion (mimeType[$COLUMN_LENGTH:75$]);
 create index IX_6AA08268 on DLFileVersion (status, companyId);
+create index IX_92309600 on DLFileVersion (status, displayDate);
 create index IX_D50EAA41 on DLFileVersion (status, fileEntryId);
 create index IX_799D5D47 on DLFileVersion (status, groupId, folderId);
 create index IX_4BFABB9A on DLFileVersion (uuid_[$COLUMN_LENGTH:75$]);

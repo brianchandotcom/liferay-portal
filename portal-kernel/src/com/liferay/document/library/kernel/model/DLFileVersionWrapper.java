@@ -63,6 +63,7 @@ public class DLFileVersionWrapper
 		attributes.put("size", getSize());
 		attributes.put("checksum", getChecksum());
 		attributes.put("storeUUID", getStoreUUID());
+		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("reviewDate", getReviewDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -232,6 +233,12 @@ public class DLFileVersionWrapper
 			setStoreUUID(storeUUID);
 		}
 
+		Date displayDate = (Date)attributes.get("displayDate");
+
+		if (displayDate != null) {
+			setDisplayDate(displayDate);
+		}
+
 		Date expirationDate = (Date)attributes.get("expirationDate");
 
 		if (expirationDate != null) {
@@ -365,6 +372,16 @@ public class DLFileVersionWrapper
 	@Override
 	public String getDescription() {
 		return model.getDescription();
+	}
+
+	/**
+	 * Returns the display date of this document library file version.
+	 *
+	 * @return the display date of this document library file version
+	 */
+	@Override
+	public Date getDisplayDate() {
+		return model.getDisplayDate();
 	}
 
 	@Override
@@ -853,6 +870,16 @@ public class DLFileVersionWrapper
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
+	}
+
+	/**
+	 * Sets the display date of this document library file version.
+	 *
+	 * @param displayDate the display date of this document library file version
+	 */
+	@Override
+	public void setDisplayDate(Date displayDate) {
+		model.setDisplayDate(displayDate);
 	}
 
 	/**

@@ -68,7 +68,7 @@ public class DLFileVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -122,6 +122,8 @@ public class DLFileVersionCacheModel
 		sb.append(checksum);
 		sb.append(", storeUUID=");
 		sb.append(storeUUID);
+		sb.append(", displayDate=");
+		sb.append(displayDate);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
 		sb.append(", reviewDate=");
@@ -266,6 +268,13 @@ public class DLFileVersionCacheModel
 			dlFileVersionImpl.setStoreUUID(storeUUID);
 		}
 
+		if (displayDate == Long.MIN_VALUE) {
+			dlFileVersionImpl.setDisplayDate(null);
+		}
+		else {
+			dlFileVersionImpl.setDisplayDate(new Date(displayDate));
+		}
+
 		if (expirationDate == Long.MIN_VALUE) {
 			dlFileVersionImpl.setExpirationDate(null);
 		}
@@ -349,6 +358,7 @@ public class DLFileVersionCacheModel
 		size = objectInput.readLong();
 		checksum = objectInput.readUTF();
 		storeUUID = objectInput.readUTF();
+		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		reviewDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -478,6 +488,7 @@ public class DLFileVersionCacheModel
 			objectOutput.writeUTF(storeUUID);
 		}
 
+		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(reviewDate);
 		objectOutput.writeLong(lastPublishDate);
@@ -522,6 +533,7 @@ public class DLFileVersionCacheModel
 	public long size;
 	public String checksum;
 	public String storeUUID;
+	public long displayDate;
 	public long expirationDate;
 	public long reviewDate;
 	public long lastPublishDate;

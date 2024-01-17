@@ -164,6 +164,8 @@ public class DLFileVersionPersistenceTest {
 
 		newDLFileVersion.setStoreUUID(RandomTestUtil.randomString());
 
+		newDLFileVersion.setDisplayDate(RandomTestUtil.nextDate());
+
 		newDLFileVersion.setExpirationDate(RandomTestUtil.nextDate());
 
 		newDLFileVersion.setReviewDate(RandomTestUtil.nextDate());
@@ -255,6 +257,9 @@ public class DLFileVersionPersistenceTest {
 		Assert.assertEquals(
 			existingDLFileVersion.getStoreUUID(),
 			newDLFileVersion.getStoreUUID());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingDLFileVersion.getDisplayDate()),
+			Time.getShortTimestamp(newDLFileVersion.getDisplayDate()));
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingDLFileVersion.getExpirationDate()),
 			Time.getShortTimestamp(newDLFileVersion.getExpirationDate()));
@@ -362,6 +367,14 @@ public class DLFileVersionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByLtD_S() throws Exception {
+		_persistence.countByLtD_S(
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByLtD_S(RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
 	public void testCountByG_F_S() throws Exception {
 		_persistence.countByG_F_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
@@ -412,10 +425,10 @@ public class DLFileVersionPersistenceTest {
 			"fileEntryId", true, "treePath", true, "fileName", true,
 			"extension", true, "mimeType", true, "title", true, "description",
 			true, "changeLog", true, "fileEntryTypeId", true, "version", true,
-			"size", true, "checksum", true, "storeUUID", true, "expirationDate",
-			true, "reviewDate", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"size", true, "checksum", true, "storeUUID", true, "displayDate",
+			true, "expirationDate", true, "reviewDate", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -759,6 +772,8 @@ public class DLFileVersionPersistenceTest {
 		dlFileVersion.setChecksum(RandomTestUtil.randomString());
 
 		dlFileVersion.setStoreUUID(RandomTestUtil.randomString());
+
+		dlFileVersion.setDisplayDate(RandomTestUtil.nextDate());
 
 		dlFileVersion.setExpirationDate(RandomTestUtil.nextDate());
 

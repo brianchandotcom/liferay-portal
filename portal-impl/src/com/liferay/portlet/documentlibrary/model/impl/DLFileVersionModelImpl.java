@@ -79,10 +79,10 @@ public class DLFileVersionModelImpl
 		{"extraSettings", Types.CLOB}, {"fileEntryTypeId", Types.BIGINT},
 		{"version", Types.VARCHAR}, {"size_", Types.BIGINT},
 		{"checksum", Types.VARCHAR}, {"storeUUID", Types.VARCHAR},
-		{"expirationDate", Types.TIMESTAMP}, {"reviewDate", Types.TIMESTAMP},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
+		{"reviewDate", Types.TIMESTAMP}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -115,6 +115,7 @@ public class DLFileVersionModelImpl
 		TABLE_COLUMNS_MAP.put("size_", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("checksum", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("storeUUID", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("reviewDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
@@ -125,7 +126,7 @@ public class DLFileVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fileVersionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,storeUUID VARCHAR(255) null,expirationDate DATE null,reviewDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fileVersionId, ctCollectionId))";
+		"create table DLFileVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fileVersionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,storeUUID VARCHAR(255) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fileVersionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileVersion";
 
@@ -169,62 +170,68 @@ public class DLFileVersionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long FILEENTRYID_COLUMN_BITMASK = 2L;
+	public static final long DISPLAYDATE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long FOLDERID_COLUMN_BITMASK = 4L;
+	public static final long FILEENTRYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long FOLDERID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MIMETYPE_COLUMN_BITMASK = 16L;
+	public static final long GROUPID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 32L;
+	public static final long MIMETYPE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STOREUUID_COLUMN_BITMASK = 64L;
+	public static final long STATUS_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TITLE_COLUMN_BITMASK = 128L;
+	public static final long STOREUUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 256L;
+	public static final long TITLE_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long VERSION_COLUMN_BITMASK = 512L;
+	public static final long UUID_COLUMN_BITMASK = 512L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long VERSION_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 1024L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 2048L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(
@@ -373,6 +380,8 @@ public class DLFileVersionModelImpl
 			attributeGetterFunctions.put(
 				"storeUUID", DLFileVersion::getStoreUUID);
 			attributeGetterFunctions.put(
+				"displayDate", DLFileVersion::getDisplayDate);
+			attributeGetterFunctions.put(
 				"expirationDate", DLFileVersion::getExpirationDate);
 			attributeGetterFunctions.put(
 				"reviewDate", DLFileVersion::getReviewDate);
@@ -487,6 +496,9 @@ public class DLFileVersionModelImpl
 			attributeSetterBiConsumers.put(
 				"storeUUID",
 				(BiConsumer<DLFileVersion, String>)DLFileVersion::setStoreUUID);
+			attributeSetterBiConsumers.put(
+				"displayDate",
+				(BiConsumer<DLFileVersion, Date>)DLFileVersion::setDisplayDate);
 			attributeSetterBiConsumers.put(
 				"expirationDate",
 				(BiConsumer<DLFileVersion, Date>)
@@ -1082,6 +1094,30 @@ public class DLFileVersionModelImpl
 
 	@JSON
 	@Override
+	public Date getDisplayDate() {
+		return _displayDate;
+	}
+
+	@Override
+	public void setDisplayDate(Date displayDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_displayDate = displayDate;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public Date getOriginalDisplayDate() {
+		return getColumnOriginalValue("displayDate");
+	}
+
+	@JSON
+	@Override
 	public Date getExpirationDate() {
 		return _expirationDate;
 	}
@@ -1384,6 +1420,7 @@ public class DLFileVersionModelImpl
 		dlFileVersionImpl.setSize(getSize());
 		dlFileVersionImpl.setChecksum(getChecksum());
 		dlFileVersionImpl.setStoreUUID(getStoreUUID());
+		dlFileVersionImpl.setDisplayDate(getDisplayDate());
 		dlFileVersionImpl.setExpirationDate(getExpirationDate());
 		dlFileVersionImpl.setReviewDate(getReviewDate());
 		dlFileVersionImpl.setLastPublishDate(getLastPublishDate());
@@ -1451,6 +1488,8 @@ public class DLFileVersionModelImpl
 			this.<String>getColumnOriginalValue("checksum"));
 		dlFileVersionImpl.setStoreUUID(
 			this.<String>getColumnOriginalValue("storeUUID"));
+		dlFileVersionImpl.setDisplayDate(
+			this.<Date>getColumnOriginalValue("displayDate"));
 		dlFileVersionImpl.setExpirationDate(
 			this.<Date>getColumnOriginalValue("expirationDate"));
 		dlFileVersionImpl.setReviewDate(
@@ -1704,6 +1743,15 @@ public class DLFileVersionModelImpl
 			dlFileVersionCacheModel.storeUUID = null;
 		}
 
+		Date displayDate = getDisplayDate();
+
+		if (displayDate != null) {
+			dlFileVersionCacheModel.displayDate = displayDate.getTime();
+		}
+		else {
+			dlFileVersionCacheModel.displayDate = Long.MIN_VALUE;
+		}
+
 		Date expirationDate = getExpirationDate();
 
 		if (expirationDate != null) {
@@ -1840,6 +1888,7 @@ public class DLFileVersionModelImpl
 	private long _size;
 	private String _checksum;
 	private String _storeUUID;
+	private Date _displayDate;
 	private Date _expirationDate;
 	private Date _reviewDate;
 	private Date _lastPublishDate;
@@ -1904,6 +1953,7 @@ public class DLFileVersionModelImpl
 		_columnOriginalValues.put("size_", _size);
 		_columnOriginalValues.put("checksum", _checksum);
 		_columnOriginalValues.put("storeUUID", _storeUUID);
+		_columnOriginalValues.put("displayDate", _displayDate);
 		_columnOriginalValues.put("expirationDate", _expirationDate);
 		_columnOriginalValues.put("reviewDate", _reviewDate);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
@@ -1987,19 +2037,21 @@ public class DLFileVersionModelImpl
 
 		columnBitmasks.put("storeUUID", 33554432L);
 
-		columnBitmasks.put("expirationDate", 67108864L);
+		columnBitmasks.put("displayDate", 67108864L);
 
-		columnBitmasks.put("reviewDate", 134217728L);
+		columnBitmasks.put("expirationDate", 134217728L);
 
-		columnBitmasks.put("lastPublishDate", 268435456L);
+		columnBitmasks.put("reviewDate", 268435456L);
 
-		columnBitmasks.put("status", 536870912L);
+		columnBitmasks.put("lastPublishDate", 536870912L);
 
-		columnBitmasks.put("statusByUserId", 1073741824L);
+		columnBitmasks.put("status", 1073741824L);
 
-		columnBitmasks.put("statusByUserName", 2147483648L);
+		columnBitmasks.put("statusByUserId", 2147483648L);
 
-		columnBitmasks.put("statusDate", 4294967296L);
+		columnBitmasks.put("statusByUserName", 4294967296L);
+
+		columnBitmasks.put("statusDate", 8589934592L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

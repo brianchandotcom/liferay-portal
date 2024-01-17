@@ -6,10 +6,9 @@
 import {useEffect} from 'react';
 
 import updateDraft from '../../actions/updateDraft';
-import updatePageContents from '../../actions/updatePageContents';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import InfoItemService from '../../services/InfoItemService';
+import {clearPageContents} from '../../utils/usePageContents';
 
 const PAGE_CONTENTS_AWARE_PORTLET_IDS = [
 	'com_liferay_journal_content_web_portlet_JournalContentPortlet',
@@ -24,15 +23,7 @@ export default function usePortletConfigurationListener() {
 	useEffect(() => {
 		const onEditConfiguration = ({portletId}) => {
 			if (PAGE_CONTENTS_AWARE_PORTLET_IDS.includes(portletId)) {
-				InfoItemService.getPageContents({
-					segmentsExperienceId,
-				}).then((pageContents) => {
-					dispatch(
-						updatePageContents({
-							pageContents,
-						})
-					);
-				});
+				clearPageContents();
 			}
 
 			dispatch(updateDraft({draft: true}));

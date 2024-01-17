@@ -180,9 +180,9 @@ public class ObjectUserNotificationsHandlerTest {
 
 	private void _setUpServiceContext() throws PortalException {
 		Mockito.when(
-			_serviceContext.getThemeDisplay()
+			_serviceContext.getCurrentURL()
 		).thenReturn(
-			null
+			RandomTestUtil.randomString()
 		);
 
 		Mockito.when(
@@ -192,15 +192,15 @@ public class ObjectUserNotificationsHandlerTest {
 		);
 
 		Mockito.when(
-			_serviceContext.getCurrentURL()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
 			_serviceContext.getScopeGroup()
 		).thenReturn(
 			Mockito.mock(Group.class)
+		);
+
+		Mockito.when(
+			_serviceContext.getThemeDisplay()
+		).thenReturn(
+			null
 		);
 	}
 

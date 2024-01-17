@@ -12,6 +12,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
@@ -195,6 +196,15 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 		</liferay-ddm:template-renderer>
 	</aui:form>
 
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).build()
+		%>'
+		module="js/FacetUtil"
+	/>
+
 	<aui:script use="liferay-search-modified-facet">
 		new Liferay.Search.ModifiedFacetFilter({
 			form: A.one('#<portlet:namespace />fm'),
@@ -205,9 +215,5 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 			),
 			toInputName: '<portlet:namespace />toInput',
 		});
-
-		Liferay.Search.FacetUtil.enableInputs(
-			document.querySelectorAll('#<portlet:namespace />fm .facet-term')
-		);
 	</aui:script>
 </c:if>

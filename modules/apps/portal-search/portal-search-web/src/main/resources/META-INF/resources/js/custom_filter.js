@@ -94,6 +94,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-search-facet-util'],
+		requires: [],
 	}
 );

@@ -3,18 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-describe('liferay-search-facet-util', () => {
-	beforeEach((done) => {
-		require('../../src/main/resources/META-INF/resources/js/facet_util');
+import {FacetUtil} from '../../src/main/resources/META-INF/resources/js/FacetUtil';
 
-		AUI().use(['liferay-search-facet-util'], () => done());
-	});
-
+describe('FacetUtil', () => {
 	describe('removeURLParameters()', () => {
 		it('removes the parameter whose name is the given key', () => {
 			const parameters = ['modified=last-24-hours', 'q=test'];
 
-			const newParameters = Liferay.Search.FacetUtil.removeURLParameters(
+			const newParameters = FacetUtil.removeURLParameters(
 				'modified',
 				parameters
 			);
@@ -29,7 +25,7 @@ describe('liferay-search-facet-util', () => {
 				'q=test',
 			];
 
-			const newParameters = Liferay.Search.FacetUtil.removeURLParameters(
+			const newParameters = FacetUtil.removeURLParameters(
 				'modified',
 				parameters
 			);
@@ -42,37 +38,37 @@ describe('liferay-search-facet-util', () => {
 		});
 
 		it('removes given parameter', () => {
-			const parameters = Liferay.Search.FacetUtil.removeURLParameters(
-				'key',
-				['key=sel1', 'key=sel2']
-			);
+			const parameters = FacetUtil.removeURLParameters('key', [
+				'key=sel1',
+				'key=sel2',
+			]);
 
 			expect(parameters).toEqual([]);
 		});
 
 		it('preserves other parameters', () => {
-			const parameters = Liferay.Search.FacetUtil.removeURLParameters(
-				'key1',
-				['key1=sel1', 'key2=sel2']
-			);
+			const parameters = FacetUtil.removeURLParameters('key1', [
+				'key1=sel1',
+				'key2=sel2',
+			]);
 
 			expect(parameters).toEqual(['key2=sel2']);
 		});
 
 		it('preserves key-only parameters', () => {
-			const parameters = Liferay.Search.FacetUtil.removeURLParameters(
-				'key',
-				['checked', 'key=value']
-			);
+			const parameters = FacetUtil.removeURLParameters('key', [
+				'checked',
+				'key=value',
+			]);
 
 			expect(parameters).toEqual(['checked']);
 		});
 
 		it('removes key-only parameters', () => {
-			const parameters = Liferay.Search.FacetUtil.removeURLParameters(
+			const parameters = FacetUtil.removeURLParameters('checked', [
 				'checked',
-				['checked', 'key=value']
-			);
+				'key=value',
+			]);
 
 			expect(parameters).toEqual(['key=value']);
 		});
@@ -80,7 +76,7 @@ describe('liferay-search-facet-util', () => {
 
 	describe('setURLParameter()', () => {
 		it('adds a missing parameter', () => {
-			const url = Liferay.Search.FacetUtil.setURLParameter(
+			const url = FacetUtil.setURLParameter(
 				'http://example.com/',
 				'q',
 				'test'
@@ -90,7 +86,7 @@ describe('liferay-search-facet-util', () => {
 		});
 
 		it('updates an existing parameter', () => {
-			const url = Liferay.Search.FacetUtil.setURLParameter(
+			const url = FacetUtil.setURLParameter(
 				'http://example.com/?q=example',
 				'q',
 				'test'
@@ -100,7 +96,7 @@ describe('liferay-search-facet-util', () => {
 		});
 
 		it('adds a missing parameter with path', () => {
-			const url = Liferay.Search.FacetUtil.setURLParameter(
+			const url = FacetUtil.setURLParameter(
 				'http://example.com/path',
 				'q',
 				'test'
@@ -112,7 +108,7 @@ describe('liferay-search-facet-util', () => {
 
 	describe('setURLParameters()', () => {
 		it('adds new selections', () => {
-			const parameters = Liferay.Search.FacetUtil.setURLParameters(
+			const parameters = FacetUtil.setURLParameters(
 				'key',
 				['sel1', 'sel2'],
 				[]
@@ -122,7 +118,7 @@ describe('liferay-search-facet-util', () => {
 		});
 
 		it('removes old selections', () => {
-			const parameters = Liferay.Search.FacetUtil.setURLParameters(
+			const parameters = FacetUtil.setURLParameters(
 				'key',
 				['sel2', 'sel3'],
 				['key=sel1']
@@ -132,7 +128,7 @@ describe('liferay-search-facet-util', () => {
 		});
 
 		it('preserves other selections', () => {
-			const parameters = Liferay.Search.FacetUtil.setURLParameters(
+			const parameters = FacetUtil.setURLParameters(
 				'key1',
 				['sel1'],
 				['key2=sel2']
@@ -144,7 +140,7 @@ describe('liferay-search-facet-util', () => {
 
 	describe('.updateQueryString()', () => {
 		it('removes old selections', () => {
-			const queryString = Liferay.Search.FacetUtil.updateQueryString(
+			const queryString = FacetUtil.updateQueryString(
 				'key',
 				['sel2', 'sel3'],
 				'?key=sel1'
@@ -154,7 +150,7 @@ describe('liferay-search-facet-util', () => {
 		});
 
 		it('adds new selections', () => {
-			const queryString = Liferay.Search.FacetUtil.updateQueryString(
+			const queryString = FacetUtil.updateQueryString(
 				'key1',
 				['sel1'],
 				'?key2=sel2'
@@ -164,7 +160,7 @@ describe('liferay-search-facet-util', () => {
 		});
 
 		it('accepts query string without question mark', () => {
-			const queryString = Liferay.Search.FacetUtil.updateQueryString(
+			const queryString = FacetUtil.updateQueryString(
 				'key1',
 				['sel1'],
 				'key2=sel2'
@@ -174,7 +170,7 @@ describe('liferay-search-facet-util', () => {
 		});
 
 		it('does not prefix with ampersand', () => {
-			const queryString = Liferay.Search.FacetUtil.updateQueryString(
+			const queryString = FacetUtil.updateQueryString(
 				'key',
 				['sel1', 'sel2'],
 				'?'

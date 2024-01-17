@@ -8,7 +8,6 @@ AUI.add(
 	(A) => {
 		const DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
-		const FacetUtil = Liferay.Search.FacetUtil;
 		const Util = Liferay.Util;
 
 		const ModifiedFacetFilter = function (config) {
@@ -41,6 +40,15 @@ AUI.add(
 		};
 
 		const ModifiedFacetFilterUtil = {
+			addURLParameter(key, value, parameterArray) {
+				key = encodeURIComponent(key);
+				value = encodeURIComponent(value);
+
+				parameterArray[parameterArray.length] = [key, value].join('=');
+
+				return parameterArray;
+			},
+
 			clearSelections() {
 				const param = this.getParameterName();
 				const paramFrom = param + 'From';
@@ -50,17 +58,17 @@ AUI.add(
 					.substr(1)
 					.split('&');
 
-				parameterArray = FacetUtil.removeURLParameters(
+				parameterArray = this.removeURLParameters(
 					param,
 					parameterArray
 				);
 
-				parameterArray = FacetUtil.removeURLParameters(
+				parameterArray = this.removeURLParameters(
 					paramFrom,
 					parameterArray
 				);
 
-				parameterArray = FacetUtil.removeURLParameters(
+				parameterArray = this.removeURLParameters(
 					paramTo,
 					parameterArray
 				);
@@ -70,6 +78,16 @@ AUI.add(
 
 			getParameterName() {
 				return 'modified';
+			},
+
+			removeURLParameters(key, parameterArray) {
+				key = encodeURIComponent(key);
+
+				return parameterArray.filter((item) => {
+					const itemSplit = item.split('=');
+
+					return !(itemSplit && itemSplit[0] === key);
+				});
 			},
 
 			submitSearch(parameterString) {
@@ -190,17 +208,17 @@ AUI.add(
 					.substr(1)
 					.split('&');
 
-				parameterArray = FacetUtil.removeURLParameters(
+				parameterArray = ModifiedFacetFilterUtil.removeURLParameters(
 					param,
 					parameterArray
 				);
 
-				parameterArray = FacetUtil.removeURLParameters(
+				parameterArray = ModifiedFacetFilterUtil.removeURLParameters(
 					paramFrom,
 					parameterArray
 				);
 
-				parameterArray = FacetUtil.removeURLParameters(
+				parameterArray = ModifiedFacetFilterUtil.removeURLParameters(
 					paramTo,
 					parameterArray
 				);
@@ -210,19 +228,19 @@ AUI.add(
 				);
 
 				if (startParameterNameElement) {
-					parameterArray = FacetUtil.removeURLParameters(
+					parameterArray = ModifiedFacetFilterUtil.removeURLParameters(
 						startParameterNameElement.value,
 						parameterArray
 					);
 				}
 
-				parameterArray = FacetUtil.addURLParameter(
+				parameterArray = ModifiedFacetFilterUtil.addURLParameter(
 					paramFrom,
 					modifiedFromParameter,
 					parameterArray
 				);
 
-				parameterArray = FacetUtil.addURLParameter(
+				parameterArray = ModifiedFacetFilterUtil.addURLParameter(
 					paramTo,
 					modifiedToParameter,
 					parameterArray
@@ -240,6 +258,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-validator', 'liferay-search-facet-util'],
+		requires: ['aui-form-validator'],
 	}
 );

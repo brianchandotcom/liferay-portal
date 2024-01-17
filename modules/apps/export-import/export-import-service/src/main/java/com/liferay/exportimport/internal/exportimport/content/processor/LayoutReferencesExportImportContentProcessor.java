@@ -11,6 +11,7 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorException;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -29,6 +30,8 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -53,8 +56,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import org.osgi.service.component.annotations.Activate;
@@ -878,11 +884,6 @@ public class LayoutReferencesExportImportContentProcessor
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		String[] friendlyURLSeparators = {
-			"/-/", FriendlyURLResolverConstants.URL_SEPARATOR_BLOGS_ENTRY,
-			FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY,
-			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE
-		};
 		String[] patterns = {"href=", "[[", "{{"};
 
 		int beginPos = -1;
@@ -944,7 +945,7 @@ public class LayoutReferencesExportImportContentProcessor
 
 			url = content.substring(beginPos + offset, endPos);
 
-			endPos = StringUtil.indexOfAny(url, friendlyURLSeparators);
+			endPos = StringUtil.indexOfAny(url, _getFriendlyURLSeparators());
 
 			if (endPos != -1) {
 				url = url.substring(0, endPos);
@@ -1169,6 +1170,38 @@ public class LayoutReferencesExportImportContentProcessor
 				throw exportImportContentValidationException;
 			}
 		}
+	}
+
+	private String[] _getFriendlyURLSeparators() {
+		List<String> friendlyURLSeparators = Arrays.asList(
+			Portal.FRIENDLY_URL_SEPARATOR);
+
+		for (String defaultFriendlyURLSeparator :
+				Arrays.asList(
+					FriendlyURLResolverConstants.URL_SEPARATOR_BLOGS_ENTRY,
+					FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY,
+					FriendlyURLResolverConstants.
+						URL_SEPARATOR_JOURNAL_ARTICLE)) {
+
+			friendlyURLSeparators.add(defaultFriendlyURLSeparator);
+
+			FriendlyURLResolver friendlyURLResolver =
+				FriendlyURLResolverRegistryUtil.
+					getFriendlyURLResolverByDefaultURLSeparator(
+						defaultFriendlyURLSeparator);
+
+			if ((friendlyURLResolver != null) &&
+				!Objects.equals(
+					defaultFriendlyURLSeparator,
+					friendlyURLResolver.getURLSeparator())) {
+
+				friendlyURLSeparators.add(
+					friendlyURLResolver.getDefaultURLSeparator());
+			}
+		}
+
+		return TransformUtil.transformToArray(
+			friendlyURLSeparators, s -> s, String.class);
 	}
 
 	private String _getPortalURL(String url, String portalURL)

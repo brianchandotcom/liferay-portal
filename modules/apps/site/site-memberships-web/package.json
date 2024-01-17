@@ -2,6 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
+	"main": "js/index.js",
 	"name": "site-membership-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

@@ -18,7 +18,7 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new OrganizationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, organizationsDisplayContext) %>"
-	propsTransformer="js/OrganizationsManagementToolbarPropsTransformer"
+	propsTransformer="{OrganizationsManagementToolbarPropsTransformer} from site-memberships-web"
 />
 
 <div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
@@ -66,7 +66,7 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 							<c:when test='<%= displayStyle.equals("icon") %>'>
 								<liferay-ui:search-container-column-text>
 									<clay:user-card
-										propsTransformer="js/OrganizationCardPropsTransformer"
+										propsTransformer="{OrganizationCardPropsTransformer} from site-memberships-web"
 										userCard="<%= new OrganizationsUserCard(organization, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 									/>
 								</liferay-ui:search-container-column-text>
@@ -105,7 +105,7 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 									<clay:dropdown-actions
 										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 										dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
-										propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
+										propsTransformer="{OrganizationDropdownDefaultPropsTransformer} from site-memberships-web"
 									/>
 								</liferay-ui:search-container-column-text>
 							</c:when>
@@ -156,7 +156,7 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 									<clay:dropdown-actions
 										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 										dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
-										propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
+										propsTransformer="{OrganizationDropdownDefaultPropsTransformer} from site-memberships-web"
 									/>
 								</liferay-ui:search-container-column-text>
 							</c:otherwise>

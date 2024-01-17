@@ -24,7 +24,7 @@ Team team = usersDisplayContext.getTeam();
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= usersManagementToolbarDisplayContext %>"
-	propsTransformer="js/UserManagementToolbarPropsTransformer"
+	propsTransformer="{UserManagementToolbarPropsTransformer} from site-memberships-web"
 />
 
 <liferay-ui:error embed="<%= false %>" exception="<%= RequiredUserException.class %>" message="one-or-more-users-were-not-removed-since-they-belong-to-a-user-group" />
@@ -85,7 +85,7 @@ Team team = usersDisplayContext.getTeam();
 							<c:when test='<%= displayStyle.equals("icon") %>'>
 								<liferay-ui:search-container-column-text>
 									<clay:user-card
-										propsTransformer="js/UserCardPropsTransformer"
+										propsTransformer="{UserCardPropsTransformer} from site-memberships-web"
 										userCard="<%= new UsersUserCard(user2, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 									/>
 								</liferay-ui:search-container-column-text>
@@ -166,7 +166,7 @@ Team team = usersDisplayContext.getTeam();
 											<clay:dropdown-actions
 												aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 												dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
-												propsTransformer="js/UserDropdownDefaultPropsTransformer"
+												propsTransformer="{UserDropdownDefaultPropsTransformer} from site-memberships-web"
 											/>
 										</liferay-ui:search-container-column-text>
 									</c:when>
@@ -204,7 +204,7 @@ Team team = usersDisplayContext.getTeam();
 											<clay:dropdown-actions
 												aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 												dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
-												propsTransformer="js/UserDropdownDefaultPropsTransformer"
+												propsTransformer="{UserDropdownDefaultPropsTransformer} from site-memberships-web"
 											/>
 										</liferay-ui:search-container-column-text>
 									</c:otherwise>

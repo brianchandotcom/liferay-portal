@@ -50,7 +50,7 @@ String userGroupGroupRolesString = ListUtil.toString(UserGroupGroupRoleLocalServ
 				<clay:dropdown-actions
 					aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 					dropdownItems="<%= userGroupActionDropdownItemsProvider.getActionDropdownItems() %>"
-					propsTransformer="js/UserGroupsDefaultPropsTransformer"
+					propsTransformer="{UserGroupsDefaultPropsTransformer} from site-memberships-web"
 				/>
 			</liferay-ui:search-container-column-text>
 		</c:if>
@@ -86,7 +86,7 @@ String userGroupGroupRolesString = ListUtil.toString(UserGroupGroupRoleLocalServ
 				<clay:dropdown-actions
 					aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 					dropdownItems="<%= userGroupActionDropdownItemsProvider.getActionDropdownItems() %>"
-					propsTransformer="js/UserGroupsDefaultPropsTransformer"
+					propsTransformer="{UserGroupsDefaultPropsTransformer} from site-memberships-web"
 				/>
 			</liferay-ui:search-container-column-text>
 		</c:if>

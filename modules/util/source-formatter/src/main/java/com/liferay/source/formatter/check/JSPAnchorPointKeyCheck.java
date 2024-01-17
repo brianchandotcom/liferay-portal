@@ -85,15 +85,14 @@ public class JSPAnchorPointKeyCheck extends BaseTagAttributesCheck {
 							continue outerLoop;
 						}
 
-						int index = fileName.indexOf(
-							"/src/main/resources/META-INF");
+						int index = fileName.lastIndexOf("/resources/");
 
 						if (index == -1) {
 							continue outerLoop;
 						}
 
 						expectValue = StringBundler.concat(
-							symbolicName, "#", fileName.substring(index + 28));
+							symbolicName, "#", fileName.substring(index + 10));
 					}
 
 					String value = attributesMap.get(attribute);

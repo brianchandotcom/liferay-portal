@@ -425,7 +425,7 @@ public interface ObjectDefinitionLocalService
 			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, boolean portlet,
-			Map<Locale, String> pluralLabelMap, String scope)
+			Map<Locale, String> pluralLabelMap, String scope, int status)
 		throws PortalException;
 
 	public ObjectDefinition updateExternalReferenceCode(

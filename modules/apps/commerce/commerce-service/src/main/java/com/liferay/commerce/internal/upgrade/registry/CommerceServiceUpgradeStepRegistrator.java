@@ -688,13 +688,6 @@ public class CommerceServiceUpgradeStepRegistrator
 					_companyLocalService, _resourcePermissionLocalService,
 					_roleLocalService));
 
-		registry.register(
-			"11.4.1", "11.4.2",
-			new com.liferay.commerce.internal.upgrade.v11_4_2.
-				SupplierRoleUpgradeProcess(
-					_companyLocalService, _resourceActionLocalService,
-					_resourcePermissionLocalService, _roleLocalService));
-
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

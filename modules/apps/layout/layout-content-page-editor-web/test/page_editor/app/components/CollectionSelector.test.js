@@ -4,12 +4,14 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+import {State} from '@liferay/frontend-js-state-web';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {CollectionItemContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/CollectionItemContext';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import {pageContentsAtom} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
 import CollectionSelector from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/CollectionSelector';
 import {openItemSelector} from '../../../../src/main/resources/META-INF/resources/page_editor/common/openItemSelector';
 
@@ -21,6 +23,13 @@ jest.mock(
 );
 
 describe('CollectionSelector', () => {
+	beforeAll(() => {
+		State.writeAtom(pageContentsAtom, {
+			data: [],
+			status: 'saved',
+		});
+	});
+
 	afterEach(() => {
 		openItemSelector.mockClear();
 	});

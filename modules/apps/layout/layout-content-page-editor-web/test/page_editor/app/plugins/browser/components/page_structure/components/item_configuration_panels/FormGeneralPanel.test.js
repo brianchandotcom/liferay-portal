@@ -7,6 +7,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
+import {State} from '@liferay/frontend-js-state-web';
 import {act, fireEvent, render, screen} from '@testing-library/react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
@@ -14,6 +15,7 @@ import {VIEWPORT_SIZES} from '../../../../../../../../../src/main/resources/META
 import {config} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateFormItemConfig from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateFormItemConfig';
+import {pageContentsAtom} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
 import {FormGeneralPanel} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page_structure/components/item_configuration_panels/FormGeneralPanel';
 
 jest.mock(
@@ -129,6 +131,13 @@ const renderComponent = ({item = MAPPED_FORM_ITEM, successMessage} = {}) => {
 };
 
 describe('FormGeneralPanel', () => {
+	beforeAll(() => {
+		State.writeAtom(pageContentsAtom, {
+			data: [],
+			status: 'saved',
+		});
+	});
+
 	beforeEach(() => {
 		updateFormItemConfig.mockClear();
 	});

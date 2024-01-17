@@ -319,9 +319,8 @@ public class ContentLayoutTestUtil {
 
 		JSONObject responseJSONObject = (JSONObject)ReflectionTestUtil.invoke(
 			mvcActionCommand, "_updateItemConfig",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
 
 		jsonObject.put(
 			"layoutData", responseJSONObject.getJSONObject("layoutData")

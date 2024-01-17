@@ -15,7 +15,7 @@ function undoAction({action, store}) {
 			itemIds: [itemId],
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: store.segmentsExperienceId,
-		}).then(({layoutData, pageContents}) => {
+		}).then(({layoutData}) => {
 			const fragmentEntryLinkIds = getFragmentEntryLinkIdsFromItemId({
 				itemId,
 				layoutData,
@@ -26,7 +26,6 @@ function undoAction({action, store}) {
 					fragmentEntryLinkIds,
 					itemId,
 					layoutData,
-					pageContents,
 					portletIds,
 				})
 			);

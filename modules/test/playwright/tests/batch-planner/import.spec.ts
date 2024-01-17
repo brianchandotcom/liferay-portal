@@ -545,7 +545,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 		OBJECT_ENTRY_ENTITY_TYPE,
 		path.join(
 			__dirname,
-			'/dependencies/two_entries_existing_non_modified_object_entries.csv'
+			'/dependencies/two_entries_existing_nonmodified_object_entries.csv'
 		),
 		'UPSERT',
 		'UPDATE'

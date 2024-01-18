@@ -37,8 +37,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 
 	@Override
 	public List<String> getAvailableProviderNames() {
-		return ListUtil.fromCollection(
-			_textEmbeddingProviderServiceTrackerMap.keySet());
+		return ListUtil.fromCollection(_serviceTrackerMap.keySet());
 	}
 
 	@Override
@@ -67,8 +66,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 
 		try {
 			TextEmbeddingProvider textEmbeddingProvider =
-				_textEmbeddingProviderServiceTrackerMap.getService(
-					providerName);
+				_serviceTrackerMap.getService(providerName);
 
 			if (textEmbeddingProvider == null) {
 				return new EmbeddingProviderStatus.
@@ -128,7 +126,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 		}
 
 		TextEmbeddingProvider textEmbeddingProvider =
-			_textEmbeddingProviderServiceTrackerMap.getService(providerName);
+			_serviceTrackerMap.getService(providerName);
 
 		if (textEmbeddingProvider == null) {
 			return new Double[0];
@@ -155,15 +153,14 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 	protected void activate(
 		Map<String, Object> properties, BundleContext bundleContext) {
 
-		_textEmbeddingProviderServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, TextEmbeddingProvider.class,
-				"search.experiences.text.embedding.provider.name");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, TextEmbeddingProvider.class,
+			"search.experiences.text.embedding.provider.name");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_textEmbeddingProviderServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private EmbeddingProviderConfiguration _getEmbeddingProviderConfiguration(
@@ -202,7 +199,6 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 	private SemanticSearchConfigurationProvider
 		_semanticSearchConfigurationProvider;
 
-	private ServiceTrackerMap<String, TextEmbeddingProvider>
-		_textEmbeddingProviderServiceTrackerMap;
+	private ServiceTrackerMap<String, TextEmbeddingProvider> _serviceTrackerMap;
 
 }

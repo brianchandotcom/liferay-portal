@@ -51,6 +51,6 @@ ProductNavigationControlMenuTagDisplayContext productNavigationControlMenuTagDis
 	</nav>
 
 	<liferay-frontend:component
-		module="control_menu/js/ProductNavigationControlMenu"
+		module="{ProductNavigationControlMenu} from product-navigation-taglib"
 	/>
 </c:if>

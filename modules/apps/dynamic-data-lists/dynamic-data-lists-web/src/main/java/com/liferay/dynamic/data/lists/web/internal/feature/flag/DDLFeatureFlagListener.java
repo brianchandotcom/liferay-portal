@@ -10,7 +10,10 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.WebAppPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -26,6 +29,13 @@ public class DDLFeatureFlagListener implements FeatureFlagListener {
 	@Override
 	public void onValue(
 		long companyId, String featureFlagKey, boolean enabled) {
+
+		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
+			companyId, WebKeys.PORTLET_CATEGORY);
+
+		if (portletCategory == null) {
+			return;
+		}
 
 		Portlet portlet = _portletLocalService.fetchPortletById(
 			companyId, DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY);

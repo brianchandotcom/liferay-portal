@@ -12,7 +12,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext
 %>
 
 <react:component
-	module="js/ProductMenuTree"
+	module="{ProductMenuTree} from product-navigation-product-menu-web"
 	props="<%= layoutsTreeDisplayContext.getData() %>"
 	servletContext="<%= application %>"
 />

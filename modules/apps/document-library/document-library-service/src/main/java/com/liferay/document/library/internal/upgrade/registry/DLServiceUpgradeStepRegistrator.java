@@ -153,7 +153,10 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				DLSizeLimitConfigurationUpgradeProcess(
 					_dlConfigurationUpgradeHelper));
 
-		registry.register("3.2.9", "3.3.0", new DLFileVersionUpgradeProcess());
+		registry.register(
+			"3.2.9", "3.3.0", new DLFileVersionUpgradeProcess(),
+			new com.liferay.document.library.internal.upgrade.v3_3_0.
+				DLFileEntryUpgradeProcess());
 	}
 
 	@Reference

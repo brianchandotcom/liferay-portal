@@ -890,7 +890,13 @@ public class JournalDisplayContext {
 	}
 
 	public String[] getOrderColumns() {
-		String[] orderColumns = {"display-date", "modified-date", "title"};
+		String[] orderColumns = {"display-date", "modified-date"};
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-202534")) {
+			orderColumns = ArrayUtil.append(orderColumns, "create-date");
+		}
+
+		orderColumns = ArrayUtil.append(orderColumns, "title");
 
 		if (isSearch()) {
 			orderColumns = ArrayUtil.append(orderColumns, "relevance");

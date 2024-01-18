@@ -17,7 +17,9 @@ export class ExportImportFramePage {
 	}
 
 	async importLARFile(folderPath: string) {
-		await this.page.frame({url: /.*localhost.*/}).waitForLoadState();
+		const iframeElement = await this.page.locator('iframe').elementHandle();
+		const frame = await iframeElement.contentFrame();
+		await frame.waitForLoadState();
 
 		const exportImportFrame = this.page.frameLocator(
 			'iframe[title="Export \\/ Import"]'

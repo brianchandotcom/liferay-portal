@@ -272,10 +272,6 @@ html#{$cadmin-selector} {
 			display: block;
 		}
 
-		.portlet-borderless .portlet-content {
-			padding: 0;
-		}
-
 		&__container.flex-row,
 		&__collection .flex-row {
 			.page-editor__collection-item.empty {

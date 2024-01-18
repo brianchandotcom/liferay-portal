@@ -15,7 +15,6 @@ function Wrapper() {
 		editedItem,
 		isOpen,
 		requestQuoteEnabled,
-		setEditedItem,
 	} = useContext(MiniCartContext);
 	const {cartItems = []} = cartState;
 	const cartHasPriceOnApplicationItems = hasPriceOnApplication(cartItems);
@@ -26,17 +25,7 @@ function Wrapper() {
 
 			{editedItem ? (
 				<>
-					{editedItem.type === 'uom' ? (
-						<CartViews.EditItemUnitOfMeasure
-							cartItemId={editedItem.cartItemId}
-							namespace="minicart-edituom-"
-							onBack={() => {
-								setEditedItem(null);
-							}}
-						/>
-					) : (
-						<CartViews.EditItem />
-					)}
+					<CartViews.EditItem />
 				</>
 			) : (
 				<>

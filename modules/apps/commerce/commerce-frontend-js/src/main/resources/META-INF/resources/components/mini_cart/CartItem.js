@@ -311,9 +311,6 @@ function CartItem({
 										cartItemId,
 										name,
 										productId,
-										type: hasSkuUnitOfMeasure
-											? 'uom'
-											: 'options',
 									})
 								}
 							>

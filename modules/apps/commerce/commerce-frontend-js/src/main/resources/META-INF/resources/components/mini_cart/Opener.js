@@ -49,7 +49,6 @@ function Opener() {
 					dataSetId,
 					name: cartItem.name,
 					productId: cartItem.productId,
-					type: 'options',
 				});
 
 				openCart();

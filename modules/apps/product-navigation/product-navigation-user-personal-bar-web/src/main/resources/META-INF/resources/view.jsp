@@ -55,7 +55,7 @@
 				displayType="unstyled"
 				icon="user"
 				label="sign-in"
-				propsTransformer="js/signInButtonPropsTransformer"
+				propsTransformer="{signInButtonPropsTransformer} from product-navigation-user-personal-bar-web"
 				small="<%= true %>"
 			/>
 		</span>

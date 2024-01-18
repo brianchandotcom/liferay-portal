@@ -2,6 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
+	"main": "js/index.js",
 	"name": "@liferay/product-navigation-user-personal-bar-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

@@ -90,6 +90,8 @@ portletDisplay.setShowBackIcon(true);
 			).put(
 				"name", name
 			).put(
+				"nameFieldMaxLength", ModelHintsUtil.getMaxLength(CTCollectionTemplate.class.getName(), "name")
+			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(
 				"publicationDescription", publicationDescription

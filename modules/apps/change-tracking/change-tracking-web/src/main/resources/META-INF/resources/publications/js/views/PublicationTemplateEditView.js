@@ -24,6 +24,7 @@ export default function PublicationTemplateEditView({
 	descriptionFieldMaxLength,
 	getTemplateCollaboratorsURL,
 	name,
+	nameFieldMaxLength,
 	namespace,
 	publicationDescription,
 	publicationName,
@@ -129,6 +130,7 @@ export default function PublicationTemplateEditView({
 				componentType="input"
 				fieldValue={nameField}
 				label={Liferay.Language.get('name')}
+				maxLength={nameFieldMaxLength}
 				onChange={(event) => {
 					setNameField(event.target.value);
 				}}
@@ -265,8 +267,8 @@ export default function PublicationTemplateEditView({
 					disabled={
 						!nameField.length ||
 						!publicationNameField.length ||
-						nameField.length > 75 ||
-						publicationNameField.length > 75 ||
+						nameField.length > nameFieldMaxLength ||
+						publicationNameField.length > nameFieldMaxLength ||
 						(descriptionField &&
 							descriptionField.length >
 								descriptionFieldMaxLength) ||

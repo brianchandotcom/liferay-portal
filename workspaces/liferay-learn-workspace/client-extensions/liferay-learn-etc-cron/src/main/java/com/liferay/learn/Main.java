@@ -770,8 +770,8 @@ public class Main {
 			permissions.add(
 				new Permission() {
 					{
-						setActionIds(() -> new String[] {"VIEW"});
-						setRoleName(() -> "Guest");
+						setActionIds(new String[] {"VIEW"});
+						setRoleName("Guest");
 					}
 				});
 
@@ -792,9 +792,8 @@ public class Main {
 			permissions.add(
 				new Permission() {
 					{
-						setActionIds(
-							() -> new String[] {"ADD_DISCUSSION", "VIEW"});
-						setRoleName(() -> (String)object);
+						setActionIds(new String[] {"ADD_DISCUSSION", "VIEW"});
+						setRoleName((String)object);
 					}
 				});
 		}
@@ -806,8 +805,8 @@ public class Main {
 		permissions.add(
 			new Permission() {
 				{
-					setActionIds(() -> new String[0]);
-					setRoleName(() -> "Guest");
+					setActionIds(new String[0]);
+					setRoleName("Guest");
 				}
 			});
 

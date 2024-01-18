@@ -6,7 +6,6 @@
 package com.liferay.template.internal.info.field.transformer;
 
 import com.liferay.info.field.InfoField;
-import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.OptionInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.petra.string.StringPool;
@@ -16,7 +15,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.template.info.field.transformer.TemplateNodeTransformer;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,14 +37,27 @@ public class SelectInfoFieldTypeTemplateNodeTransformer
 	}
 
 	@Override
-	protected String getData(
-		InfoFieldValue<Object> infoFieldValue, Locale locale) {
-
-		JSONArray selectedOptionValuesJSONArray =
-			getSelectedOptionValuesJSONArray(infoFieldValue, locale);
-
+	protected String getKey(JSONArray selectedOptionValuesJSONArray) {
 		if (!JSONUtil.isEmpty(selectedOptionValuesJSONArray)) {
 			return selectedOptionValuesJSONArray.getString(0);
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
+	protected String getLabel(
+		Map<String, String> optionsMap,
+		JSONArray selectedOptionValuesJSONArray) {
+
+		if (JSONUtil.isEmpty(selectedOptionValuesJSONArray)) {
+			return StringPool.BLANK;
+		}
+
+		String key = selectedOptionValuesJSONArray.getString(0);
+
+		if (optionsMap.containsKey(key)) {
+			return optionsMap.get(key);
 		}
 
 		return StringPool.BLANK;

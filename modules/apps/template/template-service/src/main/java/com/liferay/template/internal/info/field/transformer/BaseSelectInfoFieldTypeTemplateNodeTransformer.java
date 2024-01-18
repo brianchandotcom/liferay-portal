@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.template.info.field.transformer.BaseTemplateNodeTransformer;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -35,13 +36,6 @@ public abstract class BaseSelectInfoFieldTypeTemplateNodeTransformer
 
 		InfoField infoField = infoFieldValue.getInfoField();
 
-		InfoFieldType infoFieldType = infoField.getInfoFieldType();
-
-		TemplateNode templateNode = new TemplateNode(
-			themeDisplay, infoField.getName(),
-			getData(infoFieldValue, themeDisplay.getLocale()),
-			infoFieldType.getName(), getAttributes());
-
 		List<OptionInfoFieldType> optionInfoFieldTypes =
 			getOptionInfoFieldTypes(infoField);
 
@@ -49,19 +43,46 @@ public abstract class BaseSelectInfoFieldTypeTemplateNodeTransformer
 			optionInfoFieldTypes = Collections.emptyList();
 		}
 
+		Map<String, String> optionsMap = new LinkedHashMap<>();
+
 		for (OptionInfoFieldType optionInfoFieldType : optionInfoFieldTypes) {
-			templateNode.appendOptionMap(
+			optionsMap.put(
 				optionInfoFieldType.getValue(),
 				optionInfoFieldType.getLabel(themeDisplay.getLocale()));
 		}
+
+		InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+		JSONArray selectedOptionValuesJSONArray =
+			getSelectedOptionValuesJSONArray(
+				infoFieldValue, themeDisplay.getLocale());
+
+		String data = getData(selectedOptionValuesJSONArray);
+
+		TemplateNode templateNode = new TemplateNode(
+			themeDisplay, infoField.getName(), data, infoFieldType.getName(),
+			getAttributes());
+
+		templateNode.appendOptionsMap(optionsMap);
+
+		templateNode.put("key", getKey(selectedOptionValuesJSONArray));
+		templateNode.put(
+			"label", getLabel(optionsMap, selectedOptionValuesJSONArray));
 
 		return templateNode;
 	}
 
 	protected abstract Map<String, String> getAttributes();
 
-	protected abstract String getData(
-		InfoFieldValue<Object> infoFieldValue, Locale locale);
+	protected String getData(JSONArray selectedOptionValuesJSONArray) {
+		return getKey(selectedOptionValuesJSONArray);
+	}
+
+	protected abstract String getKey(JSONArray selectedOptionValuesJSONArray);
+
+	protected abstract String getLabel(
+		Map<String, String> optionsMap,
+		JSONArray selectedOptionValuesJSONArray);
 
 	protected abstract List<OptionInfoFieldType> getOptionInfoFieldTypes(
 		InfoField infoField);

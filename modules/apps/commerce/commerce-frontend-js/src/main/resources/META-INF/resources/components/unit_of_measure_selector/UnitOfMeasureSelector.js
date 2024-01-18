@@ -17,6 +17,7 @@ import {
 	CP_UNIT_OF_MEASURE_SELECTOR_CHANGED,
 } from '../../utilities/eventsDefinitions';
 import {getMinQuantity} from '../../utilities/quantities';
+import Asterisk from '../product_options/Asterisk';
 
 const UnitOfMeasureSelector = forwardRef(
 	({
@@ -24,10 +25,12 @@ const UnitOfMeasureSelector = forwardRef(
 		channelId,
 		cpInstanceId,
 		disabled,
+		label,
 		loadFinalPrice,
 		name,
 		namespace,
 		options,
+		panelLabel,
 		productConfiguration,
 		productId,
 		resetQuantity,
@@ -200,33 +203,54 @@ const UnitOfMeasureSelector = forwardRef(
 
 		return (
 			!!inputProperties.unitOfMeasures.length && (
-				<ClaySelectWithOption
-					className={classnames({
-						[`form-control-${size}`]: size,
-						'ml-3': true,
-						'unit-of-measure-selector': true,
-					})}
-					disabled={
-						disabled || inputProperties.unitOfMeasures.length <= 1
-					}
-					name={name}
-					onChange={({target}) => {
-						setInputProperties((inputProperties) => ({
-							...inputProperties,
-							fireEvent: true,
-							value: target.value,
-						}));
-
-						postChannelProductSkuBySkuOption(target.value);
-					}}
-					options={inputProperties.unitOfMeasures.map(
-						(unitOfMeasure) => ({
-							label: unitOfMeasure.name,
-							value: unitOfMeasure.key,
-						})
+				<>
+					{panelLabel && (
+						<div className="panel panel-unstyled">
+							<div className="panel-header">
+								<span className="panel-title">
+									{panelLabel}
+								</span>
+							</div>
+						</div>
 					)}
-					value={inputProperties.value}
-				/>
+
+					{label && (
+						<label htmlFor="minicart-uom-selector">
+							{label}
+
+							<Asterisk required={true} />
+						</label>
+					)}
+
+					<ClaySelectWithOption
+						className={classnames({
+							[`form-control-${size}`]: size,
+							'ml-3': true,
+							'unit-of-measure-selector': true,
+						})}
+						disabled={
+							disabled ||
+							inputProperties.unitOfMeasures.length <= 1
+						}
+						name={name}
+						onChange={({target}) => {
+							setInputProperties((inputProperties) => ({
+								...inputProperties,
+								fireEvent: true,
+								value: target.value,
+							}));
+
+							postChannelProductSkuBySkuOption(target.value);
+						}}
+						options={inputProperties.unitOfMeasures.map(
+							(unitOfMeasure) => ({
+								label: unitOfMeasure.name,
+								value: unitOfMeasure.key,
+							})
+						)}
+						value={inputProperties.value}
+					/>
+				</>
 			)
 		);
 	}
@@ -244,9 +268,11 @@ UnitOfMeasureSelector.propTypes = {
 	channelId: PropTypes.number.isRequired,
 	cpInstanceId: PropTypes.number.isRequired,
 	disabled: PropTypes.bool,
+	label: PropTypes.string,
 	loadFinalPrice: PropTypes.bool,
 	name: PropTypes.string,
 	namespace: PropTypes.string,
+	panelLabel: PropTypes.string,
 	productConfiguration: PropTypes.shape({
 		allowedOrderQuantities: PropTypes.arrayOf(PropTypes.number),
 		maxOrderQuantity: PropTypes.number,

@@ -1009,7 +1009,6 @@ components:
                     # @review
                     description:
                         The optional external key of this user account.
-                    readOnly: true
                     type: string
                 familyName:
                     description:

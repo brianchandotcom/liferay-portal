@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.internal.util;
 
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -47,9 +45,7 @@ public class RoleUtil {
 			serviceContext.getCompanyId(), name);
 
 		if (role != null) {
-			if ((role.getType() != roleType) &&
-				!_isLegacyAccountAdministrator(role)) {
-
+			if (role.getType() != roleType) {
 				throw new DuplicateRoleException(
 					"Role already exists with name " + name);
 			}
@@ -133,19 +129,6 @@ public class RoleUtil {
 		}
 
 		return RoleConstants.getLabelType(roleType);
-	}
-
-	private static boolean _isLegacyAccountAdministrator(Role role) {
-		if (Objects.equals(
-				role.getName(),
-				AccountRoleConstants.
-					REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR) &&
-			(role.getType() == RoleConstants.TYPE_SITE)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final String _LEGACY_TYPE_COMMUNITY_LABEL = "community";

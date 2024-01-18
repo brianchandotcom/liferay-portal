@@ -91,6 +91,11 @@ public class LayoutServiceUpgradeStepRegistrator
 			new com.liferay.layout.internal.upgrade.v1_4_1.
 				LayoutClassedModelUsageUpgradeProcess(
 					_classNameLocalService, _jsonFactory));
+
+		registry.register(
+			"1.4.1", "1.4.2",
+			new com.liferay.layout.internal.upgrade.v1_4_2.LayoutUpgradeProcess(
+				_layoutLocalService));
 	}
 
 	@Reference

@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "com.mysql", name: "mysql-connector-j", version: "8.0.33"
+	compileInclude group: "com.mysql", name: "mysql-connector-j", version: "8.3.0"
 	compileInclude group: "commons-cli", name: "commons-cli", version: "1.4"
 
 	compileOnly group: "com.liferay", name: "com.liferay.petra.function", version: "5.5.0"

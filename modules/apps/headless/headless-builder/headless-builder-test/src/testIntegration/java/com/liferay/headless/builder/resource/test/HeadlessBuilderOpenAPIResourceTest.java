@@ -84,6 +84,28 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
 
+		_singleContainerObjectDefinition = _publishObjectDefinition(
+			Arrays.asList(
+				new TextObjectFieldBuilder(
+				).externalReferenceCode(
+					_API_SINGLE_CONTAINER_SCHEMA_TEXT_FIELD_ERC
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textField"
+				).build(),
+				new LongTextObjectFieldBuilder(
+				).externalReferenceCode(
+					_API_SINGLE_CONTAINER_SCHEMA_LONG_TEXT_FIELD_ERC
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"longTextField"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
 		_singleElementObjectDefinition = _publishObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
@@ -530,6 +552,122 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"apiSchemaToAPIProperties",
 						JSONUtil.putAll(
 							JSONUtil.put(
+								"apiPropertyType",
+								APIApplication.Property.PropertyType.
+									SINGLE_CONTAINER.getValue()
+							).put(
+								"description", "description"
+							).put(
+								"externalReferenceCode",
+								_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_1
+							).put(
+								"name", "singleContainer1"
+							),
+							JSONUtil.put(
+								"apiPropertyType",
+								APIApplication.Property.PropertyType.
+									SINGLE_CONTAINER.getValue()
+							).put(
+								"description", "description"
+							).put(
+								"externalReferenceCode",
+								_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_2
+							).put(
+								"name", "singleContainer2"
+							),
+							JSONUtil.put(
+								"apiPropertyType",
+								APIApplication.Property.PropertyType.
+									SINGLE_CONTAINER.getValue()
+							).put(
+								"description", "description"
+							).put(
+								"externalReferenceCode",
+								_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_3
+							).put(
+								"name", "singleContainer3"
+							).put(
+								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+								_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_2
+							),
+							JSONUtil.put(
+								"apiPropertyType",
+								APIApplication.Property.PropertyType.
+									SINGLE_CONTAINER.getValue()
+							).put(
+								"description", "description"
+							).put(
+								"externalReferenceCode",
+								_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_4
+							).put(
+								"name", "singleContainer4"
+							),
+							JSONUtil.put(
+								"apiPropertyType",
+								APIApplication.Property.PropertyType.
+									SINGLE_CONTAINER.getValue()
+							).put(
+								"description", "description"
+							).put(
+								"externalReferenceCode",
+								_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_5
+							).put(
+								"name", "singleContainer5"
+							).put(
+								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+								_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_4
+							),
+							JSONUtil.put(
+								"apiPropertyType",
+								APIApplication.Property.PropertyType.NORMAL.
+									getValue()
+							).put(
+								"description", "description"
+							).put(
+								"externalReferenceCode",
+								_API_SINGLE_CONTAINER_SCHEMA_TEXT_PROPERTY_ERC
+							).put(
+								"name", "singleContainerTextProperty"
+							).put(
+								"objectFieldERC",
+								_API_SINGLE_CONTAINER_SCHEMA_TEXT_FIELD_ERC
+							).put(
+								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+								_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_2
+							),
+							JSONUtil.put(
+								"apiPropertyType",
+								APIApplication.Property.PropertyType.NORMAL.
+									getValue()
+							).put(
+								"description", "description"
+							).put(
+								"externalReferenceCode",
+								_API_SINGLE_CONTAINER_SCHEMA_LONG_TEXT_PROPERTY_ERC
+							).put(
+								"name", "singleContainerLongTextProperty"
+							).put(
+								"objectFieldERC",
+								_API_SINGLE_CONTAINER_SCHEMA_LONG_TEXT_FIELD_ERC
+							).put(
+								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+								_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_5
+							))
+					).put(
+						"description", "description"
+					).put(
+						"externalReferenceCode", RandomTestUtil.randomString()
+					).put(
+						"mainObjectDefinitionERC",
+						_singleContainerObjectDefinition.
+							getExternalReferenceCode()
+					).put(
+						"name", "SingleContainerSchemaName"
+					),
+					JSONUtil.put(
+						"apiSchemaToAPIProperties",
+						JSONUtil.putAll(
+							JSONUtil.put(
 								"description", "description"
 							).put(
 								"name", "singleElementTextProperty"
@@ -880,6 +1018,40 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	private static final String _API_SCHEMA_TEXT_FIELD_ERC =
 		RandomTestUtil.randomString();
 
+	private static final String
+		_API_SINGLE_CONTAINER_SCHEMA_LONG_TEXT_FIELD_ERC =
+			RandomTestUtil.randomString();
+
+	private static final String
+		_API_SINGLE_CONTAINER_SCHEMA_LONG_TEXT_PROPERTY_ERC =
+			RandomTestUtil.randomString();
+
+	private static final String
+		_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_1 =
+			RandomTestUtil.randomString();
+
+	private static final String
+		_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_2 =
+			RandomTestUtil.randomString();
+
+	private static final String
+		_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_3 =
+			RandomTestUtil.randomString();
+
+	private static final String
+		_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_4 =
+			RandomTestUtil.randomString();
+
+	private static final String
+		_API_SINGLE_CONTAINER_SCHEMA_SINGLE_CONTAINER_ERC_5 =
+			RandomTestUtil.randomString();
+
+	private static final String _API_SINGLE_CONTAINER_SCHEMA_TEXT_FIELD_ERC =
+		RandomTestUtil.randomString();
+
+	private static final String _API_SINGLE_CONTAINER_SCHEMA_TEXT_PROPERTY_ERC =
+		RandomTestUtil.randomString();
+
 	private static final String _API_SINGLE_ELEMENT_ENDPOINT_ERC =
 		RandomTestUtil.randomString();
 
@@ -936,6 +1108,9 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _singleContainerObjectDefinition;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _singleElementObjectDefinition;

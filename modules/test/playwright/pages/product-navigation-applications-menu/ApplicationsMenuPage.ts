@@ -3,25 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
+
+import {HomePage} from '../portal-web/HomePage';
 
 export class ApplicationsMenuPage {
-	readonly applicationMenuButton: Locator;
-	readonly applicationsMenuTabButton: Locator;
-	readonly clientExtensionsLink: Locator;
-	readonly controlPanelButton: Locator;
-	readonly dataMigrationCenterMenuItem: Locator;
-	readonly instanceSettingsLink: Locator;
-	readonly objectsLink: Locator;
-	readonly objectsMenuItem: Locator;
+	private readonly applicationsMenuTabButton: Locator;
+	private readonly clientExtensionsLink: Locator;
+	private readonly controlPanelButton: Locator;
+	private readonly dataMigrationCenterMenuItem: Locator;
+	private readonly homePage: HomePage;
+	private readonly instanceSettingsLink: Locator;
+	private readonly objectsMenuItem: Locator;
 	readonly page: Page;
-	readonly signInButton: Locator;
-	readonly usersAndOrganizationsItem: Locator;
+	private readonly usersAndOrganizationsItem: Locator;
 
 	constructor(page: Page) {
-		this.applicationMenuButton = page.getByLabel(
-			'Open Applications MenuCtrl+'
-		);
 		this.applicationsMenuTabButton = page.getByRole('tab', {
 			name: 'Applications',
 		});
@@ -31,6 +28,7 @@ export class ApplicationsMenuPage {
 		this.controlPanelButton = page.getByRole('tab', {
 			name: 'Control Panel',
 		});
+		this.homePage = new HomePage(page);
 		this.instanceSettingsLink = page.getByRole('link', {
 			name: 'Instance Settings',
 		});
@@ -43,7 +41,6 @@ export class ApplicationsMenuPage {
 			name: 'Objects',
 		});
 		this.page = page;
-		this.signInButton = page.getByRole('button', {name: 'Sign In'});
 		this.usersAndOrganizationsItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Users and Organizations',
@@ -51,18 +48,19 @@ export class ApplicationsMenuPage {
 	}
 
 	async goto() {
-		await this.page.goto('/');
+		await this.homePage.goto();
+		await this.homePage.openApplicationMenu();
+
+		await expect(this.applicationsMenuTabButton).toBeVisible();
 	}
 
 	async goToApplicationsMenu() {
 		await this.goto();
-		await this.applicationMenuButton.click();
 		await this.applicationsMenuTabButton.click();
 	}
 
 	async goToClientExtensions() {
 		await this.goto();
-		await this.applicationMenuButton.click();
 		await this.clientExtensionsLink.click();
 	}
 
@@ -83,13 +81,11 @@ export class ApplicationsMenuPage {
 
 	async goToControlPanel() {
 		await this.goto();
-		await this.applicationMenuButton.click();
 		await this.controlPanelButton.click();
 	}
 
 	async goToUsersAndOrganizations() {
 		await this.goto();
-		await this.applicationMenuButton.click();
 		await this.controlPanelButton.click();
 		await this.usersAndOrganizationsItem.click();
 	}

@@ -80,7 +80,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 
 	@Override
 	public AssetListEntry addDynamicAssetListEntry(
-			long userId, long groupId, String title, String typeSettings,
+			long groupId, String title, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -94,7 +94,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 
 	@Override
 	public AssetListEntry addManualAssetListEntry(
-			long userId, long groupId, String title, long[] assetEntryIds,
+			long groupId, String title, long[] assetEntryIds,
 			ServiceContext serviceContext)
 		throws PortalException {
 

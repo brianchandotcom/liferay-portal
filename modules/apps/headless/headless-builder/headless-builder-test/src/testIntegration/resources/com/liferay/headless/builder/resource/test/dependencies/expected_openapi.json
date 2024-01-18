@@ -278,6 +278,46 @@
 				},
 				"type": "object"
 			},
+			"SingleContainerSchemaName": {
+				"description": "description",
+				"properties": {
+					"singleContainer1": {
+						"description": "description",
+						"type": "object"
+					},
+					"singleContainer2": {
+						"description": "description",
+						"properties": {
+							"singleContainer3": {
+								"description": "description",
+								"type": "object"
+							},
+							"singleContainerTextProperty": {
+								"description": "description",
+								"type": "string"
+							}
+						},
+						"type": "object"
+					},
+					"singleContainer4": {
+						"description": "description",
+						"properties": {
+							"singleContainer5": {
+								"description": "description",
+								"properties": {
+									"singleContainerLongTextProperty": {
+										"description": "description",
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						},
+						"type": "object"
+					}
+				},
+				"type": "object"
+			},
 			"SingleElementSchemaName": {
 				"description": "description",
 				"properties": {

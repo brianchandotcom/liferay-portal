@@ -17,6 +17,7 @@
 			"<rootDir>/test/utils.js"
 		]
 	},
+	"main": "js/index.js",
 	"name": "ratings-taglib",
 	"private": true,
 	"scripts": {

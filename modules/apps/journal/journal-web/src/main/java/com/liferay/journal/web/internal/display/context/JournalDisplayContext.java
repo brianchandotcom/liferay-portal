@@ -873,7 +873,9 @@ public class JournalDisplayContext {
 		if (Validator.isNull(_orderByType)) {
 			String defaultOrderByType = "asc";
 
-			if (Objects.equals(getOrderByCol(), "modified-date")) {
+			if (Objects.equals(getOrderByCol(), "create-date") ||
+				Objects.equals(getOrderByCol(), "modified-date")) {
+
 				defaultOrderByType = "desc";
 			}
 

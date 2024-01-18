@@ -147,7 +147,39 @@ const Timers = ({setContentName, setErrors}) => {
 					return {};
 				}),
 
-				timerNotifications: serializableSections.map(() => ({})),
+				timerNotifications: serializableSections.map(
+					({timerActions}) => {
+						const filteredTimerActions = timerActions.filter(
+							({actionType}) =>
+								actionType === 'timerNotifications'
+						);
+
+						if (filteredTimerActions.length) {
+							return {
+								description: filteredTimerActions.map(
+									({description}) => description
+								),
+								name: filteredTimerActions.map(
+									({name}) => name
+								),
+								notificationTypes: filteredTimerActions.map(
+									({notificationTypes}) => notificationTypes
+								),
+								recipients: filteredTimerActions.map(
+									({recipients}) => recipients
+								),
+								template: filteredTimerActions.map(
+									({template}) => template
+								),
+								templateLanguage: filteredTimerActions.map(
+									({templateLanguage}) => templateLanguage
+								),
+							};
+						}
+
+						return {};
+					}
+				),
 			};
 		}
 		else {
@@ -249,6 +281,37 @@ const Timers = ({setContentName, setErrors}) => {
 				];
 				section.scriptLanguage = data.find(
 					(entry) => entry[0] === 'scriptLanguage'
+				)[1][index];
+				sections.push(section);
+			}
+		}
+
+		if (allTimerActions.timerNotifications.length) {
+			const data = allTimerActions.timerNotifications;
+			for (let index = 0; index < data[0][1].length; index++) {
+				const section = {};
+
+				section.actionType = 'timerNotifications';
+				section.description = data.find(
+					(entry) => entry[0] === 'description'
+				)[1][index];
+				section.identifier = `${Date.now()}-${
+					index + reassignmentsLength
+				}`;
+				section.name = data.find((entry) => entry[0] === 'name')[1][
+					index
+				];
+				section.notificationTypes = data.find(
+					(entry) => entry[0] === 'notificationTypes'
+				)[1][index];
+				section.recipients = data.find(
+					(entry) => entry[0] === 'recipients'
+				)[1][index];
+				section.template = data.find(
+					(entry) => entry[0] === 'template'
+				)[1][index];
+				section.templateLanguage = data.find(
+					(entry) => entry[0] === 'templateLanguage'
 				)[1][index];
 				sections.push(section);
 			}

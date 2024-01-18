@@ -751,12 +751,12 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	private Sorts _sorts;
 
 	@Reference
-	private WorkflowMetricsIndicesAvailabilityChecker
-		_workflowMetricsIndicesAvailabilityChecker;
-
-	@Reference
 	private WorkflowMetricsSLACalendarRegistry
 		_workflowMetricsSLACalendarRegistry;
+
+	@Reference
+	private WorkflowMetricsIndicesAvailabilityChecker
+		_workflowMetricsIndicesAvailabilityChecker;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionLocalService

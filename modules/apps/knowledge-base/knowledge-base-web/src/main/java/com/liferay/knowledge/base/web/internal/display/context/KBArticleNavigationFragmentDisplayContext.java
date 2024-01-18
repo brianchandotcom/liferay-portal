@@ -14,6 +14,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -53,8 +55,7 @@ public class KBArticleNavigationFragmentDisplayContext {
 		String friendlyURL = _infoItemFriendlyURLProvider.getFriendlyURL(
 			kbArticle, LanguageUtil.getLanguageId(LocaleUtil.getDefault()));
 
-		return FriendlyURLResolverConstants.
-			URL_SEPARATOR_KNOWLEDGE_BASE_ARTICLE + friendlyURL;
+		return _getFriendlyURLSeparator() + friendlyURL;
 	}
 
 	public long getKBArticleRootResourcePrimKey() {
@@ -106,6 +107,21 @@ public class KBArticleNavigationFragmentDisplayContext {
 		}
 
 		return false;
+	}
+
+	private String _getFriendlyURLSeparator() {
+		FriendlyURLResolver friendlyURLResolver =
+			FriendlyURLResolverRegistryUtil.
+				getFriendlyURLResolverByDefaultURLSeparator(
+					FriendlyURLResolverConstants.
+						URL_SEPARATOR_KNOWLEDGE_BASE_ARTICLE);
+
+		if (friendlyURLResolver != null) {
+			return friendlyURLResolver.getURLSeparator();
+		}
+
+		return FriendlyURLResolverConstants.
+			URL_SEPARATOR_KNOWLEDGE_BASE_ARTICLE;
 	}
 
 	private List<Long> _getKBArticleAncestorResourcePrimaryKeys()

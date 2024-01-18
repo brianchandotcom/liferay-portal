@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import {APIParametersOptions} from '~/core/Rest';
 import SearchBuilder from '~/core/SearchBuilder';
 import i18n from '~/i18n';
@@ -41,7 +42,7 @@ const statususes = {
 };
 
 const fields =
-	'caseResultBlocked,caseResultFailed,caseResultIncomplete,caseResultPassed,caseResultTestFix';
+	'caseResultBlocked,caseResultFailed,caseResultIncomplete,caseResultPassed,caseResultTestFix,name';
 
 const chartSelectData = [
 	{label: i18n.translate('runs'), value: 'runs'},
@@ -51,6 +52,15 @@ const chartSelectData = [
 
 const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 	const [entity, setEntity] = useState(chartSelectData[0].value);
+	const {pathname} = useLocation();
+
+	useEffect(() => {
+		const path = pathname.split('/').at(-1) as string;
+
+		if (chartSelectData.some(({value}) => value === path)) {
+			setEntity(path);
+		}
+	}, [pathname]);
 
 	const resources: TestrayChartResources = useMemo(
 		() => ({
@@ -88,7 +98,7 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 		[buildId]
 	);
 
-	const {data} = useFetch<APIResponse<any>>(
+	const {data, loading} = useFetch<APIResponse<any>>(
 		resources[entity as keyof TestrayChartResources].url,
 		{
 			params: {
@@ -111,13 +121,20 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 		[responseItems]
 	);
 
+	const columnNames = useMemo(() => responseItems.map((item) => item.name), [
+		responseItems,
+	]);
+
 	return {
 		chart: {
 			colors: chartColors,
+			columnNames,
 			columns: chartData,
 			statuses: Object.keys(statususes),
 		},
 		chartSelectData,
+		entity,
+		loading,
 		setEntity,
 	};
 };

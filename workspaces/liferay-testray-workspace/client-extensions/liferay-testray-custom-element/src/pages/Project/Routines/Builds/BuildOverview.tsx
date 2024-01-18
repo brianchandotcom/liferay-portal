@@ -4,8 +4,9 @@
  */
 
 import ClayChart from '@clayui/charts';
-import {useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Form from '~/components/Form';
+import Loading from '~/components/Loading';
 import {useCaseResultsChart} from '~/hooks/useCaseResultsChart';
 
 import JiraLink from '../../../../components/JiraLink';
@@ -26,8 +27,13 @@ type BuildOverviewProps = {
 
 const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 	const totalTestCasesGroup = useTotalTestCases(testrayBuild);
-
-	const {chart, chartSelectData, setEntity} = useCaseResultsChart({
+	const {
+		chart,
+		chartSelectData,
+		entity,
+		loading,
+		setEntity,
+	} = useCaseResultsChart({
 		buildId: testrayBuild.id,
 	});
 
@@ -35,7 +41,17 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 
 	const ref = useRef<any>();
 
+	const [columnChartLoad, setColumnChartLoad] = useState(false);
+
 	const [testrayTask] = testrayBuild?.tasks as TestrayTask[];
+
+	useEffect(() => {
+		setColumnChartLoad(false);
+
+		setTimeout(() => {
+			setColumnChartLoad(true);
+		}, 100);
+	}, [entity]);
 
 	return (
 		<>
@@ -163,44 +179,56 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 							name="priority"
 							onChange={({target: {value}}) => setEntity(value)}
 							options={chartSelectData}
+							value={entity}
 						/>
 
-						<ClayChart
-							axis={{
-								y: {
-									label: {
-										position: 'outer-middle',
-										text: i18n
-											.translate('tests')
-											.toUpperCase(),
+						{loading ||
+							(!columnChartLoad && <Loading className="py-10" />)}
+
+						{columnChartLoad && !loading && (
+							<ClayChart
+								axis={{
+									y: {
+										label: {
+											position: 'outer-middle',
+											text: i18n
+												.translate('tests')
+												.toUpperCase(),
+										},
 									},
-								},
-							}}
-							bar={{
-								width: {
-									max: 30,
-								},
-							}}
-							data={{
-								colors: chart.colors,
-								columns: chart.columns,
-								groups: [chart.statuses],
-								type: 'bar',
-							}}
-							legend={{
-								inset: {
-									anchor: 'top-right',
-									step: 1,
-									x: 10,
-									y: -20,
-								},
-								position: 'inset',
-							}}
-							padding={{
-								bottom: 5,
-								top: 20,
-							}}
-						/>
+								}}
+								bar={{
+									width: {
+										max: 30,
+									},
+								}}
+								data={{
+									colors: chart.colors,
+									columns: chart.columns,
+									groups: [chart.statuses],
+									type: 'bar',
+								}}
+								legend={{
+									inset: {
+										anchor: 'top-right',
+										step: 1,
+										x: 10,
+										y: -20,
+									},
+									position: 'inset',
+								}}
+								padding={{
+									bottom: 5,
+									top: 20,
+								}}
+								tooltip={{
+									format: {
+										title: (index: number) =>
+											chart.columnNames[index],
+									},
+								}}
+							/>
+						)}
 					</div>
 				</div>
 			</Container>

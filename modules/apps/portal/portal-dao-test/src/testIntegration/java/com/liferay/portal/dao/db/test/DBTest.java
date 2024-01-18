@@ -600,6 +600,22 @@ public class DBTest {
 	}
 
 	@Test
+	public void testGetIndexes() throws Exception {
+		_addIndex(new String[] {"typeVarchar", "typeBoolean"});
+
+		List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
+			_db, "getIndexes",
+			new Class<?>[] {
+				Connection.class, String.class, String.class, boolean.class
+			},
+			_connection, _TABLE_NAME_1, "typeVarchar", false);
+
+		for (IndexMetadata indexMetadata : indexMetadatas) {
+			Assert.assertEquals("IX_TEMP", indexMetadata.getIndexName());
+		}
+	}
+
+	@Test
 	public void testGetPrimaryKeyColumnNames() throws Exception {
 		_db.runSQL(_SQL_CREATE_TABLE_2);
 

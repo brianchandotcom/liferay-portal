@@ -24,7 +24,7 @@ public class MultiselectInfoFieldType implements InfoFieldType {
 		return "multiselect";
 	}
 
-	private MultiselectInfoFieldType() {
+	protected MultiselectInfoFieldType() {
 	}
 
 }

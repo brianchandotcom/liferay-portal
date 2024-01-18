@@ -586,9 +586,7 @@ definition {
 			locator1 = "ListGroupItem#ITEM_NAME_LINK",
 			value1 = "User");
 
-		ManagementBar.setFilterAndOrder(orderBy = "Title");
-
-		ManagementBar.sortAssets(sortDirection = "Descending");
+		Click.clickNoMouseOver(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
 
 		AssertElementPresent(
 			key_itemName = "User",

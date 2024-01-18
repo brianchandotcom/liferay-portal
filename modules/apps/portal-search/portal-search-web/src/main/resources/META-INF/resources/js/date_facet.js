@@ -16,19 +16,14 @@ AUI.add(
 
 			instance.form = config.form;
 			instance.fromInputName = config.fromInputName;
+			instance.fromInputDatePicker = config.fromInputDatePicker;
 			instance.namespace = config.namespace;
 			instance.parameterName = config.parameterName;
 			instance.searchCustomRangeButton = config.searchCustomRangeButton;
 			instance.searchCustomRangeToggleName =
 				config.searchCustomRangeToggleName;
 			instance.toInputName = config.toInputName;
-
-			instance.fromInputDatePicker = instance._getInputDatePicker(
-				config.fromInputName
-			);
-			instance.toInputDatePicker = instance._getInputDatePicker(
-				config.toInputName
-			);
+			instance.toInputDatePicker = config.toInputDatePicker;
 
 			instance._initializeFormValidator();
 
@@ -62,18 +57,6 @@ AUI.add(
 		};
 
 		A.mix(DateFacetFilter.prototype, {
-			_getInputDatePicker(inputName) {
-				const inputElements = document.getElementsByName(inputName);
-
-				if (inputElements[0]) {
-					return Liferay.component(
-						`${inputElements[0].getAttribute('id')}DatePicker`
-					);
-				}
-
-				return null;
-			},
-
 			_initializeFormValidator() {
 				const instance = this;
 

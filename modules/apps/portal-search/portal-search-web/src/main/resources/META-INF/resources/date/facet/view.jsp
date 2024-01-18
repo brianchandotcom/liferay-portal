@@ -64,6 +64,9 @@ DateFacetPortletInstanceConfiguration dateFacetPortletInstanceConfiguration = da
 	<aui:script use="liferay-search-date-facet">
 		new Liferay.Search.DateFacetFilter({
 			form: A.one('#<portlet:namespace />fm'),
+			fromInputDatePicker: Liferay.component(
+				'<portlet:namespace />fromInputDatePicker'
+			),
 			fromInputName: '<portlet:namespace />fromInput',
 			namespace: '<portlet:namespace />',
 			parameterName:
@@ -73,6 +76,9 @@ DateFacetPortletInstanceConfiguration dateFacetPortletInstanceConfiguration = da
 			),
 			searchCustomRangeToggleName:
 				'<portlet:namespace /><%= customRangeBucketDisplayContext.getBucketText() %>',
+			toInputDatePicker: Liferay.component(
+				'<portlet:namespace />toInputDatePicker'
+			),
 			toInputName: '<portlet:namespace />toInput',
 		});
 

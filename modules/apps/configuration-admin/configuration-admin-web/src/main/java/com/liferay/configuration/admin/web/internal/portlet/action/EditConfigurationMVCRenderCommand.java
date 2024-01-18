@@ -124,8 +124,7 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 						configurationModel.getBaseID()));
 
 			List<ConfigurationMenuItem> configurationMenuItems =
-				_configurationMenuItemsServiceTrackerMap.getService(
-					configurationModel.getBaseID());
+				_serviceTrackerMap.getService(configurationModel.getBaseID());
 
 			if (configurationMenuItems != null) {
 				renderRequest.setAttribute(
@@ -162,15 +161,13 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_configurationMenuItemsServiceTrackerMap =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, ConfigurationMenuItem.class,
-				"configuration.pid");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, ConfigurationMenuItem.class, "configuration.pid");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_configurationMenuItemsServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	@Reference
@@ -180,9 +177,6 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 	private ConfigurationFormRendererRetriever
 		_configurationFormRendererRetriever;
 
-	private ServiceTrackerMap<String, List<ConfigurationMenuItem>>
-		_configurationMenuItemsServiceTrackerMap;
-
 	@Reference(target = "(filter.visibility=*)")
 	private ConfigurationModelRetriever _configurationModelRetriever;
 
@@ -191,6 +185,9 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	private ServiceTrackerMap<String, List<ConfigurationMenuItem>>
+		_serviceTrackerMap;
 
 	@Reference
 	private SettingsLocatorHelper _settingsLocatorHelper;

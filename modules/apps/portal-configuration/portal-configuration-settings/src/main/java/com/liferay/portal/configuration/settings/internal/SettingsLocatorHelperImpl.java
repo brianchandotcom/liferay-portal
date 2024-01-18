@@ -122,8 +122,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 		_bundleTrackerDCLSingleton.getSingleton(this::_createBundleTracker);
 
-		return _configurationPidMappingServiceTrackerMap.getService(
-			configurationId);
+		return _serviceTrackerMap.getService(configurationId);
 	}
 
 	@Override
@@ -223,17 +222,15 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 		_bundleContext = bundleContext;
 
-		_configurationPidMappingServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ConfigurationPidMapping.class, null,
-				ServiceReferenceMapperFactory.createFromFunction(
-					bundleContext,
-					ConfigurationPidMapping::getConfigurationPid));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ConfigurationPidMapping.class, null,
+			ServiceReferenceMapperFactory.createFromFunction(
+				bundleContext, ConfigurationPidMapping::getConfigurationPid));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_configurationPidMappingServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 
 		_bundleTrackerDCLSingleton.destroy(BundleTracker::close);
 	}
@@ -458,8 +455,6 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		new DCLSingleton<>();
 	private final Map<String, Settings> _configurationBeanSettings =
 		new ConcurrentHashMap<>();
-	private ServiceTrackerMap<String, ConfigurationPidMapping>
-		_configurationPidMappingServiceTrackerMap;
 
 	@Reference
 	private ExtendedMetaTypeService _extendedMetaTypeService;
@@ -486,6 +481,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	private final Map<String, ScopedConfigurationManagedServiceFactory>
 		_scopedConfigurationManagedServiceFactories = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, ConfigurationPidMapping>
+		_serviceTrackerMap;
 
 	private class ConfigurationBeanClassBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<List<SafeCloseable>> {

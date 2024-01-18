@@ -30,7 +30,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	public JSONArray getDataAttributesJSONArray() {
 		JSONArray jsonArray = JSONUtil.put("lfr-editable-id");
 
-		for (String key : _editableElementParserServiceTrackerMap.keySet()) {
+		for (String key : _serviceTrackerMap.keySet()) {
 			jsonArray.put("lfr-editable-type:" + key);
 		}
 
@@ -39,17 +39,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_editableElementParserServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, EditableElementParser.class, "type");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, EditableElementParser.class, "type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_editableElementParserServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, EditableElementParser>
-		_editableElementParserServiceTrackerMap;
+	private ServiceTrackerMap<String, EditableElementParser> _serviceTrackerMap;
 
 }

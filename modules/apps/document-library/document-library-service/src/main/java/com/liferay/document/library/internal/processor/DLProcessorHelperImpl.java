@@ -38,7 +38,7 @@ public class DLProcessorHelperImpl implements DLProcessorHelper {
 			return;
 		}
 
-		for (DLProcessor dlProcessor : _dlProcessorServiceTrackerMap.values()) {
+		for (DLProcessor dlProcessor : _serviceTrackerMap.values()) {
 			if (dlProcessor.isSupported(fileEntry.getMimeType())) {
 				dlProcessor.cleanUp(fileEntry);
 			}
@@ -51,7 +51,7 @@ public class DLProcessorHelperImpl implements DLProcessorHelper {
 			return;
 		}
 
-		for (DLProcessor dlProcessor : _dlProcessorServiceTrackerMap.values()) {
+		for (DLProcessor dlProcessor : _serviceTrackerMap.values()) {
 			if (dlProcessor.isSupported(fileVersion)) {
 				dlProcessor.cleanUp(fileVersion);
 			}
@@ -74,7 +74,7 @@ public class DLProcessorHelperImpl implements DLProcessorHelper {
 			return;
 		}
 
-		for (DLProcessor dlProcessor : _dlProcessorServiceTrackerMap.values()) {
+		for (DLProcessor dlProcessor : _serviceTrackerMap.values()) {
 			if (dlProcessor.isSupported(latestFileVersion)) {
 				dlProcessor.exportGeneratedFiles(
 					portletDataContext, fileEntry, fileEntryElement);
@@ -84,7 +84,7 @@ public class DLProcessorHelperImpl implements DLProcessorHelper {
 
 	@Override
 	public DLProcessor getDLProcessor(String dlProcessorType) {
-		return _dlProcessorServiceTrackerMap.getService(dlProcessorType);
+		return _serviceTrackerMap.getService(dlProcessorType);
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class DLProcessorHelperImpl implements DLProcessorHelper {
 			return;
 		}
 
-		for (DLProcessor dlProcessor : _dlProcessorServiceTrackerMap.values()) {
+		for (DLProcessor dlProcessor : _serviceTrackerMap.values()) {
 			if (dlProcessor.isSupported(fileVersion)) {
 				dlProcessor.importGeneratedFiles(
 					portletDataContext, fileEntry, importedFileEntry,
@@ -156,7 +156,7 @@ public class DLProcessorHelperImpl implements DLProcessorHelper {
 			return;
 		}
 
-		for (DLProcessor dlProcessor : _dlProcessorServiceTrackerMap.values()) {
+		for (DLProcessor dlProcessor : _serviceTrackerMap.values()) {
 			if (dlProcessor.isSupported(latestFileVersion)) {
 				dlProcessor.trigger(fileVersion, latestFileVersion);
 			}
@@ -167,14 +167,13 @@ public class DLProcessorHelperImpl implements DLProcessorHelper {
 	protected void activate(BundleContext bundleContext) throws Exception {
 		_bundleContext = bundleContext;
 
-		_dlProcessorServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DLProcessor.class, "type");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DLProcessor.class, "type");
 	}
 
 	@Deactivate
 	protected void deactivate() throws Exception {
-		_dlProcessorServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private FileVersion _getLatestFileVersion(
@@ -207,7 +206,6 @@ public class DLProcessorHelperImpl implements DLProcessorHelper {
 	@Reference
 	private DLFileEntryConfigurationProvider _dlFileEntryConfigurationProvider;
 
-	private ServiceTrackerMap<String, DLProcessor>
-		_dlProcessorServiceTrackerMap;
+	private ServiceTrackerMap<String, DLProcessor> _serviceTrackerMap;
 
 }

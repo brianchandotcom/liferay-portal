@@ -57,17 +57,16 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
 	@Override
 	public void destroy() {
-		_bundleSymbolicNameServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	@Override
 	public void init() {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		_bundleSymbolicNameServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundle.getBundleContext(), ResourceBundleLoader.class,
-				"bundle.symbolic.name");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundle.getBundleContext(), ResourceBundleLoader.class,
+			"bundle.symbolic.name");
 	}
 
 	protected abstract MimeTypes getMimeTypes();
@@ -196,8 +195,7 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 				JSBundle jsBundle = jsPackage.getJSBundle();
 
 				ResourceBundleLoader resourceBundleLoader =
-					_bundleSymbolicNameServiceTrackerMap.getService(
-						jsBundle.getName());
+					_serviceTrackerMap.getService(jsBundle.getName());
 
 				if (resourceBundleLoader != null) {
 					content = LanguageUtil.process(
@@ -244,8 +242,7 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseBuiltInJSModuleServlet.class);
 
-	private ServiceTrackerMap<String, ResourceBundleLoader>
-		_bundleSymbolicNameServiceTrackerMap;
+	private ServiceTrackerMap<String, ResourceBundleLoader> _serviceTrackerMap;
 	private final String _workDirName;
 
 }

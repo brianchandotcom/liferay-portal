@@ -103,14 +103,13 @@ public class AssignScopesMVCRenderCommand implements MVCRenderCommand {
 
 		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
 			OAuth2ProviderConfiguration.class, properties);
-		_scopeMatcherFactoryServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ScopeMatcherFactory.class, "company.id");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ScopeMatcherFactory.class, "company.id");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_scopeMatcherFactoryServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	protected ThemeDisplay getThemeDisplay(PortletRequest portletRequest) {
@@ -118,9 +117,8 @@ public class AssignScopesMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private ScopeMatcherFactory _getScopeMatcherFactory(long companyId) {
-		ScopeMatcherFactory scopeMatcherFactory =
-			_scopeMatcherFactoryServiceTrackerMap.getService(
-				String.valueOf(companyId));
+		ScopeMatcherFactory scopeMatcherFactory = _serviceTrackerMap.getService(
+			String.valueOf(companyId));
 
 		if (scopeMatcherFactory == null) {
 			return _defaultScopeMatcherFactory;
@@ -159,7 +157,6 @@ public class AssignScopesMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private ScopeLocator _scopeLocator;
 
-	private ServiceTrackerMap<String, ScopeMatcherFactory>
-		_scopeMatcherFactoryServiceTrackerMap;
+	private ServiceTrackerMap<String, ScopeMatcherFactory> _serviceTrackerMap;
 
 }

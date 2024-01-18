@@ -44,7 +44,7 @@ public class CPContentRendererRegistryImpl
 		}
 
 		ServiceWrapper<CPContentRenderer> cpContentRendererServiceWrapper =
-			_cpContentRendererServiceTrackerMap.getService(key);
+			_serviceTrackerMap.getService(key);
 
 		if (cpContentRendererServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
@@ -63,7 +63,7 @@ public class CPContentRendererRegistryImpl
 
 		List<ServiceWrapper<CPContentRenderer>>
 			cpContentRendererServiceWrappers = ListUtil.fromCollection(
-				_cpContentRendererServiceTrackerMap.values());
+				_serviceTrackerMap.values());
 
 		Collections.sort(
 			cpContentRendererServiceWrappers,
@@ -102,26 +102,25 @@ public class CPContentRendererRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_cpContentRendererServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, CPContentRenderer.class,
-				"commerce.product.content.renderer.key",
-				ServiceTrackerCustomizerFactory.
-					<CPContentRenderer>serviceWrapper(bundleContext));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, CPContentRenderer.class,
+			"commerce.product.content.renderer.key",
+			ServiceTrackerCustomizerFactory.<CPContentRenderer>serviceWrapper(
+				bundleContext));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_cpContentRendererServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPContentRendererRegistryImpl.class);
 
-	private ServiceTrackerMap<String, ServiceWrapper<CPContentRenderer>>
-		_cpContentRendererServiceTrackerMap;
 	private final Comparator<ServiceWrapper<CPContentRenderer>>
 		_cpContentRendererServiceWrapperOrderComparator =
 			new CPContentRendererServiceWrapperOrderComparator();
+	private ServiceTrackerMap<String, ServiceWrapper<CPContentRenderer>>
+		_serviceTrackerMap;
 
 }

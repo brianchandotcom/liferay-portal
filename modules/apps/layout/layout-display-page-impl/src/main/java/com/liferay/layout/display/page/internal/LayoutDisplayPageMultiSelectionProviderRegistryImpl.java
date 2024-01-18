@@ -29,45 +29,40 @@ public class LayoutDisplayPageMultiSelectionProviderRegistryImpl
 	public LayoutDisplayPageMultiSelectionProvider<?>
 		getLayoutDisplayPageMultiSelectionProvider(String className) {
 
-		return _layoutDisplayPageMultiSelectionProviderServiceTrackerMap.
-			getService(className);
+		return _serviceTrackerMap.getService(className);
 	}
 
 	@Override
 	public List<LayoutDisplayPageMultiSelectionProvider<?>>
 		getLayoutDisplayPageMultiSelectionProviders() {
 
-		return new ArrayList(
-			_layoutDisplayPageMultiSelectionProviderServiceTrackerMap.values());
+		return new ArrayList(_serviceTrackerMap.values());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_layoutDisplayPageMultiSelectionProviderServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext,
-				(Class<LayoutDisplayPageMultiSelectionProvider<?>>)
-					(Class<?>)LayoutDisplayPageMultiSelectionProvider.class,
-				null,
-				(serviceReference, emitter) -> {
-					LayoutDisplayPageMultiSelectionProvider<?>
-						layoutDisplayPageMultiSelectionProvider =
-							bundleContext.getService(serviceReference);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext,
+			(Class<LayoutDisplayPageMultiSelectionProvider<?>>)
+				(Class<?>)LayoutDisplayPageMultiSelectionProvider.class,
+			null,
+			(serviceReference, emitter) -> {
+				LayoutDisplayPageMultiSelectionProvider<?>
+					layoutDisplayPageMultiSelectionProvider =
+						bundleContext.getService(serviceReference);
 
-					try {
-						emitter.emit(
-							layoutDisplayPageMultiSelectionProvider.
-								getClassName());
-					}
-					finally {
-						bundleContext.ungetService(serviceReference);
-					}
-				},
-				new PropertyServiceReferenceComparator<>("service.ranking"));
+				try {
+					emitter.emit(
+						layoutDisplayPageMultiSelectionProvider.getClassName());
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			},
+			new PropertyServiceReferenceComparator<>("service.ranking"));
 	}
 
 	private ServiceTrackerMap
-		<String, LayoutDisplayPageMultiSelectionProvider<?>>
-			_layoutDisplayPageMultiSelectionProviderServiceTrackerMap;
+		<String, LayoutDisplayPageMultiSelectionProvider<?>> _serviceTrackerMap;
 
 }

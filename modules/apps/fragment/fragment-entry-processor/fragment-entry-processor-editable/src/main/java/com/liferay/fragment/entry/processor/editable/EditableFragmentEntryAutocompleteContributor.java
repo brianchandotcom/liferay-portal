@@ -32,7 +32,7 @@ public class EditableFragmentEntryAutocompleteContributor
 	public JSONArray getAvailableTagsJSONArray() {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (String key : _editableElementParserServiceTrackerMap.keySet()) {
+		for (String key : _serviceTrackerMap.keySet()) {
 			StringBundler sb = new StringBundler(
 				2 + (5 * _REQUIRED_ATTRIBUTE_NAMES.length));
 
@@ -68,22 +68,20 @@ public class EditableFragmentEntryAutocompleteContributor
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_editableElementParserServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, EditableElementParser.class, "type");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, EditableElementParser.class, "type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_editableElementParserServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private static final String[] _REQUIRED_ATTRIBUTE_NAMES = {"id", "type"};
 
-	private ServiceTrackerMap<String, EditableElementParser>
-		_editableElementParserServiceTrackerMap;
-
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	private ServiceTrackerMap<String, EditableElementParser> _serviceTrackerMap;
 
 }

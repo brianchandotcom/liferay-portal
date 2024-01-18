@@ -48,7 +48,7 @@ public class CPContentListEntryRendererRegistryImpl
 
 		ServiceWrapper<CPContentListEntryRenderer>
 			cpContentListEntryRendererServiceWrapper =
-				_cpContentListEntryRendererServiceTrackerMap.getService(key);
+				_serviceTrackerMap.getService(key);
 
 		if (cpContentListEntryRendererServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
@@ -112,7 +112,7 @@ public class CPContentListEntryRendererRegistryImpl
 
 		List<ServiceWrapper<CPContentListEntryRenderer>>
 			cpContentListEntryRendererServiceWrappers = ListUtil.fromCollection(
-				_cpContentListEntryRendererServiceTrackerMap.values());
+				_serviceTrackerMap.values());
 
 		Collections.sort(
 			cpContentListEntryRendererServiceWrappers,
@@ -180,27 +180,25 @@ public class CPContentListEntryRendererRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_cpContentListEntryRendererServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, CPContentListEntryRenderer.class,
-				"commerce.product.content.list.entry.renderer.key",
-				ServiceTrackerCustomizerFactory.
-					<CPContentListEntryRenderer>serviceWrapper(bundleContext));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, CPContentListEntryRenderer.class,
+			"commerce.product.content.list.entry.renderer.key",
+			ServiceTrackerCustomizerFactory.
+				<CPContentListEntryRenderer>serviceWrapper(bundleContext));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_cpContentListEntryRendererServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPContentListEntryRendererRegistryImpl.class);
 
-	private ServiceTrackerMap
-		<String, ServiceWrapper<CPContentListEntryRenderer>>
-			_cpContentListEntryRendererServiceTrackerMap;
 	private final Comparator<ServiceWrapper<CPContentListEntryRenderer>>
 		_cpContentListEntryRendererServiceWrapperOrderComparator =
 			new CPContentListEntryRendererServiceWrapperOrderComparator();
+	private ServiceTrackerMap
+		<String, ServiceWrapper<CPContentListEntryRenderer>> _serviceTrackerMap;
 
 }

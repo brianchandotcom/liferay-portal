@@ -29,46 +29,42 @@ public class LayoutDisplayPageInfoItemFieldValuesProviderRegistryImpl
 	public LayoutDisplayPageInfoItemFieldValuesProvider<?>
 		getLayoutDisplayPageInfoItemFieldValuesProvider(String className) {
 
-		return _layoutDisplayPageDetailsProviderServiceTrackerMap.getService(
-			className);
+		return _serviceTrackerMap.getService(className);
 	}
 
 	@Override
 	public List<LayoutDisplayPageInfoItemFieldValuesProvider<?>>
 		getLayoutDisplayPageInfoItemFieldValuesProviders() {
 
-		return new ArrayList(
-			_layoutDisplayPageDetailsProviderServiceTrackerMap.values());
+		return new ArrayList(_serviceTrackerMap.values());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_layoutDisplayPageDetailsProviderServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext,
-				(Class<LayoutDisplayPageInfoItemFieldValuesProvider<?>>)
-					(Class<?>)
-						LayoutDisplayPageInfoItemFieldValuesProvider.class,
-				null,
-				(serviceReference, emitter) -> {
-					LayoutDisplayPageInfoItemFieldValuesProvider<?>
-						layoutDisplayPageInfoItemFieldValuesProvider =
-							bundleContext.getService(serviceReference);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext,
+			(Class<LayoutDisplayPageInfoItemFieldValuesProvider<?>>)
+				(Class<?>)LayoutDisplayPageInfoItemFieldValuesProvider.class,
+			null,
+			(serviceReference, emitter) -> {
+				LayoutDisplayPageInfoItemFieldValuesProvider<?>
+					layoutDisplayPageInfoItemFieldValuesProvider =
+						bundleContext.getService(serviceReference);
 
-					try {
-						emitter.emit(
-							layoutDisplayPageInfoItemFieldValuesProvider.
-								getClassName());
-					}
-					finally {
-						bundleContext.ungetService(serviceReference);
-					}
-				},
-				new PropertyServiceReferenceComparator<>("service.ranking"));
+				try {
+					emitter.emit(
+						layoutDisplayPageInfoItemFieldValuesProvider.
+							getClassName());
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			},
+			new PropertyServiceReferenceComparator<>("service.ranking"));
 	}
 
 	private ServiceTrackerMap
 		<String, LayoutDisplayPageInfoItemFieldValuesProvider<?>>
-			_layoutDisplayPageDetailsProviderServiceTrackerMap;
+			_serviceTrackerMap;
 
 }

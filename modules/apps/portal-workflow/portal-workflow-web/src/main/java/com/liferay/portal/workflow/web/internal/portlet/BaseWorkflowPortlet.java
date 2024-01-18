@@ -42,8 +42,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 	public List<WorkflowPortletTab> getWorkflowPortletTabs() {
 		return TransformUtil.transform(
-			getWorkflowPortletTabNames(),
-			_workflowPortletTabServiceTrackerMap::getService);
+			getWorkflowPortletTabNames(), _serviceTrackerMap::getService);
 	}
 
 	@Override
@@ -75,10 +74,9 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_workflowPortletTabServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, WorkflowPortletTab.class,
-				"portal.workflow.tabs.name");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, WorkflowPortletTab.class,
+			"portal.workflow.tabs.name");
 	}
 
 	protected void addRenderRequestAttributes(RenderRequest renderRequest) {
@@ -91,7 +89,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 	@Deactivate
 	protected void deactivate() {
-		_workflowPortletTabServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	@Override
@@ -112,11 +110,9 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		String workflowPortletTabName = ParamUtil.get(
 			renderRequest, "tab", getDefaultWorkflowPortletTabName());
 
-		return _workflowPortletTabServiceTrackerMap.getService(
-			workflowPortletTabName);
+		return _serviceTrackerMap.getService(workflowPortletTabName);
 	}
 
-	private ServiceTrackerMap<String, WorkflowPortletTab>
-		_workflowPortletTabServiceTrackerMap;
+	private ServiceTrackerMap<String, WorkflowPortletTab> _serviceTrackerMap;
 
 }

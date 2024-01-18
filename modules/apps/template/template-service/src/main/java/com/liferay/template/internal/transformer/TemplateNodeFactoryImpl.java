@@ -48,55 +48,53 @@ public class TemplateNodeFactoryImpl implements TemplateNodeFactory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_templateNodeTransformerServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext,
-				(Class<TemplateNodeTransformer>)
-					(Class)TemplateNodeTransformer.class,
-				null,
-				(serviceReference, emitter) -> {
-					try {
-						List<String> classNames = StringUtil.asList(
-							serviceReference.getProperty(
-								"info.field.type.class.name"));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext,
+			(Class<TemplateNodeTransformer>)
+				(Class)TemplateNodeTransformer.class,
+			null,
+			(serviceReference, emitter) -> {
+				try {
+					List<String> classNames = StringUtil.asList(
+						serviceReference.getProperty(
+							"info.field.type.class.name"));
 
-						for (String className : classNames) {
-							emitter.emit(className);
-						}
+					for (String className : classNames) {
+						emitter.emit(className);
+					}
 
-						if (classNames.isEmpty()) {
-							emitter.emit(_CLASS_NAME_ANY);
-						}
+					if (classNames.isEmpty()) {
+						emitter.emit(_CLASS_NAME_ANY);
 					}
-					finally {
-						bundleContext.ungetService(serviceReference);
-					}
-				},
-				new PropertyServiceReferenceComparator<>("service.ranking"));
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			},
+			new PropertyServiceReferenceComparator<>("service.ranking"));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_templateNodeTransformerServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private TemplateNodeTransformer _getTemplateNodeTransformer(
 		String className) {
 
 		TemplateNodeTransformer templateNodeTransformer =
-			_templateNodeTransformerServiceTrackerMap.getService(className);
+			_serviceTrackerMap.getService(className);
 
 		if (templateNodeTransformer != null) {
 			return templateNodeTransformer;
 		}
 
-		return _templateNodeTransformerServiceTrackerMap.getService(
-			_CLASS_NAME_ANY);
+		return _serviceTrackerMap.getService(_CLASS_NAME_ANY);
 	}
 
 	private static final String _CLASS_NAME_ANY = "<ANY>";
 
 	private ServiceTrackerMap<String, TemplateNodeTransformer>
-		_templateNodeTransformerServiceTrackerMap;
+		_serviceTrackerMap;
 
 }

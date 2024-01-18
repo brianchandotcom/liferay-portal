@@ -284,8 +284,8 @@ public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 
 	@Deactivate
 	protected void deactivate() {
-		if (_infoItemCapabilityServiceTrackerMap != null) {
-			_infoItemCapabilityServiceTrackerMap.close();
+		if (_serviceTrackerMap != null) {
+			_serviceTrackerMap.close();
 		}
 
 		for (ServiceTrackerMap<?, ?> serviceTrackerMap :
@@ -324,16 +324,15 @@ public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 	private ServiceTrackerMap<String, InfoItemCapability>
 		_getInfoItemCapabilityServiceTrackerMap() {
 
-		if (_infoItemCapabilityServiceTrackerMap == null) {
-			_infoItemCapabilityServiceTrackerMap =
-				ServiceTrackerMapFactory.openSingleValueMap(
-					_bundleContext, InfoItemCapability.class, null,
-					ServiceReferenceMapperFactory.create(
-						_bundleContext,
-						(service, emitter) -> emitter.emit(service.getKey())));
+		if (_serviceTrackerMap == null) {
+			_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+				_bundleContext, InfoItemCapability.class, null,
+				ServiceReferenceMapperFactory.create(
+					_bundleContext,
+					(service, emitter) -> emitter.emit(service.getKey())));
 		}
 
-		return _infoItemCapabilityServiceTrackerMap;
+		return _serviceTrackerMap;
 	}
 
 	private InfoItemClassDetails _getInfoItemClassDetails(
@@ -413,8 +412,6 @@ public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 			RelatedInfoItemCollectionProvider.class));
 
 	private BundleContext _bundleContext;
-	private ServiceTrackerMap<String, InfoItemCapability>
-		_infoItemCapabilityServiceTrackerMap;
 	private final Map
 		<Class<?>,
 		 ServiceTrackerMap
@@ -423,5 +420,6 @@ public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 					new ConcurrentHashMap<>();
 	private final Map<Class<?>, ServiceTrackerMap<String, ?>>
 		_keyedInfoItemServiceTrackerMap = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, InfoItemCapability> _serviceTrackerMap;
 
 }

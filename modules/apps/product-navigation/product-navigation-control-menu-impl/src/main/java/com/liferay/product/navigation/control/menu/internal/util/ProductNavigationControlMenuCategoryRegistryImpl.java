@@ -44,8 +44,8 @@ public class ProductNavigationControlMenuCategoryRegistryImpl
 
 		List<ProductNavigationControlMenuCategory>
 			productNavigationControlMenuCategories =
-				_productNavigationControlMenuCategoryServiceTrackerMap.
-					getService(productNavigationControlMenuCategoryKey);
+				_serviceTrackerMap.getService(
+					productNavigationControlMenuCategoryKey);
 
 		if (productNavigationControlMenuCategories == null) {
 			return Collections.emptyList();
@@ -102,30 +102,28 @@ public class ProductNavigationControlMenuCategoryRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_productNavigationControlMenuCategoryServiceTrackerMap =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, ProductNavigationControlMenuCategory.class, null,
-				new PropertyServiceReferenceMapper<>(
-					"product.navigation.control.menu.category.key"),
-				Collections.reverseOrder(
-					new PropertyServiceReferenceComparator<>(
-						"product.navigation.control.menu.category.order")));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, ProductNavigationControlMenuCategory.class, null,
+			new PropertyServiceReferenceMapper<>(
+				"product.navigation.control.menu.category.key"),
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator<>(
+					"product.navigation.control.menu.category.order")));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_productNavigationControlMenuCategoryServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductNavigationControlMenuCategoryRegistryImpl.class);
 
-	private ServiceTrackerMap
-		<String, List<ProductNavigationControlMenuCategory>>
-			_productNavigationControlMenuCategoryServiceTrackerMap;
-
 	@Reference
 	private ProductNavigationControlMenuEntryRegistry
 		_productNavigationControlMenuEntryRegistry;
+
+	private ServiceTrackerMap
+		<String, List<ProductNavigationControlMenuCategory>> _serviceTrackerMap;
 
 }

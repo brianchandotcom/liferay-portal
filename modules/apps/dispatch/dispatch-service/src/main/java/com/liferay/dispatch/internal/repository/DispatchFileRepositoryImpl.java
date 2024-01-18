@@ -102,15 +102,14 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_dispatchFileValidatorServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DispatchFileValidator.class,
-				"dispatch.file.validator.type");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DispatchFileValidator.class,
+			"dispatch.file.validator.type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_dispatchFileValidatorServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private FileEntry _addFileEntry(
@@ -138,14 +137,11 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 	private DispatchFileValidator _getDispatchFileValidator(
 		String dispatchTaskExecutorType) {
 
-		if (_dispatchFileValidatorServiceTrackerMap.containsKey(
-				dispatchTaskExecutorType)) {
-
-			return _dispatchFileValidatorServiceTrackerMap.getService(
-				dispatchTaskExecutorType);
+		if (_serviceTrackerMap.containsKey(dispatchTaskExecutorType)) {
+			return _serviceTrackerMap.getService(dispatchTaskExecutorType);
 		}
 
-		return _dispatchFileValidatorServiceTrackerMap.getService("default");
+		return _serviceTrackerMap.getService("default");
 	}
 
 	private Folder _getFolder(long groupId, long userId)
@@ -171,9 +167,6 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private ServiceTrackerMap<String, DispatchFileValidator>
-		_dispatchFileValidatorServiceTrackerMap;
-
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
@@ -182,5 +175,7 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	private ServiceTrackerMap<String, DispatchFileValidator> _serviceTrackerMap;
 
 }

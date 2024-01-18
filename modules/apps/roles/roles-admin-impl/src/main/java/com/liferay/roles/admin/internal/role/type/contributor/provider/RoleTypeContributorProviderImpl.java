@@ -27,37 +27,34 @@ public class RoleTypeContributorProviderImpl
 
 	@Override
 	public RoleTypeContributor getRoleTypeContributor(int type) {
-		return _roleTypeContributorServiceTrackerMap.getService(type);
+		return _serviceTrackerMap.getService(type);
 	}
 
 	@Override
 	public List<RoleTypeContributor> getRoleTypeContributors() {
-		return ListUtil.fromCollection(
-			_roleTypeContributorServiceTrackerMap.values());
+		return ListUtil.fromCollection(_serviceTrackerMap.values());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_roleTypeContributorServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, RoleTypeContributor.class, null,
-				(serviceReference, emitter) -> {
-					RoleTypeContributor roleTypeContributor =
-						_bundleContext.getService(serviceReference);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			_bundleContext, RoleTypeContributor.class, null,
+			(serviceReference, emitter) -> {
+				RoleTypeContributor roleTypeContributor =
+					_bundleContext.getService(serviceReference);
 
-					emitter.emit(roleTypeContributor.getType());
-				});
+				emitter.emit(roleTypeContributor.getType());
+			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_roleTypeContributorServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private BundleContext _bundleContext;
-	private ServiceTrackerMap<Integer, RoleTypeContributor>
-		_roleTypeContributorServiceTrackerMap;
+	private ServiceTrackerMap<Integer, RoleTypeContributor> _serviceTrackerMap;
 
 }

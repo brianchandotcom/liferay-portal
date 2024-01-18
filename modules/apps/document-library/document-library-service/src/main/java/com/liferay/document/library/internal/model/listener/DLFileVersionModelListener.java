@@ -132,9 +132,8 @@ public class DLFileVersionModelListener
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_dlProcessorServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DLProcessor.class, "type");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DLProcessor.class, "type");
 	}
 
 	private void _cleanUpFileVersion(long fileVersionId)
@@ -143,7 +142,7 @@ public class DLFileVersionModelListener
 		FileVersion fileVersion = _dlAppLocalService.getFileVersion(
 			fileVersionId);
 
-		for (DLProcessor dlProcessor : _dlProcessorServiceTrackerMap.values()) {
+		for (DLProcessor dlProcessor : _serviceTrackerMap.values()) {
 			if (dlProcessor.isSupported(fileVersion)) {
 				dlProcessor.cleanUp(fileVersion);
 			}
@@ -165,7 +164,6 @@ public class DLFileVersionModelListener
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
-	private ServiceTrackerMap<String, DLProcessor>
-		_dlProcessorServiceTrackerMap;
+	private ServiceTrackerMap<String, DLProcessor> _serviceTrackerMap;
 
 }

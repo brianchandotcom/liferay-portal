@@ -77,7 +77,7 @@ public class CTStoreCTEventListener implements CTEventListener {
 							ctEntry.getModelClassPK());
 
 					if (ctsContent != null) {
-						Store store = _storeServiceTrackerMap.getService(
+						Store store = _serviceTrackerMap.getService(
 							ctsContent.getStoreType());
 
 						store.deleteFile(
@@ -106,7 +106,7 @@ public class CTStoreCTEventListener implements CTEventListener {
 						_ctsContentLocalService.getCTSContent(
 							ctEntry.getModelClassPK());
 
-					Store store = _storeServiceTrackerMap.getService(
+					Store store = _serviceTrackerMap.getService(
 						ctsContent.getStoreType());
 
 					store.addFile(
@@ -151,7 +151,7 @@ public class CTStoreCTEventListener implements CTEventListener {
 		_ctsContentClassNameId = _classNameLocalService.getClassNameId(
 			CTSContent.class);
 
-		_storeServiceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, Store.class, "store.type");
 	}
 
@@ -169,6 +169,6 @@ public class CTStoreCTEventListener implements CTEventListener {
 	@Reference
 	private CTSContentLocalService _ctsContentLocalService;
 
-	private ServiceTrackerMap<String, Store> _storeServiceTrackerMap;
+	private ServiceTrackerMap<String, Store> _serviceTrackerMap;
 
 }

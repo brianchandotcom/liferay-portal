@@ -371,34 +371,33 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
-		_entityClassNameServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, null,
-				"(" + JaxrsWhiteboardConstants.JAX_RS_RESOURCE + "=true)",
-				new PropertyServiceReferenceMapper<>("component.name"),
-				new ServiceTrackerCustomizer<Object, String>() {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, null,
+			"(" + JaxrsWhiteboardConstants.JAX_RS_RESOURCE + "=true)",
+			new PropertyServiceReferenceMapper<>("component.name"),
+			new ServiceTrackerCustomizer<Object, String>() {
 
-					@Override
-					public String addingService(
-						ServiceReference<Object> serviceReference) {
+				@Override
+				public String addingService(
+					ServiceReference<Object> serviceReference) {
 
-						return (String)serviceReference.getProperty(
-							"entity.class.name");
-					}
+					return (String)serviceReference.getProperty(
+						"entity.class.name");
+				}
 
-					@Override
-					public void modifiedService(
-						ServiceReference<Object> serviceReference,
-						String entityClassName) {
-					}
+				@Override
+				public void modifiedService(
+					ServiceReference<Object> serviceReference,
+					String entityClassName) {
+				}
 
-					@Override
-					public void removedService(
-						ServiceReference<Object> serviceReference,
-						String entityClassName) {
-					}
+				@Override
+				public void removedService(
+					ServiceReference<Object> serviceReference,
+					String entityClassName) {
+				}
 
-				});
+			});
 
 		_trackedOpenAPIContributors = ServiceTrackerListFactory.open(
 			bundleContext, OpenAPIContributor.class);
@@ -408,7 +407,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	protected void deactivate() {
 		_trackedOpenAPIContributors.close();
 
-		_entityClassNameServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private static String _getUpdatedReference(
@@ -552,9 +551,8 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		Set<String> classNames = new HashSet<>();
 
 		for (Class<?> resourceClass : resourceClasses) {
-			String entryClassName =
-				_entityClassNameServiceTrackerMap.getService(
-					resourceClass.getName());
+			String entryClassName = _serviceTrackerMap.getService(
+				resourceClass.getName());
 
 			if (entryClassName != null) {
 				classNames.add(entryClassName);
@@ -1437,11 +1435,10 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
-	private ServiceTrackerMap<String, String> _entityClassNameServiceTrackerMap;
-
 	@Reference
 	private ExtensionProviderRegistry _extensionProviderRegistry;
 
+	private ServiceTrackerMap<String, String> _serviceTrackerMap;
 	private ServiceTrackerList<OpenAPIContributor> _trackedOpenAPIContributors;
 
 }

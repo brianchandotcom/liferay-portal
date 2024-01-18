@@ -63,7 +63,7 @@ public class EditableFragmentEntryValidator
 				element);
 
 			EditableElementParser editableElementParser =
-				_editableElementParserServiceTrackerMap.getService(type);
+				_serviceTrackerMap.getService(type);
 
 			if (editableElementParser == null) {
 				throw new FragmentEntryContentException(
@@ -91,20 +91,18 @@ public class EditableFragmentEntryValidator
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_editableElementParserServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, EditableElementParser.class, "type");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, EditableElementParser.class, "type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_editableElementParserServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
-
-	private ServiceTrackerMap<String, EditableElementParser>
-		_editableElementParserServiceTrackerMap;
 
 	@Reference
 	private Language _language;
+
+	private ServiceTrackerMap<String, EditableElementParser> _serviceTrackerMap;
 
 }

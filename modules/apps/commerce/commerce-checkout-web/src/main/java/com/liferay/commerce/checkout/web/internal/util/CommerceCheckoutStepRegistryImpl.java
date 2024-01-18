@@ -178,34 +178,33 @@ public class CommerceCheckoutStepRegistryImpl
 
 	@Deactivate
 	protected void deactivate() {
-		if (_commerceCheckoutStepServiceTrackerMap != null) {
-			_commerceCheckoutStepServiceTrackerMap.close();
+		if (_serviceTrackerMap != null) {
+			_serviceTrackerMap.close();
 		}
 	}
 
 	private ServiceTrackerMap<String, ServiceWrapper<CommerceCheckoutStep>>
 		_getCommerceCheckoutStepServiceTrackerMap() {
 
-		if (_commerceCheckoutStepServiceTrackerMap == null) {
-			_commerceCheckoutStepServiceTrackerMap =
-				ServiceTrackerMapFactory.openSingleValueMap(
-					_bundleContext, CommerceCheckoutStep.class,
-					"commerce.checkout.step.name",
-					ServiceTrackerCustomizerFactory.
-						<CommerceCheckoutStep>serviceWrapper(_bundleContext));
+		if (_serviceTrackerMap == null) {
+			_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+				_bundleContext, CommerceCheckoutStep.class,
+				"commerce.checkout.step.name",
+				ServiceTrackerCustomizerFactory.
+					<CommerceCheckoutStep>serviceWrapper(_bundleContext));
 		}
 
-		return _commerceCheckoutStepServiceTrackerMap;
+		return _serviceTrackerMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceCheckoutStepRegistryImpl.class);
 
 	private BundleContext _bundleContext;
-	private ServiceTrackerMap<String, ServiceWrapper<CommerceCheckoutStep>>
-		_commerceCheckoutStepServiceTrackerMap;
 	private final Comparator<ServiceWrapper<CommerceCheckoutStep>>
 		_commerceCheckoutStepServiceWrapperDisplayOrderComparator =
 			new CommerceCheckoutStepServiceWrapperOrderComparator();
+	private ServiceTrackerMap<String, ServiceWrapper<CommerceCheckoutStep>>
+		_serviceTrackerMap;
 
 }

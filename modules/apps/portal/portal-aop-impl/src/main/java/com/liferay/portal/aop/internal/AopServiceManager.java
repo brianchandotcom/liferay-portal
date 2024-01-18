@@ -58,14 +58,13 @@ public class AopServiceManager {
 
 		_parallel = StartupHelperUtil.isDBWarmed();
 
-		_transactionExecutorServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, TransactionExecutor.class, null,
-				(serviceReference, emitter) -> {
-					Bundle bundle = serviceReference.getBundle();
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, TransactionExecutor.class, null,
+			(serviceReference, emitter) -> {
+				Bundle bundle = serviceReference.getBundle();
 
-					emitter.emit(bundle.getBundleId());
-				});
+				emitter.emit(bundle.getBundleId());
+			});
 
 		_aopServiceServiceTracker = new ServiceTracker<>(
 			bundleContext, AopService.class,
@@ -98,7 +97,7 @@ public class AopServiceManager {
 
 		_aopServiceServiceTracker.close();
 
-		_transactionExecutorServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	@Modified
@@ -149,8 +148,7 @@ public class AopServiceManager {
 
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();
-	private ServiceTrackerMap<Long, TransactionExecutor>
-		_transactionExecutorServiceTrackerMap;
+	private ServiceTrackerMap<Long, TransactionExecutor> _serviceTrackerMap;
 
 	private static class TransactionExecutorServiceTracker
 		extends ServiceTracker<TransactionExecutor, TransactionExecutor> {
@@ -263,8 +261,7 @@ public class AopServiceManager {
 							Constants.SERVICE_BUNDLEID);
 
 						TransactionExecutor transactionExecutor =
-							_transactionExecutorServiceTrackerMap.getService(
-								bundleId);
+							_serviceTrackerMap.getService(bundleId);
 
 						if (transactionExecutor == null) {
 							ServiceTracker<?, ?> serviceTracker =

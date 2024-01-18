@@ -197,12 +197,11 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 		_readTransformedSQLsFile();
 
-		_ctServiceServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, (Class<CTService<?>>)(Class<?>)CTService.class,
-				null,
-				ServiceReferenceMapperFactory.createFromFunction(
-					_bundleContext, CTService::getModelClass));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			_bundleContext, (Class<CTService<?>>)(Class<?>)CTService.class,
+			null,
+			ServiceReferenceMapperFactory.createFromFunction(
+				_bundleContext, CTService::getModelClass));
 
 		_releaseServiceTracker = new ServiceTracker<>(
 			_bundleContext,
@@ -220,7 +219,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	public void deactivate() {
 		_writeTransformedSQLsFile();
 
-		_ctServiceServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 
 		_releaseServiceTracker.close();
 	}
@@ -422,11 +421,10 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	private static final JSqlParser _jSqlParser = new CCJSqlParserManager();
 
 	private BundleContext _bundleContext;
-	private ServiceTrackerMap<Class<?>, CTService<?>>
-		_ctServiceServiceTrackerMap;
 	private PortalCache<String, String> _ctTransformedSQLsPortalCache;
 	private PortalCache<String, String> _productionTransformedSQLsPortalCache;
 	private ServiceTracker<?, ?> _releaseServiceTracker;
+	private ServiceTrackerMap<Class<?>, CTService<?>> _serviceTrackerMap;
 
 	private abstract static class BaseStatementVisitor
 		implements ExpressionVisitor, FromItemVisitor, ItemsListVisitor,
@@ -1361,7 +1359,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 			SelectBody selectBody = ctEntryPlainSelect;
 
-			CTService<?> ctService = _ctServiceServiceTrackerMap.getService(
+			CTService<?> ctService = _serviceTrackerMap.getService(
 				ctModelRegistration.getModelClass());
 
 			List<String[]> uniqueIndexColumnNames = Collections.emptyList();

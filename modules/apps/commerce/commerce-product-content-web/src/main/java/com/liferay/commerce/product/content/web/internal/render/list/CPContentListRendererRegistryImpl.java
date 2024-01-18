@@ -44,8 +44,8 @@ public class CPContentListRendererRegistryImpl
 		}
 
 		ServiceWrapper<CPContentListRenderer>
-			cpContentListRendererServiceWrapper =
-				_cpContentListRendererServiceTrackerMap.getService(key);
+			cpContentListRendererServiceWrapper = _serviceTrackerMap.getService(
+				key);
 
 		if (cpContentListRendererServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
@@ -67,7 +67,7 @@ public class CPContentListRendererRegistryImpl
 
 		List<ServiceWrapper<CPContentListRenderer>>
 			cpContentListRendererServiceWrappers = ListUtil.fromCollection(
-				_cpContentListRendererServiceTrackerMap.values());
+				_serviceTrackerMap.values());
 
 		Collections.sort(
 			cpContentListRendererServiceWrappers,
@@ -109,26 +109,25 @@ public class CPContentListRendererRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_cpContentListRendererServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, CPContentListRenderer.class,
-				"commerce.product.content.list.renderer.key",
-				ServiceTrackerCustomizerFactory.
-					<CPContentListRenderer>serviceWrapper(bundleContext));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, CPContentListRenderer.class,
+			"commerce.product.content.list.renderer.key",
+			ServiceTrackerCustomizerFactory.
+				<CPContentListRenderer>serviceWrapper(bundleContext));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_cpContentListRendererServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPContentListRendererRegistryImpl.class);
 
-	private ServiceTrackerMap<String, ServiceWrapper<CPContentListRenderer>>
-		_cpContentListRendererServiceTrackerMap;
 	private final Comparator<ServiceWrapper<CPContentListRenderer>>
 		_cpContentListRendererServiceWrapperOrderComparator =
 			new CPContentListRendererServiceWrapperOrderComparator();
+	private ServiceTrackerMap<String, ServiceWrapper<CPContentListRenderer>>
+		_serviceTrackerMap;
 
 }

@@ -41,8 +41,7 @@ public class OrganizationTypesSettingsImpl
 
 	@Override
 	public String[] getTypes() {
-		return ArrayUtil.toStringArray(
-			_organizationTypeConfigurationWrapperServiceTrackerMap.keySet());
+		return ArrayUtil.toStringArray(_serviceTrackerMap.keySet());
 	}
 
 	@Override
@@ -86,19 +85,17 @@ public class OrganizationTypesSettingsImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_organizationTypeConfigurationWrapperServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, OrganizationTypeConfigurationWrapper.class, null,
-				ServiceReferenceMapperFactory.create(
-					bundleContext,
-					(organizationTypeConfigurationWrapper, emitter) ->
-						emitter.emit(
-							organizationTypeConfigurationWrapper.getName())));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, OrganizationTypeConfigurationWrapper.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(organizationTypeConfigurationWrapper, emitter) -> emitter.emit(
+					organizationTypeConfigurationWrapper.getName())));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_organizationTypeConfigurationWrapperServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private OrganizationTypeConfigurationWrapper
@@ -106,8 +103,7 @@ public class OrganizationTypesSettingsImpl
 
 		OrganizationTypeConfigurationWrapper
 			organizationTypeConfigurationWrapper =
-				_organizationTypeConfigurationWrapperServiceTrackerMap.
-					getService(type);
+				_serviceTrackerMap.getService(type);
 
 		if (organizationTypeConfigurationWrapper == null) {
 			_log.error("Unable to get organization type: " + type);
@@ -120,6 +116,6 @@ public class OrganizationTypesSettingsImpl
 		OrganizationTypesSettingsImpl.class);
 
 	private ServiceTrackerMap<String, OrganizationTypeConfigurationWrapper>
-		_organizationTypeConfigurationWrapperServiceTrackerMap;
+		_serviceTrackerMap;
 
 }

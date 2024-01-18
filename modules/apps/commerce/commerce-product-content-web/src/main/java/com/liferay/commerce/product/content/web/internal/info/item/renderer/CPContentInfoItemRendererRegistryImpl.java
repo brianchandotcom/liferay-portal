@@ -42,7 +42,7 @@ public class CPContentInfoItemRendererRegistryImpl
 
 		ServiceWrapper<CPContentInfoItemRenderer>
 			cpContentInfoItemRendererServiceWrapper =
-				_cpContentInfoItemRendererServiceTrackerMap.getService(key);
+				_serviceTrackerMap.getService(key);
 
 		if (cpContentInfoItemRendererServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
@@ -64,7 +64,7 @@ public class CPContentInfoItemRendererRegistryImpl
 
 		List<ServiceWrapper<CPContentInfoItemRenderer>>
 			cpContentInfoItemRendererServiceWrappers = ListUtil.fromCollection(
-				_cpContentInfoItemRendererServiceTrackerMap.values());
+				_serviceTrackerMap.values());
 
 		Collections.sort(
 			cpContentInfoItemRendererServiceWrappers,
@@ -75,26 +75,25 @@ public class CPContentInfoItemRendererRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_cpContentInfoItemRendererServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, CPContentInfoItemRenderer.class,
-				"commerce.product.content.info.item.renderer.key",
-				ServiceTrackerCustomizerFactory.
-					<CPContentInfoItemRenderer>serviceWrapper(bundleContext));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, CPContentInfoItemRenderer.class,
+			"commerce.product.content.info.item.renderer.key",
+			ServiceTrackerCustomizerFactory.
+				<CPContentInfoItemRenderer>serviceWrapper(bundleContext));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_cpContentInfoItemRendererServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPContentInfoItemRendererRegistryImpl.class);
 
-	private ServiceTrackerMap<String, ServiceWrapper<CPContentInfoItemRenderer>>
-		_cpContentInfoItemRendererServiceTrackerMap;
 	private final Comparator<ServiceWrapper<CPContentInfoItemRenderer>>
 		_cpContentInfoItemRendererServiceWrapperOrderComparator =
 			new CPContentInfoItemRendererServiceWrapperOrderComparator();
+	private ServiceTrackerMap<String, ServiceWrapper<CPContentInfoItemRenderer>>
+		_serviceTrackerMap;
 
 }

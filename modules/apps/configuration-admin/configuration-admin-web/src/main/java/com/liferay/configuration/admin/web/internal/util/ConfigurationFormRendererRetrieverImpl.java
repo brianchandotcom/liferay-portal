@@ -23,7 +23,7 @@ public class ConfigurationFormRendererRetrieverImpl
 	@Override
 	public ConfigurationFormRenderer getConfigurationFormRenderer(String pid) {
 		ConfigurationFormRenderer configurationFormRenderer =
-			_configurationFormRendererServiceTrackerMap.getService(pid);
+			_serviceTrackerMap.getService(pid);
 
 		if (configurationFormRenderer == null) {
 			configurationFormRenderer = _CONFIGURATION_FORM_RENDERER;
@@ -34,21 +34,20 @@ public class ConfigurationFormRendererRetrieverImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_configurationFormRendererServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ConfigurationFormRenderer.class, null,
-				(serviceReference, emitter) -> {
-					ConfigurationFormRenderer configurationFormRenderer =
-						bundleContext.getService(serviceReference);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ConfigurationFormRenderer.class, null,
+			(serviceReference, emitter) -> {
+				ConfigurationFormRenderer configurationFormRenderer =
+					bundleContext.getService(serviceReference);
 
-					emitter.emit(configurationFormRenderer.getPid());
-				});
+				emitter.emit(configurationFormRenderer.getPid());
+			});
 	}
 
 	private static final ConfigurationFormRenderer
 		_CONFIGURATION_FORM_RENDERER = new DefaultConfigurationFormRenderer();
 
 	private ServiceTrackerMap<String, ConfigurationFormRenderer>
-		_configurationFormRendererServiceTrackerMap;
+		_serviceTrackerMap;
 
 }

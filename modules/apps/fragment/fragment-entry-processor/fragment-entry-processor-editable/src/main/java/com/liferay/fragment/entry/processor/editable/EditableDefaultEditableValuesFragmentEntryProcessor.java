@@ -80,21 +80,20 @@ public class EditableDefaultEditableValuesFragmentEntryProcessor
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_editableElementParserServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, EditableElementParser.class, "type");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, EditableElementParser.class, "type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_editableElementParserServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private JSONObject _getDefaultValueJSONObject(
 		Element element, String type) {
 
 		EditableElementParser editableElementParser =
-			_editableElementParserServiceTrackerMap.getService(type);
+			_serviceTrackerMap.getService(type);
 
 		if (editableElementParser == null) {
 			return null;
@@ -107,10 +106,9 @@ public class EditableDefaultEditableValuesFragmentEntryProcessor
 		);
 	}
 
-	private ServiceTrackerMap<String, EditableElementParser>
-		_editableElementParserServiceTrackerMap;
-
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	private ServiceTrackerMap<String, EditableElementParser> _serviceTrackerMap;
 
 }

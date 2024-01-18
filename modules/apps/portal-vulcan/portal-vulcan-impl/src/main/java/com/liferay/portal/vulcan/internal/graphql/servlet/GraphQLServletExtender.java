@@ -551,35 +551,34 @@ public class GraphQLServletExtender {
 				_filterParserProvider, _language, _paginationProvider, _portal,
 				_sortParserProvider);
 
-		_graphQLDTOContributorServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, GraphQLDTOContributor.class, "dto.name",
-				new ServiceTrackerMapListener
-					<String, GraphQLDTOContributor, GraphQLDTOContributor>() {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, GraphQLDTOContributor.class, "dto.name",
+			new ServiceTrackerMapListener
+				<String, GraphQLDTOContributor, GraphQLDTOContributor>() {
 
-					@Override
-					public void keyEmitted(
-						ServiceTrackerMap<String, GraphQLDTOContributor>
-							serviceTrackerMap,
-						String key,
-						GraphQLDTOContributor serviceGraphQLDTOContributor,
-						GraphQLDTOContributor contentGraphQLDTOContributor) {
+				@Override
+				public void keyEmitted(
+					ServiceTrackerMap<String, GraphQLDTOContributor>
+						serviceTrackerMap,
+					String key,
+					GraphQLDTOContributor serviceGraphQLDTOContributor,
+					GraphQLDTOContributor contentGraphQLDTOContributor) {
 
-						_servlets.clear();
-					}
+					_servlets.clear();
+				}
 
-					@Override
-					public void keyRemoved(
-						ServiceTrackerMap<String, GraphQLDTOContributor>
-							serviceTrackerMap,
-						String key,
-						GraphQLDTOContributor serviceGraphQLDTOContributor,
-						GraphQLDTOContributor contentGraphQLDTOContributor) {
+				@Override
+				public void keyRemoved(
+					ServiceTrackerMap<String, GraphQLDTOContributor>
+						serviceTrackerMap,
+					String key,
+					GraphQLDTOContributor serviceGraphQLDTOContributor,
+					GraphQLDTOContributor contentGraphQLDTOContributor) {
 
-						_servlets.clear();
-					}
+					_servlets.clear();
+				}
 
-				});
+			});
 
 		_graphQLRequestContextValidators = ServiceTrackerListFactory.open(
 			bundleContext, GraphQLRequestContextValidator.class);
@@ -725,7 +724,7 @@ public class GraphQLServletExtender {
 	protected void deactivate() {
 		_graphQLContributorServiceTrackerList.close();
 
-		_graphQLDTOContributorServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 
 		_graphQLRequestContextValidators.close();
 
@@ -1566,7 +1565,7 @@ public class GraphQLServletExtender {
 		GraphQLObjectType.Builder rootQueryGraphQLObjectTypeBuilder) {
 
 		Collection<GraphQLDTOContributor> graphQLDTOContributors =
-			_graphQLDTOContributorServiceTrackerMap.values();
+			_serviceTrackerMap.values();
 
 		if (graphQLDTOContributors.isEmpty()) {
 			return;
@@ -2011,8 +2010,6 @@ public class GraphQLServletExtender {
 		_graphQLContributorServiceTrackerList;
 	private GraphQLDTOContributorDataFetchingProcessor
 		_graphQLDTOContributorDataFetchingProcessor;
-	private ServiceTrackerMap<String, GraphQLDTOContributor>
-		_graphQLDTOContributorServiceTrackerMap;
 	private GraphQLFieldRetriever _graphQLFieldRetriever;
 	private ServiceTrackerList<GraphQLRequestContextValidator>
 		_graphQLRequestContextValidators;
@@ -2043,6 +2040,7 @@ public class GraphQLServletExtender {
 	@Reference
 	private RoleLocalService _roleLocalService;
 
+	private ServiceTrackerMap<String, GraphQLDTOContributor> _serviceTrackerMap;
 	private ServiceRegistration<ServletContextHelper>
 		_servletContextHelperServiceRegistration;
 	private final Map<Method, ServletData> _servletDataMap = new HashMap<>();

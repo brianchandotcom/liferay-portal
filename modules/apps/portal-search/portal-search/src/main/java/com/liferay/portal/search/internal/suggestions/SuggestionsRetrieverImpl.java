@@ -48,15 +48,14 @@ public class SuggestionsRetrieverImpl implements SuggestionsRetriever {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_suggestionsContributorServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, SuggestionsContributor.class,
-				"search.suggestions.contributor.name");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, SuggestionsContributor.class,
+			"search.suggestions.contributor.name");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_suggestionsContributorServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private SuggestionsContributorResults _getSuggestionsContributorResults(
@@ -67,7 +66,7 @@ public class SuggestionsRetrieverImpl implements SuggestionsRetriever {
 			suggestionsContributorConfiguration) {
 
 		SuggestionsContributor suggestionsContributor =
-			_suggestionsContributorServiceTrackerMap.getService(
+			_serviceTrackerMap.getService(
 				suggestionsContributorConfiguration.getContributorName());
 
 		if (suggestionsContributor == null) {
@@ -90,6 +89,6 @@ public class SuggestionsRetrieverImpl implements SuggestionsRetriever {
 		SuggestionsRetrieverImpl.class);
 
 	private ServiceTrackerMap<String, SuggestionsContributor>
-		_suggestionsContributorServiceTrackerMap;
+		_serviceTrackerMap;
 
 }

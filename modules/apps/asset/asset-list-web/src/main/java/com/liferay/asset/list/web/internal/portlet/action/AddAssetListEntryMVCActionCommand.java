@@ -65,7 +65,6 @@ public class AddAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				assetListEntry =
 					_assetListEntryService.addDynamicAssetListEntry(
-						serviceContext.getUserId(),
 						serviceContext.getScopeGroupId(), title,
 						UnicodePropertiesBuilder.create(
 							true

@@ -6,6 +6,7 @@
 package com.liferay.adaptive.media.content.transformer.internal;
 
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
+import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -198,11 +199,34 @@ public class HtmlContentTransformerImplTest {
 
 	private final AMImageHTMLTagFactory _amImageHTMLTagFactory = Mockito.mock(
 		AMImageHTMLTagFactory.class);
+	private final AMImageMimeTypeProvider _amImageMimeTypeProvider =
+		Mockito.mock(AMImageMimeTypeProvider.class);
 	private final DLAppLocalService _dlAppLocalService = Mockito.mock(
 		DLAppLocalService.class);
 	private final FileEntry _fileEntry = Mockito.mock(FileEntry.class);
-	private final HtmlContentTransformerImpl _htmlContentTransformerImpl =
-		new HtmlContentTransformerImpl(
-			_amImageHTMLTagFactory, _dlAppLocalService);
+	private final HtmlContentTransformerImplStub _htmlContentTransformerImpl =
+		new HtmlContentTransformerImplStub(
+			_amImageHTMLTagFactory, _amImageMimeTypeProvider,
+			_dlAppLocalService);
+
+	private class HtmlContentTransformerImplStub
+		extends HtmlContentTransformerImpl {
+
+		public HtmlContentTransformerImplStub(
+			AMImageHTMLTagFactory amImageHTMLTagFactory,
+			AMImageMimeTypeProvider amImageMimeTypeProvider,
+			DLAppLocalService dlAppLocalService) {
+
+			super(
+				amImageHTMLTagFactory, amImageMimeTypeProvider,
+				dlAppLocalService);
+		}
+
+		@Override
+		protected boolean isSupported(FileEntry fileEntry) {
+			return true;
+		}
+
+	}
 
 }

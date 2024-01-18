@@ -4,7 +4,7 @@
 		"multiCompany": true,
 		"parameters": {
 			"containsHeaders": "true",
-			"createStrategy": "UPSERT",
+			"createStrategy": "INSERT",
 			"importStrategy": "ON_ERROR_FAIL",
 			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"

@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"
 	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationImplementation project(":apps:dispatch:dispatch-api")
 	testIntegrationImplementation project(":apps:dispatch:dispatch-rest-api")

@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"
 	compileInclude group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
 	compileInclude group: "com.liferay", name: "org.opensearch.java.client", version: "2.8.0.LIFERAY-PATCHED-1"
 	compileInclude group: "commons-lang", name: "commons-lang", version: "2.6"
@@ -12,7 +12,7 @@ dependencies {
 	compileInclude group: "org.glassfish", name: "jakarta.json", version: "2.0.1"
 	compileInclude group: "org.reactivestreams", name: "reactive-streams", version: "1.0.0"
 
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

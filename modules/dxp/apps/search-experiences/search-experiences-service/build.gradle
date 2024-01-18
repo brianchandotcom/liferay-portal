@@ -52,9 +52,9 @@ dependencies {
 	compileOnly project(":dxp:apps:search-experiences:search-experiences-api")
 	compileOnly project(":dxp:apps:search-experiences:search-experiences-rest-api")
 
-	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
-	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
-	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
+	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.16.1"
+	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
+	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"
 	testImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testImplementation project(":apps:portal-search:portal-search")
 	testImplementation project(":apps:users-admin:users-admin-test-util")

@@ -31,9 +31,9 @@ dependencies {
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "2.0"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "4.2.0"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.16.1"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"
 	compileOnly group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-json-provider", version: "2.9.8"
 	compileOnly group: "com.google.guava", name: "guava", version: "32.0.1-jre"
 	compileOnly group: "com.liferay", name: "org.springframework.tx", version: "5.2.24.LIFERAY-PATCHED-1"

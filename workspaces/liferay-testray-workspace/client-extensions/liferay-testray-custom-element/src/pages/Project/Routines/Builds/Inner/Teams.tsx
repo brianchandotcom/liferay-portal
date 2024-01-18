@@ -10,9 +10,8 @@ import ProgressBar from '~/components/ProgressBar';
 import SearchBuilder from '~/core/SearchBuilder';
 import i18n from '~/i18n';
 import {TestrayComponent} from '~/services/rest';
+import {testrayTeamImpl} from '~/services/rest/TestrayTeam';
 import {CaseResultStatuses} from '~/util/constants';
-
-import {testrayTeamImpl} from '../../../../../services/rest/TestrayTeam';
 
 type ProgressBarResults = {
 	blocked: number;
@@ -22,59 +21,57 @@ type ProgressBarResults = {
 	test_fix: number;
 };
 
+const getTotalResults = (components: TestrayComponent[]): number =>
+	components.reduce(
+		(prevValue, currValue) =>
+			prevValue +
+			Number(currValue?.caseResultBlocked) +
+			Number(currValue?.caseResultFailed) +
+			Number(currValue?.caseResultInProgress) +
+			Number(currValue?.caseResultPassed) +
+			Number(currValue?.caseResultTestFix) +
+			Number(currValue?.caseResultUntested),
+		0
+	);
+
+const getProgressBarResults = (
+	components: TestrayComponent[]
+): ProgressBarResults =>
+	components.reduce(
+		(prevValue, currValue) => {
+			prevValue.blocked += Number(currValue?.caseResultBlocked) || 0;
+			prevValue.failed += Number(currValue?.caseResultFailed) || 0;
+			prevValue.incomplete +=
+				Number(
+					currValue?.caseResultUntested &&
+						currValue?.caseResultInProgress
+				) || 0;
+			prevValue.passed += Number(currValue?.caseResultPassed) || 0;
+			prevValue.test_fix += Number(currValue?.caseResultTestFix) || 0;
+
+			return prevValue;
+		},
+		{
+			blocked: 0,
+			failed: 0,
+			incomplete: 0,
+			passed: 0,
+			test_fix: 0,
+		}
+	);
+
+const getStatusesResults = (
+	components: TestrayComponent[],
+	caseResultStatus: CaseResultStatuses
+): number =>
+	components.reduce(
+		(prevValue, currValue) =>
+			prevValue + Number(currValue[caseResultStatus]) || 0,
+		0
+	);
+
 const Teams = () => {
 	const {buildId} = useParams();
-
-	const getTotalResults = (components: TestrayComponent[]): number =>
-		components.reduce(
-			(accumulator, component) =>
-				accumulator +
-				Number(component?.caseResultBlocked) +
-				Number(component?.caseResultFailed) +
-				Number(component?.caseResultInProgress) +
-				Number(component?.caseResultPassed) +
-				Number(component?.caseResultTestFix) +
-				Number(component?.caseResultUntested),
-			0
-		);
-
-	const getProgressBarResults = (
-		components: TestrayComponent[]
-	): ProgressBarResults =>
-		components.reduce(
-			(accumulator, component) => {
-				accumulator.blocked +=
-					Number(component?.caseResultBlocked) || 0;
-				accumulator.failed += Number(component?.caseResultFailed) || 0;
-				accumulator.incomplete +=
-					Number(
-						component?.caseResultUntested &&
-							component?.caseResultInProgress
-					) || 0;
-				accumulator.passed += Number(component?.caseResultPassed) || 0;
-				accumulator.test_fix +=
-					Number(component?.caseResultTestFix) || 0;
-
-				return accumulator;
-			},
-			{
-				blocked: 0,
-				failed: 0,
-				incomplete: 0,
-				passed: 0,
-				test_fix: 0,
-			}
-		);
-
-	const getStatusesResults = (
-		components: TestrayComponent[],
-		statusKey: CaseResultStatuses
-	): number =>
-		components.reduce(
-			(accumulator, component) =>
-				accumulator + Number(component[statusKey]) || 0,
-			0
-		);
 
 	return (
 		<Container className="mt-4">

@@ -8,6 +8,7 @@ package com.liferay.portal.cache.multiple.internal.cluster.link;
 import com.liferay.portal.cache.multiple.configuration.PortalCacheClusterConfiguration;
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEvent;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
@@ -56,8 +57,10 @@ public class PortalCacheClusterLink {
 
 		for (Priority priority : priorities) {
 			PortalCacheClusterChannel portalCacheClusterChannel =
-				_portalCacheClusterChannelFactory.
-					createPortalCacheClusterChannel(priority);
+				PortalCacheClusterChannelFactory.
+					createPortalCacheClusterChannel(
+						_clusterLink, priority,
+						portalCacheClusterConfiguration.usingCoalescedPipe());
 
 			_portalCacheClusterChannels.add(portalCacheClusterChannel);
 		}
@@ -90,7 +93,7 @@ public class PortalCacheClusterLink {
 			PortalCacheClusterChannelSelector.class, null, true);
 
 	@Reference
-	private PortalCacheClusterChannelFactory _portalCacheClusterChannelFactory;
+	private ClusterLink _clusterLink;
 
 	private volatile List<PortalCacheClusterChannel>
 		_portalCacheClusterChannels;

@@ -6,15 +6,29 @@
 package com.liferay.portal.cache.multiple.internal.cluster.link;
 
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterException;
+import com.liferay.portal.cache.multiple.internal.constants.PortalCacheDestinationNames;
+import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
 
 /**
  * @author Shuyang Zhou
  */
-public interface PortalCacheClusterChannelFactory {
+public class PortalCacheClusterChannelFactory {
 
-	public PortalCacheClusterChannel createPortalCacheClusterChannel(
-			Priority priority)
-		throws PortalCacheClusterException;
+	public static PortalCacheClusterChannel createPortalCacheClusterChannel(
+			ClusterLink clusterLink, Priority priority,
+			boolean usingCoalescedPipe)
+		throws PortalCacheClusterException {
+
+		if (usingCoalescedPipe) {
+			return new PortalCacheClusterChannel(
+				clusterLink, PortalCacheDestinationNames.CACHE_REPLICATION,
+				new CoalescedPipePortalCacheClusterEventQueue(), priority);
+		}
+
+		return new PortalCacheClusterChannel(
+			clusterLink, PortalCacheDestinationNames.CACHE_REPLICATION,
+			new BlockingPortalCacheClusterEventQueue(), priority);
+	}
 
 }

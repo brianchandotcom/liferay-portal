@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -53,6 +52,10 @@ public class UpgradeListTypeTypeTest {
 			_originalListType = _deleteListType(
 				_listTypeNames.get(1), _NEW_LIST_TYPE_TYPE);
 
+			UpgradeProcess upgradeProcess = new UpgradeListTypeType();
+
+			upgradeProcess.upgrade();
+
 			_test();
 		}
 		finally {
@@ -75,11 +78,7 @@ public class UpgradeListTypeTypeTest {
 		return listType;
 	}
 
-	private void _test() throws UpgradeException {
-		UpgradeProcess upgradeProcess = new UpgradeListTypeType();
-
-		upgradeProcess.upgrade();
-
+	private void _test() {
 		FinderCacheUtil.clearCache();
 
 		for (String listTypeName : _listTypeNames) {

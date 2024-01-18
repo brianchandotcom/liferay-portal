@@ -30,6 +30,7 @@ ComponentAnnotationCheck | .java | Performs several checks on classes with @Comp
 [ComponentExposureCheck](check/component_exposure_check.markdown#componentexposurecheck) | .java | Avoid exposing static component. |
 ConsumerTypeAnnotationCheck | .java | Performs several checks on classes with @ConsumerType annotation. |
 DTOEnumCreationCheck | .java | Checks the creation of DTO enum. |
+DatabaseMetaDataCheck | .java | Checks usages of `java.sql.DatabaseMetaData`. |
 DeprecatedAPICheck | .java | Finds calls to deprecated classes, constructors, fields or methods. |
 EmptyConstructorCheck | .java | Finds unnecessary empty constructors. |
 ExceptionPrintStackTraceCheck | .java | Avoid using printStackTrace. |

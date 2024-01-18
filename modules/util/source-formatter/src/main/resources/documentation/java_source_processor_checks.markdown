@@ -28,6 +28,7 @@ ContractionsCheck | [Styling](styling_checks.markdown#styling-checks) | Finds co
 [CopyrightCheck](check/copyright_check.markdown#copyrightcheck) | [Styling](styling_checks.markdown#styling-checks) | Validates `copyright` header. |
 [CreationMenuBuilderCheck](check/builder_check.markdown#buildercheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | Checks that `CreationMenuBuilder` is used when possible. |
 DTOEnumCreationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks the creation of DTO enum. |
+DatabaseMetaDataCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks usages of `java.sql.DatabaseMetaData`. |
 [DefaultComesLastCheck](https://checkstyle.sourceforge.io/checks/coding/defaultcomeslast.html) | [Styling](styling_checks.markdown#styling-checks) | Checks that the `default` is after all the cases in a `switch` statement. |
 DeprecatedAPICheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds calls to deprecated classes, constructors, fields or methods. |
 EmptyCollectionCheck | [Styling](styling_checks.markdown#styling-checks) | Checks that there are no calls to `Collections.EMPTY_LIST`, `Collections.EMPTY_MAP` or `Collections.EMPTY_SET`. |

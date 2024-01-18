@@ -11,7 +11,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {waitForElementToBeRemoved} from '@testing-library/dom';
 import {cleanup} from '@testing-library/react';
 
-import {markAsAnswerMessageBoardMessageQuery} from '../../../src/main/resources/META-INF/resources/js/utils/client.es';
+import {unMarkAsAnswerMessageBoardMessageQuery} from '../../../src/main/resources/META-INF/resources/js/utils/client.es';
 import {renderComponent} from '../../helpers.es';
 
 const mockAnswer = {
@@ -72,10 +72,9 @@ const mockAnswer = {
 const apolloMocks = [
 	{
 		request: {
-			query: markAsAnswerMessageBoardMessageQuery,
+			query: unMarkAsAnswerMessageBoardMessageQuery,
 			variables: {
 				messageBoardMessageId: mockAnswer.id,
-				showAsAnswer: false,
 			},
 		},
 		result: {

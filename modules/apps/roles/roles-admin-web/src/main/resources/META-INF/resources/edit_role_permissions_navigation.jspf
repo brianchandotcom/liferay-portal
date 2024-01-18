@@ -11,7 +11,7 @@ EditRolePermissionsNavigationDisplayContext editRolePermissionsNavigationDisplay
 
 <div data-qa-id="editRolePermissionsNavigation">
 	<react:component
-		module="js/EditRolePermissionsNavigation.es"
+		module="{EditRolePermissionsNavigation} from roles-admin-web"
 		props="<%= editRolePermissionsNavigationDisplayContext.getData() %>"
 	/>
 </div>

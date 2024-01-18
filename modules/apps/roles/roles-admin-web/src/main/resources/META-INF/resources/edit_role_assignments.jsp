@@ -79,7 +79,7 @@ renderResponse.setTitle(role.getTitle(locale));
 	clearResultsURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
 	orderDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getOrderByDropDownItems() %>"
-	propsTransformer="js/EditRoleAssignmentsManagementToolbarPropsTransformer"
+	propsTransformer="{EditRoleAssignmentsManagementToolbarPropsTransformer} from roles-admin-web"
 	searchActionURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="assigneesSearch"
 	searchFormName="searchFm"
@@ -152,23 +152,21 @@ renderResponse.setTitle(role.getTitle(locale));
 	</c:choose>
 </aui:form>
 
-<aui:script require='<%= "frontend-js-web/index as frontendJsWeb, " + npmResolvedPackageName + "/js/add_assignees as addAssignees" %>'>
-	const {sessionStorage, COOKIE_TYPES} = frontendJsWeb;
-
-	var modalSegmentState = '<%= RolesAdminWebKeys.MODAL_SEGMENT_STATE %>';
-
-	var state = sessionStorage.getItem(modalSegmentState, COOKIE_TYPES.NECESSARY);
-
-	if (state === 'open') {
-		sessionStorage.removeItem(modalSegmentState);
-
-		addAssignees.default({
-			editRoleAssignmentsURL: '<%= editRoleAssignmentsURL.toString() %>',
-			modalSegmentState: modalSegmentState,
-			namespace: '<portlet:namespace />',
-			portletURL: '<%= portletURL.toString() %>',
-			roleName: '<%= HtmlUtil.escapeJS(role.getName()) %>',
-			selectAssigneesURL: '<%= selectAssigneesURL.toString() %>',
-		});
-	}
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"editRoleAssignmentsURL", editRoleAssignmentsURL.toString()
+		).put(
+			"modalSegmentState", RolesAdminWebKeys.MODAL_SEGMENT_STATE
+		).put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).put(
+			"portletURL", portletURL.toString()
+		).put(
+			"roleName", HtmlUtil.escapeJS(role.getName())
+		).put(
+			"selectAssigneesURL", selectAssigneesURL.toString()
+		).build()
+	%>'
+	module="{editRoleAssignmentsMain} from roles-admin-web"
+/>

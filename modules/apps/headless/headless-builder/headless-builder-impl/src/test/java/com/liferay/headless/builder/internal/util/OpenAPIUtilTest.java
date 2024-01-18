@@ -6,13 +6,34 @@
 package com.liferay.headless.builder.internal.util;
 
 import com.liferay.headless.builder.application.APIApplication;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.resource.OpenAPIResource;
+
+import io.swagger.v3.oas.models.media.ArraySchema;
+import io.swagger.v3.oas.models.media.Schema;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.Mockito;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Sergio Jiménez del Coso
@@ -181,5 +202,230 @@ public class OpenAPIUtilTest {
 				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT,
 				"CamelSchema"));
 	}
+
+	@Test
+	public void testToOpenAPISchemas() throws Exception {
+		JSONAssert.assertEquals(
+			"{\"singleContainer\":{\"name\":\"singleContainer\"," +
+				"\"type\":\"object\"},\"property\":{\"name\":\"property\"," +
+					"\"type\":\"string\"}}",
+			_getSchemaString(
+				Collections.emptyMap(),
+				HashMapBuilder.put(
+					"property", APIApplication.Property.PropertyType.NORMAL
+				).put(
+					"singleContainer",
+					APIApplication.Property.PropertyType.SINGLE_CONTAINER
+				).build()),
+			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			StringBundler.concat(
+				"{\"singleContainer\":{\"name\":",
+				"\"singleContainer\",\"type\":\"object\",\"properties\":",
+				"{\"property\":{\"name\":\"property\",\"type\":\"string",
+				"\"}}}}"),
+			_getSchemaString(
+				HashMapBuilder.put(
+					"property", "singleContainer"
+				).build(),
+				HashMapBuilder.put(
+					"property", APIApplication.Property.PropertyType.NORMAL
+				).put(
+					"singleContainer",
+					APIApplication.Property.PropertyType.SINGLE_CONTAINER
+				).build()),
+			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			StringBundler.concat(
+				"{\"singleContainer1\":{\"name\":\"singleContainer1\",",
+				"\"type\":\"object\",\"properties\":{\"property\":{\"name\":",
+				"\"property\",\"type\":\"string\"},\"singleContainer2\":{\"",
+				"name\":\"singleContainer2\",\"type\":\"object\"}}}}"),
+			_getSchemaString(
+				HashMapBuilder.put(
+					"property", "singleContainer1"
+				).put(
+					"singleContainer2", "singleContainer1"
+				).build(),
+				HashMapBuilder.put(
+					"property", APIApplication.Property.PropertyType.NORMAL
+				).put(
+					"singleContainer1",
+					APIApplication.Property.PropertyType.SINGLE_CONTAINER
+				).put(
+					"singleContainer2",
+					APIApplication.Property.PropertyType.SINGLE_CONTAINER
+				).build()),
+			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			StringBundler.concat(
+				"{\"singleContainer1\":{\"name\":",
+				"\"singleContainer1\",\"type\":\"object\",",
+				"\"properties\":{\"singleContainer2\":{\"",
+				"name\":\"singleContainer2\",\"type\":\"",
+				"object\",\"properties\":{\"property\":{\"",
+				"name\":\"property\",\"type\":\"string\"}}}}}}"),
+			_getSchemaString(
+				HashMapBuilder.put(
+					"property", "singleContainer2"
+				).put(
+					"singleContainer2", "singleContainer1"
+				).build(),
+				HashMapBuilder.put(
+					"property", APIApplication.Property.PropertyType.NORMAL
+				).put(
+					"singleContainer1",
+					APIApplication.Property.PropertyType.SINGLE_CONTAINER
+				).put(
+					"singleContainer2",
+					APIApplication.Property.PropertyType.SINGLE_CONTAINER
+				).build()),
+			JSONCompareMode.LENIENT);
+	}
+
+	private JSONObject _getOpenAPIJSONObject(
+		Map<String, Schema> openAPISchemas) {
+
+		Schema schema = openAPISchemas.get(_SCHEMA_NAME);
+
+		return JSONFactoryUtil.createJSONObject(schema.getProperties());
+	}
+
+	private APIApplication.Schema _getSchema(
+		Map<String, String> fieldMapping,
+		Map<String, APIApplication.Property.PropertyType> propertyTypeMap) {
+
+		List<APIApplication.Property> properties = new ArrayList<>();
+
+		for (Map.Entry<String, APIApplication.Property.PropertyType> entry :
+				propertyTypeMap.entrySet()) {
+
+			properties.add(
+				new APIApplication.Property() {
+
+					@Override
+					public String getDescription() {
+						return null;
+					}
+
+					@Override
+					public String getExternalReferenceCode() {
+						return entry.getKey();
+					}
+
+					@Override
+					public String getName() {
+						return entry.getKey();
+					}
+
+					@Override
+					public List<String> getObjectRelationshipNames() {
+						return Collections.emptyList();
+					}
+
+					@Override
+					public PropertyType getPropertyType() {
+						return entry.getValue();
+					}
+
+					@Override
+					public String getRelatedPropertyERC() {
+						if (!fieldMapping.isEmpty()) {
+							return fieldMapping.get(entry.getKey());
+						}
+
+						return "";
+					}
+
+					@Override
+					public String getSourceFieldName() {
+						return null;
+					}
+
+					@Override
+					public Type getType() {
+						if (Objects.equals(
+								entry.getValue(), PropertyType.NORMAL)) {
+
+							return Type.TEXT;
+						}
+
+						return Type.SINGLE_CONTAINER;
+					}
+
+				});
+		}
+
+		return new APIApplication.Schema() {
+
+			@Override
+			public String getDescription() {
+				return RandomTestUtil.randomString();
+			}
+
+			@Override
+			public String getExternalReferenceCode() {
+				return RandomTestUtil.randomString();
+			}
+
+			@Override
+			public String getMainObjectDefinitionExternalReferenceCode() {
+				return RandomTestUtil.randomString();
+			}
+
+			@Override
+			public String getName() {
+				return _SCHEMA_NAME;
+			}
+
+			@Override
+			public List<APIApplication.Property> getProperties() {
+				return properties;
+			}
+
+		};
+	}
+
+	private String _getSchemaString(
+			Map<String, String> fieldMapping,
+			Map<String, APIApplication.Property.PropertyType> propertyTypeMap)
+		throws Exception {
+
+		OpenAPIResource openAPIResource = Mockito.mock(OpenAPIResource.class);
+
+		Mockito.when(
+			openAPIResource.getSchemas(Page.class)
+		).thenReturn(
+			HashMapBuilder.<String, Schema>put(
+				"Page",
+				new Schema() {
+					{
+						setName("Page");
+						setProperties(
+							HashMapBuilder.put(
+								"items",
+								new ArraySchema() {
+									{
+										setName("items");
+									}
+								}
+							).build());
+					}
+				}
+			).build()
+		);
+
+		Map<String, Schema> openAPISchemas = OpenAPIUtil.toOpenAPISchemas(
+			openAPIResource, _getSchema(fieldMapping, propertyTypeMap));
+
+		JSONObject jsonObject = _getOpenAPIJSONObject(openAPISchemas);
+
+		return jsonObject.toString();
+	}
+
+	private static final String _SCHEMA_NAME = RandomTestUtil.randomString();
 
 }

@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = CommentManagerJSONWS.class
 )
 @JSONWebService
-public class CommentManagerJSONWS extends BaseServiceImpl {
+public class CommentManagerJSONWSImpl extends BaseServiceImpl {
 
 	public long addComment(
 			long groupId, String className, long classPK, String body)

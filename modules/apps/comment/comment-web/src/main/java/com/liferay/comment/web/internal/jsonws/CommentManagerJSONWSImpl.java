@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = AopService.class
 )
-@JSONWebService
+@JSONWebService("commentmanagerjsonws")
 public class CommentManagerJSONWSImpl
 	extends BaseServiceImpl implements AopService, CommentManagerJSONWS {
 

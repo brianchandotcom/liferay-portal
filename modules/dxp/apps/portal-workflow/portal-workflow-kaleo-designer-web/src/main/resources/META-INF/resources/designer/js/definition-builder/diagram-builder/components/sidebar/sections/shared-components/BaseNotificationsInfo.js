@@ -41,6 +41,7 @@ const BaseNotificationsInfo = ({
 	setSelectedItem,
 	setTemplate,
 	setTemplateLanguage,
+	showAddButton,
 	template,
 	templateLanguage,
 	updateNotificationType,
@@ -175,27 +176,29 @@ const BaseNotificationsInfo = ({
 				/>
 			</ClayForm.Group>
 
-			<ClayForm.Group>
-				<label htmlFor="execution-type">
-					{Liferay.Language.get('execution-type')}
-				</label>
+			{executionTypeOptions && (
+				<ClayForm.Group>
+					<label htmlFor="execution-type">
+						{Liferay.Language.get('execution-type')}
+					</label>
 
-				<ClaySelect
-					aria-label="Select"
-					id="execution-type"
-					onBlur={() => updateNotificationType()}
-					onChange={({target}) => setExecutionType(target.value)}
-					value={executionType}
-				>
-					{executionTypeOptions.map((item) => (
-						<ClaySelect.Option
-							key={item.value}
-							label={item.label}
-							value={item.value}
-						/>
-					))}
-				</ClaySelect>
-			</ClayForm.Group>
+					<ClaySelect
+						aria-label="Select"
+						id="execution-type"
+						onBlur={() => updateNotificationType()}
+						onChange={({target}) => setExecutionType(target.value)}
+						value={executionType}
+					>
+						{executionTypeOptions.map((item) => (
+							<ClaySelect.Option
+								key={item.value}
+								label={item.label}
+								value={item.value}
+							/>
+						))}
+					</ClaySelect>
+				</ClayForm.Group>
+			)}
 
 			<ClayForm.Group className="recipient-type-form-group">
 				<label htmlFor="recipient-type">
@@ -283,38 +286,43 @@ const BaseNotificationsInfo = ({
 				)}
 
 			<div className="sheet-subtitle" />
+			{showAddButton && (
+				<div className="section-buttons-area">
+					<ClayButton
+						className="mr-3"
+						disabled={
+							notificationName.trim() === '' ||
+							template.trim() === '' ||
+							(!notificationTypeEmail &&
+								!notificationTypeUserNotification)
+						}
+						displayType="secondary"
+						onClick={() =>
+							setSections((prev) => {
+								return [
+									...prev,
+									{
+										identifier: `${Date.now()}-${
+											prev.length
+										}`,
+									},
+								];
+							})
+						}
+					>
+						{Liferay.Language.get('new-notification')}
+					</ClayButton>
 
-			<div className="section-buttons-area">
-				<ClayButton
-					className="mr-3"
-					disabled={
-						notificationName.trim() === '' ||
-						template.trim() === '' ||
-						(!notificationTypeEmail &&
-							!notificationTypeUserNotification)
-					}
-					displayType="secondary"
-					onClick={() =>
-						setSections((prev) => {
-							return [
-								...prev,
-								{identifier: `${Date.now()}-${prev.length}`},
-							];
-						})
-					}
-				>
-					{Liferay.Language.get('new-notification')}
-				</ClayButton>
-
-				{sectionsLength > 1 && (
-					<ClayButtonWithIcon
-						className="delete-button"
-						displayType="unstyled"
-						onClick={deleteSection}
-						symbol="trash"
-					/>
-				)}
-			</div>
+					{sectionsLength > 1 && (
+						<ClayButtonWithIcon
+							className="delete-button"
+							displayType="unstyled"
+							onClick={deleteSection}
+							symbol="trash"
+						/>
+					)}
+				</div>
+			)}
 		</>
 	);
 };

@@ -48,7 +48,7 @@ String errorMessage = errorsJSONObject.getString("errorMessage");
 			</label>
 
 			<p class="mb-1 small text-secondary">
-				<%= themeDisplay.getPortalURL() %>
+				<%= friendlyURLSeparatorCompanyConfigurationDisplayContext.getURLLabel() %>
 			</p>
 
 			<div class="input-group">

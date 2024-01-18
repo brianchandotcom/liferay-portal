@@ -142,8 +142,12 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 		).put(
 			"fields", getConfigurableFriendlyURLSeparatorsJSONArray()
 		).put(
-			"url", _themeDisplay.getPortalURL()
+			"url", getURLLabel()
 		).build();
+	}
+
+	public String getURLLabel() {
+		return _URL_LABEL;
 	}
 
 	private JSONObject _getConfiguredFriendlyURLSeparatorsJSONObject() {
@@ -160,6 +164,8 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 
 		return _jsonFactory.createJSONObject();
 	}
+
+	private static final String _URL_LABEL = "http://www.sitename.com";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLSeparatorCompanyConfigurationDisplayContext.class.getName());

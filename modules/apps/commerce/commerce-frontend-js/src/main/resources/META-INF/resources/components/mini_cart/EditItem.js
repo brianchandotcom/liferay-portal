@@ -6,8 +6,15 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
 import {useLiferayState} from '@liferay/frontend-js-state-web';
+import classnames from 'classnames';
 import {fetch, sub} from 'frontend-js-web';
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 
 import ServiceProvider from '../../ServiceProvider/index';
 import {CommerceContext} from '../../index';
@@ -15,11 +22,14 @@ import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import {CHANNEL_RESOURCE_ENDPOINT, FIELD_TYPE} from '../../utilities/constants';
 import {
 	CP_INSTANCE_CHANGED,
+	CP_QUANTITY_SELECTOR_CHANGED,
+	CP_UNIT_OF_MEASURE_SELECTOR_CHANGED,
 	CURRENT_ORDER_UPDATED,
 	FDS_UPDATE_DISPLAY,
 } from '../../utilities/eventsDefinitions';
 import {formatCartItem} from '../add_to_cart/data';
 import {adaptLegacyPriceModel, isNonnull} from '../price/util/index';
+import Asterisk from '../product_options/Asterisk';
 import ProductOptionCheckbox from '../product_options/ProductOptionCheckbox';
 import ProductOptionCheckboxMultiple from '../product_options/ProductOptionCheckboxMultiple';
 import ProductOptionDate from '../product_options/ProductOptionDate';
@@ -27,6 +37,9 @@ import ProductOptionNumeric from '../product_options/ProductOptionNumeric';
 import ProductOptionRadio from '../product_options/ProductOptionRadio';
 import ProductOptionSelect from '../product_options/ProductOptionSelect';
 import ProductOptionText from '../product_options/ProductOptionText';
+import QuantitySelector from '../quantity_selector/QuantitySelector';
+import TierPrice from '../tier_price/TierPrice';
+import UnitOfMeasureSelector from '../unit_of_measure_selector/UnitOfMeasureSelector';
 import MiniCartContext from './MiniCartContext';
 
 const MINI_CART_NAMESPACE = 'minicart_';
@@ -41,15 +54,21 @@ const getProductOptionsURL = (channelId, productId) => {
 };
 
 function EditItem() {
+	const [cpInstance, setCPInstance] = useState({});
 	const [options, setOptions] = useState([]);
+	const [quantity, setQuantity] = useState(1);
+	const [quantitySelectorErrors, setQuantitySelectorErrors] = useState(false);
 	const [skuOptionsAtomState, setSkuOptionsAtomState] = useLiferayState(
 		skuOptionsAtom
 	);
-	const [cpInstance, setCPInstance] = useState({});
+	const [skuUnitOfMeasure, setSkuUnitOfMeasure] = useState(null);
 
 	const {miniCartErrors} = skuOptionsAtomState;
 
-	const disabled = useMemo(() => miniCartErrors?.length, [miniCartErrors]);
+	const disabled = useMemo(
+		() => miniCartErrors?.length || quantitySelectorErrors,
+		[miniCartErrors, quantitySelectorErrors]
+	);
 
 	const {
 		cartState: {
@@ -74,19 +93,106 @@ function EditItem() {
 
 	useEffect(() => {
 		setCPInstance({
+			id: selectedItem.skuId,
+			productId: selectedItem.productId,
 			quantity: selectedItem.quantity,
 			replacedSkuId: selectedItem.replacedSkuId,
+			settings: selectedItem.settings,
 			skuId: selectedItem.skuId,
+			skuOptions: JSON.parse(selectedItem.options || '[]') || [],
+			skuUnitOfMeasure: selectedItem.skuUnitOfMeasure,
 		});
+		setQuantity(selectedItem.quantity);
 	}, [selectedItem]);
 
-	const handleBack = () => {
-		const dataSetId = editedItem.dataSetId;
+	useEffect(() => {
+		function handleUOMChanged({unitOfMeasure}) {
+			setCPInstance((cpInstance) => ({
+				...cpInstance,
+				skuUnitOfMeasure: unitOfMeasure,
+			}));
+			setSkuUnitOfMeasure(unitOfMeasure);
+		}
 
+		Liferay.on(
+			`${MINI_CART_NAMESPACE}${CP_INSTANCE_CHANGED}`,
+			handleCPInstanceChanged
+		);
+
+		Liferay.on(
+			`${MINI_CART_NAMESPACE}${CP_UNIT_OF_MEASURE_SELECTOR_CHANGED}`,
+			handleUOMChanged
+		);
+
+		return () => {
+			Liferay.detach(
+				`${MINI_CART_NAMESPACE}${CP_INSTANCE_CHANGED}`,
+				handleCPInstanceChanged
+			);
+			Liferay.detach(
+				`${MINI_CART_NAMESPACE}${CP_UNIT_OF_MEASURE_SELECTOR_CHANGED}`,
+				handleUOMChanged
+			);
+		};
+	}, []);
+
+	const postChannelProductSkuBySkuOption = useCallback(
+		({
+			accountId,
+			channelId,
+			options,
+			productId,
+			quantity,
+			unitOfMeasureKey,
+		}) => {
+			ServiceProvider.DeliveryCatalogAPI('v1')
+				.postChannelProductSkuBySkuOption(
+					channelId,
+					productId,
+					accountId,
+					quantity,
+					unitOfMeasureKey,
+					options
+				)
+				.then((cpInstance) => {
+					cpInstance.skuId = parseInt(cpInstance.id, 10);
+
+					const dispatchedPayload = {
+						MINI_CART_NAMESPACE,
+						cpInstance,
+					};
+
+					Liferay.fire(
+						`${MINI_CART_NAMESPACE}${CP_INSTANCE_CHANGED}`,
+						dispatchedPayload
+					);
+				});
+		},
+		[]
+	);
+
+	const handleBack = (refreshDataSet = false) => {
 		setEditedItem(null);
 
-		if (dataSetId) {
-			closeCart();
+		setSkuOptionsAtomState({
+			...skuOptionsAtomState,
+			miniCartErrors: [],
+			miniCartSkuOptions: [],
+			updating: false,
+		});
+
+		if (Liferay.FeatureFlags['COMMERCE-9599']) {
+			const dataSetId = editedItem.dataSetId;
+
+			if (dataSetId) {
+				if (refreshDataSet) {
+					Liferay.fire(FDS_UPDATE_DISPLAY, {
+						id: dataSetId,
+					});
+				}
+
+				closeCart();
+			}
 		}
 	};
 
@@ -108,9 +214,7 @@ function EditItem() {
 			cartItem.id === selectedItem.id
 				? {
 						...cartItem,
-						options: formattedCartItem.options,
-						replacedSkuId: formattedCartItem.replacedSkuId,
-						skuId: formattedCartItem.skuId,
+						...formattedCartItem,
 				  }
 				: cartItem
 		);
@@ -122,26 +226,18 @@ function EditItem() {
 			.then((updatedCart) => {
 				Liferay.fire(CURRENT_ORDER_UPDATED, {order: updatedCart});
 
-				const dataSetId = editedItem.dataSetId;
-
-				setEditedItem(null);
-				setSkuOptionsAtomState({
-					...skuOptionsAtomState,
-					miniCartErrors: [],
-					miniCartSkuOptions: [],
-					updating: false,
-				});
-
-				if (dataSetId) {
-					Liferay.fire(FDS_UPDATE_DISPLAY, {
-						id: dataSetId,
-					});
-
-					closeCart();
-				}
+				handleBack(true);
 			})
 			.catch((error) => {
-				console.error(error);
+				Liferay.Util.openToast({
+					message:
+						error.detail ||
+						error.errorDescription ||
+						Liferay.Language.get(
+							'an-unexpected-system-error-occurred'
+						),
+					type: 'danger',
+				});
 			});
 	};
 
@@ -150,7 +246,12 @@ function EditItem() {
 	);
 
 	const handleCPInstanceChanged = ({cpInstance}) => {
-		setCPInstance(cpInstance);
+		setCPInstance((prevState) => ({
+			...cpInstance,
+			quantity: prevState?.quantity,
+			settings: prevState?.settings,
+			skuUnitOfMeasure: prevState?.skuUnitOfMeasure,
+		}));
 		setPrice(adaptLegacyPriceModel(cpInstance.price));
 	};
 
@@ -180,10 +281,6 @@ function EditItem() {
 		};
 	}, []);
 
-	const hasDiscount = isNonnull(price.discountPercentage);
-	const hasPromoPrice = isNonnull(price.promoPrice);
-	const priceOnApplication = price.priceOnApplication;
-
 	return (
 		<>
 			<div className="d-flex flex-column h-100 mini-cart-edit-item overflow-hidden">
@@ -202,88 +299,146 @@ function EditItem() {
 				</div>
 
 				<div className="flex-grow-1 flex-shrink-1 overflow-auto p-4">
-					{options?.items?.length > 0 ? (
-						<ClayForm>
-							<Options
-								cartItemId={editedItem.cartItemId}
-								channelId={channel.id}
-								namespace={MINI_CART_NAMESPACE}
-								productId={editedItem.productId}
-								productOptions={options.items}
-								selectedItem={selectedItem}
-							/>
-						</ClayForm>
+					{Liferay.FeatureFlags['COMMERCE-9599'] &&
+					options?.items?.length > 0 ? (
+						<>
+							<div className="panel panel-unstyled">
+								<div className="panel-header">
+									<span className="panel-title">
+										{Liferay.Language.get('edit-options')}
+									</span>
+								</div>
+							</div>
+
+							<ClayForm>
+								<Options
+									cartItemId={editedItem.cartItemId}
+									channelId={channel.id}
+									namespace={MINI_CART_NAMESPACE}
+									productId={editedItem.productId}
+									productOptions={options.items}
+									selectedItem={selectedItem}
+								/>
+							</ClayForm>
+						</>
 					) : null}
 
-					{priceOnApplication && (
-						<div className="mini-cart-prices mt-4">
-							<PriceRow
-								priceName={Liferay.Language.get(
-									'price-as-configured'
-								)}
-							>
-								<span className="price-on-application price-value text-3">
-									{Liferay.Language.get(
-										'price-on-application'
+					{cpInstance.id ? (
+						<>
+							<div>
+								<div className="panel panel-unstyled">
+									<div className="panel-header">
+										<span className="panel-title">
+											{sub(
+												Liferay.Language.get('edit-x'),
+												Liferay.Language.get('quantity')
+											)}
+										</span>
+									</div>
+								</div>
+
+								<label htmlFor="minicart-quantity-selector">
+									{Liferay.Language.get('quantity')}
+
+									<Asterisk required={true} />
+								</label>
+
+								<QuantitySelector
+									alignment="bottom"
+									allowedQuantities={
+										cpInstance.settings?.allowedQuantities
+									}
+									max={cpInstance.settings?.maxQuantity}
+									min={cpInstance.settings?.minQuantity}
+									name="minicart-quantity-selector"
+									namespace={MINI_CART_NAMESPACE}
+									onUpdate={({
+										errors,
+										unitOfMeasure,
+										value: newQuantity,
+									}) => {
+										setCPInstance((cpInstance) => ({
+											...cpInstance,
+											quantity: newQuantity,
+										}));
+										setQuantity(newQuantity);
+										setQuantitySelectorErrors(
+											errors && !!errors.length
+										);
+
+										if (!(errors && !!errors.length)) {
+											postChannelProductSkuBySkuOption({
+												accountId: cartState.accountId,
+												channelId: channel.id,
+												options:
+													cpInstance?.skuOptions ||
+													[],
+												productId: cpInstance.productId,
+												quantity: newQuantity,
+												unitOfMeasureKey:
+													unitOfMeasure?.key ||
+													skuUnitOfMeasure?.key,
+											});
+										}
+
+										Liferay.fire(
+											`${MINI_CART_NAMESPACE}${CP_QUANTITY_SELECTOR_CHANGED}`,
+											{quantity: newQuantity}
+										);
+									}}
+									quantity={quantity}
+									step={
+										skuUnitOfMeasure?.incrementalOrderQuantity ||
+										cpInstance.settings?.multipleQuantity
+									}
+									{...cpInstance.settings}
+									unitOfMeasure={skuUnitOfMeasure}
+								/>
+							</div>
+
+							<div className="mt-4">
+								<UnitOfMeasureSelector
+									accountId={cartState.accountId}
+									channelId={channel.id}
+									cpInstanceId={cpInstance.id}
+									label={Liferay.Language.get(
+										'unit-of-measure'
 									)}
-								</span>
-							</PriceRow>
-						</div>
+									loadFinalPrice={true}
+									name="minicart-uom-selector"
+									namespace={MINI_CART_NAMESPACE}
+									options={cpInstance?.skuOptions || []}
+									panelLabel={sub(
+										Liferay.Language.get('edit-x'),
+										Liferay.Language.get('unit-of-measure')
+									)}
+									productId={cpInstance.productId}
+									resetQuantity={false}
+									value={cpInstance.skuUnitOfMeasure?.key}
+								/>
+							</div>
+
+							<div className="mt-4 tier-price-table">
+								<TierPrice
+									accountId={cartState.accountId}
+									autoload={false}
+									channelId={channel.id}
+									cpInstanceId={cpInstance.id}
+									label={Liferay.Language.get(
+										'unit-of-measure-table'
+									)}
+									namespace={MINI_CART_NAMESPACE}
+									productId={cpInstance.productId}
+								/>
+							</div>
+						</>
+					) : (
+						<></>
 					)}
 				</div>
 
 				<div>
-					{!priceOnApplication && (
-						<div className="mini-cart-prices p-4">
-							<PriceRow
-								priceName={Liferay.Language.get('list-price')}
-							>
-								{hasPromoPrice || hasDiscount ? (
-									<span className="price-line-through">
-										{price.priceFormatted}
-									</span>
-								) : (
-									<span>{price.priceFormatted}</span>
-								)}
-							</PriceRow>
-
-							{hasPromoPrice ? (
-								<PriceRow
-									priceName={Liferay.Language.get(
-										'promo-price'
-									)}
-								>
-									{hasDiscount ? (
-										<span className="price-line-through">
-											{price.promoPriceFormatted}
-										</span>
-									) : (
-										<span>{price.promoPriceFormatted}</span>
-									)}
-								</PriceRow>
-							) : null}
-
-							{hasDiscount ? (
-								<PriceRow
-									priceName={Liferay.Language.get('discount')}
-								>
-									<span className="price-discount">
-										{`-${price.discountPercentage}%`}
-									</span>
-								</PriceRow>
-							) : null}
-
-							<PriceRow
-								priceName={Liferay.Language.get(
-									'price-as-configured'
-								)}
-							>
-								<span className="text-7">
-									{price.finalPriceFormatted}
-								</span>
-							</PriceRow>
-						</div>
-					)}
+					<PriceRows price={price} />
 				</div>
 
 				<div className="mini-cart-footer px-4 py-2 text-right">
@@ -368,5 +523,76 @@ const PriceRow = ({children, priceName}) => {
 
 			{children}
 		</div>
+	);
+};
+
+const PriceRows = ({price}) => {
+	const hasPromoPrice = isNonnull(price?.promoPrice);
+	const hasDiscountPercentage = isNonnull(price?.discountPercentage);
+	const priceOnApplication = price.priceOnApplication;
+
+	return (
+		<>
+			{price && !priceOnApplication && (
+				<div className="mini-cart-prices p-4">
+					<PriceRow priceName={Liferay.Language.get('list-price')}>
+						<span
+							className={classnames({
+								'price-line-through':
+									hasPromoPrice || hasDiscountPercentage,
+							})}
+						>
+							{price.priceFormatted}
+						</span>
+					</PriceRow>
+
+					{hasPromoPrice ? (
+						<PriceRow
+							priceName={Liferay.Language.get('promo-price')}
+						>
+							<span
+								className={classnames({
+									'price-line-through': hasDiscountPercentage,
+								})}
+							>
+								{price.promoPriceFormatted}
+							</span>
+						</PriceRow>
+					) : null}
+
+					{hasDiscountPercentage ? (
+						<PriceRow priceName={Liferay.Language.get('discount')}>
+							<span className="price-discount">
+								{`-${price.discountPercentage}%`}
+							</span>
+						</PriceRow>
+					) : null}
+
+					<PriceRow
+						priceName={Liferay.Language.get('price-as-configured')}
+					>
+						<span className="text-7">
+							{hasDiscountPercentage
+								? price.finalPriceFormatted
+								: hasPromoPrice
+								? price.promoPriceFormatted
+								: price.priceFormatted}
+						</span>
+					</PriceRow>
+				</div>
+			)}
+
+			{price && priceOnApplication && (
+				<div className="mini-cart-prices p-4">
+					<PriceRow
+						priceName={Liferay.Language.get('price-as-configured')}
+					>
+						<span className="price-on-application price-value text-3">
+							{Liferay.Language.get('price-on-application')}
+						</span>
+					</PriceRow>
+				</div>
+			)}
+		</>
 	);
 };

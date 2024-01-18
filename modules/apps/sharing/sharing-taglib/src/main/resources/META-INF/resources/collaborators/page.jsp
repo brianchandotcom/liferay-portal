@@ -15,7 +15,7 @@
 
 <div class="collaborators" id="<portlet:namespace />collaborators-root">
 	<react:component
-		module="collaborators/js/index.es"
+		module="{Collaborators} from sharing-taglib"
 		props='<%= (Map<String, Object>)request.getAttribute("liferay-sharing:collaborators:data") %>'
 	/>
 </div>

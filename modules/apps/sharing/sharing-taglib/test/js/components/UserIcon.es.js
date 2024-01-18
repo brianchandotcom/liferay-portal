@@ -6,7 +6,7 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import UserIcon from '../../../src/main/resources/META-INF/resources/collaborators/js/components/UserIcon.es';
+import UserIcon from '../../../src/main/resources/META-INF/resources/js/collaborators/components/UserIcon';
 
 describe('UserIcon', () => {
 	afterEach(cleanup);

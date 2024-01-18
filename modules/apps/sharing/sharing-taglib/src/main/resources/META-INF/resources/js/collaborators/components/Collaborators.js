@@ -11,7 +11,7 @@ import {fetch, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import UserIcon from './UserIcon.es';
+import UserIcon from './UserIcon';
 
 const Collaborators = ({
 	canManageCollaborators,

@@ -169,8 +169,8 @@ const Routine = () => {
 								]
 									.map(Number)
 									.reduce(
-										(prevCount, currentCount) =>
-											prevCount + currentCount
+										(previousValue, currentValue) =>
+											previousValue + currentValue
 									),
 							value: i18n.translate('total'),
 						},

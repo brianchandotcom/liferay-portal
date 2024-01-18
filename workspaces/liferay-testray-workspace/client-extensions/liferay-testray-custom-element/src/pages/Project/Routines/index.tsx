@@ -120,8 +120,8 @@ const Routines = () => {
 								]
 									.map((count) => (count ? Number(count) : 0))
 									.reduce(
-										(prevCount, currentCount) =>
-											prevCount + currentCount
+										(previousValue, currentValue) =>
+											previousValue + currentValue
 									),
 							value: i18n.translate('total'),
 						},

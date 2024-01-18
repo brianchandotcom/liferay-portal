@@ -23,14 +23,14 @@ type ProgressBarResults = {
 
 const getTotalResults = (components: TestrayComponent[]): number =>
 	components.reduce(
-		(prevValue, currValue) =>
-			prevValue +
-			Number(currValue?.caseResultBlocked) +
-			Number(currValue?.caseResultFailed) +
-			Number(currValue?.caseResultInProgress) +
-			Number(currValue?.caseResultPassed) +
-			Number(currValue?.caseResultTestFix) +
-			Number(currValue?.caseResultUntested),
+		(previousValue, currentValue) =>
+			previousValue +
+			Number(currentValue?.caseResultBlocked) +
+			Number(currentValue?.caseResultFailed) +
+			Number(currentValue?.caseResultInProgress) +
+			Number(currentValue?.caseResultPassed) +
+			Number(currentValue?.caseResultTestFix) +
+			Number(currentValue?.caseResultUntested),
 		0
 	);
 
@@ -38,18 +38,20 @@ const getProgressBarResults = (
 	components: TestrayComponent[]
 ): ProgressBarResults =>
 	components.reduce(
-		(prevValue, currValue) => {
-			prevValue.blocked += Number(currValue?.caseResultBlocked) || 0;
-			prevValue.failed += Number(currValue?.caseResultFailed) || 0;
-			prevValue.incomplete +=
+		(previousValue, currentValue) => {
+			previousValue.blocked +=
+				Number(currentValue?.caseResultBlocked) || 0;
+			previousValue.failed += Number(currentValue?.caseResultFailed) || 0;
+			previousValue.incomplete +=
 				Number(
-					currValue?.caseResultUntested &&
-						currValue?.caseResultInProgress
+					currentValue?.caseResultUntested &&
+						currentValue?.caseResultInProgress
 				) || 0;
-			prevValue.passed += Number(currValue?.caseResultPassed) || 0;
-			prevValue.test_fix += Number(currValue?.caseResultTestFix) || 0;
+			previousValue.passed += Number(currentValue?.caseResultPassed) || 0;
+			previousValue.test_fix +=
+				Number(currentValue?.caseResultTestFix) || 0;
 
-			return prevValue;
+			return previousValue;
 		},
 		{
 			blocked: 0,
@@ -65,8 +67,8 @@ const getStatusesResults = (
 	caseResultStatus: CaseResultStatuses
 ): number =>
 	components.reduce(
-		(prevValue, currValue) =>
-			prevValue + Number(currValue[caseResultStatus]) || 0,
+		(previousValue, currentValue) =>
+			previousValue + Number(currentValue[caseResultStatus]) || 0,
 		0
 	);
 

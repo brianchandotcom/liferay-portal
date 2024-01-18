@@ -110,8 +110,8 @@ const Runs = () => {
 									testrayRun?.caseResultTestFix,
 									testrayRun?.caseResultUntested,
 								].reduce(
-									(prevCount, currentCount) =>
-										prevCount + currentCount
+									(previousValue, currentValue) =>
+										previousValue + currentValue
 								),
 							size: 'sm',
 							value: i18n.translate('total'),

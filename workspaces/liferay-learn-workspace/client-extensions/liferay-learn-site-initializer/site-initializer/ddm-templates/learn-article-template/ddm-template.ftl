@@ -252,7 +252,7 @@
 	}
 
 	#articleTOC > li > a:hover {
-		color: var(--color-neutral-6, #82828C) !important;
+		color: var(--color-neutral-10, #282934) !important;
 	}
 
 	#backLink {
@@ -379,6 +379,17 @@
 	<div class="row">
 		<div class="col-12 col-md-2 mobile-nav-hide mt-3">
 			<div class="doc-nav-wrapper-inner">
+				<div class="admonition hide hilighting-alert important" id="highlightAlert">
+					<p class="admonition-title">
+						<span class="title-text">
+							${languageUtil.get(locale, "highlighting", "Highlighting")}
+							<span id="highlightTextMatch"></span>
+						</span>
+		  			</p>
+		<a class="remove-link" href="javascript:;" id="removeHighlightLink">
+		  				${languageUtil.get(locale, "remove-highlighting", "Remove Highlighting")}
+		 			</a>
+				</div>
 				<#if !topLevelArticle>
 					<#assign
 						productTitle = breadcrumbLinksJSONArray.getJSONObject(breadcrumbLinksJSONArray.length()-1).title
@@ -570,68 +581,6 @@
 						</#if>
 					</div>
 				</#if>
-		</div>
-	</div>
-
-	<div class="col-12 col-md-10 doc-body">
-		<div class="border-bottom-0 h-auto p-0">
-			<div class="mt-3 offset-1">
-				<div class="align-items-baseline d-flex justify-content-between">
-					<ul
-						aria-label="breadcrumb navigation"
-						class="article-breadcrumb"
-						role="navigation"
-					>
-						<li>
-							<a href="${groupPathFriendlyURLPublic}"><@clay["icon"] symbol="home-full" /></a>
-						</li>
-
-						<#if !topLevelArticle>
-							<#list breadcrumbLinksJSONArray.length()-1..0 as i>
-								<#assign breadcrumbLink = breadcrumbLinksJSONArray.getJSONObject(i)?eval />
-
-								<li>
-									<a href="${breadcrumbLink.url}">${breadcrumbLink.title}</a>
-								</li>
-							</#list>
-						</#if>
-
-						<li>
-							${.vars['reserved-article-title'].getData()}
-						</li>
-					</ul>
-
-					<div id="submit-feedback">
-						<a
-							class="text-decoration-none"
-							href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
-						>
-							${languageUtil.get(locale, "submit-feedback", "Submit Feedback")}
-							<@clay["icon"] symbol="message-boards" />
-						</a>
-					</div>
-				</div>
-
-				<#list taxonomyVocabularies as vocabulary>
-					<div class="align-items-baseline col-10 d-flex mt-2 pl-0">
-						<div class="align-items-baseline d-flex flex-wrap mr-2">
-							${vocabulary}:
-						</div>
-
-						<div class="d-flex font-weight-bold mr-2 tags-container">
-							<#list taxonomyCategoriesMap[vocabulary]?sort_by("categoryName") as taxonomyCategory>
-								<div class="d-flex">
-									<a
-										class="align-items-center d-flex label label-primary tag-container"
-										href="/search?category=${taxonomyCategory.categoryId}"
-									>
-										<span class="label-item label-item-expand">${taxonomyCategory.categoryName}</span>
-									</a>
-								</div>
-							</#list>
-						</div>
-					</div>
-				</#list>
 			</div>
 		</div>
 
@@ -663,12 +612,12 @@
 							</li>
 						</ul>
 
-						<div id="send-feedback">
+						<div id="submit-feedback">
 							<a
 								class="text-decoration-none"
 								href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
 							>
-								${languageUtil.get(locale, "send-feedback", "Send Feedback")}
+								${languageUtil.get(locale, "submit-feedback", "Submit Feedback")}
 								<@clay["icon"] symbol="message-boards" />
 							</a>
 						</div>

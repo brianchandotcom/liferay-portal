@@ -39,6 +39,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.web.internal.info.field.converter.ObjectFieldInfoFieldConverter;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 import com.liferay.object.web.internal.model.ProxyObjectEntry;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
@@ -86,6 +87,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -105,6 +107,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		_objectActionLocalService = objectActionLocalService;
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectFieldInfoFieldConverter = objectFieldInfoFieldConverter;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -477,22 +480,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 			objectFieldsInfoFieldValues.add(
 				new InfoFieldValue<>(
-					InfoField.builder(
-					).infoFieldType(
-						ObjectFieldDBTypeUtil.getInfoFieldType(objectField)
-					).namespace(
-						ObjectField.class.getSimpleName()
-					).name(
-						objectField.getName()
-					).labelInfoLocalizedValue(
-						InfoLocalizedValue.<String>builder(
-						).defaultLocale(
-							LocaleUtil.fromLanguageId(
-								objectField.getDefaultLanguageId())
-						).values(
-							objectField.getLabelMap()
-						).build()
-					).build(),
+					_objectFieldInfoFieldConverter.getInfoField(
+						false, ObjectField.class.getSimpleName(), objectField),
 					value));
 			objectFieldsInfoFieldValues.addAll(
 				_getAttachmentInfoFieldValues(objectField, value));
@@ -545,25 +534,13 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			_objectFieldLocalService.getObjectFields(
 				serviceBuilderObjectEntry.getObjectDefinitionId(), false),
 			relatedObjectField -> new InfoFieldValue<>(
-				InfoField.builder(
-				).infoFieldType(
-					ObjectFieldDBTypeUtil.getInfoFieldType(relatedObjectField)
-				).namespace(
+				_objectFieldInfoFieldConverter.getInfoField(
+					false,
 					StringBundler.concat(
 						ObjectRelationship.class.getSimpleName(),
 						StringPool.POUND, objectDefinition.getName(),
-						StringPool.POUND, objectRelationship.getName())
-				).name(
-					relatedObjectField.getName()
-				).labelInfoLocalizedValue(
-					InfoLocalizedValue.<String>builder(
-					).defaultLocale(
-						LocaleUtil.fromLanguageId(
-							relatedObjectField.getDefaultLanguageId())
-					).values(
-						relatedObjectField.getLabelMap()
-					).build()
-				).build(),
+						StringPool.POUND, objectRelationship.getName()),
+					relatedObjectField),
 				_getValue(objectEntry, relatedObjectField, themeDisplay)));
 	}
 
@@ -669,6 +646,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+	private final ObjectFieldInfoFieldConverter _objectFieldInfoFieldConverter;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;

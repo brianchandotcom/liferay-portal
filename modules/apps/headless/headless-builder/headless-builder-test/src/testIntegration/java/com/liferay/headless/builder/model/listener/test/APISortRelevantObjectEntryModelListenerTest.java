@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -301,12 +302,14 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 	}
 
 	private JSONObject _addObjectEntry() throws Exception {
+		String pluralObjectName = TextFormatter.formatPlural(
+			StringUtil.toLowerCase(_OBJECT_NAME));
+
 		return HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
 			).toString(),
-			"c/" + StringUtil.toLowerCase(_OBJECT_NAME) + "s",
-			Http.Method.POST);
+			"c/" + pluralObjectName, Http.Method.POST);
 	}
 
 	private static final String _API_APPLICATION_ERC =

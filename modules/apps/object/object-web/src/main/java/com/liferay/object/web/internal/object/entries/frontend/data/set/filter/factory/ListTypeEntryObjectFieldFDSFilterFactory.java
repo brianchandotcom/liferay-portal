@@ -6,8 +6,6 @@
 package com.liferay.object.web.internal.object.entries.frontend.data.set.filter.factory;
 
 import com.liferay.frontend.data.set.filter.FDSFilter;
-import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.constants.ObjectViewFilterColumnConstants;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContext;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributor;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorRegistry;
@@ -16,20 +14,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Feliphe Marinho
  */
-@Component(
-	property = {
-		"object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-		"object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP,
-		"object.field.filter.type.key=" + ObjectViewFilterColumnConstants.FILTER_TYPE_EXCLUDES,
-		"object.field.filter.type.key=" + ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES
-	},
-	service = ObjectFieldFDSFilterFactory.class
-)
 public class ListTypeEntryObjectFieldFDSFilterFactory
 	implements ObjectFieldFDSFilterFactory {
 

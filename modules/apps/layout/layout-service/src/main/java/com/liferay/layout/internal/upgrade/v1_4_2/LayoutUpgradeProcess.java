@@ -33,7 +33,7 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"SELECT groupId, plid FROM Layout WHERE privateLayout = ? ",
 					"AND (plid IN (SELECT plid FROM LayoutPageTemplateEntry ",
-					"WHERE type_ = ?) OR (classPk IN (SELECT plid FROM ",
+					"WHERE type_ = ?) OR (classPK IN (SELECT plid FROM ",
 					"LayoutPageTemplateEntry WHERE type_ = ?) AND classNameId ",
 					"= ?))"));
 			PreparedStatement preparedStatement2 =

@@ -23,6 +23,14 @@ public class DatabaseMetaDataCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		String absolutePath = getAbsolutePath();
+
+		if (absolutePath.contains("/com/liferay/portal/dao/db/") &&
+			absolutePath.endsWith("DB.java")) {
+
+			return;
+		}
+
 		List<String> importNames = getImportNames(detailAST);
 
 		if (!importNames.contains("java.sql.DatabaseMetaData") ||

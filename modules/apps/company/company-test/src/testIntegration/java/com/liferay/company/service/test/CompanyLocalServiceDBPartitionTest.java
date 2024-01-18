@@ -38,11 +38,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -87,7 +85,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 	@Test
 	public void testAddCompany() throws Exception {
-		int schemasSize = _getSchemasAndCatalogsSize();
+		int partitionsCount = _getPartitionsCount();
 
 		_company = CompanyTestUtil.addCompany();
 
@@ -95,13 +93,13 @@ public class CompanyLocalServiceDBPartitionTest
 			ArrayUtil.contains(
 				PortalInstances.getCompanyIdsBySQL(), _company.getCompanyId()));
 
-		Assert.assertEquals(schemasSize + 1, _getSchemasAndCatalogsSize());
+		Assert.assertEquals(partitionsCount + 1, _getPartitionsCount());
 	}
 
 	@Test
 	public void testAddCompanyWhenAddDBPartitionFails() throws Exception {
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-		int schemasSize = _getSchemasAndCatalogsSize();
+		int partitionsCount = _getPartitionsCount();
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
@@ -128,14 +126,14 @@ public class CompanyLocalServiceDBPartitionTest
 		catch (Exception exception) {
 			Assert.assertArrayEquals(
 				companyIds, PortalInstances.getCompanyIdsBySQL());
-			Assert.assertEquals(schemasSize, _getSchemasAndCatalogsSize());
+			Assert.assertEquals(partitionsCount, _getPartitionsCount());
 		}
 	}
 
 	@Test
 	public void testAddCompanyWhenCompanyCreationFails() throws Exception {
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-		int schemasSize = _getSchemasAndCatalogsSize();
+		int partitionsCount = _getPartitionsCount();
 
 		long companyId = RandomTestUtil.randomLong();
 		String webId = "test.com";
@@ -160,7 +158,7 @@ public class CompanyLocalServiceDBPartitionTest
 		catch (Exception exception) {
 			Assert.assertArrayEquals(
 				companyIds, PortalInstances.getCompanyIdsBySQL());
-			Assert.assertEquals(schemasSize, _getSchemasAndCatalogsSize());
+			Assert.assertEquals(partitionsCount, _getPartitionsCount());
 		}
 	}
 
@@ -483,27 +481,22 @@ public class CompanyLocalServiceDBPartitionTest
 		return objectNames;
 	}
 
-	private int _getSchemasAndCatalogsSize() throws SQLException {
-		Set<String> schemaAndCatalogNames = new HashSet<>();
-
+	private int _getPartitionsCount() throws SQLException {
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 		try (ResultSet resultSet = databaseMetaData.getSchemas()) {
-			while (resultSet.next()) {
-				schemaAndCatalogNames.add(resultSet.getString("TABLE_SCHEM"));
-				schemaAndCatalogNames.add(resultSet.getString("TABLE_CATALOG"));
+			if (resultSet.last()) {
+				return resultSet.getRow();
 			}
 		}
 
 		try (ResultSet resultSet = databaseMetaData.getCatalogs()) {
-			while (resultSet.next()) {
-				schemaAndCatalogNames.add(resultSet.getString("TABLE_CAT"));
+			while (resultSet.last()) {
+				return resultSet.getRow();
 			}
 		}
 
-		schemaAndCatalogNames.remove(null);
-
-		return schemaAndCatalogNames.size();
+		throw new SQLException("At least one database partition is required");
 	}
 
 	private int _getTablesCount(long companyId) throws Exception {

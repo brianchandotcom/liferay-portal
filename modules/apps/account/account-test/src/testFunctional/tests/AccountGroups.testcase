@@ -286,8 +286,6 @@ definition {
 		}
 
 		task ("Then filter the accounts assigned to account group by Name returns proper results") {
-			ManagementBar.viewFilterAndOrderSelectedItem(menuItem = "Name");
-
 			var index = 1;
 
 			for (var assigneeName : list "Account Name for Test,Banana Account,Filter By Name,Liferay Account") {

@@ -73,6 +73,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -1103,6 +1105,19 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			increment);
 	}
 
+	public Lock lockKBArticle(long userId, long resourcePrimKey)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195016")) {
+			return null;
+		}
+
+		return _lockManager.lock(
+			userId, KBArticleConstants.getClassName(), resourcePrimKey,
+			String.valueOf(userId), false,
+			KBArticleConstants.LOCK_EXPIRATION_TIME);
+	}
+
 	@Override
 	public void moveDependentKBArticlesToTrash(
 			long parentResourcePrimKey, long trashEntryId)
@@ -1382,6 +1397,15 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_subscriptionLocalService.addSubscription(
 			userId, groupId, KBArticle.class.getName(), resourcePrimKey);
+	}
+
+	@Override
+	public void unlockKBArticle(long resourcePrimKey) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195016")) {
+			return;
+		}
+
+		_lockManager.unlock(KBArticleConstants.getClassName(), resourcePrimKey);
 	}
 
 	@Override
@@ -2938,6 +2962,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	private KBFolderPersistence _kbFolderPersistence;
 
 	private KBServiceConfiguration _kbServiceConfiguration;
+
+	@Reference
+	private LockManager _lockManager;
 
 	@Reference
 	private MarkdownConverterFactory _markdownConverterFactory;

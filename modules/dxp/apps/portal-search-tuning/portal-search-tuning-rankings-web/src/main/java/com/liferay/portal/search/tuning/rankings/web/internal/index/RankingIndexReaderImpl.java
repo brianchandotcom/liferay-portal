@@ -23,7 +23,6 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -228,9 +227,6 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 
 	@Reference
 	private Queries _queries;
-
-	@Reference
-	private RankingIndexNameBuilder _rankingIndexNameBuilder;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

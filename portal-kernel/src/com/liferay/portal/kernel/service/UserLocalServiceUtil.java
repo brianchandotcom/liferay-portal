@@ -2705,6 +2705,22 @@ public class UserLocalServiceUtil {
 			userId, emailAddressVerified);
 	}
 
+	public static User updateExternalReferenceCode(
+			long userId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			userId, externalReferenceCode);
+	}
+
+	public static User updateExternalReferenceCode(
+			User user, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			user, externalReferenceCode);
+	}
+
 	/**
 	 * Updates the user's Facebook ID.
 	 *

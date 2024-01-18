@@ -1331,6 +1331,14 @@ public class UserServiceUtil {
 			userId, password, emailAddress1, emailAddress2, serviceContext);
 	}
 
+	public static User updateExternalReferenceCode(
+			long userId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			userId, externalReferenceCode);
+	}
+
 	/**
 	 * Updates a user account that was automatically created when a guest user
 	 * participated in an action (e.g. posting a comment) and only provided his

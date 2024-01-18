@@ -528,13 +528,6 @@ public class VariableNameCheck extends BaseCheck {
 			return;
 		}
 
-		List<String> enforceShortTypeNames = getAttributeValues(
-			_ENFORCE_SHORT_TYPE_NAMES_KEY);
-
-		if (!enforceShortTypeNames.contains(typeName)) {
-			return;
-		}
-
 		List<DetailAST> variableDeclarationDetailASTList = new ArrayList<>();
 
 		variableDeclarationDetailASTList.addAll(

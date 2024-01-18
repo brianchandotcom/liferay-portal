@@ -34,12 +34,12 @@ public class ClusterLinkPortalCacheClusterChannelFactory
 		throws PortalCacheClusterException {
 
 		if (_usingCoalescedPipe) {
-			return new ClusterLinkPortalCacheClusterChannel(
+			return new PortalCacheClusterChannel(
 				_clusterLink, PortalCacheDestinationNames.CACHE_REPLICATION,
 				new CoalescedPipePortalCacheClusterEventQueue(), priority);
 		}
 
-		return new ClusterLinkPortalCacheClusterChannel(
+		return new PortalCacheClusterChannel(
 			_clusterLink, PortalCacheDestinationNames.CACHE_REPLICATION,
 			new BlockingPortalCacheClusterEventQueue(), priority);
 	}

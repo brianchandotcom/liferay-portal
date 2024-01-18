@@ -2336,12 +2336,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		assertSuccessfulJSONObject(
 			JSONUtil.put(
-				"apiApplicationToAPIEndpoints",
-				JSONUtil.putAll(
-					_createAPIEndpoint(
-						apiEndpointExternalReferenceCode, Http.Method.GET, path,
-						pathParameter, retrieveType, scope))
-			).put(
 				"apiApplicationToAPISchemas",
 				JSONUtil.put(
 					JSONUtil.put(
@@ -2466,8 +2460,18 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		_relateAPIEndpointWithAPISchemas(
-			apiEndpointExternalReferenceCode, apiSchemaExternalReferenceCode);
+		assertSuccessfulJSONObject(
+			_createAPIEndpoint(
+				apiEndpointExternalReferenceCode, Http.Method.GET, path,
+				pathParameter, retrieveType, scope
+			).put(
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationERC",
+				apiApplicationExternalReferenceCode
+			).put(
+				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+				apiSchemaExternalReferenceCode
+			).toString(),
+			"headless-builder/endpoints", Http.Method.POST);
 	}
 
 	private void _addAPIApplicationWithPostEndpoint(

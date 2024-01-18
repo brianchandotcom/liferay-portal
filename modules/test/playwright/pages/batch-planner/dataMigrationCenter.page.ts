@@ -60,7 +60,11 @@ export class DataMigrationCenterPage {
 		await this.updateStrategySelector.selectOption(updateStrategy);
 
 		if ((await this.scopeSelector.all()).length) {
-			this.scopeSelector.selectOption('Liferay DXP');
+			this.scopeSelector.selectOption(
+				await this.page
+					.locator('option', {hasText: /^Liferay( DXP)?$/})
+					.textContent()
+			);
 		}
 
 		await this.nextButton.click();

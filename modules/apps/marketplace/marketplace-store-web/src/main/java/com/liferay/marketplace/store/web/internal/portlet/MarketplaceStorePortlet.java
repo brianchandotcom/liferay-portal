@@ -294,7 +294,7 @@ public class MarketplaceStorePortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		_checkOmniAdmin();
+		_checkOmniadmin();
 
 		try {
 			String actionName = ParamUtil.getString(
@@ -329,7 +329,7 @@ public class MarketplaceStorePortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			_checkOmniAdmin();
+			_checkOmniadmin();
 
 			HttpServletRequest httpServletRequest =
 				portal.getHttpServletRequest(renderRequest);
@@ -374,7 +374,7 @@ public class MarketplaceStorePortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		_checkOmniAdmin();
+		_checkOmniadmin();
 
 		try {
 			_remoteServeResource(resourceRequest, resourceResponse);
@@ -707,7 +707,7 @@ public class MarketplaceStorePortlet extends MVCPortlet {
 	@Reference
 	protected Portal portal;
 
-	private void _checkOmniAdmin() throws PortletException {
+	private void _checkOmniadmin() throws PortletException {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 

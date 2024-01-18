@@ -110,19 +110,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).put(
-				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
-			).put(
-				"externalReferenceCode", RandomTestUtil.randomString()
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
-			"headless-builder/applications", Http.Method.POST);
-
-		JSONObject apiEndpointJSONObject = HTTPTestUtil.invokeToJSONObject(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"description", "description"
 			).put(
@@ -140,8 +128,11 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			).put(
 				"pathParameter", "id"
 			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-				apiApplicationJSONObject.get("id")
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationERC",
+				_API_APPLICATION_ERC
+			).put(
+				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+				_API_SCHEMA_ERC
 			).put(
 				"retrieveType", "singleElement"
 			).put(
@@ -162,7 +153,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 					"oDataSort", "test:desc"
 				).put(
 					"r_apiEndpointToAPISorts_c_apiEndpointId",
-					apiEndpointJSONObject.get("id")
+					jsonObject.get("id")
 				).toString(),
 				"headless-builder/sorts", Http.Method.POST
 			).toString(),
@@ -190,7 +181,6 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			String objectDefinitionExternalReferenceCode)
 		throws Exception {
 
-		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
 		String path =
 			StringPool.SLASH +
 				StringUtil.toLowerCase(RandomTestUtil.randomString());
@@ -231,7 +221,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 					).put(
 						"description", "description"
 					).put(
-						"externalReferenceCode", apiSchemaExternalReferenceCode
+						"externalReferenceCode", _API_SCHEMA_ERC
 					).put(
 						"mainObjectDefinitionERC",
 						objectDefinitionExternalReferenceCode
@@ -243,7 +233,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			).put(
 				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
 			).put(
-				"externalReferenceCode", RandomTestUtil.randomString()
+				"externalReferenceCode", _API_APPLICATION_ERC
 			).put(
 				"title", RandomTestUtil.randomString()
 			).toString(),
@@ -253,15 +243,15 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
-				apiSchemaExternalReferenceCode,
-				"/requestAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC),
+				_API_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
+				_API_ENDPOINT_ERC),
 			Http.Method.PUT);
 		HTTPTestUtil.invokeToHttpCode(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
-				apiSchemaExternalReferenceCode,
-				"/responseAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC),
+				_API_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",
+				_API_ENDPOINT_ERC),
 			Http.Method.PUT);
 	}
 
@@ -319,8 +309,13 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			Http.Method.POST);
 	}
 
+	private static final String _API_APPLICATION_ERC =
+		RandomTestUtil.randomString();
+
 	private static final String _API_ENDPOINT_ERC =
 		RandomTestUtil.randomString();
+
+	private static final String _API_SCHEMA_ERC = RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_ERC =
 		RandomTestUtil.randomString();

@@ -14,6 +14,19 @@ export class HeadlessDeliveryApiHelper {
 		this.basePath = 'headless-delivery/v1.0';
 	}
 
+	async createSitePage(
+		siteId: string,
+		title: string,
+		pageDefinition?: PageDefinition
+	): Promise<Layout> {
+		await this.apiHelpers.featureFlag.updateFeatureFlag('LPS-178052', true);
+
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/site-pages`,
+			{pageDefinition, title}
+		);
+	}
+
 	async deleteSiteDocumentsFolderByExternalReferenceCode(
 		externalReferenceCode: string
 	) {

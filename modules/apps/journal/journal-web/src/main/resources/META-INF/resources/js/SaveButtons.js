@@ -13,6 +13,7 @@ import PublishModal from './modals/PublishModal';
 export default function SaveButtons({
 	articleId,
 	defaultLanguageId,
+	displayDate,
 	editingDefaultValues,
 	permissionsURL,
 	portletNamespace,
@@ -170,6 +171,7 @@ export default function SaveButtons({
 				<PublishModal
 					actionButton={publishModalAction}
 					articleId={articleId}
+					displayDate={displayDate}
 					onCloseModal={() =>
 						setPublishModalState({
 							publishModalAction: '',

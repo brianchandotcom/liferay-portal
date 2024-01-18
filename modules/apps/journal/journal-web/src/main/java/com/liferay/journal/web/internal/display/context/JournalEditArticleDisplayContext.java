@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -86,6 +87,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.manager.RecentGroupManager;
+
+import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1021,6 +1024,20 @@ public class JournalEditArticleDisplayContext {
 			"articleId", getArticleId()
 		).put(
 			"defaultLanguageId", getDefaultArticleLanguageId()
+		).put(
+			"displayDate",
+			() -> {
+				if ((_article != null) && _article.isScheduled()) {
+					Format format =
+						FastDateFormatFactoryUtil.getSimpleDateFormat(
+							"yyyy-MM-dd HH:mm", _themeDisplay.getLocale(),
+							_themeDisplay.getTimeZone());
+
+					return format.format(_article.getDisplayDate());
+				}
+
+				return null;
+			}
 		).put(
 			"editingDefaultValues",
 			getClassNameId() != JournalArticleConstants.CLASS_NAME_ID_DEFAULT

@@ -13,6 +13,7 @@ import ScheduleOptions from '../ScheduleOptions';
 export default function PublishModal({
 	actionButton,
 	articleId,
+	displayDate,
 	onCloseModal,
 	onPublishButtonClick,
 	permissionsURL,
@@ -43,6 +44,7 @@ export default function PublishModal({
 
 				{actionButton === 'schedule' ? (
 					<ScheduleOptions
+						displayDate={displayDate}
 						formId={formId}
 						portletNamespace={portletNamespace}
 						timeZone={timeZone}

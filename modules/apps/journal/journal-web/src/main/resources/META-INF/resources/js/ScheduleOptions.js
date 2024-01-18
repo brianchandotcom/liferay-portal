@@ -8,8 +8,13 @@ import {ClayInput} from '@clayui/form';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-export default function ScheduleOptions({formId, portletNamespace, timeZone}) {
-	const [value, setValue] = useState('');
+export default function ScheduleOptions({
+	displayDate,
+	formId,
+	portletNamespace,
+	timeZone,
+}) {
+	const [value, setValue] = useState(displayDate);
 
 	const {day, hour, minutes, month, year} = getDate(value);
 

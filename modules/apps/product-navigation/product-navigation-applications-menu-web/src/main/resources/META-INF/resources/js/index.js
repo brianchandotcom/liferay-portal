@@ -17,7 +17,7 @@ import {fetch, navigate, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
-import useKeyboardNavigation from '../js/hooks/useKeyboardNavigation';
+import useKeyboardNavigation from './hooks/useKeyboardNavigation';
 
 import '../css/ApplicationsMenu.scss';
 
@@ -560,4 +560,4 @@ ApplicationsMenu.propTypes = {
 	virtualInstance: PropTypes.object,
 };
 
-export default ApplicationsMenu;
+export {ApplicationsMenu};

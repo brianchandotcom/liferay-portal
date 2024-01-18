@@ -47,6 +47,7 @@
 		<column name="custom1ImageId" type="long" />
 		<column name="custom2ImageId" type="long" />
 		<column name="manualCheckInRequired" type="boolean" />
+		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
 		<column name="reviewDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />

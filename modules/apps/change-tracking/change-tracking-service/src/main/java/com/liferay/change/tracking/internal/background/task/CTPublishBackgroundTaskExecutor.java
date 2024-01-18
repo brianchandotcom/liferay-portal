@@ -7,6 +7,8 @@ package com.liferay.change.tracking.internal.background.task;
 
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.exception.CTPublishConflictException;
 import com.liferay.change.tracking.internal.CTServiceRegistry;
 import com.liferay.change.tracking.internal.background.task.display.CTPublishBackgroundTaskDisplay;
 import com.liferay.change.tracking.internal.helper.CTTableMapperHelper;
@@ -17,6 +19,7 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
@@ -26,11 +29,16 @@ import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstant
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -100,7 +108,7 @@ public class CTPublishBackgroundTaskExecutor
 		if (!_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 				fromCTCollection.getSchemaVersionId())) {
 
-			throw new IllegalArgumentException(
+			throw new CTPublishConflictException(
 				StringBundler.concat(
 					"Unable to publish from ", fromCTCollectionName, " to ",
 					toCTCollectionName,
@@ -148,9 +156,9 @@ public class CTPublishBackgroundTaskExecutor
 			}
 
 			if (!unresolvedConflictInfos.isEmpty()) {
-				throw new SystemException(
+				throw new CTPublishConflictException(
 					StringBundler.concat(
-						"Unable to publish ", fromCTCollectionName, " to ",
+						"Unable to publish from ", fromCTCollectionName, " to ",
 						toCTCollectionName,
 						" because of unresolved conflicts: ",
 						unresolvedConflictInfos));
@@ -236,6 +244,39 @@ public class CTPublishBackgroundTaskExecutor
 	}
 
 	@Override
+	public String handleException(
+		BackgroundTask backgroundTask, Exception exception) {
+
+		boolean showConflicts = false;
+
+		if (exception instanceof CTPublishConflictException) {
+			showConflicts = true;
+		}
+
+		try {
+			long fromCTCollectionId = MapUtil.getLong(
+				backgroundTask.getTaskContextMap(), "fromCTCollectionId");
+
+			CTCollection fromCTCollection =
+				_ctCollectionLocalService.getCTCollection(fromCTCollectionId);
+
+			_userNotificationEventLocalService.sendUserNotificationEvents(
+				backgroundTask.getUserId(), CTPortletKeys.PUBLICATIONS,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
+				JSONUtil.put(
+					"ctCollectionName", fromCTCollection.getName()
+				).put(
+					"showConflicts", showConflicts
+				));
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public void setAopProxy(Object aopProxy) {
 		_backgroundTaskExecutor = (BackgroundTaskExecutor)aopProxy;
 	}
@@ -256,5 +297,9 @@ public class CTPublishBackgroundTaskExecutor
 
 	@Reference
 	private MultiVMPool _multiVMPool;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

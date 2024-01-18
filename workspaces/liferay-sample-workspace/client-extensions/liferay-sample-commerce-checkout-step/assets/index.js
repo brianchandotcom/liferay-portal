@@ -5,7 +5,7 @@
 
 export default function CommerceCheckoutStep() {
 	const commerceCheckoutStepContainer = document.getElementById(
-		'commerceCheckoutStepContainer'
+		'_com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet_commerceCheckoutStepContainer'
 	);
 
 	const newInput = document.createElement('input');

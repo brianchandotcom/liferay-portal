@@ -11,7 +11,7 @@
 String renderURL = (String)request.getAttribute(CommerceClientExtensionWebKeys.RENDER_URL);
 %>
 
-<div class="form-group form-group-item" id="commerceCheckoutStepContainer"></div>
+<div class="form-group form-group-item" id="<portlet:namespace />commerceCheckoutStepContainer"></div>
 
 <liferay-frontend:component
 	context='<%=

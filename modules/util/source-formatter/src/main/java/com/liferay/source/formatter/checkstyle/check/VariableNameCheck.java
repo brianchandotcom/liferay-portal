@@ -515,7 +515,8 @@ public class VariableNameCheck extends BaseCheck {
 		DetailAST detailAST, String variableName, String typeName,
 		String expectedVariableName) {
 
-		if (!detailAST.branchContains(TokenTypes.LITERAL_PRIVATE) ||
+		if (StringUtil.equals(variableName, "_" + expectedVariableName) ||
+			!detailAST.branchContains(TokenTypes.LITERAL_PRIVATE) ||
 			detailAST.branchContains(TokenTypes.LITERAL_STATIC)) {
 
 			return;
@@ -608,7 +609,12 @@ public class VariableNameCheck extends BaseCheck {
 				}
 			}
 
-			return;
+			List<String> enforceShortTypeNames = getAttributeValues(
+				_ENFORCE_SHORT_TYPE_NAMES_KEY);
+
+			if (!enforceShortTypeNames.contains(typeName)) {
+				return;
+			}
 		}
 
 		String expectedVariableName = getExpectedVariableName(typeName);

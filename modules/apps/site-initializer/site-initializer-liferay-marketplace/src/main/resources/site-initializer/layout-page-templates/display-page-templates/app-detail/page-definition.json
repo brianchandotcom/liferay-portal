@@ -1191,6 +1191,93 @@
 																						},
 																						"text": {
 																							"value_i18n": {
+																								"en_US": "Resource Requirements"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textColor": "bodyColor"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"cssClasses": [
+																				"mt-2"
+																			],
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-paragraph"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_resource_requirements$]",
+																								"itemReference": {
+																									"contextSource": "DisplayPageItem"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontSize": "fontSizeLg"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"backgroundColor": "whiteColor",
+																		"borderRadius": "2px",
+																		"borderWidth": "0",
+																		"marginBottom": "2",
+																		"paddingBottom": "3",
+																		"paddingLeft": "3",
+																		"paddingRight": "3",
+																		"paddingTop": "3"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"paddingBottom": 1,
+																		"paddingLeft": 1,
+																		"paddingRight": 1,
+																		"paddingTop": 1
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"customCSS": ".[$FRAGMENT_CLASS$] {\n    font-size: 14.4px;\n    line-height: 1.389;\n    font-weight: 600;\n    letter-spacing: 1px;\n    text-transform: uppercase;\n}",
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-paragraph"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
 																								"en_US": "Edition"
 																							}
 																						}

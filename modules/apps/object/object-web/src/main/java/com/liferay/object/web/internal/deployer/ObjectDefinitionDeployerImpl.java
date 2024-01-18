@@ -70,6 +70,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.web.internal.asset.model.ObjectEntryAssetRendererFactory;
 import com.liferay.object.web.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
+import com.liferay.object.web.internal.info.field.converter.ObjectFieldInfoFieldConverter;
 import com.liferay.object.web.internal.info.item.action.ObjectEntryInfoItemActionExecutor;
 import com.liferay.object.web.internal.info.item.creator.ObjectEntryInfoItemCreator;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemActionDetailsProvider;
@@ -175,8 +176,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				_displayPageInfoItemFieldSetProvider, objectDefinition,
 				_infoItemFieldReaderFieldSetProvider,
 				_listTypeEntryLocalService, _objectActionLocalService,
-				_objectDefinitionLocalService, _objectFieldLocalService,
-				_objectFieldSettingLocalService,
+				_objectDefinitionLocalService, _objectFieldInfoFieldConverter,
+				_objectFieldLocalService, _objectFieldSettingLocalService,
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
 				_restContextPathResolverRegistry,
 				_templateInfoItemFieldSetProvider, _userLocalService);
@@ -693,6 +694,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private ObjectFieldFilterContributorRegistry
 		_objectFieldFilterContributorRegistry;
+
+	@Reference
+	private ObjectFieldInfoFieldConverter _objectFieldInfoFieldConverter;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

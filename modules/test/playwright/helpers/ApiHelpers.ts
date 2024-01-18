@@ -13,17 +13,17 @@ import {ObjectApiHelper} from './ObjectApiHelper';
 
 export class ApiHelpers {
 	readonly baseUrl: string;
+	readonly featureFlag: FeatureFlagApiHelper;
 	readonly headlessDelivery: HeadlessDeliveryApiHelper;
 	readonly object: ObjectApiHelper;
-	readonly featureFlag: FeatureFlagApiHelper;
 	readonly objectAdmin: ObjectAdminApiHelper;
 	readonly page: Page;
 
 	constructor(page: Page) {
 		this.baseUrl = liferayConfig.environment.baseUrl + '/o/';
-		this.object = new ObjectApiHelper(this);
 		this.featureFlag = new FeatureFlagApiHelper(page);
 		this.headlessDelivery = new HeadlessDeliveryApiHelper(this);
+		this.object = new ObjectApiHelper(this);
 		this.objectAdmin = new ObjectAdminApiHelper(this);
 		this.page = page;
 	}

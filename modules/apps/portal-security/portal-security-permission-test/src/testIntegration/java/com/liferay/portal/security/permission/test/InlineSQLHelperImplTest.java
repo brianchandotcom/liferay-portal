@@ -263,7 +263,7 @@ public class InlineSQLHelperImplTest {
 	}
 
 	@Test
-	public void testIsNotEnabledForOmniAdmin() throws Exception {
+	public void testIsNotEnabledForOmniadmin() throws Exception {
 		Role role = _roleLocalService.getRole(
 			_user.getCompanyId(), RoleConstants.ADMINISTRATOR);
 

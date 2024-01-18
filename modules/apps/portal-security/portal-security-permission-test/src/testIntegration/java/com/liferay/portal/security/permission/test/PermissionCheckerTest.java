@@ -1044,7 +1044,7 @@ public class PermissionCheckerTest {
 	}
 
 	@Test
-	public void testIsOmniAdminWithAdministratorRoleUser() throws Exception {
+	public void testIsOmniadminWithAdministratorRoleUser() throws Exception {
 		_user = UserTestUtil.addOmniadminUser();
 
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
@@ -1054,7 +1054,7 @@ public class PermissionCheckerTest {
 	}
 
 	@Test
-	public void testIsOmniAdminWithCompanyAdmin() throws Exception {
+	public void testIsOmniadminWithCompanyAdmin() throws Exception {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
 		_company = CompanyTestUtil.addCompany();
@@ -1072,7 +1072,7 @@ public class PermissionCheckerTest {
 	}
 
 	@Test
-	public void testIsOmniAdminWithGroupAdmin() throws Exception {
+	public void testIsOmniadminWithGroupAdmin() throws Exception {
 		_user = UserTestUtil.addGroupAdminUser(_group);
 
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
@@ -1082,7 +1082,7 @@ public class PermissionCheckerTest {
 	}
 
 	@Test
-	public void testIsOmniAdminWithRegularUser() throws Exception {
+	public void testIsOmniadminWithRegularUser() throws Exception {
 		_user = UserTestUtil.addUser();
 
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(

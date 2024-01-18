@@ -2102,7 +2102,9 @@ definition {
 
 		Navigator.gotoBack();
 
-		ManagementBar.viewFilterAndOrder(menuItem = "Inactive");
+		AssertElementPresent(
+			key_menuItem = "Inactive",
+			locator1 = "ManagementBar#FILTER_AND_ORDER_ACTIVE_ITEM");
 
 		LexiconEntry.viewEntryName(rowEntry = "Update Accounts Name via Name Link");
 

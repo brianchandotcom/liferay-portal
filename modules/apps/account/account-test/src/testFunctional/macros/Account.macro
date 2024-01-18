@@ -1269,6 +1269,10 @@ definition {
 
 		Click(locator1 = "FormFields#FIELD_ADD_REMOVE");
 
+		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_REMOVE");
+
+		Click(locator1 = "FormFields#FIELD_ADD_REMOVE");
+
 		AssertElementNotPresent(locator1 = "FormFields#FIELD_ADD_REMOVE");
 
 		Click(

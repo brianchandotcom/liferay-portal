@@ -329,7 +329,10 @@ public class DefaultPortalKaleoManager
 
 	private final Map<String, String> _defaultRoles = new HashMap<>();
 	private final Map<String, String> _definitionAssets = new HashMap<>();
-	private final Map<String, String> _definitionFiles = new HashMap<>();
+	private final Map<String, String> _definitionFiles = HashMapBuilder.put(
+		_DEFINITION_NAME,
+		"META-INF/definitions/single-approver-workflow-definition.xml"
+	).build();
 
 	@Reference
 	private Language _language;

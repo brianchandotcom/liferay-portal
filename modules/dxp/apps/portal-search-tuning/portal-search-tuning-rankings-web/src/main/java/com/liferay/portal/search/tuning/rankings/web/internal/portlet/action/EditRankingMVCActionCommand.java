@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.index.IndexNameBuilder;
-import com.liferay.portal.search.tuning.rankings.web.internal.configuration.DefaultResultRankingsConfiguration;
-import com.liferay.portal.search.tuning.rankings.web.internal.configuration.ResultRankingsConfiguration;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
 import com.liferay.portal.search.tuning.rankings.web.internal.exception.DuplicateQueryStringException;
@@ -370,8 +368,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		EditRankingMVCActionRequest editRankingMVCActionRequest,
 		Ranking ranking, boolean throwException) {
 
-		if (_resultRankingsConfiguration.allowDuplicateQueryStrings() ||
-			editRankingMVCActionRequest.isCmd(
+		if (editRankingMVCActionRequest.isCmd(
 				ResultRankingsConstants.ACTION_DEACTIVATE)) {
 
 			return false;
@@ -646,8 +643,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 	private static final String _UPDATE_SPECIAL = StringPool.GREATER_THAN;
 
 	private long _companyId;
-	private final ResultRankingsConfiguration _resultRankingsConfiguration =
-		new DefaultResultRankingsConfiguration();
 
 	private class EditRankingMVCActionRequest {
 

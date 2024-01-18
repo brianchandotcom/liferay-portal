@@ -9824,6 +9824,22 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardMessage"
             tags: ["MessageBoardMessage"]
+    "/message-board-messages/{messageBoardMessageId}/mark-as-answer":
+        put:
+            operationId: putMessageBoardMessageMarkAsAnswer
+            parameters:
+                - in: path
+                  name: messageBoardMessageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["MessageBoardMessage"]
     "/message-board-messages/{messageBoardMessageId}/message-board-attachments":
         get:
             description:
@@ -10056,6 +10072,22 @@ paths:
     "/message-board-messages/{messageBoardMessageId}/subscribe":
         put:
             operationId: putMessageBoardMessageSubscribe
+            parameters:
+                - in: path
+                  name: messageBoardMessageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["MessageBoardMessage"]
+    "/message-board-messages/{messageBoardMessageId}/unmark-as-answer":
+        put:
+            operationId: putMessageBoardMessageUnmarkAsAnswer
             parameters:
                 - in: path
                   name: messageBoardMessageId

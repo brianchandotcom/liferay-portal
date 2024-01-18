@@ -162,30 +162,34 @@
 				>
 					<div class="row">
 						<#list navPrimaryItem.getChildren() as navSecondaryItem>
-							<div class="dropdown-item-div col-12 col-lg-${columns} ${cssClassName}">
-								<#if taxonomyVocabulary?has_content && stringUtil.equals(navItemType, "CAPABILITIES")>
-									<#assign capabilityFields = taxonomyVocabulary[navSecondaryItem.getName()] />
+							<#if taxonomyVocabulary?has_content && stringUtil.equals(navItemType, "CAPABILITIES")>
+								<#if taxonomyVocabulary[navSecondaryItem.getName()]?has_content>
+									<div class="dropdown-item-div col-12 col-lg-${columns} ${cssClassName}">
+										<#assign capabilityFields = taxonomyVocabulary[navSecondaryItem.getName()] />
 
-									<a class="d-flex dropdown-item p-3 text-decoration-none" href="${groupFriendlyURL}/search?category=${capabilityFields['id']}" tabindex="4">
-										<img
-											alt="${navSecondaryItem.getName()} icon"
-											class="icon mr-3"
-											src="${capabilityFields["icon"]}"
-										/>
+										<a class="d-flex dropdown-item p-3 text-decoration-none" href="${groupFriendlyURL}/search?category=${capabilityFields['id']}" tabindex="4">
+											<img
+												alt="${navSecondaryItem.getName()} icon"
+												class="icon mr-3"
+												src="${capabilityFields["icon"]}"
+											/>
 
-										<div>
-											<h5 class="responsive-text title">
-												${navSecondaryItem.getName()}
-											</h5>
+											<div>
+												<h5 class="responsive-text title">
+													${navSecondaryItem.getName()}
+												</h5>
 
-											<#if capabilityFields["description"]?has_content>
-												<p class="pt-2 responsive-text subtitle">
-													${capabilityFields["description"]}
-												</p>
-											</#if>
-										</div>
-									</a>
-								<#else>
+												<#if capabilityFields["description"]?has_content>
+													<p class="pt-2 responsive-text subtitle">
+														${capabilityFields["description"]}
+													</p>
+												</#if>
+											</div>
+										</a>
+									</div>
+								</#if>
+							<#else>
+								<div class="dropdown-item-div col-12 col-lg-${columns} ${cssClassName}">
 									<#assign
 										customFields = navSecondaryItem.getExpandoAttributes()!{}
 										navItemDescription = customFields["Description"]!""
@@ -209,8 +213,8 @@
 											</p>
 										</div>
 									</a>
-								</#if>
-							</div>
+								</div>
+							</#if>
 						</#list>
 					</div>
 				</div>

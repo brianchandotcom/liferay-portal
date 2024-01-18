@@ -421,12 +421,21 @@ public class RankingPortletDisplayBuilder {
 			dropdownItem -> {
 				dropdownItem.setActive(
 					Objects.equals(
-						_getOrderByCol(), RankingFields.QUERY_STRINGS_KEYWORD));
+						_getOrderByCol(), RankingFields.QUERY_STRING_KEYWORD));
 				dropdownItem.setHref(
 					portletURL, "orderByCol",
-					RankingFields.QUERY_STRINGS_KEYWORD);
+					RankingFields.QUERY_STRING_KEYWORD);
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "search-query"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(_getOrderByCol(), RankingFields.STATUS));
+				dropdownItem.setHref(
+					portletURL, "orderByCol", RankingFields.STATUS);
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "status"));
 			}
 		).build();
 	}

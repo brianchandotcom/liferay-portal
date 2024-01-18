@@ -559,7 +559,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 		throws Exception {
 
 		List<Long> roleIds = RoleUtil.getRoleIds(
-			_roleLocalService, kaleoTaskInstanceTokenQuery.getServiceContext());
+			kaleoTaskInstanceTokenQuery.getServiceContext());
 
 		User user = _userLocalService.getUserById(
 			kaleoTaskInstanceTokenQuery.getUserId());

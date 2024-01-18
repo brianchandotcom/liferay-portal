@@ -7,14 +7,14 @@ package com.liferay.portal.workflow.kaleo.internal.util;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountRole;
-import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.account.service.AccountRoleLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -36,12 +36,11 @@ import org.osgi.util.tracker.ServiceTracker;
 public class RoleUtil {
 
 	public static Role getRole(
-			AccountRoleLocalService accountRoleLocalService, String name,
-			RoleLocalService roleLocalService, int roleType, boolean autoCreate,
+			String name, int roleType, boolean autoCreate,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Role role = roleLocalService.fetchRole(
+		Role role = RoleLocalServiceUtil.fetchRole(
 			serviceContext.getCompanyId(), name);
 
 		if (role == null) {
@@ -59,7 +58,7 @@ public class RoleUtil {
 
 			if (roleType == RoleConstants.TYPE_ACCOUNT) {
 				AccountRole accountRole =
-					accountRoleLocalService.addAccountRole(
+					AccountRoleLocalServiceUtil.addAccountRole(
 						serviceContext.getUserId(),
 						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name, null,
 						descriptionMap);
@@ -67,7 +66,7 @@ public class RoleUtil {
 				role = accountRole.getRole();
 			}
 			else {
-				role = roleLocalService.addRole(
+				role = RoleLocalServiceUtil.addRole(
 					serviceContext.getUserId(), null, 0, name, null,
 					descriptionMap, roleType, null, null);
 			}
@@ -80,10 +79,8 @@ public class RoleUtil {
 		return role;
 	}
 
-	public static List<Long> getRoleIds(
-		RoleLocalService roleLocalService, ServiceContext serviceContext) {
-
-		List<Role> roles = roleLocalService.getUserRoles(
+	public static List<Long> getRoleIds(ServiceContext serviceContext) {
+		List<Role> roles = RoleLocalServiceUtil.getUserRoles(
 			serviceContext.getUserId());
 
 		List<Long> roleIds = new ArrayList<>(roles.size());

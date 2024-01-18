@@ -9,7 +9,7 @@ const MAP_DATA_PARAMS = {
 	classname: 'className',
 };
 
-export default function ({namespace: portletNamespace, redirectURL, url}) {
+export function main({namespace: portletNamespace, redirectURL, url}) {
 	const form = document.getElementById(`${portletNamespace}fm`);
 
 	const addInputsFromData = (data) => {

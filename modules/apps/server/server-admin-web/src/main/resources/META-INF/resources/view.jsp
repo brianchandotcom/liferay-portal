@@ -58,5 +58,5 @@ int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 			"url", url
 		).build()
 	%>'
-	module="js/main"
+	module="{main} from server-admin-web"
 />

@@ -13,13 +13,13 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.background.task.WorkflowMetricsReindexBackgroundTaskExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
-import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndicesAvailabilityChecker;
 
 import java.io.Serializable;
 
@@ -50,9 +50,7 @@ public class WorkflowMetricsIndexCreator {
 	}
 
 	public void reindex(Company company) {
-		if (!_workflowMetricsIndicesAvailabilityChecker.check(
-				company.getCompanyId())) {
-
+		if (!_searchCapabilities.isWorkflowMetricsSupported()) {
 			return;
 		}
 
@@ -112,9 +110,6 @@ public class WorkflowMetricsIndexCreator {
 		_slaTaskResultWorkflowMetricsIndex.removeIndex(company.getCompanyId());
 		_taskWorkflowMetricsIndex.removeIndex(company.getCompanyId());
 		_transitionWorkflowMetricsIndex.removeIndex(company.getCompanyId());
-
-		_workflowMetricsIndicesAvailabilityChecker.clearCache(
-			company.getCompanyId());
 	}
 
 	@Reference
@@ -133,6 +128,9 @@ public class WorkflowMetricsIndexCreator {
 	private Queries _queries;
 
 	@Reference
+	private SearchCapabilities _searchCapabilities;
+
+	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference(
@@ -148,9 +146,5 @@ public class WorkflowMetricsIndexCreator {
 
 	@Reference(target = "(workflow.metrics.index.entity.name=transition)")
 	private WorkflowMetricsIndex _transitionWorkflowMetricsIndex;
-
-	@Reference
-	private WorkflowMetricsIndicesAvailabilityChecker
-		_workflowMetricsIndicesAvailabilityChecker;
 
 }

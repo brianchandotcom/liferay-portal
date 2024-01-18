@@ -146,7 +146,7 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 	public void deleteDocuments(
 		long companyId, long processId, long slaDefinitionId) {
 
-		if (!workflowMetricsIndicesAvailabilityChecker.check(companyId)) {
+		if (!searchCapabilities.isWorkflowMetricsSupported()) {
 			return;
 		}
 

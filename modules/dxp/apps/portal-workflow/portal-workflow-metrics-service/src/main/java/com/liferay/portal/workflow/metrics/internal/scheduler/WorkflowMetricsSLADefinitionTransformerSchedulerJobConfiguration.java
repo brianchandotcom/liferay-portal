@@ -15,8 +15,11 @@ import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -26,7 +29,6 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.configuration.WorkflowMetricsConfiguration;
 import com.liferay.portal.workflow.metrics.internal.sla.transformer.WorkflowMetricsSLADefinitionTransformer;
-import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndicesAvailabilityChecker;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 
 import java.util.Map;
@@ -83,8 +85,24 @@ public class WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration
 			_queries.term("deleted", Boolean.FALSE));
 	}
 
+	private boolean _hasIndex(long companyId) {
+		if (!_searchCapabilities.isWorkflowMetricsSupported()) {
+			return false;
+		}
+
+		IndicesExistsIndexRequest indicesExistsIndexRequest =
+			new IndicesExistsIndexRequest(
+				_indexNameBuilder.getIndexName(companyId) +
+					WorkflowMetricsIndexNameConstants.SUFFIX_PROCESS);
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			_searchEngineAdapter.execute(indicesExistsIndexRequest);
+
+		return indicesExistsIndexResponse.isExists();
+	}
+
 	private void _transform(long companyId) {
-		if (!_workflowMetricsIndicesAvailabilityChecker.check(companyId)) {
+		if (!_hasIndex(companyId)) {
 			return;
 		}
 
@@ -134,13 +152,12 @@ public class WorkflowMetricsSLADefinitionTransformerSchedulerJobConfiguration
 	private Queries _queries;
 
 	@Reference
+	private SearchCapabilities _searchCapabilities;
+
+	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
 
 	private TriggerConfiguration _triggerConfiguration;
-
-	@Reference
-	private WorkflowMetricsIndicesAvailabilityChecker
-		_workflowMetricsIndicesAvailabilityChecker;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionTransformer

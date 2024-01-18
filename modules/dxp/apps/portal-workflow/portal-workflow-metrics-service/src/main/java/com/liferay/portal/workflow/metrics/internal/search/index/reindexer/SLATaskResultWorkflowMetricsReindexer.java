@@ -7,10 +7,13 @@ package com.liferay.portal.workflow.metrics.internal.search.index.reindexer;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -20,7 +23,6 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;
-import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndicesAvailabilityChecker;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
@@ -48,7 +50,11 @@ public class SLATaskResultWorkflowMetricsReindexer
 	protected SearchEngineAdapter searchEngineAdapter;
 
 	private void _creatDefaultDocuments(long companyId) {
-		if (!_workflowMetricsIndicesAvailabilityChecker.check(companyId)) {
+		if (!_searchCapabilities.isWorkflowMetricsSupported() ||
+			!_hasIndex(
+				_indexNameBuilder.getIndexName(companyId) +
+					WorkflowMetricsIndexNameConstants.SUFFIX_NODE)) {
+
 			return;
 		}
 
@@ -109,6 +115,16 @@ public class SLATaskResultWorkflowMetricsReindexer
 		}
 	}
 
+	private boolean _hasIndex(String indexName) {
+		IndicesExistsIndexRequest indicesExistsIndexRequest =
+			new IndicesExistsIndexRequest(indexName);
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			searchEngineAdapter.execute(indicesExistsIndexRequest);
+
+		return indicesExistsIndexResponse.isExists();
+	}
+
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
 
@@ -116,12 +132,11 @@ public class SLATaskResultWorkflowMetricsReindexer
 	private Queries _queries;
 
 	@Reference
-	private SLATaskResultWorkflowMetricsIndexer
-		_slaTaskResultWorkflowMetricsIndexer;
+	private SearchCapabilities _searchCapabilities;
 
 	@Reference
-	private WorkflowMetricsIndicesAvailabilityChecker
-		_workflowMetricsIndicesAvailabilityChecker;
+	private SLATaskResultWorkflowMetricsIndexer
+		_slaTaskResultWorkflowMetricsIndexer;
 
 	@Reference
 	private WorkflowMetricsReindexStatusMessageSender

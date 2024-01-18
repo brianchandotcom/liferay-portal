@@ -9,10 +9,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -22,7 +25,6 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.background.task.WorkflowMetricsSLAProcessBackgroundTaskHelper;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAInstanceResultWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndicesAvailabilityChecker;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
@@ -57,7 +59,11 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 	protected SearchEngineAdapter searchEngineAdapter;
 
 	private void _creatDefaultDocuments(long companyId) {
-		if (!_workflowMetricsIndicesAvailabilityChecker.check(companyId)) {
+		if (!_searchCapabilities.isWorkflowMetricsSupported() ||
+			!_hasIndex(
+				_indexNameBuilder.getIndexName(companyId) +
+					WorkflowMetricsIndexNameConstants.SUFFIX_PROCESS)) {
+
 			return;
 		}
 
@@ -111,6 +117,16 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 		}
 	}
 
+	private boolean _hasIndex(String indexName) {
+		IndicesExistsIndexRequest indicesExistsIndexRequest =
+			new IndicesExistsIndexRequest(indexName);
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			searchEngineAdapter.execute(indicesExistsIndexRequest);
+
+		return indicesExistsIndexResponse.isExists();
+	}
+
 	private static final Snapshot<WorkflowMetricsSLAProcessBackgroundTaskHelper>
 		_workflowMetricsSLAProcessBackgroundTaskHelperSnapshot = new Snapshot<>(
 			SLAInstanceResultWorkflowMetricsReindexer.class,
@@ -123,11 +139,10 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 	private Queries _queries;
 
 	@Reference
-	private SLAInstanceResultWorkflowMetricsIndexer
-		_slaInstanceResultWorkflowMetricsIndexer;
+	private SearchCapabilities _searchCapabilities;
 
 	@Reference
-	private WorkflowMetricsIndicesAvailabilityChecker
-		_workflowMetricsIndicesAvailabilityChecker;
+	private SLAInstanceResultWorkflowMetricsIndexer
+		_slaInstanceResultWorkflowMetricsIndexer;
 
 }

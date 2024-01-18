@@ -267,7 +267,7 @@ definition {
 			ACUtils.waitForChartLoad();
 		}
 
-		MouseOver(
+		MouseOver.mouseOverInvisible(
 			index = ${index},
 			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 

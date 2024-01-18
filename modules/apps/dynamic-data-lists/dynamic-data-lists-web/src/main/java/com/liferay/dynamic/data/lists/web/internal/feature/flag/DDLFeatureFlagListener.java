@@ -19,7 +19,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carolina Barbosa
  */
 @Component(
-	property = "featureFlagKey=LPS-196935", service = FeatureFlagListener.class
+	property = {"featureFlagKey=LPS-196935", "initial.deployment=true"},
+	service = FeatureFlagListener.class
 )
 public class DDLFeatureFlagListener implements FeatureFlagListener {
 

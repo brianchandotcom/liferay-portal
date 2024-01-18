@@ -10,6 +10,7 @@
 		"react": "16.12.0",
 		"uuid": "9.0.0"
 	},
+	"main": "js/index.js",
 	"name": "redirect-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

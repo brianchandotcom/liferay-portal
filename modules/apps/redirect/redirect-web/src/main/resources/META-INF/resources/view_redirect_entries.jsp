@@ -14,7 +14,7 @@ RedirectEntriesDisplayContext redirectEntriesDisplayContext = (RedirectEntriesDi
 <c:if test="<%= !redirectEntriesDisplayContext.isStagingGroup() %>">
 	<clay:management-toolbar
 		managementToolbarDisplayContext="<%= redirectEntriesDisplayContext.getRedirectManagementToolbarDisplayContext() %>"
-		propsTransformer="js/RedirectManagementToolbarPropsTransformer"
+		propsTransformer="{RedirectManagementToolbarPropsTransformer} from redirect-web"
 	/>
 </c:if>
 

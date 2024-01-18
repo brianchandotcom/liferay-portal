@@ -59,12 +59,7 @@ export default function PublishModal({
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton
-							displayType="secondary"
-							onClick={() => {
-								onClose();
-							}}
-						>
+						<ClayButton displayType="secondary" onClick={onClose}>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 

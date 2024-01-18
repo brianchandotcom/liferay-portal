@@ -57,7 +57,7 @@ public abstract class BaseSelectInfoFieldTypeTemplateNodeTransformer
 			getSelectedOptionValuesJSONArray(
 				infoFieldValue, themeDisplay.getLocale());
 
-		String data = getData(selectedOptionValuesJSONArray);
+		String data = getData(optionsMap, selectedOptionValuesJSONArray);
 
 		TemplateNode templateNode = new TemplateNode(
 			themeDisplay, infoField.getName(), data, infoFieldType.getName(),
@@ -74,7 +74,10 @@ public abstract class BaseSelectInfoFieldTypeTemplateNodeTransformer
 
 	protected abstract Map<String, String> getAttributes();
 
-	protected String getData(JSONArray selectedOptionValuesJSONArray) {
+	protected String getData(
+		Map<String, String> optionsMap,
+		JSONArray selectedOptionValuesJSONArray) {
+
 		return getKey(selectedOptionValuesJSONArray);
 	}
 

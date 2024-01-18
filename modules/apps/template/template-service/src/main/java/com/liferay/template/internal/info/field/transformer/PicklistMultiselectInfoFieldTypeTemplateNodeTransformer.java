@@ -5,7 +5,10 @@
 
 package com.liferay.template.internal.info.field.transformer;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.template.info.field.transformer.TemplateNodeTransformer;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -18,4 +21,13 @@ import org.osgi.service.component.annotations.Component;
 )
 public class PicklistMultiselectInfoFieldTypeTemplateNodeTransformer
 	extends MultiselectInfoFieldTypeTemplateNodeTransformer {
+
+	@Override
+	protected String getData(
+		Map<String, String> optionsMap,
+		JSONArray selectedOptionValuesJSONArray) {
+
+		return getLabel(optionsMap, selectedOptionValuesJSONArray);
+	}
+
 }

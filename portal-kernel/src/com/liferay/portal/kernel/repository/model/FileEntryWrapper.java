@@ -100,6 +100,11 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	}
 
 	@Override
+	public Date getDisplayDate() {
+		return _fileEntry.getDisplayDate();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _fileEntry.getExpandoBridge();
 	}

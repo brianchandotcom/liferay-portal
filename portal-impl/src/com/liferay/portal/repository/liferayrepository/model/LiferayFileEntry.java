@@ -161,6 +161,11 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		return _dlFileEntry.getDescription();
 	}
 
+	@Override
+	public Date getDisplayDate() {
+		return _dlFileEntry.getDisplayDate();
+	}
+
 	public DLFileEntry getDLFileEntry() {
 		return _dlFileEntry;
 	}

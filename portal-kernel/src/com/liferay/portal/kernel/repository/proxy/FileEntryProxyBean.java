@@ -91,6 +91,11 @@ public class FileEntryProxyBean
 	}
 
 	@Override
+	public Date getDisplayDate() {
+		return _fileEntry.getDisplayDate();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return newProxyInstance(
 			_fileEntry.getExpandoBridge(), _expandoBridgeProxyProviderFunction);

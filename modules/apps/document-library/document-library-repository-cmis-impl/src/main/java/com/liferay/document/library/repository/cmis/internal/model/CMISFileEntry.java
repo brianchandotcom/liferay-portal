@@ -195,6 +195,11 @@ public class CMISFileEntry extends BaseCMISModel implements FileEntry {
 	}
 
 	@Override
+	public Date getDisplayDate() {
+		return null;
+	}
+
+	@Override
 	public Date getExpirationDate() {
 		return null;
 	}

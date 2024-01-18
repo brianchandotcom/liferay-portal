@@ -65,6 +65,11 @@ public class ExtRepositoryFileVersionAdapter
 	}
 
 	@Override
+	public Date getDisplayDate() {
+		return null;
+	}
+
+	@Override
 	public Date getExpirationDate() {
 		return null;
 	}

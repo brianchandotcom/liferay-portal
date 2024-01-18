@@ -124,6 +124,11 @@ public class CMISFileVersion extends BaseCMISModel implements FileVersion {
 	}
 
 	@Override
+	public Date getDisplayDate() {
+		return null;
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return null;
 	}

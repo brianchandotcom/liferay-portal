@@ -39,7 +39,7 @@
 			).put(
 				"isContentReviewer", permissionChecker.isContentReviewer(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())
 			).put(
-				"isOmniAdmin", permissionChecker.isOmniadmin()
+				"isOmniadmin", permissionChecker.isOmniadmin()
 			).put(
 				"newQuestionPageTitle", LocalizationUtil.getLocalization(questionsConfiguration.newQuestionPageTitleAsLocalizedXML(), themeDisplay.getLanguageId())
 			).put(

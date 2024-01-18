@@ -42,7 +42,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
 		if (_totalCompleted.length) {
 			return _totalCompleted.reduce(
-				(previous, current) => previous + current
+				(previousValue, currentValue) => previousValue + currentValue
 			);
 		}
 

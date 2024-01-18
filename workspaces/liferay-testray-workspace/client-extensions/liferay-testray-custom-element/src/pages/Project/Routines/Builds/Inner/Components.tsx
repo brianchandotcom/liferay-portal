@@ -94,8 +94,8 @@ const Components = () => {
 									testrayComponent?.caseResultTestFix,
 									testrayComponent?.caseResultUntested,
 								].reduce(
-									(prevCount, currentCount) =>
-										prevCount + currentCount
+									(previousValue, currentValue) =>
+										previousValue + currentValue
 								),
 							size: 'md',
 							value: i18n.translate('total'),

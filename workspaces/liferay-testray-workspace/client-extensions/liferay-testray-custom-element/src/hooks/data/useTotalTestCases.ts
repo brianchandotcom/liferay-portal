@@ -31,8 +31,8 @@ const useTotalTestCases = () => {
 			total: donutColumns
 				.map(([, totalCase]) => totalCase)
 				.reduce(
-					(prevValue, currentValue) =>
-						Number(prevValue) + Number(currentValue)
+					(previousValue, currentValue) =>
+						Number(previousValue) + Number(currentValue)
 				),
 		},
 		statuses: Object.values(Statuses),

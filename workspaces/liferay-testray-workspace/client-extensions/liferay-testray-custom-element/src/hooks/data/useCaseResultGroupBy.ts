@@ -75,7 +75,8 @@ const useTotalTestCases = (testrayBuild: TestrayBuild) => {
 				total: donutColumns
 					.map(([, totalCase]) => Number(totalCase))
 					.reduce(
-						(prevValue, currentValue) => prevValue + currentValue
+						(previousValue, currentValue) =>
+							previousValue + currentValue
 					),
 			},
 			ready: !!testrayBuild,
@@ -128,8 +129,8 @@ const useCaseResultGroupBy = (buildId: number = 0) => {
 			total: donutColumns
 				.map(([, totalCase]) => totalCase)
 				.reduce(
-					(prevValue, currentValue) =>
-						Number(prevValue) + Number(currentValue)
+					(previousValue, currentValue) =>
+						Number(previousValue) + Number(currentValue)
 				),
 		},
 		ready: !loading && statuses.size > 0,

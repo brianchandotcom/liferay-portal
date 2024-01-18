@@ -37,7 +37,7 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 }) => {
 	const total = items
 		.map(([, value]) => value)
-		.reduce((prevValue, currentValue) => prevValue + currentValue);
+		.reduce((previousValue, currentValue) => previousValue + currentValue);
 
 	return (
 		<>

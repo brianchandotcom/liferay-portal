@@ -702,6 +702,28 @@ public class JournalManagementToolbarDisplayContext
 							"mine"
 						).setParameter(
 							"navigationMine", Boolean.TRUE
+						).setParameter(
+							"orderByCol",
+							() -> {
+								if (FeatureFlagManagerUtil.isEnabled(
+										"LPS-202534")) {
+
+									return "create-date";
+								}
+
+								return null;
+							}
+						).setParameter(
+							"orderByType",
+							() -> {
+								if (FeatureFlagManagerUtil.isEnabled(
+										"LPS-202534")) {
+
+									return "desc";
+								}
+
+								return null;
+							}
 						).buildPortletURL()
 					).setLabel(
 						LanguageUtil.get(httpServletRequest, "mine")
@@ -757,6 +779,28 @@ public class JournalManagementToolbarDisplayContext
 						"mine"
 					).setParameter(
 						"ddmStructureId", (String)null
+					).setParameter(
+						"orderByCol",
+						() -> {
+							if (FeatureFlagManagerUtil.isEnabled(
+									"LPS-202534")) {
+
+								return "create-date";
+							}
+
+							return null;
+						}
+					).setParameter(
+						"orderByType",
+						() -> {
+							if (FeatureFlagManagerUtil.isEnabled(
+									"LPS-202534")) {
+
+								return "desc";
+							}
+
+							return null;
+						}
 					).buildPortletURL()
 				).setLabel(
 					LanguageUtil.get(httpServletRequest, "mine")

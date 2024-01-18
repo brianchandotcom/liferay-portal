@@ -449,16 +449,16 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 			objectDefinitionResource.getObjectDefinition(
 				objectFolderItem.getObjectDefinitionId());
 
+		boolean finalLinkedObjectDefinition = !Objects.equals(
+			dtoObjectDefinition.getObjectFolderExternalReferenceCode(),
+			objectFolderExternalReferenceCode);
+
 		return new ObjectFolderItem() {
 			{
-				setLinkedObjectDefinition(
-					() -> !Objects.equals(
-						dtoObjectDefinition.
-							getObjectFolderExternalReferenceCode(),
-						objectFolderExternalReferenceCode));
+				setLinkedObjectDefinition(() -> finalLinkedObjectDefinition);
 				setObjectDefinition(
 					() -> {
-						if (linkedObjectDefinition) {
+						if (finalLinkedObjectDefinition) {
 							return null;
 						}
 

@@ -72,6 +72,8 @@ public interface FileEntry extends RepositoryEntry, RepositoryModel<FileEntry> {
 
 	public String getDescription();
 
+	public Date getDisplayDate();
+
 	public Date getExpirationDate();
 
 	public String getExtension();

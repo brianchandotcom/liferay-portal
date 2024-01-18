@@ -30,6 +30,8 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 
 	public String getDescription();
 
+	public Date getDisplayDate();
+
 	@Override
 	public ExpandoBridge getExpandoBridge();
 

@@ -122,6 +122,11 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	}
 
 	@Override
+	public Date getDisplayDate() {
+		return _dlFileVersion.getDisplayDate();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _dlFileVersion.getExpandoBridge();
 	}

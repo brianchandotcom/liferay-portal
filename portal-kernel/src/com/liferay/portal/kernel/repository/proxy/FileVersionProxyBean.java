@@ -81,6 +81,11 @@ public class FileVersionProxyBean
 	}
 
 	@Override
+	public Date getDisplayDate() {
+		return _fileVersion.getDisplayDate();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return newProxyInstance(
 			_fileVersion.getExpandoBridge(),

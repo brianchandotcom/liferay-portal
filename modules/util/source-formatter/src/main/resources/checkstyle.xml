@@ -337,6 +337,11 @@
 			<message key="builder.use" value="Use ''{0}'' ({1}, {2})" />
 			<message key="builder.use.instead" value="Use ''{0}'' instead of new instance of ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.DatabaseMetaDataCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks usages of `java.sql.DatabaseMetaData`." />
+			<message key="replace.get.index.info" value="Use the method ''com.liferay.portal.kernel.dao.db.DB#getIndexResult()'' instead of ''{0}.getIndexInfo()''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.DeprecatedAPICheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds calls to deprecated classes, constructors, fields or methods." />

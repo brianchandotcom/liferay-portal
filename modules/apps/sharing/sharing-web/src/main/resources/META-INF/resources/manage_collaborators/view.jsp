@@ -8,6 +8,6 @@
 <%@ include file="/manage_collaborators/init.jsp" %>
 
 <react:component
-	module="manage_collaborators/js/ManageCollaborators.es"
+	module="{ManageCollaborators} from sharing-web"
 	props="<%= (Map<String, Object>)request.getAttribute(SharingWebKeys.SHARING_REACT_DATA) %>"
 />

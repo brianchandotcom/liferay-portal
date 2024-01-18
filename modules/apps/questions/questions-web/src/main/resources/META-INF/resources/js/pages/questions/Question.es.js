@@ -45,8 +45,8 @@ import {
 	getSubscriptionsQuery,
 	getThread,
 	getUserActivityQuery,
-	markAsAnswerMessageBoardMessageQuery,
 	subscribeQuery,
+	unMarkAsAnswerMessageBoardMessageQuery,
 } from '../../utils/client.es';
 import {ALL_SECTIONS_ID} from '../../utils/contants.es';
 import lang from '../../utils/lang.es';
@@ -306,8 +306,8 @@ const Question = ({
 		[answers]
 	);
 
-	const [markAsAnswerMessageBoardMessage] = useMutation(
-		markAsAnswerMessageBoardMessageQuery
+	const [unMarkAsAnswerMessageBoardMessage] = useMutation(
+		unMarkAsAnswerMessageBoardMessageQuery
 	);
 
 	const answerChange = useCallback(
@@ -317,17 +317,16 @@ const Question = ({
 			);
 
 			if (answer) {
-				markAsAnswerMessageBoardMessage({
+				unMarkAsAnswerMessageBoardMessage({
 					variables: {
 						messageBoardMessageId: answer.id,
-						showAsAnswer: false,
 					},
 				}).then(() => {
 					fetchMessages();
 				});
 			}
 		},
-		[markAsAnswerMessageBoardMessage, answers.items, fetchMessages]
+		[unMarkAsAnswerMessageBoardMessage, answers.items, fetchMessages]
 	);
 
 	useEffect(() => {

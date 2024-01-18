@@ -16,6 +16,7 @@ import FlagsContainer from '../pages/questions/components/FlagsContainer';
 import {
 	deleteMessageQuery,
 	markAsAnswerMessageBoardMessageQuery,
+	unMarkAsAnswerMessageBoardMessageQuery,
 } from '../utils/client.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Comments from './Comments.es';
@@ -59,6 +60,14 @@ export default withRouter(
 		const [markAsAnswerMessageBoardMessage] = useMutation(
 			markAsAnswerMessageBoardMessageQuery
 		);
+
+		const [unMarkAsAnswerMessageBoardMessage] = useMutation(
+			unMarkAsAnswerMessageBoardMessageQuery
+		);
+
+		const markAsAnswerFunction = showAsAnswer
+			? unMarkAsAnswerMessageBoardMessage
+			: markAsAnswerMessageBoardMessage;
 
 		useEffect(() => {
 			setShowAsAnswer(answer.showAsAnswer);
@@ -300,15 +309,12 @@ export default withRouter(
 													data-testid="mark-as-answer-button"
 													displayType="secondary"
 													onClick={() => {
-														markAsAnswerMessageBoardMessage(
-															{
-																variables: {
-																	messageBoardMessageId:
-																		answer.id,
-																	showAsAnswer: !showAsAnswer,
-																},
-															}
-														).then(() => {
+														markAsAnswerFunction({
+															variables: {
+																messageBoardMessageId:
+																	answer.id,
+															},
+														}).then(() => {
 															setShowAsAnswer(
 																!showAsAnswer
 															);

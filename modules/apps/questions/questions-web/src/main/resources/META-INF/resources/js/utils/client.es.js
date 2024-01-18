@@ -905,17 +905,18 @@ export const getUserActivityQuery = `
 `;
 
 export const markAsAnswerMessageBoardMessageQuery = `
-	mutation patchMessageBoardMessage(
-		$messageBoardMessageId: Long!
-		$showAsAnswer: Boolean!
-	) {
-		patchMessageBoardMessage(
-			messageBoardMessage: {showAsAnswer: $showAsAnswer}
+	mutation updateMessageBoardMessageMarkAsAnswer($messageBoardMessageId: Long!) {
+		updateMessageBoardMessageMarkAsAnswer(
 			messageBoardMessageId: $messageBoardMessageId
-		) {
-			id
-			showAsAnswer
-		}
+		)
+	}
+`;
+
+export const unMarkAsAnswerMessageBoardMessageQuery = `
+	mutation updateMessageBoardMessageUnmarkAsAnswer($messageBoardMessageId: Long!) {
+		updateMessageBoardMessageUnmarkAsAnswer(
+			messageBoardMessageId: $messageBoardMessageId
+		)
 	}
 `;
 

@@ -24,15 +24,32 @@
 			<sysproperty key="sample-sql-properties" value="${basedir}/benchmarks-actual.properties" />
 		</java>
 
+		<echo>
+To use the generated data, please do:</echo>
+
 		<if>
 			<istrue value="${sample.sql.output.merge}" />
 			<then>
-				<echo>Use ${basedir}/sample-${sample.sql.db.type}.sql to load the database.</echo>
+				<echo>1. Import ${basedir}/sample-${sample.sql.db.type}.sql into database.</echo>
 			</then>
 			<else>
-				<echo>Use SQL files in ${basedir}/output to load the database.</echo>
+				<echo>1. Import SQL files in ${basedir}/output into database.</echo>
 			</else>
 		</if>
+
+		<loadfile
+			property="domains"
+			srcfile="company.csv"
+		>
+			<filterchain>
+				<tokenfilter>
+					<replaceregex pattern="(.*)(,\d+)" replace="\1" />
+				</tokenfilter>
+			</filterchain>
+		</loadfile>
+
+		<echo>2. Modify /etc/hosts to set up IP address for domains:
+${domains}</echo>
 	</target>
 
 	<target name="clean">

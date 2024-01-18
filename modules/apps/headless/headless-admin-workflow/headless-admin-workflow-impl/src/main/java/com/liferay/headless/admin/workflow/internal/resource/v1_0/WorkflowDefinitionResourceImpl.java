@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -40,7 +39,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -110,11 +108,6 @@ public class WorkflowDefinitionResourceImpl
 		_workflowDefinitionManager.undeployWorkflowDefinition(
 			contextCompany.getCompanyId(), contextUser.getUserId(), name,
 			GetterUtil.getInteger(version));
-	}
-
-	@Override
-	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	@Override

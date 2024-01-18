@@ -189,19 +189,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).put(
-				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
-			).put(
-				"externalReferenceCode", RandomTestUtil.randomString()
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
-			"headless-builder/applications", Http.Method.POST);
-
-		JSONObject apiEndpointJSONObject = HTTPTestUtil.invokeToJSONObject(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"description", "description"
 			).put(
@@ -219,8 +207,11 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			).put(
 				"pathParameter", "id"
 			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-				apiApplicationJSONObject.get("id")
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationERC",
+				_API_APPLICATION_ERC
+			).put(
+				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+				_API_SCHEMA_ERC
 			).put(
 				"retrieveType", "singleElement"
 			).put(
@@ -241,7 +232,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 					"oDataFilter", "test:desc"
 				).put(
 					"r_apiEndpointToAPIFilters_c_apiEndpointId",
-					apiEndpointJSONObject.get("id")
+					jsonObject.get("id")
 				).toString(),
 				"headless-builder/filters", Http.Method.POST
 			).toString(),
@@ -270,8 +261,6 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 	private void _addAPIApplication(
 			String objectDefinitionExternalReferenceCode)
 		throws Exception {
-
-		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
 
 		HTTPTestUtil.invokeToHttpCode(
 			JSONUtil.put(
@@ -309,7 +298,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 					).put(
 						"description", "description"
 					).put(
-						"externalReferenceCode", apiSchemaExternalReferenceCode
+						"externalReferenceCode", _API_SCHEMA_ERC
 					).put(
 						"mainObjectDefinitionERC",
 						objectDefinitionExternalReferenceCode
@@ -321,7 +310,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			).put(
 				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
 			).put(
-				"externalReferenceCode", RandomTestUtil.randomString()
+				"externalReferenceCode", _API_APPLICATION_ERC
 			).put(
 				"title", RandomTestUtil.randomString()
 			).toString(),
@@ -331,15 +320,15 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
-				apiSchemaExternalReferenceCode,
-				"/requestAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC),
+				_API_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
+				_API_ENDPOINT_ERC),
 			Http.Method.PUT);
 		HTTPTestUtil.invokeToHttpCode(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
-				apiSchemaExternalReferenceCode,
-				"/responseAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC),
+				_API_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",
+				_API_ENDPOINT_ERC),
 			Http.Method.PUT);
 	}
 
@@ -407,12 +396,17 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			Http.Method.POST);
 	}
 
+	private static final String _API_APPLICATION_ERC =
+		RandomTestUtil.randomString();
+
 	private static final String _API_APPLICATION_PATH =
 		StringPool.SLASH +
 			StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 	private static final String _API_ENDPOINT_ERC =
 		RandomTestUtil.randomString();
+
+	private static final String _API_SCHEMA_ERC = RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_ERC =
 		RandomTestUtil.randomString();

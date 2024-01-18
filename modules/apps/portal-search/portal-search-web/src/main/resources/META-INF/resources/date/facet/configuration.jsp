@@ -17,6 +17,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.date.facet.configuration.DateFacetPortletInstanceConfiguration" %><%@
@@ -150,8 +151,11 @@ JSONArray rangesJSONArray = dateFacetPortletPreferences.getRangesJSONArray();
 	}).render();
 </aui:script>
 
-<aui:script use="liferay-search-date-facet-configuration">
-	new Liferay.Search.DateFacetConfiguration(
-		A.one(document.<portlet:namespace />fm)
-	);
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).build()
+	%>'
+	module="js/DateFacetConfiguration"
+/>

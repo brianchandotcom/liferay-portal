@@ -9,7 +9,6 @@ module.exports = {
 			ignore: [
 				'**/config.js',
 				'**/custom_filter.js',
-				'**/date_facet_configuration.js',
 				'**/date_facet.js',
 				'**/facet_util.js',
 				'**/modified_facet.js',

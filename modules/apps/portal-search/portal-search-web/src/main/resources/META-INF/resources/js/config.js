@@ -22,10 +22,6 @@
 							'liferay-search-facet-util',
 						],
 					},
-					'liferay-search-date-facet-configuration': {
-						path: 'date_facet_configuration.js',
-						requires: ['aui-node'],
-					},
 					'liferay-search-facet-util': {
 						path: 'facet_util.js',
 						requires: [],

@@ -285,30 +285,6 @@ const NotificationsInfo = ({
 	}
 
 	useEffect(() => {
-		const checkedTrue = items
-			.filter((item) => {
-				return item.checked === true;
-			})
-			.map((item) => item.label);
-
-		if (checkedTrue.includes(Liferay.Language.get('email'))) {
-			setNotificationTypeEmail(true);
-		}
-		else {
-			setNotificationTypeEmail(false);
-		}
-
-		if (checkedTrue.includes(Liferay.Language.get('user-notification'))) {
-			setNotificationTypeUserNotification(true);
-		}
-		else {
-			setNotificationTypeUserNotification(false);
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [items]);
-
-	useEffect(() => {
 		if (selectedItem.data.notifications) {
 			setSelectedItem((previousItem) => {
 				let recipientDetails = {};
@@ -423,6 +399,10 @@ const NotificationsInfo = ({
 				setItems={setItems}
 				setNotificationDescription={setNotificationDescription}
 				setNotificationName={setNotificationName}
+				setNotificationTypeEmail={setNotificationTypeEmail}
+				setNotificationTypeUserNotification={
+					setNotificationTypeUserNotification
+				}
 				setRecipientType={setRecipientType}
 				setSections={setSections}
 				setSelectedItem={setSelectedItem}

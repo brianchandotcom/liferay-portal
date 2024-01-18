@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import BaseNotificationsInfo from '../../shared-components/BaseNotificationsInfo';
@@ -142,30 +142,6 @@ const ActionTypeNotification = ({
 		});
 	};
 
-	useEffect(() => {
-		const checkedTrue = items
-			.filter((item) => {
-				return item.checked === true;
-			})
-			.map((item) => item.label);
-
-		if (checkedTrue.includes(Liferay.Language.get('email'))) {
-			setNotificationTypeEmail(true);
-		}
-		else {
-			setNotificationTypeEmail(false);
-		}
-
-		if (checkedTrue.includes(Liferay.Language.get('user-notification'))) {
-			setNotificationTypeUserNotification(true);
-		}
-		else {
-			setNotificationTypeUserNotification(false);
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [items]);
-
 	return (
 		<BaseNotificationsInfo
 			deleteSection={deleteSection}
@@ -185,6 +161,10 @@ const ActionTypeNotification = ({
 			setItems={setItems}
 			setNotificationDescription={setNotificationDescription}
 			setNotificationName={setNotificationName}
+			setNotificationTypeEmail={setNotificationTypeEmail}
+			setNotificationTypeUserNotification={
+				setNotificationTypeUserNotification
+			}
 			setRecipientType={setRecipientType}
 			setSections={setActionSections}
 			setSelectedItem={setSelectedItem}

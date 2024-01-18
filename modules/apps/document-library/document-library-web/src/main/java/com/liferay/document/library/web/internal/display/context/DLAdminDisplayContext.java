@@ -309,6 +309,23 @@ public class DLAdminDisplayContext {
 			"\\?");
 	}
 
+	public long getRepositoryGroupId(long scopeGroupId, long repositoryId) {
+		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
+			repositoryId);
+
+		if (repository != null) {
+			return repository.getGroupId();
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroup(repositoryId);
+
+		if (group != null) {
+			return group.getGroupId();
+		}
+
+		return scopeGroupId;
+	}
+
 	public long getRepositoryId() {
 		if (_repositoryId != 0) {
 			return _repositoryId;

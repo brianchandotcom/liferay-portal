@@ -543,12 +543,14 @@ renderResponse.setTitle(headerTitle);
 								className="<%= DLFileEntry.class.getName() %>"
 								classPK="<%= assetClassPK %>"
 								classTypePK="<%= (fileEntryTypeId < 0) ? DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT : fileEntryTypeId %>"
+								groupIds="<%= SiteConnectedGroupGroupProviderUtil.getCurrentAndAncestorSiteAndDepotGroupIds(dlAdminDisplayContext.getRepositoryGroupId(scopeGroupId, repositoryId)) %>"
 								visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
 							/>
 
 							<liferay-asset:asset-tags-selector
 								className="<%= DLFileEntry.class.getName() %>"
 								classPK="<%= assetClassPK %>"
+								groupIds="<%= SiteConnectedGroupGroupProviderUtil.getCurrentAndAncestorSiteAndDepotGroupIds(dlAdminDisplayContext.getRepositoryGroupId(scopeGroupId, repositoryId)) %>"
 							/>
 
 							<c:if test="<%= (fileEntry != null) && dlAdminDisplayContext.isAutoTaggingEnabled() %>">

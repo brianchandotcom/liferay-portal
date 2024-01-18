@@ -908,7 +908,9 @@ public class DLAdminManagementToolbarDisplayContext
 			_groupIds =
 				_siteConnectedGroupGroupProvider.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
-						_themeDisplay.getScopeGroupId());
+						_dlAdminDisplayContext.getRepositoryGroupId(
+							_themeDisplay.getScopeGroupId(),
+							_dlAdminDisplayContext.getRepositoryId()));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

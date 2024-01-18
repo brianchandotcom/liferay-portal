@@ -5,9 +5,9 @@
 
 import {UNLOAD_REDUCER} from './types';
 
-export default function unloadReducer(key) {
+export default function unloadReducer(key: string) {
 	return {
 		key,
 		type: UNLOAD_REDUCER,
-	};
+	} as const;
 }

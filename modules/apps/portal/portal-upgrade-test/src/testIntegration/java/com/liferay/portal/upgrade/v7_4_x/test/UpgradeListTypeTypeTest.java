@@ -40,11 +40,10 @@ public class UpgradeListTypeTypeTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_companyId = CompanyThreadLocal.getCompanyId();
-
 		for (String listTypeName : _listTypeNames) {
 			_listTypeLocalService.addListType(
-				_companyId, listTypeName, _OLD_LIST_TYPE_TYPE);
+				CompanyThreadLocal.getCompanyId(), listTypeName,
+				_OLD_LIST_TYPE_TYPE);
 		}
 	}
 
@@ -67,7 +66,7 @@ public class UpgradeListTypeTypeTest {
 
 	private ListType _deleteListType(String listTypeName, String listTypeType) {
 		ListType listType = _listTypeLocalService.getListType(
-			_companyId, listTypeName, listTypeType);
+			CompanyThreadLocal.getCompanyId(), listTypeName, listTypeType);
 
 		if (listType != null) {
 			_listTypeLocalService.deleteListType(listType);
@@ -85,10 +84,12 @@ public class UpgradeListTypeTypeTest {
 
 		for (String listTypeName : _listTypeNames) {
 			ListType oldListType = _listTypeLocalService.getListType(
-				_companyId, listTypeName, _OLD_LIST_TYPE_TYPE);
+				CompanyThreadLocal.getCompanyId(), listTypeName,
+				_OLD_LIST_TYPE_TYPE);
 
 			ListType newListType = _listTypeLocalService.getListType(
-				_companyId, listTypeName, _NEW_LIST_TYPE_TYPE);
+				CompanyThreadLocal.getCompanyId(), listTypeName,
+				_NEW_LIST_TYPE_TYPE);
 
 			Assert.assertNull(oldListType);
 
@@ -104,8 +105,6 @@ public class UpgradeListTypeTypeTest {
 
 	private static final List<String> _listTypeNames = Arrays.asList(
 		"intranet", "public");
-
-	private Long _companyId;
 
 	@Inject
 	private ListTypeLocalService _listTypeLocalService;

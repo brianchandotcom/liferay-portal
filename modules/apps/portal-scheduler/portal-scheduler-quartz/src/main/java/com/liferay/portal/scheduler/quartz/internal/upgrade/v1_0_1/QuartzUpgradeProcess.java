@@ -5,18 +5,14 @@
 
 package com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_1;
 
-import com.liferay.petra.io.ProtectedObjectInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-
-import java.io.InputStream;
+import com.liferay.portal.scheduler.quartz.internal.upgrade.BaseQuartzRenameJobsUpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +25,7 @@ import org.quartz.JobDataMap;
 /**
  * @author Kevin Lee
  */
-public class QuartzUpgradeProcess extends UpgradeProcess {
+public class QuartzUpgradeProcess extends BaseQuartzRenameJobsUpgradeProcess {
 
 	public QuartzUpgradeProcess(
 		CompanyLocalService companyLocalService, JSONFactory jsonFactory) {
@@ -39,8 +35,8 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 	}
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		Map<String, Long> companyIds = new HashMap<>();
+	protected Map<String, String> getJobNamesMap() throws Exception {
+		Map<String, String> jobNamesMap = new HashMap<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select job_name, job_data from QUARTZ_JOB_DETAILS where " +
@@ -48,27 +44,15 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				JobDataMap jobDataMap = _deserializeJobData(
+				JobDataMap jobDataMap = deserializeJobDataMap(
 					resultSet.getBinaryStream("job_data"));
 
-				_loadCompanyIds(
-					companyIds, resultSet.getString("job_name"), jobDataMap);
+				_loadJobNames(
+					jobNamesMap, resultSet.getString("job_name"), jobDataMap);
 			}
 		}
 
-		_updateTables(
-			companyIds, "job_name",
-			new String[] {
-				"QUARTZ_FIRED_TRIGGERS", "QUARTZ_JOB_DETAILS", "QUARTZ_TRIGGERS"
-			});
-
-		_updateTables(
-			companyIds, "trigger_name",
-			new String[] {
-				"QUARTZ_BLOB_TRIGGERS", "QUARTZ_CRON_TRIGGERS",
-				"QUARTZ_FIRED_TRIGGERS", "QUARTZ_SIMPLE_TRIGGERS",
-				"QUARTZ_SIMPROP_TRIGGERS", "QUARTZ_TRIGGERS"
-			});
+		return jobNamesMap;
 	}
 
 	private boolean _containsColumnId(
@@ -85,18 +69,9 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private JobDataMap _deserializeJobData(InputStream inputStream)
-		throws Exception {
-
-		try (ProtectedObjectInputStream protectedObjectInputStream =
-				new ProtectedObjectInputStream(inputStream)) {
-
-			return (JobDataMap)protectedObjectInputStream.readObject();
-		}
-	}
-
-	private void _loadCompanyIds(
-			Map<String, Long> companyIds, String jobName, JobDataMap jobDataMap)
+	private void _loadJobNames(
+			Map<String, String> jobNamesMap, String jobName,
+			JobDataMap jobDataMap)
 		throws Exception {
 
 		String destinationName = jobDataMap.getString(
@@ -112,14 +87,16 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 			jobDataMap.getString(SchedulerEngine.MESSAGE));
 
 		if (message.contains("companyId")) {
-			companyIds.put(jobName, message.getLong("companyId"));
+			jobNamesMap.put(
+				jobName,
+				jobName.concat(StringPool.AT + message.getLong("companyId")));
 
 			return;
 		}
 
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
-				if (companyIds.containsKey(jobName)) {
+				if (jobNamesMap.containsKey(jobName)) {
 					return;
 				}
 
@@ -131,7 +108,8 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 					if (_containsColumnId(
 							"CTCollection", "ctCollectionId", ctCollectionId)) {
 
-						companyIds.put(jobName, companyId);
+						jobNamesMap.put(
+							jobName, jobName.concat(StringPool.AT + companyId));
 					}
 				}
 				else if (destinationName.equals("liferay/dispatch/executor")) {
@@ -145,39 +123,11 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 							"DispatchTrigger", "dispatchTriggerId",
 							dispatchTriggerId)) {
 
-						companyIds.put(jobName, companyId);
+						jobNamesMap.put(
+							jobName, jobName.concat(StringPool.AT + companyId));
 					}
 				}
 			});
-	}
-
-	private void _updateTables(
-			Map<String, Long> companyIds, String columnName,
-			String[] tableNames)
-		throws Exception {
-
-		for (String tableName : tableNames) {
-			try (PreparedStatement preparedStatement =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						connection,
-						StringBundler.concat(
-							"update ", tableName, " set ", columnName,
-							" = ? where ", columnName, " = ?"))) {
-
-				for (Map.Entry<String, Long> entry : companyIds.entrySet()) {
-					preparedStatement.setString(
-						1,
-						StringBundler.concat(
-							entry.getKey(), StringPool.AT, entry.getValue()));
-
-					preparedStatement.setString(2, entry.getKey());
-
-					preparedStatement.addBatch();
-				}
-
-				preparedStatement.executeBatch();
-			}
-		}
 	}
 
 	private final CompanyLocalService _companyLocalService;

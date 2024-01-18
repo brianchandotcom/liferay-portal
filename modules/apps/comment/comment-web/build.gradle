@@ -14,6 +14,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-upgrade-api")
+	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":apps:user:user-taglib")
 	compileOnly project(":core:petra:petra-lang")

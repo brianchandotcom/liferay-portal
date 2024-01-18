@@ -122,7 +122,7 @@ public class UpdateLicenseAction implements Action {
 		return jsonObject.toString();
 	}
 
-	private boolean _isOmniAdmin(HttpServletRequest httpServletRequest) {
+	private boolean _isOmniadmin(HttpServletRequest httpServletRequest) {
 		User user = null;
 
 		try {
@@ -158,7 +158,7 @@ public class UpdateLicenseAction implements Action {
 		// PLACEHOLDER 21
 		// PLACEHOLDER 22
 
-		if (_isOmniAdmin(httpServletRequest)) {
+		if (_isOmniadmin(httpServletRequest)) {
 			LicenseUtil.registerOrder(httpServletRequest);
 
 			return true;

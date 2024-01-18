@@ -578,6 +578,16 @@ public class VariableNameCheck extends BaseCheck {
 			return;
 		}
 
+		List<String> enforceShortTypeNames = getAttributeValues(
+			_ENFORCE_SHORT_TYPE_NAMES_KEY);
+
+		if (enforceShortTypeNames.contains(typeName)) {
+			String expectedVariableName = getExpectedVariableName(typeName);
+
+			_checkShortTypeNames(
+				detailAST, variableName, typeName, expectedVariableName);
+		}
+
 		if (variableName.matches("(?i).*" + typeName + "[0-9]*")) {
 			List<String> enforceTableSchemaFieldTypeNames = getAttributeValues(
 				_ENFORCE_TABLE_SCHEMA_FIELD_TYPE_NAMES_KEY);
@@ -609,12 +619,7 @@ public class VariableNameCheck extends BaseCheck {
 				}
 			}
 
-			List<String> enforceShortTypeNames = getAttributeValues(
-				_ENFORCE_SHORT_TYPE_NAMES_KEY);
-
-			if (!enforceShortTypeNames.contains(typeName)) {
-				return;
-			}
+			return;
 		}
 
 		String expectedVariableName = getExpectedVariableName(typeName);
@@ -664,9 +669,6 @@ public class VariableNameCheck extends BaseCheck {
 				return;
 			}
 		}
-
-		_checkShortTypeNames(
-			detailAST, variableName, typeName, expectedVariableName);
 	}
 
 	private void _checkTypo(DetailAST detailAST, String variableName) {

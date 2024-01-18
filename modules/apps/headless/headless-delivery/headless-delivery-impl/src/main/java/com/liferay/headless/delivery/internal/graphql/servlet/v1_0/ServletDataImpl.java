@@ -982,6 +982,11 @@ public class ServletDataImpl implements ServletData {
 							MessageBoardMessageResourceImpl.class,
 							"putMessageBoardMessageBatch"));
 					put(
+						"mutation#updateMessageBoardMessageMarkAsAnswer",
+						new ObjectValuePair<>(
+							MessageBoardMessageResourceImpl.class,
+							"putMessageBoardMessageMarkAsAnswer"));
+					put(
 						"mutation#deleteMessageBoardMessageMyRating",
 						new ObjectValuePair<>(
 							MessageBoardMessageResourceImpl.class,
@@ -1006,6 +1011,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							MessageBoardMessageResourceImpl.class,
 							"putMessageBoardMessageSubscribe"));
+					put(
+						"mutation#updateMessageBoardMessageUnmarkAsAnswer",
+						new ObjectValuePair<>(
+							MessageBoardMessageResourceImpl.class,
+							"putMessageBoardMessageUnmarkAsAnswer"));
 					put(
 						"mutation#updateMessageBoardMessageUnsubscribe",
 						new ObjectValuePair<>(

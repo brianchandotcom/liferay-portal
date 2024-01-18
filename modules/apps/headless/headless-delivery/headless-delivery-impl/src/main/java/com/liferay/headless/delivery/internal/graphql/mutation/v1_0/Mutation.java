@@ -3123,6 +3123,21 @@ public class Mutation {
 					callbackURL, object));
 	}
 
+	@GraphQLField
+	public boolean updateMessageBoardMessageMarkAsAnswer(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.putMessageBoardMessageMarkAsAnswer(
+					messageBoardMessageId));
+
+		return true;
+	}
+
 	@GraphQLField(
 		description = "Deletes the message board message's rating and returns a 204 if the operation succeeds."
 	)
@@ -3206,6 +3221,22 @@ public class Mutation {
 			messageBoardMessageResource ->
 				messageBoardMessageResource.putMessageBoardMessageSubscribe(
 					messageBoardMessageId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateMessageBoardMessageUnmarkAsAnswer(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.
+					putMessageBoardMessageUnmarkAsAnswer(
+						messageBoardMessageId));
 
 		return true;
 	}

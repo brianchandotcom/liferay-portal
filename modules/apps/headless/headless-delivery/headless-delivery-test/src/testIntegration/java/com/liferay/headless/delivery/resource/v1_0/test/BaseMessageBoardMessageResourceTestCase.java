@@ -416,6 +416,32 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
+	public void testPutMessageBoardMessageMarkAsAnswer() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardMessage messageBoardMessage =
+			testPutMessageBoardMessageMarkAsAnswer_addMessageBoardMessage();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardMessageResource.
+				putMessageBoardMessageMarkAsAnswerHttpResponse(
+					messageBoardMessage.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.
+				putMessageBoardMessageMarkAsAnswerHttpResponse(0L));
+	}
+
+	protected MessageBoardMessage
+			testPutMessageBoardMessageMarkAsAnswer_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteMessageBoardMessageMyRating() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardMessage messageBoardMessage =
@@ -534,6 +560,32 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 	protected MessageBoardMessage
 			testPutMessageBoardMessageSubscribe_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutMessageBoardMessageUnmarkAsAnswer() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardMessage messageBoardMessage =
+			testPutMessageBoardMessageUnmarkAsAnswer_addMessageBoardMessage();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardMessageResource.
+				putMessageBoardMessageUnmarkAsAnswerHttpResponse(
+					messageBoardMessage.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.
+				putMessageBoardMessageUnmarkAsAnswerHttpResponse(0L));
+	}
+
+	protected MessageBoardMessage
+			testPutMessageBoardMessageUnmarkAsAnswer_addMessageBoardMessage()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

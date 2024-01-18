@@ -72,6 +72,9 @@ public interface MessageBoardMessageResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public void putMessageBoardMessageMarkAsAnswer(Long messageBoardMessageId)
+		throws Exception;
+
 	public void deleteMessageBoardMessageMyRating(Long messageBoardMessageId)
 		throws Exception;
 
@@ -98,6 +101,9 @@ public interface MessageBoardMessageResource {
 		throws Exception;
 
 	public void putMessageBoardMessageSubscribe(Long messageBoardMessageId)
+		throws Exception;
+
+	public void putMessageBoardMessageUnmarkAsAnswer(Long messageBoardMessageId)
 		throws Exception;
 
 	public void putMessageBoardMessageUnsubscribe(Long messageBoardMessageId)

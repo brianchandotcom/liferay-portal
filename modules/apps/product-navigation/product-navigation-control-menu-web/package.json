@@ -17,6 +17,7 @@
 		"react-dnd": "11.1.1",
 		"react-dnd-html5-backend": "11.1.1"
 	},
+	"main": "js/index.js",
 	"name": "product-navigation-control-menu",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

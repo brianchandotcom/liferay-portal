@@ -330,7 +330,7 @@ public class DepotPermissionCheckerWrapperTest {
 	}
 
 	@Test
-	public void testIsGroupAdminWithGroup0AndNoOmniAdmin() throws Exception {
+	public void testIsGroupAdminWithGroup0AndNoOmniadmin() throws Exception {
 		DepotTestUtil.withRegularUser(
 			(user, role) -> {
 				PermissionChecker permissionChecker =
@@ -353,7 +353,7 @@ public class DepotPermissionCheckerWrapperTest {
 	}
 
 	@Test
-	public void testIsGroupAdminWithOmniAdmin() throws PortalException {
+	public void testIsGroupAdminWithOmniadmin() throws PortalException {
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			TestPropsValues.getUser());
 
@@ -440,7 +440,7 @@ public class DepotPermissionCheckerWrapperTest {
 	}
 
 	@Test
-	public void testIsGroupMemberWithGroup0AndNoOmniAdmin() throws Exception {
+	public void testIsGroupMemberWithGroup0AndNoOmniadmin() throws Exception {
 		DepotTestUtil.withRegularUser(
 			(user, role) -> {
 				PermissionChecker permissionChecker =
@@ -463,7 +463,7 @@ public class DepotPermissionCheckerWrapperTest {
 	}
 
 	@Test
-	public void testIsGroupMemberWithOmniAdmin() throws PortalException {
+	public void testIsGroupMemberWithOmniadmin() throws PortalException {
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			TestPropsValues.getUser());
 
@@ -552,7 +552,7 @@ public class DepotPermissionCheckerWrapperTest {
 	}
 
 	@Test
-	public void testIsGroupOwnerWithGroup0AndNoOmniAdmin() throws Exception {
+	public void testIsGroupOwnerWithGroup0AndNoOmniadmin() throws Exception {
 		DepotTestUtil.withRegularUser(
 			(user, role) -> {
 				PermissionChecker permissionChecker =
@@ -575,7 +575,7 @@ public class DepotPermissionCheckerWrapperTest {
 	}
 
 	@Test
-	public void testIsGroupOwnerWithOmniAdmin() throws PortalException {
+	public void testIsGroupOwnerWithOmniadmin() throws PortalException {
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			TestPropsValues.getUser());
 

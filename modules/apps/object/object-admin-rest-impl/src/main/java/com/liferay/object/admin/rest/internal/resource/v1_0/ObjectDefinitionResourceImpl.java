@@ -684,14 +684,9 @@ public class ObjectDefinitionResourceImpl
 			objectValidationRules.toArray(new ObjectValidationRule[0]),
 			objectViews);
 
-		if (status.getCode() != WorkflowConstants.STATUS_APPROVED) {
-			return _toObjectDefinition(serviceBuilderObjectDefinition);
-		}
+		if ((status.getCode() != WorkflowConstants.STATUS_APPROVED) ||
+			serviceBuilderObjectDefinition.isApproved()) {
 
-		serviceBuilderObjectDefinition =
-			_objectDefinitionService.getObjectDefinition(objectDefinitionId);
-
-		if (serviceBuilderObjectDefinition.isApproved()) {
 			return _toObjectDefinition(serviceBuilderObjectDefinition);
 		}
 

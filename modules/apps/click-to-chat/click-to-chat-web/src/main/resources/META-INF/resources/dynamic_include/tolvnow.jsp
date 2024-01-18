@@ -7,7 +7,7 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<aui:script type="text/javascript">
+<aui:script position="inline" type="text/javascript">
 	var _tn = _tn || [];
 
 	_tn.push(['account', '<%= clickToChatChatProviderAccountId %>']);

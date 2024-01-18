@@ -7,7 +7,7 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<aui:script type="text/javascript">
+<aui:script position="inline" type="text/javascript">
 	(window.lpTag = window.lpTag || {}),
 		'undefined' == typeof window.lpTag._tagCount
 			? ((window.lpTag = {

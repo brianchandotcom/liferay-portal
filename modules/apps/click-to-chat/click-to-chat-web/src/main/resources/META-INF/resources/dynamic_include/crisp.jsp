@@ -7,7 +7,7 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<aui:script type="text/javascript">
+<aui:script position="inline" type="text/javascript">
 	window.$crisp = [];
 	window.CRISP_WEBSITE_ID = '<%= clickToChatChatProviderAccountId %>';
 

@@ -52,7 +52,7 @@ if (themeDisplay.isSignedIn() && (parts.length > 1)) {
 	<c:when test="<%= themeDisplay.isSignedIn() && (parts.length > 1) %>">
 		<c:choose>
 			<c:when test="<%= Validator.isNull(identificationToken) %>">
-				<aui:script>
+				<aui:script position="inline">
 					Liferay.Util.openToast({
 						message:
 							'<%= (errorMessage != null) ? errorMessage : LanguageUtil.get(resourceBundle, "unable-to-connect-to-hubspot") %>',
@@ -61,7 +61,7 @@ if (themeDisplay.isSignedIn() && (parts.length > 1)) {
 				</aui:script>
 			</c:when>
 			<c:otherwise>
-				<aui:script type="text/javascript">
+				<aui:script position="inline" type="text/javascript">
 					window.hsConversationsSettings = {
 						identificationEmail: '<%= user.getEmailAddress() %>',
 						identificationToken: '<%= identificationToken %>',

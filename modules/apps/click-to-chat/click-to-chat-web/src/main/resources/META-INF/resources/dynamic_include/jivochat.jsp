@@ -10,7 +10,7 @@
 <aui:script async="<%= true %>" src='<%= "//code.jivosite.com/widget/" + clickToChatChatProviderAccountId %>'></aui:script>
 
 <c:if test="<%= themeDisplay.isSignedIn() %>">
-	<aui:script>
+	<aui:script position="inline">
 		function jivo_onOpen() {
 			jivo_api.setContactInfo({
 				email: '<%= user.getEmailAddress() %>',

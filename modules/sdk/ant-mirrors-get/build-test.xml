@@ -50,9 +50,9 @@
 
 	<target name="test-5">
 		<mirrors-get
-			dest="mysql-connector-j-8.0.33.jar"
+			dest="mysql-connector-j-8.3.0.jar"
 			force="false"
-			src="https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar"
+			src="https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/8.3.0/mysql-connector-j-8.3.0.jar"
 			trylocalnetwork="false"
 			verbose="true"
 		/>

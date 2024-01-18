@@ -9,7 +9,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import ApplicationsMenu from '../../src/main/resources/META-INF/resources/js/ApplicationsMenu';
+import {ApplicationsMenu} from '../../src/main/resources/META-INF/resources/js/index';
 
 configure({
 	testIdAttribute: 'data-qa-id',

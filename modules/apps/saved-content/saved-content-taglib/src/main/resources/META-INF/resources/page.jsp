@@ -25,7 +25,7 @@ Boolean saved = GetterUtil.getBoolean(request.getAttribute("liferay-saved-conten
 	</clay:button>
 
 	<react:component
-		module="js/SavedContentEntry"
+		module="{SavedContentEntry} from saved-content-taglib"
 		props='<%= (Map<String, Object>)request.getAttribute("liferay-saved-content:saved-content:data") %>'
 	/>
 </div>

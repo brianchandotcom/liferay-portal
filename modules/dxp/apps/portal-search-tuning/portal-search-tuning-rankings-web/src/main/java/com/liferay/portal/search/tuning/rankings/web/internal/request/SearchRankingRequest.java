@@ -26,8 +26,9 @@ import com.liferay.portal.search.tuning.rankings.web.internal.display.context.Ra
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingFields;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -154,7 +155,33 @@ public class SearchRankingRequest {
 			sortOrder = SortOrder.DESC;
 		}
 
-		return Arrays.asList(_sorts.field(_getOrderByCol(), sortOrder));
+		List<Sort> sorts = new ArrayList<>();
+
+		String orderByCol = _getOrderByCol();
+
+		sorts.add(_sorts.field(orderByCol, sortOrder));
+
+		sorts.add(
+			_sorts.field(
+				RankingFields.GROUP_EXTERNAL_REFERENCE_CODE, SortOrder.ASC));
+		sorts.add(
+			_sorts.field(
+				RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
+				SortOrder.ASC));
+
+		if (orderByCol.equals(RankingFields.STATUS)) {
+			sorts.add(
+				_sorts.field(
+					RankingFields.QUERY_STRING_KEYWORD, SortOrder.ASC));
+		}
+		else if (orderByCol.equals(RankingFields.QUERY_STRING_KEYWORD)) {
+			sorts.add(_sorts.field(RankingFields.STATUS, SortOrder.ASC));
+		}
+
+		sorts.add(
+			_sorts.field(RankingFields.QUERY_STRINGS_KEYWORD, SortOrder.ASC));
+
+		return sorts;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

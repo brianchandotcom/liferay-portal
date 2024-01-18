@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -297,8 +299,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 				sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
 			}
 			else {
-				sb.append(
-					FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
+				sb.append(_getFriendlyURLSeparator());
 			}
 
 			sb.append(journalArticle.getUrlTitle());
@@ -350,6 +351,19 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 		return _journalArticleService.getArticlesByLayoutUuid(
 			groupId, layoutUuid, start, end);
+	}
+
+	private String _getFriendlyURLSeparator() {
+		FriendlyURLResolver friendlyURLResolver =
+			FriendlyURLResolverRegistryUtil.
+				getFriendlyURLResolverByDefaultURLSeparator(
+					FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
+
+		if (friendlyURLResolver != null) {
+			return friendlyURLResolver.getURLSeparator();
+		}
+
+		return FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -197,7 +197,7 @@ definition {
 
 			ACUtils.searchBar(searchItem = ${canonicalURL});
 
-			ACUtils.viewNameList(nameList = "AC Page - Site Name - ${dataSourceName}");
+			ACUtils.viewNameList(nameList = "Blogs AC Title - Site Name - ${dataSourceName}");
 		}
 	}
 

@@ -35,8 +35,8 @@ public class GenerateTestrayCSVUtil {
 
 		sb.append(
 			JenkinsResultsParserUtil.join(
-				_CSV_DELIMITER, "Case Name", "Case History URL",
-				"Error Message", "Failure Type"));
+				_CSV_DELIMITER, "Case Name", "Case History URL", "Failure Type",
+				"Error Message"));
 		sb.append("\n");
 
 		List<TestrayCaseResult> allTestrayCaseResults = _getTestrayCaseResults(
@@ -45,9 +45,13 @@ public class GenerateTestrayCSVUtil {
 		sb.append(
 			_generate(allTestrayCaseResults, TestrayCaseResult.Type.UNIQUE));
 
+		sb.append("\n");
+
 		sb.append(
 			_generate(
 				allTestrayCaseResults, TestrayCaseResult.Type.DID_NOT_RUN));
+
+		sb.append("\n");
 
 		sb.append(
 			_generate(allTestrayCaseResults, TestrayCaseResult.Type.COMMON));
@@ -80,12 +84,13 @@ public class GenerateTestrayCSVUtil {
 		if (sb.length() == 0) {
 			sb.append(
 				JenkinsResultsParserUtil.join(
-					_CSV_DELIMITER, "NONE", "N/A", "N/A",
-					testrayCaseResultType.toString()));
+					_CSV_DELIMITER, "NONE", "N/A",
+					testrayCaseResultType.toString(), "N/A"));
 			sb.append("\n");
 		}
 
-		return sb.toString();
+		return JenkinsResultsParserUtil.combine(
+			testrayCaseResultType.toString(), " Failures\n", sb.toString());
 	}
 
 	private static List<TestrayCaseResult> _getTestrayCaseResults(
@@ -168,8 +173,8 @@ public class GenerateTestrayCSVUtil {
 			return JenkinsResultsParserUtil.join(
 				_CSV_DELIMITER, _cleanCSVData(getTestrayCaseName()),
 				_cleanCSVData(getHistoryURL()),
-				_cleanCSVData(getErrorMessage()),
-				_cleanCSVData(String.valueOf(getType())));
+				_cleanCSVData(String.valueOf(getType())),
+				_cleanCSVData(getErrorMessage()));
 		}
 
 		public String getErrorMessage() {

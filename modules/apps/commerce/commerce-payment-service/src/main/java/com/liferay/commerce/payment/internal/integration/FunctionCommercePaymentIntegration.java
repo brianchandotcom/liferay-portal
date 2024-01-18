@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -66,16 +68,10 @@ public class FunctionCommercePaymentIntegration
 						_functionCommercePaymentIntegrationConfiguration.
 							oAuth2ApplicationExternalReferenceCode(),
 						_getPayloadJSONObject(commercePaymentEntry),
-						_functionCommercePaymentIntegrationConfiguration.
-							authorizePath(),
-						commercePaymentEntry.getUserId()
+						"/authorize", commercePaymentEntry.getUserId()
 					).get()));
 
-			commercePaymentEntry.setPaymentStatus(
-				jsonObject.getInt("paymentStatus"));
-
-			commercePaymentEntry.setTransactionCode(
-				jsonObject.getString("transactionCode"));
+			_toCommercePaymentEntry(commercePaymentEntry, jsonObject);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -101,14 +97,11 @@ public class FunctionCommercePaymentIntegration
 						commercePaymentEntry.getCompanyId(), Http.Method.POST,
 						_functionCommercePaymentIntegrationConfiguration.
 							oAuth2ApplicationExternalReferenceCode(),
-						_getPayloadJSONObject(commercePaymentEntry),
-						_functionCommercePaymentIntegrationConfiguration.
-							cancelPath(),
+						_getPayloadJSONObject(commercePaymentEntry), "/cancel",
 						commercePaymentEntry.getUserId()
 					).get()));
 
-			commercePaymentEntry.setPaymentStatus(
-				jsonObject.getInt("paymentStatus"));
+			_toCommercePaymentEntry(commercePaymentEntry, jsonObject);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -134,14 +127,11 @@ public class FunctionCommercePaymentIntegration
 						commercePaymentEntry.getCompanyId(), Http.Method.POST,
 						_functionCommercePaymentIntegrationConfiguration.
 							oAuth2ApplicationExternalReferenceCode(),
-						_getPayloadJSONObject(commercePaymentEntry),
-						_functionCommercePaymentIntegrationConfiguration.
-							capturePath(),
+						_getPayloadJSONObject(commercePaymentEntry), "/capture",
 						commercePaymentEntry.getUserId()
 					).get()));
 
-			commercePaymentEntry.setPaymentStatus(
-				jsonObject.getInt("paymentStatus"));
+			_toCommercePaymentEntry(commercePaymentEntry, jsonObject);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -200,14 +190,11 @@ public class FunctionCommercePaymentIntegration
 						commercePaymentEntry.getCompanyId(), Http.Method.POST,
 						_functionCommercePaymentIntegrationConfiguration.
 							oAuth2ApplicationExternalReferenceCode(),
-						_getPayloadJSONObject(commercePaymentEntry),
-						_functionCommercePaymentIntegrationConfiguration.
-							refundPath(),
+						_getPayloadJSONObject(commercePaymentEntry), "/refund",
 						commercePaymentEntry.getUserId()
 					).get()));
 
-			commercePaymentEntry.setPaymentStatus(
-				jsonObject.getInt("paymentStatus"));
+			_toCommercePaymentEntry(commercePaymentEntry, jsonObject);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -234,13 +221,10 @@ public class FunctionCommercePaymentIntegration
 						_functionCommercePaymentIntegrationConfiguration.
 							oAuth2ApplicationExternalReferenceCode(),
 						_getPayloadJSONObject(commercePaymentEntry),
-						_functionCommercePaymentIntegrationConfiguration.
-							setUpPaymentPath(),
-						commercePaymentEntry.getUserId()
+						"/set-up-payment", commercePaymentEntry.getUserId()
 					).get()));
 
-			commercePaymentEntry.setPaymentStatus(
-				jsonObject.getInt("paymentStatus"));
+			_toCommercePaymentEntry(commercePaymentEntry, jsonObject);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -345,6 +329,56 @@ public class FunctionCommercePaymentIntegration
 		).put(
 			"typeSettings", typeSettingsJSONObject
 		);
+	}
+
+	private void _toCommercePaymentEntry(
+		CommercePaymentEntry commercePaymentEntry, JSONObject jsonObject) {
+
+		commercePaymentEntry.setPaymentStatus(
+			CommercePaymentEntryConstants.STATUS_FAILED);
+
+		if (jsonObject == null) {
+			return;
+		}
+
+		if (jsonObject.has("amount")) {
+			commercePaymentEntry.setAmount(
+				BigDecimal.valueOf(jsonObject.getDouble("amount")));
+		}
+
+		if (jsonObject.has("callbackURL")) {
+			commercePaymentEntry.setCallbackURL(
+				jsonObject.getString("callbackURL"));
+		}
+
+		if (jsonObject.has("cancelURL")) {
+			commercePaymentEntry.setCancelURL(
+				jsonObject.getString("cancelURL"));
+		}
+
+		if (jsonObject.has("errorMessages")) {
+			commercePaymentEntry.setErrorMessages(
+				jsonObject.getString("errorMessages"));
+		}
+
+		if (jsonObject.has("note")) {
+			commercePaymentEntry.setNote(jsonObject.getString("note"));
+		}
+
+		if (jsonObject.has("paymentStatus")) {
+			commercePaymentEntry.setPaymentStatus(
+				jsonObject.getInt("paymentStatus"));
+		}
+
+		if (jsonObject.has("redirectURL")) {
+			commercePaymentEntry.setRedirectURL(
+				jsonObject.getString("redirectURL"));
+		}
+
+		if (jsonObject.has("transactionCode")) {
+			commercePaymentEntry.setTransactionCode(
+				jsonObject.getString("transactionCode"));
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

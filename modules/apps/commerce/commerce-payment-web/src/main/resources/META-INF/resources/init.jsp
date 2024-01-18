@@ -20,7 +20,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.constants.CommercePaymentEntryConstants" %><%@
 page import="com.liferay.commerce.payment.constants.CommercePaymentScreenNavigationConstants" %><%@
-page import="com.liferay.commerce.payment.constants.CommercePaymentWebKeys" %><%@
 page import="com.liferay.commerce.payment.entry.CommercePaymentEntryRefundType" %><%@
 page import="com.liferay.commerce.payment.exception.CommercePaymentEntryAmountException" %><%@
 page import="com.liferay.commerce.payment.exception.CommercePaymentEntryPaymentIntegrationTypeException" %><%@
@@ -37,6 +36,7 @@ page import="com.liferay.commerce.payment.web.internal.display.context.CommerceC
 page import="com.liferay.commerce.payment.web.internal.display.context.CommercePaymentEntryDisplayContext" %><%@
 page import="com.liferay.commerce.payment.web.internal.display.context.CommercePaymentMethodGroupRelQualifiersDisplayContext" %><%@
 page import="com.liferay.commerce.payment.web.internal.display.context.CommercePaymentMethodGroupRelsDisplayContext" %><%@
+page import="com.liferay.commerce.payment.web.internal.display.context.FunctionCommercePaymentIntegrationConfigurationDisplayContext" %><%@
 page import="com.liferay.commerce.term.constants.CommerceTermEntryConstants" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
@@ -47,7 +47,6 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>

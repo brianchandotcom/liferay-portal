@@ -208,14 +208,14 @@ definition {
 	@summary = "Default summary"
 	macro selectFilterInCollectionFilter(searchTerm = null, columnNumber = null, filterName = null, title = null, selectedName = null, categoryNameList = null) {
 		if (isSet(columnNumber)) {
-			Click.clickNoWaitForVisible(
+			Click.waitForMenuToggleJSClick(
 				key_columnNumber = ${columnNumber},
 				key_elementHeader = "//label[normalize-space(text())='${title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]",
 				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 		else {
-			Click(
+			Click.waitForMenuToggleJSClick(
 				key_title = ${title},
 				locator1 = "PageEditor#COLLECTION_FILTER_DROPDOWN_TOGGLE");
 		}

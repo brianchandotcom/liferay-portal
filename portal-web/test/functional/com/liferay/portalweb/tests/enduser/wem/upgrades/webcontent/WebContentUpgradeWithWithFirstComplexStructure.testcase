@@ -229,7 +229,7 @@ definition {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
 			WaitForVisible(
-				key_fieldFieldLabel = "PaginaOrigem",
+				key_fieldFieldLabel = "Imagem Aba 01",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 			for (var fieldName : list "Logo,Beneficio,Companhia,JeitoIdentificar,Destino,DescricaoOpPar,CompanhiaOperadora") {

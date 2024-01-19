@@ -12,12 +12,16 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rafael Praxedes
  */
 public abstract class BaseUsersProvider implements UsersProvider {
+
+	public BaseUsersProvider(
+		PermissionCheckerFactory permissionCheckerFactory) {
+
+		_permissionCheckerFactory = permissionCheckerFactory;
+	}
 
 	protected boolean hasViewPermission(
 		String className, long classPK, User user) {
@@ -29,7 +33,7 @@ public abstract class BaseUsersProvider implements UsersProvider {
 		if (modelResourcePermission != null) {
 			try {
 				return modelResourcePermission.contains(
-					permissionCheckerFactory.create(user), classPK,
+					_permissionCheckerFactory.create(user), classPK,
 					ActionKeys.VIEW);
 			}
 			catch (PortalException portalException) {
@@ -40,7 +44,6 @@ public abstract class BaseUsersProvider implements UsersProvider {
 		return false;
 	}
 
-	@Reference
-	protected PermissionCheckerFactory permissionCheckerFactory;
+	private final PermissionCheckerFactory _permissionCheckerFactory;
 
 }

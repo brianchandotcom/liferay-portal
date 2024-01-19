@@ -12,22 +12,25 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Feliphe Marinho
  */
-@Component(
-	property = "recipient.type=" + NotificationRecipientConstants.TYPE_USER,
-	service = UsersProvider.class
-)
 public class DefaultUsersProvider
 	extends BaseUsersProvider implements UsersProvider {
+
+	public DefaultUsersProvider(
+		PermissionCheckerFactory permissionCheckerFactory,
+		UserLocalService userLocalService) {
+
+		super(permissionCheckerFactory);
+
+		_userLocalService = userLocalService;
+	}
 
 	@Override
 	public String getRecipientType() {
@@ -62,7 +65,6 @@ public class DefaultUsersProvider
 			});
 	}
 
-	@Reference
-	private UserLocalService _userLocalService;
+	private final UserLocalService _userLocalService;
 
 }

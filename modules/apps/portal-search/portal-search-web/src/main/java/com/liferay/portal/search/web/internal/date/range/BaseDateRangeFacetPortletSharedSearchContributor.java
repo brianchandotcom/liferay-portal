@@ -98,9 +98,12 @@ public abstract class BaseDateRangeFacetPortletSharedSearchContributor {
 				selectedRangeStrings.add(rangesMap.get(selectedRange));
 			}
 			else {
-				selectedRangeStrings.add(
-					DateRangeFactoryUtil.getRangeString(
-						selectedRange, CalendarFactoryUtil.getCalendar()));
+				String rangeString = DateRangeFactoryUtil.getRangeString(
+					selectedRange, CalendarFactoryUtil.getCalendar());
+
+				if (Validator.isNotNull(rangeString)) {
+					selectedRangeStrings.add(rangeString);
+				}
 			}
 		}
 

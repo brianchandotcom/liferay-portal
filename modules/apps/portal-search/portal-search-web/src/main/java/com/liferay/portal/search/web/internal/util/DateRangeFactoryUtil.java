@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -108,6 +109,10 @@ public class DateRangeFactoryUtil {
 	}
 
 	public static String replaceAliases(String rangeString, Calendar calendar) {
+		if (Validator.isNull(rangeString)) {
+			return StringPool.BLANK;
+		}
+
 		Calendar now = (Calendar)calendar.clone();
 
 		Calendar pastHour = (Calendar)now.clone();

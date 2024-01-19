@@ -166,5 +166,21 @@
 		"facetable": true,
 		"key": "licence-duration",
 		"title": "Licence Duration"
+	},
+	{
+		"categoryKey": "resource-requirements",
+		"cpDefinitionExternalReferenceCode": "MKT-NUMBER-CPU",
+		"description": "Number of CPUs to Resource Requirements",
+		"facetable": true,
+		"key": "cpu",
+		"title": "Number of CPUs"
+	},
+	{
+		"categoryKey": "resource-requirements",
+		"cpDefinitionExternalReferenceCode": "MKT-RAM",
+		"description": "Ram in GB to Resource Requirements",
+		"facetable": true,
+		"key": "ram",
+		"title": "Ram in GB"
 	}
 ]

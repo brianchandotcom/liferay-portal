@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTracker;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.Authenticator;
-import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.RememberMeTokenLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -203,84 +202,42 @@ public class AuthenticatedSessionManagerUtil {
 			user.getUserId());
 
 		if (rememberMe) {
-			Cookie loginCookie = new Cookie(CookiesConstants.NAME_LOGIN, login);
-
-			if (domain != null) {
-				loginCookie.setDomain(domain);
-			}
-
-			loginCookie.setMaxAge(loginMaxAge);
-
 			CookiesManagerUtil.addCookie(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, loginCookie,
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
+				_buildRememberMeCookie(
+					CookiesConstants.NAME_LOGIN, login, domain, loginMaxAge),
 				httpServletRequest, httpServletResponse);
 
-			Cookie passwordCookie = new Cookie(
-				CookiesConstants.NAME_PASSWORD,
-				EncryptorUtil.encrypt(company.getKeyObj(), password));
-
-			if (domain != null) {
-				passwordCookie.setDomain(domain);
-			}
-
-			passwordCookie.setMaxAge(loginMaxAge);
-
 			CookiesManagerUtil.addCookie(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, passwordCookie,
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
+				_buildRememberMeCookie(
+					CookiesConstants.NAME_REMEMBER_ME, Boolean.TRUE.toString(),
+					domain, loginMaxAge),
 				httpServletRequest, httpServletResponse);
 
-			Cookie rememberMeCookie = new Cookie(
-				CookiesConstants.NAME_REMEMBER_ME, Boolean.TRUE.toString());
-
-			if (domain != null) {
-				rememberMeCookie.setDomain(domain);
-			}
-
-			rememberMeCookie.setMaxAge(loginMaxAge);
-
-			CookiesManagerUtil.addCookie(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, rememberMeCookie,
-				httpServletRequest, httpServletResponse);
-
-			Cookie rememberMeTokenTokenCookie = new Cookie(
-				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
-				StringPool.BLANK);
-
-			if (domain != null) {
-				rememberMeTokenTokenCookie.setDomain(domain);
-			}
-
-			rememberMeTokenTokenCookie.setMaxAge(loginMaxAge);
-			rememberMeTokenTokenCookie.setPath(StringPool.SLASH);
-
-			Date tokenExpirationDate = new Date(
-				System.currentTimeMillis() + ((long)loginMaxAge * 1000));
+			Cookie cookie = _buildRememberMeCookie(
+				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN, StringPool.BLANK,
+				domain, loginMaxAge);
 
 			RememberMeToken rememberMeToken =
 				RememberMeTokenLocalServiceUtil.addRememberMeToken(
-					user.getCompanyId(), user.getUserId(), tokenExpirationDate,
-					rememberMeTokenTokenCookie::setValue);
+					user.getCompanyId(), user.getUserId(),
+					new Date(
+						System.currentTimeMillis() +
+							((long)loginMaxAge * 1000)),
+					cookie::setValue);
+
+			CookiesManagerUtil.addCookie(
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
+				httpServletRequest, httpServletResponse);
 
 			CookiesManagerUtil.addCookie(
 				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				rememberMeTokenTokenCookie, httpServletRequest,
-				httpServletResponse);
-
-			Cookie rememberMeTokenIdCookie = new Cookie(
-				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
-				String.valueOf(rememberMeToken.getRememberMeTokenId()));
-
-			if (domain != null) {
-				rememberMeTokenIdCookie.setDomain(domain);
-			}
-
-			rememberMeTokenIdCookie.setMaxAge(loginMaxAge);
-			rememberMeTokenIdCookie.setPath(StringPool.SLASH);
-
-			CookiesManagerUtil.addCookie(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				rememberMeTokenIdCookie, httpServletRequest,
-				httpServletResponse);
+				_buildRememberMeCookie(
+					CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
+					String.valueOf(rememberMeToken.getRememberMeTokenId()),
+					domain, loginMaxAge),
+				httpServletRequest, httpServletResponse);
 		}
 	}
 
@@ -422,6 +379,20 @@ public class AuthenticatedSessionManagerUtil {
 			MessageBusUtil.sendMessage(
 				DestinationNames.LIVE_USERS, jsonObject.toString());
 		}
+	}
+
+	private static Cookie _buildRememberMeCookie(
+		String name, String value, String domain, int maxAge) {
+
+		Cookie cookie = new Cookie(name, value);
+
+		if (domain != null) {
+			cookie.setDomain(domain);
+		}
+
+		cookie.setMaxAge(maxAge);
+
+		return cookie;
 	}
 
 	private static User _getAuthenticatedUser(

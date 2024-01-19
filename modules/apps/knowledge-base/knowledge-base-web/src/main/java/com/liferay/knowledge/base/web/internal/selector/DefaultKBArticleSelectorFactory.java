@@ -5,16 +5,22 @@
 
 package com.liferay.knowledge.base.web.internal.selector;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.knowledge.base.constants.KBFolderConstants;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.knowledge.base.service.KBFolderLocalService;
+import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -30,23 +36,35 @@ public class DefaultKBArticleSelectorFactory
 
 		ClassName className = _classNameLocalService.getClassName(classNameId);
 
-		return _serviceTrackerMap.getService(className.getClassName());
+		return _kbArticleSelectors.get(className.getClassName());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, KBArticleSelector.class, "model.class.name");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_kbArticleSelectors.put(
+			KBArticle.class.getName(),
+			new KBArticleKBArticleSelector(_kbArticleService));
+		_kbArticleSelectors.put(
+			KBFolder.class.getName(),
+			new KBFolderKBArticleSelector(
+				_kbArticleService, _kbFolderService,
+				_kbFolderLocalService.createKBFolder(
+					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID)));
 	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	private ServiceTrackerMap<String, KBArticleSelector> _serviceTrackerMap;
+	private final Map<String, KBArticleSelector> _kbArticleSelectors =
+		new HashMap<>();
+
+	@Reference
+	private KBArticleService _kbArticleService;
+
+	@Reference
+	private KBFolderLocalService _kbFolderLocalService;
+
+	@Reference
+	private KBFolderService _kbFolderService;
 
 }

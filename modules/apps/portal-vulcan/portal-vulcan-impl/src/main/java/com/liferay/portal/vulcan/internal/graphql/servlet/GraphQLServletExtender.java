@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -1665,13 +1666,44 @@ public class GraphQLServletExtender {
 		List<ServletData> servletDatas) {
 
 		for (ServletData servletData : servletDatas) {
-			String graphQLNamespace = servletData.getGraphQLNamespace();
+			Set<String> graphQLNamespaces = new HashSet<>();
 
-			if (graphQLNamespace == null) {
+			if (servletData.getPath() != null) {
+				String path = servletData.getPath();
+
+				if (path.startsWith("/")) {
+					path = path.substring(1);
+				}
+
+				String[] pathParts = path.split("/");
+
+				String firstPathPart = StringUtil.removeLast(
+					pathParts[0], "-graphql");
+
+				int index = firstPathPart.indexOf("-rest");
+
+				if (index != -1) {
+					firstPathPart = firstPathPart.substring(0, index);
+				}
+
+				graphQLNamespaces.add(
+					CamelCaseUtil.toCamelCase(
+						firstPathPart + "_" + pathParts[1]));
+			}
+
+			if (servletData.getGraphQLNamespace() != null) {
+				graphQLNamespaces.add(servletData.getGraphQLNamespace());
+			}
+
+			if (graphQLNamespaces.isEmpty()) {
 				continue;
 			}
 
 			Object query = function.apply(servletData);
+
+			if (query == null) {
+				continue;
+			}
 
 			Class<?> clazz = query.getClass();
 
@@ -1689,54 +1721,59 @@ public class GraphQLServletExtender {
 				continue;
 			}
 
-			GraphQLObjectType.Builder builder = new GraphQLObjectType.Builder();
+			for (String graphQLNamespace : graphQLNamespaces) {
+				GraphQLObjectType.Builder builder =
+					new GraphQLObjectType.Builder();
 
-			String prefix = "";
+				String prefix = "";
 
-			if (mutation) {
-				prefix = "Mutation";
-			}
+				if (mutation) {
+					prefix = "Mutation";
+				}
 
-			builder.name(
-				prefix + StringUtil.upperCaseFirstLetter(graphQLNamespace));
+				builder.name(
+					prefix + StringUtil.upperCaseFirstLetter(graphQLNamespace));
 
-			GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
-				processingElementsContainer.getCodeRegistryBuilder();
+				GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
+					processingElementsContainer.getCodeRegistryBuilder();
 
-			for (Method method : methods) {
-				_servletDataMap.put(method, servletData);
+				for (Method method : methods) {
+					_servletDataMap.put(method, servletData);
 
-				builder.field(
-					_graphQLFieldRetriever.getField(
-						clazz.getSimpleName(), method,
-						processingElementsContainer));
+					builder.field(
+						_graphQLFieldRetriever.getField(
+							clazz.getSimpleName(), method,
+							processingElementsContainer));
+
+					graphQLSchemaBuilder.codeRegistry(
+						graphQLCodeRegistryBuilder.dataFetcher(
+							FieldCoordinates.coordinates(
+								graphQLNamespace, method.getName()),
+							new LiferayMethodDataFetcher(
+								new ServletDataRequestContext(
+									_companyId, method, mutation, servletData),
+								_graphQLRequestContextValidators,
+								_liferayMethodDataFetchingProcessor, method)
+						).build());
+				}
+
+				graphQLObjectTypeBuilder.field(
+					_addField(builder.build(), graphQLNamespace));
+
+				String parentField = GraphQLConstants.NAMESPACE_QUERY;
+
+				if (mutation) {
+					parentField = GraphQLConstants.NAMESPACE_MUTATION;
+				}
 
 				graphQLSchemaBuilder.codeRegistry(
 					graphQLCodeRegistryBuilder.dataFetcher(
 						FieldCoordinates.coordinates(
-							graphQLNamespace, method.getName()),
-						new LiferayMethodDataFetcher(
-							new ServletDataRequestContext(
-								_companyId, method, mutation, servletData),
-							_graphQLRequestContextValidators,
-							_liferayMethodDataFetchingProcessor, method)
+							parentField, graphQLNamespace),
+						(DataFetcher<Object>)
+							dataFetchingEnvironment -> new Object()
 					).build());
 			}
-
-			graphQLObjectTypeBuilder.field(
-				_addField(builder.build(), graphQLNamespace));
-
-			String parentField = GraphQLConstants.NAMESPACE_QUERY;
-
-			if (mutation) {
-				parentField = GraphQLConstants.NAMESPACE_MUTATION;
-			}
-
-			graphQLSchemaBuilder.codeRegistry(
-				graphQLCodeRegistryBuilder.dataFetcher(
-					FieldCoordinates.coordinates(parentField, graphQLNamespace),
-					(DataFetcher<Object>)dataFetchingEnvironment -> new Object()
-				).build());
 		}
 	}
 

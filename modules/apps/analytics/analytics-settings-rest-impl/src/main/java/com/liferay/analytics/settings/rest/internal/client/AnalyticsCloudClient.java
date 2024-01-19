@@ -44,10 +44,10 @@ import java.net.HttpURLConnection;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Riccardo Ferrari
@@ -130,7 +130,7 @@ public class AnalyticsCloudClient {
 		JSONObject contentJSONObject = JSONFactoryUtil.createJSONObject(
 			content);
 
-		_connectionProperties = contentJSONObject.toMap();
+		_connectionProperties.putAll(contentJSONObject.toMap());
 
 		return _connectionProperties;
 	}
@@ -155,7 +155,7 @@ public class AnalyticsCloudClient {
 			Http.Response response = options.getResponse();
 
 			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				_connectionProperties = new HashMap<>();
+				_connectionProperties.clear();
 
 				return ObjectMapperHolder._objectMapper.readValue(
 					content, AnalyticsDataSource.class);
@@ -459,7 +459,8 @@ public class AnalyticsCloudClient {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsCloudClient.class);
 
-	private static Map<String, Object> _connectionProperties = new HashMap<>();
+	private static final Map<String, Object> _connectionProperties =
+		new ConcurrentHashMap<>();
 
 	private final Http _http;
 

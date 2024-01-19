@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -1655,15 +1656,21 @@ public class DefaultObjectEntryManagerImpl
 			}
 
 			if (objectField.isLocalized()) {
-				value = objectEntry.getPropertyValue(
+				Object localizedValue = objectEntry.getPropertyValue(
 					objectField.getI18nObjectFieldName());
 
-				if (value == null) {
-					continue;
+				if (localizedValue != null) {
+					values.put(
+						objectField.getI18nObjectFieldName(),
+						(Serializable)localizedValue);
 				}
-
-				values.put(
-					objectField.getI18nObjectFieldName(), (Serializable)value);
+				else if (value != null) {
+					values.put(
+						objectField.getI18nObjectFieldName(),
+						HashMapBuilder.put(
+							_language.getLanguageId(locale), value
+						).build());
+				}
 
 				continue;
 			}
@@ -1710,6 +1717,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ObjectActionEngine _objectActionEngine;

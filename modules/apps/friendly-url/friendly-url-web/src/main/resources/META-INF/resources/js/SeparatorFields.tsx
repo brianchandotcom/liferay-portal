@@ -7,80 +7,100 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React from 'react';
+import React, {useState} from 'react';
 
-type Props = {
-	errors: {
-		errorMessage?: string;
-		fields?: Record<string, string>;
-	};
-	fields: Array<{
-		label: string;
-		name: string;
-		value: string;
-	}>;
+type Errors = {
+	errorMessage?: string;
+	fields?: Record<string, string>;
+};
+
+type Field = {
+	label: string;
+	name: string;
+	value: string;
+};
+
+type FieldsProps = {
+	errors: Errors;
+	fields: Field[];
 	url: string;
 };
 
-export default function SeparatorFields({errors, fields, url}: Props) {
-	const id = useId();
-
+export default function SeparatorFields({errors, fields, url}: FieldsProps) {
 	return (
 		<>
-			{fields.map((field) => {
-				const error = errors.fields?.[field.name];
-
-				return (
-					<ClayForm.Group
-						className={classNames({
-							'has-error': error,
-						})}
-						key={field.name}
-					>
-						<label className="mb-0" htmlFor={field.name}>
-							{field.label}
-						</label>
-
-						<p className="mb-1 small text-secondary">{url}</p>
-
-						<p className="sr-only" id={id}>
-							{sub(
-								Liferay.Language.get(
-									'this-will-work-as-a-suffix-for-x'
-								),
-								url
-							)}
-						</p>
-
-						<ClayInput.Group>
-							<ClayInput.GroupItem prepend shrink>
-								<ClayInput.GroupText aria-hidden="true">
-									/
-								</ClayInput.GroupText>
-							</ClayInput.GroupItem>
-
-							<ClayInput.GroupItem append>
-								<ClayInput
-									aria-describedby={id}
-									defaultValue={field.value}
-									id={field.name}
-									name={field.name}
-								/>
-							</ClayInput.GroupItem>
-						</ClayInput.Group>
-
-						{error ? (
-							<ClayForm.FeedbackGroup>
-								<ClayForm.FeedbackItem>
-									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-									{error}
-								</ClayForm.FeedbackItem>
-							</ClayForm.FeedbackGroup>
-						) : null}
-					</ClayForm.Group>
-				);
-			})}
+			{fields.map((field) => (
+				<Field
+					errors={errors}
+					field={field}
+					key={field.name}
+					url={url}
+				/>
+			))}
 		</>
+	);
+}
+
+type FieldProps = {
+	errors: Errors;
+	field: Field;
+	url: string;
+};
+
+function Field({errors, field, url}: FieldProps) {
+	const descriptionId = useId();
+
+	const {label, name} = field;
+	const error = errors.fields?.[name];
+
+	const [value, setValue] = useState(field.value);
+
+	return (
+		<ClayForm.Group
+			className={classNames({
+				'has-error': error,
+			})}
+			key={name}
+		>
+			<label className="mb-0" htmlFor={name}>
+				{label}
+			</label>
+
+			<p className="mb-1 small text-secondary">{url}</p>
+
+			<p className="sr-only" id={descriptionId}>
+				{sub(
+					Liferay.Language.get('this-will-work-as-a-suffix-for-x'),
+					url
+				)}
+			</p>
+
+			<ClayInput.Group>
+				<ClayInput.GroupItem prepend shrink>
+					<ClayInput.GroupText aria-hidden="true">
+						/
+					</ClayInput.GroupText>
+				</ClayInput.GroupItem>
+
+				<ClayInput.GroupItem append>
+					<ClayInput
+						aria-describedby={descriptionId}
+						name={name}
+						onChange={(event) => setValue(event.target.value)}
+						value={value}
+					/>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
+
+			{error ? (
+				<ClayForm.FeedbackGroup>
+					<ClayForm.FeedbackItem>
+						<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+						{error}
+					</ClayForm.FeedbackItem>
+				</ClayForm.FeedbackGroup>
+			) : null}
+		</ClayForm.Group>
 	);
 }

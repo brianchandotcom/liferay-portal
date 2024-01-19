@@ -215,6 +215,11 @@ public class DDMFormTemplateContextFactoryImpl
 			containerId = StringUtil.randomId();
 		}
 
+		templateContext.put(
+			"activePage",
+			ParamUtil.getInteger(
+				ddmFormRenderingContext.getHttpServletRequest(), "activePage"));
+
 		_setDDMFormFieldsEvaluableProperty(ddmForm, ddmFormLayout);
 
 		Locale locale = ddmFormRenderingContext.getLocale();

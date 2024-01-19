@@ -58,6 +58,13 @@ const Pages = React.forwardRef(
 				role="group"
 			>
 				<input
+					key={portletNamespace + 'activePage'}
+					name={portletNamespace + 'activePage'}
+					type="hidden"
+					value={activePage}
+				/>
+
+				<input
 					key={portletNamespace + 'persistDefaultValues'}
 					name={portletNamespace + 'persistDefaultValues'}
 					type="hidden"

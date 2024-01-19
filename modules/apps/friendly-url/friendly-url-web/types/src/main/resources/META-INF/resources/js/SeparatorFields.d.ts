@@ -5,21 +5,30 @@
 
 /// <reference types="react" />
 
-declare type Props = {
-	errors: {
-		errorMessage?: string;
-		fields?: Record<string, string>;
-	};
-	fields: Array<{
-		label: string;
-		name: string;
-		value: string;
-	}>;
+declare type Errors = {
+	errorMessage?: string;
+	fields?: Record<string, string>;
+};
+declare type Field = {
+	defaultValue: string;
+	label: string;
+	name: string;
+	value: string;
+};
+declare type FieldsProps = {
+	errors: Errors;
+	fields: Field[];
 	url: string;
 };
 export default function SeparatorFields({
 	errors,
 	fields,
 	url,
-}: Props): JSX.Element;
+}: FieldsProps): JSX.Element;
+declare type FieldProps = {
+	errors: Errors;
+	field: Field;
+	url: string;
+};
+declare function Field({errors, field, url}: FieldProps): JSX.Element;
 export {};

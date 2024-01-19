@@ -55,30 +55,27 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		ManagementBar.setFilterAndOrder(orderBy = "Title");
+		AssertTextEquals.assertPartialText(
+			key_rowEntry = "Independent",
+			locator1 = "ContentRow#ENTRY_CONTENT_PARTIAL_TEXt",
+			value1 = "Independent");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Installed");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No apps were found.");
+
+		Click.clickNoMouseOver(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Active");
 
 		AssertTextEquals.assertPartialText(
 			key_rowEntry = "Independent",
 			locator1 = "ContentRow#ENTRY_CONTENT_PARTIAL_TEXt",
 			value1 = "Independent");
 
-		ManagementBar.sortAssets(sortDirection = "Ascending");
-
-		ManagementBar.setFilterAndOrder(filterBy = "Communication");
-
-		AssertTextEquals.assertPartialText(
-			key_rowEntry = "Wiki",
-			locator1 = "ContentRow#ENTRY_CONTENT_PARTIAL_TEXt",
-			value1 = "Wiki");
-
-		ManagementBar.sortAssets(sortDirection = "Descending");
-
-		ManagementBar.setFilterAndOrder(filterBy = "Utility");
-
-		AssertTextEquals.assertPartialText(
-			key_rowEntry = "Account",
-			locator1 = "ContentRow#ENTRY_CONTENT_PARTIAL_TEXt",
-			value1 = "Account");
+		Click.clickNoMouseOver(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
 	}
 
 	@priority = 3

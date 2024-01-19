@@ -324,15 +324,13 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 									value="<%= curArticle.getDisplayDate() %>"
 								/>
 
-								<c:choose>
-									<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-202534") %>'>
-										<liferay-ui:search-container-column-date
-											cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-											name="create-date"
-											value="<%= curArticle.getCreateDate() %>"
-										/>
-									</c:when>
-								</c:choose>
+								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-202534") %>'>
+									<liferay-ui:search-container-column-date
+										cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+										name="create-date"
+										value="<%= curArticle.getCreateDate() %>"
+									/>
+								</c:if>
 							</c:when>
 							<c:otherwise>
 								<liferay-ui:search-container-column-text
@@ -355,15 +353,13 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 									value="<%= curArticle.getDisplayDate() %>"
 								/>
 
-								<c:choose>
-									<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-202534") %>'>
-										<liferay-ui:search-container-column-date
-											cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-											name="create-date"
-											value="<%= curArticle.getCreateDate() %>"
-										/>
-									</c:when>
-								</c:choose>
+								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-202534") %>'>
+									<liferay-ui:search-container-column-date
+										cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+										name="create-date"
+										value="<%= curArticle.getCreateDate() %>"
+									/>
+								</c:if>
 
 								<%
 								DDMStructure ddmStructure = curArticle.getDDMStructure();
@@ -573,15 +569,13 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							value="--"
 						/>
 
-						<c:choose>
-							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-202534") %>'>
-								<liferay-ui:search-container-column-date
-									cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-									name="create-date"
-									value="<%= curFolder.getCreateDate() %>"
-								/>
-							</c:when>
-						</c:choose>
+						<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-202534") %>'>
+							<liferay-ui:search-container-column-date
+								cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+								name="create-date"
+								value="<%= curFolder.getCreateDate() %>"
+							/>
+						</c:if>
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand-smallest table-cell-minw-150"

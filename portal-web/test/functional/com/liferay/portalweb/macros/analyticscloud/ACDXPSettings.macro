@@ -90,16 +90,6 @@ definition {
 			locator1 = "Button#ANY");
 
 		WaitForElementNotPresent(locator1 = "ACSettings#LOADING_ANIMATION");
-
-		while (IsElementPresent(key_text = "Try Again", locator1 = "Button#ANY")) {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-
-			Click(
-				key_text = "Previous",
-				locator1 = "Button#ANY");
-		}
 	}
 
 	@summary = "Default summary"

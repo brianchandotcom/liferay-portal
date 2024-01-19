@@ -6,4 +6,10 @@
 /// <reference types="react" />
 
 export declare const manyMarkerId = 'manyMarker';
-export default function ManyMarker(): JSX.Element;
+interface ManyMarkerProps {
+	objectRelationshipId: string;
+}
+export default function ManyMarker({
+	objectRelationshipId,
+}: ManyMarkerProps): JSX.Element;
+export {};

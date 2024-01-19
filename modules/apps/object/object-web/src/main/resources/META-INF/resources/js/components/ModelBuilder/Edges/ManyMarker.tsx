@@ -7,11 +7,15 @@ import React from 'react';
 
 export const manyMarkerId = 'manyMarker';
 
-export default function ManyMarker() {
+interface ManyMarkerProps {
+	objectRelationshipId: string;
+}
+
+export default function ManyMarker({objectRelationshipId}: ManyMarkerProps) {
 	return (
 		<defs>
 			<marker
-				id={manyMarkerId}
+				id={`${manyMarkerId}#${objectRelationshipId}`}
 				markerHeight="10"
 				markerWidth="22"
 				orient="auto"

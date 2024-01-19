@@ -6,4 +6,10 @@
 /// <reference types="react" />
 
 export declare const oneMarkerId = 'oneMarker';
-export default function OneMarker(): JSX.Element;
+interface OneMarkerProps {
+	objectRelationshipId: string;
+}
+export default function OneMarker({
+	objectRelationshipId,
+}: OneMarkerProps): JSX.Element;
+export {};

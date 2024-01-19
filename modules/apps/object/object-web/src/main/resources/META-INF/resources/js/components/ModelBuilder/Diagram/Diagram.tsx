@@ -73,13 +73,13 @@ function DiagramBuilder() {
 		};
 	}>();
 
-	const edges: Edge<ObjectRelationshipEdgeData>[] = [];
+	const edges: Edge<ObjectRelationshipEdgeData[]>[] = [];
 
 	const nodes: Node<ObjectDefinitionNodeData>[] = [];
 
 	elements.forEach((element) => {
 		if (isEdge(element)) {
-			edges.push(element as Edge<ObjectRelationshipEdgeData>);
+			edges.push(element as Edge<ObjectRelationshipEdgeData[]>);
 		}
 		else {
 			nodes.push(element as Node<ObjectDefinitionNodeData>);

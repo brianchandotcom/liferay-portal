@@ -7,14 +7,11 @@
 
 import {EdgeProps} from 'react-flow-renderer';
 import {ObjectRelationshipEdgeData} from '../types';
-import './Edge.scss';
 export default function SelfObjectRelationshipEdge({
 	data,
-	id,
-	source,
+	id: edgeId,
 	sourceX,
 	sourceY,
-	style,
 	targetX,
 	targetY,
-}: EdgeProps<ObjectRelationshipEdgeData>): JSX.Element | null;
+}: EdgeProps<ObjectRelationshipEdgeData[]>): JSX.Element;

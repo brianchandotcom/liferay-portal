@@ -32,6 +32,7 @@ export default class DatePicker extends React.Component {
 		},
 		disabled: PropTypes.bool,
 		displayLabel: PropTypes.bool,
+		header: PropTypes.node,
 		maxDate: PropTypes.instanceOf(moment),
 		maxRange: PropTypes.number,
 		minDate: PropTypes.instanceOf(moment),
@@ -176,6 +177,7 @@ export default class DatePicker extends React.Component {
 				date,
 				disabled,
 				displayLabel,
+				header,
 				maxDate,
 				maxRange,
 				minDate,
@@ -196,12 +198,20 @@ export default class DatePicker extends React.Component {
 
 		return (
 			<div aria-disabled={disabled} className={getCN(classes, className)}>
+				{header && (
+					<div className='picker-header picker-header--border'>
+						{header}
+					</div>
+				)}
+
 				{displayLabel && isRange(date) && (
-					<label>
-						{date.start && !date.end
-							? Liferay.Language.get('end-date')
-							: Liferay.Language.get('start-date')}
-					</label>
+					<div className='picker-header'>
+						<label>
+							{date.start && !date.end
+								? Liferay.Language.get('end-date')
+								: Liferay.Language.get('start-date')}
+						</label>
+					</div>
 				)}
 
 				<div className='controls'>
@@ -219,7 +229,7 @@ export default class DatePicker extends React.Component {
 							onChange={this.handleYearSelect}
 							options={range(
 								endYear || currentYear + 5,
-								Math.min(startYear, currentYear - 1),
+								Math.min(startYear - 1, currentYear - 1),
 								-1
 							).map(year => ({
 								label: year,
@@ -232,6 +242,7 @@ export default class DatePicker extends React.Component {
 					<ClayButton
 						aria-label={Liferay.Language.get('previous-month')}
 						className='button-root'
+						data-testid='previous-month'
 						disabled={this.isPrevDisabled()}
 						displayType='secondary'
 						monospaced

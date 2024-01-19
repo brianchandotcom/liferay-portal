@@ -1,11 +1,11 @@
 import ActiveIndividualsChart from '../components/ActiveIndividualsChart';
 import Card from 'shared/components/Card';
-import DropdownRangeKey from 'shared/hoc/DropdownRangeKey';
 import IndividualSiteMetricsQuery from 'shared/queries/IndividualSiteMetricsQuery';
 import IntervalSelector from 'shared/components/IntervalSelector';
-import React, {useCallback} from 'react';
+import React from 'react';
 import {compose} from 'redux';
 import {Containers} from 'shared/components/download-report/DownloadPDFReport';
+import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {graphql} from '@apollo/react-hoc';
 import {Interval} from 'shared/types';
 import {INTERVAL_KEY_MAP, isHourlyRangeKey} from 'shared/util/time';
@@ -31,7 +31,7 @@ interface IActiveIndividualsCardProps
 	interval: Interval;
 	loading: Boolean;
 	onChangeInterval: (val: any) => void;
-	onRangeSelectorsChange: (val: string) => void;
+	onRangeSelectorsChange: (val: RangeSelectors) => void;
 	rangeSelectors: RangeSelectors;
 }
 
@@ -63,14 +63,14 @@ const ActiveIndividualsCard: React.FC<IActiveIndividualsCardProps> = ({
 
 					<DropdownRangeKey
 						legacy={false}
-						onChange={useCallback(newVal => {
+						onRangeSelectorChange={newVal => {
 							onRangeSelectorsChange &&
 								onRangeSelectorsChange(newVal);
 
 							if (isHourlyRangeKey(newVal.rangeKey)) {
 								onChangeInterval(INTERVAL_KEY_MAP.day);
 							}
-						}, [])}
+						}}
 						rangeSelectors={rangeSelectors}
 					/>
 				</div>

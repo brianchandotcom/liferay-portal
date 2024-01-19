@@ -228,10 +228,6 @@ export enum GDPRRequestTypes {
 	Unsuppress = 'UNSUPPRESS'
 }
 
-/**
- * RangeKey TimeRange
- */
-
 export enum RangeKeyTimeRanges {
 	CustomRange = 'CUSTOM',
 	Last180Days = '180',
@@ -243,6 +239,14 @@ export enum RangeKeyTimeRanges {
 	LastYear = '365',
 	Yesterday = '1'
 }
+
+export const DATA_RETENTION_PERIOD_KEY = 'data-retention-period';
+
+export const ONE_DAY = '86400000';
+export const ONE_MONTH = '2592000000';
+export const SEVEN_MONTHS = '18144000000';
+export const THIRTEEN_MONTHS = '33696000000';
+export const TWO_DAYS = '172800000';
 
 export const TIME_RANGE_LABELS = {
 	[RangeKeyTimeRanges.Last180Days]: Liferay.Language.get('last-180-days'),

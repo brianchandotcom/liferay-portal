@@ -1,7 +1,7 @@
 import Card from 'shared/components/Card';
-import DropdownRangeKey from 'shared/hoc/DropdownRangeKey';
 import IntervalSelector from 'shared/components/IntervalSelector';
 import React, {useCallback} from 'react';
+import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {Interval} from 'shared/types';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
 import {isHourlyRangeKey} from 'shared/util/time';
@@ -59,7 +59,7 @@ const BaseCardHeaderDefault: React.FC<BaseCardHeaderDefaultIProps> = ({
 				{showRangeKey && (
 					<DropdownRangeKey
 						legacy={legacy}
-						onChange={handleRangeSelectorsChange}
+						onRangeSelectorChange={handleRangeSelectorsChange}
 						rangeSelectors={rangeSelectors}
 					/>
 				)}

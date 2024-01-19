@@ -7,6 +7,8 @@ import {CHART_DATA_PREVIOUS, METRIC_TOOLTIP_LABEL_MAP} from './MetricChart';
 import {find, get} from 'lodash';
 import {getActiveItem, getPreviousValueFromCompositeData} from './util';
 import {getDateTitle} from 'shared/util/charts';
+import {RangeKeyTimeRanges} from 'shared/util/constants';
+import {sub} from 'shared/util/lang';
 import {useData} from './MetricBaseCard';
 
 const CHART_DATA_ID_1 = 'data_1';
@@ -87,13 +89,11 @@ const useMetricTooltip = ({data, interval, payload, rangeSelectors}) => {
 					compareToPrevious && {
 						align: Alignments.Right,
 						label: previousPeriodTitle,
-						weight: Weights.Normal,
 						width: 55
 					},
 					showCurrentPeriod && {
 						align: Alignments.Right,
 						label: currentPeriodTitle,
-						weight: Weights.Semibold,
 						width: 55
 					}
 				].filter(Boolean)
@@ -104,10 +104,7 @@ const useMetricTooltip = ({data, interval, payload, rangeSelectors}) => {
 			{
 				columns: [
 					{
-						label: getDataRowName(dataOneItemData),
-						weight: compareToPrevious
-							? Weights.Semibold
-							: Weights.Normal
+						label: getDataRowName(dataOneItemData)
 					},
 					compareToPrevious && {
 						align: Alignments.Right,
@@ -115,18 +112,14 @@ const useMetricTooltip = ({data, interval, payload, rangeSelectors}) => {
 					},
 					showCurrentPeriod && {
 						align: Alignments.Right,
-						label: format(dataOneValue),
-						weight: Weights.Semibold
+						label: format(dataOneValue)
 					}
 				].filter(Boolean)
 			},
 			compositeData && {
 				columns: [
 					{
-						label: getDataRowName(dataTwoItemData),
-						weight: compareToPrevious
-							? Weights.Semibold
-							: Weights.Normal
+						label: getDataRowName(dataTwoItemData)
 					},
 					compareToPrevious && {
 						align: Alignments.Right,
@@ -134,18 +127,14 @@ const useMetricTooltip = ({data, interval, payload, rangeSelectors}) => {
 					},
 					showCurrentPeriod && {
 						align: Alignments.Right,
-						label: format(dataTwoValue),
-						weight: Weights.Semibold
+						label: format(dataTwoValue)
 					}
 				].filter(Boolean)
 			},
 			compositeData && {
 				columns: [
 					{
-						label: Liferay.Language.get('total'),
-						weight: compareToPrevious
-							? Weights.Semibold
-							: Weights.Normal
+						label: Liferay.Language.get('total')
 					},
 					compareToPrevious && {
 						align: Alignments.Right,
@@ -155,8 +144,7 @@ const useMetricTooltip = ({data, interval, payload, rangeSelectors}) => {
 					},
 					showCurrentPeriod && {
 						align: Alignments.Right,
-						label: format(dataOneValue + dataTwoValue),
-						weight: Weights.Semibold
+						label: format(dataOneValue + dataTwoValue)
 					}
 				].filter(Boolean)
 			}
@@ -168,7 +156,15 @@ const useMetricTooltip = ({data, interval, payload, rangeSelectors}) => {
 	return [header, rows];
 };
 
-const MetricTooltip = ({active, data, interval, payload, rangeSelectors}) => {
+const MetricTooltip = ({
+	active,
+	compareToPrevious,
+	data,
+	interval,
+	payload,
+	rangeSelectors,
+	retentionPeriod
+}) => {
 	if (active && payload?.length) {
 		const [header, rows] = useMetricTooltip({
 			data,
@@ -177,9 +173,32 @@ const MetricTooltip = ({active, data, interval, payload, rangeSelectors}) => {
 			rangeSelectors
 		});
 
+		let description = '';
+
+		if (
+			(compareToPrevious &&
+				rangeSelectors.rangeKey === RangeKeyTimeRanges.Last180Days) ||
+			(retentionPeriod === 13 &&
+				rangeSelectors.rangeKey === RangeKeyTimeRanges.LastYear)
+		) {
+			description = sub(
+				Liferay.Language.get(
+					'there-is-no-data-available-for-dates-prior-to-x-months-due-to-your-workspaces-data-retention-period'
+				),
+				[retentionPeriod]
+			) as string;
+		}
+
 		return (
-			<div className='bb-tooltip-container' style={{position: 'static'}}>
-				<ChartTooltip header={header} rows={rows} />
+			<div
+				className='bb-tooltip-container'
+				style={{maxWidth: 400, position: 'static'}}
+			>
+				<ChartTooltip
+					description={description}
+					header={header}
+					rows={rows}
+				/>
 			</div>
 		);
 	}

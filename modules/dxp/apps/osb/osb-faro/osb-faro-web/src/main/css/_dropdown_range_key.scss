@@ -1,10 +1,4 @@
-.dropdown-range-key-root {
-}
-
-.dropdown-range-key-menu-root {
-	&.show-date-picker {
-		max-height: none;
-		max-width: none;
-		padding: 12px;
-	}
+.dropdown-range-key-menu-root.show-date-picker.show {
+	max-width: none;
+	padding: 12px;
 }

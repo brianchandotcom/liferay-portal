@@ -1,15 +1,18 @@
-import Card from './Card';
 import ClayButton from '@clayui/button';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import DatePicker from './date-picker';
 import getCN from 'classnames';
 import Input from './Input';
 import moment from 'moment';
-import Overlay from './Overlay';
 import React, {useState} from 'react';
+import {DatePickerRetentionPeriodHeader} from './DatePickerRetentionPeriodHeader';
 import {DEFAULT_DATE_FORMAT} from 'shared/util/date';
+import {formatDateWithTimezone} from './dropdown-range-key/utils';
 import {isNil, noop} from 'lodash';
 import {sub} from 'shared/util/lang';
+import {useRetentionPeriod} from 'shared/hooks/useRetentionPeriod';
+import {useTimeZoneId} from 'shared/hooks';
 
 const convertToMoment = (value: string, format): moment.Moment => {
 	const date = moment(value, format);
@@ -46,16 +49,15 @@ const DateInput: React.FC<IDateInputProps> = ({
 	format = DEFAULT_DATE_FORMAT,
 	onBlur = noop,
 	onChange = noop,
-	overlayAlignment = 'bottomLeft',
-	usePortal = true,
 	value
 }) => {
 	const [active, setActive] = useState(false);
 
+	const timeZoneId = useTimeZoneId();
+	const retentionPeriod = useRetentionPeriod();
+
 	const convertMomentToDisplayFormat = (value: moment.Moment): string =>
 		isNil(value) ? null : value.format(displayFormat || format);
-
-	const handleClick = () => setActive(!active);
 
 	const handleDateSelect = ({end, start}: MomentDateRange) => {
 		onChange({
@@ -81,61 +83,81 @@ const DateInput: React.FC<IDateInputProps> = ({
 	};
 
 	return (
-		<Overlay
+		<ClayDropDown
 			active={active}
-			alignment={overlayAlignment}
-			className={getCN('date-range-input-root', className)}
-			containerClass='date-range-input-root'
-			forceAlignment={false}
-			onOutsideClick={event => {
-				if (onBlur && active) {
-					onBlur(event);
+			alignmentPosition={Align.TopLeft}
+			className={getCN(className, 'dropdown-range-key-root')}
+			menuElementAttrs={{
+				className: getCN('dropdown-range-key-menu-root', {
+					'show-date-picker': active
+				}),
+				style: {
+					zIndex: 1060
 				}
-
-				setActive(false);
 			}}
-			usePortal={usePortal}
+			onActiveChange={active => {
+				setActive(active);
+
+				!active && onBlur();
+			}}
+			trigger={
+				<div>
+					<Input.Group>
+						<Input.GroupItem>
+							<Input
+								autoComplete='off'
+								data-testid='date-range-input'
+								inset='after'
+								onClick={() => setActive(true)}
+								placeholder={sub(
+									Liferay.Language.get('x-to-x'),
+									[
+										Liferay.Language.get('yyyy-mm-dd'),
+										Liferay.Language.get('yyyy-mm-dd')
+									]
+								)}
+								readOnly
+								value={getDateRangeDisplay(momentDateRange)}
+							/>
+
+							<Input.Inset position='after'>
+								<ClayButton
+									aria-label={Liferay.Language.get(
+										'choose-date-range'
+									)}
+									className='button-root'
+									displayType='unstyled'
+									onClick={() => setActive(true)}
+								>
+									<ClayIcon
+										className='icon-root'
+										symbol='calendar'
+									/>
+								</ClayButton>
+							</Input.Inset>
+						</Input.GroupItem>
+					</Input.Group>
+				</div>
+			}
 		>
-			<Input.Group>
-				<Input.GroupItem>
-					<Input
-						autoComplete='off'
-						data-testid='date-range-input'
-						inset='after'
-						onClick={handleClick}
-						placeholder={sub(Liferay.Language.get('x-to-x'), [
-							Liferay.Language.get('yyyy-mm-dd'),
-							Liferay.Language.get('yyyy-mm-dd')
-						])}
-						readOnly
-						value={getDateRangeDisplay(momentDateRange)}
+			<DatePicker
+				date={momentDateRange}
+				header={
+					<DatePickerRetentionPeriodHeader
+						retentionPeriod={retentionPeriod}
 					/>
-
-					<Input.Inset position='after'>
-						<ClayButton
-							aria-label={Liferay.Language.get(
-								'choose-date-range'
-							)}
-							className='button-root'
-							displayType='unstyled'
-							onClick={handleClick}
-						>
-							<ClayIcon className='icon-root' symbol='calendar' />
-						</ClayButton>
-					</Input.Inset>
-				</Input.GroupItem>
-			</Input.Group>
-
-			<Card>
-				<Card.Body>
-					<DatePicker
-						date={momentDateRange}
-						minDate={moment().subtract(100, 'years')}
-						onSelect={handleDateSelect}
-					/>
-				</Card.Body>
-			</Card>
-		</Overlay>
+				}
+				maxDate={formatDateWithTimezone(timeZoneId)
+					.clone()
+					.subtract(1, 'days')}
+				maxRange={365}
+				minDate={formatDateWithTimezone(timeZoneId)
+					.clone()
+					.subtract(retentionPeriod, 'month')}
+				onSelect={handleDateSelect}
+				timeZoneId={timeZoneId}
+			/>
+		</ClayDropDown>
 	);
 };
 

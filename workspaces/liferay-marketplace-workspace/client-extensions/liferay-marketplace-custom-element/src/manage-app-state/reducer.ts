@@ -340,6 +340,18 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			return {...state, skuVersionId};
 		}
 
+		case TYPES.UPDATE_RESOURCE_REQUIREMENTS: {
+			const {key, value} = action.payload;
+
+			return {
+				...state,
+				resourceRequirements: {
+					...state.resourceRequirements,
+					[key]: value,
+				},
+			};
+		}
+
 		case TYPES.RESET_APP_PACKAGES: {
 			return {
 				...state,

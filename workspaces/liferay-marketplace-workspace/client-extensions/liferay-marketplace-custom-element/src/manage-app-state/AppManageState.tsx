@@ -51,6 +51,10 @@ export type InitialStateProps = {
 	priceModel: Specification;
 	productOptionId: number;
 	publisherWebsiteURL: Specification;
+	resourceRequirements: {
+		cpu: number;
+		ram: number;
+	};
 	skuTrialId: number;
 	skuVersionId: number;
 	supportURL: Specification;
@@ -68,12 +72,16 @@ const initialState = ({
 		developer: [],
 		standard: [{key: 1, value: 0}],
 	},
-	appType: {value: 'cloud'},
+	appType: {value: ''},
 	buildAppPackages: {},
 	dayTrial: 'no',
 	eulaCheckbox: false,
 	optionValuesId: {},
 	priceModel: {value: 'Paid'},
+	resourceRequirements: {
+		cpu: null,
+		ram: null,
+	},
 } as unknown) as InitialStateProps;
 
 interface AppContextProps extends Array<InitialStateProps | Function> {

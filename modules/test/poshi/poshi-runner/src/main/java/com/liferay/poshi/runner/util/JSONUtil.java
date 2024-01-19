@@ -5,10 +5,8 @@
 
 package com.liferay.poshi.runner.util;
 
-import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.Option;
 
 import com.liferay.poshi.core.util.ListUtil;
 
@@ -159,16 +157,7 @@ public class JSONUtil {
 	public static String getWithJSONPath(
 		String json, String path, String format) {
 
-		Configuration conf = Configuration.defaultConfiguration(
-		).addOptions(
-			Option.DEFAULT_PATH_LEAF_TO_NULL
-		);
-
-		DocumentContext documentContext = JsonPath.using(
-			conf
-		).parse(
-			json
-		);
+		DocumentContext documentContext = JsonPath.parse(json);
 
 		Object object = documentContext.read(path);
 

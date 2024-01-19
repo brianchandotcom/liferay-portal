@@ -64,7 +64,7 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 	}
 
 	@Override
-	public boolean isTransactionAbortedOnFailure() {
+	public boolean isDDLTransactional() {
 		return true;
 	}
 

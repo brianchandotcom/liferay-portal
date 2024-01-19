@@ -123,7 +123,7 @@ public class DBPartitionUtil {
 			connection.commit();
 		}
 		catch (Exception exception) {
-			if (!_dbPartitionDB.isTransactionAbortedOnFailure()) {
+			if (!_dbPartitionDB.isDDLTransactional()) {
 				try (Statement statement = connection.createStatement()) {
 					statement.executeUpdate(
 						_dbPartitionDB.getDropPartitionSQL(
@@ -442,7 +442,7 @@ public class DBPartitionUtil {
 		}
 		catch (Exception exception1) {
 			if (ListUtil.isEmpty(controlTableNames) ||
-				_dbPartitionDB.isTransactionAbortedOnFailure()) {
+				_dbPartitionDB.isDDLTransactional()) {
 
 				throw new PortalException(exception1);
 			}
@@ -775,7 +775,7 @@ public class DBPartitionUtil {
 			}
 		}
 		catch (Exception exception1) {
-			if (_dbPartitionDB.isTransactionAbortedOnFailure()) {
+			if (_dbPartitionDB.isDDLTransactional()) {
 				throw new PortalException(exception1);
 			}
 

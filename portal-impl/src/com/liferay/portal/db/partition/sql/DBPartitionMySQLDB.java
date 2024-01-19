@@ -58,7 +58,7 @@ public class DBPartitionMySQLDB implements DBPartitionDB {
 	}
 
 	@Override
-	public boolean isTransactionAbortedOnFailure() {
+	public boolean isDDLTransactional() {
 		return false;
 	}
 

@@ -74,7 +74,7 @@ public interface DBPartitionDB {
 		return dbInspector.getSchema();
 	}
 
-	public boolean isTransactionAbortedOnFailure();
+	public boolean isDDLTransactional();
 
 	public void setPartition(Connection connection, String partitionName)
 		throws SQLException;

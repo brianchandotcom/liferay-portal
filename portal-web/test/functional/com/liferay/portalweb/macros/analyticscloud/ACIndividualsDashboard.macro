@@ -267,6 +267,10 @@ definition {
 			ACUtils.waitForChartLoad();
 		}
 
+		Click(
+			key_cardTitle = "Distribution by attribute",
+			locator1 = "ACCards#CARD_TITLE");
+
 		MouseOver.mouseOverInvisible(
 			index = ${index},
 			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");

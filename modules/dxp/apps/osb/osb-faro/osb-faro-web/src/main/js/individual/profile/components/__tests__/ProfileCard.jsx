@@ -8,6 +8,7 @@ import {MemoryRouter, Route} from 'react-router-dom';
 import {MockedProvider} from '@apollo/react-testing';
 import {
 	mockEventMetrics,
+	mockPreferenceReq,
 	mockSessions,
 	mockTimeRangeReq
 } from 'test/graphql-data';
@@ -41,6 +42,7 @@ describe('IndividualProfileCard', () => {
 					mocks={[
 						mockEventMetrics(),
 						mockTimeRangeReq(),
+						mockPreferenceReq(),
 						mockSessions()
 					]}
 				>
@@ -67,6 +69,7 @@ describe('IndividualProfileCard', () => {
 					mocks={[
 						mockEventMetrics(),
 						mockTimeRangeReq(),
+						mockPreferenceReq(),
 						mockSessions(),
 						mockEventMetrics(),
 						mockSessions(),
@@ -123,6 +126,7 @@ describe('IndividualProfileCard', () => {
 					mocks={[
 						mockEventMetrics(),
 						mockTimeRangeReq(),
+						mockPreferenceReq(),
 						mockSessions(),
 						mockEventMetrics(),
 						mockSessions(),

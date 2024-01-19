@@ -5,7 +5,11 @@ import React from 'react';
 import TopPagesCard from '../TopPagesCard';
 import {ApolloProvider} from '@apollo/react-components';
 import {MockedProvider} from '@apollo/react-testing';
-import {mockSitesTopPagesReq, mockTimeRangeReq} from 'test/graphql-data';
+import {
+	mockPreferenceReq,
+	mockSitesTopPagesReq,
+	mockTimeRangeReq
+} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {render} from '@testing-library/react';
@@ -33,7 +37,11 @@ const DefaultComponent = () => (
 			<BasePage.Context.Provider value={MOCK_CONTEXT}>
 				<StaticRouter>
 					<MockedProvider
-						mocks={[mockTimeRangeReq(), mockSitesTopPagesReq()]}
+						mocks={[
+							mockTimeRangeReq(),
+							mockPreferenceReq(),
+							mockSitesTopPagesReq()
+						]}
 					>
 						<TopPagesCard
 							footer={{

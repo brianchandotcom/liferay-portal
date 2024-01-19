@@ -7,6 +7,7 @@ import {Individual} from 'shared/util/records';
 import {MockedProvider} from '@apollo/react-testing';
 import {
 	mockEventMetrics,
+	mockPreferenceReq,
 	mockSessions,
 	mockTimeRangeReq
 } from 'test/graphql-data';
@@ -27,6 +28,7 @@ describe('IndividualOverview', () => {
 				mocks={[
 					mockEventMetrics(variables),
 					mockTimeRangeReq(),
+					mockPreferenceReq(),
 					mockSessions(variables)
 				]}
 			>

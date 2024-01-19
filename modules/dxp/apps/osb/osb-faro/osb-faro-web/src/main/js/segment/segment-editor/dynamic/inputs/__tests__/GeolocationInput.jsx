@@ -1,8 +1,12 @@
 import * as data from 'test/data';
+import client from 'shared/apollo/client';
 import GeolocationInput from '../GeolocationInput';
 import React from 'react';
+import {ApolloProvider} from '@apollo/react-hooks';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {createCustomValueMap} from '../../utils/custom-inputs';
+import {MockedProvider} from '@apollo/react-testing';
+import {mockPreferenceReq} from 'test/graphql-data';
 import {Property} from 'shared/util/records';
 import {RelationalOperators, TimeSpans} from '../../utils/constants';
 
@@ -54,18 +58,28 @@ const emptyMockValue = createCustomValueMap([
 	}
 ]);
 
+const WrapperComponent = ({children}) => (
+	<ApolloProvider client={client}>
+		<MockedProvider mocks={[mockPreferenceReq()]}>
+			{children}
+		</MockedProvider>
+	</ApolloProvider>
+);
+
 describe('GeolocationInput', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
 		const {container, getAllByText, getByText} = render(
-			<GeolocationInput
-				onChange={jest.fn()}
-				property={new Property(data.mockProperty({}))}
-				touched={false}
-				valid={false}
-				value={emptyMockValue}
-			/>
+			<WrapperComponent>
+				<GeolocationInput
+					onChange={jest.fn()}
+					property={new Property(data.mockProperty({}))}
+					touched={false}
+					valid={false}
+					value={emptyMockValue}
+				/>
+			</WrapperComponent>
 		);
 		fireEvent.click(getByText('was'));
 		fireEvent.click(getByText('on'));
@@ -87,13 +101,15 @@ describe('GeolocationInput', () => {
 
 	it('should render with has-error', () => {
 		const {container} = render(
-			<GeolocationInput
-				onChange={jest.fn()}
-				property={new Property(data.mockProperty({}))}
-				touched
-				valid={false}
-				value={emptyMockValue}
-			/>
+			<WrapperComponent>
+				<GeolocationInput
+					onChange={jest.fn()}
+					property={new Property(data.mockProperty({}))}
+					touched
+					valid={false}
+					value={emptyMockValue}
+				/>
+			</WrapperComponent>
 		);
 		expect(container.querySelector('.select-input-root')).toHaveClass(
 			'has-error'
@@ -102,47 +118,51 @@ describe('GeolocationInput', () => {
 
 	it('should render inputs for all location values if they all have non-zero length values', () => {
 		const {container} = render(
-			<GeolocationInput
-				onChange={jest.fn()}
-				property={new Property(data.mockProperty({}))}
-				touched={false}
-				valid
-				value={mockValue}
-			/>
+			<WrapperComponent>
+				<GeolocationInput
+					onChange={jest.fn()}
+					property={new Property(data.mockProperty({}))}
+					touched={false}
+					valid
+					value={mockValue}
+				/>
+			</WrapperComponent>
 		);
 		expect(container.querySelectorAll('input').length).toBe(4);
 	});
 
 	it('should render the region input as a button if the initial value for the input was empty', () => {
 		const {container} = render(
-			<GeolocationInput
-				onChange={jest.fn()}
-				property={new Property(data.mockProperty({}))}
-				touched={false}
-				valid
-				value={createCustomValueMap([
-					{
-						key: 'criterionGroup',
-						value: [
-							{
-								operatorName: RelationalOperators.EQ,
-								propertyName: 'context/country',
-								value: 'foo country'
-							},
-							{
-								operatorName: RelationalOperators.EQ,
-								propertyName: 'completeDate',
-								value: TimeSpans.Last7Days
-							},
-							{
-								operatorName: RelationalOperators.EQ,
-								propertyName: 'context/region',
-								value: ''
-							}
-						]
-					}
-				])}
-			/>
+			<WrapperComponent>
+				<GeolocationInput
+					onChange={jest.fn()}
+					property={new Property(data.mockProperty({}))}
+					touched={false}
+					valid
+					value={createCustomValueMap([
+						{
+							key: 'criterionGroup',
+							value: [
+								{
+									operatorName: RelationalOperators.EQ,
+									propertyName: 'context/country',
+									value: 'foo country'
+								},
+								{
+									operatorName: RelationalOperators.EQ,
+									propertyName: 'completeDate',
+									value: TimeSpans.Last7Days
+								},
+								{
+									operatorName: RelationalOperators.EQ,
+									propertyName: 'context/region',
+									value: ''
+								}
+							]
+						}
+					])}
+				/>
+			</WrapperComponent>
 		);
 
 		expect(container.querySelectorAll('.button-root')[0]).toHaveTextContent(
@@ -152,39 +172,41 @@ describe('GeolocationInput', () => {
 
 	it('should render the city input as a button if the initial value for the input was empty', () => {
 		const {container} = render(
-			<GeolocationInput
-				onChange={jest.fn()}
-				property={new Property(data.mockProperty({}))}
-				touched={false}
-				valid
-				value={createCustomValueMap([
-					{
-						key: 'criterionGroup',
-						value: [
-							{
-								operatorName: RelationalOperators.EQ,
-								propertyName: 'context/country',
-								value: 'foo country'
-							},
-							{
-								operatorName: RelationalOperators.EQ,
-								propertyName: 'completeDate',
-								value: TimeSpans.Last7Days
-							},
-							{
-								operatorName: RelationalOperators.EQ,
-								propertyName: 'context/region',
-								value: 'foo region'
-							},
-							{
-								operatorName: RelationalOperators.EQ,
-								propertyName: 'context/city',
-								value: ''
-							}
-						]
-					}
-				])}
-			/>
+			<WrapperComponent>
+				<GeolocationInput
+					onChange={jest.fn()}
+					property={new Property(data.mockProperty({}))}
+					touched={false}
+					valid
+					value={createCustomValueMap([
+						{
+							key: 'criterionGroup',
+							value: [
+								{
+									operatorName: RelationalOperators.EQ,
+									propertyName: 'context/country',
+									value: 'foo country'
+								},
+								{
+									operatorName: RelationalOperators.EQ,
+									propertyName: 'completeDate',
+									value: TimeSpans.Last7Days
+								},
+								{
+									operatorName: RelationalOperators.EQ,
+									propertyName: 'context/region',
+									value: 'foo region'
+								},
+								{
+									operatorName: RelationalOperators.EQ,
+									propertyName: 'context/city',
+									value: ''
+								}
+							]
+						}
+					])}
+				/>
+			</WrapperComponent>
 		);
 
 		expect(container.querySelector('.button-root')).toHaveTextContent(

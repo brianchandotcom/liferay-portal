@@ -1,20 +1,34 @@
+import client from 'shared/apollo/client';
 import CriteriaRow from '../CriteriaRow';
 import mockStore from 'test/mock-store';
 import React from 'react';
+import {ApolloProvider} from '@apollo/react-hooks';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {DndProvider} from 'react-dnd';
 import {fromJS, Map} from 'immutable';
 import {HTML5Backend} from 'react-dnd-html5-backend';
+import {MockedProvider} from '@apollo/react-testing';
+import {mockPreferenceReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 
 jest.unmock('react-dom');
+
+const WrapperComponent = ({children}) => (
+	<ApolloProvider client={client}>
+		<Provider store={mockStore()}>
+			<MockedProvider mocks={[mockPreferenceReq()]}>
+				{children}
+			</MockedProvider>
+		</Provider>
+	</ApolloProvider>
+);
 
 describe('CriteriaRow', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
 		const {container, getAllByText, getByText} = render(
-			<Provider store={mockStore()}>
+			<WrapperComponent>
 				<DndProvider backend={HTML5Backend}>
 					<CriteriaRow
 						criterion={{
@@ -50,7 +64,7 @@ describe('CriteriaRow', () => {
 						referencedPropertiesIMap={new Map()}
 					/>
 				</DndProvider>
-			</Provider>
+			</WrapperComponent>
 		);
 
 		fireEvent.click(getByText('is not'));
@@ -66,14 +80,14 @@ describe('CriteriaRow', () => {
 
 	it('should render w/ Non-Existent Property message', () => {
 		const {queryByText} = render(
-			<Provider store={mockStore()}>
+			<WrapperComponent>
 				<DndProvider backend={HTML5Backend}>
 					<CriteriaRow
 						referencedAssetsIMap={new Map()}
 						referencedPropertiesIMap={new Map()}
 					/>
 				</DndProvider>
-			</Provider>
+			</WrapperComponent>
 		);
 
 		expect(queryByText('Attribute no longer exists.')).toBeTruthy();

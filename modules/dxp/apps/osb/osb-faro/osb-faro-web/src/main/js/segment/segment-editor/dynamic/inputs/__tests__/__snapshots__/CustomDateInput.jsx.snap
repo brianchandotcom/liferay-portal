@@ -41,37 +41,47 @@ exports[`CustomDateInput should render 1`] = `
         data-aria-hidden="true"
       >
         <div
-          aria-haspopup="true"
-          class="input-group date-input-root"
+          class="dropdown dropdown-range-key-root"
         >
           <div
-            class="input-group-item"
+            aria-controls="clay-dropdown-menu-1"
+            aria-expanded="false"
+            aria-haspopup="true"
+            class="dropdown-toggle"
           >
-            <input
-              autocomplete="off"
-              class="input-root form-control input-group-inset input-group-inset-after"
-              data-testid="date-input"
-              placeholder="YYYY-MM-DD"
-              type="text"
-              value="2020-01-17"
-            />
             <div
-              class="input-group-inset-item input-group-inset-item-after"
+              class="input-group"
             >
-              <button
-                aria-label="Choose a date"
-                class="button-root btn btn-unstyled"
-                type="button"
+              <div
+                class="input-group-item"
               >
-                <svg
-                  class="lexicon-icon lexicon-icon-calendar icon-root"
-                  role="presentation"
+                <input
+                  autocomplete="off"
+                  class="input-root form-control input-group-inset input-group-inset-after"
+                  data-testid="date-input"
+                  placeholder="YYYY-MM-DD"
+                  type="text"
+                  value="2020-01-17"
+                />
+                <div
+                  class="input-group-inset-item input-group-inset-item-after"
                 >
-                  <use
-                    href="#calendar"
-                  />
-                </svg>
-              </button>
+                  <button
+                    aria-label="Choose a date"
+                    class="button-root btn btn-unstyled"
+                    type="button"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-calendar icon-root"
+                      role="presentation"
+                    >
+                      <use
+                        href="#calendar"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

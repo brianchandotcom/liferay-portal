@@ -6,9 +6,12 @@ import VisitorsByTimeCard, {
 	renderTooltip
 } from '../VisitorsByTimeCard';
 import {ApolloProvider} from '@apollo/react-components';
+import {createMemoryHistory} from 'history';
+import {MockedProvider} from '@apollo/react-testing';
+import {mockPreferenceReq, mockTimeRangeReq} from 'test/graphql-data';
 import {render} from '@testing-library/react';
-import {StaticRouter} from 'react-router-dom';
-import {waitForLoading} from 'test/helpers';
+import {Router} from 'react-router-dom';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -25,21 +28,29 @@ const MOCK_CONTEXT = {
 	}
 };
 
-const WrappedComponent = props => (
-	<ApolloProvider client={client}>
-		<BasePage.Context.Provider value={MOCK_CONTEXT}>
-			<StaticRouter>
-				<VisitorsByTimeCard {...props} />
-			</StaticRouter>
-		</BasePage.Context.Provider>
-	</ApolloProvider>
-);
+const WrappedComponent = props => {
+	const history = createMemoryHistory();
+
+	return (
+		<ApolloProvider client={client}>
+			<Router history={history}>
+				<BasePage.Context.Provider value={MOCK_CONTEXT}>
+					<MockedProvider
+						mocks={[mockTimeRangeReq(), mockPreferenceReq()]}
+					>
+						<VisitorsByTimeCard {...props} />
+					</MockedProvider>
+				</BasePage.Context.Provider>
+			</Router>
+		</ApolloProvider>
+	);
+};
 
 describe('VisitorsByTimeCard', () => {
 	it('render', async () => {
 		const {container} = render(<WrappedComponent />);
 
-		await waitForLoading(container);
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

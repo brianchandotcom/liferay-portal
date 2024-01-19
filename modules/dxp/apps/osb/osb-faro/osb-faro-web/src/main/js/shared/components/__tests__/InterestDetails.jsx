@@ -1,11 +1,18 @@
+import client from 'shared/apollo/client';
 import InterestDetails from '../InterestDetails';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
-import {MemoryRouter, Route} from 'react-router-dom';
+import {ApolloProvider} from '@apollo/react-components';
+import {createMemoryHistory} from 'history';
+import {MemoryRouter, Route, Router} from 'react-router-dom';
 import {MockedProvider} from '@apollo/react-testing';
-import {mockTouchpointsReq} from 'test/graphql-data';
+import {
+	mockPreferenceReq,
+	mockTimeRangeReq,
+	mockTouchpointsReq
+} from 'test/graphql-data';
+import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
-import {waitForLoading} from 'test/helpers';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -50,29 +57,39 @@ const defaultProps = {
 	}
 };
 
-const DefaultComponent = () => (
-	<MockedProvider mocks={[mockTouchpointsReq(mockItems, {size: 2})]}>
-		<MemoryRouter
-			initialEntries={[
-				'/workspace/23/321321/contacts/accounts/123123/interests/test'
-			]}
-		>
-			<Route path={Routes.CONTACTS_ACCOUNT_INTEREST_DETAILS}>
-				<InterestDetails {...defaultProps} />
-			</Route>
-		</MemoryRouter>
-	</MockedProvider>
-);
+const DefaultComponent = () => {
+	const history = createMemoryHistory();
+
+	return (
+		<ApolloProvider client={client}>
+			<MockedProvider
+				mocks={[
+					mockTimeRangeReq(),
+					mockPreferenceReq(),
+					mockTouchpointsReq(mockItems, {size: 2})
+				]}
+			>
+				<Router history={history}>
+					<MemoryRouter
+						initialEntries={[
+							'/workspace/23/321321/contacts/accounts/123123/interests/test'
+						]}
+					>
+						<Route path={Routes.CONTACTS_ACCOUNT_INTEREST_DETAILS}>
+							<InterestDetails {...defaultProps} />
+						</Route>
+					</MemoryRouter>
+				</Router>
+			</MockedProvider>
+		</ApolloProvider>
+	);
+};
 
 describe('InterestDetails', () => {
-	afterEach(cleanup);
-
 	it('renders', async () => {
 		const {container} = render(<DefaultComponent />);
 
-		await waitForLoading(container);
-
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

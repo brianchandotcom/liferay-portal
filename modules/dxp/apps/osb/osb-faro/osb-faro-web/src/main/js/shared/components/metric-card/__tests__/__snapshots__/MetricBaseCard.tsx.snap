@@ -1,0 +1,735 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MetricBaseCard renders component 1`] = `
+<div>
+  <div
+    class="card card-root analytics-metrics-card"
+    style="min-height: 605px;"
+  >
+    <div
+      class="card-header align-items-center d-flex justify-content-between"
+    >
+      <h5
+        class="card-title"
+      >
+        Visitors Behavior
+      </h5>
+      <div
+        class="d-flex"
+      >
+        <div
+          class="error-display-root flex-grow-1 no-results-root flex-grow-1"
+        >
+          <div
+            class="no-results-content"
+          >
+            <h4
+              class="no-results-title"
+            >
+              An unexpected error occurred.
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="card-body analytics-metrics"
+    >
+      <ul
+        class="card-tabs-root analytics-metrics-tabs"
+      >
+        <li
+          class="card-tab active"
+          data-testid="0"
+        >
+          <button
+            class="button-root btn btn-unstyled"
+            type="button"
+          >
+            <span
+              class="title"
+            >
+              Unique Visitors
+            </span>
+            <div>
+              <span>
+                <span
+                  class="primary-content"
+                >
+                  <div
+                    class="metric-value"
+                  >
+                    1
+                    <span
+                      class="metric-value-letter"
+                    />
+                  </div>
+                </span>
+                <div
+                  class="analytics-trend"
+                  style="color: rgb(174, 176, 187);"
+                >
+                  <span
+                    class="analytics-trend-percent mb-0"
+                  >
+                    0%
+                  </span>
+                </div>
+              </span>
+            </div>
+          </button>
+        </li>
+        <li
+          class="card-tab"
+          data-testid="1"
+        >
+          <button
+            class="button-root btn btn-unstyled"
+            type="button"
+          >
+            <span
+              class="title"
+            >
+              Sessions/Visitor
+            </span>
+            <div>
+              <span>
+                <span
+                  class="primary-content"
+                >
+                  <div
+                    class="metric-value"
+                  >
+                    1
+                    <span
+                      class="metric-value-letter"
+                    />
+                  </div>
+                </span>
+                <div
+                  class="analytics-trend"
+                  style="color: rgb(174, 176, 187);"
+                >
+                  <span
+                    class="analytics-trend-percent mb-0"
+                  >
+                    0%
+                  </span>
+                </div>
+              </span>
+            </div>
+          </button>
+        </li>
+        <li
+          class="card-tab"
+          data-testid="2"
+        >
+          <button
+            class="button-root btn btn-unstyled"
+            type="button"
+          >
+            <span
+              class="title"
+            >
+              Session Duration
+            </span>
+            <div>
+              <span>
+                <span
+                  class="primary-content"
+                >
+                  <div
+                    class="metric-value"
+                  >
+                    25
+                    <span
+                      class="metric-value-letter"
+                    >
+                      s
+                    </span>
+                  </div>
+                </span>
+                <div
+                  class="analytics-trend"
+                  style="color: rgb(174, 176, 187);"
+                >
+                  <span
+                    class="analytics-trend-percent mb-0"
+                  >
+                    0%
+                  </span>
+                </div>
+              </span>
+            </div>
+          </button>
+        </li>
+        <li
+          class="card-tab"
+          data-testid="3"
+        >
+          <button
+            class="button-root btn btn-unstyled"
+            type="button"
+          >
+            <span
+              class="title"
+            >
+              Bounce Rate
+            </span>
+            <div>
+              <span>
+                <span
+                  class="primary-content"
+                >
+                  <div
+                    class="metric-value"
+                  >
+                    0
+                    <span
+                      class="metric-value-letter"
+                    >
+                      %
+                    </span>
+                  </div>
+                </span>
+                <div
+                  class="analytics-trend"
+                  style="color: rgb(174, 176, 187);"
+                >
+                  <span
+                    class="analytics-trend-percent mb-0"
+                  >
+                    0%
+                  </span>
+                </div>
+              </span>
+            </div>
+          </button>
+        </li>
+      </ul>
+      <div
+        class="analytics-metrics-chart"
+      >
+        <div
+          class="composed-chart-with-empty-state"
+        >
+          <div
+            class="recharts-responsive-container"
+            style="width: 800px; height: 350px; min-width: 0;"
+          >
+            <div
+              class="recharts-wrapper"
+              role="region"
+              style="position: relative; cursor: default; width: 800px; height: 350px;"
+            >
+              <svg
+                class="recharts-surface"
+                height="350"
+                viewBox="0 0 800 350"
+                width="800"
+              >
+                <title />
+                <desc />
+                <defs>
+                  <clippath
+                    id="recharts1-clip"
+                  >
+                    <rect
+                      height="280"
+                      width="738"
+                      x="45"
+                      y="35"
+                    />
+                  </clippath>
+                </defs>
+                <g
+                  class="recharts-cartesian-grid"
+                >
+                  <g
+                    class="recharts-cartesian-grid-horizontal"
+                  >
+                    <line
+                      fill="none"
+                      height="280"
+                      stroke="#E7E7ED"
+                      stroke-dasharray="3 3"
+                      width="738"
+                      x="45"
+                      x1="45"
+                      x2="783"
+                      y="35"
+                      y1="315"
+                      y2="315"
+                    />
+                    <line
+                      fill="none"
+                      height="280"
+                      stroke="#E7E7ED"
+                      stroke-dasharray="3 3"
+                      width="738"
+                      x="45"
+                      x1="45"
+                      x2="783"
+                      y="35"
+                      y1="245"
+                      y2="245"
+                    />
+                    <line
+                      fill="none"
+                      height="280"
+                      stroke="#E7E7ED"
+                      stroke-dasharray="3 3"
+                      width="738"
+                      x="45"
+                      x1="45"
+                      x2="783"
+                      y="35"
+                      y1="175"
+                      y2="175"
+                    />
+                    <line
+                      fill="none"
+                      height="280"
+                      stroke="#E7E7ED"
+                      stroke-dasharray="3 3"
+                      width="738"
+                      x="45"
+                      x1="45"
+                      x2="783"
+                      y="35"
+                      y1="105"
+                      y2="105"
+                    />
+                    <line
+                      fill="none"
+                      height="280"
+                      stroke="#E7E7ED"
+                      stroke-dasharray="3 3"
+                      width="738"
+                      x="45"
+                      x1="45"
+                      x2="783"
+                      y="35"
+                      y1="35"
+                      y2="35"
+                    />
+                  </g>
+                </g>
+                <g
+                  class="recharts-layer recharts-cartesian-axis recharts-xAxis xAxis"
+                >
+                  <line
+                    class="recharts-cartesian-axis-line"
+                    fill="none"
+                    height="30"
+                    orientation="top"
+                    stroke="#E7E7ED"
+                    width="738"
+                    x="45"
+                    x1="45"
+                    x2="783"
+                    y="5"
+                    y1="35"
+                    y2="35"
+                  />
+                  <g
+                    class="recharts-cartesian-axis-ticks"
+                  />
+                </g>
+                <g
+                  class="recharts-layer recharts-cartesian-axis recharts-yAxis yAxis"
+                >
+                  <line
+                    class="recharts-cartesian-axis-line"
+                    fill="none"
+                    height="280"
+                    orientation="left"
+                    stroke="#E7E7ED"
+                    width="40"
+                    x="5"
+                    x1="45"
+                    x2="45"
+                    y="35"
+                    y1="35"
+                    y2="315"
+                  />
+                  <g
+                    class="recharts-cartesian-axis-ticks"
+                  >
+                    <g
+                      class="recharts-layer recharts-cartesian-axis-tick"
+                    >
+                      <text
+                        class="recharts-text"
+                        fill="#808080"
+                        style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                        text-anchor="end"
+                        x="37"
+                        y="315"
+                      >
+                        <tspan
+                          dy="0em"
+                          x="37"
+                        >
+                          0
+                        </tspan>
+                      </text>
+                    </g>
+                    <g
+                      class="recharts-layer recharts-cartesian-axis-tick"
+                    >
+                      <text
+                        class="recharts-text"
+                        fill="#808080"
+                        style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                        text-anchor="end"
+                        x="37"
+                        y="245"
+                      >
+                        <tspan
+                          dy="0em"
+                          x="37"
+                        >
+                          1
+                        </tspan>
+                      </text>
+                    </g>
+                    <g
+                      class="recharts-layer recharts-cartesian-axis-tick"
+                    >
+                      <text
+                        class="recharts-text"
+                        fill="#808080"
+                        style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                        text-anchor="end"
+                        x="37"
+                        y="175"
+                      >
+                        <tspan
+                          dy="0em"
+                          x="37"
+                        >
+                          2
+                        </tspan>
+                      </text>
+                    </g>
+                    <g
+                      class="recharts-layer recharts-cartesian-axis-tick"
+                    >
+                      <text
+                        class="recharts-text"
+                        fill="#808080"
+                        style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                        text-anchor="end"
+                        x="37"
+                        y="105"
+                      >
+                        <tspan
+                          dy="0em"
+                          x="37"
+                        >
+                          3
+                        </tspan>
+                      </text>
+                    </g>
+                    <g
+                      class="recharts-layer recharts-cartesian-axis-tick"
+                    >
+                      <text
+                        class="recharts-text"
+                        fill="#808080"
+                        style="fill: #6B6C7E; font: Symbol\\" 14px 14px; font-size: 0.75rem;"
+                        text-anchor="end"
+                        x="37"
+                        y="35"
+                      >
+                        <tspan
+                          dy="0em"
+                          x="37"
+                        >
+                          4
+                        </tspan>
+                      </text>
+                    </g>
+                  </g>
+                  <text
+                    class="recharts-text"
+                    fill="#6B6C7E"
+                    text-anchor="start"
+                    x="5"
+                    y="15"
+                  >
+                    <tspan
+                      dy="0em"
+                      x="5"
+                    >
+                      Unique Visitors
+                    </tspan>
+                  </text>
+                </g>
+                <g
+                  class="recharts-layer recharts-bar"
+                >
+                  <g
+                    class="recharts-layer recharts-bar-rectangles"
+                  >
+                    <g
+                      class="recharts-layer recharts-bar-rectangle"
+                    />
+                    <g
+                      class="recharts-layer recharts-bar-rectangle"
+                    />
+                    <g
+                      class="recharts-layer recharts-bar-rectangle"
+                    />
+                    <g
+                      class="recharts-layer recharts-bar-rectangle"
+                    />
+                    <g
+                      class="recharts-layer recharts-bar-rectangle"
+                    />
+                  </g>
+                  <g
+                    class="recharts-layer"
+                  />
+                </g>
+                <g
+                  class="recharts-layer recharts-bar"
+                >
+                  <g
+                    class="recharts-layer recharts-bar-rectangles"
+                  >
+                    <g
+                      class="recharts-layer recharts-bar-rectangle"
+                    />
+                    <g
+                      class="recharts-layer recharts-bar-rectangle"
+                    />
+                    <g
+                      class="recharts-layer recharts-bar-rectangle"
+                    />
+                    <g
+                      class="recharts-layer recharts-bar-rectangle"
+                    />
+                    <g
+                      class="recharts-layer recharts-bar-rectangle"
+                    />
+                  </g>
+                  <g
+                    class="recharts-layer"
+                  />
+                </g>
+              </svg>
+              <div
+                class="recharts-legend-wrapper"
+                style="position: absolute; width: 790px; height: auto; right: 5px; color: rgb(107, 108, 126); font-size: 14px; line-height: 21px;"
+              >
+                <ul
+                  class="recharts-default-legend"
+                  style="padding: 0px; margin: 0px; text-align: right;"
+                >
+                  <li
+                    class="recharts-legend-item legend-item-0"
+                    style="display: inline-block; margin-right: 10px;"
+                  >
+                    <svg
+                      class="recharts-surface"
+                      height="8"
+                      style="display: inline-block; vertical-align: middle; margin-right: 4px;"
+                      viewBox="0 0 32 32"
+                      width="8"
+                    >
+                      <title />
+                      <desc />
+                      <path
+                        class="recharts-symbols"
+                        cx="16"
+                        cy="16"
+                        d="M16,0A16,16,0,1,1,-16,0A16,16,0,1,1,16,0"
+                        fill="#4B9BFF"
+                        transform="translate(16, 16)"
+                      />
+                    </svg>
+                    <span
+                      class="recharts-legend-item-text"
+                      style="color: rgb(75, 155, 255);"
+                    >
+                      Known Visitors:
+                      <b
+                        class="ml-1"
+                      >
+                        1
+                      </b>
+                    </span>
+                  </li>
+                  <li
+                    class="recharts-legend-item legend-item-1"
+                    style="display: inline-block; margin-right: 10px;"
+                  >
+                    <svg
+                      class="recharts-surface"
+                      height="8"
+                      style="display: inline-block; vertical-align: middle; margin-right: 4px;"
+                      viewBox="0 0 32 32"
+                      width="8"
+                    >
+                      <title />
+                      <desc />
+                      <path
+                        class="recharts-symbols"
+                        cx="16"
+                        cy="16"
+                        d="M16,0A16,16,0,1,1,-16,0A16,16,0,1,1,16,0"
+                        fill="#FFB46E"
+                        transform="translate(16, 16)"
+                      />
+                    </svg>
+                    <span
+                      class="recharts-legend-item-text"
+                      style="color: rgb(255, 180, 110);"
+                    >
+                      Anonymous Visitors:
+                      <b
+                        class="ml-1"
+                      >
+                        0
+                      </b>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="recharts-tooltip-wrapper"
+                role="dialog"
+                style="transition: transform 400ms ease; transform: translate(undefinedpx, undefinedpx); pointer-events: none; visibility: hidden; position: absolute; top: 0px; left: 0px;"
+                tabindex="-1"
+              >
+                <div
+                  class="bb-tooltip-container"
+                  style="max-width: 400px; position: static;"
+                >
+                  <table
+                    class="analytics-tooltip-chart"
+                  >
+                    <thead
+                      class="analytics-tooltip-chart-header"
+                    >
+                      <tr
+                        class="analytics-tooltip-chart-row"
+                      >
+                        <td
+                          style="min-width: 116px;"
+                        >
+                          <div
+                            class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-semibold"
+                          >
+                            Unique Visitors
+                          </div>
+                        </td>
+                        <td
+                          style="min-width: 55px;"
+                        >
+                          <div
+                            class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-right font-weight-normal"
+                          >
+                            
+                          </div>
+                        </td>
+                      </tr>
+                    </thead>
+                    <tbody
+                      class="analytics-tooltip-chart-body"
+                    >
+                      <tr
+                        class="analytics-tooltip-chart-row"
+                      >
+                        <td>
+                          <div
+                            class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-normal"
+                          >
+                            Known
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-right font-weight-normal"
+                          >
+                            0
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        class="analytics-tooltip-chart-row"
+                      >
+                        <td>
+                          <div
+                            class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-normal"
+                          >
+                            Anonymous
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-right font-weight-normal"
+                          >
+                            0
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        class="analytics-tooltip-chart-row"
+                      >
+                        <td>
+                          <div
+                            class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-left font-weight-normal"
+                          >
+                            Total
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="analytics-tooltip-chart-content analytics-tooltip-chart-column text-right font-weight-normal"
+                          >
+                            0
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="analytics-metrics-chart-sub-content-wrapper"
+          >
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  type="checkbox"
+                  value="false"
+                />
+                <span
+                  class="custom-control-label"
+                >
+                  <span
+                    class="custom-control-label-text"
+                  >
+                    Compare to Previous
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+          <div
+            data-qa-is-chart-populated="false"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

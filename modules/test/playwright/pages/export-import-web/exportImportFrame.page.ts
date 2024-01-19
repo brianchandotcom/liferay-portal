@@ -5,7 +5,7 @@
 
 // @ts-ignore
 
-import {Page, expect} from '@playwright/test';
+import {Page} from '@playwright/test';
 
 import {zipFolder} from '../../utils/util';
 
@@ -17,8 +17,8 @@ export class ExportImportFramePage {
 	}
 
 	async importLARFile(folderPath: string) {
-		const iframeElement = await this.page.locator('iframe').elementHandle();
-		const frame = await iframeElement.contentFrame();
+		let iframeElement = await this.page.locator('iframe').elementHandle();
+		let frame = await iframeElement.contentFrame();
 		await frame.waitForLoadState();
 
 		const exportImportFrame = this.page.frameLocator(
@@ -39,12 +39,15 @@ export class ExportImportFramePage {
 
 		await exportImportFrame.getByRole('button', {name: 'Continue'}).click();
 		await exportImportFrame.getByRole('button', {name: 'Import'}).click();
-		await expect(
-			exportImportFrame
-				.getByTestId('row')
-				.nth(0)
-				.locator('.background-task-status-successful')
-		).toBeVisible();
+
+		iframeElement = await this.page.locator('iframe').elementHandle();
+		frame = await iframeElement.contentFrame();
+		await frame.waitForLoadState();
+
+		await frame.waitForSelector(
+			'[data-qa-id=row]:nth-of-type(1) .background-task-status-successful',
+			{state: 'visible'}
+		);
 	}
 
 	async close() {

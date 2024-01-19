@@ -104,16 +104,19 @@
 />
 
 <#list restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories?fields=description%2Cid%2Cname%2CtaxonomyCategoryProperties").items as taxonomyCategory>
-	<#assign taxonomyVocabulary = taxonomyVocabulary +
-		{
-			taxonomyCategory.name:
-				{
-					"description": taxonomyCategory.description,
-					"icon": taxonomyCategory.taxonomyCategoryProperties?filter(property -> stringUtil.equals(property.key, "icon"))[0].value!"",
-					"id": taxonomyCategory.id
-				}
-		}
-	/>
+	<#assign categoryIcon = taxonomyCategory.taxonomyCategoryProperties?filter(property -> stringUtil.equals(property.key, "icon")) />
+	<#if categoryIcon?size != 0>
+		<#assign icon = categoryIcon[0].value!"" />
+	</#if>
+	<#assign taxonomyVocabulary = taxonomyVocabulary + {
+				taxonomyCategory.name:
+					{
+						"description": taxonomyCategory.description,
+						"icon": icon!"",
+						"id": taxonomyCategory.id
+					}
+			}
+	>
 </#list>
 
 <div class="adt-navigation">

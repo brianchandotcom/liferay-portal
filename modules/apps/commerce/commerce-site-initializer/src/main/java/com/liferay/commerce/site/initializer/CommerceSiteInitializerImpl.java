@@ -409,10 +409,11 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (CPDefinition cpDefinition : existingCPDefinitions) {
+			String externalReferenceCode = cpDefinition.getCProduct(
+			).getExternalReferenceCode();
+
 			stringUtilReplaceValues.put(
-				"CP_DEFINITION_ID:" +
-					cpDefinition.getCProduct(
-					).getExternalReferenceCode(),
+				"CP_DEFINITION_ID:" + externalReferenceCode,
 				String.valueOf(cpDefinition.getCPDefinitionId()));
 		}
 
@@ -441,10 +442,11 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 		}
 
 		for (CPDefinition cpDefinition : cpDefinitions) {
+			String externalReferenceCode = cpDefinition.getCProduct(
+			).getExternalReferenceCode();
+
 			stringUtilReplaceValues.put(
-				"CP_DEFINITION_ID:" +
-					cpDefinition.getCProduct(
-					).getExternalReferenceCode(),
+				"CP_DEFINITION_ID:" + externalReferenceCode,
 				String.valueOf(cpDefinition.getCPDefinitionId()));
 
 			List<CPInstance> cpInstances = cpDefinition.getCPInstances();

@@ -9,6 +9,7 @@ import {cleanup, render} from '@testing-library/react';
 import {CommerceMetricCard} from 'commerce/components/CommerceMetricCard';
 import {
 	mockCommerceTotalOrderValueReq,
+	mockPreferenceReq,
 	mockTimeRangeReq
 } from 'test/graphql-data';
 import {MockedProvider} from '@apollo/react-testing';
@@ -73,6 +74,7 @@ const WrappedComponent = ({
 				<MockedProvider
 					mocks={[
 						mockTimeRangeReq(),
+						mockPreferenceReq(),
 						mockCommerceTotalOrderValueReq({
 							data,
 							Query: CommerceTotalOrderValueQuery,
@@ -109,7 +111,7 @@ describe('CommerceMetricCard', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		const dropdownRangeSelector = document.querySelector(
-			'.dropdown-range-key-menu-root'
+			'.dropdown-range-key-root'
 		);
 
 		expect(getByText('this is the description')).toBeInTheDocument();

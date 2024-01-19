@@ -72,17 +72,25 @@ exports[`InterestDetails renders 1`] = `
               </div>
             </div>
             <div
-              class="no-results-root flex-grow-1"
+              class="dropdown dropdown-range-key-root"
             >
-              <div
-                class="no-results-content"
+              <button
+                aria-controls="clay-dropdown-menu-1"
+                aria-expanded="false"
+                aria-haspopup="true"
+                class="dropdown-toggle button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
+                type="button"
               >
-                <h4
-                  class="no-results-title"
+                Last 30 days
+                <svg
+                  class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
+                  role="presentation"
                 >
-                  Sorry, an error occurred.
-                </h4>
-              </div>
+                  <use
+                    href="#caret-bottom"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         </nav>
@@ -279,7 +287,7 @@ exports[`InterestDetails renders 1`] = `
             class="dropdown dropdown-root pagination-items-per-page"
           >
             <button
-              aria-controls="clay-dropdown-menu-1"
+              aria-controls="clay-dropdown-menu-2"
               aria-expanded="false"
               aria-haspopup="true"
               class="dropdown-toggle button-root btn btn-sm btn-secondary"

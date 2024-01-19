@@ -20,6 +20,7 @@ import {
 	mockEventAnalysisReq,
 	mockEventAttributeDefinitionsReq,
 	mockEventDefinitionsReq,
+	mockPreferenceReq,
 	mockTimeRangeReq
 } from 'test/graphql-data';
 import {OrderByDirections} from 'shared/util/constants';
@@ -45,6 +46,7 @@ const WrappedComponent = () => (
 			<MockedProvider
 				mocks={[
 					mockTimeRangeReq(),
+					mockPreferenceReq(),
 					mockEventAnalysisReq(),
 					mockEventAttributeDefinitionsReq(
 						range(10).map(i =>
@@ -236,9 +238,7 @@ describe('Event Analysis Edit', () => {
 
 		jest.runAllTimers();
 
-		const dropdown = document.querySelector(
-			'.dropdown-range-key-menu-root.show'
-		);
+		const dropdown = document.querySelector('.dropdown-menu.show');
 
 		await waitForElement(() => dropdown);
 

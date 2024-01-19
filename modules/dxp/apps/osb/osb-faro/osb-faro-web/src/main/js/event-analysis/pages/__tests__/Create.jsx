@@ -15,7 +15,11 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {MockedProvider} from '@apollo/react-testing';
-import {mockEventDefinitionsReq, mockTimeRangeReq} from 'test/graphql-data';
+import {
+	mockEventDefinitionsReq,
+	mockPreferenceReq,
+	mockTimeRangeReq
+} from 'test/graphql-data';
 import {OrderByDirections} from 'shared/util/constants';
 import {Provider} from 'react-redux';
 import {range} from 'lodash';
@@ -38,6 +42,7 @@ const WrappedComponent = () => (
 			<MockedProvider
 				mocks={[
 					mockTimeRangeReq(),
+					mockPreferenceReq(),
 					mockEventDefinitionsReq(
 						range(10).map(i =>
 							data.mockEventDefinition(i, {

@@ -1,25 +1,54 @@
+import client from 'shared/apollo/client';
+import mockStore from 'test/mock-store';
 import React from 'react';
 import ValueInput from '../ValueInput';
+import {ApolloProvider} from '@apollo/react-hooks';
 import {DataTypes} from 'event-analysis/utils/types';
 import {fireEvent, render} from '@testing-library/react';
 import {
 	FunctionalOperators,
 	RelationalOperators
 } from '../../../../utils/constants';
+import {MockedProvider} from '@apollo/react-testing';
+import {mockPreferenceReq} from 'test/graphql-data';
+import {Provider} from 'react-redux';
 
 jest.unmock('react-dom');
+
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useParams: () => ({
+		channelId: '456',
+		groupId: '2000',
+		query: {
+			rangeKey: '30'
+		}
+	})
+}));
+
+const WrapperComponent = ({children}) => (
+	<ApolloProvider client={client}>
+		<Provider store={mockStore()}>
+			<MockedProvider mocks={[mockPreferenceReq()]}>
+				{children}
+			</MockedProvider>
+		</Provider>
+	</ApolloProvider>
+);
 
 describe('ValueInput', () => {
 	it('should render', () => {
 		const {container, getByText} = render(
-			<ValueInput
-				dataType={DataTypes.Boolean}
-				onChange={jest.fn()}
-				operatorName={RelationalOperators.EQ}
-				touched={false}
-				valid
-				value='true'
-			/>
+			<WrapperComponent>
+				<ValueInput
+					dataType={DataTypes.Boolean}
+					onChange={jest.fn()}
+					operatorName={RelationalOperators.EQ}
+					touched={false}
+					valid
+					value='true'
+				/>
+			</WrapperComponent>
 		);
 		fireEvent.click(getByText('Select an option'));
 
@@ -41,14 +70,16 @@ describe('ValueInput', () => {
 		'should find $testId if dataType is $dataType and operatorName is $operatorName',
 		({dataType, operatorName, testId, value}) => {
 			const {queryByTestId} = render(
-				<ValueInput
-					dataType={dataType}
-					onChange={jest.fn()}
-					operatorName={operatorName}
-					touched={false}
-					valid
-					value={value}
-				/>
+				<WrapperComponent>
+					<ValueInput
+						dataType={dataType}
+						onChange={jest.fn()}
+						operatorName={operatorName}
+						touched={false}
+						valid
+						value={value}
+					/>
+				</WrapperComponent>
 			);
 
 			expect(queryByTestId(testId)).toBeTruthy();

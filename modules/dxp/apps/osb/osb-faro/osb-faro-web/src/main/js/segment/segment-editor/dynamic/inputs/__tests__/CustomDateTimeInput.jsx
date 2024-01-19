@@ -1,7 +1,11 @@
+import client from 'shared/apollo/client';
 import CustomDateTimeInput from '../CustomDateTimeInput';
 import React from 'react';
+import {ApolloProvider} from '@apollo/react-hooks';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {createCustomValueMap} from '../../utils/custom-inputs';
+import {MockedProvider} from '@apollo/react-testing';
+import {mockPreferenceReq} from 'test/graphql-data';
 import {Property} from 'shared/util/records';
 import {RelationalOperators} from '../../utils/constants';
 
@@ -25,11 +29,15 @@ describe('CustomDateTimeInput', () => {
 
 	it('should render', () => {
 		const {container, getAllByText, getByText} = render(
-			<CustomDateTimeInput
-				property={new Property()}
-				timeZoneId='UTC'
-				value={mockValue}
-			/>
+			<ApolloProvider client={client}>
+				<MockedProvider mocks={[mockPreferenceReq()]}>
+					<CustomDateTimeInput
+						property={new Property()}
+						timeZoneId='UTC'
+						value={mockValue}
+					/>
+				</MockedProvider>
+			</ApolloProvider>
 		);
 		fireEvent.click(getByText('is after'));
 

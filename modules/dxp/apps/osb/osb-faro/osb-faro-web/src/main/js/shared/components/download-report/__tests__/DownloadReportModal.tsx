@@ -1,12 +1,16 @@
 import ClayForm from '@clayui/form';
+import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
 import moment, {Moment} from 'moment';
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import {ApolloProvider} from '@apollo/react-hooks';
 import {Checkbox, Containers, formatContainers} from '../DownloadPDFReport';
 import {DownloadReportButton} from '../DownloadReportButton';
 import {DownloadReportModal, ReportType} from '../DownloadReportModal';
+import {MockedProvider} from '@apollo/react-testing';
+import {mockPreferenceReq} from 'test/graphql-data';
 import {MomentDateRange} from 'shared/components/DateRangeInput';
 import {Provider} from 'react-redux';
 import {sub} from 'shared/util/lang';
@@ -111,21 +115,25 @@ const WrapperComponent: React.FC<IWrapperComponent> = ({
 	return (
 		<>
 			{visible && (
-				<Provider store={mockStore()}>
-					<DownloadReportModal
-						{...otherProps}
-						alertMessage={alertMessage}
-						descriptionMessage={descriptionMessage}
-						infoMessage={infoMessage}
-						observer={observer}
-						onClose={jest.fn()}
-						onSubmit={jest.fn()}
-						requiredDateRange={requiredDateRange}
-						type={type}
-					>
-						{children}
-					</DownloadReportModal>
-				</Provider>
+				<ApolloProvider client={client}>
+					<MockedProvider mocks={[mockPreferenceReq()]}>
+						<Provider store={mockStore()}>
+							<DownloadReportModal
+								{...otherProps}
+								alertMessage={alertMessage}
+								descriptionMessage={descriptionMessage}
+								infoMessage={infoMessage}
+								observer={observer}
+								onClose={jest.fn()}
+								onSubmit={jest.fn()}
+								requiredDateRange={requiredDateRange}
+								type={type}
+							>
+								{children}
+							</DownloadReportModal>
+						</Provider>
+					</MockedProvider>
+				</ApolloProvider>
 			)}
 
 			<DownloadReportButton

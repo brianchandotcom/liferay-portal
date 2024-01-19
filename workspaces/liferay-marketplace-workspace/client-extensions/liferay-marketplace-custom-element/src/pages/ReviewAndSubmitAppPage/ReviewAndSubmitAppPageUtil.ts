@@ -17,6 +17,10 @@ export type App = {
 	name: string;
 	price: number;
 	priceModel: string;
+	resourceRequirements: {
+		cpu: string;
+		ram: string;
+	};
 	storefront: ProductImages[];
 	supportAndHelp: {
 		icon: string;
@@ -25,6 +29,7 @@ export type App = {
 	}[];
 	tags: string[];
 	thumbnail: string;
+	type: string;
 	version: string;
 	versionDescription: string;
 };

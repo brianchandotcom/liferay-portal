@@ -30,6 +30,8 @@ export default {
 	'cancel': 'Cancel',
 	'cash': 'Cash',
 	'client-extensions': 'Client Extensions',
+	'cloud-apps-must-state-resource-requirements-if-your-app-has-no-additional-cpu-or-ram-requirements-please-enter-0':
+		'Cloud apps must state resource requirements. If your app has no additional CPU or Ram requirements please enter 0',
 	'cloud-compatible': 'Cloud Compatible?',
 	'cloud-upload': 'Cloud Upload',
 	'compatible-offering': 'Compatible Offering',
@@ -133,6 +135,7 @@ export default {
 	'request-account': 'Request Account',
 	'request-description': 'Request Description',
 	'request-details': 'Request details',
+	'resource-requirements': 'Resource Requirements',
 	'return-to-marketplace': 'Return to Marketplace',
 	'review-the-new-publisher-info-and-the-liferay-marketplace-terms-before-proceeding':
 		'Review the new publisher info and the Liferay Marketplace terms before proceeding',

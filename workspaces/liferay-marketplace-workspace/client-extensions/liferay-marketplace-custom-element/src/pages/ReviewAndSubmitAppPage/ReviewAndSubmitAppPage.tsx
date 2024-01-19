@@ -51,8 +51,7 @@ export function ReviewAndSubmitAppPage({
 			productResponse.categories.forEach((category: any) => {
 				if (category.vocabulary === 'marketplace app category') {
 					productCategories.push(category.name);
-				}
-				else if (category.vocabulary === 'marketplace app tags') {
+				} else if (category.vocabulary === 'marketplace app tags') {
 					productTags.push(category.name);
 				}
 			});
@@ -65,16 +64,24 @@ export function ReviewAndSubmitAppPage({
 				({skuOptions: [trialOption]}) => trialOption?.value === 'no'
 			);
 
-			let version = '';
-			let versionDescription = '';
+			const dataProduct = {
+				'cpu': '',
+				'licenseType': '',
+				'price-model': '',
+				'priceModel': '',
+				'ram': '',
+				'type': '',
+				'version': '',
+				'versionDescription': '',
+			};
 
 			nonTrialSKU?.customFields?.forEach(({customValue, name}) => {
 				if (name === 'version') {
-					version = customValue.data as string;
+					dataProduct.version = customValue.data as string;
 				}
 
 				if (name === 'Version Description') {
-					versionDescription = customValue.data as string;
+					dataProduct.versionDescription = customValue.data as string;
 				}
 			});
 
@@ -83,37 +90,35 @@ export function ReviewAndSubmitAppPage({
 				link: string;
 				title: string;
 			}[] = [];
-			let licenseType = '';
-			let priceModel = '';
 
 			productSpecifications.forEach((specification) => {
 				const {specificationKey, value} = specification;
 				const localizedValue = value['en_US'];
 
 				if (
-					specificationKey === 'supporturl' ||
-					specificationKey === 'publisherwebsiteurl' ||
-					specificationKey === 'appusagetermsurl' ||
-					specificationKey === 'appdocumentationurl' ||
-					specificationKey === 'appinstallationguideurl'
+					[
+						'supporturl',
+						'publisherwebsiteurl',
+						'ppusagetermsurl',
+						'appdocumentationurl',
+						'appinstallationguideurl',
+					].includes(specificationKey)
 				) {
-					const supportAndHelItem = supportAndHelpMap.get(
-						specificationKey
-					);
 					supportAndHelpCardInfos.push({
-						...(supportAndHelItem as {icon: string; title: string}),
+						...(supportAndHelpMap.get(specificationKey) as {
+							icon: string;
+							title: string;
+						}),
 						link: localizedValue,
 					});
 				}
 
-				if (specificationKey === 'price-model') {
-					priceModel = localizedValue;
-				}
-
-				if (specificationKey === 'license-type') {
-					licenseType = localizedValue;
-				}
+				(dataProduct as any)[
+					specificationKey as string
+				] = localizedValue;
 			});
+
+			dataProduct.priceModel = dataProduct['price-model'];
 
 			const attachment = productResponse.attachments.find(
 				(attachment) => {
@@ -129,18 +134,19 @@ export function ReviewAndSubmitAppPage({
 				attachmentTitle: attachment?.title['en_US'] as string,
 				categories: productCategories,
 				description: productResponse.description['en_US'],
-				licenseType,
 				name: productResponse.name['en_US'],
 				price: nonTrialSKU?.price as number,
-				priceModel,
+				resourceRequirements: {
+					cpu: dataProduct.cpu,
+					ram: dataProduct.ram,
+				},
 				storefront: (productResponse.images || []).filter((image) => {
 					return image.galleryEnabled;
 				}),
 				supportAndHelp: supportAndHelpCardInfos,
 				tags: productTags,
 				thumbnail,
-				version,
-				versionDescription,
+				...dataProduct,
 			};
 
 			setApp(newApp);

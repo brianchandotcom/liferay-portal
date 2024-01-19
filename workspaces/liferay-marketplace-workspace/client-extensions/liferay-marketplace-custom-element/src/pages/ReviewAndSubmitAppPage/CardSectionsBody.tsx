@@ -5,9 +5,11 @@
 
 import brightnessEmptyIcon from '../../assets/icons/brightness_empty_icon.svg';
 import calendarMonthIcon from '../../assets/icons/calendar_month_icon.svg';
+import cancelIcon from '../../assets/icons/cancel_icon.svg';
 import creditCardIcon from '../../assets/icons/credit_card_icon.svg';
 import documentIcon from '../../assets/icons/document_icon.svg';
 import scheduleIcon from '../../assets/icons/schedule_icon.svg';
+import taskCheckedIcon from '../../assets/icons/task_checked_icon.svg';
 import {CardLink} from '../../components/Card/CardLink';
 import {CardView} from '../../components/Card/CardView';
 import {LicensePriceChildren} from '../../components/LicensePriceCard/LicensePriceChildren';
@@ -60,6 +62,48 @@ export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
 					{app?.tags.map((tag, index) => {
 						return <Tag key={index} label={tag}></Tag>;
 					})}
+				</div>
+			</CardSection>
+
+			<CardSection
+				enableEdit={!readonly}
+				localized
+				required
+				sectionName="Cloud Compatible"
+			>
+				<div className="card-section-body-cloud-compatible">
+					<CardView
+						description={
+							app?.type === 'cloud'
+								? 'Create a Cloud app using client extensions.'
+								: 'Create a DXP app using a plugin package.'
+						}
+						icon={
+							app?.type === 'cloud' ? taskCheckedIcon : cancelIcon
+						}
+						title={app?.type === 'cloud' ? 'Yes' : 'No'}
+					/>
+				</div>
+			</CardSection>
+
+			<CardSection
+				enableEdit={readonly}
+				localized
+				required
+				sectionName="Resource Requirements"
+			>
+				<div className="card-section-body-section-requirements d-flex justify-content-between">
+					<CardView
+						description={app?.resourceRequirements?.cpu}
+						title="Number of CPUs"
+						tooltip={!readonly ? 'More info' : ''}
+					/>
+
+					<CardView
+						description={`${app?.resourceRequirements?.ram} GB`}
+						title="Ram in GB"
+						tooltip={!readonly ? 'More info' : ''}
+					/>
 				</div>
 			</CardSection>
 

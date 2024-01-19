@@ -91,6 +91,35 @@ public class ChainingCheck extends BaseCheck {
 
 			int chainSize = chainedMethodNames.size();
 
+			if (chainSize > 1) {
+				DetailAST childDetailAST = methodCallDetailAST.getFirstChild();
+
+				if (childDetailAST.getType() == TokenTypes.DOT) {
+					DetailAST parentDetailAST = methodCallDetailAST.getParent();
+
+					while (parentDetailAST != null) {
+						if ((parentDetailAST.getType() == TokenTypes.DOT) ||
+							(parentDetailAST.getType() ==
+								TokenTypes.METHOD_CALL)) {
+
+							parentDetailAST = parentDetailAST.getParent();
+
+							continue;
+						}
+
+						break;
+					}
+
+					if ((parentDetailAST != null) &&
+						(parentDetailAST.getType() == TokenTypes.PLUS)) {
+
+						log(
+							methodCallDetailAST, _MSG_AVOID_METHOD,
+							getMethodName(methodCallDetailAST), "+");
+					}
+				}
+			}
+
 			if (chainSize > 3) {
 				_checkChainOrder(methodCallDetailAST, chainedMethodNames);
 			}
@@ -370,6 +399,8 @@ public class ChainingCheck extends BaseCheck {
 	}
 
 	private static final String _APPLY_TO_TYPE_CAST_KEY = "applyToTypeCast";
+
+	private static final String _MSG_AVOID_METHOD = "chaining.avoid.method";
 
 	private static final String _MSG_AVOID_PARENTHESES_CHAINING =
 		"chaining.avoid.parentheses";

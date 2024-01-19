@@ -81,7 +81,7 @@ export default {
 	'host-name': 'Host Name',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
-	'if-no-CPUs-please-enter-0': 'If no CPUs please enter 0',
+	'if-no-cpus-please-enter-0': 'If no CPUs please enter 0',
 	'if-no-ram-required-please-enter-0': 'If no RAM required please enter 0',
 	'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range':
 		'If the app is compatible with different updates of 7.4, please upload multiple packages for each update or update compatibility range.',

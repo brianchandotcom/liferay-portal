@@ -59,7 +59,7 @@ type ProvideAppBuildPageProps = {
 type BodyProductSpecificationProps = {
 	productId: number;
 	specificationKey: string;
-	value: number;
+	value: number | string;
 };
 
 const acceptFileTypes = {
@@ -385,40 +385,31 @@ export function ProvideAppBuildPage({
 
 	const submitAppBuildClouldResourceRequirements = async (
 		appId: string,
-		bodyData: BodyProductSpecificationProps[]
+		productSpecifications: BodyProductSpecificationProps[]
 	) => {
 		const dataSpecificationList = await getProductSpecifications({
 			appProductId,
 		});
 
-		const handleResourceRequirements = bodyData.map(async (body) => {
+		for (const productSpecification of productSpecifications) {
 			const dataSpecification = dataSpecificationList?.find(
 				(specification) =>
-					specification?.specificationKey === body.specificationKey
+					specification?.specificationKey ===
+					productSpecification.specificationKey
 			);
 
-			const updateSpecification = await updateProductSpecification({
+			const fn = dataSpecification?.id
+				? updateProductSpecification
+				: createProductSpecification;
+
+			await fn({
 				body: {
-					specificationKey: body.specificationKey,
-					value: {en_US: body.value},
+					specificationKey: productSpecification.specificationKey,
+					value: {en_US: productSpecification.value},
 				},
-				id: dataSpecification?.id as number,
+				id: dataSpecification?.id || appId,
 			});
-
-			if (!updateSpecification.ok) {
-				return createProductSpecification({
-					appId,
-					body: {
-						specificationKey: body.specificationKey,
-						value: {en_US: body.value},
-					},
-				});
-			}
-
-			return updateSpecification;
-		});
-
-		return handleResourceRequirements;
+		}
 	};
 
 	const submitAppBuildTypeSpecification = async () => {
@@ -435,13 +426,13 @@ export function ProvideAppBuildPage({
 		const dataSpecification = await getSpecification('type');
 
 		const {id} = await createProductSpecification({
-			appId,
 			body: {
 				productId: appProductId,
 				specificationId: dataSpecification.id,
 				specificationKey: dataSpecification.key,
 				value: {en_US: appType.value},
 			},
+			id: appId,
 		});
 
 		dispatch({

@@ -10,28 +10,28 @@ import sitesIcon from '../../assets/icons/sites_icon.svg';
 import usageTermsIcon from '../../assets/icons/usage_terms_icon.svg';
 
 export type App = {
-	attachmentTitle: string;
-	categories: string[];
-	description: string;
-	licenseType: string;
-	name: string;
-	price: number;
-	priceModel: string;
-	resourceRequirements: {
+	'attachmentTitle': string;
+	'categories': string[];
+	'description': string;
+	'license-type': string;
+	'name': string;
+	'price': number;
+	'price-model': string;
+	'resourceRequirements': {
 		cpu: string;
 		ram: string;
 	};
-	storefront: ProductImages[];
-	supportAndHelp: {
+	'storefront': ProductImages[];
+	'supportAndHelp': {
 		icon: string;
 		link: string;
 		title: string;
 	}[];
-	tags: string[];
-	thumbnail: string;
-	type: string;
-	version: string;
-	versionDescription: string;
+	'tags': string[];
+	'thumbnail': string;
+	'type': string;
+	'version': string;
+	'versionDescription': string;
 };
 
 export const supportAndHelpMap = new Map<string, {icon: string; title: string}>(

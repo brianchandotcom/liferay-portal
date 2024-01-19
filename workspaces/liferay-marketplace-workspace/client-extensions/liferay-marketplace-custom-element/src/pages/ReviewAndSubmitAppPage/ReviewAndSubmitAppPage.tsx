@@ -67,9 +67,8 @@ export function ReviewAndSubmitAppPage({
 
 			const dataProduct = {
 				'cpu': '',
-				'licenseType': '',
+				'license-type': '',
 				'price-model': '',
-				'priceModel': '',
 				'ram': '',
 				'type': '',
 				'version': '',
@@ -118,8 +117,6 @@ export function ReviewAndSubmitAppPage({
 					specificationKey as string
 				] = localizedValue;
 			});
-
-			dataProduct.priceModel = dataProduct['price-model'];
 
 			const attachment = productResponse.attachments.find(
 				(attachment) => {

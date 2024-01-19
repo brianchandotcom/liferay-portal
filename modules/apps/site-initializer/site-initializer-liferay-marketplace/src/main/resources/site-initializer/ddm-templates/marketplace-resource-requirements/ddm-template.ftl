@@ -1,6 +1,6 @@
 <#assign
 	channelId=""
-	channels=restClient.get("/headless-commerce-delivery-catalog/v1.0/channels") 
+	channels=restClient.get("/headless-commerce-delivery-catalog/v1.0/channels")
 	filteredSpecifications=[]
 />
 
@@ -16,15 +16,13 @@
 
 <#if specifications?has_content && specifications.items?has_content>
 
-	<#assign 
-		cpuQuantity ="" 
-		memoryQuantity ="" 
+	<#assign
+		cpuQuantity = ""
+		memoryQuantity = ""
 	/>
 
 	<#list specifications.items?sort_by("specificationKey") as specification>
-
-		<#if specification.specificationKey?has_content && (stringUtil.equals(specification.specificationKey, "cpu" ) || stringUtil.equals(specification.specificationKey, "ram" ))>
-
+		<#if specification.specificationKey?has_content && (stringUtil.equals(specification.specificationKey, "cpu") || stringUtil.equals(specification.specificationKey, "ram"))>
 			<#if stringUtil.equals(specification.specificationKey, "cpu" )>
 				<#assign cpuQuantity = specification.value />
 
@@ -39,13 +37,13 @@
 				</#if>
 			</#if>
 
-			<#if stringUtil.equals(specification.specificationKey, "ram" )>
+			<#if stringUtil.equals(specification.specificationKey, "ram")>
 				<#assign memoryQuantity = specification.value />
 
 				<#if cpuQuantity?has_content && memoryQuantity?has_content >,</#if>
 			</#if>
 
-			<#if stringUtil.equals(specification.specificationKey, "ram" )>
+			<#if stringUtil.equals(specification.specificationKey, "ram")>
 				<#assign memoryQuantity = specification.value />
 
 				<#if memoryQuantity?has_content>

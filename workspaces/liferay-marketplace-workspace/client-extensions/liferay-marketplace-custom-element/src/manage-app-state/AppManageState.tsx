@@ -52,8 +52,8 @@ export type InitialStateProps = {
 	productOptionId: number;
 	publisherWebsiteURL: Specification;
 	resourceRequirements: {
-		cpu: number;
-		ram: number;
+		cpu: number | string;
+		ram: number | string;
 	};
 	skuTrialId: number;
 	skuVersionId: number;
@@ -79,8 +79,8 @@ const initialState = ({
 	optionValuesId: {},
 	priceModel: {value: 'Paid'},
 	resourceRequirements: {
-		cpu: null,
-		ram: null,
+		cpu: '',
+		ram: '',
 	},
 } as unknown) as InitialStateProps;
 

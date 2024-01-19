@@ -119,7 +119,6 @@ export function ChoosePricingModelPage({
 							);
 
 							const {id} = await createProductSpecification({
-								appId,
 								body: {
 									productId: appProductId,
 									specificationId: dataSpecification.id,
@@ -129,6 +128,7 @@ export function ChoosePricingModelPage({
 											? {en_US: 'Free'}
 											: {en_US: 'Paid'},
 								},
+								id: appId,
 							});
 
 							dispatch({

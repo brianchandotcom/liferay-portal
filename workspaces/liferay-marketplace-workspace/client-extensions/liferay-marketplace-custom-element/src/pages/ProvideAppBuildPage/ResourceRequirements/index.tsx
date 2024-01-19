@@ -10,11 +10,6 @@ import {TYPES} from '../../../manage-app-state/actionTypes';
 
 import './index.scss';
 
-export type ResourceRequirementsForm = {
-	numberOfCPUs: number;
-	ram: number;
-};
-
 const ResourceRequirements = () => {
 	const [{resourceRequirements}, dispatch] = useAppContext();
 
@@ -23,17 +18,15 @@ const ResourceRequirements = () => {
 			<FormInput
 				boldLabel
 				className="custom-input resource-requirements-content-input"
-				helpMessage={i18n.translate('if-no-CPUs-please-enter-0')}
+				helpMessage={i18n.translate('if-no-cpus-please-enter-0')}
 				label={i18n.translate('number-of-cpus')}
 				name="numberOfCPUs"
-				onChange={({target}) => {
-					const {value} = target;
-
+				onChange={({target: {value}}) =>
 					dispatch({
 						payload: {key: 'cpu', value},
 						type: TYPES.UPDATE_RESOURCE_REQUIREMENTS,
-					});
-				}}
+					})
+				}
 				placeholder={i18n.translate('enter-the-number-of-cpus')}
 				type="number"
 				value={resourceRequirements.cpu ?? ''}
@@ -47,8 +40,7 @@ const ResourceRequirements = () => {
 				)}
 				label={i18n.translate('ram')}
 				name="ram"
-				onChange={({target}) => {
-					const {value} = target;
+				onChange={({target: {value}}) => {
 					dispatch({
 						payload: {key: 'ram', value},
 						type: TYPES.UPDATE_RESOURCE_REQUIREMENTS,

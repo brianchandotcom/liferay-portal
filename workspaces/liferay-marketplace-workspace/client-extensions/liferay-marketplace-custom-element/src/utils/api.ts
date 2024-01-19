@@ -183,14 +183,14 @@ export function createImage({
 }
 
 export async function createProductSpecification({
-	appId,
 	body,
+	id,
 }: {
-	appId: string;
 	body: Object;
+	id: number | string;
 }) {
 	const response = await fetch(
-		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${appId}/productSpecifications`,
+		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${id}/productSpecifications`,
 		{
 			body: JSON.stringify(body),
 			headers,
@@ -940,7 +940,7 @@ export async function updateProductSpecification({
 	id,
 }: {
 	body: Object;
-	id: number;
+	id: number | string;
 }) {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/productSpecifications/${id}`,

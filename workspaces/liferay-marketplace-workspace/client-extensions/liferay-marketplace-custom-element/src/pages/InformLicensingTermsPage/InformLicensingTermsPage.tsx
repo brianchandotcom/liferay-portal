@@ -81,13 +81,13 @@ export function InformLicensingTermsPage({
 		const dataSpecification = await getSpecification('license-type');
 
 		const {id} = await createProductSpecification({
-			appId,
 			body: {
 				productId: appProductId,
 				specificationId: dataSpecification.id,
 				specificationKey: dataSpecification.key,
 				value,
 			},
+			id: appId,
 		});
 
 		dispatch({

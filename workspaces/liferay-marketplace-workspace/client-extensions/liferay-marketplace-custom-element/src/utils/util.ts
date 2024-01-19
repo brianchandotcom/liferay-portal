@@ -299,13 +299,13 @@ async function submitSpecification(
 	}
 	else {
 		const {id} = await createProductSpecification({
-			appId,
 			body: {
 				productId,
 				specificationId: specification.id,
 				specificationKey: key,
 				value: {en_US: value},
 			},
+			id: appId,
 		});
 
 		return id;

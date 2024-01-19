@@ -40,8 +40,6 @@ import com.liferay.gradle.util.ArrayUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 
 import de.undercouch.gradle.tasks.download.Download;
 
@@ -795,7 +793,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private Copy _addTaskDistBundle(
-		final Project project, Download downloadBundleTask, String taskName,
+		Project project, Download downloadBundleTask, String taskName,
 		WorkspaceExtension workspaceExtension, String environment,
 		Configuration providedModulesConfiguration) {
 
@@ -805,15 +803,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		_configureTaskDisableUpToDate(copy);
 
-		copy.into(
-			new Callable<File>() {
+		Callable<File> callable = () -> new File(project.getBuildDir(), "dist");
 
-				@Override
-				public File call() throws Exception {
-					return new File(project.getBuildDir(), "dist");
-				}
+		copy.into(callable);
 
-			});
+		_configureFixTargetTomcatConfigs(callable, copy);
 
 		copy.setDescription("Assembles the Liferay bundle.");
 
@@ -1121,46 +1115,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		initBundleTask.dependsOn(
 			verifyProductTask, downloadBundleTask, verifyBundleTask);
-		initBundleTask.doLast(
-			new Action<Task>() {
 
-				@Override
-				public void execute(Task task) {
-					File homeDir = workspaceExtension.getHomeDir();
+		_configureFixTargetTomcatConfigs(
+			workspaceExtension.getHomeDir(), initBundleTask);
 
-					File unversionedTomcatDirectory = new File(
-						homeDir, "tomcat");
-
-					if (!unversionedTomcatDirectory.exists()) {
-						return;
-					}
-
-					File[] files = homeDir.listFiles(
-						(dir, name) -> name.startsWith("tomcat-"));
-
-					if (ArrayUtil.isEmpty(files)) {
-						return;
-					}
-
-					File versionedTomcatDirectory = files[0];
-
-					WorkResult workResult = project.copy(
-						copySpec -> {
-							copySpec.setDuplicatesStrategy(
-								DuplicatesStrategy.INCLUDE);
-
-							copySpec.from(unversionedTomcatDirectory);
-							copySpec.into(versionedTomcatDirectory);
-
-							copySpec.setIncludeEmptyDirs(false);
-						});
-
-					if (workResult.getDidWork()) {
-						project.delete(unversionedTomcatDirectory);
-					}
-				}
-
-			});
 		initBundleTask.mustRunAfter(verifyProductTask);
 		initBundleTask.setConfigEnvironment(
 			new Callable<String>() {
@@ -1704,24 +1662,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return verifyProductTask;
 	}
 
-	private void _configureCopySpecExpandTomcatVersion(
-		CopySpec copySpec, WorkspaceExtension workspaceExtension) {
-
-		String tomcatVersion = workspaceExtension.getAppServerTomcatVersion();
-
-		copySpec.eachFile(
-			fileCopyDetails -> {
-				String path = fileCopyDetails.getPath();
-
-				fileCopyDetails.setPath(
-					path.replaceAll(
-						"tomcat/",
-						StringBundler.concat(
-							"tomcat-", tomcatVersion,
-							StringPool.FORWARD_SLASH)));
-			});
-	}
-
 	private <T extends AbstractArchiveTask> void _configureDistBundleEnvArchive(
 		Project project, T distBundleArchiveTask, String environment,
 		boolean bundleDistIncludeMetadata, long buildTime) {
@@ -1805,6 +1745,54 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		}
 	}
 
+	private void _configureFixTargetTomcatConfigs(
+		Object bundleHomeDirObject, Task task) {
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					File bundleHomeDir = GradleUtil.toFile(
+						task.getProject(), bundleHomeDirObject);
+
+					File unversionedTomcatDirectory = new File(
+						bundleHomeDir, "tomcat");
+
+					if (!unversionedTomcatDirectory.exists()) {
+						return;
+					}
+
+					File[] files = bundleHomeDir.listFiles(
+						(dir, name) -> name.startsWith("tomcat-"));
+
+					if (ArrayUtil.isEmpty(files)) {
+						return;
+					}
+
+					File versionedTomcatDirectory = files[0];
+
+					Project project = task.getProject();
+
+					WorkResult workResult = project.copy(
+						copySpec -> {
+							copySpec.setDuplicatesStrategy(
+								DuplicatesStrategy.INCLUDE);
+
+							copySpec.from(unversionedTomcatDirectory);
+							copySpec.into(versionedTomcatDirectory);
+
+							copySpec.setIncludeEmptyDirs(false);
+						});
+
+					if (workResult.getDidWork()) {
+						project.delete(unversionedTomcatDirectory);
+					}
+				}
+
+			});
+	}
+
 	private void _configureNpmProject(Project project) {
 		project.subprojects(
 			new Action<Project>() {
@@ -1884,10 +1872,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 							new File(destinationDir, rootDirName),
 							destinationDir);
 					}
-
-					if (copy.getDidWork()) {
-						project.delete(new File(destinationDir, "tomcat"));
-					}
 				}
 
 			});
@@ -1934,11 +1918,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
-
-		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
-			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
-
-		_configureCopySpecExpandTomcatVersion(copy, workspaceExtension);
 	}
 
 	private void _configureTaskCopyBundlePreserveTimestamps(Copy copy) {

@@ -46,7 +46,6 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -71,16 +70,8 @@ public class DBPartitionUtil {
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
 
-		boolean autoCommit = _executeCallable(connection::getAutoCommit);
-
-		_executeCallable(
-			() -> {
-				connection.setAutoCommit(false);
-
-				return null;
-			});
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
+		try (AutoCloseable autoCloseable = _disableAutoCommit(connection);
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				_dbPartitionDB.getCreatePartitionSQL(
 					connection, _getPartitionName(companyId)))) {
 
@@ -145,14 +136,6 @@ public class DBPartitionUtil {
 			}
 
 			throw new PortalException(exception);
-		}
-		finally {
-			_executeCallable(
-				() -> {
-					connection.setAutoCommit(autoCommit);
-
-					return null;
-				});
 		}
 
 		_companyIds.add(companyId);
@@ -369,6 +352,16 @@ public class DBPartitionUtil {
 				" where companyId = ", companyId));
 	}
 
+	private static AutoCloseable _disableAutoCommit(Connection connection)
+		throws Exception {
+
+		boolean autoCommit = connection.getAutoCommit();
+
+		connection.setAutoCommit(false);
+
+		return () -> connection.setAutoCommit(autoCommit);
+	}
+
 	private static void _dropDBPartition(long companyId)
 		throws PortalException {
 
@@ -414,17 +407,6 @@ public class DBPartitionUtil {
 		_companyIds.remove(companyId);
 	}
 
-	private static <R> R _executeCallable(Callable<R> callable)
-		throws PortalException {
-
-		try {
-			return callable.call();
-		}
-		catch (Exception exception) {
-			throw new PortalException(exception);
-		}
-	}
-
 	private static void _extractDBPartition(long companyId)
 		throws PortalException {
 
@@ -465,16 +447,7 @@ public class DBPartitionUtil {
 				throw new PortalException(exception1);
 			}
 
-			boolean autoCommit = _executeCallable(connection::getAutoCommit);
-
-			_executeCallable(
-				() -> {
-					connection.setAutoCommit(false);
-
-					return null;
-				});
-
-			try {
+			try (AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
 				for (String tableName : controlTableNames) {
 					try (Statement statement = connection.createStatement()) {
 						_restoreTable(
@@ -491,14 +464,6 @@ public class DBPartitionUtil {
 						"partition. Recover a backup of the database ",
 						"partition ", _getPartitionName(companyId), "."),
 					exception2);
-			}
-			finally {
-				_executeCallable(
-					() -> {
-						connection.setAutoCommit(autoCommit);
-
-						return null;
-					});
 			}
 
 			throw new PortalException(
@@ -759,15 +724,15 @@ public class DBPartitionUtil {
 	private static void _insertDBPartition(long companyId)
 		throws PortalException {
 
+		AutoCloseable autoCloseable = null;
+
 		List<String> companyIdControlTableNames = new ArrayList<>();
 
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
 
-		boolean autoCommit = _executeCallable(connection::getAutoCommit);
-
 		try (Statement statement = connection.createStatement()) {
-			connection.setAutoCommit(false);
+			autoCloseable = _disableAutoCommit(connection);
 
 			DBInspector dbInspector = new DBInspector(connection);
 
@@ -859,12 +824,14 @@ public class DBPartitionUtil {
 				exception1);
 		}
 		finally {
-			_executeCallable(
-				() -> {
-					connection.setAutoCommit(autoCommit);
-
-					return null;
-				});
+			if (autoCloseable != null) {
+				try {
+					autoCloseable.close();
+				}
+				catch (Exception exception) {
+					throw new PortalException(exception);
+				}
+			}
 		}
 
 		_companyIds.add(companyId);

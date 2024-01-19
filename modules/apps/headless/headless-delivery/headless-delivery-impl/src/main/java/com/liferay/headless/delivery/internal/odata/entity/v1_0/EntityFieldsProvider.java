@@ -117,8 +117,7 @@ public class EntityFieldsProvider {
 					ddmFormField.getFieldReference(), locale, "Number"));
 		}
 		else if (Objects.equals(
-					ddmFormField.getDataType(),
-					DDMFormFieldTypeConstants.RADIO) ||
+					ddmFormField.getType(), DDMFormFieldTypeConstants.RADIO) ||
 				 (Objects.equals(ddmFormField.getIndexType(), "keyword") &&
 				  (Objects.equals(
 					  ddmFormField.getType(),

@@ -340,6 +340,13 @@ public class KBArticleServiceUtil {
 		return getService().getTempAttachmentNames(groupId, tempFolderName);
 	}
 
+	public static com.liferay.portal.kernel.lock.Lock lockKBArticle(
+			long resourcePrimKey)
+		throws PortalException {
+
+		return getService().lockKBArticle(resourcePrimKey);
+	}
+
 	public static void moveKBArticle(
 			long resourcePrimKey, long parentResourceClassNameId,
 			long parentResourcePrimKey, double priority)
@@ -377,6 +384,12 @@ public class KBArticleServiceUtil {
 		getService().subscribeKBArticle(groupId, resourcePrimKey);
 	}
 
+	public static void unlockKBArticle(long resourcePrimKey)
+		throws PortalException {
+
+		getService().unlockKBArticle(resourcePrimKey);
+	}
+
 	public static void unsubscribeGroupKBArticles(
 			long groupId, String portletId)
 		throws PortalException {
@@ -388,6 +401,21 @@ public class KBArticleServiceUtil {
 		throws PortalException {
 
 		getService().unsubscribeKBArticle(resourcePrimKey);
+	}
+
+	public static KBArticle updateAndUnlockKBArticle(
+			long resourcePrimKey, String title, String content,
+			String description, String[] sections, String sourceURL,
+			java.util.Date displayDate, java.util.Date expirationDate,
+			java.util.Date reviewDate, String[] selectedFileNames,
+			long[] removeFileEntryIds,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateAndUnlockKBArticle(
+			resourcePrimKey, title, content, description, sections, sourceURL,
+			displayDate, expirationDate, reviewDate, selectedFileNames,
+			removeFileEntryIds, serviceContext);
 	}
 
 	public static KBArticle updateKBArticle(

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -171,7 +172,19 @@ public interface KBArticleLocalService
 	 * @throws PortalException if a kb article with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public KBArticle deleteKBArticle(long kbArticleId) throws PortalException;
+
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE
+	)
+	public KBArticle deleteKBArticle(
+			long userId, long resourcePrimKey, int version)
+		throws PortalException;
 
 	public void deleteKBArticles(long groupId, long parentResourcePrimKey)
 		throws PortalException;
@@ -521,8 +534,14 @@ public interface KBArticleLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasKBArticleLock(long userId, long resourcePrimKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void incrementViewCount(
 			long userId, long resourcePrimKey, int increment)
+		throws PortalException;
+
+	public Lock lockKBArticle(long userId, long resourcePrimKey)
 		throws PortalException;
 
 	public void moveDependentKBArticlesToTrash(
@@ -573,10 +592,20 @@ public interface KBArticleLocalService
 			long userId, long groupId, long resourcePrimKey)
 		throws PortalException;
 
+	public void unlockKBArticle(long resourcePrimKey);
+
 	public void unsubscribeGroupKBArticles(long userId, long groupId)
 		throws PortalException;
 
 	public void unsubscribeKBArticle(long userId, long resourcePrimKey)
+		throws PortalException;
+
+	public KBArticle updateAndUnlockKBArticle(
+			long userId, long resourcePrimKey, String title, String content,
+			String description, String[] sections, String sourceURL,
+			Date displayDate, Date expirationDate, Date reviewDate,
+			String[] selectedFileNames, long[] removeFileEntryIds,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

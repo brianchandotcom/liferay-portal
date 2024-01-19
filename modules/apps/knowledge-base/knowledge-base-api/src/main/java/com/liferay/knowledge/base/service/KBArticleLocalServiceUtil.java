@@ -189,6 +189,13 @@ public class KBArticleLocalServiceUtil {
 		return getService().deleteKBArticle(kbArticleId);
 	}
 
+	public static KBArticle deleteKBArticle(
+			long userId, long resourcePrimKey, int version)
+		throws PortalException {
+
+		return getService().deleteKBArticle(userId, resourcePrimKey, version);
+	}
+
 	public static void deleteKBArticles(
 			long groupId, long parentResourcePrimKey)
 		throws PortalException {
@@ -692,11 +699,22 @@ public class KBArticleLocalServiceUtil {
 			groupId, userId, tempFolderName);
 	}
 
+	public static boolean hasKBArticleLock(long userId, long resourcePrimKey) {
+		return getService().hasKBArticleLock(userId, resourcePrimKey);
+	}
+
 	public static void incrementViewCount(
 			long userId, long resourcePrimKey, int increment)
 		throws PortalException {
 
 		getService().incrementViewCount(userId, resourcePrimKey, increment);
+	}
+
+	public static com.liferay.portal.kernel.lock.Lock lockKBArticle(
+			long userId, long resourcePrimKey)
+		throws PortalException {
+
+		return getService().lockKBArticle(userId, resourcePrimKey);
 	}
 
 	public static void moveDependentKBArticlesToTrash(
@@ -793,6 +811,10 @@ public class KBArticleLocalServiceUtil {
 		getService().subscribeKBArticle(userId, groupId, resourcePrimKey);
 	}
 
+	public static void unlockKBArticle(long resourcePrimKey) {
+		getService().unlockKBArticle(resourcePrimKey);
+	}
+
 	public static void unsubscribeGroupKBArticles(long userId, long groupId)
 		throws PortalException {
 
@@ -803,6 +825,21 @@ public class KBArticleLocalServiceUtil {
 		throws PortalException {
 
 		getService().unsubscribeKBArticle(userId, resourcePrimKey);
+	}
+
+	public static KBArticle updateAndUnlockKBArticle(
+			long userId, long resourcePrimKey, String title, String content,
+			String description, String[] sections, String sourceURL,
+			java.util.Date displayDate, java.util.Date expirationDate,
+			java.util.Date reviewDate, String[] selectedFileNames,
+			long[] removeFileEntryIds,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateAndUnlockKBArticle(
+			userId, resourcePrimKey, title, content, description, sections,
+			sourceURL, displayDate, expirationDate, reviewDate,
+			selectedFileNames, removeFileEntryIds, serviceContext);
 	}
 
 	/**

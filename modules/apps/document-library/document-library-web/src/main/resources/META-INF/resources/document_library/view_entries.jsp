@@ -155,8 +155,10 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 															</c:when>
 															<c:when test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
 																<clay:icon
-																	cssClass="inline-item inline-item-after state-icon"
+																	aria-label="<%= LanguageUtil.get(request, "locked-document") %>"
+																	cssClass="inline-item inline-item-after lfr-portal-tooltip state-icon"
 																	symbol="lock"
+																	title ="<%= LanguageUtil.get(request, "locked-document") %>"
 																/>
 															</c:when>
 														</c:choose>

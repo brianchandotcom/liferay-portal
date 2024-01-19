@@ -5,11 +5,13 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import DatePicker from 'shared/components/date-picker';
+import getCN from 'classnames';
 import React, {useState} from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
-import {applyTimeZone} from 'shared/util/date';
+import {DatePickerRetentionPeriodHeader} from '../DatePickerRetentionPeriodHeader';
 import {formatDate} from './utils';
+import {formatDateWithTimezone} from '../dropdown-range-key/utils';
 import {Moment} from 'moment';
 import {MomentDateRange} from '../DateRangeInput';
 import {pickBy} from 'lodash';
@@ -18,6 +20,7 @@ import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
 import {spritemap} from 'shared/util/constants';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
+import {useRetentionPeriod} from 'shared/hooks/useRetentionPeriod';
 import {useTimeZoneId} from 'shared/hooks';
 
 export enum ReportType {
@@ -66,14 +69,17 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	const [dateRange, setDateRange] = useState<MomentDateRange>(date);
 	const [submitDisabled, setSubmitDisabled] = useState(false);
 
+	const retentionPeriod = useRetentionPeriod();
 	const timeZoneId = useTimeZoneId();
 
 	const maxDate =
 		initialMaxDate ||
-		applyTimeZone(undefined, timeZoneId).subtract(1, 'days');
+		formatDateWithTimezone(timeZoneId).clone().subtract(1, 'days');
 	const minDate =
 		initialMinDate ||
-		applyTimeZone(undefined, timeZoneId).subtract(10, 'years');
+		formatDateWithTimezone(timeZoneId)
+			.clone()
+			.subtract(retentionPeriod, 'month');
 
 	return (
 		<ClayModal observer={observer}>
@@ -168,7 +174,10 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 							<ClayDropDown
 								alignmentPosition={Align.BottomLeft}
 								menuElementAttrs={{
-									style: {maxWidth: 'none', minWidth: 'none'}
+									className: getCN(
+										'dropdown-range-key-menu-root',
+										{'show-date-picker': showDateRange}
+									)
 								}}
 								trigger={
 									<ClayInput.Group>
@@ -204,16 +213,17 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 								}
 							>
 								<DatePicker
-									className='p-2'
 									date={dateRange}
 									displayLabel={false}
+									header={
+										<DatePickerRetentionPeriodHeader
+											retentionPeriod={retentionPeriod}
+										/>
+									}
 									maxDate={maxDate}
 									maxRange={365}
 									minDate={minDate}
-									onSelect={({
-										end,
-										start
-									}: MomentDateRange) => {
+									onSelect={({end, start}) => {
 										setDateRange({
 											end,
 											start

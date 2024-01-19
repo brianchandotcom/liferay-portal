@@ -1,7 +1,6 @@
 import ActivitiesChart from 'contacts/components/ActivitiesChart';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
-import DropdownRangeKey from 'shared/hoc/DropdownRangeKey';
 import EventMetricQuery, {
 	EventMetricsData,
 	EventMetricsVariables
@@ -26,6 +25,7 @@ import {
 	getDateRangeLabelFromDate,
 	getEndDate
 } from 'shared/util/date';
+import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {formatSessions, getActivityLabel} from 'shared/util/activities';
 import {getSafeRangeSelectors} from 'shared/util/util';
@@ -250,7 +250,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 
 					<DropdownRangeKey
 						legacy={false}
-						onChange={(rangeSelectors: RangeSelectors) => {
+						onRangeSelectorChange={rangeSelectors => {
 							onRangeSelectorsChange(rangeSelectors);
 
 							handleChangeSelection(null);

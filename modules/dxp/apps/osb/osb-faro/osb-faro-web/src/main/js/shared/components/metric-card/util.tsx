@@ -163,7 +163,7 @@ export const getPreviousValueFromCompositeData = (
 	const data = get(compositeData, dataName);
 
 	if (data) {
-		return data.find(val => toUnix(val.key) === dateKey).previousValue;
+		return data.find(val => toUnix(val.key) === dateKey)?.previousValue;
 	}
 };
 

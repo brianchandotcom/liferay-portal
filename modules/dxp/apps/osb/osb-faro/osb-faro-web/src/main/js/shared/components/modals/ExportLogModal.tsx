@@ -49,10 +49,14 @@ const ExportLogModal: React.FC<IExportLogModalProps> = ({
 				<h4>{Liferay.Language.get('request-date-range')}</h4>
 
 				<div className='d-flex'>
-					<DateRangeInput onChange={setDateRange} value={dateRange} />
+					<DateRangeInput
+						className='w-100'
+						onChange={setDateRange}
+						value={dateRange}
+					/>
 
 					<ClayButton
-						className='button-root download'
+						className='button-root ml-2'
 						disabled={!isValid()}
 						displayType='primary'
 						onClick={() => {

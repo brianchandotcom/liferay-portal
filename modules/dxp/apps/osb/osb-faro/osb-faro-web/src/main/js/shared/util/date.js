@@ -68,6 +68,12 @@ const FORMATTED_LANGUAGE_IDS = {
 
 moment.locale(FORMATTED_LANGUAGE_IDS[DEFAULT_LANGUAGE_ID]);
 
+export const convertMillisecondsToMonths = milliseconds =>
+	Math.round(milliseconds / 1000 / 60 / 60 / 24 / 30);
+
+export const convertMillisecondsToDays = milliseconds =>
+	Math.round(milliseconds / 1000 / 60 / 60 / 24);
+
 /**
  * Formats unix timestamp to specified moment format
  * @param {number|string|Date} date

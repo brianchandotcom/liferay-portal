@@ -41,6 +41,17 @@
 		}
 	}
 
+	.picker-header {
+		margin: -12px -12px 0;
+		padding: 12px 24px 0;
+
+		&--border {
+			border-bottom: 1px solid $mainLighten74;
+			margin-bottom: 12px;
+			padding-bottom: 12px;
+		}
+	}
+
 	.picker-body {
 		display: flex;
 		justify-content: center;

@@ -7,7 +7,7 @@ import Form, {
 } from 'shared/components/form';
 import Loading, {Align} from 'shared/components/Loading';
 import PreferenceMutation from 'settings/data-privacy/queries/PreferenceMutation';
-import PreferenceQuery from 'settings/data-privacy/queries/PreferenceQuery';
+import PreferenceQuery from 'shared/queries/PreferenceQuery';
 import React, {useRef} from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert, Modal} from 'shared/types';

@@ -3,11 +3,23 @@ import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import PreferenceMutation from '../queries/PreferenceMutation';
-import PreferenceQuery from '../queries/PreferenceQuery';
+import PreferenceQuery from 'shared/queries/PreferenceQuery';
 import React from 'react';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
+import {
+	convertMillisecondsToDays,
+	convertMillisecondsToMonths
+} from 'shared/util/date';
+import {
+	DATA_RETENTION_PERIOD_KEY,
+	ONE_DAY,
+	ONE_MONTH,
+	SEVEN_MONTHS,
+	THIRTEEN_MONTHS,
+	TWO_DAYS
+} from 'shared/util/constants';
 import {get} from 'lodash';
 import {Option, Picker} from '@clayui/core';
 import {Routes, toRoute} from 'shared/util/router';
@@ -16,25 +28,11 @@ import {useMutation, useQuery} from '@apollo/react-hooks';
 import {User} from 'shared/util/records';
 import {withCurrentUser} from 'shared/hoc';
 
-const DATA_RETENTION_PERIOD_KEY = 'data-retention-period';
-
-const ONE_DAY = '86400000';
-const ONE_MONTH = '2592000000';
-const SEVEN_MONTHS = '18144000000';
-const THIRTEEN_MONTHS = '33696000000';
-const TWO_DAYS = '172800000';
-
 let RETENTION_OPTIONS = [SEVEN_MONTHS, THIRTEEN_MONTHS];
 
 if (FARO_ENV === 'uat') {
 	RETENTION_OPTIONS = [ONE_DAY, TWO_DAYS, SEVEN_MONTHS, THIRTEEN_MONTHS];
 }
-
-const convertMillisecondsToMonths = (milliseconds: number): number =>
-	Math.round(milliseconds / 1000 / 60 / 60 / 24 / 30);
-
-const convertMillisecondsToDays = (milliseconds: number): number =>
-	Math.round(milliseconds / 1000 / 60 / 60 / 24);
 
 const getRetentionLabel = (milliseconds: number): string => {
 	if (milliseconds < parseInt(ONE_MONTH)) {

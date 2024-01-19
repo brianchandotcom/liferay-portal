@@ -2,10 +2,10 @@ import BreakdownTable from './event-analysis-breakdown';
 import Card from 'shared/components/Card';
 import CardTabs, {CardTabSizes} from 'shared/components/CardTabs';
 import Checkbox from 'shared/components/Checkbox';
-import DropdownRangeKey from 'shared/hoc/DropdownRangeKey';
 import EventAnalysisBuilder from './event-analysis-builder';
 import React from 'react';
 import {CalculationTypes, Event} from 'event-analysis/utils/types';
+import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {RangeSelectors} from 'shared/types';
 
 interface IEventAnalysisEditorProps extends React.HTMLAttributes<HTMLElement> {
@@ -70,7 +70,7 @@ const EventAnalysisEditor: React.FC<IEventAnalysisEditorProps> = ({
 
 				<DropdownRangeKey
 					legacy={false}
-					onChange={onRangeSelectorsChange}
+					onRangeSelectorChange={onRangeSelectorsChange}
 					rangeSelectors={rangeSelectors}
 				/>
 			</div>

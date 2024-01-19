@@ -1,10 +1,10 @@
 import autobind from 'autobind-decorator';
-import DropdownRangeKey from 'shared/hoc/DropdownRangeKey';
 import FaroConstants, {RangeKeyTimeRanges} from 'shared/util/constants';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Toolbar from 'shared/components/toolbar';
 import withHistory from './WithHistory';
+import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {get} from 'lodash';
 import {hasChanges} from 'shared/util/react';
 import {paginationDefaults} from 'shared/util/pagination';
@@ -180,7 +180,9 @@ export default configs => WrappedComponent => {
 									'legacyDropdownRangeKey',
 									true
 								)}
-								onChange={this.handleRangeSelectorsChange}
+								onRangeSelectorChange={
+									this.handleRangeSelectorsChange
+								}
 								rangeKeys={rangeKeys}
 								rangeSelectors={rangeSelectors}
 							/>

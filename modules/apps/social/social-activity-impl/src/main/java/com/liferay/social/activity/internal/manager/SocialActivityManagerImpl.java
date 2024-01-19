@@ -94,10 +94,6 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 
 	@Override
 	public void deleteActivities(T model) throws PortalException {
-		if (!_isEnabled(model.getCompanyId())) {
-			return;
-		}
-
 		SocialActivityManager<T> socialActivityManager =
 			_getSocialActivityManager(model.getModelClassName());
 

@@ -406,10 +406,10 @@ definition {
 				version = "properties");
 		}
 
-		task ("Then the nestedFields of many-to-many self relationship apiPropertiesToAPIProperties is present in the schema") {
+		task ("Then the nestedFields of many-to-many self relationship apiPropertyToAPIProperties is present in the schema") {
 			APIExplorer.assertSchemaFieldsPresent(
 				schemaEntity = "APIProperty",
-				schemaFields = "apiPropertiesToAPIProperties");
+				schemaFields = "apiPropertyToAPIProperties");
 		}
 	}
 

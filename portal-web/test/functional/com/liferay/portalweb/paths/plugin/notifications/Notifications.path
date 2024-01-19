@@ -44,6 +44,11 @@
 <!--NOTIFICATIONS-->
 
 <tr>
+	<td>DELETE</td>
+	<td>//button[contains(.,'Delete')]/span[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MARK_AS_READ</td>
 	<td>//a[contains(.,'Mark as Read')]/span[1]</td>
 	<td></td>

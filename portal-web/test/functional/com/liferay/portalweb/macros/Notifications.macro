@@ -31,7 +31,7 @@ definition {
 
 			ClickNoError(
 				key_text = "trash",
-				locator1 = "ManagementBar#ANY_ICON");
+				locator1 = "Notifications#DELETE");
 
 			Alert.viewSuccessMessage();
 		}

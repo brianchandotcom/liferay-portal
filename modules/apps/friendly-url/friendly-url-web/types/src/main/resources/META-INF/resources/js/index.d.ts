@@ -3,23 +3,4 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/// <reference types="react" />
-
-declare type Props = {
-	errors: {
-		errorMessage?: string;
-		fields?: Record<string, string>;
-	};
-	fields: Array<{
-		label: string;
-		name: string;
-		value: string;
-	}>;
-	url: string;
-};
-export declare function SeparatorFields({
-	errors,
-	fields,
-	url,
-}: Props): JSX.Element;
-export {};
+export {default as SeparatorFields} from './SeparatorFields';

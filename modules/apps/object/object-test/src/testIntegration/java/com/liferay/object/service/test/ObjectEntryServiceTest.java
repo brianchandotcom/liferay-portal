@@ -32,6 +32,7 @@ import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.tree.constants.TreeConstants;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationEventTable;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -849,17 +851,32 @@ public class ObjectEntryServiceTest {
 		long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
 
 		for (long userId : userIds) {
-			int count =
-				_userNotificationLocalService.getUserNotificationEventsCount(
-					userId, portletId,
-					LocalDate.now(
-					).atStartOfDay(
-						ZoneId.systemDefault()
-					).toInstant(
-					).getEpochSecond(),
-					true, "%\"exceedsObjectEntryLimit\":%");
+			int count = _userNotificationLocalService.dslQueryCount(
+				DSLQueryFactoryUtil.countDistinct(
+					UserNotificationEventTable.INSTANCE.userNotificationEventId
+				).from(
+					UserNotificationEventTable.INSTANCE
+				).where(
+					UserNotificationEventTable.INSTANCE.delivered.eq(
+						true
+					).and(
+						UserNotificationEventTable.INSTANCE.type.eq(portletId)
+					).and(
+						UserNotificationEventTable.INSTANCE.userId.eq(userId)
+					).and(
+						UserNotificationEventTable.INSTANCE.timestamp.gte(
+							LocalDate.now(
+							).atStartOfDay(
+								ZoneId.systemDefault()
+							).toInstant(
+							).getEpochSecond())
+					).and(
+						UserNotificationEventTable.INSTANCE.payload.like(
+							"%\"exceedsObjectEntryLimit\":%")
+					)
+				));
 
-			Assert.assertTrue(count == 1);
+			Assert.assertEquals(1, count);
 		}
 	}
 

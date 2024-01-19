@@ -31,6 +31,7 @@ import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.TreeFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.model.UserNotificationEventTable;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -652,11 +654,26 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectDefinition.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
 		for (long userId : _userLocalService.getRoleUserIds(role.getRoleId())) {
-			int count =
-				_userNotificationEventLocalService.
-					getUserNotificationEventsCount(
-						userId, portletId, timestamp, true,
-						"%\"exceedsObjectEntryLimit\":%");
+			int count = _userNotificationEventLocalService.dslQueryCount(
+				DSLQueryFactoryUtil.countDistinct(
+					UserNotificationEventTable.INSTANCE.userNotificationEventId
+				).from(
+					UserNotificationEventTable.INSTANCE
+				).where(
+					UserNotificationEventTable.INSTANCE.delivered.eq(
+						true
+					).and(
+						UserNotificationEventTable.INSTANCE.type.eq(portletId)
+					).and(
+						UserNotificationEventTable.INSTANCE.userId.eq(userId)
+					).and(
+						UserNotificationEventTable.INSTANCE.timestamp.gte(
+							timestamp)
+					).and(
+						UserNotificationEventTable.INSTANCE.payload.like(
+							"%\"exceedsObjectEntryLimit\":%")
+					)
+				));
 
 			if (count == 0) {
 				userIds.add(userId);

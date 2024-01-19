@@ -7,11 +7,15 @@ import React from 'react';
 
 export const oneMarkerId = 'oneMarker';
 
-export default function OneMarker() {
+interface OneMarkerProps {
+	objectRelationshipId: string;
+}
+
+export default function OneMarker({objectRelationshipId}: OneMarkerProps) {
 	return (
 		<defs>
 			<marker
-				id={oneMarkerId}
+				id={`${oneMarkerId}#${objectRelationshipId}`}
 				markerHeight="10"
 				markerWidth="22"
 				orient="auto"

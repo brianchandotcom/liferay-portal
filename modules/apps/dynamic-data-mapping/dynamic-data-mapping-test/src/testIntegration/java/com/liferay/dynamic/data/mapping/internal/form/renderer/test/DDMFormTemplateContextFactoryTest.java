@@ -11,6 +11,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTemplateContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -26,8 +27,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -52,16 +51,6 @@ public class DDMFormTemplateContextFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_httpServletRequest = new MockHttpServletRequest();
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setPathContext("/my/path/context/");
-		themeDisplay.setPathThemeImages("/my/theme/images/");
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
 		_originalSiteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
 		_originalThemeDisplayDefaultLocale =
 			LocaleThreadLocal.getThemeDisplayLocale();
@@ -88,7 +77,7 @@ public class DDMFormTemplateContextFactoryTest {
 			).withContainerId(
 				containerId
 			).withHttpServletRequest(
-				_httpServletRequest
+				_getMockHttpServletRequest()
 			).withLocale(
 				LocaleUtil.US
 			).withPaginationMode(
@@ -101,6 +90,7 @@ public class DDMFormTemplateContextFactoryTest {
 				true
 			).build();
 
+		Assert.assertEquals(0, ddmFormTemplateContext.get("activePage"));
 		Assert.assertEquals(
 			containerId, ddmFormTemplateContext.get("containerId"));
 		Assert.assertFalse((boolean)ddmFormTemplateContext.get("readOnly"));
@@ -113,10 +103,18 @@ public class DDMFormTemplateContextFactoryTest {
 			ddmFormTemplateContext.get("templateNamespace"));
 		Assert.assertTrue((boolean)ddmFormTemplateContext.get("viewMode"));
 
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest();
+
+		int activePage = RandomTestUtil.randomInt();
+
+		mockHttpServletRequest.setParameter(
+			"activePage", String.valueOf(activePage));
+
 		ddmFormTemplateContext = DDMFormTemplateContext.Builder.newBuilder(
 			_ddmFormTemplateContextFactory
 		).withHttpServletRequest(
-			_httpServletRequest
+			mockHttpServletRequest
 		).withLocale(
 			LocaleUtil.US
 		).withPaginationMode(
@@ -135,6 +133,8 @@ public class DDMFormTemplateContextFactoryTest {
 			null
 		).build();
 
+		Assert.assertEquals(
+			activePage, ddmFormTemplateContext.get("activePage"));
 		Assert.assertNotNull(ddmFormTemplateContext.get("containerId"));
 		Assert.assertEquals(
 			"/o/dynamic-data-mapping-form-context-provider/",
@@ -255,7 +255,7 @@ public class DDMFormTemplateContextFactoryTest {
 				_ddmFormTemplateContextFactory);
 
 		ddmFormTemplateContext = builder.withHttpServletRequest(
-			_httpServletRequest
+			_getMockHttpServletRequest()
 		).withLocale(
 			LocaleUtil.US
 		).withPaginationMode(
@@ -316,10 +316,27 @@ public class DDMFormTemplateContextFactoryTest {
 		}
 	}
 
+	private MockHttpServletRequest _getMockHttpServletRequest()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setPathContext("/my/path/context/");
+		themeDisplay.setPathThemeImages("/my/theme/images/");
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
+	}
+
 	@Inject
 	private static DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 
-	private HttpServletRequest _httpServletRequest;
 	private Locale _originalSiteDefaultLocale;
 	private Locale _originalThemeDisplayDefaultLocale;
 

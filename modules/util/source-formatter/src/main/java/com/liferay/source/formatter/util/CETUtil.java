@@ -90,7 +90,7 @@ public class CETUtil {
 
 		List<CETProperty> cetProperties = new ArrayList<>(defaultCETProperties);
 		String description = null;
-		String name = null;
+		String name1 = null;
 
 		List<String> annotationsBlocks = SourceUtil.getAnnotationsBlocks(
 			javaClass.getContent());
@@ -114,12 +114,21 @@ public class CETUtil {
 				}
 				else if (annotation.startsWith("@CETType")) {
 					description = annotationMemberValuePair.get("description");
-					name = annotationMemberValuePair.get("name");
+					name1 = annotationMemberValuePair.get("name");
 				}
 			}
 		}
 
-		return new CET(cetProperties, description, name);
+		Collections.sort(
+			cetProperties,
+			(cetProperty1, cetProperty2) -> {
+				String name2 = cetProperty1.getName();
+				String name3 = cetProperty2.getName();
+
+				return name2.compareTo(name3);
+			});
+
+		return new CET(cetProperties, description, name1);
 	}
 
 	private static List<CET> _getCETs(List<String> fileNames)

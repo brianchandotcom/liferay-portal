@@ -66,6 +66,8 @@ export default {
 	'enter-last-name': 'Enter last name',
 	'enter-the-name-and-a-brief-description-of-the-app-you-would-like-to-submit':
 		'Enter the name and a brief description of the app you would like to submit',
+	'enter-the-number-of-cpus': 'Enter the number of CPUs',
+	'enter-the-required-ram': 'Enter the required RAM',
 	'enter-your-contact-details-in-the-fields-below-in-the-request-description-enter-the-name-and-a-brief-description-of-the-app-you-would-like-to-submit-we-will-be-in-contact-regarding-your-request':
 		'Enter your contact details in the fields below. In the Request Description, enter the name and a brief description of the app you would like to submit. We will be in contact regarding your request.',
 	'environment': 'Environment',
@@ -79,6 +81,8 @@ export default {
 	'host-name': 'Host Name',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
+	'if-no-CPUs-please-enter-0': 'If no CPUs please enter 0',
+	'if-no-ram-required-please-enter-0': 'If no RAM required please enter 0',
 	'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range':
 		'If the app is compatible with different updates of 7.4, please upload multiple packages for each update or update compatibility range.',
 	'if-you-are-requesting-the-account-on-behalf-of-a-business-,-please-note-the-business-name':
@@ -111,6 +115,7 @@ export default {
 	'no': 'No',
 	'no-licenses-yet': 'No Licenses yet',
 	'no-results-found': 'No results found',
+	'number-of-cpus': 'Number of CPUs',
 	'only-jar-war-files-are-allowed-max-file-size-is-500mb':
 		'Only JAR, WAR files are allowed. Max file size is 500MB.',
 	'only-zip-files-are-allowed-max-file-size-is-500-mb':
@@ -129,6 +134,7 @@ export default {
 	'purchase-order-number': 'Purchase Order Number',
 	'purchased-by': 'Purchased by',
 	'qty': 'Qty',
+	'ram': 'RAM',
 	'remove-a-version': 'Remove a Version',
 	'request-a-marketplace-publisher-account':
 		'Request a Marketplace Publisher Account',

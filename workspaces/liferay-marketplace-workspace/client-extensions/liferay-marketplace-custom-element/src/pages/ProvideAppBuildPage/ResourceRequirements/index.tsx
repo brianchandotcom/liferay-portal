@@ -4,6 +4,7 @@
  */
 
 import FormInput from '../../../components/Input/formInput';
+import i18n from '../../../i18n';
 import {useAppContext} from '../../../manage-app-state/AppManageState';
 import {TYPES} from '../../../manage-app-state/actionTypes';
 
@@ -22,8 +23,8 @@ const ResourceRequirements = () => {
 			<FormInput
 				boldLabel
 				className="custom-input resource-requirements-content-input"
-				helpMessage="If no CPUs please enter 0"
-				label="Number of CPUs"
+				helpMessage={i18n.translate('if-no-CPUs-please-enter-0')}
+				label={i18n.translate('number-of-cpus')}
 				name="numberOfCPUs"
 				onChange={({target}) => {
 					const {value} = target;
@@ -33,7 +34,7 @@ const ResourceRequirements = () => {
 						type: TYPES.UPDATE_RESOURCE_REQUIREMENTS,
 					});
 				}}
-				placeholder="Enter the number of CPUs"
+				placeholder={i18n.translate('enter-the-number-of-cpus')}
 				type="number"
 				value={resourceRequirements.cpu ?? ''}
 			/>
@@ -41,8 +42,10 @@ const ResourceRequirements = () => {
 			<FormInput
 				boldLabel
 				className="custom-input resource-requirements-content-input"
-				helpMessage="If no RAM required please enter 0"
-				label="RAM"
+				helpMessage={i18n.translate(
+					'if-no-ram-required-please-enter-0'
+				)}
+				label={i18n.translate('ram')}
 				name="ram"
 				onChange={({target}) => {
 					const {value} = target;
@@ -51,7 +54,7 @@ const ResourceRequirements = () => {
 						type: TYPES.UPDATE_RESOURCE_REQUIREMENTS,
 					});
 				}}
-				placeholder="Enter the required RAM"
+				placeholder={i18n.translate('enter-the-required-ram')}
 				type="number"
 				value={resourceRequirements.ram ?? ''}
 			/>

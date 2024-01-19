@@ -19,6 +19,7 @@ import {CardSection} from './CardSection';
 import {App} from './ReviewAndSubmitAppPageUtil';
 
 import './CardSectionsBody.scss';
+import i18n from '../../i18n';
 
 interface CardSectionsBodyProps {
 	app: App;
@@ -75,8 +76,12 @@ export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
 					<CardView
 						description={
 							app?.type === 'cloud'
-								? 'Create a Cloud app using client extensions.'
-								: 'Create a DXP app using a plugin package.'
+								? i18n.translate(
+										'create-a-cloud-app-using-client-extensions'
+								  )
+								: i18n.translate(
+										'create-a-dxp-app-using-a-plugin-package'
+								  )
 						}
 						icon={
 							app?.type === 'cloud' ? taskCheckedIcon : cancelIcon
@@ -95,14 +100,14 @@ export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
 				<div className="card-section-body-section-requirements d-flex justify-content-between">
 					<CardView
 						description={app?.resourceRequirements?.cpu}
-						title="Number of CPUs"
-						tooltip={!readonly ? 'More info' : ''}
+						title={i18n.translate('number-of-cpus')}
+						tooltip={!readonly ? i18n.translate('more-info') : ''}
 					/>
 
 					<CardView
 						description={`${app?.resourceRequirements?.ram} GB`}
 						title="Ram in GB"
-						tooltip={!readonly ? 'More info' : ''}
+						tooltip={!readonly ? i18n.translate('more-info') : ''}
 					/>
 				</div>
 			</CardSection>

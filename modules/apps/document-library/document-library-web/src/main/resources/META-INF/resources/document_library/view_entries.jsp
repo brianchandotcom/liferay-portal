@@ -154,12 +154,13 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 																/>
 															</c:when>
 															<c:when test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-																<clay:icon
-																	aria-label="<%= LanguageUtil.get(request, "locked-document") %>"
-																	cssClass="inline-item inline-item-after lfr-portal-tooltip state-icon"
-																	symbol="lock"
-																	title ="<%= LanguageUtil.get(request, "locked-document") %>"
-																/>
+																<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "locked-document") %>">
+																	<clay:icon
+																		aria-label="<%= LanguageUtil.get(request, "locked-document") %>"
+																		cssClass="inline-item inline-item-after state-icon"
+																		symbol="lock"
+																	/>
+																</span>
 															</c:when>
 														</c:choose>
 
@@ -215,12 +216,13 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 														/>
 
 														<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-															<clay:icon
-																aria-label="<%= LanguageUtil.get(request, "locked-document") %>"
-																cssClass="inline-item inline-item-after lfr-portal-tooltip state-icon"
-																symbol="lock"
-																title ="<%= LanguageUtil.get(request, "locked-document") %>"
-															/>
+															<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "locked-document") %>">
+																<clay:icon
+																	aria-label="<%= LanguageUtil.get(request, "locked-document") %>"
+																	cssClass="inline-item inline-item-after state-icon"
+																	symbol="lock"
+																/>
+															</span>
 														</c:if>
 
 														<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">

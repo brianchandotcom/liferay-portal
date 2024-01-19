@@ -267,6 +267,8 @@ definition {
 
 		task ("Go to the Path tab") {
 			ACNavigation.switchTab(tabName = "Path");
+
+			ACUtils.waitForLoading();
 		}
 
 		task ("Click Filter button") {
@@ -303,6 +305,8 @@ definition {
 
 		task ("Go to the Path tab") {
 			ACNavigation.switchTab(tabName = "Path");
+
+			ACUtils.waitForLoading();
 		}
 
 		task ("Click Filter button") {
@@ -385,6 +389,8 @@ definition {
 
 		task ("Go to the Path tab") {
 			ACNavigation.switchTab(tabName = "Path");
+
+			ACUtils.waitForLoading();
 		}
 
 		task ("Observe page total") {
@@ -479,6 +485,8 @@ definition {
 
 		task ("Go to the Path tab") {
 			ACNavigation.switchTab(tabName = "Path");
+
+			ACUtils.waitForLoading();
 		}
 
 		task ("Click Filter button") {

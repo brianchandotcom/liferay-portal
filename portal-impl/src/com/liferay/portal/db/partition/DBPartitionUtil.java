@@ -131,7 +131,7 @@ public class DBPartitionUtil {
 				}
 				catch (SQLException sqlException) {
 					throw new PortalException(
-						"Unable to rollback schema creation", sqlException);
+						"Unable to roll back schema creation", sqlException);
 				}
 			}
 
@@ -460,7 +460,7 @@ public class DBPartitionUtil {
 			catch (Exception exception2) {
 				throw new PortalException(
 					StringBundler.concat(
-						"Unable to rollback the extraction of database ",
+						"Unable to roll back the extraction of database ",
 						"partition. Recover a backup of the database ",
 						"partition ", _getPartitionName(companyId), "."),
 					exception2);

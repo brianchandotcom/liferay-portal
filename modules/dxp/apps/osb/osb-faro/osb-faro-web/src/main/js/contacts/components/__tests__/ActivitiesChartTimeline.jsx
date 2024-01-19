@@ -11,24 +11,6 @@ jest.unmock('react-dom');
 const {activityAggregations} = data.mockActivityHistory();
 
 describe('ActivitiesChartTimeline', () => {
-	const {ResizeObserver} = window;
-
-	beforeEach(() => {
-		delete window.ResizeObserver;
-
-		window.ResizeObserver = jest.fn().mockImplementation(() => ({
-			disconnect: jest.fn(),
-			observe: jest.fn(),
-			unobserve: jest.fn()
-		}));
-	});
-
-	afterEach(() => {
-		window.ResizeObserver = ResizeObserver;
-
-		jest.restoreAllMocks();
-	});
-
 	it('should render', async () => {
 		const {container} = render(
 			<StaticRouter>

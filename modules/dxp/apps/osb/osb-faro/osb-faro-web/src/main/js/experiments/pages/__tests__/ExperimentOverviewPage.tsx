@@ -44,24 +44,6 @@ const WrappedComponent = ({mocks}) => (
 );
 
 describe('ExperimentOverviewPage', () => {
-	const {ResizeObserver} = window;
-
-	beforeEach(() => {
-		delete window.ResizeObserver;
-
-		window.ResizeObserver = jest.fn().mockImplementation(() => ({
-			disconnect: jest.fn(),
-			observe: jest.fn(),
-			unobserve: jest.fn()
-		}));
-	});
-
-	afterEach(() => {
-		window.ResizeObserver = ResizeObserver;
-
-		jest.restoreAllMocks();
-	});
-
 	it('renders review and delete button in the DRAFT status', async () => {
 		const {container, findByRole} = render(
 			<WrappedComponent

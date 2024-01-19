@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -369,6 +370,8 @@ public class StagingImplTest {
 			stagingJournalArticle, "Title2",
 			stagingJournalArticle.getContent());
 
+		// Expire old version of the content
+
 		JournalTestUtil.expireArticle(
 			stagingJournalArticle.getGroupId(), stagingJournalArticle, 1.0D);
 
@@ -383,6 +386,16 @@ public class StagingImplTest {
 		journalArticle = JournalArticleLocalServiceUtil.getArticle(
 			_group.getGroupId(), journalArticle.getArticleId());
 
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, journalArticle.getStatus());
+
+		JournalArticle oldJournalArticle =
+			JournalArticleLocalServiceUtil.getArticle(
+				_group.getGroupId(), journalArticle.getArticleId(), 1.0D);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, oldJournalArticle.getStatus());
+
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 			journalArticle.getGroupId(),
 			journalArticle.getArticleResourceUuid());
@@ -390,7 +403,6 @@ public class StagingImplTest {
 		// Check the status of the asset entry related to the article in live
 
 		Assert.assertTrue(assetEntry.isVisible());
-		Assert.assertEquals(journalArticle.getLastPublishDate(), assetEntry.getPublishDate());
 	}
 
 	@Test

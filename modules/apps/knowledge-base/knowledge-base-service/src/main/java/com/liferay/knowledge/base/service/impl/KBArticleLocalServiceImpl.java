@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -411,98 +412,133 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	public KBArticle deleteKBArticle(KBArticle kbArticle)
 		throws PortalException {
 
-		// Child KB articles
-
-		deleteKBArticles(
-			kbArticle.getGroupId(), kbArticle.getResourcePrimKey());
-
-		// Resources
-
-		_resourceLocalService.deleteResource(
-			kbArticle.getCompanyId(), KBArticle.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, kbArticle.getResourcePrimKey());
-
-		// KB articles
-
-		kbArticlePersistence.removeByResourcePrimKey(
-			kbArticle.getResourcePrimKey());
-
-		// KB comments
-
-		KBCommentUtil.deleteKBComments(
-			KBArticle.class.getName(), _classNameLocalService,
-			kbArticle.getResourcePrimKey(), _kbCommentPersistence);
-
-		// Asset
-
-		_deleteAssets(kbArticle);
-
-		// Expando
-
-		_expandoRowLocalService.deleteRows(kbArticle.getKbArticleId());
-
-		// Ratings
-
-		_ratingsStatsLocalService.deleteStats(
-			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
-
-		// Social
-
-		_socialActivityLocalService.deleteActivities(
-			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
-
-		// Indexer
-
-		Indexer<KBArticle> indexer = _indexerRegistry.getIndexer(
-			KBArticle.class);
-
-		indexer.delete(kbArticle);
-
-		// Attachments
-
-		_portletFileRepository.deletePortletFolder(
-			kbArticle.getAttachmentsFolderId());
-
-		// Subscriptions
-
-		_deleteSubscriptions(kbArticle);
-
-		// Trash
-
-		if (kbArticle.isInTrash()) {
-			TrashEntry trashEntry = _trashEntryLocalService.deleteEntry(
-				KBArticle.class.getName(), kbArticle.getResourcePrimKey());
-
-			if (trashEntry == null) {
-				_trashVersionLocalService.deleteTrashVersion(
-					KBArticle.class.getName(), kbArticle.getResourcePrimKey());
-			}
-		}
-
-		// View count
-
-		_viewCountManager.deleteViewCount(
-			kbArticle.getCompanyId(),
-			_classNameLocalService.getClassNameId(KBArticle.class),
-			kbArticle.getPrimaryKey());
-
-		// Workflow
-
-		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-			kbArticle.getCompanyId(), kbArticle.getGroupId(),
-			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
-
-		return kbArticle;
+		return kbArticleLocalService.deleteKBArticle(
+			PrincipalThreadLocal.getUserId(), kbArticle.getResourcePrimKey(),
+			kbArticle.getVersion());
 	}
 
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public KBArticle deleteKBArticle(long resourcePrimKey)
 		throws PortalException {
 
 		KBArticle kbArticle = getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
-		return kbArticleLocalService.deleteKBArticle(kbArticle);
+		return kbArticleLocalService.deleteKBArticle(
+			PrincipalThreadLocal.getUserId(), kbArticle.getResourcePrimKey(),
+			kbArticle.getVersion());
+	}
+
+	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE
+	)
+	public KBArticle deleteKBArticle(
+			long userId, long resourcePrimKey, int version)
+		throws PortalException {
+
+		KBArticle kbArticle = kbArticlePersistence.findByR_V(
+			resourcePrimKey, version);
+
+		if (!hasKBArticleLock(userId, resourcePrimKey)) {
+			lockKBArticle(userId, resourcePrimKey);
+		}
+
+		try {
+
+			// Child KB articles
+
+			deleteKBArticles(
+				kbArticle.getGroupId(), kbArticle.getResourcePrimKey());
+
+			// Resources
+
+			_resourceLocalService.deleteResource(
+				kbArticle.getCompanyId(), KBArticle.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				kbArticle.getResourcePrimKey());
+
+			// KB articles
+
+			kbArticlePersistence.removeByResourcePrimKey(
+				kbArticle.getResourcePrimKey());
+
+			// KB comments
+
+			KBCommentUtil.deleteKBComments(
+				KBArticle.class.getName(), _classNameLocalService,
+				kbArticle.getResourcePrimKey(), _kbCommentPersistence);
+
+			// Asset
+
+			_deleteAssets(kbArticle);
+
+			// Expando
+
+			_expandoRowLocalService.deleteRows(kbArticle.getKbArticleId());
+
+			// Ratings
+
+			_ratingsStatsLocalService.deleteStats(
+				KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+
+			// Social
+
+			_socialActivityLocalService.deleteActivities(
+				KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+
+			// Indexer
+
+			Indexer<KBArticle> indexer = _indexerRegistry.getIndexer(
+				KBArticle.class);
+
+			indexer.delete(kbArticle);
+
+			// Attachments
+
+			_portletFileRepository.deletePortletFolder(
+				kbArticle.getAttachmentsFolderId());
+
+			// Subscriptions
+
+			_deleteSubscriptions(kbArticle);
+
+			// Trash
+
+			if (kbArticle.isInTrash()) {
+				TrashEntry trashEntry = _trashEntryLocalService.deleteEntry(
+					KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+
+				if (trashEntry == null) {
+					_trashVersionLocalService.deleteTrashVersion(
+						KBArticle.class.getName(),
+						kbArticle.getResourcePrimKey());
+				}
+			}
+
+			// View count
+
+			_viewCountManager.deleteViewCount(
+				kbArticle.getCompanyId(),
+				_classNameLocalService.getClassNameId(KBArticle.class),
+				kbArticle.getPrimaryKey());
+
+			// Workflow
+
+			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+				kbArticle.getCompanyId(), kbArticle.getGroupId(),
+				KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+		}
+		finally {
+			unlockKBArticle(resourcePrimKey);
+		}
+
+		return kbArticle;
 	}
 
 	@Override
@@ -571,22 +607,31 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			long userId, long resourcePrimKey, ServiceContext serviceContext)
 		throws PortalException {
 
-		KBArticle kbArticle = getLatestKBArticle(
-			resourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-		if (kbArticle.isDraft() || kbArticle.isPending() ||
-			kbArticle.isScheduled()) {
-
-			return kbArticle;
+		if (!hasKBArticleLock(userId, resourcePrimKey)) {
+			lockKBArticle(userId, resourcePrimKey);
 		}
 
-		kbArticle.setExpirationDate(new Date());
+		try {
+			KBArticle kbArticle = getLatestKBArticle(
+				resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
-		kbArticleLocalService.updateKBArticle(kbArticle);
+			if (kbArticle.isDraft() || kbArticle.isPending() ||
+				kbArticle.isScheduled()) {
 
-		return updateStatus(
-			userId, resourcePrimKey, WorkflowConstants.STATUS_EXPIRED,
-			serviceContext);
+				return kbArticle;
+			}
+
+			kbArticle.setExpirationDate(new Date());
+
+			kbArticleLocalService.updateKBArticle(kbArticle);
+
+			return updateStatus(
+				userId, resourcePrimKey, WorkflowConstants.STATUS_EXPIRED,
+				serviceContext);
+		}
+		finally {
+			unlockKBArticle(resourcePrimKey);
+		}
 	}
 
 	@Override
@@ -1079,6 +1124,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	@Override
+	public boolean hasKBArticleLock(long userId, long resourcePrimKey) {
+		return _lockManager.hasLock(
+			userId, KBArticleConstants.getClassName(), resourcePrimKey);
+	}
+
+	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void incrementViewCount(
 			long userId, long resourcePrimKey, int increment)
@@ -1148,89 +1199,104 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			long parentResourcePrimKey, double priority)
 		throws PortalException {
 
-		KBArticle kbArticle = getLatestKBArticle(
-			resourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-		if (kbArticle.getResourcePrimKey() == parentResourcePrimKey) {
-			return;
+		if (!hasKBArticleLock(userId, resourcePrimKey)) {
+			lockKBArticle(userId, resourcePrimKey);
 		}
 
-		_validateParent(
-			kbArticle, parentResourceClassNameId, parentResourcePrimKey);
-		_validateParentStatus(
-			parentResourceClassNameId, parentResourcePrimKey,
-			kbArticle.getStatus());
-		_validatePriority(priority);
+		try {
+			KBArticle kbArticle = getLatestKBArticle(
+				resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
-		_updatePermissionFields(
-			resourcePrimKey, parentResourceClassNameId, parentResourcePrimKey);
+			if (kbArticle.getResourcePrimKey() == parentResourcePrimKey) {
+				return;
+			}
 
-		long kbFolderClassNameId = _classNameLocalService.getClassNameId(
-			KBFolderConstants.getClassName());
+			_validateParent(
+				kbArticle, parentResourceClassNameId, parentResourcePrimKey);
+			_validateParentStatus(
+				parentResourceClassNameId, parentResourcePrimKey,
+				kbArticle.getStatus());
+			_validatePriority(priority);
 
-		long kbFolderId = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			_updatePermissionFields(
+				resourcePrimKey, parentResourceClassNameId,
+				parentResourcePrimKey);
 
-		if (parentResourceClassNameId == kbFolderClassNameId) {
-			kbFolderId = parentResourcePrimKey;
-		}
-		else {
-			KBArticle parentKBArticle = getLatestKBArticle(
-				parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
+			long kbFolderClassNameId = _classNameLocalService.getClassNameId(
+				KBFolderConstants.getClassName());
 
-			kbFolderId = parentKBArticle.getKbFolderId();
-		}
+			long kbFolderId = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-		List<KBArticle> kbArticles = getKBArticleVersions(
-			resourcePrimKey, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new KBArticleVersionComparator());
+			if (parentResourceClassNameId == kbFolderClassNameId) {
+				kbFolderId = parentResourcePrimKey;
+			}
+			else {
+				KBArticle parentKBArticle = getLatestKBArticle(
+					parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
 
-		for (KBArticle curKBArticle : kbArticles) {
-			curKBArticle.setParentResourceClassNameId(
-				parentResourceClassNameId);
-			curKBArticle.setParentResourcePrimKey(parentResourcePrimKey);
-			curKBArticle.setKbFolderId(kbFolderId);
-			curKBArticle.setPriority(priority);
+				kbFolderId = parentKBArticle.getKbFolderId();
+			}
 
-			curKBArticle = kbArticlePersistence.update(curKBArticle);
+			List<KBArticle> kbArticles = getKBArticleVersions(
+				resourcePrimKey, WorkflowConstants.STATUS_ANY,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new KBArticleVersionComparator());
 
-			_indexKBArticle(curKBArticle);
-		}
+			for (KBArticle curKBArticle : kbArticles) {
+				curKBArticle.setParentResourceClassNameId(
+					parentResourceClassNameId);
+				curKBArticle.setParentResourcePrimKey(parentResourcePrimKey);
+				curKBArticle.setKbFolderId(kbFolderId);
+				curKBArticle.setPriority(priority);
 
-		if (kbArticle.getKbFolderId() != kbFolderId) {
-			List<KBArticle> descendantKBArticles = getAllDescendantKBArticles(
-				resourcePrimKey, WorkflowConstants.STATUS_ANY, null);
+				curKBArticle = kbArticlePersistence.update(curKBArticle);
 
-			for (KBArticle curKBArticle : descendantKBArticles) {
-				List<KBArticle> kbArticleVersions = getKBArticleVersions(
-					curKBArticle.getResourcePrimKey(),
-					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, new KBArticleVersionComparator());
+				_indexKBArticle(curKBArticle);
+			}
 
-				for (KBArticle kbArticleVersion : kbArticleVersions) {
-					kbArticleVersion.setKbFolderId(kbFolderId);
+			if (kbArticle.getKbFolderId() != kbFolderId) {
+				List<KBArticle> descendantKBArticles =
+					getAllDescendantKBArticles(
+						resourcePrimKey, WorkflowConstants.STATUS_ANY, null);
 
-					kbArticleVersion = kbArticlePersistence.update(
-						kbArticleVersion);
+				for (KBArticle curKBArticle : descendantKBArticles) {
+					List<KBArticle> kbArticleVersions = getKBArticleVersions(
+						curKBArticle.getResourcePrimKey(),
+						WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, new KBArticleVersionComparator());
 
-					_indexKBArticle(kbArticleVersion);
+					for (KBArticle kbArticleVersion : kbArticleVersions) {
+						kbArticleVersion.setKbFolderId(kbFolderId);
+
+						kbArticleVersion = kbArticlePersistence.update(
+							kbArticleVersion);
+
+						_indexKBArticle(kbArticleVersion);
+					}
 				}
 			}
+
+			KBArticle latestKBArticle = getLatestKBArticle(
+				resourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+			JSONObject extraDataJSONObject = JSONUtil.put(
+				"title", latestKBArticle.getTitle());
+
+			if (latestKBArticle.isApproved() ||
+				!latestKBArticle.isFirstVersion()) {
+
+				_socialActivityLocalService.addActivity(
+					userId, latestKBArticle.getGroupId(),
+					KBArticle.class.getName(), resourcePrimKey,
+					AdminActivityKeys.MOVE_KB_ARTICLE,
+					extraDataJSONObject.toString(), 0);
+			}
+
+			_indexKBArticle(latestKBArticle);
 		}
-
-		KBArticle latestKBArticle = getLatestKBArticle(
-			resourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-		JSONObject extraDataJSONObject = JSONUtil.put(
-			"title", latestKBArticle.getTitle());
-
-		if (latestKBArticle.isApproved() || !latestKBArticle.isFirstVersion()) {
-			_socialActivityLocalService.addActivity(
-				userId, latestKBArticle.getGroupId(), KBArticle.class.getName(),
-				resourcePrimKey, AdminActivityKeys.MOVE_KB_ARTICLE,
-				extraDataJSONObject.toString(), 0);
+		finally {
+			unlockKBArticle(resourcePrimKey);
 		}
-
-		_indexKBArticle(latestKBArticle);
 	}
 
 	@Override
@@ -1262,37 +1328,47 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	public KBArticle moveKBArticleToTrash(long userId, long resourcePrimKey)
 		throws PortalException {
 
-		KBArticle kbArticle = getLatestKBArticle(resourcePrimKey);
-
-		if (kbArticle.isInTrash()) {
-			throw new TrashEntryException();
+		if (!hasKBArticleLock(userId, resourcePrimKey)) {
+			lockKBArticle(userId, resourcePrimKey);
 		}
 
-		long classPK = kbArticle.getClassPK();
-		int oldStatus = kbArticle.getStatus();
+		try {
+			KBArticle kbArticle = getLatestKBArticle(resourcePrimKey);
 
-		kbArticle = _updateStatus(
-			userId, kbArticle, WorkflowConstants.STATUS_IN_TRASH);
+			if (kbArticle.isInTrash()) {
+				throw new TrashEntryException();
+			}
 
-		_assetEntryLocalService.updateVisible(
-			KBArticle.class.getName(), classPK, false);
+			long classPK = kbArticle.getClassPK();
+			int oldStatus = kbArticle.getStatus();
 
-		JSONObject extraDataJSONObject = JSONUtil.put(
-			"title", kbArticle.getTitle());
+			kbArticle = _updateStatus(
+				userId, kbArticle, WorkflowConstants.STATUS_IN_TRASH);
 
-		_socialActivityLocalService.addActivity(
-			userId, kbArticle.getGroupId(), KBArticle.class.getName(),
-			resourcePrimKey, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
-			extraDataJSONObject.toString(), 0);
+			_assetEntryLocalService.updateVisible(
+				KBArticle.class.getName(), classPK, false);
 
-		TrashEntry trashEntry = _trashEntryLocalService.addTrashEntry(
-			userId, kbArticle.getGroupId(), KBArticle.class.getName(),
-			resourcePrimKey, kbArticle.getUuid(), null, oldStatus, null, null);
+			JSONObject extraDataJSONObject = JSONUtil.put(
+				"title", kbArticle.getTitle());
 
-		moveDependentKBArticlesToTrash(
-			resourcePrimKey, trashEntry.getEntryId());
+			_socialActivityLocalService.addActivity(
+				userId, kbArticle.getGroupId(), KBArticle.class.getName(),
+				resourcePrimKey, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+				extraDataJSONObject.toString(), 0);
 
-		return kbArticle;
+			TrashEntry trashEntry = _trashEntryLocalService.addTrashEntry(
+				userId, kbArticle.getGroupId(), KBArticle.class.getName(),
+				resourcePrimKey, kbArticle.getUuid(), null, oldStatus, null,
+				null);
+
+			moveDependentKBArticlesToTrash(
+				resourcePrimKey, trashEntry.getEntryId());
+
+			return kbArticle;
+		}
+		finally {
+			unlockKBArticle(resourcePrimKey);
+		}
 	}
 
 	public void restoreDependentKBArticleFromTrash(KBArticle kbArticle)
@@ -1354,20 +1430,32 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		KBArticle kbArticle = kbArticleLocalService.getKBArticle(
-			resourcePrimKey, version);
+		// Lock
 
-		ExpandoBridge expandoBridge = kbArticle.getExpandoBridge();
+		if (!hasKBArticleLock(userId, resourcePrimKey)) {
+			lockKBArticle(userId, resourcePrimKey);
+		}
 
-		serviceContext.setExpandoBridgeAttributes(
-			expandoBridge.getAttributes());
+		try {
+			KBArticle kbArticle = kbArticleLocalService.getKBArticle(
+				resourcePrimKey, version);
 
-		return updateKBArticle(
-			userId, resourcePrimKey, kbArticle.getTitle(),
-			kbArticle.getContent(), kbArticle.getDescription(),
-			StringUtil.split(kbArticle.getSections()), kbArticle.getSourceURL(),
-			kbArticle.getDisplayDate(), kbArticle.getExpirationDate(),
-			kbArticle.getReviewDate(), null, null, serviceContext);
+			ExpandoBridge expandoBridge = kbArticle.getExpandoBridge();
+
+			serviceContext.setExpandoBridgeAttributes(
+				expandoBridge.getAttributes());
+
+			return updateKBArticle(
+				userId, resourcePrimKey, kbArticle.getTitle(),
+				kbArticle.getContent(), kbArticle.getDescription(),
+				StringUtil.split(kbArticle.getSections()),
+				kbArticle.getSourceURL(), kbArticle.getDisplayDate(),
+				kbArticle.getExpirationDate(), kbArticle.getReviewDate(), null,
+				null, serviceContext);
+		}
+		finally {
+			unlockKBArticle(resourcePrimKey);
+		}
 	}
 
 	@Override
@@ -1435,110 +1523,121 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// KB article
 
-		User user = _userLocalService.getUser(userId);
+		if (!hasKBArticleLock(userId, resourcePrimKey)) {
+			lockKBArticle(userId, resourcePrimKey);
+		}
 
-		_validate(
-			title, content, sourceURL, displayDate, expirationDate, reviewDate);
+		try {
+			User user = _userLocalService.getUser(userId);
 
-		KBArticle oldKBArticle = getLatestKBArticle(
-			resourcePrimKey, WorkflowConstants.STATUS_ANY);
+			_validate(
+				title, content, sourceURL, displayDate, expirationDate,
+				reviewDate);
 
-		int oldVersion = oldKBArticle.getVersion();
+			KBArticle oldKBArticle = getLatestKBArticle(
+				resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
-		KBArticle kbArticle = null;
+			int oldVersion = oldKBArticle.getVersion();
 
-		if (oldKBArticle.isApproved() || oldKBArticle.isExpired()) {
-			long kbArticleId = counterLocalService.increment();
+			KBArticle kbArticle = null;
 
-			kbArticle = kbArticlePersistence.create(kbArticleId);
+			if (oldKBArticle.isApproved() || oldKBArticle.isExpired()) {
+				long kbArticleId = counterLocalService.increment();
 
-			kbArticle.setUuid(serviceContext.getUuid());
-			kbArticle.setResourcePrimKey(oldKBArticle.getResourcePrimKey());
-			kbArticle.setGroupId(oldKBArticle.getGroupId());
-			kbArticle.setCompanyId(user.getCompanyId());
-			kbArticle.setUserId(user.getUserId());
-			kbArticle.setUserName(user.getFullName());
-			kbArticle.setCreateDate(oldKBArticle.getCreateDate());
-			kbArticle.setExternalReferenceCode(
-				oldKBArticle.getExternalReferenceCode());
-			kbArticle.setRootResourcePrimKey(
-				oldKBArticle.getRootResourcePrimKey());
-			kbArticle.setParentResourceClassNameId(
-				oldKBArticle.getParentResourceClassNameId());
-			kbArticle.setParentResourcePrimKey(
-				oldKBArticle.getParentResourcePrimKey());
-			kbArticle.setKbFolderId(oldKBArticle.getKbFolderId());
-			kbArticle.setVersion(oldVersion + 1);
-			kbArticle.setUrlTitle(oldKBArticle.getUrlTitle());
-			kbArticle.setPriority(oldKBArticle.getPriority());
+				kbArticle = kbArticlePersistence.create(kbArticleId);
 
-			_viewCountManager.incrementViewCount(
-				kbArticle.getCompanyId(),
-				_classNameLocalService.getClassNameId(KBArticle.class),
-				kbArticle.getPrimaryKey(), (int)oldKBArticle.getViewCount());
+				kbArticle.setUuid(serviceContext.getUuid());
+				kbArticle.setResourcePrimKey(oldKBArticle.getResourcePrimKey());
+				kbArticle.setGroupId(oldKBArticle.getGroupId());
+				kbArticle.setCompanyId(user.getCompanyId());
+				kbArticle.setUserId(user.getUserId());
+				kbArticle.setUserName(user.getFullName());
+				kbArticle.setCreateDate(oldKBArticle.getCreateDate());
+				kbArticle.setExternalReferenceCode(
+					oldKBArticle.getExternalReferenceCode());
+				kbArticle.setRootResourcePrimKey(
+					oldKBArticle.getRootResourcePrimKey());
+				kbArticle.setParentResourceClassNameId(
+					oldKBArticle.getParentResourceClassNameId());
+				kbArticle.setParentResourcePrimKey(
+					oldKBArticle.getParentResourcePrimKey());
+				kbArticle.setKbFolderId(oldKBArticle.getKbFolderId());
+				kbArticle.setVersion(oldVersion + 1);
+				kbArticle.setUrlTitle(oldKBArticle.getUrlTitle());
+				kbArticle.setPriority(oldKBArticle.getPriority());
+
+				_viewCountManager.incrementViewCount(
+					kbArticle.getCompanyId(),
+					_classNameLocalService.getClassNameId(KBArticle.class),
+					kbArticle.getPrimaryKey(),
+					(int)oldKBArticle.getViewCount());
+
+				// Indexer
+
+				Indexer<KBArticle> indexer = _indexerRegistry.getIndexer(
+					KBArticle.class);
+
+				indexer.delete(oldKBArticle);
+			}
+			else {
+				kbArticle = oldKBArticle;
+			}
+
+			if (oldKBArticle.isPending()) {
+				kbArticle.setStatus(WorkflowConstants.STATUS_PENDING);
+			}
+			else {
+				kbArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
+			}
+
+			kbArticle.setTitle(title);
+			kbArticle.setContent(content);
+			kbArticle.setDescription(description);
+			kbArticle.setSections(
+				StringUtil.merge(KBSectionEscapeUtil.escapeSections(sections)));
+			kbArticle.setLatest(true);
+			kbArticle.setMain(false);
+			kbArticle.setSourceURL(sourceURL);
+			kbArticle.setDisplayDate(displayDate);
+			kbArticle.setExpirationDate(expirationDate);
+			kbArticle.setReviewDate(reviewDate);
+			kbArticle.setExpandoBridgeAttributes(serviceContext);
+
+			kbArticle = kbArticlePersistence.update(kbArticle);
+
+			if (oldKBArticle.isApproved() || oldKBArticle.isExpired()) {
+				oldKBArticle.setModifiedDate(oldKBArticle.getModifiedDate());
+				oldKBArticle.setLatest(false);
+
+				kbArticlePersistence.update(oldKBArticle);
+			}
+
+			// Asset
+
+			updateKBArticleAsset(
+				userId, kbArticle, serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(),
+				serviceContext.getAssetLinkEntryIds());
+
+			// Attachments
+
+			_addKBArticleAttachments(userId, kbArticle, selectedFileNames);
+
+			_removeKBArticleAttachments(removeFileEntryIds);
 
 			// Indexer
 
-			Indexer<KBArticle> indexer = _indexerRegistry.getIndexer(
-				KBArticle.class);
+			_indexKBArticle(kbArticle);
 
-			indexer.delete(oldKBArticle);
+			// Workflow
+
+			_startWorkflowInstance(userId, kbArticle, serviceContext);
+
+			return kbArticle;
 		}
-		else {
-			kbArticle = oldKBArticle;
+		finally {
+			unlockKBArticle(resourcePrimKey);
 		}
-
-		if (oldKBArticle.isPending()) {
-			kbArticle.setStatus(WorkflowConstants.STATUS_PENDING);
-		}
-		else {
-			kbArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
-		}
-
-		kbArticle.setTitle(title);
-		kbArticle.setContent(content);
-		kbArticle.setDescription(description);
-		kbArticle.setSections(
-			StringUtil.merge(KBSectionEscapeUtil.escapeSections(sections)));
-		kbArticle.setLatest(true);
-		kbArticle.setMain(false);
-		kbArticle.setSourceURL(sourceURL);
-		kbArticle.setDisplayDate(displayDate);
-		kbArticle.setExpirationDate(expirationDate);
-		kbArticle.setReviewDate(reviewDate);
-		kbArticle.setExpandoBridgeAttributes(serviceContext);
-
-		kbArticle = kbArticlePersistence.update(kbArticle);
-
-		if (oldKBArticle.isApproved() || oldKBArticle.isExpired()) {
-			oldKBArticle.setModifiedDate(oldKBArticle.getModifiedDate());
-			oldKBArticle.setLatest(false);
-
-			kbArticlePersistence.update(oldKBArticle);
-		}
-
-		// Asset
-
-		updateKBArticleAsset(
-			userId, kbArticle, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
-		// Attachments
-
-		_addKBArticleAttachments(userId, kbArticle, selectedFileNames);
-
-		_removeKBArticleAttachments(removeFileEntryIds);
-
-		// Indexer
-
-		_indexKBArticle(kbArticle);
-
-		// Workflow
-
-		_startWorkflowInstance(userId, kbArticle, serviceContext);
-
-		return kbArticle;
 	}
 
 	@Override

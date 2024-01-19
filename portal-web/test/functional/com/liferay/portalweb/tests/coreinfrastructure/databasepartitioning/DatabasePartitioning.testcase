@@ -235,7 +235,7 @@ definition {
 
 	@priority = 5
 	test CanAddCompanyWithPortalInstancesAdminUI {
-		property custom.properties = "database.partition.schema.name.prefix=lparttest_${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property custom.properties = "database.partition.schema.name.prefix=ltest_${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
@@ -270,14 +270,14 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
 		SQL.assertDatabaseCount(
-			databaseFilter = "lparttest_%",
-			databaseSubstring = "lparttest_",
+			databaseFilter = "ltest_%",
+			databaseSubstring = "ltest_",
 			expectedCount = 1);
 	}
 
 	@priority = 5
 	test CanDeleteCompany {
-		property custom.properties = "database.partition.schema.name.prefix=lparttest_${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property custom.properties = "database.partition.schema.name.prefix=ltest_${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
@@ -312,8 +312,8 @@ definition {
 		PortalInstances.deleteCP(virtualHost = "www.able.com");
 
 		SQL.assertDatabaseCount(
-			databaseFilter = "lparttest_%",
-			databaseSubstring = "lparttest_",
+			databaseFilter = "ltest_%",
+			databaseSubstring = "ltest_",
 			expectedCount = 0);
 	}
 
@@ -448,7 +448,7 @@ definition {
 
 	@priority = 4
 	test ExecuteSchemaValidator {
-		property custom.properties = "database.partition.schema.name.prefix=lparttest_${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
+		property custom.properties = "database.partition.schema.name.prefix=ltest_${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -506,16 +506,16 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
 		SQL.assertDatabaseCount(
-			databaseFilter = "lparttest_%",
-			databaseSubstring = "lparttest_",
+			databaseFilter = "ltest_%",
+			databaseSubstring = "ltest_",
 			expectedCount = 2);
 
-		DBPartition.validateSchemas(schemaNamePrefix = "lparttest_");
+		DBPartition.validateSchemas(schemaNamePrefix = "ltest_");
 	}
 
 	@priority = 3
 	test NewCompanyStillAccessibleAfterRestart {
-		property custom.properties = "database.partition.schema.name.prefix=lparttest_${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property custom.properties = "database.partition.schema.name.prefix=ltest_${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

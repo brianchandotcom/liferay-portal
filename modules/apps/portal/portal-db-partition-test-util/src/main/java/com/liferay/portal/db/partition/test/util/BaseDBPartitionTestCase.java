@@ -538,7 +538,7 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	private static final String _DATABASE_PARTITION_SCHEMA_NAME_PREFIX =
-		"lparttest_";
+		"ltest_";
 
 	private static DataSource _currentDataSource;
 	private static boolean _dbPartitionEnabled;

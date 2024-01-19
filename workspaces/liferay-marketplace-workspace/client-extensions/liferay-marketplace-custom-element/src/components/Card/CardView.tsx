@@ -6,33 +6,50 @@
 import {ReactNode} from 'react';
 
 import './CardView.scss';
+import {Tooltip} from '../Tooltip/Tooltip';
 
 interface CardViewProps {
 	children?: ReactNode;
 	description: string;
 	icon?: string;
 	title: string;
+	tooltip?: string;
 }
 
-export function CardView({children, description, icon, title}: CardViewProps) {
+export function CardView({
+	children,
+	description,
+	icon,
+	title,
+	tooltip,
+}: CardViewProps) {
 	return (
 		<div className="card-view-container">
 			<div className="card-view-main-info">
 				<div className="card-view-title">
 					<span className="card-view-title-text">{title}</span>
 
-					<img
-						alt="Icon"
-						className="card-view-title-icon"
-						src={icon}
-					/>
+					{icon && (
+						<img
+							alt="Icon"
+							className="card-view-title-icon"
+							src={icon}
+						/>
+					)}
 				</div>
+				{icon && (
+					<button className="card-view-learn-more">
+						<span className="card-view-learn-more-text">
+							Learn more
+						</span>
+					</button>
+				)}
 
-				<button className="card-view-learn-more">
-					<span className="card-view-learn-more-text">
-						Learn more
-					</span>
-				</button>
+				{tooltip && (
+					<div className="field-base-tooltip ml-3">
+						<Tooltip tooltip={tooltip} />
+					</div>
+				)}
 			</div>
 
 			<span className="card-view-description">{description}</span>

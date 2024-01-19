@@ -84,6 +84,7 @@ const CaseForm = () => {
 			params: {
 				fields: 'id,name',
 				pageSize: 1000,
+				sort: 'name:asc',
 			},
 		}
 	);

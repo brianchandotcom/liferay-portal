@@ -61,7 +61,11 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 
 	const {data: factorCategoryResponse} = useFetch<
 		APIResponse<FactorCategoryForm>
-	>(`/factorcategories`);
+	>(`/factorcategories`, {
+		params: {
+			sort: 'name:asc',
+		},
+	});
 
 	const {data: factorResponse, mutate} = useFetch<APIResponse<TestrayFactor>>(
 		testrayFactorRest.resource,
@@ -92,7 +96,9 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 
 		setState([
 			availableItems.map(onMapAvailable) as any,
-			selectedItems.map(onMapAvailable as any),
+			selectedItems
+				.map(onMapAvailable as any)
+				.sort((a: any, b: any) => a.label.localeCompare(b.label)),
 		]);
 	}, [factorCategoryResponse?.items, factors, setState]);
 

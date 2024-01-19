@@ -86,6 +86,16 @@ const BaseUser = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [search, user]);
 
+	useEffect(() => {
+		setUser({
+			emailAddress,
+			screenName,
+			userId,
+		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [emailAddress, screenName, userId]);
+
 	const deleteSection = () => {
 		setSections((prevSections) => {
 			const newSections = prevSections.filter(

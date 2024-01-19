@@ -16,6 +16,8 @@ MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CA
 
 long categoryId = MBUtil.getCategoryId(request, category);
 
+String searchCategoryId = request.getParameter("searchCategoryId");
+
 Set<Long> categorySubscriptionClassPKs = null;
 Set<Long> threadSubscriptionClassPKs = null;
 
@@ -49,6 +51,10 @@ if (cur2 > 0) {
 }
 
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
+
+if (Validator.isNotNull(searchCategoryId)) {
+	portletURL.setParameter("searchCategoryId", searchCategoryId);
+}
 
 String keywords = ParamUtil.getString(request, "keywords");
 

@@ -171,12 +171,19 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return Collections.emptyList();
 		}
 
+		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
+			new ObjectFieldInfoFieldConverter(
+				_listTypeEntryLocalService, _objectDefinitionLocalService,
+				_objectFieldLocalService, _objectFieldSettingLocalService,
+				_objectRelationshipLocalService, _objectScopeProviderRegistry,
+				_portal, _restContextPathResolverRegistry, _userLocalService);
+
 		InfoItemFormProvider<ObjectEntry> infoItemFormProvider =
 			new ObjectEntryInfoItemFormProvider(
 				_displayPageInfoItemFieldSetProvider, objectDefinition,
 				_infoItemFieldReaderFieldSetProvider,
 				_listTypeEntryLocalService, _objectActionLocalService,
-				_objectDefinitionLocalService, _objectFieldInfoFieldConverter,
+				_objectDefinitionLocalService, objectFieldInfoFieldConverter,
 				_objectFieldLocalService, _objectFieldSettingLocalService,
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
 				_restContextPathResolverRegistry,
@@ -308,7 +315,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_infoItemFieldReaderFieldSetProvider, _jsonFactory,
 					_objectActionLocalService, objectDefinition,
 					_objectDefinitionLocalService,
-					_objectFieldInfoFieldConverter, _objectEntryLocalService,
+					objectFieldInfoFieldConverter, _objectEntryLocalService,
 					_objectEntryManagerRegistry, _objectFieldLocalService,
 					_objectRelationshipLocalService,
 					_objectScopeProviderRegistry,
@@ -695,9 +702,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private ObjectFieldFilterContributorRegistry
 		_objectFieldFilterContributorRegistry;
-
-	@Reference
-	private ObjectFieldInfoFieldConverter _objectFieldInfoFieldConverter;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

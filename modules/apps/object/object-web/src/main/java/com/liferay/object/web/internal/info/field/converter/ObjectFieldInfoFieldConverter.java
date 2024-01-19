@@ -54,14 +54,31 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(service = ObjectFieldInfoFieldConverter.class)
 public class ObjectFieldInfoFieldConverter {
+
+	public ObjectFieldInfoFieldConverter(
+		ListTypeEntryLocalService listTypeEntryLocalService,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectFieldLocalService objectFieldLocalService,
+		ObjectFieldSettingLocalService objectFieldSettingLocalService,
+		ObjectRelationshipLocalService objectRelationshipLocalService,
+		ObjectScopeProviderRegistry objectScopeProviderRegistry, Portal portal,
+		RESTContextPathResolverRegistry restContextPathResolverRegistry,
+		UserLocalService userLocalService) {
+
+		_listTypeEntryLocalService = listTypeEntryLocalService;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectFieldLocalService = objectFieldLocalService;
+		_objectFieldSettingLocalService = objectFieldSettingLocalService;
+		_objectRelationshipLocalService = objectRelationshipLocalService;
+		_objectScopeProviderRegistry = objectScopeProviderRegistry;
+		_portal = portal;
+		_restContextPathResolverRegistry = restContextPathResolverRegistry;
+		_userLocalService = userLocalService;
+	}
 
 	public InfoField<?> getInfoField(
 		boolean editable, String namespace, ObjectField objectField) {
@@ -432,31 +449,17 @@ public class ObjectFieldInfoFieldConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectFieldInfoFieldConverter.class);
 
-	@Reference
-	private ListTypeEntryLocalService _listTypeEntryLocalService;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
-
-	@Reference
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
-	@Reference
-	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private RESTContextPathResolverRegistry _restContextPathResolverRegistry;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private final ListTypeEntryLocalService _listTypeEntryLocalService;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectFieldSettingLocalService
+		_objectFieldSettingLocalService;
+	private final ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
+	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+	private final Portal _portal;
+	private final RESTContextPathResolverRegistry
+		_restContextPathResolverRegistry;
+	private final UserLocalService _userLocalService;
 
 }

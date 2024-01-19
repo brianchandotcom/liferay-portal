@@ -315,11 +315,15 @@ public class CompanyLocalServiceDBPartitionTest
 	public void testDeleteCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
+		int partitionsCount = _getPartitionsCount();
+
 		_companyLocalService.deleteCompany(company);
 
 		Assert.assertFalse(
 			ArrayUtil.contains(
 				PortalInstances.getCompanyIdsBySQL(), company.getCompanyId()));
+
+		Assert.assertEquals(partitionsCount - 1, _getPartitionsCount());
 	}
 
 	@Test

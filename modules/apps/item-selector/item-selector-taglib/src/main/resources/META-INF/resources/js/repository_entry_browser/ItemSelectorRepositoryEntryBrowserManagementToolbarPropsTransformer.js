@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openSelectionModal} from 'frontend-js-web';
+import {createPortletURL, navigate, openSelectionModal} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
@@ -19,9 +19,18 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				}
 				else {
 					openSelectionModal({
+						height: '70vh',
+						onSelect: ({selectedItems}) => {
+							if (selectedItems) {
+								navigate(window.location.href);
+							}
+						},
+						selectEventName: `${portletNamespace}selectAIImages`,
 						size: 'lg',
 						title: Liferay.Language.get('create-ai-image'),
-						url: item?.data?.aiCreatorURL,
+						url: createPortletURL(item?.data?.aiCreatorURL, {
+							selectEventName: `${portletNamespace}selectAIImages`,
+						}).toString(),
 					});
 				}
 			}

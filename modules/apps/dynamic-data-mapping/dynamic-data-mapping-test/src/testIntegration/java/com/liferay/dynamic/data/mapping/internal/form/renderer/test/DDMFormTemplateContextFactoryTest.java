@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -21,10 +22,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,7 +54,13 @@ public class DDMFormTemplateContextFactoryTest {
 	public void setUp() throws Exception {
 		_httpServletRequest = new MockHttpServletRequest();
 
-		_setUpThemeDisplay();
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setPathContext("/my/path/context/");
+		themeDisplay.setPathThemeImages("/my/theme/images/");
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		_originalSiteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
 		_originalThemeDisplayDefaultLocale =
@@ -71,187 +78,78 @@ public class DDMFormTemplateContextFactoryTest {
 	}
 
 	@Test
-	public void testContainerId() throws Exception {
+	public void testCreateDDMFormTemplateContext() throws Exception {
 		String containerId = StringUtil.randomString();
+		String submitLabel = StringUtil.randomString();
 
-		DDMFormTemplateContext.Builder builder =
-			DDMFormTemplateContext.Builder.newBuilder(
-				_ddmFormTemplateContextFactory);
-
-		Map<String, Object> ddmFormTemplateContext = builder.withContainerId(
-			containerId
-		).withHttpServletRequest(
-			_httpServletRequest
-		).withLocale(
-			LocaleUtil.US
-		).build();
-
-		Assert.assertEquals(
-			containerId, ddmFormTemplateContext.get("containerId"));
-	}
-
-	@Test
-	public void testContainerIdGeneration() throws Exception {
-		DDMFormTemplateContext.Builder builder =
-			DDMFormTemplateContext.Builder.newBuilder(
-				_ddmFormTemplateContextFactory);
-
-		Map<String, Object> ddmFormTemplateContext =
-			builder.withHttpServletRequest(
-				_httpServletRequest
-			).withLocale(
-				LocaleUtil.US
-			).build();
-
-		Assert.assertNotNull(ddmFormTemplateContext.get("containerId"));
-	}
-
-	@Test
-	public void testEvaluatorURL() throws Exception {
-		DDMFormTemplateContext.Builder builder =
-			DDMFormTemplateContext.Builder.newBuilder(
-				_ddmFormTemplateContextFactory);
-
-		Map<String, Object> ddmFormTemplateContext =
-			builder.withHttpServletRequest(
-				_httpServletRequest
-			).withLocale(
-				LocaleUtil.US
-			).build();
-
-		Assert.assertEquals(
-			"/o/dynamic-data-mapping-form-context-provider/",
-			ddmFormTemplateContext.get("evaluatorURL"));
-	}
-
-	@Test
-	public void testPortletNamespace() throws Exception {
-		DDMFormTemplateContext.Builder builder =
-			DDMFormTemplateContext.Builder.newBuilder(
-				_ddmFormTemplateContextFactory);
-
-		Map<String, Object> ddmFormTemplateContext =
-			builder.withHttpServletRequest(
-				_httpServletRequest
-			).withLocale(
-				LocaleUtil.US
-			).withPortletNamespace(
-				"_PORTLET_NAMESPACE_"
-			).build();
-
-		Assert.assertEquals(
-			"_PORTLET_NAMESPACE_",
-			ddmFormTemplateContext.get("portletNamespace"));
-	}
-
-	@Test
-	public void testReadOnly() throws Exception {
-		DDMFormTemplateContext.Builder builder =
-			DDMFormTemplateContext.Builder.newBuilder(
-				_ddmFormTemplateContextFactory);
-
-		Map<String, Object> ddmFormTemplateContext =
-			builder.withHttpServletRequest(
-				_httpServletRequest
-			).withLocale(
-				LocaleUtil.US
-			).withReadOnly(
-				true
-			).build();
-
-		Assert.assertTrue((boolean)ddmFormTemplateContext.get("readOnly"));
-	}
-
-	@Test
-	public void testShowPartialResultsToRespondents() throws Exception {
 		Map<String, Object> ddmFormTemplateContext =
 			DDMFormTemplateContext.Builder.newBuilder(
 				_ddmFormTemplateContextFactory
+			).withContainerId(
+				containerId
 			).withHttpServletRequest(
 				_httpServletRequest
 			).withLocale(
 				LocaleUtil.US
-			).withProperty(
-				"showPartialResultsToRespondents", true
+			).withPaginationMode(
+				DDMFormLayout.SETTINGS_MODE
+			).withShowSubmitButton(
+				true
+			).withSubmitLabel(
+				submitLabel
+			).withViewMode(
+				true
 			).build();
 
+		Assert.assertEquals(
+			containerId, ddmFormTemplateContext.get("containerId"));
+		Assert.assertFalse((boolean)ddmFormTemplateContext.get("readOnly"));
+		Assert.assertTrue(
+			(boolean)ddmFormTemplateContext.get("showSubmitButton"));
+		Assert.assertEquals(
+			submitLabel, ddmFormTemplateContext.get("submitLabel"));
+		Assert.assertEquals(
+			"ddm.settings_form",
+			ddmFormTemplateContext.get("templateNamespace"));
+		Assert.assertTrue((boolean)ddmFormTemplateContext.get("viewMode"));
+
+		ddmFormTemplateContext = DDMFormTemplateContext.Builder.newBuilder(
+			_ddmFormTemplateContextFactory
+		).withHttpServletRequest(
+			_httpServletRequest
+		).withLocale(
+			LocaleUtil.US
+		).withPaginationMode(
+			null
+		).withPortletNamespace(
+			"_PORTLET_NAMESPACE_"
+		).withProperty(
+			"showPartialResultsToRespondents", true
+		).withReadOnly(
+			true
+		).withShowRequiredFieldsWarning(
+			false
+		).withShowSubmitButton(
+			true
+		).withSubmitLabel(
+			null
+		).build();
+
+		Assert.assertNotNull(ddmFormTemplateContext.get("containerId"));
+		Assert.assertEquals(
+			"/o/dynamic-data-mapping-form-context-provider/",
+			ddmFormTemplateContext.get("evaluatorURL"));
+		Assert.assertEquals(
+			"_PORTLET_NAMESPACE_",
+			ddmFormTemplateContext.get("portletNamespace"));
+		Assert.assertTrue((boolean)ddmFormTemplateContext.get("readOnly"));
 		Assert.assertTrue(
 			(boolean)ddmFormTemplateContext.get(
 				"showPartialResultsToRespondents"));
-	}
-
-	@Test
-	public void testShowRequiredFieldsWarning() throws Exception {
-		DDMFormTemplateContext.Builder builder =
-			DDMFormTemplateContext.Builder.newBuilder(
-				_ddmFormTemplateContextFactory);
-
-		Map<String, Object> ddmFormTemplateContext =
-			builder.withHttpServletRequest(
-				_httpServletRequest
-			).withLocale(
-				LocaleUtil.US
-			).withShowRequiredFieldsWarning(
-				false
-			).build();
-
 		Assert.assertFalse(
 			(boolean)ddmFormTemplateContext.get("showRequiredFieldsWarning"));
-	}
-
-	@Test
-	public void testShowSubmitButton() throws Exception {
-		DDMFormTemplateContext.Builder builder =
-			DDMFormTemplateContext.Builder.newBuilder(
-				_ddmFormTemplateContextFactory);
-
-		Map<String, Object> ddmFormTemplateContext =
-			builder.withHttpServletRequest(
-				_httpServletRequest
-			).withLocale(
-				LocaleUtil.US
-			).withShowSubmitButton(
-				true
-			).build();
-
-		Assert.assertTrue(
-			(boolean)ddmFormTemplateContext.get("showSubmitButton"));
-	}
-
-	@Test
-	public void testShowSubmitButtonAndReadOnlyEnabled() throws Exception {
-		DDMFormTemplateContext.Builder builder =
-			DDMFormTemplateContext.Builder.newBuilder(
-				_ddmFormTemplateContextFactory);
-
-		Map<String, Object> ddmFormTemplateContext =
-			builder.withHttpServletRequest(
-				_httpServletRequest
-			).withLocale(
-				LocaleUtil.US
-			).withReadOnly(
-				true
-			).withShowSubmitButton(
-				true
-			).build();
-
 		Assert.assertFalse(
 			(boolean)ddmFormTemplateContext.get("showSubmitButton"));
-	}
-
-	@Test
-	public void testStrings() throws Exception {
-		DDMFormTemplateContext.Builder builder =
-			DDMFormTemplateContext.Builder.newBuilder(
-				_ddmFormTemplateContextFactory);
-
-		Map<String, Object> ddmFormTemplateContext =
-			builder.withHttpServletRequest(
-				_httpServletRequest
-			).withLocale(
-				LocaleUtil.US
-			).build();
-
 		Assert.assertEquals(
 			HashMapBuilder.put(
 				"next", "Next"
@@ -259,79 +157,108 @@ public class DDMFormTemplateContextFactoryTest {
 				"previous", "Previous"
 			).build(),
 			ddmFormTemplateContext.get("strings"));
-	}
-
-	@Test
-	public void testSubmitLabel() throws Exception {
-		String submitLabel = StringUtil.randomString();
-
-		DDMFormTemplateContext.Builder builder =
-			DDMFormTemplateContext.Builder.newBuilder(
-				_ddmFormTemplateContextFactory);
-
-		Map<String, Object> ddmFormTemplateContext =
-			builder.withHttpServletRequest(
-				_httpServletRequest
-			).withLocale(
-				LocaleUtil.US
-			).withSubmitLabel(
-				submitLabel
-			).build();
-
-		Assert.assertEquals(
-			submitLabel, ddmFormTemplateContext.get("submitLabel"));
-
-		ddmFormTemplateContext = builder.withSubmitLabel(
-			null
-		).build();
-
 		Assert.assertEquals(
 			"Submit", ddmFormTemplateContext.get("submitLabel"));
-	}
-
-	@Test
-	public void testTemplateNamespace() throws Exception {
-
-		// Settings form
-
-		DDMFormTemplateContext.Builder builder =
-			DDMFormTemplateContext.Builder.newBuilder(
-				_ddmFormTemplateContextFactory);
-
-		Map<String, Object> ddmFormTemplateContext =
-			builder.withHttpServletRequest(
-				_httpServletRequest
-			).withLocale(
-				LocaleUtil.US
-			).withPaginationMode(
-				DDMFormLayout.SETTINGS_MODE
-			).build();
-
-		Assert.assertEquals(
-			"ddm.settings_form",
-			ddmFormTemplateContext.get("templateNamespace"));
-
-		// Simple form
-
-		ddmFormTemplateContext = builder.withPaginationMode(
-			null
-		).build();
-
 		Assert.assertEquals(
 			"ddm.simple_form", ddmFormTemplateContext.get("templateNamespace"));
 
-		// Tabbed form
+		Map<String, Map<String, String>[]> validations =
+			(Map<String, Map<String, String>[]>)ddmFormTemplateContext.get(
+				"validations");
 
-		ddmFormTemplateContext = builder.withPaginationMode(
-			DDMFormLayout.TABBED_MODE
-		).build();
+		Assert.assertEquals(validations.toString(), 3, validations.size());
 
-		Assert.assertEquals(
-			"ddm.tabbed_form", ddmFormTemplateContext.get("templateNamespace"));
+		_assertValidations(
+			ListUtil.fromArray(validations.get("date")),
+			ListUtil.fromArray(
+				HashMapBuilder.put(
+					"name", "dateRange"
+				).put(
+					"template",
+					"futureDates({name}, \"{parameter}\") AND " +
+						"pastDates({name}, \"{parameter}\")"
+				).build(),
+				HashMapBuilder.put(
+					"name", "futureDates"
+				).put(
+					"template", "futureDates({name}, \"{parameter}\")"
+				).build(),
+				HashMapBuilder.put(
+					"name", "pastDates"
+				).put(
+					"template", "pastDates({name}, \"{parameter}\")"
+				).build()));
+		_assertValidations(
+			ListUtil.fromArray(validations.get("numeric")),
+			ListUtil.fromArray(
+				HashMapBuilder.put(
+					"name", "eq"
+				).put(
+					"template", "{name} == {parameter}"
+				).build(),
+				HashMapBuilder.put(
+					"name", "gt"
+				).put(
+					"template", "{name} > {parameter}"
+				).build(),
+				HashMapBuilder.put(
+					"name", "gteq"
+				).put(
+					"template", "{name} >= {parameter}"
+				).build(),
+				HashMapBuilder.put(
+					"name", "lt"
+				).put(
+					"template", "{name} < {parameter}"
+				).build(),
+				HashMapBuilder.put(
+					"name", "lteq"
+				).put(
+					"template", "{name} <= {parameter}"
+				).build(),
+				HashMapBuilder.put(
+					"name", "neq"
+				).put(
+					"template", "{name} != {parameter}"
+				).build()));
+		_assertValidations(
+			ListUtil.fromArray(validations.get("string")),
+			ListUtil.fromArray(
+				HashMapBuilder.put(
+					"name", "contains"
+				).put(
+					"template", "contains({name}, \"{parameter}\")"
+				).build(),
+				HashMapBuilder.put(
+					"name", "email"
+				).put(
+					"template", "isEmailAddress({name})"
+				).build(),
+				HashMapBuilder.put(
+					"name", "notContains"
+				).put(
+					"template", "NOT(contains({name}, \"{parameter}\"))"
+				).build(),
+				HashMapBuilder.put(
+					"name", "regularExpression"
+				).put(
+					"template", "match({name}, \"{parameter}\")"
+				).build(),
+				HashMapBuilder.put(
+					"name", "url"
+				).put(
+					"template", "isURL({name})"
+				).build()));
 
-		// Paginated form
+		DDMFormTemplateContext.Builder builder =
+			DDMFormTemplateContext.Builder.newBuilder(
+				_ddmFormTemplateContextFactory);
 
-		ddmFormTemplateContext = builder.withPaginationMode(
+		ddmFormTemplateContext = builder.withHttpServletRequest(
+			_httpServletRequest
+		).withLocale(
+			LocaleUtil.US
+		).withPaginationMode(
 			StringPool.BLANK
 		).build();
 
@@ -339,7 +266,12 @@ public class DDMFormTemplateContextFactoryTest {
 			"ddm.paginated_form",
 			ddmFormTemplateContext.get("templateNamespace"));
 
-		// Wizard form
+		ddmFormTemplateContext = builder.withPaginationMode(
+			DDMFormLayout.TABBED_MODE
+		).build();
+
+		Assert.assertEquals(
+			"ddm.tabbed_form", ddmFormTemplateContext.get("templateNamespace"));
 
 		ddmFormTemplateContext = builder.withPaginationMode(
 			DDMFormLayout.WIZARD_MODE
@@ -349,128 +281,39 @@ public class DDMFormTemplateContextFactoryTest {
 			"ddm.wizard_form", ddmFormTemplateContext.get("templateNamespace"));
 	}
 
-	@Test
-	public void testValidations() throws Exception {
-		DDMFormTemplateContext.Builder builder =
-			DDMFormTemplateContext.Builder.newBuilder(
-				_ddmFormTemplateContextFactory);
-
-		Map<String, Object> ddmFormTemplateContext =
-			builder.withHttpServletRequest(
-				_httpServletRequest
-			).withLocale(
-				LocaleUtil.US
-			).build();
-
-		HashMap<String, Object> actualValidationsMap =
-			(HashMap<String, Object>)ddmFormTemplateContext.get("validations");
-
-		Assert.assertEquals(
-			actualValidationsMap.toString(), 3, actualValidationsMap.size());
-		Assert.assertTrue(actualValidationsMap.containsKey("date"));
-		Assert.assertTrue(actualValidationsMap.containsKey("numeric"));
-		Assert.assertTrue(actualValidationsMap.containsKey("string"));
-
-		_assertValidations(
-			actualValidationsMap, "date",
-			HashMapBuilder.put(
-				"dateRange",
-				"futureDates({name}, \"{parameter}\") AND pastDates({name}, " +
-					"\"{parameter}\")"
-			).put(
-				"futureDates", "futureDates({name}, \"{parameter}\")"
-			).put(
-				"pastDates", "pastDates({name}, \"{parameter}\")"
-			).build());
-
-		_assertValidations(
-			actualValidationsMap, "numeric",
-			HashMapBuilder.put(
-				"eq", "{name} == {parameter}"
-			).put(
-				"gt", "{name} > {parameter}"
-			).put(
-				"gteq", "{name} >= {parameter}"
-			).put(
-				"lt", "{name} < {parameter}"
-			).put(
-				"lteq", "{name} <= {parameter}"
-			).put(
-				"neq", "{name} != {parameter}"
-			).build());
-
-		_assertValidations(
-			actualValidationsMap, "string",
-			HashMapBuilder.put(
-				"contains", "contains({name}, \"{parameter}\")"
-			).put(
-				"email", "isEmailAddress({name})"
-			).put(
-				"notContains", "NOT(contains({name}, \"{parameter}\"))"
-			).put(
-				"regularExpression", "match({name}, \"{parameter}\")"
-			).put(
-				"url", "isURL({name})"
-			).build());
-	}
-
-	@Test
-	public void testViewMode() throws Exception {
-		DDMFormTemplateContext.Builder builder =
-			DDMFormTemplateContext.Builder.newBuilder(
-				_ddmFormTemplateContextFactory);
-
-		Map<String, Object> ddmFormTemplateContext =
-			builder.withHttpServletRequest(
-				_httpServletRequest
-			).withLocale(
-				LocaleUtil.US
-			).withViewMode(
-				true
-			).build();
-
-		Assert.assertTrue((boolean)ddmFormTemplateContext.get("viewMode"));
-	}
-
 	private void _assertValidations(
-		HashMap<String, Object> actualValidationsMap, String dataType,
-		HashMap<String, String> expectedValidationsMap) {
-
-		Object[] actualValidations = (Object[])actualValidationsMap.get(
-			dataType);
+		List<Map<String, String>> actualValidations,
+		List<Map<String, String>> expectedValidations) {
 
 		Assert.assertEquals(
-			Arrays.toString(actualValidations), expectedValidationsMap.size(),
-			actualValidations.length);
+			actualValidations.toString(), expectedValidations.size(),
+			actualValidations.size());
 
-		for (Object actualValidation : actualValidations) {
-			HashMap<String, Object> actualValidationMap =
-				(HashMap<String, Object>)actualValidation;
-
+		for (Map<String, String> actualValidationMap : actualValidations) {
 			Assert.assertTrue(actualValidationMap.containsKey("label"));
 			Assert.assertTrue(actualValidationMap.containsKey("name"));
 			Assert.assertTrue(
 				actualValidationMap.containsKey("parameterMessage"));
 			Assert.assertTrue(actualValidationMap.containsKey("template"));
 
+			String expectedTemplate = null;
+
+			for (Map<String, String> expectedValidationMap :
+					expectedValidations) {
+
+				if (Objects.equals(
+						actualValidationMap.get("name"),
+						expectedValidationMap.get("name"))) {
+
+					expectedTemplate = expectedValidationMap.get("template");
+
+					break;
+				}
+			}
+
 			Assert.assertEquals(
-				expectedValidationsMap.remove(actualValidationMap.get("name")),
-				actualValidationMap.get("template"));
+				expectedTemplate, actualValidationMap.get("template"));
 		}
-
-		Assert.assertEquals(
-			expectedValidationsMap.toString(), 0,
-			expectedValidationsMap.size());
-	}
-
-	private void _setUpThemeDisplay() throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setPathContext("/my/path/context/");
-		themeDisplay.setPathThemeImages("/my/theme/images/");
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 	}
 
 	@Inject

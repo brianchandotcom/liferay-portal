@@ -7,6 +7,7 @@ package com.liferay.portal.security.auth.session;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
@@ -241,12 +242,29 @@ public class AuthenticatedSessionManagerUtil {
 				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, rememberMeCookie,
 				httpServletRequest, httpServletResponse);
 
+			Cookie rememberMeTokenTokenCookie = new Cookie(
+				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
+				StringPool.BLANK);
+
+			if (domain != null) {
+				rememberMeTokenTokenCookie.setDomain(domain);
+			}
+
+			rememberMeTokenTokenCookie.setMaxAge(loginMaxAge);
+			rememberMeTokenTokenCookie.setPath(StringPool.SLASH);
+
 			Date tokenExpirationDate = new Date(
 				System.currentTimeMillis() + ((long)loginMaxAge * 1000));
 
 			RememberMeToken rememberMeToken =
 				RememberMeTokenLocalServiceUtil.addRememberMeToken(
-					user.getCompanyId(), user.getUserId(), tokenExpirationDate);
+					user.getCompanyId(), user.getUserId(), tokenExpirationDate,
+					rememberMeTokenTokenCookie::setValue);
+
+			CookiesManagerUtil.addCookie(
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
+				rememberMeTokenTokenCookie, httpServletRequest,
+				httpServletResponse);
 
 			Cookie rememberMeTokenIdCookie = new Cookie(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
@@ -263,28 +281,6 @@ public class AuthenticatedSessionManagerUtil {
 				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
 				rememberMeTokenIdCookie, httpServletRequest,
 				httpServletResponse);
-
-			Cookie rememberMeTokenTokenCookie = new Cookie(
-				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
-				rememberMeToken.getToken());
-
-			if (domain != null) {
-				rememberMeTokenTokenCookie.setDomain(domain);
-			}
-
-			rememberMeTokenTokenCookie.setMaxAge(loginMaxAge);
-			rememberMeTokenTokenCookie.setPath(StringPool.SLASH);
-
-			CookiesManagerUtil.addCookie(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				rememberMeTokenTokenCookie, httpServletRequest,
-				httpServletResponse);
-
-			rememberMeToken.setToken(
-				PasswordEncryptorUtil.encrypt(rememberMeToken.getToken()));
-
-			RememberMeTokenLocalServiceUtil.updateRememberMeToken(
-				rememberMeToken);
 		}
 	}
 

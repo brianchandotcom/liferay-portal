@@ -11,14 +11,20 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.knowledge.base.service.KBFolderLocalService;
+import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.web.internal.KBUtil;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
+import com.liferay.knowledge.base.web.internal.selector.KBArticleKBArticleSelector;
 import com.liferay.knowledge.base.web.internal.selector.KBArticleSelection;
 import com.liferay.knowledge.base.web.internal.selector.KBArticleSelector;
-import com.liferay.knowledge.base.web.internal.selector.KBArticleSelectorFactory;
+import com.liferay.knowledge.base.web.internal.selector.KBFolderKBArticleSelector;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -34,6 +40,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -42,6 +51,8 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -75,6 +86,19 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class DisplayPortlet extends BaseKBPortlet {
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_kbArticleSelectors.put(
+			KBArticle.class.getName(),
+			new KBArticleKBArticleSelector(_kbArticleService));
+		_kbArticleSelectors.put(
+			KBFolder.class.getName(),
+			new KBFolderKBArticleSelector(
+				_kbArticleService, _kbFolderService,
+				_kbFolderLocalService.createKBFolder(
+					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID)));
+	}
 
 	@Override
 	protected void doDispatch(
@@ -200,9 +224,8 @@ public class DisplayPortlet extends BaseKBPortlet {
 			parentResourcePrimKey = kbFolderId;
 		}
 
-		KBArticleSelector kbArticleSelector =
-			_kbArticleSelectorFactory.getKBArticleSelector(
-				parentResourceClassNameId);
+		KBArticleSelector kbArticleSelector = _getKBArticleSelector(
+			parentResourceClassNameId);
 
 		String urlTitle = ParamUtil.getString(renderRequest, "urlTitle");
 
@@ -228,6 +251,14 @@ public class DisplayPortlet extends BaseKBPortlet {
 			parentResourcePrimKey, resourcePrimKey);
 	}
 
+	private KBArticleSelector _getKBArticleSelector(long classNameId)
+		throws PortalException {
+
+		ClassName className = _classNameLocalService.getClassName(classNameId);
+
+		return _kbArticleSelectors.get(className.getClassName());
+	}
+
 	private String _getPreferredKBFolderUrlTitle(
 			RenderRequest renderRequest, PortletPreferences portletPreferences)
 		throws PortalException {
@@ -248,8 +279,17 @@ public class DisplayPortlet extends BaseKBPortlet {
 	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
 
+	private final Map<String, KBArticleSelector> _kbArticleSelectors =
+		new HashMap<>();
+
 	@Reference
-	private KBArticleSelectorFactory _kbArticleSelectorFactory;
+	private KBArticleService _kbArticleService;
+
+	@Reference
+	private KBFolderLocalService _kbFolderLocalService;
+
+	@Reference
+	private KBFolderService _kbFolderService;
 
 	@Reference
 	private Portal _portal;

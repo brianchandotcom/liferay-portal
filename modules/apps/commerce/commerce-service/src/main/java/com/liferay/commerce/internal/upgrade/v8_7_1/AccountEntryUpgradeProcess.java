@@ -6,6 +6,7 @@
 package com.liferay.commerce.internal.upgrade.v8_7_1;
 
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
@@ -77,6 +78,19 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 					defaultBillingAddressId);
 
 				if (billingAddress != null) {
+					CommerceChannelAccountEntryRel
+						existingCommerceChannelAccountEntryRel =
+							_commerceChannelAccountEntryRelLocalService.
+								fetchCommerceChannelAccountEntryRel(
+									accountEntryId, Address.class.getName(),
+									billingAddress.getAddressId(), 0,
+									CommerceChannelAccountEntryRelConstants.
+										TYPE_BILLING_ADDRESS);
+
+					if (existingCommerceChannelAccountEntryRel != null) {
+						continue;
+					}
+
 					_commerceChannelAccountEntryRelLocalService.
 						addCommerceChannelAccountEntryRel(
 							userId, accountEntryId, Address.class.getName(),
@@ -89,6 +103,19 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 					defaultShippingAddressId);
 
 				if (shippingAddress != null) {
+					CommerceChannelAccountEntryRel
+						existingCommerceChannelAccountEntryRel =
+							_commerceChannelAccountEntryRelLocalService.
+								fetchCommerceChannelAccountEntryRel(
+									accountEntryId, Address.class.getName(),
+									shippingAddress.getAddressId(), 0,
+									CommerceChannelAccountEntryRelConstants.
+										TYPE_SHIPPING_ADDRESS);
+
+					if (existingCommerceChannelAccountEntryRel != null) {
+						continue;
+					}
+
 					_commerceChannelAccountEntryRelLocalService.
 						addCommerceChannelAccountEntryRel(
 							userId, accountEntryId, Address.class.getName(),

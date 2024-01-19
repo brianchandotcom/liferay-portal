@@ -11,17 +11,14 @@ import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Adolfo Pérez
  */
-@Component(
-	property = "model.class.name=com.liferay.knowledge.base.model.KBArticle",
-	service = KBArticleSelector.class
-)
 public class KBArticleKBArticleSelector implements KBArticleSelector {
+
+	public KBArticleKBArticleSelector(KBArticleService kbArticleService) {
+		_kbArticleService = kbArticleService;
+	}
 
 	@Override
 	public KBArticleSelection findByResourcePrimKey(
@@ -132,7 +129,6 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 			groupId, ancestorKBArticle, kbArticle);
 	}
 
-	@Reference
-	private KBArticleService _kbArticleService;
+	private final KBArticleService _kbArticleService;
 
 }

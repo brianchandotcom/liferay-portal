@@ -221,7 +221,7 @@
 </tr>
 <tr>
 	<td>REPEATED_FIELD_IN_FIELDS_GROUP</td>
-	<td>xpath=(//div[contains(@data-field-name, '${key_fieldName}')]//div[contains(@class,'repeatable')])[${key_index}]</td>
+	<td>xpath=(//div[contains(@data-field-name, '${key_fieldName}')]/div[contains(@class,'repeatable')][@draggable='true'])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

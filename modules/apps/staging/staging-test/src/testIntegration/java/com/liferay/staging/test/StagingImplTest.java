@@ -7,8 +7,10 @@ package com.liferay.staging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
@@ -316,6 +318,79 @@ public class StagingImplTest {
 	@Test
 	public void testLocalStagingJournal() throws Exception {
 		enableLocalStagingWithContent(true, false, false);
+	}
+
+	@Test
+	public void testLocalStagingJournalChangesetVersionConsistency()
+		throws Exception {
+
+		LayoutTestUtil.addTypePortletLayout(_group);
+		LayoutTestUtil.addTypePortletLayout(_group);
+
+		// Create content
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), "Title", "content");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAttribute(
+			StagingUtil.getStagedPortletId(JournalPortletKeys.JOURNAL),
+			Boolean.TRUE);
+
+		Map<String, Serializable> attributes = serviceContext.getAttributes();
+
+		List<String> portletIds = new ArrayList<>();
+
+		portletIds.add(JournalPortletKeys.JOURNAL);
+
+		Map<String, String[]> parameters =
+			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
+				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, false,
+				false, false, false, false, false, false, false, true, false,
+				portletIds, true, false, portletIds, false, portletIds,
+				ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, false, true,
+				UserIdStrategy.CURRENT_USER_ID);
+
+		attributes.putAll(parameters);
+
+		enableLocalStaging(false, serviceContext);
+
+		Group stagingGroup = _group.getStagingGroup();
+
+		// Update content in staging
+
+		JournalArticle stagingJournalArticle =
+			JournalArticleLocalServiceUtil.getArticleByUrlTitle(
+				stagingGroup.getGroupId(), journalArticle.getUrlTitle());
+
+		stagingJournalArticle = JournalTestUtil.updateArticle(
+			stagingJournalArticle, "Title2",
+			stagingJournalArticle.getContent());
+
+		JournalTestUtil.expireArticle(
+			stagingJournalArticle.getGroupId(), stagingJournalArticle, 1.0D);
+
+		// Publish to live
+
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			_group.getGroupId(), false, parameters);
+
+		// Retrieve content from live after publishing
+
+		journalArticle = JournalArticleLocalServiceUtil.getArticle(
+			_group.getGroupId(), journalArticle.getArticleId());
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			journalArticle.getGroupId(),
+			journalArticle.getArticleResourceUuid());
+
+		// Check the status of the asset entry related to the article in live
+
+		Assert.assertTrue(assetEntry.isVisible());
+		Assert.assertEquals(journalArticle.getLastPublishDate(), assetEntry.getPublishDate());
 	}
 
 	@Test

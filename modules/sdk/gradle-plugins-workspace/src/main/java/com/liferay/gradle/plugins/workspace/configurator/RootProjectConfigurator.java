@@ -36,6 +36,7 @@ import com.liferay.gradle.plugins.workspace.task.CreateTokenTask;
 import com.liferay.gradle.plugins.workspace.task.InitBundleTask;
 import com.liferay.gradle.plugins.workspace.task.VerifyBundleTask;
 import com.liferay.gradle.plugins.workspace.task.VerifyProductTask;
+import com.liferay.gradle.util.ArrayUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
@@ -1127,26 +1128,35 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				public void execute(Task task) {
 					File homeDir = workspaceExtension.getHomeDir();
 
+					File unversionedTomcatDirectory = new File(
+						homeDir, "tomcat");
+
+					if (!unversionedTomcatDirectory.exists()) {
+						return;
+					}
+
+					File[] files = homeDir.listFiles(
+						(dir, name) -> name.startsWith("tomcat-"));
+
+					if (ArrayUtil.isEmpty(files)) {
+						return;
+					}
+
+					File versionedTomcatDirectory = files[0];
+
 					WorkResult workResult = project.copy(
 						copySpec -> {
 							copySpec.setDuplicatesStrategy(
 								DuplicatesStrategy.INCLUDE);
 
-							copySpec.from(
-								new File(
-									workspaceExtension.getConfigsDir(),
-									"common"),
-								new File(
-									workspaceExtension.getConfigsDir(),
-									workspaceExtension.getEnvironment()));
-							copySpec.into(homeDir);
+							copySpec.from(unversionedTomcatDirectory);
+							copySpec.into(versionedTomcatDirectory);
 
-							_configureCopySpecExpandTomcatVersion(
-								copySpec, workspaceExtension);
+							copySpec.setIncludeEmptyDirs(false);
 						});
 
 					if (workResult.getDidWork()) {
-						project.delete(new File(homeDir, "tomcat"));
+						project.delete(unversionedTomcatDirectory);
 					}
 				}
 

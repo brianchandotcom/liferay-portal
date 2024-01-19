@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -37,12 +38,14 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 		AddressLocalService addressLocalService,
 		AccountEntryLocalService accountEntryLocalService,
 		ListTypeLocalService listTypeLocalService,
-		PhoneLocalService phoneLocalService) {
+		PhoneLocalService phoneLocalService,
+		UserLocalService userLocalService) {
 
 		_addressLocalService = addressLocalService;
 		_accountEntryLocalService = accountEntryLocalService;
 		_listTypeLocalService = listTypeLocalService;
 		_phoneLocalService = phoneLocalService;
+		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -58,7 +61,16 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 				address.setExternalReferenceCode(
 					resultSet.getString("externalReferenceCode"));
 				address.setCompanyId(resultSet.getLong("companyId"));
-				address.setUserId(resultSet.getLong("userId"));
+
+				if (resultSet.getLong("userId") == 0) {
+					address.setUserId(
+						_userLocalService.getGuestUserId(
+							resultSet.getLong("companyId")));
+				}
+				else {
+					address.setUserId(resultSet.getLong("userId"));
+				}
+
 				address.setUserName(resultSet.getString("userName"));
 				address.setCreateDate(resultSet.getTimestamp("createDate"));
 				address.setModifiedDate(resultSet.getTimestamp("modifiedDate"));
@@ -197,5 +209,6 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 	private final AddressLocalService _addressLocalService;
 	private final ListTypeLocalService _listTypeLocalService;
 	private final PhoneLocalService _phoneLocalService;
+	private final UserLocalService _userLocalService;
 
 }

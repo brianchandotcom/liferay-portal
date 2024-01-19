@@ -201,23 +201,32 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		Date date = _article.getModifiedDate();
-		String key = "modified-x-ago-by-x";
-		String userName = _article.getStatusByUserName();
-
 		if (FeatureFlagManagerUtil.isEnabled("LPS-202534") && _navigationMine) {
-			date = _article.getCreateDate();
-			key = "created-x-ago-by-x";
-			userName = _article.getUserName();
+			Date createDate = _article.getCreateDate();
+
+			String dateDescription = LanguageUtil.getTimeDescription(
+				_httpServletRequest,
+				System.currentTimeMillis() - createDate.getTime(), true);
+
+			return LanguageUtil.format(
+				_httpServletRequest, "created-x-ago-by-x",
+				new String[] {
+					dateDescription, HtmlUtil.escape(_article.getUserName())
+				});
 		}
 
-		String dateDescription = LanguageUtil.getTimeDescription(
-			_httpServletRequest, System.currentTimeMillis() - date.getTime(),
-			true);
+		Date modifiedDate = _article.getModifiedDate();
+
+		String modifiedDateDescription = LanguageUtil.getTimeDescription(
+			_httpServletRequest,
+			System.currentTimeMillis() - modifiedDate.getTime(), true);
 
 		return LanguageUtil.format(
-			_httpServletRequest, key,
-			new String[] {dateDescription, HtmlUtil.escape(userName)});
+			_httpServletRequest, "modified-x-ago-by-x",
+			new String[] {
+				modifiedDateDescription,
+				HtmlUtil.escape(_article.getStatusByUserName())
+			});
 	}
 
 	@Override

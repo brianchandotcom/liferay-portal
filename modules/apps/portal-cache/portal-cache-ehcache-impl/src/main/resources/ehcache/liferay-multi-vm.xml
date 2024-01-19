@@ -13,7 +13,7 @@
 
 	<defaultCache
 		eternal="false"
-		maxElementsInMemory="10000"
+		maxElementsInMemory="200000"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>

@@ -459,7 +459,8 @@ public class AnalyticsCloudClient {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsCloudClient.class);
 
-	private Map<String, Object> _connectionProperties = new HashMap<>();
+	private static Map<String, Object> _connectionProperties = new HashMap<>();
+
 	private final Http _http;
 
 	private static class ObjectMapperHolder {

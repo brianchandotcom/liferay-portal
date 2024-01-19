@@ -602,6 +602,8 @@ definition {
 			optionValue = "Option 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton(gridOptionType = "row");
+
 		FormFields.editGridOptions(
 			gridField = "Rows",
 			optionValue = "Option 2",
@@ -611,6 +613,8 @@ definition {
 			gridField = "Columns",
 			optionValue = "Option A",
 			rowNumber = 1);
+
+		FormFields.clickAddOptionButton(gridOptionType = "column");
 
 		FormFields.editGridOptions(
 			gridField = "Columns",
@@ -988,6 +992,8 @@ definition {
 			optionValue = "Option 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionValue = "Option 2",
 			rowNumber = 2);
@@ -1173,6 +1179,8 @@ definition {
 			optionValue = "Option 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionValue = "Option 2",
 			rowNumber = 2);
@@ -1296,6 +1304,8 @@ definition {
 		FormFields.addSingleSelectionOption(
 			optionName = "Option 1",
 			optionValue = 1);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.addSingleSelectionOption(
 			optionName = "Option 2",

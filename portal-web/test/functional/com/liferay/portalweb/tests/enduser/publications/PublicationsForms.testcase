@@ -335,6 +335,8 @@ definition {
 			optionName = "Option1",
 			optionValue = "Option 1");
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option 2",

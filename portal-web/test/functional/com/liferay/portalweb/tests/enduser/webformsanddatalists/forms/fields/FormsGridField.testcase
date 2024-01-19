@@ -218,6 +218,12 @@ definition {
 				gridField = "Columns",
 				optionValue = "Column ${optionNumber}",
 				rowNumber = ${optionNumber});
+
+			if (${optionNumber} != 4) {
+				FormFields.clickAddOptionButton(gridOptionType = "row");
+
+				FormFields.clickAddOptionButton(gridOptionType = "column");
+			}
 		}
 
 		Form.closeSidebar();
@@ -236,6 +242,12 @@ definition {
 				gridField = "Columns",
 				optionValue = "日本語 Column ${optionNumber}",
 				rowNumber = ${optionNumber});
+
+			if (${optionNumber} != 4) {
+				FormFields.clickAddOptionButton(gridOptionType = "row");
+
+				FormFields.clickAddOptionButton(gridOptionType = "column");
+			}
 		}
 
 		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
@@ -250,6 +262,12 @@ definition {
 				gridField = "Columns",
 				optionValue = "Português Column ${optionNumber}",
 				rowNumber = ${optionNumber});
+
+			if (${optionNumber} != 4) {
+				FormFields.clickAddOptionButton(gridOptionType = "row");
+
+				FormFields.clickAddOptionButton(gridOptionType = "column");
+			}
 		}
 
 		Form.save();
@@ -364,6 +382,8 @@ definition {
 			optionValue = "Option 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton(gridOptionType = "row");
+
 		FormFields.editGridOptions(
 			gridField = "Rows",
 			optionValue = "Option 2",
@@ -373,6 +393,8 @@ definition {
 			gridField = "Columns",
 			optionValue = "Option 3",
 			rowNumber = 1);
+
+		FormFields.clickAddOptionButton(gridOptionType = "column");
 
 		FormFields.editGridOptions(
 			gridField = "Columns",
@@ -423,6 +445,8 @@ definition {
 			optionValue = "Option 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton(gridOptionType = "row");
+
 		FormFields.editGridOptions(
 			gridField = "Rows",
 			optionValue = "Option 2",
@@ -432,6 +456,8 @@ definition {
 			gridField = "Columns",
 			optionValue = "Option 3",
 			rowNumber = 1);
+
+		FormFields.clickAddOptionButton(gridOptionType = "column");
 
 		FormFields.editGridOptions(
 			gridField = "Columns",
@@ -699,6 +725,8 @@ definition {
 			optionValue = "Option 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton(gridOptionType = "row");
+
 		FormFields.editGridOptions(
 			gridField = "Rows",
 			optionValue = "Option 2",
@@ -752,6 +780,8 @@ definition {
 			gridField = "Rows",
 			optionValue = "Option 1",
 			rowNumber = 1);
+
+		FormFields.clickAddOptionButton(gridOptionType = "row");
 
 		FormFields.editGridOptions(
 			gridField = "Rows",

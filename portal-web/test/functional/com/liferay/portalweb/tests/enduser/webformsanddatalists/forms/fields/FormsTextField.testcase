@@ -188,6 +188,8 @@ definition {
 			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
 			value1 = "Option 1");
 
+		FormFields.clickAddOptionButton();
+
 		Type(
 			key_rowNumber = 2,
 			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",

@@ -52,6 +52,8 @@ definition {
 			optionValue = "Option 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option 2",
@@ -100,6 +102,10 @@ definition {
 				optionName = "Select${number}",
 				optionValue = "Select ${number}",
 				rowNumber = ${number});
+
+			if (${number} != 4) {
+				FormFields.clickAddOptionButton();
+			}
 		}
 
 		Form.gotoAdvancedTab();
@@ -438,6 +444,8 @@ definition {
 			fieldReference = "Option1234",
 			optionValue = "Option1",
 			rowNumber = 1);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRowValueOrFieldReference(
 			fieldReference = "Option2345",
@@ -1110,6 +1118,8 @@ definition {
 			optionName = "Option1",
 			optionValue = "Option 1");
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option 2",
@@ -1159,6 +1169,10 @@ definition {
 				optionName = "Select${number}",
 				optionValue = "Select ${number}",
 				rowNumber = ${number});
+
+			if (${number} != 3) {
+				FormFields.clickAddOptionButton();
+			}
 		}
 
 		FormFields.deleteOptionsRow(rowNumber = 3);
@@ -1209,6 +1223,8 @@ definition {
 			optionName = "Option1",
 			optionValue = "Option 1");
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option 2",
@@ -1251,10 +1267,14 @@ definition {
 			optionValue = "Option A",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option C",
 			rowNumber = 2);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionName = "Option3",
@@ -1334,6 +1354,8 @@ definition {
 			optionName = "Option1",
 			optionValue = "Option 1",
 			rowNumber = 1);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionName = "Option2",

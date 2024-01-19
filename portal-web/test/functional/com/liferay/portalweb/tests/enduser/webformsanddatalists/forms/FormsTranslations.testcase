@@ -702,6 +702,10 @@ definition {
 				optionName = "Select${number}",
 				optionValue = "Select ${number}",
 				rowNumber = ${number});
+
+			if (${number} != 3) {
+				FormFields.clickAddOptionButton();
+			}
 		}
 
 		Form.gotoAdvancedTab();
@@ -1237,6 +1241,8 @@ definition {
 			optionValue = "Option One",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option Two",
@@ -1501,6 +1507,8 @@ definition {
 			optionName = "Option1",
 			optionValue = "Option One");
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option Two",
@@ -1630,6 +1638,8 @@ definition {
 		FormFields.editOptionsRow(
 			optionName = "Option1",
 			optionValue = "Option One");
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionName = "Option2",

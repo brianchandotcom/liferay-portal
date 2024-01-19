@@ -114,6 +114,19 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro clickAddOptionButton(gridOptionType = null) {
+		if (${gridOptionType} == "row") {
+			Click(locator1 = "FormFields#GRID_OPTIONS_ADD_ROW_OPTION_BUTTON");
+		}
+		else if (${gridOptionType} == "column") {
+			Click(locator1 = "FormFields#GRID_OPTIONS_ADD_COLUMN_OPTION_BUTTON");
+		}
+		else {
+			Click(locator1 = "FormFields#OPTIONS_ADD_OPTION_BUTTON");
+		}
+	}
+
+	@summary = "Default summary"
 	macro deleteGridOptionsRow(gridField = null, rowNumber = null) {
 		Click.javaScriptClick(
 			key_gridField = ${gridField},

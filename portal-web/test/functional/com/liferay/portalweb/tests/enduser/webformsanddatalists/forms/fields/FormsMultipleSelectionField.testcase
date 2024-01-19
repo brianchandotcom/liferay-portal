@@ -105,6 +105,8 @@ definition {
 			optionName = "Option1",
 			optionValue = "Option 1");
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option 2",
@@ -234,6 +236,8 @@ definition {
 			optionName = "Option A",
 			optionValue = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.addSingleSelectionOption(
 			optionName = "Option B",
 			optionValue = 2);
@@ -281,6 +285,8 @@ definition {
 			optionName = "Option1",
 			optionValue = "Option 1",
 			rowNumber = 1);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionName = "Option2",
@@ -356,6 +362,8 @@ definition {
 			optionValue = "Option 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRowValueOrFieldReference(
 			optionValue = "Option 2",
 			rowNumber = 2);
@@ -389,6 +397,8 @@ definition {
 			optionName = "Option1",
 			optionValue = "Option 1",
 			rowNumber = 1);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionName = "Option2",
@@ -543,6 +553,8 @@ definition {
 			optionValue = "Option 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option 2",
@@ -582,6 +594,8 @@ definition {
 			optionName = "Option1",
 			optionValue = "Option 1",
 			rowNumber = 1);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionName = "Option2",
@@ -669,10 +683,14 @@ definition {
 			optionValue = "Option 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option 2",
 			rowNumber = 2);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionName = "Option3",
@@ -713,6 +731,8 @@ definition {
 			optionName = "Option1",
 			optionValue = "Option 1",
 			rowNumber = 1);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionName = "Option2",
@@ -759,6 +779,10 @@ definition {
 				optionName = "Checkbox${number}",
 				optionValue = "Checkbox ${number}",
 				rowNumber = ${number});
+
+			if (${number} != 4) {
+				FormFields.clickAddOptionButton();
+			}
 		}
 
 		FormFields.moveOptionsRow(
@@ -823,6 +847,8 @@ definition {
 			optionName = "Option 1",
 			optionValue = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.addSingleSelectionOption(
 			optionName = "Option 2",
 			optionValue = 2);
@@ -866,6 +892,8 @@ definition {
 		FormFields.addSingleSelectionOption(
 			optionName = "Option 1",
 			optionValue = 1);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.addSingleSelectionOption(
 			optionName = "Option 2",

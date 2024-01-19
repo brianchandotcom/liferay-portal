@@ -1163,6 +1163,8 @@ definition {
 			optionName = "Select1",
 			optionValue = "Select 1");
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "Select2",
 			optionValue = "Select 2",

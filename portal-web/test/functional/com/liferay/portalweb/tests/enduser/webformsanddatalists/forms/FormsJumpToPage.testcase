@@ -156,9 +156,13 @@ definition {
 			optionValue = "Destiny 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionValue = "Destiny 2",
 			rowNumber = 2);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionValue = "Destiny 3",
@@ -289,9 +293,13 @@ definition {
 			optionValue = "Destiny 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionValue = "Destiny 2",
 			rowNumber = 2);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionValue = "Destiny 3",
@@ -467,9 +475,13 @@ definition {
 			optionValue = "Destiny 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionValue = "Destiny 2",
 			rowNumber = 2);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionValue = "Destiny 3",
@@ -607,9 +619,13 @@ definition {
 			optionValue = "Destiny 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionValue = "Destiny 2",
 			rowNumber = 2);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionValue = "Destiny 3",
@@ -747,9 +763,13 @@ definition {
 			optionValue = "Destiny 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionValue = "Destiny 2",
 			rowNumber = 2);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionValue = "Destiny 3",

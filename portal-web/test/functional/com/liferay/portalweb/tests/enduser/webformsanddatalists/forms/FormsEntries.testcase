@@ -659,6 +659,10 @@ definition {
 					optionName = "Select${number}",
 					optionValue = "Select ${number}",
 					rowNumber = ${number});
+
+				if (${number} != 3) {
+					FormFields.clickAddOptionButton();
+				}
 			}
 
 			Form.closeSidebar();

@@ -581,6 +581,8 @@ definition {
 			optionValue = "student",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "professional",
 			optionValue = "professional",

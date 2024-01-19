@@ -417,6 +417,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTIONS_ADD_OPTION_BUTTON</td>
+	<td>//div[contains(@class,'ddm-field-options-container')]//button[contains(@class,'add-option-button')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_PREDEFINED_SELECTOR</td>
 	<td>//label[contains(text(),'Predefined')]//following-sibling::div/button[text()='${key_definedEntry}']</td>
 	<td></td>
@@ -428,7 +433,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_OPTION_VALUE_FIELD_REFERENCE</td>
-	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//input[@class='key-value-reference-input'] | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//input[@class='key-value-reference-input']</td>
+	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//input[contains(@id,'keyValueReference')] | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//input[contains(@id,'keyValueReference')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -438,12 +443,12 @@
 </tr>
 <tr>
 	<td>OPTIONS_OPTION_NAME_FIELD</td>
-	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//div[contains(@class, 'key-value-editor')] | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[contains(@class, 'key-value-editor')]</td>
+	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//div[contains(@class, 'collapsable-option-body')] | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[contains(@class, 'collapsable-option-body')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_OPTION_NAME_FIELD_EDIT</td>
-	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//input[contains(@class,'key-value-input')] | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[contains(@class,'key-value-editor')]/input[contains(@class, 'input')]</td>
+	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//input[contains(@class,'key-value-input')] | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[contains(@class,'collapsable-option-body')]/input[contains(@class, 'input')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -478,13 +483,23 @@
 <!--GRID-->
 
 <tr>
+	<td>GRID_OPTIONS_ADD_ROW_OPTION_BUTTON</td>
+	<td>//div[contains(@data-field-reference,'rows')]//div[contains(@class,'ddm-field-options-container')]//button[contains(@class,'add-option-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GRID_OPTIONS_ADD_COLUMN_OPTION_BUTTON</td>
+	<td>//div[contains(@data-field-reference,'columns')]//div[contains(@class,'ddm-field-options-container')]//button[contains(@class,'add-option-button')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GRID_OPTIONS_OPTION_DELETE_ROW_BUTTON</td>
 	<td>//div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//button[contains(@class,'close-modal')] | //div[contains(@class,'form-group') and contains(.//label, '${key_gridField}')]//div[@class='ddm-field-options'][${key_rowNumber}]//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GRID_OPTIONS_OPTION_VALUE_FIELD</td>
-	<td>//div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//input | //div[contains(@class,'form-group') and contains(.//label, '${key_gridField}')]//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@class,'ddm-field-text')]</td>
+	<td>//div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//input | //div[contains(@class,'form-group') and contains(.//label, '${key_gridField}')]//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@id,'keyValueDisplayName')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -494,12 +509,12 @@
 </tr>
 <tr>
 	<td>GRID_OPTIONS_OPTION_NAME_FIELD</td>
-	<td>//div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//div[contains(@class, 'key-value-editor')] | //div[contains(@class,'form-group') and contains(.//label, '${key_gridField}')]//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@class,'key-value-input')]</td>
+	<td>//div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//div[contains(@class, 'collapsable-option-body')] | //div[contains(@class,'form-group') and contains(.//label, '${key_gridField}')]//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@class,'key-value-input')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GRID_OPTIONS_OPTION_REFERENCE_FIELD</td>
-	<td>//div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//div[contains(@class, 'key-value-editor')] | //div[contains(@class,'form-group') and contains(.//label, '${key_gridField}')]//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@class,'key-value-reference-input')]</td>
+	<td>//div[contains(@data-field-name,'${key_gridField}sOption')]/../../div[${key_rowNumber}]//div[contains(@class, 'collapsable-option-body')] | //div[contains(@class,'form-group') and contains(.//label, '${key_gridField}')]//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@id,'keyValueReference')]</td>
 	<td></td>
 </tr>
 <tr>

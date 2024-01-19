@@ -1567,13 +1567,19 @@ definition {
 			optionName = "Option 1",
 			optionValue = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.addSingleSelectionOption(
 			optionName = "Option 2",
 			optionValue = 2);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.addSingleSelectionOption(
 			optionName = "Option 3",
 			optionValue = 3);
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.addSingleSelectionOption(
 			optionName = "Option 4",

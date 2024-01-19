@@ -183,7 +183,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_OPTION_NAME_FIELD</td>
-	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')]['${key_rowNumber}']//div[contains(@class, 'key-value-editor')]</td>
+	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')]['${key_rowNumber}']//div[contains(@class, 'collapsable-option-body')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -238,7 +238,7 @@
 </tr>
 <tr>
 	<td>PREDEFINED_VALUE_AT_FORM_SINGLE_SELECTION</td>
-	<td>//legend[contains(text(),'${key_fieldName}')]/..//span[contains(.,'${key_fieldValue}')]/../input[contains(@type,'radio')]</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/..//span[contains(.,'${key_fieldValue}')]/../input[contains(@type,'radio')]</td>
 	<td></td>
 </tr>
 <tr>

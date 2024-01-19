@@ -158,6 +158,8 @@ definition {
 			optionName = "Select1",
 			optionValue = "Select 1");
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "Select2",
 			optionValue = "Select 2",
@@ -177,6 +179,8 @@ definition {
 		FormFields.editOptionsRow(
 			optionName = "Option1",
 			optionValue = "Option 1");
+
+		FormFields.clickAddOptionButton();
 
 		FormFields.editOptionsRow(
 			optionName = "Option2",
@@ -210,6 +214,8 @@ definition {
 			optionValue = "Checkbox 1",
 			rowNumber = 1);
 
+		FormFields.clickAddOptionButton();
+
 		FormFields.editOptionsRow(
 			optionName = "Checkbox2",
 			optionValue = "Checkbox 2",
@@ -239,6 +245,10 @@ definition {
 				gridField = "Row",
 				optionValue = "Option ${optionNumber}",
 				rowNumber = ${optionNumber});
+
+			if (${optionNumber} != 3) {
+				FormFields.clickAddOptionButton(gridOptionType = "row");
+			}
 		}
 
 		for (var optionNumber : list "1,2,3") {
@@ -246,6 +256,10 @@ definition {
 				gridField = "Column",
 				optionValue = "Category ${optionNumber}",
 				rowNumber = ${optionNumber});
+
+			if (${optionNumber} != 3) {
+				FormFields.clickAddOptionButton(gridOptionType = "column");
+			}
 		}
 
 		Form.closeSidebar();
@@ -692,6 +706,8 @@ definition {
 				optionName = "Option1",
 				optionValue = "Option 1",
 				rowNumber = 1);
+
+			FormFields.clickAddOptionButton();
 
 			FormFields.editOptionsRow(
 				optionName = "Option2",

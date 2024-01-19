@@ -53,6 +53,10 @@ definition {
 					optionValue = "Option ${optionNumbers}",
 					rowNumber = ${row});
 
+				if (${number} != 3) {
+					FormFields.clickAddOptionButton();
+				}
+
 				var row = ${row} + 1;
 			}
 		}

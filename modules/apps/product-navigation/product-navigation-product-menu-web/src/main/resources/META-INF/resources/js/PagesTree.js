@@ -243,20 +243,13 @@ function TreeItem({
 
 							{Liferay.FeatureFlags['LPS-196847'] &&
 							!item.hasGuestViewPermission ? (
-								<span
-									aria-label={Liferay.Language.get(
+								<ClayIcon
+									className="c-ml-2 c-mt-0 flex-shrink-0 icon-tooltip lfr-portal-tooltip text-4"
+									data-title={Liferay.Language.get(
 										'restricted-page'
 									)}
-									className="c-ml-2 icon-tooltip lfr-portal-tooltip"
-									title={Liferay.Language.get(
-										'restricted-page'
-									)}
-								>
-									<ClayIcon
-										className="c-mt-0 flex-shrink-0 icon-tooltip text-4"
-										symbol="lock"
-									/>
-								</span>
+									symbol="lock"
+								/>
 							) : null}
 
 							{Liferay.FeatureFlags['LPS-174417'] &&
@@ -313,12 +306,31 @@ function TreeItem({
 						<div className="align-items-center d-flex pl-2">
 							{item.regularURL ? (
 								<a
-									aria-label={
-										Liferay.FeatureFlags['LPS-174417'] &&
-										item.hasDuplicatedFriendlyURL
-											? `${item.name}. ${warningMessage}`
-											: item.name
-									}
+									aria-label={(() => {
+										if (
+											Liferay.FeatureFlags[
+												'LPS-196847'
+											] &&
+											!item.hasGuestViewPermission
+										) {
+											return `${
+												item.name
+											}. ${Liferay.Language.get(
+												'restricted-page'
+											)}`;
+										}
+
+										if (
+											Liferay.FeatureFlags[
+												'LPS-174417'
+											] &&
+											item.hasDuplicatedFriendlyURL
+										) {
+											return `${item.name}. ${warningMessage}`;
+										}
+
+										return item.name;
+									})()}
 									className="align-items-center d-flex flex-grow-1 text-decoration-none text-truncate-inline"
 									href={item.regularURL}
 									tabIndex="-1"
@@ -333,20 +345,13 @@ function TreeItem({
 
 									{Liferay.FeatureFlags['LPS-196847'] &&
 									!item.hasGuestViewPermission ? (
-										<span
-											aria-label={Liferay.Language.get(
+										<ClayIcon
+											className="c-ml-2 c-mt-0 flex-shrink-0 icon-tooltip lfr-portal-tooltip text-4"
+											data-title={Liferay.Language.get(
 												'restricted-page'
 											)}
-											className="c-ml-2 icon-tooltip lfr-portal-tooltip"
-											title={Liferay.Language.get(
-												'restricted-page'
-											)}
-										>
-											<ClayIcon
-												className="c-mt-0 flex-shrink-0 text-4"
-												symbol="lock"
-											/>
-										</span>
+											symbol="lock"
+										/>
 									) : null}
 
 									{Liferay.FeatureFlags['LPS-174417'] &&

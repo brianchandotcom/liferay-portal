@@ -482,7 +482,7 @@ type ProductSpecification = {
 	priority?: number;
 	productId?: number;
 	specificationId?: number;
-	specificationKey?: string;
+	specificationKey: string;
 	value: {[key: string]: string};
 };
 

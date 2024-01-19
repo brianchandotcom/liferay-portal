@@ -101,6 +101,8 @@ public class CompanyLocalServiceDBPartitionTest
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 		int partitionsCount = _getPartitionsCount();
 
+		Company company = null;
+
 		long companyId = RandomTestUtil.randomLong();
 		String webId = "test.com";
 
@@ -113,11 +115,9 @@ public class CompanyLocalServiceDBPartitionTest
 					(CompanyLocalServiceImpl)aopInvocationHandler.getTarget(),
 					"_dlFileEntryTypeLocalService", null)) {
 
-			_companyLocalService.addCompany(
+			company = _companyLocalService.addCompany(
 				companyId, webId, webId, webId, 0, true, null, null, null, null,
 				null, null);
-
-			removeDBPartitions(new long[] {companyId});
 
 			Assert.fail("CompanyLocalService should throw an exception");
 		}
@@ -126,12 +126,19 @@ public class CompanyLocalServiceDBPartitionTest
 				companyIds, PortalInstances.getCompanyIdsBySQL());
 			Assert.assertEquals(partitionsCount, _getPartitionsCount());
 		}
+		finally {
+			if (company != null) {
+				removeDBPartitions(new long[] {companyId});
+			}
+		}
 	}
 
 	@Test
 	public void testAddCompanyWhenDBPartitionUtilFails() throws Exception {
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 		int partitionsCount = _getPartitionsCount();
+
+		Company company = null;
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
@@ -149,9 +156,7 @@ public class CompanyLocalServiceDBPartitionTest
 							return method.invoke(dbPartitionDB, args);
 						}))) {
 
-			Company company = CompanyTestUtil.addCompany();
-
-			_companyLocalService.deleteCompany(company);
+			company = CompanyTestUtil.addCompany();
 
 			Assert.fail("DBPartitionUtil should throw an exception");
 		}
@@ -159,6 +164,11 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertArrayEquals(
 				companyIds, PortalInstances.getCompanyIdsBySQL());
 			Assert.assertEquals(partitionsCount, _getPartitionsCount());
+		}
+		finally {
+			if (company != null) {
+				_companyLocalService.deleteCompany(company);
+			}
 		}
 	}
 
@@ -351,6 +361,8 @@ public class CompanyLocalServiceDBPartitionTest
 	public void testExtractDBPartitionCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
+		boolean standaloneDBPartition = false;
+
 		try {
 			_companyLocalService.extractDBPartitionCompany(
 				company.getCompanyId());
@@ -360,15 +372,18 @@ public class CompanyLocalServiceDBPartitionTest
 					PortalInstances.getCompanyIdsBySQL(),
 					company.getCompanyId()));
 
+			standaloneDBPartition = true;
+
 			_checkStandaloneDBPartitionTables(
 				company.getCompanyId(), "Company", "VirtualHost");
-
-			removeDBPartitions(new long[] {company.getCompanyId()});
 		}
-		catch (Exception exception) {
-			_companyLocalService.deleteCompany(company);
-
-			throw exception;
+		finally {
+			if (standaloneDBPartition) {
+				removeDBPartitions(new long[] {company.getCompanyId()});
+			}
+			else {
+				_companyLocalService.deleteCompany(company);
+			}
 		}
 	}
 

@@ -385,10 +385,10 @@ create unique index IX_2DE52B22 on UserIdMapper (type_[$COLUMN_LENGTH:75$], user
 create unique index IX_8B6E3ACE on UserNotificationDelivery (userId, portletId[$COLUMN_LENGTH:200$], classNameId, notificationType, deliveryType);
 
 create index IX_BF29100B on UserNotificationEvent (type_[$COLUMN_LENGTH:200$]);
-create index IX_3BE9B7B1 on UserNotificationEvent (userId, delivered, deliveryType, archived, actionRequired);
-create index IX_D8C49479 on UserNotificationEvent (userId, delivered, deliveryType, type_[$COLUMN_LENGTH:200$], archived);
-create index IX_EBF87241 on UserNotificationEvent (userId, delivered, type_[$COLUMN_LENGTH:200$], timestamp);
 create index IX_D60FB085 on UserNotificationEvent (userId, deliveryType, archived, actionRequired);
+create index IX_441EED81 on UserNotificationEvent (userId, deliveryType, archived, delivered, actionRequired);
+create index IX_7248297D on UserNotificationEvent (userId, deliveryType, archived, delivered, type_[$COLUMN_LENGTH:200$]);
+create index IX_DAFCC027 on UserNotificationEvent (userId, deliveryType, delivered, type_[$COLUMN_LENGTH:200$]);
 create index IX_ECD8CFEA on UserNotificationEvent (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_29BA1CF5 on UserTracker (companyId);

@@ -295,19 +295,6 @@ public class UserNotificationEventPersistenceTest {
 	}
 
 	@Test
-	public void testCountByU_T_GteT_D() throws Exception {
-		_persistence.countByU_T_GteT_D(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
-
-		_persistence.countByU_T_GteT_D(
-			0L, "null", 0L, RandomTestUtil.randomBoolean());
-
-		_persistence.countByU_T_GteT_D(
-			0L, (String)null, 0L, RandomTestUtil.randomBoolean());
-	}
-
-	@Test
 	public void testCountByU_T_DT_D() throws Exception {
 		_persistence.countByU_T_DT_D(
 			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt(),

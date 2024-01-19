@@ -8,6 +8,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.NoSuchRememberMeTokenException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.model.RememberMeToken;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
@@ -19,6 +20,7 @@ import com.liferay.portal.service.base.RememberMeTokenLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,20 +32,28 @@ public class RememberMeTokenLocalServiceImpl
 
 	@Override
 	public RememberMeToken addRememberMeToken(
-		long companyId, long userId, Date expirationDate) {
+			long companyId, long userId, Date expirationDate,
+			Consumer<String> tokenConsumer)
+		throws PwdEncryptorException {
 
 		long rememberMeTokenId = counterLocalService.increment();
 
 		RememberMeToken rememberMeToken = rememberMeTokenPersistence.create(
 			rememberMeTokenId);
 
+		String generate = PortalUUIDUtil.generate();
+
 		rememberMeToken.setCompanyId(companyId);
 		rememberMeToken.setUserId(userId);
 		rememberMeToken.setCreateDate(new Date());
-		rememberMeToken.setToken(PortalUUIDUtil.generate());
+		rememberMeToken.setToken(PasswordEncryptorUtil.encrypt(generate));
 		rememberMeToken.setExpirationDate(expirationDate);
 
-		return rememberMeTokenPersistence.update(rememberMeToken);
+		rememberMeToken = rememberMeTokenPersistence.update(rememberMeToken);
+
+		tokenConsumer.accept(generate);
+
+		return rememberMeToken;
 	}
 
 	@Override

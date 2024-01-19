@@ -38,6 +38,7 @@ import {
 	createProductSpecification,
 	getCategories,
 	getProductIdCategories,
+	getProductSpecifications,
 	getSpecification,
 	getVocabularies,
 	patchProductIdCategory,
@@ -48,10 +49,17 @@ import OfferingTypeCheckbox from './components/OfferingTypeCheckbox';
 import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
 
 import './ProvideAppBuildPage.scss';
+import ResourceRequirements from './ResourceRequirements';
 
 type ProvideAppBuildPageProps = {
 	onClickBack: () => void;
 	onClickContinue: () => void;
+};
+
+type BodyProductSpecificationProps = {
+	productId: number;
+	specificationKey: string;
+	value: number;
 };
 
 const acceptFileTypes = {
@@ -160,7 +168,15 @@ export function ProvideAppBuildPage({
 	const [isProcessing, setProcessing] = useState(false);
 
 	const [
-		{appBuild, appERC, appId, appProductId, appType, buildAppPackages},
+		{
+			appBuild,
+			appERC,
+			appId,
+			appProductId,
+			appType,
+			buildAppPackages,
+			resourceRequirements,
+		},
 		dispatch,
 	] = useAppContext();
 	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
@@ -169,6 +185,19 @@ export function ProvideAppBuildPage({
 	const [visibleSelectVersionModal, setVisibleSelectVersionModal] = useState(
 		false
 	);
+
+	const bodySpecification = [
+		{
+			productId: appProductId,
+			specificationKey: 'cpu',
+			value: resourceRequirements.cpu,
+		},
+		{
+			productId: appProductId,
+			specificationKey: 'ram',
+			value: resourceRequirements.ram,
+		},
+	];
 
 	const handleSelectCheckbox = (offeringTypelabel: string) =>
 		setSelectedCheckboxValue((prevValue) =>
@@ -282,8 +311,7 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		}
-		else {
+		} else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -339,8 +367,7 @@ export function ProvideAppBuildPage({
 						tableName: 'CUSTOM_FIELDS',
 					});
 				}
-			}
-			catch (error) {
+			} catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
@@ -352,6 +379,44 @@ export function ProvideAppBuildPage({
 			payload: buildAppPackages,
 			type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
 		});
+	};
+
+	const submitAppBuildClouldResourceRequirements = async (
+		appId: string,
+		bodyData: BodyProductSpecificationProps[]
+	) => {
+		const dataSpecificationList = await getProductSpecifications({
+			appProductId,
+		});
+
+		const handleResourceRequirements = bodyData.map(async (body) => {
+			const dataSpecification = dataSpecificationList?.find(
+				(specification) =>
+					specification?.specificationKey === body.specificationKey
+			);
+
+			const updateSpecification = await updateProductSpecification({
+				body: {
+					specificationKey: body.specificationKey,
+					value: {en_US: body.value},
+				},
+				id: dataSpecification?.id as number,
+			});
+
+			if (!updateSpecification.ok) {
+				return createProductSpecification({
+					appId,
+					body: {
+						specificationKey: body.specificationKey,
+						value: {en_US: body.value},
+					},
+				});
+			}
+
+			return updateSpecification;
+		});
+
+		return handleResourceRequirements;
 	};
 
 	const submitAppBuildTypeSpecification = async () => {
@@ -459,180 +524,215 @@ export function ProvideAppBuildPage({
 				</div>
 			</Section>
 
-			<Section
-				label={i18n.translate('compatible-offering')}
-				required
-				tooltip={i18n.translate(
-					'select-the-offering-of-liferay-your-app-is-compatible-with-the-compatibility-selections-will-determine-on-what-platforms-your-app-is-tested'
-				)}
-				tooltipText={i18n.translate('more-info')}
-			>
-				<div className="provide-app-build-page-app-build-checkbox-container">
-					<OfferingTypeCheckbox
-						handleSelectCheckbox={handleSelectCheckbox}
-						offeringTypes={
-							(offeringTypesDescription[
-								appType.value as ProductType
-							] as unknown) as OfferingType[]
-						}
-						selectedValue={selectedCheckboxValue}
-					/>
-				</div>
-			</Section>
+			{appType.value !== '' && (
+				<>
+					<Section
+						label={i18n.translate('compatible-offering')}
+						required
+						tooltip={i18n.translate(
+							'select-the-offering-of-liferay-your-app-is-compatible-with-the-compatibility-selections-will-determine-on-what-platforms-your-app-is-tested'
+						)}
+						tooltipText={i18n.translate('more-info')}
+					>
+						<div className="provide-app-build-page-app-build-checkbox-container">
+							<OfferingTypeCheckbox
+								handleSelectCheckbox={handleSelectCheckbox}
+								offeringTypes={
+									(offeringTypesDescription[
+										appType.value as ProductType
+									] as unknown) as OfferingType[]
+								}
+								selectedValue={selectedCheckboxValue}
+							/>
+						</div>
+					</Section>
 
-			<Section
-				label={i18n.translate('app-build')}
-				required
-				tooltip={i18n.translate(
-					'an-app-build-is-your-compiled-or-non-compiled-code-submitted-on-behalf-of-your-account-to-the-marketplace-once-submitted-it-will-be-reviewed-and-tested-by-our-marketplace-administrators-for-approval-in-the-marketplace'
-				)}
-				tooltipText={i18n.translate('more-info')}
-			>
-				<div className="provide-app-build-page-app-build-radio-container">
-					<RadioCard
+					<Section
+						label={i18n.translate('resource-requirements')}
+						required
+						tooltip={i18n.translate(
+							'cloud-apps-must-state-resource-requirements-if-your-app-has-no-additional-cpu-or-ram-requirements-please-enter-0'
+						)}
+						tooltipText={i18n.translate('more-info')}
+					>
+						<div className="provide-app-build-page-resource-requirements">
+							<ResourceRequirements />
+						</div>
+					</Section>
+
+					<Section
+						label={i18n.translate('app-build')}
+						required
+						tooltip={i18n.translate(
+							'an-app-build-is-your-compiled-or-non-compiled-code-submitted-on-behalf-of-your-account-to-the-marketplace-once-submitted-it-will-be-reviewed-and-tested-by-our-marketplace-administrators-for-approval-in-the-marketplace'
+						)}
+						tooltipText={i18n.translate('more-info')}
+					>
+						<div className="provide-app-build-page-app-build-radio-container">
+							<RadioCard
+								description={i18n.translate(
+									appType.value === ProductType.CLOUD
+										? 'use-any-local-zip-files-to-upload-max-file-size-is-500-mb'
+										: 'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin'
+								)}
+								icon={uploadIcon}
+								onChange={() =>
+									dispatch({
+										payload: {
+											value: ProductUploadType.ZIP_UPLOAD,
+										},
+										type: TYPES.UPDATE_APP_BUILD,
+									})
+								}
+								selected={
+									appBuild === ProductUploadType.ZIP_UPLOAD
+								}
+								title={
+									appType.value === ProductType.CLOUD
+										? i18n.translate('via-zip-upload')
+										: i18n.translate(
+												'via-liferay-plugin-packages'
+										  )
+								}
+								tooltip={ReactDOMServer.renderToString(
+									<span>
+										{i18n.translate(
+											'zip-files-must-be-in-universal-file-format-archive-uffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see'
+										)}
+
+										<a href="https://learn.liferay.com/web/guest/w/dxp/building-applications/client-extensions/working-with-client-extensions#working-with-client-extensions">
+											{i18n.translate('liferay-learn')}
+										</a>
+									</span>
+								)}
+							/>
+
+							<RadioCard
+								description={i18n.translate(
+									'use-any-build-from-any-available-liferay-experience-cloud-account-requires-lxc-account'
+								)}
+								disabled
+								icon={cloudIcon}
+								onChange={() =>
+									dispatch({
+										payload: {value: ProductUploadType.LXC},
+										type: TYPES.UPDATE_APP_BUILD,
+									})
+								}
+								selected={appBuild === ProductUploadType.LXC}
+								title={i18n.translate(
+									'via-liferay-experience-cloud-integration'
+								)}
+								tooltip={i18n.translate(
+									'in-the-future-you-will-be-able-to-submit-your-app-directly-from-liferay-experience-cloud-projects'
+								)}
+							/>
+
+							<RadioCard
+								description={i18n.translate(
+									'use-any-build-from-your-computer-connecting-with-a-github-provider'
+								)}
+								disabled
+								icon={githubIcon}
+								onChange={() => {
+									dispatch({
+										payload: {
+											value: ProductUploadType.GITHUB,
+										},
+										type: TYPES.UPDATE_APP_BUILD,
+									});
+								}}
+								selected={appBuild === ProductUploadType.GITHUB}
+								title={i18n.translate('via-github-repo')}
+								tooltip={i18n.translate(
+									'in-the-future-you-will-be-able-to-submit-your-app-source-code-for-additional-support-and-partnership-opportunities-with-liferay'
+								)}
+							/>
+						</div>
+					</Section>
+
+					<Section
 						description={i18n.translate(
 							appType.value === ProductType.CLOUD
-								? 'use-any-local-zip-files-to-upload-max-file-size-is-500-mb'
-								: 'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin'
+								? 'select-a-local-file-to-upload'
+								: 'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range'
 						)}
-						icon={uploadIcon}
-						onChange={() =>
-							dispatch({
-								payload: {value: ProductUploadType.ZIP_UPLOAD},
-								type: TYPES.UPDATE_APP_BUILD,
-							})
-						}
-						selected={appBuild === ProductUploadType.ZIP_UPLOAD}
-						title={
+						label={i18n.translate(
 							appType.value === ProductType.CLOUD
-								? i18n.translate('via-zip-upload')
-								: i18n.translate('via-liferay-plugin-packages')
-						}
-						tooltip={ReactDOMServer.renderToString(
-							<span>
-								{i18n.translate(
-									'zip-files-must-be-in-universal-file-format-archive-uffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see'
+								? 'upload-zip-files'
+								: 'upload-liferay-plugin-packages'
+						)}
+						required
+						tooltip={i18n.translate(
+							appType.value === ProductType.CLOUD
+								? 'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb'
+								: 'only-jar-war-files-are-allowed-max-file-size-is-500mb.'
+						)}
+						tooltipText={i18n.translate('more-info')}
+					>
+						{appType.value === ProductType.CLOUD && (
+							<UploadAppPackagesComponent
+								versionName={ProductType.CLOUD}
+							/>
+						)}
+
+						{appType.value === ProductType.DXP && (
+							<>
+								{buildAppPackageVersions.map(
+									(version, index) => (
+										<div
+											className="mt-4 provide-app-build-page-dropzone-container"
+											key={index}
+										>
+											<div className="align-center d-flex font-weight-bold justify-content-between p-3 provide-app-build-page-dropzone-container-header">
+												<span>{version}</span>
+
+												<ClayButton
+													displayType="unstyled"
+													onClick={() =>
+														handleRemovePackageVersion(
+															version
+														)
+													}
+												>
+													{i18n.translate(
+														'remove-a-version'
+													)}
+												</ClayButton>
+											</div>
+
+											<UploadAppPackagesComponent
+												versionName={version}
+											/>
+										</div>
+									)
 								)}
 
-								<a href="https://learn.liferay.com/web/guest/w/dxp/building-applications/client-extensions/working-with-client-extensions#working-with-client-extensions">
-									{i18n.translate('liferay-learn')}
-								</a>
-							</span>
+								<ClayButton
+									className="btn-block provide-app-build-page-add-package-button"
+									displayType="secondary"
+									onClick={() =>
+										setVisibleSelectVersionModal(true)
+									}
+								>
+									<ClayIcon className="mr-1" symbol="plus" />
+									{i18n.translate('add-packages')}
+								</ClayButton>
+							</>
 						)}
-					/>
 
-					<RadioCard
-						description={i18n.translate(
-							'use-any-build-from-any-available-liferay-experience-cloud-account-requires-lxc-account'
+						{visibleSelectVersionModal && (
+							<PackageVersionModal
+								appProductId={appProductId}
+								currentVersions={buildAppPackageVersions}
+								handleClose={() =>
+									setVisibleSelectVersionModal(false)
+								}
+							/>
 						)}
-						disabled
-						icon={cloudIcon}
-						onChange={() =>
-							dispatch({
-								payload: {value: ProductUploadType.LXC},
-								type: TYPES.UPDATE_APP_BUILD,
-							})
-						}
-						selected={appBuild === ProductUploadType.LXC}
-						title={i18n.translate(
-							'via-liferay-experience-cloud-integration'
-						)}
-						tooltip={i18n.translate(
-							'in-the-future-you-will-be-able-to-submit-your-app-directly-from-liferay-experience-cloud-projects'
-						)}
-					/>
-
-					<RadioCard
-						description={i18n.translate(
-							'use-any-build-from-your-computer-connecting-with-a-github-provider'
-						)}
-						disabled
-						icon={githubIcon}
-						onChange={() => {
-							dispatch({
-								payload: {value: ProductUploadType.GITHUB},
-								type: TYPES.UPDATE_APP_BUILD,
-							});
-						}}
-						selected={appBuild === ProductUploadType.GITHUB}
-						title={i18n.translate('via-github-repo')}
-						tooltip={i18n.translate(
-							'in-the-future-you-will-be-able-to-submit-your-app-source-code-for-additional-support-and-partnership-opportunities-with-liferay'
-						)}
-					/>
-				</div>
-			</Section>
-
-			<Section
-				description={i18n.translate(
-					appType.value === ProductType.CLOUD
-						? 'select-a-local-file-to-upload'
-						: 'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range'
-				)}
-				label={i18n.translate(
-					appType.value === ProductType.CLOUD
-						? 'upload-zip-files'
-						: 'upload-liferay-plugin-packages'
-				)}
-				required
-				tooltip={i18n.translate(
-					appType.value === ProductType.CLOUD
-						? 'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb'
-						: 'only-jar-war-files-are-allowed-max-file-size-is-500mb.'
-				)}
-				tooltipText={i18n.translate('more-info')}
-			>
-				{appType.value === ProductType.CLOUD && (
-					<UploadAppPackagesComponent
-						versionName={ProductType.CLOUD}
-					/>
-				)}
-
-				{appType.value === ProductType.DXP && (
-					<>
-						{buildAppPackageVersions.map((version, index) => (
-							<div
-								className="mt-4 provide-app-build-page-dropzone-container"
-								key={index}
-							>
-								<div className="align-center d-flex font-weight-bold justify-content-between p-3 provide-app-build-page-dropzone-container-header">
-									<span>{version}</span>
-
-									<ClayButton
-										displayType="unstyled"
-										onClick={() =>
-											handleRemovePackageVersion(version)
-										}
-									>
-										{i18n.translate('remove-a-version')}
-									</ClayButton>
-								</div>
-
-								<UploadAppPackagesComponent
-									versionName={version}
-								/>
-							</div>
-						))}
-
-						<ClayButton
-							className="btn-block provide-app-build-page-add-package-button"
-							displayType="secondary"
-							onClick={() => setVisibleSelectVersionModal(true)}
-						>
-							<ClayIcon className="mr-1" symbol="plus" />
-							{i18n.translate('add-packages')}
-						</ClayButton>
-					</>
-				)}
-
-				{visibleSelectVersionModal && (
-					<PackageVersionModal
-						appProductId={appProductId}
-						currentVersions={buildAppPackageVersions}
-						handleClose={() => setVisibleSelectVersionModal(false)}
-					/>
-				)}
-			</Section>
+					</Section>
+				</>
+			)}
 
 			<NewAppPageFooterButtons
 				disableContinueButton={disableContinueButton}
@@ -644,10 +744,13 @@ export function ProvideAppBuildPage({
 						await submitAppBuildCategories();
 						await submitAppBuildTypeSpecification();
 						await submitAppBuildPackages();
-					}
-					catch (error) {
+						await submitAppBuildClouldResourceRequirements(
+							appId,
+							bodySpecification
+						);
+					} catch (error) {
 						console.error(
-							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages'
+							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages | buildClouldResourceRequirements'
 						);
 					}
 

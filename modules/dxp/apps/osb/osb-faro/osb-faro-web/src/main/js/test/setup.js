@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
+import 'jest-extended';
 import * as pedantic from './pedantic';
 import lang from './lang';
 
@@ -10,6 +11,12 @@ jest.mock('shared/components/DocumentTitle');
 jest.mock('react-dom');
 
 document.body.className = 'dxp';
+
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+	disconnect: jest.fn(),
+	observe: jest.fn(),
+	unobserve: jest.fn()
+}));
 
 global.analytics = {
 	group: () => {},

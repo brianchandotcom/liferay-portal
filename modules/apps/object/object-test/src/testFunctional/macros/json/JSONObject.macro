@@ -1272,6 +1272,43 @@ definition {
 		return ${entryId};
 	}
 
+	@summary = "Default summary"
+	macro getObjectEntryIdByIndex(virtualHost = null) {
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (!(isSet(index))) {
+			var index = 0;
+		}
+
+		var objectName = StringUtil.toLowerCase(${objectName});
+
+		var curl = '''
+			${portalURL}/o/c/${objectName}s \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var entryId = JSONCurlUtil.get(${curl}, "$.items[${index}]['id']");
+
+		return ${entryId};
+	}
+
 	@summary = "Get the external reference code of an object field"
 	macro getObjectFieldERC(objectName, fieldName) {
 		var portalURL = JSONCompany.getPortalURL();

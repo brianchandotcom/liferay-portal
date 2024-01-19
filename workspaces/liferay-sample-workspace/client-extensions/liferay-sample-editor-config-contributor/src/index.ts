@@ -9,14 +9,35 @@ import {
 } from '@liferay/js-api/editor';
 
 const editorConfigTransformer: EditorConfigTransformer<any> = (config) => {
-	const toolbar: [string[]] = config.toolbar_liferay;
+	const toolbar: string | [string[]] = config.toolbar;
 
-	toolbar.push(['ImageSelector']);
+	const buttonName = 'AICreator';
+	let transformedConfig: any;
+
+	if (typeof toolbar === 'string') {
+		const activeToolbar = config[`toolbar_${toolbar}`];
+
+		activeToolbar.push([buttonName]);
+
+		transformedConfig = {
+			...config,
+			[`toolbar_${toolbar}`]: activeToolbar,
+		};
+	}
+	else {
+		toolbar.push([buttonName]);
+
+		transformedConfig = {
+			...config,
+			toolbar,
+		};
+	}
+
+	const extraPlugins: string = config.extraPlugins;
 
 	return {
-		...config,
-		extraPlugins: 'itemselector',
-		toolbar_liferay: toolbar,
+		...transformedConfig,
+		extraPlugins: extraPlugins ? `${extraPlugins},aicreator` : 'aicreator',
 	};
 };
 

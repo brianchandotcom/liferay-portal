@@ -291,12 +291,22 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 				keywordConflict = keywordConflict + StringPool.SLASH;
 			}
 
-			FriendlyURLResolver friendlyURLResolver =
+			FriendlyURLResolver friendlyURLResolver1 =
+				FriendlyURLResolverRegistryUtil.
+					getFriendlyURLResolverByDefaultURLSeparator(
+						keywordConflict);
+
+			FriendlyURLResolver friendlyURLResolver2 =
 				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
 					keywordConflict);
 
-			if ((friendlyURLResolver == null) ||
-				!Objects.equals(friendlyURLResolver.getKey(), key)) {
+			if (((friendlyURLResolver1 == null) &&
+				 (friendlyURLResolver2 == null)) ||
+				((friendlyURLResolver1 != null) &&
+				 Objects.equals(
+					 friendlyURLResolver1.getDefaultURLSeparator(),
+					 keywordConflict) &&
+				 !Objects.equals(friendlyURLResolver1.getKey(), key))) {
 
 				fieldsValidationErrorsJSONObject.put(
 					namespace + key,

@@ -6,6 +6,8 @@
 package com.liferay.knowledge.base.constants;
 
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 /**
  * @author Peter Shin
@@ -18,6 +20,9 @@ public class KBArticleConstants {
 	public static final double DEFAULT_PRIORITY = 1.0;
 
 	public static final int DEFAULT_VERSION = 1;
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		PropsUtil.get("lock.expiration.time." + getClassName()));
 
 	public static String getClassName() {
 		return KBArticle.class.getName();

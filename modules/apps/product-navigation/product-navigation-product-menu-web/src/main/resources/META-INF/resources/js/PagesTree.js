@@ -228,6 +228,27 @@ function TreeItem({
 				<div className="align-items-center d-flex pl-2">
 					{item.regularURL ? (
 						<a
+							aria-label={(() => {
+								if (
+									Liferay.FeatureFlags['LPS-196847'] &&
+									!item.hasGuestViewPermission
+								) {
+									return `${
+										item.name
+									}. ${Liferay.Language.get(
+										'restricted-page'
+									)}`;
+								}
+
+								if (
+									Liferay.FeatureFlags['LPS-174417'] &&
+									item.hasDuplicatedFriendlyURL
+								) {
+									return `${item.name}. ${warningMessage}`;
+								}
+
+								return item.name;
+							})()}
 							className="align-items-center d-flex flex-grow-1 text-decoration-none text-truncate w-100"
 							data-tooltip-floating="true"
 							href={item.regularURL}

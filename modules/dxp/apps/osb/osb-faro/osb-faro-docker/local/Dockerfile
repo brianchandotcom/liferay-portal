@@ -25,7 +25,6 @@ HEALTHCHECK --interval=3s --timeout=3s CMD curl -f http://localhost:8080 || exit
 RUN mkdir -p $LIFERAY_HOME/tomcat/lib/org/apache/catalina/util && \
     echo "server.info=" > $LIFERAY_HOME/tomcat/lib/org/apache/catalina/util/ServerInfo.properties
 
-COPY --chown=liferay:liferay common/license $LIFERAY_HOME/deploy
 COPY common/resources/context.xml $LIFERAY_HOME/tomcat/conf
 COPY common/resources/portal-ext.properties $LIFERAY_HOME/
 COPY common/resources/rewrite.config $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF/

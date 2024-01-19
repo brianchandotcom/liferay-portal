@@ -103,9 +103,6 @@ public class CompanyLocalServiceDBPartitionTest
 
 		Company company = null;
 
-		long companyId = RandomTestUtil.randomLong();
-		String webId = "test.com";
-
 		AopInvocationHandler aopInvocationHandler =
 			ProxyUtil.fetchInvocationHandler(
 				_companyLocalService, AopInvocationHandler.class);
@@ -116,8 +113,8 @@ public class CompanyLocalServiceDBPartitionTest
 					"_dlFileEntryTypeLocalService", null)) {
 
 			company = _companyLocalService.addCompany(
-				companyId, webId, webId, webId, 0, true, null, null, null, null,
-				null, null);
+				RandomTestUtil.randomLong(), "test.com", "test.com", "test.com",
+				0, true, null, null, null, null, null, null);
 
 			Assert.fail("CompanyLocalService should throw an exception");
 		}
@@ -128,7 +125,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 		finally {
 			if (company != null) {
-				removeDBPartitions(new long[] {companyId});
+				removeDBPartitions(new long[] {company.getCompanyId()});
 			}
 		}
 	}

@@ -511,6 +511,14 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	@Override
+	public List<UserNotificationEvent> getUserNotificationEvents(
+		long userId, String type, long timestamp, boolean delivered) {
+
+		return userNotificationEventPersistence.findByU_T_GteT_D(
+			userId, type, timestamp, delivered);
+	}
+
+	@Override
 	public int getUserNotificationEventsCount(long userId) {
 		return userNotificationEventPersistence.countByUserId(userId);
 	}
@@ -544,15 +552,6 @@ public class UserNotificationEventLocalServiceImpl
 
 		return userNotificationEventPersistence.countByU_T_DT_D_A(
 			userId, type, deliveryType, delivered, archived);
-	}
-
-	@Override
-	public int getUserNotificationEventsCount(
-		long userId, String type, long timestamp, boolean delivered,
-		String payload) {
-
-		return userNotificationEventPersistence.countByU_T_GteT_D_LikeP(
-			userId, type, timestamp, delivered, payload);
 	}
 
 	@Override

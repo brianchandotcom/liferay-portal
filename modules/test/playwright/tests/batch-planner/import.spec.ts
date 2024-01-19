@@ -307,7 +307,6 @@ test('can import CSV file with an unexisting field', async ({
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
@@ -368,7 +367,6 @@ test('can import CSV file with custom columns order', async ({
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const objectDefinition = await apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
@@ -435,7 +433,6 @@ test('can import CSV file with multiple site scoped object entries', async ({
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
@@ -526,7 +523,6 @@ test('can import CSV file with new and existing site scoped object entries', asy
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
@@ -629,7 +625,6 @@ test('can import CSV file with new and modified existing company scoped object e
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
@@ -726,7 +721,6 @@ test('can map all imported fields', async ({
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
@@ -762,7 +756,6 @@ test('can preview CSV file', async ({
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
@@ -837,7 +830,7 @@ test('can show duplicate error message with CSV import existing entry and only a
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	
 	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
 	);
@@ -878,7 +871,6 @@ test('cannot import CSV file without headers row', async ({
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -906,7 +898,6 @@ test('cannot import CSV file with empty headers row', async ({
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		siteObjectDefinition
@@ -947,7 +938,7 @@ test('cannot import CSV file with object entry with UPSERT strategy', async ({
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
+	
 	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition
 	);
@@ -979,7 +970,6 @@ test('cannot import empty CSV file', async ({
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-8087', true);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-173135', true);
 
 	const response = await apiHelpers.objectAdmin.postObjectDefinition(
 		companyObjectDefinition

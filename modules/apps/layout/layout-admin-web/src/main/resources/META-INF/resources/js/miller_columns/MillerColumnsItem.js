@@ -452,16 +452,25 @@ const MillerColumnsItem = ({
 				>
 					{viewUrl ? (
 						<ClayLink
-							aria-label={
-								Liferay.FeatureFlags['LPS-174417'] &&
-								hasDuplicatedFriendlyURL
-									? `${title}. ${Liferay.Language.get(
-											'restricted-page'
-									  )} ${warningMessage}`
-									: `${title}. ${Liferay.Language.get(
-											'restricted-page'
-									  )}`
-							}
+							aria-label={(() => {
+								if (
+									Liferay.FeatureFlags['LPS-196847'] &&
+									!hasGuestViewPermission
+								) {
+									return `${title}. ${Liferay.Language.get(
+										'restricted-page'
+									)}`;
+								}
+
+								if (
+									Liferay.FeatureFlags['LPS-174417'] &&
+									hasDuplicatedFriendlyURL
+								) {
+									return `${title}. ${warningMessage}`;
+								}
+
+								return title;
+							})()}
 							className="text-truncate"
 							href={viewUrl}
 							target={target}

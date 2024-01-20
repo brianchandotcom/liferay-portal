@@ -75,12 +75,6 @@ public class RememberMeTokenLocalServiceImpl
 			return null;
 		}
 
-		if (rememberMeToken.isExpired()) {
-			deleteRememberMeToken(rememberMeToken);
-
-			return null;
-		}
-
 		String rememberMeTokenToken = rememberMeToken.getToken();
 
 		if (!rememberMeTokenToken.equals(

@@ -109,7 +109,7 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 		User guestUser = _userLocalService.getGuestUser(company.getCompanyId());
 
 		if ((user == null) || (guestUser.getUserId() == user.getUserId()) ||
-			!user.isActive()) {
+			!user.isActive() || rememberMeToken.isExpired()) {
 
 			removeCookies(httpServletRequest, httpServletResponse);
 

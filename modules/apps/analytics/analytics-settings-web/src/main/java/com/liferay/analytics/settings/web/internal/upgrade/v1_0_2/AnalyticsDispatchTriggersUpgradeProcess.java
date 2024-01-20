@@ -123,9 +123,15 @@ public class AnalyticsDispatchTriggersUpgradeProcess extends UpgradeProcess {
 		calendar.setTime(new Date());
 		calendar.add(Calendar.HOUR, -2);
 
+		Date endDate = calendar.getTime();
+
+		calendar.add(Calendar.MINUTE, -5);
+
+		Date startDate = calendar.getTime();
+
 		_dispatchLogLocalService.addDispatchLog(
-			userId, dispatchTrigger.getDispatchTriggerId(), calendar.getTime(),
-			null, null, null, DispatchTaskStatus.SUCCESSFUL);
+			userId, dispatchTrigger.getDispatchTriggerId(), endDate, null, null,
+			startDate, DispatchTaskStatus.SUCCESSFUL);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

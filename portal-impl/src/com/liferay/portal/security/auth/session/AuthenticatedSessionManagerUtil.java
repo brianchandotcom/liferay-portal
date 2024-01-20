@@ -262,14 +262,12 @@ public class AuthenticatedSessionManagerUtil {
 			CookiesManagerUtil.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME, httpServletRequest, false));
 
-		if (rememberMe) {
-			String rememberMeTokenId = CookiesManagerUtil.getCookieValue(
-				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID, httpServletRequest);
+		String rememberMeTokenId = CookiesManagerUtil.getCookieValue(
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID, httpServletRequest);
 
-			if (Validator.isNotNull(rememberMeTokenId)) {
-				RememberMeTokenLocalServiceUtil.deleteRememberMeToken(
-					GetterUtil.getLong(rememberMeTokenId));
-			}
+		if (Validator.isNotNull(rememberMeTokenId)) {
+			RememberMeTokenLocalServiceUtil.deleteRememberMeToken(
+				GetterUtil.getLong(rememberMeTokenId));
 		}
 
 		CookiesManagerUtil.deleteCookies(

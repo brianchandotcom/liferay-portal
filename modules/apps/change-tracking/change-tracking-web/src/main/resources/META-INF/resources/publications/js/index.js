@@ -15,6 +15,6 @@ export {default as ChangeTrackingRenderView} from './views/ChangeTrackingRenderV
 export {default as ChangeTrackingRescheduleView} from './views/ChangeTrackingRescheduleView';
 export {default as DeletePublicationsFDSPropsTransformer} from './components/DeletePublicationsFDSPropsTransformer';
 export {default as ManageCollaborators} from './components/manage-collaborators-modal/ManageCollaborators';
-export {default as PublicationTemplateEditVie} from './views/PublicationTemplateEditView';
+export {default as PublicationTemplateEditView} from './views/PublicationTemplateEditView';
 export {default as StatusRenderer} from './components/StatusRenderer';
 export {default as ViewPublicationsDropdownMenu} from './components/ViewPublicationsDropdownMenu';

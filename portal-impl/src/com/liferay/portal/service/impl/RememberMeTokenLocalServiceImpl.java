@@ -6,15 +6,11 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.exception.NoSuchRememberMeTokenException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.model.RememberMeToken;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.RememberMeTokenUtil;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.service.base.RememberMeTokenLocalServiceBaseImpl;
 
@@ -68,38 +64,37 @@ public class RememberMeTokenLocalServiceImpl
 		}
 	}
 
-	@Override
-	public List<RememberMeToken> getUserRememberMeTokens(long userId) {
-		return RememberMeTokenUtil.findByUserId(userId);
-	}
-
-	@Override
-	public KeyValuePair validateToken(long rememberMeTokenId, String token)
-		throws PortalException {
+	public RememberMeToken fetchRememberMeToken(
+			long rememberMeTokenId, String token)
+		throws PwdEncryptorException {
 
 		RememberMeToken rememberMeToken = fetchRememberMeToken(
 			rememberMeTokenId);
 
+		if (rememberMeToken == null) {
+			return null;
+		}
+
 		if (rememberMeToken.isExpired()) {
 			deleteRememberMeToken(rememberMeToken);
 
-			throw new NoSuchRememberMeTokenException();
+			return null;
 		}
 
 		String rememberMeTokenToken = rememberMeToken.getToken();
 
-		String encToken = PasswordEncryptorUtil.encrypt(
-			token, rememberMeTokenToken);
+		if (!rememberMeTokenToken.equals(
+				PasswordEncryptorUtil.encrypt(token, rememberMeTokenToken))) {
 
-		if (rememberMeTokenToken.equals(encToken)) {
-			long userId = rememberMeToken.getUserId();
-
-			User user = _userLocalService.getUserById(userId);
-
-			return new KeyValuePair(String.valueOf(userId), user.getPassword());
+			return null;
 		}
 
-		throw new NoSuchRememberMeTokenException();
+		return rememberMeToken;
+	}
+
+	@Override
+	public List<RememberMeToken> getUserRememberMeTokens(long userId) {
+		return RememberMeTokenUtil.findByUserId(userId);
 	}
 
 	@BeanReference(type = UserLocalService.class)

@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.RememberMeToken;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
@@ -17,7 +18,6 @@ import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.service.RememberMeTokenLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -88,15 +88,21 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			Company company = _portal.getCompany(httpServletRequest);
 
 			if (company.isAutoLogin()) {
-				KeyValuePair kvp = _rememberMeTokenLocalService.validateToken(
-					GetterUtil.getLong(rememberMeTokenId),
-					rememberMeTokenToken);
+				RememberMeToken rememberMeToken =
+					_rememberMeTokenLocalService.fetchRememberMeToken(
+						GetterUtil.getLong(rememberMeTokenId),
+						rememberMeTokenToken);
 
-				credentials = new String[3];
+				if (rememberMeToken != null) {
+					User user = _userLocalService.getUserById(
+						rememberMeToken.getUserId());
 
-				credentials[0] = kvp.getKey();
-				credentials[1] = kvp.getValue();
-				credentials[2] = Boolean.TRUE.toString();
+					credentials = new String[3];
+
+					credentials[0] = String.valueOf(user.getUserId());
+					credentials[1] = user.getPassword();
+					credentials[2] = String.valueOf(user.isPasswordEncrypted());
+				}
 			}
 		}
 

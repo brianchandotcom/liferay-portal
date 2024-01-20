@@ -1,0 +1,17 @@
+task runGradleTest
+
+gradle.liferayWorkspace {
+	bundleUrl = "https://releases-cdn.liferay.com/dxp/2023.q4.1/liferay-dxp-tomcat-2023.q4.1-1704907579.tar.gz"
+}
+
+runGradleTest {
+	dependsOn distBundle
+
+	doLast {
+		File file = fileTree(distBundle.destinationDir) {
+			include "**/setEnv1.sh"
+		}.getSingleFile()
+
+		assert file.path.endsWith("tomcat/bin/setEnv1.sh")
+	}
+}

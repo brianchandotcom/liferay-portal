@@ -1,0 +1,18 @@
+task runGradleTest
+
+gradle.liferayWorkspace {
+	environment = "production"
+	product = "portal-7.1-ga3"
+}
+
+runGradleTest {
+	dependsOn distBundle
+
+	doLast {
+		File file = fileTree(distBundle.destinationDir) {
+			include "**/setEnv1.sh"
+		}.getSingleFile()
+
+		assert file.path.endsWith("tomcat-9.0.10/bin/setEnv1.sh")
+	}
+}

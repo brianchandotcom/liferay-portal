@@ -2,10 +2,11 @@ task runGradleTest
 
 gradle.liferayWorkspace {
 	environment = "production"
+	product = "portal-7.1-ga3"
 }
 
 runGradleTest {
-	dependsOn initBundle
+	dependsOn clean, initBundle
 
 	doLast {
 
@@ -29,8 +30,6 @@ runGradleTest {
 			assert expectedFile.text.normalize() == generatedFile.text.normalize()
 		}
 
-		String tomcatVersion = gradle.liferayWorkspace.appServerTomcatVersion;
-
 		File bundleTomcatDir = new File(initBundle.destinationDir, "tomcat-9.0.10");
 
 		File bundleTomcatBinDir = new File(bundleTomcatDir, "bin");
@@ -38,10 +37,6 @@ runGradleTest {
 		File generatedEmptyShFile = new File(bundleTomcatBinDir, "setEnv1.sh");
 
 		assert generatedEmptyShFile.exists();
-
-		File bundleUnversionedTomcatDir = new File(initBundle.destinationDir, "tomcat");
-
-		assert !bundleUnversionedTomcatDir.exists();
 
 		// Bundle
 

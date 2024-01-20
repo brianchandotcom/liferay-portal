@@ -79,7 +79,7 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			}
 		}
 
-		String[] credentials = null;
+		RememberMeToken rememberMeToken = null;
 
 		if (Validator.isNotNull(rememberMe) &&
 			Validator.isNotNull(rememberMeTokenId) &&
@@ -88,47 +88,42 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			Company company = _portal.getCompany(httpServletRequest);
 
 			if (company.isAutoLogin()) {
-				RememberMeToken rememberMeToken =
+				rememberMeToken =
 					_rememberMeTokenLocalService.fetchRememberMeToken(
 						GetterUtil.getLong(rememberMeTokenId),
 						rememberMeTokenToken);
-
-				if (rememberMeToken != null) {
-					User user = _userLocalService.getUserById(
-						rememberMeToken.getUserId());
-
-					credentials = new String[3];
-
-					credentials[0] = String.valueOf(user.getUserId());
-					credentials[1] = user.getPassword();
-					credentials[2] = String.valueOf(user.isPasswordEncrypted());
-				}
 			}
 		}
 
 		// LPS-11218
 
-		if (credentials != null) {
-			Company company = _portal.getCompany(httpServletRequest);
-
-			User guestUser = _userLocalService.getGuestUser(
-				company.getCompanyId());
-
-			long userId = GetterUtil.getLong(credentials[0]);
-
-			User user = _userLocalService.fetchUserById(userId);
-
-			if ((user == null) || (guestUser.getUserId() == userId) ||
-				!user.isActive()) {
-
-				removeCookies(httpServletRequest, httpServletResponse);
-
-				_rememberMeTokenLocalService.deleteRememberMeToken(
-					GetterUtil.getLong(rememberMeTokenId));
-
-				return null;
-			}
+		if (rememberMeToken == null) {
+			return null;
 		}
+
+		User user = _userLocalService.fetchUserById(
+			rememberMeToken.getUserId());
+
+		Company company = _portal.getCompany(httpServletRequest);
+
+		User guestUser = _userLocalService.getGuestUser(company.getCompanyId());
+
+		if ((user == null) || (guestUser.getUserId() == user.getUserId()) ||
+			!user.isActive()) {
+
+			removeCookies(httpServletRequest, httpServletResponse);
+
+			_rememberMeTokenLocalService.deleteRememberMeToken(
+				GetterUtil.getLong(rememberMeTokenId));
+
+			return null;
+		}
+
+		String[] credentials = new String[3];
+
+		credentials[0] = String.valueOf(user.getUserId());
+		credentials[1] = user.getPassword();
+		credentials[2] = String.valueOf(user.isPasswordEncrypted());
 
 		return credentials;
 	}

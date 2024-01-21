@@ -62,6 +62,19 @@ public class ChainingCheck extends BaseCheck {
 		_checkChainingOnMethodCalls(detailAST);
 	}
 
+	private void _checkChainingOnConcat(
+		DetailAST methodCallDetailAST, ChainInformation chainInformation) {
+
+		DetailAST lastMethodCallDetailAST =
+			chainInformation.getLastMethodCallDetailAST();
+
+		DetailAST parentDetailAST = lastMethodCallDetailAST.getParent();
+
+		if (parentDetailAST.getType() == TokenTypes.PLUS) {
+			log(methodCallDetailAST, _MSG_AVOID_CONCAT);
+		}
+	}
+
 	private void _checkChainingOnMethodCalls(DetailAST detailAST) {
 		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_CALL);
@@ -92,16 +105,7 @@ public class ChainingCheck extends BaseCheck {
 			int chainSize = chainedMethodNames.size();
 
 			if (chainSize > 1) {
-				DetailAST lastMethodCallDetailAST =
-					chainInformation.getLastMethodCallDetailAST();
-
-				DetailAST parentDetailAST = lastMethodCallDetailAST.getParent();
-
-				if (parentDetailAST.getType() == TokenTypes.PLUS) {
-					log(
-						methodCallDetailAST, _MSG_AVOID_METHOD,
-						getMethodName(methodCallDetailAST), "+");
-				}
+				_checkChainingOnConcat(methodCallDetailAST, chainInformation);
 			}
 
 			if (chainSize > 3) {
@@ -384,7 +388,7 @@ public class ChainingCheck extends BaseCheck {
 
 	private static final String _APPLY_TO_TYPE_CAST_KEY = "applyToTypeCast";
 
-	private static final String _MSG_AVOID_METHOD = "chaining.avoid.method";
+	private static final String _MSG_AVOID_CONCAT = "chaining.avoid.concat";
 
 	private static final String _MSG_AVOID_PARENTHESES_CHAINING =
 		"chaining.avoid.parentheses";

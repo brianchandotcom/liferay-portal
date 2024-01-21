@@ -98,6 +98,9 @@ definition {
 	@description = "This is a use case for LPS-155637. Verify that it's possible to import exported web content structures with fieldsets."
 	@priority = 3
 	test CanImportExportedWCStructuresWithFieldsets {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
 		task ("Given: Add a new site") {
 			HeadlessSite.addSite(siteName = "Site Name");
 		}

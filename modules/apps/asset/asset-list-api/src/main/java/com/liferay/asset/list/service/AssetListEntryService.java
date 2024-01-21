@@ -61,12 +61,12 @@ public interface AssetListEntryService extends BaseService {
 		throws PortalException;
 
 	public AssetListEntry addDynamicAssetListEntry(
-			long userId, long groupId, String title, String typeSettings,
+			long groupId, String title, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public AssetListEntry addManualAssetListEntry(
-			long userId, long groupId, String title, long[] assetEntryIds,
+			long groupId, String title, long[] assetEntryIds,
 			ServiceContext serviceContext)
 		throws PortalException;
 

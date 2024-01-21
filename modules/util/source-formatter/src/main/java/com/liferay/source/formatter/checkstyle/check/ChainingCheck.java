@@ -92,31 +92,15 @@ public class ChainingCheck extends BaseCheck {
 			int chainSize = chainedMethodNames.size();
 
 			if (chainSize > 1) {
-				DetailAST childDetailAST = methodCallDetailAST.getFirstChild();
+				DetailAST lastMethodCallDetailAST =
+					chainInformation.getLastMethodCallDetailAST();
 
-				if (childDetailAST.getType() == TokenTypes.DOT) {
-					DetailAST parentDetailAST = methodCallDetailAST.getParent();
+				DetailAST parentDetailAST = lastMethodCallDetailAST.getParent();
 
-					while (parentDetailAST != null) {
-						if ((parentDetailAST.getType() == TokenTypes.DOT) ||
-							(parentDetailAST.getType() ==
-								TokenTypes.METHOD_CALL)) {
-
-							parentDetailAST = parentDetailAST.getParent();
-
-							continue;
-						}
-
-						break;
-					}
-
-					if ((parentDetailAST != null) &&
-						(parentDetailAST.getType() == TokenTypes.PLUS)) {
-
-						log(
-							methodCallDetailAST, _MSG_AVOID_METHOD,
-							getMethodName(methodCallDetailAST), "+");
-					}
+				if (parentDetailAST.getType() == TokenTypes.PLUS) {
+					log(
+						methodCallDetailAST, _MSG_AVOID_METHOD,
+						getMethodName(methodCallDetailAST), "+");
 				}
 			}
 

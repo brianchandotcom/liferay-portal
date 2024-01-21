@@ -58,21 +58,21 @@ public class AssetListEntryServiceUtil {
 	}
 
 	public static AssetListEntry addDynamicAssetListEntry(
-			long userId, long groupId, String title, String typeSettings,
+			long groupId, String title, String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addDynamicAssetListEntry(
-			userId, groupId, title, typeSettings, serviceContext);
+			groupId, title, typeSettings, serviceContext);
 	}
 
 	public static AssetListEntry addManualAssetListEntry(
-			long userId, long groupId, String title, long[] assetEntryIds,
+			long groupId, String title, long[] assetEntryIds,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addManualAssetListEntry(
-			userId, groupId, title, assetEntryIds, serviceContext);
+			groupId, title, assetEntryIds, serviceContext);
 	}
 
 	public static void deleteAssetEntrySelection(

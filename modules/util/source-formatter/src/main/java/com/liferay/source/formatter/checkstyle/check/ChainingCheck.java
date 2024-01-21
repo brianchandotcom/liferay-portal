@@ -62,16 +62,14 @@ public class ChainingCheck extends BaseCheck {
 		_checkChainingOnMethodCalls(detailAST);
 	}
 
-	private void _checkChainingOnConcat(
-		DetailAST methodCallDetailAST, ChainInformation chainInformation) {
-
+	private void _checkChainingOnConcat(ChainInformation chainInformation) {
 		DetailAST lastMethodCallDetailAST =
 			chainInformation.getLastMethodCallDetailAST();
 
 		DetailAST parentDetailAST = lastMethodCallDetailAST.getParent();
 
 		if (parentDetailAST.getType() == TokenTypes.PLUS) {
-			log(methodCallDetailAST, _MSG_AVOID_CONCAT);
+			log(parentDetailAST, _MSG_AVOID_CONCAT);
 		}
 	}
 
@@ -105,7 +103,7 @@ public class ChainingCheck extends BaseCheck {
 			int chainSize = chainedMethodNames.size();
 
 			if (chainSize > 1) {
-				_checkChainingOnConcat(methodCallDetailAST, chainInformation);
+				_checkChainingOnConcat(chainInformation);
 			}
 
 			if (chainSize > 3) {

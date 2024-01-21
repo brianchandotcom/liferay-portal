@@ -138,7 +138,7 @@ public class CTOnDemandUserTicketGeneratorImpl
 			password, password, true, screenName,
 			StringBundler.concat(screenName, StringPool.AT, company.getMx()),
 			company.getLocale(), ctCollection.getName(), null,
-			"Publication Reviewer", 0, 0, true, date.getMonth(), date.getDay(),
+			"Publication Reviewer", 0, 0, true, date.getMonth(), date.getDate(),
 			date.getYear(), null, UserConstants.TYPE_ON_DEMAND_USER, null, null,
 			new long[] {role.getRoleId()}, null, false, new ServiceContext());
 

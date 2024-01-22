@@ -177,13 +177,15 @@ public class CookiesManagerImpl implements CookiesManager {
 		cookie.setValue(encodedCookieValue);
 		cookie.setVersion(0);
 
-		httpServletResponse.addCookie(cookie);
-
 		if (httpServletRequest != null) {
 			Map<String, Cookie> cookiesMap = _getCookiesMap(httpServletRequest);
 
+			cookie.setPath(_getContextPath(httpServletRequest));
+
 			cookiesMap.put(StringUtil.toUpperCase(cookie.getName()), cookie);
 		}
+
+		httpServletResponse.addCookie(cookie);
 
 		if (_log.isWarnEnabled() &&
 			(_knownCookies.get(cookie.getName()) != null) &&
@@ -211,7 +213,7 @@ public class CookiesManagerImpl implements CookiesManager {
 			CookiesConstants.NAME_COOKIE_SUPPORT, "true");
 
 		cookieSupportCookie.setMaxAge(CookiesConstants.MAX_AGE);
-		cookieSupportCookie.setPath(StringPool.SLASH);
+		cookieSupportCookie.setPath(_getContextPath(httpServletRequest));
 
 		return addCookie(
 			CookiesConstants.CONSENT_TYPE_NECESSARY, cookieSupportCookie, null,
@@ -242,7 +244,7 @@ public class CookiesManagerImpl implements CookiesManager {
 			}
 
 			cookie.setMaxAge(0);
-			cookie.setPath(StringPool.SLASH);
+			cookie.setPath(_getContextPath(httpServletRequest));
 			cookie.setValue(StringPool.BLANK);
 
 			httpServletResponse.addCookie(cookie);
@@ -487,6 +489,16 @@ public class CookiesManagerImpl implements CookiesManager {
 		}
 
 		return false;
+	}
+
+	private String _getContextPath(HttpServletRequest httpServletRequest) {
+		String contextPath = httpServletRequest.getContextPath();
+
+		if (Validator.isNotNull(contextPath)) {
+			return contextPath;
+		}
+
+		return StringPool.SLASH;
 	}
 
 	private Map<String, Cookie> _getCookiesMap(

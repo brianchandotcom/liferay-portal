@@ -5,9 +5,9 @@
 import type {HeadlessAdminTaxonomy_v1_0_Facet} from './HeadlessAdminTaxonomy_v1_0_Facet';
 import type {HeadlessAdminTaxonomy_v1_0_Permission} from './HeadlessAdminTaxonomy_v1_0_Permission';
 export type HeadlessAdminTaxonomy_v1_0_PagePermission = {
+	items?: Array<HeadlessAdminTaxonomy_v1_0_Permission>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessAdminTaxonomy_v1_0_Permission>;
 	facets?: Array<HeadlessAdminTaxonomy_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

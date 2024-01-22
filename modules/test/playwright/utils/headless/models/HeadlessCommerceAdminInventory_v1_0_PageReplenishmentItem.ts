@@ -5,9 +5,9 @@
 import type {HeadlessCommerceAdminInventory_v1_0_Facet} from './HeadlessCommerceAdminInventory_v1_0_Facet';
 import type {HeadlessCommerceAdminInventory_v1_0_ReplenishmentItem} from './HeadlessCommerceAdminInventory_v1_0_ReplenishmentItem';
 export type HeadlessCommerceAdminInventory_v1_0_PageReplenishmentItem = {
+	items?: Array<HeadlessCommerceAdminInventory_v1_0_ReplenishmentItem>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessCommerceAdminInventory_v1_0_ReplenishmentItem>;
 	facets?: Array<HeadlessCommerceAdminInventory_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

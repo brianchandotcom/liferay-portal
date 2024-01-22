@@ -5,9 +5,9 @@
 import type {HeadlessDelivery_v1_0_Facet} from './HeadlessDelivery_v1_0_Facet';
 import type {HeadlessDelivery_v1_0_WikiNode} from './HeadlessDelivery_v1_0_WikiNode';
 export type HeadlessDelivery_v1_0_PageWikiNode = {
+	items?: Array<HeadlessDelivery_v1_0_WikiNode>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessDelivery_v1_0_WikiNode>;
 	facets?: Array<HeadlessDelivery_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

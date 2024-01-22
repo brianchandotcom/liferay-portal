@@ -52,6 +52,12 @@ export type HeadlessAdminWorkflow_v1_0_WorkflowLog = {
 	readonly 'stateLabel'?: string;
 
 	/**
+	 * The task associated with this workflow log.
+	 */
+	readonly 'workflowTaskId'?: number;
+	readonly 'x-class-name'?: string;
+
+	/**
 	 * The workflow log's type.
 	 */
 	readonly 'type'?:
@@ -60,10 +66,4 @@ export type HeadlessAdminWorkflow_v1_0_WorkflowLog = {
 		| 'TaskCompletion'
 		| 'TaskUpdate'
 		| 'Transition';
-
-	/**
-	 * The task associated with this workflow log.
-	 */
-	readonly 'workflowTaskId'?: number;
-	readonly 'x-class-name'?: string;
 };

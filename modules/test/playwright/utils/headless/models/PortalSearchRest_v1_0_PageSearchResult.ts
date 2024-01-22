@@ -5,9 +5,9 @@
 import type {PortalSearchRest_v1_0_Facet} from './PortalSearchRest_v1_0_Facet';
 import type {PortalSearchRest_v1_0_SearchResult} from './PortalSearchRest_v1_0_SearchResult';
 export type PortalSearchRest_v1_0_PageSearchResult = {
+	items?: Array<PortalSearchRest_v1_0_SearchResult>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<PortalSearchRest_v1_0_SearchResult>;
 	facets?: Array<PortalSearchRest_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

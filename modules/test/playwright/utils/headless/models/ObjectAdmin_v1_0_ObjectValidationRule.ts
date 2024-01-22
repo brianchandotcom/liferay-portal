@@ -17,8 +17,8 @@ export type ObjectAdmin_v1_0_ObjectValidationRule = {
 	'objectDefinitionExternalReferenceCode'?: string;
 	'objectDefinitionId'?: number;
 	'objectValidationRuleSettings'?: Array<ObjectAdmin_v1_0_ObjectValidationRuleSetting>;
-	'outputType'?: 'fullValidation' | 'partialValidation';
 	'script'?: string;
 	'system'?: boolean;
 	readonly 'x-class-name'?: string;
+	'outputType'?: 'fullValidation' | 'partialValidation';
 };

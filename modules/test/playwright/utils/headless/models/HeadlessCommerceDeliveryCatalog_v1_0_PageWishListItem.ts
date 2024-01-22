@@ -5,9 +5,9 @@
 import type {HeadlessCommerceDeliveryCatalog_v1_0_Facet} from './HeadlessCommerceDeliveryCatalog_v1_0_Facet';
 import type {HeadlessCommerceDeliveryCatalog_v1_0_WishListItem} from './HeadlessCommerceDeliveryCatalog_v1_0_WishListItem';
 export type HeadlessCommerceDeliveryCatalog_v1_0_PageWishListItem = {
+	items?: Array<HeadlessCommerceDeliveryCatalog_v1_0_WishListItem>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessCommerceDeliveryCatalog_v1_0_WishListItem>;
 	facets?: Array<HeadlessCommerceDeliveryCatalog_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

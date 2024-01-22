@@ -5,9 +5,9 @@
 import type {HeadlessCommerceAdminChannel_v1_0_Facet} from './HeadlessCommerceAdminChannel_v1_0_Facet';
 import type {HeadlessCommerceAdminChannel_v1_0_ShippingFixedOptionTerm} from './HeadlessCommerceAdminChannel_v1_0_ShippingFixedOptionTerm';
 export type HeadlessCommerceAdminChannel_v1_0_PageShippingFixedOptionTerm = {
+	items?: Array<HeadlessCommerceAdminChannel_v1_0_ShippingFixedOptionTerm>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessCommerceAdminChannel_v1_0_ShippingFixedOptionTerm>;
 	facets?: Array<HeadlessCommerceAdminChannel_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

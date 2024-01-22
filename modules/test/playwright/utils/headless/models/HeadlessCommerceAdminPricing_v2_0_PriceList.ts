@@ -36,7 +36,7 @@ export type HeadlessCommerceAdminPricing_v2_0_PriceList = {
 	'priceListOrderTypes'?: Array<HeadlessCommerceAdminPricing_v2_0_PriceListOrderType>;
 	'priceModifiers'?: Array<HeadlessCommerceAdminPricing_v2_0_PriceModifier>;
 	'priority'?: number;
-	'type': 'price-list' | 'promotion' | 'contract';
 	'workflowStatusInfo'?: HeadlessCommerceAdminPricing_v2_0_Status;
 	readonly 'x-class-name'?: string;
+	'type': 'price-list' | 'promotion' | 'contract';
 };

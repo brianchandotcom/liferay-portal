@@ -62,6 +62,6 @@ export type HeadlessAdminUser_v1_0_Account = {
 	'postalAddresses'?: Array<HeadlessAdminUser_v1_0_PostalAddress>;
 	'status'?: number;
 	'taxId'?: string;
-	'type'?: 'business' | 'guest' | 'person' | 'supplier';
 	readonly 'x-class-name'?: string;
+	'type'?: 'business' | 'guest' | 'person' | 'supplier';
 };

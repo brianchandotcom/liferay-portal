@@ -26,11 +26,6 @@ export type HeadlessBatchEngine_v1_0_ImportTask = {
 	'errorMessage'?: string;
 
 	/**
-	 * The status of import task's execution.
-	 */
-	'executeStatus'?: 'COMPLETED' | 'FAILED' | 'INITIAL' | 'STARTED';
-
-	/**
 	 * The optional external key of this account.
 	 */
 	'externalReferenceCode'?: string;
@@ -40,16 +35,6 @@ export type HeadlessBatchEngine_v1_0_ImportTask = {
 	 * The task's ID.
 	 */
 	'id'?: number;
-
-	/**
-	 * Defines if import task will fail when error occurs or continue importing rest of the items.
-	 */
-	'importStrategy'?: 'ON_ERROR_CONTINUE' | 'ON_ERROR_FAIL';
-
-	/**
-	 * The operation of import task.
-	 */
-	'operation'?: 'CREATE' | 'DELETE' | 'UPDATE';
 
 	/**
 	 * Number of items processed by import task opeartion.
@@ -66,4 +51,19 @@ export type HeadlessBatchEngine_v1_0_ImportTask = {
 	 */
 	'totalItemsCount'?: number;
 	readonly 'x-class-name'?: string;
+
+	/**
+	 * The status of import task's execution.
+	 */
+	'executeStatus'?: 'COMPLETED' | 'FAILED' | 'INITIAL' | 'STARTED';
+
+	/**
+	 * Defines if import task will fail when error occurs or continue importing rest of the items.
+	 */
+	'importStrategy'?: 'ON_ERROR_CONTINUE' | 'ON_ERROR_FAIL';
+
+	/**
+	 * The operation of import task.
+	 */
+	'operation'?: 'CREATE' | 'DELETE' | 'UPDATE';
 };

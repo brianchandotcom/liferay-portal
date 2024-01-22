@@ -13,6 +13,8 @@ export type HeadlessCommerceAdminCatalog_v1_0_Currency = {
 	'primary'?: boolean;
 	'priority'?: number;
 	'rate'?: number;
+	'symbol'?: string;
+	readonly 'x-class-name'?: string;
 	'roundingMode'?:
 		| 'UP'
 		| 'DOWN'
@@ -22,6 +24,4 @@ export type HeadlessCommerceAdminCatalog_v1_0_Currency = {
 		| 'HALF_DOWN'
 		| 'HALF_EVEN'
 		| 'UNNECESSARY';
-	'symbol'?: string;
-	readonly 'x-class-name'?: string;
 };

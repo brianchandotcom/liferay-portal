@@ -5,9 +5,9 @@
 import type {HeadlessCommerceDeliveryOrder_v1_0_Facet} from './HeadlessCommerceDeliveryOrder_v1_0_Facet';
 import type {HeadlessCommerceDeliveryOrder_v1_0_PlacedOrderItemShipment} from './HeadlessCommerceDeliveryOrder_v1_0_PlacedOrderItemShipment';
 export type HeadlessCommerceDeliveryOrder_v1_0_PagePlacedOrderItemShipment = {
+	items?: Array<HeadlessCommerceDeliveryOrder_v1_0_PlacedOrderItemShipment>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessCommerceDeliveryOrder_v1_0_PlacedOrderItemShipment>;
 	facets?: Array<HeadlessCommerceDeliveryOrder_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

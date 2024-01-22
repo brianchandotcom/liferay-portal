@@ -9,6 +9,6 @@ export type ObjectAdmin_v1_0_ObjectLayoutBox = {
 	'name'?: Record<string, string>;
 	'objectLayoutRows'?: Array<ObjectAdmin_v1_0_ObjectLayoutRow>;
 	'priority'?: number;
-	'type'?: 'categorization' | 'regular';
 	readonly 'x-class-name'?: string;
+	'type'?: 'categorization' | 'regular';
 };

@@ -15,6 +15,28 @@ export type ObjectAdmin_v1_0_ObjectField = {
 		| 'Long'
 		| 'String';
 	readonly 'actions'?: Record<string, Record<string, string>>;
+
+	/**
+	 * @deprecated
+	 */
+	'defaultValue'?: string;
+	'externalReferenceCode'?: string;
+	readonly 'id'?: number;
+	'indexed'?: boolean;
+	'indexedAsKeyword'?: boolean;
+	'indexedLanguageId'?: string;
+	'label'?: Record<string, string>;
+	'listTypeDefinitionExternalReferenceCode'?: string;
+	'listTypeDefinitionId'?: number;
+	'localized'?: boolean;
+	'name'?: string;
+	'objectFieldSettings'?: Array<ObjectAdmin_v1_0_ObjectFieldSetting>;
+	'readOnlyConditionExpression'?: string;
+	'required'?: boolean;
+	'state'?: boolean;
+	'system'?: boolean;
+	readonly 'unique'?: boolean;
+	readonly 'x-class-name'?: string;
 	'businessType'?:
 		| 'Aggregation'
 		| 'Attachment'
@@ -34,28 +56,8 @@ export type ObjectAdmin_v1_0_ObjectField = {
 		| 'Relationship'
 		| 'RichText'
 		| 'Text';
-
-	/**
-	 * @deprecated
-	 */
-	'defaultValue'?: string;
-	'externalReferenceCode'?: string;
-	readonly 'id'?: number;
-	'indexed'?: boolean;
-	'indexedAsKeyword'?: boolean;
-	'indexedLanguageId'?: string;
-	'label'?: Record<string, string>;
-	'listTypeDefinitionExternalReferenceCode'?: string;
-	'listTypeDefinitionId'?: number;
-	'localized'?: boolean;
-	'name'?: string;
-	'objectFieldSettings'?: Array<ObjectAdmin_v1_0_ObjectFieldSetting>;
 	'readOnly'?: 'conditional' | 'false' | 'true';
-	'readOnlyConditionExpression'?: string;
 	readonly 'relationshipType'?: 'oneToMany' | 'oneToOne';
-	'required'?: boolean;
-	'state'?: boolean;
-	'system'?: boolean;
 
 	/**
 	 * @deprecated
@@ -70,6 +72,4 @@ export type ObjectAdmin_v1_0_ObjectField = {
 		| 'Integer'
 		| 'Long'
 		| 'String';
-	readonly 'unique'?: boolean;
-	readonly 'x-class-name'?: string;
 };

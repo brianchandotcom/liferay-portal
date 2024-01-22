@@ -16,10 +16,10 @@ export type HeadlessDelivery_v1_0_SitePageNavigationMenuSettings = {
 	 * The page's description to be used as summary for search engines.
 	 */
 	'target'?: string;
+	readonly 'x-class-name'?: string;
 
 	/**
 	 * The target's type (specific frame or new tab).
 	 */
 	'targetType'?: 'SpecificFrame' | 'NewTab';
-	readonly 'x-class-name'?: string;
 };

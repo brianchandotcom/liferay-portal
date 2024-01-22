@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {HeadlessBatchEngine_v1_0_ImportTask} from '../models/HeadlessBatchEngine_v1_0_ImportTask';
+import type {HeadlessBatchEngine_v1_0_MultipartBody} from '../models/HeadlessBatchEngine_v1_0_MultipartBody';
 import type {CancelablePromise} from '../core/CancelablePromise';
 import {OpenAPI} from '../core/OpenAPI';
 import {request as __request} from '../core/request';
@@ -121,7 +122,7 @@ export class HeadlessBatchEngineV10ImportTaskService {
 		fieldNameMapping?: string,
 		importStrategy?: string,
 		taskItemDelegateName?: string,
-		requestBody?: Record<string, any>
+		requestBody?: HeadlessBatchEngine_v1_0_MultipartBody
 	): CancelablePromise<HeadlessBatchEngine_v1_0_ImportTask> {
 		return __request(OpenAPI, {
 			method: 'POST',

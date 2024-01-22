@@ -5,9 +5,9 @@
 import type {HeadlessDelivery_v1_0_BlogPosting} from './HeadlessDelivery_v1_0_BlogPosting';
 import type {HeadlessDelivery_v1_0_Facet} from './HeadlessDelivery_v1_0_Facet';
 export type HeadlessDelivery_v1_0_PageBlogPosting = {
+	items?: Array<HeadlessDelivery_v1_0_BlogPosting>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessDelivery_v1_0_BlogPosting>;
 	facets?: Array<HeadlessDelivery_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

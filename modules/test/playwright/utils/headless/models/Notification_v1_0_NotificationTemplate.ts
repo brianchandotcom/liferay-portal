@@ -10,7 +10,6 @@ export type Notification_v1_0_NotificationTemplate = {
 	readonly 'dateCreated'?: string;
 	readonly 'dateModified'?: string;
 	'description'?: string;
-	'editorType'?: 'freeMarker' | 'richText';
 	'externalReferenceCode'?: string;
 	readonly 'id'?: number;
 	'name'?: string;
@@ -24,4 +23,5 @@ export type Notification_v1_0_NotificationTemplate = {
 	'type'?: string;
 	'typeLabel'?: string;
 	readonly 'x-class-name'?: string;
+	'editorType'?: 'freeMarker' | 'richText';
 };

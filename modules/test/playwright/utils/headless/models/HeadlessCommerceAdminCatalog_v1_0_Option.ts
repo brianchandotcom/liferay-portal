@@ -11,14 +11,6 @@ export type HeadlessCommerceAdminCatalog_v1_0_Option = {
 	'description'?: Record<string, string>;
 	'externalReferenceCode'?: string;
 	'facetable'?: boolean;
-	'fieldType':
-		| 'checkbox'
-		| 'checkbox_multiple'
-		| 'date'
-		| 'numeric'
-		| 'radio'
-		| 'select'
-		| 'text';
 	readonly 'id'?: number;
 	'key': string;
 	'name': Record<string, string>;
@@ -27,4 +19,12 @@ export type HeadlessCommerceAdminCatalog_v1_0_Option = {
 	'required'?: boolean;
 	'skuContributor'?: boolean;
 	readonly 'x-class-name'?: string;
+	'fieldType':
+		| 'checkbox'
+		| 'checkbox_multiple'
+		| 'date'
+		| 'numeric'
+		| 'radio'
+		| 'select'
+		| 'text';
 };

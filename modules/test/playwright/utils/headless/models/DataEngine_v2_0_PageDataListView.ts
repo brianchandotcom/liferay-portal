@@ -5,9 +5,9 @@
 import type {DataEngine_v2_0_DataListView} from './DataEngine_v2_0_DataListView';
 import type {DataEngine_v2_0_Facet} from './DataEngine_v2_0_Facet';
 export type DataEngine_v2_0_PageDataListView = {
+	items?: Array<DataEngine_v2_0_DataListView>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<DataEngine_v2_0_DataListView>;
 	facets?: Array<DataEngine_v2_0_Facet>;
 	pageSize?: number;
 	page?: number;

@@ -199,6 +199,48 @@ export class HeadlessAdminUserV10AccountGroupService {
 	}
 
 	/**
+	 * Assigns an account by its external reference code to an account group by external reference code
+	 * @param accountExternalReferenceCode
+	 * @param externalReferenceCode
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessAdminUserV10PostAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode(
+		accountExternalReferenceCode: string,
+		externalReferenceCode: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'POST',
+			url: '/headless-admin-user/v1.0/account-groups/by-external-reference-code/{accountExternalReferenceCode}/accounts/by-external-reference-code/{externalReferenceCode}',
+			path: {
+				accountExternalReferenceCode: accountExternalReferenceCode,
+				externalReferenceCode: externalReferenceCode,
+			},
+		});
+	}
+
+	/**
+	 * Removes an account by their external reference code from an account group by external reference code
+	 * @param accountExternalReferenceCode
+	 * @param externalReferenceCode
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessAdminUserV10DeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode(
+		accountExternalReferenceCode: string,
+		externalReferenceCode: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/headless-admin-user/v1.0/account-groups/by-external-reference-code/{accountExternalReferenceCode}/accounts/by-external-reference-code/{externalReferenceCode}',
+			path: {
+				accountExternalReferenceCode: accountExternalReferenceCode,
+				externalReferenceCode: externalReferenceCode,
+			},
+		});
+	}
+
+	/**
 	 * @param externalReferenceCode
 	 * @returns HeadlessAdminUser_v1_0_AccountGroup default response
 	 * @throws ApiError
@@ -274,48 +316,6 @@ export class HeadlessAdminUserV10AccountGroupService {
 			},
 			body: requestBody,
 			mediaType: 'application/json',
-		});
-	}
-
-	/**
-	 * Assigns an account by its external reference code to an account group by external reference code
-	 * @param accountExternalReferenceCode
-	 * @param externalReferenceCode
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessAdminUserV10PostAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode(
-		accountExternalReferenceCode: string,
-		externalReferenceCode: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'POST',
-			url: '/headless-admin-user/v1.0/account-groups/by-external-reference-code/{accountExternalReferenceCode}/accounts/by-external-reference-code/{externalReferenceCode}',
-			path: {
-				accountExternalReferenceCode: accountExternalReferenceCode,
-				externalReferenceCode: externalReferenceCode,
-			},
-		});
-	}
-
-	/**
-	 * Removes an account by their external reference code from an account group by external reference code
-	 * @param accountExternalReferenceCode
-	 * @param externalReferenceCode
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessAdminUserV10DeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode(
-		accountExternalReferenceCode: string,
-		externalReferenceCode: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'DELETE',
-			url: '/headless-admin-user/v1.0/account-groups/by-external-reference-code/{accountExternalReferenceCode}/accounts/by-external-reference-code/{externalReferenceCode}',
-			path: {
-				accountExternalReferenceCode: accountExternalReferenceCode,
-				externalReferenceCode: externalReferenceCode,
-			},
 		});
 	}
 

@@ -6,6 +6,6 @@ export type ObjectAdmin_v1_0_ObjectViewSortColumn = {
 	readonly 'id'?: number;
 	'objectFieldName'?: string;
 	'priority'?: number;
-	'sortOrder'?: 'asc' | 'desc';
 	readonly 'x-class-name'?: string;
+	'sortOrder'?: 'asc' | 'desc';
 };

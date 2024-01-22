@@ -8,6 +8,17 @@
 export type HeadlessDelivery_v1_0_SiteMapSettings = {
 
 	/**
+	 * Whether search engines should crawl and index the page.
+	 */
+	'include'?: boolean;
+
+	/**
+	 * How the page should be prioritized relative to other pages.
+	 */
+	'pagePriority'?: number;
+	readonly 'x-class-name'?: string;
+
+	/**
 	 * Indicates how often a page is updated.
 	 */
 	'changeFrequency'?:
@@ -18,15 +29,4 @@ export type HeadlessDelivery_v1_0_SiteMapSettings = {
 		| 'Monthly'
 		| 'Yearly'
 		| 'Never';
-
-	/**
-	 * Whether search engines should crawl and index the page.
-	 */
-	'include'?: boolean;
-
-	/**
-	 * How the page should be prioritized relative to other pages.
-	 */
-	'pagePriority'?: number;
-	readonly 'x-class-name'?: string;
 };

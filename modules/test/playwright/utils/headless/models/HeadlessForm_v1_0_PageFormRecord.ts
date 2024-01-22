@@ -5,9 +5,9 @@
 import type {HeadlessForm_v1_0_Facet} from './HeadlessForm_v1_0_Facet';
 import type {HeadlessForm_v1_0_FormRecord} from './HeadlessForm_v1_0_FormRecord';
 export type HeadlessForm_v1_0_PageFormRecord = {
+	items?: Array<HeadlessForm_v1_0_FormRecord>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessForm_v1_0_FormRecord>;
 	facets?: Array<HeadlessForm_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

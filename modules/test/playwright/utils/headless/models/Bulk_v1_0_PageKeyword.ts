@@ -5,9 +5,9 @@
 import type {Bulk_v1_0_Facet} from './Bulk_v1_0_Facet';
 import type {Bulk_v1_0_Keyword} from './Bulk_v1_0_Keyword';
 export type Bulk_v1_0_PageKeyword = {
+	items?: Array<Bulk_v1_0_Keyword>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<Bulk_v1_0_Keyword>;
 	facets?: Array<Bulk_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

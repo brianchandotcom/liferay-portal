@@ -5,9 +5,9 @@
 import type {HeadlessAdminUser_v1_0_Facet} from './HeadlessAdminUser_v1_0_Facet';
 import type {HeadlessAdminUser_v1_0_Role} from './HeadlessAdminUser_v1_0_Role';
 export type HeadlessAdminUser_v1_0_PageRole = {
+	items?: Array<HeadlessAdminUser_v1_0_Role>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessAdminUser_v1_0_Role>;
 	facets?: Array<HeadlessAdminUser_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

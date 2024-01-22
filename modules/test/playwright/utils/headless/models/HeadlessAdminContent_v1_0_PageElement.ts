@@ -21,6 +21,7 @@ export type HeadlessAdminContent_v1_0_PageElement = {
 	 * A list of the page elements this page element has.
 	 */
 	'pageElements'?: Array<HeadlessAdminContent_v1_0_PageElement>;
+	readonly 'x-class-name'?: string;
 
 	/**
 	 * The page element's type (collection, collection item, column, drop zone, form, fragment, fragment drop zone, root, row, section or widget).
@@ -37,5 +38,4 @@ export type HeadlessAdminContent_v1_0_PageElement = {
 		| 'Row'
 		| 'Section'
 		| 'Widget';
-	readonly 'x-class-name'?: string;
 };

@@ -5,9 +5,9 @@
 import type {HeadlessCommerceAdminPricing_v1_0_Discount} from './HeadlessCommerceAdminPricing_v1_0_Discount';
 import type {HeadlessCommerceAdminPricing_v1_0_Facet} from './HeadlessCommerceAdminPricing_v1_0_Facet';
 export type HeadlessCommerceAdminPricing_v1_0_PageDiscount = {
+	items?: Array<HeadlessCommerceAdminPricing_v1_0_Discount>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessCommerceAdminPricing_v1_0_Discount>;
 	facets?: Array<HeadlessCommerceAdminPricing_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

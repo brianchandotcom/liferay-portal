@@ -5,7 +5,6 @@
 import type {ObjectAdmin_v1_0_ObjectField} from './ObjectAdmin_v1_0_ObjectField';
 export type ObjectAdmin_v1_0_ObjectRelationship = {
 	readonly 'actions'?: Record<string, Record<string, string>>;
-	'deletionType'?: 'cascade' | 'disassociate' | 'prevent';
 	'edge'?: boolean;
 	'externalReferenceCode'?: string;
 	readonly 'id'?: number;
@@ -23,6 +22,7 @@ export type ObjectAdmin_v1_0_ObjectRelationship = {
 	'parameterObjectFieldName'?: string;
 	readonly 'reverse'?: boolean;
 	'system'?: boolean;
-	'type'?: 'oneToMany' | 'oneToOne' | 'manyToMany';
 	readonly 'x-class-name'?: string;
+	'deletionType'?: 'cascade' | 'disassociate' | 'prevent';
+	'type'?: 'oneToMany' | 'oneToOne' | 'manyToMany';
 };

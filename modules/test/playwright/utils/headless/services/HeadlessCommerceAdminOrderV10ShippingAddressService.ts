@@ -9,23 +9,6 @@ import {request as __request} from '../core/request';
 export class HeadlessCommerceAdminOrderV10ShippingAddressService {
 
 	/**
-	 * @param id
-	 * @returns HeadlessCommerceAdminOrder_v1_0_ShippingAddress default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceAdminOrderV10GetOrderItemShippingAddress(
-		id: string
-	): CancelablePromise<HeadlessCommerceAdminOrder_v1_0_ShippingAddress> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-commerce-admin-order/v1.0/orderItems/{id}/shippingAddress',
-			path: {
-				id: id,
-			},
-		});
-	}
-
-	/**
 	 * @param externalReferenceCode
 	 * @returns HeadlessCommerceAdminOrder_v1_0_ShippingAddress default response
 	 * @throws ApiError
@@ -60,6 +43,23 @@ export class HeadlessCommerceAdminOrderV10ShippingAddressService {
 			},
 			body: requestBody,
 			mediaType: 'application/json',
+		});
+	}
+
+	/**
+	 * @param id
+	 * @returns HeadlessCommerceAdminOrder_v1_0_ShippingAddress default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceAdminOrderV10GetOrderItemShippingAddress(
+		id: string
+	): CancelablePromise<HeadlessCommerceAdminOrder_v1_0_ShippingAddress> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-commerce-admin-order/v1.0/orderItems/{id}/shippingAddress',
+			path: {
+				id: id,
+			},
 		});
 	}
 

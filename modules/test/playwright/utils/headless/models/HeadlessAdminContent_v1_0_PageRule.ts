@@ -11,11 +11,6 @@ import type {HeadlessAdminContent_v1_0_PageRuleCondition} from './HeadlessAdminC
 export type HeadlessAdminContent_v1_0_PageRule = {
 
 	/**
-	 * The custom name of a Page rule.
-	 */
-	'conditionType'?: 'All' | 'Any';
-
-	/**
 	 * The page rule ID.
 	 */
 	'id'?: string;
@@ -35,4 +30,9 @@ export type HeadlessAdminContent_v1_0_PageRule = {
 	 */
 	'pageRuleConditions'?: Array<HeadlessAdminContent_v1_0_PageRuleCondition>;
 	readonly 'x-class-name'?: string;
+
+	/**
+	 * The custom name of a Page rule.
+	 */
+	'conditionType'?: 'All' | 'Any';
 };

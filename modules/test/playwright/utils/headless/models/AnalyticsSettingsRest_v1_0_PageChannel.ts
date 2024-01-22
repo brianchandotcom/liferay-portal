@@ -5,9 +5,9 @@
 import type {AnalyticsSettingsRest_v1_0_Channel} from './AnalyticsSettingsRest_v1_0_Channel';
 import type {AnalyticsSettingsRest_v1_0_Facet} from './AnalyticsSettingsRest_v1_0_Facet';
 export type AnalyticsSettingsRest_v1_0_PageChannel = {
+	items?: Array<AnalyticsSettingsRest_v1_0_Channel>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<AnalyticsSettingsRest_v1_0_Channel>;
 	facets?: Array<AnalyticsSettingsRest_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

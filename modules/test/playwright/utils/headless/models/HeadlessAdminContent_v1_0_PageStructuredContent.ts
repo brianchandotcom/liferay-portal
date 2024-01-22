@@ -5,9 +5,9 @@
 import type {HeadlessAdminContent_v1_0_Facet} from './HeadlessAdminContent_v1_0_Facet';
 import type {HeadlessAdminContent_v1_0_StructuredContent} from './HeadlessAdminContent_v1_0_StructuredContent';
 export type HeadlessAdminContent_v1_0_PageStructuredContent = {
+	items?: Array<HeadlessAdminContent_v1_0_StructuredContent>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessAdminContent_v1_0_StructuredContent>;
 	facets?: Array<HeadlessAdminContent_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

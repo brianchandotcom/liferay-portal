@@ -5,9 +5,9 @@
 import type {HeadlessCommerceAdminCatalog_v1_0_Facet} from './HeadlessCommerceAdminCatalog_v1_0_Facet';
 import type {HeadlessCommerceAdminCatalog_v1_0_SkuUnitOfMeasure} from './HeadlessCommerceAdminCatalog_v1_0_SkuUnitOfMeasure';
 export type HeadlessCommerceAdminCatalog_v1_0_PageSkuUnitOfMeasure = {
+	items?: Array<HeadlessCommerceAdminCatalog_v1_0_SkuUnitOfMeasure>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessCommerceAdminCatalog_v1_0_SkuUnitOfMeasure>;
 	facets?: Array<HeadlessCommerceAdminCatalog_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

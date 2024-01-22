@@ -10,32 +10,6 @@ import {request as __request} from '../core/request';
 export class HeadlessUserNotificationV10UserNotificationService {
 
 	/**
-	 * Mark the user notification as unread.
-	 * @param userNotificationId
-	 * @param fields
-	 * @param restrictFields
-	 * @returns any default response
-	 * @throws ApiError
-	 */
-	public static headlessUserNotificationV10PutUserNotificationUnread(
-		userNotificationId: string,
-		fields?: string,
-		restrictFields?: string
-	): CancelablePromise<any> {
-		return __request(OpenAPI, {
-			method: 'PUT',
-			url: '/headless-user-notification/v1.0/user-notifications/{userNotificationId}/unread',
-			path: {
-				userNotificationId: userNotificationId,
-			},
-			query: {
-				fields: fields,
-				restrictFields: restrictFields,
-			},
-		});
-	}
-
-	/**
 	 * Retrieves the current user's notifications. Results can be paginated, filtered, searched and sorted.
 	 * @param fields
 	 * @param restrictFields
@@ -67,6 +41,32 @@ export class HeadlessUserNotificationV10UserNotificationService {
 				pageSize: pageSize,
 				search: search,
 				sort: sort,
+			},
+		});
+	}
+
+	/**
+	 * Mark the user notification as unread.
+	 * @param userNotificationId
+	 * @param fields
+	 * @param restrictFields
+	 * @returns any default response
+	 * @throws ApiError
+	 */
+	public static headlessUserNotificationV10PutUserNotificationUnread(
+		userNotificationId: string,
+		fields?: string,
+		restrictFields?: string
+	): CancelablePromise<any> {
+		return __request(OpenAPI, {
+			method: 'PUT',
+			url: '/headless-user-notification/v1.0/user-notifications/{userNotificationId}/unread',
+			path: {
+				userNotificationId: userNotificationId,
+			},
+			query: {
+				fields: fields,
+				restrictFields: restrictFields,
 			},
 		});
 	}

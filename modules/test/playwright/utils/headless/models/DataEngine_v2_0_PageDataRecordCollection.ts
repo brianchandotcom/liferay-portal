@@ -5,9 +5,9 @@
 import type {DataEngine_v2_0_DataRecordCollection} from './DataEngine_v2_0_DataRecordCollection';
 import type {DataEngine_v2_0_Facet} from './DataEngine_v2_0_Facet';
 export type DataEngine_v2_0_PageDataRecordCollection = {
+	items?: Array<DataEngine_v2_0_DataRecordCollection>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<DataEngine_v2_0_DataRecordCollection>;
 	facets?: Array<DataEngine_v2_0_Facet>;
 	pageSize?: number;
 	page?: number;

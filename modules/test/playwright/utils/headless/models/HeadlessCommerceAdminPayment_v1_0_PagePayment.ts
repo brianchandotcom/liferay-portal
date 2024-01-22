@@ -5,9 +5,9 @@
 import type {HeadlessCommerceAdminPayment_v1_0_Facet} from './HeadlessCommerceAdminPayment_v1_0_Facet';
 import type {HeadlessCommerceAdminPayment_v1_0_Payment} from './HeadlessCommerceAdminPayment_v1_0_Payment';
 export type HeadlessCommerceAdminPayment_v1_0_PagePayment = {
+	items?: Array<HeadlessCommerceAdminPayment_v1_0_Payment>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessCommerceAdminPayment_v1_0_Payment>;
 	facets?: Array<HeadlessCommerceAdminPayment_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

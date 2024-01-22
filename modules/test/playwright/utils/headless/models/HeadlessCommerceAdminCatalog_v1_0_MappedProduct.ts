@@ -15,6 +15,6 @@ export type HeadlessCommerceAdminCatalog_v1_0_MappedProduct = {
 	'sku'?: string;
 	'skuExternalReferenceCode'?: string;
 	'skuId'?: number;
-	'type'?: 'diagram' | 'external' | 'sku';
 	readonly 'x-class-name'?: string;
+	'type'?: 'diagram' | 'external' | 'sku';
 };

@@ -193,23 +193,6 @@ export class DataEngineV20DataRecordCollectionService {
 	}
 
 	/**
-	 * @param dataRecordCollectionId
-	 * @returns string default response
-	 * @throws ApiError
-	 */
-	public static dataEngineV20GetDataRecordCollectionPermissionByCurrentUser(
-		dataRecordCollectionId: string
-	): CancelablePromise<string> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions/by-current-user',
-			path: {
-				dataRecordCollectionId: dataRecordCollectionId,
-			},
-		});
-	}
-
-	/**
 	 * @param dataDefinitionId
 	 * @returns DataEngine_v2_0_DataRecordCollection default response
 	 * @throws ApiError
@@ -222,6 +205,23 @@ export class DataEngineV20DataRecordCollectionService {
 			url: '/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collection',
 			path: {
 				dataDefinitionId: dataDefinitionId,
+			},
+		});
+	}
+
+	/**
+	 * @param dataRecordCollectionId
+	 * @returns string default response
+	 * @throws ApiError
+	 */
+	public static dataEngineV20GetDataRecordCollectionPermissionByCurrentUser(
+		dataRecordCollectionId: string
+	): CancelablePromise<string> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions/by-current-user',
+			path: {
+				dataRecordCollectionId: dataRecordCollectionId,
 			},
 		});
 	}

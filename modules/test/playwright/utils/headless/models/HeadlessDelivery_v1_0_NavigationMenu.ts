@@ -38,13 +38,13 @@ export type HeadlessDelivery_v1_0_NavigationMenu = {
 	'navigationMenuItems'?: Array<HeadlessDelivery_v1_0_NavigationMenuItem>;
 
 	/**
-	 * The navigation menu's type (primary, secondary, social).
-	 */
-	'navigationType'?: 'Primary' | 'Secondary' | 'Social';
-
-	/**
 	 * The ID of the site to which this navigation menu is scoped.
 	 */
 	readonly 'siteId'?: number;
 	readonly 'x-class-name'?: string;
+
+	/**
+	 * The navigation menu's type (primary, secondary, social).
+	 */
+	'navigationType'?: 'Primary' | 'Secondary' | 'Social';
 };

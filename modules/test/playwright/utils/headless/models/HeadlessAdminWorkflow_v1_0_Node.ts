@@ -5,6 +5,7 @@
 export type HeadlessAdminWorkflow_v1_0_Node = {
 	readonly 'label'?: string;
 	readonly 'name'?: string;
+	readonly 'x-class-name'?: string;
 
 	/**
 	 * The workflow's node types.
@@ -18,5 +19,4 @@ export type HeadlessAdminWorkflow_v1_0_Node = {
 		| 'STATE'
 		| 'TASK'
 		| 'TERMINAL_STATE';
-	readonly 'x-class-name'?: string;
 };

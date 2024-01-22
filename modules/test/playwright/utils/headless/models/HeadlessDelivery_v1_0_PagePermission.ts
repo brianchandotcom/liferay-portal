@@ -5,9 +5,9 @@
 import type {HeadlessDelivery_v1_0_Facet} from './HeadlessDelivery_v1_0_Facet';
 import type {HeadlessDelivery_v1_0_Permission} from './HeadlessDelivery_v1_0_Permission';
 export type HeadlessDelivery_v1_0_PagePermission = {
+	items?: Array<HeadlessDelivery_v1_0_Permission>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessDelivery_v1_0_Permission>;
 	facets?: Array<HeadlessDelivery_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

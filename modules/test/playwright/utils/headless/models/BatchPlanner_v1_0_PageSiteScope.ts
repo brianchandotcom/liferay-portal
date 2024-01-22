@@ -5,9 +5,9 @@
 import type {BatchPlanner_v1_0_Facet} from './BatchPlanner_v1_0_Facet';
 import type {BatchPlanner_v1_0_SiteScope} from './BatchPlanner_v1_0_SiteScope';
 export type BatchPlanner_v1_0_PageSiteScope = {
+	items?: Array<BatchPlanner_v1_0_SiteScope>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<BatchPlanner_v1_0_SiteScope>;
 	facets?: Array<BatchPlanner_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

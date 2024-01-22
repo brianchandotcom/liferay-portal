@@ -5,9 +5,9 @@
 import type {HeadlessDelivery_v1_0_Comment} from './HeadlessDelivery_v1_0_Comment';
 import type {HeadlessDelivery_v1_0_Facet} from './HeadlessDelivery_v1_0_Facet';
 export type HeadlessDelivery_v1_0_PageComment = {
+	items?: Array<HeadlessDelivery_v1_0_Comment>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessDelivery_v1_0_Comment>;
 	facets?: Array<HeadlessDelivery_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

@@ -5,9 +5,9 @@
 import type {ChangeTrackingRest_v1_0_CTProcess} from './ChangeTrackingRest_v1_0_CTProcess';
 import type {ChangeTrackingRest_v1_0_Facet} from './ChangeTrackingRest_v1_0_Facet';
 export type ChangeTrackingRest_v1_0_PageCTProcess = {
+	items?: Array<ChangeTrackingRest_v1_0_CTProcess>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<ChangeTrackingRest_v1_0_CTProcess>;
 	facets?: Array<ChangeTrackingRest_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

@@ -5,9 +5,9 @@
 import type {HeadlessCommerceAdminChannel_v1_0_ChannelAccount} from './HeadlessCommerceAdminChannel_v1_0_ChannelAccount';
 import type {HeadlessCommerceAdminChannel_v1_0_Facet} from './HeadlessCommerceAdminChannel_v1_0_Facet';
 export type HeadlessCommerceAdminChannel_v1_0_PageChannelAccount = {
+	items?: Array<HeadlessCommerceAdminChannel_v1_0_ChannelAccount>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessCommerceAdminChannel_v1_0_ChannelAccount>;
 	facets?: Array<HeadlessCommerceAdminChannel_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

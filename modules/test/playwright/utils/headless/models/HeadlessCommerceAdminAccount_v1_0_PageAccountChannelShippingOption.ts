@@ -6,9 +6,9 @@ import type {HeadlessCommerceAdminAccount_v1_0_AccountChannelShippingOption} fro
 import type {HeadlessCommerceAdminAccount_v1_0_Facet} from './HeadlessCommerceAdminAccount_v1_0_Facet';
 export type HeadlessCommerceAdminAccount_v1_0_PageAccountChannelShippingOption =
 	{
+		items?: Array<HeadlessCommerceAdminAccount_v1_0_AccountChannelShippingOption>;
 		lastPage?: number;
 		totalCount?: number;
-		items?: Array<HeadlessCommerceAdminAccount_v1_0_AccountChannelShippingOption>;
 		facets?: Array<HeadlessCommerceAdminAccount_v1_0_Facet>;
 		pageSize?: number;
 		page?: number;

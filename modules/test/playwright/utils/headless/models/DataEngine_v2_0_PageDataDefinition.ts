@@ -5,9 +5,9 @@
 import type {DataEngine_v2_0_DataDefinition} from './DataEngine_v2_0_DataDefinition';
 import type {DataEngine_v2_0_Facet} from './DataEngine_v2_0_Facet';
 export type DataEngine_v2_0_PageDataDefinition = {
+	items?: Array<DataEngine_v2_0_DataDefinition>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<DataEngine_v2_0_DataDefinition>;
 	facets?: Array<DataEngine_v2_0_Facet>;
 	pageSize?: number;
 	page?: number;

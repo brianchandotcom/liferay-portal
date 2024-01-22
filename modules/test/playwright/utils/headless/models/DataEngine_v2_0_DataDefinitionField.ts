@@ -7,7 +7,6 @@ export type DataEngine_v2_0_DataDefinitionField = {
 	'defaultValue'?: Record<string, Record<string, any>>;
 	'fieldType'?: string;
 	'id'?: number;
-	'indexType'?: 'all' | 'keyword' | 'none' | 'text';
 	'indexable'?: boolean;
 	'label'?: Record<string, Record<string, any>>;
 	'localizable'?: boolean;
@@ -24,4 +23,5 @@ export type DataEngine_v2_0_DataDefinitionField = {
 	'tip'?: Record<string, Record<string, any>>;
 	'visible'?: boolean;
 	readonly 'x-class-name'?: string;
+	'indexType'?: 'all' | 'keyword' | 'none' | 'text';
 };

@@ -144,11 +144,6 @@ export type HeadlessAdminUser_v1_0_UserAccount = {
 	 * A list of the user's sites.
 	 */
 	readonly 'siteBriefs'?: Array<HeadlessAdminUser_v1_0_SiteBrief>;
-
-	/**
-	 * The user's status.
-	 */
-	'status'?: 'Active' | 'Inactive';
 	'userAccountContactInformation'?: HeadlessAdminUser_v1_0_UserAccountContactInformation;
 
 	/**
@@ -156,4 +151,9 @@ export type HeadlessAdminUser_v1_0_UserAccount = {
 	 */
 	readonly 'userGroupBriefs'?: Array<HeadlessAdminUser_v1_0_UserGroupBrief>;
 	readonly 'x-class-name'?: string;
+
+	/**
+	 * The user's status.
+	 */
+	'status'?: 'Active' | 'Inactive';
 };

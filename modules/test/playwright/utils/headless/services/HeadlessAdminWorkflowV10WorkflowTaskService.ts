@@ -58,6 +58,23 @@ export class HeadlessAdminWorkflowV10WorkflowTaskService {
 	}
 
 	/**
+	 * @param workflowTaskId
+	 * @returns boolean default response
+	 * @throws ApiError
+	 */
+	public static headlessAdminWorkflowV10GetWorkflowTaskHasAssignableUsers(
+		workflowTaskId: string
+	): CancelablePromise<boolean> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/has-assignable-users',
+			path: {
+				workflowTaskId: workflowTaskId,
+			},
+		});
+	}
+
+	/**
 	 * @param page
 	 * @param pageSize
 	 * @param sort
@@ -81,23 +98,6 @@ export class HeadlessAdminWorkflowV10WorkflowTaskService {
 			},
 			body: requestBody,
 			mediaType: 'application/json',
-		});
-	}
-
-	/**
-	 * @param workflowTaskId
-	 * @returns boolean default response
-	 * @throws ApiError
-	 */
-	public static headlessAdminWorkflowV10GetWorkflowTaskHasAssignableUsers(
-		workflowTaskId: string
-	): CancelablePromise<boolean> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/has-assignable-users',
-			path: {
-				workflowTaskId: workflowTaskId,
-			},
 		});
 	}
 

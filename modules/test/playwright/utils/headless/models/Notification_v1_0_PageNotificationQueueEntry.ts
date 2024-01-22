@@ -5,9 +5,9 @@
 import type {Notification_v1_0_Facet} from './Notification_v1_0_Facet';
 import type {Notification_v1_0_NotificationQueueEntry} from './Notification_v1_0_NotificationQueueEntry';
 export type Notification_v1_0_PageNotificationQueueEntry = {
+	items?: Array<Notification_v1_0_NotificationQueueEntry>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<Notification_v1_0_NotificationQueueEntry>;
 	facets?: Array<Notification_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

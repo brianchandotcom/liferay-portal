@@ -6,9 +6,9 @@ import type {HeadlessCommerceAdminChannel_v1_0_Facet} from './HeadlessCommerceAd
 import type {HeadlessCommerceAdminChannel_v1_0_PaymentMethodGroupRelOrderType} from './HeadlessCommerceAdminChannel_v1_0_PaymentMethodGroupRelOrderType';
 export type HeadlessCommerceAdminChannel_v1_0_PagePaymentMethodGroupRelOrderType =
 	{
+		items?: Array<HeadlessCommerceAdminChannel_v1_0_PaymentMethodGroupRelOrderType>;
 		lastPage?: number;
 		totalCount?: number;
-		items?: Array<HeadlessCommerceAdminChannel_v1_0_PaymentMethodGroupRelOrderType>;
 		facets?: Array<HeadlessCommerceAdminChannel_v1_0_Facet>;
 		pageSize?: number;
 		page?: number;

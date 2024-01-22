@@ -25,11 +25,6 @@ export type HeadlessBatchEngine_v1_0_ExportTask = {
 	'errorMessage'?: string;
 
 	/**
-	 * The status of export task's execution.
-	 */
-	'executeStatus'?: 'COMPLETED' | 'FAILED' | 'INITIAL' | 'STARTED';
-
-	/**
 	 * The optional external key of this account.
 	 */
 	'externalReferenceCode'?: string;
@@ -54,4 +49,9 @@ export type HeadlessBatchEngine_v1_0_ExportTask = {
 	 */
 	'totalItemsCount'?: number;
 	readonly 'x-class-name'?: string;
+
+	/**
+	 * The status of export task's execution.
+	 */
+	'executeStatus'?: 'COMPLETED' | 'FAILED' | 'INITIAL' | 'STARTED';
 };

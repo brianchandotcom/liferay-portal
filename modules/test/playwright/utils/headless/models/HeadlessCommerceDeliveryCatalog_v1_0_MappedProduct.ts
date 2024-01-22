@@ -28,7 +28,7 @@ export type HeadlessCommerceDeliveryCatalog_v1_0_MappedProduct = {
 	'skuId'?: number;
 	'skuOptions'?: Array<HeadlessCommerceDeliveryCatalog_v1_0_SkuOption>;
 	readonly 'thumbnail'?: string;
-	'type'?: 'diagram' | 'external' | 'sku';
 	'urls'?: Record<string, string>;
 	readonly 'x-class-name'?: string;
+	'type'?: 'diagram' | 'external' | 'sku';
 };

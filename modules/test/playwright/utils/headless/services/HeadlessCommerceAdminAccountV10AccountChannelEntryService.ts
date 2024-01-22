@@ -837,52 +837,6 @@ export class HeadlessCommerceAdminAccountV10AccountChannelEntryService {
 	}
 
 	/**
-	 * @param externalReferenceCode
-	 * @param page
-	 * @param pageSize
-	 * @returns HeadlessCommerceAdminAccount_v1_0_PageAccountChannelEntry default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceAdminAccountV10GetAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
-		externalReferenceCode: string,
-		page?: string,
-		pageSize?: string
-	): CancelablePromise<HeadlessCommerceAdminAccount_v1_0_PageAccountChannelEntry> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-shipping-addresses',
-			path: {
-				externalReferenceCode: externalReferenceCode,
-			},
-			query: {
-				page: page,
-				pageSize: pageSize,
-			},
-		});
-	}
-
-	/**
-	 * @param externalReferenceCode
-	 * @param requestBody
-	 * @returns HeadlessCommerceAdminAccount_v1_0_AccountChannelEntry default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceAdminAccountV10PostAccountByExternalReferenceCodeAccountChannelShippingAddress(
-		externalReferenceCode: string,
-		requestBody?: HeadlessCommerceAdminAccount_v1_0_AccountChannelEntry
-	): CancelablePromise<HeadlessCommerceAdminAccount_v1_0_AccountChannelEntry> {
-		return __request(OpenAPI, {
-			method: 'POST',
-			url: '/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-shipping-addresses',
-			path: {
-				externalReferenceCode: externalReferenceCode,
-			},
-			body: requestBody,
-			mediaType: 'application/json',
-		});
-	}
-
-	/**
 	 * @param id
 	 * @param page
 	 * @param pageSize
@@ -922,6 +876,52 @@ export class HeadlessCommerceAdminAccountV10AccountChannelEntryService {
 			url: '/headless-commerce-admin-account/v1.0/accounts/{id}/account-channel-users',
 			path: {
 				id: id,
+			},
+			body: requestBody,
+			mediaType: 'application/json',
+		});
+	}
+
+	/**
+	 * @param externalReferenceCode
+	 * @param page
+	 * @param pageSize
+	 * @returns HeadlessCommerceAdminAccount_v1_0_PageAccountChannelEntry default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceAdminAccountV10GetAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
+		externalReferenceCode: string,
+		page?: string,
+		pageSize?: string
+	): CancelablePromise<HeadlessCommerceAdminAccount_v1_0_PageAccountChannelEntry> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-shipping-addresses',
+			path: {
+				externalReferenceCode: externalReferenceCode,
+			},
+			query: {
+				page: page,
+				pageSize: pageSize,
+			},
+		});
+	}
+
+	/**
+	 * @param externalReferenceCode
+	 * @param requestBody
+	 * @returns HeadlessCommerceAdminAccount_v1_0_AccountChannelEntry default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceAdminAccountV10PostAccountByExternalReferenceCodeAccountChannelShippingAddress(
+		externalReferenceCode: string,
+		requestBody?: HeadlessCommerceAdminAccount_v1_0_AccountChannelEntry
+	): CancelablePromise<HeadlessCommerceAdminAccount_v1_0_AccountChannelEntry> {
+		return __request(OpenAPI, {
+			method: 'POST',
+			url: '/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-shipping-addresses',
+			path: {
+				externalReferenceCode: externalReferenceCode,
 			},
 			body: requestBody,
 			mediaType: 'application/json',

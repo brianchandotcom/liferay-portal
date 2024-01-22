@@ -5,9 +5,9 @@
 import type {ObjectAdmin_v1_0_Facet} from './ObjectAdmin_v1_0_Facet';
 import type {ObjectAdmin_v1_0_ObjectFolder} from './ObjectAdmin_v1_0_ObjectFolder';
 export type ObjectAdmin_v1_0_PageObjectFolder = {
+	items?: Array<ObjectAdmin_v1_0_ObjectFolder>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<ObjectAdmin_v1_0_ObjectFolder>;
 	facets?: Array<ObjectAdmin_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

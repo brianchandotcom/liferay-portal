@@ -5,9 +5,9 @@
 import type {ChangeTrackingRest_v1_0_CTRemote} from './ChangeTrackingRest_v1_0_CTRemote';
 import type {ChangeTrackingRest_v1_0_Facet} from './ChangeTrackingRest_v1_0_Facet';
 export type ChangeTrackingRest_v1_0_PageCTRemote = {
+	items?: Array<ChangeTrackingRest_v1_0_CTRemote>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<ChangeTrackingRest_v1_0_CTRemote>;
 	facets?: Array<ChangeTrackingRest_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

@@ -5,9 +5,9 @@
 import type {HeadlessPortalInstances_v1_0_Facet} from './HeadlessPortalInstances_v1_0_Facet';
 import type {HeadlessPortalInstances_v1_0_PortalInstance} from './HeadlessPortalInstances_v1_0_PortalInstance';
 export type HeadlessPortalInstances_v1_0_PagePortalInstance = {
+	items?: Array<HeadlessPortalInstances_v1_0_PortalInstance>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessPortalInstances_v1_0_PortalInstance>;
 	facets?: Array<HeadlessPortalInstances_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

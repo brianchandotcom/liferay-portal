@@ -5,9 +5,9 @@
 import type {ObjectAdmin_v1_0_Facet} from './ObjectAdmin_v1_0_Facet';
 import type {ObjectAdmin_v1_0_ObjectLayout} from './ObjectAdmin_v1_0_ObjectLayout';
 export type ObjectAdmin_v1_0_PageObjectLayout = {
+	items?: Array<ObjectAdmin_v1_0_ObjectLayout>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<ObjectAdmin_v1_0_ObjectLayout>;
 	facets?: Array<ObjectAdmin_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

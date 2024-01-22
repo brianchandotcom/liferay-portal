@@ -5,9 +5,9 @@
 import type {HeadlessAdminContent_v1_0_DisplayPageTemplate} from './HeadlessAdminContent_v1_0_DisplayPageTemplate';
 import type {HeadlessAdminContent_v1_0_Facet} from './HeadlessAdminContent_v1_0_Facet';
 export type HeadlessAdminContent_v1_0_PageDisplayPageTemplate = {
+	items?: Array<HeadlessAdminContent_v1_0_DisplayPageTemplate>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessAdminContent_v1_0_DisplayPageTemplate>;
 	facets?: Array<HeadlessAdminContent_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

@@ -9,23 +9,6 @@ import {request as __request} from '../core/request';
 export class HeadlessCommerceAdminOrderV10ChannelService {
 
 	/**
-	 * @param orderTypeChannelId
-	 * @returns HeadlessCommerceAdminOrder_v1_0_Channel default response
-	 * @throws ApiError
-	 */
-	public static headlessCommerceAdminOrderV10GetOrderTypeChannelChannel(
-		orderTypeChannelId: string
-	): CancelablePromise<HeadlessCommerceAdminOrder_v1_0_Channel> {
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/headless-commerce-admin-order/v1.0/order-type-channels/{orderTypeChannelId}/channel',
-			path: {
-				orderTypeChannelId: orderTypeChannelId,
-			},
-		});
-	}
-
-	/**
 	 * @param externalReferenceCode
 	 * @returns HeadlessCommerceAdminOrder_v1_0_Channel default response
 	 * @throws ApiError
@@ -38,6 +21,23 @@ export class HeadlessCommerceAdminOrderV10ChannelService {
 			url: '/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/channel',
 			path: {
 				externalReferenceCode: externalReferenceCode,
+			},
+		});
+	}
+
+	/**
+	 * @param orderTypeChannelId
+	 * @returns HeadlessCommerceAdminOrder_v1_0_Channel default response
+	 * @throws ApiError
+	 */
+	public static headlessCommerceAdminOrderV10GetOrderTypeChannelChannel(
+		orderTypeChannelId: string
+	): CancelablePromise<HeadlessCommerceAdminOrder_v1_0_Channel> {
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/headless-commerce-admin-order/v1.0/order-type-channels/{orderTypeChannelId}/channel',
+			path: {
+				orderTypeChannelId: orderTypeChannelId,
 			},
 		});
 	}

@@ -5,9 +5,9 @@
 import type {HeadlessCommerceAdminChannel_v1_0_Facet} from './HeadlessCommerceAdminChannel_v1_0_Facet';
 import type {HeadlessCommerceAdminChannel_v1_0_TaxCategory} from './HeadlessCommerceAdminChannel_v1_0_TaxCategory';
 export type HeadlessCommerceAdminChannel_v1_0_PageTaxCategory = {
+	items?: Array<HeadlessCommerceAdminChannel_v1_0_TaxCategory>;
 	lastPage?: number;
 	totalCount?: number;
-	items?: Array<HeadlessCommerceAdminChannel_v1_0_TaxCategory>;
 	facets?: Array<HeadlessCommerceAdminChannel_v1_0_Facet>;
 	pageSize?: number;
 	page?: number;

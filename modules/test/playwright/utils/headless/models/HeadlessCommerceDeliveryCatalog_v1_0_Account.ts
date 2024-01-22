@@ -28,6 +28,6 @@ export type HeadlessCommerceDeliveryCatalog_v1_0_Account = {
 	'organizationIds'?: Array<number>;
 	'status'?: number;
 	'taxId'?: string;
-	'type'?: 'business' | 'guest' | 'person' | 'supplier';
 	readonly 'x-class-name'?: string;
+	'type'?: 'business' | 'guest' | 'person' | 'supplier';
 };

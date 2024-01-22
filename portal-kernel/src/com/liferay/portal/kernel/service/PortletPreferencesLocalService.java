@@ -314,6 +314,9 @@ public interface PortletPreferencesLocalService
 		long plid, String portletId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PortletPreferences> getPortletPreferences(String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PortletPreferences> getPortletPreferencesByOwnerId(
 		long ownerId);
 

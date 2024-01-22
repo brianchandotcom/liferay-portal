@@ -431,6 +431,13 @@ public class PortletPreferencesLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<PortletPreferences> getPortletPreferences(
+		String portletId) {
+
+		return _portletPreferencesLocalService.getPortletPreferences(portletId);
+	}
+
+	@Override
 	public java.util.List<PortletPreferences> getPortletPreferencesByOwnerId(
 		long ownerId) {
 

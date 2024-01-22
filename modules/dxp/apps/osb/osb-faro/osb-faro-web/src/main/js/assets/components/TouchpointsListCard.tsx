@@ -9,7 +9,7 @@ import {sub} from 'shared/util/lang';
 import {toFixedPoint} from 'shared/util/numbers';
 import {useQueryRangeSelectors} from 'shared/hooks';
 
-interface ITouchpointRouter {
+export interface ITouchpointRouter {
 	params: {
 		channelId: string;
 		groupId: string;
@@ -20,7 +20,7 @@ interface ITouchpointRouter {
 }
 
 const MAX_PAGES_LIMIT = 1000;
-type Item = {
+export type Item = {
 	title: string;
 	touchpoint: string;
 };

@@ -111,7 +111,7 @@ public abstract class BaseLayoutScreenNavigationEntry
 				infoItemServiceRegistry, itemSelector, layoutLocalService,
 				layoutPageTemplateEntryLocalService,
 				layoutSEOCanonicalURLProvider, layoutSEOLinkManager,
-				layoutSEOSiteLocalService,
+				layoutSEOSiteLocalService, layoutUtilityPageEntryLocalService,
 				portal.getLiferayPortletRequest(
 					(PortletRequest)httpServletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_REQUEST)),

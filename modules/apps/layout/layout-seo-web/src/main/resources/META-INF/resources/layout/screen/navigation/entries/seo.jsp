@@ -94,52 +94,60 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 							<aui:input helpMessage="html-title-help" id="title" label="html-title" name="title" placeholder="title" />
 							<aui:input helpMessage="description-help" id="descriptionSEO" name="description" placeholder="description" />
 
-							<%
-							LayoutSEOEntry selLayoutSEOEntry = layoutsSEODisplayContext.getSelLayoutSEOEntry();
-							%>
+							<c:if test="<%= !layoutsSEODisplayContext.isLayoutUtilityPageEntry() %>">
 
-							<liferay-util:buffer
-								var="infoCanonicalURL"
-							>
-								<clay:alert
-									message="use-custom-canonical-url-alert-info"
+								<%
+								LayoutSEOEntry selLayoutSEOEntry = layoutsSEODisplayContext.getSelLayoutSEOEntry();
+								%>
+
+								<liferay-util:buffer
+									var="infoCanonicalURL"
+								>
+									<clay:alert
+										message="use-custom-canonical-url-alert-info"
+									/>
+								</liferay-util:buffer>
+
+								<c:choose>
+									<c:when test="<%= selLayoutSEOEntry != null %>">
+										<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
+
+										<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" labelCssClass="font-weight-normal" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-2" />
+
+										<div id="<portlet:namespace />customCanonicalURLSettings">
+											<aui:input disabled="<%= !selLayoutSEOEntry.isCanonicalURLEnabled() %>" label="canonical-url" name="canonicalURL" placeholder="<%= layoutsSEODisplayContext.getDefaultCanonicalURL() %>">
+												<aui:validator name="url" />
+											</aui:input>
+										</div>
+
+										<div class="<%= selLayoutSEOEntry.isCanonicalURLEnabled() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />canonicalURLAlert">
+											<%= infoCanonicalURL %>
+										</div>
+
+										<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
+									</c:when>
+									<c:otherwise>
+										<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-2" />
+
+										<div id="<portlet:namespace />customCanonicalURLSettings">
+											<aui:input disabled="<%= true %>" label="canonical-url" localized="<%= true %>" name="canonicalURL" placeholder="<%= layoutsSEODisplayContext.getDefaultCanonicalURL() %>" type="text">
+												<aui:validator name="url" />
+											</aui:input>
+										</div>
+
+										<div class="hide" id="<portlet:namespace />canonicalURLAlert">
+											<%= infoCanonicalURL %>
+										</div>
+									</c:otherwise>
+								</c:choose>
+
+								<liferay-frontend:component
+									module="js/seo/toggleCanonicalURLFields"
+									servletContext="<%= application %>"
 								/>
-							</liferay-util:buffer>
 
-							<c:choose>
-								<c:when test="<%= selLayoutSEOEntry != null %>">
-									<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
-
-									<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" labelCssClass="font-weight-normal" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-2" />
-
-									<div id="<portlet:namespace />customCanonicalURLSettings">
-										<aui:input disabled="<%= !selLayoutSEOEntry.isCanonicalURLEnabled() %>" label="canonical-url" name="canonicalURL" placeholder="<%= layoutsSEODisplayContext.getDefaultCanonicalURL() %>">
-											<aui:validator name="url" />
-										</aui:input>
-									</div>
-
-									<div class="<%= selLayoutSEOEntry.isCanonicalURLEnabled() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />canonicalURLAlert">
-										<%= infoCanonicalURL %>
-									</div>
-
-									<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
-								</c:when>
-								<c:otherwise>
-									<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-2" />
-
-									<div id="<portlet:namespace />customCanonicalURLSettings">
-										<aui:input disabled="<%= true %>" label="canonical-url" localized="<%= true %>" name="canonicalURL" placeholder="<%= layoutsSEODisplayContext.getDefaultCanonicalURL() %>" type="text">
-											<aui:validator name="url" />
-										</aui:input>
-									</div>
-
-									<div class="hide" id="<portlet:namespace />canonicalURLAlert">
-										<%= infoCanonicalURL %>
-									</div>
-								</c:otherwise>
-							</c:choose>
-
-							<aui:input name="keywords" placeholder="keywords" />
+								<aui:input name="keywords" placeholder="keywords" />
+							</c:if>
 
 							<div class="form-group">
 								<label><liferay-ui:message key="preview" /></label>
@@ -152,15 +160,12 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 									/>
 								</div>
 							</div>
-
-							<liferay-frontend:component
-								module="js/seo/toggleCanonicalURLFields"
-								servletContext="<%= application %>"
-							/>
 						</c:otherwise>
 					</c:choose>
 
-					<aui:input name="robots" placeholder="robots" />
+					<c:if test="<%= !layoutsSEODisplayContext.isLayoutUtilityPageEntry() %>">
+						<aui:input name="robots" placeholder="robots" />
+					</c:if>
 				</div>
 			</clay:sheet-section>
 		</clay:sheet>

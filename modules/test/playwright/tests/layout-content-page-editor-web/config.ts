@@ -6,11 +6,9 @@
 import {devices} from '@playwright/test';
 
 export const config = {
-	dependencies: ['setup'],
 	name: 'layout-content-page-editor-web',
 	testDir: 'tests/layout-content-page-editor-web',
 	use: {
 		...devices['Desktop Chrome'],
-		storageState: 'tmp/.auth/user.json',
 	},
 };

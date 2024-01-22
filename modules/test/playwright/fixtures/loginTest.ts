@@ -19,51 +19,55 @@ let loggedIn = false;
 const loginTest = test.extend<{
 	login: Login;
 }>({
-	login: [async ({page}, use) => {
-		const user = liferayConfig.user.login;
-		const password = liferayConfig.user.password;
+	login: [
+		async ({page}, use) => {
+			const user = liferayConfig.user.login;
+			const password = liferayConfig.user.password;
 
-		if (!loggedIn) {
-			const storageStatePath = createTempFile('storageState.json');
+			if (!loggedIn) {
+				const storageStatePath = createTempFile('storageState.json');
 
-			await page.goto('/');
+				await page.goto('/');
 
-			await page.getByRole('button', {name: 'Sign In'}).click();
+				await page.getByRole('button', {name: 'Sign In'}).click();
 
-			await page.getByLabel('Email Address').fill(user);
-			await page.getByLabel('Password').fill(password);
-			await page.getByLabel('Remember Me').check();
+				await page.getByLabel('Email Address').fill(user);
+				await page.getByLabel('Password').fill(password);
+				await page.getByLabel('Remember Me').check();
 
-			await page
-				.getByLabel('Sign In- Loading')
-				.getByRole('button', {name: 'Sign In'})
-				.click();
+				await page
+					.getByLabel('Sign In- Loading')
+					.getByRole('button', {name: 'Sign In'})
+					.click();
 
-			await expect(
-				page.getByLabel('Open Applications MenuCtrl+')
-			).toBeVisible({
-				timeout: 30 * 1000,
+				await expect(
+					page.getByLabel('Open Applications MenuCtrl+')
+				).toBeVisible({
+					timeout: 30 * 1000,
+				});
+
+				await page.context().storageState({path: storageStatePath});
+
+				loggedIn = true;
+			}
+			else {
+				const {cookies} = JSON.parse(readTempFile('storageState.json'));
+
+				page.context().addCookies(cookies);
+			}
+
+			const cookies = await page.context().cookies();
+
+			await use({
+				password,
+				sessionId: cookies.find(
+					(cookie) => cookie.name === 'JSESSIONID'
+				).value,
+				user,
 			});
-
-			await page.context().storageState({path: storageStatePath});
-
-			loggedIn = true;
-		}
-		else {
-			const {cookies} = JSON.parse(readTempFile('storageState.json'));
-
-			page.context().addCookies(cookies);
-		}
-
-		const cookies = await page.context().cookies();
-
-		await use({
-			password,
-			sessionId: cookies.find((cookie) => cookie.name === 'JSESSIONID')
-				.value,
-			user,
-		});
-	},{auto: true}]
-} );
+		},
+		{auto: true},
+	],
+});
 
 export {loginTest};

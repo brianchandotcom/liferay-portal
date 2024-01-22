@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPages';
 import getRandomId from '../../utils/getRandomId';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -15,6 +16,7 @@ import getPageDefinition from './utils/getPageDefinition';
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
+	loginTest,
 	pageEditorPagesTest
 );
 

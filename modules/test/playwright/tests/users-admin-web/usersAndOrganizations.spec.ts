@@ -7,9 +7,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {loginTest} from '../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 
-export const test = mergeTests(usersAndOrganizationsPagesTest);
+export const test = mergeTests(loginTest, usersAndOrganizationsPagesTest);
 
 test('LPS-204541 check export/import menu visibility', async ({
 	usersAndOrganizationsPage,

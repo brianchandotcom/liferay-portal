@@ -6,12 +6,10 @@
 import {devices} from '@playwright/test';
 
 export const config = {
-	dependencies: ['setup'],
 	name: 'batch-planner',
 	testDir: 'tests/batch-planner',
 	timeout: 60 * 1000,
 	use: {
 		...devices['Desktop Chrome'],
-		storageState: 'tmp/.auth/user.json',
 	},
 };

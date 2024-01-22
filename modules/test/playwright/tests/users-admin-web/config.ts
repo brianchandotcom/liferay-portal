@@ -8,12 +8,10 @@
 import {devices} from '@playwright/test';
 
 export const config = {
-	dependencies: ['setup'],
 	name: 'users-admin-web',
 	testDir: 'tests/users-admin-web',
 	use: {
 		...devices['Desktop Chrome'],
-		storageState: 'tmp/.auth/user.json',
 		testIdAttribute: 'data-qa-id',
 	},
 };

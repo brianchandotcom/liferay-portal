@@ -265,7 +265,7 @@ function TreeItem({
 							{Liferay.FeatureFlags['LPS-196847'] &&
 							!item.hasGuestViewPermission ? (
 								<ClayIcon
-									className="c-ml-2 c-mt-0 flex-shrink-0 icon-tooltip lfr-portal-tooltip text-4"
+									className="c-ml-2 c-mt-0 flex-shrink-0 icon-tooltip text-4"
 									data-title={Liferay.Language.get(
 										'restricted-page'
 									)}
@@ -367,7 +367,7 @@ function TreeItem({
 									{Liferay.FeatureFlags['LPS-196847'] &&
 									!item.hasGuestViewPermission ? (
 										<ClayIcon
-											className="c-ml-2 c-mt-0 flex-shrink-0 icon-tooltip lfr-portal-tooltip text-4"
+											className="c-ml-2 c-mt-0 flex-shrink-0 icon-tooltip text-4"
 											data-title={Liferay.Language.get(
 												'restricted-page'
 											)}

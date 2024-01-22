@@ -133,7 +133,7 @@
 </tr>
 <tr>
 	<td>PAGES_TO_PUBLISH_PAGE_NAME</td>
-	<td>//span[contains(@id,'pages-tree') and contains(.,'${key_pageName}')]</td>
+	<td>//div[contains(@class,'autofit-col')]//span[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>

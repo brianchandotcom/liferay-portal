@@ -127,15 +127,21 @@ public class DispatchTriggerHelper {
 	}
 
 	private String _getGroupName(DispatchTrigger dispatchTrigger) {
+		String dispatchTriggerId = String.format(
+			"%07d", dispatchTrigger.getDispatchTriggerId());
+
 		return StringBundler.concat(
-			"DISPATCH_GROUP_", dispatchTrigger.getDispatchTriggerId(),
-			StringPool.AT, dispatchTrigger.getCompanyId());
+			"DISPATCH_GROUP_", dispatchTriggerId, StringPool.AT,
+			dispatchTrigger.getCompanyId());
 	}
 
 	private String _getJobName(DispatchTrigger dispatchTrigger) {
+		String dispatchTriggerId = String.format(
+			"%07d", dispatchTrigger.getDispatchTriggerId());
+
 		return StringBundler.concat(
-			"DISPATCH_JOB_", dispatchTrigger.getDispatchTriggerId(),
-			StringPool.AT, dispatchTrigger.getCompanyId());
+			"DISPATCH_JOB_", dispatchTriggerId, StringPool.AT,
+			dispatchTrigger.getCompanyId());
 	}
 
 	private String _getPayload(long dispatchTriggerId) {

@@ -16,6 +16,8 @@ LayoutUtilityPageEntryDisplayContext layoutUtilityPageEntryDisplayContext = new 
 	propsTransformer="js/LayoutUtilityPageEntriesManagementToolbarPropsTransformer"
 />
 
+<liferay-ui:success key="layoutUpdated" message="the-page-was-updated-successfully" />
+
 <aui:form cssClass="container-fluid container-fluid-max-xl container-view" name="fm">
 	<liferay-ui:success key="layoutPublished" message="the-utility-page-was-published-successfully" />
 	<liferay-ui:success key="layoutUtilityPageDeleted" message='<%= GetterUtil.getString(MultiSessionMessages.get(renderRequest, "layoutUtilityPageDeleted")) %>' />

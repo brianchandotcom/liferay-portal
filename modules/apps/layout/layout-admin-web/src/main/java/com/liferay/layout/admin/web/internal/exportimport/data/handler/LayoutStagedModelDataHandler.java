@@ -7,6 +7,7 @@ package com.liferay.layout.admin.web.internal.exportimport.data.handler;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
@@ -2034,6 +2035,13 @@ public class LayoutStagedModelDataHandler
 	private void _importClientExtensionEntryRels(
 			Layout layout, PortletDataContext portletDataContext)
 		throws Exception {
+
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			_portal.getClassNameId(Layout.class), layout.getPlid(),
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			_portal.getClassNameId(Layout.class), layout.getPlid(),
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 
 		List<Element> clientExtensionEntryRelsElements =
 			portletDataContext.getReferenceDataElements(

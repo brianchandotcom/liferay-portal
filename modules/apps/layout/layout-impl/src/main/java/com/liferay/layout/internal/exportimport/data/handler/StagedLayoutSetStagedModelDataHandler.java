@@ -5,6 +5,7 @@
 
 package com.liferay.layout.internal.exportimport.data.handler;
 
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -679,6 +680,15 @@ public class StagedLayoutSetStagedModelDataHandler
 			PortletDataContext portletDataContext,
 			StagedLayoutSet stagedLayoutSet)
 		throws Exception {
+
+		LayoutSet layoutSet = stagedLayoutSet.getLayoutSet();
+
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 
 		List<Element> clientExtensionEntryRelsElements =
 			portletDataContext.getReferenceDataElements(

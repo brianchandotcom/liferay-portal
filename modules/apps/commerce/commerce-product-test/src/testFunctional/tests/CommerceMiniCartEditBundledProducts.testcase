@@ -434,7 +434,7 @@ definition {
 			FrontStore.viewMiniCartEditProductOption(
 				cartItemOptionName = "Color",
 				cartItemOptionValue = "White",
-				cartItemPriceAsConfiguredValue = "$ 100.00",
+				cartItemPriceAsConfiguredValue = "$ 90.00",
 				cartItemPriceInactiveValue = "$ 100.00",
 				cartItemPromoPriceValue = "$ 90.00");
 
@@ -911,7 +911,7 @@ definition {
 			FrontStore.viewMiniCartEditProductOption(
 				cartItemOptionName = "Color",
 				cartItemOptionValue = "White",
-				cartItemPriceAsConfiguredValue = "$ 33.33",
+				cartItemPriceAsConfiguredValue = "$ 26.67",
 				cartItemPriceInactiveValue = "$ 33.33",
 				cartItemPromoPriceValue = "$ 26.67");
 		}

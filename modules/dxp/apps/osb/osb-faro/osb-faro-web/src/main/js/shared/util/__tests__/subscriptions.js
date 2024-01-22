@@ -42,10 +42,20 @@ describe('subscriptions', () => {
 	});
 
 	describe('formatPlanData', () => {
-		it('should format the plan data as a Plan record', () => {
+		it('should format the plan data as an enterprise Plan record', () => {
 			const plan = formatPlanData(fromJS(mockSubscription()));
 
 			expect(plan).toBeInstanceOf(Plan);
+
+			const metrics = plan.metrics;
+
+			const individualsMetrics = metrics.get('individuals');
+
+			expect(individualsMetrics.count).toEqual(2057);
+
+			const pageViewsMetrics = metrics.get('pageViews');
+
+			expect(pageViewsMetrics.count).toEqual(100023);
 		});
 
 		it('should format the plan data when faroSusbcription is null', () => {

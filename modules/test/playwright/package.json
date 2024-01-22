@@ -9,6 +9,8 @@
 		"@liferay/npm-scripts": "49.2.0",
 		"@playwright/test": "1.39.0",
 		"@types/node": "^20.9.0",
+		"@types/node-fetch": "^2.6.11",
+		"node-fetch": "^2.7.0",
 		"zip-a-folder": "^3.1.6"
 	},
 	"keywords": [
@@ -23,7 +25,7 @@
 	"scripts": {
 		"checkFormat": "tsc && liferay-npm-scripts lint && liferay-npm-scripts format:check",
 		"format": "tsc && liferay-npm-scripts lint:fix && liferay-npm-scripts format",
-		"headless:regen": "curl 'http://localhost:8080/o/openapi/openapi.yaml' -u test@liferay.com:test > openapi.yaml && npx openapi-typescript-codegen --input openapi.yaml -o ./utils/headless --useUnionTypes && rm -rf openapi.yaml && npm run format",
+		"headless:regen": "curl 'http://localhost:8080/o/openapi/openapi.yaml' -u test@liferay.com:test > openapi.yaml && npx openapi-typescript-codegen --input openapi.yaml -o ./utils/headless --useUnionTypes --client node && rm -rf openapi.yaml && npm run format",
 		"playwright": "playwright",
 		"test": "playwright test"
 	},

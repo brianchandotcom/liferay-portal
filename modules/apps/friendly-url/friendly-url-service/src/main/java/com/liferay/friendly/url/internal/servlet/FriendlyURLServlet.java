@@ -814,8 +814,15 @@ public class FriendlyURLServlet extends HttpServlet {
 			layoutFriendlyURLLocalService.fetchFirstLayoutFriendlyURL(
 				groupId, _private, friendlyURL);
 
-		if (layoutFriendlyURL != null) {
-			return layoutLocalService.fetchLayout(layoutFriendlyURL.getPlid());
+		if (layoutFriendlyURL == null) {
+			return null;
+		}
+
+		Layout layout = layoutLocalService.fetchLayout(
+			layoutFriendlyURL.getPlid());
+
+		if ((layout != null) && !layout.isSystem()) {
+			return layout;
 		}
 
 		return null;

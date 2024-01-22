@@ -52,6 +52,7 @@ page import="com.liferay.document.library.kernel.exception.DuplicateFileEntryExc
 page import="com.liferay.document.library.kernel.exception.DuplicateFileEntryTypeException" %><%@
 page import="com.liferay.document.library.kernel.exception.DuplicateFolderNameException" %><%@
 page import="com.liferay.document.library.kernel.exception.DuplicateRepositoryNameException" %><%@
+page import="com.liferay.document.library.kernel.exception.FileEntryDisplayDateException" %><%@
 page import="com.liferay.document.library.kernel.exception.FileEntryLockException" %><%@
 page import="com.liferay.document.library.kernel.exception.FileExtensionException" %><%@
 page import="com.liferay.document.library.kernel.exception.FileMimeTypeException" %><%@

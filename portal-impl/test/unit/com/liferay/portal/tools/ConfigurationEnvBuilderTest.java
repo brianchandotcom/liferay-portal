@@ -54,9 +54,9 @@ public class ConfigurationEnvBuilderTest extends ConfigurationEnvBuilder {
 
 		Path modulesDirPath = Paths.get("modules");
 
+		PathMatcher excludePathMatcher = _getPathMatcher("glob:**/*-test/**");
 		PathMatcher includePathMatcher = _getPathMatcher(
 			"glob:**/apps/**/configuration{,/**}/*Configuration.java");
-		PathMatcher excludePathMatcher = _getPathMatcher("glob:**/*-test/**");
 
 		Files.walkFileTree(
 			modulesDirPath,

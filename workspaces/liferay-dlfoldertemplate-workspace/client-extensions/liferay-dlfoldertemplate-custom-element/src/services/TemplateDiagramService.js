@@ -17,18 +17,18 @@ export async function addNode(
 		const result = await postFolderTemplate({
 			description: '',
 			name,
-			parentID: parentNode,
+			parentId: parentNode,
 			root,
-			templateID: template,
+			templateId: template,
 		});
 
 		const node = {
 			description: result.description,
 			id: result.id,
 			name: result.name,
-			pid: result.parentID,
+			pid: result.parentId,
 			root,
-			templateID: result.templateID,
+			templateId: result.templateId,
 		};
 
 		return node;
@@ -53,11 +53,11 @@ export async function deleteFolderTemplateBatch(data) {
 	});
 }
 
-export async function getAvailableTemplatesNodesPage(templateID) {
+export async function getAvailableTemplatesNodesPage(templateId) {
 	return request({
 		url: `${getHostUrl()}/${
 			config.templateNodeApi
-		}?page=0&filter=templateID eq ${templateID}`,
+		}?page=0&filter=templateId eq ${templateId}`,
 	});
 }
 

@@ -20,7 +20,7 @@ exports[`PagePathCard should render 1`] = `
         class="card-body d-flex align-items-center justify-content-center"
       >
         <div
-          class="recharts-wrapper"
+          class="recharts-wrapper analytics-sankey"
           role="region"
           style="position: relative; cursor: default; width: 1200px; height: 600px;"
         >
@@ -303,25 +303,53 @@ exports[`PagePathCard should render 1`] = `
                   >
                     34K
                   </text>
-                  <text
-                    font-size="16"
-                    font-weight="600"
-                    text-anchor="start"
-                    x="530"
-                    y="142.894323121378"
+                  <a
+                    data-tooltip-align="right"
+                    href="/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.liferay.com/Liferay Home Page?rangeKey=30"
+                    title="Go to Dashboard Page"
                   >
-                    Liferay Home Pa...
-                  </text>
-                  <text
-                    fill="#6B6C7E"
-                    font-size="12"
-                    font-weight="400"
-                    text-anchor="start"
+                    <text
+                      class="analytics-sankey-node-title"
+                      data-testid="sankey-node-title"
+                      font-size="16"
+                      font-weight="600"
+                      text-anchor="start"
+                      x="530"
+                      y="138.894323121378"
+                    >
+                      Liferay Home Pa...
+                    </text>
+                  </a>
+                  <svg
+                    class="lexicon-icon lexicon-icon-shortcut icon-root text-secondary"
+                    height="16"
+                    role="presentation"
+                    width="16"
                     x="530"
-                    y="160.894323121378"
+                    y="148.894323121378"
                   >
-                    https://www.liferay.com
-                  </text>
+                    <use
+                      href="#shortcut"
+                    />
+                  </svg>
+                  <a
+                    data-tooltip-align="right"
+                    href="https://www.liferay.com"
+                    target="_blank"
+                    title="Visit https://www.liferay.com"
+                  >
+                    <text
+                      class="analytics-sankey-node-url"
+                      fill="#6B6C7E"
+                      font-size="12"
+                      font-weight="400"
+                      text-anchor="start"
+                      x="550"
+                      y="160.894323121378"
+                    >
+                      https://www.lifera...
+                    </text>
+                  </a>
                 </g>
               </g>
               <g
@@ -350,24 +378,46 @@ exports[`PagePathCard should render 1`] = `
                     10K
                   </text>
                   <text
+                    class="analytics-sankey-node-title"
+                    data-testid="sankey-node-title"
                     font-size="16"
                     font-weight="600"
                     text-anchor="start"
                     x="0"
-                    y="32"
+                    y="28"
                   >
                     Google
                   </text>
-                  <text
-                    fill="#6B6C7E"
-                    font-size="12"
-                    font-weight="400"
-                    text-anchor="start"
+                  <svg
+                    class="lexicon-icon lexicon-icon-shortcut icon-root text-secondary"
+                    height="16"
+                    role="presentation"
+                    width="16"
                     x="0"
-                    y="50"
+                    y="38"
                   >
-                    https://www.google.com
-                  </text>
+                    <use
+                      href="#shortcut"
+                    />
+                  </svg>
+                  <a
+                    data-tooltip-align="right"
+                    href="https://www.google.com"
+                    target="_blank"
+                    title="Visit https://www.google.com"
+                  >
+                    <text
+                      class="analytics-sankey-node-url"
+                      fill="#6B6C7E"
+                      font-size="12"
+                      font-weight="400"
+                      text-anchor="start"
+                      x="20"
+                      y="50"
+                    >
+                      https://www.google...
+                    </text>
+                  </a>
                 </g>
               </g>
               <g
@@ -396,24 +446,46 @@ exports[`PagePathCard should render 1`] = `
                     10K
                   </text>
                   <text
+                    class="analytics-sankey-node-title"
+                    data-testid="sankey-node-title"
                     font-size="16"
                     font-weight="600"
                     text-anchor="start"
                     x="0"
-                    y="167.88235294117646"
+                    y="163.88235294117646"
                   >
                     Facebook
                   </text>
-                  <text
-                    fill="#6B6C7E"
-                    font-size="12"
-                    font-weight="400"
-                    text-anchor="start"
+                  <svg
+                    class="lexicon-icon lexicon-icon-shortcut icon-root text-secondary"
+                    height="16"
+                    role="presentation"
+                    width="16"
                     x="0"
-                    y="185.88235294117646"
+                    y="173.88235294117646"
                   >
-                    https://www.facebook.com
-                  </text>
+                    <use
+                      href="#shortcut"
+                    />
+                  </svg>
+                  <a
+                    data-tooltip-align="right"
+                    href="https://www.facebook.com"
+                    target="_blank"
+                    title="Visit https://www.facebook.com"
+                  >
+                    <text
+                      class="analytics-sankey-node-url"
+                      fill="#6B6C7E"
+                      font-size="12"
+                      font-weight="400"
+                      text-anchor="start"
+                      x="20"
+                      y="185.88235294117646"
+                    >
+                      https://www.facebo...
+                    </text>
+                  </a>
                 </g>
               </g>
               <g
@@ -442,24 +514,46 @@ exports[`PagePathCard should render 1`] = `
                     8K
                   </text>
                   <text
+                    class="analytics-sankey-node-title"
+                    data-testid="sankey-node-title"
                     font-size="16"
                     font-weight="600"
                     text-anchor="start"
                     x="0"
-                    y="303.7647058823529"
+                    y="299.7647058823529"
                   >
                     Instagram
                   </text>
-                  <text
-                    fill="#6B6C7E"
-                    font-size="12"
-                    font-weight="400"
-                    text-anchor="start"
+                  <svg
+                    class="lexicon-icon lexicon-icon-shortcut icon-root text-secondary"
+                    height="16"
+                    role="presentation"
+                    width="16"
                     x="0"
-                    y="321.7647058823529"
+                    y="309.7647058823529"
                   >
-                    https://www.instagram.com
-                  </text>
+                    <use
+                      href="#shortcut"
+                    />
+                  </svg>
+                  <a
+                    data-tooltip-align="right"
+                    href="https://www.instagram.com"
+                    target="_blank"
+                    title="Visit https://www.instagram.com"
+                  >
+                    <text
+                      class="analytics-sankey-node-url"
+                      fill="#6B6C7E"
+                      font-size="12"
+                      font-weight="400"
+                      text-anchor="start"
+                      x="20"
+                      y="321.7647058823529"
+                    >
+                      https://www.instag...
+                    </text>
+                  </a>
                 </g>
               </g>
               <g
@@ -488,11 +582,13 @@ exports[`PagePathCard should render 1`] = `
                     5K
                   </text>
                   <text
+                    class="analytics-sankey-node-title"
+                    data-testid="sankey-node-title"
                     font-size="16"
                     font-weight="600"
                     text-anchor="start"
                     x="0"
-                    y="440.4705882352941"
+                    y="444.4705882352941"
                   >
                     Direct Traffic
                   </text>
@@ -524,11 +620,13 @@ exports[`PagePathCard should render 1`] = `
                     1K
                   </text>
                   <text
+                    class="analytics-sankey-node-title"
+                    data-testid="sankey-node-title"
                     font-size="16"
                     font-weight="600"
                     text-anchor="start"
                     x="0"
-                    y="548.4117647058823"
+                    y="552.4117647058823"
                   >
                     Other Referrals
                   </text>
@@ -560,25 +658,53 @@ exports[`PagePathCard should render 1`] = `
                   >
                     10K
                   </text>
-                  <text
-                    font-size="16"
-                    font-weight="600"
-                    text-anchor="start"
-                    x="1060"
-                    y="34.79411764705878"
+                  <a
+                    data-tooltip-align="right"
+                    href="/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.site1.com/Site 1?rangeKey=30"
+                    title="Go to Dashboard Page"
                   >
-                    Site 1
-                  </text>
-                  <text
-                    fill="#6B6C7E"
-                    font-size="12"
-                    font-weight="400"
-                    text-anchor="start"
+                    <text
+                      class="analytics-sankey-node-title"
+                      data-testid="sankey-node-title"
+                      font-size="16"
+                      font-weight="600"
+                      text-anchor="start"
+                      x="1060"
+                      y="30.794117647058783"
+                    >
+                      Site 1
+                    </text>
+                  </a>
+                  <svg
+                    class="lexicon-icon lexicon-icon-shortcut icon-root text-secondary"
+                    height="16"
+                    role="presentation"
+                    width="16"
                     x="1060"
-                    y="52.79411764705878"
+                    y="40.79411764705878"
                   >
-                    https://www.site1.com
-                  </text>
+                    <use
+                      href="#shortcut"
+                    />
+                  </svg>
+                  <a
+                    data-tooltip-align="right"
+                    href="https://www.site1.com"
+                    target="_blank"
+                    title="Visit https://www.site1.com"
+                  >
+                    <text
+                      class="analytics-sankey-node-url"
+                      fill="#6B6C7E"
+                      font-size="12"
+                      font-weight="400"
+                      text-anchor="start"
+                      x="1080"
+                      y="52.79411764705878"
+                    >
+                      https://www.site1....
+                    </text>
+                  </a>
                 </g>
               </g>
               <g
@@ -607,25 +733,53 @@ exports[`PagePathCard should render 1`] = `
                   >
                     10K
                   </text>
-                  <text
-                    font-size="16"
-                    font-weight="600"
-                    text-anchor="start"
-                    x="1060"
-                    y="170.67647058823525"
+                  <a
+                    data-tooltip-align="right"
+                    href="/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.site2.com/Site 2?rangeKey=30"
+                    title="Go to Dashboard Page"
                   >
-                    Site 2
-                  </text>
-                  <text
-                    fill="#6B6C7E"
-                    font-size="12"
-                    font-weight="400"
-                    text-anchor="start"
+                    <text
+                      class="analytics-sankey-node-title"
+                      data-testid="sankey-node-title"
+                      font-size="16"
+                      font-weight="600"
+                      text-anchor="start"
+                      x="1060"
+                      y="166.67647058823525"
+                    >
+                      Site 2
+                    </text>
+                  </a>
+                  <svg
+                    class="lexicon-icon lexicon-icon-shortcut icon-root text-secondary"
+                    height="16"
+                    role="presentation"
+                    width="16"
                     x="1060"
-                    y="188.67647058823525"
+                    y="176.67647058823525"
                   >
-                    https://www.site2.com
-                  </text>
+                    <use
+                      href="#shortcut"
+                    />
+                  </svg>
+                  <a
+                    data-tooltip-align="right"
+                    href="https://www.site2.com"
+                    target="_blank"
+                    title="Visit https://www.site2.com"
+                  >
+                    <text
+                      class="analytics-sankey-node-url"
+                      fill="#6B6C7E"
+                      font-size="12"
+                      font-weight="400"
+                      text-anchor="start"
+                      x="1080"
+                      y="188.67647058823525"
+                    >
+                      https://www.site2....
+                    </text>
+                  </a>
                 </g>
               </g>
               <g
@@ -654,25 +808,53 @@ exports[`PagePathCard should render 1`] = `
                   >
                     5K
                   </text>
-                  <text
-                    font-size="16"
-                    font-weight="600"
-                    text-anchor="start"
-                    x="1060"
-                    y="306.5588235294117"
+                  <a
+                    data-tooltip-align="right"
+                    href="/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.site3.com/Site 3?rangeKey=30"
+                    title="Go to Dashboard Page"
                   >
-                    Site 3
-                  </text>
-                  <text
-                    fill="#6B6C7E"
-                    font-size="12"
-                    font-weight="400"
-                    text-anchor="start"
+                    <text
+                      class="analytics-sankey-node-title"
+                      data-testid="sankey-node-title"
+                      font-size="16"
+                      font-weight="600"
+                      text-anchor="start"
+                      x="1060"
+                      y="302.5588235294117"
+                    >
+                      Site 3
+                    </text>
+                  </a>
+                  <svg
+                    class="lexicon-icon lexicon-icon-shortcut icon-root text-secondary"
+                    height="16"
+                    role="presentation"
+                    width="16"
                     x="1060"
-                    y="324.5588235294117"
+                    y="312.5588235294117"
                   >
-                    https://www.site3.com
-                  </text>
+                    <use
+                      href="#shortcut"
+                    />
+                  </svg>
+                  <a
+                    data-tooltip-align="right"
+                    href="https://www.site3.com"
+                    target="_blank"
+                    title="Visit https://www.site3.com"
+                  >
+                    <text
+                      class="analytics-sankey-node-url"
+                      fill="#6B6C7E"
+                      font-size="12"
+                      font-weight="400"
+                      text-anchor="start"
+                      x="1080"
+                      y="324.5588235294117"
+                    >
+                      https://www.site3....
+                    </text>
+                  </a>
                 </g>
               </g>
               <g
@@ -702,11 +884,13 @@ exports[`PagePathCard should render 1`] = `
                     500
                   </text>
                   <text
+                    class="analytics-sankey-node-title"
+                    data-testid="sankey-node-title"
                     font-size="16"
                     font-weight="600"
                     text-anchor="start"
                     x="1060"
-                    y="426.49999999999994"
+                    y="430.49999999999994"
                   >
                     Other Pages
                   </text>
@@ -739,11 +923,13 @@ exports[`PagePathCard should render 1`] = `
                     8K
                   </text>
                   <text
+                    class="analytics-sankey-node-title"
+                    data-testid="sankey-node-title"
                     font-size="16"
                     font-weight="600"
                     text-anchor="start"
                     x="1060"
-                    y="509.2941176470588"
+                    y="513.2941176470588"
                   >
                     Drop Offs
                   </text>

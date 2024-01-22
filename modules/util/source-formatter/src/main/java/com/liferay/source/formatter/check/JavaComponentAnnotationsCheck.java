@@ -72,8 +72,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			fileName, absolutePath, javaClass, annotation);
 		annotation = _formatEnabledAttribute(absolutePath, annotation);
 		annotation = _formatServiceAttribute(
-			fileName, absolutePath, javaClass.getName(), annotation,
-			javaClass.getImplementedClassNames());
+			fileName, absolutePath, javaClass, annotation);
 
 		List<String> extendedClassNames = javaClass.getExtendedClassNames(
 			false);
@@ -599,12 +598,13 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	}
 
 	private String _formatServiceAttribute(
-			String fileName, String absolutePath, String className,
-			String annotation, List<String> implementedClassNames)
+			String fileName, String absolutePath, JavaClass javaClass,
+			String annotation)
 		throws Exception {
 
 		String expectedServiceAttributeValue =
-			_getExpectedServiceAttributeValue(implementedClassNames);
+			_getExpectedServiceAttributeValue(
+				javaClass.getImplementedClassNames());
 
 		String serviceAttributeValue = getAnnotationAttributeValue(
 			annotation, "service");
@@ -626,6 +626,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 			addMessage(fileName, "Mismatched @Component 'service' attribute");
 		}
+
+		String className = javaClass.getName();
 
 		if (checkSelfRegistration &&
 			serviceAttributeValue.matches(".*\\b" + className + "\\.class.*")) {

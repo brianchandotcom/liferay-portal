@@ -405,6 +405,52 @@ public class ObjectDefinitionResourceTest
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			postObjectDefinition.getId());
 
+		// Draft custom object definition
+
+		postObjectDefinition = objectDefinitionResource.postObjectDefinition(
+			randomObjectDefinition());
+
+		Assert.assertEquals(
+			postObjectDefinition.getStatus(),
+			new Status() {
+				{
+					code = WorkflowConstants.STATUS_DRAFT;
+					label = WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_DRAFT);
+					label_i18n = _language.get(
+						LanguageResources.getResourceBundle(
+							LocaleUtil.getDefault()),
+						WorkflowConstants.getStatusLabel(
+							WorkflowConstants.STATUS_DRAFT));
+				}
+			});
+
+		postObjectDefinition.setStatus(
+			new Status() {
+				{
+					code = WorkflowConstants.STATUS_APPROVED;
+				}
+			});
+
+		ObjectDefinition randomPersistedPublishedObjectDefinition =
+			objectDefinitionResource.putObjectDefinition(
+				postObjectDefinition.getId(), postObjectDefinition);
+
+		Assert.assertEquals(
+			randomPersistedPublishedObjectDefinition.getStatus(),
+			new Status() {
+				{
+					code = WorkflowConstants.STATUS_APPROVED;
+					label = WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_APPROVED);
+					label_i18n = _language.get(
+						LanguageResources.getResourceBundle(
+							LocaleUtil.getDefault()),
+						WorkflowConstants.getStatusLabel(
+							WorkflowConstants.STATUS_APPROVED));
+				}
+			});
+
 		// Modifiable system object definition
 
 		ObjectDefinition randomModifiableSystemObjectDefinition =
@@ -520,52 +566,6 @@ public class ObjectDefinitionResourceTest
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			randomModifiableSystemObjectDefinition.getId());
-
-		// Publish a persisted draft custom object definition
-
-		postObjectDefinition = objectDefinitionResource.postObjectDefinition(
-			randomObjectDefinition());
-
-		Assert.assertEquals(
-			postObjectDefinition.getStatus(),
-			new Status() {
-				{
-					code = WorkflowConstants.STATUS_DRAFT;
-					label = WorkflowConstants.getStatusLabel(
-						WorkflowConstants.STATUS_DRAFT);
-					label_i18n = _language.get(
-						LanguageResources.getResourceBundle(
-							LocaleUtil.getDefault()),
-						WorkflowConstants.getStatusLabel(
-							WorkflowConstants.STATUS_DRAFT));
-				}
-			});
-
-		postObjectDefinition.setStatus(
-			new Status() {
-				{
-					code = WorkflowConstants.STATUS_APPROVED;
-				}
-			});
-
-		ObjectDefinition randomPersistedPublishedObjectDefinition =
-			objectDefinitionResource.putObjectDefinition(
-				postObjectDefinition.getId(), postObjectDefinition);
-
-		Assert.assertEquals(
-			randomPersistedPublishedObjectDefinition.getStatus(),
-			new Status() {
-				{
-					code = WorkflowConstants.STATUS_APPROVED;
-					label = WorkflowConstants.getStatusLabel(
-						WorkflowConstants.STATUS_APPROVED);
-					label_i18n = _language.get(
-						LanguageResources.getResourceBundle(
-							LocaleUtil.getDefault()),
-						WorkflowConstants.getStatusLabel(
-							WorkflowConstants.STATUS_APPROVED));
-				}
-			});
 
 		// Storage type
 

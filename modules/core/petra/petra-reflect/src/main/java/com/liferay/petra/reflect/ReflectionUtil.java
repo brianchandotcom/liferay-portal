@@ -117,6 +117,10 @@ public class ReflectionUtil {
 	}
 
 	public static Field unfinalField(Field field) throws Exception {
+		if (_modifiersField == null) {
+			return field;
+		}
+
 		int modifiers = field.getModifiers();
 
 		if ((modifiers & _STATIC_FINAL) == _STATIC_FINAL) {
@@ -140,18 +144,26 @@ public class ReflectionUtil {
 	private static final Field _modifiersField;
 
 	static {
+		Field modifiersField = null;
+
 		try {
 			_cloneMethod = Object.class.getDeclaredMethod("clone");
 
 			_cloneMethod.setAccessible(true);
-
-			_modifiersField = Field.class.getDeclaredField("modifiers");
-
-			_modifiersField.setAccessible(true);
 		}
 		catch (Exception exception) {
 			throw new ExceptionInInitializerError(exception);
 		}
+
+		try {
+			modifiersField = Field.class.getDeclaredField("modifiers");
+
+			modifiersField.setAccessible(true);
+		}
+		catch (Exception exception) {
+		}
+
+		_modifiersField = modifiersField;
 	}
 
 }

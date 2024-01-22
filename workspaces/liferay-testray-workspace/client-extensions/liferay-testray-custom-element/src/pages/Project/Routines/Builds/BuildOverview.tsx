@@ -226,6 +226,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 										title: (index: number) =>
 											chart.columnNames[index],
 									},
+									order: '',
 								}}
 							/>
 						)}

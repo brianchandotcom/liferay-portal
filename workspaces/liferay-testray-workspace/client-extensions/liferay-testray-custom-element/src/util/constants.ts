@@ -54,11 +54,11 @@ export const DATA_COLORS = {
 };
 
 export const chartColors = {
-	[Statuses.BLOCKED]: DATA_COLORS['metrics.blocked'],
-	[Statuses.FAILED]: DATA_COLORS['metrics.failed'],
-	[Statuses.INCOMPLETE]: DATA_COLORS['metrics.incomplete'],
 	[Statuses.PASSED]: DATA_COLORS['metrics.passed'],
+	[Statuses.FAILED]: DATA_COLORS['metrics.failed'],
+	[Statuses.BLOCKED]: DATA_COLORS['metrics.blocked'],
 	[Statuses.TEST_FIX]: DATA_COLORS['metrics.testfix'],
+	[Statuses.INCOMPLETE]: DATA_COLORS['metrics.incomplete'],
 };
 
 export const LABEL_GREATER_THAN_99 = '> 99';

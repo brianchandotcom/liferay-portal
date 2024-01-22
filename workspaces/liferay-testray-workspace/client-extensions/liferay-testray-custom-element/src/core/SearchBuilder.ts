@@ -139,10 +139,13 @@ export default class SearchBuilder {
 				({name}) => key === name
 			) as RendererFields;
 
+			const isFilterChanged =
+				value.includes('false') || value.includes('No');
+
 			const removeQuoteMark =
 				schema?.removeQuoteMark ||
 				schema?.type === 'number' ||
-				schema?.optionalOperator === 'ne';
+				isFilterChanged;
 
 			const customOperator = schema?.operator;
 
@@ -152,8 +155,6 @@ export default class SearchBuilder {
 				}
 
 				const getOptionalSearchCondition = () => {
-					const isFilterChanged =
-						value.includes('false') || value.includes('No');
 					const formattedKey = key.replace('$', '');
 
 					if (schema?.optionalOperator === 'ne') {

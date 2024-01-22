@@ -12,6 +12,7 @@ import {
 	APIResponse,
 	testrayComponentImpl,
 	testrayRunImpl,
+	testrayTeamImpl,
 } from '~/services/rest';
 import {chartColors} from '~/util/constants';
 import {getRandom} from '~/util/mock';
@@ -33,16 +34,19 @@ type TestrayChartResources = {
 	};
 };
 
-const statususes = {
-	BLOCKED: 'caseResultBlocked',
-	FAILED: 'caseResultFailed',
-	INCOMPLETE: 'caseResultIncomplete',
-	PASSED: 'caseResultPassed',
-	TEST_FIX: 'caseResultTestFix',
-};
+enum statususes {
+	PASSED = 'caseResultPassed',
+	FAILED = 'caseResultFailed',
+	BLOCKED = 'caseResultBlocked',
+	TEST_FIX = 'caseResultTestFix',
+	INCOMPLETE = 'caseResultIncomplete',
+}
 
 const fields =
 	'caseResultBlocked,caseResultFailed,caseResultIncomplete,caseResultPassed,caseResultTestFix,name';
+
+const teamsFields =
+	'name,teamToComponents.caseResultBlocked,teamToComponents.caseResultFailed,teamToComponents.caseResultIncomplete,teamToComponents.caseResultPassed,teamToComponents.caseResultTestFix';
 
 const chartSelectData = [
 	{label: i18n.translate('runs'), value: 'runs'},
@@ -86,13 +90,13 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 			},
 			teams: {
 				fetchParameters: {
-					fields,
+					fields: teamsFields,
 					filter: SearchBuilder.eq(
-						'componentToCaseResult/r_buildToCaseResult_c_buildId',
+						'teamToComponents/componentToCaseResult/r_buildToCaseResult_c_buildId',
 						buildId
 					),
 				},
-				url: testrayComponentImpl.resource,
+				url: testrayTeamImpl.resource,
 			},
 		}),
 		[buildId]
@@ -114,9 +118,51 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 		() =>
 			Object.entries(statususes).map(([key, value]) => [
 				key,
-				...responseItems.map(
-					(caseResult) => caseResult[value] ?? getRandom(1000)
-				),
+				...responseItems
+
+					.flatMap((caseResult) => {
+						if (caseResult.teamToComponents) {
+							return caseResult.teamToComponents.reduce(
+								(accumulator: any, component: any) => {
+									accumulator.caseResultBlocked +=
+										Number(component?.caseResultBlocked) ||
+										0;
+
+									accumulator.caseResultFailed +=
+										Number(component?.caseResultFailed) ||
+										0;
+
+									accumulator.caseResultUntested +=
+										Number(
+											component?.caseResultUntested &&
+												component?.caseResultInProgress
+										) || 0;
+
+									accumulator.caseResultPassed +=
+										Number(component?.caseResultPassed) ||
+										0;
+
+									accumulator.caseResultTestFix +=
+										Number(component?.caseResultTestFix) ||
+										0;
+
+									return accumulator;
+								},
+								{
+									caseResultBlocked: 0,
+									caseResultFailed: 0,
+									caseResultInProgress: 0,
+									caseResultPassed: 0,
+									caseResultTestFix: 0,
+									caseResultUntested: 0,
+								}
+							);
+						}
+
+						return caseResult;
+					})
+
+					.map((caseResult) => caseResult[value] ?? getRandom(1000)),
 			]),
 		[responseItems]
 	);

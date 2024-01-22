@@ -322,87 +322,17 @@ public class StagingImplTest {
 	}
 
 	@Test
-	public void testLocalStagingJournalChangesetVersionConsistency()
+	public void testLocalStagingJournalChangesetLatestVersionConsistency()
 		throws Exception {
 
-		LayoutTestUtil.addTypePortletLayout(_group);
-		LayoutTestUtil.addTypePortletLayout(_group);
+		_assertLocalStagingJournalVersion(1.1D);
+	}
 
-		// Create content
+	@Test
+	public void testLocalStagingJournalChangesetPreviousVersionConsistency()
+		throws Exception {
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), "Title", "content");
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		serviceContext.setAttribute(
-			StagingUtil.getStagedPortletId(JournalPortletKeys.JOURNAL),
-			Boolean.TRUE);
-
-		Map<String, Serializable> attributes = serviceContext.getAttributes();
-
-		List<String> portletIds = new ArrayList<>();
-
-		portletIds.add(JournalPortletKeys.JOURNAL);
-
-		Map<String, String[]> parameters =
-			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
-				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, false,
-				false, false, false, false, false, false, false, true, false,
-				portletIds, true, false, portletIds, false, portletIds,
-				ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, false, true,
-				UserIdStrategy.CURRENT_USER_ID);
-
-		attributes.putAll(parameters);
-
-		enableLocalStaging(false, serviceContext);
-
-		Group stagingGroup = _group.getStagingGroup();
-
-		// Update content in staging
-
-		JournalArticle stagingJournalArticle =
-			JournalArticleLocalServiceUtil.getArticleByUrlTitle(
-				stagingGroup.getGroupId(), journalArticle.getUrlTitle());
-
-		stagingJournalArticle = JournalTestUtil.updateArticle(
-			stagingJournalArticle, "Title2",
-			stagingJournalArticle.getContent());
-
-		// Expire old version of the content
-
-		JournalTestUtil.expireArticle(
-			stagingJournalArticle.getGroupId(), stagingJournalArticle, 1.0D);
-
-		// Publish to live
-
-		StagingUtil.publishLayouts(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			_group.getGroupId(), false, parameters);
-
-		// Retrieve content from live after publishing
-
-		journalArticle = JournalArticleLocalServiceUtil.getArticle(
-			_group.getGroupId(), journalArticle.getArticleId());
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, journalArticle.getStatus());
-
-		JournalArticle oldJournalArticle =
-			JournalArticleLocalServiceUtil.getArticle(
-				_group.getGroupId(), journalArticle.getArticleId(), 1.0D);
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_EXPIRED, oldJournalArticle.getStatus());
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			journalArticle.getGroupId(),
-			journalArticle.getArticleResourceUuid());
-
-		// Check the status of the asset entry related to the article in live
-
-		Assert.assertTrue(assetEntry.isVisible());
+		_assertLocalStagingJournalVersion(1.0D);
 	}
 
 	@Test
@@ -833,6 +763,89 @@ public class StagingImplTest {
 			category.getParentCategoryId(), titleMap,
 			category.getDescriptionMap(), category.getVocabularyId(), null,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private void _assertLocalStagingJournalVersion(Double version)
+		throws Exception {
+
+		LayoutTestUtil.addTypePortletLayout(_group);
+		LayoutTestUtil.addTypePortletLayout(_group);
+
+		// Create content
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), "Title", "content");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAttribute(
+			StagingUtil.getStagedPortletId(JournalPortletKeys.JOURNAL),
+			Boolean.TRUE);
+
+		Map<String, Serializable> attributes = serviceContext.getAttributes();
+
+		List<String> portletIds = new ArrayList<>();
+
+		portletIds.add(JournalPortletKeys.JOURNAL);
+
+		Map<String, String[]> parameters =
+			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
+				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, false,
+				false, false, false, false, false, false, false, true, false,
+				portletIds, true, false, portletIds, false, portletIds,
+				ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, false, true,
+				UserIdStrategy.CURRENT_USER_ID);
+
+		attributes.putAll(parameters);
+
+		enableLocalStaging(false, serviceContext);
+
+		Group stagingGroup = _group.getStagingGroup();
+
+		// Update content in staging
+
+		JournalArticle stagingJournalArticle =
+			JournalArticleLocalServiceUtil.getArticleByUrlTitle(
+				stagingGroup.getGroupId(), journalArticle.getUrlTitle());
+
+		stagingJournalArticle = JournalTestUtil.updateArticle(
+			stagingJournalArticle, "Title2",
+			stagingJournalArticle.getContent());
+
+		// Expire old version of the content
+
+		JournalTestUtil.expireArticle(
+			stagingJournalArticle.getGroupId(), stagingJournalArticle, version);
+
+		// Publish to live
+
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			_group.getGroupId(), false, parameters);
+
+		// Retrieve content from live after publishing
+
+		journalArticle = JournalArticleLocalServiceUtil.getArticle(
+			_group.getGroupId(), journalArticle.getArticleId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, journalArticle.getStatus());
+
+		JournalArticle oldJournalArticle =
+			JournalArticleLocalServiceUtil.getArticle(
+				_group.getGroupId(), journalArticle.getArticleId(), version);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, oldJournalArticle.getStatus());
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			journalArticle.getGroupId(),
+			journalArticle.getArticleResourceUuid());
+
+		// Check the status of the asset entry related to the article in live
+
+		Assert.assertTrue(assetEntry.isVisible());
 	}
 
 	private Throwable _disableRemoteStagingWithIncorrectLiveGroupId() {

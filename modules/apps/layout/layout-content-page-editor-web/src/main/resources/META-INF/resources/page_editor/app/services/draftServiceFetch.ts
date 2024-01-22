@@ -7,6 +7,10 @@ import updateNetwork from '../actions/updateNetwork';
 import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
 import serviceFetch, {Options} from './serviceFetch';
 
+export interface OnNetworkStatus {
+	(action: ReturnType<typeof updateNetwork>): void;
+}
+
 /**
  * Performs a POST request to the given url and parses an expected object response.
  * If the response status is over 400, or there is any "error" or "exception"
@@ -15,7 +19,7 @@ import serviceFetch, {Options} from './serviceFetch';
 export default function draftServiceFetch<T>(
 	url: string,
 	options: Options,
-	onNetworkStatus: (action: ReturnType<typeof updateNetwork>) => void
+	onNetworkStatus: OnNetworkStatus
 ): Promise<T> {
 	onNetworkStatus(
 		updateNetwork({
@@ -44,7 +48,7 @@ export default function draftServiceFetch<T>(
  */
 function handleErroredResponse(
 	error: string,
-	onNetworkStatus: (action: ReturnType<typeof updateNetwork>) => void
+	onNetworkStatus: OnNetworkStatus
 ) {
 	onNetworkStatus(
 		updateNetwork({

@@ -98,7 +98,7 @@ test('Create, edit and delete editor config contributor client extension', async
  *
  * We are skipping the test until we automate these steps.
  */
-test('Add a toolbar button to a CKEditor, by applying editor config contributor client extension', async ({
+test.skip('Add a toolbar button to a CKEditor, by applying editor config contributor client extension', async ({
 	apiHelpers,
 	newEditorConfigContributorPage,
 }) => {

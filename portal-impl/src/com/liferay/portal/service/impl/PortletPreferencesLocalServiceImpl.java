@@ -436,6 +436,11 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	@Override
+	public List<PortletPreferences> getPortletPreferences(String portletId) {
+		return portletPreferencesFinder.findByPortletId(portletId);
+	}
+
+	@Override
 	public List<PortletPreferences> getPortletPreferencesByOwnerId(
 		long ownerId) {
 

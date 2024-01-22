@@ -568,21 +568,19 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry publishedFragmentEntry = fetchFragmentEntry(
 			draftFragmentEntry.getHeadId());
 
+		if ((publishedFragmentEntry == null) ||
+			!Objects.equals(
+				publishedFragmentEntry.getName(),
+				draftFragmentEntry.getName())) {
+
+			_validate(draftFragmentEntry.getName());
+		}
+
 		if (publishedFragmentEntry != null) {
-			if (!Objects.equals(
-					publishedFragmentEntry.getName(),
-					draftFragmentEntry.getName())) {
-
-				_validate(draftFragmentEntry.getName());
-			}
-
 			draftFragmentEntry.setCacheable(
 				publishedFragmentEntry.isCacheable());
 			draftFragmentEntry.setPreviewFileEntryId(
 				publishedFragmentEntry.getPreviewFileEntryId());
-		}
-		else {
-			_validate(draftFragmentEntry.getName());
 		}
 
 		_fragmentEntryValidator.validateConfiguration(

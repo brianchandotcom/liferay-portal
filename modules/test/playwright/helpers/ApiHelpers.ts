@@ -18,6 +18,7 @@ export class ApiHelpers {
 	constructor(page: Page) {
 		this.baseUrl = liferayConfig.environment.baseUrl + '/o/';
 		this.featureFlag = new FeatureFlagApiHelper(page);
+		this.object = new ObjectApiHelper(this);
 		this.page = page;
 	}
 

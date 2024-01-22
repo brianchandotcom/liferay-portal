@@ -30,6 +30,6 @@ ViewHistoryDisplayContext viewHistoryDisplayContext = (ViewHistoryDisplayContext
 		apiURL="<%= viewHistoryDisplayContext.getAPIURL() %>"
 		fdsActionDropdownItems="<%= viewHistoryDisplayContext.getFDSActionDropdownItems() %>"
 		id="<%= PublicationsFDSNames.PUBLICATIONS_HISTORY %>"
-		propsTransformer="publications/js/components/PublicationHistoryPropsTransformer"
+		propsTransformer="{PublicationHistoryPropsTransformer} from change-tracking-web"
 	/>
 </clay:container-fluid>

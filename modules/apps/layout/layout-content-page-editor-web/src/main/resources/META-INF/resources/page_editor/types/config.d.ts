@@ -125,8 +125,12 @@ export interface Config {
 	getCollectionMappingFieldsURL: string;
 	getCollectionSupportedFiltersURL: string;
 	getCollectionWarningMessageURL: string;
+	getEditCollectionConfigurationURL: string;
 	getExperienceDataURL: string;
+	getFileEntryURL: string;
 	getFormConfigURL: string;
+	getFormFieldsURL: string;
+	getFragmentEntryInputFieldTypesURL: string;
 	getIframeContentCssURL: string;
 	getIframeContentURL: string;
 	getInfoItemActionErrorMessageURL: string;
@@ -208,8 +212,10 @@ export interface Config {
 	updateConfigurationValuesURL: string;
 	updateFormItemConfigURL: string;
 	updateFragmentPortletSetsSortURL: string;
+	updateFragmentsHighlightedConfigurationURL: string;
 	updateItemConfigURL: string;
 	updateLayoutPageTemplateDataURL: string;
+	updatePortletsHighlightedConfigurationURL: string;
 	updateRowColumnsURL: string;
 	updateRuleURL: string;
 	updateSegmentsExperiencePriorityURL: string;

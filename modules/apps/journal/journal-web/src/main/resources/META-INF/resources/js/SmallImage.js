@@ -107,7 +107,7 @@ export default function SmallImage({
 					<ClayInput.Group small>
 						<ClayInput.GroupItem>
 							<input
-								className="sr-only"
+								hidden
 								id={`${portletNamespace}smallFile`}
 								name={`${portletNamespace}smallFile`}
 								onChange={(event) =>
@@ -120,9 +120,9 @@ export default function SmallImage({
 							/>
 
 							<ClayInput
-								onClick={() => fileInputRef.current?.click()}
-								placeholder={Liferay.Language.get(
-									'select-image'
+								placeholder={sub(
+									Liferay.Language.get('no-x-selected'),
+									Liferay.Language.get('image')
 								)}
 								readOnly
 								sizing="sm"
@@ -195,9 +195,9 @@ export default function SmallImage({
 
 							<ClayInput
 								id={`${portletNamespace}smallImageId`}
-								onClick={() => openItemSelector()}
-								placeholder={Liferay.Language.get(
-									'select-image'
+								placeholder={sub(
+									Liferay.Language.get('no-x-selected'),
+									Liferay.Language.get('image')
 								)}
 								readOnly
 								sizing="sm"

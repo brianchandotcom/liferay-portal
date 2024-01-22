@@ -2,7 +2,7 @@
 	"dependencies": {
 		"@clayui/button": "3.107.0",
 		"@clayui/charts": "3.106.1",
-		"@clayui/form": "3.107.0",
+		"@clayui/form": "3.109.0",
 		"@clayui/icon": "3.106.1",
 		"@clayui/table": "3.108.0",
 		"axios": "1.6.2",

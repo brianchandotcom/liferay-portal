@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/core": "3.108.0",
+		"@clayui/core": "3.109.0",
 		"@clayui/icon": "3.106.1",
 		"@liferay/accessibility-settings-state-web": "*",
 		"@liferay/frontend-js-state-web": "*",

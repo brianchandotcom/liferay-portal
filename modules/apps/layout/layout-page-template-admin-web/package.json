@@ -3,7 +3,7 @@
 		"@clayui/alert": "3.106.1",
 		"@clayui/button": "3.107.0",
 		"@clayui/icon": "3.106.1",
-		"@clayui/modal": "3.107.0",
+		"@clayui/modal": "3.109.0",
 		"@liferay/frontend-icons-web": "*",
 		"@liferay/layout-js-components-web": "*",
 		"classnames": "2.3.1",

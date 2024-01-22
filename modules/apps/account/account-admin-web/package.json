@@ -1,10 +1,10 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.107.0",
-		"@clayui/form": "3.107.0",
+		"@clayui/form": "3.109.0",
 		"@clayui/icon": "3.106.1",
 		"@clayui/layout": "3.106.1",
-		"@clayui/multi-select": "3.108.0",
+		"@clayui/multi-select": "3.109.0",
 		"@liferay/address-web": "*",
 		"frontend-js-web": "*",
 		"react": "16.12.0"

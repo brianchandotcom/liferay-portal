@@ -1,8 +1,8 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.107.0",
-		"@clayui/form": "3.107.0",
-		"@clayui/tabs": "3.107.0",
+		"@clayui/form": "3.109.0",
+		"@clayui/tabs": "3.109.0",
 		"asset-taglib": "*",
 		"commerce-frontend-js": "*",
 		"frontend-js-web": "*",

@@ -37,6 +37,7 @@ const ActionTypeNotification = ({
 	actionType,
 	sectionsLength,
 	setActionSections,
+	...restProps
 }) => {
 	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
 
@@ -104,6 +105,62 @@ const ActionTypeNotification = ({
 		});
 	};
 
+	const roleRecipientUpdateSelectedItem = (role) => {
+		setActionSections((prevSections) => {
+			const updatedSections = [...prevSections];
+
+			updatedSections[actionSectionsIndex] = {
+				...prevSections[actionSectionsIndex],
+				recipients: {
+					assignmentType: ['roleId'],
+					roleId: role.id,
+					sectionsData: {
+						id: role.id,
+						name: role.name,
+						roleType: role.roleType,
+					},
+				},
+			};
+
+			return updatedSections;
+		});
+	};
+
+	const roleTypeRecipientUpdateSelectedItem = (values) => {
+		setActionSections((prevSections) => {
+			const updatedSections = [...prevSections];
+
+			updatedSections[actionSectionsIndex] = {
+				...prevSections[actionSectionsIndex],
+				recipients: {
+					assignmentType: ['roleType'],
+					autoCreate: values.map(({autoCreate}) => autoCreate),
+					roleKey: values.map(({roleKey}) => roleKey),
+					roleName: values.map(({roleName}) => roleName),
+					roleType: values.map(({roleType}) => roleType),
+				},
+			};
+
+			return updatedSections;
+		});
+	};
+
+	const scriptedRecipientUpdateSelectedItem = ({target}) => {
+		setActionSections((prevSections) => {
+			const updatedSections = [...prevSections];
+
+			updatedSections[actionSectionsIndex] = {
+				...prevSections[actionSectionsIndex],
+				recipients: {
+					assignmentType: ['scriptedRecipient'],
+					script: [target.value],
+				},
+			};
+
+			return updatedSections;
+		});
+	};
+
 	const updateNotificationInfo = (item) => {
 		if (item.name && item.template && item.notificationTypes.length) {
 			setActionSections((previousSections) => {
@@ -142,6 +199,23 @@ const ActionTypeNotification = ({
 		});
 	};
 
+	const userRecipientUpdateSelectedItem = (values) => {
+		setActionSections((prevSections) => {
+			const updatedSections = [...prevSections];
+
+			updatedSections[actionSectionsIndex] = {
+				...prevSections[actionSectionsIndex],
+				recipients: {
+					assignmentType: ['user'],
+					emailAddress: values.map(({emailAddress}) => emailAddress),
+					sectionsData: values.map((values) => values),
+				},
+			};
+
+			return updatedSections;
+		});
+	};
+
 	return (
 		<BaseNotificationsInfo
 			deleteSection={deleteSection}
@@ -155,6 +229,13 @@ const ActionTypeNotification = ({
 			notificationTypeUserNotification={notificationTypeUserNotification}
 			recipientType={recipientType}
 			recipientTypeOptions={recipientTypeOptions}
+			roleRecipientUpdateSelectedItem={roleRecipientUpdateSelectedItem}
+			roleTypeRecipientUpdateSelectedItem={
+				roleTypeRecipientUpdateSelectedItem
+			}
+			scriptedRecipientUpdateSelectedItem={
+				scriptedRecipientUpdateSelectedItem
+			}
 			sectionsLength={sectionsLength}
 			selectedItem={selectedItem}
 			setInternalSections={setInternalSections}
@@ -173,6 +254,8 @@ const ActionTypeNotification = ({
 			template={template}
 			templateLanguage={templateLanguage}
 			updateNotificationType={updateNotificationType}
+			userRecipientUpdateSelectedItem={userRecipientUpdateSelectedItem}
+			{...restProps}
 		/>
 	);
 };

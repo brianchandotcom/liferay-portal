@@ -29,6 +29,9 @@ const BaseNotificationsInfo = ({
 	notificationTypeUserNotification,
 	recipientType,
 	recipientTypeOptions,
+	roleRecipientUpdateSelectedItem,
+	roleTypeRecipientUpdateSelectedItem,
+	scriptedRecipientUpdateSelectedItem,
 	sectionsLength,
 	selectedItem,
 	setExecutionType,
@@ -47,6 +50,7 @@ const BaseNotificationsInfo = ({
 	template,
 	templateLanguage,
 	updateNotificationType,
+	userRecipientUpdateSelectedItem,
 	...restProps
 }) => {
 	const recipientTypeComponents = {
@@ -57,20 +61,6 @@ const BaseNotificationsInfo = ({
 	};
 
 	const RecipientTypeComponent = recipientTypeComponents[recipientType];
-
-	const scriptedRecipientUpdateSelectedItem = ({target}) => {
-		setSelectedItem((previousItem) => {
-			previousItem.data.notifications.recipients[notificationIndex] = {
-				...previousItem.data.notifications.recipients[
-					notificationIndex
-				],
-				assignmentType: ['scriptedRecipient'],
-				script: [target.value],
-			};
-
-			return previousItem;
-		});
-	};
 
 	const templateLanguageOptions = [
 		{
@@ -87,6 +77,24 @@ const BaseNotificationsInfo = ({
 		},
 	];
 
+	const getUpdateSelectedItem = (recipientType) => {
+		let updateSelectedItem;
+
+		if (recipientType === 'role') {
+			updateSelectedItem = roleRecipientUpdateSelectedItem;
+		}
+		else if (recipientType === 'roleType') {
+			updateSelectedItem = roleTypeRecipientUpdateSelectedItem;
+		}
+		else if (recipientType === 'scriptedRecipient') {
+			updateSelectedItem = scriptedRecipientUpdateSelectedItem;
+		}
+		else if (recipientType === 'user') {
+			updateSelectedItem = userRecipientUpdateSelectedItem;
+		}
+
+		return updateSelectedItem;
+	};
 	useEffect(() => {
 		const checkedTrue = items
 			.filter((item) => {
@@ -300,9 +308,9 @@ const BaseNotificationsInfo = ({
 									notificationIndex={notificationIndex}
 									sectionsLength={internalSections.length}
 									setSections={setInternalSections}
-									updateSelectedItem={
-										scriptedRecipientUpdateSelectedItem
-									}
+									updateSelectedItem={getUpdateSelectedItem(
+										recipientType
+									)}
 									{...props}
 									{...restProps}
 								/>

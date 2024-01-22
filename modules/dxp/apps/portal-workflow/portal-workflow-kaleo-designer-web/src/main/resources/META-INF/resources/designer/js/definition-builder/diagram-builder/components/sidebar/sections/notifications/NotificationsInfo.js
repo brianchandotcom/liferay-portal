@@ -155,6 +155,89 @@ const NotificationsInfo = ({
 		});
 	};
 
+	const roleRecipientUpdateSelectedItem = (role) => {
+		setSelectedItem((previousItem) => {
+			const newRecipients = [
+				...previousItem.data.notifications.recipients,
+			];
+
+			newRecipients[notificationIndex] = {
+				...newRecipients[notificationIndex],
+				assignmentType: ['roleId'],
+				roleId: role.id,
+				sectionsData: {
+					id: role.id,
+					name: role.name,
+					roleType: role.roleType,
+				},
+			};
+
+			return {
+				...previousItem,
+				data: {
+					...previousItem.data,
+					notifications: {
+						...previousItem.data.notifications,
+						recipients: newRecipients,
+					},
+				},
+			};
+		});
+	};
+
+	const roleTypeRecipientUpdateSelectedItem = (values) => {
+		setSelectedItem((previousItem) => {
+			const newRecipients = [
+				...previousItem.data.notifications.recipients,
+			];
+
+			newRecipients[notificationIndex] = {
+				...newRecipients[notificationIndex],
+				assignmentType: ['roleType'],
+				autoCreate: values.map(({autoCreate}) => autoCreate),
+				roleKey: values.map(({roleKey}) => roleKey),
+				roleName: values.map(({roleName}) => roleName),
+				roleType: values.map(({roleType}) => roleType),
+			};
+
+			return {
+				...previousItem,
+				data: {
+					...previousItem.data,
+					notifications: {
+						...previousItem.data.notifications,
+						recipients: newRecipients,
+					},
+				},
+			};
+		});
+	};
+
+	const scriptedRecipientUpdateSelectedItem = ({target}) => {
+		setSelectedItem((previousItem) => {
+			const newRecipients = [
+				...previousItem.data.notifications.recipients,
+			];
+
+			newRecipients[notificationIndex] = {
+				...newRecipients[notificationIndex],
+				assignmentType: ['scriptedRecipient'],
+				script: [target.value],
+			};
+
+			return {
+				...previousItem,
+				data: {
+					...previousItem.data,
+					notifications: {
+						...previousItem.data.notifications,
+						recipients: newRecipients,
+					},
+				},
+			};
+		});
+	};
+
 	const updateNotificationType = () => {
 		const notificationTypes = [];
 
@@ -249,6 +332,32 @@ const NotificationsInfo = ({
 				return prev;
 			});
 		}
+	};
+
+	const userRecipientUpdateSelectedItem = (values) => {
+		setSelectedItem((previousItem) => {
+			const newRecipients = [
+				...previousItem.data.notifications.recipients,
+			];
+
+			newRecipients[notificationIndex] = {
+				...newRecipients[notificationIndex],
+				assignmentType: ['user'],
+				emailAddress: values.map(({emailAddress}) => emailAddress),
+				sectionsData: values.map((values) => values),
+			};
+
+			return {
+				...previousItem,
+				data: {
+					...previousItem.data,
+					notifications: {
+						...previousItem.data.notifications,
+						recipients: newRecipients,
+					},
+				},
+			};
+		});
 	};
 
 	if (selectedItem.type === 'task') {
@@ -392,6 +501,15 @@ const NotificationsInfo = ({
 				}
 				recipientType={recipientType}
 				recipientTypeOptions={recipientTypeOptions}
+				roleRecipientUpdateSelectedItem={
+					roleRecipientUpdateSelectedItem
+				}
+				roleTypeRecipientUpdateSelectedItem={
+					roleTypeRecipientUpdateSelectedItem
+				}
+				scriptedRecipientUpdateSelectedItem={
+					scriptedRecipientUpdateSelectedItem
+				}
 				sectionsLength={sectionsLength}
 				selectedItem={selectedItem}
 				setExecutionType={setExecutionType}
@@ -412,6 +530,9 @@ const NotificationsInfo = ({
 				template={template}
 				templateLanguage={templateLanguage}
 				updateNotificationType={updateNotificationType}
+				userRecipientUpdateSelectedItem={
+					userRecipientUpdateSelectedItem
+				}
 				{...restProps}
 			/>
 		</SidebarPanel>

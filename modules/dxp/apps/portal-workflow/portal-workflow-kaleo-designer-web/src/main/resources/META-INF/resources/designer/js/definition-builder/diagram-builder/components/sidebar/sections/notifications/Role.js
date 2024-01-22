@@ -8,24 +8,8 @@ import React, {useContext} from 'react';
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import BaseRole from '../shared-components/BaseRole';
 
-const Role = ({notificationIndex}) => {
-	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
-
-	const updateSelectedItem = (role) => {
-		setSelectedItem((previousItem) => {
-			previousItem.data.notifications.recipients[notificationIndex] = {
-				assignmentType: ['roleId'],
-				roleId: role.id,
-				sectionsData: {
-					id: role.id,
-					name: role.name,
-					roleType: role.roleType,
-				},
-			};
-
-			return previousItem;
-		});
-	};
+const Role = ({notificationIndex, updateSelectedItem}) => {
+	const {selectedItem} = useContext(DiagramBuilderContext);
 
 	return (
 		<BaseRole

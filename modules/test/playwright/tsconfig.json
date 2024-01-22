@@ -1,6 +1,12 @@
 {
 	"compilerOptions": {
+		"lib": [
+			"ES2021",
+			"DOM"
+		],
+		"module": "CommonJS",
 		"noEmit": true,
+		"target": "ES2021",
 		"types": [
 			"node"
 		]

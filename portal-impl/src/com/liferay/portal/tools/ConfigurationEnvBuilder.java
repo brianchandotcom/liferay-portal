@@ -257,19 +257,6 @@ public class ConfigurationEnvBuilder {
 				attributeDef.optionValues = optionValues;
 			}
 
-			if (ArrayUtil.isNotEmpty(attributeDef.optionValues) &&
-				attributeDef.isNumber()) {
-
-				Number[] optionValues = {};
-
-				for (Object optionValue : attributeDef.optionValues) {
-					optionValues = ArrayUtil.append(
-						optionValues, _toNumber(String.valueOf(optionValue)));
-				}
-
-				attributeDef.optionValues = optionValues;
-			}
-
 			if (objectDef.hasMetaAnnotation || attributeDef.hasMetaAnnotation) {
 				objectDef.attributeDefs.add(attributeDef);
 			}

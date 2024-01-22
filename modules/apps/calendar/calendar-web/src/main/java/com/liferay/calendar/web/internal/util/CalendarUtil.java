@@ -319,7 +319,7 @@ public class CalendarUtil {
 			"calendarResourceId", calendarResource.getCalendarResourceId()
 		).put(
 			"calendarResourceName",
-			calendarResource.getName(themeDisplay.getLocale())
+			HtmlUtil.escape(calendarResource.getName(themeDisplay.getLocale()))
 		).put(
 			"classNameId", calendarResource.getClassNameId()
 		).put(

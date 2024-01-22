@@ -55,6 +55,7 @@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemLi
 page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
+page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.lock.Lock" %><%@
 page import="com.liferay.portal.kernel.repository.model.RepositoryEntry" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@

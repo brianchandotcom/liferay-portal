@@ -14,7 +14,7 @@ declare const FieldsWrapper: ({
 	onObjectDefinitionLoad,
 }: TFieldsWrapperProps) => JSX.Element;
 export declare type TGenericFieldProps = {
-	onChange?({
+	onChange({
 		hasError,
 		name,
 		value,
@@ -29,6 +29,7 @@ export declare type TGenericFieldProps = {
 	mode?: string;
 	name: string;
 	namespace: string;
+	originalField: TObjectField;
 	readOnly?: boolean;
 	required?: boolean;
 	specificProps?: any;

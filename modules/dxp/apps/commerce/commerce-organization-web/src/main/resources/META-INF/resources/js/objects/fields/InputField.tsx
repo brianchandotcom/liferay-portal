@@ -63,13 +63,11 @@ const InputField = ({
 				value = Number(value) || null;
 			}
 
-			if (onChange) {
-				onChange({
-					hasError,
-					name,
-					value,
-				});
-			}
+			onChange({
+				hasError,
+				name,
+				value,
+			});
 		},
 		[name, onChange, required, specificProps]
 	);

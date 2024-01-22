@@ -62,13 +62,11 @@ const DateField = ({
 				}
 			}
 
-			if (onChange) {
-				onChange({
-					hasError,
-					name,
-					value: isoDateString || null,
-				});
-			}
+			onChange({
+				hasError,
+				name,
+				value: isoDateString || null,
+			});
 		},
 		[name, onChange, required, specificProps]
 	);

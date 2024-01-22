@@ -23,6 +23,7 @@ const FieldsWrapper = ({
 	const renderField = useCallback(
 		(field: TObjectField) => {
 			const genericField = FIELDS_MAPPER[field.businessType];
+
 			if (genericField) {
 				const GenericFieldComponent = genericField.component;
 
@@ -48,11 +49,12 @@ const FieldsWrapper = ({
 								});
 							}
 						}}
+						originalField={field}
 						readOnly={!!field.readOnly && field.readOnly === 'true'}
 						required={field.required}
 						specificProps={genericField.props}
 						value={objectData[field.name]}
-					></GenericFieldComponent>
+					/>
 				);
 			}
 		},
@@ -102,7 +104,7 @@ const FieldsWrapper = ({
 };
 
 export type TGenericFieldProps = {
-	onChange?({
+	onChange({
 		hasError,
 		name,
 		value,
@@ -117,6 +119,7 @@ export type TGenericFieldProps = {
 	mode?: string;
 	name: string;
 	namespace: string;
+	originalField: TObjectField;
 	readOnly?: boolean;
 	required?: boolean;
 	specificProps?: any;

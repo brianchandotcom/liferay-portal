@@ -9,6 +9,8 @@ import {TGenericFieldProps} from './FieldsWrapper';
 import BooleanField from './fields/BooleanField';
 import DateField from './fields/DateField';
 import InputField from './fields/InputField';
+import MultiselectPicklist from './fields/MultiselectPicklist';
+import Picklist from './fields/Picklist';
 
 export const FIELDS_MAPPER: {
 	[key: string]: {
@@ -29,6 +31,8 @@ export const FIELDS_MAPPER: {
 		component: InputField,
 		props: {component: 'textarea', type: 'string'},
 	},
+	MultiselectPicklist: {component: MultiselectPicklist},
+	Picklist: {component: Picklist},
 	PrecisionDecimal: {component: InputField, props: {type: 'number'}},
 	Text: {component: InputField, props: {type: 'string'}},
 };

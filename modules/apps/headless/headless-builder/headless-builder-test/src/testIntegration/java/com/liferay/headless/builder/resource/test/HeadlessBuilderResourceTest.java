@@ -184,7 +184,35 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testGetInDifferentCompany() throws Exception {
+	public void testGetIndividualObjectEntryByUniqueField() throws Exception {
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_objectDefinition1.getExternalReferenceCode(),
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, "textUniqueField",
+			APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.getValue(),
+			APIApplication.Endpoint.Scope.COMPANY);
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		_addCustomObjectEntry(
+			1, null, _objectDefinition1, "value1", "valueUnique");
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"textUniqueProperty", "valueUnique"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "/valueUnique"),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
+	public void testGetOpenAPIInDifferentCompany() throws Exception {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
@@ -283,34 +311,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			"headless-builder/applications/by-external-reference-code/" +
 				_API_APPLICATION_ERC_1,
 			Http.Method.GET);
-	}
-
-	@Test
-	public void testGetIndividualObjectEntryByUniqueField() throws Exception {
-		_addAPIApplication(
-			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
-			_objectDefinition1.getExternalReferenceCode(),
-			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, "textUniqueField",
-			APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.getValue(),
-			APIApplication.Endpoint.Scope.COMPANY);
-
-		_publishAPIApplication(_API_APPLICATION_ERC_1);
-
-		_addCustomObjectEntry(
-			1, null, _objectDefinition1, "value1", "valueUnique");
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"textUniqueProperty", "valueUnique"
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				StringBundler.concat(
-					"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "/valueUnique"),
-				Http.Method.GET
-			).toString(),
-			JSONCompareMode.LENIENT);
 	}
 
 	@Test

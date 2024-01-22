@@ -330,6 +330,7 @@ create table DLFileEntry (
 	custom1ImageId LONG,
 	custom2ImageId LONG,
 	manualCheckInRequired BOOLEAN,
+	displayDate DATE null,
 	expirationDate DATE null,
 	reviewDate DATE null,
 	lastPublishDate DATE null,

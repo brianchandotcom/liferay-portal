@@ -105,7 +105,7 @@
 
 <#list restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories?fields=description%2Cid%2Cname%2CtaxonomyCategoryProperties").items as taxonomyCategory>
 	<#assign icons = taxonomyCategory.taxonomyCategoryProperties?filter(property -> stringUtil.equals(property.key, "icon")) />
-	
+
 	<#if icons?size != 0>
 		<#assign icon = icons[0].value />
 	</#if>

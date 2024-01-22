@@ -13,8 +13,8 @@ import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarLocalService;
+import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
-import com.liferay.calendar.test.util.CalendarResourceTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.RecurrenceTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -268,16 +268,24 @@ public class CalendarUtilTest {
 
 	@Test
 	public void testToCalendarJSONObject() throws Exception {
+		String maliciousScript = "'\"></option><img onerror=alert(123) src=x>";
+
 		CalendarResource calendarResource =
-			CalendarResourceTestUtil.addCalendarResource(
-				_groupLocalService.getGroup(TestPropsValues.getGroupId()));
+			_calendarResourceLocalService.addCalendarResource(
+				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				_classNameLocalService.getClassNameId(CalendarResource.class),
+				0, null, null,
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), maliciousScript
+				).build(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				new ServiceContext());
 
 		Calendar calendar = _calendarLocalService.addCalendar(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			calendarResource.getCalendarResourceId(),
 			HashMapBuilder.put(
-				LocaleUtil.getDefault(),
-				"'\"></option><img onerror=alert(123) src=x>"
+				LocaleUtil.getDefault(), maliciousScript
 			).build(),
 			RandomTestUtil.randomLocaleStringMap(), StringPool.UTC, 0, false,
 			false, false, new ServiceContext());
@@ -288,9 +296,12 @@ public class CalendarUtilTest {
 		JSONObject jsonObject = (JSONObject)method.invoke(
 			null, createThemeDisplay(), calendar);
 
+		String escapedMaliciousScript =
+			"&#39;&#34;&gt;&lt;/option&gt;&lt;img onerror=alert(123) src=x&gt;";
+
 		Assert.assertEquals(
-			"&#39;&#34;&gt;&lt;/option&gt;&lt;img onerror=alert(123) src=x&gt;",
-			jsonObject.get("name"));
+			escapedMaliciousScript, jsonObject.get("calendarResourceName"));
+		Assert.assertEquals(escapedMaliciousScript, jsonObject.get("name"));
 	}
 
 	protected void assertRepeatsForever(Recurrence recurrence) {
@@ -393,13 +404,15 @@ public class CalendarUtilTest {
 	private CalendarLocalService _calendarLocalService;
 
 	@Inject
+	private CalendarResourceLocalService _calendarResourceLocalService;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	private Group _group;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
-
 	private PermissionChecker _permissionChecker;
 	private User _privateUser;
 	private User _user;

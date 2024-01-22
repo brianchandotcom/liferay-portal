@@ -16,14 +16,19 @@ AUI.add(
 
 			instance.form = config.form;
 			instance.fromInputName = config.fromInputName;
-			instance.fromInputDatePicker = config.fromInputDatePicker;
 			instance.namespace = config.namespace;
 			instance.parameterName = config.parameterName;
 			instance.searchCustomRangeButton = config.searchCustomRangeButton;
 			instance.searchCustomRangeToggleName =
 				config.searchCustomRangeToggleName;
 			instance.toInputName = config.toInputName;
-			instance.toInputDatePicker = config.toInputDatePicker;
+
+			instance.fromInputDatePicker = Liferay.component(
+				instance.fromInputName + 'DatePicker'
+			);
+			instance.toInputDatePicker = Liferay.component(
+				instance.toInputName + 'DatePicker'
+			);
 
 			instance._initializeFormValidator();
 

@@ -198,16 +198,10 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 	<aui:script use="liferay-search-modified-facet">
 		new Liferay.Search.ModifiedFacetFilter({
 			form: A.one('#<portlet:namespace />fm'),
-			fromInputDatePicker: Liferay.component(
-				'<portlet:namespace />fromInputDatePicker'
-			),
 			fromInputName: '<portlet:namespace />fromInput',
 			namespace: '<portlet:namespace />',
 			searchCustomRangeButton: A.one(
 				'#<portlet:namespace />searchCustomRangeButton'
-			),
-			toInputDatePicker: Liferay.component(
-				'<portlet:namespace />toInputDatePicker'
 			),
 			toInputName: '<portlet:namespace />toInput',
 		});

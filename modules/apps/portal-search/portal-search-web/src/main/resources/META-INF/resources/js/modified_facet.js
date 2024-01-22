@@ -15,12 +15,17 @@ AUI.add(
 			const instance = this;
 
 			instance.form = config.form;
-			instance.fromInputDatePicker = config.fromInputDatePicker;
 			instance.fromInputName = config.fromInputName;
 			instance.namespace = config.namespace;
 			instance.searchCustomRangeButton = config.searchCustomRangeButton;
-			instance.toInputDatePicker = config.toInputDatePicker;
 			instance.toInputName = config.toInputName;
+
+			instance.fromInputDatePicker = Liferay.component(
+				instance.fromInputName + 'DatePicker'
+			);
+			instance.toInputDatePicker = Liferay.component(
+				instance.toInputName + 'DatePicker'
+			);
 
 			instance.fromInput = A.one('#' + instance.fromInputName);
 			instance.toInput = A.one('#' + instance.toInputName);

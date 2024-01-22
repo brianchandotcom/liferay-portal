@@ -42,6 +42,33 @@ const POSITION = {x: 0, y: 0};
 
 const EDGE_TYPE = 'SmoothStep';
 
+const normalizeNode = (node) => {
+	return {
+		POSITION,
+		data: {
+			description: node.description,
+			label: node.name,
+			nodeId: `${node.id}`,
+			parent: node.root ? null : `${node.parentId}`,
+			root: node.root,
+		},
+		deletable: !node.root,
+		id: `${node.id}`,
+		parent: node.root ? null : `${node.parentId}`,
+		type: 'folderNode',
+	};
+};
+
+const getEdge = (nodeId, parentId) => {
+	return {
+		animated: false,
+		id: `e${nodeId}${parentId}`,
+		source: `${parentId}`,
+		target: `${nodeId}`,
+		type: EDGE_TYPE,
+	};
+};
+
 const getLayoutedElements = (nodes, edges) => {
 	DAGRE_GRAPH.setGraph({
 		rankdir: 'TB',
@@ -75,50 +102,6 @@ const getLayoutedElements = (nodes, edges) => {
 	return {edges, updatedNodes};
 };
 
-const getNodesFromHeadless = async (templateId) => {
-	const templateNodesPage = await getAvailableTemplatesNodesPage(templateId);
-
-	const templateNodes = templateNodesPage.items;
-
-	if (!templateNodes.length) {
-		const rootNode = await addNode(0, true, 'Root Node', templateId);
-
-		templateNodes.push(rootNode);
-	}
-
-	const templateEdges = [];
-
-	const normalizedNodes = templateNodes.map((node) => {
-		if (node.parentID !== 0) {
-			const edge = {
-				animated: false,
-				id: `e${node.id}${node.parentID}`,
-				source: `${node.parentID}`,
-				target: `${node.id}`,
-				type: EDGE_TYPE,
-			};
-			templateEdges.push(edge);
-		}
-
-		return {
-			POSITION,
-			data: {
-				description: node.description,
-				label: node.name,
-				nodeId: `${node.id}`,
-				parent: node.root ? null : `${node.parentID}`,
-				root: node.root,
-			},
-			deletable: !node.root,
-			id: `${node.id}`,
-			parent: node.root ? null : `${node.parentID}`,
-			type: 'folderNode',
-		};
-	});
-
-	return getLayoutedElements(normalizedNodes, templateEdges);
-};
-
 const getChildNodeIds = (nodeId, subNodes = []) => {
 	subNodes.push(nodeId);
 
@@ -143,45 +126,13 @@ const deleteNodes = async (nodeIds) => {
 	);
 };
 
-const addNewNode = async (parentNodeId, templateId, nodes, edges) => {
-	const newNode = await addNode(parentNodeId, false, 'New Node', templateId);
-
-	const newDiagramNode = {
-		POSITION,
-		data: {
-			description: newNode.description,
-			label: newNode.name,
-			nodeId: `${newNode.id}`,
-			parent: newNode.root ? null : `${parentNodeId}`,
-			root: newNode.root,
-		},
-		deletable: !newNode.root,
-		id: `${newNode.id}`,
-		parent: newNode.root ? null : `${parentNodeId}`,
-		type: newNode.root ? 'folderNode' : 'folderNode',
-	};
-
-	const newDiagramEdge = {
-		animated: false,
-		id: `e${newDiagramNode.id}${parentNodeId}`,
-		source: `${parentNodeId}`,
-		target: `${newDiagramNode.id}`,
-		type: EDGE_TYPE,
-	};
-
-	nodes.push(newDiagramNode);
-
-	edges.push(newDiagramEdge);
-
-	return getLayoutedElements(nodes, edges);
-};
-
 const Diagram = ({key, templateId}) => {
 	const [nodes, setNodes] = useNodesState(null);
 
 	const [edges, setEdges] = useEdgesState(null);
 
 	const [selectedNode, setSelectedNode] = useState();
+
 	const [isLoading, setIsLoading] = useState(false);
 
 	const [form] = Form.useForm();
@@ -191,9 +142,9 @@ const Diagram = ({key, templateId}) => {
 			description: data.description,
 			id: data.nodeId,
 			name: data.label,
-			parentID: data.parent,
+			parentId: data.parent,
 			root: data.root,
-			templateID: templateId,
+			templateId,
 		});
 		setSelectedNode(data);
 	};
@@ -240,19 +191,30 @@ const Diagram = ({key, templateId}) => {
 	);
 
 	const handleAdd = useCallback(
-		(parentNodeId) => {
-			const addNodeAsync = async () => {
-				const {
-					edges: layoutedEdges,
-					updatedNodes: layoutedNodes,
-				} = await addNewNode(parentNodeId, templateId, nodes, edges);
+		async (parentNodeId) => {
+			const newNode = await addNode(
+				parentNodeId,
+				false,
+				'New Node',
+				templateId
+			);
 
-				setNodes([...layoutedNodes]);
+			const newDiagramNode = normalizeNode(newNode);
 
-				setEdges([...layoutedEdges]);
-			};
+			const newDiagramEdge = getEdge(newDiagramNode.id, parentNodeId);
 
-			addNodeAsync();
+			nodes.push(newDiagramNode);
+
+			edges.push(newDiagramEdge);
+
+			const {
+				edges: layoutedEdges,
+				updatedNodes: layoutedNodes,
+			} = getLayoutedElements(nodes, edges);
+
+			setNodes([...layoutedNodes]);
+
+			setEdges([...layoutedEdges]);
 		},
 		[nodes, edges, setNodes, setEdges, templateId]
 	);
@@ -279,10 +241,39 @@ const Diagram = ({key, templateId}) => {
 
 	const loadNodes = useCallback(
 		async (templateId) => {
+			const templateNodesPage = await getAvailableTemplatesNodesPage(
+				templateId
+			);
+
+			const templateNodes = templateNodesPage.items;
+
+			if (!templateNodes.length) {
+				const rootNode = await addNode(
+					0,
+					true,
+					'Root Node',
+					templateId
+				);
+
+				templateNodes.push(rootNode);
+			}
+
+			const templateEdges = [];
+
+			const normalizedNodes = templateNodes.map((node) => {
+				if (node.parentId !== 0) {
+					const edge = getEdge(node.id, node.parentId);
+
+					templateEdges.push(edge);
+				}
+
+				return normalizeNode(node);
+			});
+
 			const {
 				edges: layoutedEdges,
 				updatedNodes: layoutedNodes,
-			} = await getNodesFromHeadless(templateId);
+			} = getLayoutedElements(normalizedNodes, templateEdges);
 
 			setNodes([...layoutedNodes]);
 
@@ -293,7 +284,7 @@ const Diagram = ({key, templateId}) => {
 
 	useEffect(() => {
 		loadNodes(templateId);
-	}, [templateId, loadNodes]);
+	}, [loadNodes, templateId]);
 
 	const handleSave = () => {
 		form.validateFields()
@@ -408,8 +399,8 @@ const Diagram = ({key, templateId}) => {
 										<Form.Item
 											hidden={true}
 											initialValue={selectedNode.parent}
-											label="parentID"
-											name="parentID"
+											label="parentId"
+											name="parentId"
 											rules={[
 												{
 													message:
@@ -423,8 +414,8 @@ const Diagram = ({key, templateId}) => {
 										<Form.Item
 											hidden={true}
 											initialValue={templateId}
-											label="templateID"
-											name="templateID"
+											label="templateId"
+											name="templateId"
 											rules={[
 												{
 													message:

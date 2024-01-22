@@ -326,6 +326,26 @@ exports[`UsageOverview should render 1`] = `
                             Users
                           </span>
                         </li>
+                        <li>
+                          <svg
+                            class="lexicon-icon lexicon-icon-calendar-usage icon-root"
+                            role="presentation"
+                          >
+                            <use
+                              href="#calendar-usage"
+                            />
+                          </svg>
+                          <span
+                            class="limit-amount semibold"
+                          >
+                            Workspace Birthday
+                          </span>
+                          <span
+                            class="text-secondary"
+                          >
+                            2018-07-08
+                          </span>
+                        </li>
                       </ul>
                     </div>
                     <div

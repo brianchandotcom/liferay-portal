@@ -69,10 +69,9 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				long userId = resultSet.getLong("userId");
 				long accountEntryId = resultSet.getLong("accountEntryId");
+
 				long defaultBillingAddressId = resultSet.getLong(
 					"defaultBillingAddressId");
-				long defaultShippingAddressId = resultSet.getLong(
-					"defaultShippingAddressId");
 
 				Address billingAddress = _addressLocalService.fetchAddress(
 					defaultBillingAddressId);
@@ -98,6 +97,9 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 							CommerceChannelAccountEntryRelConstants.
 								TYPE_BILLING_ADDRESS);
 				}
+
+				long defaultShippingAddressId = resultSet.getLong(
+					"defaultShippingAddressId");
 
 				Address shippingAddress = _addressLocalService.fetchAddress(
 					defaultShippingAddressId);

@@ -383,7 +383,7 @@
           "indexedAsKeyword": false,
           "system": false,
           "indexedLanguageId": "",
-          "name": "parentID",
+          "name": "parentId",
           "state": false,
           "businessType": "Integer",
           "readOnlyConditionExpression": ""
@@ -450,7 +450,7 @@
           "indexedAsKeyword": false,
           "system": false,
           "indexedLanguageId": "",
-          "name": "templateID",
+          "name": "templateId",
           "state": false,
           "businessType": "LongInteger",
           "readOnlyConditionExpression": ""

@@ -723,6 +723,10 @@ public class FragmentEntryLocalServiceImpl
 
 		fragmentEntry = getDraft(fragmentEntry);
 
+		if (!Objects.equals(name, fragmentEntry.getName())) {
+			fragmentEntry.setName(name);
+		}
+
 		if (status != WorkflowConstants.STATUS_APPROVED) {
 			return fragmentEntry;
 		}

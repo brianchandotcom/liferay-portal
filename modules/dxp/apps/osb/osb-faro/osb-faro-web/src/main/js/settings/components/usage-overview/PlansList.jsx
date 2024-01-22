@@ -27,13 +27,14 @@ class PlansList extends React.Component {
 					[PAGEVIEWS]: PropTypes.number
 				}),
 				name: PropTypes.string,
-				price: PropTypes.number
+				price: PropTypes.number,
+				workspaceBirthday: PropTypes.number
 			})
 		)
 	};
 
 	render() {
-		const {currentPlanName, plans} = this.props;
+		const {currentPlanName, plans, workspaceBirthday} = this.props;
 
 		return (
 			<div
@@ -74,6 +75,7 @@ class PlansList extends React.Component {
 										? []
 										: getPlanAddOns(PLAN_TYPES[name])
 								}
+								currentPlan={isCurrentPlan}
 								limits={[
 									{
 										entityLabel: INDIVIDUALS,
@@ -84,6 +86,7 @@ class PlansList extends React.Component {
 										value: limits.pageViews
 									}
 								]}
+								workspaceBirthday={workspaceBirthday}
 							/>
 						</Panel>
 					);

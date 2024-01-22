@@ -1,5 +1,6 @@
 import ClayIcon from '@clayui/icon';
 import React from 'react';
+import {DEFAULT_DATE_FORMAT, formatUTCDate} from 'shared/util/date';
 import {
 	getPropIcon,
 	getPropLabel,
@@ -12,16 +13,19 @@ import {sub} from 'shared/util/lang';
 class PlanBreakdown extends React.Component {
 	static defaultProps = {
 		addOns: [],
+		currentPlan: false,
 		limits: []
 	};
 
 	static propTypes = {
 		addOns: PropTypes.array,
-		limits: PropTypes.array
+		currentPlan: PropTypes.bool,
+		limits: PropTypes.array,
+		workspaceBirthday: PropTypes.number
 	};
 
 	render() {
-		const {addOns, limits} = this.props;
+		const {addOns, currentPlan, limits, workspaceBirthday} = this.props;
 
 		return (
 			<div
@@ -59,6 +63,26 @@ class PlanBreakdown extends React.Component {
 								{Liferay.Language.get('users')}
 							</span>
 						</li>
+
+						{currentPlan && (
+							<li>
+								<ClayIcon
+									className='icon-root'
+									symbol='calendar-usage'
+								/>
+
+								<span className='limit-amount semibold'>
+									{Liferay.Language.get('workspace-birthday')}
+								</span>
+
+								<span className='text-secondary'>
+									{formatUTCDate(
+										workspaceBirthday,
+										DEFAULT_DATE_FORMAT
+									)}
+								</span>
+							</li>
+						)}
 					</ul>
 				</div>
 

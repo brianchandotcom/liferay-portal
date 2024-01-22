@@ -2342,6 +2342,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			"richTextProperty", RandomTestUtil.randomString()
 		).put(
 			"textProperty", RandomTestUtil.randomString()
+		).put(
+			"textUniqueProperty", "Unique field value"
 		).toString();
 
 		String endpointPath = "c/" + _BASE_URL_1 + "/test";

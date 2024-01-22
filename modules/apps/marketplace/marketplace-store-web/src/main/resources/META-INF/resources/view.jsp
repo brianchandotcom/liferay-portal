@@ -39,7 +39,3 @@ viewURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 		<aui:button onClick="<%= deauthorizeURL %>" value="sign-out" />
 	</div>
 </c:if>
-
-<liferay-frontend:component
-	module="js/MarketplaceFrame"
-/>

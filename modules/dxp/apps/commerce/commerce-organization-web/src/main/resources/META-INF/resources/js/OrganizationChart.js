@@ -94,6 +94,10 @@ function OrganizationChart({
 		return () => chartInstanceRef.current?.cleanUp();
 	}, [namespace, pageSize, rootData, spritemap]);
 
+	useEffect(() => {
+		document.body.classList[expanded ? 'add' : 'remove']('overflow-hidden');
+	}, [expanded]);
+
 	return (
 		<ChartContext.Provider
 			value={{
@@ -102,80 +106,86 @@ function OrganizationChart({
 				setCurrentView,
 			}}
 		>
-			<ManagementBar
-				onSearchSelected={(id, name, type) => {
-					setSearchData(name);
-					if (chartInstanceRef && chartInstanceRef.current) {
-						chartInstanceRef.current.search(id, type);
-					}
-				}}
-			/>
-
-			{Liferay.FeatureFlags['COMMERCE-12192'] && (
-				<InfoPanelProvider
-					namespace={namespace}
-					pathImage={pathImage}
-					selectLogoURL={selectLogoURL}
-					spritemap={spritemap}
+			<div
+				className={classnames('org-management-portlet-wrapper', {
+					expanded,
+				})}
+			>
+				<ManagementBar
+					onSearchSelected={(id, name, type) => {
+						setSearchData(name);
+						if (chartInstanceRef && chartInstanceRef.current) {
+							chartInstanceRef.current.search(id, type);
+						}
+					}}
 				/>
-			)}
 
-			<div className={classnames('org-chart-container', {expanded})}>
-				{searchData && !!searchData.length ? (
-					<div className="org-chart-result-helper">
-						{sub(Liferay.Language.get('x-result-for-x'), [
-							searchDataCount,
-							searchData,
-						])}
+				<div className={classnames('org-chart-container', {expanded})}>
+					{searchData && !!searchData.length ? (
+						<div className="org-chart-result-helper">
+							{sub(Liferay.Language.get('x-result-for-x'), [
+								searchDataCount,
+								searchData,
+							])}
+						</div>
+					) : (
+						<></>
+					)}
+
+					<svg className="svg-chart" ref={chartSVGRef} />
+
+					<div className="zoom-controls">
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('full-screen')}
+							displayType="secondary"
+							onClick={() => setExpanded(!expanded)}
+							size="sm"
+							symbol={expanded ? 'compress' : 'expand'}
+						/>
+
+						<ClayButton.Group className="ml-3">
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('zoom-out')}
+								displayType="secondary"
+								ref={zoomOutRef}
+								size="sm"
+								symbol="hr"
+							/>
+
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('zoom-in')}
+								displayType="secondary"
+								ref={zoomInRef}
+								size="sm"
+								symbol="plus"
+							/>
+						</ClayButton.Group>
 					</div>
-				) : (
-					<></>
+				</div>
+
+				{Liferay.FeatureFlags['COMMERCE-12192'] && (
+					<InfoPanelProvider
+						namespace={namespace}
+						pathImage={pathImage}
+						selectLogoURL={selectLogoURL}
+						spritemap={spritemap}
+					/>
 				)}
 
-				<svg className="svg-chart" ref={chartSVGRef} />
+				<MenuProvider
+					alignElementRef={clickedMenuButtonRef}
+					data={menuData}
+					namespace={namespace}
+					parentData={menuParentData}
+				/>
 
-				<div className="zoom-controls">
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('full-screen')}
-						displayType="secondary"
-						onClick={() => setExpanded(!expanded)}
-						size="sm"
-						symbol="expand"
-					/>
-
-					<ClayButton.Group className="ml-3">
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('zoom-out')}
-							displayType="secondary"
-							ref={zoomOutRef}
-							size="sm"
-							symbol="hr"
-						/>
-
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('zoom-in')}
-							displayType="secondary"
-							ref={zoomInRef}
-							size="sm"
-							symbol="plus"
-						/>
-					</ClayButton.Group>
-				</div>
+				<ModalProvider
+					active={modalActive}
+					closeModal={() => setModalActive(false)}
+					parentData={modalData?.parentData}
+					type={modalData?.type}
+				/>
 			</div>
-
-			<MenuProvider
-				alignElementRef={clickedMenuButtonRef}
-				data={menuData}
-				namespace={namespace}
-				parentData={menuParentData}
-			/>
-
-			<ModalProvider
-				active={modalActive}
-				closeModal={() => setModalActive(false)}
-				parentData={modalData?.parentData}
-				type={modalData?.type}
-			/>
 		</ChartContext.Provider>
 	);
 }

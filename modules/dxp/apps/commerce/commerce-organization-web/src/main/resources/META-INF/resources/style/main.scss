@@ -16,30 +16,16 @@ $btn-size: 28px;
 		right: 0;
 		top: 0;
 		z-index: 100;
+
+		& ~ .org-char-info-panel {
+			z-index: 100;
+		}
 	}
 
 	.zoom-controls {
 		bottom: $spacer;
+		left: $spacer;
 		position: absolute;
-		right: $spacer;
-
-		.btn.btn-secondary {
-			background-color: $white;
-		}
-
-		.btn-group {
-			.btn {
-				&:not(:first-child) {
-					border-bottom-left-radius: 0;
-					border-top-left-radius: 0;
-				}
-				&:not(:last-child) {
-					border-bottom-right-radius: 0;
-					border-right: 0;
-					border-top-right-radius: 0;
-				}
-			}
-		}
 	}
 
 	.svg-chart {
@@ -312,6 +298,8 @@ $btn-size: 28px;
 }
 
 .org-chart-management-toolbar {
+	z-index: 101;
+
 	.navbar-nav {
 		padding: 0 12px;
 		width: 100%;
@@ -349,10 +337,6 @@ $btn-size: 28px;
 			right: 0;
 			top: 0;
 			z-index: 10;
-
-			& > svg {
-				font-size: 20px;
-			}
 
 			& + .info-panel-content .sidebar-header > .autofit-row {
 				width: auto;
@@ -393,9 +377,26 @@ $btn-size: 28px;
 	}
 }
 
+.org-management-portlet-wrapper.expanded {
+	height: 100vh;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	z-index: 990;
+}
+
+.org-chart-container.expanded ~ .org-char-info-panel {
+	top: var(--control-menu-container-height) + 48px;
+}
+
 .admin-portlet {
 	.org-char-info-panel {
 		position: fixed;
-		top: calc(var(--control-menu-container-height) + 48px);
+		top: calc(var(--control-menu-container-height) + 112px);
 	}
+}
+
+.org-chart-root {
+	overflow-x: hidden;
 }

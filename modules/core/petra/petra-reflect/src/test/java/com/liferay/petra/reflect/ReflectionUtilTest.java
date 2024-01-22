@@ -21,6 +21,8 @@ import java.net.URLClassLoader;
 import java.security.Permission;
 
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Assert;
@@ -141,6 +143,41 @@ public class ReflectionUtilTest {
 		field.set(testClass, object);
 
 		Assert.assertSame(object, testClass._privateFinalObject);
+	}
+
+	@NewEnv(type = NewEnv.Type.JVM)
+	@Test
+	public void testGetDeclaredFieldNoModifersField() throws Exception {
+		SecurityException securityException = new SecurityException();
+
+		AtomicInteger counter = new AtomicInteger();
+
+		try (SwappableSecurityManager swappableSecurityManager =
+				new SwappableSecurityManager() {
+
+					@Override
+					public void checkPermission(Permission permission) {
+						if (Objects.equals(
+								permission.getName(),
+								"accessDeclaredMembers") &&
+							(counter.incrementAndGet() == 2)) {
+
+							throw securityException;
+						}
+					}
+
+				}) {
+
+			swappableSecurityManager.install();
+
+			Field staticField = ReflectionUtil.getDeclaredField(
+				TestClass.class, "_privateStaticFinalObject");
+
+			Assert.assertTrue(staticField.isAccessible());
+			Assert.assertTrue(Modifier.isFinal(staticField.getModifiers()));
+			Assert.assertSame(
+				TestClass._privateStaticFinalObject, staticField.get(null));
+		}
 	}
 
 	@Test

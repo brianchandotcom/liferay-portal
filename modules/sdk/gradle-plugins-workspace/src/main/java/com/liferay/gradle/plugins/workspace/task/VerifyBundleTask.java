@@ -58,9 +58,11 @@ public class VerifyBundleTask extends Verify {
 		if (!calculatedChecksum.equalsIgnoreCase(getChecksum())) {
 			File srcFile = getSrc();
 
+			String lowerCaseChecksum = getChecksum().toLowerCase();
+
 			throw new GradleException(
 				"Invalid checksum for " + srcFile.getName() + ". Expected " +
-					getChecksum().toLowerCase() + ", but got " +
+					lowerCaseChecksum + ", but got " +
 						calculatedChecksum.toLowerCase() + ". Please remove " +
 							srcFile.getAbsolutePath() + " and try again.");
 		}

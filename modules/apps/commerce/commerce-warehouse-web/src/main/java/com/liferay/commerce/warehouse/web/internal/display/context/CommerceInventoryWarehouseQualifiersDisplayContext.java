@@ -79,8 +79,11 @@ public class CommerceInventoryWarehouseQualifiersDisplayContext
 	}
 
 	public String getWarehouseChannelsAPIURL() throws PortalException {
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			getCommerceInventoryWarehouse();
+
 		return "/o/headless-commerce-admin-inventory/v1.0/warehouses/" +
-			getCommerceInventoryWarehouse().getCommerceInventoryWarehouseId() +
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId() +
 				"/warehouse-channels?nestedFields=channel";
 	}
 

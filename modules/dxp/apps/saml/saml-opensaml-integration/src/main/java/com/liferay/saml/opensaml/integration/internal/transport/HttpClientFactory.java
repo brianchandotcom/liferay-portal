@@ -65,7 +65,9 @@ public class HttpClientFactory {
 			});
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Shutting down " + getClass().getName());
+			Class<?> clazz = getClass();
+
+			_log.debug("Shutting down " + clazz.getName());
 		}
 
 		if (_poolingClientConnectionManager == null) {

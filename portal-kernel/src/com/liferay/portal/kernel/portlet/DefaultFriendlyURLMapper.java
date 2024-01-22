@@ -126,7 +126,9 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 		String friendlyURLPath, Map<String, String[]> parameterMap,
 		Map<String, Object> requestContext) {
 
-		friendlyURLPath = friendlyURLPath.substring(getMapping().length() + 1);
+		int mappingLength = getMapping().length();
+
+		friendlyURLPath = friendlyURLPath.substring(mappingLength + 1);
 
 		if (friendlyURLPath.endsWith(StringPool.SLASH)) {
 			friendlyURLPath = friendlyURLPath.substring(

@@ -562,6 +562,20 @@ public interface DLFileEntryModel
 	public void setManualCheckInRequired(boolean manualCheckInRequired);
 
 	/**
+	 * Returns the display date of this document library file entry.
+	 *
+	 * @return the display date of this document library file entry
+	 */
+	public Date getDisplayDate();
+
+	/**
+	 * Sets the display date of this document library file entry.
+	 *
+	 * @param displayDate the display date of this document library file entry
+	 */
+	public void setDisplayDate(Date displayDate);
+
+	/**
 	 * Returns the expiration date of this document library file entry.
 	 *
 	 * @return the expiration date of this document library file entry

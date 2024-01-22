@@ -240,6 +240,7 @@
 		<field name="custom1ImageId" type="long" />
 		<field name="custom2ImageId" type="long" />
 		<field name="manualCheckInRequired" type="boolean" />
+		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date">
 			<hint name="default-year-delta">1</hint>
 		</field>

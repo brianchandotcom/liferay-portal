@@ -68,7 +68,7 @@ public class DLFileEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(71);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -132,6 +132,8 @@ public class DLFileEntryCacheModel
 		sb.append(custom2ImageId);
 		sb.append(", manualCheckInRequired=");
 		sb.append(manualCheckInRequired);
+		sb.append(", displayDate=");
+		sb.append(displayDate);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
 		sb.append(", reviewDate=");
@@ -267,6 +269,13 @@ public class DLFileEntryCacheModel
 		dlFileEntryImpl.setCustom2ImageId(custom2ImageId);
 		dlFileEntryImpl.setManualCheckInRequired(manualCheckInRequired);
 
+		if (displayDate == Long.MIN_VALUE) {
+			dlFileEntryImpl.setDisplayDate(null);
+		}
+		else {
+			dlFileEntryImpl.setDisplayDate(new Date(displayDate));
+		}
+
 		if (expirationDate == Long.MIN_VALUE) {
 			dlFileEntryImpl.setExpirationDate(null);
 		}
@@ -344,6 +353,7 @@ public class DLFileEntryCacheModel
 		custom2ImageId = objectInput.readLong();
 
 		manualCheckInRequired = objectInput.readBoolean();
+		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		reviewDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -471,6 +481,7 @@ public class DLFileEntryCacheModel
 		objectOutput.writeLong(custom2ImageId);
 
 		objectOutput.writeBoolean(manualCheckInRequired);
+		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(reviewDate);
 		objectOutput.writeLong(lastPublishDate);
@@ -507,6 +518,7 @@ public class DLFileEntryCacheModel
 	public long custom1ImageId;
 	public long custom2ImageId;
 	public boolean manualCheckInRequired;
+	public long displayDate;
 	public long expirationDate;
 	public long reviewDate;
 	public long lastPublishDate;

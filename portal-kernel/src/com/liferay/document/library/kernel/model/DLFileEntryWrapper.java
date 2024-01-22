@@ -68,6 +68,7 @@ public class DLFileEntryWrapper
 		attributes.put("custom1ImageId", getCustom1ImageId());
 		attributes.put("custom2ImageId", getCustom2ImageId());
 		attributes.put("manualCheckInRequired", isManualCheckInRequired());
+		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("reviewDate", getReviewDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -265,6 +266,12 @@ public class DLFileEntryWrapper
 			setManualCheckInRequired(manualCheckInRequired);
 		}
 
+		Date displayDate = (Date)attributes.get("displayDate");
+
+		if (displayDate != null) {
+			setDisplayDate(displayDate);
+		}
+
 		Date expirationDate = (Date)attributes.get("expirationDate");
 
 		if (expirationDate != null) {
@@ -411,6 +418,16 @@ public class DLFileEntryWrapper
 	@Override
 	public String getDescription() {
 		return model.getDescription();
+	}
+
+	/**
+	 * Returns the display date of this document library file entry.
+	 *
+	 * @return the display date of this document library file entry
+	 */
+	@Override
+	public Date getDisplayDate() {
+		return model.getDisplayDate();
 	}
 
 	@Override
@@ -934,6 +951,16 @@ public class DLFileEntryWrapper
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
+	}
+
+	/**
+	 * Sets the display date of this document library file entry.
+	 *
+	 * @param displayDate the display date of this document library file entry
+	 */
+	@Override
+	public void setDisplayDate(Date displayDate) {
+		model.setDisplayDate(displayDate);
 	}
 
 	/**

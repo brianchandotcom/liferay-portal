@@ -380,6 +380,14 @@ else {
 				<liferay-ui:error exception="<%= FileEntryExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 				<liferay-ui:error exception="<%= FileEntryReviewDateException.class %>" message="please-enter-a-valid-review-date" />
 
+				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") %>'>
+					<p class="text-secondary">
+						<liferay-ui:message key="set-the-publication-date-and-time-for-your-document-to-be-published-automatically" />
+					</p>
+
+					<aui:input label="publish-date" name="displayDate" wrapperCssClass="display-date" />
+				</c:if>
+
 				<p class="text-secondary">
 					<liferay-ui:message key="including-an-expiration-date-will-allow-your-documents-or-media-to-expire-automatically-and-become-unpublished" />
 				</p>

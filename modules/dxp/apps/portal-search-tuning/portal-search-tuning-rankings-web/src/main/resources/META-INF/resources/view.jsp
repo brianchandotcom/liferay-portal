@@ -15,7 +15,8 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
@@ -163,36 +164,38 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				value="<%= rankingEntryDisplayContext.getHiddenResultsCount() %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smallest table-cell-minw-150"
-				name="scope"
-			>
-				<c:choose>
-					<c:when test="<%= Validator.isNotNull(rankingEntryDisplayContext.getGroupExternalReferenceCode()) %>">
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-6368") %>'>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-cell-minw-150"
+					name="scope"
+				>
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(rankingEntryDisplayContext.getGroupExternalReferenceCode()) %>">
 
-						<%
-						Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(rankingEntryDisplayContext.getGroupExternalReferenceCode(), themeDisplay.getCompanyId());
-						%>
+							<%
+							Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(rankingEntryDisplayContext.getGroupExternalReferenceCode(), themeDisplay.getCompanyId());
+							%>
 
-						<span class="lfr-portal-tooltip" data-title='<%= Validator.isNotNull(group) ? HtmlUtil.escape(group.getDescriptiveName(locale)) : LanguageUtil.get(request, "the-site-associated-with-this-ranking-was-deleted") %>'>
-							<liferay-ui:message key="site" />
-						</span>
-					</c:when>
-					<c:when test="<%= Validator.isNotNull(rankingEntryDisplayContext.getSXPBlueprintExternalReferenceCode()) %>">
+							<span class="lfr-portal-tooltip" data-title='<%= Validator.isNotNull(group) ? HtmlUtil.escape(group.getDescriptiveName(locale)) : LanguageUtil.get(request, "the-site-associated-with-this-ranking-was-deleted") %>'>
+								<liferay-ui:message key="site" />
+							</span>
+						</c:when>
+						<c:when test="<%= Validator.isNotNull(rankingEntryDisplayContext.getSXPBlueprintExternalReferenceCode()) %>">
 
-						<%
-						String sxpBlueprintTitle = rankingEntryDisplayContext.getSXPBlueprintTitle();
-						%>
+							<%
+							String sxpBlueprintTitle = rankingEntryDisplayContext.getSXPBlueprintTitle();
+							%>
 
-						<span class="lfr-portal-tooltip" data-title='<%= Validator.isNotNull(sxpBlueprintTitle) ? HtmlUtil.escape(sxpBlueprintTitle) : LanguageUtil.get(request, "the-blueprint-associated-with-this-ranking-was-deleted") %>'>
-							<liferay-ui:message key="blueprint" />
-						</span>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="everything" />
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+							<span class="lfr-portal-tooltip" data-title='<%= Validator.isNotNull(sxpBlueprintTitle) ? HtmlUtil.escape(sxpBlueprintTitle) : LanguageUtil.get(request, "the-blueprint-associated-with-this-ranking-was-deleted") %>'>
+								<liferay-ui:message key="blueprint" />
+							</span>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="everything" />
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-column-text>
+			</c:if>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-smallest table-cell-minw-150"

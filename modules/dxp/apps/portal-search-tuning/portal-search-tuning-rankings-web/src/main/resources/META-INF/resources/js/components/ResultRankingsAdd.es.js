@@ -173,79 +173,81 @@ function ResultRankingsAdd({
 				)}
 			</ClayForm.Group>
 
-			<ClayForm.Group>
-				<label htmlFor="searchScopeType">
-					{Liferay.Language.get('scope')}
+			{Liferay.FeatureFlags['LPD-6368'] && (
+				<ClayForm.Group>
+					<label htmlFor="searchScopeType">
+						{Liferay.Language.get('scope')}
 
-					<ClayIcon
-						className="c-ml-1 reference-mark"
-						symbol="asterisk"
-					/>
-				</label>
-
-				<ClayButton
-					aria-label={Liferay.Language.get('scope')}
-					className="form-control form-control-select"
-					displayType="unstyled"
-					id="searchScopeType"
-					onClick={_handleScopeDropdownChange}
-					ref={alignElementRef}
-				>
-					{SCOPE_INFO[scopeType].label}
-				</ClayButton>
-
-				<ClayDropDown.Menu
-					active={scopeDropdownActive}
-					alignElementRef={alignElementRef}
-					closeOnClickOutside
-					onActiveChange={setScopeDropdownActive}
-					style={{
-						maxWidth: '100%',
-						width:
-							alignElementRef.current &&
-							alignElementRef.current.clientWidth + 'px',
-					}}
-				>
-					<ClayDropDown.ItemList items={scopeItemsList}>
-						{(item) => (
-							<ClayDropDown.Item
-								key={item}
-								onClick={() => {
-									_handleScopeTypeChange(item);
-								}}
-							>
-								<div className="autofit-col-expand">
-									<div className="align-items-center d-flex list-group-text text-dark">
-										{SCOPE_INFO[item].label}
-
-										{SCOPE_INFO[item].showBetaBadge && (
-											<span className="c-ml-1">
-												<FeatureIndicator type="beta" />
-											</span>
-										)}
-									</div>
-
-									<div className="c-mt-0 list-group-subtext text-2">
-										{SCOPE_INFO[item].description}
-									</div>
-								</div>
-							</ClayDropDown.Item>
-						)}
-					</ClayDropDown.ItemList>
-				</ClayDropDown.Menu>
-
-				<div className="c-mt-1 sheet-text text-3">
-					<span className="text-secondary">
-						{Liferay.Language.get('result-rankings-scope-help')}
-
-						<LearnMessage
-							className="c-ml-1"
-							resource="portal-search-tuning-rankings-web"
-							resourceKey="result-rankings"
+						<ClayIcon
+							className="c-ml-1 reference-mark"
+							symbol="asterisk"
 						/>
-					</span>
-				</div>
-			</ClayForm.Group>
+					</label>
+
+					<ClayButton
+						aria-label={Liferay.Language.get('scope')}
+						className="form-control form-control-select"
+						displayType="unstyled"
+						id="searchScopeType"
+						onClick={_handleScopeDropdownChange}
+						ref={alignElementRef}
+					>
+						{SCOPE_INFO[scopeType].label}
+					</ClayButton>
+
+					<ClayDropDown.Menu
+						active={scopeDropdownActive}
+						alignElementRef={alignElementRef}
+						closeOnClickOutside
+						onActiveChange={setScopeDropdownActive}
+						style={{
+							maxWidth: '100%',
+							width:
+								alignElementRef.current &&
+								alignElementRef.current.clientWidth + 'px',
+						}}
+					>
+						<ClayDropDown.ItemList items={scopeItemsList}>
+							{(item) => (
+								<ClayDropDown.Item
+									key={item}
+									onClick={() => {
+										_handleScopeTypeChange(item);
+									}}
+								>
+									<div className="autofit-col-expand">
+										<div className="align-items-center d-flex list-group-text text-dark">
+											{SCOPE_INFO[item].label}
+
+											{SCOPE_INFO[item].showBetaBadge && (
+												<span className="c-ml-1">
+													<FeatureIndicator type="beta" />
+												</span>
+											)}
+										</div>
+
+										<div className="c-mt-0 list-group-subtext text-2">
+											{SCOPE_INFO[item].description}
+										</div>
+									</div>
+								</ClayDropDown.Item>
+							)}
+						</ClayDropDown.ItemList>
+					</ClayDropDown.Menu>
+
+					<div className="c-mt-1 sheet-text text-3">
+						<span className="text-secondary">
+							{Liferay.Language.get('result-rankings-scope-help')}
+
+							<LearnMessage
+								className="c-ml-1"
+								resource="portal-search-tuning-rankings-web"
+								resourceKey="result-rankings"
+							/>
+						</span>
+					</div>
+				</ClayForm.Group>
+			)}
 
 			{scopeType === SCOPE_TYPES.SITE && (
 				<ClayForm.Group

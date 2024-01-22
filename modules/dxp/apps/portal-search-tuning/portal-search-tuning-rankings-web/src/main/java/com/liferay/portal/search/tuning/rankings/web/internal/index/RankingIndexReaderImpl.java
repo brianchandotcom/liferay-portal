@@ -6,6 +6,7 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -139,13 +140,17 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		if (!Validator.isBlank(sxpBlueprintExternalReferenceCode)) {
+		if (!Validator.isBlank(sxpBlueprintExternalReferenceCode) &&
+			FeatureFlagManagerUtil.isEnabled("LPD-6368")) {
+
 			booleanQuery.addFilterQueryClauses(
 				_queries.term(
 					RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
 					sxpBlueprintExternalReferenceCode));
 		}
-		else if (!Validator.isBlank(groupExternalReferenceCode)) {
+		else if (!Validator.isBlank(groupExternalReferenceCode) &&
+				 FeatureFlagManagerUtil.isEnabled("LPD-6368")) {
+
 			booleanQuery.addFilterQueryClauses(
 				_queries.term(
 					RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,

@@ -70,6 +70,7 @@ export default function ({namespace: portletNamespace}) {
 	}
 
 	function onSubmit(event) {
+		event.preventDefault();
 		event.stopPropagation();
 
 		search();

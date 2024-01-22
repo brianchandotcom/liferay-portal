@@ -54,7 +54,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 		</div>
 	</c:when>
 	<c:otherwise>
-		<aui:form action="<%= searchBarPortletDisplayContext.getSearchURL() %>" method="get" name="fm">
+		<form action="<%= searchBarPortletDisplayContext.getSearchURL() %>" id="<portlet:namespace />fm" method="get" name="<portlet:namespace />fm">
 			<c:if test="<%= !Validator.isBlank(searchBarPortletDisplayContext.getPaginationStartParameterName()) %>">
 				<input class="search-bar-reset-start-page" name="<%= searchBarPortletDisplayContext.getPaginationStartParameterName() %>" type="hidden" value="0" />
 			</c:if>
@@ -167,9 +167,14 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 					</c:otherwise>
 				</c:choose>
 			</liferay-ddm:template-renderer>
-		</aui:form>
+		</form>
 
 		<liferay-frontend:component
+			context='<%=
+				HashMapBuilder.<String, Object>put(
+					"namespace", liferayPortletResponse.getNamespace()
+				).build()
+			%>'
 			module="js/SearchBar"
 		/>
 	</c:otherwise>

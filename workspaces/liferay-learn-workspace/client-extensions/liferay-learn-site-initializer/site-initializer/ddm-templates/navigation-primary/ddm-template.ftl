@@ -112,7 +112,7 @@
 				taxonomyCategory.name:
 					{
 						"description": taxonomyCategory.description,
-						"icon": icon!"",
+						"icon": icon!"documents/d${themeDisplay.getScopeGroup().getFriendlyURL()}/blank_icon",
 						"id": taxonomyCategory.id
 					}
 			}

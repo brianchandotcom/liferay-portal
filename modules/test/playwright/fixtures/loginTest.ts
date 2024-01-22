@@ -19,7 +19,7 @@ let loggedIn = false;
 const loginTest = test.extend<{
 	login: Login;
 }>({
-	login: async ({page}, use) => {
+	login: [async ({page}, use) => {
 		const user = liferayConfig.user.login;
 		const password = liferayConfig.user.password;
 
@@ -63,7 +63,7 @@ const loginTest = test.extend<{
 				.value,
 			user,
 		});
-	},
-});
+	},{auto: true}]
+} );
 
 export {loginTest};

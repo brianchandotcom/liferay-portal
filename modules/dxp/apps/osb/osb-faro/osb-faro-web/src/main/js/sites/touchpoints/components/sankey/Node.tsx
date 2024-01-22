@@ -1,15 +1,21 @@
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 import {
 	EMPTY_NODE_COLOR,
 	getFill,
 	MAIN_NODE_HEIGHT,
 	MAIN_NODE_WIDTH,
-	SANKEY_HEIGHT,
 	URL_COLOR
 } from './utils';
+import {getUrl} from 'shared/util/urls';
 import {Layer, Rectangle} from 'recharts';
+import {Link, useParams} from 'react-router-dom';
+import {pickBy} from 'lodash';
+import {Routes} from 'shared/util/router';
+import {sub} from 'shared/util/lang';
 import {TitleKey, Type} from './types';
 import {toThousands} from 'shared/util/numbers';
+import {useQueryRangeSelectors} from 'shared/hooks';
 
 function truncateText(text: string, limit: number) {
 	if (text.length > limit) {
@@ -48,6 +54,20 @@ function normalizeNumber(number: number) {
 	return isNaN(number) ? 0 : number;
 }
 
+const Title = ({title, x, y}) => (
+	<text
+		className='analytics-sankey-node-title'
+		data-testid='sankey-node-title'
+		fontSize='16'
+		fontWeight={600}
+		textAnchor='start'
+		x={x}
+		y={y}
+	>
+		{truncateText(title, 15)}
+	</text>
+);
+
 export const Node = ({
 	emptyState,
 	height: initialHeight,
@@ -64,6 +84,9 @@ export const Node = ({
 	const width = normalizeNumber(initialWidth);
 	const x = normalizeNumber(initialX);
 	const y = normalizeNumber(initialY);
+
+	const {channelId, groupId} = useParams();
+	const rangeSelectors = useQueryRangeSelectors();
 
 	return (
 		<Layer
@@ -117,27 +140,66 @@ export const Node = ({
 				</>
 			)}
 
-			<text
-				fontSize='16'
-				fontWeight={SANKEY_HEIGHT}
-				textAnchor='start'
-				x={x}
-				y={showURL(payload.url) ? y - 28 : y - 16}
-			>
-				{truncateText(payload.name, 15)}
-			</text>
+			{showURL(payload.url) ? (
+				payload.external ? (
+					<Title title={payload.name} x={x} y={y - 32} />
+				) : (
+					<Link
+						data-tooltip-align='right'
+						title={Liferay.Language.get('go-to-dashboard-page')}
+						to={getUrl(Routes.SITES_TOUCHPOINTS_OVERVIEW, {
+							params: {
+								channelId,
+								groupId,
+								title: payload.name,
+								touchpoint: payload.url
+							},
+							query: {
+								...pickBy(rangeSelectors)
+							}
+						})}
+					>
+						<Title title={payload.name} x={x} y={y - 32} />
+					</Link>
+				)
+			) : (
+				<Title title={payload.name} x={x} y={y - 12} />
+			)}
 
 			{showURL(payload.url) && (
-				<text
-					fill={URL_COLOR}
-					fontSize='12'
-					fontWeight={400}
-					textAnchor='start'
-					x={x}
-					y={y - 10}
-				>
-					{truncateText(payload.url, 25)}
-				</text>
+				<>
+					<ClayIcon
+						className='icon-root text-secondary'
+						height={16}
+						symbol='shortcut'
+						width={16}
+						x={x}
+						y={y - 22}
+					/>
+
+					<a
+						data-tooltip-align='right'
+						href={payload.url}
+						target='_blank'
+						title={
+							sub(Liferay.Language.get('visit-x'), [
+								payload.url
+							]) as string
+						}
+					>
+						<text
+							className='analytics-sankey-node-url'
+							fill={URL_COLOR}
+							fontSize='12'
+							fontWeight={400}
+							textAnchor='start'
+							x={x + 20}
+							y={y - 10}
+						>
+							{truncateText(payload.url, 18)}
+						</text>
+					</a>
+				</>
 			)}
 		</Layer>
 	);

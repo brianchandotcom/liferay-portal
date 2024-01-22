@@ -11,6 +11,7 @@ const Sankey = ({data, width}) => {
 
 	return (
 		<SankeyChart
+			className='analytics-sankey'
 			data={data}
 			height={SANKEY_HEIGHT}
 			link={

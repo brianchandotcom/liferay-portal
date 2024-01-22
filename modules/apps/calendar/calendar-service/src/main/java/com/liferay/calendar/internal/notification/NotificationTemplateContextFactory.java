@@ -125,7 +125,8 @@ public class NotificationTemplateContextFactory {
 			).put(
 				"portalURL",
 				() -> _getPortalURLOrCompanyPortalURL(
-					portalURL, user.getCompanyId())
+					portalURL, user.getCompanyId(),
+					calendarBooking.getGroupId())
 			).put(
 				"portletName",
 				LanguageUtil.get(
@@ -223,8 +224,24 @@ public class NotificationTemplateContextFactory {
 			GroupLocalService groupLocalService =
 				_groupLocalServiceSnapshot.get();
 
-			Group group = groupLocalService.getGroup(
-				user.getCompanyId(), GroupConstants.GUEST);
+			CalendarBookingLocalService calendarBookingLocalService =
+				_calendarBookingLocalServiceSnapshot.get();
+
+			CalendarBooking calendarBooking =
+				calendarBookingLocalService.fetchCalendarBooking(
+					calendarBookingId);
+
+			Group group = null;
+
+			if (calendarBooking != null) {
+				group = groupLocalService.fetchGroup(
+					calendarBooking.getGroupId());
+			}
+
+			if (group == null) {
+				group = groupLocalService.getGroup(
+					user.getCompanyId(), GroupConstants.GUEST);
+			}
 
 			LayoutLocalService layoutLocalService =
 				_layoutLocalServiceSnapshot.get();
@@ -233,7 +250,7 @@ public class NotificationTemplateContextFactory {
 				layoutLocalService.fetchLayout(group.getDefaultPublicPlid()));
 
 			portalURL = _getPortalURLOrCompanyPortalURL(
-				portalURL, user.getCompanyId());
+				portalURL, user.getCompanyId(), group.getGroupId());
 
 			url = portalURL + layoutURL;
 		}
@@ -256,7 +273,7 @@ public class NotificationTemplateContextFactory {
 	}
 
 	private static String _getPortalURLOrCompanyPortalURL(
-			String portalURL, long companyId)
+			String portalURL, long companyId, long groupId)
 		throws PortalException {
 
 		if (portalURL != null) {
@@ -268,12 +285,7 @@ public class NotificationTemplateContextFactory {
 
 		Company company = companyLocalService.getCompany(companyId);
 
-		GroupLocalService groupLocalService = _groupLocalServiceSnapshot.get();
-
-		Group group = groupLocalService.getGroup(
-			companyId, GroupConstants.GUEST);
-
-		return company.getPortalURL(group.getGroupId());
+		return company.getPortalURL(groupId);
 	}
 
 	private static Format _getUserDateTimeFormat(

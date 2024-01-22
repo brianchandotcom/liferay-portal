@@ -972,8 +972,7 @@ public class JournalDisplayContext {
 		if (count > 1) {
 			return LanguageUtil.get(
 				_themeDisplay.getLocale(),
-				"multiple-publications-scheduled.-view-history-for-more-" +
-					"details");
+				"multiple-publications-were-scheduled");
 		}
 
 		return _dateTimeFormat.format(journalArticle.getDisplayDate());

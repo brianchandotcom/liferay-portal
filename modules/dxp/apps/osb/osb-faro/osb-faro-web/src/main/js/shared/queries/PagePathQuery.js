@@ -22,11 +22,13 @@ export default gql`
 			canonicalUrl
 			followingPagePathNodes {
 				canonicalUrl
+				external
 				views
 				title
 			}
 			previousPagePathNodes {
 				canonicalUrl
+				external
 				views
 				title
 			}

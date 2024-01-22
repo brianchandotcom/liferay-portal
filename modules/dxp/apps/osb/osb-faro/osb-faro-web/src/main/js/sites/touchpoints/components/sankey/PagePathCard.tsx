@@ -17,6 +17,7 @@ import {useResize} from 'shared/hooks';
 import {v4 as uuidv4} from 'uuid';
 
 type pagePathNode = {
+	external: boolean;
 	views: number;
 	canonicalUrl: string;
 	title: TitleKey;
@@ -49,8 +50,9 @@ function formatData({pagePath}: {pagePath: pagePathNode}) {
 	const formatNodes = (nodes: pagePathNode[], type: Type) =>
 		nodes
 			?.filter(({views}) => !!views)
-			?.map(({canonicalUrl, title, views}) => ({
+			?.map(({canonicalUrl, external, title, views}) => ({
 				color: getColor(title),
+				external,
 				id: uuidv4(),
 				name: getTitle(title, type),
 				type,

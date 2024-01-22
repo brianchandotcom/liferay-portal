@@ -19,13 +19,14 @@ class PlansList extends React.Component {
 					[INDIVIDUALS]: PropTypes.number,
 					[PAGEVIEWS]: PropTypes.number
 				}),
-				name: PropTypes.string
+				name: PropTypes.string,
+				workspaceBirthday: PropTypes.number
 			})
 		)
 	};
 
 	render() {
-		const {currentPlanName, plans} = this.props;
+		const {currentPlanName, plans, workspaceBirthday} = this.props;
 
 		return (
 			<div
@@ -60,6 +61,7 @@ class PlansList extends React.Component {
 							}
 						>
 							<PlanBreakdown
+								currentPlan={isCurrentPlan}
 								limits={[
 									{
 										entityLabel: INDIVIDUALS,
@@ -70,6 +72,7 @@ class PlansList extends React.Component {
 										value: limits.pageViews
 									}
 								]}
+								workspaceBirthday={workspaceBirthday}
 							/>
 						</Panel>
 					);

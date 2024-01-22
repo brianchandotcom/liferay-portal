@@ -189,6 +189,9 @@ export class UsageOverview extends React.Component {
 									<PlansList
 										currentPlanName={currentPlan.name}
 										plans={getPlans(currentPlan)}
+										workspaceBirthday={
+											currentPlan.startDate
+										}
 									/>
 								</div>
 

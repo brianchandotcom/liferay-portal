@@ -27,10 +27,15 @@ const PreviewSeo = ({
 
 			{titleSuffix && ` - ${titleSuffix}`}
 		</div>,
-		<div className="preview-seo-url text-truncate" key="url">
-			{decodeURIComponent(url)}
-		</div>,
 	];
+
+	if (url) {
+		titleUrl.push(
+			<div className="preview-seo-url text-truncate" key="url">
+				{decodeURIComponent(url)}
+			</div>
+		);
+	}
 
 	return (
 		<div

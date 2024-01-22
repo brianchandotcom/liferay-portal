@@ -539,11 +539,17 @@ public class LayoutsSEODisplayContext {
 				).build()
 			).put(
 				"url",
-				HashMapBuilder.<String, Object>put(
-					"defaultValue", getDefaultCanonicalURLMap()
-				).put(
-					"id", "canonicalURL"
-				).build()
+				() -> {
+					if (isLayoutUtilityPageEntry()) {
+						return null;
+					}
+
+					return HashMapBuilder.<String, Object>put(
+						"defaultValue", getDefaultCanonicalURLMap()
+					).put(
+						"id", "canonicalURL"
+					).build();
+				}
 			).build()
 		).put(
 			"titleSuffix", getPageTitleSuffix()

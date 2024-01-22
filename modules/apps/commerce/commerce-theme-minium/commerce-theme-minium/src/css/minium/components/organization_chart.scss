@@ -4,4 +4,8 @@
 		position: fixed;
 		top: calc(var(--control-menu-container-height) + 64px);
 	}
+
+	.org-chart-container.expanded ~ .org-char-info-panel {
+		top: var(--control-menu-container-height) + 48px;
+	}
 }

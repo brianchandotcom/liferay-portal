@@ -11,7 +11,7 @@
 CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (CommerceOrganizationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<div class="<%= commerceOrganizationDisplayContext.isAdminPortlet() ? "admin-portlet" : "" %>" id="<portlet:namespace />org-chart-root">
+<div class="org-chart-root<%= commerceOrganizationDisplayContext.isAdminPortlet() ? " admin-portlet" : "" %>" id="<portlet:namespace />org-chart-root">
 	<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
 
 	<react:component

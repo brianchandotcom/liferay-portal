@@ -10,6 +10,10 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPages';
 import getRandomId from '../../utils/getRandomId';
+import {
+	HeadlessDeliveryV10SitePageService,
+	HeadlessSiteV10SiteService,
+} from '../../utils/headless';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -57,11 +61,14 @@ test('shows correct sections on each configuration panel when viewport is not De
 	page,
 	pageEditorPage,
 }) => {
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178052', true);
 	await page.goto('/');
 
 	// Create a site
 
-	const site = await apiHelpers.headlessSite.createSite(getRandomId());
+	const site = await HeadlessSiteV10SiteService.headlessSiteV10PostSite({
+		name: getRandomId(),
+	});
 
 	// Create a page with a Heading fragment
 
@@ -72,11 +79,14 @@ test('shows correct sections on each configuration panel when viewport is not De
 		'BASIC_COMPONENT-heading'
 	);
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomId(),
-		getPageDefinition([headingFragment])
-	);
+	const layout =
+		await HeadlessDeliveryV10SitePageService.headlessDeliveryV10PostSiteSitePage(
+			`${site.id}`,
+			{
+				pageDefinition: getPageDefinition([headingFragment]),
+				title: getRandomId(),
+			}
+		);
 
 	// Go to edit mode of page
 
@@ -106,5 +116,7 @@ test('shows correct sections on each configuration panel when viewport is not De
 
 	// Delete the site
 
-	await apiHelpers.headlessSite.deleteSite(site.id);
+	await HeadlessSiteV10SiteService.headlessSiteV10DeleteSite(`${site.id}`);
+
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178052', false);
 });

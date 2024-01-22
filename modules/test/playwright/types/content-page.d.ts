@@ -15,10 +15,6 @@ type ConfigurationSection =
 
 type ConfigurationTab = 'Advanced' | 'General' | 'Styles';
 
-type Layout = {
-	friendlyUrlPath: string;
-};
-
 type PageDefinition = {
 	pageElement: PageElement;
 };

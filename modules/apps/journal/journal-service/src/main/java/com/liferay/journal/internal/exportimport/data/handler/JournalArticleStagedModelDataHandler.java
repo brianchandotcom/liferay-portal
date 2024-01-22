@@ -1086,11 +1086,18 @@ public class JournalArticleStagedModelDataHandler
 					serviceContext);
 			}
 
-			_journalArticleLocalService.updateAsset(
-				userId, importedArticle, serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames(),
-				serviceContext.getAssetLinkEntryIds(),
-				serviceContext.getAssetPriority());
+			if (_updateAsset(
+					importedArticle.getGroupId(),
+					importedArticle.getArticleId(),
+					importedArticle.getVersion())) {
+
+				_journalArticleLocalService.updateAsset(
+					userId, importedArticle,
+					serviceContext.getAssetCategoryIds(),
+					serviceContext.getAssetTagNames(),
+					serviceContext.getAssetLinkEntryIds(),
+					serviceContext.getAssetPriority());
+			}
 
 			if (article.isExpired() || importedArticle.isExpired()) {
 				_journalArticleLocalService.expireArticle(
@@ -1731,6 +1738,19 @@ public class JournalArticleStagedModelDataHandler
 				_journalArticleLocalService.updateJournalArticle(curArticle);
 			}
 		}
+	}
+
+	private boolean _updateAsset(
+		long groupId, String articleId, double version) {
+
+		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
+			groupId, articleId, WorkflowConstants.STATUS_APPROVED);
+
+		if ((article == null) || (version >= article.getVersion())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import React, {useState} from 'react';
 
 import AssetDisplayPageSelector from './AssetDisplayPageSelector';
@@ -62,19 +60,14 @@ export default function SelectAssetDisplayPage({
 	const ITEMS = [
 		{
 			label: getLabel(DISPLAY_PAGE_TYPE.default),
-			onClick: () =>
-				setSelectedDisplayPageType(DISPLAY_PAGE_TYPE.default),
 			value: DISPLAY_PAGE_TYPE.default,
 		},
 		{
 			label: getLabel(DISPLAY_PAGE_TYPE.specific),
-			onClick: () =>
-				setSelectedDisplayPageType(DISPLAY_PAGE_TYPE.specific),
 			value: DISPLAY_PAGE_TYPE.specific,
 		},
 		{
 			label: getLabel(DISPLAY_PAGE_TYPE.none),
-			onClick: () => setSelectedDisplayPageType(DISPLAY_PAGE_TYPE.none),
 			value: DISPLAY_PAGE_TYPE.none,
 		},
 	];
@@ -82,20 +75,18 @@ export default function SelectAssetDisplayPage({
 	return (
 		<>
 			<ClayForm.Group>
-				<ClayDropDownWithItems
-					items={ITEMS}
-					trigger={
-						<ClayButton
-							aria-label={Liferay.Language.get(
-								'select-display-page-type'
-							)}
-							className="bg-light form-control-select text-left w-100"
-							displayType="secondary"
-							type="button"
-						>
-							<span>{getLabel(selectedDisplayPageType)}</span>
-						</ClayButton>
+				<ClaySelectWithOption
+					aria-label={Liferay.Language.get(
+						'select-display-page-type'
+					)}
+					id={`${namespace}selectDisplayPageType`}
+					onChange={(event) =>
+						setSelectedDisplayPageType(
+							parseInt(event.target.value, 10)
+						)
 					}
+					options={ITEMS}
+					value={selectedDisplayPageType}
 				/>
 			</ClayForm.Group>
 

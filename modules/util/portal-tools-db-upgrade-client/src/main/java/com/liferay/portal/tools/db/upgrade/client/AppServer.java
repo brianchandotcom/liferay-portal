@@ -8,8 +8,18 @@ package com.liferay.portal.tools.db.upgrade.client;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.URISyntaxException;
+import java.net.URL;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author David Truong
@@ -18,25 +28,27 @@ public class AppServer {
 
 	public static AppServer getJBossEAPAppServer() {
 		return new AppServer(
-			"jboss-eap", _getJBossExtraLibDirNames(),
-			"/modules/com/liferay/portal/main",
+			_getAppServerDirName("../../", "jboss-eap"),
+			_getJBossExtraLibDirNames(), "/modules/com/liferay/portal/main",
 			"/standalone/deployments/ROOT.war", "jboss");
 	}
 
 	public static AppServer getTomcatAppServer() {
 		return new AppServer(
-			"tomcat", "/bin", "/lib", "/webapps/ROOT", "tomcat");
+			_getAppServerDirName("../../", "tomcat"), "/bin", "/lib",
+			"/webapps/ROOT", "tomcat");
 	}
 
 	public static AppServer getWebLogicAppServer() {
 		return new AppServer(
-			"weblogic", "/wlserver/modules", "/domains/liferay/lib",
-			"/domains/liferay/autodeploy/ROOT", "weblogic");
+			_getAppServerDirName("../../", "weblogic"), "/wlserver/modules",
+			"/domains/liferay/lib", "/domains/liferay/autodeploy/ROOT",
+			"weblogic");
 	}
 
 	public static AppServer getWebSphereAppServer() {
 		return new AppServer(
-			"websphere", "", "/lib",
+			_getAppServerDirName("../../", "websphere"), "", "/lib",
 			"/profiles/liferay/installedApps/liferay-cell/liferay-portal.ear" +
 				"/liferay-portal.war",
 			"websphere");
@@ -44,8 +56,8 @@ public class AppServer {
 
 	public static AppServer getWildFlyAppServer() {
 		return new AppServer(
-			"wildfly", _getJBossExtraLibDirNames(),
-			"/modules/com/liferay/portal/main",
+			_getAppServerDirName("../../", "wildfly"),
+			_getJBossExtraLibDirNames(), "/modules/com/liferay/portal/main",
 			"/standalone/deployments/ROOT.war", "wildfly");
 	}
 
@@ -129,6 +141,41 @@ public class AppServer {
 		_portalDirName = portalDirName;
 	}
 
+	private static String _getAppServerDirName(
+		String basePath, String dirName) {
+
+		File basePathFolder = new File(basePath);
+
+		if (!basePathFolder.isAbsolute()) {
+			basePathFolder = new File(_jarDir, basePath);
+		}
+
+		if (basePathFolder.isDirectory()) {
+			File[] folders = basePathFolder.listFiles();
+
+			if (folders != null) {
+				for (File file : folders) {
+					if (file.isDirectory() &&
+						(Objects.equals(file.getName(), dirName) ||
+						 file.getName(
+						 ).startsWith(
+							 dirName + "-"
+						 ))) {
+
+						try {
+							return file.getCanonicalPath();
+						}
+						catch (IOException ioException) {
+							ioException.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+
+		return dirName;
+	}
+
 	private static String _getJBossExtraLibDirNames() {
 		StringBuilder sb = new StringBuilder();
 
@@ -157,6 +204,28 @@ public class AppServer {
 		}
 		catch (IOException ioException) {
 			ioException.printStackTrace();
+		}
+	}
+
+	private static File _jarDir;
+
+	static {
+		ProtectionDomain protectionDomain =
+			AppServer.class.getProtectionDomain();
+
+		CodeSource codeSource = protectionDomain.getCodeSource();
+
+		URL url = codeSource.getLocation();
+
+		try {
+			Path path = Paths.get(url.toURI());
+
+			File jarFile = path.toFile();
+
+			_jarDir = jarFile.getParentFile();
+		}
+		catch (URISyntaxException uriSyntaxException) {
+			throw new ExceptionInInitializerError(uriSyntaxException);
 		}
 	}
 

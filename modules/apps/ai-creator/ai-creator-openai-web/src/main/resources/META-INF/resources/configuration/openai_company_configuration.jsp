@@ -57,7 +57,7 @@ AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigur
 	</clay:content-col>
 </clay:content-row>
 
-<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-196648") %>'>
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10793") %>'>
 	<clay:content-row
 		cssClass="ai-creator-config-checkbox c-my-5"
 	>

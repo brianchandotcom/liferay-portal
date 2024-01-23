@@ -119,7 +119,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 				portletResponse);
 		}
 
-		if (_featureFlagManager.isEnabled("LPS-196648")) {
+		if (_featureFlagManager.isEnabled("LPD-10793")) {
 			_add(
 				menuItems,
 				_menuItemProvider.getAICreatorMenuItem(

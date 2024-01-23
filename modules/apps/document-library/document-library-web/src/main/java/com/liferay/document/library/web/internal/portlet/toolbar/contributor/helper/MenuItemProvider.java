@@ -312,7 +312,7 @@ public class MenuItemProvider {
 		Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
-		if (!_featureFlagManager.isEnabled("LPS-196648")) {
+		if (!_featureFlagManager.isEnabled("LPD-10793")) {
 			return null;
 		}
 

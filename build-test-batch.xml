@@ -7260,15 +7260,6 @@ ${output.content}</echo>
 
 								<gradle-execute dir="${playwright.dir}" task="npmInstall" />
 
-								<if>
-									<not>
-										<isset property="playwright.test.project" />
-									</not>
-									<then>
-										<property name="playwright.test.project" value="" />
-									</then>
-								</if>
-
 								<local name="playwright.test.shard" />
 
 								<if>
@@ -7281,9 +7272,27 @@ ${output.content}</echo>
 									</else>
 								</if>
 
+								<if>
+									<isset property="PLAYWRIGHT_PROJECT_NAME" />
+									<then>
+										<propertycopy from="PLAYWRIGHT_PROJECT_NAME" name="playwright.project.name" />
+									</then>
+									<else>
+										<property name="playwright.project.name" value="" />
+									</else>
+								</if>
+
 								<local name="playwright.command" />
 
-								<property name="playwright.command" value="npm run playwright test ${playwright.test.project} ${playwright.test.shard}" />
+								<if>
+									<equals arg1="${playwright.project.name}" arg2="" />
+									<then>
+										<property name="playwright.command" value="npm run playwright test ${playwright.test.shard}" />
+									</then>
+									<else>
+										<property name="playwright.command" value="npm run playwright test --project ${playwright.project.name} ${playwright.test.shard}" />
+									</else>
+								</if>
 
 								<echo>Running "${playwright.command}" from ${playwright.dir}</echo>
 

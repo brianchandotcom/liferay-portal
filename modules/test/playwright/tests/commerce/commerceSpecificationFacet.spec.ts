@@ -109,12 +109,15 @@ test('can sort specifications by specification group priority', async ({
 		await expect(panelList[i]).toHaveText(specificationFacetsList[i]);
 	}
 
-	await apiHelpers.headlessCommerceAdminCatalog.deleteOptionCategory(
-		optionCategory1.id
-	);
-	await apiHelpers.headlessCommerceAdminCatalog.deleteOptionCategory(
-		optionCategory2.id
-	);
+	await Promise.all([
+		apiHelpers.headlessCommerceAdminCatalog.deleteOptionCategory(
+			optionCategory1.id
+		),
+		apiHelpers.headlessCommerceAdminCatalog.deleteOptionCategory(
+			optionCategory2.id
+		),
+		apiHelpers.headlessCommerceAdminChannel.deleteChannel(channel.id),
+	]);
 
 	await apiHelpers.headlessCommerceAdminCatalog.deleteSpecification(
 		specification1.id
@@ -130,7 +133,6 @@ test('can sort specifications by specification group priority', async ({
 		product2.productId
 	);
 
-	await apiHelpers.headlessCommerceAdminChannel.deleteChannel(channel.id);
 	await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(catalog.id);
 
 	await commerceLayoutsPage.goToPages();

@@ -546,8 +546,11 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		ServiceContext serviceContext = _createServiceContext(userAccount);
 
-		_userService.updateExternalReferenceCode(
-			userAccountId, userAccount.getExternalReferenceCode());
+		user = _userService.updateExternalReferenceCode(
+			userAccountId,
+			GetterUtil.getString(
+				userAccount.getExternalReferenceCode(),
+				user.getExternalReferenceCode()));
 
 		user = _userService.updateUser(
 			userAccountId, null, null, null, false, null, null,
@@ -1005,6 +1008,12 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			user, userAccount.getCurrentPassword(), userAccount.getPassword());
 
 		ServiceContext serviceContext = _createServiceContext(userAccount);
+
+		user = _userService.updateExternalReferenceCode(
+			userAccountId,
+			GetterUtil.getString(
+				userAccount.getExternalReferenceCode(),
+				user.getExternalReferenceCode()));
 
 		_userService.updateStatus(
 			userAccountId, workflowStatus, serviceContext);

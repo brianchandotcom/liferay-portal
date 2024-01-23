@@ -5,13 +5,11 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.GroupService;
@@ -22,9 +20,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
 
 import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -90,85 +85,13 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 		);
 	}
 
-	protected JSONObject getSitesJSONObject(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<Group> allGroups = new ArrayList<>();
-
-		_addGroupsWithChildren(
-			allGroups,
-			_groupService.getGroups(
-				themeDisplay.getCompanyId(),
-				GroupConstants.DEFAULT_PARENT_GROUP_ID, true));
-
-		allGroups.sort(
-			(g1, g2) -> {
-				try {
-					return g1.getDescriptiveName(
-						themeDisplay.getLocale()
-					).compareTo(
-						g2.getDescriptiveName(themeDisplay.getLocale())
-					);
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
-				}
-
-				return 0;
-			});
-
-		return JSONUtil.put(
-			"items",
-			JSONUtil.toJSONArray(
-				allGroups,
-				group -> JSONUtil.put(
-					"descriptiveName",
-					group.getDescriptiveName(themeDisplay.getLocale())
-				).put(
-					"externalReferenceCode", group.getExternalReferenceCode()
-				).put(
-					"groupId", group.getGroupId()
-				).put(
-					"name", group.getName(themeDisplay.getLocale())
-				))
-		).put(
-			"total", allGroups.size()
-		);
-	}
-
-	private void _addGroupsWithChildren(
-		List<Group> allGroups, List<Group> groups) {
-
-		groups.forEach(
-			group -> {
-				if (!group.isActive()) {
-					return;
-				}
-
-				List<Group> children = group.getChildren(true);
-
-				if (!children.isEmpty()) {
-					_addGroupsWithChildren(allGroups, children);
-				}
-
-				allGroups.add(group);
-			});
-	}
-
 	private JSONObject _getJSONObject(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 
-		if (cmd.equals("getSitesJSONObject")) {
-			return getSitesJSONObject(resourceRequest, resourceResponse);
-		}
-		else if (cmd.equals("getSiteByExternalReferenceCodeJSONObject")) {
+		if (cmd.equals("getSiteByExternalReferenceCodeJSONObject")) {
 			return getSiteByExternalReferenceCodeJSONObject(
 				resourceRequest, resourceResponse);
 		}

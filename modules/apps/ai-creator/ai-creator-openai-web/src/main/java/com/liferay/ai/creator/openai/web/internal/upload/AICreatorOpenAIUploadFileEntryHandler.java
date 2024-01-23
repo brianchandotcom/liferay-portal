@@ -88,7 +88,7 @@ public class AICreatorOpenAIUploadFileEntryHandler
 			}
 
 			String title = StringBundler.concat(
-				"image-", now.getTime(), extension);
+				"AI-image-", now.getTime(), extension);
 
 			file = FileUtil.createTempFile(inputStream);
 

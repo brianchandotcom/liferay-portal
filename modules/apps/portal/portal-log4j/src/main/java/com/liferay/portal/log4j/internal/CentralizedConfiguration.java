@@ -5,13 +5,8 @@
 
 package com.liferay.portal.log4j.internal;
 
-import com.liferay.petra.reflect.ReflectionUtil;
-
 import java.io.File;
 
-import java.lang.reflect.Field;
-
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -214,15 +209,8 @@ public class CentralizedConfiguration extends AbstractConfiguration {
 
 		Map<String, Appender> newAppenders = newLoggerConfig.getAppenders();
 
-		List<AppenderRef> currentAppenderRefs = new ArrayList<>(
-			currentLoggerConfig.getAppenderRefs());
-
-		try {
-			_appenderRefsField.set(currentLoggerConfig, currentAppenderRefs);
-		}
-		catch (IllegalAccessException illegalAccessException) {
-			ReflectionUtil.throwException(illegalAccessException);
-		}
+		List<AppenderRef> currentAppenderRefs =
+			currentLoggerConfig.getAppenderRefs();
 
 		for (Appender newAppender : newAppenders.values()) {
 			String name = newAppender.getName();
@@ -257,18 +245,6 @@ public class CentralizedConfiguration extends AbstractConfiguration {
 
 				currentAppenderRefs.add(newAppenderRef);
 			}
-		}
-	}
-
-	private static final Field _appenderRefsField;
-
-	static {
-		try {
-			_appenderRefsField = ReflectionUtil.getDeclaredField(
-				LoggerConfig.class, "appenderRefs");
-		}
-		catch (Exception exception) {
-			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

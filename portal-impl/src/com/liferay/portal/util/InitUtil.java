@@ -79,7 +79,7 @@ public class InitUtil {
 		}
 
 		try {
-			if (!OSDetector.isWindows() && !JavaDetector.isJDK11()) {
+			if (!OSDetector.isWindows() && JavaDetector.isJDK8()) {
 				Field field = ReflectionUtil.getDeclaredField(
 					ZipFile.class, "usemmap");
 

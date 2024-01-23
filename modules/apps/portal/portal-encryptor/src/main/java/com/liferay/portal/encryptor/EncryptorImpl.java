@@ -16,12 +16,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.security.Key;
-import java.security.Provider;
 import java.security.SecureRandom;
-import java.security.Security;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -42,22 +39,12 @@ public class EncryptorImpl implements Encryptor {
 
 	public static final String ENCODING = Digester.ENCODING;
 
-	public static final String IBM_PROVIDER_CLASS =
-		"com.ibm.crypto.provider.IBMJCE";
-
 	public static final String KEY_ALGORITHM = StringUtil.toUpperCase(
 		GetterUtil.getString(
 			PropsUtil.get(PropsKeys.COMPANY_ENCRYPTION_ALGORITHM)));
 
 	public static final int KEY_SIZE = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.COMPANY_ENCRYPTION_KEY_SIZE));
-
-	public static final String PROVIDER_CLASS = SystemProperties.get(
-		EncryptorImpl.class.getName() + ".provider.class",
-		EncryptorImpl.SUN_PROVIDER_CLASS);
-
-	public static final String SUN_PROVIDER_CLASS =
-		"com.sun.crypto.provider.SunJCE";
 
 	@Override
 	public String decrypt(Key key, String encryptedString)
@@ -198,42 +185,6 @@ public class EncryptorImpl implements Encryptor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(EncryptorImpl.class);
-
-	private static final Provider _provider;
-
-	static {
-		try {
-			Class<?> providerClass = null;
-
-			try {
-				providerClass = Class.forName(PROVIDER_CLASS);
-			}
-			catch (ClassNotFoundException classNotFoundException1) {
-				try {
-					if (PROVIDER_CLASS.equals(SUN_PROVIDER_CLASS)) {
-						providerClass = Class.forName(IBM_PROVIDER_CLASS);
-					}
-				}
-				catch (ClassNotFoundException classNotFoundException2) {
-					classNotFoundException1.addSuppressed(
-						classNotFoundException2);
-				}
-
-				if (providerClass == null) {
-					throw new IllegalStateException(
-						"Unable to find provider class: " + PROVIDER_CLASS,
-						classNotFoundException1);
-				}
-			}
-
-			_provider = (Provider)providerClass.newInstance();
-
-			Security.addProvider(_provider);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new ExceptionInInitializerError(reflectiveOperationException);
-		}
-	}
 
 	private final Map<String, Cipher> _decryptCipherMap =
 		new ConcurrentHashMap<>(1, 1F, 1);

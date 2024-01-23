@@ -98,6 +98,26 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 	}
 
 	@Test
+	public void testDoProcessActionWithANumberAsAFriendlyURLSeparator()
+		throws Exception {
+
+		Map<String, String> friendlyURLSeparators =
+			_getRandomFriendlyURLSeparatorsMap();
+
+		friendlyURLSeparators.put(JournalArticle.class.getName(), "12");
+
+		MockActionResponse mockActionResponse = new MockActionResponse();
+
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(friendlyURLSeparators),
+			mockActionResponse);
+
+		_assertRedirectURL(
+			"friendly-url-separator-error-can-not-be-a-number",
+			friendlyURLSeparators, mockActionResponse.getRedirect());
+	}
+
+	@Test
 	public void testDoProcessActionWithInvalidCharactersAsAFriendlyURLSeparator()
 		throws Exception {
 

@@ -49,6 +49,12 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 			<aui:input label="max-specifications" name="preferences--maxSpecifications--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("maxSpecifications", null), 10) %>' />
 			<aui:input label="max-terms" name="preferences--maxTerms--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("maxTerms", null), 10) %>' />
 			<aui:input label="frequency-threshold" name="preferences--frequencyThreshold--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("frequencyThreshold", null), 1) %>' />
+
+			<aui:select label="order-specifications-by" name="preferences--specificationsOrder--" value='<%= portletPreferences.getValue("specificationsOrder", "priority:asc") %>'>
+				<aui:option label="specification-group-priority-ascending" value="priority:asc" />
+				<aui:option label="specification-group-priority-descending" value="priority:desc" />
+			</aui:select>
+
 			<aui:input label="display-frequencies" name="preferences--frequenciesVisible--" type="checkbox" value='<%= GetterUtil.getBoolean(portletPreferences.getValue("frequenciesVisible", null), true) %>' />
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>

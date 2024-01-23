@@ -55,6 +55,10 @@ public class CPSpecificationOptionsSearchFacetDisplayContext
 		return _parameterValue;
 	}
 
+	public Double getPriority() {
+		return _priority;
+	}
+
 	public List<CPSpecificationOptionsSearchFacetTermDisplayContext>
 		getTermDisplayContexts() {
 
@@ -95,6 +99,10 @@ public class CPSpecificationOptionsSearchFacetDisplayContext
 		_parameterValue = paramValue;
 	}
 
+	public void setPriority(Double priority) {
+		_priority = priority;
+	}
+
 	public void setRenderRequest(RenderRequest renderRequest) {
 		_renderRequest = renderRequest;
 	}
@@ -116,6 +124,7 @@ public class CPSpecificationOptionsSearchFacetDisplayContext
 	private String _paginationStartParameterName;
 	private String _parameterName;
 	private String _parameterValue;
+	private Double _priority;
 	private RenderRequest _renderRequest;
 
 }

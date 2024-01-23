@@ -10,6 +10,7 @@ import com.liferay.commerce.product.content.search.web.internal.display.context.
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetTermDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.util.CPSpecificationOptionFacetsUtil;
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.petra.string.StringPool;
@@ -33,6 +34,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -85,7 +87,8 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	}
 
 	private CPSpecificationOptionsSearchFacetDisplayContext
-		_buildCPSpecificationOptionsSearchFacetDisplayContext() {
+			_buildCPSpecificationOptionsSearchFacetDisplayContext()
+		throws PortalException {
 
 		_tuples = _getTuples(_facet.getFacetCollector());
 
@@ -105,6 +108,22 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 			_getFirstParameterValueString());
 		cpSpecificationOptionsSearchFacetDisplayContext.setRenderRequest(
 			_renderRequest);
+
+		CPSpecificationOption cpSpecificationOption = _getCPSpecificationOption(
+			_facet.getFieldName());
+
+		CPOptionCategory cpOptionCategory =
+			cpSpecificationOption.getCPOptionCategory();
+
+		if (cpOptionCategory != null) {
+			cpSpecificationOptionsSearchFacetDisplayContext.setPriority(
+				cpOptionCategory.getPriority());
+		}
+		else {
+			cpSpecificationOptionsSearchFacetDisplayContext.setPriority(
+				GetterUtil.DEFAULT_DOUBLE);
+		}
+
 		cpSpecificationOptionsSearchFacetDisplayContext.setTermDisplayContexts(
 			_buildTermDisplayContexts());
 		cpSpecificationOptionsSearchFacetDisplayContext.
@@ -115,10 +134,11 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	}
 
 	private CPSpecificationOptionsSearchFacetDisplayContext
-		_buildCPSpecificationOptionsSearchFacetDisplayContext(
-			Facet facet,
-			PortletSharedSearchResponse portletSharedSearchResponse,
-			RenderRequest renderRequest) {
+			_buildCPSpecificationOptionsSearchFacetDisplayContext(
+				Facet facet,
+				PortletSharedSearchResponse portletSharedSearchResponse,
+				RenderRequest renderRequest)
+		throws PortalException {
 
 		_facet = facet;
 
@@ -161,6 +181,8 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 				_frequenciesVisible);
 			_maxTerms = GetterUtil.getInteger(
 				portletPreferences.getValue("maxTerms", null), _maxTerms);
+			_specificationsOrder = portletPreferences.getValue(
+				"specificationsOrder", _specificationsOrder);
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
@@ -213,6 +235,19 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 				cpSpecificationOptionsSearchFacetDisplayContexts.add(
 					cpSpecificationOptionsSearchFacetDisplayContext);
 			}
+		}
+
+		if (_specificationsOrder != null) {
+			Comparator<CPSpecificationOptionsSearchFacetDisplayContext>
+				comparator = Comparator.comparing(
+					CPSpecificationOptionsSearchFacetDisplayContext::
+						getPriority);
+
+			if (_specificationsOrder.equals("priority:desc")) {
+				comparator = comparator.reversed();
+			}
+
+			cpSpecificationOptionsSearchFacetDisplayContexts.sort(comparator);
 		}
 
 		return cpSpecificationOptionsSearchFacetDisplayContexts;
@@ -400,6 +435,7 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 	private PortletSharedSearchRequest _portletSharedSearchRequest;
 	private PortletSharedSearchResponse _portletSharedSearchResponse;
 	private RenderRequest _renderRequest;
+	private String _specificationsOrder = "priority:asc";
 	private List<Tuple> _tuples;
 
 }

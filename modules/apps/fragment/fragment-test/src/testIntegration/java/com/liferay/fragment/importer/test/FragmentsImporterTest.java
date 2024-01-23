@@ -91,7 +91,7 @@ public class FragmentsImporterTest {
 
 		_user = TestPropsValues.getUser();
 
-		_file = _generateZipFile();
+		_file = _generateZipFile(_PATH_DEPENDENCIES + "fragments");
 
 		_resourcesFile = _generateResourcesZipFile();
 	}

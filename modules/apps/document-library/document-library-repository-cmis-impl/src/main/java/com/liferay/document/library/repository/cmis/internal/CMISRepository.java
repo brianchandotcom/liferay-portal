@@ -875,7 +875,25 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	public Session getSession() throws PortalException {
-		Session session = _get(_sessionKey);
+		Session session = null;
+
+		HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
+
+		if (httpSession != null) {
+			TransientValue<Session> transientValue =
+				(TransientValue<Session>)httpSession.getAttribute(_sessionKey);
+
+			if (transientValue != null) {
+				Object value = transientValue.getValue();
+
+				if (value instanceof Session) {
+					session = (Session)value;
+				}
+				else {
+					httpSession.removeAttribute(_sessionKey);
+				}
+			}
+		}
 
 		if (session == null) {
 			SessionImpl sessionImpl =
@@ -1863,31 +1881,6 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 
 		return dlFolderLocalService.fetchFolder(repository.getDlFolderId());
-	}
-
-	private Session _get(String key) {
-		HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
-
-		if (httpSession == null) {
-			return null;
-		}
-
-		TransientValue<Session> transientValue =
-			(TransientValue<Session>)httpSession.getAttribute(key);
-
-		if (transientValue == null) {
-			return null;
-		}
-
-		Object value = transientValue.getValue();
-
-		if (value instanceof Session) {
-			return (Session)value;
-		}
-
-		httpSession.removeAttribute(key);
-
-		return null;
 	}
 
 	private org.apache.chemistry.opencmis.client.api.Folder _getCmisFolder(

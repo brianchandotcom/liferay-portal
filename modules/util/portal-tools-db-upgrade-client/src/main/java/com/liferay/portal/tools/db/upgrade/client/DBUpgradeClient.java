@@ -29,10 +29,8 @@ import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -622,7 +620,7 @@ public class DBUpgradeClient {
 		while (dataSource == null) {
 			System.out.print("[ ");
 
-			for (String database : _databases.keySet()) {
+			for (String database : _databases) {
 				System.out.print(database + " ");
 			}
 
@@ -636,7 +634,7 @@ public class DBUpgradeClient {
 				response = "mysql";
 			}
 
-			dataSource = _databases.get(response);
+			dataSource = Database.getDatabase(response);
 
 			if (dataSource == null) {
 				System.err.println(response + " is an unsupported database.");
@@ -760,18 +758,10 @@ public class DBUpgradeClient {
 
 	private static final Set<String> _appServers = new LinkedHashSet<>(
 		Arrays.asList("jboss", "tomcat", "weblogic", "websphere", "wildfly"));
-	private static final Map<String, Database> _databases =
-		new LinkedHashMap<String, Database>() {
-			{
-				put("db2", Database.getDB2Database());
-				put("mariadb", Database.getMariaDBDatabase());
-				put("mysql", Database.getMySQLDatabase());
-				put("oracle", Database.getOracleDataSource());
-				put("postgresql", Database.getPostgreSQLDatabase());
-				put("sqlserver", Database.getSQLServerDatabase());
-				put("sybase", Database.getSybaseDatabase());
-			}
-		};
+	private static final Set<String> _databases = new LinkedHashSet<>(
+		Arrays.asList(
+			"db2", "mariadb", "mysql", "oracle", "postgresql", "sqlserver",
+			"sybase"));
 	private static final Pattern _gogoShellAddressPattern = Pattern.compile(
 		"^([^\\:]+):([0-9]{1,5})$");
 	private static File _jarDir;

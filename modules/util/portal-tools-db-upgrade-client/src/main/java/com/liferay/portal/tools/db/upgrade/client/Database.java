@@ -10,54 +10,58 @@ package com.liferay.portal.tools.db.upgrade.client;
  */
 public class Database {
 
-	public static Database getDB2Database() {
-		return new Database(
-			"com.ibm.db2.jcc.DB2Driver", "jdbc:db2://", "localhost", 50000,
-			"lportal",
-			":deferPrepares=false;fullyMaterializeInputStreams=true;" +
-				"fullyMaterializeLobData=true;progresssiveLocators=2;" +
-					"progressiveStreaming=2;");
-	}
+	public static Database getDatabase(String databaseName) {
+		if (databaseName.equals("db2")) {
+			return new Database(
+				"com.ibm.db2.jcc.DB2Driver", "jdbc:db2://", "localhost", 50000,
+				"lportal",
+				":deferPrepares=false;fullyMaterializeInputStreams=true;" +
+					"fullyMaterializeLobData=true;progresssiveLocators=2;" +
+						"progressiveStreaming=2;");
+		}
 
-	public static Database getMariaDBDatabase() {
-		return new Database(
-			"org.mariadb.jdbc.Driver", "jdbc:mariadb://", "localhost", 0,
-			"lportal",
-			"?useUnicode=true&characterEncoding=UTF-8" +
-				"&useFastDateParsing=false");
-	}
+		if (databaseName.equals("mariadb")) {
+			return new Database(
+				"org.mariadb.jdbc.Driver", "jdbc:mariadb://", "localhost", 0,
+				"lportal",
+				"?useUnicode=true&characterEncoding=UTF-8" +
+					"&useFastDateParsing=false");
+		}
 
-	public static Database getMySQLDatabase() {
-		return new Database(
-			"com.mysql.cj.jdbc.Driver", "jdbc:mysql://", "localhost", 0,
-			"lportal",
-			"?characterEncoding=UTF-8&dontTrackOpenResources=true" +
-				"&holdResultsOpenOverStatementClose=true&serverTimezone=GMT" +
-					"&useFastDateParsing=false&useUnicode=true");
-	}
+		if (databaseName.equals("mysql")) {
+			return new Database(
+				"com.mysql.cj.jdbc.Driver", "jdbc:mysql://", "localhost", 0,
+				"lportal",
+				"?characterEncoding=UTF-8&dontTrackOpenResources=true" +
+					"&holdResultsOpenOverStatementClose=true&serverTimezone=" +
+						"GMT&useFastDateParsing=false&useUnicode=true");
+		}
 
-	public static Database getOracleDataSource() {
-		return new Database(
-			"oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@", "localhost", 1521,
-			"xe", "");
-	}
+		if (databaseName.equals("oracle")) {
+			return new Database(
+				"oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@", "localhost",
+				1521, "xe", "");
+		}
 
-	public static Database getPostgreSQLDatabase() {
-		return new Database(
-			"org.postgresql.Driver", "jdbc:postgresql://", "localhost", 5432,
-			"lportal", "");
-	}
+		if (databaseName.equals("postgresql")) {
+			return new Database(
+				"org.postgresql.Driver", "jdbc:postgresql://", "localhost",
+				5432, "lportal", "");
+		}
 
-	public static Database getSQLServerDatabase() {
-		return new Database(
-			"com.microsoft.sqlserver.jdbc.SQLServerDriver", "jdbc:sqlserver://",
-			"localhost", 0, "lportal", "");
-	}
+		if (databaseName.equals("sqlserver")) {
+			return new Database(
+				"com.microsoft.sqlserver.jdbc.SQLServerDriver",
+				"jdbc:sqlserver://", "localhost", 0, "lportal", "");
+		}
 
-	public static Database getSybaseDatabase() {
-		return new Database(
-			"com.sybase.jdbc4.jdbc.SybDriver", "jdbc:sybase:Tds:", "localhost",
-			5000, "lportal", "");
+		if (databaseName.equals("sybase")) {
+			return new Database(
+				"com.sybase.jdbc4.jdbc.SybDriver", "jdbc:sybase:Tds:",
+				"localhost", 5000, "lportal", "");
+		}
+
+		return null;
 	}
 
 	public String getClassName() {

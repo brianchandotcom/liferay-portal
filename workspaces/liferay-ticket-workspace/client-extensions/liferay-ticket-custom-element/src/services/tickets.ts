@@ -111,6 +111,10 @@ export async function updateTicketStatus(ticket: Ticket) {
 	ticket.payload.ticketStatus =
 		LIST_TYPE_DEFINITIONS[J3Y7_STATUSES].entriesMap[ticket.ticketStatus];
 
+	if (!ticket.payload.r_userToJ3Y7Ticket_userId) {
+		delete ticket.payload.r_userToJ3Y7Ticket_userId;
+	}
+
 	const result = await request(
 		`/o/c/j3y7tickets/${ticket.id}`,
 		'PUT',

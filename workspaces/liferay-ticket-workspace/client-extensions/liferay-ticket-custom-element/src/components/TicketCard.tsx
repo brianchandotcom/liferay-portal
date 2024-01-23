@@ -10,15 +10,15 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
 import {useDraggable} from '@dnd-kit/core';
 import {CSS} from '@dnd-kit/utilities';
+import classNames from 'classnames';
 import {useState} from 'react';
 import {QueryClient, useMutation, useQueryClient} from 'react-query';
-import classNames from 'classnames';
 
 import {Liferay} from '../services/liferay';
 import {assignTicketToMe} from '../services/tickets';
 import {Ticket} from '../types';
 
-const TicketCard = ({ticket} : {ticket: Ticket}) => {
+const TicketCard = ({ticket}: {ticket: Ticket}) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isPanelExpanded, setIsPanelExpanded] = useState(false);
 
@@ -33,9 +33,9 @@ const TicketCard = ({ticket} : {ticket: Ticket}) => {
 	} = useDraggable({data: ticket, id: ticket.id + '_draggable'});
 
 	const draggableContainerClass = classNames({
-		'border border-neutral-2 mb-4 py-2': true,
 		'bg-brand-primary-lighten-6': isDragging,
 		'bg-neutral-0': !isDragging,
+		'border border-neutral-2 mb-4 py-2': true,
 	});
 
 	const assignToMeMutation = useMutation({

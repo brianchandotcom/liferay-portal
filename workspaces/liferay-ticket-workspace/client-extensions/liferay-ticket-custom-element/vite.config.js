@@ -8,7 +8,6 @@ import {defineConfig} from 'vite';
 
 export default defineConfig({
 	build: {
-		target:'esnext',
 		outDir: 'build/vite',
 		rollupOptions: {
 			external: [/@clayui\/*/, 'react', 'react-dom'],
@@ -18,6 +17,7 @@ export default defineConfig({
 				entryFileNames: '[name]-[hash].js',
 			},
 		},
+		target: 'esnext',
 	},
 	plugins: [react()],
 	server: {

@@ -18,7 +18,7 @@ type Props = {
 	tickets: Ticket[];
 };
 
-const DisplayTickets = ({tickets} : Props) => {
+const DisplayTickets = ({tickets}: Props) => {
 	if (!tickets.length) {
 		return (
 			<>

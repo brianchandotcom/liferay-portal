@@ -5,10 +5,10 @@
 
 import {request} from './request';
 
-//add the used properties here
 type ListTypeDefinitionEntry = {
+	key: string;
 	name: string;
-}
+};
 
 async function fetchListTypeEntries(externalReferenceCode: string) {
 	const response = await request(
@@ -49,11 +49,13 @@ export async function fetchListTypeDefinitions() {
 	const listTypeDefinitions = {} as ListTypeDefinitions;
 
 	for (const listTypeDefinitionERC of listTypeDefinitionERCs) {
-		const entries:ListTypeDefinitionEntry[] = await fetchListTypeEntries(listTypeDefinitionERC);
+		const entries: ListTypeDefinitionEntry[] = await fetchListTypeEntries(
+			listTypeDefinitionERC
+		);
 
-		const processedEntries:{
-			entriesArray: ListTypeDefinitionEntry[],
-			entriesMap: {[key: string] : any}
+		const processedEntries: {
+			entriesArray: ListTypeDefinitionEntry[];
+			entriesMap: {[key: string]: any};
 		} = {
 			entriesArray: entries,
 			entriesMap: {},

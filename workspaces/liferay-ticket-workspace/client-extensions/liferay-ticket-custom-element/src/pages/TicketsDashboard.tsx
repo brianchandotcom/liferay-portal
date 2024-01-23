@@ -54,20 +54,21 @@ const TicketsDashboard = ({screenType}: {screenType: ScreenType}) => {
 		search: '',
 	});
 
-	const relatedTicketsMap: RelatedTicketsMap =
-		useMemo<RelatedTicketsMap>(() => {
-			const map: RelatedTicketsMap = {};
+	const relatedTicketsMap: RelatedTicketsMap = useMemo<
+		RelatedTicketsMap
+	>(() => {
+		const map: RelatedTicketsMap = {};
 
-			tickets.forEach((ticket: Ticket) => {
-				if (!map[ticket.ticketStatus]) {
-					map[ticket.ticketStatus] = [];
-				}
+		tickets.forEach((ticket: Ticket) => {
+			if (!map[ticket.ticketStatus]) {
+				map[ticket.ticketStatus] = [];
+			}
 
-				map[ticket.ticketStatus].push(ticket);
-			});
+			map[ticket.ticketStatus].push(ticket);
+		});
 
-			return map;
-		}, [tickets]);
+		return map;
+	}, [tickets]);
 
 	const onDragEnd = async (event: any) => {
 		if (!event || !event.over || !event.over.id) {
@@ -86,7 +87,8 @@ const TicketsDashboard = ({screenType}: {screenType: ScreenType}) => {
 			await updateTicketStatus(updatedTicket);
 
 			return DRAG_RESULT.STATUS_CHANGED;
-		} else {
+		}
+		else {
 			return DRAG_RESULT.NO_CHANGE;
 		}
 	};

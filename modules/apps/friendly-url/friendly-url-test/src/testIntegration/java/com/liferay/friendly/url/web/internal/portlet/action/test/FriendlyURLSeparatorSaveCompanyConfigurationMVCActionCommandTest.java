@@ -6,7 +6,6 @@
 package com.liferay.friendly.url.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
@@ -113,10 +112,36 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			_getMockLiferayPortletActionRequest(friendlyURLSeparators),
 			mockActionResponse);
 
-		Assert.assertNotNull(mockActionResponse.getRedirect());
+		_assertRedirectURL(
+			friendlyURLSeparators, mockActionResponse.getRedirect());
+	}
+
+	@Test
+	public void testDoProcessActionWithReservedLanguageKeywordAsAFriendlyURLSeparator()
+		throws Exception {
+
+		Map<String, String> friendlyURLSeparators =
+			_getRandomFriendlyURLSeparatorsMap();
+
+		friendlyURLSeparators.put(JournalArticle.class.getName(), "en");
+
+		MockActionResponse mockActionResponse = new MockActionResponse();
+
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(friendlyURLSeparators),
+			mockActionResponse);
+
+		_assertRedirectURL(
+			friendlyURLSeparators, mockActionResponse.getRedirect());
+	}
+
+	private void _assertRedirectURL(
+		Map<String, String> friendlyURLSeparators, String redirect) {
+
+		Assert.assertNotNull(redirect);
 
 		String errors = HttpComponentsUtil.getParameter(
-			mockActionResponse.getRedirect(),
+			redirect,
 			"_com_liferay_configuration_admin_web_portlet_" +
 				"InstanceSettingsPortlet_errors",
 			false);
@@ -143,7 +168,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			HttpComponentsUtil.decodeURL(errors));
 
 		String urlSeparator = HttpComponentsUtil.getParameter(
-			mockActionResponse.getRedirect(),
+			redirect,
 			"_com_liferay_configuration_admin_web_portlet_" +
 				"InstanceSettingsPortlet_" + JournalArticle.class.getName(),
 			false);
@@ -213,7 +238,9 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 		themeDisplay.setLocale(LocaleUtil.US);
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setPpid(ConfigurationAdminPortletKeys.INSTANCE_SETTINGS);
+		themeDisplay.setPpid(
+			"com_liferay_configuration_admin_web_portlet_" +
+				"InstanceSettingsPortlet");
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());

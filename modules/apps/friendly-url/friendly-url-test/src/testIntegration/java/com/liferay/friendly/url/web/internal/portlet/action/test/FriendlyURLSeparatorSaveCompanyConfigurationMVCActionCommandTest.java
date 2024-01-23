@@ -8,6 +8,7 @@ package com.liferay.friendly.url.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -154,6 +155,32 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 
 		_assertRedirectURL(
 			"friendly-url-separator-error-invalid-characters",
+			friendlyURLSeparators, mockActionResponse.getRedirect());
+	}
+
+	@Test
+	public void testDoProcessActionWithLayoutFriendlyURLAsAFriendlyURLSeparator()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Map<String, String> friendlyURLSeparators =
+			_getRandomFriendlyURLSeparatorsMap();
+
+		String layoutFriendlyURL = layout.getFriendlyURL(LocaleUtil.US);
+
+		friendlyURLSeparators.put(
+			JournalArticle.class.getName(),
+			layoutFriendlyURL.replaceAll(StringPool.SLASH, StringPool.BLANK));
+
+		MockActionResponse mockActionResponse = new MockActionResponse();
+
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(friendlyURLSeparators),
+			mockActionResponse);
+
+		_assertRedirectURL(
+			"friendly-url-separator-error-other-asset-type-may-use-this-prefix",
 			friendlyURLSeparators, mockActionResponse.getRedirect());
 	}
 

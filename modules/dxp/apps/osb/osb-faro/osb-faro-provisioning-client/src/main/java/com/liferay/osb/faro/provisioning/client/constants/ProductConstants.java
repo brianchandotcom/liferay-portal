@@ -55,7 +55,7 @@ public class ProductConstants {
 	public static final String ENTERPRISE_TRACKED_PAGES_PRODUCT_NAME =
 		"Liferay Analytics Cloud Enterprise Tracked Pages";
 
-	public static final String LXC_BUSINESS_PRODUCT_ENTRY_ID = "KOR-6218822";
+	public static final String LXC_BUSINESS_PRODUCT_ENTRY_ID = "KOR-6218594";
 
 	public static final String LXC_BUSINESS_PRODUCT_NAME = "LXC Business";
 
@@ -136,7 +136,7 @@ public class ProductConstants {
 	public static final String LXC_CSP_CUSTOM_PRODUCT_NAME =
 		"LXC - CSP - Custom User Tier";
 
-	public static final String LXC_ENTERPRISE_PRODUCT_ENTRY_ID = "KOR-6218594";
+	public static final String LXC_ENTERPRISE_PRODUCT_ENTRY_ID = "KOR-6218822";
 
 	public static final String LXC_ENTERPRISE_PRODUCT_NAME = "LXC Enterprise";
 

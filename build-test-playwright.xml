@@ -3,11 +3,9 @@
 <project basedir="." name="portal-test-playwright" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<import file="build-test.xml" />
 
-	<condition property="playwright.project.name" value="${env.PLAYWRIGHT_PROJECT_NAME}">
+	<condition else="portal" property="playwright.project.name" value="${env.PLAYWRIGHT_PROJECT_NAME}">
 		<isset property="env.PLAYWRIGHT_PROJECT_NAME" />
 	</condition>
-
-	<fail message="Please set the property ${playwright.project.name}." unless="playwright.project.name" />
 
 	<macrodef name="get-playwright-bash-script">
 		<attribute name="bash.script.name" />
@@ -79,6 +77,46 @@
 					project.setProperty("playwright.project.dir", getPlaywrightProjectDirPath());
 				]]>
 			</beanshell>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-playwright-bash-script">
+		<attribute name="bash.script.name" />
+
+		<sequential>
+			<get-playwright-bash-script bash.script.name="@{bash.script.name}" />
+
+			<get-playwright-project-dir />
+
+			<local name="tstamp.value" />
+
+			<tstamp>
+				<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+			</tstamp>
+
+			<trycatch>
+				<try>
+					<echo file="${tstamp.value}.sh">
+						<![CDATA[
+							#!/bin/bash
+
+							export LIFERAY_HOME=${liferay.home}
+							export PLAYWRIGHT_BASE_DIR=${project.dir}/modules/test/playwright
+							export PLAYWRIGHT_PROJECT_DIR=${playwright.project.dir}
+							export PROJECT_DIR=${project.dir}
+
+							/bin/bash ${playwright.bash.script}
+						]]>
+					</echo>
+
+					<exec executable="/bin/bash">
+						<arg value="${tstamp.value}.sh" />
+					</exec>
+				</try>
+				<finally>
+					<delete failonerror="false" file="${tstamp.value}.sh" />
+				</finally>
+			</trycatch>
 		</sequential>
 	</macrodef>
 
@@ -216,47 +254,11 @@
 	</target>
 
 	<target name="setup-playwright-environment">
-		<get-playwright-bash-script bash.script.name="setup.sh" />
-
-		<get-playwright-project-dir />
-
-		<echo file="playwright_setup.sh">
-			<![CDATA[
-				#!/bin/bash
-
-				export LIFERAY_HOME=${liferay.home}
-				export PLAYWRIGHT_PROJECT_DIR=${playwright.project.dir}
-				export PLAYWRIGHT_PROJECT_NAME=${playwright.project.name}
-				export PROJECT_DIR=${project.dir}
-
-				/bin/bash ${playwright.bash.script}
-			]]>
-		</echo>
-
-		<exec executable="/bin/bash">
-			<arg value="playwright_setup.sh" />
-		</exec>
+		<run-playwright-bash-script bash.script.name="setup.sh" />
 	</target>
 
 	<target name="teardown-playwright-environment">
-		<get-playwright-bash-script bash.script.name="teardown.sh" />
-
-		<get-playwright-project-dir />
-
-		<echo file="playwright_teardown.sh">
-			<![CDATA[
-				export LIFERAY_HOME=${liferay.home}
-				export PLAYWRIGHT_PROJECT_DIR=${playwright.project.dir}
-				export PLAYWRIGHT_PROJECT_NAME=${playwright.project.name}
-				export PROJECT_DIR=${project.dir}
-
-				/bin/bash ${playwright.bash.script}
-			]]>
-		</echo>
-
-		<exec executable="/bin/bash">
-			<arg value="playwright_teardown.sh" />
-		</exec>
+		<run-playwright-bash-script bash.script.name="teardown.sh" />
 	</target>
 
 	<target name="update-portal-ext-properties">

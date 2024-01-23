@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+
+<project basedir="." default="test" name="portal-test-quick" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
+	<import file="build-test-batch.xml" />
+
+	<target name="hashi">
+		<delete dir="/home/me/Downloads/bundle" />
+		<delete dir="/home/me/Downloads/bundle-dist" />
+
+		<decompress
+			dest="/home/me/Downloads/bundle"
+			src="/home/me/Downloads/liferay-dxp-tomcat-7.4.13-u92-e8fd53aaf6b02.7z"
+		/>
+
+		<!--<decompress
+			dest="/home/me/Downloads/bundle"
+			src="/home/me/Downloads/liferay-dxp-tomcat-7.4.13.u94-20230913160210550.7z"
+		/>-->
+
+		<var name="app.server.parent.dir" unset="true" />
+
+		<property name="app.server.parent.dir" value="/home/me/Downloads/bundle-dist" />
+
+		<move
+			todir="${app.server.parent.dir}"
+		>
+			<fileset
+				dir="/home/me/Downloads/bundle"
+				includes="liferay-*/**"
+			/>
+			<mapper
+				from="[^/]+/(.*)"
+				to="\1"
+				type="regexp"
+			/>
+		</move>
+
+		<execute>
+			mv ${app.server.parent.dir}/tomcat ${app.server.parent.dir}/tomcat-9.0.75
+		</execute>
+	</target>
+
+	<target name="quick">
+		<!--<property name="test.class.group" value="com/liferay/portal/dao/db/test/BaseDBProcessTest.class,com/liferay/portal/dao/db/test/DBInspectorTest.class,com/liferay/portal/dao/db/test/DBTest.class,com/liferay/portal/dao/orm/common/test/SQLTransformerOracleCastClobTextTest.class,com/liferay/portal/dao/orm/hibernate/test/DB2DialectTest.class,com/liferay/portal/dao/orm/hibernate/test/DynamicQueryTest.class,com/liferay/portal/dao/orm/hibernate/test/RestrictionsFactoryTest.class,com/liferay/portal/dao/orm/hibernate/test/SuspendedSessionConnectionTest.class,com/liferay/portal/dao/orm/test/DefaultActionableDynamicQueryTest.class,com/liferay/portal/dao/orm/test/QueryUtilTest.class,com/liferay/portal/dao/orm/test/SQLConcatTest.class" />-->
+		<!--<property name="test.class.group" value="com/liferay/portal/dao/db/test/BaseDBProcessTest.class" />-->
+		<property name="test.class.group" value="com/liferay/journal/search/test/JournalArticleSearchTest.class" />
+		<!--<property name="test.class.group" value="com/liferay/project/templates/spring/mvc/portlet/ProjectTemplatesSpringPortletMVCTest.class" />-->
+
+		<!--<setup-test-batch-testable-tomcat test.portal.bundle.version="@{test.portal.bundle.version}" />
+
+		<get-test-batch-app-server-start-executable-arg-line />
+
+		<antcall inheritAll="false" target="start-app-server-preserve-liferay-home">
+			<param name="app.server.start.executable.arg.line" value="${test.batch.app.server.start.executable.arg.line}" />
+		</antcall>
+
+		<deploy-release-dependency-modules-post-startup />-->
+
+		<!--<antcall inheritAll="false" target="prepare-log4j-ext-xml">
+			<param name="database.type" value="mariadb" />
+		</antcall>
+
+		<antcall inheritAll="false" target="prepare-portal-ext-properties">
+			<param name="database.type" value="mariadb" />
+		</antcall>
+
+		<antcall inheritAll="false" target="prepare-system-ext-properties" />-->
+
+		<echo>Executing Gradle task in directory "modules": testIntegration.</echo>
+
+		<!--<antcall target="prepare-portal-test-digital-signature-properties" />
+
+		<antcall target="prepare-portal-test-object-storage-salesforce-properties" />
+
+		<ant dir="portal-test" inheritAll="false" target="deploy" />
+
+		<ant dir="portal-test" inheritAll="false" target="install-portal-snapshot" />-->
+
+		<!--<setup-test-batch-testable-tomcat test.portal.bundle.version="@{test.portal.bundle.version}" />-->
+
+		<!--<get-test-batch-app-server-start-executable-arg-line />
+
+		<antcall inheritAll="false" target="start-app-server-preserve-liferay-home">
+			<param name="app.server.start.executable.arg.line" value="${test.batch.app.server.start.executable.arg.line}" />
+		</antcall>-->
+
+		<!--<deploy-release-dependency-modules-post-startup />-->
+
+		<lstopwatch action="start" name="test.execution.duration" />
+
+		<delete dir="modules/test-results" />
+
+		<deploy-release-dependency-modules-post-startup />
+
+		<for list="${test.class.group}" param="test.class">
+			<sequential>
+				<run-modules-junit-test test.class="@{test.class}" test.task="testIntegration">
+					<arg value="--continue" />
+					<arg value="-Dbuild.exclude.ant.plugin=true" />
+					<arg value="-Dtest.class.group.index=${axis.variable}" />
+				</run-modules-junit-test>
+			</sequential>
+		</for>
+	</target>
+</project>

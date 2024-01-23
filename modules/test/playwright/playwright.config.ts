@@ -5,12 +5,13 @@
 
 import {defineConfig} from '@playwright/test';
 
-import {config as batchPlanner} from './tests/batch-planner/config';
-import {config as exportImportWeb} from './tests/export-import-web/config';
-import {config as layoutContentPageEditorWeb} from './tests/layout-content-page-editor-web/config';
-import {config as object} from './tests/object-web/config';
-import {config as portalWeb} from './tests/portal-web/config';
-import {config as usersAdminWeb} from './tests/users-admin-web/config';
+import {config as batchPlannerConfig} from './tests/batch-planner/config';
+import {config as clientExtensionWebConfig} from './tests/client-extension-web/config';
+import {config as exportImportWebConfig} from './tests/export-import-web/config';
+import {config as layoutContentPageEditorWebConfig} from './tests/layout-content-page-editor-web/config';
+import {config as objectWebConfig} from './tests/object-web/config';
+import {config as portalWebConfig} from './tests/portal-web/config';
+import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
 
 export default defineConfig({
 	expect: {
@@ -18,12 +19,13 @@ export default defineConfig({
 	},
 	forbidOnly: !!process.env.CI,
 	projects: [
-		batchPlanner,
-		exportImportWeb,
-		layoutContentPageEditorWeb,
-		object,
-		portalWeb,
-		usersAdminWeb,
+		batchPlannerConfig,
+		clientExtensionWebConfig,
+		exportImportWebConfig,
+		layoutContentPageEditorWebConfig,
+		objectWebConfig,
+		portalWebConfig,
+		usersAdminWebConfig,
 	],
 	reporter: [
 		[

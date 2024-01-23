@@ -230,6 +230,7 @@ const Renderer: React.FC<RendererProps> = ({
 							onChange={onChange}
 							options={getOptions()}
 							value={currentValue[0]?.value || currentValue}
+							isLoading={isLoading}
 						/>
 					);
 				}

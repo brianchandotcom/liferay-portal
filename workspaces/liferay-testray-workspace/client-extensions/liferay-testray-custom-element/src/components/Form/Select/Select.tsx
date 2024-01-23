@@ -15,6 +15,7 @@ type InputSelectProps = {
 	errors?: any;
 	forceSelectOption?: boolean;
 	id?: string;
+	isLoading?: boolean;
 	label?: string;
 	name: string;
 	options: {label: string; value: string | number}[];
@@ -35,6 +36,7 @@ const InputSelect: React.FC<InputSelectProps> = ({
 	name,
 	register = () => {},
 	id = name,
+	isLoading = true,
 	options,
 	forceSelectOption = false,
 	required = false,
@@ -55,23 +57,29 @@ const InputSelect: React.FC<InputSelectProps> = ({
 				name={name}
 				{...otherProps}
 				{...register(name, {required, ...registerOptions})}
-			>
-				{defaultOption && <option value=""></option>}
+			>	
+				defaultOption && <option value=""></option>
 
-				{options.map(({label, value}, index) => (
-					<option
-						key={index}
-						label={label}
-						selected={
-							forceSelectOption
-								? value === defaultValue
-								: undefined
-						}
-						value={value}
-					>
-						{label}
-					</option>
-				))}
+				{isLoading ? 
+					<option value="">
+						Loading...
+					</option> :
+					options.map(({label, value}, index) => (
+						<option
+							key={index}
+							label={label}
+							selected={
+								forceSelectOption
+									? value === defaultValue
+									: undefined
+							}
+							value={value}
+						>
+							{label}
+						</option>
+					))
+				}
+				
 			</select>
 		</BaseWrapper>
 	);

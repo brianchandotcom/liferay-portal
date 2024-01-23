@@ -6,12 +6,14 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {loginTest} from '../../fixtures/loginTest';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {newEditorConfigContributorPageTest} from './fixtures/newEditorConfigContributorPageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	clientExtensionsPageTest,
+	loginTest,
 	newEditorConfigContributorPageTest
 );
 

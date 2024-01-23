@@ -39,8 +39,7 @@ const Geolocation = ({
 	const handleChange = useCallback(
 		({newVal: {address, location}}) => {
 			setAddress(address);
-
-			onChange({location: JSON.stringify(location)});
+			onChange(JSON.stringify(location));
 		},
 		[onChange, setAddress]
 	);
@@ -107,30 +106,24 @@ const Main = ({
 	value,
 	viewMode,
 	...otherProps
-}) => {
-	const [defaultPlaceLocation, setDefaultPlaceLocation] = useState('');
-
-	return (
-		<FieldBase name={name} readOnly={readOnly} {...otherProps}>
-			<Geolocation
-				disabled={readOnly}
-				googleMapsAPIKey={googleMapsAPIKey}
-				instanceId={instanceId}
-				mapProviderKey={mapProviderKey}
-				name={name}
-				onChange={({location}) => {
-					setDefaultPlaceLocation(JSON.stringify(location));
-
-					if (defaultPlaceLocation) {
-						onChange({}, location);
-					}
-				}}
-				value={value}
-				viewMode={viewMode}
-			/>
-		</FieldBase>
-	);
-};
+}) => (
+	<FieldBase name={name} readOnly={readOnly} {...otherProps}>
+		<Geolocation
+			disabled={readOnly}
+			googleMapsAPIKey={googleMapsAPIKey}
+			instanceId={instanceId}
+			mapProviderKey={mapProviderKey}
+			name={name}
+			onChange={(value) => {
+				if (value !== '{"lat":0,"lng":0}') {
+					onChange({}, value);
+				}
+			}}
+			value={value}
+			viewMode={viewMode}
+		/>
+	</FieldBase>
+);
 
 Main.displayName = 'Geolocation';
 

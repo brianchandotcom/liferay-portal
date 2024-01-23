@@ -101,7 +101,7 @@ public abstract class BaseDateRangeFacetPortletSharedSearchContributor {
 				String rangeString = DateRangeFactoryUtil.getRangeString(
 					selectedRange, CalendarFactoryUtil.getCalendar());
 
-				if (Validator.isNotNull(rangeString)) {
+				if (!Validator.isBlank(rangeString)) {
 					selectedRangeStrings.add(rangeString);
 				}
 			}

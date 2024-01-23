@@ -161,9 +161,6 @@
 			"type": "array"
 		}
 	},
-	"required": [
-		"frontendTokenCategories"
-	],
 	"title": "The Design Frontend Tokens Definition Schema",
 	"type": "object"
 }

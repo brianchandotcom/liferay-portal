@@ -8,15 +8,6 @@ package com.liferay.portal.tools.db.upgrade.client;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.URISyntaxException;
-import java.net.URL;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import java.security.CodeSource;
-import java.security.ProtectionDomain;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -146,10 +137,6 @@ public class AppServer {
 
 		File basePathFolder = new File(basePath);
 
-		if (!basePathFolder.isAbsolute()) {
-			basePathFolder = new File(_jarDir, basePath);
-		}
-
 		if (basePathFolder.isDirectory()) {
 			File[] folders = basePathFolder.listFiles();
 
@@ -204,28 +191,6 @@ public class AppServer {
 		}
 		catch (IOException ioException) {
 			ioException.printStackTrace();
-		}
-	}
-
-	private static File _jarDir;
-
-	static {
-		ProtectionDomain protectionDomain =
-			AppServer.class.getProtectionDomain();
-
-		CodeSource codeSource = protectionDomain.getCodeSource();
-
-		URL url = codeSource.getLocation();
-
-		try {
-			Path path = Paths.get(url.toURI());
-
-			File jarFile = path.toFile();
-
-			_jarDir = jarFile.getParentFile();
-		}
-		catch (URISyntaxException uriSyntaxException) {
-			throw new ExceptionInInitializerError(uriSyntaxException);
 		}
 	}
 

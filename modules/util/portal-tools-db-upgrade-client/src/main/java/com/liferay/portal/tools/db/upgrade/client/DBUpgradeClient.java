@@ -760,8 +760,7 @@ public class DBUpgradeClient {
 		Arrays.asList("jboss", "tomcat", "weblogic", "websphere", "wildfly"));
 	private static final Set<String> _databases = new LinkedHashSet<>(
 		Arrays.asList(
-			"db2", "mariadb", "mysql", "oracle", "postgresql", "sqlserver",
-			"sybase"));
+			"db2", "mariadb", "mysql", "oracle", "postgresql", "sqlserver"));
 	private static final Pattern _gogoShellAddressPattern = Pattern.compile(
 		"^([^\\:]+):([0-9]{1,5})$");
 	private static File _jarDir;

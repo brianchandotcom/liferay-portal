@@ -22,7 +22,9 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 						height: '70vh',
 						onSelect: ({selectedItems}) => {
 							if (selectedItems) {
-								navigate(window.location.href);
+								setTimeout(() => {
+									navigate(window.location.href);
+								}, 300);
 							}
 						},
 						selectEventName: `${portletNamespace}selectAIImages`,

@@ -8,6 +8,7 @@ package com.liferay.portal.dao.db.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
@@ -48,6 +49,8 @@ public class OracleDBTest {
 
 	public static void assume() {
 		_db = DBManagerUtil.getDB();
+
+		_dbInspector = new DBInspector(_connection);
 
 		Assume.assumeTrue(_db.getDBType() == DBType.ORACLE);
 	}
@@ -93,7 +96,9 @@ public class OracleDBTest {
 				_connection, _TABLE_NAME_1, "typeVarchar", false);
 
 			for (IndexMetadata indexMetadata : indexMetadatas) {
-				Assert.assertEquals("IX_TEMP", indexMetadata.getIndexName());
+				Assert.assertEquals(
+					_dbInspector.normalizeName("IX_TEMP"),
+					indexMetadata.getIndexName());
 			}
 
 			statement.execute(
@@ -132,5 +137,6 @@ public class OracleDBTest {
 
 	private static Connection _connection;
 	private static DB _db;
+	private static DBInspector _dbInspector;
 
 }

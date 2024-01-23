@@ -611,7 +611,9 @@ public class DBTest {
 			_connection, _TABLE_NAME_1, "typeVarchar", false);
 
 		for (IndexMetadata indexMetadata : indexMetadatas) {
-			Assert.assertEquals("IX_TEMP", indexMetadata.getIndexName());
+			Assert.assertEquals(
+				_dbInspector.normalizeName("IX_TEMP"),
+				indexMetadata.getIndexName());
 		}
 	}
 

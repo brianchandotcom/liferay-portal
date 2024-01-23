@@ -20,6 +20,8 @@ import {config as productNavigationUserPersonalBarWebConfig} from './tests/produ
 import {config as stableConfig} from './tests/stable/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
 
+import 'dotenv/config';
+
 export default defineConfig({
 	expect: {
 		timeout: 15 * 1000,

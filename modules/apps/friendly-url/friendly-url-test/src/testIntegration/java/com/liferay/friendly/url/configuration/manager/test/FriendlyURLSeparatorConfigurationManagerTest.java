@@ -10,11 +10,13 @@ import com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfigu
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -48,6 +50,42 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 	}
 
 	@Test
+	public void testGetEmptyFriendlyURLSeparators() throws Exception {
+		String friendlyURLSeparators =
+			_friendlyURLSeparatorConfigurationManager.getFriendlyURLSeparators(
+				_companyId);
+
+		Assert.assertNotNull(friendlyURLSeparators);
+
+		Assert.assertEquals(
+			_jsonFactory.createJSONObject(
+			).toString(),
+			friendlyURLSeparators);
+	}
+
+	@Test
+	public void testGetFriendlyURLSeparators() throws Exception {
+		JSONObject friendlyURLSeparatorsJSONObject = JSONUtil.put(
+			JournalArticle.class.getName(), "/test1/");
+
+		_configurationProvider.saveCompanyConfiguration(
+			FriendlyURLSeparatorCompanyConfiguration.class, _companyId,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"friendlyURLSeparators",
+				friendlyURLSeparatorsJSONObject.toString()
+			).build());
+
+		String friendlyURLSeparators =
+			_friendlyURLSeparatorConfigurationManager.getFriendlyURLSeparators(
+				_companyId);
+
+		Assert.assertNotNull(friendlyURLSeparators);
+
+		Assert.assertEquals(
+			friendlyURLSeparatorsJSONObject.toString(), friendlyURLSeparators);
+	}
+
+	@Test
 	public void testUpdateFriendlyURLSeparatorCompanyConfiguration()
 		throws Exception {
 
@@ -78,5 +116,8 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 	@Inject
 	private FriendlyURLSeparatorConfigurationManager
 		_friendlyURLSeparatorConfigurationManager;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 }

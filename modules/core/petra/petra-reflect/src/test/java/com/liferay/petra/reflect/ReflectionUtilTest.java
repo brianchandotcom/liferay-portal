@@ -42,43 +42,6 @@ public class ReflectionUtilTest {
 			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
 	@Test
-	public void testArrayClone() throws Exception {
-		Object object = new Object();
-
-		try {
-			ReflectionUtil.arrayClone(object);
-
-			Assert.fail();
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-			Assert.assertEquals(
-				"Input object is not an array: " + object,
-				illegalArgumentException.getMessage());
-		}
-
-		object = new long[] {1, 2, 3};
-
-		Object clone = ReflectionUtil.arrayClone(object);
-
-		Assert.assertNotSame(object, clone);
-		Assert.assertArrayEquals((long[])object, (long[])clone);
-
-		Field field = ReflectionUtil.getDeclaredField(
-			ReflectionUtil.class, "_cloneMethod");
-
-		field.set(null, null);
-
-		try {
-			ReflectionUtil.arrayClone(object);
-
-			Assert.fail();
-		}
-		catch (NullPointerException nullPointerException) {
-			Assert.assertNull(nullPointerException.getCause());
-		}
-	}
-
-	@Test
 	public void testConstructor() {
 		new ReflectionUtil();
 	}

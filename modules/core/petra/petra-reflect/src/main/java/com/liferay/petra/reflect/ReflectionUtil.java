@@ -20,22 +20,6 @@ import java.util.function.Consumer;
  */
 public class ReflectionUtil {
 
-	public static Object arrayClone(Object array) {
-		Class<?> clazz = array.getClass();
-
-		if (!clazz.isArray()) {
-			throw new IllegalArgumentException(
-				"Input object is not an array: " + array);
-		}
-
-		try {
-			return _cloneMethod.invoke(array);
-		}
-		catch (Exception exception) {
-			return throwException(exception);
-		}
-	}
-
 	public static Field getDeclaredField(Class<?> clazz, String name)
 		throws Exception {
 

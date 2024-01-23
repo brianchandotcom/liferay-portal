@@ -5,20 +5,15 @@
 
 package com.liferay.layout.utility.page.kernel;
 
-import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.kernel.request.contributor.StatusLayoutUtilityPageEntryRequestContributor;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
 
@@ -30,8 +25,9 @@ public class StatusLayoutUtilityPageEntryRequestContributorRegistryUtil {
 	public static StatusLayoutUtilityPageEntryRequestContributor
 		getStatusLayoutUtilityPageEntryRequestContributor(int statusCode) {
 
-		String layoutUtilityPageEntryType = _externalToInternalValuesMap.get(
-			statusCode);
+		String layoutUtilityPageEntryType =
+			LayoutUtilityPageEntryTypeUtil.getStatusLayoutUtilityPageEntryType(
+				statusCode);
 
 		if (Validator.isNull(layoutUtilityPageEntryType)) {
 			return null;
@@ -43,14 +39,6 @@ public class StatusLayoutUtilityPageEntryRequestContributorRegistryUtil {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
-	private static final Map<Integer, String> _externalToInternalValuesMap =
-		HashMapBuilder.put(
-			HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-			LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR
-		).put(
-			HttpServletResponse.SC_NOT_FOUND,
-			LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND
-		).build();
 
 	private static final ServiceTrackerMap
 		<String, StatusLayoutUtilityPageEntryRequestContributor>

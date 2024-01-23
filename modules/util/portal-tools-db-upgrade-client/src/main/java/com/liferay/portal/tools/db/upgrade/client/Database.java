@@ -55,12 +55,6 @@ public class Database {
 				"jdbc:sqlserver://", "localhost", 0, "lportal", "");
 		}
 
-		if (databaseName.equals("sybase")) {
-			return new Database(
-				"com.sybase.jdbc4.jdbc.SybDriver", "jdbc:sybase:Tds:",
-				"localhost", 5000, "lportal", "");
-		}
-
 		return null;
 	}
 

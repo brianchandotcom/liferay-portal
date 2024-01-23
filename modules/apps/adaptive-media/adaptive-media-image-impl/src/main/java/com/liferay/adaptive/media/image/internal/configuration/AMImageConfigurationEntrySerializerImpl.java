@@ -7,7 +7,7 @@ package com.liferay.adaptive.media.image.internal.configuration;
 
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntrySerializer;
-import com.liferay.adaptive.media.image.internal.util.AMImageConfigurationEntryParserUtil;
+import com.liferay.adaptive.media.image.internal.configuration.util.AMImageConfigurationEntryParserUtil;
 
 import org.osgi.service.component.annotations.Component;
 

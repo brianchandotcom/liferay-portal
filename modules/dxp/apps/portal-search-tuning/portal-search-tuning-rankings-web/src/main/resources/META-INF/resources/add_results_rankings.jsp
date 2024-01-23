@@ -15,14 +15,12 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.learn.LearnMessageUtil" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder" %><%@
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants" %><%@
+page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.AddRankingDisplayContext" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.DuplicateQueryStringException" %>
 
 <liferay-frontend:defineObjects />
@@ -32,7 +30,7 @@ page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.Du
 <portlet:defineObjects />
 
 <%
-String formName = "addResultRankingsFm";
+AddRankingDisplayContext addRankingDisplayContext = (AddRankingDisplayContext)request.getAttribute(AddRankingDisplayContext.class.getName());
 
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -59,7 +57,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 
 <liferay-frontend:edit-form
 	action="<%= addResultsRankingEntryURL %>"
-	name="<%= formName %>"
+	name="addResultRankingsFm"
 >
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
@@ -74,26 +72,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 
 		<react:component
 			module="js/components/ResultRankingsAdd.es"
-			props='<%=
-				HashMapBuilder.<String, Object>put(
-					"cancelURL", redirect
-				).put(
-					"fetchSitesURL",
-					ResourceURLBuilder.createResourceURL(
-						renderResponse
-					).setCMD(
-						"getSitesJSONObject"
-					).setResourceID(
-						"/result_rankings/get_sites"
-					).buildString()
-				).put(
-					"formName", formName
-				).put(
-					"learnResources", LearnMessageUtil.getReactDataJSONObject("portal-search-tuning-rankings-web")
-				).put(
-					"namespace", liferayPortletResponse.getNamespace()
-				).build()
-			%>'
+			props="<%= addRankingDisplayContext.getProps() %>"
 		/>
 	</div>
 </liferay-frontend:edit-form>

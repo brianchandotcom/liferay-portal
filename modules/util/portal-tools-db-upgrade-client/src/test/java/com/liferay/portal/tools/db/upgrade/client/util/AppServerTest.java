@@ -81,7 +81,7 @@ public class AppServerTest {
 
 		dirFile.mkdir();
 
-		AppServer appServer = AppServer.getTomcatAppServer();
+		AppServer appServer = AppServer.getAppServer("../../", "tomcat");
 
 		_assert(
 			appServer, dirFile, "bin", "lib",
@@ -93,7 +93,7 @@ public class AppServerTest {
 
 		dirFile.mkdirs();
 
-		appServer = AppServer.getTomcatAppServer();
+		appServer = AppServer.getAppServer("../../", "tomcat");
 
 		_assert(
 			appServer, dirFile, "bin", "lib",

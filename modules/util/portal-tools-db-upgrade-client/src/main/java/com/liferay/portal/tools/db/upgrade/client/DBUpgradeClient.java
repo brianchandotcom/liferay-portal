@@ -27,10 +27,13 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -297,9 +300,11 @@ public class DBUpgradeClient {
 		}
 
 		try {
-			_verifyAppServerProperties();
-			_verifyPortalUpgradeDatabaseProperties();
 			_verifyPortalUpgradeExtProperties();
+
+			_verifyAppServerProperties();
+
+			_verifyPortalUpgradeDatabaseProperties();
 
 			_saveProperties();
 		}
@@ -502,7 +507,7 @@ public class DBUpgradeClient {
 			while (_appServer == null) {
 				System.out.print("[ ");
 
-				for (String appServer : _appServers.keySet()) {
+				for (String appServer : _appServers) {
 					System.out.print(appServer + " ");
 				}
 
@@ -516,7 +521,9 @@ public class DBUpgradeClient {
 					response = "tomcat";
 				}
 
-				_appServer = _appServers.get(response);
+				_appServer = AppServer.getAppServer(
+					_portalUpgradeExtProperties.getProperty("liferay.home"),
+					response);
 
 				if (_appServer == null) {
 					System.err.println(
@@ -751,16 +758,8 @@ public class DBUpgradeClient {
 
 	private static final String _JAVA_HOME = System.getenv("JAVA_HOME");
 
-	private static final Map<String, AppServer> _appServers =
-		new LinkedHashMap<String, AppServer>() {
-			{
-				put("jboss", AppServer.getJBossEAPAppServer());
-				put("tomcat", AppServer.getTomcatAppServer());
-				put("weblogic", AppServer.getWebLogicAppServer());
-				put("websphere", AppServer.getWebSphereAppServer());
-				put("wildfly", AppServer.getWildFlyAppServer());
-			}
-		};
+	private static final Set<String> _appServers = new LinkedHashSet<>(
+		Arrays.asList("jboss", "tomcat", "weblogic", "websphere", "wildfly"));
 	private static final Map<String, Database> _databases =
 		new LinkedHashMap<String, Database>() {
 			{

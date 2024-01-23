@@ -17,39 +17,45 @@ import java.util.Objects;
  */
 public class AppServer {
 
-	public static AppServer getJBossEAPAppServer() {
-		return new AppServer(
-			_getAppServerDirName("../../", "jboss-eap"),
-			_getJBossExtraLibDirNames(), "/modules/com/liferay/portal/main",
-			"/standalone/deployments/ROOT.war", "jboss");
-	}
+	public static AppServer getAppServer(
+		String liferayHomeDir, String appServerName) {
 
-	public static AppServer getTomcatAppServer() {
-		return new AppServer(
-			_getAppServerDirName("../../", "tomcat"), "/bin", "/lib",
-			"/webapps/ROOT", "tomcat");
-	}
+		if (appServerName.equals("jboss")) {
+			return new AppServer(
+				_getAppServerDirName(liferayHomeDir, "jboss-eap"),
+				_getJBossExtraLibDirNames(), "/modules/com/liferay/portal/main",
+				"/standalone/deployments/ROOT.war", appServerName);
+		}
 
-	public static AppServer getWebLogicAppServer() {
-		return new AppServer(
-			_getAppServerDirName("../../", "weblogic"), "/wlserver/modules",
-			"/domains/liferay/lib", "/domains/liferay/autodeploy/ROOT",
-			"weblogic");
-	}
+		if (appServerName.equals("tomcat")) {
+			return new AppServer(
+				_getAppServerDirName(liferayHomeDir, "tomcat"), "/bin", "/lib",
+				"/webapps/ROOT", appServerName);
+		}
 
-	public static AppServer getWebSphereAppServer() {
-		return new AppServer(
-			_getAppServerDirName("../../", "websphere"), "", "/lib",
-			"/profiles/liferay/installedApps/liferay-cell/liferay-portal.ear" +
-				"/liferay-portal.war",
-			"websphere");
-	}
+		if (appServerName.equals("weblogic")) {
+			return new AppServer(
+				_getAppServerDirName(liferayHomeDir, "weblogic"),
+				"/wlserver/modules", "/domains/liferay/lib",
+				"/domains/liferay/autodeploy/ROOT", appServerName);
+		}
 
-	public static AppServer getWildFlyAppServer() {
-		return new AppServer(
-			_getAppServerDirName("../../", "wildfly"),
-			_getJBossExtraLibDirNames(), "/modules/com/liferay/portal/main",
-			"/standalone/deployments/ROOT.war", "wildfly");
+		if (appServerName.equals("websphere")) {
+			return new AppServer(
+				_getAppServerDirName(liferayHomeDir, "websphere"), "", "/lib",
+				"/profiles/liferay/installedApps/liferay-cell" +
+					"/liferay-portal.ear/liferay-portal.war",
+				appServerName);
+		}
+
+		if (appServerName.equals("wildfly")) {
+			return new AppServer(
+				_getAppServerDirName(liferayHomeDir, "wildfly"),
+				_getJBossExtraLibDirNames(), "/modules/com/liferay/portal/main",
+				"/standalone/deployments/ROOT.war", appServerName);
+		}
+
+		return null;
 	}
 
 	public AppServer(

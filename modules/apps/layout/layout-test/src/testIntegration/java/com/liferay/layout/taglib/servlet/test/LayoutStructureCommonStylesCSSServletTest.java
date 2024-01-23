@@ -48,6 +48,11 @@ import org.springframework.mock.web.MockHttpServletResponse;
 @RunWith(Arquillian.class)
 public class LayoutStructureCommonStylesCSSServletTest {
 
+	public static final String COMMON_CSS_STYLE =
+		".lfr-layout-structure-item-container {padding: 0;}." +
+			"lfr-layout-structure-item-row {overflow: hidden;}." +
+				"portlet-borderless .portlet-content{padding: 0;}";
+
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
@@ -85,7 +90,9 @@ public class LayoutStructureCommonStylesCSSServletTest {
 
 		Assert.assertEquals(
 			_normalize(mockHttpServletResponse.getContentAsString()),
-			_normalize(_read("expected_style_container_fixed.css")));
+			_normalize(
+				COMMON_CSS_STYLE +
+					_read("expected_style_container_fixed.css")));
 	}
 
 	@Test
@@ -102,7 +109,7 @@ public class LayoutStructureCommonStylesCSSServletTest {
 
 		Assert.assertEquals(
 			_normalize(mockHttpServletResponse.getContentAsString()),
-			_normalize(_read("expected_style.css")));
+			_normalize(COMMON_CSS_STYLE + _read("expected_style.css")));
 	}
 
 	@Test
@@ -119,7 +126,9 @@ public class LayoutStructureCommonStylesCSSServletTest {
 
 		Assert.assertEquals(
 			_normalize(mockHttpServletResponse.getContentAsString()),
-			_normalize(_read("expected_style_with_custom_css.css")));
+			_normalize(
+				COMMON_CSS_STYLE +
+					_read("expected_style_with_custom_css.css")));
 	}
 
 	@Test
@@ -136,7 +145,9 @@ public class LayoutStructureCommonStylesCSSServletTest {
 
 		Assert.assertEquals(
 			_normalize(mockHttpServletResponse.getContentAsString()),
-			_normalize(_read("expected_style_with_responsive_styles.css")));
+			_normalize(
+				COMMON_CSS_STYLE +
+					_read("expected_style_with_responsive_styles.css")));
 	}
 
 	@Test
@@ -153,9 +164,7 @@ public class LayoutStructureCommonStylesCSSServletTest {
 
 		Assert.assertEquals(
 			_normalize(mockHttpServletResponse.getContentAsString()),
-			_normalize(
-				".lfr-layout-structure-item-container {padding: 0;}." +
-					"lfr-layout-structure-item-row {overflow: hidden;}"));
+			_normalize(COMMON_CSS_STYLE));
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws Exception {

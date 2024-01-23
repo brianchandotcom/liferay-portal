@@ -58,7 +58,7 @@ public class AssetPublisherUserNotificationHandler
 		JSONObject assetEntriesJSONObject = contextJSONObject.getJSONObject(
 			"[$ASSET_ENTRIES$]");
 
-		return assetEntriesJSONObject.getString("originalValue");
+		return assetEntriesJSONObject.getString("escapedValue");
 	}
 
 	protected String getTitle(

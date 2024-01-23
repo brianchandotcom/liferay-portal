@@ -35,10 +35,6 @@ public class CommercePortletKeys {
 		"com_liferay_commerce_checkout_web_internal_portlet_" +
 			"CommerceCheckoutPortlet";
 
-	public static final String COMMERCE_COUNTRY =
-		"com_liferay_commerce_address_web_internal_portlet_" +
-			"CommerceCountryPortlet";
-
 	public static final String COMMERCE_DASHBOARD_FORECASTS_CHART =
 		"com_liferay_commerce_dashboard_web_internal_portlet_" +
 			"CommerceDashboardForecastsChartPortlet";

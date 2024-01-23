@@ -49,22 +49,22 @@ public class FlagsUserNotificationHandler extends BaseUserNotificationHandler {
 					serviceContext.getLocale(),
 					"a-x-named-x-was-flagged-as-x-by-x",
 					new String[] {
-						_getOriginalValue(
+						_getEscapedValue(
 							contextJSONObject.getJSONObject(
 								"[$CONTENT_TYPE$]")),
-						_getOriginalValue(
+						_getEscapedValue(
 							contextJSONObject.getJSONObject(
 								"[$CONTENT_TITLE$]")),
-						_getOriginalValue(
+						_getEscapedValue(
 							contextJSONObject.getJSONObject("[$REASON|uri$]")),
-						_getOriginalValue(
+						_getEscapedValue(
 							contextJSONObject.getJSONObject(
 								"[$REPORTER_USER_NAME$]"))
 					}),
 				_language.format(
 					serviceContext.getLocale(),
 					"inappropriate-content-flagged-in-x",
-					_getOriginalValue(
+					_getEscapedValue(
 						contextJSONObject.getJSONObject("[$SITE_NAME$]")))
 			});
 	}
@@ -80,11 +80,11 @@ public class FlagsUserNotificationHandler extends BaseUserNotificationHandler {
 
 		JSONObject contextJSONObject = jsonObject.getJSONObject("context");
 
-		return _getOriginalValue(
+		return _getEscapedValue(
 			contextJSONObject.getJSONObject("[$CONTENT_URL$]"));
 	}
 
-	private String _getOriginalValue(JSONObject jsonObject) {
+	private String _getEscapedValue(JSONObject jsonObject) {
 		return jsonObject.getString("escapedValue");
 	}
 

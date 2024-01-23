@@ -1,0 +1,6 @@
+assemble:
+    - from: assets
+      into: static
+liferay-dotcom-static-content:
+    name: Liferay Dotcom Static Content
+    type: staticContent

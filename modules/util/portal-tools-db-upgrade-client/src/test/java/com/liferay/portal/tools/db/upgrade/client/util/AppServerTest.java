@@ -5,14 +5,12 @@
 
 package com.liferay.portal.tools.db.upgrade.client.util;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.tools.db.upgrade.client.AppServer;
 
 import java.io.File;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -24,17 +22,6 @@ public class AppServerTest {
 
 	@ClassRule
 	public static TemporaryFolder temporaryFolder = new TemporaryFolder();
-
-	@BeforeClass
-	public static void setUpClass() {
-		File jarLocation = new File(
-			temporaryFolder.getRoot(), "tools/upgradeclient");
-
-		jarLocation.mkdirs();
-
-		ReflectionTestUtil.setFieldValue(
-			AppServer.class, "_jarDir", jarLocation);
-	}
 
 	@Test
 	public void testGetCustomAppServer() {

@@ -1,0 +1,36 @@
+diff --git a/aQute/bnd/osgi/Jar.java b/aQute/bnd/osgi/Jar.java
+index ee22d31b468ac..8919568edf758 100644
+--- a/aQute/bnd/osgi/Jar.java
++++ b/aQute/bnd/osgi/Jar.java
+@@ -59,6 +59,7 @@ import aQute.lib.io.ByteBufferOutputStream;
+ import aQute.lib.io.IO;
+ import aQute.lib.io.IOConstants;
+ import aQute.lib.zip.ZipUtil;
++import java.util.concurrent.ConcurrentSkipListMap;
+ 
+ public class Jar implements Closeable {
+ 	private static final int	BUFFER_SIZE				= IOConstants.PAGE_SIZE * 16;
+@@ -91,7 +92,7 @@ public class Jar implements Closeable {
+ 
+ 	public static final Object[]								EMPTY_ARRAY				= new Jar[0];
+ 	private final NavigableMap<String, Resource>				resources				= new TreeMap<>();
+-	private final NavigableMap<String, Map<String, Resource>>	directories				= new TreeMap<>();
++	private final NavigableMap<String, Map<String, Resource>>	directories				= new ConcurrentSkipListMap<>();
+ 	private Optional<Manifest>									manifest;
+ 	private Optional<ModuleAttribute>							moduleAttribute;
+ 	private boolean												manifestFirst;
+@@ -291,7 +292,7 @@ public class Jar implements Closeable {
+ 				dir = dir.substring(0, n);
+ 				if (directories.containsKey(dir))
+ 					break;
+-				directories.put(dir, null);
++				directories.put(dir, new TreeMap<>());
+ 			}
+ 			return new TreeMap<>();
+ 		});
+@@ -1247,3 +1248,4 @@ public class Jar implements Closeable {
+ 		subDirs.forEach(subDir -> removePrefix(subDir + "/"));
+ 	}
+ }
++/* @generated */
+\ No newline at end of file

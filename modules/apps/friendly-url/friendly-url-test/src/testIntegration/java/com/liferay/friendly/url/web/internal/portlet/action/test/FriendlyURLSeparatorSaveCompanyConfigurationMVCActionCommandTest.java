@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -70,7 +70,8 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
 	}
 
 	@Test
@@ -86,7 +87,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			_friendlyURLSeparatorConfigurationManager.getFriendlyURLSeparators(
-				_group.getCompanyId()));
+				_company.getCompanyId()));
 
 		for (Map.Entry<String, String> friendlyURLSeparator :
 				friendlyURLSeparators.entrySet()) {
@@ -162,7 +163,9 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 	public void testDoProcessActionWithLayoutFriendlyURLAsAFriendlyURLSeparator()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+		Group group = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
 
 		Map<String, String> friendlyURLSeparators =
 			_getRandomFriendlyURLSeparatorsMap();
@@ -335,8 +338,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(_group.getCompanyId()));
+		themeDisplay.setCompany(_company);
 
 		Layout layout = new LayoutImpl();
 
@@ -350,12 +352,12 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 		themeDisplay.setPpid(
 			"com_liferay_configuration_admin_web_portlet_" +
 				"InstanceSettingsPortlet");
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
 	}
+
+	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
@@ -366,9 +368,6 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 	@Inject
 	private FriendlyURLSeparatorConfigurationManager
 		_friendlyURLSeparatorConfigurationManager;
-
-	@DeleteAfterTestRun
-	private Group _group;
 
 	@Inject
 	private JSONFactory _jsonFactory;

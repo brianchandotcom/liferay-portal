@@ -891,7 +891,7 @@ export function mockPlan({data = {}, individuals = {}, pageViews = {}} = {}) {
 		},
 		name: 'Liferay Analytics Cloud Enterprise',
 		startDate: getTimestamp(-2),
-		...{data}
+		...data
 	};
 }
 

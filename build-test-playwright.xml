@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-playwright" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
+	<import file="build-test.xml" />
+
+	<condition property="playwright.project.name" value="${env.PLAYWRIGHT_PROJECT_NAME}">
+		<isset property="env.PLAYWRIGHT_PROJECT_NAME" />
+	</condition>
+
+	<fail message="Please set the property ${playwright.project.name}." unless="playwright.project.name" />
+
+	<macrodef name="get-playwright-bash-script">
+		<attribute name="bash.script.name" />
+
+		<sequential>
+			<var name="playwright.bash.script" unset="true" />
+
+			<get-playwright-project-dir />
+
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+					File playwrightProjectDir = new File(project.getProperty("playwright.project.dir"));
+
+					File playwrightBaseDir = new File(project.getProperty("project.dir"), "modules/test/playwright");
+
+					public String getPlaywrightBashScript() {
+						File bashScriptFile = new File(playwrightProjectDir, "env/@{bash.script.name}");
+
+						if (bashScriptFile.exists()) {
+							return JenkinsResultsParserUtil.getCanonicalPath(bashScriptFile);
+						}
+
+						return JenkinsResultsParserUtil.getCanonicalPath(new File(playwrightBaseDir, "env/@{bash.script.name}"));
+					}
+
+					project.setProperty("playwright.bash.script", getPlaywrightBashScript());
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-playwright-project-dir">
+		<sequential>
+			<var name="playwright.project.dir" unset="true" />
+
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+					import java.util.regex.Matcher;
+					import java.util.regex.Pattern;
+
+					Pattern pattern = Pattern.compile("name\\: '([^']+)'");
+
+					String playwrightProjectName = project.getProperty("playwright.project.name");
+
+					File playwrightBaseDir = new File(project.getProperty("project.dir"), "modules/test/playwright");
+
+					public String getPlaywrightProjectDirPath() {
+						for (File configTSFile : JenkinsResultsParserUtil.findFiles(playwrightBaseDir, ".*config.ts")) {
+							Matcher matcher = pattern.matcher(JenkinsResultsParserUtil.read(configTSFile));
+
+							if (!matcher.find()) {
+								continue;
+							}
+
+							if (!Objects.equals(matcher.group(1), playwrightProjectName)) {
+								continue;
+							}
+
+							return JenkinsResultsParserUtil.getCanonicalPath(configTSFile.getParentFile());
+						}
+
+						return JenkinsResultsParserUtil.getCanonicalPath(playwrightBaseDir);
+					}
+
+					project.setProperty("playwright.project.dir", getPlaywrightProjectDirPath());
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
+	<target name="setup-playwright-environment">
+		<get-playwright-bash-script bash.script.name="setup.sh" />
+
+		<get-playwright-project-dir />
+
+		<echo file="playwright_setup.sh">
+			<![CDATA[
+				#!/bin/bash
+
+				export LIFERAY_HOME=${liferay.home}
+				export PLAYWRIGHT_PROJECT_DIR=${playwright.project.dir}
+				export PLAYWRIGHT_PROJECT_NAME=${playwright.project.name}
+				export PROJECT_DIR=${project.dir}
+
+				/bin/bash ${playwright.bash.script}
+			]]>
+		</echo>
+
+		<exec executable="/bin/bash">
+			<arg value="playwright_setup.sh" />
+		</exec>
+	</target>
+
+	<target name="teardown-playwright-environment">
+		<get-playwright-bash-script bash.script.name="teardown.sh" />
+
+		<get-playwright-project-dir />
+
+		<echo file="playwright_teardown.sh">
+			<![CDATA[
+				export LIFERAY_HOME=${liferay.home}
+				export PLAYWRIGHT_PROJECT_DIR=${playwright.project.dir}
+				export PLAYWRIGHT_PROJECT_NAME=${playwright.project.name}
+				export PROJECT_DIR=${project.dir}
+
+				/bin/bash ${playwright.bash.script}
+			]]>
+		</echo>
+
+		<exec executable="/bin/bash">
+			<arg value="playwright_teardown.sh" />
+		</exec>
+	</target>
+</project>

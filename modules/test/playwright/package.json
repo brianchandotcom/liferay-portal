@@ -9,6 +9,7 @@
 		"@liferay/npm-scripts": "49.2.0",
 		"@playwright/test": "1.39.0",
 		"@types/node": "^20.9.0",
+		"dotenv": "^16.3.2",
 		"zip-a-folder": "^3.1.6"
 	},
 	"keywords": [

@@ -126,6 +126,11 @@ public class FaroServiceUpgradeStepRegistrator
 			},
 			new com.liferay.osb.faro.internal.upgrade.v18_0_0.
 				UpgradeCompanyId());
+
+		registry.register(
+			"18.0.0", "19.0.0",
+			new com.liferay.osb.faro.internal.upgrade.v19_0_0.
+				UpgradeFaroProjectUpgradeProcess());
 	}
 
 }

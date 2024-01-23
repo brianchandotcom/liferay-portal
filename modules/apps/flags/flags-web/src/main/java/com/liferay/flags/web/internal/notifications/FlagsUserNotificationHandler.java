@@ -85,7 +85,7 @@ public class FlagsUserNotificationHandler extends BaseUserNotificationHandler {
 	}
 
 	private String _getOriginalValue(JSONObject jsonObject) {
-		return jsonObject.getString("originalValue");
+		return jsonObject.getString("escapedValue");
 	}
 
 	@Reference

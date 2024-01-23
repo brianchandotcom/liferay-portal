@@ -25,19 +25,19 @@ HEALTHCHECK --interval=3s --timeout=3s CMD curl -f http://localhost:8080 || exit
 RUN mkdir -p $LIFERAY_HOME/tomcat/lib/org/apache/catalina/util && \
     echo "server.info=" > $LIFERAY_HOME/tomcat/lib/org/apache/catalina/util/ServerInfo.properties
 
-COPY common/resources/context.xml $LIFERAY_HOME/tomcat/conf
-COPY common/resources/portal-ext.properties $LIFERAY_HOME/
-COPY common/resources/rewrite.config $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF/
-COPY common/resources/setenv.sh $LIFERAY_HOME/tomcat/bin/
-COPY common/resources/system-ext.properties $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF/classes
+COPY ./common/resources/context.xml $LIFERAY_HOME/tomcat/conf
+COPY ./common/resources/portal-ext.properties $LIFERAY_HOME/
+COPY ./common/resources/rewrite.config $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF/
+COPY ./common/resources/setenv.sh $LIFERAY_HOME/tomcat/bin/
+COPY ./common/resources/system-ext.properties $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF/classes
 
 # Configs
 
-COPY common/resources/configs $LIFERAY_HOME/osgi/configs/
+COPY ./common/resources/configs $LIFERAY_HOME/osgi/configs/
 
 # Log4j
 
-COPY common/resources/log4j $LIFERAY_HOME/osgi/log4j/
+COPY ./common/resources/log4j $LIFERAY_HOME/osgi/log4j/
 
 # WAR
 

@@ -17,6 +17,10 @@ import org.json.JSONObject;
  */
 public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 
+	public String getProjectName() {
+		return _projectName;
+	}
+
 	@Override
 	public String getTestCasePropertiesContent() {
 		StringBuilder sb = new StringBuilder();
@@ -63,7 +67,7 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 
 		int axisCount = getAxisCount();
 
-		if (axisCount > 1) {
+		if (axisCount >= 1) {
 			for (int axisIndex = 0; axisIndex < getAxisCount(); axisIndex++) {
 				sb.append("PLAYWRIGHT_ARGS_");
 				sb.append(axisIndex);
@@ -75,7 +79,14 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 			}
 		}
 
+		sb.append("PLAYWRIGHT_PROJECT_NAME=");
+		sb.append(getProjectName());
+
 		return sb.toString();
+	}
+
+	public void setProjectName(String projectName) {
+		_projectName = projectName;
 	}
 
 	protected PlaywrightSegmentTestClassGroup(
@@ -131,5 +142,7 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 
 		return filteredJobProperties;
 	}
+
+	private String _projectName;
 
 }

@@ -5,12 +5,72 @@
 
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
-import React from 'react';
+import {createPortletURL, fetch} from 'frontend-js-web';
+import React, {useEffect, useState} from 'react';
 
 import TimelineDropdownMenu from './TimelineDropdownMenu';
-import WorkflowStatusLabel from './WorkflowStatusLabel';
+import {
+	WORKFLOW_STATUS_APPROVED,
+	WORKFLOW_STATUS_DRAFT,
+	WORKFLOW_STATUS_PENDING,
+	WorkflowStatusLabel,
+} from './WorkflowStatusLabel';
 
-const PublicationTimeline = ({timelineItems}) => {
+const PublicationTimeline = ({timelineItemsURL}) => {
+	const [timelineItems, setTimelineItems] = useState([]);
+
+	const createMVCRenderCommandURL = (
+		ctCollectionId,
+		mvcRenderCommandName,
+		additionalParams = {}
+	) => {
+		return createPortletURL(
+			themeDisplay.getLayoutRelativeControlPanelURL(),
+			{
+				ctCollectionId,
+				mvcRenderCommandName,
+				p_p_id:
+					'com_liferay_change_tracking_web_portlet_PublicationsPortlet',
+				...additionalParams,
+			}
+		).toString();
+	};
+
+	const getEditURL = (ctCollectionId) => {
+		return createMVCRenderCommandURL(
+			ctCollectionId,
+			'/change_tracking/edit_ct_collection'
+		);
+	};
+
+	const getRevertURL = (ctCollectionId) => {
+		return createMVCRenderCommandURL(
+			ctCollectionId,
+			'/change_tracking/undo_ct_collection',
+			{revert: true}
+		);
+	};
+	const getReviewURL = (ctCollectionId) => {
+		return createMVCRenderCommandURL(
+			ctCollectionId,
+			'/change_tracking/view_changes'
+		);
+	};
+
+	useEffect(() => {
+		if (!timelineItemsURL) {
+			return;
+		}
+
+		fetch(timelineItemsURL)
+			.then((response) => {
+				return response.json();
+			})
+			.then((jsonResponse) => {
+				setTimelineItems(jsonResponse.items);
+			});
+	}, [timelineItemsURL]);
+
 	if (timelineItems && !!timelineItems.length) {
 		return (
 			<div className="publication-timeline">
@@ -28,7 +88,9 @@ const PublicationTimeline = ({timelineItems}) => {
 										</span>
 
 										<WorkflowStatusLabel
-											workflowStatus={timelineItem.status}
+											workflowStatus={
+												timelineItem.status.code
+											}
 										/>
 									</div>
 
@@ -44,17 +106,31 @@ const PublicationTimeline = ({timelineItems}) => {
 								<ClayLayout.ContentCol>
 									<TimelineDropdownMenu
 										deleteURL={
-											timelineItem.dropdownMenu.deleteURL
+											timelineItem.status.code ===
+												WORKFLOW_STATUS_DRAFT ||
+											timelineItem.status.code ===
+												WORKFLOW_STATUS_PENDING
+												? timelineItem.actions.delete
+														.href
+												: undefined
 										}
 										editURL={
-											timelineItem.dropdownMenu.editURL
+											timelineItem.status.code ===
+												WORKFLOW_STATUS_DRAFT ||
+											timelineItem.status.code ===
+												WORKFLOW_STATUS_PENDING
+												? getEditURL(timelineItem.id)
+												: undefined
 										}
 										revertURL={
-											timelineItem.dropdownMenu.revertURL
+											timelineItem.status.code ===
+											WORKFLOW_STATUS_APPROVED
+												? getRevertURL(timelineItem.id)
+												: undefined
 										}
-										reviewURL={
-											timelineItem.dropdownMenu.reviewURL
-										}
+										reviewURL={getReviewURL(
+											timelineItem.id
+										)}
 									/>
 								</ClayLayout.ContentCol>
 							</ClayLayout.ContentRow>

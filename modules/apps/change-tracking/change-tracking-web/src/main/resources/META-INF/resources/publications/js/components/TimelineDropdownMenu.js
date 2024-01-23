@@ -5,6 +5,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import {fetch, openToast} from 'frontend-js-web';
 import React from 'react';
 
 export default function TimelineDropdownMenu({
@@ -42,8 +43,42 @@ export default function TimelineDropdownMenu({
 		dropdownItems.push(
 			{type: 'divider'},
 			{
-				href: deleteURL,
 				label: Liferay.Language.get('delete'),
+				onClick: () => {
+					Liferay.Util.openConfirmModal({
+						message: Liferay.Language.get(
+							'are-you-sure-you-want-to-delete-this-publication'
+						),
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								fetch(deleteURL, {
+									method: 'DELETE',
+								}).then((response) => {
+									if (
+										response.status === 204 ||
+										response.status === 200
+									) {
+										window.location.reload();
+									}
+									else {
+										openToast({
+											message: Liferay.Language.get(
+												'an-unexpected-error-occurred'
+											),
+											title: Liferay.Language.get(
+												'error'
+											),
+											type: 'danger',
+										});
+									}
+								});
+							}
+							else {
+								self.focus();
+							}
+						},
+					});
+				},
 				symbolLeft: 'times-circle',
 			}
 		);

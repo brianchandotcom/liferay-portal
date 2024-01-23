@@ -38,7 +38,7 @@ export default function ChangeTrackingIndicator({
 	spritemap,
 	timelineIconClass,
 	timelineIconName,
-	timelineItems,
+	timelineItemsURL,
 	title,
 	warningBody,
 	warningButton,
@@ -489,7 +489,7 @@ export default function ChangeTrackingIndicator({
 	);
 
 	const renderTimeline = () => {
-		if (timelineItems) {
+		if (timelineItemsURL !== null) {
 			return (
 				<ClayDropDown
 					alignmentPosition={Align.BottomCenter}
@@ -506,7 +506,7 @@ export default function ChangeTrackingIndicator({
 						</ClayButton>
 					}
 				>
-					<PublicationTimeline timelineItems={timelineItems} />
+					<PublicationTimeline timelineItemsURL={timelineItemsURL} />
 				</ClayDropDown>
 			);
 		}

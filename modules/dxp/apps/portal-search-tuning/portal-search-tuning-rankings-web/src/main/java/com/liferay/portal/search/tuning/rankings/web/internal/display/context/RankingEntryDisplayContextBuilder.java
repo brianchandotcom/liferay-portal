@@ -16,8 +16,11 @@ import java.util.List;
  */
 public class RankingEntryDisplayContextBuilder {
 
-	public RankingEntryDisplayContextBuilder(Ranking ranking) {
+	public RankingEntryDisplayContextBuilder(
+		Ranking ranking, String sxpBlueprintTitle) {
+
 		_ranking = ranking;
+		_sxpBlueprintTitle = sxpBlueprintTitle;
 	}
 
 	public RankingEntryDisplayContext build() {
@@ -32,6 +35,7 @@ public class RankingEntryDisplayContextBuilder {
 		_setPinnedResultsCount(rankingEntryDisplayContext);
 		_setStatus(rankingEntryDisplayContext);
 		_setSXPBlueprintExternalReferenceCode(rankingEntryDisplayContext);
+		_setSXPBlueprintTitle(rankingEntryDisplayContext);
 		_setUid(rankingEntryDisplayContext);
 
 		return rankingEntryDisplayContext;
@@ -95,6 +99,12 @@ public class RankingEntryDisplayContextBuilder {
 			_ranking.getSXPBlueprintExternalReferenceCode());
 	}
 
+	private void _setSXPBlueprintTitle(
+		RankingEntryDisplayContext rankingEntryDisplayContext) {
+
+		rankingEntryDisplayContext.setSXPBlueprintTitle(_sxpBlueprintTitle);
+	}
+
 	private void _setUid(
 		RankingEntryDisplayContext rankingEntryDisplayContext) {
 
@@ -102,5 +112,6 @@ public class RankingEntryDisplayContextBuilder {
 	}
 
 	private final Ranking _ranking;
+	private final String _sxpBlueprintTitle;
 
 }

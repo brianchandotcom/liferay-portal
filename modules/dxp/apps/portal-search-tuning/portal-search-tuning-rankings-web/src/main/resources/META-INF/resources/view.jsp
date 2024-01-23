@@ -28,9 +28,7 @@ page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.Re
 page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingEntryDisplayContext" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingPortletDisplayContext" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.DuplicateQueryStringException" %><%@
-page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.NotApplicableStatusException" %><%@
-page import="com.liferay.search.experiences.model.SXPBlueprint" %><%@
-page import="com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil" %>
+page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.NotApplicableStatusException" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.Objects" %>
@@ -183,10 +181,10 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 					<c:when test="<%= Validator.isNotNull(rankingEntryDisplayContext.getSXPBlueprintExternalReferenceCode()) %>">
 
 						<%
-						SXPBlueprint sxpBlueprint = SXPBlueprintLocalServiceUtil.fetchSXPBlueprintByExternalReferenceCode(rankingEntryDisplayContext.getSXPBlueprintExternalReferenceCode(), themeDisplay.getCompanyId());
+						String sxpBlueprintTitle = rankingEntryDisplayContext.getSXPBlueprintTitle();
 						%>
 
-						<span class="lfr-portal-tooltip" data-title='<%= Validator.isNotNull(sxpBlueprint) ? HtmlUtil.escape(sxpBlueprint.getTitle(locale)) : LanguageUtil.get(request, "the-blueprint-associated-with-this-ranking-was-deleted") %>'>
+						<span class="lfr-portal-tooltip" data-title='<%= Validator.isNotNull(sxpBlueprintTitle) ? HtmlUtil.escape(sxpBlueprintTitle) : LanguageUtil.get(request, "the-blueprint-associated-with-this-ranking-was-deleted") %>'>
 							<liferay-ui:message key="blueprint" />
 						</span>
 					</c:when>

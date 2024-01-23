@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -27,11 +28,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.experiences.SXPBlueprintTitleProvider;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
+import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
@@ -300,10 +303,23 @@ public class RankingPortletDisplayBuilder {
 	private RankingEntryDisplayContext _buildDisplayContext(
 		SearchHit searchHit) {
 
+		Ranking ranking = _documentToRankingTranslator.translate(
+			searchHit.getDocument(), searchHit.getId());
+
+		SXPBlueprintTitleProvider sxpBlueprintTitleProvider =
+			_sxpBlueprintTitleProviderSnapshot.get();
+
+		String sxpBlueprintTitle = StringPool.BLANK;
+
+		if (sxpBlueprintTitleProvider != null) {
+			sxpBlueprintTitle = sxpBlueprintTitleProvider.getSXPBlueprintTitle(
+				_portal.getCompanyId(_httpServletRequest),
+				_language.getLanguageId(_httpServletRequest),
+				ranking.getSXPBlueprintExternalReferenceCode());
+		}
+
 		RankingEntryDisplayContextBuilder rankingEntryDisplayContextBuilder =
-			new RankingEntryDisplayContextBuilder(
-				_documentToRankingTranslator.translate(
-					searchHit.getDocument(), searchHit.getId()));
+			new RankingEntryDisplayContextBuilder(ranking, sxpBlueprintTitle);
 
 		return rankingEntryDisplayContextBuilder.build();
 	}
@@ -518,6 +534,11 @@ public class RankingPortletDisplayBuilder {
 
 	private static final String _ORDER_BY_COL =
 		RankingFields.QUERY_STRING_KEYWORD;
+
+	private static final Snapshot<SXPBlueprintTitleProvider>
+		_sxpBlueprintTitleProviderSnapshot = new Snapshot<>(
+			RankingPortletDisplayBuilder.class, SXPBlueprintTitleProvider.class,
+			null, true);
 
 	private String _displayStyle;
 	private final DocumentToRankingTranslator _documentToRankingTranslator;

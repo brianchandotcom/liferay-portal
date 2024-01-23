@@ -52,6 +52,10 @@ public class RankingEntryDisplayContext {
 		return _sxpBlueprintExternalReferenceCode;
 	}
 
+	public String getSXPBlueprintTitle() {
+		return _sxpBlueprintTitle;
+	}
+
 	public String getUid() {
 		return _uid;
 	}
@@ -92,6 +96,10 @@ public class RankingEntryDisplayContext {
 		_sxpBlueprintExternalReferenceCode = sxpBlueprintExternalReferenceCode;
 	}
 
+	public void setSXPBlueprintTitle(String sxpBlueprintTitle) {
+		_sxpBlueprintTitle = sxpBlueprintTitle;
+	}
+
 	public void setUid(String uid) {
 		_uid = uid;
 	}
@@ -104,6 +112,7 @@ public class RankingEntryDisplayContext {
 	private String _pinnedResultsCount;
 	private String _status;
 	private String _sxpBlueprintExternalReferenceCode;
+	private String _sxpBlueprintTitle;
 	private String _uid;
 
 }

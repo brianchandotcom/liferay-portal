@@ -3,9 +3,9 @@ assemble:
       into: static
 liferay-sample-editor-config-contributor:
     editorConfigKeys:
+        - description
         - sampleClassicEditor
         - sampleLegacyEditor
-        - description
     name: Liferay Sample Editor Config Contributor
     type: editorConfigContributor
     url: index.js

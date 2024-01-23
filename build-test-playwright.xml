@@ -258,4 +258,40 @@
 			<arg value="playwright_teardown.sh" />
 		</exec>
 	</target>
+
+	<target name="update-portal-ext-properties">
+		<fail message="Please set the property ${updated.portal.ext.properties}." unless="updated.portal.ext.properties" />
+
+		<beanshell>
+			<![CDATA[
+				import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+				public File getPortalExtPropertiesFile() {
+					List portalExtPropertiesFiles = JenkinsResultsParserUtil.findFiles(new File(project.getProperty("liferay.home")), "portal-ext.properties");
+
+					if (portalExtPropertiesFiles.isEmpty()) {
+						throw new RuntimeException("Could not find the original portal-ext.properties file");
+					}
+
+					return portalExtPropertiesFiles.get(0);
+				}
+
+				public File getUpdatedPortalExtPropertiesFile() {
+					File updatedPortalExtPropertiesFile = new File(project.getProperty("updated.portal.ext.properties"));
+
+					if (!updatedPortalExtPropertiesFile.exists()) {
+						throw new RuntimeException("Could not find the updated portal-ext.properties file at " + updatedPortalExtPropertiesFile);
+					}
+
+					return updatedPortalExtPropertiesFile;
+				}
+
+				File portalExtPropertiesFile = getPortalExtPropertiesFile();
+
+				Properties portalExtProperties = JenkinsResultsParserUtil.getProperties(new File[] {portalExtPropertiesFile, getUpdatedPortalExtPropertiesFile()});
+
+				JenkinsResultsParserUtil.writePropertiesFile(portalExtPropertiesFile, portalExtProperties, true);
+			]]>
+		</beanshell>
+	</target>
 </project>

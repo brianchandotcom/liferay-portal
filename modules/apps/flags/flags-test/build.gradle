@@ -1,4 +1,6 @@
 dependencies {
 	testIntegrationImplementation project(":apps:flags:flags-api")
+	testIntegrationImplementation project(":apps:flags:flags-web")
+	testIntegrationImplementation project(":apps:message-boards:message-boards-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

@@ -141,13 +141,13 @@ public class AppServer {
 	private static String _getAppServerDirName(
 		String basePath, String dirName) {
 
-		File basePathFolder = new File(basePath);
+		File baseDir = new File(basePath);
 
-		if (basePathFolder.isDirectory()) {
-			File[] folders = basePathFolder.listFiles();
+		if (baseDir.isDirectory()) {
+			File[] files = baseDir.listFiles();
 
-			if (folders != null) {
-				for (File file : folders) {
+			if (files != null) {
+				for (File file : files) {
 					if (file.isDirectory() &&
 						(Objects.equals(file.getName(), dirName) ||
 						 file.getName(

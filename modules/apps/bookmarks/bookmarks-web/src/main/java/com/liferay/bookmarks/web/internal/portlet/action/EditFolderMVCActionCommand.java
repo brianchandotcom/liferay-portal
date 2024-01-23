@@ -181,8 +181,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 	private void _updateFolder(ActionRequest actionRequest) throws Exception {
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
-		long parentFolderId = ParamUtil.getLong(
-			actionRequest, "parentFolderId");
+		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
@@ -194,14 +193,15 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		if (folderId <= 0) {
 			_bookmarksFolderService.addFolder(
-				parentFolderId, name, description, serviceContext);
+				ParamUtil.getLong(actionRequest, "parentFolderId"), name,
+				description, serviceContext);
 		}
 		else if (mergeWithParentFolder) {
-			_bookmarksFolderService.mergeFolders(folderId, parentFolderId);
+			_bookmarksFolderService.mergeFolders(folderId, newFolderId);
 		}
 		else {
 			_bookmarksFolderService.updateFolder(
-				folderId, parentFolderId, name, description, serviceContext);
+				folderId, newFolderId, name, description, serviceContext);
 		}
 	}
 

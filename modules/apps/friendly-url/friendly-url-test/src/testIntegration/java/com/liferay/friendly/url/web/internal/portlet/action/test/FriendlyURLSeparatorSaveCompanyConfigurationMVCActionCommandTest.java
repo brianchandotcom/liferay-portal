@@ -98,6 +98,26 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 	}
 
 	@Test
+	public void testDoProcessActionWithInvalidCharactersAsAFriendlyURLSeparator()
+		throws Exception {
+
+		Map<String, String> friendlyURLSeparators =
+			_getRandomFriendlyURLSeparatorsMap();
+
+		friendlyURLSeparators.put(JournalArticle.class.getName(), "%&/()?¿*");
+
+		MockActionResponse mockActionResponse = new MockActionResponse();
+
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(friendlyURLSeparators),
+			mockActionResponse);
+
+		_assertRedirectURL(
+			"friendly-url-separator-error-invalid-characters",
+			friendlyURLSeparators, mockActionResponse.getRedirect());
+	}
+
+	@Test
 	public void testDoProcessActionWithReservedKeywordAsAFriendlyURLSeparator()
 		throws Exception {
 
@@ -113,6 +133,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			mockActionResponse);
 
 		_assertRedirectURL(
+			"friendly-url-separator-error-other-asset-type-may-use-this-prefix",
 			friendlyURLSeparators, mockActionResponse.getRedirect());
 	}
 
@@ -132,11 +153,13 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			mockActionResponse);
 
 		_assertRedirectURL(
+			"friendly-url-separator-error-other-asset-type-may-use-this-prefix",
 			friendlyURLSeparators, mockActionResponse.getRedirect());
 	}
 
 	private void _assertRedirectURL(
-		Map<String, String> friendlyURLSeparators, String redirect) {
+		String errorFieldKey, Map<String, String> friendlyURLSeparators,
+		String redirect) {
 
 		Assert.assertNotNull(redirect);
 
@@ -160,10 +183,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 					"_com_liferay_configuration_admin_web_portlet_" +
 						"InstanceSettingsPortlet_" +
 							JournalArticle.class.getName(),
-					_language.get(
-						LocaleUtil.US,
-						"friendly-url-separator-error-other-asset-type-may-" +
-							"use-this-prefix"))
+					_language.get(LocaleUtil.US, errorFieldKey))
 			).toString(),
 			HttpComponentsUtil.decodeURL(errors));
 
@@ -177,7 +197,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 
 		Assert.assertEquals(
 			friendlyURLSeparators.get(JournalArticle.class.getName()),
-			urlSeparator);
+			HttpComponentsUtil.decodeURL(urlSeparator));
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(

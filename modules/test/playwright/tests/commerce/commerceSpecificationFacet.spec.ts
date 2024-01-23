@@ -7,8 +7,9 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../fixtures/commercePagesTest';
+import {loginTest} from '../../fixtures/loginTest';
 
-export const test = mergeTests(apiHelpersTest, commercePagesTest);
+export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest);
 
 test('can sort specifications by specification group priority', async ({
 	apiHelpers,

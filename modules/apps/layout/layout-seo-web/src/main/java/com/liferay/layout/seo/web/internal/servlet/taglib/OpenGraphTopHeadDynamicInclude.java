@@ -29,6 +29,7 @@ import com.liferay.layout.seo.template.LayoutSEOTemplateProcessor;
 import com.liferay.layout.seo.web.internal.configuration.LayoutSEODynamicRenderingConfiguration;
 import com.liferay.layout.seo.web.internal.util.OpenGraphImageProvider;
 import com.liferay.layout.seo.web.internal.util.TitleProvider;
+import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryTypeUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -83,6 +84,15 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		throws IOException {
 
 		try {
+			String layoutUtilityPageEntryType =
+				LayoutUtilityPageEntryTypeUtil.
+					getStatusLayoutUtilityPageEntryType(
+						httpServletResponse.getStatus());
+
+			if (Validator.isNotNull(layoutUtilityPageEntryType)) {
+				return;
+			}
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);

@@ -68,10 +68,6 @@ public class Database {
 		return _className;
 	}
 
-	public String getDatabaseName() {
-		return _databaseName;
-	}
-
 	public String getHost() {
 		return _host;
 	}
@@ -82,6 +78,10 @@ public class Database {
 
 	public String getProtocol() {
 		return _protocol;
+	}
+
+	public String getSchemaName() {
+		return _schemaName;
 	}
 
 	public String getURL() {
@@ -105,7 +105,7 @@ public class Database {
 			sb.append("/");
 		}
 
-		sb.append(_databaseName);
+		sb.append(_schemaName);
 		sb.append(_params);
 
 		return sb.toString();
@@ -113,10 +113,6 @@ public class Database {
 
 	public void setClassName(String className) {
 		_className = className;
-	}
-
-	public void setDatabaseName(String databaseName) {
-		_databaseName = databaseName;
 	}
 
 	public void setHost(String host) {
@@ -135,6 +131,10 @@ public class Database {
 		_protocol = protocol;
 	}
 
+	public void setSchemaName(String schemaName) {
+		_schemaName = schemaName;
+	}
+
 	private Database(
 		String className, String protocol, String host, int port,
 		String databaseName, String params) {
@@ -143,15 +143,16 @@ public class Database {
 		_protocol = protocol;
 		_host = host;
 		_port = port;
-		_databaseName = databaseName;
 		_params = params;
+
+		_schemaName = databaseName;
 	}
 
 	private String _className;
-	private String _databaseName;
 	private String _host;
 	private String _params;
 	private int _port;
 	private String _protocol;
+	private String _schemaName;
 
 }

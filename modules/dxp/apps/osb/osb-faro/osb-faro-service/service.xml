@@ -165,6 +165,7 @@
 		<column name="services" type="String" />
 		<column name="state" type="String" />
 		<column name="subscription" type="String" />
+		<column name="subscriptionModifiedTime" type="long" />
 		<column name="timeZoneId" type="String" />
 		<column name="weDeployKey" type="String" />
 

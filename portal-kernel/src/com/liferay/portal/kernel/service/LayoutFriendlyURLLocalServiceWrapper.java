@@ -488,6 +488,12 @@ public class LayoutFriendlyURLLocalServiceWrapper
 		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLsCount();
 	}
 
+	@Override
+	public int getLayoutFriendlyURLsCount(long companyId, String friendlyURL) {
+		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLsCount(
+			companyId, friendlyURL);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

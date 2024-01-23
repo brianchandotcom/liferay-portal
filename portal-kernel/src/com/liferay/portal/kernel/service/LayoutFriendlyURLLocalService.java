@@ -365,6 +365,9 @@ public interface LayoutFriendlyURLLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutFriendlyURLsCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutFriendlyURLsCount(long companyId, String friendlyURL);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

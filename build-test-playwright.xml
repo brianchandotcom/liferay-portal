@@ -174,7 +174,7 @@
 							}
 						}
 
-						JenkinsResultsParserUtil.sleep(1000);
+						JenkinsResultsParserUtil.sleep(3000);
 					}
 
 					throw new Exception(clientExtensionName + " was not started");
@@ -242,7 +242,7 @@
 							}
 						}
 
-						JenkinsResultsParserUtil.sleep(1000);
+						JenkinsResultsParserUtil.sleep(3000);
 					}
 
 					throw new Exception(osgiModuleName + " was not started");

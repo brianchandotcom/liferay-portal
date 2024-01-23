@@ -1,0 +1,37 @@
+pipeline {
+	agent any
+
+	environment {
+		LABEL_BUILD_DATE = "${sh(script: 'date -u +%Y-%m-%dT%H:%M:%SZ', returnStdout: true).trim()}"
+		IMAGE_NAME = "liferay/com-liferay-osb-faro"
+		IMAGE_TAG_SUFFIX = "${sh(script: 'date +%Y%m%d', returnStdout: true).trim()}-${sh(script: 'git rev-parse --short=7 ${GIT_COMMIT}', returnStdout: true).trim()}"
+
+		DOCKER_BUILD_ARGS = "--build-arg LABEL_BUILD_DATE=${LABEL_BUILD_DATE} --build-arg LABEL_VCS_REF=${GIT_COMMIT} --no-cache -f ./Dockerfile ./"
+	}
+
+	stages {
+		stage('Build') {
+			steps {
+				sh 'ant -f ../../../../../build.xml setup-sdk'
+				sh 'ant -f ../../../../../build.xml setup-profile-dxp'
+                sh 'ant -f ../../../../../build.xml compile install-portal-snapshots'
+			}
+		}
+
+		stage('Build Docker Image') {
+			steps {
+				dir('osb-faro-docker/cloud') {
+					script {
+						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+							osbFaroImage = docker.build(
+								"${IMAGE_NAME}-${IMAGE_TAG_SUFFIX}",
+								"${DOCKER_BUILD_ARGS}")
+
+                            osbFaroImage.push()
+                        }
+					}
+				}
+			}
+		}
+	}
+}

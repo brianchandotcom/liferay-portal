@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <react:component
-	module="item/selector/FDSViewItemSelector"
+	module="{FDSViewItemSelector} from frontend-data-set-views-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"className", fdsViewItemSelectorDisplayContext.getClassName()

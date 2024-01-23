@@ -6,3 +6,4 @@
 export {default as FDSEntries} from './FDSEntries';
 export {default as FDSViews} from './FDSViews';
 export {default as FDSView} from './FDSView';
+export {default as FDSViewItemSelector} from '../item/selector/FDSViewItemSelector';

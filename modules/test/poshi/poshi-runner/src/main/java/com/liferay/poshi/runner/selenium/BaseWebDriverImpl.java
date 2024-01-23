@@ -2362,7 +2362,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			saveScreenshot(fileName);
 		}
 		catch (UnhandledAlertException unhandledAlertException) {
-			LiferaySeleniumUtil.captureScreen(fileName);
+			System.out.println("Unable to save screenshot due to alert");
 		}
 	}
 

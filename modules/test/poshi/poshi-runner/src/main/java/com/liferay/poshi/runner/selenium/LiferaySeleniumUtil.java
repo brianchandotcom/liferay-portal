@@ -16,11 +16,7 @@ import com.liferay.poshi.runner.exception.LiferayLogException;
 import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.util.EmailCommands;
 
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -40,8 +36,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.imageio.ImageIO;
 
 import junit.framework.TestCase;
 
@@ -218,28 +212,6 @@ public class LiferaySeleniumUtil {
 		if (Validator.isNotNull(sb.toString())) {
 			throw new Exception(sb.toString());
 		}
-	}
-
-	public static void captureScreen(String fileName) throws Exception {
-		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
-
-		if (!poshiProperties.saveScreenshot) {
-			return;
-		}
-
-		File file = new File(fileName);
-
-		file.mkdirs();
-
-		Robot robot = new Robot();
-
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-
-		Rectangle rectangle = new Rectangle(toolkit.getScreenSize());
-
-		BufferedImage bufferedImage = robot.createScreenCapture(rectangle);
-
-		ImageIO.write(bufferedImage, "jpg", file);
 	}
 
 	public static void connectToEmailAccount(

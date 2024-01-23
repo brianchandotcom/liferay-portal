@@ -6,8 +6,8 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import {fetch} from 'frontend-js-web';
-import React, {useState} from 'react';
+import {debounce, fetch} from 'frontend-js-web';
+import React, {useCallback, useMemo, useState} from 'react';
 
 import ServiceProvider from '../../../ServiceProvider/index';
 import AccountCreationModalBody from './AccountCreationModalBody';
@@ -39,9 +39,7 @@ export default function AccountCreationModal({
 		themeDisplay.getPortalURL()
 	);
 
-	const createAccount = (event) => {
-		event.preventDefault();
-
+	const createAccount = useCallback(() => {
 		const organizationIds = accountData.organizations.map(
 			({value}) => value
 		);
@@ -67,12 +65,31 @@ export default function AccountCreationModal({
 				closeModal();
 			})
 			.catch((error) => console.error(error));
-	};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [
+		accountData.description,
+		accountData.externalReferenceCode,
+		accountData.name,
+		accountData.organizations,
+		accountData.taxId,
+		accountData.type,
+		closeModal,
+		handleAccountChange,
+	]);
+
+	const debouncedCreateAccount = useMemo(
+		() => debounce(async () => createAccount(), 500),
+		[createAccount]
+	);
 
 	return (
 		<ClayModal center className="commerce-modal" observer={observer}>
 			<ClayForm
-				onSubmit={createAccount}
+				onSubmit={(event) => {
+					event.preventDefault();
+
+					debouncedCreateAccount();
+				}}
 				style={{
 					display: 'inherit',
 					flexDirection: 'inherit',

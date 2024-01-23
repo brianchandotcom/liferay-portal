@@ -9,19 +9,6 @@ import serviceFetch from './serviceFetch';
 export default {
 
 	/**
-	 * Get a collection's configuration
-	 * @param {object} options
-	 * @param {object} options.collection
-	 */
-	getCollectionConfiguration(collection) {
-		return serviceFetch(config.getCollectionConfigurationURL, {
-			body: {
-				collectionKey: collection.key,
-			},
-		});
-	},
-
-	/**
 	 * Get the URL to edit configuration of a collection
 	 * @param {object} options
 	 * @param {string} options.collectionKey

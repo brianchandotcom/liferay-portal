@@ -24,23 +24,52 @@ public class AppServerTest {
 	public static TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	@Test
-	public void testGetCustomAppServer() {
+	public void testGetAppServer() throws Exception {
+		File tempFile = temporaryFolder.getRoot();
+
+		File dirFile = new File(tempFile, "tomcat");
+
+		dirFile.mkdir();
+
+		AppServer appServer = AppServer.getAppServer(
+			tempFile.getCanonicalPath(), "tomcat");
+
+		_assertAppServer(
+			appServer, dirFile, "bin", "lib",
+			"webapps" + File.separator + "ROOT", "tomcat");
+
+		dirFile.delete();
+
+		dirFile = new File(tempFile, "tomcat-9.0.80");
+
+		dirFile.mkdirs();
+
+		appServer = AppServer.getAppServer(
+			tempFile.getCanonicalPath(), "tomcat");
+
+		_assertAppServer(
+			appServer, dirFile, "bin", "lib",
+			"webapps" + File.separator + "ROOT", "tomcat");
+	}
+
+	@Test
+	public void testNewAppServer() {
 		File dirFile = new File(
 			temporaryFolder.getRoot(), RandomTestUtil.randomString());
 
 		dirFile.mkdir();
 
-		String extraDirLibNames = RandomTestUtil.randomString();
-		String globalDirLibNames = RandomTestUtil.randomString();
+		String extraDirLibName = RandomTestUtil.randomString();
+		String globalDirLibName = RandomTestUtil.randomString();
 		String portalDirName = RandomTestUtil.randomString();
 		String serverDetectorServerId = RandomTestUtil.randomString();
 
 		AppServer appServer = new AppServer(
-			dirFile.getAbsolutePath(), extraDirLibNames, globalDirLibNames,
+			dirFile.getAbsolutePath(), extraDirLibName, globalDirLibName,
 			portalDirName, serverDetectorServerId);
 
-		_assert(
-			appServer, dirFile, extraDirLibNames, globalDirLibNames,
+		_assertAppServer(
+			appServer, dirFile, extraDirLibName, globalDirLibName,
 			portalDirName, serverDetectorServerId);
 
 		dirFile = new File(
@@ -48,46 +77,21 @@ public class AppServerTest {
 
 		dirFile.mkdir();
 
-		extraDirLibNames = RandomTestUtil.randomString();
-		globalDirLibNames = RandomTestUtil.randomString();
+		extraDirLibName = RandomTestUtil.randomString();
+		globalDirLibName = RandomTestUtil.randomString();
 		portalDirName = RandomTestUtil.randomString();
 
 		appServer.setDirName(dirFile.getAbsolutePath());
 		appServer.setPortalDirName(portalDirName);
-		appServer.setExtraLibDirNames(extraDirLibNames);
-		appServer.setGlobalLibDirName(globalDirLibNames);
+		appServer.setExtraLibDirNames(extraDirLibName);
+		appServer.setGlobalLibDirName(globalDirLibName);
 
-		_assert(
-			appServer, dirFile, extraDirLibNames, globalDirLibNames,
+		_assertAppServer(
+			appServer, dirFile, extraDirLibName, globalDirLibName,
 			portalDirName, serverDetectorServerId);
 	}
 
-	@Test
-	public void testGetTomcatAppServer() {
-		File dirFile = new File(temporaryFolder.getRoot(), "tomcat");
-
-		dirFile.mkdir();
-
-		AppServer appServer = AppServer.getAppServer("../../", "tomcat");
-
-		_assert(
-			appServer, dirFile, "bin", "lib",
-			"webapps" + File.separator + "ROOT", "tomcat");
-
-		dirFile.delete();
-
-		dirFile = new File(temporaryFolder.getRoot(), "tomcat-9.0.80");
-
-		dirFile.mkdirs();
-
-		appServer = AppServer.getAppServer("../../", "tomcat");
-
-		_assert(
-			appServer, dirFile, "bin", "lib",
-			"webapps" + File.separator + "ROOT", "tomcat");
-	}
-
-	private void _assert(
+	private void _assertAppServer(
 		AppServer appServer, File dirFile, String extraDirLibName,
 		String globalDirLibName, String portalDirName,
 		String serverDetectorServerId) {

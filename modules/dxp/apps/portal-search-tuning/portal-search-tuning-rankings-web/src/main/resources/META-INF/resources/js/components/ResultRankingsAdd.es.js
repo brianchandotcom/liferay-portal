@@ -75,7 +75,7 @@ function ResultRankingsAdd({cancelURL, formName, selectSitesURL}) {
 		return errors;
 	};
 
-	const _handleBlur = (fieldName) => () => {
+	const _handleBlur = (fieldName) => {
 		setTouched({...touched, [fieldName]: true});
 	};
 
@@ -98,6 +98,7 @@ function ResultRankingsAdd({cancelURL, formName, selectSitesURL}) {
 	const _handleScopeTypeChange = (value) => {
 		setScopeType(value);
 		setScope('');
+		setGroupName('');
 		setTouched({...touched, scope: false});
 
 		setScopeDropdownActive(false);
@@ -148,7 +149,7 @@ function ResultRankingsAdd({cancelURL, formName, selectSitesURL}) {
 				<ClayInput
 					id="searchQuery"
 					name={`${namespace}keywords`}
-					onBlur={_handleBlur('searchQuery')}
+					onBlur={() => _handleBlur('searchQuery')}
 					onChange={_handleSearchQueryChange}
 					type="text"
 					value={searchQuery}
@@ -244,7 +245,11 @@ function ResultRankingsAdd({cancelURL, formName, selectSitesURL}) {
 			</ClayForm.Group>
 
 			{scopeType === SCOPE_TYPES.SITE && (
-				<>
+				<ClayForm.Group
+					className={getCN({
+						'has-error': !!errors.scope && touched.scope,
+					})}
+				>
 					<label htmlFor="groupName">
 						{Liferay.Language.get('select-site')}
 
@@ -273,7 +278,12 @@ function ResultRankingsAdd({cancelURL, formName, selectSitesURL}) {
 								onClick={() => {
 									openSelectionModal({
 										id: `${namespace}selectSite`,
+										onClose: () => {
+											_handleBlur('scope');
+										},
 										onSelect: (selectedItem) => {
+											_handleBlur('scope');
+
 											if (!selectedItem) {
 												return;
 											}
@@ -299,6 +309,14 @@ function ResultRankingsAdd({cancelURL, formName, selectSitesURL}) {
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
 
+					{errors.scope && touched.scope && (
+						<ClayForm.FeedbackGroup>
+							<ClayForm.FeedbackItem>
+								{errors.scope}
+							</ClayForm.FeedbackItem>
+						</ClayForm.FeedbackGroup>
+					)}
+
 					<input
 						id={`${namespace}groupExternalReferenceCode`}
 						key="groupExternalReferenceCode"
@@ -307,7 +325,7 @@ function ResultRankingsAdd({cancelURL, formName, selectSitesURL}) {
 						type="hidden"
 						value={scope}
 					/>
-				</>
+				</ClayForm.Group>
 			)}
 
 			{scopeType === SCOPE_TYPES.SXP_BLUEPRINT && (
@@ -322,7 +340,7 @@ function ResultRankingsAdd({cancelURL, formName, selectSitesURL}) {
 							id: 'externalReferenceCode',
 							label: 'title',
 						}}
-						onBlur={_handleBlur('scope')}
+						onBlur={() => _handleBlur('scope')}
 						onSelect={_handleScopeChange}
 						selected={scope}
 						title={Liferay.Language.get('select-blueprint')}

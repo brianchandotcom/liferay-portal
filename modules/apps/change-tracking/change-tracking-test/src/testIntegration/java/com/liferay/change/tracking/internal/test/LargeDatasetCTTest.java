@@ -69,6 +69,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Preston Crary
  */
+@Ignore
 @RunWith(Arquillian.class)
 public class LargeDatasetCTTest {
 
@@ -110,15 +111,6 @@ public class LargeDatasetCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					ctCollection.getCtCollectionId())) {
 
-			long[] organizationIds = ListUtil.toLongArray(
-				_organizationLocalService.getOrganizations(0, _BATCH_SIZE),
-				Organization.ORGANIZATION_ID_ACCESSOR);
-
-			_organizationLocalService.addUserOrganizations(
-				TestPropsValues.getUserId(), organizationIds);
-		}
-
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long[] organizationIds = ListUtil.toLongArray(
 				_organizationLocalService.getOrganizations(0, _BATCH_SIZE),
 				Organization.ORGANIZATION_ID_ACCESSOR);

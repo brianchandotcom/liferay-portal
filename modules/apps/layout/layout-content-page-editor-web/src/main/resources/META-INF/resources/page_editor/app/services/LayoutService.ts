@@ -1,0 +1,325 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {CollectionItemLayoutDataItem} from '../../types/layout_data/CollectionItemLayoutDataItem';
+import {LayoutData, LayoutDataItem} from '../../types/layout_data/LayoutData';
+import {
+	FragmentEntryLink,
+	FragmentEntryLinkMap,
+} from '../actions/addFragmentEntryLinks';
+import {LayoutDataItemType} from '../config/constants/layoutDataItemTypes';
+import {config} from '../config/index';
+import {PageContent} from '../utils/usePageContents';
+import draftServiceFetch, {OnNetworkStatus} from './draftServiceFetch';
+import serviceFetch from './serviceFetch';
+
+export interface StyleBookTokenValue {
+	cssVariable: string;
+	editorType: string;
+	label: string;
+	name: string;
+	tokenCategoryLabel: string;
+	tokenSetLabel: string;
+	value: string;
+}
+
+export type StyleBookTokenValueMap = Record<string, StyleBookTokenValue>;
+
+export interface Layout {
+	groupId: string;
+	layoutId: string;
+	layoutUuid: string;
+	privateLayout: boolean;
+	title: string;
+}
+
+export default {
+	addItem({
+		itemType,
+		onNetworkStatus,
+		parentItemId,
+		position,
+		segmentsExperienceId,
+	}: {
+		itemType: LayoutDataItemType;
+		onNetworkStatus: OnNetworkStatus;
+		parentItemId: string;
+		position: number;
+		segmentsExperienceId: string;
+	}) {
+		return draftServiceFetch<{
+			addedItemId: string;
+			layoutData: LayoutData;
+		}>(
+			config.addItemURL,
+			{
+				body: {
+					itemType,
+					parentItemId,
+					position,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	changeMasterLayout({
+		masterLayoutPlid,
+		onNetworkStatus,
+	}: {
+		masterLayoutPlid: string;
+		onNetworkStatus: OnNetworkStatus;
+	}) {
+		return draftServiceFetch<
+			| {
+					fragmentEntryLinks: FragmentEntryLinkMap;
+					masterLayoutData: LayoutData;
+			  }
+			| undefined
+		>(
+			config.changeMasterLayoutURL,
+			{body: {masterLayoutPlid}},
+			onNetworkStatus
+		);
+	},
+
+	changeStyleBookEntry({
+		onNetworkStatus,
+		styleBookEntryId,
+	}: {
+		onNetworkStatus: OnNetworkStatus;
+		styleBookEntryId: string;
+	}) {
+		return draftServiceFetch<{tokenValues: StyleBookTokenValueMap}>(
+			config.changeStyleBookEntryURL,
+			{body: {styleBookEntryId}},
+			onNetworkStatus
+		);
+	},
+
+	getLayoutFriendlyURL(layout: Layout) {
+		return serviceFetch<{friendlyURL: string}>(
+			config.getLayoutFriendlyURL,
+			{body: layout}
+		);
+	},
+
+	markItemForDeletion({
+		itemId,
+		onNetworkStatus,
+		portletIds = [],
+		segmentsExperienceId,
+	}: {
+		itemId: string;
+		onNetworkStatus: OnNetworkStatus;
+		portletIds?: string[];
+		segmentsExperienceId: string;
+	}) {
+		return draftServiceFetch<{
+			layoutData: LayoutData;
+			pageContents: PageContent[];
+		}>(
+			config.markItemForDeletionURL,
+			{
+				body: {
+					itemId,
+					portletIds,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	moveItem({
+		itemId,
+		onNetworkStatus,
+		parentItemId,
+		position,
+		segmentsExperienceId,
+	}: {
+		itemId: string;
+		onNetworkStatus: OnNetworkStatus;
+		parentItemId: string;
+		position: number;
+		segmentsExperienceId: string;
+	}) {
+		return draftServiceFetch<LayoutData>(
+			config.moveItemURL,
+			{
+				body: {
+					itemId,
+					parentItemId,
+					position,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	restoreCollectionDisplayConfig({
+		filterFragmentEntryLinks,
+		itemConfig,
+		itemId,
+		onNetworkStatus,
+		segmentsExperienceId,
+	}: {
+		filterFragmentEntryLinks: Array<{
+			editableValues: FragmentEntryLink['editableValues'];
+			fragmentEntryLinkId: string;
+		}>;
+		itemConfig: CollectionItemLayoutDataItem['config'];
+		itemId: string;
+		onNetworkStatus: OnNetworkStatus;
+		segmentsExperienceId: string;
+	}) {
+		return draftServiceFetch<void>(
+			config.restoreCollectionDisplayConfigURL,
+			{
+				body: {
+					filterFragmentEntryLinks: JSON.stringify(
+						filterFragmentEntryLinks
+					),
+					itemConfig: JSON.stringify(itemConfig),
+					itemId,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	unmarkItemsForDeletion({
+		itemIds,
+		onNetworkStatus,
+		segmentsExperienceId,
+	}: {
+		itemIds: string[];
+		onNetworkStatus: OnNetworkStatus;
+		segmentsExperienceId: string;
+	}) {
+		return draftServiceFetch<{
+			layoutData: LayoutData;
+			pageContents: PageContent[];
+		}>(
+			config.unmarkItemsForDeletionURL,
+			{
+				body: {
+					itemIds: JSON.stringify(itemIds),
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	updateCollectionDisplayConfig({
+		itemConfig,
+		itemId,
+		languageId,
+		onNetworkStatus,
+		segmentsExperienceId,
+	}: {
+		itemConfig: CollectionItemLayoutDataItem['config'];
+		itemId: string;
+		languageId: Liferay.Language.Locale;
+		onNetworkStatus: OnNetworkStatus;
+		segmentsExperienceId: string;
+	}) {
+		return draftServiceFetch<{
+			fragmentEntryLinks: FragmentEntryLink[];
+			layoutData: LayoutData;
+			pageContents: PageContent[];
+		}>(
+			config.updateCollectionDisplayConfigURL,
+			{
+				body: {
+					itemConfig: JSON.stringify(itemConfig),
+					itemId,
+					languageId,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	updateItemConfig({
+		itemConfig,
+		itemId,
+		onNetworkStatus,
+		segmentsExperienceId,
+	}: {
+		itemConfig: LayoutDataItem['config'];
+		itemId: string;
+		onNetworkStatus: OnNetworkStatus;
+		segmentsExperienceId: string;
+	}) {
+		return draftServiceFetch<{
+			layoutData: LayoutData;
+			pageContents: PageContent[];
+		}>(
+			config.updateItemConfigURL,
+			{
+				body: {
+					itemConfig: JSON.stringify(itemConfig),
+					itemId,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	updateLayoutData({
+		layoutData,
+		onNetworkStatus,
+		segmentsExperienceId,
+	}: {
+		layoutData: LayoutData;
+		onNetworkStatus: OnNetworkStatus;
+		segmentsExperienceId: string;
+	}) {
+		return draftServiceFetch<void>(
+			config.updateLayoutPageTemplateDataURL,
+			{
+				body: {
+					data: JSON.stringify(layoutData),
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	updateRowColumns({
+		itemId,
+		numberOfColumns,
+		onNetworkStatus,
+		segmentsExperienceId,
+	}: {
+		itemId: string;
+		numberOfColumns: number;
+		onNetworkStatus: OnNetworkStatus;
+		segmentsExperienceId: string;
+	}) {
+		return draftServiceFetch<{
+			layoutData: LayoutData;
+			pageContents: PageContent[];
+		}>(
+			config.updateRowColumnsURL,
+			{
+				body: {
+					itemId,
+					numberOfColumns,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+};

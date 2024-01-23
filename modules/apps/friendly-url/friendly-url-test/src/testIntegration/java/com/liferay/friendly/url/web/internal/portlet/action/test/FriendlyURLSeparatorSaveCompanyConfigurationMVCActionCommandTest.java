@@ -1,15 +1,19 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.friendly.url.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -28,12 +32,16 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,35 +75,11 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 
 	@Test
 	public void testDoProcessActionSaveConfiguration() throws Exception {
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest();
-
-		Map<String, String> friendlyURLSeparators = new HashMap<>();
-
-		for (FriendlyURLResolver friendlyURLResolver :
-				FriendlyURLResolverRegistryUtil.
-					getFriendlyURLResolversAsCollection()) {
-
-			if (!friendlyURLResolver.isURLSeparatorConfigurable()) {
-				continue;
-			}
-
-			String urlSeparator = RandomTestUtil.randomString();
-
-			String urlSeparatorNormalized =
-				_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
-					urlSeparator);
-
-			friendlyURLSeparators.put(
-				friendlyURLResolver.getKey(),
-				StringPool.SLASH + urlSeparatorNormalized + StringPool.SLASH);
-
-			mockLiferayPortletActionRequest.setParameter(
-				friendlyURLResolver.getKey(), urlSeparator);
-		}
+		Map<String, String> friendlyURLSeparators =
+			_getRandomFriendlyURLSeparatorsMap();
 
 		_mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest,
+			_getMockLiferayPortletActionRequest(friendlyURLSeparators),
 			new MockLiferayPortletActionResponse());
 
 		Thread.sleep(2000);
@@ -108,13 +92,71 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 				friendlyURLSeparators.entrySet()) {
 
 			Assert.assertEquals(
-				friendlyURLSeparator.getValue(),
+				StringPool.SLASH + friendlyURLSeparator.getValue() +
+					StringPool.SLASH,
 				jsonObject.get(friendlyURLSeparator.getKey()));
 		}
 	}
 
-	private MockLiferayPortletActionRequest
-			_getMockLiferayPortletActionRequest()
+	@Test
+	public void testDoProcessActionWithReservedKeywordAsAFriendlyURLSeparator()
+		throws Exception {
+
+		Map<String, String> friendlyURLSeparators =
+			_getRandomFriendlyURLSeparatorsMap();
+
+		friendlyURLSeparators.put(JournalArticle.class.getName(), "web");
+
+		MockActionResponse mockActionResponse = new MockActionResponse();
+
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(friendlyURLSeparators),
+			mockActionResponse);
+
+		Assert.assertNotNull(mockActionResponse.getRedirect());
+
+		String errors = HttpComponentsUtil.getParameter(
+			mockActionResponse.getRedirect(),
+			"_com_liferay_configuration_admin_web_portlet_" +
+				"InstanceSettingsPortlet_errors",
+			false);
+
+		Assert.assertNotNull(errors);
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"errorMessage",
+				_language.get(
+					LocaleUtil.US,
+					"friendly-url-separator-error-changes-could-not-be-saved")
+			).put(
+				"fields",
+				JSONUtil.put(
+					"_com_liferay_configuration_admin_web_portlet_" +
+						"InstanceSettingsPortlet_" +
+							JournalArticle.class.getName(),
+					_language.get(
+						LocaleUtil.US,
+						"friendly-url-separator-error-other-asset-type-may-" +
+							"use-this-prefix"))
+			).toString(),
+			HttpComponentsUtil.decodeURL(errors));
+
+		String urlSeparator = HttpComponentsUtil.getParameter(
+			mockActionResponse.getRedirect(),
+			"_com_liferay_configuration_admin_web_portlet_" +
+				"InstanceSettingsPortlet_" + JournalArticle.class.getName(),
+			false);
+
+		Assert.assertNotNull(urlSeparator);
+
+		Assert.assertEquals(
+			friendlyURLSeparators.get(JournalArticle.class.getName()),
+			urlSeparator);
+	}
+
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			Map<String, String> friendlyURLSeparators)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -123,7 +165,37 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
+		mockLiferayPortletActionRequest.setParameter(
+			"redirect", "http://localhost:8080");
+
+		for (Map.Entry<String, String> friendlyURLSeparator :
+				friendlyURLSeparators.entrySet()) {
+
+			mockLiferayPortletActionRequest.setParameter(
+				friendlyURLSeparator.getKey(), friendlyURLSeparator.getValue());
+		}
+
 		return mockLiferayPortletActionRequest;
+	}
+
+	private Map<String, String> _getRandomFriendlyURLSeparatorsMap() {
+		Map<String, String> friendlyURLSeparators = new HashMap<>();
+
+		for (FriendlyURLResolver friendlyURLResolver :
+				FriendlyURLResolverRegistryUtil.
+					getFriendlyURLResolversAsCollection()) {
+
+			if (!friendlyURLResolver.isURLSeparatorConfigurable()) {
+				continue;
+			}
+
+			friendlyURLSeparators.put(
+				friendlyURLResolver.getKey(),
+				_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+					RandomTestUtil.randomString()));
+		}
+
+		return friendlyURLSeparators;
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
@@ -138,8 +210,10 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 
 		themeDisplay.setLayout(layout);
 
+		themeDisplay.setLocale(LocaleUtil.US);
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setPpid(ConfigurationAdminPortletKeys.INSTANCE_SETTINGS);
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
@@ -163,9 +237,28 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 	@Inject
 	private JSONFactory _jsonFactory;
 
+	@Inject
+	private Language _language;
+
 	@Inject(
 		filter = "mvc.command.name=/instance_settings/friendly_url_separator_save_company_configuration"
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	private static class MockActionResponse
+		extends MockLiferayPortletActionResponse {
+
+		public String getRedirect() {
+			return _location;
+		}
+
+		@Override
+		public void sendRedirect(String location) throws IOException {
+			_location = location;
+		}
+
+		private String _location;
+
+	}
 
 }

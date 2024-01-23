@@ -150,8 +150,9 @@ public class DBPartitionUtil {
 			(_DATABASE_PARTITION_SCHEMA_NAME_PREFIX.length() > 11)) {
 
 			throw new PortalException(
-				"database.partition.schema.name.prefix length must not be " +
-					"greater than 11 characters");
+				"The value for property " +
+					"\"database.partition.schema.name.prefix\" is greater " +
+						"than 11 characters");
 		}
 	}
 

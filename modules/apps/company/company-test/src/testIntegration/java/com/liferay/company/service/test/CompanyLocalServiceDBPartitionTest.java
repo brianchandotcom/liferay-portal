@@ -116,7 +116,7 @@ public class CompanyLocalServiceDBPartitionTest
 				RandomTestUtil.randomLong(), "test.com", "test.com", "test.com",
 				0, true, null, null, null, null, null, null);
 
-			Assert.fail("CompanyLocalService should throw an exception");
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertArrayEquals(
@@ -155,7 +155,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 			company = CompanyTestUtil.addCompany();
 
-			Assert.fail("DBPartitionUtil should throw an exception");
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertArrayEquals(
@@ -230,7 +230,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 				standaloneDBPartition = false;
 
-				Assert.fail("CompanyLocalService should throw an exception");
+				Assert.fail();
 			}
 			catch (PortalException portalException) {
 				long[] companyIds = PortalInstances.getCompanyIdsBySQL();
@@ -289,7 +289,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 				standaloneDBPartition = false;
 
-				Assert.fail("DBPartitionUtil should throw an exception");
+				Assert.fail();
 			}
 			catch (PortalException portalException) {
 				long[] companyIds = PortalInstances.getCompanyIdsBySQL();
@@ -322,7 +322,6 @@ public class CompanyLocalServiceDBPartitionTest
 		Assert.assertFalse(
 			ArrayUtil.contains(
 				PortalInstances.getCompanyIdsBySQL(), company.getCompanyId()));
-
 		Assert.assertEquals(partitionsCount - 1, _getPartitionsCount());
 	}
 
@@ -348,7 +347,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 			_companyLocalService.deleteCompany(_company);
 
-			Assert.fail("DBPartitionUtil should throw an exception");
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertTrue(
@@ -422,7 +421,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 			standaloneDBPartition = true;
 
-			Assert.fail("DBPartitionUtil should throw an exception");
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertEquals(

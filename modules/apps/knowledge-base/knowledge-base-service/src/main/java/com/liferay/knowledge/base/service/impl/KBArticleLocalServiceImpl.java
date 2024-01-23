@@ -1156,10 +1156,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			increment);
 	}
 
+	@Override
 	public Lock lockKBArticle(long userId, long resourcePrimKey)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-195016")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-11003")) {
 			return null;
 		}
 
@@ -1489,7 +1490,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Override
 	public void unlockKBArticle(long resourcePrimKey) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-195016")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-11003")) {
 			return;
 		}
 

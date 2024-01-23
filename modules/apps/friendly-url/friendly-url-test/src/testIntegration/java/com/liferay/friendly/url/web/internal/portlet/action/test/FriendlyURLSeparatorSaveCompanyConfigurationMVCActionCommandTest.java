@@ -100,6 +100,39 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 	}
 
 	@Test
+	public void testDoProcessActionSaveConfigurationWithSomeInvalidCharacters()
+		throws Exception {
+
+		Map<String, String> friendlyURLSeparators =
+			_getRandomFriendlyURLSeparatorsMap();
+
+		friendlyURLSeparators.put(JournalArticle.class.getName(), "test%&?/22");
+
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(friendlyURLSeparators),
+			new MockLiferayPortletActionResponse());
+
+		Thread.sleep(2000);
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			_friendlyURLSeparatorConfigurationManager.getFriendlyURLSeparators(
+				_company.getCompanyId()));
+
+		for (Map.Entry<String, String> friendlyURLSeparator :
+				friendlyURLSeparators.entrySet()) {
+
+			String normalizedFriendlyURLSeparator =
+				_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+					friendlyURLSeparator.getValue());
+
+			Assert.assertEquals(
+				StringPool.SLASH + normalizedFriendlyURLSeparator +
+					StringPool.SLASH,
+				jsonObject.get(friendlyURLSeparator.getKey()));
+		}
+	}
+
+	@Test
 	public void testDoProcessActionWithANumberAsAFriendlyURLSeparator()
 		throws Exception {
 

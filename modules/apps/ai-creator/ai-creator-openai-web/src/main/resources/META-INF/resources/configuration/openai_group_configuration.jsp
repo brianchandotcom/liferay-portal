@@ -35,7 +35,7 @@ boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.is
 					message="to-enable-chatgpt-for-this-site,-first-enable-it-for-your-instance"
 				/>
 			</c:when>
-			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-196648") && companyChatGPTEnabled && !companyDALLEEnabled %>'>
+			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10793") && companyChatGPTEnabled && !companyDALLEEnabled %>'>
 				<clay:alert
 					message="to-enable-dalle-for-this-site,-first-enable-it-for-your-instance"
 				/>
@@ -95,7 +95,7 @@ boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.is
 	</clay:content-col>
 </clay:content-row>
 
-<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-196648") %>'>
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10793") %>'>
 	<clay:content-row
 		cssClass="c-mt-5"
 	>

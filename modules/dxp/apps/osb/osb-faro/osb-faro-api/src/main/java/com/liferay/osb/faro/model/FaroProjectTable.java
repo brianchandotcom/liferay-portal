@@ -71,6 +71,10 @@ public class FaroProjectTable extends BaseTable<FaroProjectTable> {
 		"state_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<FaroProjectTable, String> subscription = createColumn(
 		"subscription", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<FaroProjectTable, Long> subscriptionModifiedTime =
+		createColumn(
+			"subscriptionModifiedTime", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<FaroProjectTable, String> timeZoneId = createColumn(
 		"timeZoneId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<FaroProjectTable, String> weDeployKey = createColumn(

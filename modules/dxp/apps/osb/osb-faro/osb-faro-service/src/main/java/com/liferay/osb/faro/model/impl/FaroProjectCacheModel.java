@@ -66,7 +66,7 @@ public class FaroProjectCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -110,6 +110,8 @@ public class FaroProjectCacheModel
 		sb.append(state);
 		sb.append(", subscription=");
 		sb.append(subscription);
+		sb.append(", subscriptionModifiedTime=");
+		sb.append(subscriptionModifiedTime);
 		sb.append(", timeZoneId=");
 		sb.append(timeZoneId);
 		sb.append(", weDeployKey=");
@@ -220,6 +222,8 @@ public class FaroProjectCacheModel
 			faroProjectImpl.setSubscription(subscription);
 		}
 
+		faroProjectImpl.setSubscriptionModifiedTime(subscriptionModifiedTime);
+
 		if (timeZoneId == null) {
 			faroProjectImpl.setTimeZoneId("");
 		}
@@ -270,6 +274,8 @@ public class FaroProjectCacheModel
 		services = objectInput.readUTF();
 		state = objectInput.readUTF();
 		subscription = objectInput.readUTF();
+
+		subscriptionModifiedTime = objectInput.readLong();
 		timeZoneId = objectInput.readUTF();
 		weDeployKey = objectInput.readUTF();
 	}
@@ -378,6 +384,8 @@ public class FaroProjectCacheModel
 			objectOutput.writeUTF(subscription);
 		}
 
+		objectOutput.writeLong(subscriptionModifiedTime);
+
 		if (timeZoneId == null) {
 			objectOutput.writeUTF("");
 		}
@@ -414,6 +422,7 @@ public class FaroProjectCacheModel
 	public String services;
 	public String state;
 	public String subscription;
+	public long subscriptionModifiedTime;
 	public String timeZoneId;
 	public String weDeployKey;
 

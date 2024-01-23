@@ -73,6 +73,7 @@
 		<field name="subscription" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="subscriptionModifiedTime" type="long" />
 		<field name="timeZoneId" type="String" />
 		<field name="weDeployKey" type="String" />
 	</model>

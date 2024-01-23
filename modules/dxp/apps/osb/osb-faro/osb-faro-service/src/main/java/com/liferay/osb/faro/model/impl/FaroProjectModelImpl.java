@@ -72,6 +72,7 @@ public class FaroProjectModelImpl
 		{"recommendationsEnabled", Types.BOOLEAN},
 		{"serverLocation", Types.VARCHAR}, {"services", Types.VARCHAR},
 		{"state_", Types.VARCHAR}, {"subscription", Types.VARCHAR},
+		{"subscriptionModifiedTime", Types.BIGINT},
 		{"timeZoneId", Types.VARCHAR}, {"weDeployKey", Types.VARCHAR}
 	};
 
@@ -100,12 +101,13 @@ public class FaroProjectModelImpl
 		TABLE_COLUMNS_MAP.put("services", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("state_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("subscription", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("subscriptionModifiedTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("timeZoneId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("weDeployKey", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBFaro_FaroProject (mvccVersion LONG default 0 not null,faroProjectId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createTime LONG,modifiedTime LONG,name VARCHAR(75) null,accountKey VARCHAR(75) null,accountName VARCHAR(75) null,corpProjectName VARCHAR(75) null,corpProjectUuid VARCHAR(75) null,ipAddresses STRING null,incidentReportEmailAddresses STRING null,lastAccessTime LONG,recommendationsEnabled BOOLEAN,serverLocation VARCHAR(75) null,services STRING null,state_ VARCHAR(75) null,subscription STRING null,timeZoneId VARCHAR(75) null,weDeployKey VARCHAR(75) null)";
+		"create table OSBFaro_FaroProject (mvccVersion LONG default 0 not null,faroProjectId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createTime LONG,modifiedTime LONG,name VARCHAR(75) null,accountKey VARCHAR(75) null,accountName VARCHAR(75) null,corpProjectName VARCHAR(75) null,corpProjectUuid VARCHAR(75) null,ipAddresses STRING null,incidentReportEmailAddresses STRING null,lastAccessTime LONG,recommendationsEnabled BOOLEAN,serverLocation VARCHAR(75) null,services STRING null,state_ VARCHAR(75) null,subscription STRING null,subscriptionModifiedTime LONG,timeZoneId VARCHAR(75) null,weDeployKey VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBFaro_FaroProject";
@@ -307,6 +309,9 @@ public class FaroProjectModelImpl
 			attributeGetterFunctions.put(
 				"subscription", FaroProject::getSubscription);
 			attributeGetterFunctions.put(
+				"subscriptionModifiedTime",
+				FaroProject::getSubscriptionModifiedTime);
+			attributeGetterFunctions.put(
 				"timeZoneId", FaroProject::getTimeZoneId);
 			attributeGetterFunctions.put(
 				"weDeployKey", FaroProject::getWeDeployKey);
@@ -393,6 +398,10 @@ public class FaroProjectModelImpl
 			attributeSetterBiConsumers.put(
 				"subscription",
 				(BiConsumer<FaroProject, String>)FaroProject::setSubscription);
+			attributeSetterBiConsumers.put(
+				"subscriptionModifiedTime",
+				(BiConsumer<FaroProject, Long>)
+					FaroProject::setSubscriptionModifiedTime);
 			attributeSetterBiConsumers.put(
 				"timeZoneId",
 				(BiConsumer<FaroProject, String>)FaroProject::setTimeZoneId);
@@ -820,6 +829,20 @@ public class FaroProjectModelImpl
 	}
 
 	@Override
+	public long getSubscriptionModifiedTime() {
+		return _subscriptionModifiedTime;
+	}
+
+	@Override
+	public void setSubscriptionModifiedTime(long subscriptionModifiedTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_subscriptionModifiedTime = subscriptionModifiedTime;
+	}
+
+	@Override
 	public String getTimeZoneId() {
 		if (_timeZoneId == null) {
 			return "";
@@ -944,6 +967,8 @@ public class FaroProjectModelImpl
 		faroProjectImpl.setServices(getServices());
 		faroProjectImpl.setState(getState());
 		faroProjectImpl.setSubscription(getSubscription());
+		faroProjectImpl.setSubscriptionModifiedTime(
+			getSubscriptionModifiedTime());
 		faroProjectImpl.setTimeZoneId(getTimeZoneId());
 		faroProjectImpl.setWeDeployKey(getWeDeployKey());
 
@@ -996,6 +1021,8 @@ public class FaroProjectModelImpl
 		faroProjectImpl.setState(this.<String>getColumnOriginalValue("state_"));
 		faroProjectImpl.setSubscription(
 			this.<String>getColumnOriginalValue("subscription"));
+		faroProjectImpl.setSubscriptionModifiedTime(
+			this.<Long>getColumnOriginalValue("subscriptionModifiedTime"));
 		faroProjectImpl.setTimeZoneId(
 			this.<String>getColumnOriginalValue("timeZoneId"));
 		faroProjectImpl.setWeDeployKey(
@@ -1195,6 +1222,9 @@ public class FaroProjectModelImpl
 			faroProjectCacheModel.subscription = null;
 		}
 
+		faroProjectCacheModel.subscriptionModifiedTime =
+			getSubscriptionModifiedTime();
+
 		faroProjectCacheModel.timeZoneId = getTimeZoneId();
 
 		String timeZoneId = faroProjectCacheModel.timeZoneId;
@@ -1293,6 +1323,7 @@ public class FaroProjectModelImpl
 	private String _services;
 	private String _state;
 	private String _subscription;
+	private long _subscriptionModifiedTime;
 	private String _timeZoneId;
 	private String _weDeployKey;
 
@@ -1349,6 +1380,8 @@ public class FaroProjectModelImpl
 		_columnOriginalValues.put("services", _services);
 		_columnOriginalValues.put("state_", _state);
 		_columnOriginalValues.put("subscription", _subscription);
+		_columnOriginalValues.put(
+			"subscriptionModifiedTime", _subscriptionModifiedTime);
 		_columnOriginalValues.put("timeZoneId", _timeZoneId);
 		_columnOriginalValues.put("weDeployKey", _weDeployKey);
 	}
@@ -1416,9 +1449,11 @@ public class FaroProjectModelImpl
 
 		columnBitmasks.put("subscription", 1048576L);
 
-		columnBitmasks.put("timeZoneId", 2097152L);
+		columnBitmasks.put("subscriptionModifiedTime", 2097152L);
 
-		columnBitmasks.put("weDeployKey", 4194304L);
+		columnBitmasks.put("timeZoneId", 4194304L);
+
+		columnBitmasks.put("weDeployKey", 8388608L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

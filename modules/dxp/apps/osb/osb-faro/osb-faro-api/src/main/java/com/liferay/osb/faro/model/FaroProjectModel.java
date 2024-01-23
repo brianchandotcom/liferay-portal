@@ -380,6 +380,20 @@ public interface FaroProjectModel
 	public void setSubscription(String subscription);
 
 	/**
+	 * Returns the subscription modified time of this faro project.
+	 *
+	 * @return the subscription modified time of this faro project
+	 */
+	public long getSubscriptionModifiedTime();
+
+	/**
+	 * Sets the subscription modified time of this faro project.
+	 *
+	 * @param subscriptionModifiedTime the subscription modified time of this faro project
+	 */
+	public void setSubscriptionModifiedTime(long subscriptionModifiedTime);
+
+	/**
 	 * Returns the time zone ID of this faro project.
 	 *
 	 * @return the time zone ID of this faro project

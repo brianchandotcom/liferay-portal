@@ -63,6 +63,7 @@ create table OSBFaro_FaroProject (
 	services STRING null,
 	state_ VARCHAR(75) null,
 	subscription STRING null,
+	subscriptionModifiedTime LONG,
 	timeZoneId VARCHAR(75) null,
 	weDeployKey VARCHAR(75) null
 );

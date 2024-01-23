@@ -54,6 +54,8 @@ public class FaroProjectWrapper
 		attributes.put("services", getServices());
 		attributes.put("state", getState());
 		attributes.put("subscription", getSubscription());
+		attributes.put(
+			"subscriptionModifiedTime", getSubscriptionModifiedTime());
 		attributes.put("timeZoneId", getTimeZoneId());
 		attributes.put("weDeployKey", getWeDeployKey());
 
@@ -188,6 +190,13 @@ public class FaroProjectWrapper
 
 		if (subscription != null) {
 			setSubscription(subscription);
+		}
+
+		Long subscriptionModifiedTime = (Long)attributes.get(
+			"subscriptionModifiedTime");
+
+		if (subscriptionModifiedTime != null) {
+			setSubscriptionModifiedTime(subscriptionModifiedTime);
 		}
 
 		String timeZoneId = (String)attributes.get("timeZoneId");
@@ -411,6 +420,16 @@ public class FaroProjectWrapper
 	@Override
 	public String getSubscription() {
 		return model.getSubscription();
+	}
+
+	/**
+	 * Returns the subscription modified time of this faro project.
+	 *
+	 * @return the subscription modified time of this faro project
+	 */
+	@Override
+	public long getSubscriptionModifiedTime() {
+		return model.getSubscriptionModifiedTime();
 	}
 
 	/**
@@ -688,6 +707,16 @@ public class FaroProjectWrapper
 	@Override
 	public void setSubscription(String subscription) {
 		model.setSubscription(subscription);
+	}
+
+	/**
+	 * Sets the subscription modified time of this faro project.
+	 *
+	 * @param subscriptionModifiedTime the subscription modified time of this faro project
+	 */
+	@Override
+	public void setSubscriptionModifiedTime(long subscriptionModifiedTime) {
+		model.setSubscriptionModifiedTime(subscriptionModifiedTime);
 	}
 
 	/**

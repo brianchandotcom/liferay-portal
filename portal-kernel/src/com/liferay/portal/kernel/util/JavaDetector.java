@@ -86,6 +86,16 @@ public class JavaDetector {
 		return false;
 	}
 
+	public static boolean isJDK21() {
+		String javaVersion = getJavaVersion();
+
+		if (javaVersion.startsWith(_JAVA_VERSION_JDK_21)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isOpenJDK() {
 		return _javaDetector._openJDK;
 	}
@@ -143,6 +153,8 @@ public class JavaDetector {
 	private static final String _JAVA_VERSION_JDK_8 = "1.8.";
 
 	private static final String _JAVA_VERSION_JDK_11 = "11";
+
+	private static final String _JAVA_VERSION_JDK_21 = "21";
 
 	private static final Log _log = LogFactoryUtil.getLog(JavaDetector.class);
 

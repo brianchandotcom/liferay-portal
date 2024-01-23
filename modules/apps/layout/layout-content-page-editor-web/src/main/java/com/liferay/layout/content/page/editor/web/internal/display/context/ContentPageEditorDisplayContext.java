@@ -418,10 +418,6 @@ public class ContentPageEditorDisplayContext {
 				_getResourceURL(
 					"/layout_content_page_editor/get_available_templates")
 			).put(
-				"getCollectionConfigurationURL",
-				_getResourceURL(
-					"/layout_content_page_editor/get_collection_configuration")
-			).put(
 				"getCollectionFieldURL",
 				_getResourceURL(
 					"/layout_content_page_editor/get_collection_field")

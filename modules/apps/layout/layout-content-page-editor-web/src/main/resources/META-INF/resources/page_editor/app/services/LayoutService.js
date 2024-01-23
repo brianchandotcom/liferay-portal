@@ -77,26 +77,6 @@ export default {
 		);
 	},
 
-	createLayoutPageTemplateEntry({
-		segmentsExperienceId,
-		templateSetDescription,
-		templateSetId,
-		templateSetName,
-	}) {
-		return draftServiceFetch(
-			config.createLayoutPageTemplateEntryURL,
-			{
-				body: {
-					layoutPageTemplateCollectionDescription: templateSetDescription,
-					layoutPageTemplateCollectionId: templateSetId,
-					layoutPageTemplateCollectionName: templateSetName,
-					segmentsExperienceId,
-				},
-			},
-			() => {}
-		);
-	},
-
 	/**
 	 * @param {object} layout
 	 * @returns {Promise<{error: Error, friendlyURL: string}>}

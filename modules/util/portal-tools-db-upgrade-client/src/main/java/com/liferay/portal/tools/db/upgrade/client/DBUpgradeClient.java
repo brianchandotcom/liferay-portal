@@ -693,13 +693,13 @@ public class DBUpgradeClient {
 		}
 
 		System.out.println(
-			"Please enter your database name (" + dataSource.getDatabaseName() +
+			"Please enter your database name (" + dataSource.getSchemaName() +
 				"): ");
 
 		response = _consoleReader.readLine();
 
 		if (!response.isEmpty()) {
-			dataSource.setDatabaseName(response);
+			dataSource.setSchemaName(response);
 		}
 
 		System.out.println("Please enter your database username: ");

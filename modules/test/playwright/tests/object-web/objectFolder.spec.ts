@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/util';
@@ -14,6 +15,9 @@ import {getRandomInt} from '../../utils/util';
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
+	featureFlagsTest({
+		'LPS-148856': true,
+	}),
 	loginTest,
 	objectPagesTest
 );
@@ -22,8 +26,6 @@ test('created object folders are on the left side bar', async ({
 	apiHelpers,
 	objectDefinitionsPage,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
-
 	await objectDefinitionsPage.goto();
 
 	const objectFolderExternalReferenceCode = 'objectFolder' + getRandomInt();
@@ -44,11 +46,8 @@ test('created object folders are on the left side bar', async ({
 });
 
 test('default folder does not contains delete and edit options', async ({
-	apiHelpers,
 	objectDefinitionsPage,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-148856', true);
-
 	await objectDefinitionsPage.goto();
 
 	await objectDefinitionsPage.clickDefaultObjectFolder();

@@ -161,6 +161,13 @@ function appendXMLAssignments(
 	wrapperNodeAttrs
 ) {
 	if (dataAssignments) {
+		if (
+			!dataAssignments.assignmentType &&
+			dataAssignments[0].assignmentType
+		) {
+			dataAssignments = dataAssignments[0];
+		}
+
 		const assignmentType = Array.from(dataAssignments.assignmentType)[0];
 
 		const xmlAssignments = XMLUtil.createObj(

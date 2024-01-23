@@ -5,6 +5,11 @@
 
 import {request} from './request';
 
+//add the used properties here
+type ListTypeDefinitionEntry = {
+	name: string;
+}
+
 async function fetchListTypeEntries(externalReferenceCode: string) {
 	const response = await request(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${externalReferenceCode}/list-type-entries`
@@ -44,15 +49,21 @@ export async function fetchListTypeDefinitions() {
 	const listTypeDefinitions = {} as ListTypeDefinitions;
 
 	for (const listTypeDefinitionERC of listTypeDefinitionERCs) {
-		const entries = await fetchListTypeEntries(listTypeDefinitionERC);
+		const entries:ListTypeDefinitionEntry[] = await fetchListTypeEntries(listTypeDefinitionERC);
 
-		listTypeDefinitions[listTypeDefinitionERC] = {};
-		listTypeDefinitions[listTypeDefinitionERC].array = entries;
-		listTypeDefinitions[listTypeDefinitionERC].map = {};
+		const processedEntries:{
+			entriesArray: ListTypeDefinitionEntry[],
+			entriesMap: {[key: string] : any}
+		} = {
+			entriesArray: entries,
+			entriesMap: {},
+		};
 
-		entries.forEach((entry: any) => {
-			listTypeDefinitions[listTypeDefinitionERC].map[entry.name] = entry;
+		entries.forEach((entry) => {
+			processedEntries.entriesMap[entry.name] = entry;
 		});
+
+		listTypeDefinitions[listTypeDefinitionERC] = processedEntries;
 	}
 
 	return listTypeDefinitions;

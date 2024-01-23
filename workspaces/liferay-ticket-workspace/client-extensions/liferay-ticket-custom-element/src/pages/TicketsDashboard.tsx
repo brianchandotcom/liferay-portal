@@ -42,9 +42,7 @@ const PAGE_LOADING_INDICATOR_STYLE: React.CSSProperties = {
 	zIndex: 2,
 };
 
-const TicketsDashboard: React.FC<{screenType?: ScreenType}> = ({
-	screenType,
-}) => {
+const TicketsDashboard = ({screenType}: {screenType: ScreenType}) => {
 	const queryClient: QueryClient = useQueryClient();
 
 	const [isLoading, setIsLoading] = useState(false);
@@ -56,21 +54,20 @@ const TicketsDashboard: React.FC<{screenType?: ScreenType}> = ({
 		search: '',
 	});
 
-	const relatedTicketsMap: RelatedTicketsMap = useMemo<
-		RelatedTicketsMap
-	>(() => {
-		const map: RelatedTicketsMap = {};
+	const relatedTicketsMap: RelatedTicketsMap =
+		useMemo<RelatedTicketsMap>(() => {
+			const map: RelatedTicketsMap = {};
 
-		tickets.forEach((ticket: Ticket) => {
-			if (!map[ticket.ticketStatus]) {
-				map[ticket.ticketStatus] = [];
-			}
+			tickets.forEach((ticket: Ticket) => {
+				if (!map[ticket.ticketStatus]) {
+					map[ticket.ticketStatus] = [];
+				}
 
-			map[ticket.ticketStatus].push(ticket);
-		});
+				map[ticket.ticketStatus].push(ticket);
+			});
 
-		return map;
-	}, [tickets]);
+			return map;
+		}, [tickets]);
 
 	const onDragEnd = async (event: any) => {
 		if (!event || !event.over || !event.over.id) {
@@ -89,8 +86,7 @@ const TicketsDashboard: React.FC<{screenType?: ScreenType}> = ({
 			await updateTicketStatus(updatedTicket);
 
 			return DRAG_RESULT.STATUS_CHANGED;
-		}
-		else {
+		} else {
 			return DRAG_RESULT.NO_CHANGE;
 		}
 	};
@@ -167,7 +163,11 @@ const TicketsDashboard: React.FC<{screenType?: ScreenType}> = ({
 						<div className="autofit-col w-25" key={status}>
 							<StatusColumn
 								name={status}
-								relatedTickets={relatedTicketsMap[status]}
+								relatedTickets={
+									relatedTicketsMap[status]
+										? relatedTicketsMap[status]
+										: []
+								}
 							/>
 						</div>
 					))}

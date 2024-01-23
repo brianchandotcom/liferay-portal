@@ -31,7 +31,7 @@ ROUTES.forEach((route) => {
 	HREF_COMPONENT_MAP[route.href] = route.element;
 });
 
-const AllScreens: React.FC = () => {
+const AllScreens = () => {
 	const {hash} = useHash('#dashboard');
 
 	return (

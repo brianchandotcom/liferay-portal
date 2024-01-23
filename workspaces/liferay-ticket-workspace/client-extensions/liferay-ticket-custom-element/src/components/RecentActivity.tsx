@@ -18,7 +18,7 @@ type Props = {
 	tickets: Ticket[];
 };
 
-const DisplayTickets: React.FC<Props> = ({tickets}) => {
+const DisplayTickets = ({tickets} : Props) => {
 	if (!tickets.length) {
 		return (
 			<>
@@ -70,7 +70,7 @@ const DisplayTickets: React.FC<Props> = ({tickets}) => {
 	);
 };
 
-const RecentActivity: React.FC<Props> = ({tickets}) => {
+const RecentActivity = ({tickets}: Props) => {
 	return (
 		<div className="col px-0">
 			<div className="bg-neutral-1 my-3 p-3 w-100">

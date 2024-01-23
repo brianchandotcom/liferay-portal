@@ -33,7 +33,7 @@ const LIST_TYPE_DEFINITIONS: ListTypeDefinitions = await fetchListTypeDefinition
 const TICKET_SUBJECTS = [
 	'My Object Definition Is Not Deploying in My Batch Client Extension',
 	'A Theme CSS Client Extension Is Not Showing on My Search Page',
-	'I Would Like to Change My Site’s Icon Through a Client Extension',
+	"I Would Like to Change My Site's Icon Through a Client Extension",
 	'When Updating a Custom Element React App, the URL Metadata Is Not Specified Correctly',
 	'Liferay Is Not Triggering My Spring Boot App From an Object Action',
 	'Client Extensions Are Amazing - How Can I Learn More?',
@@ -75,10 +75,10 @@ export async function fetchRecentTickets() {
 }
 
 export async function generateNewTicket() {
-	const priorities = LIST_TYPE_DEFINITIONS[J3Y7_PRIORITIES].array;
-	const regions = LIST_TYPE_DEFINITIONS[J3Y7_REGIONS].array;
-	const resolutions = LIST_TYPE_DEFINITIONS[J3Y7_RESOLUTIONS].array;
-	const types = LIST_TYPE_DEFINITIONS[J3Y7_TYPES].array;
+	const priorities = LIST_TYPE_DEFINITIONS[J3Y7_PRIORITIES].entriesArray;
+	const regions = LIST_TYPE_DEFINITIONS[J3Y7_REGIONS].entriesArray;
+	const resolutions = LIST_TYPE_DEFINITIONS[J3Y7_RESOLUTIONS].entriesArray;
+	const types = LIST_TYPE_DEFINITIONS[J3Y7_TYPES].entriesArray;
 
 	return request(
 		`/o/c/j3y7tickets`,
@@ -109,7 +109,7 @@ export async function generateNewTicket() {
 
 export async function updateTicketStatus(ticket: Ticket) {
 	ticket.payload.ticketStatus =
-		LIST_TYPE_DEFINITIONS[J3Y7_STATUSES].map[ticket.ticketStatus];
+		LIST_TYPE_DEFINITIONS[J3Y7_STATUSES].entriesMap[ticket.ticketStatus];
 
 	const result = await request(
 		`/o/c/j3y7tickets/${ticket.id}`,

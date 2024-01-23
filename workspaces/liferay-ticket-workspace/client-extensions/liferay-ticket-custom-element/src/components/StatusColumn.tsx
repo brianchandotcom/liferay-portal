@@ -8,10 +8,13 @@ import {useDroppable} from '@dnd-kit/core';
 import {Ticket} from '../types';
 import TicketCard from './TicketCard';
 
-const StatusColumn: React.FC<{
+const StatusColumn = ({
+	name,
+	relatedTickets,
+}: {
 	name: string;
 	relatedTickets: Ticket[];
-}> = ({name, relatedTickets}) => {
+}) => {
 	const {setNodeRef} = useDroppable({
 		data: {status: name},
 		id: name + '_droppable',
@@ -30,10 +33,9 @@ const StatusColumn: React.FC<{
 				</div>
 			)}
 
-			{relatedTickets &&
-				relatedTickets.map((ticket: Ticket) => (
-					<TicketCard key={ticket.id} ticket={ticket} />
-				))}
+			{relatedTickets.map((ticket: Ticket) => (
+				<TicketCard key={ticket.id} ticket={ticket} />
+			))}
 		</div>
 	);
 };

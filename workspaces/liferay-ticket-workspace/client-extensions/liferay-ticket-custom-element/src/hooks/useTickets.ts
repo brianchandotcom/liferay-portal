@@ -8,7 +8,7 @@ import {useQuery} from 'react-query';
 
 import {FetchTicketsQueryKey, fetchTickets} from '../services/tickets';
 import {Ticket} from '../types';
-import {normalizeTicket} from '../utils/normalizeTicket';
+import normalizeTicket from '../utils/normalizeTicket';
 
 const useTickets = ({
 	filter,
@@ -17,9 +17,9 @@ const useTickets = ({
 	search,
 }: {
 	filter: {field: string; value: string};
-	page: string | number;
+	page: number;
 	pageSize: number;
-	search?: string | number;
+	search?: string;
 }) => {
 	const tickets = useQuery(
 		['tickets', {filter, page, pageSize, search}],

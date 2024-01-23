@@ -5,7 +5,7 @@
 
 import {Ticket, TicketPayload} from '../types';
 
-export function normalizeTicket(ticketPayload: TicketPayload): Ticket {
+export default function normalizeTicket(ticketPayload: TicketPayload): Ticket {
 	let suggestions = [];
 
 	try {

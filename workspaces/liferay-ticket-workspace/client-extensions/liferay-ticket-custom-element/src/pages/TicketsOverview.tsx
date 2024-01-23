@@ -52,7 +52,7 @@ const FILTERS: Filter[] = [
 	},
 ];
 
-const TicketsOverview: React.FC = () => {
+const TicketsOverview = () => {
 	const queryClient: QueryClient = useQueryClient();
 
 	const [filter, setFilter] = useState(INITIAL_FILTER_STATE);

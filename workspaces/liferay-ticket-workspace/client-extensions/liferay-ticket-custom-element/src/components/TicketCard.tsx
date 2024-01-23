@@ -12,12 +12,13 @@ import {useDraggable} from '@dnd-kit/core';
 import {CSS} from '@dnd-kit/utilities';
 import {useState} from 'react';
 import {QueryClient, useMutation, useQueryClient} from 'react-query';
+import classNames from 'classnames';
 
 import {Liferay} from '../services/liferay';
 import {assignTicketToMe} from '../services/tickets';
 import {Ticket} from '../types';
 
-const TicketCard: React.FC<{ticket: Ticket}> = ({ticket}) => {
+const TicketCard = ({ticket} : {ticket: Ticket}) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isPanelExpanded, setIsPanelExpanded] = useState(false);
 
@@ -31,11 +32,11 @@ const TicketCard: React.FC<{ticket: Ticket}> = ({ticket}) => {
 		transform,
 	} = useDraggable({data: ticket, id: ticket.id + '_draggable'});
 
-	const style: React.CSSProperties = {
-		position: 'relative',
-		transform: CSS.Translate.toString(transform),
-		zIndex: isDragging ? 150 : 1,
-	};
+	const draggableContainerClass = classNames({
+		'border border-neutral-2 mb-4 py-2': true,
+		'bg-brand-primary-lighten-6': isDragging,
+		'bg-neutral-0': !isDragging,
+	});
 
 	const assignToMeMutation = useMutation({
 		mutationFn: async (ticket: Ticket) => {
@@ -67,11 +68,13 @@ const TicketCard: React.FC<{ticket: Ticket}> = ({ticket}) => {
 	return (
 		<div
 			{...attributes}
-			className={`border border-neutral-2 mb-4 py-2 ${
-				isDragging ? 'bg-brand-primary-lighten-6' : 'bg-neutral-0'
-			}`}
+			className={draggableContainerClass}
 			ref={setNodeRef}
-			style={style}
+			style={{
+				position: 'relative',
+				transform: CSS.Translate.toString(transform),
+				zIndex: isDragging ? 150 : 1,
+			}}
 		>
 			<ClayLayout.ContentRow padded>
 				<ClayLayout.ContentCol
@@ -121,9 +124,7 @@ const TicketCard: React.FC<{ticket: Ticket}> = ({ticket}) => {
 						}
 						displayType="secondary"
 						expanded={isPanelExpanded}
-						onExpandedChange={(isExpanded: boolean) =>
-							setIsPanelExpanded(isExpanded)
-						}
+						onExpandedChange={setIsPanelExpanded}
 						showCollapseIcon={true}
 					>
 						<ClayPanel.Body>

@@ -7,7 +7,7 @@ import {useMemo} from 'react';
 import {useQuery} from 'react-query';
 
 import {fetchRecentTickets} from '../services/tickets';
-import {normalizeTicket} from '../utils/normalizeTicket';
+import normalizeTicket from '../utils/normalizeTicket';
 
 const useRecentTickets = () => {
 	const recentTickets = useQuery(['recentTickets'], fetchRecentTickets, {

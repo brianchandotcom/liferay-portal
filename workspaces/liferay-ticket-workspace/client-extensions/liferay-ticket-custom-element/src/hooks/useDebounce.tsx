@@ -5,7 +5,7 @@
 
 import {useEffect, useState} from 'react';
 
-export default function useDebounce(value: string | number, delay: number) {
+export default function useDebounce(value: any, delay: number) {
 	const [debouncedValue, setDebouncedValue] = useState(value);
 
 	useEffect(() => {

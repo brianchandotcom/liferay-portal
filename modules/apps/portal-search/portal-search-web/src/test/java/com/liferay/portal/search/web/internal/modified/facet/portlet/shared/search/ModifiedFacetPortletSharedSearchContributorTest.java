@@ -46,10 +46,10 @@ public class ModifiedFacetPortletSharedSearchContributorTest {
 						JSONUtil.put(
 							"label", "past-hour"
 						).put(
-							"range", _RANGE_VALUE
+							"range", _RANGE
 						)));
 
-		Assert.assertTrue(selectedRangeStrings.contains(_RANGE_VALUE));
+		Assert.assertTrue(selectedRangeStrings.contains(_RANGE));
 		Assert.assertEquals(
 			"Expect only valid ranges", 1, selectedRangeStrings.size());
 	}
@@ -71,10 +71,9 @@ public class ModifiedFacetPortletSharedSearchContributorTest {
 
 	private static final String _PARAMETER_NAME = "modified";
 
-	private static final String _RANGE_VALUE =
-		"[20240119221249 TO 20240119231249]";
+	private static final String _RANGE = "[20240119221249 TO 20240119231249]";
 
-	private class TestModifiedFacetPortletSharedSearchContributor
+	private static class TestModifiedFacetPortletSharedSearchContributor
 		extends ModifiedFacetPortletSharedSearchContributor {
 
 		@Override

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -152,13 +151,6 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			new com.liferay.document.library.internal.upgrade.v3_2_9.
 				DLSizeLimitConfigurationUpgradeProcess(
 					_dlConfigurationUpgradeHelper));
-
-		registry.register(
-			"3.2.9", "3.3.0",
-			UpgradeProcessFactory.addColumns(
-				"DLFileVersion", "displayDate DATE null"),
-			UpgradeProcessFactory.addColumns(
-				"DLFileEntry", "displayDate DATE null"));
 	}
 
 	@Reference

@@ -1,0 +1,94 @@
+diff --git a/org/apache/aries/spifly/dynamic/OSGiFriendlyClassWriter.java b/org/apache/aries/spifly/dynamic/OSGiFriendlyClassWriter.java
+index fe4f6cf613ac0..5a128c48d18a7 100644
+--- a/org/apache/aries/spifly/dynamic/OSGiFriendlyClassWriter.java
++++ b/org/apache/aries/spifly/dynamic/OSGiFriendlyClassWriter.java
+@@ -71,44 +71,28 @@ public final class OSGiFriendlyClassWriter extends ClassWriter {
+     try {
+       boolean bRunning = true;
+       boolean aRunning = true;
+-      InputStream is;
+       String arg00 = arg0;
+       String arg11 = arg1;
+       while(aRunning || bRunning ) {
+         if(aRunning) {
+-          is = loader.getResourceAsStream(arg00 + ".class");
+-          if(is != null) {
+-            ClassReader cr = new ClassReader(is);
+-            arg00 = cr.getSuperName();
+-            if(arg00 == null) {
+-              if (names.size() == 2) {
+-                return OBJECT_INTERNAL_NAME; //arg0 is an interface
+-              }
+-              aRunning = false; //old arg00 was java.lang.Object
+-            } else if(!!!names.add(arg00)) {
+-              return arg00;
+-            }
+-          } else {
+-            //The class file isn't visible on this ClassLoader
+-            aRunning = false;
+-          }
++			arg00 = _getSuperClassName(arg00);
++
++			if (arg00 == null) {
++				aRunning = false;
++			}
++			else if (!names.add(arg00)){
++				return arg00;
++			}
+         }
+         if(bRunning) {
+-          is = loader.getResourceAsStream(arg11 + ".class");
+-          if(is != null) {
+-            ClassReader cr = new ClassReader(is);
+-            arg11 = cr.getSuperName();
+-            if(arg11 == null) {
+-              if (names.size() == 3) {
+-                return OBJECT_INTERNAL_NAME;  //arg1 is an interface
+-              }
+-              bRunning = false; //old arg11 was java.lang.Object
+-            } else if(!!!names.add(arg11)) {
+-              return arg11;
+-            }
+-          } else {
+-            bRunning = false;
+-          }
++			arg11 = _getSuperClassName(arg11);
++
++			if (arg11 == null) {
++				bRunning = false;
++			}
++			else if (!names.add(arg11)) {
++				return arg11;
++			}
+         }
+       }
+ 
+@@ -117,4 +101,27 @@ public final class OSGiFriendlyClassWriter extends ClassWriter {
+       throw new RuntimeException(e);
+     }
+   }
++
++  private String _getSuperClassName(String classInternalName) throws IOException {
++	  if (classInternalName.startsWith("java/")) {
++		  return OBJECT_INTERNAL_NAME;
++	  }
++
++	  InputStream is = loader.getResourceAsStream(classInternalName + ".class");
++
++	  if (is == null) {
++		  return null;
++	  }
++
++	  ClassReader cr = new ClassReader(is);
++
++	  String superName = cr.getSuperName();
++
++	  if (superName == null) {
++		  return OBJECT_INTERNAL_NAME;
++	  }
++
++	  return superName;
++  }
+ }
++/* @generated */
+\ No newline at end of file

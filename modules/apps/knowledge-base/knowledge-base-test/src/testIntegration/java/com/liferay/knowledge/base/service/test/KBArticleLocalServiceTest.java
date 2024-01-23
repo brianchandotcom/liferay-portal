@@ -1389,6 +1389,27 @@ public class KBArticleLocalServiceTest {
 				_serviceContext));
 	}
 
+	@FeatureFlags("LPS-195016")
+	@Test
+	public void testUpdateAndUnlockKBArticleWithPreviousLockByCurrentUser()
+		throws Exception {
+
+		KBArticle kbArticle = _addKbArticle();
+
+		_kbArticleLocalService.lockKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey());
+
+		_kbArticleLocalService.updateAndUnlockKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, new Date(), null, null, null,
+			null, _serviceContext);
+
+		Assert.assertFalse(
+			_kbArticleLocalService.hasKBArticleLock(
+				_user.getUserId(), kbArticle.getResourcePrimKey()));
+	}
+
 	@Test(expected = KBArticleDisplayDateException.class)
 	public void testUpdateKBArticleDisplayDateException() throws Exception {
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
@@ -1483,20 +1504,6 @@ public class KBArticleLocalServiceTest {
 
 	@FeatureFlags("LPS-195016")
 	@Test
-	public void testUpdateKBArticleWithLock() throws Exception {
-		KBArticle kbArticle = _addKbArticle();
-
-		_testKBArticleLock(
-			kbArticle.getResourcePrimKey(),
-			() -> _kbArticleLocalService.updateKBArticle(
-				_user.getUserId(), kbArticle.getResourcePrimKey(),
-				StringUtil.randomString(), StringUtil.randomString(),
-				StringUtil.randomString(), null, null, new Date(), null, null,
-				null, null, _serviceContext));
-	}
-
-	@FeatureFlags("LPS-195016")
-	@Test
 	public void testUpdateKBArticleWithLockByPreviousUser() throws Exception {
 		KBArticle kbArticle = _addKbArticle();
 
@@ -1507,6 +1514,43 @@ public class KBArticleLocalServiceTest {
 				StringUtil.randomString(), StringUtil.randomString(),
 				StringUtil.randomString(), null, null, new Date(), null, null,
 				null, null, new ServiceContext()));
+	}
+
+	@FeatureFlags("LPS-195016")
+	@Test
+	public void testUpdateKBArticleWithoutPreviousLock() throws Exception {
+		KBArticle kbArticle = _addKbArticle();
+
+		_kbArticleLocalService.updateKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, new Date(), null, null, null,
+			null, _serviceContext);
+
+		Assert.assertFalse(
+			_kbArticleLocalService.hasKBArticleLock(
+				_user.getUserId(), kbArticle.getResourcePrimKey()));
+	}
+
+	@FeatureFlags("LPS-195016")
+	@Test
+	public void testUpdateKBArticleWithPreviousLockByCurrentUser()
+		throws Exception {
+
+		KBArticle kbArticle = _addKbArticle();
+
+		_kbArticleLocalService.lockKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey());
+
+		_kbArticleLocalService.updateKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, new Date(), null, null, null,
+			null, _serviceContext);
+
+		Assert.assertTrue(
+			_kbArticleLocalService.hasKBArticleLock(
+				_user.getUserId(), kbArticle.getResourcePrimKey()));
 	}
 
 	protected void importMarkdownArticles() throws PortalException {

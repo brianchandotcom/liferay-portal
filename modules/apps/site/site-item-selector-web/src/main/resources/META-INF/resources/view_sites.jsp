@@ -50,6 +50,8 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
 				"groupdescriptivename", group.getDescriptiveName(locale)
 			).put(
+				"groupexternalreferencecode", group.getExternalReferenceCode()
+			).put(
 				"groupid", group.getGroupId()
 			).put(
 				"groupscopelabel", LanguageUtil.get(resourceBundle, group.getScopeLabel(themeDisplay))

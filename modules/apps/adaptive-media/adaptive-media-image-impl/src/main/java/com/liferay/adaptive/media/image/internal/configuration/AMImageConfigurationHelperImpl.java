@@ -10,7 +10,7 @@ import com.liferay.adaptive.media.exception.AMImageConfigurationException.Invali
 import com.liferay.adaptive.media.exception.AMRuntimeException;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
-import com.liferay.adaptive.media.image.internal.util.AMImageConfigurationEntryParserUtil;
+import com.liferay.adaptive.media.image.internal.configuration.util.AMImageConfigurationEntryParserUtil;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.petra.function.transform.TransformUtil;

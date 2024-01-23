@@ -15,6 +15,12 @@ const CaseTypeModal = () => {
 		<>
 			<ListView
 				forceRefetch={formModal.forceRefetch}
+				initialContext={{
+					sort: {
+						direction: 'ASC',
+						key: 'name',
+					},
+				}}
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
 				}}

@@ -51,6 +51,9 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 	const {data} = useFetch<APIResponse<TestrayFactorCategory>>(
 		'/factorcategories',
 		{
+			params: {
+				sort: 'name:asc',
+			},
 			transformData: (response) =>
 				testrayFactorCategoryRest.transformDataFromList(response),
 		}

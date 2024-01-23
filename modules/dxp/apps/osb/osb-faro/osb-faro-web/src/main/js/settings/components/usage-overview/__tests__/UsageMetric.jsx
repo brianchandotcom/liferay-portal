@@ -1,19 +1,20 @@
 import React from 'react';
 import UsageMetric from '../UsageMetric';
 import {fromJS} from 'immutable';
-import {mockPlan} from 'test/data';
+import {getTimestamp, mockPlan} from 'test/data';
 import {Plan} from 'shared/util/records';
 import {render} from '@testing-library/react';
 import {SubscriptionStatuses} from 'shared/util/constants';
 
 jest.unmock('react-dom');
 
-const DefaultComponent = ({count, limit, status}) => (
+const DefaultComponent = ({count, data = {}, limit, status}) => (
 	<UsageMetric
 		currentPlan={
 			new Plan(
 				fromJS(
 					mockPlan({
+						data,
 						pageViews: {
 							count,
 							limit,
@@ -63,5 +64,37 @@ describe('UsageMetric', () => {
 		const {container} = render(<DefaultComponent {...props} />);
 
 		expect(container.querySelector('.bar-danger')).toBeTruthy();
+	});
+
+	it('should display last anniversary date when subscription plan is enterprise', () => {
+		const props = {
+			count: 700,
+			limit: 7000,
+			status: SubscriptionStatuses.Ok
+		};
+
+		const {container} = render(<DefaultComponent {...props} />);
+
+		expect(
+			container.querySelector('.usage-since-label').textContent
+		).toEqual('10% since July 8, 2018');
+	});
+
+	it('should display last anniversary date when subscription plan is enterprise', () => {
+		const props = {
+			count: 700,
+			data: {
+				name: 'Liferay Analytics Cloud Basic',
+				startDate: getTimestamp(-365)
+			},
+			limit: 7000,
+			status: SubscriptionStatuses.Ok
+		};
+
+		const {container} = render(<DefaultComponent {...props} />);
+
+		expect(
+			container.querySelector('.usage-since-label').textContent
+		).toEqual('10% since July 10, 2017');
 	});
 });

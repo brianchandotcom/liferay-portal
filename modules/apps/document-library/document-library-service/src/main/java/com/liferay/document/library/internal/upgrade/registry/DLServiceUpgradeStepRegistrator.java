@@ -20,7 +20,6 @@ import com.liferay.document.library.internal.upgrade.v3_2_4.DLSizeLimitConfigura
 import com.liferay.document.library.internal.upgrade.v3_2_5.DLFileEntryTypesDDMStructureUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_6.DeleteStalePWCVersionsUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_7.DownloadViewActionResourcePermissionUpgradeProcess;
-import com.liferay.document.library.internal.upgrade.v3_3_0.DLFileVersionUpgradeProcess;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -154,9 +154,11 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 					_dlConfigurationUpgradeHelper));
 
 		registry.register(
-			"3.2.9", "3.3.0", new DLFileVersionUpgradeProcess(),
-			new com.liferay.document.library.internal.upgrade.v3_3_0.
-				DLFileEntryUpgradeProcess());
+			"3.2.9", "3.3.0",
+			UpgradeProcessFactory.addColumns(
+				"DLFileVersion", "displayDate DATE null"),
+			UpgradeProcessFactory.addColumns(
+				"DLFileEntry", "displayDate DATE null"));
 	}
 
 	@Reference

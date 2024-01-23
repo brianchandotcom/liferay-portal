@@ -302,27 +302,22 @@ class ResultRankingsForm extends Component {
 	 * externalReferenceCode, if defined.
 	 */
 	_handleFetchScopeDisplayName = () => {
-		if (
-			this.props.initialGroupExternalReferenceCode ||
-			this.props.initialSXPBlueprintExternalReferenceCode
-		) {
-			const scopeInfo = this.props.initialGroupExternalReferenceCode
-				? {
-						fetchItemByIdUrl: this.props
-							.fetchSiteByExternalReferenceCodeURL,
-						label: 'descriptiveName',
-						value: this.props.initialGroupExternalReferenceCode,
-				  }
-				: {
-						fetchItemByIdUrl: `${
-							window.location.origin
-						}${Liferay.ThemeDisplay.getPathContext()}/o/search-experiences-rest/v1.0/sxp-blueprints/by-external-reference-code/${
-							this.props.initialSXPBlueprintExternalReferenceCode
-						}`,
-						label: 'title',
-						value: this.props
-							.initialSXPBlueprintExternalReferenceCode,
-				  };
+		if (this.props.initialGroupExternalReferenceCode) {
+			this.setState(() => ({
+				scopeDisplayName: this.props.siteDisplayName,
+			}));
+		}
+
+		if (this.props.initialSXPBlueprintExternalReferenceCode) {
+			const scopeInfo = {
+				fetchItemByIdUrl: `${
+					window.location.origin
+				}${Liferay.ThemeDisplay.getPathContext()}/o/search-experiences-rest/v1.0/sxp-blueprints/by-external-reference-code/${
+					this.props.initialSXPBlueprintExternalReferenceCode
+				}`,
+				label: 'title',
+				value: this.props.initialSXPBlueprintExternalReferenceCode,
+			};
 
 			fetchResponse(scopeInfo.fetchItemByIdUrl, {
 				[`${this.context.namespace}externalReferenceCode`]: scopeInfo.value,

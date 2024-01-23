@@ -11,11 +11,13 @@ type Option = {label: string; value: string};
 
 type MultiSelectProps = {
 	label?: string;
+	isLoading: boolean;
 	options: Option[];
 } & InputHTMLAttributes<HTMLSelectElement>;
 
 const MultiSelect: React.FC<MultiSelectProps> = ({
 	disabled,
+	isLoading,
 	label,
 	name = '',
 	onChange,
@@ -62,6 +64,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 				options={options}
 				ref={multiselectRef}
 				value={value as PropsValue<unknown>}
+				isLoading={isLoading}
 			/>
 		</Form.BaseWrapper>
 	);

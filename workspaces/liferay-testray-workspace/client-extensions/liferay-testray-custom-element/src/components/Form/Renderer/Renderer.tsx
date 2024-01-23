@@ -64,6 +64,7 @@ const Renderer: React.FC<RendererProps> = ({
 	const params = useParams();
 
 	const [fieldDisabled, setFieldDisabled] = useState({});
+	const [isLoading, setIsLoading] = useState(true);
 
 	const paramsMemoized = useMemo(() => {
 		const testrayModalParams = document.getElementById(
@@ -120,6 +121,7 @@ const Renderer: React.FC<RendererProps> = ({
 		}
 
 		setFieldOpt(_fieldOptions);
+		setIsLoading(false);
 	}, [fieldsMemoized, paramsMemoized, setFieldOpt]);
 
 	useEffect(() => {
@@ -301,6 +303,7 @@ const Renderer: React.FC<RendererProps> = ({
 								onChange={onChange}
 								options={getOptions()}
 								value={currentValue}
+								isLoading={isLoading}	
 							/>
 						</div>
 					);

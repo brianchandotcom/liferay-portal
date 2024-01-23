@@ -1512,6 +1512,25 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			userId, KBArticle.class.getName(), resourcePrimKey);
 	}
 
+	public KBArticle updateAndUnlockKBArticle(
+			long userId, long resourcePrimKey, String title, String content,
+			String description, String[] sections, String sourceURL,
+			Date displayDate, Date expirationDate, Date reviewDate,
+			String[] selectedFileNames, long[] removeFileEntryIds,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		try {
+			return updateKBArticle(
+				userId, resourcePrimKey, title, content, description, sections,
+				sourceURL, displayDate, expirationDate, reviewDate,
+				selectedFileNames, removeFileEntryIds, serviceContext);
+		}
+		finally {
+			unlockKBArticle(resourcePrimKey);
+		}
+	}
+
 	@Override
 	public KBArticle updateKBArticle(
 			long userId, long resourcePrimKey, String title, String content,
@@ -1523,8 +1542,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// KB article
 
+		boolean autoLock = false;
+
 		if (!hasKBArticleLock(userId, resourcePrimKey)) {
 			lockKBArticle(userId, resourcePrimKey);
+
+			autoLock = true;
 		}
 
 		try {
@@ -1636,7 +1659,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return kbArticle;
 		}
 		finally {
-			unlockKBArticle(resourcePrimKey);
+			if (autoLock && hasKBArticleLock(userId, resourcePrimKey)) {
+				unlockKBArticle(resourcePrimKey);
+			}
 		}
 	}
 

@@ -309,6 +309,9 @@ public class UpdateKBArticleMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		int workflowAction = ParamUtil.getInteger(
+			actionRequest, "workflowAction");
+
 		if (cmd.equals(Constants.ADD)) {
 			long parentResourceClassNameId = ParamUtil.getLong(
 				actionRequest, "parentResourceClassNameId",
@@ -332,18 +335,23 @@ public class UpdateKBArticleMVCActionCommand
 			long[] removeFileEntryIds = ParamUtil.getLongValues(
 				actionRequest, "removeFileEntryIds");
 
-			kbArticle = _kbArticleService.updateKBArticle(
-				resourcePrimKey, title, content, description, sections,
-				sourceURL, displayDate, expirationDate, reviewDate,
-				selectedFileNames, removeFileEntryIds, serviceContext);
+			if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
+				kbArticle = _kbArticleService.updateKBArticle(
+					resourcePrimKey, title, content, description, sections,
+					sourceURL, displayDate, expirationDate, reviewDate,
+					selectedFileNames, removeFileEntryIds, serviceContext);
+			}
+			else {
+				kbArticle = _kbArticleService.updateAndUnlockKBArticle(
+					resourcePrimKey, title, content, description, sections,
+					sourceURL, displayDate, expirationDate, reviewDate,
+					selectedFileNames, removeFileEntryIds, serviceContext);
+			}
 		}
 
 		_assetDisplayPageEntryFormProcessor.process(
 			KBArticle.class.getName(), kbArticle.getResourcePrimKey(),
 			actionRequest);
-
-		int workflowAction = ParamUtil.getInteger(
-			actionRequest, "workflowAction");
 
 		String successMessage = StringPool.BLANK;
 

@@ -849,6 +849,24 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	@Override
+	public KBArticle updateAndUnlockKBArticle(
+			long resourcePrimKey, String title, String content,
+			String description, String[] sections, String sourceURL,
+			Date displayDate, Date expirationDate, Date reviewDate,
+			String[] selectedFileNames, long[] removeFileEntryIds,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_kbArticleModelResourcePermission.check(
+			getPermissionChecker(), resourcePrimKey, KBActionKeys.UPDATE);
+
+		return kbArticleLocalService.updateAndUnlockKBArticle(
+			getUserId(), resourcePrimKey, title, content, description, sections,
+			sourceURL, displayDate, expirationDate, reviewDate,
+			selectedFileNames, removeFileEntryIds, serviceContext);
+	}
+
+	@Override
 	public KBArticle updateKBArticle(
 			long resourcePrimKey, String title, String content,
 			String description, String[] sections, String sourceURL,

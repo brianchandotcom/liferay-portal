@@ -10,6 +10,7 @@
 		"@playwright/test": "1.39.0",
 		"@types/node": "^20.9.0",
 		"@types/node-fetch": "^2.6.11",
+		"dotenv": "^16.3.2",
 		"node-fetch": "^2.7.0",
 		"zip-a-folder": "^3.1.6"
 	},

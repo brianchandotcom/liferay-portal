@@ -14,6 +14,8 @@ import {config as objectWebConfig} from './tests/object-web/config';
 import {config as portalWebConfig} from './tests/portal-web/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
 
+import 'dotenv/config';
+
 export default defineConfig({
 	expect: {
 		timeout: 15 * 1000,

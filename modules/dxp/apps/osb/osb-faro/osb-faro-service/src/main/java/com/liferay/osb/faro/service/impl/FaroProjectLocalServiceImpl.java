@@ -112,6 +112,7 @@ public class FaroProjectLocalServiceImpl
 		faroProject.setServices(services);
 		faroProject.setState(state);
 		faroProject.setSubscription(subscription);
+		faroProject.setSubscriptionModifiedTime(now);
 		faroProject.setTimeZoneId(timeZoneId);
 		faroProject.setWeDeployKey(weDeployKey);
 
@@ -320,6 +321,10 @@ public class FaroProjectLocalServiceImpl
 
 		if (faroProject == null) {
 			return null;
+		}
+
+		if (faroProject.getSubscription() != subscription) {
+			faroProject.setSubscriptionModifiedTime(System.currentTimeMillis());
 		}
 
 		faroProject.setModifiedTime(System.currentTimeMillis());

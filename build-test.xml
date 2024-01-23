@@ -16978,6 +16978,12 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 	</target>
 
 	<target name="wait-for-server-shutdown">
+		<condition property="app.server.port.number" value="8080">
+			<not>
+				<isset property="app.server.port.number" />
+			</not>
+		</condition>
+
 		<sleep seconds="10" />
 
 		<waitfor checkevery="5" checkeveryunit="second" maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.shutdown.timeout">
@@ -17024,5 +17030,15 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 				</fail>
 			</then>
 		</if>
+	</target>
+
+	<target name="wait-for-server-startup">
+		<condition property="test.app.server.leading.port.number" value="8">
+			<not>
+				<isset property="test.app.server.leading.port.number" />
+			</not>
+		</condition>
+
+		<wait-for-app-server app.server.bin.dir="${app.server.bin.dir}" />
 	</target>
 </project>

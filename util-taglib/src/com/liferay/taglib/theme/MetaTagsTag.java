@@ -5,6 +5,8 @@
 
 package com.liferay.taglib.theme;
 
+import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryTypeUtil;
+import com.liferay.layout.utility.page.kernel.provider.util.LayoutUtilityPageEntryLayoutProviderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -56,6 +58,18 @@ public class MetaTagsTag extends IncludeTag {
 
 	@Override
 	protected int processEndTag() throws Exception {
+		HttpServletResponse httpServletResponse =
+			(HttpServletResponse)pageContext.getResponse();
+
+		String layoutUtilityPageEntryType =
+			LayoutUtilityPageEntryTypeUtil.getStatusLayoutUtilityPageEntryType(
+				httpServletResponse.getStatus());
+
+		if (Validator.isNotNull(layoutUtilityPageEntryType)) {
+			return _setLayoutUtilityPageEntryMetaDescription(
+				layoutUtilityPageEntryType);
+		}
+
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
@@ -163,6 +177,49 @@ public class MetaTagsTag extends IncludeTag {
 			_writeMeta(
 				HtmlUtil.escape(metaKeywords), metaKeywordsLanguageId,
 				"keywords");
+		}
+
+		return EVAL_PAGE;
+	}
+
+	private int _setLayoutUtilityPageEntryMetaDescription(
+			String layoutUtilityPageEntryType)
+		throws Exception {
+
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)pageContext.getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return EVAL_PAGE;
+		}
+
+		Layout layout =
+			LayoutUtilityPageEntryLayoutProviderUtil.
+				getDefaultLayoutUtilityPageEntryLayout(
+					themeDisplay.getScopeGroupId(), layoutUtilityPageEntryType);
+
+		if (layout == null) {
+			return EVAL_PAGE;
+		}
+
+		String languageId = LanguageUtil.getLanguageId(httpServletRequest);
+
+		String metaDescription = layout.getDescription(languageId, false);
+
+		if (Validator.isNull(metaDescription)) {
+			languageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+
+			metaDescription = layout.getDescription(languageId);
+		}
+
+		if (Validator.isNotNull(metaDescription)) {
+			_writeMeta(
+				HtmlUtil.escape(metaDescription),
+				LocaleUtil.toW3cLanguageId(languageId), "description");
 		}
 
 		return EVAL_PAGE;

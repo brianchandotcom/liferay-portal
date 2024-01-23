@@ -11,7 +11,7 @@ import * as path from 'path';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {exportImportPagesTest} from '../../fixtures/exportImportPages.fixtures';
 import {loginTest} from '../../fixtures/loginTest';
-import { HeadlessDeliveryV10DocumentFolderService } from '../../utils/headless';
+import {HeadlessDeliveryV10DocumentFolderService} from '../../utils/headless';
 
 export const test = mergeTests(
 	documentLibraryPagesTest,

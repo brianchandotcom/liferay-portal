@@ -56,6 +56,18 @@ jest.mock(
 	})
 );
 
+const COMMON_CSS_STYLE = `
+			.lfr-layout-structure-item-container {
+				padding: 0;
+			}
+			
+			.lfr-layout-structure-item-row { 
+				overflow: hidden;
+			}
+			
+			.portlet-borderless .portlet-content{
+				padding: 0;
+			}`;
 const FRAGMENT_ID = 'FRAGMENT_ID';
 const ITEM_ID = 'ITEM_ID';
 const MASTER_ITEM_ID = 'ITEM_ID';
@@ -176,14 +188,8 @@ describe('CommonStylesManager', () => {
 		renderCommonStylesManager();
 
 		const expected = `
-			.lfr-layout-structure-item-container { 
-				padding: 0; 
-			}
+			${COMMON_CSS_STYLE}
 			
-			.lfr-layout-structure-item-row { 
-				overflow: hidden; 
-			}
-
 			.${getLayoutDataItemUniqueClassName(FRAGMENT_ID)} {
 				background-color: var(--info) !important;
 			}
@@ -215,13 +221,8 @@ describe('CommonStylesManager', () => {
 		renderCommonStylesManager();
 
 		const expected = `
-			.lfr-layout-structure-item-container { 
-				padding: 0; 
-			}
-
-			.lfr-layout-structure-item-row { 
-				overflow: hidden; 
-			}
+			${COMMON_CSS_STYLE}
+			
 			.${getLayoutDataItemUniqueClassName(MASTER_ITEM_ID)} {
 				background-color: var(--danger) !important;
 				margin-bottom: var(--spacer-3, 1rem) !important;
@@ -244,13 +245,7 @@ describe('CommonStylesManager', () => {
 		});
 
 		const expected = `
-			.lfr-layout-structure-item-container { 
-				padding: 0; 
-			}
-
-			.lfr-layout-structure-item-row { 
-				overflow: hidden; 
-			}
+			${COMMON_CSS_STYLE}
 			
 			.${getLayoutDataItemUniqueClassName(FRAGMENT_ID)} {
 				background-color: var(--info) !important;
@@ -291,13 +286,7 @@ describe('CommonStylesManager', () => {
 		});
 
 		const expected = `
-			.lfr-layout-structure-item-container { 
-				padding: 0; 
-			}
-
-			.lfr-layout-structure-item-row { 
-				overflow: hidden; 
-			}
+			${COMMON_CSS_STYLE}
 			
 			.${getLayoutDataItemUniqueClassName(FRAGMENT_ID)} {
 				background-color: var(--info) !important;
@@ -326,5 +315,5 @@ describe('CommonStylesManager', () => {
 });
 
 function normalize(value) {
-	return value.replaceAll(/[\n\t]/g, '');
+	return value.replaceAll(/[\s\n\t]/g, '');
 }

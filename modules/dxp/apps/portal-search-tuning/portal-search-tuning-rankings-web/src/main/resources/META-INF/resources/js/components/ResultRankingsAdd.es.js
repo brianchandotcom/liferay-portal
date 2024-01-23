@@ -13,7 +13,7 @@ import {
 	LearnMessage,
 	LearnResourcesContext,
 } from 'frontend-js-components-web';
-import {navigate} from 'frontend-js-web';
+import {navigate, openSelectionModal} from 'frontend-js-web';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import NamespaceContext from '../NamespaceContext';
@@ -42,8 +42,9 @@ const SCOPE_INFO = {
 	},
 };
 
-function ResultRankingsAdd({cancelURL, fetchSitesURL, formName}) {
+function ResultRankingsAdd({cancelURL, formName, selectSitesURL}) {
 	const [errors, setErrors] = useState({});
+	const [groupName, setGroupName] = useState('');
 	const [scopeType, setScopeType] = useState(SCOPE_TYPES.EVERYTHING);
 	const [scope, setScope] = useState('');
 	const [scopeDropdownActive, setScopeDropdownActive] = useState(false);
@@ -244,21 +245,59 @@ function ResultRankingsAdd({cancelURL, fetchSitesURL, formName}) {
 
 			{scopeType === SCOPE_TYPES.SITE && (
 				<>
-					<ScopeSelect
-						disabled={false}
-						error={errors.scope}
-						fetchItemsUrl={fetchSitesURL}
-						locator={{
-							id: 'externalReferenceCode',
-							label: 'descriptiveName',
-						}}
-						onBlur={_handleBlur('scope')}
-						onSelect={_handleScopeChange}
-						selected={scope}
-						title={Liferay.Language.get('select-site')}
-						touched={touched.scope}
-						type={SCOPE_TYPES.SITE}
-					/>
+					<label htmlFor="groupName">
+						{Liferay.Language.get('select-site')}
+
+						<ClayIcon
+							className="c-ml-1 reference-mark"
+							symbol="asterisk"
+						/>
+					</label>
+
+					<ClayInput.Group>
+						<ClayInput.GroupItem
+							className="d-none d-sm-block"
+							prepend
+						>
+							<ClayInput
+								disabled
+								id="groupName"
+								type="text"
+								value={groupName}
+							/>
+						</ClayInput.GroupItem>
+
+						<ClayInput.GroupItem append shrink>
+							<ClayButton
+								displayType="secondary"
+								onClick={() => {
+									openSelectionModal({
+										id: `${namespace}selectSite`,
+										onSelect: (selectedItem) => {
+											if (!selectedItem) {
+												return;
+											}
+
+											setGroupName(
+												selectedItem.groupdescriptivename
+											);
+											setScope(
+												selectedItem.groupexternalreferencecode
+											);
+										},
+										selectEventName: `${namespace}selectSite`,
+										title: Liferay.Language.get(
+											'select-site'
+										),
+										url: selectSitesURL,
+									});
+								}}
+								type="button"
+							>
+								{Liferay.Language.get('select')}
+							</ClayButton>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
 
 					<input
 						id={`${namespace}groupExternalReferenceCode`}
@@ -321,18 +360,18 @@ function ResultRankingsAdd({cancelURL, fetchSitesURL, formName}) {
 
 export default function ({
 	cancelURL,
-	fetchSitesURL,
 	formName,
 	learnResources,
 	namespace = '',
+	selectSitesURL,
 }) {
 	return (
 		<LearnResourcesContext.Provider value={learnResources}>
 			<NamespaceContext.Provider value={{namespace}}>
 				<ResultRankingsAdd
 					cancelURL={cancelURL}
-					fetchSitesURL={fetchSitesURL}
 					formName={formName}
+					selectSitesURL={selectSitesURL}
 				/>
 			</NamespaceContext.Provider>
 		</LearnResourcesContext.Provider>

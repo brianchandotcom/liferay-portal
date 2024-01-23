@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
@@ -36,10 +37,14 @@ public class AddResultsRankingsMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			AddRankingDisplayContext.class.getName(),
-			new AddRankingDisplayContext(renderRequest, renderResponse));
+			new AddRankingDisplayContext(
+				_itemSelector, renderRequest, renderResponse));
 
 		return "/add_results_rankings.jsp";
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

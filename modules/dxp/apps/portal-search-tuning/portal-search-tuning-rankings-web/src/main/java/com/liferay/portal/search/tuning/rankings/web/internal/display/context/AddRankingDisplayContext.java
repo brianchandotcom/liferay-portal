@@ -5,10 +5,15 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.learn.LearnMessageUtil;
-import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.util.Map;
 
@@ -21,8 +26,10 @@ import javax.portlet.RenderResponse;
 public class AddRankingDisplayContext {
 
 	public AddRankingDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		ItemSelector itemSelector, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
+		_itemSelector = itemSelector;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -31,15 +38,6 @@ public class AddRankingDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"cancelURL", ParamUtil.getString(_renderRequest, "redirect")
 		).put(
-			"fetchSitesURL",
-			ResourceURLBuilder.createResourceURL(
-				_renderResponse
-			).setCMD(
-				"getSitesJSONObject"
-			).setResourceID(
-				"/result_rankings/get_sites"
-			).buildString()
-		).put(
 			"formName", "addResultRankingsFm"
 		).put(
 			"learnResources",
@@ -47,9 +45,27 @@ public class AddRankingDisplayContext {
 				"portal-search-tuning-rankings-web")
 		).put(
 			"namespace", _renderResponse.getNamespace()
+		).put(
+			"selectSitesURL",
+			() -> {
+				ItemSelectorCriterion itemSelectorCriterion =
+					new SiteItemSelectorCriterion();
+
+				itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+					new GroupItemSelectorReturnType());
+
+				return PortletURLBuilder.create(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							_renderRequest),
+						_renderResponse.getNamespace() + "selectSite",
+						itemSelectorCriterion)
+				).buildString();
+			}
 		).build();
 	}
 
+	private final ItemSelector _itemSelector;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 

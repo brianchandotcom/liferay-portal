@@ -140,6 +140,27 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 	}
 
 	@Test
+	public void testDoProcessActionWithEmptyWordAsAFriendlyURLSeparator()
+		throws Exception {
+
+		Map<String, String> friendlyURLSeparators =
+			_getRandomFriendlyURLSeparatorsMap();
+
+		friendlyURLSeparators.put(
+			JournalArticle.class.getName(), StringPool.BLANK);
+
+		MockActionResponse mockActionResponse = new MockActionResponse();
+
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(friendlyURLSeparators),
+			mockActionResponse);
+
+		_assertRedirectURL(
+			"friendly-url-separator-error-cannot-be-empty",
+			friendlyURLSeparators, mockActionResponse.getRedirect());
+	}
+
+	@Test
 	public void testDoProcessActionWithInvalidCharactersAsAFriendlyURLSeparator()
 		throws Exception {
 

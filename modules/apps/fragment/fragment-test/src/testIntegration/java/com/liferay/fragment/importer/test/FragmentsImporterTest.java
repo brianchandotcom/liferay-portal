@@ -576,20 +576,20 @@ public class FragmentsImporterTest {
 		return zipWriter.getFile();
 	}
 
-	private File _generateZipFile() throws Exception {
+	private File _generateZipFile(String path) throws Exception {
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		URL collectionURL = _bundle.getEntry(
-			_PATH_FRAGMENTS +
+			path + StringPool.FORWARD_SLASH +
 				FragmentExportImportConstants.FILE_NAME_COLLECTION);
 
 		try (InputStream inputStream = collectionURL.openStream()) {
-			zipWriter.addEntry(
-				FragmentExportImportConstants.FILE_NAME_COLLECTION,
-				inputStream);
+			_addZipWriterEntry(
+				zipWriter, path,
+				FragmentExportImportConstants.FILE_NAME_COLLECTION);
 		}
 
-		_populateZipWriter(_PATH_FRAGMENTS, zipWriter, true);
+		_populateZipWriter(path, zipWriter, true);
 
 		return zipWriter.getFile();
 	}

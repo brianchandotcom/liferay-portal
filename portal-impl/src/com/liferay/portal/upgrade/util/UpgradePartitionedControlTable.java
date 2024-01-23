@@ -5,7 +5,7 @@
 
 package com.liferay.portal.upgrade.util;
 
-import com.liferay.portal.db.partition.DBPartitionUtil;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 

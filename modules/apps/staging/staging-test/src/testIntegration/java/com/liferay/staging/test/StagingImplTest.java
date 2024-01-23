@@ -824,7 +824,7 @@ public class StagingImplTest {
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			_group.getGroupId(), false, parameters);
 
-		// Retrieve content from live after publishing
+		// Get content from live after publishing
 
 		journalArticle = JournalArticleLocalServiceUtil.getArticle(
 			_group.getGroupId(), journalArticle.getArticleId());

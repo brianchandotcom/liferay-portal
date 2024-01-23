@@ -21,8 +21,6 @@ import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
-import com.liferay.change.tracking.web.internal.timeline.CTCollectionHistoryDataProvider;
-import com.liferay.change.tracking.web.internal.timeline.DefaultCTCollectionHistoryProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -51,7 +49,6 @@ import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -66,9 +63,6 @@ import com.liferay.taglib.util.HtmlTopTag;
 import java.io.IOException;
 import java.io.Writer;
 
-import java.text.Format;
-
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -258,9 +252,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					bundleContext.ungetService(serviceReference);
 				}
 			});
-
-		_defaultCTCollectionHistoryProvider =
-			new DefaultCTCollectionHistoryProvider<>();
 	}
 
 	@Activate
@@ -268,32 +259,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 	protected void activate(Map<String, Object> properties) {
 		_defaultCTConfiguration = ConfigurableUtil.createConfigurable(
 			CTConfiguration.class, properties);
-	}
-
-	private void _getConflictIconData(
-		long classNameId, long classPK, CTCollection currentCTCollection,
-		Map<String, Object> data, HttpServletRequest httpServletRequest,
-		ThemeDisplay themeDisplay) {
-
-		if (currentCTCollection == null) {
-			return;
-		}
-
-		ResourceURL getConflictInfoURL =
-			(ResourceURL)_portal.getControlPanelPortletURL(
-				httpServletRequest, themeDisplay.getScopeGroup(),
-				CTPortletKeys.PUBLICATIONS, 0, 0,
-				PortletRequest.RESOURCE_PHASE);
-
-		getConflictInfoURL.setParameter(
-			"classNameId", String.valueOf(classNameId));
-		getConflictInfoURL.setParameter("classPK", String.valueOf(classPK));
-		getConflictInfoURL.setParameter(
-			"currentCTCollectionId",
-			String.valueOf(currentCTCollection.getCtCollectionId()));
-		getConflictInfoURL.setResourceID("/change_tracking/get_conflict_info");
-
-		data.put("getConflictInfoURL", getConflictInfoURL.toString());
 	}
 
 	private CTConfiguration _getCTConfiguration(long companyId) {
@@ -610,16 +575,15 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-161033")) {
-			_getTimelineData(
-				ctCollection, data, httpServletRequest, themeDisplay);
+			_getTimelineData(data, httpServletRequest, themeDisplay);
 		}
 
 		return data;
 	}
 
 	private void _getTimelineData(
-			CTCollection currentCTCollection, Map<String, Object> data,
-			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
+			Map<String, Object> data, HttpServletRequest httpServletRequest,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		String className = (String)httpServletRequest.getAttribute(
@@ -640,66 +604,14 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		if ((className != null) && (classPK != 0)) {
 			long classNameId = _portal.getClassNameId(className);
 
-			CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
-				_serviceTrackerMap.getService(classNameId);
-
-			if (ctCollectionHistoryProvider == null) {
-				ctCollectionHistoryProvider =
-					_defaultCTCollectionHistoryProvider;
-			}
-
-			List<CTCollection> ctCollections =
-				ctCollectionHistoryProvider.getCTCollections(
-					classNameId, classPK);
-
-			JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-			Format format = _fastDateFormatFactory.getDate(
-				themeDisplay.getLocale(), themeDisplay.getTimeZone());
-
-			for (CTCollection ctCollection : ctCollections) {
-				CTCollectionHistoryDataProvider
-					ctCollectionHistoryDataProvider =
-						new CTCollectionHistoryDataProvider(
-							ctCollection, httpServletRequest);
-
-				jsonArray.put(
-					JSONUtil.put(
-						"date",
-						() -> {
-							Date date = ctCollection.getStatusDate();
-
-							if (date == null) {
-								date = ctCollection.getModifiedDate();
-							}
-
-							return format.format(date);
-						}
-					).put(
-						"description", ctCollection.getDescription()
-					).put(
-						"dropdownMenu",
-						ctCollectionHistoryDataProvider.
-							getTimelineDropdownMenuData(themeDisplay)
-					).put(
-						"id", ctCollection.getCtCollectionId()
-					).put(
-						"name", ctCollection.getName()
-					).put(
-						"status", ctCollection.getStatus()
-					).put(
-						"statusMessage",
-						ctCollectionHistoryDataProvider.getStatusMessage()
-					));
-			}
-
-			_getConflictIconData(
-				classNameId, classPK, currentCTCollection, data,
-				httpServletRequest, themeDisplay);
-
 			data.put("timelineIconClass", "change-tracking-timeline-icon");
 			data.put("timelineIconName", "time");
-			data.put("timelineItems", jsonArray);
+			data.put(
+				"timelineItemsURL",
+				StringBundler.concat(
+					_portal.getPortalURL(themeDisplay),
+					"/o/change-tracking-rest/v1.0/ct-collections/history?",
+					"classNameId=", classNameId, "&classPK=", classPK));
 
 			CTDisplayRenderer<?> ctDisplayRenderer =
 				_ctDisplayRendererRegistry.getCTDisplayRenderer(classNameId);
@@ -734,11 +646,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 	@Reference
 	private CTSettingsConfigurationHelper _ctSettingsConfigurationHelper;
 
-	private CTCollectionHistoryProvider<?> _defaultCTCollectionHistoryProvider;
 	private volatile CTConfiguration _defaultCTConfiguration;
-
-	@Reference
-	private FastDateFormatFactory _fastDateFormatFactory;
 
 	@Reference
 	private JSONFactory _jsonFactory;

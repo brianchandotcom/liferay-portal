@@ -75,7 +75,7 @@ export default class UsageMetric extends React.Component {
 
 	render() {
 		const {
-			currentPlan: {lastAnniversaryDate, metrics},
+			currentPlan: {lastAnniversaryDate, metrics, name, startDate},
 			metricType,
 			timeZoneId
 		} = this.props;
@@ -124,7 +124,9 @@ export default class UsageMetric extends React.Component {
 									[
 										toRounded(percent * 100),
 										formatDateToTimeZone(
-											lastAnniversaryDate,
+											PLAN_TYPES[name] === 'basic'
+												? startDate
+												: lastAnniversaryDate,
 											'MMMM D, YYYY',
 											timeZoneId
 										)

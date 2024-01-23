@@ -185,6 +185,28 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 	}
 
 	@Test
+	public void testDoProcessActionWithRepeatedSeparatorAsAFriendlyURLSeparator()
+		throws Exception {
+
+		Map<String, String> friendlyURLSeparators =
+			_getRandomFriendlyURLSeparatorsMap();
+
+		friendlyURLSeparators.put(
+			"com.liferay.blogs.model.BlogsEntry", "test1");
+		friendlyURLSeparators.put(JournalArticle.class.getName(), "test1");
+
+		MockActionResponse mockActionResponse = new MockActionResponse();
+
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(friendlyURLSeparators),
+			mockActionResponse);
+
+		_assertRedirectURL(
+			"friendly-url-separator-error-other-asset-type-may-use-this-prefix",
+			friendlyURLSeparators, mockActionResponse.getRedirect());
+	}
+
+	@Test
 	public void testDoProcessActionWithReservedKeywordAsAFriendlyURLSeparator()
 		throws Exception {
 

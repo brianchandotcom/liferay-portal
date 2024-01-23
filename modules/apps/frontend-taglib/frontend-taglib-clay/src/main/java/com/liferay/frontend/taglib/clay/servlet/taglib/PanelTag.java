@@ -25,7 +25,6 @@ public class PanelTag extends BaseContainerTag {
 	@Override
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
-		setDynamicAttribute(StringPool.BLANK, "role", "tablist");
 
 		return super.doStartTag();
 	}

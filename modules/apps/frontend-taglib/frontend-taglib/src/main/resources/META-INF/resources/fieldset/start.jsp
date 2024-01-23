@@ -34,7 +34,7 @@ else if (collapsible) {
 
 			<c:choose>
 				<c:when test="<%= collapsible %>">
-					<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon <%= collapsed ? "collapsed" : StringPool.BLANK %> sheet-subtitle" data-toggle="liferay-collapse" href="#<%= id %>Content" id="<%= id %>Toggle" role="tab">
+					<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon <%= collapsed ? "collapsed" : StringPool.BLANK %> sheet-subtitle" data-toggle="liferay-collapse" href="#<%= id %>Content" id="<%= id %>Toggle">
 						<span>
 							<%= header %>
 						</span>

@@ -468,10 +468,10 @@ definition {
 		}
 	}
 
-	@description = "Verify that Entries for the Color, Date and Text Fields display a Field List in the Summary Tab"
+	@description = "Verify that Entries for the Color, Date, Image, Text and Upload Fields display a Field List in the Summary Tab"
 	@priority = 5
 	test DataIsDisplayedInFieldListFormat {
-		task ("Given a published form with Text, Color, and Date fields") {
+		task ("Given a published form with Text, Color, Image, Upload and Date fields") {
 			FormsAdmin.addForm();
 
 			Form.editName(formName = "Form 1");
@@ -492,6 +492,18 @@ definition {
 				fieldType = "Date",
 				formPageNumber = 0);
 
+			Form.closeSidebar();
+
+			Form.gotoAddField(
+				fieldPositionNumber = 3,
+				fieldType = "Image");
+
+			Form.closeSidebar();
+
+			Form.gotoAddField(
+				fieldPositionNumber = 4,
+				fieldType = "Upload");
+
 			Form.save();
 
 			Form.publishForm();
@@ -511,6 +523,18 @@ definition {
 			FormViewBuilder.editDate(
 				fieldName = "Date",
 				fieldValue = "01/01/2001");
+
+			ItemSelector.gotoImageSelectorViaSelectButton();
+
+			ItemSelector.uploadFile(
+				navTab = "Documents and Media",
+				uploadFileName = "Document_1.jpg");
+
+			ItemSelector.gotoItemSelectorViaSelectButton();
+
+			ItemSelector.uploadFile(
+				navTab = "Documents and Media",
+				uploadFileName = "Document_2.jpg");
 
 			Click(
 				key_text = "Submit",
@@ -545,6 +569,16 @@ definition {
 			FormViewBuilder.viewSummaryEntry(
 				key_card = "Date",
 				key_entryName = "01/01/2001",
+				key_entryNumber = "1 entry");
+
+			FormViewBuilder.viewSummaryEntry(
+				key_card = "Image",
+				key_entryName = "Document_1.jpg",
+				key_entryNumber = "1 entry");
+
+			FormViewBuilder.viewSummaryEntry(
+				key_card = "Upload",
+				key_entryName = "Document_2.jpg",
 				key_entryNumber = "1 entry");
 		}
 	}
@@ -767,12 +801,12 @@ definition {
 		}
 	}
 
-	@description = "Verify that Entries for the Paragraph, Rich Text, Separator, Image, and Upload Fields do not display any metrics in the Summary Tab"
+	@description = "Verify that Entries for the Paragraph, Rich Text and Separator Fields do not display any metrics in the Summary Tab"
 	@priority = 5
 	test NoMetricsIsDisplayed {
 		property portal.acceptance = "true";
 
-		task ("Given a published form with Paragraph, Rich Text, Separator, Image, and Upload Fields") {
+		task ("Given a published form with Paragraph, Rich Text and Separator Fields") {
 			FormsAdmin.addForm();
 
 			Form.editName(formName = "Form 1");
@@ -795,18 +829,6 @@ definition {
 				fieldPositionNumber = 2,
 				fieldType = "Separator");
 
-			Form.closeSidebar();
-
-			Form.gotoAddField(
-				fieldPositionNumber = 3,
-				fieldType = "Image");
-
-			Form.closeSidebar();
-
-			Form.gotoAddField(
-				fieldPositionNumber = 4,
-				fieldType = "Upload");
-
 			Form.save();
 
 			Form.publishForm();
@@ -816,18 +838,6 @@ definition {
 			FormsAdminNavigator.gotoPublishedForm();
 
 			FormFields.editParagraphBody(content = "Test Text");
-
-			ItemSelector.gotoImageSelectorViaSelectButton();
-
-			ItemSelector.uploadFile(
-				navTab = "Documents and Media",
-				uploadFileName = "Document_1.jpg");
-
-			ItemSelector.gotoItemSelectorViaSelectButton();
-
-			ItemSelector.uploadFile(
-				navTab = "Documents and Media",
-				uploadFileName = "Document_2.jpg");
 
 			FormPortlet.submitSuccessfully();
 		}

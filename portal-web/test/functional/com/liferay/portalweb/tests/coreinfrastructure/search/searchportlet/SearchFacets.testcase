@@ -2617,13 +2617,7 @@ definition {
 
 		// Workaround for LPS-97383
 
-		//Refresh();
-
-		// Workaround for LPS-201232
-
-		Navigator.openURL();
-
-		SearchPage.searchEmbedded(searchTerm = "WC Title");
+		Refresh();
 
 		AssertElementNotPresent(
 			locator1 = "Search#MODIFIED_FACET_SELECTION",

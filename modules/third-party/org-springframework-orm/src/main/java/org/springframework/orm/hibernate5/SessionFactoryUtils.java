@@ -92,7 +92,7 @@ public abstract class SessionFactoryUtils {
 	public static final int SESSION_SYNCHRONIZATION_ORDER =
 			DataSourceUtils.CONNECTION_SYNCHRONIZATION_ORDER - 100;
 
-	static final Log logger = LogFactory.getLog(SessionFactoryUtils.class);
+	static Log logger = LogFactory.getLog(SessionFactoryUtils.class);
 
 
 	private static Method getFlushMode;
@@ -301,3 +301,4 @@ public abstract class SessionFactoryUtils {
 	}
 
 }
+/* @generated */

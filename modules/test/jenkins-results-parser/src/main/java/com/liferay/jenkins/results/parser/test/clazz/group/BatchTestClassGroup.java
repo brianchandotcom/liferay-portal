@@ -52,6 +52,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		axisTestClassGroups.add(axisTestClassGroup);
 	}
 
+	public void addSegmentTestClassGroup(
+		SegmentTestClassGroup segmentTestClassGroup) {
+
+		_segmentTestClassGroups.add(segmentTestClassGroup);
+	}
+
 	public long getAverageTestDuration(String testName) {
 		if (_averageTestDurations.containsKey(testName)) {
 			return _averageTestDurations.get(testName);

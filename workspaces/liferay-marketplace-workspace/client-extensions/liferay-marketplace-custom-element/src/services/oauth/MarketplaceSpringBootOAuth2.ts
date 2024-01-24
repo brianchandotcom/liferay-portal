@@ -5,6 +5,26 @@
 
 import OAuth2Client from './OAuth2Client';
 
+type ConsoleProjectsUsage = {
+	userEmail: string;
+	userProjects: ConsoleUserProject[];
+};
+
+type ConsoleUserProject = {
+	environments: string[];
+	rootProjectId: string;
+	rootProjectPlanUsage: {
+		cpu: ConsoleCPU;
+		instance: ConsoleCPU;
+		memory: ConsoleCPU;
+	};
+};
+
+type ConsoleCPU = {
+	limit: number;
+	used: number;
+};
+
 export type LicenseKey = {
 	active: boolean;
 	complimentary: boolean;
@@ -121,6 +141,14 @@ export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 		) as unknown)) as Promise<APIResponse<any>>;
 
 		return response;
+	}
+
+	async getProductUsages(): Promise<ConsoleProjectsUsage> {
+		const response = await this.oAuth2Client.fetch(
+			'/console/projects-usage'
+		);
+
+		return response.json();
 	}
 
 	async getSubscriptions(orderId: number): Promise<SubscriptionsType[]> {

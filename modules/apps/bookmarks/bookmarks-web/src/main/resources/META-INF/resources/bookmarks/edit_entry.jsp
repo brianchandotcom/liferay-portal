@@ -87,51 +87,24 @@ renderResponse.setTitle(headerTitle);
 							}
 							%>
 
-							<div class="form-group">
-								<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
-
-								<aui:button name="selectFolderButton" value="select" />
-
-								<aui:script>
-									var <portlet:namespace />selectFolderButton = document.getElementById(
-										'<portlet:namespace />selectFolderButton'
-									);
-
-									if (<portlet:namespace />selectFolderButton) {
-										<portlet:namespace />selectFolderButton.addEventListener(
-											'click',
-											(event) => {
-												Liferay.Util.openSelectionModal({
-													onSelect: function (event) {
-														var folderData = {
-															idString: 'folderId',
-															idValue: event.entityid,
-															nameString: 'folderName',
-															nameValue: event.entityname,
-														};
-
-														Liferay.Util.selectFolder(
-															folderData,
-															'<portlet:namespace />'
-														);
-													},
-													selectEventName: '<portlet:namespace />selectFolder',
-													title:
-														'<liferay-ui:message arguments="folder" key="select-x" />',
-													url:
-														'<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>',
-												});
-											}
-										);
-									}
-								</aui:script>
-
-								<%
-								String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('folderId', 'folderName', this, '" + liferayPortletResponse.getNamespace() + "');";
-								%>
-
-								<aui:button disabled="<%= folderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-							</div>
+							<liferay-frontend:resource-selector
+								inputLabel='<%= LanguageUtil.get(request, "folder") %>'
+								inputName="newFolderId"
+								modalTitle='<%= LanguageUtil.get(request, "select-folder") %>'
+								resourceName="<%= folderName %>"
+								resourceValue="<%= folderId %>"
+								selectEventName="selectFolder"
+								selectResourceURL='<%=
+									PortletURLBuilder.createRenderURL(
+										renderResponse
+									).setMVCRenderCommandName(
+										"/bookmarks/select_folder"
+									).setWindowState(
+										LiferayWindowState.POP_UP
+									).buildString()
+								%>'
+								showRemoveButton="<%= true %>"
+							/>
 						</c:if>
 
 						<aui:input name="name" />

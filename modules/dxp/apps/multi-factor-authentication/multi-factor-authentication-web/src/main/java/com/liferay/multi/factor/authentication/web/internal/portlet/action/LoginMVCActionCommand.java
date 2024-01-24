@@ -189,7 +189,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			throw new PrincipalException("User sent unverified state");
 		}
 
-		Key mfaWebKey = (Key)httpSession.getAttribute(MFAWebKeys.MFA_WEB_KEY);
+		Key mfaWebKey = _encryptor.deserializeKey(
+			(String)httpSession.getAttribute(MFAWebKeys.MFA_WEB_KEY));
 
 		Map<String, Object> stateMap = _jsonFactory.looseDeserialize(
 			_encryptor.decrypt(mfaWebKey, state), Map.class);
@@ -340,7 +341,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		httpSession.setAttribute(
 			MFAWebKeys.MFA_WEB_DIGEST,
 			DigesterUtil.digest(encryptedStateMapJSON));
-		httpSession.setAttribute(MFAWebKeys.MFA_WEB_KEY, key);
+		httpSession.setAttribute(
+			MFAWebKeys.MFA_WEB_KEY, _encryptor.serializeKey(key));
 	}
 
 	private static final Accessor<Object, String> _STRING_ACCESSOR =

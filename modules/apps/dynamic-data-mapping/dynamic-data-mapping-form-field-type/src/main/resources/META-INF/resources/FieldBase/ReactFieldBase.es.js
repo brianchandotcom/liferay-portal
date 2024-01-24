@@ -128,7 +128,7 @@ const TooltipProperty = ({showPopover = false, tooltip}) => {
 };
 
 const Popover = ({tooltip}) => {
-	const [isPopoverVisible, setPopoverVisible] = useState(false);
+	const [isPopoverVisible, setIsPopoverVisible] = useState(false);
 
 	const POPOVER_IMAGE_HEIGHT = 170;
 	const POPOVER_IMAGE_WIDTH = 232;
@@ -140,14 +140,14 @@ const Popover = ({tooltip}) => {
 			data-testid="clayPopover"
 			disableScroll
 			header={Liferay.Language.get('input-mask-format')}
-			onShowChange={setPopoverVisible}
+			onShowChange={setIsPopoverVisible}
 			show={isPopoverVisible}
 			style={{maxWidth: POPOVER_MAX_WIDTH}}
 			trigger={
 				<span
 					className="ddm-tooltip"
-					onMouseOut={() => setPopoverVisible(false)}
-					onMouseOver={() => setPopoverVisible(true)}
+					onMouseOut={() => setIsPopoverVisible(false)}
+					onMouseOver={() => setIsPopoverVisible(true)}
 				>
 					<ClayIcon symbol="question-circle-full" />
 				</span>

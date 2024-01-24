@@ -48,24 +48,28 @@ public class OracleDBTest extends DBTest {
 					connection.getSchema(), "', tabname => '", TABLE_NAME_1,
 					"')"));
 
-			List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
-				db, "getIndexes",
-				new Class<?>[] {
-					Connection.class, String.class, String.class, boolean.class
-				},
-				connection, TABLE_NAME_1, "typeVarchar", false);
+			try {
+				List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
+					db, "getIndexes",
+					new Class<?>[] {
+						Connection.class, String.class, String.class,
+						boolean.class
+					},
+					connection, TABLE_NAME_1, "typeVarchar", false);
 
-			for (IndexMetadata indexMetadata : indexMetadatas) {
-				Assert.assertEquals(
-					dbInspector.normalizeName(INDEX_NAME),
-					indexMetadata.getIndexName());
+				for (IndexMetadata indexMetadata : indexMetadatas) {
+					Assert.assertEquals(
+						dbInspector.normalizeName(INDEX_NAME),
+						indexMetadata.getIndexName());
+				}
 			}
-
-			statement.execute(
-				StringBundler.concat(
-					"CALL dbms_stats.unlock_table_stats(ownname => '",
-					connection.getSchema(), "', tabname => '", TABLE_NAME_1,
-					"')"));
+			finally {
+				statement.execute(
+					StringBundler.concat(
+						"CALL dbms_stats.unlock_table_stats(ownname => '",
+						connection.getSchema(), "', tabname => '", TABLE_NAME_1,
+						"')"));
+			}
 		}
 	}
 

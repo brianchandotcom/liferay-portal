@@ -36,7 +36,7 @@ for (int i = 1; i < numPDFDocumentsToAdd + 1; i++) {
 		DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, title + ".pdf",
 		"application/pdf", title, StringPool.BLANK, null, StringPool.BLANK,
 		DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT, ddmFormValuesMap,
-		file, null, file.length(), null, null, serviceContext);
+		file, null, file.length(), null, null, null, serviceContext);
 
 	DLFileVersion dlFileVersion =
 		DLFileVersionLocalServiceUtil.fetchLatestFileVersion(

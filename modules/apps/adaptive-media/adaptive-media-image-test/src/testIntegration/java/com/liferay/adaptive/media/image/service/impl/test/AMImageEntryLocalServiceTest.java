@@ -669,7 +669,7 @@ public class AMImageEntryLocalServiceTest {
 			StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT,
 			Collections.emptyMap(), null, new UnsyncByteArrayInputStream(bytes),
-			bytes.length, null, null, serviceContext);
+			bytes.length, null, null, null, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

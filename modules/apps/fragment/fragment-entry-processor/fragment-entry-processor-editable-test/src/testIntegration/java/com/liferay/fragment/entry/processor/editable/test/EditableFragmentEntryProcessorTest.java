@@ -1209,7 +1209,7 @@ public class EditableFragmentEntryProcessorTest {
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length, null,
-			null, serviceContext);
+			null, null, serviceContext);
 	}
 
 	private JournalArticle _addJournalArticle(

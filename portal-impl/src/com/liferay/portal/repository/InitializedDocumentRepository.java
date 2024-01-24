@@ -35,24 +35,25 @@ public abstract class InitializedDocumentRepository
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String urlTitle, String description, String changeLog, File file,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		checkDocumentRepository();
 
 		return documentRepository.addFileEntry(
 			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
-			title, urlTitle, description, changeLog, file, expirationDate,
-			reviewDate, serviceContext);
+			title, urlTitle, description, changeLog, file, displayDate,
+			expirationDate, reviewDate, serviceContext);
 	}
 
 	@Override
 	public FileEntry addFileEntry(
-		String externalReferenceCode, long userId, long folderId,
-		String sourceFileName, String mimeType, String title,
-		String urlTitle, String description, String changeLog,
-		InputStream inputStream, long size, Date displayDate, Date expirationDate,
-		Date reviewDate, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String urlTitle, String description, String changeLog,
+			InputStream inputStream, long size, Date displayDate,
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		checkDocumentRepository();

@@ -301,7 +301,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return repository.addFileEntry(
 			externalReferenceCode, getUserId(), folderId, sourceFileName,
-			mimeType, title, urlTitle, description, changeLog, file,
+			mimeType, title, urlTitle, description, changeLog, file, null,
 			expirationDate, reviewDate, serviceContext);
 	}
 
@@ -3179,7 +3179,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			latestFileVersion.getMimeType(), latestFileVersion.getTitle(),
 			latestFileVersion.getTitle(), latestFileVersion.getDescription(),
 			StringPool.BLANK, latestFileVersion.getContentStream(false),
-			latestFileVersion.getSize(), latestFileVersion.getExpirationDate(),
+			latestFileVersion.getSize(), latestFileVersion.getDisplayDate(),
+			latestFileVersion.getExpirationDate(),
 			latestFileVersion.getReviewDate(), serviceContext);
 
 		for (RatingsEntry ratingsEntry :

@@ -436,7 +436,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 			RandomTestUtil.randomString(), null, null,
 			dlFileEntryType.getFileEntryTypeId(), ddmFormValuesMap, null,
 			byteArrayInputStream, byteArrayInputStream.available(), null, null,
-			serviceContext);
+			null, serviceContext);
 	}
 
 	protected FileEntry addFileEntry(long folderId) throws Exception {

@@ -79,7 +79,7 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 			String externalReferenceCode, long userId, long folderId,
 			String fileName, String mimeType, String title, String urlTitle,
 			String description, String changeLog, InputStream inputStream,
-			long size, Date expirationDate, Date reviewDate,
+			long size, Date displayDate, Date expirationDate, Date reviewDate,
 			ServiceContext serviceContext)
 		throws PortalException {
 

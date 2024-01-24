@@ -424,7 +424,7 @@ public class DLFileEntryServiceTest {
 			StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
 			null, new ByteArrayInputStream(_CONTENT.getBytes()), 0, null, null,
-			serviceContext);
+			null, serviceContext);
 	}
 
 	protected DLFileEntry updateDLFileEntry(

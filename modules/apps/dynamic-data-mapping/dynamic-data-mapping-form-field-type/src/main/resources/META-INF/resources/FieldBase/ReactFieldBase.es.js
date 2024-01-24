@@ -109,9 +109,17 @@ const RequiredProperty = () => {
 	);
 };
 
-const TooltipProperty = ({showPopover, tooltip}) => {
+const TooltipProperty = ({showPopover = false, tooltip}) => {
 	return showPopover ? (
 		<Popover tooltip={tooltip} />
+	) : Liferay.FeatureFlags['LPS-114700'] ? (
+		<span
+			className="c-ml-2 text-4 text-secondary"
+			tabIndex={0}
+			title={tooltip}
+		>
+			<ClayIcon symbol="question-circle-full" />
+		</span>
 	) : (
 		<span className="ddm-tooltip" title={tooltip}>
 			<ClayIcon symbol="question-circle-full" />
@@ -164,6 +172,7 @@ export function FieldBase({
 	accessible = true,
 	children,
 	displayErrors,
+	editOnlyInDefaultLanguage,
 	errorMessage,
 	fieldName,
 	fieldReference,
@@ -239,6 +248,11 @@ export function FieldBase({
 
 	const renderLabel =
 		(label && showLabel) || hideField || repeatable || required || tooltip;
+	const showDisabledFieldIcon =
+		Liferay.FeatureFlags['LPS-114700'] &&
+		editOnlyInDefaultLanguage &&
+		showLabel &&
+		readOnly;
 	const showLegend =
 		type === 'checkbox_multiple' ||
 		type === 'grid' ||
@@ -433,6 +447,14 @@ export function FieldBase({
 								)}
 							</legend>
 
+							{showDisabledFieldIcon && (
+								<TooltipProperty
+									tooltip={Liferay.Language.get(
+										'this-field-can-not-be-localized'
+									)}
+								/>
+							)}
+
 							{children}
 						</fieldset>
 					) : (
@@ -464,6 +486,14 @@ export function FieldBase({
 									/>
 								)}
 							</label>
+
+							{showDisabledFieldIcon && (
+								<TooltipProperty
+									tooltip={Liferay.Language.get(
+										'this-field-can-not-be-localized'
+									)}
+								/>
+							)}
 
 							{children}
 

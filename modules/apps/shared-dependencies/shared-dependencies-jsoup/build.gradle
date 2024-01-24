@@ -1,0 +1,3 @@
+dependencies {
+	compileInclude group: "org.jsoup", name: "jsoup", version: "1.15.3"
+}

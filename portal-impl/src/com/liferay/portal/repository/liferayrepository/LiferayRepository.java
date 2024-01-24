@@ -118,7 +118,7 @@ public class LiferayRepository
 			externalReferenceCode, getGroupId(), getRepositoryId(),
 			toFolderId(folderId), sourceFileName, mimeType, title, urlTitle,
 			description, changeLog, fileEntryTypeId, ddmFormValuesMap, file,
-			null, size, expirationDate, reviewDate, serviceContext);
+			null, size, null, expirationDate, reviewDate, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}
@@ -143,7 +143,7 @@ public class LiferayRepository
 			externalReferenceCode, getGroupId(), getRepositoryId(),
 			toFolderId(folderId), sourceFileName, mimeType, title, urlTitle,
 			description, changeLog, fileEntryTypeId, ddmFormValuesMap, null,
-			inputStream, size, expirationDate, reviewDate, serviceContext);
+			inputStream, size, null, expirationDate, reviewDate, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

@@ -83,7 +83,7 @@ public class CPAttachmentFileEntryTableReferenceDefinitionTest
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, inputStream, bytes.length, null, null, _serviceContext);
+			null, inputStream, bytes.length, null, null, null, _serviceContext);
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(

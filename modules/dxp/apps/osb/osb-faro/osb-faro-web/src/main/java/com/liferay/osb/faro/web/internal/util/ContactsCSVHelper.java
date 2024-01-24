@@ -328,7 +328,7 @@ public class ContactsCSVHelper {
 				repository.getDlFolderId(), fileName, ContentTypes.TEXT_CSV,
 				file.getName(), fileName, repository.getDescription(), null,
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, null, file,
-				null, file.length(), null, null, serviceContext);
+				null, file.length(), null, null, null, serviceContext);
 		}
 
 		return dlFileEntry.getLatestFileVersion(true);

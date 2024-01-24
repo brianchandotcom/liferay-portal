@@ -83,6 +83,41 @@ public class MetaTagsTagTest {
 			RandomTestUtil.randomString(), pageRobotsRequestAttribute);
 	}
 
+	private void _assertMetaTagsTag(
+		String metaContent, String metaName)
+		throws Exception {
+
+		MetaTagsTag metaTagsTag = new MetaTagsTag();
+
+		metaTagsTag.setPageContext(_pageContext);
+
+		metaTagsTag.doStartTag();
+
+		metaTagsTag.setBodyContent(_pageContext.pushBody());
+
+		metaTagsTag.doEndTag();
+
+		String content = _unsyncStringWriter.toString();
+
+		if (Validator.isNull(metaContent)) {
+			Assert.assertFalse(
+				content,
+				StringUtil.contains(
+					content, " name=\"" + metaName + "\" />", StringPool.BLANK));
+		}
+		else {
+			Assert.assertTrue(
+				content,
+				StringUtil.contains(
+					content,
+					StringBundler.concat(
+					"<meta content=\"" , metaContent ,
+					"\" name=\"", metaName, "\" />"),
+					StringPool.BLANK));
+		}
+	}
+
+
 	private void _assertRobotsMetaTagsTag(
 			String expectedRobotsMetaTagContent, String layoutRobots,
 			String localizedLayoutRobots, String pageRobotsRequestAttribute)
@@ -106,33 +141,7 @@ public class MetaTagsTagTest {
 
 		_setUpPageContext(layout, pageRobotsRequestAttribute);
 
-		MetaTagsTag metaTagsTag = new MetaTagsTag();
-
-		metaTagsTag.setPageContext(_pageContext);
-
-		metaTagsTag.doStartTag();
-
-		metaTagsTag.setBodyContent(_pageContext.pushBody());
-
-		metaTagsTag.doEndTag();
-
-		String content = _unsyncStringWriter.toString();
-
-		if (Validator.isNull(expectedRobotsMetaTagContent)) {
-			Assert.assertFalse(
-				content,
-				StringUtil.contains(
-					content, " name=\"robots\" />", StringPool.BLANK));
-		}
-		else {
-			Assert.assertTrue(
-				content,
-				StringUtil.contains(
-					content,
-					"<meta content=\"" + expectedRobotsMetaTagContent +
-						"\" name=\"robots\" />",
-					StringPool.BLANK));
-		}
+		_assertMetaTagsTag(expectedRobotsMetaTagContent, "robots");
 	}
 
 	private void _setUpLanguageUtil() {

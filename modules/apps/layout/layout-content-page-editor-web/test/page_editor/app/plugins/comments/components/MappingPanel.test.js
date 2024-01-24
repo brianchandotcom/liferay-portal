@@ -34,9 +34,7 @@ const state = {
 	},
 	languageId: 'en_US',
 	mappingFields: {},
-	pageContents: [],
 	permissions: {},
-	selectPageContents: {},
 };
 
 jest.mock(

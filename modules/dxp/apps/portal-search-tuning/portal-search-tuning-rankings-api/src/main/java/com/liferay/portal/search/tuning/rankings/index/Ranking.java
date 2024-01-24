@@ -41,51 +41,50 @@ public interface Ranking {
 	public String getSXPBlueprintExternalReferenceCode();
 
 	public boolean isPinned(String documentId);
-	
+
+	public interface Builder {
+
+		public Builder aliases(List<String> aliases);
+
+		public Ranking build();
+
+		public Builder groupExternalReferenceCode(
+			String groupExternalReferenceCode);
+
+		public Builder hiddenDocumentIds(List<String> hiddenDocumentIds);
+
+		public Builder indexName(String indexName);
+
+		public Builder name(String name);
+
+		public Builder pins(List<Ranking.Pin> pins);
+
+		public Builder queryString(String queryString);
+
+		public Builder rankingDocumentId(String rankingDocumentId);
+
+		public Builder status(String status);
+
+		public Builder sxpBlueprintExternalReferenceCode(
+			String sxpBlueprintExternalReferenceCode);
+
+	}
+
 	public interface Pin {
 
 		public String getDocumentId();
-	
+
 		public int getPosition();
-		
+
 		public interface Builder {
-			
+
 			public Pin build();
 
 			public Builder documentId(String documentId);
 
 			public Builder position(int position);
-			
-		}
-	
-	}
-	
-	public interface RankingBuilder {
 
-		public RankingBuilder aliases(List<String> aliases);
-	
-		public Ranking build();
-	
-		public RankingBuilder groupExternalReferenceCode(
-			String groupExternalReferenceCode);
-	
-		public RankingBuilder hiddenDocumentIds(
-			List<String> hiddenDocumentIds);
-	
-		public RankingBuilder indexName(String indexName);
-	
-		public RankingBuilder name(String name);
-	
-		public RankingBuilder pins(List<Ranking.Pin> pins);
-	
-		public RankingBuilder queryString(String queryString);
-	
-		public RankingBuilder rankingDocumentId(String rankingDocumentId);
-	
-		public RankingBuilder status(String status);
-	
-		public RankingBuilder sxpBlueprintExternalReferenceCode(
-			String sxpBlueprintExternalReferenceCode);
+		}
 
 	}
 

@@ -13,8 +13,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface RankingBuilderFactory {
 
-	public Ranking.RankingBuilder builder();
+	public Ranking.Builder builder();
 
-	public Ranking.RankingBuilder builder(Ranking ranking);
+	public Ranking.Builder builder(Ranking ranking);
 
 }

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
@@ -137,6 +137,7 @@ const Popover = ({tooltip}) => {
 	return (
 		<ClayPopover
 			alignPosition="right-bottom"
+			closeOnClickOutside
 			data-testid="clayPopover"
 			disableScroll
 			header={Liferay.Language.get('input-mask-format')}
@@ -144,13 +145,24 @@ const Popover = ({tooltip}) => {
 			show={isPopoverVisible}
 			style={{maxWidth: POPOVER_MAX_WIDTH}}
 			trigger={
-				<span
-					className="ddm-tooltip"
-					onMouseOut={() => setIsPopoverVisible(false)}
-					onMouseOver={() => setIsPopoverVisible(true)}
-				>
-					<ClayIcon symbol="question-circle-full" />
-				</span>
+				Liferay.FeatureFlags['LPS-114700'] ? (
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('more-information')}
+						className="c-ml-2 text-secondary"
+						displayType="unstyled"
+						monospaced={false}
+						size="sm"
+						symbol="question-circle-full"
+					/>
+				) : (
+					<span
+						className="ddm-tooltip"
+						onMouseOut={() => setIsPopoverVisible(false)}
+						onMouseOver={() => setIsPopoverVisible(true)}
+					>
+						<ClayIcon symbol="question-circle-full" />
+					</span>
+				)
 			}
 		>
 			<p>{tooltip}</p>

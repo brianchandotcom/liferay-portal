@@ -88,6 +88,8 @@ export default function propsTransformer({
 		let entrySelectorNodes = document.querySelectorAll(
 			'input[type="checkbox"][name="' +
 				`${portletNamespace}rowIdsJournalArticle` +
+				'"], input[type="checkbox"][name="' +
+				`${portletNamespace}rowIdsJournalFolder` +
 				'"]'
 		);
 
@@ -98,7 +100,20 @@ export default function propsTransformer({
 		}
 
 		const articleIds = Array.from(entrySelectorNodes)
-			.filter((node) => node.checked)
+			.filter(
+				(node) =>
+					node.checked &&
+					node.name === `${portletNamespace}rowIdsJournalArticle`
+			)
+			.map((node) => node.value)
+			.join(',');
+
+		const folderIds = Array.from(entrySelectorNodes)
+			.filter(
+				(node) =>
+					node.checked &&
+					node.name === `${portletNamespace}rowIdsJournalFolder`
+			)
 			.map((node) => node.value)
 			.join(',');
 
@@ -107,6 +122,10 @@ export default function propsTransformer({
 		url.searchParams.set(
 			`${portletNamespace}rowIdsJournalArticle`,
 			articleIds
+		);
+		url.searchParams.set(
+			`${portletNamespace}rowIdsJournalFolder`,
+			folderIds
 		);
 
 		navigate(url);

@@ -96,7 +96,7 @@ public class RankingPortletDisplayBuilderTest extends BaseRankingsWebTestCase {
 		dropdownItems =
 			rankingPortletDisplayContext.getFilterItemsDropdownItems();
 
-		Assert.assertEquals(dropdownItems.toString(), 3, dropdownItems.size());
+		Assert.assertEquals(dropdownItems.toString(), 2, dropdownItems.size());
 	}
 
 	@Override

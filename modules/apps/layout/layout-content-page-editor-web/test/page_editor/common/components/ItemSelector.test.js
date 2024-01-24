@@ -4,10 +4,11 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+import {State} from '@liferay/frontend-js-state-web';
 import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import {pageContentsAtom} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
 import ItemSelector from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/ItemSelector';
 import {openItemSelector} from '../../../../src/main/resources/META-INF/resources/page_editor/common/openItemSelector';
 
@@ -38,30 +39,36 @@ function renderItemSelector({
 	selectedItemClassPK = '',
 	selectedItemTitle = '',
 }) {
-	const state = {
-		pageContents,
-	};
+	State.writeAtom(pageContentsAtom, {
+		data: pageContents,
+		status: 'saved',
+	});
 
 	return render(
-		<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
-			<ItemSelector
-				label="itemSelectorLabel"
-				onItemSelect={() => {}}
-				selectedItem={
-					selectedItemTitle
-						? {
-								classPK: selectedItemClassPK,
-								title: selectedItemTitle,
-						  }
-						: null
-				}
-				transformValueCallback={() => {}}
-			/>
-		</StoreAPIContextProvider>
+		<ItemSelector
+			label="itemSelectorLabel"
+			onItemSelect={() => {}}
+			selectedItem={
+				selectedItemTitle
+					? {
+							classPK: selectedItemClassPK,
+							title: selectedItemTitle,
+					  }
+					: null
+			}
+			transformValueCallback={() => {}}
+		/>
 	);
 }
 
 describe('ItemSelector', () => {
+	beforeEach(() => {
+		State.writeAtom(pageContentsAtom, {
+			data: [],
+			status: 'idle',
+		});
+	});
+
 	afterEach(() => {
 		openItemSelector.mockClear();
 	});

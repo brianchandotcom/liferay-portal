@@ -92,7 +92,6 @@ const renderPageContent = (props = contents[0]) =>
 		<StoreContextProvider
 			initialState={{
 				layoutData: {items: {}},
-				pageContents: contents,
 				permissions: {UPDATE: true, UPDATE_LAYOUT_CONTENT: true},
 			}}
 		>

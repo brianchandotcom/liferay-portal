@@ -33,6 +33,7 @@ type FilterBodyProps = {
 	filterSchema: FilterSchema | undefined;
 	setPosition: React.Dispatch<React.SetStateAction<number>>;
 	setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+	visible: boolean;
 };
 
 const FilterBody: React.FC<FilterBodyProps> = ({
@@ -40,17 +41,20 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 	filterSchema,
 	setPosition,
 	setVisible,
+	visible,
 }) => {
 	const [filter, setFilter] = useState('');
 	const inputRef = useRef<HTMLInputElement>(null);
 
-	const {current} = inputRef;
-
 	useEffect(() => {
-		if (current) {
-			inputRef?.current?.focus();
-		}
-	}, [current]);
+		const timeout = setTimeout(() => {
+			if (visible) {
+				inputRef?.current?.focus();
+			}
+		}, 100);
+
+		return () => clearTimeout(timeout);
+	}, [visible]);
 
 	const fields = useMemo(() => filterSchema?.fields as RendererFields[], [
 		filterSchema?.fields,
@@ -129,10 +133,6 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		setVisible(false);
 	}, [dispatch, fields, form, setVisible]);
 
-	const searchFilterInputRef = {
-		ref: inputRef,
-	};
-
 	return (
 		<div className="align-content-between d-flex flex-column">
 			<div className="dropdown-header">
@@ -146,8 +146,8 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 							name="search-filter"
 							onChange={({target: {value}}) => setFilter(value)}
 							placeholder={i18n.translate('search-filters')}
+							ref={inputRef}
 							value={filter}
-							{...searchFilterInputRef}
 						/>
 
 						<ClayButtonWithIcon
@@ -245,6 +245,7 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 				filterSchema={filterSchema}
 				setPosition={setPosition}
 				setVisible={setVisible}
+				visible={visible}
 			/>
 		</ClayPopover>
 	);

@@ -1386,7 +1386,7 @@ public class PropsValues {
 					PropsKeys.
 						MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_TRANSIENT));
 
-	public static final boolean MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED =
+	public static volatile boolean MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED));
 

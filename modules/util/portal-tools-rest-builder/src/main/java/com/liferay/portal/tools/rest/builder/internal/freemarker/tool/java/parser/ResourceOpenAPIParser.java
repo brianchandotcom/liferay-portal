@@ -344,7 +344,7 @@ public class ResourceOpenAPIParser {
 		List<JavaMethodSignature> javaMethodSignatures,
 		Map<String, String> properties) {
 
-		Set<String> createStrategies = new HashSet<>();
+		Set<String> createStrategies = new TreeSet<>();
 
 		Set<String> propertyNames = properties.keySet();
 
@@ -382,7 +382,7 @@ public class ResourceOpenAPIParser {
 	public static Set<String> getVulcanBatchImplementationUpdateStrategies(
 		List<JavaMethodSignature> javaMethodSignatures) {
 
-		Set<String> updateStrategies = new HashSet<>();
+		Set<String> updateStrategies = new TreeSet<>();
 
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
 			String methodName = javaMethodSignature.getMethodName();

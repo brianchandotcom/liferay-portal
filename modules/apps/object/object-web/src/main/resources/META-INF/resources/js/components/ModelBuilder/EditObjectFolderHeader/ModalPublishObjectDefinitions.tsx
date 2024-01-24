@@ -31,7 +31,7 @@ enum STATUS {
 interface ModalPublishObjectDefinitionsProps {
 	disableAutoClose: boolean;
 	dispatch: React.Dispatch<TAction>;
-	elements: Elements<ObjectDefinitionNodeData | ObjectRelationshipEdgeData>;
+	elements: Elements<ObjectDefinitionNodeData | ObjectRelationshipEdgeData[]>;
 	handleOnClose: () => void;
 }
 

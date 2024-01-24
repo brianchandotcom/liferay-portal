@@ -10,7 +10,7 @@ import './ModalPublishObjectDefinitions.scss';
 interface ModalPublishObjectDefinitionsProps {
 	disableAutoClose: boolean;
 	dispatch: React.Dispatch<TAction>;
-	elements: Elements<ObjectDefinitionNodeData | ObjectRelationshipEdgeData>;
+	elements: Elements<ObjectDefinitionNodeData | ObjectRelationshipEdgeData[]>;
 	handleOnClose: () => void;
 }
 export declare function ModalPublishObjectDefinitions({

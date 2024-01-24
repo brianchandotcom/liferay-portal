@@ -31,7 +31,7 @@ const ObjectFolderContext = createContext({} as ObjectFolderContextProps);
 const initialState = {
 	deletedObjectDefinition: {} as DeletedObjectDefinition,
 	elements: [] as Elements<
-		ObjectDefinitionNodeData | ObjectRelationshipEdgeData
+		ObjectDefinitionNodeData | ObjectRelationshipEdgeData[]
 	>,
 	isLoadingObjectFolder: false,
 	leftSidebarItems: [] as LeftSidebarItem[],

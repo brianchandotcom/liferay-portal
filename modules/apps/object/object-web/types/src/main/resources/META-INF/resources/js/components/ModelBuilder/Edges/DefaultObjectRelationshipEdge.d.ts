@@ -25,4 +25,4 @@ export default function DefaultObjectRelationshipEdge({
 	source,
 	style,
 	target,
-}: EdgeProps<ObjectRelationshipEdgeData>): JSX.Element | null;
+}: EdgeProps<ObjectRelationshipEdgeData[]>): JSX.Element | null;

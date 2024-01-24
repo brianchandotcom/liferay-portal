@@ -84,7 +84,7 @@ export default function EditObjectFolder({
 	] = useState(false);
 
 	const edges = elements.filter((element) => isEdge(element)) as Edge<
-		ObjectRelationshipEdgeData
+		ObjectRelationshipEdgeData[]
 	>[];
 
 	const nodes = elements.filter((element) => isNode(element)) as Node<

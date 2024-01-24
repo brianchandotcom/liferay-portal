@@ -8,6 +8,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.storage;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
+import com.liferay.portal.search.tuning.rankings.storage.RankingStorageAdapter;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexWriter;
 import com.liferay.portal.search.tuning.rankings.web.internal.storage.helper.RankingJSONStorageHelper;
 
@@ -18,7 +19,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bryan Engler
  */
 @Component(service = RankingStorageAdapter.class)
-public class RankingStorageAdapter {
+public class RankingStorageAdapterImpl implements RankingStorageAdapter {
 
 	public String create(Ranking ranking, RankingIndexName rankingIndexName) {
 		String rankingDocumentId = rankingJSONStorageHelper.addJSONStorageEntry(

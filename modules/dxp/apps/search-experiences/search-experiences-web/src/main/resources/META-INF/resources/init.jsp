@@ -22,10 +22,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.learn.LearnMessageUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
-page import="com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.settings.ParameterMapSettings" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
@@ -42,7 +40,8 @@ page import="com.liferay.search.experiences.web.internal.blueprint.admin.constan
 page import="com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPBlueprintsDisplayContext" %><%@
 page import="com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPElementsDisplayContext" %><%@
 page import="com.liferay.search.experiences.web.internal.blueprint.options.portlet.preferences.SXPBlueprintOptionsPortletPreferencesUtil" %><%@
-page import="com.liferay.search.experiences.web.internal.constants.SXPWebKeys" %>
+page import="com.liferay.search.experiences.web.internal.constants.SXPWebKeys" %><%@
+page import="com.liferay.search.experiences.web.internal.display.context.EditSXPBlueprintDisplayContext" %>
 
 <liferay-frontend:defineObjects />
 

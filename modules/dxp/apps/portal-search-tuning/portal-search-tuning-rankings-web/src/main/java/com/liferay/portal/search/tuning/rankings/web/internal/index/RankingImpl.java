@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -7,6 +7,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingUtil;
 
 import java.util.ArrayList;
@@ -21,21 +22,22 @@ import java.util.Set;
 /**
  * @author Bryan Engler
  */
-public class Ranking {
+public class RankingImpl implements Ranking {
 
-	public Ranking(Ranking ranking) {
-		_aliases = new ArrayList<>(ranking._aliases);
-		_groupExternalReferenceCode = ranking._groupExternalReferenceCode;
-		_hiddenDocumentIds = new LinkedHashSet<>(ranking._hiddenDocumentIds);
-		_indexName = ranking._indexName;
-		_name = ranking._name;
-		_pinnedDocumentIds = new HashSet<>(ranking._pinnedDocumentIds);
-		_pins = new ArrayList<>(ranking._pins);
-		_queryString = ranking._queryString;
-		_rankingDocumentId = ranking._rankingDocumentId;
-		_status = ranking._status;
+	public RankingImpl(RankingImpl rankingImpl) {
+		_aliases = new ArrayList<>(rankingImpl._aliases);
+		_groupExternalReferenceCode = rankingImpl._groupExternalReferenceCode;
+		_hiddenDocumentIds = new LinkedHashSet<>(
+			rankingImpl._hiddenDocumentIds);
+		_indexName = rankingImpl._indexName;
+		_name = rankingImpl._name;
+		_pinnedDocumentIds = new HashSet<>(rankingImpl._pinnedDocumentIds);
+		_pins = new ArrayList<>(rankingImpl._pins);
+		_queryString = rankingImpl._queryString;
+		_rankingDocumentId = rankingImpl._rankingDocumentId;
+		_status = rankingImpl._status;
 		_sxpBlueprintExternalReferenceCode =
-			ranking._sxpBlueprintExternalReferenceCode;
+			rankingImpl._sxpBlueprintExternalReferenceCode;
 	}
 
 	public List<String> getAliases() {
@@ -72,7 +74,7 @@ public class Ranking {
 		return sb.toString();
 	}
 
-	public List<Pin> getPins() {
+	public List<Ranking.Pin> getPins() {
 		return Collections.unmodifiableList(_pins);
 	}
 
@@ -112,11 +114,117 @@ public class Ranking {
 		return false;
 	}
 
-	public static class Pin {
+	protected static class BuilderImpl implements Ranking.Builder {
 
-		public Pin(int position, String documentId) {
-			_position = position;
-			_documentId = documentId;
+		public BuilderImpl() {
+			_rankingImpl = new RankingImpl();
+		}
+
+		public BuilderImpl(Ranking ranking) {
+			_rankingImpl = (RankingImpl)ranking;
+		}
+
+		public BuilderImpl aliases(List<String> aliases) {
+			_rankingImpl._aliases = aliases;
+
+			return this;
+		}
+
+		public Ranking build() {
+			return new RankingImpl(_rankingImpl);
+		}
+
+		public BuilderImpl groupExternalReferenceCode(
+			String groupExternalReferenceCode) {
+
+			_rankingImpl._groupExternalReferenceCode =
+				groupExternalReferenceCode;
+
+			return this;
+		}
+
+		public BuilderImpl hiddenDocumentIds(List<String> hiddenDocumentIds) {
+			_rankingImpl._hiddenDocumentIds = new LinkedHashSet<>(
+				toList(hiddenDocumentIds));
+
+			return this;
+		}
+
+		public BuilderImpl indexName(String indexName) {
+			_rankingImpl._indexName = indexName;
+
+			return this;
+		}
+
+		public BuilderImpl name(String name) {
+			_rankingImpl._name = name;
+
+			return this;
+		}
+
+		public BuilderImpl pins(List<Ranking.Pin> pins) {
+			if (pins != null) {
+				Set<String> documentIds = new LinkedHashSet<>();
+
+				pins.forEach(pin -> documentIds.add(pin.getDocumentId()));
+
+				_rankingImpl._pinnedDocumentIds = documentIds;
+
+				_rankingImpl._pins = pins;
+			}
+			else {
+				_rankingImpl._pinnedDocumentIds.clear();
+
+				_rankingImpl._pins.clear();
+			}
+
+			return this;
+		}
+
+		public BuilderImpl queryString(String queryString) {
+			_rankingImpl._queryString = queryString;
+
+			return this;
+		}
+
+		public BuilderImpl rankingDocumentId(String rankingDocumentId) {
+			_rankingImpl._rankingDocumentId = rankingDocumentId;
+
+			return this;
+		}
+
+		public BuilderImpl status(String status) {
+			_rankingImpl._status = status;
+
+			return this;
+		}
+
+		public BuilderImpl sxpBlueprintExternalReferenceCode(
+			String sxpBlueprintExternalReferenceCode) {
+
+			_rankingImpl._sxpBlueprintExternalReferenceCode =
+				sxpBlueprintExternalReferenceCode;
+
+			return this;
+		}
+
+		protected <T, V extends T> List<T> toList(List<V> list) {
+			if (list != null) {
+				return new ArrayList<>(list);
+			}
+
+			return new ArrayList<>();
+		}
+
+		private final RankingImpl _rankingImpl;
+
+	}
+
+	protected static class PinImpl implements Ranking.Pin {
+
+		public PinImpl(PinImpl pinImpl) {
+			_position = pinImpl._position;
+			_documentId = pinImpl._documentId;
 		}
 
 		public String getDocumentId() {
@@ -127,119 +235,40 @@ public class Ranking {
 			return _position;
 		}
 
-		private final String _documentId;
-		private final int _position;
+		protected static class BuilderImpl implements Ranking.Pin.Builder {
+
+			@Override
+			public Ranking.Pin build() {
+				return new PinImpl(_pinImpl);
+			}
+
+			@Override
+			public Builder documentId(String documentId) {
+				_pinImpl._documentId = documentId;
+
+				return this;
+			}
+
+			@Override
+			public Builder position(int position) {
+				_pinImpl._position = position;
+
+				return this;
+			}
+
+			private final PinImpl _pinImpl = new PinImpl();
+
+		}
+
+		private PinImpl() {
+		}
+
+		private String _documentId;
+		private int _position;
 
 	}
 
-	public static class RankingBuilder {
-
-		public RankingBuilder() {
-			_ranking = new Ranking();
-		}
-
-		public RankingBuilder(Ranking ranking) {
-			_ranking = ranking;
-		}
-
-		public RankingBuilder aliases(List<String> aliases) {
-			_ranking._aliases = aliases;
-
-			return this;
-		}
-
-		public Ranking build() {
-			return new Ranking(_ranking);
-		}
-
-		public RankingBuilder groupExternalReferenceCode(
-			String groupExternalReferenceCode) {
-
-			_ranking._groupExternalReferenceCode = groupExternalReferenceCode;
-
-			return this;
-		}
-
-		public RankingBuilder hiddenDocumentIds(
-			List<String> hiddenDocumentIds) {
-
-			_ranking._hiddenDocumentIds = new LinkedHashSet<>(
-				toList(hiddenDocumentIds));
-
-			return this;
-		}
-
-		public RankingBuilder indexName(String indexName) {
-			_ranking._indexName = indexName;
-
-			return this;
-		}
-
-		public RankingBuilder name(String name) {
-			_ranking._name = name;
-
-			return this;
-		}
-
-		public RankingBuilder pins(List<Pin> pins) {
-			if (pins != null) {
-				Set<String> documentIds = new LinkedHashSet<>();
-
-				pins.forEach(pin -> documentIds.add(pin.getDocumentId()));
-
-				_ranking._pinnedDocumentIds = documentIds;
-
-				_ranking._pins = pins;
-			}
-			else {
-				_ranking._pinnedDocumentIds.clear();
-
-				_ranking._pins.clear();
-			}
-
-			return this;
-		}
-
-		public RankingBuilder queryString(String queryString) {
-			_ranking._queryString = queryString;
-
-			return this;
-		}
-
-		public RankingBuilder rankingDocumentId(String rankingDocumentId) {
-			_ranking._rankingDocumentId = rankingDocumentId;
-
-			return this;
-		}
-
-		public RankingBuilder status(String status) {
-			_ranking._status = status;
-
-			return this;
-		}
-
-		public RankingBuilder sxpBlueprintExternalReferenceCode(
-			String sxpBlueprintExternalReferenceCode) {
-
-			_ranking._sxpBlueprintExternalReferenceCode =
-				sxpBlueprintExternalReferenceCode;
-
-			return this;
-		}
-
-		protected static <T, V extends T> List<T> toList(List<V> list) {
-			if (list != null) {
-				return new ArrayList<>(list);
-			}
-
-			return new ArrayList<>();
-		}
-
-		private final Ranking _ranking;
-
-	}
-
-	private Ranking() {
+	private RankingImpl() {
 	}
 
 	private List<String> _aliases = new ArrayList<>();
@@ -248,7 +277,7 @@ public class Ranking {
 	private String _indexName;
 	private String _name;
 	private Set<String> _pinnedDocumentIds = new LinkedHashSet<>();
-	private List<Pin> _pins = new ArrayList<>();
+	private List<Ranking.Pin> _pins = new ArrayList<>();
 	private String _queryString;
 	private String _rankingDocumentId;
 	private String _status;

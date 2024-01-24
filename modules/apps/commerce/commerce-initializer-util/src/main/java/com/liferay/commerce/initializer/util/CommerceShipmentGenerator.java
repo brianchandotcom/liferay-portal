@@ -325,11 +325,11 @@ public class CommerceShipmentGenerator {
 				Math.floorMod(randomInt, range) + min.intValue());
 		}
 
+		BigDecimal incrementalOrderQuantity =
+			cpInstanceUnitOfMeasure.getIncrementalOrderQuantity();
+
 		return max.min(
-			cpInstanceUnitOfMeasure.getIncrementalOrderQuantity(
-			).multiply(
-				BigDecimal.valueOf(randomInt)
-			));
+			incrementalOrderQuantity.multiply(BigDecimal.valueOf(randomInt)));
 	}
 
 	private void _setPermissionChecker(long groupId) throws Exception {

@@ -8,12 +8,16 @@ package com.liferay.calendar.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.service.CalendarBookingLocalService;
+import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
+import com.liferay.calendar.test.util.CalendarResourceTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.RecurrenceTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -24,13 +28,16 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -259,6 +266,33 @@ public class CalendarUtilTest {
 			excpectedCalendarBookingIds, actualCalendarBookingIds);
 	}
 
+	@Test
+	public void testToCalendarJSONObject() throws Exception {
+		CalendarResource calendarResource =
+			CalendarResourceTestUtil.addCalendarResource(
+				_groupLocalService.getGroup(TestPropsValues.getGroupId()));
+
+		Calendar calendar = _calendarLocalService.addCalendar(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			calendarResource.getCalendarResourceId(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(),
+				"'\"></option><img onerror=alert(123) src=x>"
+			).build(),
+			RandomTestUtil.randomLocaleStringMap(), StringPool.UTC, 0, false,
+			false, false, new ServiceContext());
+
+		Method method = _calendarUtilClass.getMethod(
+			"toCalendarJSONObject", ThemeDisplay.class, Calendar.class);
+
+		JSONObject jsonObject = (JSONObject)method.invoke(
+			null, createThemeDisplay(), calendar);
+
+		Assert.assertEquals(
+			"&#39;&#34;&gt;&lt;/option&gt;&lt;img onerror=alert(123) src=x&gt;",
+			jsonObject.get("name"));
+	}
+
 	protected void assertRepeatsForever(Recurrence recurrence) {
 		Assert.assertNotNull(recurrence);
 
@@ -356,9 +390,16 @@ public class CalendarUtilTest {
 	private CalendarBookingLocalService _calendarBookingLocalService;
 
 	@Inject
+	private CalendarLocalService _calendarLocalService;
+
+	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	private PermissionChecker _permissionChecker;
 	private User _privateUser;
 	private User _user;

@@ -5,6 +5,7 @@
 
 package com.liferay.search.experiences.web.internal.blueprint.admin.portlet.action;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
 import com.liferay.search.experiences.web.internal.display.context.EditSXPBlueprintDisplayContext;
@@ -13,6 +14,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kevin Tan
@@ -33,9 +35,13 @@ public class EditSXPBlueprintMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			EditSXPBlueprintDisplayContext.class.getName(),
-			new EditSXPBlueprintDisplayContext(renderRequest, renderResponse));
+			new EditSXPBlueprintDisplayContext(
+				_itemSelector, renderRequest, renderResponse));
 
 		return "/sxp_blueprint_admin/edit_sxp_blueprint.jsp";
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

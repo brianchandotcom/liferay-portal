@@ -6,18 +6,12 @@
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
+import {openSelectionModal} from 'frontend-js-web';
 import React, {useContext, useState} from 'react';
 
 import removeDuplicates from '../../utils/functions/remove_duplicates';
 import toNumber from '../../utils/functions/to_number';
-import SelectorModal from '../SelectorModal';
 import ThemeContext from '../ThemeContext';
-
-const SITES_LOCATOR = {
-	label: 'descriptiveName',
-	total: 'total',
-	value: 'groupId',
-};
 
 /**
  * SiteSelectorInput uses fetchSitesURL in order for the user to quickly
@@ -44,27 +38,11 @@ function SiteSelectorInput({
 		multiple ? '' : value.label || String(value) || ''
 	);
 
-	const {fetchSitesURL} = useContext(ThemeContext);
-
-	/*
-	 * The initial selected items for the Selector Modal are formatted
-	 * into an array of objects with a label and value property, where value
-	 * corresponds to the IDs in the fetchItemsURL response.
-	 */
-	const _getInitialSelected = (selected) =>
-		multiple
-			? selected.map(({label, value}) => ({
-					[SITES_LOCATOR.value]: value,
-					label,
-			  }))
-			: [
-					{
-						[SITES_LOCATOR.value]: selected.value || selected,
-					},
-			  ];
+	const {namespace} = useContext(ThemeContext);
+	const {selectSitesURL} = useContext(ThemeContext);
 
 	const _getLabel = (item) =>
-		`${item[SITES_LOCATOR.label]} (ID: ${item[SITES_LOCATOR.value]})`;
+		`${item.groupdescriptivename} (ID: ${item.groupid})`;
 
 	const _handleBlur = () => {
 		setFieldTouched(name);
@@ -91,7 +69,7 @@ function SiteSelectorInput({
 				items
 					.map((item) => ({
 						label: item.label || _getLabel(item),
-						value: item.value || String(item[SITES_LOCATOR.value]),
+						value: item.value || String(item.groupid),
 					}))
 					.filter(({value}) => typeof toNumber(value) === 'number'),
 				'value'
@@ -120,7 +98,7 @@ function SiteSelectorInput({
 	const _handleSingleItemChange = (item) => {
 		setFieldValue(name, {
 			label: _getLabel(item),
-			value: String(item[SITES_LOCATOR.value]),
+			value: String(item.groupid),
 		});
 		setInputValue(_getLabel(item));
 	};
@@ -153,27 +131,30 @@ function SiteSelectorInput({
 			</ClayInput.GroupItem>
 
 			<ClayInput.GroupItem shrink>
-				<SelectorModal
-					fetchItemsURL={fetchSitesURL}
-					initialSelected={_getInitialSelected(value)}
-					locator={SITES_LOCATOR}
-					multiple={multiple}
-					onSubmit={_handleFieldValueChange}
-					title={
-						multiple
-							? Liferay.Language.get('select-sites')
-							: Liferay.Language.get('select-site')
-					}
+				<ClayButton
+					aria-label={Liferay.Language.get('select')}
+					disabled={disabled}
+					displayType="secondary"
+					onClick={() => {
+						openSelectionModal({
+							id: `${namespace}selectSite`,
+							onSelect: (selectedItem) => {
+								if (!selectedItem) {
+									return;
+								}
+
+								_handleFieldValueChange([selectedItem]);
+							},
+							selectEventName: `${namespace}selectSite`,
+							title: Liferay.Language.get('select-site'),
+							url: selectSitesURL,
+						});
+					}}
+					small
+					type="button"
 				>
-					<ClayButton
-						aria-label={Liferay.Language.get('select')}
-						disabled={disabled}
-						displayType="secondary"
-						small
-					>
-						{Liferay.Language.get('select')}
-					</ClayButton>
-				</SelectorModal>
+					{Liferay.Language.get('select')}
+				</ClayButton>
 			</ClayInput.GroupItem>
 		</ClayInput.Group>
 	);

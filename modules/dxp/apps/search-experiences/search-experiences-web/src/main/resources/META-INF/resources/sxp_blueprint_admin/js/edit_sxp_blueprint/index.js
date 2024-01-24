@@ -19,12 +19,12 @@ export default function ({
 	contextPath,
 	defaultLocale,
 	featureFlagLps153813,
-	fetchSitesURL,
 	isCompanyAdmin,
 	learnMessages,
 	locale,
 	namespace,
 	redirectURL,
+	selectSitesURL,
 	sxpBlueprintId,
 }) {
 	const [resource, setResource] = useState(null);
@@ -53,12 +53,12 @@ export default function ({
 				contextPath,
 				defaultLocale,
 				featureFlagLps153813,
-				fetchSitesURL,
 				isCompanyAdmin,
 				learnMessages,
 				locale,
 				namespace,
 				redirectURL,
+				selectSitesURL,
 				sxpType: 'sxpBlueprint',
 			}}
 		>

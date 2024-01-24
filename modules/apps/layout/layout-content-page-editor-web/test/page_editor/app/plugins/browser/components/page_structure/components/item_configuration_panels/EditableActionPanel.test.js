@@ -68,7 +68,6 @@ function getStateWithConfig(config = {}) {
 		languageId: 'en_US',
 		layoutData: {items: {'fragment-id': {config: {}}}},
 		mappingFields: [],
-		pageContents: [],
 		segmentsExperienceId: 0,
 	};
 }

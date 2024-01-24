@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {State} from '@liferay/frontend-js-state-web';
+
 import '@testing-library/jest-dom/extend-expect';
 import {
 	act,
@@ -20,6 +22,7 @@ import {config} from '../../../../../../src/main/resources/META-INF/resources/pa
 import {useCollectionConfig} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/CollectionItemContext';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import CollectionService from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService';
+import {pageContentsAtom} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
 import MappingSelector from '../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/MappingSelector';
 
 const defaultMappingFields = {
@@ -145,16 +148,6 @@ function renderMappingSelector({
 			},
 		},
 		mappingFields,
-		pageContents: [
-			{
-				classNameId: 'mappedItemClassNameId',
-				classPK: 'mappedItemClassPK',
-				classTypeId: 'mappedItemClassTypeId',
-				itemSubtype: 'Mapped Item Subtype',
-				itemType: 'Mapped Item Type',
-				title: 'mappedItemTitle',
-			},
-		],
 		segmentsExperienceId: 0,
 	};
 
@@ -173,6 +166,29 @@ function renderMappingSelector({
 }
 
 describe('MappingSelector', () => {
+	beforeAll(() => {
+		State.writeAtom(pageContentsAtom, {
+			data: [
+				{
+					classNameId: 'mappedItemClassNameId',
+					classPK: 'mappedItemClassPK',
+					classTypeId: 'mappedItemClassTypeId',
+					itemSubtype: 'Mapped Item Subtype',
+					itemType: 'Mapped Item Type',
+					title: 'mappedItemTitle',
+				},
+			],
+			status: 'saved',
+		});
+	});
+
+	afterAll(() => {
+		State.writeAtom(pageContentsAtom, {
+			data: [],
+			status: 'idle',
+		});
+	});
+
 	it('renders correct selects in content pages', async () => {
 		renderMappingSelector({});
 

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {State} from '@liferay/frontend-js-state-web';
 import {render, screen} from '@testing-library/react';
 import React from 'react';
 
@@ -10,6 +11,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
 import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import {pageContentsAtom} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
 import ContentsSidebar from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page_content/components/ContentsSidebar';
 
 jest.mock(
@@ -30,6 +32,13 @@ jest.mock(
 				},
 			],
 		},
+	})
+);
+
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/InfoItemService',
+	() => ({
+		getPageContents: jest.fn(),
 	})
 );
 
@@ -118,23 +127,35 @@ const renderPageContent = ({
 	pageContents = PAGE_CONTENTS,
 	languageId = 'en_US',
 	segmentsExperienceId = '0',
-} = {}) =>
-	render(
+} = {}) => {
+	State.writeAtom(pageContentsAtom, {
+		data: pageContents,
+		status: 'saved',
+	});
+
+	return render(
 		<StoreContextProvider
 			initialState={{
 				fragmentEntryLinks,
 				languageId,
 				layoutData: DEFAULT_LAYOUT_DATA,
-				pageContents,
 				permissions: {UPDATE: true, UPDATE_LAYOUT_CONTENT: true},
 				segmentsExperienceId,
 			}}
 		>
-			<ContentsSidebar></ContentsSidebar>
+			<ContentsSidebar />
 		</StoreContextProvider>
 	);
+};
 
 describe('ContentsSidebar', () => {
+	beforeEach(() => {
+		State.writeAtom(pageContentsAtom, {
+			data: [],
+			status: 'idle',
+		});
+	});
+
 	it('shows the content list', () => {
 		renderPageContent();
 

@@ -454,14 +454,14 @@ export function FieldBase({
 								{showLabel && label}
 
 								{required && <RequiredProperty />}
-
-								{tooltip && (
-									<TooltipProperty
-										showPopover={showPopover}
-										tooltip={tooltip}
-									/>
-								)}
 							</label>
+
+							{tooltip && (
+								<TooltipProperty
+									showPopover={showPopover}
+									tooltip={tooltip}
+								/>
+							)}
 
 							{showDisabledFieldIcon && (
 								<TooltipProperty
@@ -495,14 +495,14 @@ export function FieldBase({
 								{required && <RequiredProperty />}
 
 								{hideField && <HideFieldProperty />}
-
-								{showLabel && tooltip && (
-									<TooltipProperty
-										showPopover={showPopover}
-										tooltip={tooltip}
-									/>
-								)}
 							</label>
+
+							{showLabel && tooltip && (
+								<TooltipProperty
+									showPopover={showPopover}
+									tooltip={tooltip}
+								/>
+							)}
 
 							{showDisabledFieldIcon && (
 								<TooltipProperty

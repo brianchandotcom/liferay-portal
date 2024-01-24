@@ -65,21 +65,13 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 	@Override
 	public String getCommerceShippingOptionLabel(String name, Locale locale) {
 		try {
-			User currentUser = _userService.getCurrentUser();
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				new String(
-					_portalCatapult.launch(
-						currentUser.getCompanyId(), Http.Method.POST,
-						_functionCommerceShippingEngineConfiguration.
-							oAuth2ApplicationExternalReferenceCode(),
-						JSONUtil.put(
-							"locale", locale
-						).put(
-							"name", name
-						),
-						"/option-label", currentUser.getUserId()
-					).get()));
+			JSONObject jsonObject = _getJSONObject(
+				JSONUtil.put(
+					"locale", locale
+				).put(
+					"name", name
+				),
+				"option-label");
 
 			return jsonObject.getString(name);
 		}
@@ -97,41 +89,23 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 		throws CommerceShippingEngineException {
 
 		try {
-			User currentUser = _userService.getCurrentUser();
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				new String(
-					_portalCatapult.launch(
-						commerceOrder.getCompanyId(), Http.Method.POST,
-						_functionCommerceShippingEngineConfiguration.
-							oAuth2ApplicationExternalReferenceCode(),
-						_getPayloadJSONObject(commerceContext, commerceOrder),
-						"/options", currentUser.getUserId()
-					).get()));
-
-			return _getCommerceShippingOptions(jsonObject);
+			return _getCommerceShippingOptions(
+				_getJSONObject(
+					_getPayloadJSONObject(commerceContext, commerceOrder),
+					"options"));
 		}
 		catch (Exception exception) {
 			_log.error(exception);
-
-			return Collections.emptyList();
 		}
+
+		return Collections.emptyList();
 	}
 
 	@Override
 	public String getDescription(Locale locale) {
 		try {
-			User currentUser = _userService.getCurrentUser();
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				new String(
-					_portalCatapult.launch(
-						currentUser.getCompanyId(), Http.Method.POST,
-						_functionCommerceShippingEngineConfiguration.
-							oAuth2ApplicationExternalReferenceCode(),
-						JSONUtil.put("locale", locale), "/description",
-						currentUser.getUserId()
-					).get()));
+			JSONObject jsonObject = _getJSONObject(
+				JSONUtil.put("locale", locale), "description");
 
 			return jsonObject.getString("description");
 		}
@@ -149,25 +123,16 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 		throws CommerceShippingEngineException {
 
 		try {
-			User currentUser = _userService.getCurrentUser();
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				new String(
-					_portalCatapult.launch(
-						commerceOrder.getCompanyId(), Http.Method.POST,
-						_functionCommerceShippingEngineConfiguration.
-							oAuth2ApplicationExternalReferenceCode(),
-						_getPayloadJSONObject(commerceContext, commerceOrder),
-						"/options-enabled", currentUser.getUserId()
-					).get()));
-
-			return _getCommerceShippingOptions(jsonObject);
+			return _getCommerceShippingOptions(
+				_getJSONObject(
+					_getPayloadJSONObject(commerceContext, commerceOrder),
+					"options-enabled"));
 		}
 		catch (Exception exception) {
 			_log.error(exception);
-
-			return Collections.emptyList();
 		}
+
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -178,17 +143,8 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 	@Override
 	public String getName(Locale locale) {
 		try {
-			User currentUser = _userService.getCurrentUser();
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				new String(
-					_portalCatapult.launch(
-						currentUser.getCompanyId(), Http.Method.POST,
-						_functionCommerceShippingEngineConfiguration.
-							oAuth2ApplicationExternalReferenceCode(),
-						JSONUtil.put("locale", locale), "/name",
-						currentUser.getUserId()
-					).get()));
+			JSONObject jsonObject = _getJSONObject(
+				JSONUtil.put("locale", locale), "name");
 
 			return jsonObject.getString("name");
 		}
@@ -377,6 +333,23 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 			});
 
 		return commerceShippingOptions;
+	}
+
+	private JSONObject _getJSONObject(
+			JSONObject payloadJSONObject, String resourcePath)
+		throws Exception {
+
+		User currentUser = _userService.getCurrentUser();
+
+		return _jsonFactory.createJSONObject(
+			new String(
+				_portalCatapult.launch(
+					currentUser.getCompanyId(), Http.Method.POST,
+					_functionCommerceShippingEngineConfiguration.
+						oAuth2ApplicationExternalReferenceCode(),
+					payloadJSONObject, "/" + resourcePath,
+					currentUser.getUserId()
+				).get()));
 	}
 
 	private JSONObject _getPayloadJSONObject(

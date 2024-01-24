@@ -39,8 +39,6 @@ public class EditSXPBlueprintDisplayContext {
 
 	public Map<String, Object> getProps() {
 		return HashMapBuilder.<String, Object>put(
-			"contextPath", application.getContextPath()
-		).put(
 			"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
 		).put(
 			"featureFlagLps153813",

@@ -433,7 +433,7 @@ public class PropsValues {
 	public static final String CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID =
 		PropsUtil.get(PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
 
-	public static final boolean CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK =
+	public static volatile boolean CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK));
 

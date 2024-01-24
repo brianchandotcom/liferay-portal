@@ -6,10 +6,12 @@
 package com.liferay.friendly.url.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -76,26 +78,33 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 
 	@Test
 	public void testDoProcessActionSaveConfiguration() throws Exception {
-		Map<String, String> friendlyURLSeparators =
-			_getRandomFriendlyURLSeparatorsMap();
+		try {
+			Map<String, String> friendlyURLSeparators =
+				_getRandomFriendlyURLSeparatorsMap();
 
-		_mvcActionCommand.processAction(
-			_getMockLiferayPortletActionRequest(friendlyURLSeparators),
-			new MockLiferayPortletActionResponse());
+			_mvcActionCommand.processAction(
+				_getMockLiferayPortletActionRequest(friendlyURLSeparators),
+				new MockLiferayPortletActionResponse());
 
-		Thread.sleep(2000);
+			Thread.sleep(2000);
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			_friendlyURLSeparatorConfigurationManager.getFriendlyURLSeparators(
-				_company.getCompanyId()));
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				_friendlyURLSeparatorConfigurationManager.
+					getFriendlyURLSeparators(_company.getCompanyId()));
 
-		for (Map.Entry<String, String> friendlyURLSeparator :
-				friendlyURLSeparators.entrySet()) {
+			for (Map.Entry<String, String> friendlyURLSeparator :
+					friendlyURLSeparators.entrySet()) {
 
-			Assert.assertEquals(
-				StringPool.SLASH + friendlyURLSeparator.getValue() +
-					StringPool.SLASH,
-				jsonObject.get(friendlyURLSeparator.getKey()));
+				Assert.assertEquals(
+					StringPool.SLASH + friendlyURLSeparator.getValue() +
+						StringPool.SLASH,
+					jsonObject.get(friendlyURLSeparator.getKey()));
+			}
+		}
+		finally {
+			_configurationProvider.deleteCompanyConfiguration(
+				FriendlyURLSeparatorCompanyConfiguration.class,
+				_company.getCompanyId());
 		}
 	}
 
@@ -103,32 +112,40 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 	public void testDoProcessActionSaveConfigurationWithSomeInvalidCharacters()
 		throws Exception {
 
-		Map<String, String> friendlyURLSeparators =
-			_getRandomFriendlyURLSeparatorsMap();
+		try {
+			Map<String, String> friendlyURLSeparators =
+				_getRandomFriendlyURLSeparatorsMap();
 
-		friendlyURLSeparators.put(JournalArticle.class.getName(), "test%&?/22");
+			friendlyURLSeparators.put(
+				JournalArticle.class.getName(), "test%&?/22");
 
-		_mvcActionCommand.processAction(
-			_getMockLiferayPortletActionRequest(friendlyURLSeparators),
-			new MockLiferayPortletActionResponse());
+			_mvcActionCommand.processAction(
+				_getMockLiferayPortletActionRequest(friendlyURLSeparators),
+				new MockLiferayPortletActionResponse());
 
-		Thread.sleep(2000);
+			Thread.sleep(2000);
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			_friendlyURLSeparatorConfigurationManager.getFriendlyURLSeparators(
-				_company.getCompanyId()));
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				_friendlyURLSeparatorConfigurationManager.
+					getFriendlyURLSeparators(_company.getCompanyId()));
 
-		for (Map.Entry<String, String> friendlyURLSeparator :
-				friendlyURLSeparators.entrySet()) {
+			for (Map.Entry<String, String> friendlyURLSeparator :
+					friendlyURLSeparators.entrySet()) {
 
-			String normalizedFriendlyURLSeparator =
-				_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
-					friendlyURLSeparator.getValue());
+				String normalizedFriendlyURLSeparator =
+					_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+						friendlyURLSeparator.getValue());
 
-			Assert.assertEquals(
-				StringPool.SLASH + normalizedFriendlyURLSeparator +
-					StringPool.SLASH,
-				jsonObject.get(friendlyURLSeparator.getKey()));
+				Assert.assertEquals(
+					StringPool.SLASH + normalizedFriendlyURLSeparator +
+						StringPool.SLASH,
+					jsonObject.get(friendlyURLSeparator.getKey()));
+			}
+		}
+		finally {
+			_configurationProvider.deleteCompanyConfiguration(
+				FriendlyURLSeparatorCompanyConfiguration.class,
+				_company.getCompanyId());
 		}
 	}
 
@@ -415,6 +432,9 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
 
 	@Inject
 	private FriendlyURLNormalizer _friendlyURLNormalizer;

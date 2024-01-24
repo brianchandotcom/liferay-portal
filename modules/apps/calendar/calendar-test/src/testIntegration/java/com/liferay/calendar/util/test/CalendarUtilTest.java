@@ -14,6 +14,7 @@ import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.CalendarResourceLocalService;
+import com.liferay.calendar.service.CalendarResourceService;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.RecurrenceTestUtil;
@@ -202,6 +203,50 @@ public class CalendarUtilTest {
 			jsonObject.getString("recurrence"), calendarBooking.getTimeZone());
 
 		assertRepeatsForever(recurrence);
+	}
+
+	@Test
+	public void testToCalendarBookingJSONObjectVulnerabilities()
+		throws Exception {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarResource calendarResource =
+			_calendarResourceLocalService.addCalendarResource(
+				_user.getUserId(), TestPropsValues.getGroupId(),
+				_classNameLocalService.getClassNameId(CalendarResource.class),
+				0, null, null,
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(),
+					"lp'\"></option>" +
+						"<img onerror=alert(document.location) src=x>"
+				).build(),
+				RandomTestUtil.randomLocaleStringMap(), true, serviceContext);
+
+		Calendar calendar = _calendarLocalService.addCalendar(
+			_user.getUserId(), TestPropsValues.getGroupId(),
+			calendarResource.getCalendarResourceId(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), StringPool.UTC, 0, false,
+			false, false, serviceContext);
+
+		CalendarBooking calendarBookingInstance =
+			CalendarBookingTestUtil.addRecurringCalendarBooking(
+				_user, calendar, RecurrenceTestUtil.getDailyRecurrence(),
+				serviceContext);
+
+		Method method = _calendarUtilClass.getMethod(
+			"toCalendarBookingJSONObject", ThemeDisplay.class,
+			CalendarBooking.class, TimeZone.class);
+
+		JSONObject jsonObject = (JSONObject)method.invoke(
+			null, createThemeDisplay(), calendarBookingInstance,
+			calendarBookingInstance.getTimeZone());
+
+		Assert.assertEquals(
+			"lp&#39;&#34;&gt;&lt;/option&gt;&lt;" +
+				"img onerror=alert(document.location) src=x&gt;",
+			jsonObject.get("calendarResourceName"));
 	}
 
 	@Test
@@ -405,6 +450,9 @@ public class CalendarUtilTest {
 
 	@Inject
 	private CalendarResourceLocalService _calendarResourceLocalService;
+
+	@Inject
+	private CalendarResourceService _calendarResourceService;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

@@ -46,8 +46,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	public void addProjectsToSet(String projectNames) {
 		List<String> projectList = Arrays.asList(projectNames.split(","));
 
-		for (String project : projectList) {
-			_playwrightProjectSet.add(project);
+		for (String projectName : projectList) {
+			_playwrightProjectSet.add(projectName);
 		}
 	}
 
@@ -86,7 +86,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			portalGitWorkingDirectory.getWorkingDirectory(),
 			"build-test-batch.xml");
 
-		for (String project : _playwrightProjectSet) {
+		for (String projectName : _playwrightProjectSet) {
 			SegmentTestClassGroup segmentTestClassGroup =
 				TestClassGroupFactory.newSegmentTestClassGroup(this);
 
@@ -97,7 +97,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 					playwrightSegmentTestClassGroup =
 						(PlaywrightSegmentTestClassGroup)segmentTestClassGroup;
 
-				playwrightSegmentTestClassGroup.setProjectName(project);
+				playwrightSegmentTestClassGroup.setProjectName(projectName);
 
 				AxisTestClassGroup axisTestClassGroup =
 					TestClassGroupFactory.newAxisTestClassGroup(this);

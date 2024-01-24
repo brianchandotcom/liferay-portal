@@ -365,7 +365,7 @@ public class TextDDMFormFieldTypeSettingsTest
 					"label", "placeholder", "tip", "displayStyle", "required",
 					"requiredErrorMessage"),
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
-					"name", "fieldReference", "predefinedValue",
+					"fieldReference", "name", "predefinedValue",
 					"objectFieldName", "visibilityExpression", "fieldNamespace",
 					"indexType", "labelAtStructureLevel", "localizable",
 					"nativeField", "readOnly", "dataType", "type", "hideField",

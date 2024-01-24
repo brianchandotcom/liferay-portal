@@ -317,7 +317,7 @@ public class NumericDDMFormFieldTypeSettingsTest
 					"label", "placeholder", "tip", "dataType", "required",
 					"requiredErrorMessage"),
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
-					"name", "fieldReference", "predefinedValue",
+					"fieldReference", "name", "predefinedValue",
 					"objectFieldName", "visibilityExpression", "fieldNamespace",
 					"indexType", "labelAtStructureLevel", "localizable",
 					"nativeField", "readOnly", "type", "hideField", "showLabel",

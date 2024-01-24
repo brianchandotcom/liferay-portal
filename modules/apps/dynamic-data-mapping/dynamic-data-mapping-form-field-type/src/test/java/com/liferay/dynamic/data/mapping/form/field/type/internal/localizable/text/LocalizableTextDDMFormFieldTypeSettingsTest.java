@@ -96,7 +96,7 @@ public class LocalizableTextDDMFormFieldTypeSettingsTest
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
 					"label", "placeholder", "tip", "displayStyle", "required"),
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
-					"name", "fieldReference", "predefinedValue",
+					"fieldReference", "name", "predefinedValue",
 					"visibilityExpression", "fieldNamespace", "indexType",
 					"localizable", "readOnly", "dataType", "type", "showLabel",
 					"repeatable", "tooltip")));

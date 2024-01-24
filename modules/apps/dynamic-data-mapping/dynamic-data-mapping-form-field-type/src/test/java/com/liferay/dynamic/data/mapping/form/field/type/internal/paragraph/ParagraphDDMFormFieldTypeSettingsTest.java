@@ -126,7 +126,7 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
 					"label", "text", "tip", "required"),
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
-					"name", "fieldReference", "showLabel", "repeatable",
+					"fieldReference", "name", "showLabel", "repeatable",
 					"predefinedValue", "visibilityExpression", "fieldNamespace",
 					"indexType", "localizable", "readOnly", "dataType", "type",
 					"rulesConditionDisabled")));

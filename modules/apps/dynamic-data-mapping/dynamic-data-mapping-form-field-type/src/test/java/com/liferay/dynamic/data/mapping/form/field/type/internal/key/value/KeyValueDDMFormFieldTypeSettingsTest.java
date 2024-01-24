@@ -105,7 +105,7 @@ public class KeyValueDDMFormFieldTypeSettingsTest
 					"showLabel", "repeatable", "placeholder",
 					"visibilityExpression", "predefinedValue", "fieldNamespace",
 					"indexType", "localizable", "readOnly", "dataType", "type",
-					"name", "fieldReference", "tooltip")));
+					"fieldReference", "name", "tooltip")));
 	}
 
 	@Override

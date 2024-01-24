@@ -141,7 +141,7 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 					"label", "tip", "required", "requiredErrorMessage",
 					"showAsSwitcher"),
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
-					"name", "fieldReference", "visibilityExpression",
+					"fieldReference", "name", "visibilityExpression",
 					"predefinedValue", "objectFieldName", "fieldNamespace",
 					"indexType", "labelAtStructureLevel", "localizable",
 					"readOnly", "dataType", "type", "repeatable")));

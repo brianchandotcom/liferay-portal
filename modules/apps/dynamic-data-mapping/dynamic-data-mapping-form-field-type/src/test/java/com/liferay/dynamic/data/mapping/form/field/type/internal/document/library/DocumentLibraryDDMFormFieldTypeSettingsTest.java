@@ -101,7 +101,7 @@ public class DocumentLibraryDDMFormFieldTypeSettingsTest
 					"label", "tip", "required", "requiredErrorMessage",
 					"allowGuestUsers"),
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
-					"name", "fieldReference", "predefinedValue",
+					"fieldReference", "name", "predefinedValue",
 					"objectFieldName", "visibilityExpression", "fieldNamespace",
 					"indexType", "labelAtStructureLevel", "localizable",
 					"readOnly", "dataType", "type", "showLabel",

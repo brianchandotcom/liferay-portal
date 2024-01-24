@@ -135,7 +135,7 @@ public class RadioDDMFormFieldTypeSettingsTest
 					"label", "tip", "required", "requiredErrorMessage",
 					"options"),
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
-					"name", "fieldReference", "predefinedValue",
+					"fieldReference", "name", "predefinedValue",
 					"objectFieldName", "visibilityExpression", "fieldNamespace",
 					"indexType", "labelAtStructureLevel", "localizable",
 					"nativeField", "readOnly", "dataType", "type", "showLabel",

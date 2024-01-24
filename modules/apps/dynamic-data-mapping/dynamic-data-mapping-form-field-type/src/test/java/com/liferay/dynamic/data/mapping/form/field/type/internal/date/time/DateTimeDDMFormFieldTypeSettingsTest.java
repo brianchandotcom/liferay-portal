@@ -91,7 +91,7 @@ public class DateTimeDDMFormFieldTypeSettingsTest
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
 					"label", "tip", "required", "requiredErrorMessage"),
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
-					"dataType", "name", "fieldReference", "predefinedValue",
+					"dataType", "fieldReference", "name", "predefinedValue",
 					"objectFieldName", "indexType", "showLabel", "repeatable",
 					"readOnly", "rulesActionDisabled", "rulesConditionDisabled",
 					"type")));

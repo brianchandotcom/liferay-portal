@@ -170,7 +170,7 @@ public class SearchLocationDDMFormFieldTypeSettingsTest
 					"requiredErrorMessage", "visibleFields", "layout",
 					"redirectButton"),
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
-					"dataType", "name", "fieldReference", "showLabel",
+					"dataType", "fieldReference", "name", "showLabel",
 					"repeatable", "readOnly", "rulesActionDisabled",
 					"rulesConditionDisabled")));
 	}

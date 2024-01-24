@@ -117,7 +117,7 @@ public class GridDDMFormFieldTypeSettingsTest
 					"label", "tip", "required", "requiredErrorMessage",
 					"predefinedValue", "rows", "columns"),
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
-					"name", "fieldReference", "objectFieldName",
+					"fieldReference", "name", "objectFieldName",
 					"visibilityExpression", "showLabel", "repeatable",
 					"fieldNamespace", "indexType", "localizable", "readOnly",
 					"dataType", "type")));

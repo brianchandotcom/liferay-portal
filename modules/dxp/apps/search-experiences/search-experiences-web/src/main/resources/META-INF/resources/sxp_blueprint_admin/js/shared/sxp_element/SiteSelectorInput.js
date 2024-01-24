@@ -14,15 +14,17 @@ import toNumber from '../../utils/functions/to_number';
 import ThemeContext from '../ThemeContext';
 
 /**
- * SiteSelectorInput uses fetchSitesURL in order for the user to quickly
- * find sites. Click on the 'select' button to open a modal with
- * the full list of sites.
+ * SiteSelectorInput uses selectSitesURL and openSelectionModal so users can
+ * quickly find sites. Click on the 'select' button to open the modal.
  *
- * The site selector will render when a field has the 'number' type or
- * 'multiselect' type and their name contains 'group_id' or 'group_ids',
- * respectively. For the multiselect, IDs are formatted as an array of
- * stringified IDs for 'View Element JSON'. For the number type, the ID
- * is formatted as a number.
+ * The site selector renders automatically when:
+ *
+ * - The field has the 'number' type and its name contains 'group_id'.
+ *   For this case, the ID is formatted as a number for 'View Element JSON'.
+ *
+ * - The field has the 'multiselect' type and its name contains 'group_ids'.
+ *   For this case, the IDs are formatted as an array of stringified IDs for
+ *   'View Element JSON'.
  */
 function SiteSelectorInput({
 	disabled,

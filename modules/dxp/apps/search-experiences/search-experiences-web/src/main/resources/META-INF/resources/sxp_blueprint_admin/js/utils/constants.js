@@ -17,24 +17,6 @@ export const CONFIG_PREFIX = 'configuration';
 
 export const COPY_BUTTON_CSS_CLASS = 'sxp-copy-button';
 
-export const DEFAULT_DELTAS = [
-	{
-		label: 5,
-	},
-	{
-		label: 10,
-	},
-	{
-		label: 20,
-	},
-	{
-		label: 40,
-	},
-	{
-		label: 50,
-	},
-];
-
 export const DEFAULT_INDEX_CONFIGURATION = {
 	external: false,
 	indexName: '',

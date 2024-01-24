@@ -8,18 +8,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-if (Validator.isNull(redirect)) {
-	redirect = PortletURLBuilder.createRenderURL(
-		renderResponse
-	).setMVCRenderCommandName(
-		"/sxp_blueprint_admin/view_sxp_blueprints"
-	).buildString();
-}
+EditSXPBlueprintDisplayContext editSXPBlueprintDisplayContext = (EditSXPBlueprintDisplayContext)request.getAttribute(EditSXPBlueprintDisplayContext.class.getName());
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(editSXPBlueprintDisplayContext.getRedirect());
 portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(LanguageUtil.get(request, "edit-blueprint"));
@@ -30,35 +22,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-blueprint"));
 
 	<react:component
 		module="sxp_blueprint_admin/js/edit_sxp_blueprint/index"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"contextPath", application.getContextPath()
-			).put(
-				"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
-			).put(
-				"featureFlagLps153813", FeatureFlagManagerUtil.isEnabled("LPS-153813")
-			).put(
-				"fetchSitesURL",
-				ResourceURLBuilder.createResourceURL(
-					renderResponse
-				).setCMD(
-					"getSitesJSONObject"
-				).setResourceID(
-					"/sxp_blueprint_admin/get_sites"
-				).buildString()
-			).put(
-				"isCompanyAdmin", permissionChecker.isCompanyAdmin()
-			).put(
-				"learnMessages", LearnMessageUtil.getJSONObject("search-experiences-web")
-			).put(
-				"locale", themeDisplay.getLanguageId()
-			).put(
-				"namespace", liferayPortletResponse.getNamespace()
-			).put(
-				"redirectURL", redirect
-			).put(
-				"sxpBlueprintId", ParamUtil.getLong(renderRequest, "sxpBlueprintId")
-			).build()
-		%>'
+		props="<%= editSXPBlueprintDisplayContext.getProps() %>"
 	/>
 </div>

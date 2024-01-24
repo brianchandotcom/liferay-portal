@@ -7,6 +7,7 @@ package com.liferay.search.experiences.web.internal.blueprint.admin.portlet.acti
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
+import com.liferay.search.experiences.web.internal.display.context.EditSXPBlueprintDisplayContext;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -29,6 +30,10 @@ public class EditSXPBlueprintMVCRenderCommand implements MVCRenderCommand {
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		renderRequest.setAttribute(
+			EditSXPBlueprintDisplayContext.class.getName(),
+			new EditSXPBlueprintDisplayContext(renderRequest, renderResponse));
 
 		return "/sxp_blueprint_admin/edit_sxp_blueprint.jsp";
 	}

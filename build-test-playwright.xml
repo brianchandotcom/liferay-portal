@@ -253,12 +253,12 @@
 		</beanshell>
 	</target>
 
-	<target name="setup-playwright-environment">
-		<run-playwright-bash-script bash.script.name="setup.sh" />
+	<target name="set-up-playwright-environment">
+		<run-playwright-bash-script bash.script.name="set_up.sh" />
 	</target>
 
-	<target name="teardown-playwright-environment">
-		<run-playwright-bash-script bash.script.name="teardown.sh" />
+	<target name="tear-down-playwright-environment">
+		<run-playwright-bash-script bash.script.name="tear_down.sh" />
 	</target>
 
 	<target name="update-portal-ext-properties">

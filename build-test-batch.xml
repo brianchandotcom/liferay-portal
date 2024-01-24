@@ -7238,7 +7238,7 @@ ${output.content}</echo>
 
 						<trycatch>
 							<try>
-								<ant antfile="build-test-playwright.xml" target="setup-playwright-environment">
+								<ant antfile="build-test-playwright.xml" target="set-up-playwright-environment">
 									<property name="playwright.project.name" value="${playwright.project.name}" />
 								</ant>
 
@@ -7291,7 +7291,7 @@ ${output.content}</echo>
 							<finally>
 								<stop-docker-playwright />
 
-								<ant antfile="build-test-playwright.xml" target="teardown-playwright-environment">
+								<ant antfile="build-test-playwright.xml" target="tear-down-playwright-environment">
 									<property name="playwright.project.name" value="${playwright.project.name}" />
 								</ant>
 

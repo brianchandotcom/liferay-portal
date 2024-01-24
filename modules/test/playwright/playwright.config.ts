@@ -9,6 +9,7 @@ import {config as batchPlannerConfig} from './tests/batch-planner/config';
 import {config as clientExtensionWebConfig} from './tests/client-extension-web/config';
 import {config as commerceConfig} from './tests/commerce/config';
 import {config as exportImportWebConfig} from './tests/export-import-web/config';
+import {config as knowledgeBaseWebConfig} from './tests/knowledge-base-web/config';
 import {config as layoutContentPageEditorWebConfig} from './tests/layout-content-page-editor-web/config';
 import {config as objectWebConfig} from './tests/object-web/config';
 import {config as portalWebConfig} from './tests/portal-web/config';
@@ -24,6 +25,7 @@ export default defineConfig({
 		clientExtensionWebConfig,
 		commerceConfig,
 		exportImportWebConfig,
+		knowledgeBaseWebConfig,
 		layoutContentPageEditorWebConfig,
 		objectWebConfig,
 		portalWebConfig,

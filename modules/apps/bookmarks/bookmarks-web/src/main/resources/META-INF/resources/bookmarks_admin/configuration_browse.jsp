@@ -82,37 +82,30 @@ portletDisplay.setURLBackTitle("bookmarks");
 					<c:choose>
 						<c:when test='<%= Objects.equals(bookmarksConfigurationDisplayContext.getNavigation(), "display-settings") %>'>
 							<div class="c-px-4">
-								<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= rootFolderId %>" />
 								<aui:input name="preferences--folderColumns--" type="hidden" />
 								<aui:input name="preferences--entryColumns--" type="hidden" />
 
-								<div class="form-group">
-									<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
-
-									<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-										<portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" />
-									</liferay-portlet:renderURL>
-
-									<div class="c-gap-1 d-flex">
-										<clay:button
-											additionalProps='<%=
-												HashMapBuilder.<String, Object>put(
-													"selectFolderURL", selectFolderURL
-												).build()
-											%>'
-											displayType="secondary"
-											id='<%= liferayPortletResponse.getNamespace() + "selectFolderButton" %>'
-											label="select"
-											propsTransformer="{SelectRootFolderButtonPropsTransformer} from bookmarks-web"
-										/>
-
-										<%
-										String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + liferayPortletResponse.getNamespace() + "');";
-										%>
-
-										<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-									</div>
-								</div>
+								<liferay-frontend:resource-selector
+									inputLabel='<%= LanguageUtil.get(request, "root-folder") %>'
+									inputName="preferences--rootFolderId--"
+									modalTitle='<%= LanguageUtil.get(request, "select-folder") %>'
+									resourceName="<%= rootFolderName %>"
+									resourceValue="<%= rootFolderId %>"
+									selectEventName="selectFolder"
+									selectResourceURL='<%=
+										PortletURLBuilder.create(
+											PortalUtil.getControlPanelPortletURL(request, themeDisplay.getScopeGroup(), BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+										).setMVCRenderCommandName(
+											"/bookmarks/select_folder"
+										).setPortletResource(
+											portletResource
+										).setWindowState(
+											LiferayWindowState.POP_UP
+										).buildString()
+									%>'
+									showRemoveButton="<%= true %>"
+									warningMessage='<%= rootFolderInTrash ? LanguageUtil.get(request, "the-selected-root-folder-is-in-the-recycle-bin-please-remove-it-or-select-another-one") : null %>'
+								/>
 
 								<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.showFoldersSearch() %>" />
 

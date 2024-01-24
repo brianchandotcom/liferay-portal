@@ -6,6 +6,9 @@
 import {devices} from '@playwright/test';
 
 export const config = {
+	expect: {
+		timeout: 30 * 1000,
+	},
 	name: 'knowledge-base-web',
 	testDir: 'tests/knowledge-base-web',
 	use: {

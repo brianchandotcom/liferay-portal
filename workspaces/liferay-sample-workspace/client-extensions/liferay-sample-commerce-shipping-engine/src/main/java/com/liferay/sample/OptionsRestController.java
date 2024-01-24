@@ -34,51 +34,47 @@ public class OptionsRestController extends BaseRestController {
 
 		log(jwt, _log, json);
 
-		JSONObject shippingOptionsJSONObject = new JSONObject();
-
-		JSONArray shippingOptionJSONArray = new JSONArray();
-
-		shippingOptionJSONArray.put(
-			new JSONObject(
-			).put(
-				"amount", 13.90
-			).put(
-				"key", "CXOption1"
-			).put(
-				"name", "CXOption1"
-			).put(
-				"priority", 1
-			));
-		shippingOptionJSONArray.put(
-			new JSONObject(
-			).put(
-				"amount", 15.99
-			).put(
-				"key", "CXOption2"
-			).put(
-				"name", "CXOption2"
-			).put(
-				"priority", 2
-			));
-		shippingOptionJSONArray.put(
-			new JSONObject(
-			).put(
-				"amount", 17.50
-			).put(
-				"key", "CXOption3"
-			).put(
-				"name", "CXOption3"
-			).put(
-				"priority", 3
-			));
-
-		shippingOptionsJSONObject.put(
-			"shippingOptions", shippingOptionJSONArray);
-
-		log(jwt, _log, shippingOptionsJSONObject.toString());
-
 		return new ResponseEntity<>(
-			shippingOptionsJSONObject.toString(), HttpStatus.OK);
+			new JSONObject(
+			).put(
+				"shippingOptions",
+				new JSONArray(
+				).put(
+					new JSONObject(
+					).put(
+						"amount", 13.90
+					).put(
+						"key", "CXOption1"
+					).put(
+						"name", "CXOption1"
+					).put(
+						"priority", 1
+					)
+				).put(
+					new JSONObject(
+					).put(
+						"amount", 15.99
+					).put(
+						"key", "CXOption2"
+					).put(
+						"name", "CXOption2"
+					).put(
+						"priority", 2
+					)
+				).put(
+					new JSONObject(
+					).put(
+						"amount", 17.50
+					).put(
+						"key", "CXOption3"
+					).put(
+						"name", "CXOption3"
+					).put(
+						"priority", 3
+					)
+				)
+			).toString(),
+			HttpStatus.OK);
 	}
 
 	private static final Log _log = LogFactory.getLog(

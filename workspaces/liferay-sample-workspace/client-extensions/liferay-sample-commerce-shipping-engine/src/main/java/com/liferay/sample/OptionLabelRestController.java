@@ -5,11 +5,6 @@
 
 package com.liferay.sample;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -38,21 +33,18 @@ public class OptionLabelRestController extends BaseRestController {
 
 		log(jwt, _log, json);
 
-		ObjectMapper objectMapper = new ObjectMapper();
+		JSONObject jsonObject = new JSONObject(json);
 
-		Map<String, String> requestBodyMap = objectMapper.readValue(
-			json, HashMap.class);
-
-		if (requestBodyMap.containsKey("name")) {
-			return new ResponseEntity<>(
-				new JSONObject(
-				).put(
-					"name", "Shipping Option Name"
-				).toString(),
-				HttpStatus.OK);
+		if (!jsonObject.has("name")) {
+			return null;
 		}
 
-		return null;
+		return new ResponseEntity<>(
+			new JSONObject(
+			).put(
+				"name", "Shipping Option Name"
+			).toString(),
+			HttpStatus.OK);
 	}
 
 	private static final Log _log = LogFactory.getLog(

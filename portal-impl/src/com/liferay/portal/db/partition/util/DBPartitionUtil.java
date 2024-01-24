@@ -186,7 +186,7 @@ public class DBPartitionUtil {
 			return;
 		}
 
-		if (_DATABASE_PARTITION_THREAD_POOL_ENABLED) {
+		if (_databasePartitionThreadPoolEnabled) {
 			_forEachCompanyIdConcurrently(unsafeConsumer);
 
 			return;
@@ -972,14 +972,13 @@ public class DBPartitionUtil {
 			PropsUtil.get("database.partition.schema.name.prefix"),
 			"lpartition_");
 
-	private static final boolean _DATABASE_PARTITION_THREAD_POOL_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get("database.partition.thread.pool.enabled"), true);
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DBPartitionUtil.class);
 
 	private static final List<Long> _companyIds = new CopyOnWriteArrayList<>();
+	private static volatile boolean _databasePartitionThreadPoolEnabled =
+		GetterUtil.getBoolean(
+			PropsUtil.get("database.partition.thread.pool.enabled"), true);
 	private static DBPartitionDB _dbPartitionDB;
 	private static volatile long _defaultCompanyId;
 	private static String _defaultPartitionName;

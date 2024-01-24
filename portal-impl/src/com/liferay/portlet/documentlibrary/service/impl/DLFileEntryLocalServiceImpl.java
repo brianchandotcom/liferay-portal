@@ -606,7 +606,8 @@ public class DLFileEntryLocalServiceImpl
 			sourceDLFileEntry.getMimeType(), sourceTitle, sourceTitle,
 			sourceDLFileEntry.getDescription(), null,
 			sourceDLFileEntry.getFileEntryTypeId(), null, null,
-			sourceInputStream, sourceDLFileEntry.getSize(), null,
+			sourceInputStream, sourceDLFileEntry.getSize(),
+			sourceDLFileEntry.getDisplayDate(),
 			sourceDLFileEntry.getExpirationDate(),
 			sourceDLFileEntry.getReviewDate(), serviceContext);
 

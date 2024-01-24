@@ -166,7 +166,8 @@ public class LiferayDynamicCapabilityTest {
 								long folderId, String sourceFileName,
 								String mimeType, String title, String urlTitle,
 								String description, String changeLog, File file,
-								Date expirationDate, Date reviewDate,
+								Date displayDate, Date expirationDate,
+								Date reviewDate,
 								ServiceContext serviceContext) {
 
 								return fileEntry1;
@@ -346,7 +347,8 @@ public class LiferayDynamicCapabilityTest {
 								long folderId, String sourceFileName,
 								String mimeType, String title, String urlTitle,
 								String description, String changeLog, File file,
-								Date expirationDate, Date reviewDate,
+								Date displayDate, Date expirationDate,
+								Date reviewDate,
 								ServiceContext serviceContext) {
 
 								return fileEntry1;
@@ -404,7 +406,8 @@ public class LiferayDynamicCapabilityTest {
 								long folderId, String sourceFileName,
 								String mimeType, String title, String urlTitle,
 								String description, String changeLog, File file,
-								Date expirationDate, Date reviewDate,
+								Date displayDate, Date expirationDate,
+								Date reviewDate,
 								ServiceContext serviceContext) {
 
 								return fileEntry1;

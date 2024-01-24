@@ -53,7 +53,7 @@ function SiteSelectorInput({
 			_handleSingleItemChange(newFieldValue);
 		}
 		else {
-			_handleMultiItemsChange(newFieldValue);
+			_handleMultiItemsChange([...value, newFieldValue]);
 		}
 	};
 
@@ -143,7 +143,7 @@ function SiteSelectorInput({
 									return;
 								}
 
-								_handleFieldValueChange([selectedItem]);
+								_handleFieldValueChange(selectedItem);
 							},
 							selectEventName: `${namespace}selectSite`,
 							title: Liferay.Language.get('select-site'),

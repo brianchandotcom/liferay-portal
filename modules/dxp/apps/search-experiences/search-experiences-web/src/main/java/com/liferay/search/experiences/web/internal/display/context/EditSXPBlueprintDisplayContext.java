@@ -5,8 +5,12 @@
 
 package com.liferay.search.experiences.web.internal.display.context;
 
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.learn.LearnMessageUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -16,6 +20,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.util.Map;
 
@@ -28,8 +33,10 @@ import javax.portlet.RenderResponse;
 public class EditSXPBlueprintDisplayContext {
 
 	public EditSXPBlueprintDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		ItemSelector itemSelector, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
+		_itemSelector = itemSelector;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -70,6 +77,23 @@ public class EditSXPBlueprintDisplayContext {
 		).put(
 			"redirectURL", getRedirect()
 		).put(
+			"selectSitesURL",
+			() -> {
+				ItemSelectorCriterion itemSelectorCriterion =
+					new SiteItemSelectorCriterion();
+
+				itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+					new GroupItemSelectorReturnType());
+
+				return PortletURLBuilder.create(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							_renderRequest),
+						_renderResponse.getNamespace() + "selectSite",
+						itemSelectorCriterion)
+				).buildString();
+			}
+		).put(
 			"sxpBlueprintId",
 			ParamUtil.getLong(_renderRequest, "sxpBlueprintId")
 		).build();
@@ -95,6 +119,7 @@ public class EditSXPBlueprintDisplayContext {
 		return _redirect;
 	}
 
+	private final ItemSelector _itemSelector;
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

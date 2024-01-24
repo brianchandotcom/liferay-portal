@@ -5,6 +5,7 @@
 
 package com.liferay.headless.builder.application;
 
+import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.portal.kernel.util.Http;
 
 import java.util.List;
@@ -119,9 +120,43 @@ public interface APIApplication {
 
 		public List<String> getObjectRelationshipNames();
 
+		public PropertyType getPropertyType();
+
 		public String getSourceFieldName();
 
 		public Type getType();
+
+		public enum PropertyType {
+
+			ARRAY_CONTAINER(
+				HeadlessBuilderConstants.PROPERTY_TYPE_ARRAY_CONTAINER),
+			NORMAL(HeadlessBuilderConstants.PROPERTY_TYPE_NORMAL),
+			SINGLE_CONTAINER(
+				HeadlessBuilderConstants.PROPERTY_TYPE_SINGLE_CONTAINER);
+
+			public static PropertyType parse(String value) {
+				for (PropertyType propertyType :
+						Property.PropertyType.values()) {
+
+					if (Objects.equals(propertyType.getValue(), value)) {
+						return propertyType;
+					}
+				}
+
+				throw new IllegalArgumentException("Invalid value " + value);
+			}
+
+			public String getValue() {
+				return _value;
+			}
+
+			private PropertyType(String value) {
+				_value = value;
+			}
+
+			private final String _value;
+
+		}
 
 		public enum Type {
 

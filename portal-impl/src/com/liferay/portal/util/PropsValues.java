@@ -2450,8 +2450,8 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE));
 
-	public static final boolean USERS_SEARCH_WITH_INDEX = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.USERS_SEARCH_WITH_INDEX));
+	public static volatile boolean USERS_SEARCH_WITH_INDEX =
+		GetterUtil.getBoolean(PropsUtil.get(PropsKeys.USERS_SEARCH_WITH_INDEX));
 
 	public static final boolean USERS_UPDATE_LAST_LOGIN = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.USERS_UPDATE_LAST_LOGIN));

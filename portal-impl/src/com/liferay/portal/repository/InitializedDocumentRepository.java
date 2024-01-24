@@ -48,11 +48,11 @@ public abstract class InitializedDocumentRepository
 
 	@Override
 	public FileEntry addFileEntry(
-			String externalReferenceCode, long userId, long folderId,
-			String sourceFileName, String mimeType, String title,
-			String urlTitle, String description, String changeLog,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
+		String externalReferenceCode, long userId, long folderId,
+		String sourceFileName, String mimeType, String title,
+		String urlTitle, String description, String changeLog,
+		InputStream inputStream, long size, Date displayDate, Date expirationDate,
+		Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		checkDocumentRepository();
@@ -60,7 +60,7 @@ public abstract class InitializedDocumentRepository
 		return documentRepository.addFileEntry(
 			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
 			title, urlTitle, description, changeLog, inputStream, size,
-			expirationDate, reviewDate, serviceContext);
+			displayDate, expirationDate, reviewDate, serviceContext);
 	}
 
 	@Override

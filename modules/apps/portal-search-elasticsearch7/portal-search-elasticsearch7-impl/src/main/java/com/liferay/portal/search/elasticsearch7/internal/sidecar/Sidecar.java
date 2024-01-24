@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -369,6 +370,10 @@ public class Sidecar {
 		arguments.add("-Dio.netty.recycler.maxCapacityPerThread=0");
 		arguments.add("-Dfile.encoding=UTF-8");
 		arguments.add("-Djava.io.tmpdir=" + _sidecarTempDirPath);
+
+		if (JavaDetector.isJDK21()) {
+			arguments.add("-Djava.security.manager=allow");
+		}
 
 		arguments.add(
 			"-Djava.security.policy=" +

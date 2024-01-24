@@ -195,8 +195,10 @@ create index IX_B7546EDE on LayoutBranch (plid, layoutSetBranchId, master);
 create unique index IX_6C2CC347 on LayoutBranch (plid, layoutSetBranchId, name[$COLUMN_LENGTH:75$]);
 
 create index IX_EAB317C8 on LayoutFriendlyURL (companyId);
-create unique index IX_FA3194C on LayoutFriendlyURL (friendlyURL[$COLUMN_LENGTH:255$], languageId[$COLUMN_LENGTH:75$], ctCollectionId, groupId, privateLayout);
-create index IX_59051329 on LayoutFriendlyURL (plid, friendlyURL[$COLUMN_LENGTH:255$]);
+create index IX_C23A9814 on LayoutFriendlyURL (friendlyURL[$COLUMN_LENGTH:255$], companyId);
+create unique index IX_7B314B62 on LayoutFriendlyURL (friendlyURL[$COLUMN_LENGTH:255$], groupId, languageId[$COLUMN_LENGTH:75$], ctCollectionId, privateLayout);
+create index IX_D3B2D6DF on LayoutFriendlyURL (friendlyURL[$COLUMN_LENGTH:255$], plid);
+create index IX_742EF04A on LayoutFriendlyURL (groupId);
 create unique index IX_2069E0D0 on LayoutFriendlyURL (plid, languageId[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_9F80D54 on LayoutFriendlyURL (uuid_[$COLUMN_LENGTH:75$]);
 

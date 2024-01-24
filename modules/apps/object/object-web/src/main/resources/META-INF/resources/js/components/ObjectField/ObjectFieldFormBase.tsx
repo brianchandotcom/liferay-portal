@@ -578,33 +578,21 @@ export default function ObjectFieldFormBase({
 							size="sm"
 						/>
 					) : (
-						<SingleSelect
-							className="lfr-objects__object-field-form-base-picklist-select-field"
-							disabled={disabled}
-							error={errors.listTypeDefinitionId}
-							id="objectFieldFormBase"
-							items={listTypeDefinitionsItems}
-							label={Liferay.Language.get('picklist')}
-							onSelectionChange={(value) => {
-								const selectedListTypeDefinition = listTypeDefinitions.find(
-									({externalReferenceCode}) =>
-										externalReferenceCode === value
-								);
-								if (selectedListTypeDefinition) {
-									setValues({
-										listTypeDefinitionExternalReferenceCode:
-											selectedListTypeDefinition.externalReferenceCode,
-										listTypeDefinitionId:
-											selectedListTypeDefinition.id,
-										objectFieldSettings: removeFieldSettings(
-											['defaultValue', 'stateFlow'],
-											values
-										),
-									});
-
-									if (onSubmit) {
-										onSubmit({
-											...values,
+						<div className="lfr-objects__object-field-form-base-picklist-container">
+							<SingleSelect
+								className="lfr-objects__object-field-form-base-picklist-select-field"
+								disabled={disabled}
+								error={errors.listTypeDefinitionId}
+								id="objectFieldFormBase"
+								items={listTypeDefinitionsItems}
+								label={Liferay.Language.get('picklist')}
+								onSelectionChange={(value) => {
+									const selectedListTypeDefinition = listTypeDefinitions.find(
+										({externalReferenceCode}) =>
+											externalReferenceCode === value
+									);
+									if (selectedListTypeDefinition) {
+										setValues({
 											listTypeDefinitionExternalReferenceCode:
 												selectedListTypeDefinition.externalReferenceCode,
 											listTypeDefinitionId:
@@ -614,26 +602,47 @@ export default function ObjectFieldFormBase({
 												values
 											),
 										});
-									}
-								}
-							}}
-							selectedKey={
-								selectedListTypeDefinitionExternalReferenceCode
-							}
-						/>
-					)}
 
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('refresh-list')}
-						className="lfr-objects__object-field-form-base-picklist-reload-button"
-						data-tooltip-align="top"
-						displayType="secondary"
-						onClick={() =>
-							updateListTypeDefinitions(setListTypeDefinitions)
-						}
-						symbol="reload"
-						title={Liferay.Language.get('refresh-list')}
-					/>
+										if (onSubmit) {
+											onSubmit({
+												...values,
+												listTypeDefinitionExternalReferenceCode:
+													selectedListTypeDefinition.externalReferenceCode,
+												listTypeDefinitionId:
+													selectedListTypeDefinition.id,
+												objectFieldSettings: removeFieldSettings(
+													[
+														'defaultValue',
+														'stateFlow',
+													],
+													values
+												),
+											});
+										}
+									}
+								}}
+								selectedKey={
+									selectedListTypeDefinitionExternalReferenceCode
+								}
+							/>
+
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'refresh-list'
+								)}
+								className="lfr-objects__object-field-form-base-picklist-reload-button"
+								data-tooltip-align="top"
+								displayType="secondary"
+								onClick={() =>
+									updateListTypeDefinitions(
+										setListTypeDefinitions
+									)
+								}
+								symbol="reload"
+								title={Liferay.Language.get('refresh-list')}
+							/>
+						</div>
+					)}
 
 					<ClayButton
 						aria-labelledby={Liferay.Language.get(

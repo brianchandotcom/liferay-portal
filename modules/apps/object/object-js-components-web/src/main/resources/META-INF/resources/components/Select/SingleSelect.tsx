@@ -55,6 +55,7 @@ export function SingleSelect<T extends SingleSelectOption>({
 }: SingleSelectProps<T>) {
 	return (
 		<FieldBase
+			className={className}
 			disabled={disabled}
 			errorMessage={error}
 			helpMessage={feedbackMessage}

@@ -1,4 +1,9 @@
 Bundle-Name: Liferay Portal Search Tuning Rankings API
 Bundle-SymbolicName: com.liferay.portal.search.tuning.rankings.api
-Bundle-Version: 1.0.5
-Export-Package: com.liferay.portal.search.tuning.rankings.storage
+Bundle-Version: 1.1.0
+Export-Package:\
+	com.liferay.portal.search.tuning.rankings.constants,\
+	com.liferay.portal.search.tuning.rankings.helper,\
+	com.liferay.portal.search.tuning.rankings.index,\
+	com.liferay.portal.search.tuning.rankings.index.name,\
+	com.liferay.portal.search.tuning.rankings.storage

@@ -44,7 +44,10 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	public void addProjectsToSet(String projectNames) {
-		List<String> projectNamesList = Arrays.asList(projectNames.split(","));
+		projectNames = projectNames.trim();
+
+		List<String> projectNamesList = Arrays.asList(
+			projectNames.split("\\s*,\\s*"));
 
 		for (String projectName : projectNamesList) {
 			_projectNamesSet.add(projectName);

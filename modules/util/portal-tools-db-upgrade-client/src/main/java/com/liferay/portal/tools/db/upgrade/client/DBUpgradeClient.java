@@ -520,7 +520,9 @@ public class DBUpgradeClient {
 				}
 
 				_appServer = AppServer.getAppServer(
-					_portalUpgradeExtProperties.getProperty("liferay.home"),
+					new File(
+						_portalUpgradeExtProperties.getProperty(
+							"liferay.home")),
 					response);
 
 				if (_appServer == null) {

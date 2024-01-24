@@ -18,7 +18,7 @@ import java.util.Objects;
 public class AppServer {
 
 	public static AppServer getAppServer(
-		String liferayHomeDir, String appServerName) {
+		File liferayHomeDir, String appServerName) {
 
 		if (appServerName.equals("jboss")) {
 			return new AppServer(
@@ -139,29 +139,30 @@ public class AppServer {
 	}
 
 	private static String _getAppServerDirName(
-		String basePath, String dirName) {
+		File liferayHomeDir, String dirName) {
 
-		File baseDir = new File(basePath);
+		if (!liferayHomeDir.isDirectory()) {
+			return dirName;
+		}
 
-		if (baseDir.isDirectory()) {
-			File[] files = baseDir.listFiles();
+		File[] files = liferayHomeDir.listFiles();
 
-			if (files != null) {
-				for (File file : files) {
-					if (file.isDirectory() &&
-						(Objects.equals(file.getName(), dirName) ||
-						 file.getName(
-						 ).startsWith(
-							 dirName + "-"
-						 ))) {
+		if (files == null) {
+			return dirName;
+		}
 
-						try {
-							return file.getCanonicalPath();
-						}
-						catch (IOException ioException) {
-							ioException.printStackTrace();
-						}
-					}
+		for (File file : files) {
+			String fileName = file.getName();
+
+			if (file.isDirectory() &&
+				(Objects.equals(file.getName(), dirName) ||
+				 fileName.startsWith(dirName + "-"))) {
+
+				try {
+					return file.getCanonicalPath();
+				}
+				catch (IOException ioException) {
+					ioException.printStackTrace();
 				}
 			}
 		}

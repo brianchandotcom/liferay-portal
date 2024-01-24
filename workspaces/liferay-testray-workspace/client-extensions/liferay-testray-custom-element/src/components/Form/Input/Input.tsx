@@ -19,7 +19,7 @@ type InputProps = {
 	type?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const Input: React.FC<InputProps> = forwardRef(
+const Input = forwardRef<HTMLInputElement, InputProps>(
 	(
 		{
 			disabled = false,

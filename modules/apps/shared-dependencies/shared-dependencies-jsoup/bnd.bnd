@@ -1,0 +1,15 @@
+Bundle-Name: Liferay Shared Dependencies Jsoup
+Bundle-SymbolicName: com.liferay.shared.dependencies.jsoup
+Bundle-Version: 1.0.0
+Import-Package:\
+	!javax.annotation.meta,\
+	\
+	*
+-exportcontents:\
+	org.jsoup,\
+	org.jsoup.helper,\
+	org.jsoup.internal,\
+	org.jsoup.nodes,\
+	org.jsoup.parser,\
+	org.jsoup.safety,\
+	org.jsoup.select

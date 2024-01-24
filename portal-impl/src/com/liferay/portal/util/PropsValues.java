@@ -2367,19 +2367,19 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.UPGRADE_DATABASE_TRANSACTIONS_DISABLED));
 
-	public static final boolean UPGRADE_LOG_CONTEXT_ENABLED =
+	public static volatile boolean UPGRADE_LOG_CONTEXT_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.UPGRADE_LOG_CONTEXT_ENABLED));
 
-	public static final String UPGRADE_REPORT_DIR = GetterUtil.getString(
+	public static volatile String UPGRADE_REPORT_DIR = GetterUtil.getString(
 		PropsUtil.get(PropsKeys.UPGRADE_REPORT_DIR));
 
-	public static final long UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT =
+	public static volatile long UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT =
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT));
 
-	public static final boolean UPGRADE_REPORT_ENABLED = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.UPGRADE_REPORT_ENABLED));
+	public static volatile boolean UPGRADE_REPORT_ENABLED =
+		GetterUtil.getBoolean(PropsUtil.get(PropsKeys.UPGRADE_REPORT_ENABLED));
 
 	public static boolean USER_GROUPS_NAME_ALLOW_NUMERIC =
 		GetterUtil.getBoolean(

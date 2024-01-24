@@ -13,7 +13,7 @@ configurations {
 }
 
 dependencies {
-	compileOnly group: "com.liferay", name: "org.hibernate.core", version: "5.6.7.LIFERAY-PATCHED-1"
+	compileOnly group: "com.liferay", name: "org.hibernate.core", version: "5.6.7.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay", name: "org.springframework.orm", version: "5.2.24.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay", name: "org.springframework.tx", version: "5.2.24.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

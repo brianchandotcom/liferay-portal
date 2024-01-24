@@ -616,7 +616,7 @@ public class DBTest {
 
 		for (IndexMetadata indexMetadata : indexMetadatas) {
 			Assert.assertEquals(
-				dbInspector.normalizeName("IX_TEMP"),
+				dbInspector.normalizeName(INDEX_NAME),
 				indexMetadata.getIndexName());
 		}
 	}

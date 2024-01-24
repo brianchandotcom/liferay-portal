@@ -144,7 +144,7 @@ definition {
 				text = "albert");
 
 			Click(
-				key_itemName = "albert-base-v1",
+				key_itemName = "albert/albert-base-v1",
 				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 		}
 
@@ -217,7 +217,7 @@ definition {
 				text = "albert");
 
 			Click(
-				key_itemName = "albert-base-v1",
+				key_itemName = "albert/albert-base-v1",
 				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 
 			AssertElementNotPresent(
@@ -603,7 +603,7 @@ definition {
 				text = "albert");
 
 			Click(
-				key_itemName = "albert-base-v1",
+				key_itemName = "albert/albert-base-v1",
 				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 
 			SemanticSearch.saveAndContinue();
@@ -622,7 +622,7 @@ definition {
 
 			SystemSettings.viewInputText(
 				fieldLabel = "Model",
-				fieldValue = "albert-base-v1");
+				fieldValue = "albert/albert-base-v1");
 		}
 
 		task ("Refresh the page and assert form fields retain the values added earlier") {
@@ -634,7 +634,7 @@ definition {
 
 			SystemSettings.viewInputText(
 				fieldLabel = "Model",
-				fieldValue = "albert-base-v1");
+				fieldValue = "albert/albert-base-v1");
 		}
 
 		task ("Back in System Settings, fill out required fields for Hugging Face Inference API and save") {
@@ -672,7 +672,7 @@ definition {
 
 			SystemSettings.viewInputText(
 				fieldLabel = "Model",
-				fieldValue = "albert-base-v1");
+				fieldValue = "albert/albert-base-v1");
 		}
 
 		task ("Assert Instance Settings field values use the System Settings values when resetting to default") {

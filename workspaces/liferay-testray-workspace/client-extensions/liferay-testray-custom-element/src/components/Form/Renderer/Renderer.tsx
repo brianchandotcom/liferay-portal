@@ -224,13 +224,13 @@ const Renderer: React.FC<RendererProps> = ({
 					return (
 						<Form.Select
 							disabled={disabled}
+							isLoading={isLoading}
 							key={index}
 							label={label}
 							name={name}
 							onChange={onChange}
 							options={getOptions()}
 							value={currentValue[0]?.value || currentValue}
-							isLoading={isLoading}
 						/>
 					);
 				}
@@ -299,12 +299,12 @@ const Renderer: React.FC<RendererProps> = ({
 						<div className="mb-2" key={index}>
 							<Form.MultiSelect
 								disabled={disabled}
+								isLoading={isLoading}
 								label={label}
 								name={name}
 								onChange={onChange}
 								options={getOptions()}
 								value={currentValue}
-								isLoading={isLoading}	
 							/>
 						</div>
 					);

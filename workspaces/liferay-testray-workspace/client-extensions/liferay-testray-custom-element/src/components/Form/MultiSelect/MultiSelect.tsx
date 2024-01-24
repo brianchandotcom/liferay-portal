@@ -10,8 +10,8 @@ import ReactSelect, {PropsValue} from 'react-select';
 type Option = {label: string; value: string};
 
 type MultiSelectProps = {
-	label?: string;
 	isLoading: boolean;
+	label?: string;
 	options: Option[];
 } & InputHTMLAttributes<HTMLSelectElement>;
 
@@ -41,6 +41,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 				classNamePrefix="testray-multi-select"
 				closeMenuOnSelect={false}
 				isDisabled={disabled}
+				isLoading={isLoading}
 				isMulti
 				menuIsOpen={visible}
 				name={name}
@@ -64,7 +65,6 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 				options={options}
 				ref={multiselectRef}
 				value={value as PropsValue<unknown>}
-				isLoading={isLoading}
 			/>
 		</Form.BaseWrapper>
 	);

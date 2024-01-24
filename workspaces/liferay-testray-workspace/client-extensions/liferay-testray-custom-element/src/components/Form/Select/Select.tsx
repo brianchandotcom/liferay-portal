@@ -57,13 +57,12 @@ const InputSelect: React.FC<InputSelectProps> = ({
 				name={name}
 				{...otherProps}
 				{...register(name, {required, ...registerOptions})}
-			>	
-				defaultOption && <option value=""></option>
+			>
+				{defaultOption && <option value=""></option>}
 
-				{isLoading ? 
-					<option value="">
-						Loading...
-					</option> :
+				{isLoading ? (
+					<option value="">Loading...</option>
+				) : (
 					options.map(({label, value}, index) => (
 						<option
 							key={index}
@@ -78,8 +77,7 @@ const InputSelect: React.FC<InputSelectProps> = ({
 							{label}
 						</option>
 					))
-				}
-				
+				)}
 			</select>
 		</BaseWrapper>
 	);

@@ -79,7 +79,7 @@ public class TemporaryFileEntriesCapabilityImpl
 			return _documentRepository.addFileEntry(
 				null, temporaryFileEntriesScope.getUserId(),
 				folder.getFolderId(), fileName, mimeType, fileName, fileName,
-				StringPool.BLANK, StringPool.BLANK, file, null, null,
+				StringPool.BLANK, StringPool.BLANK, file, null, null, null,
 				serviceContext);
 		}
 		catch (IOException ioException) {

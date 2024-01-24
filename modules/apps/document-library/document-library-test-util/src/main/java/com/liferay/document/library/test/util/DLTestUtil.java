@@ -42,6 +42,7 @@ public class DLTestUtil {
 			StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
 			null, new ByteArrayInputStream(bytes), bytes.length, null, null,
+			null,
 			ServiceContextTestUtil.getServiceContext(dlFolder.getGroupId()));
 	}
 

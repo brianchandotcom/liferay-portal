@@ -99,7 +99,7 @@ public class AMImageEntryTableReferenceDefinitionTest
 			StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT,
 			Collections.emptyMap(), null, new UnsyncByteArrayInputStream(bytes),
-			bytes.length, null, null,
+			bytes.length, null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		return new LiferayFileEntry(dlFileEntry);

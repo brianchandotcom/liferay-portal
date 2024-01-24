@@ -162,7 +162,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			return localRepository.addFileEntry(
 				externalReferenceCode, userId, folderId, fileName, mimeType,
 				fileName, fileName, StringPool.BLANK, StringPool.BLANK, file,
-				null, null, serviceContext);
+				null, null, null, serviceContext);
 		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);

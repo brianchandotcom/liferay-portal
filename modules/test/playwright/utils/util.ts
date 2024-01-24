@@ -11,6 +11,22 @@ export function getRandomInt(): number {
 	return Math.floor(Math.random() * 9999999999);
 }
 
+const KEY1 = '0123456789';
+const KEY2 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const KEY3 = 'abcdefghijklmnopqrstuvwxyz';
+
+export function getRandomString(length: number = 8): string {
+	let randomString = '';
+	const chars = KEY1 + KEY2 + KEY3;
+	const charLength = chars.length;
+
+	for (let i = 0; i < length; i++) {
+		randomString += chars.charAt(Math.floor(Math.random() * charLength));
+	}
+
+	return randomString;
+}
+
 export async function zipFolder(folderPath: string) {
 	const tempFilePath = path.join(os.tmpdir(), path.basename(folderPath));
 	await zip(folderPath, tempFilePath);

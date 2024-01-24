@@ -22,6 +22,8 @@ import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
+import com.liferay.portal.search.tuning.rankings.index.RankingPinBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
 
@@ -117,6 +119,9 @@ public class RankingIndexReindexer implements IndexReindexer {
 	protected JSONStorageEntryLocalService jsonStorageEntryLocalService;
 
 	@Reference
+	protected RankingBuilderFactory rankingBuilderFactory;
+
+	@Reference
 	protected RankingIndexCreator rankingIndexCreator;
 
 	@Reference
@@ -126,13 +131,16 @@ public class RankingIndexReindexer implements IndexReindexer {
 	protected RankingIndexWriter rankingIndexWriter;
 
 	@Reference
+	protected RankingPinBuilderFactory rankingPinBuilderFactory;
+
+	@Reference
 	protected SearchCapabilities searchCapabilities;
 
 	private Ranking _buildRanking(long classPK) throws Exception {
 		JSONObject jsonObject = jsonStorageEntryLocalService.getJSONObject(
 			classNameLocalService.getClassNameId(Ranking.class), classPK);
 
-		Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder();
+		Ranking.Builder rankingBuilder = rankingBuilderFactory.builder();
 
 		rankingBuilder.aliases(
 			JSONUtil.toStringList(jsonObject.getJSONArray("aliases"))
@@ -165,9 +173,12 @@ public class RankingIndexReindexer implements IndexReindexer {
 		JSONUtil.toList(
 			jsonArray,
 			jsonObject -> pins.add(
-				new Ranking.Pin(
-					jsonObject.getInt("position"),
-					jsonObject.getString("documentId"))));
+				rankingPinBuilderFactory.builder(
+				).documentId(
+					jsonObject.getString("documentId")
+				).position(
+					jsonObject.getInt("position")
+				).build()));
 
 		return pins;
 	}

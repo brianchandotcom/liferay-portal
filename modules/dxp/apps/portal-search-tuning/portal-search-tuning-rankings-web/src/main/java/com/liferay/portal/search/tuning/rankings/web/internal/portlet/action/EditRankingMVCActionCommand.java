@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
+import com.liferay.portal.search.tuning.rankings.index.RankingPinBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.storage.RankingStorageAdapter;
@@ -114,10 +116,16 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 	protected Portal portal;
 
 	@Reference
+	protected RankingBuilderFactory rankingBuilderFactory;
+
+	@Reference
 	protected RankingIndexNameBuilder rankingIndexNameBuilder;
 
 	@Reference
 	protected RankingIndexReader rankingIndexReader;
+
+	@Reference
+	protected RankingPinBuilderFactory rankingPinBuilderFactory;
 
 	@Reference
 	protected RankingStorageAdapter rankingStorageAdapter;
@@ -159,7 +167,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		ActionRequest actionRequest,
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
-		Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder();
+		Ranking.Builder rankingBuilder = rankingBuilderFactory.builder();
 
 		String resultActionCmd = ParamUtil.getString(
 			actionRequest, "resultActionCmd");
@@ -169,7 +177,13 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		if (!resultActionCmd.isEmpty() && !resultActionUid.isEmpty()) {
 			if (resultActionCmd.equals("pin")) {
 				rankingBuilder.pins(
-					Arrays.asList(new Ranking.Pin(0, resultActionUid)));
+					Arrays.asList(
+						rankingPinBuilderFactory.builder(
+						).documentId(
+							resultActionUid
+						).position(
+							0
+						).build()));
 			}
 			else {
 				rankingBuilder.hiddenDocumentIds(
@@ -471,8 +485,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 		_guardDuplicateQueryStrings(editRankingMVCActionRequest, ranking);
 
-		Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder(
-			ranking);
+		Ranking.Builder rankingBuilder = rankingBuilderFactory.builder(ranking);
 
 		String[] addedHiddenIds = ParamUtil.getStringValues(
 			actionRequest, "addedHiddenIds");
@@ -503,7 +516,13 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "pinnedIds");
 
 		for (int i = 0; i < pinnedIds.length; i++) {
-			pins.add(new Ranking.Pin(i, pinnedIds[i]));
+			pins.add(
+				rankingPinBuilderFactory.builder(
+				).documentId(
+					pinnedIds[i]
+				).position(
+					i
+				).build());
 		}
 
 		if (ListUtil.isNotEmpty(pins)) {
@@ -617,7 +636,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 				continue;
 			}
 
-			Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder(
+			Ranking.Builder rankingBuilder = rankingBuilderFactory.builder(
 				ranking);
 
 			if (editRankingMVCActionRequest.isCmd(

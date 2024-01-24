@@ -12,12 +12,15 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
+import com.liferay.portal.search.tuning.rankings.index.RankingPinBuilderFactory;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author André de Oliveira
@@ -53,8 +56,8 @@ public class DocumentToRankingTranslatorImpl
 		).build();
 	}
 
-	protected Ranking.RankingBuilder builder() {
-		return new Ranking.RankingBuilder();
+	protected Ranking.Builder builder() {
+		return _rankingBuilderFactory.builder();
 	}
 
 	private List<String> _getAliases(Document document) {
@@ -122,8 +125,19 @@ public class DocumentToRankingTranslatorImpl
 	}
 
 	private Ranking.Pin _toPin(Map<String, String> map) {
-		return new Ranking.Pin(
-			GetterUtil.getInteger(map.get("position")), map.get("uid"));
+		Ranking.Pin.Builder builder = _rankingPinBuilderFactory.builder();
+
+		return builder.documentId(
+			map.get("uid")
+		).position(
+			GetterUtil.getInteger(map.get("position"))
+		).build();
 	}
+
+	@Reference
+	private RankingBuilderFactory _rankingBuilderFactory;
+
+	@Reference
+	private RankingPinBuilderFactory _rankingPinBuilderFactory;
 
 }

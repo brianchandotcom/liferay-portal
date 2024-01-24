@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
@@ -43,8 +44,8 @@ public class SXPBlueprintModelListener extends BaseModelListener<SXPBlueprint> {
 			}
 
 			for (Ranking ranking : rankings) {
-				Ranking.RankingBuilder rankingBuilder =
-					new Ranking.RankingBuilder(ranking);
+				Ranking.Builder rankingBuilder = _rankingBuilderFactory.builder(
+					ranking);
 
 				rankingBuilder.status(
 					ResultRankingsConstants.STATUS_NOT_APPLICABLE);
@@ -57,6 +58,9 @@ public class SXPBlueprintModelListener extends BaseModelListener<SXPBlueprint> {
 			throw new RuntimeException(portalException);
 		}
 	}
+
+	@Reference
+	private RankingBuilderFactory _rankingBuilderFactory;
 
 	@Reference
 	private RankingIndexNameBuilder _rankingIndexNameBuilder;

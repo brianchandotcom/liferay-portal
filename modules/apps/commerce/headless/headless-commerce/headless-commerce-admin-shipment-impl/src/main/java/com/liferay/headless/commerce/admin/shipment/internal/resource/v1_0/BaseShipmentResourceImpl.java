@@ -780,6 +780,12 @@ public abstract class BaseShipmentResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				shipmentUnsafeFunction =
+					shipment -> putShipmentByExternalReferenceCode(
+						shipment.getExternalReferenceCode(), shipment);
+			}
+
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				shipmentUnsafeFunction = shipment -> {
 					Shipment persistedShipment = null;
@@ -837,7 +843,7 @@ public abstract class BaseShipmentResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("UPSERT", "INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

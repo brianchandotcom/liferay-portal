@@ -55,7 +55,7 @@ public class DLFolderSearchFixture {
 			keywords, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
 			null, new ByteArrayInputStream(content.getBytes()), 0, null, null,
-			serviceContext);
+			null, serviceContext);
 
 		_dlFolders.add(dlFolder);
 

@@ -55,7 +55,7 @@ public class DLFileShortcutUADTestUtil {
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, inputStream, bytes.length, null, null, serviceContext);
+			null, inputStream, bytes.length, null, null, null, serviceContext);
 
 		return dlFileShortcutLocalService.addFileShortcut(
 			userId, groupId, groupId, dlFolder.getFolderId(),

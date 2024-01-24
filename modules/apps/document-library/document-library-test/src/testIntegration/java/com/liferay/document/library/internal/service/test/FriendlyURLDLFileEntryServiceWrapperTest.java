@@ -62,7 +62,7 @@ public class FriendlyURLDLFileEntryServiceWrapperTest
 			ContentTypes.APPLICATION_OCTET_STREAM, "title", "urltitle",
 			StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, inputStream, bytes.length, null, null,
+			null, inputStream, bytes.length, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -92,7 +92,7 @@ public class FriendlyURLDLFileEntryServiceWrapperTest
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, inputStream, bytes.length, null, null, serviceContext);
+			null, inputStream, bytes.length, null, null, null, serviceContext);
 
 		dlFileEntry = _dlFileEntryService.updateFileEntry(
 			dlFileEntry.getFileEntryId(), StringUtil.randomString(),

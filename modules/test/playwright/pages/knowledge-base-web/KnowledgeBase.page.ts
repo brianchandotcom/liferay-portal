@@ -5,10 +5,19 @@
 
 import {Page} from '@playwright/test';
 
+import {ProductMenuPage} from '../product-navigation-product-menu/ProductMenu.page';
+
 export class KnowledgeBasePage {
 	readonly page: Page;
+	readonly productMenuPage: ProductMenuPage;
 
 	constructor(page: Page) {
 		this.page = page;
+		this.productMenuPage = new ProductMenuPage(page);
 	}
+
+	async goto() {
+		await this.productMenuPage.goToKnowledgeBaseMenuItem();
+	}
+
 }

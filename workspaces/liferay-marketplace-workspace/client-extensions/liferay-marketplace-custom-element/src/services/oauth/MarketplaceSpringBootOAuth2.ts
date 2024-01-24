@@ -5,29 +5,6 @@
 
 import OAuth2Client from './OAuth2Client';
 
-export type SubscriptionsType = {
-	endDate?: string;
-	name: string;
-	perpetual: boolean;
-	productPurchasedKey: string;
-	provisionedCount: number;
-	purchasedCount: number;
-	startDate: string;
-};
-
-type LicenseTypePayload = {
-	licenseEntry: {
-		description: string;
-		hostName: string;
-		ipAddresses: string;
-		macAddresses: string;
-		orderId: string;
-		productPurchaseKey: string;
-	};
-	skuId: number;
-	type: string;
-};
-
 export type LicenseKey = {
 	active: boolean;
 	complimentary: boolean;
@@ -54,52 +31,34 @@ export type LicenseKey = {
 	userUuid: string;
 };
 
+type LicenseTypePayload = {
+	licenseEntry: {
+		description: string;
+		hostName: string;
+		ipAddresses: string;
+		macAddresses: string;
+		orderId: string;
+		productPurchaseKey: string;
+	};
+	skuId: number;
+	type: string;
+};
+
+export type SubscriptionsType = {
+	endDate?: string;
+	name: string;
+	perpetual: boolean;
+	productPurchasedKey: string;
+	provisionedCount: number;
+	purchasedCount: number;
+	startDate: string;
+};
+
 export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 	constructor() {
 		super(
 			'liferay-marketplace-etc-spring-boot-oauth-application-user-agent'
 		);
-	}
-
-	async getSubscriptions(orderId: number): Promise<SubscriptionsType[]> {
-		const response = await this.oAuth2Client.fetch(
-			`/koroneiki/subscriptions/${orderId}`
-		);
-
-		return response.json();
-	}
-
-	async deactivateLicenseKey(licenseKey: number) {
-		await this.oAuth2Client.fetch(
-			`/provisioning/license-keys/${licenseKey}/deactivate`,
-			{
-				method: 'POST',
-			}
-		);
-	}
-
-	async getOrderLicenseKeys(
-		orderId: string,
-		searchParams: URLSearchParams = new URLSearchParams()
-	): Promise<APIResponse<any>> {
-		const response = (await (this.oAuth2Client.fetch(
-			`/provisioning/order-license-keys/${orderId}?${searchParams.toString()}`
-		) as unknown)) as Promise<APIResponse<any>>;
-
-		return response;
-	}
-
-	async syncKoroneikiProduct(productId: number) {
-		const response = await this.oAuth2Client.fetch(
-			`/koroneiki/product/${productId}`,
-			{
-				method: 'POST',
-			}
-		);
-
-		if (!response.ok) {
-			throw new Error('Unable to Sync Product');
-		}
 	}
 
 	async createLicenseKey(payload: LicenseTypePayload): Promise<LicenseKey> {
@@ -109,6 +68,15 @@ export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 
 			// Necessary due the response comes resolved already, not necessary to parse to .json()
 		}) as unknown) as Promise<LicenseKey>;
+	}
+
+	async deactivateLicenseKey(licenseKey: number) {
+		await this.oAuth2Client.fetch(
+			`/provisioning/license-keys/${licenseKey}/deactivate`,
+			{
+				method: 'POST',
+			}
+		);
 	}
 
 	async downloadLicenseKey(id: number) {
@@ -142,5 +110,37 @@ export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 
 		anchor.click();
 		anchor.remove();
+	}
+
+	async getOrderLicenseKeys(
+		orderId: string,
+		searchParams: URLSearchParams = new URLSearchParams()
+	): Promise<APIResponse<any>> {
+		const response = (await (this.oAuth2Client.fetch(
+			`/provisioning/order-license-keys/${orderId}?${searchParams.toString()}`
+		) as unknown)) as Promise<APIResponse<any>>;
+
+		return response;
+	}
+
+	async getSubscriptions(orderId: number): Promise<SubscriptionsType[]> {
+		const response = await this.oAuth2Client.fetch(
+			`/koroneiki/subscriptions/${orderId}`
+		);
+
+		return response.json();
+	}
+
+	async syncKoroneikiProduct(productId: number) {
+		const response = await this.oAuth2Client.fetch(
+			`/koroneiki/product/${productId}`,
+			{
+				method: 'POST',
+			}
+		);
+
+		if (!response.ok) {
+			throw new Error('Unable to Sync Product');
+		}
 	}
 }

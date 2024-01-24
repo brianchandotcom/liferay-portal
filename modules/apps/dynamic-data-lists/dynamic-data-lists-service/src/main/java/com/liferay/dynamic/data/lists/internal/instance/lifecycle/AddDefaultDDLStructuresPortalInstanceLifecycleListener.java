@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.lists.internal.instance.lifecycle;
 
 import com.liferay.dynamic.data.lists.internal.configuration.DDLServiceConfiguration;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.osgi.util.configuration.ConfigurationPersistenceUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -15,7 +14,6 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -82,9 +80,6 @@ public class AddDefaultDDLStructuresPortalInstanceLifecycleListener
 			DDLServiceConfiguration.class, properties);
 	}
 
-	@Reference
-	private DDLRecordSetLocalService _ddlRecordSetLocalService;
-
 	private volatile DDLServiceConfiguration _ddlServiceConfiguration;
 
 	@Reference
@@ -94,9 +89,6 @@ public class AddDefaultDDLStructuresPortalInstanceLifecycleListener
 	private GroupLocalService _groupLocalService;
 
 	private long _lastModifiedTime;
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Portal _portal;

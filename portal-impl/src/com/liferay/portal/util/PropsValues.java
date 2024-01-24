@@ -2385,7 +2385,7 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.USER_GROUPS_NAME_ALLOW_NUMERIC));
 
-	public static final boolean USER_GROUPS_SEARCH_WITH_INDEX =
+	public static volatile boolean USER_GROUPS_SEARCH_WITH_INDEX =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.USER_GROUPS_SEARCH_WITH_INDEX));
 

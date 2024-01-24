@@ -90,6 +90,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -371,6 +372,29 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertMetaTag(document, "property1", "content1");
 		_assertNoOpenGraphMetaProperty(document, "property2");
 		_assertNoOpenGraphMetaContent(document, "content3");
+	}
+
+	@Test
+	public void testIncludeInternalServerErrorResponseStatus()
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		mockHttpServletResponse.setStatus(
+			HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			false, true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertNoLinkElements(document, "alternate");
+		_assertNoLinkElements(document, "canonical");
 	}
 
 	@Test
@@ -1135,6 +1159,26 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
+	public void testIncludeNotFoundResponseStatus() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		mockHttpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			false, true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertNoLinkElements(document, "alternate");
+		_assertNoLinkElements(document, "canonical");
+	}
+
+	@Test
 	public void testIncludeOpenGraphNotEnabled() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -1350,6 +1394,27 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_dynamicInclude.include(
 			_getSignedInHttpServletRequest(), mockHttpServletResponse,
 			RandomTestUtil.randomString());
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertNoLinkElements(document, "alternate");
+		_assertNoLinkElements(document, "canonical");
+	}
+
+	@Test
+	public void testStatusErrorPage() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		mockHttpServletResponse.setStatus(
+			HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			false, true);
 
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());

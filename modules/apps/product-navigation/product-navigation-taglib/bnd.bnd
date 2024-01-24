@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Product Navigation Taglib
 Bundle-SymbolicName: com.liferay.product.navigation.taglib
-Bundle-Version: 6.0.60
+Bundle-Version: 6.0.61
 Export-Package: com.liferay.product.navigation.taglib.servlet.taglib
 Liferay-JS-Config: /META-INF/resources/config.js
 Provide-Capability:\

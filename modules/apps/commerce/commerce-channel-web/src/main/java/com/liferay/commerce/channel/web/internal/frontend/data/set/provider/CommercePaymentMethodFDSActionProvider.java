@@ -69,7 +69,7 @@ public class CommercePaymentMethodFDSActionProvider
 						"commerceChannelId", commerceChannelId
 					).setParameter(
 						"commercePaymentIntegrationKey",
-						paymentMethod.getIntegrationKey()
+						paymentMethod.getPaymentIntegrationKey()
 					).setParameter(
 						"commercePaymentMethodEngineKey", paymentMethod.getKey()
 					).setWindowState(

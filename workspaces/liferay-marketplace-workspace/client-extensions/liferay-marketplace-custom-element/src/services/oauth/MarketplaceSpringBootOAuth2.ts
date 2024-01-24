@@ -53,7 +53,8 @@ export type LicenseKey = {
 	userName: string;
 	userUuid: string;
 };
-class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
+
+export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 	constructor() {
 		super(
 			'liferay-marketplace-etc-spring-boot-oauth-application-user-agent'
@@ -107,7 +108,6 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 			method: 'POST',
 
 			// Necessary due the response comes resolved already, not necessary to parse to .json()
-
 		}) as unknown) as Promise<LicenseKey>;
 	}
 
@@ -144,5 +144,3 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 		anchor.remove();
 	}
 }
-
-export default ProvisioningKoroneikiOAuth2;

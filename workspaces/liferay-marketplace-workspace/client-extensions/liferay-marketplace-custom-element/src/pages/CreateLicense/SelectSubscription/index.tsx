@@ -9,8 +9,8 @@ import {useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
 import RadioCardList from '../../../components/RadioCardList/RadioCardList';
+import useMarketplaceSpringBootOAuth2 from '../../../hooks/useMarketplaceSpringBootOAuth2';
 import i18n from '../../../i18n';
-import useProvisioningKoroneikiOAuth2 from '../../GetAppPage/hooks/useProvisioningKoroneikiOAuth2';
 import {formatDate} from '../../PublishedAppsDashboard/PublishedDashboardPageUtil';
 
 type SubscriptionSelectionProps = {
@@ -26,14 +26,12 @@ const SelectSubscription = ({
 
 	const orderId = Number(params.orderId);
 
-	const provisioningKoroneikiOAuth2 = useProvisioningKoroneikiOAuth2();
+	const {getSubscriptions} = useMarketplaceSpringBootOAuth2();
 
 	const {
 		data: subscriptions = [],
 		isLoading,
-	} = useSWR(`/subcriptions/${orderId}`, () =>
-		provisioningKoroneikiOAuth2.getSubscriptions(orderId)
-	);
+	} = useSWR(`/subcriptions/${orderId}`, () => getSubscriptions(orderId));
 
 	return (
 		<div className="mb-4 mt-3">

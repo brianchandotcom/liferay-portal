@@ -9,16 +9,16 @@ import {KeyedMutator} from 'swr';
 
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
-import ProvisioningKoroneikiOAuth2, {
+import MarketplaceSpringBootOAuth2, {
 	LicenseKey,
-} from '../../../../../services/oauth/ProvisioningKoroneikiOAuth2';
+} from '../../../../../services/oauth/MarketplaceSpringBootOAuth2';
 
 type Props = {
 	deactivateLicenseModal: ReturnType<typeof useModal>;
 	keyType: string;
 	licenseKeyModal: ReturnType<typeof useModal>;
+	marketplaceSpringBootOAuth2: MarketplaceSpringBootOAuth2;
 	mutate: KeyedMutator<any>;
-	provisioningKoroneikiOAuth2: ProvisioningKoroneikiOAuth2;
 	setModal: (data: any) => void;
 };
 
@@ -26,12 +26,12 @@ const useLicenseActions = ({
 	deactivateLicenseModal,
 	keyType,
 	licenseKeyModal,
+	marketplaceSpringBootOAuth2,
 	mutate,
-	provisioningKoroneikiOAuth2,
 	setModal,
 }: Props) => {
 	const onDeativateLicenseKey = (row: LicenseKey) =>
-		provisioningKoroneikiOAuth2
+		marketplaceSpringBootOAuth2
 			.deactivateLicenseKey(row?.id as number)
 			.then(() => {
 				mutate((data: any) => data, {revalidate: true});
@@ -58,11 +58,10 @@ const useLicenseActions = ({
 			}
 
 			try {
-				await provisioningKoroneikiOAuth2.downloadLicenseKey(
+				await marketplaceSpringBootOAuth2.downloadLicenseKey(
 					licenseKey?.id as number
 				);
-			}
-			catch {
+			} catch {
 				Liferay.Util.openToast({
 					message: i18n.translate(
 						'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard'
@@ -71,7 +70,7 @@ const useLicenseActions = ({
 				});
 			}
 		},
-		[provisioningKoroneikiOAuth2]
+		[marketplaceSpringBootOAuth2]
 	);
 
 	return {

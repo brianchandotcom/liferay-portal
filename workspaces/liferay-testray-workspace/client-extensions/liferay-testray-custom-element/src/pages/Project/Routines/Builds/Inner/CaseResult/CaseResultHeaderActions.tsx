@@ -4,12 +4,10 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
 import AssignModal from '../../../../../../components/AssignModal';
-import {TestrayContext} from '../../../../../../context/TestrayContext';
 import useFormModal from '../../../../../../hooks/useFormModal';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../services/liferay';
@@ -33,17 +31,10 @@ const CaseResultHeaderActions: React.FC<{
 				.then(mutateCaseResult),
 	});
 
-	const [{myUserAccount}] = useContext(TestrayContext);
-
 	const navigate = useNavigate();
 
 	const assignedUserId = caseResult.user?.id || 0;
-	const isAdministratorOrAnalyst = myUserAccount?.roleBriefs.some(
-		(role) =>
-			role.name === 'Administrator' ||
-			role.name === 'Testray Administrator' ||
-			role.name === 'Testray Analyst'
-	);
+
 	const isCaseResultAssignedToMe = caseResult.user?.id === userId;
 
 	const isReopened = ![
@@ -80,15 +71,9 @@ const CaseResultHeaderActions: React.FC<{
 				spaced
 			>
 				<ClayButton
-					disabled={
-						!buttonValidations.completeTest ||
-						!isAdministratorOrAnalyst
-					}
+					disabled={!buttonValidations.completeTest}
 					displayType={
-						!buttonValidations.completeTest ||
-						!isAdministratorOrAnalyst
-							? 'unstyled'
-							: undefined
+						!buttonValidations.completeTest ? 'unstyled' : undefined
 					}
 					onClick={() => modal.open()}
 				>
@@ -155,16 +140,7 @@ const CaseResultHeaderActions: React.FC<{
 				</ClayButton>
 
 				<ClayButton
-					disabled={
-						buttonValidations.editValidation ||
-						!buttonValidations.completeTest
-					}
-					displayType={
-						buttonValidations.editValidation ||
-						!buttonValidations.completeTest
-							? 'unstyled'
-							: 'secondary'
-					}
+					displayType="secondary"
 					onClick={() => navigate(`edit/${caseResult.dueStatus.key}`)}
 				>
 					{i18n.translate('edit')}

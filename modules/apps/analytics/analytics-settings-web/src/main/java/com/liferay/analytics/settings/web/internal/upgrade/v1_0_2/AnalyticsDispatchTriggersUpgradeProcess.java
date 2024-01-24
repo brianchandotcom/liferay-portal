@@ -12,9 +12,9 @@ import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -49,8 +49,20 @@ public class AnalyticsDispatchTriggersUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			"(service.pid=" + AnalyticsConfiguration.class.getName() + "*)");
+		Configuration[] configurations;
+
+		if (DBPartition.isPartitionEnabled()) {
+			configurations = _configurationAdmin.listConfigurations(
+				StringBundler.concat(
+					"(&(companyId=", CompanyThreadLocal.getCompanyId(),
+					")(service.pid=", AnalyticsConfiguration.class.getName(),
+					"*))"));
+		}
+		else {
+			configurations = _configurationAdmin.listConfigurations(
+				"(service.pid=" + AnalyticsConfiguration.class.getName() +
+					"*)");
+		}
 
 		if (ArrayUtil.isEmpty(configurations)) {
 			return;
@@ -64,78 +76,53 @@ public class AnalyticsDispatchTriggersUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			long companyThreadLocalCompanyId =
-				CompanyThreadLocal.getCompanyId();
-
 			long companyId = GetterUtil.getLong(properties.get("companyId"));
 
-			CompanyThreadLocal.setCompanyId(companyId);
+			DispatchTrigger dispatchTrigger =
+				_dispatchTriggerLocalService.fetchDispatchTrigger(
+					companyId, "export-analytics-dxp-entities");
 
-			try {
-				_doUpgrade(companyId);
+			if (dispatchTrigger != null) {
+				continue;
 			}
-			finally {
-				CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
-			}
-		}
-	}
 
-	private void _doUpgrade(long companyId) throws PortalException {
-		long userId;
-
-		try {
-			userId = _userLocalService.getUserIdByScreenName(
+			User user = _userLocalService.fetchUserByScreenName(
 				companyId,
 				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
+
+			if (user == null) {
+				continue;
+			}
+
+			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
+				null, user.getUserId(), "export-analytics-dxp-entities", null,
+				"export-analytics-dxp-entities", false);
+
+			LocalDateTime localDateTime = LocalDateTime.now();
+
+			_dispatchTriggerLocalService.updateDispatchTrigger(
+				dispatchTrigger.getDispatchTriggerId(), true, "0 0 * * * ?",
+				DispatchTaskClusterMode.NOT_APPLICABLE, 0, 0, 0, 0, 0, true,
+				false, localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute(), "UTC");
+
+			Calendar calendar = Calendar.getInstance();
+
+			calendar.setTime(new Date());
+			calendar.add(Calendar.HOUR, -2);
+
+			Date endDate = calendar.getTime();
+
+			calendar.add(Calendar.MINUTE, -5);
+
+			Date startDate = calendar.getTime();
+
+			_dispatchLogLocalService.addDispatchLog(
+				user.getUserId(), dispatchTrigger.getDispatchTriggerId(),
+				endDate, null, null, startDate, DispatchTaskStatus.SUCCESSFUL);
 		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Analytics Administrator was not found for company ID " +
-					companyId,
-				portalException);
-
-			return;
-		}
-
-		DispatchTrigger dispatchTrigger =
-			_dispatchTriggerLocalService.fetchDispatchTrigger(
-				companyId, "export-analytics-dxp-entities");
-
-		if (dispatchTrigger != null) {
-			return;
-		}
-
-		dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
-			null, userId, "export-analytics-dxp-entities", null,
-			"export-analytics-dxp-entities", false);
-
-		LocalDateTime localDateTime = LocalDateTime.now();
-
-		_dispatchTriggerLocalService.updateDispatchTrigger(
-			dispatchTrigger.getDispatchTriggerId(), true, "0 0 * * * ?",
-			DispatchTaskClusterMode.NOT_APPLICABLE, 0, 0, 0, 0, 0, true, false,
-			localDateTime.getMonthValue() - 1, localDateTime.getDayOfMonth(),
-			localDateTime.getYear(), localDateTime.getHour(),
-			localDateTime.getMinute(), "UTC");
-
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.setTime(new Date());
-		calendar.add(Calendar.HOUR, -2);
-
-		Date endDate = calendar.getTime();
-
-		calendar.add(Calendar.MINUTE, -5);
-
-		Date startDate = calendar.getTime();
-
-		_dispatchLogLocalService.addDispatchLog(
-			userId, dispatchTrigger.getDispatchTriggerId(), endDate, null, null,
-			startDate, DispatchTaskStatus.SUCCESSFUL);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsDispatchTriggersUpgradeProcess.class);
 
 	private final ConfigurationAdmin _configurationAdmin;
 	private final DispatchLogLocalService _dispatchLogLocalService;

@@ -26,8 +26,9 @@ public class ConsoleRestController extends BaseRestController {
 
 	@GetMapping("projects-usage")
 	public String getProjectsUsage(
-		@AuthenticationPrincipal Jwt jwt,
-		@RequestParam(required = false) String email) {
+			@AuthenticationPrincipal Jwt jwt,
+			@RequestParam(required = false) String email)
+		throws Exception {
 
 		if (email == null) {
 			email = jwt.getClaims(
@@ -53,7 +54,7 @@ public class ConsoleRestController extends BaseRestController {
 		).block();
 	}
 
-	private String _getAuthorization() {
+	private String _getAuthorization() throws Exception {
 		if ((_accessToken != null) &&
 			(System.currentTimeMillis() < (_tokenExpirationMillis - 30000))) {
 
@@ -82,7 +83,7 @@ public class ConsoleRestController extends BaseRestController {
 		).block();
 
 		if (response == null) {
-			return "";
+			throw new Exception("Unable to get authorization");
 		}
 
 		_accessToken = new JSONObject(

@@ -7965,7 +7965,7 @@ public class JournalArticleLocalServiceImpl
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			Value value = ddmFormFieldValue.getValue();
 
-			if (value != null) {
+			if ((value != null) && value.isLocalized()) {
 				value.removeLocale(locale);
 			}
 

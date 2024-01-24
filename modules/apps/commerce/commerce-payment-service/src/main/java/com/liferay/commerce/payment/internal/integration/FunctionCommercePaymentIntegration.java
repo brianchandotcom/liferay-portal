@@ -60,18 +60,7 @@ public class FunctionCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		try {
-			_setCommercePaymentEntry(commercePaymentEntry, "/authorize");
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			commercePaymentEntry.setErrorMessages(exception.getMessage());
-			commercePaymentEntry.setPaymentStatus(
-				CommercePaymentEntryConstants.STATUS_FAILED);
-		}
-
-		return commercePaymentEntry;
+		return _setCommercePaymentEntry(commercePaymentEntry, "/authorize");
 	}
 
 	@Override
@@ -80,18 +69,7 @@ public class FunctionCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		try {
-			_setCommercePaymentEntry(commercePaymentEntry, "/cancel");
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			commercePaymentEntry.setErrorMessages(exception.getMessage());
-			commercePaymentEntry.setPaymentStatus(
-				CommercePaymentEntryConstants.STATUS_FAILED);
-		}
-
-		return commercePaymentEntry;
+		return _setCommercePaymentEntry(commercePaymentEntry, "/cancel");
 	}
 
 	@Override
@@ -100,18 +78,7 @@ public class FunctionCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		try {
-			_setCommercePaymentEntry(commercePaymentEntry, "/capture");
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			commercePaymentEntry.setErrorMessages(exception.getMessage());
-			commercePaymentEntry.setPaymentStatus(
-				CommercePaymentEntryConstants.STATUS_FAILED);
-		}
-
-		return commercePaymentEntry;
+		return _setCommercePaymentEntry(commercePaymentEntry, "/capture");
 	}
 
 	@Override
@@ -153,18 +120,7 @@ public class FunctionCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		try {
-			_setCommercePaymentEntry(commercePaymentEntry, "/refund");
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			commercePaymentEntry.setErrorMessages(exception.getMessage());
-			commercePaymentEntry.setPaymentStatus(
-				CommercePaymentEntryConstants.STATUS_FAILED);
-		}
-
-		return commercePaymentEntry;
+		return _setCommercePaymentEntry(commercePaymentEntry, "/refund");
 	}
 
 	@Override
@@ -173,18 +129,8 @@ public class FunctionCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		try {
-			_setCommercePaymentEntry(commercePaymentEntry, "/set-up-payment");
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			commercePaymentEntry.setErrorMessages(exception.getMessage());
-			commercePaymentEntry.setPaymentStatus(
-				CommercePaymentEntryConstants.STATUS_FAILED);
-		}
-
-		return commercePaymentEntry;
+		return _setCommercePaymentEntry(
+			commercePaymentEntry, "/set-up-payment");
 	}
 
 	@Activate
@@ -281,61 +227,71 @@ public class FunctionCommercePaymentIntegration
 		);
 	}
 
-	private void _setCommercePaymentEntry(
-			CommercePaymentEntry commercePaymentEntry, String resourcePath)
-		throws Exception {
+	private CommercePaymentEntry _setCommercePaymentEntry(
+		CommercePaymentEntry commercePaymentEntry, String resourcePath) {
 
-		commercePaymentEntry.setPaymentStatus(
-			CommercePaymentEntryConstants.STATUS_FAILED);
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			new String(
-				_portalCatapult.launch(
-					commercePaymentEntry.getCompanyId(), Http.Method.POST,
-					_functionCommercePaymentIntegrationConfiguration.
-						oAuth2ApplicationExternalReferenceCode(),
-					_getPayloadJSONObject(commercePaymentEntry), resourcePath,
-					commercePaymentEntry.getUserId()
-				).get()));
-
-		if (jsonObject.has("amount")) {
-			commercePaymentEntry.setAmount(
-				BigDecimal.valueOf(jsonObject.getDouble("amount")));
-		}
-
-		if (jsonObject.has("callbackURL")) {
-			commercePaymentEntry.setCallbackURL(
-				jsonObject.getString("callbackURL"));
-		}
-
-		if (jsonObject.has("cancelURL")) {
-			commercePaymentEntry.setCancelURL(
-				jsonObject.getString("cancelURL"));
-		}
-
-		if (jsonObject.has("errorMessages")) {
-			commercePaymentEntry.setErrorMessages(
-				jsonObject.getString("errorMessages"));
-		}
-
-		if (jsonObject.has("note")) {
-			commercePaymentEntry.setNote(jsonObject.getString("note"));
-		}
-
-		if (jsonObject.has("paymentStatus")) {
+		try {
 			commercePaymentEntry.setPaymentStatus(
-				jsonObject.getInt("paymentStatus"));
+				CommercePaymentEntryConstants.STATUS_FAILED);
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				new String(
+					_portalCatapult.launch(
+						commercePaymentEntry.getCompanyId(), Http.Method.POST,
+						_functionCommercePaymentIntegrationConfiguration.
+							oAuth2ApplicationExternalReferenceCode(),
+						_getPayloadJSONObject(commercePaymentEntry),
+						resourcePath, commercePaymentEntry.getUserId()
+					).get()));
+
+			if (jsonObject.has("amount")) {
+				commercePaymentEntry.setAmount(
+					BigDecimal.valueOf(jsonObject.getDouble("amount")));
+			}
+
+			if (jsonObject.has("callbackURL")) {
+				commercePaymentEntry.setCallbackURL(
+					jsonObject.getString("callbackURL"));
+			}
+
+			if (jsonObject.has("cancelURL")) {
+				commercePaymentEntry.setCancelURL(
+					jsonObject.getString("cancelURL"));
+			}
+
+			if (jsonObject.has("errorMessages")) {
+				commercePaymentEntry.setErrorMessages(
+					jsonObject.getString("errorMessages"));
+			}
+
+			if (jsonObject.has("note")) {
+				commercePaymentEntry.setNote(jsonObject.getString("note"));
+			}
+
+			if (jsonObject.has("paymentStatus")) {
+				commercePaymentEntry.setPaymentStatus(
+					jsonObject.getInt("paymentStatus"));
+			}
+
+			if (jsonObject.has("redirectURL")) {
+				commercePaymentEntry.setRedirectURL(
+					jsonObject.getString("redirectURL"));
+			}
+
+			if (jsonObject.has("transactionCode")) {
+				commercePaymentEntry.setTransactionCode(
+					jsonObject.getString("transactionCode"));
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			commercePaymentEntry.setErrorMessages(exception.getMessage());
+			commercePaymentEntry.setPaymentStatus(
+				CommercePaymentEntryConstants.STATUS_FAILED);
 		}
 
-		if (jsonObject.has("redirectURL")) {
-			commercePaymentEntry.setRedirectURL(
-				jsonObject.getString("redirectURL"));
-		}
-
-		if (jsonObject.has("transactionCode")) {
-			commercePaymentEntry.setTransactionCode(
-				jsonObject.getString("transactionCode"));
-		}
+		return commercePaymentEntry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

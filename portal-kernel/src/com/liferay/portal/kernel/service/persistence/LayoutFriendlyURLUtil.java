@@ -1048,6 +1048,196 @@ public class LayoutFriendlyURLUtil {
 	}
 
 	/**
+	 * Returns all the layout friendly urls where companyId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param friendlyURL the friendly url
+	 * @return the matching layout friendly urls
+	 */
+	public static List<LayoutFriendlyURL> findByC_F(
+		long companyId, String friendlyURL) {
+
+		return getPersistence().findByC_F(companyId, friendlyURL);
+	}
+
+	/**
+	 * Returns a range of all the layout friendly urls where companyId = &#63; and friendlyURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutFriendlyURLModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
+	 * @return the range of matching layout friendly urls
+	 */
+	public static List<LayoutFriendlyURL> findByC_F(
+		long companyId, String friendlyURL, int start, int end) {
+
+		return getPersistence().findByC_F(companyId, friendlyURL, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout friendly urls where companyId = &#63; and friendlyURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutFriendlyURLModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout friendly urls
+	 */
+	public static List<LayoutFriendlyURL> findByC_F(
+		long companyId, String friendlyURL, int start, int end,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
+
+		return getPersistence().findByC_F(
+			companyId, friendlyURL, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout friendly urls where companyId = &#63; and friendlyURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutFriendlyURLModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching layout friendly urls
+	 */
+	public static List<LayoutFriendlyURL> findByC_F(
+		long companyId, String friendlyURL, int start, int end,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_F(
+			companyId, friendlyURL, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first layout friendly url in the ordered set where companyId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param friendlyURL the friendly url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
+	 */
+	public static LayoutFriendlyURL findByC_F_First(
+			long companyId, String friendlyURL,
+			OrderByComparator<LayoutFriendlyURL> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchLayoutFriendlyURLException {
+
+		return getPersistence().findByC_F_First(
+			companyId, friendlyURL, orderByComparator);
+	}
+
+	/**
+	 * Returns the first layout friendly url in the ordered set where companyId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param friendlyURL the friendly url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
+	 */
+	public static LayoutFriendlyURL fetchByC_F_First(
+		long companyId, String friendlyURL,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
+
+		return getPersistence().fetchByC_F_First(
+			companyId, friendlyURL, orderByComparator);
+	}
+
+	/**
+	 * Returns the last layout friendly url in the ordered set where companyId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param friendlyURL the friendly url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
+	 */
+	public static LayoutFriendlyURL findByC_F_Last(
+			long companyId, String friendlyURL,
+			OrderByComparator<LayoutFriendlyURL> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchLayoutFriendlyURLException {
+
+		return getPersistence().findByC_F_Last(
+			companyId, friendlyURL, orderByComparator);
+	}
+
+	/**
+	 * Returns the last layout friendly url in the ordered set where companyId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param friendlyURL the friendly url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
+	 */
+	public static LayoutFriendlyURL fetchByC_F_Last(
+		long companyId, String friendlyURL,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
+
+		return getPersistence().fetchByC_F_Last(
+			companyId, friendlyURL, orderByComparator);
+	}
+
+	/**
+	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where companyId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
+	 * @param companyId the company ID
+	 * @param friendlyURL the friendly url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
+	 */
+	public static LayoutFriendlyURL[] findByC_F_PrevAndNext(
+			long layoutFriendlyURLId, long companyId, String friendlyURL,
+			OrderByComparator<LayoutFriendlyURL> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchLayoutFriendlyURLException {
+
+		return getPersistence().findByC_F_PrevAndNext(
+			layoutFriendlyURLId, companyId, friendlyURL, orderByComparator);
+	}
+
+	/**
+	 * Removes all the layout friendly urls where companyId = &#63; and friendlyURL = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param friendlyURL the friendly url
+	 */
+	public static void removeByC_F(long companyId, String friendlyURL) {
+		getPersistence().removeByC_F(companyId, friendlyURL);
+	}
+
+	/**
+	 * Returns the number of layout friendly urls where companyId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param friendlyURL the friendly url
+	 * @return the number of matching layout friendly urls
+	 */
+	public static int countByC_F(long companyId, String friendlyURL) {
+		return getPersistence().countByC_F(companyId, friendlyURL);
+	}
+
+	/**
 	 * Returns all the layout friendly urls where plid = &#63; and friendlyURL = &#63;.
 	 *
 	 * @param plid the plid

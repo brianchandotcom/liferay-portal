@@ -245,6 +245,15 @@ public class LayoutFriendlyURLPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_F() throws Exception {
+		_persistence.countByC_F(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_F(0L, "null");
+
+		_persistence.countByC_F(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByP_F() throws Exception {
 		_persistence.countByP_F(RandomTestUtil.nextLong(), "");
 

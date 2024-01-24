@@ -2245,7 +2245,7 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.STAGING_SYSTEM_EVENT_CHECK_INTERVAL));
 
-	public static final int STAGING_SYSTEM_EVENT_MAX_AGE =
+	public static volatile int STAGING_SYSTEM_EVENT_MAX_AGE =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.STAGING_SYSTEM_EVENT_MAX_AGE));
 

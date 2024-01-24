@@ -5,7 +5,7 @@
 
 import OAuth2Client from './OAuth2Client';
 
-type ConsoleProjectsUsage = {
+export type ConsoleProjectsUsage = {
 	userEmail: string;
 	userProjects: ConsoleUserProject[];
 };
@@ -87,6 +87,7 @@ export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 			method: 'POST',
 
 			// Necessary due the response comes resolved already, not necessary to parse to .json()
+
 		}) as unknown) as Promise<LicenseKey>;
 	}
 

@@ -20,6 +20,7 @@ import {ReviewAndSubmitAppPage} from '../../ReviewAndSubmitAppPage/ReviewAndSubm
 
 import './App.scss';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import useMarketplaceSpringBootOAuth2 from '../../../hooks/useMarketplaceSpringBootOAuth2';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
@@ -28,7 +29,6 @@ import {
 	getThumbnailByProductAttachment,
 	showAppImage,
 } from '../../../utils/util';
-import useProvisioningKoroneikiOAuth2 from '../../GetAppPage/hooks/useProvisioningKoroneikiOAuth2';
 
 const App = () => {
 	const [, dispatch] = useAppContext();
@@ -36,7 +36,7 @@ const App = () => {
 	const {appId} = useParams();
 	const {myUserAccount} = useMarketplaceContext();
 	const navigate = useNavigate();
-	const provisioningKoroneikiOAuth2 = useProvisioningKoroneikiOAuth2();
+	const {syncKoroneikiProduct} = useMarketplaceSpringBootOAuth2();
 
 	const productId = Number(appId) + 1;
 
@@ -171,8 +171,7 @@ const App = () => {
 							onClick={() => {
 								setLoading(true);
 
-								provisioningKoroneikiOAuth2
-									.syncKoroneikiProduct(productId)
+								syncKoroneikiProduct(productId)
 									.then(() =>
 										Liferay.Util.openToast({
 											message:

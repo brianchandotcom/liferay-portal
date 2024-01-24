@@ -27,8 +27,8 @@ import {Statuses as OrderStatuses} from '../../../../../components/OrderStatus';
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import {OrderType} from '../../../../../enums/OrderType';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
-import {LicenseKey} from '../../../../../services/oauth/ProvisioningKoroneikiOAuth2';
-import useProvisioningKoroneikiOAuth2 from '../../../../GetAppPage/hooks/useProvisioningKoroneikiOAuth2';
+import useMarketplaceSpringBootOAuth2 from '../../../../../hooks/useMarketplaceSpringBootOAuth2';
+import {LicenseKey} from '../../../../../services/oauth/MarketplaceSpringBootOAuth2';
 import LicenseDetailsModalHeader from './components/LicenseDetailsModalHeader';
 import LicenceKeyModalContent from './components/LicenseModalContent';
 import TableActions from './components/TableActions';
@@ -62,7 +62,7 @@ const Licenses = () => {
 	const placedOrder = outletContext?.placedOrder;
 	const product = outletContext?.product;
 
-	const provisioningKoroneikiOAuth2 = useProvisioningKoroneikiOAuth2();
+	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 
 	const keyType =
 		placedOrder?.orderTypeExternalReferenceCode === OrderType.DXP
@@ -73,15 +73,14 @@ const Licenses = () => {
 		`/order-license-keys/${orderId}-${page}-${pageSize}`,
 		async () => {
 			try {
-				return provisioningKoroneikiOAuth2.getOrderLicenseKeys(
+				return marketplaceSpringBootOAuth2.getOrderLicenseKeys(
 					orderId as string,
 					new URLSearchParams({
 						page: page.toString(),
 						pageSize: pageSize.toString(),
 					})
 				);
-			}
-			catch (error) {
+			} catch (error) {
 				return {
 					items: [],
 					totalCount: 0,
@@ -102,8 +101,8 @@ const Licenses = () => {
 		deactivateLicenseModal,
 		keyType,
 		licenseKeyModal,
+		marketplaceSpringBootOAuth2,
 		mutate,
-		provisioningKoroneikiOAuth2,
 		setModal: setModalData,
 	});
 

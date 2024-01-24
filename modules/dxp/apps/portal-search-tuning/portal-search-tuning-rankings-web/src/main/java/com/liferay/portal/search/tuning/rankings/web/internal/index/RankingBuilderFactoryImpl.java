@@ -5,10 +5,12 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
@@ -18,12 +20,15 @@ public class RankingBuilderFactoryImpl implements RankingBuilderFactory {
 
 	@Override
 	public Ranking.Builder builder() {
-		return new RankingImpl.BuilderImpl();
+		return new RankingImpl.BuilderImpl(_rankingHelper);
 	}
 
 	@Override
 	public Ranking.Builder builder(Ranking ranking) {
-		return new RankingImpl.BuilderImpl(ranking);
+		return new RankingImpl.BuilderImpl(ranking, _rankingHelper);
 	}
+
+	@Reference
+	private RankingHelper _rankingHelper;
 
 }

@@ -7,8 +7,8 @@ package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
-import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,6 +35,7 @@ public class RankingImpl implements Ranking {
 		_pins = new ArrayList<>(rankingImpl._pins);
 		_queryString = rankingImpl._queryString;
 		_rankingDocumentId = rankingImpl._rankingDocumentId;
+		_rankingHelper = rankingImpl._rankingHelper;
 		_status = rankingImpl._status;
 		_sxpBlueprintExternalReferenceCode =
 			rankingImpl._sxpBlueprintExternalReferenceCode;
@@ -83,7 +84,7 @@ public class RankingImpl implements Ranking {
 	}
 
 	public Collection<String> getQueryStrings() {
-		return RankingUtil.getQueryStrings(_queryString, _aliases);
+		return _rankingHelper.getQueryStrings(_queryString, _aliases);
 	}
 
 	public String getRankingDocumentId() {
@@ -105,7 +106,7 @@ public class RankingImpl implements Ranking {
 
 		for (String pinnedDocumentId : _pinnedDocumentIds) {
 			if (documentId.equals(
-					RankingUtil.getDocumentId(pinnedDocumentId))) {
+					_rankingHelper.getDocumentId(pinnedDocumentId))) {
 
 				return true;
 			}
@@ -116,12 +117,14 @@ public class RankingImpl implements Ranking {
 
 	protected static class BuilderImpl implements Ranking.Builder {
 
-		public BuilderImpl() {
-			_rankingImpl = new RankingImpl();
+		public BuilderImpl(Ranking ranking, RankingHelper rankingHelper) {
+			_rankingImpl = (RankingImpl)ranking;
+
+			_rankingImpl._rankingHelper = rankingHelper;
 		}
 
-		public BuilderImpl(Ranking ranking) {
-			_rankingImpl = (RankingImpl)ranking;
+		public BuilderImpl(RankingHelper rankingHelper) {
+			this(new RankingImpl(), rankingHelper);
 		}
 
 		public BuilderImpl aliases(List<String> aliases) {
@@ -280,6 +283,7 @@ public class RankingImpl implements Ranking {
 	private List<Ranking.Pin> _pins = new ArrayList<>();
 	private String _queryString;
 	private String _rankingDocumentId;
+	private RankingHelper _rankingHelper;
 	private String _status;
 	private String _sxpBlueprintExternalReferenceCode;
 

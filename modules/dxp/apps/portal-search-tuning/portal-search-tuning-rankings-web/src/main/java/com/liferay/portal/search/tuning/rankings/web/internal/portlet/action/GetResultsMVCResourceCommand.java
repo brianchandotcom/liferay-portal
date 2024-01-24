@@ -24,6 +24,7 @@ import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
 import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
@@ -85,9 +86,9 @@ public class GetResultsMVCResourceCommand implements MVCResourceCommand {
 		RankingGetHiddenResultsBuilder rankingGetHiddenResultsBuilder =
 			new RankingGetHiddenResultsBuilder(
 				dlAppLocalService, fastDateFormatFactory, queries,
-				getRankingIndexName(resourceRequest), rankingIndexReader,
-				resourceActions, resourceRequest, resourceResponse,
-				searchEngineAdapter);
+				rankingHelper, getRankingIndexName(resourceRequest),
+				rankingIndexReader, resourceActions, resourceRequest,
+				resourceResponse, searchEngineAdapter);
 
 		RankingMVCResourceRequest rankingMVCResourceRequest =
 			new RankingMVCResourceRequest(resourceRequest);
@@ -221,6 +222,9 @@ public class GetResultsMVCResourceCommand implements MVCResourceCommand {
 
 	@Reference
 	protected Queries queries;
+
+	@Reference
+	protected RankingHelper rankingHelper;
 
 	@Reference
 	protected RankingIndexNameBuilder rankingIndexNameBuilder;

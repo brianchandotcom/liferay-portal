@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
+import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
@@ -35,7 +36,6 @@ import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRa
 import com.liferay.portal.search.tuning.rankings.web.internal.exception.DuplicateQueryStringException;
 import com.liferay.portal.search.tuning.rankings.web.internal.exception.NotApplicableStatusException;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DuplicateQueryStringsDetector;
-import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingUtil;
 
 import java.io.IOException;
 
@@ -117,6 +117,9 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	protected RankingBuilderFactory rankingBuilderFactory;
+
+	@Reference
+	protected RankingHelper rankingHelper;
 
 	@Reference
 	protected RankingIndexNameBuilder rankingIndexNameBuilder;
@@ -395,7 +398,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 				return false;
 			}
 
-			queryStrings = RankingUtil.getQueryStrings(
+			queryStrings = rankingHelper.getQueryStrings(
 				ranking.getQueryString(),
 				_getAliases(editRankingMVCActionRequest));
 		}
@@ -546,7 +549,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			hiddenIdsUpdated = Arrays.asList(addedHiddenIds);
 		}
 		else {
-			hiddenIdsUpdated = RankingUtil.translateDocumentIds(
+			hiddenIdsUpdated = rankingHelper.translateDocumentIds(
 				currentHiddenIds);
 
 			Collections.addAll(hiddenIdsUpdated, addedHiddenIds);

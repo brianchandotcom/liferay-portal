@@ -458,6 +458,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="format-source-bnd">
 		<antcall target="format-source-files">
+			<param name="skip.check.names" value="BNDBreakingChangeCommitMessageCheck" />
 			<param name="source.file.extensions" value="bnd,gradle,json" />
 		</antcall>
 	</target>
@@ -672,6 +673,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 					<arg value="max.line.length=${source.formatter.max.line.length}" />
 					<arg value="processor.thread.count=${source.formatter.processor.thread.count}" />
 					<arg value="show.debug.information=${source.formatter.show.debug.information}" />
+					<arg value="skip.check.names=${skip.check.names}" />
 					<arg value="source.auto.fix=${source.auto.fix}" />
 					<arg value="source.base.dir=${source.base.dir}" />
 					<arg value="source.check.category.names=${source.check.category.names}" />

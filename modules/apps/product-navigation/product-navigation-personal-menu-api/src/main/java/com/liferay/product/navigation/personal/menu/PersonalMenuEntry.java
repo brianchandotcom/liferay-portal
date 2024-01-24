@@ -57,7 +57,9 @@ public interface PersonalMenuEntry {
 	 */
 	public String getLabel(Locale locale);
 
-	public default String getOnClickJSModuleURL() {
+	public default String getOnClickESModule(
+		HttpServletRequest httpServletRequest) {
+
 		return null;
 	}
 

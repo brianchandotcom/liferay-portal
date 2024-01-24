@@ -14,11 +14,11 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
 import com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingPortletDisplayBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingPortletDisplayContext;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DocumentToRankingTranslator;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

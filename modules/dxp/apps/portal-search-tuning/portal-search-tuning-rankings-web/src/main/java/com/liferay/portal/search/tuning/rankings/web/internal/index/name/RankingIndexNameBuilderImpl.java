@@ -7,6 +7,8 @@ package com.liferay.portal.search.tuning.rankings.web.internal.index.name;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
+import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

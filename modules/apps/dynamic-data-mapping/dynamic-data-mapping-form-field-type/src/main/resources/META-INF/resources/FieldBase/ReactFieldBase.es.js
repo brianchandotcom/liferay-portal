@@ -219,6 +219,7 @@ export function FieldBase({
 	});
 
 	const fieldDetailsId = `${id ?? name}_fieldDetails`;
+	const fieldLabelId = `${id ?? name}_fieldLabel`;
 
 	const hiddenTranslations = useMemo(() => {
 		if (!localizedValue) {
@@ -430,12 +431,13 @@ export function FieldBase({
 			{renderLabel && (
 				<>
 					{showLegend ? (
-						<fieldset>
-							<legend
+						<div aria-labelledby={fieldLabelId} role="group">
+							<label
 								{...accessiblePropsFields}
 								className={classNames('lfr-ddm-legend', {
 									'text-muted': showDisabledFieldIcon,
 								})}
+								id={fieldLabelId}
 							>
 								{showLabel && label}
 
@@ -447,7 +449,7 @@ export function FieldBase({
 										tooltip={tooltip}
 									/>
 								)}
-							</legend>
+							</label>
 
 							{showDisabledFieldIcon && (
 								<TooltipProperty
@@ -458,7 +460,7 @@ export function FieldBase({
 							)}
 
 							{children}
-						</fieldset>
+						</div>
 					) : (
 						<>
 							<label

@@ -234,6 +234,14 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					}
 
 					@Override
+					public PropertyType getPropertyType() {
+						ListEntry listEntry = (ListEntry)properties.get(
+							"apiPropertyType");
+
+						return PropertyType.parse(listEntry.getKey());
+					}
+
+					@Override
 					public String getSourceFieldName() {
 						return objectField.getName();
 					}

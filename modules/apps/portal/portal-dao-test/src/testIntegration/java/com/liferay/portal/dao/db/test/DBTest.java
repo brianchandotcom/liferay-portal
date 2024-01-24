@@ -11,10 +11,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -34,6 +36,7 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -50,86 +53,94 @@ public class DBTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_connection = DataAccess.getConnection();
+		connection = DataAccess.getConnection();
 
-		_db = DBManagerUtil.getDB();
+		db = DBManagerUtil.getDB();
 
-		_dbInspector = new DBInspector(_connection);
+		dbInspector = new DBInspector(connection);
 
 		for (int i = 0; i < _SYNC_TABLES_COLUMN_NAMES.length; i++) {
-			_SYNC_TABLES_COLUMN_NAMES[i] = _dbInspector.normalizeName(
+			_SYNC_TABLES_COLUMN_NAMES[i] = dbInspector.normalizeName(
 				_SYNC_TABLES_COLUMN_NAMES[i]);
 		}
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		DataAccess.cleanUp(_connection);
+		DataAccess.cleanUp(connection);
+	}
+
+	public void assume() {
+		db = DBManagerUtil.getDB();
+
+		dbInspector = new DBInspector(connection);
+
+		Assume.assumeTrue(db.getDBType() != DBType.ORACLE);
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		_createTestTable(_TABLE_NAME_1);
+		_createTestTable(TABLE_NAME_1);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_1 + ")");
-		_db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_2 + ")");
-		_db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_3 + ")");
+		db.runSQL("DROP_TABLE_IF_EXISTS(" + TABLE_NAME_1 + ")");
+		db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_2 + ")");
+		db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_3 + ")");
 	}
 
 	@Test
 	public void testAlterColumnNameNoNullableChange() throws Exception {
-		_db.alterColumnName(
-			_connection, _TABLE_NAME_1, "nilColumn",
+		db.alterColumnName(
+			connection, TABLE_NAME_1, "nilColumn",
 			"nilColumnTest VARCHAR(75) null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "nilColumnTest", "VARCHAR(75) null"));
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "nilColumnTest", "VARCHAR(75) null"));
 
-		_db.alterColumnName(
-			_connection, _TABLE_NAME_1, "notNilColumn",
+		db.alterColumnName(
+			connection, TABLE_NAME_1, "notNilColumn",
 			"notNilColumnTest VARCHAR(75) not null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "notNilColumnTest", "VARCHAR(75) not null"));
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "notNilColumnTest", "VARCHAR(75) not null"));
 	}
 
 	@Test
 	public void testAlterColumnTypeAlterSize() throws Exception {
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "notNilColumn",
-			"VARCHAR(200) not null");
+		db.alterColumnType(
+			connection, TABLE_NAME_1, "notNilColumn", "VARCHAR(200) not null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "notNilColumn", "VARCHAR(200) not null"));
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "notNilColumn", "VARCHAR(200) not null"));
 	}
 
 	@Test
 	public void testAlterColumnTypeChangeToDefaultNotNull() throws Exception {
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "nilColumn",
+		db.alterColumnType(
+			connection, TABLE_NAME_1, "nilColumn",
 			"VARCHAR(75) default 'test' not null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "nilColumn",
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "nilColumn",
 				"VARCHAR(75) default 'test' not null"));
 	}
 
 	@Test
 	public void testAlterColumnTypeChangeToDefaultNull() throws Exception {
 		try {
-			_db.alterColumnType(
-				_connection, _TABLE_NAME_1, "notNilColumn",
+			db.alterColumnType(
+				connection, TABLE_NAME_1, "notNilColumn",
 				"VARCHAR(75) default 'test' null");
 
 			Assert.fail();
@@ -140,92 +151,90 @@ public class DBTest {
 				illegalArgumentException.getMessage());
 
 			Assert.assertTrue(
-				_dbInspector.hasColumnType(
-					_TABLE_NAME_1, "notNilColumn", "VARCHAR(75) not null"));
+				dbInspector.hasColumnType(
+					TABLE_NAME_1, "notNilColumn", "VARCHAR(75) not null"));
 		}
 	}
 
 	@Test
 	public void testAlterColumnTypeChangeToNotNull() throws Exception {
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "nilColumn", "VARCHAR(75) not null");
+		db.alterColumnType(
+			connection, TABLE_NAME_1, "nilColumn", "VARCHAR(75) not null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "nilColumn", "VARCHAR(75) not null"));
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "nilColumn", "VARCHAR(75) not null"));
 	}
 
 	@Test
 	public void testAlterColumnTypeChangeToNull() throws Exception {
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "notNilColumn", "VARCHAR(75) null");
+		db.alterColumnType(
+			connection, TABLE_NAME_1, "notNilColumn", "VARCHAR(75) null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "notNilColumn", "VARCHAR(75) null"));
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "notNilColumn", "VARCHAR(75) null"));
 	}
 
 	@Test
 	public void testAlterColumnTypeChangeToText() throws Exception {
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "typeString", "TEXT null");
+		db.alterColumnType(connection, TABLE_NAME_1, "typeString", "TEXT null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "typeString", "TEXT null"));
+			dbInspector.hasColumnType(TABLE_NAME_1, "typeString", "TEXT null"));
 	}
 
 	@Test
 	public void testAlterColumnTypeChangeWithoutDefaultClause()
 		throws Exception {
 
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "typeVarcharDefault",
+		db.alterColumnType(
+			connection, TABLE_NAME_1, "typeVarcharDefault",
 			"VARCHAR(10) not null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "typeVarcharDefault", "VARCHAR(10) not null"));
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "typeVarcharDefault", "VARCHAR(10) not null"));
 	}
 
 	@Test
 	public void testAlterColumnTypeChangeWithoutNullClause() throws Exception {
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "notNilColumn", "VARCHAR(75)");
+		db.alterColumnType(
+			connection, TABLE_NAME_1, "notNilColumn", "VARCHAR(75)");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "notNilColumn", "VARCHAR(75) null"));
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "notNilColumn", "VARCHAR(75) null"));
 
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "nilColumn", "VARCHAR(75)");
+		db.alterColumnType(
+			connection, TABLE_NAME_1, "nilColumn", "VARCHAR(75)");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "nilColumn", "VARCHAR(75) null"));
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "nilColumn", "VARCHAR(75) null"));
 	}
 
 	@Test
 	public void testAlterColumnTypeDefaultWithData() throws Exception {
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "nilColumn",
+		db.alterColumnType(
+			connection, TABLE_NAME_1, "nilColumn",
 			"VARCHAR(75) default 'test' not null");
 
-		_db.runSQL(
-			"insert into " + _TABLE_NAME_1 +
+		db.runSQL(
+			"insert into " + TABLE_NAME_1 +
 				" (id, notNilColumn) values (1, '1')");
 
-		_db.runSQL(
-			"insert into " + _TABLE_NAME_1 +
+		db.runSQL(
+			"insert into " + TABLE_NAME_1 +
 				" (id, notNilColumn, nilColumn) values (2, '2', 'nil')");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "nilColumn",
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "nilColumn",
 				"VARCHAR(75) default 'test' not null"));
 
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select nilColumn from " + _TABLE_NAME_1 + " order by id");
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select nilColumn from " + TABLE_NAME_1 + " order by id");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			resultSet.next();
@@ -240,39 +249,37 @@ public class DBTest {
 
 	@Test
 	public void testAlterColumnTypeNoChangesNotNull() throws Exception {
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "notNilColumn", "VARCHAR(75) not null");
+		db.alterColumnType(
+			connection, TABLE_NAME_1, "notNilColumn", "VARCHAR(75) not null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "notNilColumn", "VARCHAR(75) not null"));
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "notNilColumn", "VARCHAR(75) not null"));
 	}
 
 	@Test
 	public void testAlterColumnTypeNoChangesNull() throws Exception {
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "nilColumn", "VARCHAR(75) null");
+		db.alterColumnType(
+			connection, TABLE_NAME_1, "nilColumn", "VARCHAR(75) null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "nilColumn", "VARCHAR(75) null"));
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "nilColumn", "VARCHAR(75) null"));
 	}
 
 	@Test
 	public void testAlterColumnTypeWithData() throws Exception {
-		_db.runSQL(
-			"insert into " + _TABLE_NAME_1 +
+		db.runSQL(
+			"insert into " + TABLE_NAME_1 +
 				" (id, notNilColumn, typeString) values (1, '1', 'testValue')");
 
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "typeString", "TEXT null");
+		db.alterColumnType(connection, TABLE_NAME_1, "typeString", "TEXT null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "typeString", "TEXT null"));
+			dbInspector.hasColumnType(TABLE_NAME_1, "typeString", "TEXT null"));
 
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select typeString from " + _TABLE_NAME_1);
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select typeString from " + TABLE_NAME_1);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			resultSet.next();
@@ -283,81 +290,80 @@ public class DBTest {
 
 	@Test
 	public void testAlterIndexedColumnName() throws Exception {
-		_addIndex(new String[] {"typeVarchar", "typeBoolean"});
+		addIndex(new String[] {"typeVarchar", "typeBoolean"});
 
-		_db.alterColumnName(
-			_connection, _TABLE_NAME_1, "typeVarchar",
+		db.alterColumnName(
+			connection, TABLE_NAME_1, "typeVarchar",
 			"typeVarcharTest VARCHAR(75) null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumn(_TABLE_NAME_1, "typeVarcharTest"));
+			dbInspector.hasColumn(TABLE_NAME_1, "typeVarcharTest"));
 
 		_validateIndex(
 			new String[] {
-				_dbInspector.normalizeName("typeVarcharTest"),
-				_dbInspector.normalizeName("typeBoolean")
+				dbInspector.normalizeName("typeVarcharTest"),
+				dbInspector.normalizeName("typeBoolean")
 			});
 	}
 
 	@Test
 	public void testAlterIndexedColumnType() throws Exception {
-		_addIndex(new String[] {"typeVarchar", "typeBoolean"});
+		addIndex(new String[] {"typeVarchar", "typeBoolean"});
 
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "typeVarchar", "VARCHAR(50) null");
+		db.alterColumnType(
+			connection, TABLE_NAME_1, "typeVarchar", "VARCHAR(50) null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "typeVarchar", "VARCHAR(50) null"));
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "typeVarchar", "VARCHAR(50) null"));
 
 		_validateIndex(
 			new String[] {
-				_dbInspector.normalizeName("typeVarchar"),
-				_dbInspector.normalizeName("typeBoolean")
+				dbInspector.normalizeName("typeVarchar"),
+				dbInspector.normalizeName("typeBoolean")
 			});
 	}
 
 	@Test
 	public void testAlterPrimaryKeyName() throws Exception {
-		_db.alterColumnName(
-			_connection, _TABLE_NAME_1, "id", "idTest LONG not null");
+		db.alterColumnName(
+			connection, TABLE_NAME_1, "id", "idTest LONG not null");
 
 		Assert.assertTrue(
 			ArrayUtil.contains(
-				_db.getPrimaryKeyColumnNames(_connection, _TABLE_NAME_1),
-				_dbInspector.normalizeName("idTest")));
+				db.getPrimaryKeyColumnNames(connection, TABLE_NAME_1),
+				dbInspector.normalizeName("idTest")));
 	}
 
 	@Test
 	public void testAlterPrimaryKeyType() throws Exception {
-		_db.alterColumnType(
-			_connection, _TABLE_NAME_1, "id", "VARCHAR(75) not null");
+		db.alterColumnType(
+			connection, TABLE_NAME_1, "id", "VARCHAR(75) not null");
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "id", "VARCHAR(75) not null"));
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "id", "VARCHAR(75) not null"));
 	}
 
 	@Test
 	public void testAlterTableAddColumn() throws Exception {
-		_db.alterTableAddColumn(
-			_connection, _TABLE_NAME_1, "testColumn", "LONG null");
+		db.alterTableAddColumn(
+			connection, TABLE_NAME_1, "testColumn", "LONG null");
 
-		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME_1, "testColumn"));
+		Assert.assertTrue(dbInspector.hasColumn(TABLE_NAME_1, "testColumn"));
 	}
 
 	@Test
 	public void testAlterTableAddColumnLongDefaultNotNull() throws Exception {
-		_db.alterTableAddColumn(
-			_connection, _TABLE_NAME_1, "testColumn",
-			"LONG default 2 not null");
+		db.alterTableAddColumn(
+			connection, TABLE_NAME_1, "testColumn", "LONG default 2 not null");
 
-		_db.runSQL(
-			"insert into " + _TABLE_NAME_1 +
+		db.runSQL(
+			"insert into " + TABLE_NAME_1 +
 				" (id, notNilColumn) values (1, '1')");
 
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select testColumn from " + _TABLE_NAME_1);
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select testColumn from " + TABLE_NAME_1);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			resultSet.next();
@@ -366,24 +372,24 @@ public class DBTest {
 		}
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "testColumn", "LONG default 2 not null"));
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "testColumn", "LONG default 2 not null"));
 	}
 
 	@Test
 	public void testAlterTableAddColumnVarcharDefaultNotNull()
 		throws Exception {
 
-		_db.alterTableAddColumn(
-			_connection, _TABLE_NAME_1, "testColumn",
+		db.alterTableAddColumn(
+			connection, TABLE_NAME_1, "testColumn",
 			"VARCHAR(40) default 'test value' not null");
 
-		_db.runSQL(
-			"insert into " + _TABLE_NAME_1 +
+		db.runSQL(
+			"insert into " + TABLE_NAME_1 +
 				" (id, notNilColumn) values (1, '1')");
 
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select testColumn from " + _TABLE_NAME_1);
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select testColumn from " + TABLE_NAME_1);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			resultSet.next();
@@ -392,26 +398,25 @@ public class DBTest {
 		}
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(
-				_TABLE_NAME_1, "testColumn",
+			dbInspector.hasColumnType(
+				TABLE_NAME_1, "testColumn",
 				"VARCHAR(40) default 'test value' not null"));
 	}
 
 	@Test
 	public void testAlterTableDropIndexedColumn() throws Exception {
-		_addIndex(new String[] {"typeVarchar", "typeBoolean"});
+		addIndex(new String[] {"typeVarchar", "typeBoolean"});
 
-		_db.alterTableDropColumn(_connection, _TABLE_NAME_1, "typeVarchar");
+		db.alterTableDropColumn(connection, TABLE_NAME_1, "typeVarchar");
 
-		Assert.assertFalse(
-			_dbInspector.hasColumn(_TABLE_NAME_1, "typeVarchar"));
+		Assert.assertFalse(dbInspector.hasColumn(TABLE_NAME_1, "typeVarchar"));
 
 		List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
-			_db, "getIndexes",
+			db, "getIndexes",
 			new Class<?>[] {
 				Connection.class, String.class, String.class, boolean.class
 			},
-			_connection, _TABLE_NAME_1, "typeVarchar", false);
+			connection, TABLE_NAME_1, "typeVarchar", false);
 
 		Assert.assertEquals(
 			indexMetadatas.toString(), 0, indexMetadatas.size());
@@ -419,40 +424,40 @@ public class DBTest {
 
 	@Test
 	public void testAlterTableName() throws Exception {
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
-				"alter_table_name ", _TABLE_NAME_1, StringPool.SPACE,
+				"alter_table_name ", TABLE_NAME_1, StringPool.SPACE,
 				_TABLE_NAME_2));
 
-		Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_2));
+		Assert.assertTrue(dbInspector.hasTable(_TABLE_NAME_2));
 
-		_db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_2 + ")");
+		db.runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME_2 + ")");
 
-		Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME_1));
+		Assert.assertFalse(dbInspector.hasTable(TABLE_NAME_1));
 	}
 
 	@Test
 	public void testCopyTableRows() throws Exception {
 		_createTestTable(_TABLE_NAME_2);
 
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
-				"insert into ", _TABLE_NAME_1,
+				"insert into ", TABLE_NAME_1,
 				" (id, notNilColumn, typeString) values (1, '1', ",
 				"'testTable1Value1')"));
 
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
-				"insert into ", _TABLE_NAME_1,
+				"insert into ", TABLE_NAME_1,
 				" (id, notNilColumn, typeString) values (2, '2', ",
 				"'testTable1Value2')"));
 
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
-				"insert into ", _TABLE_NAME_1,
+				"insert into ", TABLE_NAME_1,
 				" (id, notNilColumn) values (3, '3')"));
 
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
 				"insert into ", _TABLE_NAME_2,
 				" (id, notNilColumn, typeString) values (1, '1', ",
@@ -464,13 +469,13 @@ public class DBTest {
 			columnNamesMap.put(columnName, columnName);
 		}
 
-		_db.copyTableRows(
-			_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
+		db.copyTableRows(
+			connection, TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
 			HashMapBuilder.put(
-				_dbInspector.normalizeName("typeString"), "'test'"
+				dbInspector.normalizeName("typeString"), "'test'"
 			).build());
 
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id asc");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -497,7 +502,7 @@ public class DBTest {
 
 	@Test
 	public void testCopyTableRowsDifferentColumnNames() throws Exception {
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
 				"create table ", _TABLE_NAME_2, " (id2 LONG not null primary ",
 				"key, notNilColumn2 VARCHAR(75) not null, nilColumn2 ",
@@ -507,24 +512,24 @@ public class DBTest {
 				"STRING null, typeText2 TEXT null, typeVarchar2 VARCHAR(75) ",
 				"null);"));
 
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
-				"insert into ", _TABLE_NAME_1,
+				"insert into ", TABLE_NAME_1,
 				" (id, notNilColumn, typeString) values (1, '1', ",
 				"'testTable1Value1')"));
 
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
-				"insert into ", _TABLE_NAME_1,
+				"insert into ", TABLE_NAME_1,
 				" (id, notNilColumn, typeString) values (2, '2', ",
 				"'testTable1Value2')"));
 
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
-				"insert into ", _TABLE_NAME_1,
+				"insert into ", TABLE_NAME_1,
 				" (id, notNilColumn) values (3, '3')"));
 
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
 				"insert into ", _TABLE_NAME_2,
 				" (id2, notNilColumn2, typeString2) values (1, '1', ",
@@ -536,13 +541,13 @@ public class DBTest {
 			columnNamesMap.put(columnName, columnName + "2");
 		}
 
-		_db.copyTableRows(
-			_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
+		db.copyTableRows(
+			connection, TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
 			HashMapBuilder.put(
-				_dbInspector.normalizeName("typeString2"), "'test'"
+				dbInspector.normalizeName("typeString2"), "'test'"
 			).build());
 
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id2 asc");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -571,18 +576,18 @@ public class DBTest {
 	public void testCopyTableStructure() throws Exception {
 		String[] indexColumnNames = {"typeVarchar", "typeBoolean"};
 
-		_addIndex(indexColumnNames);
+		addIndex(indexColumnNames);
 
-		_db.copyTableStructure(_connection, _TABLE_NAME_1, _TABLE_NAME_2);
+		db.copyTableStructure(connection, TABLE_NAME_1, _TABLE_NAME_2);
 
 		boolean supportsDuplicatedIndexName = ReflectionTestUtil.invoke(
-			_db, "isSupportsDuplicatedIndexName", new Class<?>[0]);
+			db, "isSupportsDuplicatedIndexName", new Class<?>[0]);
 
-		Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_2));
-		Assert.assertFalse(_dbInspector.hasRows(_TABLE_NAME_2));
-		Assert.assertFalse(_dbInspector.isNullable(_TABLE_NAME_2, "id"));
+		Assert.assertTrue(dbInspector.hasTable(_TABLE_NAME_2));
+		Assert.assertFalse(dbInspector.hasRows(_TABLE_NAME_2));
+		Assert.assertFalse(dbInspector.isNullable(_TABLE_NAME_2, "id"));
 		Assert.assertFalse(
-			_dbInspector.isNullable(_TABLE_NAME_2, "notNilColumn"));
+			dbInspector.isNullable(_TABLE_NAME_2, "notNilColumn"));
 
 		String indexNamePrefix = StringPool.BLANK;
 
@@ -591,71 +596,70 @@ public class DBTest {
 		}
 
 		Assert.assertTrue(
-			_dbInspector.hasIndex(
-				_TABLE_NAME_2, indexNamePrefix + _INDEX_NAME));
+			dbInspector.hasIndex(_TABLE_NAME_2, indexNamePrefix + INDEX_NAME));
 
 		Assert.assertArrayEquals(
-			new String[] {_dbInspector.normalizeName("id")},
-			_db.getPrimaryKeyColumnNames(_connection, _TABLE_NAME_2));
+			new String[] {dbInspector.normalizeName("id")},
+			db.getPrimaryKeyColumnNames(connection, _TABLE_NAME_2));
 	}
 
 	@Test
 	public void testGetIndexes() throws Exception {
-		_addIndex(new String[] {"typeVarchar", "typeBoolean"});
+		addIndex(new String[] {"typeVarchar", "typeBoolean"});
 
 		List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
-			_db, "getIndexes",
+			db, "getIndexes",
 			new Class<?>[] {
 				Connection.class, String.class, String.class, boolean.class
 			},
-			_connection, _TABLE_NAME_1, "typeVarchar", false);
+			connection, TABLE_NAME_1, "typeVarchar", false);
 
 		for (IndexMetadata indexMetadata : indexMetadatas) {
 			Assert.assertEquals(
-				_dbInspector.normalizeName("IX_TEMP"),
+				dbInspector.normalizeName("IX_TEMP"),
 				indexMetadata.getIndexName());
 		}
 	}
 
 	@Test
 	public void testGetPrimaryKeyColumnNames() throws Exception {
-		_db.runSQL(_SQL_CREATE_TABLE_2);
+		db.runSQL(_SQL_CREATE_TABLE_2);
 
 		Assert.assertArrayEquals(
 			new String[] {
-				_dbInspector.normalizeName("id2"),
-				_dbInspector.normalizeName("id1")
+				dbInspector.normalizeName("id2"),
+				dbInspector.normalizeName("id1")
 			},
-			_db.getPrimaryKeyColumnNames(_connection, _TABLE_NAME_2));
+			db.getPrimaryKeyColumnNames(connection, _TABLE_NAME_2));
 	}
 
 	@Test
 	public void testGetPrimaryKeyColumnNamesIncorrectOrder() throws Exception {
-		_db.runSQL(_SQL_CREATE_TABLE_2);
+		db.runSQL(_SQL_CREATE_TABLE_2);
 
 		Assert.assertFalse(
 			Arrays.equals(
 				new String[] {
-					_dbInspector.normalizeName("id1"),
-					_dbInspector.normalizeName("id2")
+					dbInspector.normalizeName("id1"),
+					dbInspector.normalizeName("id2")
 				},
-				_db.getPrimaryKeyColumnNames(_connection, _TABLE_NAME_2)));
+				db.getPrimaryKeyColumnNames(connection, _TABLE_NAME_2)));
 	}
 
 	@Test
 	public void testRenameTables() throws Exception {
-		_db.runSQL(_SQL_CREATE_TABLE_2);
+		db.runSQL(_SQL_CREATE_TABLE_2);
 
-		_db.renameTables(
-			_connection, new ObjectValuePair<>(_TABLE_NAME_1, _TABLE_NAME_3),
-			new ObjectValuePair<>(_TABLE_NAME_2, _TABLE_NAME_1),
+		db.renameTables(
+			connection, new ObjectValuePair<>(TABLE_NAME_1, _TABLE_NAME_3),
+			new ObjectValuePair<>(_TABLE_NAME_2, TABLE_NAME_1),
 			new ObjectValuePair<>(_TABLE_NAME_3, _TABLE_NAME_2));
 
-		Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_1));
-		Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_2));
+		Assert.assertTrue(dbInspector.hasTable(TABLE_NAME_1));
+		Assert.assertTrue(dbInspector.hasTable(_TABLE_NAME_2));
 
-		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME_1, "id1"));
-		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME_2, "id"));
+		Assert.assertTrue(dbInspector.hasColumn(TABLE_NAME_1, "id1"));
+		Assert.assertTrue(dbInspector.hasColumn(_TABLE_NAME_2, "id"));
 	}
 
 	@Test
@@ -663,31 +667,30 @@ public class DBTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.dao.db.BaseDB", LoggerTestUtil.OFF)) {
 
-			_db.renameTables(
-				_connection,
-				new ObjectValuePair<>(_TABLE_NAME_1, _TABLE_NAME_3),
-				new ObjectValuePair<>(_TABLE_NAME_2, _TABLE_NAME_1));
+			db.renameTables(
+				connection, new ObjectValuePair<>(TABLE_NAME_1, _TABLE_NAME_3),
+				new ObjectValuePair<>(_TABLE_NAME_2, TABLE_NAME_1));
 
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_1));
-			Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME_2));
-			Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME_3));
+			Assert.assertTrue(dbInspector.hasTable(TABLE_NAME_1));
+			Assert.assertFalse(dbInspector.hasTable(_TABLE_NAME_2));
+			Assert.assertFalse(dbInspector.hasTable(_TABLE_NAME_3));
 		}
 	}
 
 	@Test
 	public void testSyncTables() throws Exception {
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
-				"insert into ", _TABLE_NAME_1,
+				"insert into ", TABLE_NAME_1,
 				" (id, notNilColumn, typeString) values (1, '1', ",
 				"'testValueA')"));
 
 		_createTestTable(_TABLE_NAME_2);
 
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
 				"insert into ", _TABLE_NAME_2,
 				" (id, notNilColumn, typeString) values (1, '1', ",
@@ -699,31 +702,31 @@ public class DBTest {
 			columnNamesMap.put(columnName, columnName);
 		}
 
-		try (AutoCloseable autoCloseable = _db.syncTables(
-				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
+		try (AutoCloseable autoCloseable = db.syncTables(
+				connection, TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
 				HashMapBuilder.put(
-					_dbInspector.normalizeName("typeString"), "'test'"
+					dbInspector.normalizeName("typeString"), "'test'"
 				).build())) {
 
-			_db.runSQL(
+			db.runSQL(
 				StringBundler.concat(
-					"insert into ", _TABLE_NAME_1,
+					"insert into ", TABLE_NAME_1,
 					" (id, notNilColumn, typeString) values (2, '2', ",
 					"'testValueB')"));
 
-			_db.runSQL(
+			db.runSQL(
 				StringBundler.concat(
-					"insert into ", _TABLE_NAME_1,
+					"insert into ", TABLE_NAME_1,
 					" (id, notNilColumn) values (3, '3')"));
 
-			_db.runSQL("delete from " + _TABLE_NAME_1 + " where id = 1");
+			db.runSQL("delete from " + TABLE_NAME_1 + " where id = 1");
 
-			_db.runSQL(
-				"update " + _TABLE_NAME_1 +
+			db.runSQL(
+				"update " + TABLE_NAME_1 +
 					" set typeString = NULL where id = 2");
 		}
 
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -743,7 +746,7 @@ public class DBTest {
 
 	@Test
 	public void testSyncTablesDifferentColumnNames() throws Exception {
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
 				"create table ", _TABLE_NAME_2, " (id2 LONG not null primary ",
 				"key, notNilColumn2 VARCHAR(75) not null, nilColumn2 ",
@@ -755,13 +758,13 @@ public class DBTest {
 				"typeVarcharDefault2 VARCHAR(10) default 'testValue' not ",
 				"null);"));
 
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
-				"insert into ", _TABLE_NAME_1,
+				"insert into ", TABLE_NAME_1,
 				" (id, notNilColumn, typeString) values (1, '1', ",
 				"'testValueA')"));
 
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
 				"insert into ", _TABLE_NAME_2,
 				" (id2, notNilColumn2, typeString2) values (1, '1', ",
@@ -773,31 +776,31 @@ public class DBTest {
 			columnNamesMap.put(columnName, columnName + "2");
 		}
 
-		try (AutoCloseable autoCloseable = _db.syncTables(
-				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
+		try (AutoCloseable autoCloseable = db.syncTables(
+				connection, TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
 				HashMapBuilder.put(
-					_dbInspector.normalizeName("typeString2"), "'test'"
+					dbInspector.normalizeName("typeString2"), "'test'"
 				).build())) {
 
-			_db.runSQL(
+			db.runSQL(
 				StringBundler.concat(
-					"insert into ", _TABLE_NAME_1,
+					"insert into ", TABLE_NAME_1,
 					" (id, notNilColumn, typeString) values (2, '2', ",
 					"'testValueB')"));
 
-			_db.runSQL(
+			db.runSQL(
 				StringBundler.concat(
-					"insert into ", _TABLE_NAME_1,
+					"insert into ", TABLE_NAME_1,
 					" (id, notNilColumn) values (3, '3')"));
 
-			_db.runSQL("delete from " + _TABLE_NAME_1 + " where id = 1");
+			db.runSQL("delete from " + TABLE_NAME_1 + " where id = 1");
 
-			_db.runSQL(
-				"update " + _TABLE_NAME_1 +
+			db.runSQL(
+				"update " + TABLE_NAME_1 +
 					" set typeString = NULL where id = 2");
 		}
 
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id2");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -815,17 +818,25 @@ public class DBTest {
 		}
 	}
 
-	private void _addIndex(String[] columnNames) {
+	protected void addIndex(String[] columnNames) {
 		List<IndexMetadata> indexMetadatas = Arrays.asList(
-			new IndexMetadata(_INDEX_NAME, _TABLE_NAME_1, false, columnNames));
+			new IndexMetadata(INDEX_NAME, TABLE_NAME_1, false, columnNames));
 
 		ReflectionTestUtil.invoke(
-			_db, "addIndexes", new Class<?>[] {Connection.class, List.class},
-			_connection, indexMetadatas);
+			db, "addIndexes", new Class<?>[] {Connection.class, List.class},
+			connection, indexMetadatas);
 	}
 
+	protected static final String INDEX_NAME = "IX_TEMP";
+
+	protected static final String TABLE_NAME_1 = "DBTest1";
+
+	protected static Connection connection;
+	protected static DB db;
+	protected static DBInspector dbInspector;
+
 	private void _createTestTable(String tableName) throws Exception {
-		_db.runSQL(
+		db.runSQL(
 			StringBundler.concat(
 				"create table ", tableName, " (id LONG not null primary key, ",
 				"notNilColumn VARCHAR(75) not null, nilColumn VARCHAR(75) ",
@@ -841,16 +852,16 @@ public class DBTest {
 		String tableName, String[] columnNames) {
 
 		return ReflectionTestUtil.invoke(
-			_db, "getIndexes",
+			db, "getIndexes",
 			new Class<?>[] {
 				Connection.class, String.class, String.class, boolean.class
 			},
-			_connection, tableName, columnNames[0], false);
+			connection, tableName, columnNames[0], false);
 	}
 
 	private void _validateIndex(String[] columnNames) throws Exception {
 		List<IndexMetadata> indexMetadatas = _getIndexes(
-			_TABLE_NAME_1, columnNames);
+			TABLE_NAME_1, columnNames);
 
 		Assert.assertEquals(
 			indexMetadatas.toString(), 1, indexMetadatas.size());
@@ -858,15 +869,13 @@ public class DBTest {
 		IndexMetadata indexMetadata = indexMetadatas.get(0);
 
 		Assert.assertEquals(
-			_dbInspector.normalizeName(_INDEX_NAME),
+			dbInspector.normalizeName(INDEX_NAME),
 			indexMetadata.getIndexName());
 
 		Assert.assertArrayEquals(
 			ArrayUtil.sortedUnique(columnNames),
 			ArrayUtil.sortedUnique(indexMetadata.getColumnNames()));
 	}
-
-	private static final String _INDEX_NAME = "IX_TEMP";
 
 	private static final String _SQL_CREATE_TABLE_2 =
 		"create table " + DBTest._TABLE_NAME_2 +
@@ -878,14 +887,8 @@ public class DBTest {
 		"typeString", "typeText", "typeVarchar"
 	};
 
-	private static final String _TABLE_NAME_1 = "DBTest1";
-
 	private static final String _TABLE_NAME_2 = "DBTest2";
 
 	private static final String _TABLE_NAME_3 = "DBTest3";
-
-	private static Connection _connection;
-	private static DB _db;
-	private static DBInspector _dbInspector;
 
 }

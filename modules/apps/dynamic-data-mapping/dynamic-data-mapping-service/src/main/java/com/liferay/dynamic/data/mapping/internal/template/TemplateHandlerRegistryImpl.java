@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -139,11 +138,6 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 	@Reference
 	private Language _language;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate)"
-	)
-	private ModelResourcePermission<DDMTemplate> _modelResourcePermission;
 
 	@Reference
 	private Portal _portal;

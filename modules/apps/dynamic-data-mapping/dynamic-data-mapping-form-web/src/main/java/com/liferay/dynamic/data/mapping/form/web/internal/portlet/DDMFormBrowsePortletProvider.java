@@ -11,13 +11,11 @@ import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 
-import javax.portlet.Portlet;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -48,11 +46,6 @@ public class DDMFormBrowsePortletProvider extends BasePortletProvider {
 	public Action[] getSupportedActions() {
 		return _supportedActions;
 	}
-
-	@Reference(
-		target = "(javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER + ")"
-	)
-	private Portlet _portlet;
 
 	private final Action[] _supportedActions = {Action.BROWSE};
 

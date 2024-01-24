@@ -246,11 +246,6 @@ public class DDMFormInstanceRecordUADDisplay
 	private final Map<Long, DDMFormInstanceRecordUADUserCache>
 		_ddmFormInstanceRecordUADUserCacheMap = new HashMap<>();
 
-	@Reference(
-		target = "(component.name=com.liferay.dynamic.data.mapping.uad.display.DDMFormInstanceUADDisplay)"
-	)
-	private UADDisplay<?> _ddmFormInstanceUADDisplay;
-
 	@Reference
 	private Language _language;
 

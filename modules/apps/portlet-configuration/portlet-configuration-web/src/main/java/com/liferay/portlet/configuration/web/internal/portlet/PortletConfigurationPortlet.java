@@ -13,6 +13,8 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -614,6 +616,17 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			themeDisplay.getLayout(),
 			ServiceContextFactory.getInstance(actionRequest),
 			themeDisplay.getUserId());
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196847") &&
+			(resourcePrimKeys.length > 1)) {
+
+			SessionMessages.add(
+				actionRequest, "requestProcessed",
+				_language.format(
+					themeDisplay.getLocale(),
+					"x-permissions-were-updated-successfully",
+					resourcePrimKeys.length));
+		}
 	}
 
 	@Activate
@@ -1114,6 +1127,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

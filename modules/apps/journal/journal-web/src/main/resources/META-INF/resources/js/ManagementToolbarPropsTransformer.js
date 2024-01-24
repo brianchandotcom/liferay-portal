@@ -84,43 +84,29 @@ export default function propsTransformer({
 		);
 	};
 
-	const moveEntries = () => {
-		let entrySelectorNodes = document.querySelectorAll(
+	const rowsValues = (selector) => {
+		const selectorNodes = document.querySelectorAll(
 			'input[type="checkbox"][name="' +
-				`${portletNamespace}rowIdsJournalArticle` +
-				'"], input[type="checkbox"][name="' +
-				`${portletNamespace}rowIdsJournalFolder` +
+				`${portletNamespace}${selector}` +
 				'"]'
 		);
 
-		const articleIds = Array.from(entrySelectorNodes)
+		return Array.from(selectorNodes)
 			.filter(
 				(node) =>
 					node.checked &&
-					node.name === `${portletNamespace}rowIdsJournalArticle`
+					node.name === `${portletNamespace}${selector}`
 			)
 			.map((node) => node.value)
 			.join(',');
+	};
 
-		const folderIds = Array.from(entrySelectorNodes)
-			.filter(
-				(node) =>
-					node.checked &&
-					node.name === `${portletNamespace}rowIdsJournalFolder`
-			)
-			.map((node) => node.value)
-			.join(',');
-
+	const moveEntries = () => {
 		const url = new URL(moveArticlesAndFoldersURL);
 
-		url.searchParams.set(
-			`${portletNamespace}rowIdsJournalArticle`,
-			articleIds
-		);
-		url.searchParams.set(
-			`${portletNamespace}rowIdsJournalFolder`,
-			folderIds
-		);
+		['rowIdsJournalArticle', 'rowIdsJournalFolder'].forEach((id) => {
+			url.searchParams.set(`${portletNamespace}${id}`, rowsValues(id));
+		});
 
 		navigate(url);
 	};

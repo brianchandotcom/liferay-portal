@@ -133,7 +133,15 @@ export function ModalAddObjectField({
 				objectFieldBusinessTypes: ObjectFieldBusinessType[];
 			};
 
-			setObjectFieldBusinessTypes(objectFieldBusinessTypes);
+			setObjectFieldBusinessTypes(
+				objectFieldBusinessTypes.filter((objectFieldBusinessType) => {
+					if (
+						objectFieldBusinessType.businessType !== 'Relationship'
+					) {
+						return objectFieldBusinessType;
+					}
+				})
+			);
 		};
 
 		makeFetch();

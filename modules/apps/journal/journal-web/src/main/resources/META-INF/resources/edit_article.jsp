@@ -286,12 +286,13 @@ journalEditArticleDisplayContext.setViewAttributes();
 											sb.append(LanguageUtil.get(request, "the-friendly-url-may-be-modified-to-ensure-uniqueness"));
 											%>
 
-											<clay:icon
-												cssClass="lfr-portal-tooltip"
-												symbol="question-circle-full"
-												title="<%= sb.toString() %>"
-											/>
 										</label>
+
+										<span class="d-inline-block lfr-portal-tooltip text-4 text-secondary" tabindex="0" title="<%= sb.toString() %>">
+											<clay:icon
+												symbol="question-circle-full"
+											/>
+										</span>
 
 										<liferay-friendly-url:input
 											className="<%= JournalArticle.class.getName() %>"

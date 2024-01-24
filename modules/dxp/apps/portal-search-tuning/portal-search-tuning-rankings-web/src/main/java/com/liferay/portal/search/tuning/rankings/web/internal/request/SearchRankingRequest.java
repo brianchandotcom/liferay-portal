@@ -7,6 +7,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.request;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
@@ -86,6 +87,15 @@ public class SearchRankingRequest {
 		return searchRankingResponse;
 	}
 
+	private void _addFilterByEverythingScope(BooleanQuery booleanQuery) {
+		booleanQuery.addFilterQueryClauses(
+			_queries.term(
+				RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
+				StringPool.BLANK),
+			_queries.term(
+				RankingFields.GROUP_EXTERNAL_REFERENCE_CODE, StringPool.BLANK));
+	}
+
 	private BooleanQuery _getBooleanQuery() {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -118,19 +128,17 @@ public class SearchRankingRequest {
 						StringPool.BLANK));
 			}
 			else {
-				booleanQuery.addFilterQueryClauses(
-					_queries.term(
-						RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
-						StringPool.BLANK),
-					_queries.term(
-						RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
-						StringPool.BLANK));
+				_addFilterByEverythingScope(booleanQuery);
 			}
 		}
 
 		if (!Objects.equals(status, "all")) {
 			booleanQuery.addFilterQueryClauses(
 				_queries.term(RankingFields.STATUS, status));
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-6368")) {
+			_addFilterByEverythingScope(booleanQuery);
 		}
 
 		return booleanQuery;

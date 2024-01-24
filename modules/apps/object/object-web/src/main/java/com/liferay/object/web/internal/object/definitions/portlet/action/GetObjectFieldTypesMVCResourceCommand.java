@@ -5,7 +5,6 @@
 
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectDefinition;
@@ -18,7 +17,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -63,11 +61,7 @@ public class GetObjectFieldBusinessTypesMVCResourceCommand
 							getObjectFieldBusinessTypes(),
 						objectFieldBusinessType ->
 							objectFieldBusinessType.isVisible(
-								objectDefinition) &&
-							!StringUtil.equals(
-								objectFieldBusinessType.getName(),
-								ObjectFieldConstants.
-									BUSINESS_TYPE_RELATIONSHIP)))));
+								objectDefinition)))));
 	}
 
 	@Reference

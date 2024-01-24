@@ -3,254 +3,268 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragment": {
-						"key": "back-button"
-					},
-					"fragmentConfig": {
-						"buttonSize": "btn-sm",
-						"inverted": false,
-						"style": "neutral",
-						"type": "ghost",
-						"uppercase": false
-					},
-					"fragmentFields": [
-						{
-							"id": "link",
-							"value": {
-								"fragmentLink": {
-									"value": {
-										"href": {
-											"mapping": {
-												"itemReference": {
-													"className": "com.liferay.portal.kernel.model.Layout",
-													"fields": [
-														{
-															"fieldName": "friendlyURL",
-															"fieldValue": "/home"
-														},
-														{
-															"fieldName": "privatePage",
-															"fieldValue": "false"
-														},
-														{
-															"fieldName": "siteKey",
-															"fieldValue": "[$GROUP_KEY$]"
-														}
-													]
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					],
 					"fragmentStyle": {
-						"marginBottom": "3"
+						"marginLeft": "7",
+						"marginRight": "7"
 					},
-					"indexed": true
-				},
-				"type": "Fragment"
-			},
-			{
-				"definition": {
-					"fragment": {
-						"key": "DIALECT-dialect-text"
-					},
-					"fragmentConfig": {
-						"textType": "display-3",
-						"truncateText": false
-					},
-					"fragmentFields": [
-						{
-							"id": "element-text",
-							"value": {
-								"fragmentLink": {
-								},
-								"text": {
-									"mapping": {
-										"fieldKey": "BlogsEntry_title",
-										"itemReference": {
-											"contextSource": "DisplayPageItem"
-										}
-									}
-								}
-							}
-						}
-					],
-					"fragmentStyle": {
-						"fontWeight": "fontWeightBold",
-						"marginBottom": "3"
-					},
-					"indexed": true
-				},
-				"type": "Fragment"
-			},
-			{
-				"definition": {
-					"fragment": {
-						"key": "DIALECT-dialect-text"
-					},
-					"fragmentConfig": {
-						"textType": "text-paragraph-lg",
-						"truncateText": false
-					},
-					"fragmentFields": [
-						{
-							"id": "element-text",
-							"value": {
-								"fragmentLink": {
-								},
-								"text": {
-									"mapping": {
-										"fieldKey": "BlogsEntry_content",
-										"itemReference": {
-											"contextSource": "DisplayPageItem"
-										}
-									}
-								}
-							}
-						}
-					],
-					"indexed": true
-				},
-				"type": "Fragment"
-			},
-			{
-				"definition": {
-					"fragment": {
-						"key": "BASIC_COMPONENT-separator"
-					},
-					"fragmentConfig": {
-						"bottomSpacing": "3",
-						"separatorColor": ""
-					},
-					"fragmentFields": [
-					],
-					"fragmentStyle": {
-						"marginTop": "9"
-					},
-					"indexed": true
-				},
-				"type": "Fragment"
-			},
-			{
-				"definition": {
 					"indexed": true,
 					"layout": {
-						"align": "Center",
-						"contentDisplay": "FlexRow"
+						"marginLeft": 8,
+						"marginRight": 8
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
-							"cssClasses": [
-								"sticker-lg",
-								"user-icon-color-2",
-								"sticker-overlay",
-								"sticker-circle",
-								"position-relative"
-							],
 							"fragment": {
-								"key": "BASIC_COMPONENT-image"
+								"key": "back-button"
 							},
 							"fragmentConfig": {
-								"imageSize": "w-100"
+								"buttonSize": "btn-sm",
+								"inverted": false,
+								"style": "neutral",
+								"type": "ghost",
+								"uppercase": false
 							},
 							"fragmentFields": [
 								{
-									"id": "image-square",
+									"id": "link",
 									"value": {
-										"fragmentImage": {
-											"url": {
-												"mapping": {
-													"fieldKey": "BlogsEntry_authorProfileImage",
-													"itemReference": {
-														"contextSource": "DisplayPageItem"
+										"fragmentLink": {
+											"value": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/home"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																},
+																{
+																	"fieldName": "siteKey",
+																	"fieldValue": "[$GROUP_KEY$]"
+																}
+															]
+														}
 													}
 												}
 											}
-										},
-										"fragmentLink": {
 										}
 									}
 								}
 							],
 							"fragmentStyle": {
-								"backgroundFragmentImage": {
+								"marginBottom": "3"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "DIALECT-dialect-text"
+							},
+							"fragmentConfig": {
+								"textType": "display-3",
+								"truncateText": false
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"mapping": {
+												"fieldKey": "BlogsEntry_title",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"fontWeight": "fontWeightBold",
+								"marginBottom": "3"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "DIALECT-dialect-text"
+							},
+							"fragmentConfig": {
+								"textType": "text-paragraph-lg",
+								"truncateText": false
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"mapping": {
+												"fieldKey": "BlogsEntry_content",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-separator"
+							},
+							"fragmentConfig": {
+								"bottomSpacing": "3",
+								"separatorColor": ""
+							},
+							"fragmentFields": [
+							],
+							"fragmentStyle": {
+								"marginTop": "9"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"align": "Center",
+								"contentDisplay": "FlexRow"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"cssClasses": [
+										"sticker-lg",
+										"user-icon-color-2",
+										"sticker-overlay",
+										"sticker-circle",
+										"position-relative"
+									],
+									"fragment": {
+										"key": "BASIC_COMPONENT-image"
+									},
+									"fragmentConfig": {
+										"imageSize": "w-100"
+									},
+									"fragmentFields": [
+										{
+											"id": "image-square",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"mapping": {
+															"fieldKey": "BlogsEntry_authorProfileImage",
+															"itemReference": {
+																"contextSource": "DisplayPageItem"
+															}
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginLeft": "4"
+									},
+									"indexed": true
 								},
-								"marginLeft": "4"
+								"type": "Fragment"
 							},
-							"indexed": true
-						},
-						"type": "Fragment"
-					},
-					{
-						"definition": {
-							"fragment": {
-								"key": "DIALECT-dialect-text"
-							},
-							"fragmentConfig": {
-								"textType": "text-paragraph",
-								"truncateText": false
-							},
-							"fragmentFields": [
-								{
-									"id": "element-text",
-									"value": {
-										"fragmentLink": {
-										},
-										"text": {
-											"mapping": {
-												"fieldKey": "BlogsEntry_authorName",
-												"itemReference": {
-													"contextSource": "DisplayPageItem"
+							{
+								"definition": {
+									"fragment": {
+										"key": "DIALECT-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "text-paragraph",
+										"truncateText": false
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"mapping": {
+														"fieldKey": "BlogsEntry_authorName",
+														"itemReference": {
+															"contextSource": "DisplayPageItem"
+														}
+													}
 												}
 											}
 										}
-									}
-								}
-							],
-							"fragmentStyle": {
-								"marginLeft": "2"
+									],
+									"fragmentStyle": {
+										"marginLeft": "2"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
 							},
-							"indexed": true
-						},
-						"type": "Fragment"
-					},
-					{
-						"definition": {
-							"fragment": {
-								"key": "DIALECT-dialect-text"
-							},
-							"fragmentConfig": {
-								"textType": "text-paragraph",
-								"truncateText": false
-							},
-							"fragmentFields": [
-								{
-									"id": "element-text",
-									"value": {
-										"fragmentLink": {
-										},
-										"text": {
-											"mapping": {
-												"fieldKey": "BlogsEntry_displayDate",
-												"itemReference": {
-													"contextSource": "DisplayPageItem"
+							{
+								"definition": {
+									"fragment": {
+										"key": "DIALECT-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "text-paragraph",
+										"truncateText": false
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"mapping": {
+														"fieldKey": "BlogsEntry_displayDate",
+														"itemReference": {
+															"contextSource": "DisplayPageItem"
+														}
+													}
 												}
 											}
 										}
-									}
-								}
-							],
-							"fragmentStyle": {
-								"marginLeft": "6"
-							},
-							"indexed": true
-						},
-						"type": "Fragment"
+									],
+									"fragmentStyle": {
+										"marginLeft": "6"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
 					}
 				],
 				"type": "Section"

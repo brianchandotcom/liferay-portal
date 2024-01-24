@@ -184,6 +184,16 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 				RankingFields.STATUS,
 				ResultRankingsConstants.STATUS_NOT_APPLICABLE));
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-6368")) {
+			booleanQuery.addFilterQueryClauses(
+				_queries.term(
+					RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
+					StringPool.BLANK),
+				_queries.term(
+					RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
+					StringPool.BLANK));
+		}
+
 		return booleanQuery;
 	}
 

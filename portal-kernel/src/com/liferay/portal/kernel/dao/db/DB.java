@@ -78,7 +78,7 @@ public interface DB {
 
 	public List<Index> getIndexes(Connection connection) throws SQLException;
 
-	public ResultSet getIndexResultSet(Connection connection, String tableName)
+	public ResultSet getIndexResultSet(Connection connection, String tableName, Boolean onlyUnique)
 		throws SQLException;
 
 	public int getMajorVersion();

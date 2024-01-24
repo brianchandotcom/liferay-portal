@@ -201,7 +201,7 @@ public class DBInspector {
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
 		try (ResultSet resultSet = db.getIndexResultSet(
-				_connection, normalizeName(tableName, databaseMetaData))) {
+				_connection, normalizeName(tableName, databaseMetaData), false)) {
 
 			while (resultSet.next()) {
 				if (Objects.equals(

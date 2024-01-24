@@ -163,7 +163,8 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
-	public ResultSet getIndexResultSet(Connection connection, String tableName)
+	public ResultSet getIndexResultSet(
+			Connection connection, String tableName, Boolean onlyUnique)
 		throws SQLException {
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -171,8 +172,8 @@ public class OracleDB extends BaseDB {
 		DBInspector dbInspector = new DBInspector(connection);
 
 		return databaseMetaData.getIndexInfo(
-			dbInspector.getCatalog(), dbInspector.getSchema(), tableName, false,
-			true);
+			dbInspector.getCatalog(), dbInspector.getSchema(), tableName,
+			onlyUnique, true);
 	}
 
 	@Override

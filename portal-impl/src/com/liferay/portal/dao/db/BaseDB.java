@@ -342,7 +342,7 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
-	public ResultSet getIndexResultSet(Connection connection, String tableName)
+	public ResultSet getIndexResultSet(Connection connection, String tableName , Boolean onlyUnique)
 		throws SQLException {
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -350,7 +350,7 @@ public abstract class BaseDB implements DB {
 		DBInspector dbInspector = new DBInspector(connection);
 
 		return databaseMetaData.getIndexInfo(
-			dbInspector.getCatalog(), dbInspector.getSchema(), tableName, false,
+			dbInspector.getCatalog(), dbInspector.getSchema(), tableName, onlyUnique,
 			false);
 	}
 

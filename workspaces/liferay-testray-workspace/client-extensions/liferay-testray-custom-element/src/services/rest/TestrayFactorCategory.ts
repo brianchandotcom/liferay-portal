@@ -41,8 +41,8 @@ class TestrayFactorCategoryRest extends Rest<
 
 			if (response?.items) {
 				factorCategoryItems.push(
-					[...response.items].sort(
-						(a, b) => a.name.localeCompare(b.name)
+					[...response.items].sort((a, b) =>
+						a.name.localeCompare(b.name)
 					)
 				);
 			}

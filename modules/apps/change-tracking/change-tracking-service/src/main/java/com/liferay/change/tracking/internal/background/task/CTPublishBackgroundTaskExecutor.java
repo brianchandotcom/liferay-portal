@@ -109,7 +109,7 @@ public class CTPublishBackgroundTaskExecutor
 		if (!_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
 				fromCTCollection.getSchemaVersionId())) {
 
-			throw new CTPublishConflictException(
+			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"Unable to publish from ", fromCTCollectionName, " to ",
 					toCTCollectionName,

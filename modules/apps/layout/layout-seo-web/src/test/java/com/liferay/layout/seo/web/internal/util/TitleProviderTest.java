@@ -7,6 +7,7 @@ package com.liferay.layout.seo.web.internal.util;
 
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
+import com.liferay.layout.utility.page.kernel.provider.util.LayoutUtilityPageEntryLayoutProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -26,15 +27,20 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Cristina González
@@ -45,6 +51,11 @@ public class TitleProviderTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@AfterClass
+	public static void tearDownClass() {
+		_layoutUtilityPageEntryLayoutProviderUtilMockedStatic.close();
+	}
 
 	@Before
 	public void setUp() {
@@ -108,7 +119,9 @@ public class TitleProviderTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
-			_getThemeDisplay(companyName, groupDescriptiveName, htmlTitle));
+			_getThemeDisplay(
+				companyName, groupDescriptiveName, htmlTitle,
+				HttpServletResponse.SC_OK));
 
 		Assert.assertEquals(
 			StringUtil.merge(
@@ -117,21 +130,34 @@ public class TitleProviderTest {
 			_titleProvider.getTitle(mockHttpServletRequest));
 	}
 
-	private ThemeDisplay _getThemeDisplay(
-			String companyName, String groupDescriptiveName, String htmlTitle)
+	@Test
+	public void testGetTitleStatusErrorPage() throws PortalException {
+		String htmlTitle = RandomTestUtil.randomString();
+		String groupDescriptiveName = RandomTestUtil.randomString();
+
+		_setUpLayoutUtilityPageEntryLayoutProviderUtil(
+			groupDescriptiveName, htmlTitle);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+		String companyName = RandomTestUtil.randomString();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY,
+			_getThemeDisplay(
+				companyName, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				HttpServletResponse.SC_NOT_FOUND));
+
+		Assert.assertEquals(
+			StringUtil.merge(
+				new String[] {htmlTitle, groupDescriptiveName, companyName},
+				_SEPARATOR),
+			_titleProvider.getTitle(mockHttpServletRequest));
+	}
+
+	private Layout _getLayout(String groupDescriptiveName, String htmlTitle)
 		throws PortalException {
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		Company company = Mockito.mock(Company.class);
-
-		Mockito.when(
-			company.getName()
-		).thenReturn(
-			companyName
-		);
-
-		themeDisplay.setCompany(company);
 
 		Layout layout = Mockito.mock(Layout.class);
 
@@ -155,11 +181,54 @@ public class TitleProviderTest {
 			htmlTitle
 		);
 
-		themeDisplay.setLayout(layout);
+		return layout;
+	}
+
+	private ThemeDisplay _getThemeDisplay(
+			String companyName, String groupDescriptiveName, String htmlTitle,
+			int status)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Company company = Mockito.mock(Company.class);
+
+		Mockito.when(
+			company.getName()
+		).thenReturn(
+			companyName
+		);
+
+		themeDisplay.setCompany(company);
+
+		themeDisplay.setLayout(_getLayout(groupDescriptiveName, htmlTitle));
 
 		themeDisplay.setLocale(LocaleUtil.US);
 
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		mockHttpServletResponse.setStatus(status);
+
+		themeDisplay.setResponse(mockHttpServletResponse);
+
 		return themeDisplay;
+	}
+
+	private void _setUpLayoutUtilityPageEntryLayoutProviderUtil(
+			String groupDescriptiveName, String htmlTitle)
+		throws PortalException {
+
+		Layout layout = _getLayout(groupDescriptiveName, htmlTitle);
+
+		_layoutUtilityPageEntryLayoutProviderUtilMockedStatic.when(
+			() ->
+				LayoutUtilityPageEntryLayoutProviderUtil.
+					getDefaultLayoutUtilityPageEntryLayout(
+						Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			layout
+		);
 	}
 
 	private void _setUpPortalUtil() {
@@ -177,6 +246,10 @@ public class TitleProviderTest {
 	}
 
 	private static final String _SEPARATOR = " - ";
+
+	private static final MockedStatic<LayoutUtilityPageEntryLayoutProviderUtil>
+		_layoutUtilityPageEntryLayoutProviderUtilMockedStatic =
+			Mockito.mockStatic(LayoutUtilityPageEntryLayoutProviderUtil.class);
 
 	private TitleProvider _titleProvider;
 

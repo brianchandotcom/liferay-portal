@@ -30,7 +30,7 @@ import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.auth.BasicCredentialsProvider;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.ssl.ClientTlsStrategyBuilder;
-import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
+import org.apache.hc.client5.http.ssl.DefaultHostnameVerifier;
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.ssl.SSLContextBuilder;
 import org.apache.hc.core5.ssl.SSLContexts;
@@ -310,7 +310,7 @@ public class OpenSearchConnection {
 						).setSslContext(
 							_createSSLContext()
 						).setHostnameVerifier(
-							NoopHostnameVerifier.INSTANCE
+							new DefaultHostnameVerifier()
 						).build());
 				}
 

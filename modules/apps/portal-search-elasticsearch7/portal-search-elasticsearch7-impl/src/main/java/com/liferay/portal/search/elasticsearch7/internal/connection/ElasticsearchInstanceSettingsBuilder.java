@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
@@ -273,6 +274,10 @@ public class ElasticsearchInstanceSettingsBuilder {
 		_configurePaths();
 
 		_configureTestMode();
+
+		if (JavaDetector.isJDK21()) {
+			put("thread_pool.warmer.max", "20");
+		}
 
 		_disableGeoipDownloader();
 

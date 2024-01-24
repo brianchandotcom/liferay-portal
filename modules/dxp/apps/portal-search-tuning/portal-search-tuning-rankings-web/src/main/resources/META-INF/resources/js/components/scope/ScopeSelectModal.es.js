@@ -9,11 +9,10 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-import NamespaceContext from '../../NamespaceContext';
 import {fetchResponse} from '../../utils/api.es';
-import {DELTAS, SCOPE_TYPES} from '../../utils/constants.es';
+import {DELTAS} from '../../utils/constants.es';
 
 /**
  * Modal that opens when user clicks on "View More" in ScopeSelect dropdown.
@@ -28,10 +27,7 @@ const ScopeSelectModal = ({
 	onSubmit,
 	selected = '',
 	title,
-	type = SCOPE_TYPES.SITE,
 }) => {
-	const {namespace} = useContext(NamespaceContext);
-
 	const [activePage, setActivePage] = useState(1);
 	const [delta, setDelta] = useState(10);
 	const [resource, setResource] = useState({});
@@ -41,12 +37,7 @@ const ScopeSelectModal = ({
 	useEffect(() => {
 		setLoading(true);
 
-		const paramPrefix = type === SCOPE_TYPES.SITE ? namespace : '';
-
-		fetchResponse(fetchItemsUrl, {
-			[`${paramPrefix}page`]: activePage,
-			[`${paramPrefix}pageSize`]: delta,
-		})
+		fetchResponse(fetchItemsUrl, {page: activePage, pageSize: delta})
 			.then((response) => {
 				setResource(response);
 			})
@@ -56,7 +47,7 @@ const ScopeSelectModal = ({
 			.finally(() => {
 				setLoading(false);
 			});
-	}, [activePage, delta, fetchItemsUrl, namespace, type]);
+	}, [activePage, delta, fetchItemsUrl]);
 
 	/**
 	 * Handles what is displayed depending on loading/error/results/no results.
@@ -101,10 +92,9 @@ const ScopeSelectModal = ({
 								</ClayTable.Cell>
 
 								<ClayTable.Cell expanded headingCell>
-									{type === SCOPE_TYPES.SXP_BLUEPRINT &&
-										Liferay.Language.get(
-											'external-reference-code'
-										)}
+									{Liferay.Language.get(
+										'external-reference-code'
+									)}
 								</ClayTable.Cell>
 							</ClayTable.Row>
 						</ClayTable.Head>
@@ -117,8 +107,7 @@ const ScopeSelectModal = ({
 									</ClayTable.Cell>
 
 									<ClayTable.Cell>
-										{type === SCOPE_TYPES.SXP_BLUEPRINT &&
-											item.externalReferenceCode}
+										{item.externalReferenceCode}
 									</ClayTable.Cell>
 
 									<ClayTable.Cell align="right">
@@ -194,10 +183,8 @@ export default function ({
 	fetchItemsUrl,
 	locator,
 	onSubmit,
-	paramPrefix,
 	selected,
 	title,
-	type,
 }) {
 	const {observer, onOpenChange, open} = useModal();
 
@@ -215,10 +202,8 @@ export default function ({
 					locator={locator}
 					observer={observer}
 					onSubmit={_handleSubmit}
-					paramPrefix={paramPrefix}
 					selected={selected}
 					title={title}
-					type={type}
 				/>
 			)}
 

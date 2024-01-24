@@ -9,11 +9,9 @@ import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
-import React, {useContext, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 
-import NamespaceContext from '../../NamespaceContext';
 import {fetchResponse} from '../../utils/api.es';
-import {SCOPE_TYPES} from '../../utils/constants.es';
 import {sub} from '../../utils/language.es';
 import ScopeSelectModal from './ScopeSelectModal.es';
 
@@ -41,10 +39,8 @@ const ScopeSelect = ({
 	onBlur,
 	title,
 	touched = false,
-	type = SCOPE_TYPES.SITE,
+	type,
 }) => {
-	const {namespace} = useContext(NamespaceContext);
-
 	const [activeDropdown, setActiveDropdown] = useState(false);
 	const [displayName, setDisplayName] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -56,11 +52,9 @@ const ScopeSelect = ({
 	const _fetchDropdownItems = () => {
 		setLoading(true);
 
-		const paramPrefix = type === SCOPE_TYPES.SITE ? namespace : '';
-
 		fetchResponse(fetchItemsUrl, {
-			[`${paramPrefix}page`]: 1,
-			[`${paramPrefix}pageSize`]: 5,
+			page: 1,
+			pageSize: 5,
 		})
 			.then(({items}) => {
 				setResourceItems(items || []);
@@ -156,16 +150,14 @@ const ScopeSelect = ({
 										{item[locator.label]}
 									</div>
 
-									{type === SCOPE_TYPES.SXP_BLUEPRINT && (
-										<div className="list-group-text">
-											{sub(
-												Liferay.Language.get(
-													'external-reference-code-x'
-												),
-												[item.externalReferenceCode]
-											)}
-										</div>
-									)}
+									<div className="list-group-text">
+										{sub(
+											Liferay.Language.get(
+												'external-reference-code-x'
+											),
+											[item.externalReferenceCode]
+										)}
+									</div>
 								</ClayDropDown.Item>
 							)}
 						</ClayDropDown.Group>
@@ -185,7 +177,6 @@ const ScopeSelect = ({
 								onSubmit={_handleSelect}
 								selected={selected}
 								title={title}
-								type={type}
 							>
 								<ClayButton
 									className="w-100"

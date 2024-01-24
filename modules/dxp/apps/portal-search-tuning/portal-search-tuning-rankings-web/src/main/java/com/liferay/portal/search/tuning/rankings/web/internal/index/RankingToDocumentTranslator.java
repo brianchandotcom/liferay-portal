@@ -6,6 +6,7 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.tuning.rankings.index.Ranking;
 
 /**
  * @author André de Oliveira

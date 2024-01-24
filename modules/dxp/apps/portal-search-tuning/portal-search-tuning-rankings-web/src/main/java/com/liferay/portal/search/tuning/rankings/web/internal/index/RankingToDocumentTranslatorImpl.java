@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.tuning.rankings.index.Ranking;
 
 import java.util.Collection;
 import java.util.List;

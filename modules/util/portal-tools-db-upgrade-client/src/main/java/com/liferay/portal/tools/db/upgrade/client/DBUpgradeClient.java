@@ -27,11 +27,8 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -758,11 +755,12 @@ public class DBUpgradeClient {
 
 	private static final String _JAVA_HOME = System.getenv("JAVA_HOME");
 
-	private static final Set<String> _appServers = new LinkedHashSet<>(
-		Arrays.asList("jboss", "tomcat", "weblogic", "websphere", "wildfly"));
-	private static final Set<String> _databases = new LinkedHashSet<>(
-		Arrays.asList(
-			"db2", "mariadb", "mysql", "oracle", "postgresql", "sqlserver"));
+	private static final String[] _appServers = {
+		"jboss", "tomcat", "weblogic", "websphere", "wildfly"
+	};
+	private static final String[] _databases = {
+		"db2", "mariadb", "mysql", "oracle", "postgresql", "sqlserver"
+	};
 	private static final Pattern _gogoShellAddressPattern = Pattern.compile(
 		"^([^\\:]+):([0-9]{1,5})$");
 	private static File _jarDir;

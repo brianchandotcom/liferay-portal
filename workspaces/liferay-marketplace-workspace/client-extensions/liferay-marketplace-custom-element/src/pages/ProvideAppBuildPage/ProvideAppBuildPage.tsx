@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {filesize} from 'filesize';
 import {uniqueId} from 'lodash';
-import {useCallback, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 import cancelIcon from '../../assets/icons/cancel_icon.svg';
@@ -186,18 +186,21 @@ export function ProvideAppBuildPage({
 		false
 	);
 
-	const bodySpecification = [
-		{
-			productId: appProductId,
-			specificationKey: 'cpu',
-			value: resourceRequirements.cpu,
-		},
-		{
-			productId: appProductId,
-			specificationKey: 'ram',
-			value: resourceRequirements.ram,
-		},
-	];
+	const bodySpecification = useMemo(
+		() => [
+			{
+				productId: appProductId,
+				specificationKey: 'cpu',
+				value: resourceRequirements.cpu,
+			},
+			{
+				productId: appProductId,
+				specificationKey: 'ram',
+				value: resourceRequirements.ram,
+			},
+		],
+		[appProductId, resourceRequirements.cpu, resourceRequirements.ram]
+	);
 
 	const handleSelectCheckbox = (offeringTypelabel: string) =>
 		setSelectedCheckboxValue((prevValue) =>
@@ -311,8 +314,7 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		}
-		else {
+		} else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -368,8 +370,7 @@ export function ProvideAppBuildPage({
 						tableName: 'CUSTOM_FIELDS',
 					});
 				}
-			}
-			catch (error) {
+			} catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
@@ -459,6 +460,7 @@ export function ProvideAppBuildPage({
 
 	const disableContinueButton =
 		isProcessing ||
+		!bodySpecification.every(({value}) => value) ||
 		!selectedCheckboxValue.length ||
 		!buildAppPackageValues.length ||
 		buildAppPackageValues.some((versionEntry) => !versionEntry?.length);
@@ -517,7 +519,7 @@ export function ProvideAppBuildPage({
 				</div>
 			</Section>
 
-			{appType.value !== '' && (
+			{appType.value && (
 				<>
 					<Section
 						label={i18n.translate('compatible-offering')}
@@ -540,18 +542,20 @@ export function ProvideAppBuildPage({
 						</div>
 					</Section>
 
-					<Section
-						label={i18n.translate('resource-requirements')}
-						required
-						tooltip={i18n.translate(
-							'cloud-apps-must-state-resource-requirements-if-your-app-has-no-additional-cpu-or-ram-requirements-please-enter-0'
-						)}
-						tooltipText={i18n.translate('more-info')}
-					>
-						<div className="provide-app-build-page-resource-requirements">
-							<ResourceRequirements />
-						</div>
-					</Section>
+					{appType.value === 'cloud' && (
+						<Section
+							label={i18n.translate('resource-requirements')}
+							required
+							tooltip={i18n.translate(
+								'cloud-apps-must-state-resource-requirements-if-your-app-has-no-additional-cpu-or-ram-requirements-please-enter-0'
+							)}
+							tooltipText={i18n.translate('more-info')}
+						>
+							<div className="provide-app-build-page-resource-requirements">
+								<ResourceRequirements />
+							</div>
+						</Section>
+					)}
 
 					<Section
 						label={i18n.translate('app-build')}
@@ -737,12 +741,14 @@ export function ProvideAppBuildPage({
 						await submitAppBuildCategories();
 						await submitAppBuildTypeSpecification();
 						await submitAppBuildPackages();
-						await submitAppBuildClouldResourceRequirements(
-							appId,
-							bodySpecification
-						);
-					}
-					catch (error) {
+
+						if (appType.value === 'cloud') {
+							await submitAppBuildClouldResourceRequirements(
+								appId,
+								bodySpecification
+							);
+						}
+					} catch (error) {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages | buildClouldResourceRequirements'
 						);

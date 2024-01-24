@@ -8,10 +8,10 @@ package com.liferay.portal.search.tuning.rankings.web.internal.results.builder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.search.tuning.rankings.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
+import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 
 import org.mockito.Mockito;
 

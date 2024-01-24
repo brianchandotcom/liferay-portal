@@ -48,6 +48,8 @@ public class GetResultsMVCResourceCommandTest
 		ReflectionTestUtil.setFieldValue(
 			_getResultsMVCResourceCommand, "queries", queries);
 		ReflectionTestUtil.setFieldValue(
+			_getResultsMVCResourceCommand, "rankingHelper", rankingHelper);
+		ReflectionTestUtil.setFieldValue(
 			_getResultsMVCResourceCommand, "rankingIndexNameBuilder",
 			rankingIndexNameBuilder);
 		ReflectionTestUtil.setFieldValue(

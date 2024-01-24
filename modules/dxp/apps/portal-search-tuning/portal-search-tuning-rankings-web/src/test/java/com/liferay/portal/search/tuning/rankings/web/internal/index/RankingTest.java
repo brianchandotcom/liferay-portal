@@ -5,9 +5,14 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.search.tuning.rankings.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
+import com.liferay.portal.search.tuning.rankings.web.internal.helper.RankingHelperImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,9 +27,15 @@ public class RankingTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Before
+	public void setUp() {
+		ReflectionTestUtil.setFieldValue(
+			_rankingBuilderFactory, "_rankingHelper", new RankingHelperImpl());
+	}
+
 	@Test
 	public void testDefaults() {
-		Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder();
+		Ranking.Builder rankingBuilder = _rankingBuilderFactory.builder();
 
 		Ranking ranking = rankingBuilder.build();
 
@@ -37,5 +48,8 @@ public class RankingTest {
 		Assert.assertEquals(
 			null, ranking.getSXPBlueprintExternalReferenceCode());
 	}
+
+	private final RankingBuilderFactory _rankingBuilderFactory =
+		new RankingBuilderFactoryImpl();
 
 }

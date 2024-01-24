@@ -10,6 +10,11 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.Field;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
+import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
+import com.liferay.portal.search.tuning.rankings.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
+import com.liferay.portal.search.tuning.rankings.index.RankingPinBuilderFactory;
+import com.liferay.portal.search.tuning.rankings.web.internal.helper.RankingHelperImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
@@ -35,13 +40,20 @@ public class RankingToDocumentTranslatorTest {
 
 	@Before
 	public void setUp() {
-		_documentToRankingTranslator = _createDocumentToRankingTranslator();
 		_rankingToDocumentTranslator = _createRankingToDocumentTranslator();
+		ReflectionTestUtil.setFieldValue(
+			_documentToRankingTranslator, "_rankingBuilderFactory",
+			_rankingBuilderFactory);
+		ReflectionTestUtil.setFieldValue(
+			_documentToRankingTranslator, "_rankingPinBuilderFactory",
+			_rankingPinBuilderFactory);
+		ReflectionTestUtil.setFieldValue(
+			_rankingBuilderFactory, "_rankingHelper", _rankingHelper);
 	}
 
 	@Test
 	public void testBlocks() {
-		Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder();
+		Ranking.Builder rankingBuilder = _rankingBuilderFactory.builder();
 
 		rankingBuilder.hiddenDocumentIds(
 			Arrays.asList("142857", "285714", "428571"));
@@ -63,7 +75,7 @@ public class RankingToDocumentTranslatorTest {
 
 	@Test
 	public void testDefaults() {
-		Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder();
+		Ranking.Builder rankingBuilder = _rankingBuilderFactory.builder();
 
 		Document document = translate(rankingBuilder.build());
 
@@ -86,10 +98,16 @@ public class RankingToDocumentTranslatorTest {
 
 	@Test
 	public void testPins() {
-		Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder();
+		Ranking.Builder rankingBuilder = _rankingBuilderFactory.builder();
 
 		rankingBuilder.pins(
-			Collections.singletonList(new Ranking.Pin(142857, "uid")));
+			Collections.singletonList(
+				_rankingPinBuilderFactory.builder(
+				).documentId(
+					"uid"
+				).position(
+					142857
+				).build()));
 
 		Document document = translate(rankingBuilder.build());
 
@@ -106,7 +124,7 @@ public class RankingToDocumentTranslatorTest {
 
 	@Test
 	public void testQueryStrings() {
-		Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder();
+		Ranking.Builder rankingBuilder = _rankingBuilderFactory.builder();
 
 		rankingBuilder.aliases(Arrays.asList("142857", "285714", "428571"));
 
@@ -131,10 +149,6 @@ public class RankingToDocumentTranslatorTest {
 		return _rankingToDocumentTranslator.translate(ranking);
 	}
 
-	private DocumentToRankingTranslator _createDocumentToRankingTranslator() {
-		return new DocumentToRankingTranslatorImpl();
-	}
-
 	private RankingToDocumentTranslatorImpl
 		_createRankingToDocumentTranslator() {
 
@@ -154,7 +168,13 @@ public class RankingToDocumentTranslatorTest {
 				pins, pin -> pin.getPosition() + "=" + pin.getDocumentId()));
 	}
 
-	private DocumentToRankingTranslator _documentToRankingTranslator;
+	private final DocumentToRankingTranslator _documentToRankingTranslator =
+		new DocumentToRankingTranslatorImpl();
+	private final RankingBuilderFactory _rankingBuilderFactory =
+		new RankingBuilderFactoryImpl();
+	private final RankingHelper _rankingHelper = new RankingHelperImpl();
+	private final RankingPinBuilderFactory _rankingPinBuilderFactory =
+		new RankingPinBuilderFactoryImpl();
 	private RankingToDocumentTranslator _rankingToDocumentTranslator;
 
 }

@@ -44,6 +44,9 @@ public class ValidateRankingMVCResourceCommandTest
 			_validateRankingMVCResourceCommand, "_jsonFactory",
 			new JSONFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
+			_validateRankingMVCResourceCommand, "_rankingHelper",
+			rankingHelper);
+		ReflectionTestUtil.setFieldValue(
 			_validateRankingMVCResourceCommand, "portal", portal);
 		ReflectionTestUtil.setFieldValue(
 			_validateRankingMVCResourceCommand, "rankingIndexNameBuilder",

@@ -7,6 +7,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -53,8 +54,10 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
+import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
+import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
+import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
+import com.liferay.portal.search.tuning.rankings.web.internal.helper.RankingHelperImpl;
 import com.liferay.portal.search.web.interpreter.SearchResultInterpreterProvider;
 
 import java.text.SimpleDateFormat;
@@ -592,6 +595,16 @@ public abstract class BaseRankingsWebTestCase {
 		).matchAll();
 	}
 
+	protected void setUpRankingHelper() {
+		Mockito.doReturn(
+			StringPool.BLANK
+		).when(
+			rankingHelper
+		).getDocumentId(
+			Mockito.anyString()
+		);
+	}
+
 	protected void setUpRankingIndexNameBuilder() {
 		Mockito.doReturn(
 			Mockito.mock(RankingIndexName.class)
@@ -846,6 +859,8 @@ public abstract class BaseRankingsWebTestCase {
 	protected Language language = Mockito.mock(Language.class);
 	protected Portal portal = Mockito.mock(Portal.class);
 	protected Queries queries = Mockito.mock(Queries.class);
+	protected RankingHelper rankingHelper = Mockito.spy(
+		RankingHelperImpl.class);
 	protected RankingIndexNameBuilder rankingIndexNameBuilder = Mockito.mock(
 		RankingIndexNameBuilder.class);
 	protected ResourceRequest resourceRequest = Mockito.mock(

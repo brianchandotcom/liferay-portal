@@ -6,7 +6,9 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
@@ -34,6 +36,10 @@ public class DocumentToRankingTranslatorImplTest {
 	public void setUp() throws Exception {
 		_documentToRankingTranslatorImpl =
 			new DocumentToRankingTranslatorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			_documentToRankingTranslatorImpl, "_rankingBuilderFactory",
+			new RankingBuilderFactoryImpl());
 	}
 
 	@Test

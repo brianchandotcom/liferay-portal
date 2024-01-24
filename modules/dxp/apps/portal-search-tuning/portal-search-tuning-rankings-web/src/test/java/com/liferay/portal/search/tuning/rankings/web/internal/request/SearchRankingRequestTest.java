@@ -13,8 +13,8 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.MatchAllQuery;
 import com.liferay.portal.search.query.MatchQuery;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import javax.servlet.http.HttpServletRequest;

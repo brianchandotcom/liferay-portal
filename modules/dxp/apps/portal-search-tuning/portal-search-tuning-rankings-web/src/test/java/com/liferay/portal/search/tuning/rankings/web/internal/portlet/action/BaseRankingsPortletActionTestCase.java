@@ -7,11 +7,14 @@ package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.search.tuning.rankings.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
+import com.liferay.portal.search.tuning.rankings.index.RankingPinBuilderFactory;
+import com.liferay.portal.search.tuning.rankings.storage.RankingStorageAdapter;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DuplicateQueryStringsDetector;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
-import com.liferay.portal.search.tuning.rankings.web.internal.storage.RankingStorageAdapter;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingImpl;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingPinBuilderFactoryImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -127,26 +130,32 @@ public abstract class BaseRankingsPortletActionTestCase
 	}
 
 	protected void setUpRankingIndexReader() {
-		Ranking ranking = Mockito.mock(Ranking.class);
+		RankingImpl rankingImpl = Mockito.mock(RankingImpl.class);
 
 		ReflectionTestUtil.setFieldValue(
-			ranking, "_aliases", Arrays.asList("aliases"));
+			rankingImpl, "_aliases", Arrays.asList("aliases"));
 		ReflectionTestUtil.setFieldValue(
-			ranking, "_groupExternalReferenceCode",
+			rankingImpl, "_groupExternalReferenceCode",
 			"groupExternalReferenceCode");
 		ReflectionTestUtil.setFieldValue(
-			ranking, "_hiddenDocumentIds",
+			rankingImpl, "_hiddenDocumentIds",
 			new LinkedHashSet<String>(Arrays.asList("hiddenDocumentIds")));
 		ReflectionTestUtil.setFieldValue(
-			ranking, "_pins",
+			rankingImpl, "_pins",
 			new ArrayList<Ranking.Pin>(
-				Arrays.asList(new Ranking.Pin(0, "id"))));
+				Arrays.asList(
+					_rankingPinBuilderFactory.builder(
+					).documentId(
+						"id"
+					).position(
+						0
+					).build())));
 		ReflectionTestUtil.setFieldValue(
-			ranking, "_sxpBlueprintExternalReferenceCode",
+			rankingImpl, "_sxpBlueprintExternalReferenceCode",
 			"sxpBlueprintExternalReferenceCode");
 
 		Mockito.doReturn(
-			ranking
+			rankingImpl
 		).when(
 			rankingIndexReader
 		).fetch(
@@ -176,5 +185,8 @@ public abstract class BaseRankingsPortletActionTestCase
 		RankingIndexReader.class);
 	protected RankingStorageAdapter rankingStorageAdapter = Mockito.mock(
 		RankingStorageAdapter.class);
+
+	private final RankingPinBuilderFactory _rankingPinBuilderFactory =
+		new RankingPinBuilderFactoryImpl();
 
 }

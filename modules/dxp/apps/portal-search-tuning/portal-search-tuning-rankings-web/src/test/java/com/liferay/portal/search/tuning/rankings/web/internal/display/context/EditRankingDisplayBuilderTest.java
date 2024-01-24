@@ -6,11 +6,14 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
+import com.liferay.portal.model.impl.GroupImpl;
+import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
+import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
-import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import javax.portlet.RenderResponse;
@@ -18,6 +21,7 @@ import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -39,12 +43,18 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		_setUpGroupLocalServiceUtil();
 		_setUpHttpServletRequest();
 		_setUpLearnMessages();
 
 		_editRankingDisplayBuilder = new EditRankingDisplayBuilder(
 			httpServletRequest, rankingIndexNameBuilder, _rankingIndexReader,
 			_renderResponse);
+	}
+
+	@After
+	public void tearDown() {
+		_groupLocalServiceUtilMockedStatic.close();
 	}
 
 	@Test
@@ -87,6 +97,17 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 	protected HttpServletRequest httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
 	protected ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+	private void _setUpGroupLocalServiceUtil() throws Exception {
+		Group group = new GroupImpl();
+
+		Mockito.when(
+			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				Mockito.anyString(), Mockito.anyLong())
+		).thenReturn(
+			group
+		);
+	}
 
 	private void _setUpHttpServletRequest() {
 		Mockito.doReturn(
@@ -134,6 +155,9 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 	}
 
 	private EditRankingDisplayBuilder _editRankingDisplayBuilder;
+	private final MockedStatic<GroupLocalServiceUtil>
+		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			GroupLocalServiceUtil.class);
 	private final RankingIndexReader _rankingIndexReader = Mockito.mock(
 		RankingIndexReader.class);
 	private final RenderResponse _renderResponse = Mockito.mock(

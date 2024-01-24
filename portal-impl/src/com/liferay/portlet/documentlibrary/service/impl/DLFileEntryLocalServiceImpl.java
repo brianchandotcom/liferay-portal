@@ -200,8 +200,8 @@ public class DLFileEntryLocalServiceImpl
 			String mimeType, String title, String urlTitle, String description,
 			String changeLog, long fileEntryTypeId,
 			Map<String, DDMFormValues> ddmFormValuesMap, File file,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date displayDate,
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
@@ -606,7 +606,7 @@ public class DLFileEntryLocalServiceImpl
 			sourceDLFileEntry.getMimeType(), sourceTitle, sourceTitle,
 			sourceDLFileEntry.getDescription(), null,
 			sourceDLFileEntry.getFileEntryTypeId(), null, null,
-			sourceInputStream, sourceDLFileEntry.getSize(),
+			sourceInputStream, sourceDLFileEntry.getSize(), null,
 			sourceDLFileEntry.getExpirationDate(),
 			sourceDLFileEntry.getReviewDate(), serviceContext);
 

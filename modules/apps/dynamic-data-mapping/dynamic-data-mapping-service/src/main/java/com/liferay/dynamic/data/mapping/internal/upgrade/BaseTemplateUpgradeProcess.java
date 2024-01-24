@@ -108,6 +108,10 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
+					if (resultSet.getString("script") == null) {
+						continue;
+					}
+
 					updatePreparedStatement.setString(
 						1,
 						_replaceDeprecatedClass(

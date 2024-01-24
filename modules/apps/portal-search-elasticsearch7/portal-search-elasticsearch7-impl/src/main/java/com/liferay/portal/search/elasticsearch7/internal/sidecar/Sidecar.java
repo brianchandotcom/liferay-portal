@@ -219,6 +219,8 @@ public class Sidecar {
 			_getBootstrapClassPath()
 		).setEnvironment(
 			_getEnvironment()
+		).setJavaExecutable(
+			System.getProperty("java.home") + "/bin/java"
 		).setProcessLogConsumer(
 			this::_consumeProcessLog
 		).setReactClassLoader(

@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -46,12 +45,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	public void addProjectsToSet(String projectNames) {
 		projectNames = projectNames.trim();
 
-		List<String> projectNamesList = Arrays.asList(
-			projectNames.split("\\s*,\\s*"));
-
-		for (String projectName : projectNamesList) {
-			_projectNamesSet.add(projectName);
-		}
+		Collections.addAll(_projectNamesSet, projectNames.split("\\s*,\\s*"));
 	}
 
 	protected PlaywrightBatchTestClassGroup(

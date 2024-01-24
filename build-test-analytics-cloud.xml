@@ -329,9 +329,12 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 
 				docker logs ${analytics.cloud.faro.container.name}
 
+				docker builder prune -f
 				docker container prune -f
 				docker image prune -f
 				docker volume prune -f
+
+				docker system df
 			</echo>
 
 			<trycatch>
@@ -487,9 +490,12 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 
 				docker-compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} down --volumes
 
+				docker builder prune -f
 				docker container prune -f
 				docker image prune -f
 				docker volume prune -f
+
+				docker system df
 			</execute>
 		</sequential>
 	</macrodef>
@@ -503,9 +509,12 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 
 				docker-compose -f docker-compose.integration-test.yml down --volumes
 
+				docker builder prune -f
 				docker container prune -f
 				docker image prune -f
 				docker volume prune -f
+
+				docker system df
 			</execute>
 		</sequential>
 	</macrodef>

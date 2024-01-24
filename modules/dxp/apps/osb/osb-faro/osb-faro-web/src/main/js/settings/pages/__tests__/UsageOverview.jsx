@@ -197,7 +197,7 @@ describe('UsageOverview', () => {
 		expect(container.querySelector('.alert-warning')).toBeInTheDocument();
 		expect(
 			getByText(
-				'Usage limit is approaching. Please contact your workspace administrator at the earliest conveninece.'
+				'Usage limit is approaching. Please contact your workspace administrator at the earliest convenience.'
 			)
 		).toBeInTheDocument();
 	});

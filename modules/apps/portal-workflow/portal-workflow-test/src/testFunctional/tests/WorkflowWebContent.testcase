@@ -528,7 +528,7 @@ definition {
 		task ("and When the user attach an larger image on the created Web Content") {
 			WebContent.addWithStructureCP(
 				navTab = "Web Content Images",
-				webContentImage = "tree.png",
+				webContentImage = "blue-tree.png",
 				webContentTitle = "WC Title");
 
 			Button.click(button = "Submit for Workflow");
@@ -547,7 +547,7 @@ definition {
 
 			OcularAssertElementImage(
 				locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
-				value1 = "tree.png",
+				value1 = "blue-tree.png",
 				value2 = 80);
 		}
 	}

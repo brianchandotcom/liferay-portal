@@ -79,3 +79,80 @@ test('View Undo interaction state is cleared after refreshing the page', async (
 
 	await apiHelpers.headlessSite.deleteSite(site.id);
 });
+
+test('Undo and Redo buttons work as expected', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+}) => {
+	await page.goto('/');
+
+	// Create a site
+
+	const site = await apiHelpers.headlessSite.createSite(getRandomId());
+
+	// Create a page with a Tabs fragment
+
+	const tabsId = getRandomId();
+
+	const fragmentDefinition = getFragmentDefinition(
+		tabsId,
+		'BASIC_COMPONENT-tabs'
+	);
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage(
+		site.id,
+		getRandomId(),
+		getPageDefinition([fragmentDefinition])
+	);
+
+	// Go to edit mode of page
+
+	await pageEditorPage.goToEditMode(site, layout);
+
+	// Change number of tabs to 5
+
+	await pageEditorPage.changeFragmentConfiguration(
+		tabsId,
+		'General',
+		'Number of Tabs',
+		'5'
+	);
+
+	// Delete tabs fragment
+
+	await pageEditorPage.deleteFragment(tabsId);
+
+	// Assert undo button is enabled and redo button is disabled
+
+	await expect(pageEditorPage.undoButton).toBeEnabled();
+	await expect(pageEditorPage.redoButton).toBeDisabled();
+
+	// Undo deleting the fragment
+
+	await pageEditorPage.undoButton.click();
+
+	// Assert tabsfragment its present and configuration is not lost
+
+	const tabsFragment = pageEditorPage.getFragment(tabsId);
+
+	await expect(tabsFragment).toBeAttached();
+	await expect(tabsFragment.getByText('Tab 5')).toBeVisible();
+
+	// Undo changing number of tabs
+
+	await pageEditorPage.undoButton.click();
+
+	// Check tab 5 is not present
+
+	await expect(tabsFragment.getByText('Tab 5')).not.toBeVisible();
+
+	// Assert Undo button is disabled and Redo button is enabled
+
+	await expect(pageEditorPage.undoButton).toBeDisabled();
+	await expect(pageEditorPage.redoButton).toBeEnabled();
+
+	// Delete the site
+
+	await apiHelpers.headlessSite.deleteSite(site.id);
+});

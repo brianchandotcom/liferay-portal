@@ -98,14 +98,6 @@ public class FaroSubscriptionDisplay {
 		}
 	}
 
-	public Date geLastAnniversaryDate() {
-		if (_lastAnniversaryDate == null) {
-			return null;
-		}
-
-		return new Date(_lastAnniversaryDate.getTime());
-	}
-
 	public long getIndividualsCount() {
 		return _individualsCount;
 	}
@@ -116,6 +108,14 @@ public class FaroSubscriptionDisplay {
 
 	public long getIndividualsLimit() {
 		return _individualsLimit;
+	}
+
+	public Date getLastAnniversaryDate() {
+		if (_lastAnniversaryDate == null) {
+			return null;
+		}
+
+		return new Date(_lastAnniversaryDate.getTime());
 	}
 
 	public String getName() {

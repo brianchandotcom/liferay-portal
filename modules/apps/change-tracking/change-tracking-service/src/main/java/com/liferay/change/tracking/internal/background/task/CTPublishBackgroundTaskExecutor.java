@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -270,6 +271,9 @@ public class CTPublishBackgroundTaskExecutor
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
 				JSONUtil.put(
 					"ctCollectionName", fromCTCollection.getName()
+				).put(
+					"notificationType",
+					UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY
 				).put(
 					"showConflicts", showConflicts
 				));

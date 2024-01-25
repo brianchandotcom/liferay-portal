@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
-import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -35,10 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Samuel Trong Tran
  */
-@Component(
-	property = "javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
-	service = UserNotificationHandler.class
-)
+@Component(service = PublicationInviteUserNotificationHandler.class)
 public class PublicationInviteUserNotificationHandler
 	extends BaseUserNotificationHandler {
 

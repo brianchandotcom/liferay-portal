@@ -300,6 +300,9 @@ public class InviteUsersMVCResourceCommand
 				JSONUtil.put(
 					"classPK", ctCollectionId
 				).put(
+					"notificationType",
+					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY
+				).put(
 					"roleValue", roleValue
 				).put(
 					"userId", user.getUserId()

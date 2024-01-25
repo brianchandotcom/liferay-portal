@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
-import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -21,10 +20,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brooke Dalton
  */
-@Component(
-	property = "javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
-	service = UserNotificationHandler.class
-)
+@Component(service = ScheduledPublicationUserNotificationHandler.class)
 public class ScheduledPublicationUserNotificationHandler
 	extends BaseUserNotificationHandler {
 

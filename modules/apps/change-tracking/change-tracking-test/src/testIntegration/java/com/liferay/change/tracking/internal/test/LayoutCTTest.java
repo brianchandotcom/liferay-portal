@@ -27,18 +27,23 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.log.LogCapture;
@@ -46,6 +51,7 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -70,7 +76,9 @@ public class LayoutCTTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -223,6 +231,51 @@ public class LayoutCTTest {
 		}
 		finally {
 			_ctCollection = null;
+		}
+	}
+
+	@Test
+	public void testGetLayoutsWithDeletedLayoutInProduction() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			Assert.assertEquals(
+				layout, _layoutLocalService.fetchLayout(layout.getPlid()));
+
+			layout = _layoutLocalService.updateName(
+				layout, RandomTestUtil.randomString(),
+				LocaleUtil.toLanguageId(LocaleUtil.BRAZIL));
+		}
+
+		CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
+			_ctCollection.getCtCollectionId(), _layoutClassNameId,
+			layout.getPlid());
+
+		Assert.assertNotNull(ctEntry);
+
+		_layoutLocalService.deleteLayout(layout);
+
+		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
+
+		try (SafeCloseable safeCloseable2 =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			List<Layout> layouts = _layoutLocalService.getLayouts(
+				_group.getGroupId(), layout.isPrivateLayout(),
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(
+					UserLocalServiceUtil.getUser(TestPropsValues.getUserId()));
+
+			for (Layout curLayout : layouts) {
+				_layoutPermission.check(
+					permissionChecker, curLayout, ActionKeys.VIEW);
+			}
 		}
 	}
 
@@ -1087,6 +1140,9 @@ public class LayoutCTTest {
 
 	@Inject
 	private static LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private static LayoutPermission _layoutPermission;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;

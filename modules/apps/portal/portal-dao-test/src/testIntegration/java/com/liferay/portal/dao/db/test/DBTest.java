@@ -56,6 +56,14 @@ public class DBTest {
 		new AggregateTestRule(
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
+	public static void assume() {
+		db = DBManagerUtil.getDB();
+
+		dbInspector = new DBInspector(connection);
+
+		Assume.assumeTrue(db.getDBType() != DBType.ORACLE);
+	}
+
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		connection = DataAccess.getConnection();
@@ -73,14 +81,6 @@ public class DBTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		DataAccess.cleanUp(connection);
-	}
-
-	public void assume() {
-		db = DBManagerUtil.getDB();
-
-		dbInspector = new DBInspector(connection);
-
-		Assume.assumeTrue(db.getDBType() != DBType.ORACLE);
 	}
 
 	@Before

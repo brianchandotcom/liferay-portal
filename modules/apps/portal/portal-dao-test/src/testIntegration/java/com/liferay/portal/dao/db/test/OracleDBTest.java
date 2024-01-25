@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class OracleDBTest extends DBTest {
 
-	public void assume() {
+	public static void assume() {
 		db = DBManagerUtil.getDB();
 
 		dbInspector = new DBInspector(connection);

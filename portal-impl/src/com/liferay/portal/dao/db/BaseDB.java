@@ -344,7 +344,7 @@ public abstract class BaseDB implements DB {
 
 	@Override
 	public ResultSet getIndexResultSet(
-			Connection connection, String tableName, Boolean onlyUnique)
+			Connection connection, String tableName, boolean onlyUnique)
 		throws SQLException {
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();

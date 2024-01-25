@@ -18,6 +18,34 @@ export interface FeatureFlag {
 	readonly key: string;
 }
 
+/**
+ * Declare the FF needs of a test.
+ *
+ * This fixture sets the given FFs to the requested state, then restores them when the test
+ * finishes, no matter if it failed or succeeded. The fixture takes care of restoring dependent FFs
+ * too.
+ *
+ * Note that you can use this fixture several times in the same test file according to your needs,
+ * you don't need to use the same FFs across one single test file (see the example below for a way
+ * to do it).
+ *
+ * @param options the list of FFs and the requested state for them when running this test
+ *
+ * @example
+ * export const testWithoutFF = mergeTests(
+ *   loginTest
+ * );
+ *
+ * export const testWithFF = mergeTests(
+ *   featureFlagsTest({
+ *     'LPS-148856': true,
+ *   }),
+ *   loginTest
+ * );
+ *
+ * testWithoutFF('something', ...);
+ * testWithFF('another thing', ...);
+ */
 function featureFlagsTest(options: FeatureFlagsOptions) {
 	const fixtureImpl = test.extend<{
 		featureFlags: FeatureFlags;

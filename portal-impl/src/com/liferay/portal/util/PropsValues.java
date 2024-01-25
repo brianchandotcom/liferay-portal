@@ -1773,7 +1773,7 @@ public class PropsValues {
 	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
 	@Deprecated
-	public static final String PORTAL_JAAS_AUTH_TYPE = GetterUtil.getString(
+	public static volatile String PORTAL_JAAS_AUTH_TYPE = GetterUtil.getString(
 		PropsUtil.get(PropsKeys.PORTAL_JAAS_AUTH_TYPE));
 
 	/**

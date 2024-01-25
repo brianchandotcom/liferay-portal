@@ -237,7 +237,7 @@ public class GraphQLServletExtender {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_graphQLFieldRetriever = new LiferayGraphQLFieldRetriever();
+		_liferayGraphQLFieldRetriever = new LiferayGraphQLFieldRetriever();
 
 		GraphQLInterfaceRetriever graphQLInterfaceRetriever =
 			new GraphQLInterfaceRetriever();
@@ -278,7 +278,7 @@ public class GraphQLServletExtender {
 		GraphQLExtensionsHandler graphQLExtensionsHandler =
 			new GraphQLExtensionsHandler() {
 				{
-					setFieldRetriever(_graphQLFieldRetriever);
+					setFieldRetriever(_liferayGraphQLFieldRetriever);
 					setFieldSearchAlgorithm(parentalSearch);
 					setGraphQLObjectInfoRetriever(graphQLObjectInfoRetriever);
 					setMethodSearchAlgorithm(breadthFirstSearch);
@@ -289,7 +289,7 @@ public class GraphQLServletExtender {
 			{
 				setExtensionsHandler(graphQLExtensionsHandler);
 				setFieldSearchAlgorithm(parentalSearch);
-				setGraphQLFieldRetriever(_graphQLFieldRetriever);
+				setGraphQLFieldRetriever(_liferayGraphQLFieldRetriever);
 				setGraphQLInterfaceRetriever(graphQLInterfaceRetriever);
 				setGraphQLObjectInfoRetriever(graphQLObjectInfoRetriever);
 				setMethodSearchAlgorithm(breadthFirstSearch);
@@ -354,8 +354,8 @@ public class GraphQLServletExtender {
 				}
 				else if (clazz.isAnnotationPresent(GraphQLTypeResolver.class)) {
 					graphQLType = new InterfaceBuilder(
-						graphQLObjectInfoRetriever, _graphQLFieldRetriever,
-						graphQLExtensionsHandler
+						graphQLObjectInfoRetriever,
+						_liferayGraphQLFieldRetriever, graphQLExtensionsHandler
 					).getInterfaceBuilder(
 						clazz, processingElementsContainer
 					).build();
@@ -371,7 +371,7 @@ public class GraphQLServletExtender {
 					if (input) {
 						graphQLType = new InputObjectBuilder(
 							graphQLObjectInfoRetriever, parentalSearch,
-							breadthFirstSearch, _graphQLFieldRetriever
+							breadthFirstSearch, _liferayGraphQLFieldRetriever
 						).getInputObjectBuilder(
 							clazz, processingElementsContainer
 						).build();
@@ -380,7 +380,8 @@ public class GraphQLServletExtender {
 						GraphQLObjectType.Builder outputObjectBuilder =
 							new OutputObjectBuilder(
 								graphQLObjectInfoRetriever, parentalSearch,
-								breadthFirstSearch, _graphQLFieldRetriever,
+								breadthFirstSearch,
+								_liferayGraphQLFieldRetriever,
 								graphQLInterfaceRetriever,
 								graphQLExtensionsHandler
 							).getOutputObjectBuilder(
@@ -913,12 +914,9 @@ public class GraphQLServletExtender {
 					Method firstMethod = methodsTreeSet.first();
 
 					for (Method method : methodsTreeSet) {
-						Class<?> clazz = method.getDeclaringClass();
-
 						GraphQLFieldDefinition field =
-							_graphQLFieldRetriever.getField(
-								clazz.getSimpleName(), method,
-								processingElementsContainer);
+							_liferayGraphQLFieldRetriever.getField(
+								true, method, processingElementsContainer);
 
 						if (firstMethod == method) {
 							graphQLObjectTypeBuilder.field(field);
@@ -1740,13 +1738,20 @@ public class GraphQLServletExtender {
 				GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
 					processingElementsContainer.getCodeRegistryBuilder();
 
+				boolean deprecated = false;
+
+				if (StringUtil.equals(
+						graphQLNamespace, servletData.getGraphQLNamespace())) {
+
+					deprecated = true;
+				}
+
 				for (Method method : methods) {
 					_servletDataMap.put(method, servletData);
 
 					builder.field(
-						_graphQLFieldRetriever.getField(
-							clazz.getSimpleName(), method,
-							processingElementsContainer));
+						_liferayGraphQLFieldRetriever.getField(
+							deprecated, method, processingElementsContainer));
 
 					graphQLSchemaBuilder.codeRegistry(
 						graphQLCodeRegistryBuilder.dataFetcher(
@@ -2054,7 +2059,6 @@ public class GraphQLServletExtender {
 		_graphQLContributorServiceTrackerList;
 	private GraphQLDTOContributorDataFetchingProcessor
 		_graphQLDTOContributorDataFetchingProcessor;
-	private GraphQLFieldRetriever _graphQLFieldRetriever;
 	private ServiceTrackerList<GraphQLRequestContextValidator>
 		_graphQLRequestContextValidators;
 
@@ -2064,6 +2068,7 @@ public class GraphQLServletExtender {
 	@Reference
 	private Language _language;
 
+	private LiferayGraphQLFieldRetriever _liferayGraphQLFieldRetriever;
 	private LiferayMethodDataFetchingProcessor
 		_liferayMethodDataFetchingProcessor;
 
@@ -2644,6 +2649,23 @@ public class GraphQLServletExtender {
 
 	private class LiferayGraphQLFieldRetriever extends GraphQLFieldRetriever {
 
+		public GraphQLFieldDefinition getField(
+			boolean deprecated, Method method,
+			ProcessingElementsContainer processingElementsContainer) {
+
+			GraphQLFieldDefinition.Builder graphQLFieldDefinitionBuilder =
+				_getGraphQLFieldDefinitionBuilder(
+					method, processingElementsContainer);
+
+			if (deprecated) {
+				graphQLFieldDefinitionBuilder.deprecate(
+					"This field is deprecated. Please, use the namespaced " +
+						"query/mutation");
+			}
+
+			return graphQLFieldDefinitionBuilder.build();
+		}
+
 		@Override
 		public GraphQLFieldDefinition getField(
 				String parentName, Field field,
@@ -2681,6 +2703,18 @@ public class GraphQLServletExtender {
 		public GraphQLFieldDefinition getField(
 			String parentName, Method method,
 			ProcessingElementsContainer processingElementsContainer) {
+
+			GraphQLFieldDefinition.Builder graphQLFieldDefinitionBuilder =
+				_getGraphQLFieldDefinitionBuilder(
+					method, processingElementsContainer);
+
+			return graphQLFieldDefinitionBuilder.build();
+		}
+
+		private GraphQLFieldDefinition.Builder
+			_getGraphQLFieldDefinitionBuilder(
+				Method method,
+				ProcessingElementsContainer processingElementsContainer) {
 
 			GraphQLFieldDefinition.Builder graphQLFieldDefinitionBuilder =
 				GraphQLFieldDefinition.newFieldDefinition();
@@ -2730,7 +2764,7 @@ public class GraphQLServletExtender {
 
 			graphQLFieldDefinitionBuilder.type(graphQLOutputType);
 
-			return graphQLFieldDefinitionBuilder.build();
+			return graphQLFieldDefinitionBuilder;
 		}
 
 	}

@@ -275,6 +275,32 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 	}
 
 	@Override
+	protected CTCollection testGetCtCollectionsByClassPage_addCTCollection(
+			CTCollection ctCollection)
+		throws Exception {
+
+		CTCollection postCTCollection = ctCollectionResource.postCTCollection(
+			ctCollection);
+
+		com.liferay.change.tracking.model.CTCollection
+			serviceBuilderCTCollection =
+				_ctCollectionLocalService.getCTCollection(
+					postCTCollection.getId());
+
+		serviceBuilderCTCollection.setCreateDate(ctCollection.getDateCreated());
+		serviceBuilderCTCollection.setModifiedDate(
+			ctCollection.getDateModified());
+		serviceBuilderCTCollection.setShareable(true);
+
+		serviceBuilderCTCollection =
+			_ctCollectionLocalService.updateCTCollection(
+				serviceBuilderCTCollection);
+
+		return ctCollectionResource.getCTCollection(
+			serviceBuilderCTCollection.getCtCollectionId());
+	}
+
+	@Override
 	protected CTCollection testGetCTCollectionsPage_addCTCollection(
 			CTCollection ctCollection)
 		throws Exception {

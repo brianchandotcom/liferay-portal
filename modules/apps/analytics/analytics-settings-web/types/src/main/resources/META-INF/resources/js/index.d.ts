@@ -41,5 +41,4 @@ interface IAppProps extends React.HTMLAttributes<HTMLElement> {
 }
 declare const AppContextProvider: React.FC<IAppProps>;
 declare const App: React.FC<IAppProps>;
-export {AppContextProvider, useData, useDispatch};
-export default App;
+export {App, AppContextProvider, useData, useDispatch};

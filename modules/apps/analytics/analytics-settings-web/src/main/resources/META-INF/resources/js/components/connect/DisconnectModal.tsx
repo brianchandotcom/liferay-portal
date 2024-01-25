@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 
-import {EPageView, Events, useDispatch} from '../../App';
+import {EPageView, Events, useDispatch} from '../..';
 import {deleteConnection} from '../../utils/api';
 import Loading from '../Loading';
 

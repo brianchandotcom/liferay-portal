@@ -378,26 +378,6 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			const {leftSidebarItems} = state;
 			let isObjectDefinitionNodeSelected = false;
 
-			const updatedObjectRelationshipEdges = objectRelationshipEdges.map(
-				(
-					objectRelationshipEdge: Edge<ObjectRelationshipEdgeData[]>
-				) => {
-					if (
-						objectRelationshipEdge.source ===
-							objectDefinitionId.toString() ||
-						objectRelationshipEdge.target ===
-							objectDefinitionId.toString()
-					) {
-						return {
-							...objectRelationshipEdge,
-							isHidden: !hiddenObjectDefinitionNode,
-						};
-					}
-
-					return objectRelationshipEdge;
-				}
-			);
-
 			const updatedObjectDefinitionNodes = objectDefinitionNodes.map(
 				(objectDefinitionNode: Node<ObjectDefinitionNodeData>) => {
 					if (objectDefinitionNode.data?.id === objectDefinitionId) {
@@ -412,6 +392,39 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					}
 
 					return objectDefinitionNode;
+				}
+			);
+
+			const updatedObjectRelationshipEdges = objectRelationshipEdges.map(
+				(objectRelationshipEdge: Edge<ObjectRelationshipEdgeData[]>) => {
+					const sourceNode = updatedObjectDefinitionNodes.find(
+						(updatedObjectDefinitionNode) =>
+							updatedObjectDefinitionNode.id ===
+							objectRelationshipEdge.source
+					) as Node<ObjectDefinitionNodeData>;
+
+					const targetNode = updatedObjectDefinitionNodes.find(
+						(updatedObjectDefinitionNode) =>
+							updatedObjectDefinitionNode.id ===
+							objectRelationshipEdge.target
+					) as Node<ObjectDefinitionNodeData>;
+
+					const bothNodesVisible =
+						!sourceNode.isHidden && !targetNode.isHidden;
+
+					if (
+						objectRelationshipEdge.source ===
+							objectDefinitionId.toString() ||
+						objectRelationshipEdge.target ===
+							objectDefinitionId.toString()
+					) {
+						return {
+							...objectRelationshipEdge,
+							isHidden: !bothNodesVisible,
+						};
+					}
+
+					return objectRelationshipEdge;
 				}
 			);
 

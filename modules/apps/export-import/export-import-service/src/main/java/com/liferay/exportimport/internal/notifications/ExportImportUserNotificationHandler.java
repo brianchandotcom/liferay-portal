@@ -75,7 +75,9 @@ public class ExportImportUserNotificationHandler
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.fetchBackgroundTask(backgroundTaskId);
 
-		if (backgroundTask == null) {
+		if ((backgroundTask == null) ||
+			(serviceContext.getThemeDisplay() == null)) {
+
 			return StringPool.BLANK;
 		}
 

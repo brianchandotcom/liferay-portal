@@ -15,7 +15,7 @@ ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext = (ItemSelec
 	<clay:sheet>
 		<div class="panel-group panel-group-flush">
 			<react:component
-				module="js/ItemSelectorUrl.es"
+				module="{ItemSelectorUrl} from item-selector-url-web"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
 						"eventName", itemSelectorURLViewDisplayContext.getItemSelectedEventName()

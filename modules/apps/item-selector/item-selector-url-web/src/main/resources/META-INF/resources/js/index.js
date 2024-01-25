@@ -12,7 +12,7 @@ import {getOpener} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
-import {sub} from './utils.es';
+import {sub} from './utils';
 
 const TIMEOUT_MS = 5000;
 
@@ -141,4 +141,4 @@ ItemSelectorUrl.propTypes = {
 	eventName: PropTypes.string.isRequired,
 };
 
-export default ItemSelectorUrl;
+export {ItemSelectorUrl};

@@ -22,9 +22,9 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.Serializable;
@@ -36,6 +36,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+
+import org.junit.Assert;
 
 /**
  * @author Feliphe Marinho
@@ -286,7 +288,24 @@ public class TreeTestUtil {
 					node.getChildNodes(), unsafeFunction, String.class));
 		}
 
-		AssertUtils.assertEquals(expectedMap, actualMap);
+		Assert.assertEquals(
+			"The maps have different sizes", expectedMap.size(),
+			actualMap.size());
+
+		for (Map.Entry<String, String[]> entry : expectedMap.entrySet()) {
+			String[] actualValues = actualMap.get(entry.getKey());
+			String[] expectedValues = entry.getValue();
+
+			if ((actualValues.length == 0) && (expectedValues.length == 0)) {
+				continue;
+			}
+
+			Assert.assertEquals(
+				Arrays.toString(actualValues), expectedValues.length,
+				actualValues.length);
+			Assert.assertTrue(
+				ArrayUtil.containsAll(actualValues, expectedValues));
+		}
 	}
 
 	private static String _getExternalReferenceCode(

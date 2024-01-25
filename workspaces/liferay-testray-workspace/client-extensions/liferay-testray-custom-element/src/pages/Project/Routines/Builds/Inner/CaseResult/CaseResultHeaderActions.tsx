@@ -4,10 +4,12 @@
  */
 
 import ClayButton from '@clayui/button';
+import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
 import AssignModal from '../../../../../../components/AssignModal';
+import {TestrayContext} from '../../../../../../context/TestrayContext';
 import useFormModal from '../../../../../../hooks/useFormModal';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../services/liferay';
@@ -31,9 +33,12 @@ const CaseResultHeaderActions: React.FC<{
 				.then(mutateCaseResult),
 	});
 
+	const [{myUserAccount}] = useContext(TestrayContext);
+
 	const navigate = useNavigate();
 
 	const assignedUserId = caseResult.user?.id || 0;
+	const isAdministratorOrAnalyst = myUserAccount?.roleBriefs.some(e => e.name === 'Administrator' || e.name === 'Testray Administrator' || e.name === 'Testray Analyst');
 	const isCaseResultAssignedToMe = caseResult.user?.id === userId;
 
 	const isReopened = ![
@@ -52,6 +57,8 @@ const CaseResultHeaderActions: React.FC<{
 		editValidation: assignedUserId > 0 && assignedUserId !== userId,
 
 		reopenTest: workflowDisabled || isReopened,
+
+		startTest: isCaseResultAssignedToMe && caseResult.dueStatus.key === CaseResultStatuses.UNTESTED,
 	};
 
 	const hasCaseResultEditPermission = !!caseResult.actions?.update;
@@ -66,9 +73,9 @@ const CaseResultHeaderActions: React.FC<{
 				spaced
 			>
 				<ClayButton
-					disabled={!buttonValidations.completeTest}
+					disabled={!buttonValidations.completeTest || !isAdministratorOrAnalyst}
 					displayType={
-						!buttonValidations.completeTest ? 'unstyled' : undefined
+						!buttonValidations.completeTest || !isAdministratorOrAnalyst ? 'unstyled' : undefined
 					}
 					onClick={() => modal.open()}
 				>
@@ -96,7 +103,19 @@ const CaseResultHeaderActions: React.FC<{
 					)}
 				</ClayButton>
 
-				<ClayButton disabled displayType="unstyled">
+				<ClayButton
+					disabled={!buttonValidations.startTest}
+					displayType={
+						buttonValidations.startTest
+							? 'secondary'
+							: 'unstyled'
+					}
+					onClick={() =>
+						testrayCaseResultImpl
+							.startTest(caseResult)
+							.then(mutateCaseResult)
+					}
+				>
 					{i18n.translate('start-test')}
 				</ClayButton>
 
@@ -117,7 +136,7 @@ const CaseResultHeaderActions: React.FC<{
 					}
 					onClick={() =>
 						testrayCaseResultImpl
-							.assignToMe(caseResult)
+							.reopenTest(caseResult)
 							.then(mutateCaseResult)
 					}
 				>
@@ -146,7 +165,7 @@ const CaseResultHeaderActions: React.FC<{
 						displayType="secondary"
 						onClick={() =>
 							testrayCaseResultImpl
-								.removeAssign(caseResult)
+								.resetTest(caseResult)
 								.then(mutateCaseResult)
 						}
 					>

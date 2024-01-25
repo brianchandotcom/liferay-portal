@@ -1702,6 +1702,7 @@
 	},
 	{
 		"actionIds": [
+			"UPDATE",
 			"VIEW"
 		],
 		"primKey": "0",
@@ -1724,7 +1725,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResultsIssues$]",
-		"roleName": "Testray Administrator",
+		"roleName": "Testray User",
 		"scope": 1
 	},
 	{

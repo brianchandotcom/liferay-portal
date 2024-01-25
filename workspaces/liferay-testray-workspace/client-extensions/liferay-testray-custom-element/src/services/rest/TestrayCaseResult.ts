@@ -131,13 +131,8 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 	}
 
 	public assignTo(caseResult: TestrayCaseResult, userId: number) {
-		const dueStatus =
-			userId === Number(Liferay.ThemeDisplay.getUserId())
-				? CaseResultStatuses.IN_PROGRESS
-				: caseResult.dueStatus.key;
-
 		return this.update(caseResult.id, {
-			dueStatus,
+			dueStatus: caseResult.dueStatus.key,
 			startDate: caseResult.startDate,
 			userId,
 		});
@@ -145,7 +140,6 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 
 	public assignToMe(caseResult: TestrayCaseResult) {
 		return this.update(caseResult.id, {
-			dueStatus: CaseResultStatuses.IN_PROGRESS,
 			startDate: caseResult.startDate,
 			userId: Number(Liferay.ThemeDisplay.getUserId()),
 		});
@@ -153,9 +147,30 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 
 	public removeAssign(caseResult: TestrayCaseResult) {
 		return this.update(caseResult.id, {
+			startDate: null,
+			userId: this.UNASSIGNED_USER_ID,
+		});
+	}
+
+	public reopenTest(caseResult: TestrayCaseResult) {
+		return this.update(caseResult.id, {
+			dueStatus: CaseResultStatuses.UNTESTED,
+			startDate: null,
+		});
+	}
+
+	public resetTest(caseResult: TestrayCaseResult) {
+		return this.update(caseResult.id, {
 			dueStatus: CaseResultStatuses.UNTESTED,
 			startDate: null,
 			userId: this.UNASSIGNED_USER_ID,
+		});
+	}
+
+	public startTest(caseResult: TestrayCaseResult) {
+		return this.update(caseResult.id, {
+			dueStatus: CaseResultStatuses.IN_PROGRESS,
+			startDate: caseResult.startDate,
 		});
 	}
 

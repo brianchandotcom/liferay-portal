@@ -2270,7 +2270,7 @@ public class PropsValues {
 					PropsKeys.
 						TEMPLATE_ENGINE_FREEMARKER_TRANSACTION_READ_ONLY));
 
-	public static final boolean TEMPLATE_ENGINE_SERVICE_LOCATOR_RESTRICT =
+	public static volatile boolean TEMPLATE_ENGINE_SERVICE_LOCATOR_RESTRICT =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.TEMPLATE_ENGINE_SERVICE_LOCATOR_RESTRICT));
 

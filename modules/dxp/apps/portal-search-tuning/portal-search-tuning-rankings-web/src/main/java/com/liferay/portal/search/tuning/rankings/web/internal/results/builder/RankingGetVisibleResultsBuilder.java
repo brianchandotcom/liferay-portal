@@ -150,7 +150,9 @@ public class RankingGetVisibleResultsBuilder {
 				_searchRequestBuilderFactory);
 
 		SearchRequestBuilder searchRequestBuilder =
-			rankingSearchRequestBuilder.companyId(
+			rankingSearchRequestBuilder.adminSearch(
+				true
+			).companyId(
 				_companyId
 			).from(
 				_from

@@ -66,7 +66,6 @@ public class OpenSearchSuggesterTranslator
 			completionSuggester.getAnalyzer());
 
 		completionSuggesterBuilder.field(completionSuggester.getField());
-		completionSuggesterBuilder.prefix(completionSuggester.getValue());
 
 		SetterUtil.setNotNullInteger(
 			completionSuggesterBuilder::size, completionSuggester.getSize());

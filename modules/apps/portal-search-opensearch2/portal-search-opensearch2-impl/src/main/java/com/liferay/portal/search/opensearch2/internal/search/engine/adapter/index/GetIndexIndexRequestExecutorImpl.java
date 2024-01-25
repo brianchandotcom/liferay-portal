@@ -86,7 +86,7 @@ public class GetIndexIndexRequestExecutorImpl
 		GetIndexIndexResponse getIndexIndexResponse,
 		Map<String, IndexState> indexStates) {
 
-		Map<String, String> indexSetting = new HashMap<>();
+		Map<String, String> settings = new HashMap<>();
 
 		Map<String, String> indexMappings = new HashMap<>();
 
@@ -95,13 +95,13 @@ public class GetIndexIndexRequestExecutorImpl
 
 			indexMappings.put(
 				entry.getKey(), JsonpUtil.toString(indexState.mappings()));
-			indexMappings.put(
+			settings.put(
 				entry.getKey(), JsonpUtil.toString(indexState.settings()));
 		}
 
 		getIndexIndexResponse.setIndexMappings(indexMappings);
 
-		getIndexIndexResponse.setSettings(indexSetting);
+		getIndexIndexResponse.setSettings(settings);
 	}
 
 	@Reference

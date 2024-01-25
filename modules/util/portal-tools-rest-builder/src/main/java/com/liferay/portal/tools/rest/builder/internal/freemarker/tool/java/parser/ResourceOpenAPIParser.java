@@ -294,6 +294,25 @@ public class ResourceOpenAPIParser {
 		return sb.toString();
 	}
 
+	public static List<JavaMethodSignature>
+		getResourceGetPageJavaMethodSignatures(
+			List<JavaMethodSignature> javaMethodSignatures) {
+
+		List<JavaMethodSignature> getPageJavaMethodSignatures =
+			new ArrayList<>();
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			if (StringUtil.startsWith(
+					javaMethodSignature.getReturnType(),
+					Page.class.getName() + "<")) {
+
+				getPageJavaMethodSignatures.add(javaMethodSignature);
+			}
+		}
+
+		return getPageJavaMethodSignatures;
+	}
+
 	public static String getResourceMethodName(
 		List<JavaMethodSignature> javaMethodSignatures, String propertyName) {
 
@@ -425,6 +444,9 @@ public class ResourceOpenAPIParser {
 
 	public static boolean hasResourceGetPageJavaMethodSignature(
 		String javaDataType, List<JavaMethodSignature> javaMethodSignatures) {
+
+		javaMethodSignatures = getResourceGetPageJavaMethodSignatures(
+			javaMethodSignatures);
 
 		String pageJavaDataType = StringBundler.concat(
 			Page.class.getName(), "<", javaDataType, ">");

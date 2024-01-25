@@ -94,6 +94,10 @@ public class ConfigYAML {
 		return _generateGraphQL;
 	}
 
+	public boolean isGenerateJSClient() {
+		return _generateJSClient;
+	}
+
 	public boolean isGenerateOpenAPI() {
 		return _generateOpenAPI;
 	}
@@ -180,6 +184,10 @@ public class ConfigYAML {
 		_generateGraphQL = generateGraphQL;
 	}
 
+	public void setGenerateJSClient(boolean generateJSClient) {
+		_generateJSClient = generateJSClient;
+	}
+
 	public void setGenerateOpenAPI(boolean generateOpenAPI) {
 		_generateOpenAPI = generateOpenAPI;
 	}
@@ -235,6 +243,7 @@ public class ConfigYAML {
 	private boolean _generateActionProviders;
 	private boolean _generateBatch = true;
 	private boolean _generateGraphQL = true;
+	private boolean _generateJSClient;
 	private boolean _generateOpenAPI = true;
 	private boolean _generateREST = true;
 	private String _graphQLNamespace;

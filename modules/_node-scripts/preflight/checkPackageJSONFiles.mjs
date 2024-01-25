@@ -447,6 +447,7 @@ const ALLOWED_NAMED_SCOPE_EXCEPTIONS = [
 const ALLOWED_NON_GLOBAL_DEPENDENCIES = [
 	'@liferay/amd-loader',
 	'@liferay/npm-scripts',
+	'@types/node-fetch',
 	'@vscode/ripgrep',
 	'alloy-ui',
 	'alloyeditor',
@@ -473,6 +474,7 @@ const ALLOWED_NON_GLOBAL_DEPENDENCIES = [
 	'lodash',
 	'mini-css-extract-plugin',
 	'minimist',
+	'node-fetch',
 	'os-browserify',
 	'path-browserify',
 	'path-to-regexp',

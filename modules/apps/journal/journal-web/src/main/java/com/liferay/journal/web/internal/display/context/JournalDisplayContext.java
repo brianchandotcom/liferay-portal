@@ -2276,9 +2276,7 @@ public class JournalDisplayContext {
 		long ddmStructureId = ParamUtil.getLong(
 			_httpServletRequest, "ddmStructureId");
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-194763") &&
-			isHighlightedDDMStructure()) {
-
+		if (isHighlightedDDMStructure()) {
 			searchContext.setClassTypeIds(
 				new long[] {getHighlightedDDMStructureId()});
 		}

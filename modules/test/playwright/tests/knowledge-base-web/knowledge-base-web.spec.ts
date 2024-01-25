@@ -80,7 +80,7 @@ test('can delete all articles without a recycle bin', async ({
 		getRandomString()
 	);
 
-	await knowledgeBasePage.deleteAll(page, false);
+	await knowledgeBasePage.deleteAll(false);
 	await expect(
 		page.getByRole('heading', {name: 'Knowledge base is empty.'})
 	).toBeVisible();
@@ -101,7 +101,7 @@ test('can delete all articles with a recycle bin', async ({
 		getRandomString()
 	);
 
-	await knowledgeBasePage.deleteAll(page, true);
+	await knowledgeBasePage.deleteAll(true);
 	await expect(
 		page.locator(
 			'[id="_com_liferay_knowledge_base_web_portlet_AdminPortlet_recycleBinAlert"]'

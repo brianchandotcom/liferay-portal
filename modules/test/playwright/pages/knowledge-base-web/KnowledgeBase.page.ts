@@ -3,22 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
+import {showUI} from '../../utils/showUI';
 import {ProductMenuPage} from '../product-navigation-product-menu/ProductMenu.page';
-
-async function showUI({
-	target,
-	trigger,
-}: {
-	target: Locator;
-	trigger: Locator;
-}) {
-	await expect(async () => {
-		await trigger.click();
-		await expect(target).toBeVisible({timeout: 100});
-	}).toPass();
-}
 
 export class KnowledgeBasePage {
 	readonly basicArticleMenuItem: Locator;
@@ -73,38 +61,35 @@ export class KnowledgeBasePage {
 			)
 			.filter({hasText: title});
 
-		await kbArticle
-			.getByLabel('Show Actions')
-			.and(this.page.locator('[aria-haspopup]'))
-			.click();
-
 		this.page.once('dialog', (dialog) => {
 			dialog.accept().catch(() => {});
 		});
-		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
+		await showUI({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Delete'}),
+			trigger: kbArticle.getByLabel('Show Actions'),
+		});
 	}
 
-	async deleteAll(page: Page, recycleBin: boolean) {
+	async deleteAll(recycleBin: boolean) {
 		await this.goto();
-		const disabled = await this.selectAllCheckBox.isDisabled();
 
-		if (!disabled) {
-			const dropdownItemDelete = page.getByRole('button', {
-				name: 'Delete',
-			});
-
-			await showUI({
-				target: dropdownItemDelete,
-				trigger: this.selectAllCheckBox,
-			});
-
-			if (!recycleBin) {
-				page.once('dialog', (dialog) => {
-					dialog.accept().catch(() => {});
-				});
-			}
-
-			await dropdownItemDelete.click();
+		if (await this.selectAllCheckBox.isDisabled()) {
+			return;
 		}
+
+		if (!recycleBin) {
+			this.page.once('dialog', (dialog) => {
+				dialog.accept().catch(() => {});
+			});
+		}
+
+		await showUI({
+			autoClick: true,
+			target: this.page.getByRole('button', {
+				name: 'Delete',
+			}),
+			trigger: this.selectAllCheckBox,
+		});
 	}
 }

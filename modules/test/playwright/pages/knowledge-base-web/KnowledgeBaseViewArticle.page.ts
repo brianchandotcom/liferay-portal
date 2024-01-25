@@ -14,13 +14,16 @@ export class KnowledgeBaseViewArticlePage {
 	knowledgeBasePage: KnowledgeBasePage;
 
 	constructor(page: Page) {
-		this.showActionsButton = page.getByLabel('Show Actions');
+		this.showActionsButton = page
+			.getByLabel('Show Actions')
+			.and(page.locator('[aria-haspopup]'));
 		this.knowledgeBasePage = new KnowledgeBasePage(page);
 		this.page = page;
 	}
 
 	async goto(title: string) {
 		await this.knowledgeBasePage.goto();
+		await this.page.getByRole('link', {name: title}).waitFor();
 		await this.page.getByRole('link', {name: title}).click();
 		await this.page.locator('.kb-article-title').getByText(title).waitFor();
 	}

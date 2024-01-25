@@ -63,7 +63,8 @@ public class DefaultTableItemView implements TableItemView {
 
 		userNameSearchEntry.setCssClass(
 			"table-cell-expand-smaller table-cell-minw-150");
-		userNameSearchEntry.setName(_itemDescriptor.getUserName());
+		userNameSearchEntry.setName(
+			HtmlUtil.escape(_itemDescriptor.getUserName()));
 
 		searchEntries.add(userNameSearchEntry);
 

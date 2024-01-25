@@ -13,7 +13,7 @@
 		"@clayui/list": "3.109.0",
 		"@clayui/loading-indicator": "3.106.1",
 		"@clayui/modal": "3.109.0",
-		"@clayui/panel": "3.109.0",
+		"@clayui/panel": "3.110.0",
 		"@clayui/tabs": "3.109.0",
 		"@clayui/tooltip": "3.109.0",
 		"@liferay/frontend-data-set-web": "*",

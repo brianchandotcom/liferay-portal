@@ -16,7 +16,7 @@
 		"@clayui/management-toolbar": "3.106.1",
 		"@clayui/modal": "3.109.0",
 		"@clayui/multi-select": "3.109.0",
-		"@clayui/panel": "3.109.0",
+		"@clayui/panel": "3.110.0",
 		"@clayui/popover": "3.109.0",
 		"@clayui/tooltip": "3.109.0",
 		"classnames": "2.3.1",

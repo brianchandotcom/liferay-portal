@@ -19,7 +19,7 @@
 		"@clayui/modal": "3.109.0",
 		"@clayui/multi-select": "3.109.0",
 		"@clayui/navigation-bar": "3.109.0",
-		"@clayui/panel": "3.109.0",
+		"@clayui/panel": "3.110.0",
 		"@clayui/table": "3.108.0",
 		"@clayui/tabs": "3.109.0",
 		"@liferay/frontend-data-set-web": "*",

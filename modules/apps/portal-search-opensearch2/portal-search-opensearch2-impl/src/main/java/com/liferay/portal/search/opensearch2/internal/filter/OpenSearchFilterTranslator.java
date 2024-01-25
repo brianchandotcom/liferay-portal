@@ -176,7 +176,9 @@ public class OpenSearchFilterTranslator
 	@Override
 	public QueryVariant visit(GeoDistanceFilter geoDistanceFilter) {
 		return GeoDistanceQuery.of(
-			geoDistanceQuery -> geoDistanceQuery.field(
+			geoDistanceQuery -> geoDistanceQuery.distance(
+				String.valueOf(geoDistanceFilter.getGeoDistance())
+			).field(
 				geoDistanceFilter.getField()
 			).location(
 				_geoTranslator.translateGeoLocationPoint(

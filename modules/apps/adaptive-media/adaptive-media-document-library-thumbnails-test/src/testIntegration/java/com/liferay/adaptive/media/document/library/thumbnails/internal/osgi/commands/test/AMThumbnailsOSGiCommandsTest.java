@@ -214,10 +214,10 @@ public class AMThumbnailsOSGiCommandsTest {
 	public void testMigrateOnlyProcessesImages() throws Exception {
 		try (SafeCloseable safeCloseable1 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
-					"DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT", 100);
+					"DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT", 100, false);
 			SafeCloseable safeCloseable2 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
-					"DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH", 100)) {
+					"DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH", 100, false)) {
 
 			FileEntry pdfFileEntry = _addPDFFileEntry();
 			FileEntry pngFileEntry = _addPNGFileEntry();
@@ -235,10 +235,10 @@ public class AMThumbnailsOSGiCommandsTest {
 
 		try (SafeCloseable safeCloseable1 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
-					"DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT", 999);
+					"DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT", 999, false);
 			SafeCloseable safeCloseable2 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
-					"DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH", 999)) {
+					"DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH", 999, false)) {
 
 			_addPNGFileEntry();
 

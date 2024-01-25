@@ -27,13 +27,13 @@
 		HashMapBuilder.<String, Object>put(
 			"baseURL", HtmlUtil.escapeJS(themeDisplay.getURLCurrent())
 		).put(
-			"formNode", "<portlet:namespace />fm"
+			"formNode", liferayPortletResponse.getNamespace() + "fm"
 		).put(
-			"languageIdSelectNode", "#<portlet:namespace />languageId"
+			"languageIdSelectNode", "#" + liferayPortletResponse.getNamespace() + "languageId"
 		).put(
-			"portletNamespace", "<portlet:namespace />"
+			"portletNamespace", liferayPortletResponse.getNamespace()
 		).put(
-			"userNameFieldsNode", "<portlet:namespace />userNameFields"
+			"userNameFieldsNode", liferayPortletResponse.getNamespace() + "userNameFields"
 		).build()
 	%>'
 	module="{UserNameFields} from users-admin-web"

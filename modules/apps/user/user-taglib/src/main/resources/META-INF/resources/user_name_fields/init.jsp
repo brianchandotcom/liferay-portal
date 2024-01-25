@@ -39,6 +39,8 @@ page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 
 <liferay-theme:defineObjects />
 
+<portlet:defineObjects />
+
 <%
 Object bean = request.getAttribute("liferay-user:user-name-fields:bean");
 Contact selContact = (Contact)request.getAttribute("liferay-user:user-name-fields:contact");

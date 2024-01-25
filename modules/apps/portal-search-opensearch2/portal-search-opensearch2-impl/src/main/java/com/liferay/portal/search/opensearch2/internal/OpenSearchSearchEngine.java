@@ -42,11 +42,8 @@ import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositor
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.DeleteSnapshotRequest;
-import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotRepositoriesRequest;
-import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotRepositoriesResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.RestoreSnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotDetails;
-import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRepositoryDetails;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotState;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationObserver;
@@ -60,11 +57,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.lang.ArrayUtils;
 
 import org.opensearch.client.json.JsonData;
 import org.opensearch.client.opensearch.OpenSearchClient;
+import org.opensearch.client.opensearch.cat.OpenSearchCatClient;
+import org.opensearch.client.opensearch.cat.RepositoriesResponse;
+import org.opensearch.client.opensearch.cat.repositories.RepositoriesRecord;
 import org.opensearch.client.opensearch.ingest.OpenSearchIngestClient;
 import org.opensearch.client.opensearch.ingest.Processor;
 import org.opensearch.client.opensearch.ingest.PutPipelineRequest;
@@ -355,20 +356,31 @@ public class OpenSearchSearchEngine
 	}
 
 	private boolean _hasBackupRepository() {
-		GetSnapshotRepositoriesRequest getSnapshotRepositoriesRequest =
-			new GetSnapshotRepositoriesRequest(_BACKUP_REPOSITORY_NAME);
+		OpenSearchClient openSearchClient =
+			_openSearchConnectionManager.getOpenSearchClient();
 
-		GetSnapshotRepositoriesResponse getSnapshotRepositoriesResponse =
-			_searchEngineAdapter.execute(getSnapshotRepositoriesRequest);
+		OpenSearchCatClient openSearchCatClient = openSearchClient.cat();
 
-		List<SnapshotRepositoryDetails> snapshotRepositoryDetailsList =
-			getSnapshotRepositoriesResponse.getSnapshotRepositoryDetails();
+		try {
+			RepositoriesResponse repositoriesResponse =
+				openSearchCatClient.repositories();
 
-		if (snapshotRepositoryDetailsList.isEmpty()) {
+			List<RepositoriesRecord> repositoriesRecords =
+				repositoriesResponse.valueBody();
+
+			for (RepositoriesRecord repositoriesRecord : repositoriesRecords) {
+				if (Objects.equals(
+						repositoriesRecord.id(), _BACKUP_REPOSITORY_NAME)) {
+
+					return true;
+				}
+			}
+
 			return false;
 		}
-
-		return true;
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private void _putTimestampPipeline() {

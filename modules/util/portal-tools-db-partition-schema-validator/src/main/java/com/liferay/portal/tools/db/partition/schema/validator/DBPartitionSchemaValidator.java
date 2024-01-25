@@ -48,6 +48,9 @@ public class DBPartitionSchemaValidator {
 
 		CommandLine commandLine = commandLineParser.parse(options, args);
 
+		_dbType = commandLine.getOptionValue("db-type");
+		_dbType = _dbType.toLowerCase();
+
 		_dbName = commandLine.getOptionValue("db-name");
 
 		String jdbcURL = _DEFAULT_JDBC_URL.replace("db-name", _dbName);
@@ -253,6 +256,7 @@ public class DBPartitionSchemaValidator {
 	private static final Set<String> _controlTableNames = new HashSet<>(
 		Arrays.asList("Company", "VirtualHost"));
 	private static String _dbName;
+	private static String _dbType;
 	private static boolean _debug;
 	private static String _schemaPrefix = "lpartition_";
 

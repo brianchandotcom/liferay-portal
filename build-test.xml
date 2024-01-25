@@ -16862,18 +16862,42 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 				<arg value="clean" />
 			</gradle-execute>
 
-			<java
-				fork="true"
-				jar="${liferay.home}/tools/portal-tools-db-partition-schema-validator/com.liferay.portal.tools.db.partition.schema.validator.jar"
-				output="${liferay.home}/validateoutput.txt"
-			>
-				<arg line="-j ${database.mysql.url}" />
-				<arg line="-d ${database.mysql.schema}" />
-				<arg line="-s ${schema.name.prefix}" />
-				<arg line="-u ${database.mysql.username}" />
-				<arg value="-p" />
-				<arg value="&quot;${database.mysql.password}&quot;" />
-			</java>
+			<if>
+				<equals arg1="${database.type}" arg2="mysql" />
+				<then>
+					<java
+						fork="true"
+						jar="${liferay.home}/tools/portal-tools-db-partition-schema-validator/com.liferay.portal.tools.db.partition.schema.validator.jar"
+						output="${liferay.home}/validateoutput.txt"
+					>
+						<arg line="-j ${database.mysql.url}" />
+						<arg line="-d ${database.mysql.schema}" />
+						<arg line="-s ${schema.name.prefix}" />
+						<arg line="-t mysql" />
+						<arg line="-u ${database.mysql.username}" />
+						<arg value="-p" />
+						<arg value="&quot;${database.mysql.password}&quot;" />
+					</java>
+				</then>
+				<elseif>
+					<equals arg1="${database.type}" arg2="postgresql" />
+					<then>
+						<java
+							fork="true"
+							jar="${liferay.home}/tools/portal-tools-db-partition-schema-validator/com.liferay.portal.tools.db.partition.schema.validator.jar"
+							output="${liferay.home}/validateoutput.txt"
+						>
+							<arg line="-j ${database.postgresql.url}" />
+							<arg line="-d ${database.postgresql.schema}" />
+							<arg line="-s ${schema.name.prefix}" />
+							<arg line="-t postgresql" />
+							<arg line="-u ${database.postgresql.username}" />
+							<arg value="-p" />
+							<arg value="&quot;${database.postgresql.password}&quot;" />
+						</java>
+					</then>
+				</elseif>
+			</if>
 
 			<print-file file.name="${liferay.home}/validateoutput.txt" />
 		</sequential>

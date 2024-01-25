@@ -38,7 +38,12 @@ const CaseResultHeaderActions: React.FC<{
 	const navigate = useNavigate();
 
 	const assignedUserId = caseResult.user?.id || 0;
-	const isAdministratorOrAnalyst = myUserAccount?.roleBriefs.some(e => e.name === 'Administrator' || e.name === 'Testray Administrator' || e.name === 'Testray Analyst');
+	const isAdministratorOrAnalyst = myUserAccount?.roleBriefs.some(
+		(role) =>
+			role.name === 'Administrator' ||
+			role.name === 'Testray Administrator' ||
+			role.name === 'Testray Analyst'
+	);
 	const isCaseResultAssignedToMe = caseResult.user?.id === userId;
 
 	const isReopened = ![
@@ -58,7 +63,9 @@ const CaseResultHeaderActions: React.FC<{
 
 		reopenTest: workflowDisabled || isReopened,
 
-		startTest: isCaseResultAssignedToMe && caseResult.dueStatus.key === CaseResultStatuses.UNTESTED,
+		startTest:
+			isCaseResultAssignedToMe &&
+			caseResult.dueStatus.key === CaseResultStatuses.UNTESTED,
 	};
 
 	const hasCaseResultEditPermission = !!caseResult.actions?.update;
@@ -73,9 +80,15 @@ const CaseResultHeaderActions: React.FC<{
 				spaced
 			>
 				<ClayButton
-					disabled={!buttonValidations.completeTest || !isAdministratorOrAnalyst}
+					disabled={
+						!buttonValidations.completeTest ||
+						!isAdministratorOrAnalyst
+					}
 					displayType={
-						!buttonValidations.completeTest || !isAdministratorOrAnalyst ? 'unstyled' : undefined
+						!buttonValidations.completeTest ||
+						!isAdministratorOrAnalyst
+							? 'unstyled'
+							: undefined
 					}
 					onClick={() => modal.open()}
 				>
@@ -106,9 +119,7 @@ const CaseResultHeaderActions: React.FC<{
 				<ClayButton
 					disabled={!buttonValidations.startTest}
 					displayType={
-						buttonValidations.startTest
-							? 'secondary'
-							: 'unstyled'
+						buttonValidations.startTest ? 'secondary' : 'unstyled'
 					}
 					onClick={() =>
 						testrayCaseResultImpl

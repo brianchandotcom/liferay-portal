@@ -153,6 +153,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 	<liferay-frontend:component
 		componentId="AccountUserEmailDomainValidator"
 		context="<%= context %>"
-		module="account_users_admin/js/AccountUserEmailDomainValidator.es"
+		module="{AccountUserEmailDomainValidator} from account-admin-web"
 	/>
 </c:if>

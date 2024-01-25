@@ -184,5 +184,5 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 			"defaultAddressesContainerId", liferayPortletResponse.getNamespace() + "defaultAddresses"
 		).build()
 	%>'
-	module="account_entries_admin/js/DefaultAddresses"
+	module="{DefaultAddresses} from account-admin-web"
 />

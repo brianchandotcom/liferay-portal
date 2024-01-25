@@ -52,7 +52,7 @@ renderResponse.setTitle(accountGroupDisplay.getName());
 		).build()
 	%>'
 	managementToolbarDisplayContext="<%= viewAccountGroupAccountEntriesManagementToolbarDisplayContext %>"
-	propsTransformer="account_groups_admin/js/AccountGroupAccountEntriesManagementToolbarPropsTransformer"
+	propsTransformer="{AccountGroupAccountEntriesManagementToolbarPropsTransformer} from account-admin-web"
 />
 
 <clay:container-fluid>

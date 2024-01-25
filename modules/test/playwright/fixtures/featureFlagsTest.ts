@@ -44,6 +44,10 @@ function featureFlagsTest(options: FeatureFlagsOptions) {
 						await setEnabled(enabled, key, page);
 					}
 
+					// Reload page to account for FF changes (eg: update Liferay.FeatureFlags)
+
+					await page.reload();
+
 					// Run test
 
 					await use(

@@ -470,7 +470,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 	private static final DCLSingleton<PortalReleaseDTO>
 		_currentPortalReleaseDTODCLSingleton = new DCLSingleton<>();
 	private static final Version _initialSchemaVersion = new Version(0, 1, 0);
-	private static final UpgradeVersionTreeMap _upgradeVersionTreeMap =
+	private static volatile UpgradeVersionTreeMap _upgradeVersionTreeMap =
 		new UpgradeVersionTreeMap() {
 			{
 				put(_initialSchemaVersion, new DummyUpgradeProcess());

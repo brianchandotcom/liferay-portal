@@ -288,58 +288,25 @@ renderResponse.setTitle(headerTitle);
 					}
 					%>
 
-					<div class="form-group">
-						<c:if test="<%= dlEditFileEntryDisplayContext.isFolderSelectionVisible() %>">
-							<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
+					<c:if test="<%= dlEditFileEntryDisplayContext.isFolderSelectionVisible() %>">
 
-							<aui:button name="selectFolderButton" value="select" />
+						<%
+						ItemSelector itemSelector = (ItemSelector)request.getAttribute(ItemSelector.class.getName());
 
-							<%
-							String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('folderId', 'folderName', this, '" + liferayPortletResponse.getNamespace() + "');";
-							%>
+						FolderItemSelectorURLProvider folderItemSelectorURLProvider = new FolderItemSelectorURLProvider(request, itemSelector);
+						%>
 
-							<aui:button disabled="<%= folderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-
-							<aui:script>
-								var selectFolderButton = document.getElementById(
-									'<portlet:namespace />selectFolderButton'
-								);
-
-								if (selectFolderButton) {
-									selectFolderButton.addEventListener('click', (event) => {
-										Liferay.Util.openSelectionModal({
-											multiple: false,
-											onSelect: function (selectedItem) {
-												if (!selectedItem) {
-													return;
-												}
-
-												var folderData = {
-													idString: 'folderId',
-													idValue: selectedItem.folderid,
-													nameString: 'folderName',
-													nameValue: selectedItem.foldername,
-												};
-
-												Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-											},
-											selectEventName: '<portlet:namespace />folderSelected',
-											title: '<liferay-ui:message arguments="folder" key="select-x" />',
-
-											<%
-											ItemSelector itemSelector = (ItemSelector)request.getAttribute(ItemSelector.class.getName());
-
-											FolderItemSelectorURLProvider folderItemSelectorURLProvider = new FolderItemSelectorURLProvider(request, itemSelector);
-											%>
-
-											url:
-												'<%= HtmlUtil.escapeJS(folderItemSelectorURLProvider.getSelectAddFileEntryFolderURL(folderId)) %>',
-										});
-									});
-								}
-							</aui:script>
-						</c:if>
-					</div>
+						<liferay-frontend:resource-selector
+							inputLabel='<%= LanguageUtil.get(request, "folder") %>'
+							inputName="newFolderId"
+							modalTitle='<%= LanguageUtil.get(request, "select-folder") %>'
+							resourceName="<%= folderName %>"
+							resourceValue="<%= folderId %>"
+							selectEventName="folderSelected"
+							selectResourceURL="<%= folderItemSelectorURLProvider.getSelectAddFileEntryFolderURL(folderId) %>"
+							showRemoveButton="<%= true %>"
+						/>
+					</c:if>
 
 					<%@ include file="/document_library/edit_file_entry_picker.jspf" %>
 

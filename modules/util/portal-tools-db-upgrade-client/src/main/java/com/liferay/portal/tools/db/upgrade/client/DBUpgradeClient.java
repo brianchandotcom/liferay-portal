@@ -194,6 +194,16 @@ public class DBUpgradeClient {
 			"-Dserver.detector.server.id=" +
 				_appServer.getServerDetectorServerId());
 
+		if (_isGTJDK8()) {
+			_jvmOpts.add("--add-opens=java.base/java.lang=ALL-UNNAMED");
+			_jvmOpts.add("--add-opens=java.base/java.lang.reflect=ALL-UNNAMED");
+			_jvmOpts.add("--add-opens=java.base/java.net=ALL-UNNAMED");
+			_jvmOpts.add(
+				"--add-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED");
+			_jvmOpts.add("--add-opens=java.base/sun.util.calendar=ALL-UNNAMED");
+			_jvmOpts.add("--add-opens=jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED");
+		}
+
 		System.out.println("JVM arguments: " + _jvmOpts.toString());
 
 		commands.addAll(_jvmOpts);
@@ -412,6 +422,19 @@ public class DBUpgradeClient {
 		int port = Integer.parseInt(matcher.group(2));
 
 		return new GogoShellClient(host, port);
+	}
+
+	private boolean _isGTJDK8() {
+		String javaVersion = System.getProperty("java.version");
+
+		int majorVersion = Integer.parseInt(
+			javaVersion.substring(0, javaVersion.indexOf('.')));
+
+		if (majorVersion > 8) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isPortalUpgradeFinished(GogoShellClient gogoShellClient)

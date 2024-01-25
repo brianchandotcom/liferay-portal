@@ -668,7 +668,7 @@ components:
                 externalReferenceCode:
                     # @review
                     description:
-                        The portable ID of this role.
+                        The optional external key of this role.
                     type: string
                 id:
                     description:
@@ -1264,7 +1264,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '4.0.55'."
+        'com.liferay.headless.admin.user.client', and version '4.0.56'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -4311,6 +4311,35 @@ paths:
                                 $ref: "#/components/schemas/Role"
                     description:
                         "Roles successfully created"
+            tags: ["Role"]
+    "/roles/by-external-reference-code/{externalReferenceCode}":
+        put:
+            description:
+                update the given Role
+            operationId: putRoleByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Role"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Role"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Role"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Role"
             tags: ["Role"]
     "/roles/{roleId}":
         get:

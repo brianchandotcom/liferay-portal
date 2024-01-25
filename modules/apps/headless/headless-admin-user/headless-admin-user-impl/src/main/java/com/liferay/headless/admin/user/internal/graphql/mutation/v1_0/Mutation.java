@@ -1430,6 +1430,19 @@ public class Mutation {
 			roleResource -> roleResource.postRoleBatch(callbackURL, object));
 	}
 
+	@GraphQLField(description = "update the given Role")
+	public Role updateRoleByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("role") Role role)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.putRoleByExternalReferenceCode(
+				externalReferenceCode, role));
+	}
+
 	@GraphQLField(description = "Unassociates a role with a user account")
 	public boolean deleteRoleUserAccountAssociation(
 			@GraphQLName("roleId") Long roleId,

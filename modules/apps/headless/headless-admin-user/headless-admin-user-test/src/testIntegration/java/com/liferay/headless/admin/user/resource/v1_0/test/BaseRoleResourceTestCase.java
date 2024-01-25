@@ -317,6 +317,62 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
+	public void testPutRoleByExternalReferenceCode() throws Exception {
+		Role postRole = testPutRoleByExternalReferenceCode_addRole();
+
+		Role randomRole = randomRole();
+
+		Role putRole = roleResource.putRoleByExternalReferenceCode(
+			postRole.getExternalReferenceCode(), randomRole);
+
+		assertEquals(randomRole, putRole);
+		assertValid(putRole);
+
+		Role getRole = testPutRoleByExternalReferenceCode_getRole(
+			putRole.getExternalReferenceCode());
+
+		assertEquals(randomRole, getRole);
+		assertValid(getRole);
+
+		Role newRole = testPutRoleByExternalReferenceCode_createRole();
+
+		putRole = roleResource.putRoleByExternalReferenceCode(
+			newRole.getExternalReferenceCode(), newRole);
+
+		assertEquals(newRole, putRole);
+		assertValid(putRole);
+
+		getRole = testPutRoleByExternalReferenceCode_getRole(
+			putRole.getExternalReferenceCode());
+
+		assertEquals(newRole, getRole);
+
+		Assert.assertEquals(
+			newRole.getExternalReferenceCode(),
+			putRole.getExternalReferenceCode());
+	}
+
+	protected Role testPutRoleByExternalReferenceCode_getRole(
+		String externalReferenceCode) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Role testPutRoleByExternalReferenceCode_createRole()
+		throws Exception {
+
+		return randomRole();
+	}
+
+	protected Role testPutRoleByExternalReferenceCode_addRole()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetRole() throws Exception {
 		Role postRole = testGetRole_addRole();
 

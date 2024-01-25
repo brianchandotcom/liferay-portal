@@ -337,7 +337,7 @@ public class LayoutReferencesExportImportContentProcessor
 					if (urlWithoutLocale.startsWith(
 							_PRIVATE_GROUP_SERVLET_MAPPING) ||
 						urlWithoutLocale.startsWith(
-							_PRIVATE_USER_SERVLET_MAPPING) ||
+							_privateUserServletMapping) ||
 						urlWithoutLocale.startsWith(
 							_PUBLIC_GROUP_SERVLET_MAPPING)) {
 
@@ -349,8 +349,7 @@ public class LayoutReferencesExportImportContentProcessor
 								-1) &&
 							 !localePath.equals(
 								 _PRIVATE_GROUP_SERVLET_MAPPING) &&
-							 !localePath.equals(
-								 _PRIVATE_USER_SERVLET_MAPPING) &&
+							 !localePath.equals(_privateUserServletMapping) &&
 							 !localePath.equals(
 								 _PUBLIC_GROUP_SERVLET_MAPPING)) {
 
@@ -391,11 +390,11 @@ public class LayoutReferencesExportImportContentProcessor
 
 					privateLayout = true;
 				}
-				else if (url.startsWith(_PRIVATE_USER_SERVLET_MAPPING)) {
+				else if (url.startsWith(_privateUserServletMapping)) {
 					urlSB.append(_DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING);
 
 					url = url.substring(
-						_PRIVATE_USER_SERVLET_MAPPING.length() - 1);
+						_privateUserServletMapping.length() - 1);
 
 					privateLayout = true;
 				}
@@ -995,8 +994,7 @@ public class LayoutReferencesExportImportContentProcessor
 
 				if (urlWithoutLocale.startsWith(
 						_PRIVATE_GROUP_SERVLET_MAPPING) ||
-					urlWithoutLocale.startsWith(
-						_PRIVATE_USER_SERVLET_MAPPING) ||
+					urlWithoutLocale.startsWith(_privateUserServletMapping) ||
 					urlWithoutLocale.startsWith(
 						_PUBLIC_GROUP_SERVLET_MAPPING) ||
 					_isVirtualHostDefined(urlSB)) {
@@ -1006,7 +1004,7 @@ public class LayoutReferencesExportImportContentProcessor
 				else if ((urlWithoutLocale.indexOf(StringPool.SLASH, 1) ==
 							-1) &&
 						 !localePath.equals(_PRIVATE_GROUP_SERVLET_MAPPING) &&
-						 !localePath.equals(_PRIVATE_USER_SERVLET_MAPPING) &&
+						 !localePath.equals(_privateUserServletMapping) &&
 						 !localePath.equals(_PUBLIC_GROUP_SERVLET_MAPPING)) {
 
 					urlSB.append(localePath);
@@ -1046,8 +1044,8 @@ public class LayoutReferencesExportImportContentProcessor
 
 				privateLayout = true;
 			}
-			else if (url.startsWith(_PRIVATE_USER_SERVLET_MAPPING)) {
-				url = url.substring(_PRIVATE_USER_SERVLET_MAPPING.length() - 1);
+			else if (url.startsWith(_privateUserServletMapping)) {
+				url = url.substring(_privateUserServletMapping.length() - 1);
 
 				privateLayout = true;
 			}
@@ -1311,11 +1309,6 @@ public class LayoutReferencesExportImportContentProcessor
 			PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING) +
 				StringPool.SLASH;
 
-	private static final String _PRIVATE_USER_SERVLET_MAPPING =
-		PropsUtil.get(
-			PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING) +
-				StringPool.SLASH;
-
 	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
 		PropsUtil.get(PropsKeys.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING) +
 			StringPool.SLASH;
@@ -1330,6 +1323,11 @@ public class LayoutReferencesExportImportContentProcessor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutReferencesExportImportContentProcessor.class);
+
+	private static volatile String _privateUserServletMapping =
+		PropsUtil.get(
+			PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING) +
+				StringPool.SLASH;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -80,9 +80,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -383,16 +380,13 @@ public class DefaultExportImportContentProcessorTest {
 		_oldLayoutFriendlyURLPrivateUserServletMapping =
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
 
-		_setFinalStaticField(
-			PropsValues.class.getField(
-				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
-			"/en");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class,
+			"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING", "/en");
 
-		Class<?> clazz =
-			_layoutReferencesExportImportContentProcessor.getClass();
-
-		_setFinalStaticField(
-			clazz.getDeclaredField("_PRIVATE_USER_SERVLET_MAPPING"), "/en/");
+		ReflectionTestUtil.setFieldValue(
+			_layoutReferencesExportImportContentProcessor,
+			"_privateUserServletMapping", "/en/");
 
 		String content = _replaceParameters(
 			_getContent("layout_references.txt"), _fileEntry);
@@ -434,13 +428,14 @@ public class DefaultExportImportContentProcessorTest {
 		Assert.assertFalse(
 			content, content.contains("@data_handler_path_context@/de@"));
 
-		_setFinalStaticField(
-			PropsValues.class.getDeclaredField(
-				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class,
+			"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING",
 			_oldLayoutFriendlyURLPrivateUserServletMapping);
 
-		_setFinalStaticField(
-			clazz.getDeclaredField("_PRIVATE_USER_SERVLET_MAPPING"),
+		ReflectionTestUtil.setFieldValue(
+			_layoutReferencesExportImportContentProcessor,
+			"_privateUserServletMapping",
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING +
 				StringPool.SLASH);
 
@@ -456,16 +451,13 @@ public class DefaultExportImportContentProcessorTest {
 		_oldLayoutFriendlyURLPrivateUserServletMapping =
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
 
-		_setFinalStaticField(
-			PropsValues.class.getField(
-				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
-			"/en");
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class,
+			"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING", "/en");
 
-		Class<?> clazz =
-			_layoutReferencesExportImportContentProcessor.getClass();
-
-		_setFinalStaticField(
-			clazz.getDeclaredField("_PRIVATE_USER_SERVLET_MAPPING"), "/en/");
+		ReflectionTestUtil.setFieldValue(
+			_layoutReferencesExportImportContentProcessor,
+			"_privateUserServletMapping", "/en/");
 
 		String content = _replaceParameters(
 			_getContent("layout_references.txt"), _fileEntry);
@@ -504,13 +496,14 @@ public class DefaultExportImportContentProcessorTest {
 			content, content.contains(_stagingGroup.getFriendlyURL()));
 		Assert.assertFalse(content, content.contains("/en/en"));
 
-		_setFinalStaticField(
-			PropsValues.class.getDeclaredField(
-				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class,
+			"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING",
 			_oldLayoutFriendlyURLPrivateUserServletMapping);
 
-		_setFinalStaticField(
-			clazz.getDeclaredField("_PRIVATE_USER_SERVLET_MAPPING"),
+		ReflectionTestUtil.setFieldValue(
+			_layoutReferencesExportImportContentProcessor,
+			"_privateUserServletMapping",
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING +
 				StringPool.SLASH);
 	}
@@ -1273,19 +1266,6 @@ public class DefaultExportImportContentProcessorTest {
 		}
 
 		return StringUtil.merge(outURLs, StringPool.NEW_LINE);
-	}
-
-	private void _setFinalStaticField(Field field, Object newValue)
-		throws Exception {
-
-		field.setAccessible(true);
-
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-		field.set(null, newValue);
 	}
 
 	private void _testImportDLReferences(boolean deleteFileEntryBeforeImport)

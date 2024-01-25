@@ -77,27 +77,6 @@ public class GetFieldMappingIndexRequestExecutorImpl
 			));
 	}
 
-	private GetFieldMappingResponse _getGetFieldMappingsResponse(
-		GetFieldMappingIndexRequest getFieldMappingIndexRequest,
-		GetFieldMappingRequest getFieldMappingRequest) {
-
-		OpenSearchClient openSearchClient =
-			_openSearchConnectionManager.getOpenSearchClient(
-				getFieldMappingIndexRequest.getConnectionId(),
-				getFieldMappingIndexRequest.isPreferLocalCluster());
-
-		OpenSearchIndicesClient openSearchIndicesClient =
-			openSearchClient.indices();
-
-		try {
-			return openSearchIndicesClient.getFieldMapping(
-				getFieldMappingRequest);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
 	private String _getFieldMappings(Map<String, FieldMapping> mappings) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -124,6 +103,27 @@ public class GetFieldMappingIndexRequestExecutorImpl
 		}
 
 		return jsonObject.toString();
+	}
+
+	private GetFieldMappingResponse _getGetFieldMappingsResponse(
+		GetFieldMappingIndexRequest getFieldMappingIndexRequest,
+		GetFieldMappingRequest getFieldMappingRequest) {
+
+		OpenSearchClient openSearchClient =
+			_openSearchConnectionManager.getOpenSearchClient(
+				getFieldMappingIndexRequest.getConnectionId(),
+				getFieldMappingIndexRequest.isPreferLocalCluster());
+
+		OpenSearchIndicesClient openSearchIndicesClient =
+			openSearchClient.indices();
+
+		try {
+			return openSearchIndicesClient.getFieldMapping(
+				getFieldMappingRequest);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	@Reference

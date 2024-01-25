@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
@@ -58,10 +59,12 @@ public class DDMFormInstanceRecordVersionTableReferenceDefinitionTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
+		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
+			_ddmFormInstanceRecord.getFormInstanceRecordVersion();
+
 		return _ddmFormInstanceRecordLocalService.updateStatus(
 			TestPropsValues.getUserId(),
-			_ddmFormInstanceRecord.getFormInstanceRecordVersion(
-			).getFormInstanceRecordVersionId(),
+			ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
 	}

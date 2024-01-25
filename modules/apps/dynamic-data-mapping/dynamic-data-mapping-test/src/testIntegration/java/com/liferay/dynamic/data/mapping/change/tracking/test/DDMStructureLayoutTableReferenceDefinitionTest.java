@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.journal.model.JournalArticle;
@@ -52,14 +53,15 @@ public class DDMStructureLayoutTableReferenceDefinitionTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
+		DDMStructureVersion ddmStructureVersion =
+			_ddmStructure.getStructureVersion();
+
 		return _ddmStructureLayoutLocalService.addStructureLayout(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			_classNameLocalService.getClassNameId(JournalArticle.class),
 			RandomTestUtil.randomString(),
-			_ddmStructure.getStructureVersion(
-			).getStructureVersionId(),
-			_ddmStructure.getStructureVersion(
-			).getDDMFormLayout(),
+			ddmStructureVersion.getStructureVersionId(),
+			ddmStructureVersion.getDDMFormLayout(),
 			ServiceContextTestUtil.getServiceContext());
 	}
 

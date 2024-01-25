@@ -143,6 +143,21 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	@Override
+	public void deleteFile(long companyId, long repositoryId, String fileName)
+		throws PortalException {
+
+		_validate(fileName, null, null, false, StringPool.BLANK);
+
+		for (String versionLabel :
+				_wrappedStore.getFileVersions(
+					companyId, repositoryId, fileName)) {
+
+			_wrappedStore.deleteFile(
+				companyId, repositoryId, fileName, versionLabel);
+		}
+	}
+
+	@Override
 	public void deleteFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)

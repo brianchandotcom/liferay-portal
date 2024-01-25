@@ -603,7 +603,7 @@ public abstract class BaseAttachmentsUpgradeProcess extends UpgradeProcess {
 			}
 
 			try {
-				DLStoreUtil.deleteDirectory(
+				DLStoreUtil.deleteFile(
 					companyId, CompanyConstants.SYSTEM, attachment);
 			}
 			catch (Exception exception) {

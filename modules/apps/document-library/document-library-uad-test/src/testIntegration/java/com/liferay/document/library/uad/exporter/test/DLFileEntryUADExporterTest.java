@@ -85,7 +85,7 @@ public class DLFileEntryUADExporterTest
 	public void testExportAllWithMissingBinary() throws Exception {
 		DLFileEntry dlFileEntry = addBaseModel(user.getUserId());
 
-		DLStoreUtil.deleteDirectory(
+		DLStoreUtil.deleteFile(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName());
 

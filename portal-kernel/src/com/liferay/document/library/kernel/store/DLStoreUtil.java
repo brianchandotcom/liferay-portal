@@ -107,6 +107,22 @@ public class DLStoreUtil {
 	}
 
 	/**
+	 * Deletes a file. If a file has multiple versions, all versions will be
+	 * deleted.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param repositoryId the primary key of the data repository (optionally
+	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
+	 * @param fileName the file's name
+	 */
+	public static void deleteFile(
+			long companyId, long repositoryId, String fileName)
+		throws PortalException {
+
+		_store.deleteFile(companyId, repositoryId, fileName);
+	}
+
+	/**
 	 * Deletes a file at a particular version.
 	 *
 	 * @param companyId the primary key of the company

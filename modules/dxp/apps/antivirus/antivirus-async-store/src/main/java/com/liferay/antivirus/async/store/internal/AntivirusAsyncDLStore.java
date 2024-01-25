@@ -164,6 +164,19 @@ public class AntivirusAsyncDLStore implements DLStore {
 	}
 
 	@Override
+	public void deleteFile(long companyId, long repositoryId, String fileName)
+		throws PortalException {
+
+		_validate(fileName, null, null, false, StringPool.BLANK);
+
+		for (String versionLabel :
+				_store.getFileVersions(companyId, repositoryId, fileName)) {
+
+			_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
+		}
+	}
+
+	@Override
 	public void deleteFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)

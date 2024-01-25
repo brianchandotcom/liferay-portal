@@ -475,6 +475,10 @@ public interface UserNotificationEventLocalService
 		long userId, int start, int end,
 		OrderByComparator<UserNotificationEvent> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserNotificationEvent> getUserNotificationEvents(
+		long userId, String type, long timestamp, boolean delivered);
+
 	/**
 	 * Returns the number of user notification events.
 	 *
@@ -501,10 +505,6 @@ public interface UserNotificationEventLocalService
 	public int getUserNotificationEventsCount(
 		long userId, String type, int deliveryType, boolean delivered,
 		boolean archived);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserNotificationEventsCount(
-		long userId, String type, long timestamp, boolean delivered);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserNotificationEventsCount(

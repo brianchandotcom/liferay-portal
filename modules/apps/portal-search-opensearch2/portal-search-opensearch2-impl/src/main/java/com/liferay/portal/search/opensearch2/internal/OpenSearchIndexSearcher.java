@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.suggest.QuerySuggester;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -55,9 +56,11 @@ import com.liferay.portal.search.sort.ScoreSort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.time.StopWatch;
 
 import org.osgi.service.component.annotations.Component;
@@ -357,7 +360,8 @@ public class OpenSearchIndexSearcher extends BaseIndexSearcher {
 	}
 
 	private SearchSearchRequest _createSearchSearchRequestWithDeepPagination(
-		Query query, SearchContext searchContext, SearchRequest searchRequest) {
+		Query query, SearchContext searchContext, SearchRequest searchRequest,
+		int start) {
 
 		SearchSearchRequest searchSearchRequest = createSearchSearchRequest(
 			query, searchContext, searchRequest);
@@ -372,13 +376,36 @@ public class OpenSearchIndexSearcher extends BaseIndexSearcher {
 
 			scoreSort.setSortOrder(SortOrder.DESC);
 
-			searchSearchRequest.addSorts(scoreSort, _sorts.field("_shard_doc"));
+			searchSearchRequest.addSorts(scoreSort, _sorts.field("_id"));
 
 			return searchSearchRequest;
 		}
 
-		searchSearchRequest.setSorts(searchContext.getSorts());
-		searchSearchRequest.setSorts(searchRequest.getSorts());
+		if (ListUtil.isNotEmpty(searchRequest.getSorts())) {
+			if (start > 0) {
+				List<com.liferay.portal.search.sort.Sort> sorts =
+					new ArrayList<>();
+
+				sorts.add(_sorts.field("_index"));
+				sorts.addAll(searchRequest.getSorts());
+
+				searchSearchRequest.setSorts(sorts);
+			}
+			else {
+				searchSearchRequest.setSorts(searchRequest.getSorts());
+			}
+		}
+		else if (!ArrayUtil.isEmpty(searchContext.getSorts())) {
+			if (start > 0) {
+				searchSearchRequest.setSorts(
+					(Sort[])ArrayUtils.add(
+						searchContext.getSorts(), 0,
+						new Sort("_index", false)));
+			}
+			else {
+				searchSearchRequest.setSorts(searchContext.getSorts());
+			}
+		}
 
 		return searchSearchRequest;
 	}
@@ -577,7 +604,7 @@ public class OpenSearchIndexSearcher extends BaseIndexSearcher {
 
 		SearchSearchRequest searchSearchRequest =
 			_createSearchSearchRequestWithDeepPagination(
-				query, searchContext, searchRequest);
+				query, searchContext, searchRequest, start);
 
 		SearchSearchResponse searchSearchResponse = null;
 

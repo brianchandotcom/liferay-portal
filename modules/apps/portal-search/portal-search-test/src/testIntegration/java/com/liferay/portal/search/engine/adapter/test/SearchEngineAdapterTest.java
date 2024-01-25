@@ -164,7 +164,19 @@ public class SearchEngineAdapterTest {
 
 			String message = runtimeException.getMessage();
 
-			if (isSearchEngine("Solr")) {
+			if (isSearchEngine("Elasticsearch7")) {
+				Assert.assertTrue(
+					message,
+					message.contains("reason=no such index [" + index + "]"));
+			}
+			else if (isSearchEngine("OpenSearch")) {
+				Assert.assertTrue(
+					message,
+					message.contains(
+						"[index_not_found_exception] no such index [" + index +
+							"]"));
+			}
+			else if (isSearchEngine("Solr")) {
 				Assert.assertTrue(
 					message,
 					message.contains(
@@ -175,11 +187,6 @@ public class SearchEngineAdapterTest {
 					message.contains(
 						"<tr><th>URI:</th><td>/solr/" + index +
 							"/update</td></tr>"));
-			}
-			else if (isSearchEngine("Elasticsearch7")) {
-				Assert.assertTrue(
-					message,
-					message.contains("reason=no such index [" + index + "]"));
 			}
 			else {
 				Assert.assertTrue(
@@ -203,8 +210,9 @@ public class SearchEngineAdapterTest {
 
 		String name = clazz.getName();
 
-		if (name.startsWith("org.elasticsearch") ||
-			name.startsWith("org.apache.solr")) {
+		if (name.startsWith("org.apache.solr") ||
+			name.startsWith("org.elasticsearch") ||
+			name.startsWith("org.opensearch")) {
 
 			throw _getTestFrameworkSafeToLoadException(
 				name, throwable.getMessage(), throwable.getStackTrace());

@@ -6,7 +6,7 @@
 import ClayMultiStepNav from '@clayui/multi-step-nav';
 import React, {useState} from 'react';
 
-import {EPageView, Events, useDispatch} from '../../App';
+import {EPageView, Events, useDispatch} from '../..';
 import {IPages} from '../../utils/types';
 import AttributesStep from './AttributesStep';
 import ConnectStep from './ConnectStep';

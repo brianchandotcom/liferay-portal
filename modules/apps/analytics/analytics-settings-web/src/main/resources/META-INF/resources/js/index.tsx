@@ -127,5 +127,4 @@ const App: React.FC<IAppProps> = (props) => {
 	);
 };
 
-export {AppContextProvider, useData, useDispatch};
-export default App;
+export {App, AppContextProvider, useData, useDispatch};

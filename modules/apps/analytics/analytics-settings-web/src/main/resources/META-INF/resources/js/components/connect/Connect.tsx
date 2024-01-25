@@ -11,7 +11,7 @@ import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
-import {EPageView, Events, useData, useDispatch} from '../../App';
+import {EPageView, Events, useData, useDispatch} from '../..';
 import {fetchConnection} from '../../utils/api';
 import BasePage from '../BasePage';
 import Loading from '../Loading';

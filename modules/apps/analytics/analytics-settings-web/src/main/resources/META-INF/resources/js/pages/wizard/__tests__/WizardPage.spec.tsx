@@ -14,7 +14,7 @@ import {
 	TData,
 	initialState,
 	useData,
-} from '../../../App';
+} from '../../../index';
 import {mockResponse} from '../../../utils/__tests__/helpers';
 import {fetchPropertiesResponse} from '../../../utils/__tests__/mocks';
 import WizardPage from '../WizardPage';

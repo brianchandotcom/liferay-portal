@@ -13,7 +13,7 @@ AnalyticsSettingsDisplayContext analyticsSettingsDisplayContext = new AnalyticsS
 
 <div>
 	<react:component
-		module="js/App"
+		module="{App} from analytics-settings-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"connected", analyticsSettingsDisplayContext.isConnected()

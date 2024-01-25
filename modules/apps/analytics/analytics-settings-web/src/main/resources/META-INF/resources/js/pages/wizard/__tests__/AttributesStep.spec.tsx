@@ -8,7 +8,7 @@ import {act, fireEvent, render} from '@testing-library/react';
 import fetch from 'jest-fetch-mock';
 import React, {useEffect} from 'react';
 
-import {AppContextProvider, TData, initialState, useData} from '../../../App';
+import {AppContextProvider, TData, initialState, useData} from '../../../index';
 import {mockResponse} from '../../../utils/__tests__/helpers';
 import AttributesStep from '../AttributesStep';
 

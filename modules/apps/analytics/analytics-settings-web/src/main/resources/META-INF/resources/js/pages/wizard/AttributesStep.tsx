@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import React from 'react';
 
-import {EPageView, Events, useDispatch} from '../../App';
+import {EPageView, Events, useDispatch} from '../..';
 import BasePage from '../../components/BasePage';
 import Attributes from '../../components/attributes/Attributes';
 import {sync} from '../../utils/api';

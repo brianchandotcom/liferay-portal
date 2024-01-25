@@ -37,7 +37,7 @@
 			"<rootDir>/jest-setup.config.js"
 		]
 	},
-	"main": "js/index.js",
+	"main": "js/index.tsx",
 	"name": "@liferay/analytics-settings-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

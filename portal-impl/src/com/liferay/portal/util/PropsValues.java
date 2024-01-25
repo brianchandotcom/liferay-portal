@@ -341,7 +341,7 @@ public class PropsValues {
 	public static final int COMBO_MAX_FILES = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.COMBO_MAX_FILES), -1);
 
-	public static final String COMPANY_DEFAULT_HOME_URL = PropsUtil.get(
+	public static volatile String COMPANY_DEFAULT_HOME_URL = PropsUtil.get(
 		PropsKeys.COMPANY_DEFAULT_HOME_URL);
 
 	public static String COMPANY_DEFAULT_LOCALE = PropsUtil.get(

@@ -31,18 +31,18 @@ public class FacetCollectorFactory {
 			return new RangeFacetCollector(name, dateRangeAggregate.buckets());
 		}
 
+		if (object instanceof RangeAggregate) {
+			RangeAggregate rangeAggregate = aggregate.range();
+
+			return new RangeFacetCollector(name, rangeAggregate.buckets());
+		}
+
 		if (object instanceof MultiBucketAggregateBase) {
 			MultiBucketAggregateBase multiBucketAggregateBase =
 				(MultiBucketAggregateBase)object;
 
 			return new MultiBucketsAggregationFacetCollector(
 				multiBucketAggregateBase, name);
-		}
-
-		if (object instanceof RangeAggregate) {
-			RangeAggregate rangeAggregate = aggregate.range();
-
-			return new RangeFacetCollector(name, rangeAggregate.buckets());
 		}
 
 		if (object instanceof SingleBucketAggregateBase) {

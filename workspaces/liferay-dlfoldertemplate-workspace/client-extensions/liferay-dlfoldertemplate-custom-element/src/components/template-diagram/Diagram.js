@@ -28,11 +28,7 @@ import {
 import {showError} from '../../utils/util';
 import FolderNode from './controls/custom-node/FolderNode';
 
-import './Diagram.css';
-
-const DAGRE_GRAPH = new dagre.graphlib.Graph();
-
-DAGRE_GRAPH.setDefaultEdgeLabel(() => ({}));
+const EDGE_TYPE = 'SmoothStep';
 
 const NODE_WIDTH = 172;
 
@@ -40,23 +36,18 @@ const NODE_HEIGHT = 36;
 
 const POSITION = {x: 0, y: 0};
 
-const EDGE_TYPE = 'SmoothStep';
+const dagreGraph = new dagre.graphlib.Graph();
 
-const normalizeNode = (node) => {
-	return {
-		POSITION,
-		data: {
-			description: node.description,
-			label: node.name,
-			nodeId: `${node.id}`,
-			parent: node.root ? null : `${node.parentId}`,
-			root: node.root,
-		},
-		deletable: !node.root,
-		id: `${node.id}`,
-		parent: node.root ? null : `${node.parentId}`,
-		type: 'folderNode',
-	};
+dagreGraph.setDefaultEdgeLabel(() => ({}));
+
+const deleteNodes = async (nodeIds) => {
+	await deleteFolderTemplateBatch(
+		nodeIds.map((nodeId) => {
+			return {
+				id: nodeId,
+			};
+		})
+	);
 };
 
 const getEdge = (nodeId, parentId) => {
@@ -70,22 +61,22 @@ const getEdge = (nodeId, parentId) => {
 };
 
 const getLayoutedElements = (nodes, edges) => {
-	DAGRE_GRAPH.setGraph({
+	dagreGraph.setGraph({
 		rankdir: 'TB',
 	});
 
 	nodes.forEach((node) => {
-		DAGRE_GRAPH.setNode(node.id, {height: NODE_HEIGHT, width: NODE_WIDTH});
+		dagreGraph.setNode(node.id, {height: NODE_HEIGHT, width: NODE_WIDTH});
 	});
 
 	edges.forEach((edge) => {
-		DAGRE_GRAPH.setEdge(edge.source, edge.target);
+		dagreGraph.setEdge(edge.source, edge.target);
 	});
 
-	dagre.layout(DAGRE_GRAPH);
+	dagre.layout(dagreGraph);
 
 	const updatedNodes = nodes.map((node) => {
-		const nodeWithPosition = DAGRE_GRAPH.node(node.id);
+		const nodeWithPosition = dagreGraph.node(node.id);
 
 		return {
 			...node,
@@ -99,31 +90,50 @@ const getLayoutedElements = (nodes, edges) => {
 		};
 	});
 
-	return {edges, updatedNodes};
+	return {layoutedEdges: edges, layoutedNodes: updatedNodes};
 };
 
 const getChildNodeIds = (nodeId, subNodes = []) => {
 	subNodes.push(nodeId);
 
-	const childrenNodes = DAGRE_GRAPH.successors(nodeId);
+	const childNodes = dagreGraph.successors(nodeId);
 
-	if (childrenNodes && childrenNodes.length) {
-		childrenNodes.forEach((node) => {
-			getChildNodeIds(node, subNodes);
+	if (childNodes && childNodes.length) {
+		childNodes.forEach((nodeId) => {
+			getChildNodeIds(nodeId, subNodes);
 		});
 	}
 
 	return subNodes;
 };
 
-const deleteNodes = async (nodeIds) => {
-	await deleteFolderTemplateBatch(
-		nodeIds.map((nodeId) => {
-			return {
-				id: nodeId,
-			};
-		})
-	);
+const normalizeNode = (node) => {
+	return {
+		POSITION,
+		data: {
+			description: node.description,
+			label: node.name,
+			nodeId: node.id.toString(),
+			parent: node.root
+				? null
+				: node.pid
+				? node.pid.toString()
+				: node.parentId
+				? node.parentId.toString()
+				: '',
+			root: node.root,
+		},
+		deletable: !node.root,
+		id: node.id.toString(),
+		parent: node.root
+			? null
+			: node.pid
+			? node.pid.toString()
+			: node.parentId
+			? node.parentId.toString()
+			: '',
+		type: 'folderNode',
+	};
 };
 
 const Diagram = ({key, templateId}) => {
@@ -131,9 +141,8 @@ const Diagram = ({key, templateId}) => {
 
 	const [edges, setEdges] = useEdgesState(null);
 
-	const [selectedNode, setSelectedNode] = useState();
-
 	const [isLoading, setIsLoading] = useState(false);
+	const [selectedNode, setSelectedNode] = useState();
 
 	const [form] = Form.useForm();
 
@@ -142,14 +151,15 @@ const Diagram = ({key, templateId}) => {
 			description: data.description,
 			id: data.nodeId,
 			name: data.label,
-			parentId: data.parent,
+			parentId: data.root ? 0 : data.parent,
 			root: data.root,
 			templateId,
 		});
+
 		setSelectedNode(data);
 	};
 
-	const handlePaneClick = () => {
+	const handlePanelClick = () => {
 		setSelectedNode(null);
 	};
 
@@ -163,10 +173,10 @@ const Diagram = ({key, templateId}) => {
 				(edge) => !idsToExclude.includes(edge.source)
 			);
 
-			const {
-				edges: layoutedEdges,
-				updatedNodes: layoutedNodes,
-			} = getLayoutedElements(filteredNodes, filteredEdges);
+			const {layoutedEdges, layoutedNodes} = getLayoutedElements(
+				filteredNodes,
+				filteredEdges
+			);
 
 			setNodes([...layoutedNodes]);
 
@@ -207,10 +217,10 @@ const Diagram = ({key, templateId}) => {
 
 			edges.push(newDiagramEdge);
 
-			const {
-				edges: layoutedEdges,
-				updatedNodes: layoutedNodes,
-			} = getLayoutedElements(nodes, edges);
+			const {layoutedEdges, layoutedNodes} = getLayoutedElements(
+				nodes,
+				edges
+			);
 
 			setNodes([...layoutedNodes]);
 
@@ -270,10 +280,10 @@ const Diagram = ({key, templateId}) => {
 				return normalizeNode(node);
 			});
 
-			const {
-				edges: layoutedEdges,
-				updatedNodes: layoutedNodes,
-			} = getLayoutedElements(normalizedNodes, templateEdges);
+			const {layoutedEdges, layoutedNodes} = getLayoutedElements(
+				normalizedNodes,
+				templateEdges
+			);
 
 			setNodes([...layoutedNodes]);
 
@@ -335,14 +345,17 @@ const Diagram = ({key, templateId}) => {
 					nodes={nodes}
 					onConnect={null}
 					onNodesDelete={handleDelete}
-					onPaneClick={handlePaneClick}
+					onPaneClick={handlePanelClick}
 				>
 					<Controls />
 					<Background className="background" />
 					{selectedNode && (
-						<Panel className="side-panel" position="top-right">
-							<div className="sidebar">
-								<div className="border-bottom sidebar-header">
+						<Panel
+							className="h-100 m-0 side-panel w-25"
+							position="top-right"
+						>
+							<div className="sidebar sidebar-light">
+								<div className="sidebar-header">
 									<div className="autofit-row sidebar-section">
 										<div className="autofit-col autofit-col-expand">
 											<div className="component-title mb-auto mt-auto">
@@ -355,9 +368,7 @@ const Diagram = ({key, templateId}) => {
 											<ClayButtonWithIcon
 												aria-label="Close"
 												displayType="unstyled"
-												onClick={() => {
-													handlePaneClick(null);
-												}}
+												onClick={handlePanelClick}
 												symbol="times"
 												title="Close"
 											/>
@@ -454,7 +465,7 @@ const Diagram = ({key, templateId}) => {
 										</Form.Item>
 									</Form>
 								</div>
-								<div className="actions fixed-bottom sidebar-footer">
+								<div className="d-flex justify-content-between sidebar-footer">
 									{!selectedNode.root && (
 										<ClayButton
 											disabled={isLoading}

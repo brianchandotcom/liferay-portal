@@ -6,7 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayButtonGroup from '@clayui/button/lib/Group';
 import {Body, Cell, Head, Row, Table} from '@clayui/core';
-import {Context as ModalContext} from '@clayui/modal';
+import ClayModal, {Context as ModalContext, useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayToolbar from '@clayui/toolbar';
 import moment from 'moment';
@@ -18,6 +18,9 @@ import TemplateItemCreateFolder from './controls/template-item-create-folder/Tem
 import NewTemplateItem from './controls/template-item-create/NewTemplateItem';
 
 import './template-list.css';
+
+import ClayIcon from '@clayui/icon';
+
 import {
 	deleteFolderTemplateInformation,
 	getAvailableTemplatesPage,
@@ -56,53 +59,15 @@ const HEADERS = [
 
 const TemplateList = () => {
 	const [data, setData] = useState([]);
-	const [totalItems, setTotalItems] = useState(0);
-	const [pageIndex, setPageIndex] = useState(1);
 	const [delta, setDelta] = useState(5);
+	const [isDeletingLoading, setIsDeletingLoading] = useState(false);
+	const [pageIndex, setPageIndex] = useState(1);
+	const [selectedTemplateId, setSelectedTemplateId] = useState();
+	const [totalItems, setTotalItems] = useState(0);
 
 	const [modalState, dispatchModal] = useContext(ModalContext);
 
-	const [isDeletingLoading, setIsDeletingLoading] = useState(false);
-
-	const openDesignerModal = (template) => {
-		dispatchModal({
-			payload: {
-				body: <FolderStructureDesigner templateId={template.id} />,
-				header: 'Design Template',
-				size: 'full-screen',
-			},
-			type: MODAL_OPEN,
-		});
-	};
-
-	const openCreateFolderModal = (template) => {
-		try {
-			dispatchModal({
-				payload: {
-					body: <TemplateItemCreateFolder templateID={template.id} />,
-					center: true,
-					header: 'Create Folder Structure',
-					size: 'lg',
-				},
-				type: MODAL_OPEN,
-			});
-		}
-		catch (exp) {
-			showError(exp);
-		}
-	};
-
-	const openNewItemModal = () => {
-		dispatchModal({
-			payload: {
-				body: <NewTemplateItem onClose={closeNewItemModal} />,
-				center: true,
-				header: 'Create Folder Template',
-				size: 'lg',
-			},
-			type: MODAL_OPEN,
-		});
-	};
+	const {observer, onOpenChange, open} = useModal();
 
 	const confirmDeleteItemModal = (template) => {
 		const deleteTemplate = async () => {
@@ -134,6 +99,29 @@ const TemplateList = () => {
 		modalState.onClose(true);
 	};
 
+	const openDesignerModal = (template) => {
+		setSelectedTemplateId(template);
+
+		onOpenChange(true);
+	};
+
+	const openCreateFolderModal = (template) => {
+		try {
+			dispatchModal({
+				payload: {
+					body: <TemplateItemCreateFolder templateID={template.id} />,
+					center: true,
+					header: 'Create Folder Structure',
+					size: 'lg',
+				},
+				type: MODAL_OPEN,
+			});
+		}
+		catch (exp) {
+			showError(exp);
+		}
+	};
+
 	const reload = () => {
 		setTotalItems(0);
 
@@ -160,6 +148,18 @@ const TemplateList = () => {
 
 		setTotalItems(results.totalCount);
 	}, [pageIndex, delta]);
+
+	const openNewItemModal = () => {
+		dispatchModal({
+			payload: {
+				body: <NewTemplateItem onClose={closeNewItemModal} />,
+				center: true,
+				header: 'Create Folder Template',
+				size: 'lg',
+			},
+			type: MODAL_OPEN,
+		});
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -312,6 +312,38 @@ const TemplateList = () => {
 						totalItems={totalItems}
 					/>
 				</>
+			)}
+
+			{open && selectedTemplateId && (
+				<ClayModal observer={observer} size="full-screen">
+					<ClayModal.Header withTitle={false}>
+						<ClayModal.ItemGroup>
+							<ClayModal.Item>
+								<ClayModal.TitleSection>
+									<ClayModal.Title>
+										Design Template
+									</ClayModal.Title>
+								</ClayModal.TitleSection>
+							</ClayModal.Item>
+						</ClayModal.ItemGroup>
+						<ClayButton
+							aria-label="close"
+							className="close"
+							displayType="unstyled"
+							onClick={() => {
+								onOpenChange(false);
+								setSelectedTemplateId(null);
+							}}
+						>
+							<ClayIcon symbol="times" />
+						</ClayButton>
+					</ClayModal.Header>
+					<ClayModal.Body className="p-0">
+						<FolderStructureDesigner
+							templateId={selectedTemplateId.id}
+						/>
+					</ClayModal.Body>
+				</ClayModal>
 			)}
 		</>
 	);

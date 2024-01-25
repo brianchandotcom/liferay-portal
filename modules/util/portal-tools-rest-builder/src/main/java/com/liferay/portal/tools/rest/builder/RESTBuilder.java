@@ -53,6 +53,7 @@ import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.security.CodeSource;
@@ -61,12 +62,14 @@ import java.security.ProtectionDomain;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -194,28 +197,32 @@ public class RESTBuilder {
 
 		List<String> validationErrorMessages = new ArrayList<>();
 
-		File[] files = FileUtil.getFiles(_configDir, "rest-openapi", ".yaml");
+		File[] openAPIYAMLFiles = FileUtil.getFiles(
+			_configDir, "rest-openapi", ".yaml");
 
-		for (File file : files) {
+		for (File openAPIYAMLFile : openAPIYAMLFiles) {
 			try {
-				_checkOpenAPIYAMLFile(freeMarkerTool, file);
+				_checkOpenAPIYAMLFile(freeMarkerTool, openAPIYAMLFile);
 			}
 			catch (Exception exception) {
 				_log.error(exception);
 
 				throw new RuntimeException(
 					StringBundler.concat(
-						"Error in file \"", file.getName(), "\": ",
+						"Error in file \"", openAPIYAMLFile.getName(), "\": ",
 						exception.getMessage()));
 			}
 
-			String yamlString = FileUtil.read(file);
+			String yamlString = FileUtil.read(openAPIYAMLFile);
 
 			if (!_validateOpenAPIYAML(
-					file.getName(), yamlString, validationErrorMessages)) {
+					openAPIYAMLFile.getName(), yamlString,
+					validationErrorMessages)) {
 
 				continue;
 			}
+
+			context.put("openApiYamlFile", openAPIYAMLFile);
 
 			OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(yamlString);
 
@@ -359,6 +366,10 @@ public class RESTBuilder {
 					_createDTOActionProviderFile(
 						context, escapedVersion, schemaName);
 				}
+			}
+
+			if (Validator.isNotNull(_configYAML.getClientDir())) {
+				_invokeJSClientGenerator(context);
 			}
 		}
 
@@ -1840,6 +1851,82 @@ public class RESTBuilder {
 			reference.lastIndexOf('#'), reference.lastIndexOf('/'));
 
 		return freeMarkerTool.getSchemaVarName(reference.substring(index + 1));
+	}
+
+	private void _invokeJSClientGenerator(Map<String, Object> context)
+		throws Exception {
+
+		String baseClientDir =
+			StringUtil.removeLast(_configDir.getPath(), "-impl") + "-client-js";
+
+		// Constructs client name from the api package path
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		StringBundler sb = new StringBundler();
+
+		String[] parts = apiPackagePath.split("\\.");
+
+		for (int i = 2; i < parts.length; i++) {
+			sb.append(StringUtil.upperCaseFirstLetter(parts[i]));
+		}
+
+		sb.append("Client");
+
+		String clientName = sb.toString();
+
+		File openApiYamlFile = (File)context.get("openApiYamlFile");
+
+		for (String target : Arrays.asList("fetch", "node")) {
+			Path outputDirPath = Paths.get(
+				baseClientDir, "src", "main", "resources", "META-INF",
+				"resources", target);
+
+			List<String> args = new ArrayList<>(
+				Arrays.asList(
+					"npx", "openapi-typescript-codegen", "--input",
+					openApiYamlFile.getPath(), "--output",
+					outputDirPath.toString(), "--client", target));
+
+			// See https://github.com/ferdikoomen/openapi-typescript-codegen/wiki/Client-instances
+
+			args.add("--name");
+			args.add(clientName);
+
+			// See https://github.com/ferdikoomen/openapi-typescript-codegen/wiki/Arguments-vs.-Object-style
+
+			args.add("--useOptions");
+
+			// See https://github.com/ferdikoomen/openapi-typescript-codegen/wiki/Enums-vs.-Union-types
+
+			args.add("--useUnionTypes");
+
+			ProcessBuilder processBuilder = new ProcessBuilder(args);
+
+			Process process = processBuilder.start();
+
+			System.out.printf(
+				"Invoking Typescript %s client generator%n", target);
+
+			process.waitFor();
+
+			if (process.exitValue() > 0) {
+				System.out.println("Typescript client generator failed");
+
+				Scanner scanner = new Scanner(process.getErrorStream());
+
+				scanner.useDelimiter("\n");
+
+				while (scanner.hasNext()) {
+					System.out.println("[codegen] " + scanner.next());
+				}
+			}
+			else {
+				System.out.printf(
+					"Typescript client generated at %s%n",
+					outputDirPath.toRealPath());
+			}
+		}
 	}
 
 	private OpenAPIYAML _loadOpenAPIYAML(String yamlString) {

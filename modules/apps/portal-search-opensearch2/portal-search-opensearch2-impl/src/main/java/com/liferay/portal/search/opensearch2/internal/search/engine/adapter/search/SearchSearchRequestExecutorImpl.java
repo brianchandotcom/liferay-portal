@@ -8,7 +8,6 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.sea
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
@@ -43,14 +42,13 @@ public class SearchSearchRequestExecutorImpl
 		SearchRequest.Builder searchRequestBuilder =
 			new SearchRequest.Builder();
 
-		if (searchSearchRequest.getPointInTime() == null) {
-			searchRequestBuilder.index(
-				ListUtil.fromArray(searchSearchRequest.getIndexNames()));
-		}
-
 		SetterUtil.setNotNullBoolean(
 			searchRequestBuilder::requestCache,
 			searchSearchRequest.isRequestCache());
+
+		if (searchSearchRequest.getSearchAfter() != null) {
+			searchSearchRequest.setStart(null);
+		}
 
 		_searchSearchRequestAssembler.assemble(
 			searchRequestBuilder, searchSearchRequest);
@@ -106,7 +104,8 @@ public class SearchSearchRequestExecutorImpl
 			scrollRequestBuilder.scroll(
 				Time.of(
 					time -> time.time(
-						scrollKeepAliveMinutes + TimeUnit.Minutes)));
+						scrollKeepAliveMinutes +
+							TimeUnit.Minutes.jsonValue())));
 		}
 
 		scrollRequestBuilder.scrollId(searchSearchRequest.getScrollId());

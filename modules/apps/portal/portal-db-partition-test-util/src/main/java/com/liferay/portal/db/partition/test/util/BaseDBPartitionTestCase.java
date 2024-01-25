@@ -196,8 +196,8 @@ public abstract class BaseDBPartitionTestCase {
 				DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
 				_DATABASE_PARTITION_SCHEMA_NAME_PREFIX);
 			ReflectionTestUtil.setFieldValue(
-				DBPartitionUtil.class,
-				"_databasePartitionThreadPoolEnabled", true);
+				DBPartitionUtil.class, "_databasePartitionThreadPoolEnabled",
+				true);
 
 			DBPartitionUtil.setDefaultCompanyId(portal.getDefaultCompanyId());
 

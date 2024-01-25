@@ -35,3 +35,34 @@ test('can publish and delete an article', async ({
 
 	await page.close();
 });
+
+test('can schedule the publication of an article and delete it afterward', async ({
+	apiHelpers,
+	knowledgeBaseEditArticle,
+	knowledgeBaseViewArticlePage,
+	page,
+}) => {
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-188058', true);
+
+	const content = getRandomString();
+	const title = getRandomString();
+	const kbArticle = page.getByRole('link', {name: title});
+
+	await knowledgeBaseEditArticle.publishNewKnowledgeBaseArticleWithSchedule(
+		content,
+		title
+	);
+	await expect(kbArticle).toBeVisible();
+
+	await knowledgeBaseViewArticlePage.deleteKnowledgeBaseArticle(title);
+	await expect(
+		page.locator(
+			'[id="_com_liferay_knowledge_base_web_portlet_AdminPortlet_recycleBinAlert"]'
+		)
+	).toBeVisible();
+	await expect(kbArticle).toBeHidden();
+
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-188058', false);
+
+	await page.close();
+});

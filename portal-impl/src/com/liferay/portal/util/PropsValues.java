@@ -1547,7 +1547,7 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.ORGANIZATIONS_ASSIGNMENT_STRICT));
 
-	public static final boolean ORGANIZATIONS_MEMBERSHIP_STRICT =
+	public static volatile boolean ORGANIZATIONS_MEMBERSHIP_STRICT =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.ORGANIZATIONS_MEMBERSHIP_STRICT));
 

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.scheduler.quartz.internal.upgrade;
 
-import com.liferay.petra.io.ProtectedObjectInputStream;
+import com.liferay.petra.io.ProtectedClassLoaderObjectInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -27,10 +27,15 @@ public abstract class BaseQuartzRenameJobsUpgradeProcess
 	protected JobDataMap deserializeJobDataMap(InputStream inputStream)
 		throws Exception {
 
-		try (ProtectedObjectInputStream protectedObjectInputStream =
-				new ProtectedObjectInputStream(inputStream)) {
+		try (ProtectedClassLoaderObjectInputStream
+				protectedClassLoaderObjectInputStream =
+					new ProtectedClassLoaderObjectInputStream(
+						inputStream,
+						BaseQuartzRenameJobsUpgradeProcess.class.
+							getClassLoader())) {
 
-			return (JobDataMap)protectedObjectInputStream.readObject();
+			return (JobDataMap)
+				protectedClassLoaderObjectInputStream.readObject();
 		}
 	}
 

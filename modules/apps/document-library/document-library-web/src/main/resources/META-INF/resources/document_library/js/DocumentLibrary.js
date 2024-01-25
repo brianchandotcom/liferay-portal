@@ -153,13 +153,13 @@ export default function DocumentLibrary({
 			onSelect: (selectedItem) => {
 				if (parameterName && parameterValue) {
 					_moveSingleElement(
-						selectedItem.folderid,
+						selectedItem.resourceid,
 						parameterName,
 						parameterValue
 					);
 				}
 				else {
-					_moveCurrentSelection(selectedItem.folderid);
+					_moveCurrentSelection(selectedItem.resourceid);
 				}
 			},
 			selectEventName: `${namespace}selectFolder`,

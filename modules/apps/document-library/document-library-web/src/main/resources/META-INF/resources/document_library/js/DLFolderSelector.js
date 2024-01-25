@@ -71,8 +71,8 @@ const DLFolderSelector = ({
 					return;
 				}
 
-				setDestinationParentFolderName(selectedItem.foldername);
-				setDestinationParentFolderId(selectedItem.folderid);
+				setDestinationParentFolderName(selectedItem.resourcename);
+				setDestinationParentFolderId(selectedItem.resourceid);
 				setDestinationRepositoryId(selectedItem.repositoryid);
 				setDestinationRepositoryName(selectedItem.repositoryname);
 				setCopyButtonDisabled(false);

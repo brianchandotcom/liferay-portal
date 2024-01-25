@@ -207,7 +207,7 @@ FolderItemSelectorURLProvider folderItemSelectorURLProvider = new FolderItemSele
 
 				form.elements[namespace + 'cmd'].value = 'move';
 				form.elements[namespace + 'newFolderId'].value =
-					selectedItem.folderid;
+					selectedItem.resourceid;
 
 				submitForm(form, actionUrl, false);
 			},

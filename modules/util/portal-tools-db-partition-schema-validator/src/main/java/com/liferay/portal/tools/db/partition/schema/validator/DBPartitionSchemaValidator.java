@@ -48,9 +48,9 @@ public class DBPartitionSchemaValidator {
 
 		CommandLine commandLine = commandLineParser.parse(options, args);
 
-		_schemaName = commandLine.getOptionValue("db-schema");
+		_dbName = commandLine.getOptionValue("db-name");
 
-		String jdbcURL = _DEFAULT_JDBC_URL.replace("db-schema", _schemaName);
+		String jdbcURL = _DEFAULT_JDBC_URL.replace("db-name", _dbName);
 
 		if (commandLine.hasOption("jdbc-url")) {
 			jdbcURL = commandLine.getOptionValue("jdbc-url");
@@ -64,13 +64,14 @@ public class DBPartitionSchemaValidator {
 
 			_debug = commandLine.hasOption("debug");
 
-			boolean defaultSchema = true;
+			boolean defaultPartition = true;
 
 			for (long companyId : _getCompanyIds()) {
-				if (defaultSchema) {
-					_validateSchema(companyId, _schemaName, true);
+				if (defaultPartition) {
+					_validatePartition(
+						companyId, _getDefaultPartitionName(), true);
 
-					defaultSchema = false;
+					defaultPartition = false;
 
 					continue;
 				}
@@ -79,7 +80,7 @@ public class DBPartitionSchemaValidator {
 					_schemaPrefix = commandLine.getOptionValue("schema-prefix");
 				}
 
-				_validateSchema(companyId, _schemaPrefix + companyId, false);
+				_validatePartition(companyId, _schemaPrefix + companyId, false);
 			}
 		}
 		finally {
@@ -104,16 +105,20 @@ public class DBPartitionSchemaValidator {
 		}
 	}
 
+	private static String _getDefaultPartitionName() throws SQLException {
+		return _connection.getCatalog();
+	}
+
 	private static int _getInvalidRecordsCount(
-			long companyId, String schemaName, String tableName,
-			boolean defaultSchema)
+			long companyId, String partitionName, String tableName,
+			boolean defaultPartition)
 		throws SQLException {
 
 		String query =
-			"select count(*) from " + schemaName + "." + tableName + " where " +
-				"companyId != " + companyId;
+			"select count(*) from " + partitionName + "." + tableName +
+				" where companyId != " + companyId;
 
-		if (defaultSchema) {
+		if (defaultPartition) {
 			query += " and companyId != 0";
 		}
 
@@ -143,9 +148,11 @@ public class DBPartitionSchemaValidator {
 		options.addOption("j", "jdbc-url", true, "Set the JDBC url.");
 		options.addOption(
 			"s", "schema-prefix", true,
-			"Set the schema prefix for nondefault databases.");
+			"Set the schema prefix for nondefault partitions.");
 		options.addRequiredOption(
-			"d", "db-schema", true, "Set the default database schema name.");
+			"d", "db-name", true, "Set the database name.");
+		options.addRequiredOption(
+			"t", "db-type", true, "Set database type [mysql, postgresql].");
 		options.addRequiredOption(
 			"p", "password", true, "Set database user password.");
 		options.addRequiredOption(
@@ -155,13 +162,13 @@ public class DBPartitionSchemaValidator {
 	}
 
 	private static boolean _hasColumn(
-			String schemaName, String tableName, String columnName)
+			String partitionName, String tableName, String columnName)
 		throws Exception {
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
 		try (ResultSet resultSet = databaseMetaData.getColumns(
-				schemaName, schemaName, tableName, columnName)) {
+				partitionName, partitionName, tableName, columnName)) {
 
 			if (!resultSet.next()) {
 				return false;
@@ -171,19 +178,26 @@ public class DBPartitionSchemaValidator {
 		}
 	}
 
-	private static void _validateSchema(
-			long companyId, String schemaName, boolean defaultSchema)
+	private static void _validatePartition(
+			long companyId, String partitionName, boolean defaultPartition)
 		throws Exception {
 
-		System.out.println(
-			"Validating schema " + schemaName + " for company ID " + companyId);
+		if (defaultPartition) {
+			System.out.println(
+				"Validating default partition for company ID " + companyId);
+		}
+		else {
+			System.out.println(
+				"Validating partition " + partitionName + " for company ID " +
+					companyId);
+		}
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
 		try (ResultSet resultSet = databaseMetaData.getTables(
-				schemaName, schemaName, null, new String[] {"TABLE"})) {
+				partitionName, partitionName, null, new String[] {"TABLE"})) {
 
-			boolean validSchema = true;
+			boolean validPartition = true;
 
 			while (resultSet.next()) {
 				String tableName = resultSet.getString("TABLE_NAME");
@@ -196,16 +210,16 @@ public class DBPartitionSchemaValidator {
 					continue;
 				}
 
-				if (_hasColumn(schemaName, tableName, "companyId")) {
+				if (_hasColumn(partitionName, tableName, "companyId")) {
 					int count = _getInvalidRecordsCount(
-						companyId, schemaName, tableName, defaultSchema);
+						companyId, partitionName, tableName, defaultPartition);
 
 					if (count > 0) {
 						System.out.println(
 							"Table " + tableName + " contains " + count +
 								" records with an invalid company ID");
 
-						validSchema = false;
+						validPartition = false;
 					}
 					else if (_debug) {
 						System.out.println(
@@ -215,15 +229,22 @@ public class DBPartitionSchemaValidator {
 				}
 			}
 
-			if (validSchema) {
-				System.out.println(
-					"Validation passed successfully for schema " + schemaName);
+			if (validPartition) {
+				if (defaultPartition) {
+					System.out.println(
+						"Validation passed successfully for default partition");
+				}
+				else {
+					System.out.println(
+						"Validation passed successfully for partition " +
+							partitionName);
+				}
 			}
 		}
 	}
 
 	private static final String _DEFAULT_JDBC_URL =
-		"jdbc:mysql://localhost/db-schema?characterEncoding=UTF-8&" +
+		"jdbc:mysql://localhost/db-name?characterEncoding=UTF-8&" +
 			"dontTrackOpenResources=true&holdResultsOpenOverStatementClose=" +
 				"true&serverTimezone=GMT&useFastDateParsing=false&useUnicode=" +
 					"true";
@@ -231,8 +252,8 @@ public class DBPartitionSchemaValidator {
 	private static Connection _connection;
 	private static final Set<String> _controlTableNames = new HashSet<>(
 		Arrays.asList("Company", "VirtualHost"));
+	private static String _dbName;
 	private static boolean _debug;
-	private static String _schemaName;
 	private static String _schemaPrefix = "lpartition_";
 
 }

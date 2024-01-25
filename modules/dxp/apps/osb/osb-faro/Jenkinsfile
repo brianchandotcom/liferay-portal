@@ -1,5 +1,9 @@
 pipeline {
-	agent any
+	agent {
+		kubernetes {
+			label 'java'
+		}
+	}
 
 	environment {
 		LABEL_BUILD_DATE = "${sh(script: 'date -u +%Y-%m-%dT%H:%M:%SZ', returnStdout: true).trim()}"

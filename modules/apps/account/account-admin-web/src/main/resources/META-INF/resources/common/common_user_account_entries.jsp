@@ -96,7 +96,7 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
 				name="name"
-				property="name"
+				value="<%= HtmlUtil.escape(accountEntryDisplay.getName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

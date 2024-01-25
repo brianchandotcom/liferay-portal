@@ -361,7 +361,7 @@ public class Role implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
-	@Schema(description = "The portable ID of this role.")
+	@Schema(description = "The optional external key of this role.")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -395,7 +395,7 @@ public class Role implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The portable ID of this role.")
+	@GraphQLField(description = "The optional external key of this role.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 

@@ -46,7 +46,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "ar",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -64,7 +63,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "bg",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -82,7 +80,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "ca",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -100,7 +97,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "cs",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -118,7 +114,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "da",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -130,14 +125,12 @@
 		{
 			"template_string_sortable_de_AT": {
 				"mapping": {
-					"country": "AT",
 					"fields": {
 						"keyword_lowercase": {
 							"normalizer": "lowercase",
 							"type": "keyword"
 						}
 					},
-					"language": "de",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -155,7 +148,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "de",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -173,7 +165,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "el",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -191,7 +182,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "en",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -209,7 +199,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "es",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -227,7 +216,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "et",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -245,7 +233,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "eu",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -263,7 +250,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "fa",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -281,7 +267,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "fi",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -293,14 +278,12 @@
 		{
 			"template_string_sortable_fr_CA": {
 				"mapping": {
-					"country": "CA",
 					"fields": {
 						"keyword_lowercase": {
 							"normalizer": "lowercase",
 							"type": "keyword"
 						}
 					},
-					"language": "fr",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -318,7 +301,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "fr",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -336,7 +318,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "gl",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -354,7 +335,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "hi",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -372,7 +352,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "hr",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -390,7 +369,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "hu",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -408,7 +386,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "hy",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -426,7 +403,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "in",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -444,7 +420,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "it",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -462,7 +437,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "ja",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -480,7 +454,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "kk",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -498,7 +471,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "ko",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -516,7 +488,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "lo",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -534,7 +505,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "lt",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -552,7 +522,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "ms",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -570,7 +539,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "nb",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -588,7 +556,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "nl",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -606,7 +573,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "no",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -624,7 +590,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "pl",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -642,7 +607,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "pt",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -660,7 +624,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "ro",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -678,7 +641,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "ru",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -696,7 +658,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "sk",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -714,7 +675,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "sl",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -732,7 +692,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "sr",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -750,7 +709,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "sv",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -768,7 +726,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "ta",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -786,7 +743,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "th",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -804,7 +760,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "tr",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -822,7 +777,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "uk",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -840,7 +794,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "vi",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},
@@ -858,7 +811,6 @@
 							"type": "keyword"
 						}
 					},
-					"language": "zh",
 					"store": true,
 					"type": "icu_collation_keyword"
 				},

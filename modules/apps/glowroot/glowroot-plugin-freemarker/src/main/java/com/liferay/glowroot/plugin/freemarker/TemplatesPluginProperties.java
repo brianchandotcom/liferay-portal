@@ -8,6 +8,7 @@ package com.liferay.glowroot.plugin.freemarker;
 import org.glowroot.agent.plugin.api.Agent;
 import org.glowroot.agent.plugin.api.config.ConfigListener;
 import org.glowroot.agent.plugin.api.config.ConfigService;
+import org.glowroot.agent.plugin.api.config.StringProperty;
 
 /**
  * @author Fabian Bouché
@@ -27,9 +28,10 @@ public class TemplatesPluginProperties {
 
 		@Override
 		public void onChange() {
-			_instrumentationLevel = _configService.getStringProperty(
-				"instrumentationLevel"
-			).value();
+			StringProperty stringProperty = _configService.getStringProperty(
+				"instrumentationLevel");
+
+			_instrumentationLevel = stringProperty.value();
 		}
 
 	}

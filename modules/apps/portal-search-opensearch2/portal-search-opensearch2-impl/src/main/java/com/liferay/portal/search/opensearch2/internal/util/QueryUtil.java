@@ -31,7 +31,13 @@ public class QueryUtil {
 
 		MapUtil.isNotEmptyForEach(
 			fieldsBoosts,
-			(key, value) -> fieldsWithBoosts.add(key + "^" + value));
+			(key, value) -> {
+				if (value == null) {
+					value = 1.0F;
+				}
+
+				fieldsWithBoosts.add(key + "^" + value);
+			});
 
 		return fieldsWithBoosts;
 	}

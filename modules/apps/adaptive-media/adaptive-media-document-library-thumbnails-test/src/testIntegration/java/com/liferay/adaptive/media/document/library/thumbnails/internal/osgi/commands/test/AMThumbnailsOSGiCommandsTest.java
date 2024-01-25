@@ -238,7 +238,7 @@ public class AMThumbnailsOSGiCommandsTest {
 					"DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT", 999);
 			SafeCloseable safeCloseable2 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
-					"DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT", 999)) {
+					"DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH", 999)) {
 
 			_addPNGFileEntry();
 

@@ -1160,6 +1160,14 @@ public class CTermEntryLocalizationPersistenceImpl
 						cTermEntryLocalizationId, ContentTypes.TEXT_HTML,
 						Sanitizer.MODE_ALL,
 						cTermEntryLocalization.getDescription(), null));
+
+				cTermEntryLocalization.setLabel(
+					SanitizerUtil.sanitize(
+						companyId, groupId, userId,
+						CTermEntryLocalization.class.getName(),
+						cTermEntryLocalizationId, ContentTypes.TEXT_HTML,
+						Sanitizer.MODE_ALL, cTermEntryLocalization.getLabel(),
+						null));
 			}
 			catch (SanitizerException sanitizerException) {
 				throw new SystemException(sanitizerException);

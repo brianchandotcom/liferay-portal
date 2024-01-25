@@ -2343,7 +2343,7 @@ public class PropsValues {
 	public static final int TRASH_SEARCH_LIMIT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.TRASH_SEARCH_LIMIT));
 
-	public static final boolean TUNNEL_SERVLET_HIDE_EXCEPTION_DATA =
+	public static volatile boolean TUNNEL_SERVLET_HIDE_EXCEPTION_DATA =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.TUNNEL_SERVLET_HIDE_EXCEPTION_DATA));
 

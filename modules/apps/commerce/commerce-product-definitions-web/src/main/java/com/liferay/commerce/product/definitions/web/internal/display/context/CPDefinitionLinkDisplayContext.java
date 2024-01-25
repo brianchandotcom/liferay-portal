@@ -13,7 +13,9 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -26,6 +28,8 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
@@ -58,6 +62,21 @@ public class CPDefinitionLinkDisplayContext
 		_itemSelector = itemSelector;
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
+	}
+
+	public List<DropdownItem> getBulkActionDropdownItems() {
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createActionURL(
+					cpRequestHelper.getRenderResponse()
+				).setActionName(
+					"/cp_definitions/edit_cp_definition_link"
+				).setCMD(
+					Constants.DELETE
+				).buildString(),
+				"trash", "delete", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				null));
 	}
 
 	public CPDefinitionLink getCPDefinitionLink() throws PortalException {

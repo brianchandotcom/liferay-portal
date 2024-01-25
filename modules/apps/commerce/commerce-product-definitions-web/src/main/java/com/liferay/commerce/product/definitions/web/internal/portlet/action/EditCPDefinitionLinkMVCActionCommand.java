@@ -163,8 +163,7 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			deleteCPDefinitionLinkIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCPDefinitionLinkIds"),
-				0L);
+				ParamUtil.getString(actionRequest, "cpdefinitionLinkId"), 0L);
 		}
 
 		for (long deleteCPDefinitionLinkId : deleteCPDefinitionLinkIds) {

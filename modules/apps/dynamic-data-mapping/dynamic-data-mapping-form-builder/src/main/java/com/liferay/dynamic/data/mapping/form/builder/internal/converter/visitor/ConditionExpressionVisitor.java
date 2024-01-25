@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.expression.model.Term;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRuleCondition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,8 +104,14 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 			SPIDDMFormRuleCondition.Operand operand = doVisit(
 				parameterExpressions.get(1));
 
+			String operandType = operand.getType();
+
+			if (StringUtil.equals(operand.getType(), "string")) {
+				operandType = "option";
+			}
+
 			return new SPIDDMFormRuleCondition.Operand(
-				"option", operand.getValue());
+				operandType, operand.getValue());
 		}
 
 		if (Objects.equals(functionName, "getValue")) {
@@ -118,15 +125,27 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 		List<SPIDDMFormRuleCondition.Operand> operands = new ArrayList<>();
 
 		for (Expression parameterExpression : parameterExpressions) {
+			if (parameterExpression instanceof FunctionCallExpression) {
+				FunctionCallExpression parameterFunctionCallExpression =
+					(FunctionCallExpression)parameterExpression;
+
+				if (StringUtil.equals(
+						parameterFunctionCallExpression.getFunctionName(),
+						"getOptionLabel")) {
+
+					operands.add(doVisit(parameterExpression));
+
+					continue;
+				}
+			}
+
 			if (functionCallExpression.hasNestedFunctions()) {
 				operands.add(
 					new SPIDDMFormRuleCondition.Operand(
 						"condition", parameterExpression.toString()));
 			}
 			else {
-				operands.add(
-					(SPIDDMFormRuleCondition.Operand)doVisit(
-						parameterExpression));
+				operands.add(doVisit(parameterExpression));
 			}
 		}
 

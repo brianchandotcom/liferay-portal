@@ -147,7 +147,7 @@ public class DBPartitionUtil {
 		throws PortalException {
 
 		if (DBPartition.isPartitionEnabled() &&
-			(_DATABASE_PARTITION_SCHEMA_NAME_PREFIX.length() > 11)) {
+			(_databasePartitionSchemaNamePrefix.length() > 11)) {
 
 			throw new PortalException(
 				"The value for property " +
@@ -719,7 +719,7 @@ public class DBPartitionUtil {
 			return _defaultPartitionName;
 		}
 
-		return _DATABASE_PARTITION_SCHEMA_NAME_PREFIX + companyId;
+		return _databasePartitionSchemaNamePrefix + companyId;
 	}
 
 	private static void _insertDBPartition(long companyId)
@@ -967,15 +967,14 @@ public class DBPartitionUtil {
 		};
 	}
 
-	private static final String _DATABASE_PARTITION_SCHEMA_NAME_PREFIX =
-		GetterUtil.get(
-			PropsUtil.get("database.partition.schema.name.prefix"),
-			"lpartition_");
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DBPartitionUtil.class);
 
 	private static final List<Long> _companyIds = new CopyOnWriteArrayList<>();
+	private static volatile String _databasePartitionSchemaNamePrefix =
+		GetterUtil.get(
+			PropsUtil.get("database.partition.schema.name.prefix"),
+			"lpartition_");
 	private static volatile boolean _databasePartitionThreadPoolEnabled =
 		GetterUtil.getBoolean(
 			PropsUtil.get("database.partition.thread.pool.enabled"), true);

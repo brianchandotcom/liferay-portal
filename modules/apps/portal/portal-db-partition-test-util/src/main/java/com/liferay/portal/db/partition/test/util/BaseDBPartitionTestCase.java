@@ -160,7 +160,7 @@ public abstract class BaseDBPartitionTestCase {
 		_lazyConnectionDataSourceProxy.setTargetDataSource(_currentDataSource);
 
 		ReflectionTestUtil.setFieldValue(
-			DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
+			DBPartitionUtil.class, "_databasePartitionSchemaNamePrefix",
 			StringPool.BLANK);
 	}
 
@@ -193,11 +193,11 @@ public abstract class BaseDBPartitionTestCase {
 			PropsUtil.set("database.partition.enabled", "true");
 
 			ReflectionTestUtil.setFieldValue(
-				DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
+				DBPartitionUtil.class, "_databasePartitionSchemaNamePrefix",
 				_DATABASE_PARTITION_SCHEMA_NAME_PREFIX);
 			ReflectionTestUtil.setFieldValue(
-				DBPartitionUtil.class,
-				"_databasePartitionThreadPoolEnabled", true);
+				DBPartitionUtil.class, "_databasePartitionThreadPoolEnabled",
+				true);
 
 			DBPartitionUtil.setDefaultCompanyId(portal.getDefaultCompanyId());
 
@@ -250,9 +250,12 @@ public abstract class BaseDBPartitionTestCase {
 
 	protected static String getPartitionName(long companyId) {
 		if (_dbPartitionEnabled) {
-			return (String)ReflectionTestUtil.getFieldValue(
-				DBPartitionUtil.class,
-				"_DATABASE_PARTITION_SCHEMA_NAME_PREFIX") + companyId;
+			String databasePartitionSchemaNamePrefix =
+				ReflectionTestUtil.getFieldValue(
+					DBPartitionUtil.class,
+					"_databasePartitionSchemaNamePrefix");
+
+			return databasePartitionSchemaNamePrefix + companyId;
 		}
 
 		return _DATABASE_PARTITION_SCHEMA_NAME_PREFIX + companyId;

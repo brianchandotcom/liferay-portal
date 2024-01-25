@@ -341,8 +341,7 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownGroupItem.setDropdownItems(
 					_getFilterNavigationDropdownItems());
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "filter-by") +
-						StringPool.TRIPLE_PERIOD);
+					LanguageUtil.get(_httpServletRequest, "filter-by"));
 			}
 		).build();
 	}
@@ -840,8 +839,7 @@ public class DLAdminManagementToolbarDisplayContext
 					"categoriesFilterURL", _getAssetCategorySelectorURL());
 				dropdownItem.setActive(!assetCategoryIdsIsEmpty);
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "categories") +
-						StringPool.TRIPLE_PERIOD);
+					LanguageUtil.get(_httpServletRequest, "categories"));
 			}
 		).add(
 			dropdownItem -> {
@@ -849,9 +847,7 @@ public class DLAdminManagementToolbarDisplayContext
 
 				dropdownItem.putData("action", "openDocumentTypesSelector");
 
-				String label =
-					LanguageUtil.get(_httpServletRequest, "type") +
-						StringPool.TRIPLE_PERIOD;
+				String label = LanguageUtil.get(_httpServletRequest, "type");
 
 				if (fileEntryTypeId != -1) {
 					String fileEntryTypeName = LanguageUtil.get(
@@ -881,8 +877,7 @@ public class DLAdminManagementToolbarDisplayContext
 					"extensionsFilterURL", _getExtensionsItemSelectorURL());
 				dropdownItem.setActive(!extensionsIsEmpty);
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "extension") +
-						StringPool.TRIPLE_PERIOD);
+					LanguageUtil.get(_httpServletRequest, "extension"));
 			}
 		).add(
 			dropdownItem -> {
@@ -891,8 +886,7 @@ public class DLAdminManagementToolbarDisplayContext
 					"tagsFilterURL", _getAssetTagSelectorURL());
 				dropdownItem.setActive(!assetTagIdsIsEmpty);
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "tags") +
-						StringPool.TRIPLE_PERIOD);
+					LanguageUtil.get(_httpServletRequest, "tags"));
 			}
 		).build();
 	}

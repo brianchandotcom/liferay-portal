@@ -1321,9 +1321,6 @@ public class AssetPublisherDisplayContext {
 		groupItemSelectorCriterion.setIncludeRecentSites(false);
 		groupItemSelectorCriterion.setIncludeSitesThatIAdminister(true);
 
-		String label = LanguageUtil.get(
-			_httpServletRequest, "other-site-or-asset-library");
-
 		dropdownItemList.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "openScopeSelector");
@@ -1344,7 +1341,9 @@ public class AssetPublisherDisplayContext {
 					).setParameter(
 						"plid", layout.getPlid()
 					).buildString());
-				dropdownItem.setLabel(label + StringPool.TRIPLE_PERIOD);
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest, "other-site-or-asset-library"));
 			});
 
 		return dropdownItemList;

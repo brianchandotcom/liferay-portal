@@ -70,8 +70,7 @@ public class FileExtensionContentDashboardItemFilter
 		).setActive(
 			ListUtil.isNotEmpty(getParameterValues())
 		).setLabel(
-			_language.get(_httpServletRequest, "extension") +
-				StringPool.TRIPLE_PERIOD
+			_language.get(_httpServletRequest, "extension")
 		).build();
 	}
 

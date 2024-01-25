@@ -833,8 +833,7 @@ public class JournalManagementToolbarDisplayContext
 				).setActive(
 					_journalDisplayContext.isNavigationStructure()
 				).setLabel(
-					LanguageUtil.get(httpServletRequest, "structures") +
-						StringPool.TRIPLE_PERIOD
+					LanguageUtil.get(httpServletRequest, "structures")
 				).build());
 		}
 
@@ -851,8 +850,7 @@ public class JournalManagementToolbarDisplayContext
 			).setActive(
 				ArrayUtil.isNotEmpty(_getAssetCategoryIds())
 			).setLabel(
-				LanguageUtil.get(httpServletRequest, "categories") +
-					StringPool.TRIPLE_PERIOD
+				LanguageUtil.get(httpServletRequest, "categories")
 			).build());
 		filterNavigationDropdownItems.add(
 			DropdownItemBuilder.putData(
@@ -867,8 +865,7 @@ public class JournalManagementToolbarDisplayContext
 			).setActive(
 				ArrayUtil.isNotEmpty(_getAssetTagIds())
 			).setLabel(
-				LanguageUtil.get(httpServletRequest, "tags") +
-					StringPool.TRIPLE_PERIOD
+				LanguageUtil.get(httpServletRequest, "tags")
 			).build());
 
 		return filterNavigationDropdownItems;

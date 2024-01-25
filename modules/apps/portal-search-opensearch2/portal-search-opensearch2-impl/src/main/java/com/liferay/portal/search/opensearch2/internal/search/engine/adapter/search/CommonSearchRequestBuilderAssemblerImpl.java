@@ -69,7 +69,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		_setPostFilter(baseSearchRequest, searchRequestBuilder);
 		setQuery(baseSearchRequest, searchRequestBuilder);
 		_setRequestCache(baseSearchRequest, searchRequestBuilder);
-		_setRescorers(baseSearchRequest.getRescores(), searchRequestBuilder);
+		_setRescorers(baseSearchRequest, searchRequestBuilder);
 		_setStatsRequests(baseSearchRequest, searchRequestBuilder);
 		_setTimeout(baseSearchRequest, searchRequestBuilder);
 		_setTrackTotalHits(baseSearchRequest, searchRequestBuilder);
@@ -428,10 +428,43 @@ public class CommonSearchRequestBuilderAssemblerImpl
 			baseSearchRequest.getRequestCache());
 	}
 
+	private void _setRescoreQuery(
+		Query query, SearchRequest.Builder searchRequestBuilder) {
+
+		if (query == null) {
+			return;
+		}
+
+		RescoreQuery.Builder rescoreQueryBuilder = new RescoreQuery.Builder();
+
+		rescoreQueryBuilder.query(
+			new org.opensearch.client.opensearch._types.query_dsl.Query(
+				_queryTranslator.translate(query)));
+
+		org.opensearch.client.opensearch.core.search.Rescore.Builder
+			rescoreBuilder =
+				new org.opensearch.client.opensearch.core.search.Rescore.
+					Builder();
+
+		rescoreBuilder.query(rescoreQueryBuilder.build());
+
+		searchRequestBuilder.rescore(rescoreBuilder.build());
+	}
+
 	private void _setRescorers(
+		BaseSearchRequest baseSearchRequest,
+		SearchRequest.Builder searchRequestBuilder) {
+
+		_setRescores(baseSearchRequest.getRescores(), searchRequestBuilder);
+
+		_setRescoreQuery(
+			baseSearchRequest.getRescoreQuery(), searchRequestBuilder);
+	}
+
+	private void _setRescores(
 		List<Rescore> rescores, SearchRequest.Builder searchRequestBuilder) {
 
-		if (rescores == null) {
+		if (ListUtil.isEmpty(rescores)) {
 			return;
 		}
 

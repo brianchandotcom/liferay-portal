@@ -182,7 +182,6 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 				<ClayButton onClick={onApply}>
 					{i18n.translate('apply')}
 				</ClayButton>
-				S
 				<ClayButton
 					className="ml-3"
 					disabled={clearDisabled}

@@ -138,6 +138,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -906,7 +907,10 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Date time
 
-		LocalDateTime localDateTime = LocalDateTime.now();
+		LocalDateTime nowLocalDateTime = LocalDateTime.now();
+
+		LocalDateTime localDateTime = nowLocalDateTime.truncatedTo(
+			ChronoUnit.MILLIS);
 
 		assertEquals(
 			_defaultObjectEntryManager.addObjectEntry(

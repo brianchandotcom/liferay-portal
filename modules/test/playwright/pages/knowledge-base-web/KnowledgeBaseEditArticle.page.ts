@@ -22,6 +22,7 @@ export class KnowledgeBaseEditArticlePage {
 		this.contentTextBox = this.contentFrameLocator.getByRole('textbox');
 		this.knowledgeBasePage = new KnowledgeBasePage(page);
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
+		this.publishMenuItem = page.getByRole('menuitem', {name: 'Publish'});
 		this.titlePlaceholder = page.getByPlaceholder('Untitled Article');
 		this.page = page;
 	}
@@ -35,5 +36,17 @@ export class KnowledgeBaseEditArticlePage {
 		await this.titlePlaceholder.fill(title);
 		await this.contentTextBox.fill(content);
 		await this.publishButton.click();
+	}
+
+	async publishNewKnowledgeBaseArticleWithSchedule(
+		content: string,
+		title: string
+	) {
+		await this.goto();
+		await this.titlePlaceholder.fill(title);
+		await this.contentTextBox.fill(content);
+		await this.publishButton.click();
+		await this.publishMenuItem.waitFor();
+		await this.publishMenuItem.click();
 	}
 }

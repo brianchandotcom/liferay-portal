@@ -83,6 +83,7 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultT
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.opensearch2.internal.hits.HitsMetadataTranslator;
+import com.liferay.portal.search.opensearch2.internal.util.OpenSearchStringUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -223,7 +224,9 @@ public class OpenSearchAggregationResultTranslator
 				buckets.array(),
 				dateHistogramBucket -> {
 					Bucket bucket = dateHistogramAggregationResult.addBucket(
-						dateHistogramBucket.keyAsString(),
+						OpenSearchStringUtil.getFirstStringValue(
+							dateHistogramBucket::keyAsString,
+							dateHistogramBucket::key),
 						dateHistogramBucket.docCount());
 
 					_addBucketChildAggregationResults(
@@ -446,7 +449,8 @@ public class OpenSearchAggregationResultTranslator
 				buckets.array(),
 				histogramBucket -> {
 					Bucket bucket = histogramAggregationResult.addBucket(
-						histogramBucket.keyAsString(),
+						OpenSearchStringUtil.getFirstStringValue(
+							histogramBucket::keyAsString, histogramBucket::key),
 						histogramBucket.docCount());
 
 					_addBucketChildAggregationResults(
@@ -837,7 +841,7 @@ public class OpenSearchAggregationResultTranslator
 				buckets.keyed(),
 				(key, rangeBucket) -> {
 					Bucket bucket = bucketAggregationResult.addBucket(
-						rangeBucket.key(), rangeBucket.docCount());
+						key, rangeBucket.docCount());
 
 					_addBucketChildAggregationResults(
 						aggregation, rangeBucket.aggregations(), bucket);

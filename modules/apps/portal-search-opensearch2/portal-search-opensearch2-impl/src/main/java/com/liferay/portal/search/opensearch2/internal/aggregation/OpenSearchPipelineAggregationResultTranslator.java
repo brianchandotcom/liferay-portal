@@ -226,8 +226,7 @@ public class OpenSearchPipelineAggregationResultTranslator
 				percentiles.keyed(),
 				(key, percentile) ->
 					percentilesBucketPipelineAggregationResult.addPercentile(
-						Double.valueOf(percentile),
-						GetterUtil.getDouble(percentile)));
+						Double.valueOf(key), GetterUtil.getDouble(percentile)));
 		}
 
 		return percentilesBucketPipelineAggregationResult;

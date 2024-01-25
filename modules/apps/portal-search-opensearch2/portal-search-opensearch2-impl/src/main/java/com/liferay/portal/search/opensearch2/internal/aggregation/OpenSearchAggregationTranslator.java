@@ -56,6 +56,7 @@ import com.liferay.portal.search.opensearch2.internal.geolocation.GeoTranslator;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
 import com.liferay.portal.search.opensearch2.internal.util.ConversionUtil;
+import com.liferay.portal.search.opensearch2.internal.util.OpenSearchStringUtil;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
 import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.script.Script;
@@ -67,6 +68,7 @@ import com.liferay.portal.search.significance.ScriptSignificanceHeuristic;
 import com.liferay.portal.search.significance.SignificanceHeuristic;
 import com.liferay.portal.search.sort.SortFieldTranslator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -76,12 +78,13 @@ import java.util.function.Consumer;
 import org.opensearch.client.opensearch._types.GeoHashPrecision;
 import org.opensearch.client.opensearch._types.SortOptions;
 import org.opensearch.client.opensearch._types.SortOrder;
+import org.opensearch.client.opensearch._types.Time;
+import org.opensearch.client.opensearch._types.TimeUnit;
 import org.opensearch.client.opensearch._types.aggregations.Aggregation.Builder.ContainerBuilder;
 import org.opensearch.client.opensearch._types.aggregations.AggregationBuilders;
 import org.opensearch.client.opensearch._types.aggregations.AggregationRange;
 import org.opensearch.client.opensearch._types.aggregations.AverageAggregation;
 import org.opensearch.client.opensearch._types.aggregations.Buckets;
-import org.opensearch.client.opensearch._types.aggregations.CalendarInterval;
 import org.opensearch.client.opensearch._types.aggregations.ChiSquareHeuristic;
 import org.opensearch.client.opensearch._types.aggregations.DateRangeExpression;
 import org.opensearch.client.opensearch._types.aggregations.ExtendedBounds;
@@ -220,9 +223,10 @@ public class OpenSearchAggregationTranslator
 				AggregationBuilders.dateHistogram();
 
 		if (dateHistogramAggregation.getDateHistogramInterval() != null) {
-			dateHistogramAggregationBuilder.calendarInterval(
-				_translateCalendarInterval(
-					dateHistogramAggregation.getDateHistogramInterval()));
+			dateHistogramAggregationBuilder.interval(
+				Time.of(
+					time -> time.time(
+						dateHistogramAggregation.getDateHistogramInterval())));
 		}
 
 		dateHistogramAggregationBuilder.field(
@@ -249,6 +253,14 @@ public class OpenSearchAggregationTranslator
 		if (dateHistogramAggregation.getMinDocCount() != null) {
 			dateHistogramAggregationBuilder.minDocCount(
 				Math.toIntExact(dateHistogramAggregation.getMinDocCount()));
+		}
+
+		if (dateHistogramAggregation.getOffset() != null) {
+			dateHistogramAggregationBuilder.offset(
+				Time.of(
+					time -> time.time(
+						dateHistogramAggregation.getOffset() +
+							TimeUnit.Milliseconds.jsonValue())));
 		}
 
 		if (ListUtil.isNotEmpty(dateHistogramAggregation.getOrders())) {
@@ -359,8 +371,9 @@ public class OpenSearchAggregationTranslator
 
 		Integer sigma = extendedStatsAggregation.getSigma();
 
-		SetterUtil.setNotNullDouble(
-			extendedStatsAggregationBuilder::sigma, sigma.doubleValue());
+		if (sigma != null) {
+			extendedStatsAggregationBuilder.sigma(sigma.doubleValue());
+		}
 
 		return _translateChildAggregations(
 			extendedStatsAggregation,
@@ -520,9 +533,13 @@ public class OpenSearchAggregationTranslator
 		rangeAggregationRanges.forEach(
 			rangeAggregationRange -> geoDistanceAggregationBuilder.ranges(
 				_createAggregationRange(
-					rangeAggregationRange.getFromAsString(),
+					OpenSearchStringUtil.getFirstStringValue(
+						rangeAggregationRange::getFromAsString,
+						rangeAggregationRange::getFrom),
 					rangeAggregationRange.getKey(),
-					rangeAggregationRange.getToAsString())));
+					OpenSearchStringUtil.getFirstStringValue(
+						rangeAggregationRange::getToAsString,
+						rangeAggregationRange::getTo))));
 
 		return _translateChildAggregations(
 			geoDistanceAggregation,
@@ -1517,8 +1534,11 @@ public class OpenSearchAggregationTranslator
 		ranges.forEach(
 			range -> builder.ranges(
 				_createAggregationRange(
-					range.getFromAsString(), range.getKey(),
-					range.getToAsString())));
+					OpenSearchStringUtil.getFirstStringValue(
+						range::getFromAsString, range::getFrom),
+					range.getKey(),
+					OpenSearchStringUtil.getFirstStringValue(
+						range::getToAsString, range::getTo))));
 	}
 
 	protected org.opensearch.client.opensearch._types.aggregations.ValueType
@@ -1627,54 +1647,6 @@ public class OpenSearchAggregationTranslator
 		throw new IllegalArgumentException("Invalid order " + order);
 	}
 
-	private CalendarInterval _translateCalendarInterval(
-		String calendarInterval) {
-
-		if (calendarInterval.equals("second") ||
-			calendarInterval.equals("1s")) {
-
-			return CalendarInterval.Second;
-		}
-		else if (calendarInterval.equals("minute") ||
-				 calendarInterval.equals("1m")) {
-
-			return CalendarInterval.Minute;
-		}
-		else if (calendarInterval.equals("hour") ||
-				 calendarInterval.equals("1h")) {
-
-			return CalendarInterval.Hour;
-		}
-		else if (calendarInterval.equals("day") ||
-				 calendarInterval.equals("1d")) {
-
-			return CalendarInterval.Day;
-		}
-		else if (calendarInterval.equals("week") ||
-				 calendarInterval.equals("1w")) {
-
-			return CalendarInterval.Week;
-		}
-		else if (calendarInterval.equals("month") ||
-				 calendarInterval.equals("1M")) {
-
-			return CalendarInterval.Month;
-		}
-		else if (calendarInterval.equals("quarter") ||
-				 calendarInterval.equals("1q")) {
-
-			return CalendarInterval.Quarter;
-		}
-		else if (calendarInterval.equals("year") ||
-				 calendarInterval.equals("1y")) {
-
-			return CalendarInterval.Year;
-		}
-
-		throw new IllegalArgumentException(
-			"Invalid calendar interval " + calendarInterval);
-	}
-
 	private org.opensearch.client.opensearch._types.aggregations.Aggregation
 		_translateChildAggregations(
 			Aggregation aggregation, ContainerBuilder containerBuilder) {
@@ -1764,11 +1736,13 @@ public class OpenSearchAggregationTranslator
 				));
 	}
 
-	private Map<String, SortOrder> _translateOrders(List<Order> orders) {
-		Map<String, SortOrder> sortOrders = new HashMap<>();
+	private List<Map<String, SortOrder>> _translateOrders(List<Order> orders) {
+		List<Map<String, SortOrder>> sortOrdersList = new ArrayList<>();
 
 		orders.forEach(
 			order -> {
+				Map<String, SortOrder> sortOrders = new HashMap<>();
+
 				SortOrder sortOrder;
 
 				if (order.isAscending()) {
@@ -1784,9 +1758,11 @@ public class OpenSearchAggregationTranslator
 				else if (Order.KEY_METRIC_NAME.equals(order.getMetricName())) {
 					sortOrders.put(Order.KEY_METRIC_NAME, sortOrder);
 				}
+
+				sortOrdersList.add(sortOrders);
 			});
 
-		return sortOrders;
+		return sortOrdersList;
 	}
 
 	private ScriptedHeuristic _translateScriptSignificanceHeuristic(

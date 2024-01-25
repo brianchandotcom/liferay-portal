@@ -302,9 +302,12 @@ test('can create post method endpoint with company scope', async ({
 
 	expect(page.getByLabel('post ​/test-post-endpoint')).toBeDefined;
 
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178642', false);
+	await page.goto('http://localhost:8080');
+
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		basicApiApplication.externalReferenceCode
 	);
+
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178642', false);
 });

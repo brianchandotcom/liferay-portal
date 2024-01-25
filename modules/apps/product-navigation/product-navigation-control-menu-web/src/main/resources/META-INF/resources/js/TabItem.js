@@ -52,6 +52,7 @@ const TabItem = ({item}) => {
 				'sidebar-body__add-panel__tab-portlet-item':
 					item.data.portletItemId,
 			})}
+			data-qa-id="addPanelTabItem"
 			ref={item.disabled ? null : sourceRef}
 		>
 			<div

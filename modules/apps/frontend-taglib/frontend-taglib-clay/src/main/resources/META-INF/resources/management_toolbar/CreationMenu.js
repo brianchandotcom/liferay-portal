@@ -45,6 +45,7 @@ const ItemList = ({
 					(item) => item.icon
 				),
 			})}
+			data-qa-id="dropdownMenu"
 		>
 			{primaryItems?.map((item, index) => {
 				currentItemCount++;
@@ -174,6 +175,7 @@ const CreationMenu = ({
 						<ClayButton
 							aria-label={getPlusIconLabel()}
 							className="nav-btn"
+							data-qa-id="creationMenuNewButton"
 							title={getPlusIconLabel()}
 						>
 							<ClayIcon
@@ -244,6 +246,7 @@ const CreationMenu = ({
 						aria-label={getPlusIconLabel()}
 						button={true}
 						className="nav-btn"
+						data-qa-id="creationMenuNewButton"
 						displayType="primary"
 						href={firstItemRef.current.href}
 						onClick={(event) => {

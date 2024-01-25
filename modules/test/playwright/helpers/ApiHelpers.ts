@@ -7,6 +7,9 @@ import {Page} from '@playwright/test';
 
 import {liferayConfig} from '../liferay.config';
 import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
+import {HeadlessAdminUserApiHelper} from './HeadlessAdminUserApiHelper';
+import {HeadlessCommerceAdminCatalogApiHelper} from './HeadlessCommerceAdminCatalogApiHelper';
+import {HeadlessCommerceAdminChannelApiHelper} from './HeadlessCommerceAdminChannelApiHelper';
 import {HeadlessDeliveryApiHelper} from './HeadlessDeliveryApiHelper';
 import {HeadlessSiteApiHelper} from './HeadlessSiteApiHelper';
 import {ObjectAdminApiHelper} from './ObjectAdminApiHelper';
@@ -15,6 +18,9 @@ import {ObjectApiHelper} from './ObjectApiHelper';
 export class ApiHelpers {
 	readonly baseUrl: string;
 	readonly featureFlag: FeatureFlagApiHelper;
+	readonly headlessAdminUser: HeadlessAdminUserApiHelper;
+	readonly headlessCommerceAdminCatalog: HeadlessCommerceAdminCatalogApiHelper;
+	readonly headlessCommerceAdminChannel: HeadlessCommerceAdminChannelApiHelper;
 	readonly headlessDelivery: HeadlessDeliveryApiHelper;
 	readonly headlessSite: HeadlessSiteApiHelper;
 	readonly object: ObjectApiHelper;
@@ -28,6 +34,11 @@ export class ApiHelpers {
 		this.headlessSite = new HeadlessSiteApiHelper(this);
 		this.object = new ObjectApiHelper(this);
 		this.objectAdmin = new ObjectAdminApiHelper(this);
+		this.headlessCommerceAdminCatalog =
+			new HeadlessCommerceAdminCatalogApiHelper(this);
+		this.headlessCommerceAdminChannel =
+			new HeadlessCommerceAdminChannelApiHelper(this);
+		this.headlessAdminUser = new HeadlessAdminUserApiHelper(this);
 		this.page = page;
 	}
 
@@ -39,6 +50,15 @@ export class ApiHelpers {
 
 	async get(url: string) {
 		const response = await this.page.request.get(url, {
+			headers: await this.getHeader(),
+		});
+
+		return response.json();
+	}
+
+	async patch(url: string, data: DataObject) {
+		const response = await this.page.request.patch(url, {
+			data,
 			headers: await this.getHeader(),
 		});
 

@@ -255,7 +255,9 @@ const Modal = ({
 												iframeBodyCssClass
 											}
 											iframeProps={{
-												id: id && `${id}_iframe_`,
+												id:
+													(id && `${id}_iframe_`) ||
+													'modalIframe',
 												...iframeProps,
 											}}
 											onOpen={onOpen}

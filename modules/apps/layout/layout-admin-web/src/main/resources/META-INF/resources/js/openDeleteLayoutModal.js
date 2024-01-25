@@ -21,6 +21,7 @@ export default function openDeleteLayoutModal({
 			},
 			{
 				displayType: 'danger',
+				id: 'deleteLayoutModalDeleteButton',
 				label: Liferay.Language.get('delete'),
 				onClick: ({processClose}) => {
 					processClose();

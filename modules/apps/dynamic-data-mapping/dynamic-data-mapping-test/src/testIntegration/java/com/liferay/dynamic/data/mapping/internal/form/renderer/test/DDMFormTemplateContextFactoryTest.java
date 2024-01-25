@@ -172,6 +172,8 @@ public class DDMFormTemplateContextFactoryTest {
 			ListUtil.fromArray(validations.get("date")),
 			ListUtil.fromArray(
 				HashMapBuilder.put(
+					"label", "Range"
+				).put(
 					"name", "dateRange"
 				).put(
 					"template",
@@ -179,11 +181,15 @@ public class DDMFormTemplateContextFactoryTest {
 						"pastDates({name}, \"{parameter}\")"
 				).build(),
 				HashMapBuilder.put(
+					"label", "Future Dates"
+				).put(
 					"name", "futureDates"
 				).put(
 					"template", "futureDates({name}, \"{parameter}\")"
 				).build(),
 				HashMapBuilder.put(
+					"label", "Past Dates"
+				).put(
 					"name", "pastDates"
 				).put(
 					"template", "pastDates({name}, \"{parameter}\")"
@@ -192,31 +198,43 @@ public class DDMFormTemplateContextFactoryTest {
 			ListUtil.fromArray(validations.get("numeric")),
 			ListUtil.fromArray(
 				HashMapBuilder.put(
+					"label", "Is Equal To"
+				).put(
 					"name", "eq"
 				).put(
 					"template", "{name} == {parameter}"
 				).build(),
 				HashMapBuilder.put(
+					"label", "Is Greater Than"
+				).put(
 					"name", "gt"
 				).put(
 					"template", "{name} > {parameter}"
 				).build(),
 				HashMapBuilder.put(
+					"label", "Is Greater Than Or Equal To"
+				).put(
 					"name", "gteq"
 				).put(
 					"template", "{name} >= {parameter}"
 				).build(),
 				HashMapBuilder.put(
+					"label", "Is Less Than"
+				).put(
 					"name", "lt"
 				).put(
 					"template", "{name} < {parameter}"
 				).build(),
 				HashMapBuilder.put(
+					"label", "Is Less Than Or Equal To"
+				).put(
 					"name", "lteq"
 				).put(
 					"template", "{name} <= {parameter}"
 				).build(),
 				HashMapBuilder.put(
+					"label", "Is Not Equal To"
+				).put(
 					"name", "neq"
 				).put(
 					"template", "{name} != {parameter}"
@@ -225,26 +243,36 @@ public class DDMFormTemplateContextFactoryTest {
 			ListUtil.fromArray(validations.get("string")),
 			ListUtil.fromArray(
 				HashMapBuilder.put(
+					"label", "Contains"
+				).put(
 					"name", "contains"
 				).put(
 					"template", "contains({name}, \"{parameter}\")"
 				).build(),
 				HashMapBuilder.put(
+					"label", "Is an email"
+				).put(
 					"name", "email"
 				).put(
 					"template", "isEmailAddress({name})"
 				).build(),
 				HashMapBuilder.put(
+					"label", "Does Not Contain"
+				).put(
 					"name", "notContains"
 				).put(
 					"template", "NOT(contains({name}, \"{parameter}\"))"
 				).build(),
 				HashMapBuilder.put(
+					"label", "Matches"
+				).put(
 					"name", "regularExpression"
 				).put(
 					"template", "match({name}, \"{parameter}\")"
 				).build(),
 				HashMapBuilder.put(
+					"label", "Is a URL"
+				).put(
 					"name", "url"
 				).put(
 					"template", "isURL({name})"
@@ -253,6 +281,128 @@ public class DDMFormTemplateContextFactoryTest {
 		DDMFormTemplateContext.Builder builder =
 			DDMFormTemplateContext.Builder.newBuilder(
 				_ddmFormTemplateContextFactory);
+
+		ddmFormTemplateContext = builder.withHttpServletRequest(
+			_getMockHttpServletRequest()
+		).withLocale(
+			LocaleUtil.BRAZIL
+		).build();
+
+		validations =
+			(Map<String, Map<String, String>[]>)ddmFormTemplateContext.get(
+				"validations");
+
+		Assert.assertEquals(validations.toString(), 3, validations.size());
+
+		_assertValidations(
+			ListUtil.fromArray(validations.get("date")),
+			ListUtil.fromArray(
+				HashMapBuilder.put(
+					"label", "Faixa"
+				).put(
+					"name", "dateRange"
+				).put(
+					"template",
+					"futureDates({name}, \"{parameter}\") AND " +
+						"pastDates({name}, \"{parameter}\")"
+				).build(),
+				HashMapBuilder.put(
+					"label", "Datas futuras"
+				).put(
+					"name", "futureDates"
+				).put(
+					"template", "futureDates({name}, \"{parameter}\")"
+				).build(),
+				HashMapBuilder.put(
+					"label", "Datas passadas"
+				).put(
+					"name", "pastDates"
+				).put(
+					"template", "pastDates({name}, \"{parameter}\")"
+				).build()));
+		_assertValidations(
+			ListUtil.fromArray(validations.get("numeric")),
+			ListUtil.fromArray(
+				HashMapBuilder.put(
+					"label", "É igual a"
+				).put(
+					"name", "eq"
+				).put(
+					"template", "{name} == {parameter}"
+				).build(),
+				HashMapBuilder.put(
+					"label", "É maior que"
+				).put(
+					"name", "gt"
+				).put(
+					"template", "{name} > {parameter}"
+				).build(),
+				HashMapBuilder.put(
+					"label", "É maior ou igual a"
+				).put(
+					"name", "gteq"
+				).put(
+					"template", "{name} >= {parameter}"
+				).build(),
+				HashMapBuilder.put(
+					"label", "É menor que"
+				).put(
+					"name", "lt"
+				).put(
+					"template", "{name} < {parameter}"
+				).build(),
+				HashMapBuilder.put(
+					"label", "É menor ou igual a"
+				).put(
+					"name", "lteq"
+				).put(
+					"template", "{name} <= {parameter}"
+				).build(),
+				HashMapBuilder.put(
+					"label", "Não é igual"
+				).put(
+					"name", "neq"
+				).put(
+					"template", "{name} != {parameter}"
+				).build()));
+		_assertValidations(
+			ListUtil.fromArray(validations.get("string")),
+			ListUtil.fromArray(
+				HashMapBuilder.put(
+					"label", "Contêm"
+				).put(
+					"name", "contains"
+				).put(
+					"template", "contains({name}, \"{parameter}\")"
+				).build(),
+				HashMapBuilder.put(
+					"label", "É um e-mail"
+				).put(
+					"name", "email"
+				).put(
+					"template", "isEmailAddress({name})"
+				).build(),
+				HashMapBuilder.put(
+					"label", "Não contêm"
+				).put(
+					"name", "notContains"
+				).put(
+					"template", "NOT(contains({name}, \"{parameter}\"))"
+				).build(),
+				HashMapBuilder.put(
+					"label", "Correspondências"
+				).put(
+					"name", "regularExpression"
+				).put(
+					"template", "match({name}, \"{parameter}\")"
+				).build(),
+				HashMapBuilder.put(
+					"label", "É um URL"
+				).put(
+					"name", "url"
+				).put(
+					"template", "isURL({name})"
+				).build()));
 
 		ddmFormTemplateContext = builder.withHttpServletRequest(
 			_getMockHttpServletRequest()
@@ -296,6 +446,7 @@ public class DDMFormTemplateContextFactoryTest {
 				actualValidationMap.containsKey("parameterMessage"));
 			Assert.assertTrue(actualValidationMap.containsKey("template"));
 
+			String expectedLabel = null;
 			String expectedTemplate = null;
 
 			for (Map<String, String> expectedValidationMap :
@@ -305,12 +456,15 @@ public class DDMFormTemplateContextFactoryTest {
 						actualValidationMap.get("name"),
 						expectedValidationMap.get("name"))) {
 
+					expectedLabel = expectedValidationMap.get("label");
 					expectedTemplate = expectedValidationMap.get("template");
 
 					break;
 				}
 			}
 
+			Assert.assertEquals(
+				expectedLabel, actualValidationMap.get("label"));
 			Assert.assertEquals(
 				expectedTemplate, actualValidationMap.get("template"));
 		}

@@ -2350,10 +2350,10 @@ public class PropsValues {
 	public static final String TUNNELING_SERVLET_ENCRYPTION_ALGORITHM =
 		PropsUtil.get(PropsKeys.TUNNELING_SERVLET_ENCRYPTION_ALGORITHM);
 
-	public static final String TUNNELING_SERVLET_SHARED_SECRET = PropsUtil.get(
-		PropsKeys.TUNNELING_SERVLET_SHARED_SECRET);
+	public static volatile String TUNNELING_SERVLET_SHARED_SECRET =
+		PropsUtil.get(PropsKeys.TUNNELING_SERVLET_SHARED_SECRET);
 
-	public static final boolean TUNNELING_SERVLET_SHARED_SECRET_HEX =
+	public static volatile boolean TUNNELING_SERVLET_SHARED_SECRET_HEX =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.TUNNELING_SERVLET_SHARED_SECRET_HEX));
 

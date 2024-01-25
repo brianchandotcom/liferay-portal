@@ -4,10 +4,10 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
-
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {loginTest} from '../../fixtures/loginTest';
 
-export const test = mergeTests(apiHelpersTest);
+export const test = mergeTests(apiHelpersTest, loginTest);
 
 const basicApiApplication = {
 	apiApplicationToAPISchemas: [

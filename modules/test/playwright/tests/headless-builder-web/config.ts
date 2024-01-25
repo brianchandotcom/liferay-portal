@@ -8,12 +8,10 @@
 import {devices} from '@playwright/test';
 
 export const config = {
-	dependencies: ['setup'],
 	name: 'headless-builder-web',
 	testDir: 'tests/headless-builder-web',
 	use: {
 		...devices['Desktop Chrome'],
-		storageState: 'tmp/.auth/user.json',
 		testIdAttribute: 'data-qa-id',
 	},
 };

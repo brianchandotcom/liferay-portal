@@ -8,6 +8,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import {HomePage} from '../portal-web/HomePage';
 
 export class ApplicationsMenuPage {
+	private readonly apiBuilderMenuItem: Locator;
 	private readonly applicationsMenuTabButton: Locator;
 	private readonly clientExtensionsLink: Locator;
 	private readonly controlPanelButton: Locator;
@@ -19,6 +20,10 @@ export class ApplicationsMenuPage {
 	private readonly usersAndOrganizationsItem: Locator;
 
 	constructor(page: Page) {
+		this.apiBuilderMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'API Builder',
+		});
 		this.applicationsMenuTabButton = page.getByRole('tab', {
 			name: 'Applications',
 		});
@@ -67,6 +72,11 @@ export class ApplicationsMenuPage {
 	async goToDataMigrationCenter() {
 		await this.goToApplicationsMenu();
 		await this.dataMigrationCenterMenuItem.click();
+	}
+
+	async goToApiBuilder() {
+		await this.goToControlPanel();
+		await this.apiBuilderMenuItem.click();
 	}
 
 	async goToObjects() {

@@ -934,7 +934,7 @@ public class PropsValues {
 					PropsKeys.
 						INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD));
 
-	public static final int INDEX_SEARCH_LIMIT = GetterUtil.getInteger(
+	public static volatile int INDEX_SEARCH_LIMIT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.INDEX_SEARCH_LIMIT));
 
 	public static final boolean INDEX_SEARCH_QUERY_INDEXING_ENABLED =

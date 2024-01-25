@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Commerce Catalog Web
 Bundle-SymbolicName: com.liferay.commerce.catalog.web
-Bundle-Version: 4.0.49
+Bundle-Version: 4.0.50
 Web-ContextPath: /commerce-catalog-web
 -dsannotations-options: inherit

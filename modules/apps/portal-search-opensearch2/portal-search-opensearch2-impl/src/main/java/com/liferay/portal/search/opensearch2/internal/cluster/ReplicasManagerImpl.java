@@ -45,7 +45,7 @@ public class ReplicasManagerImpl implements ReplicasManager {
 											String.valueOf(numberOfReplicas)))
 							)));
 
-			JsonpUtil.logInfoResponse(_log, putIndicesSettingsResponse);
+			JsonpUtil.logInfoResponse(putIndicesSettingsResponse, _log);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

@@ -17,6 +17,8 @@ import java.io.StringWriter;
 
 import org.opensearch.client.json.JsonpMapper;
 import org.opensearch.client.json.JsonpSerializable;
+import org.opensearch.client.json.jackson.JacksonJsonpMapper;
+import org.opensearch.client.opensearch.core.BulkResponse;
 
 /**
  * @author Petteri Karttunen
@@ -27,13 +29,25 @@ public class JsonpUtil {
 		OpenSearchConnectionManager openSearchConnectionManager =
 			_openSearchConnectionManagerSnapshot.get();
 
+		if (openSearchConnectionManager == null) {
+			return new JacksonJsonpMapper();
+		}
+
 		return openSearchConnectionManager.getJsonpMapper(null);
 	}
 
-	public static void logInfoResponse(
-		Log log, JsonpSerializable jsonpSerializable) {
+	public static void logBulkResponse(BulkResponse bulkResponse, Log log) {
+		if (bulkResponse.errors()) {
+			log.error(toString(bulkResponse));
+		}
 
-		if (jsonpSerializable == null) {
+		logInfoResponse(bulkResponse, log);
+	}
+
+	public static void logInfoResponse(
+		JsonpSerializable jsonpSerializable, Log log) {
+
+		if (!log.isInfoEnabled() || (jsonpSerializable == null)) {
 			return;
 		}
 
@@ -72,6 +86,6 @@ public class JsonpUtil {
 
 	private static final Snapshot<OpenSearchConnectionManager>
 		_openSearchConnectionManagerSnapshot = new Snapshot<>(
-			MappingsUtil.class, OpenSearchConnectionManager.class, null, true);
+			JsonpUtil.class, OpenSearchConnectionManager.class, null, true);
 
 }

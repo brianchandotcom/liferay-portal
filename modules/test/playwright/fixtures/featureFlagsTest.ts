@@ -38,7 +38,7 @@ function featureFlagsTest(options: FeatureFlagsOptions) {
 
 				try {
 
-					// Activate  FFs
+					// Set requested state of FFs
 
 					for (const [key, enabled] of Object.entries(options)) {
 						await setEnabled(enabled, key, page);

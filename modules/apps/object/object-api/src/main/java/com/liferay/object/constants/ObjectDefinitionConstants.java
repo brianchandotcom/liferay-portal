@@ -23,4 +23,6 @@ public class ObjectDefinitionConstants {
 
 	public static final String STORAGE_TYPE_SALESFORCE = "salesforce";
 
+	public static final String STORAGE_TYPE_SUGARCRM = "sugarcrm";
+
 }

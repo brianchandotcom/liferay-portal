@@ -314,8 +314,7 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		}
-		else {
+		} else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -371,8 +370,7 @@ export function ProvideAppBuildPage({
 						tableName: 'CUSTOM_FIELDS',
 					});
 				}
-			}
-			catch (error) {
+			} catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
@@ -459,10 +457,15 @@ export function ProvideAppBuildPage({
 
 	const buildAppPackageVersions = Object.keys(buildAppPackages ?? {});
 	const buildAppPackageValues = Object.values(buildAppPackages ?? {}) ?? [];
+	const isCloud = appType.value === 'cloud';
+
+	const isResourceRequirementsValid = isCloud
+		? bodySpecification.every(({value}) => value)
+		: true;
 
 	const disableContinueButton =
 		isProcessing ||
-		!bodySpecification.every(({value}) => value) ||
+		!isResourceRequirementsValid ||
 		!selectedCheckboxValue.length ||
 		!buildAppPackageValues.length ||
 		buildAppPackageValues.some((versionEntry) => !versionEntry?.length);
@@ -544,7 +547,7 @@ export function ProvideAppBuildPage({
 						</div>
 					</Section>
 
-					{appType.value === 'cloud' && (
+					{isCloud && (
 						<Section
 							label={i18n.translate('resource-requirements')}
 							required
@@ -744,14 +747,13 @@ export function ProvideAppBuildPage({
 						await submitAppBuildTypeSpecification();
 						await submitAppBuildPackages();
 
-						if (appType.value === 'cloud') {
+						if (isCloud) {
 							await submitAppBuildClouldResourceRequirements(
 								appId,
 								bodySpecification
 							);
 						}
-					}
-					catch (error) {
+					} catch (error) {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages | buildClouldResourceRequirements'
 						);

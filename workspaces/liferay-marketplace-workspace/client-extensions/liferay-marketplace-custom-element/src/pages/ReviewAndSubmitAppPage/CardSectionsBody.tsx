@@ -27,6 +27,8 @@ interface CardSectionsBodyProps {
 }
 
 export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
+	const isCloud = app?.type === 'cloud';
+
 	return (
 		<>
 			<CardSection
@@ -75,7 +77,7 @@ export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
 				<div className="card-section-body-cloud-compatible">
 					<CardView
 						description={
-							app?.type === 'cloud'
+							isCloud
 								? i18n.translate(
 										'create-a-cloud-app-using-client-extensions'
 								  )
@@ -83,34 +85,38 @@ export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
 										'create-a-dxp-app-using-a-plugin-package'
 								  )
 						}
-						icon={
-							app?.type === 'cloud' ? taskCheckedIcon : cancelIcon
-						}
-						title={app?.type === 'cloud' ? 'Yes' : 'No'}
+						icon={isCloud ? taskCheckedIcon : cancelIcon}
+						title={isCloud ? 'Yes' : 'No'}
 					/>
 				</div>
 			</CardSection>
 
-			<CardSection
-				enableEdit={readonly}
-				localized
-				required
-				sectionName="Resource Requirements"
-			>
-				<div className="card-section-body-section-requirements d-flex justify-content-between">
-					<CardView
-						description={app?.resourceRequirements?.cpu}
-						title={i18n.translate('number-of-cpus')}
-						tooltip={readonly ? '' : i18n.translate('more-info')}
-					/>
+			{isCloud && (
+				<CardSection
+					enableEdit={readonly}
+					localized
+					required
+					sectionName={i18n.translate('resource-requirements')}
+				>
+					<div className="card-section-body-section-requirements d-flex justify-content-between">
+						<CardView
+							description={app?.resourceRequirements?.cpu}
+							title={i18n.translate('number-of-cpus')}
+							tooltip={
+								readonly ? '' : i18n.translate('more-info')
+							}
+						/>
 
-					<CardView
-						description={`${app?.resourceRequirements?.ram} GB`}
-						title="Ram in GB"
-						tooltip={readonly ? '' : i18n.translate('more-info')}
-					/>
-				</div>
-			</CardSection>
+						<CardView
+							description={`${app?.resourceRequirements?.ram} GB`}
+							title="Ram in GB"
+							tooltip={
+								readonly ? '' : i18n.translate('more-info')
+							}
+						/>
+					</div>
+				</CardSection>
+			)}
 
 			<CardSection
 				enableEdit={!readonly}

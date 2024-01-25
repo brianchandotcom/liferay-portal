@@ -64,7 +64,7 @@ const BaseWrapper: React.FC<BaseWrapperProps> = ({
 			{error && <BaseWarning>{error}</BaseWarning>}
 
 			{helpMessage && (
-				<p className="input__base-text mt-1">{helpMessage}</p>
+				<p className="input__base-text ml-1 mt-2">{helpMessage}</p>
 			)}
 		</ClayForm.Group>
 	);

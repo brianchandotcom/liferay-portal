@@ -67,7 +67,11 @@ export default {
 	'enter-the-name-and-a-brief-description-of-the-app-you-would-like-to-submit':
 		'Enter the name and a brief description of the app you would like to submit',
 	'enter-the-number-of-cpus': 'Enter the number of CPUs',
+	'enter-the-required-cpus-0-is-a-valid-value':
+		'Enter the required CPUs (0 is a valid value)',
 	'enter-the-required-ram': 'Enter the required RAM',
+	'enter-the-required-ram-0-is-a-valid-value':
+		'Enter the required RAM (0 is a valid value)',
 	'enter-your-contact-details-in-the-fields-below-in-the-request-description-enter-the-name-and-a-brief-description-of-the-app-you-would-like-to-submit-we-will-be-in-contact-regarding-your-request':
 		'Enter your contact details in the fields below. In the Request Description, enter the name and a brief description of the app you would like to submit. We will be in contact regarding your request.',
 	'environment': 'Environment',
@@ -81,7 +85,6 @@ export default {
 	'host-name': 'Host Name',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
-	'if-no-cpus-please-enter-0': 'If no CPUs please enter 0',
 	'if-no-ram-required-please-enter-0': 'If no RAM required please enter 0',
 	'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range':
 		'If the app is compatible with different updates of 7.4, please upload multiple packages for each update or update compatibility range.',
@@ -135,6 +138,7 @@ export default {
 	'purchased-by': 'Purchased by',
 	'qty': 'Qty',
 	'ram': 'RAM',
+	'ram-in-gbs': 'RAM in GBs',
 	'remove-a-version': 'Remove a Version',
 	'request-a-marketplace-publisher-account':
 		'Request a Marketplace Publisher Account',

@@ -18,17 +18,21 @@ const ResourceRequirements = () => {
 			<FormInput
 				boldLabel
 				className="custom-input resource-requirements-content-input"
-				helpMessage={i18n.translate('if-no-cpus-please-enter-0')}
+				helpMessage={i18n.translate(
+					'enter-the-required-cpus-0-is-a-valid-value'
+				)}
 				label={i18n.translate('number-of-cpus')}
+				maxLength={2}
 				name="numberOfCPUs"
-				onChange={({target: {value}}) =>
-					dispatch({
-						payload: {key: 'cpu', value},
-						type: TYPES.UPDATE_RESOURCE_REQUIREMENTS,
-					})
-				}
+				onChange={({target: {value}}) => {
+					if (!isNaN((value as unknown) as number)) {
+						dispatch({
+							payload: {key: 'cpu', value},
+							type: TYPES.UPDATE_RESOURCE_REQUIREMENTS,
+						});
+					}
+				}}
 				placeholder={i18n.translate('enter-the-number-of-cpus')}
-				type="number"
 				value={resourceRequirements.cpu ?? ''}
 			/>
 
@@ -36,18 +40,20 @@ const ResourceRequirements = () => {
 				boldLabel
 				className="custom-input resource-requirements-content-input"
 				helpMessage={i18n.translate(
-					'if-no-ram-required-please-enter-0'
+					'enter-the-required-ram-0-is-a-valid-value'
 				)}
-				label={i18n.translate('ram')}
+				label={i18n.translate('ram-in-gbs')}
+				maxLength={2}
 				name="ram"
 				onChange={({target: {value}}) => {
-					dispatch({
-						payload: {key: 'ram', value},
-						type: TYPES.UPDATE_RESOURCE_REQUIREMENTS,
-					});
+					if (!isNaN((value as unknown) as number)) {
+						dispatch({
+							payload: {key: 'ram', value},
+							type: TYPES.UPDATE_RESOURCE_REQUIREMENTS,
+						});
+					}
 				}}
 				placeholder={i18n.translate('enter-the-required-ram')}
-				type="number"
 				value={resourceRequirements.ram ?? ''}
 			/>
 		</div>

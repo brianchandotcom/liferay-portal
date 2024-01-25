@@ -9,7 +9,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -28,6 +30,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Mikel Lorza
@@ -68,12 +73,24 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 		JSONObject friendlyURLSeparatorsJSONObject = JSONUtil.put(
 			JournalArticle.class.getName(), "/test1/");
 
-		_configurationProvider.saveCompanyConfiguration(
-			FriendlyURLSeparatorCompanyConfiguration.class, _companyId,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"friendlyURLSeparators",
-				friendlyURLSeparatorsJSONObject.toString()
-			).build());
+		ConfigurationTestUtil.updateConfiguration(
+			FriendlyURLSeparatorCompanyConfiguration.class.getName(),
+			() -> {
+				_configurationProvider.saveCompanyConfiguration(
+					FriendlyURLSeparatorCompanyConfiguration.class, _companyId,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"friendlyURLSeparators",
+						friendlyURLSeparatorsJSONObject.toString()
+					).build());
+
+				Configuration configuration =
+					_configurationAdmin.getConfiguration(
+						FriendlyURLSeparatorCompanyConfiguration.class.
+							getName(),
+						StringPool.QUESTION);
+
+				configuration.update();
+			});
 
 		String friendlyURLSeparators =
 			_friendlyURLSeparatorConfigurationManager.getFriendlyURLSeparators(
@@ -107,6 +124,9 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 			friendlyURLSeparatorsJSONObject.toString(),
 			friendlyURLSeparatorCompanyConfiguration.friendlyURLSeparators());
 	}
+
+	@Inject
+	private static ConfigurationAdmin _configurationAdmin;
 
 	private int _companyId;
 

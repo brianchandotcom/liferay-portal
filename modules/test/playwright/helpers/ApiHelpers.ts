@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore
+
 import {Page} from '@playwright/test';
 
 import {liferayConfig} from '../liferay.config';
@@ -30,15 +32,15 @@ export class ApiHelpers {
 	constructor(page: Page) {
 		this.baseUrl = liferayConfig.environment.baseUrl + '/o/';
 		this.featureFlag = new FeatureFlagApiHelper(page);
-		this.headlessDelivery = new HeadlessDeliveryApiHelper(this);
-		this.headlessSite = new HeadlessSiteApiHelper(this);
-		this.object = new ObjectApiHelper(this);
-		this.objectAdmin = new ObjectAdminApiHelper(this);
+		this.headlessAdminUser = new HeadlessAdminUserApiHelper(this);
 		this.headlessCommerceAdminCatalog =
 			new HeadlessCommerceAdminCatalogApiHelper(this);
 		this.headlessCommerceAdminChannel =
 			new HeadlessCommerceAdminChannelApiHelper(this);
-		this.headlessAdminUser = new HeadlessAdminUserApiHelper(this);
+		this.headlessDelivery = new HeadlessDeliveryApiHelper(this);
+		this.headlessSite = new HeadlessSiteApiHelper(this);
+		this.object = new ObjectApiHelper(this);
+		this.objectAdmin = new ObjectAdminApiHelper(this);
 		this.page = page;
 	}
 
@@ -65,7 +67,7 @@ export class ApiHelpers {
 		return response.json();
 	}
 
-	async post(url: string, data: DataObject) {
+	async post(url: string, data: DataObject | any[]) {
 		const response = await this.page.request.post(url, {
 			data,
 			headers: await this.getHeader(),

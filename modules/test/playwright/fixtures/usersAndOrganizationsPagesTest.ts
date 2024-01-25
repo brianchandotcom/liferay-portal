@@ -7,11 +7,16 @@
 
 import {test} from '@playwright/test';
 
+import {EditUserPage} from '../pages/users-admin-web/EditUserPage';
 import {UsersAndOrganizationsPage} from '../pages/users-admin-web/UsersAndOrganizationsPage';
 
 const usersAndOrganizationsPagesTest = test.extend<{
+	editUserPage: EditUserPage;
 	usersAndOrganizationsPage: UsersAndOrganizationsPage;
 }>({
+	editUserPage: async ({page}, use) => {
+		await use(new EditUserPage(page));
+	},
 	usersAndOrganizationsPage: async ({page}, use) => {
 		await use(new UsersAndOrganizationsPage(page));
 	},

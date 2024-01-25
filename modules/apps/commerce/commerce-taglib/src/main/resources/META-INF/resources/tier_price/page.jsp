@@ -39,11 +39,12 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
 						BigDecimal minQuantity = BigDecimal.ZERO;
 
-						if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getMinQuantity() != null)) {
-							minQuantity = commerceTierPriceEntry.getMinQuantity(
-							).setScale(
-								0, BigDecimal.ROUND_DOWN
-							);
+						if (commerceTierPriceEntry != null) {
+							minQuantity = commerceTierPriceEntry.getMinQuantity();
+
+							if (minQuantity != null) {
+								minQuantity = minQuantity.setScale(0, BigDecimal.ROUND_DOWN);
+							}
 						}
 
 						BigDecimal priceTotal = price.multiply(minQuantity);

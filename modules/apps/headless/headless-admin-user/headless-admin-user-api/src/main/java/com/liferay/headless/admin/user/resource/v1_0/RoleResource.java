@@ -62,6 +62,10 @@ public interface RoleResource {
 	public Response postRoleBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public Role putRoleByExternalReferenceCode(
+			String externalReferenceCode, Role role)
+		throws Exception;
+
 	public Role getRole(Long roleId) throws Exception;
 
 	public void deleteRoleUserAccountAssociation(

@@ -548,6 +548,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							RoleResourceImpl.class, "postRoleBatch"));
 					put(
+						"mutation#updateRoleByExternalReferenceCode",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class,
+							"putRoleByExternalReferenceCode"));
+					put(
 						"mutation#deleteRoleUserAccountAssociation",
 						new ObjectValuePair<>(
 							RoleResourceImpl.class,

@@ -8,6 +8,7 @@ package com.liferay.portal.search.opensearch2.internal.sort;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.search.opensearch2.internal.geolocation.GeoTranslator;
 import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
+import com.liferay.portal.search.opensearch2.internal.util.ConversionUtil;
 import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.GeoDistanceSort;
@@ -20,7 +21,6 @@ import com.liferay.portal.search.sort.SortMode;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.SortVisitor;
 
-import org.opensearch.client.opensearch._types.FieldValue;
 import org.opensearch.client.opensearch._types.NestedSortValue;
 import org.opensearch.client.opensearch._types.ScriptSortType;
 import org.opensearch.client.opensearch._types.SortOptions;
@@ -56,7 +56,8 @@ public class OpenSearchSortFieldTranslator
 		builder.field(fieldSort.getField());
 
 		if (fieldSort.getMissing() != null) {
-			builder.missing(FieldValue.of((long)fieldSort.getMissing()));
+			builder.missing(
+				ConversionUtil.toFieldValue(fieldSort.getMissing()));
 		}
 
 		if (fieldSort.getSortMode() != null) {

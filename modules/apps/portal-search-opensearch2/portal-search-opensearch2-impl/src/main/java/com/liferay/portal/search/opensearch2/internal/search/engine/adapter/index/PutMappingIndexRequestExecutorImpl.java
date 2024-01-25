@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexResponse;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.util.MappingsUtil;
+import com.liferay.portal.search.opensearch2.internal.util.IndexUtil;
 
 import java.io.IOException;
 
@@ -58,7 +58,7 @@ public class PutMappingIndexRequestExecutorImpl
 				putMappingIndexRequest.getMapping());
 
 			List<Map<String, DynamicTemplate>> dynamicTemplates =
-				MappingsUtil.getDynamicTemplatesMap(mappingJSONObject);
+				IndexUtil.getDynamicTemplatesMap(mappingJSONObject);
 
 			if (dynamicTemplates != null) {
 				builder.dynamicTemplates(dynamicTemplates);
@@ -67,7 +67,7 @@ public class PutMappingIndexRequestExecutorImpl
 			builder.index(
 				ListUtil.fromArray(putMappingIndexRequest.getIndexNames()));
 
-			Map<String, Property> properties = MappingsUtil.getPropertiesMap(
+			Map<String, Property> properties = IndexUtil.getPropertiesMap(
 				mappingJSONObject);
 
 			if (properties != null) {

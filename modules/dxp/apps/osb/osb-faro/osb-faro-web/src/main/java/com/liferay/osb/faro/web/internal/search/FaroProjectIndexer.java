@@ -190,7 +190,7 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 
 		document.addDate(
 			"lastAnniversaryDate",
-			faroSubscriptionDisplay.geLastAnniversaryDate());
+			faroSubscriptionDisplay.getLastAnniversaryDate());
 		document.addNumber(
 			"individualsCount", faroSubscriptionDisplay.getIndividualsCount());
 		document.addNumber(

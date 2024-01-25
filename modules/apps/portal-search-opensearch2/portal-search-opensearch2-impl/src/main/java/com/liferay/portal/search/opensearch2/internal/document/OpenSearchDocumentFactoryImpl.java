@@ -162,7 +162,7 @@ public class OpenSearchDocumentFactoryImpl
 			List<String> fieldValues = new ArrayList<>(values.length);
 
 			for (String value : values) {
-				if (Validator.isBlank(value)) {
+				if (value == null) {
 					continue;
 				}
 

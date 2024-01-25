@@ -61,6 +61,7 @@ const ActionControls = ({
 						.map((item, index) => (
 							<ManagementToolbar.Item
 								className="d-md-flex d-none"
+								data-qa-id="actionDropdownItem"
 								key={index}
 							>
 								<LinkOrButton

@@ -426,7 +426,7 @@ const MillerColumnsItem = ({
 			)}
 
 			{selectable && (
-				<ClayLayout.ContentCol>
+				<ClayLayout.ContentCol data-qa-id="selectLayout">
 					<ClayCheckbox
 						aria-label={sub(
 							Liferay.Language.get('select-x'),
@@ -449,6 +449,7 @@ const MillerColumnsItem = ({
 								Liferay.FeatureFlags['LPS-196847'],
 						}
 					)}
+					data-qa-id="layoutHref"
 				>
 					{viewUrl ? (
 						<ClayLink

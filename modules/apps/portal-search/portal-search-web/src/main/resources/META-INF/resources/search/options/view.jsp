@@ -14,6 +14,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <div class="alert alert-info text-center">
 	<clay:link
+		data-qa-id="searchOptionsHref"
 		href="javascript:void(0);"
 		label='<%= LanguageUtil.get(request, "search-options-help") %>'
 		onClick="<%= portletDisplay.getURLConfigurationJS() %>"

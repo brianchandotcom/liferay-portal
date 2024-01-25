@@ -24,7 +24,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 		validateOnBlur="<%= false %>"
 	>
 		<liferay-frontend:edit-form-body>
-			<aui:input label="name" name="name" placeholder='<%= LanguageUtil.get(request, "add-page-name") %>' required="<%= true %>" />
+			<aui:input data-qa-id="addPageNameInput" label="name" name="name" placeholder='<%= LanguageUtil.get(request, "add-page-name") %>' required="<%= true %>" />
 
 			<c:choose>
 				<c:when test="<%= autoSiteNavigationMenus.size() > 1 %>">
@@ -96,10 +96,12 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 		</liferay-frontend:edit-form-body>
 
 		<liferay-frontend:edit-form-footer>
-			<liferay-frontend:edit-form-buttons
-				submitId="addButton"
-				submitLabel="add"
-			/>
+			<div data-qa-id="addLayoutFooter">
+				<liferay-frontend:edit-form-buttons
+					submitId="addButton"
+					submitLabel="add"
+				/>
+			</div>
 		</liferay-frontend:edit-form-footer>
 	</liferay-frontend:edit-form>
 </clay:container-fluid>

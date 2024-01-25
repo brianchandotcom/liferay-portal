@@ -7,6 +7,8 @@ import {Locator, Page} from '@playwright/test';
 
 import {ProductMenuPage} from '../product-navigation-product-menu/ProductMenu.page';
 
+const JS_HYDRATION_TIMEOUT = 2_000;
+
 export class KnowledgeBasePage {
 	readonly basicArticleMenuItem: Locator;
 	readonly foldersAndArticlesButton: Locator;
@@ -76,6 +78,7 @@ export class KnowledgeBasePage {
 		const disabled = await this.selectAllCheckBox.isDisabled();
 
 		if (!disabled) {
+			await page.waitForTimeout(JS_HYDRATION_TIMEOUT);
 			await this.selectAllCheckBox.click();
 
 			await page.getByRole('button', {name: 'Delete'}).waitFor();

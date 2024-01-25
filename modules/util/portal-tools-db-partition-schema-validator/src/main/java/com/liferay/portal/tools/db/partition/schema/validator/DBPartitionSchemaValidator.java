@@ -51,9 +51,22 @@ public class DBPartitionSchemaValidator {
 		_dbType = commandLine.getOptionValue("db-type");
 		_dbType = _dbType.toLowerCase();
 
+		String jdbcURL = null;
+
+		if (_dbType.equals("mysql")) {
+			jdbcURL = _MYSQL_DEFAULT_JDBC_URL;
+
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		}
+		else {
+			jdbcURL = _POSTGRESQL_DEFAULT_JDBC_URL;
+
+			Class.forName("org.postgresql.Driver");
+		}
+
 		_dbName = commandLine.getOptionValue("db-name");
 
-		String jdbcURL = _DEFAULT_JDBC_URL.replace("db-name", _dbName);
+		jdbcURL = jdbcURL.replace("db-name", _dbName);
 
 		if (commandLine.hasOption("jdbc-url")) {
 			jdbcURL = commandLine.getOptionValue("jdbc-url");
@@ -93,6 +106,16 @@ public class DBPartitionSchemaValidator {
 		}
 	}
 
+	private static String _getCatalog(String partitionName)
+		throws SQLException {
+
+		if (_dbType.equals("mysql")) {
+			return partitionName;
+		}
+
+		return _connection.getCatalog();
+	}
+
 	private static List<Long> _getCompanyIds() throws Exception {
 		try (Statement statement = _connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
@@ -109,7 +132,11 @@ public class DBPartitionSchemaValidator {
 	}
 
 	private static String _getDefaultPartitionName() throws SQLException {
-		return _connection.getCatalog();
+		if (_dbType.equals("mysql")) {
+			return _connection.getCatalog();
+		}
+
+		return _connection.getSchema();
 	}
 
 	private static int _getInvalidRecordsCount(
@@ -164,6 +191,14 @@ public class DBPartitionSchemaValidator {
 		return options;
 	}
 
+	private static String _getSchema(String partitionName) throws SQLException {
+		if (_dbType.equals("postgresql")) {
+			return partitionName;
+		}
+
+		return _connection.getSchema();
+	}
+
 	private static boolean _hasColumn(
 			String partitionName, String tableName, String columnName)
 		throws Exception {
@@ -171,7 +206,8 @@ public class DBPartitionSchemaValidator {
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
 		try (ResultSet resultSet = databaseMetaData.getColumns(
-				partitionName, partitionName, tableName, columnName)) {
+				_getCatalog(partitionName), _getSchema(partitionName),
+				tableName, columnName)) {
 
 			if (!resultSet.next()) {
 				return false;
@@ -198,7 +234,8 @@ public class DBPartitionSchemaValidator {
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
 		try (ResultSet resultSet = databaseMetaData.getTables(
-				partitionName, partitionName, null, new String[] {"TABLE"})) {
+				_getCatalog(partitionName), _getSchema(partitionName), null,
+				new String[] {"TABLE"})) {
 
 			boolean validPartition = true;
 
@@ -246,11 +283,14 @@ public class DBPartitionSchemaValidator {
 		}
 	}
 
-	private static final String _DEFAULT_JDBC_URL =
+	private static final String _MYSQL_DEFAULT_JDBC_URL =
 		"jdbc:mysql://localhost/db-name?characterEncoding=UTF-8&" +
 			"dontTrackOpenResources=true&holdResultsOpenOverStatementClose=" +
 				"true&serverTimezone=GMT&useFastDateParsing=false&useUnicode=" +
 					"true";
+
+	private static final String _POSTGRESQL_DEFAULT_JDBC_URL =
+		"jdbc:postgresql://localhost:5432/db-name?reWriteBatchedInserts=true";
 
 	private static Connection _connection;
 	private static final Set<String> _controlTableNames = new HashSet<>(

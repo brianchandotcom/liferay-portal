@@ -1,6 +1,7 @@
 dependencies {
 	compileInclude group: "com.mysql", name: "mysql-connector-j", version: "8.3.0"
 	compileInclude group: "commons-cli", name: "commons-cli", version: "1.4"
+	compileInclude group: "org.postgresql", name: "postgresql", version: "42.4.3"
 }
 
 liferayOSGi {

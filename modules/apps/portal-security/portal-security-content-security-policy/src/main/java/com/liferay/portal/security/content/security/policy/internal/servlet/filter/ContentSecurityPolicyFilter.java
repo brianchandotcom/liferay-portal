@@ -86,6 +86,8 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 
 			httpServletResponse.setHeader("Content-Security-Policy", policy);
 
+			httpServletResponse.setContentType("text/html; charset=UTF-8");
+
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			ContentSecurityPolicyHttpServletResponse

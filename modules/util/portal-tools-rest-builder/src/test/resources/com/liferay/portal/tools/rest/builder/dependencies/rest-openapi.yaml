@@ -37,7 +37,7 @@ components:
                     $ref: "#/components/schemas/Folder"
                 externalField:
                     items:
-                        $ref: "src/test/resources/com/liferay/portal/tools/rest/builder/external-dependencies/rest-openapi.yaml#ExternalReferenceElement1"
+                        $ref: "src/test/resources/com/liferay/portal/tools/rest/builder/external-dependencies/rest-openapi.yaml#/components/schemas/ExternalReferenceElement1"
                     type: array
                 id:
                     format: int64
@@ -103,7 +103,7 @@ components:
                     type: string
                 external-reference-field:
                     items:
-                        $ref: "src/test/resources/com/liferay/portal/tools/rest/builder/external-dependencies/rest-openapi.yaml#ExternalReferenceElement2"
+                        $ref: "src/test/resources/com/liferay/portal/tools/rest/builder/external-dependencies/rest-openapi.yaml#/components/schemas/ExternalReferenceElement2"
                     type: array
                 id:
                     format: int64

@@ -929,7 +929,8 @@ public class LayoutStagedModelDataHandler
 		_importFaviconFileEntry(
 			layout, layoutElement, importedLayout, portletDataContext);
 
-		_importClientExtensionEntryRels(layout, portletDataContext);
+		_importClientExtensionEntryRels(
+			importedLayout, layout, portletDataContext);
 
 		_importLayoutLocalizations(layout, portletDataContext);
 
@@ -2033,14 +2034,15 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _importClientExtensionEntryRels(
-			Layout layout, PortletDataContext portletDataContext)
+			Layout importedLayout, Layout layout,
+			PortletDataContext portletDataContext)
 		throws Exception {
 
 		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-			_portal.getClassNameId(Layout.class), layout.getPlid(),
+			_portal.getClassNameId(Layout.class), importedLayout.getPlid(),
 			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
 		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-			_portal.getClassNameId(Layout.class), layout.getPlid(),
+			_portal.getClassNameId(Layout.class), importedLayout.getPlid(),
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 
 		List<Element> clientExtensionEntryRelsElements =

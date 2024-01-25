@@ -43,6 +43,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
@@ -223,8 +224,11 @@ public class GetPersonalMenuItemsMVCResourceCommand
 					ParamUtil.getString(portletRequest, "portletId")));
 
 			try {
+				HttpServletRequest httpServletRequest =
+					_portal.getHttpServletRequest(portletRequest);
+
 				String href = personalMenuEntry.getPortletURL(
-					_portal.getHttpServletRequest(portletRequest));
+					httpServletRequest);
 
 				if (href != null) {
 					jsonObject.put("href", href);
@@ -233,10 +237,10 @@ public class GetPersonalMenuItemsMVCResourceCommand
 					jsonObject.put(
 						"jsOnClickConfig",
 						personalMenuEntry.getJSOnClickConfigJSONObject(
-							_portal.getHttpServletRequest(portletRequest))
+							httpServletRequest)
 					).put(
-						"onClickJSModuleURL",
-						personalMenuEntry.getOnClickJSModuleURL()
+						"onClickESModule",
+						personalMenuEntry.getOnClickESModule(httpServletRequest)
 					);
 				}
 			}

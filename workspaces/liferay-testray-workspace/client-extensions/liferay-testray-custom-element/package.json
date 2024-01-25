@@ -16,7 +16,7 @@
 		"@clayui/management-toolbar": "*",
 		"@clayui/modal": "^3.58.1",
 		"@clayui/pagination": "^3.58.0",
-		"@clayui/pagination-bar": "^3.59.0",
+		"@clayui/pagination-bar": "3.52.0",
 		"@clayui/panel": "^3.58.0",
 		"@clayui/popover": "^3.58.0",
 		"@clayui/sticker": "^3.56.0",

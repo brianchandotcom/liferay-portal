@@ -231,7 +231,6 @@ const ListView: React.FC<ListViewProps> = ({
 			activeDelta={pageSize}
 			activePage={page}
 			deltas={PAGINATION.delta.map((label) => ({label}))}
-			disableEllipsis={totalCount > 100}
 			ellipsisBuffer={PAGINATION.ellipsisBuffer}
 			labels={{
 				paginationResults: i18n.translate('showing-x-to-x-of-x'),

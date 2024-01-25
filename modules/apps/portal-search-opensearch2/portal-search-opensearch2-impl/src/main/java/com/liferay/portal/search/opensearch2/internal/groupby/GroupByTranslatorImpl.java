@@ -9,13 +9,15 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.opensearch2.internal.legacy.sort.SortTranslator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -97,7 +99,7 @@ public class GroupByTranslatorImpl implements GroupByTranslator {
 
 		Set<String> sortFieldNames = new HashSet<>();
 
-		Map<String, SortOrder> sortOrders = new HashMap<>();
+		List<Map<String, SortOrder>> sortOrdersList = new ArrayList<>();
 
 		for (Sort sort : sorts) {
 			if (sort == null) {
@@ -111,11 +113,19 @@ public class GroupByTranslatorImpl implements GroupByTranslator {
 			}
 
 			sortFieldNames.add(sortFieldName);
-			sortOrders.put(sortFieldName, _translateSort(sort));
+
+			if (sortFieldName.equals("_count") ||
+				sortFieldName.equals("_key")) {
+
+				sortOrdersList.add(
+					HashMapBuilder.<String, SortOrder>put(
+						sortFieldName, _getSortOrder(sort)
+					).build());
+			}
 		}
 
-		if (!sortOrders.isEmpty()) {
-			builder.order(sortOrders);
+		if (!sortOrdersList.isEmpty()) {
+			builder.order(sortOrdersList);
 		}
 	}
 
@@ -132,6 +142,14 @@ public class GroupByTranslatorImpl implements GroupByTranslator {
 		}
 
 		return new Aggregation(builder.build());
+	}
+
+	private SortOrder _getSortOrder(Sort sort) {
+		if (sort.isReverse()) {
+			return SortOrder.Desc;
+		}
+
+		return SortOrder.Asc;
 	}
 
 	private Aggregation _getTopHitsAggregation(
@@ -174,14 +192,6 @@ public class GroupByTranslatorImpl implements GroupByTranslator {
 		}
 
 		return new Aggregation(builder.build());
-	}
-
-	private SortOrder _translateSort(Sort sort) {
-		if (sort.isReverse()) {
-			return SortOrder.Desc;
-		}
-
-		return SortOrder.Asc;
 	}
 
 	private final HighlightTranslator _highlightTranslator =

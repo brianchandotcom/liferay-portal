@@ -8,11 +8,13 @@ package com.liferay.portal.search.opensearch2.internal.index;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapper;
 import com.liferay.portal.search.opensearch2.internal.index.constants.IndexSettingsConstants;
+import com.liferay.portal.search.opensearch2.internal.util.IndexUtil;
 import com.liferay.portal.search.opensearch2.internal.util.ResourceUtil;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.opensearch.client.opensearch._types.Time;
 import org.opensearch.client.opensearch._types.TimeUnit;
@@ -41,11 +43,9 @@ public class SettingsFactory {
 			ResourceUtil.getResourceAsString(
 				getClass(), IndexSettingsConstants.INDEX_SETTINGS_FILE_NAME));
 
-		settingsJSONObject = _mergeSettingsFromConfiguration(
-			settingsJSONObject);
+		_mergeSettingsFromConfiguration(settingsJSONObject);
 
-		settingsJSONObject = _mergeAdditionalIndexConfigurations(
-			settingsJSONObject);
+		_mergeAdditionalIndexConfigurations(settingsJSONObject);
 
 		return settingsJSONObject;
 	}
@@ -100,33 +100,22 @@ public class SettingsFactory {
 		return indexSettingsSearchBuilder.build();
 	}
 
-	private JSONObject _mergeAdditionalIndexConfigurations(
+	private void _mergeAdditionalIndexConfigurations(
 		JSONObject settingsJSONObject) {
 
 		String additionalIndexConfigurations =
 			_openSearchConfigurationWrapper.additionalIndexConfigurations();
 
 		if (Validator.isBlank(additionalIndexConfigurations)) {
-			return settingsJSONObject;
+			return;
 		}
 
-		return _mergeJSONObjects(
+		IndexUtil.mergeToJsonObject(
 			settingsJSONObject,
 			_createJSONObject(additionalIndexConfigurations));
 	}
 
-	private JSONObject _mergeJSONObjects(
-		JSONObject jsonObject1, JSONObject jsonObject2) {
-
-		try {
-			return JSONUtil.merge(jsonObject1, jsonObject2);
-		}
-		catch (JSONException jsonException) {
-			throw new RuntimeException(jsonException);
-		}
-	}
-
-	private JSONObject _mergeSettingsFromConfiguration(
+	private void _mergeSettingsFromConfiguration(
 		JSONObject settingsJSONObject) {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
@@ -135,7 +124,7 @@ public class SettingsFactory {
 			"max_result_window",
 			_openSearchConfigurationWrapper.indexMaxResultWindow());
 
-		if (!Validator.isBlank(
+		if (!StringUtils.isBlank(
 				_openSearchConfigurationWrapper.indexNumberOfReplicas())) {
 
 			jsonObject.put(
@@ -143,7 +132,7 @@ public class SettingsFactory {
 				_openSearchConfigurationWrapper.indexNumberOfReplicas());
 		}
 
-		if (!Validator.isBlank(
+		if (!StringUtils.isBlank(
 				_openSearchConfigurationWrapper.indexNumberOfShards())) {
 
 			jsonObject.put(
@@ -151,7 +140,7 @@ public class SettingsFactory {
 				_openSearchConfigurationWrapper.indexNumberOfShards());
 		}
 
-		return _mergeJSONObjects(settingsJSONObject, jsonObject);
+		IndexUtil.mergeToJsonObject(settingsJSONObject, jsonObject);
 	}
 
 	private final JSONFactory _jsonFactory;

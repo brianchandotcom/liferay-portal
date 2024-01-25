@@ -1297,7 +1297,7 @@ public class PropsValues {
 	public static final int MENU_MAX_DISPLAY_ITEMS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.MENU_MAX_DISPLAY_ITEMS));
 
-	public static final boolean MESSAGE_BOARDS_EMAIL_BULK =
+	public static volatile boolean MESSAGE_BOARDS_EMAIL_BULK =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_BULK));
 

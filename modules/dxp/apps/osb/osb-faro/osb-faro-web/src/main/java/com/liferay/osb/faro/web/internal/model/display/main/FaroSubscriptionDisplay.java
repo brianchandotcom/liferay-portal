@@ -158,8 +158,12 @@ public class FaroSubscriptionDisplay {
 			return;
 		}
 
-		_individualsCount = contactsEngineClient.getIndividualsCount(
-			faroProject, false);
+		Date subscriptionModifiedDate = new Date(
+			faroProject.getSubscriptionModifiedTime());
+
+		_individualsCount =
+			contactsEngineClient.getIndividualsCreatedSinceCount(
+				faroProject, subscriptionModifiedDate);
 
 		if (_startDate == null) {
 			_startDate = new Date(faroProject.getCreateTime());
@@ -175,7 +179,7 @@ public class FaroSubscriptionDisplay {
 
 		_pageViewsCount = GetterUtil.getInteger(
 			cerebroEngineClient.getPageViews(
-				faroProject, _startDate, new Date()));
+				faroProject, subscriptionModifiedDate, new Date()));
 
 		_pageViewsCountSinceLastAnniversary = GetterUtil.getInteger(
 			cerebroEngineClient.getPageViews(

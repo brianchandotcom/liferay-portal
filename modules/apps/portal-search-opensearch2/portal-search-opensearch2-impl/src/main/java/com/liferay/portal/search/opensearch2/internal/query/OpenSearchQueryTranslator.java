@@ -826,12 +826,16 @@ public class OpenSearchQueryTranslator
 
 		builder.field(regexQuery.getField());
 
-		SetterUtil.setNotNullValueAsString(
-			builder::flags, regexQuery.getRegexFlags());
+		if (regexQuery.getRegexFlags() != null) {
+			builder.flags(_translateRegexFlags(regexQuery.getRegexFlags()));
+		}
+
 		SetterUtil.setNotNullInteger(
 			builder::maxDeterminizedStates,
 			regexQuery.getMaxDeterminedStates());
 		SetterUtil.setNotBlankString(builder::rewrite, regexQuery.getRewrite());
+
+		builder.value(regexQuery.getRegex());
 
 		return builder.build();
 	}
@@ -1285,6 +1289,43 @@ public class OpenSearchQueryTranslator
 		}
 
 		throw new IllegalArgumentException("Invalid operator " + operator);
+	}
+
+	private String _translateRegexFlags(int regexFlag) {
+		if (regexFlag == 0xffff) {
+			return "ALL";
+		}
+
+		if (regexFlag == 0x0008) {
+			return "ANYSTRING";
+		}
+
+		if (regexFlag == 0x0010) {
+			return "AUTOMATON";
+		}
+
+		if (regexFlag == 0x0002) {
+			return "COMPLEMENT";
+		}
+
+		if (regexFlag == 0x0004) {
+			return "EMPTY";
+		}
+
+		if (regexFlag == 0x0001) {
+			return "INTERSECTION";
+		}
+
+		if (regexFlag == 0x0020) {
+			return "INTERVAL";
+		}
+
+		if (regexFlag == 0) {
+			return "NONE";
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid regex flag value " + regexFlag);
 	}
 
 	private FunctionScoreMode _translateScoreMore(

@@ -19,7 +19,6 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
@@ -33,6 +32,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
@@ -279,16 +280,21 @@ public class CTPublishBackgroundTaskExecutor
 				));
 		}
 		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
 		}
 
-		return StringPool.BLANK;
+		return super.handleException(backgroundTask, exception);
 	}
 
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		_backgroundTaskExecutor = (BackgroundTaskExecutor)aopProxy;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTPublishBackgroundTaskExecutor.class);
 
 	private BackgroundTaskExecutor _backgroundTaskExecutor;
 

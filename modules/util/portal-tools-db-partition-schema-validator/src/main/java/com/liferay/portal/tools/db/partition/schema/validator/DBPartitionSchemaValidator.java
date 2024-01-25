@@ -161,7 +161,9 @@ public class DBPartitionSchemaValidator {
 			if (resultSet.next()) {
 				count = resultSet.getInt(1);
 
-				if (tableName.equals("DLFileEntryType") && (count == 1)) {
+				if (tableName.equalsIgnoreCase("DLFileEntryType") &&
+					(count == 1)) {
+
 					return 0;
 				}
 			}
@@ -207,7 +209,8 @@ public class DBPartitionSchemaValidator {
 
 		try (ResultSet resultSet = databaseMetaData.getColumns(
 				_getCatalog(partitionName), _getSchema(partitionName),
-				tableName, columnName)) {
+				_normalizeName(tableName, databaseMetaData),
+				_normalizeName(columnName, databaseMetaData))) {
 
 			if (!resultSet.next()) {
 				return false;
@@ -215,6 +218,21 @@ public class DBPartitionSchemaValidator {
 
 			return true;
 		}
+	}
+
+	private static String _normalizeName(
+			String name, DatabaseMetaData databaseMetaData)
+		throws SQLException {
+
+		if (databaseMetaData.storesLowerCaseIdentifiers()) {
+			return name.toLowerCase();
+		}
+
+		if (databaseMetaData.storesUpperCaseIdentifiers()) {
+			return name.toUpperCase();
+		}
+
+		return name;
 	}
 
 	private static void _validatePartition(
@@ -242,7 +260,7 @@ public class DBPartitionSchemaValidator {
 			while (resultSet.next()) {
 				String tableName = resultSet.getString("TABLE_NAME");
 
-				if (_controlTableNames.contains(tableName)) {
+				if (_controlTableNames.contains(tableName.toLowerCase())) {
 					if (_debug) {
 						System.out.println(tableName + " is control table");
 					}
@@ -294,7 +312,7 @@ public class DBPartitionSchemaValidator {
 
 	private static Connection _connection;
 	private static final Set<String> _controlTableNames = new HashSet<>(
-		Arrays.asList("Company", "VirtualHost"));
+		Arrays.asList("company", "virtualhost"));
 	private static String _dbName;
 	private static String _dbType;
 	private static boolean _debug;

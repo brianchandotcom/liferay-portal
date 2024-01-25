@@ -47,7 +47,7 @@ public class PasswordEncryptorUtil {
 
 		try {
 			return encrypt(
-				_PASSWORDS_ENCRYPTION_ALGORITHM, plainTextPassword,
+				_passwordEncryptionAlgorithm, plainTextPassword,
 				encryptedPassword);
 		}
 		finally {
@@ -93,7 +93,7 @@ public class PasswordEncryptorUtil {
 		boolean prependAlgorithm = true;
 
 		if (upgradeHashSecurity) {
-			algorithm = _PASSWORDS_ENCRYPTION_ALGORITHM;
+			algorithm = _passwordEncryptionAlgorithm;
 			encryptedPassword = null;
 		}
 		else {
@@ -122,7 +122,7 @@ public class PasswordEncryptorUtil {
 			}
 
 			if (Validator.isNull(algorithm)) {
-				algorithm = _PASSWORDS_ENCRYPTION_ALGORITHM;
+				algorithm = _passwordEncryptionAlgorithm;
 			}
 		}
 
@@ -193,7 +193,7 @@ public class PasswordEncryptorUtil {
 				return legacyAlgorithm;
 			}
 
-			return _PASSWORDS_ENCRYPTION_ALGORITHM;
+			return _passwordEncryptionAlgorithm;
 		}
 		else if (Validator.isNotNull(encryptedPassword) &&
 				 (encryptedPassword.charAt(0) == CharPool.OPEN_CURLY_BRACE)) {
@@ -257,14 +257,13 @@ public class PasswordEncryptorUtil {
 		return passwordEncryptor;
 	}
 
-	private static final String _PASSWORDS_ENCRYPTION_ALGORITHM =
-		StringUtil.toUpperCase(
-			GetterUtil.getString(
-				PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)));
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PasswordEncryptorUtil.class);
 
+	private static volatile String _passwordEncryptionAlgorithm =
+		StringUtil.toUpperCase(
+			GetterUtil.getString(
+				PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)));
 	private static final ServiceTrackerMap<String, PasswordEncryptor>
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			SystemBundleUtil.getBundleContext(), PasswordEncryptor.class,

@@ -57,7 +57,7 @@ public class BackgroundTaskStatusMessageListenerTest {
 
 		BackgroundTaskExecutor backgroundTaskExecutor =
 			(BackgroundTaskExecutor)ProxyUtil.newProxyInstance(
-				BackgroundTaskStatusMessageListenerTest.class.getClassLoader(),
+				BackgroundTaskExecutor.class.getClassLoader(),
 				new Class<?>[] {BackgroundTaskExecutor.class},
 				(proxy, method, argus) -> {
 					if (Objects.equals(method.getName(), "clone")) {

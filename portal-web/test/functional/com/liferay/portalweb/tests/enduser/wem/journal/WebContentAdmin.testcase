@@ -758,7 +758,7 @@ definition {
 		}
 
 		task ("Then the site administrator could filter web contents by categories and tags") {
-			ManagementBar.setFilterAndOrder(filterBy = "Categories...");
+			ManagementBar.setFilterAndOrder(filterBy = "Categories");
 
 			AssetCategorization.selectCategories(categoryNameList = "Commerce");
 
@@ -778,7 +778,7 @@ definition {
 
 			Search.clearSearchResult();
 
-			ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+			ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
 			AssetCategorization.selectTags(tagNameList = "echo");
 
@@ -798,7 +798,7 @@ definition {
 
 			Search.clearSearchResult();
 
-			ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+			ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
 			AssetCategorization.selectTags(tagNameList = "lima");
 

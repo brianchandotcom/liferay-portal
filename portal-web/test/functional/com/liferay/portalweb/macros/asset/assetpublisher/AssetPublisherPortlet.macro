@@ -34,7 +34,7 @@ definition {
 			locator1 = "Configuration#SCOPE_SELECT",
 			value1 = "Select");
 
-		MenuItem.click(menuItem = "Other Site or Asset Library...");
+		MenuItem.click(menuItem = "Other Site or Asset Library");
 
 		SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
@@ -71,7 +71,7 @@ definition {
 
 		Select(
 			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
-			value1 = "Select More Than One...");
+			value1 = "Select More Than One");
 
 		for (var contentName : list ${selectContent}) {
 			var key_contentName = ${contentName};
@@ -159,7 +159,7 @@ definition {
 		if (${selectMoreThanOneSubtype} == "true") {
 			Select(
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
-				value1 = "Select More Than One...");
+				value1 = "Select More Than One");
 
 			if (isSet(selectContent)) {
 				for (var contentName : list ${selectContent}) {
@@ -450,7 +450,7 @@ definition {
 
 			Click(locator1 = "Configuration#SCOPE_SELECT");
 
-			MenuItem.click(menuItem = "Other Site or Asset Library...");
+			MenuItem.click(menuItem = "Other Site or Asset Library");
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
@@ -567,7 +567,7 @@ definition {
 		}
 
 		if (isSet(otherSite)) {
-			MenuItem.click(menuItem = "Other Site or Asset Library...");
+			MenuItem.click(menuItem = "Other Site or Asset Library");
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
@@ -577,7 +577,7 @@ definition {
 		}
 
 		if (isSet(depotName)) {
-			MenuItem.click(menuItem = "Other Site or Asset Library...");
+			MenuItem.click(menuItem = "Other Site or Asset Library");
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
@@ -689,7 +689,7 @@ definition {
 			MenuItem.click(menuItem = ${siteName});
 		}
 		else {
-			MenuItem.click(menuItem = "Other Site or Asset Library...");
+			MenuItem.click(menuItem = "Other Site or Asset Library");
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
@@ -1339,7 +1339,7 @@ definition {
 				locator1 = "MenuItem#ANY_MENU_ITEM",
 				value1 = "Global");
 
-			MenuItem.click(menuItem = "Other Site or Asset Library...");
+			MenuItem.click(menuItem = "Other Site or Asset Library");
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
@@ -1374,9 +1374,9 @@ definition {
 
 			if (${childSite} == "true") {
 				AssertTextEquals(
-					key_menuItem = "Other Site or Asset Library...",
+					key_menuItem = "Other Site or Asset Library",
 					locator1 = "MenuItem#ANY_MENU_ITEM",
-					value1 = "Other Site or Asset Library...");
+					value1 = "Other Site or Asset Library");
 			}
 			else {
 				MenuItem.viewNotPresent(menuItem = "OTHER_SITE");

@@ -94,7 +94,7 @@ definition {
 
 		ManagementBar.setFilterAndOrder(filterBy = "Mine");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+		ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
 		DMDocument.selectTags(tagNameList = "tag1");
 
@@ -160,11 +160,11 @@ definition {
 
 		Search.searchCP(searchTerm = "Document");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Categories...");
+		ManagementBar.setFilterAndOrder(filterBy = "Categories");
 
 		DMDocument.selectFilterItems(categories = "Filtering");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Extension...");
+		ManagementBar.setFilterAndOrder(filterBy = "Extension");
 
 		DMDocument.selectFilterItems(categories = "Text (1 Item)");
 
@@ -232,7 +232,7 @@ definition {
 
 		ManagementBar.setFilterAndOrder(filterBy = "Recent");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Type...");
+		ManagementBar.setFilterAndOrder(filterBy = "Type");
 
 		IFrame.selectDocumentType(dmDocumentType = "External Video Shortcut");
 

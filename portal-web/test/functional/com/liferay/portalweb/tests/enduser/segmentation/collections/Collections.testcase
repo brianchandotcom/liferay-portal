@@ -72,7 +72,7 @@ definition {
 
 		task ("When the user selects item types") {
 			AssetListsAdmin.configureItemTypeInManualCollection(
-				itemType = "Select Types...",
+				itemType = "Select Types",
 				moveToAvailableItemTypeList = "Blogs Entry,Web Content Article");
 		}
 

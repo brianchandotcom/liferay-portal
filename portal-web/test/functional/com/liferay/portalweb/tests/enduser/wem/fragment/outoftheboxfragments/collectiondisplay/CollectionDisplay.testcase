@@ -943,7 +943,7 @@ definition {
 
 			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
 
-			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "Select Types...");
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "Select Types");
 
 			for (var key_type : list "Web Content Article,Blogs Entry,Document") {
 				AssertVisible(locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE_SELECTED");

@@ -119,7 +119,7 @@ definition {
 		task ("When the site administrator filters web content by categories") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			ManagementBar.setFilterAndOrder(filterBy = "Categories...");
+			ManagementBar.setFilterAndOrder(filterBy = "Categories");
 
 			AssetCategorization.selectCategories(categoryNameList = "Commerce");
 
@@ -133,7 +133,7 @@ definition {
 		task ("When the site administrator filters web content by tags") {
 			Search.clearSearchResult();
 
-			ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+			ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
 			AssetCategorization.selectTags(tagNameList = "echo");
 

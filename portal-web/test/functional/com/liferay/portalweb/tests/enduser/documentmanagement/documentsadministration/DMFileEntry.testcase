@@ -1593,7 +1593,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		task ("Assert user can choose one of the categories to filter documents") {
-			ManagementBar.setFilterAndOrder(filterBy = "Categories...");
+			ManagementBar.setFilterAndOrder(filterBy = "Categories");
 
 			DMDocument.viewFilterByDetails(
 				category = "DXP Site Vocabulary (${siteName}),Global Site Vocabulary (Global)",
@@ -1619,7 +1619,7 @@ definition {
 		task ("Assert user can choose multiple categories to filter documents in Home folder") {
 			ManagementBar.setFilterAndOrder(
 				active = "true",
-				filterBy = "Categories...");
+				filterBy = "Categories");
 
 			DMDocument.selectFilterItems(
 				categories = "Category1,GlobalCategory",
@@ -1667,7 +1667,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Categories...");
+		ManagementBar.setFilterAndOrder(filterBy = "Categories");
 
 		DMDocument.selectFilterItems(categories = "Category1~!@#$*");
 
@@ -1720,7 +1720,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		task ("Assert user can choose one of the extensions to filter documents") {
-			ManagementBar.setFilterAndOrder(filterBy = "Extension...");
+			ManagementBar.setFilterAndOrder(filterBy = "Extension");
 
 			DMDocument.viewFilterByDetails(
 				category = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
@@ -1746,7 +1746,7 @@ definition {
 		task ("Assert user can choose multiple extensions to filter documents in Home folder") {
 			ManagementBar.setFilterAndOrder(
 				active = "true",
-				filterBy = "Extension...");
+				filterBy = "Extension");
 
 			DMDocument.viewFilterByDetails(
 				category = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
@@ -1786,7 +1786,7 @@ definition {
 
 			DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-			ManagementBar.setFilterAndOrder(filterBy = "Extension...");
+			ManagementBar.setFilterAndOrder(filterBy = "Extension");
 
 			DMDocument.viewFilterByDetails(
 				category = "Image (1 Item),Spreadsheet (1 Item),Text (1 Item)",
@@ -1945,7 +1945,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		task ("Assert user can choose one subcategory to filter documents") {
-			ManagementBar.setFilterAndOrder(filterBy = "Extension...");
+			ManagementBar.setFilterAndOrder(filterBy = "Extension");
 
 			DMDocument.viewFilterByDetails(
 				category = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
@@ -1966,7 +1966,7 @@ definition {
 		task ("Assert user can choose multiple subcategories to filter documents") {
 			ManagementBar.setFilterAndOrder(
 				active = "true",
-				filterBy = "Extension...");
+				filterBy = "Extension");
 
 			DMDocument.viewFilterByDetails(
 				category = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
@@ -1994,7 +1994,7 @@ definition {
 		task ("Assert user can choose multiple subcategories from different extensions to filter documents") {
 			ManagementBar.setFilterAndOrder(
 				active = "true",
-				filterBy = "Extension...");
+				filterBy = "Extension");
 
 			DMDocument.viewFilterByDetails(
 				category = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
@@ -2022,7 +2022,7 @@ definition {
 		task ("Assert user can choose one category and one subcategory of extensions to filter documents") {
 			ManagementBar.setFilterAndOrder(
 				active = "true",
-				filterBy = "Extension...");
+				filterBy = "Extension");
 
 			DMDocument.viewFilterByDetails(
 				category = "Image (3 Items),Spreadsheet (2 Items),Text (2 Items),Vectorial (1 Item)",
@@ -4023,7 +4023,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+		ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
 		DMDocument.selectTags(tagNameList = "tag1,tag2");
 
@@ -4033,7 +4033,7 @@ definition {
 			key_dmDocumentTitle = "DM Document Title 2",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+		ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
 		DMDocument.selectTags(tagName = "tag1,tag2,tag3");
 
@@ -4090,7 +4090,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		task ("Assert only documents in the folder return when a user chooses one category to filter documents in a folder") {
-			ManagementBar.setFilterAndOrder(filterBy = "Categories...");
+			ManagementBar.setFilterAndOrder(filterBy = "Categories");
 
 			DMDocument.selectFilterItems(categories = "Category2");
 
@@ -4115,7 +4115,7 @@ definition {
 		task ("Assert only documents in the folder return when a user chooses multiple categories to filter documents in a folder") {
 			ManagementBar.setFilterAndOrder(
 				active = "true",
-				filterBy = "Categories...");
+				filterBy = "Categories");
 
 			DMDocument.selectFilterItems(categories = "Category1");
 
@@ -4165,7 +4165,7 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+		ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
 		DMDocument.selectTags(tagName = "tag1");
 

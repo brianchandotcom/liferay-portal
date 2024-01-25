@@ -827,18 +827,6 @@ public class DBPartitionUtil {
 				DBInspector dbInspector = new DBInspector(connection);
 
 				for (String copiedTableName : copiedTableNames) {
-					_deleteCompanyData(
-						companyId, copiedTableName, _defaultPartitionName,
-						statement);
-
-					statement.executeUpdate(
-						_dbPartitionDB.getDropTableSQL(
-							_getPartitionName(companyId), copiedTableName));
-
-					statement.executeUpdate(
-						_dbPartitionDB.getDropViewSQL(
-							_getPartitionName(companyId), copiedTableName));
-
 					_extractTable(
 						companyId, copiedTableName, statement, dbInspector);
 				}

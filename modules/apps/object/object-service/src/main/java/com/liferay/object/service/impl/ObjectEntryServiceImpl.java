@@ -39,6 +39,8 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -48,6 +50,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -650,13 +653,26 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectDefinition.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
 		for (long userId : _userLocalService.getRoleUserIds(role.getRoleId())) {
-			int count =
-				_userNotificationEventLocalService.
-					getUserNotificationEventsCount(
-						userId, portletId, timestamp, true,
-						"%\"exceedsObjectEntryLimit\":%");
+			List<UserNotificationEvent> userNotificationEvents =
+				_userNotificationEventLocalService.getUserNotificationEvents(
+					userId, portletId, timestamp, true);
 
-			if (count == 0) {
+			boolean notificationReceived = false;
+
+			for (UserNotificationEvent userNotificationEvent :
+					userNotificationEvents) {
+
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					userNotificationEvent.getPayload());
+
+				if (jsonObject.has("exceedsObjectEntryLimit")) {
+					notificationReceived = true;
+
+					break;
+				}
+			}
+
+			if (!notificationReceived) {
 				userIds.add(userId);
 			}
 		}
@@ -770,6 +786,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	private volatile ObjectConfiguration _objectConfiguration;
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserGroupRoleService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -157,12 +158,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Override
 	public Role postRole(Role role) throws Exception {
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			contextHttpServletRequest);
-
-		com.liferay.portal.kernel.model.Role serviceBuilderRole =
-			_roleService.fetchRole(
-				contextCompany.getCompanyId(), role.getExternalReferenceCode());
+		String className = null;
+		int type = 0;
 
 		List<RoleTypeContributor> roleTypeContributors = ListUtil.filter(
 			_roleTypeContributorProvider.getRoleTypeContributors(),
@@ -175,9 +172,6 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 					roleTypeContributor.getTypeLabel(), role.getRoleType());
 			});
 
-		int type = 0;
-		String className = null;
-
 		if (ListUtil.isNotEmpty(roleTypeContributors)) {
 			RoleTypeContributor roleTypeContributor = roleTypeContributors.get(
 				0);
@@ -186,46 +180,13 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 			className = roleTypeContributor.getClassName();
 		}
 
-		Map<Locale, String> titleMap = null;
+		com.liferay.portal.kernel.model.Role serviceBuilderRole =
+			_roleService.addRole(
+				className, 0, role.getName(), _getTitleMap(role),
+				_getDescriptionMap(role), type, null,
+				ServiceContextFactory.getInstance(contextHttpServletRequest));
 
-		if (MapUtil.isNotEmpty(role.getName_i18n())) {
-			titleMap = LocalizedMapUtil.getLocalizedMap(role.getName_i18n());
-		}
-
-		Map<Locale, String> descriptionMap = null;
-
-		if (MapUtil.isNotEmpty(role.getDescription_i18n())) {
-			descriptionMap = LocalizedMapUtil.getLocalizedMap(
-				role.getDescription_i18n());
-		}
-
-		if (serviceBuilderRole == null) {
-			serviceBuilderRole = _roleService.addRole(
-				className, 0, role.getExternalReferenceCode(), titleMap,
-				descriptionMap, type, null, serviceContext);
-		}
-		else {
-			serviceBuilderRole = _roleService.updateRole(
-				serviceBuilderRole.getRoleId(), role.getExternalReferenceCode(),
-				titleMap, descriptionMap, null, serviceContext);
-		}
-
-		for (RolePermission rolePermission : role.getRolePermissions()) {
-			if (rolePermission.getScope() ==
-					ResourceConstants.SCOPE_INDIVIDUAL) {
-
-				continue;
-			}
-
-			for (String actionId : rolePermission.getActionIds()) {
-				_resourcePermissionService.addResourcePermission(
-					contextUser.getGroupId(), contextCompany.getCompanyId(),
-					rolePermission.getResourceName(),
-					Math.toIntExact(rolePermission.getScope()),
-					rolePermission.getPrimaryKey(),
-					serviceBuilderRole.getRoleId(), actionId);
-			}
-		}
+		_addResourcePermission(role, serviceBuilderRole);
 
 		return _roleDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -254,6 +215,95 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 		_userGroupRoleService.addUserGroupRoles(
 			userAccountId, siteId, new long[] {roleId});
+	}
+
+	@Override
+	public Role putRoleByExternalReferenceCode(
+			String externalReferenceCode, Role role)
+		throws Exception {
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = role.getExternalReferenceCode();
+
+			if (Validator.isBlank(externalReferenceCode)) {
+				externalReferenceCode = role.getName();
+			}
+		}
+
+		com.liferay.portal.kernel.model.Role serviceBuilderRole =
+			_roleService.fetchRole(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		String className = null;
+		int type = 0;
+
+		List<RoleTypeContributor> roleTypeContributors = ListUtil.filter(
+			_roleTypeContributorProvider.getRoleTypeContributors(),
+			roleTypeContributor -> {
+				if (Validator.isNull(role.getRoleType())) {
+					return false;
+				}
+
+				return StringUtil.equals(
+					roleTypeContributor.getTypeLabel(), role.getRoleType());
+			});
+
+		if (ListUtil.isNotEmpty(roleTypeContributors)) {
+			RoleTypeContributor roleTypeContributor = roleTypeContributors.get(
+				0);
+
+			type = roleTypeContributor.getType();
+			className = roleTypeContributor.getClassName();
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			contextHttpServletRequest);
+
+		if (serviceBuilderRole == null) {
+			serviceBuilderRole = _roleService.addRole(
+				className, 0, role.getName(), _getTitleMap(role),
+				_getDescriptionMap(role), type, null, serviceContext);
+		}
+		else {
+			serviceBuilderRole = _roleService.updateRole(
+				serviceBuilderRole.getRoleId(), externalReferenceCode,
+				_getTitleMap(role), _getDescriptionMap(role), null,
+				serviceContext);
+		}
+
+		_addResourcePermission(role, serviceBuilderRole);
+
+		return _roleDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				true, _getActions(serviceBuilderRole.getRoleId()),
+				_dtoConverterRegistry, serviceBuilderRole.getRoleId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			serviceBuilderRole);
+	}
+
+	private void _addResourcePermission(
+			Role role, com.liferay.portal.kernel.model.Role serviceBuilderRole)
+		throws Exception {
+
+		if (ArrayUtil.isNotEmpty(role.getRolePermissions())) {
+			for (RolePermission rolePermission : role.getRolePermissions()) {
+				if (rolePermission.getScope() ==
+						ResourceConstants.SCOPE_INDIVIDUAL) {
+
+					continue;
+				}
+
+				for (String actionId : rolePermission.getActionIds()) {
+					_resourcePermissionService.addResourcePermission(
+						contextUser.getGroupId(), contextCompany.getCompanyId(),
+						rolePermission.getResourceName(),
+						Math.toIntExact(rolePermission.getScope()),
+						rolePermission.getPrimaryKey(),
+						serviceBuilderRole.getRoleId(), actionId);
+				}
+			}
+		}
 	}
 
 	private void _checkRoleType(long roleId, int type) throws Exception {
@@ -311,6 +361,27 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				ActionKeys.VIEW, roleId, "getRole",
 				_roleModelResourcePermission)
 		).build();
+	}
+
+	private Map<Locale, String> _getDescriptionMap(Role role) {
+		Map<Locale, String> descriptionMap = null;
+
+		if (MapUtil.isNotEmpty(role.getDescription_i18n())) {
+			descriptionMap = LocalizedMapUtil.getLocalizedMap(
+				role.getDescription_i18n());
+		}
+
+		return descriptionMap;
+	}
+
+	private Map<Locale, String> _getTitleMap(Role role) {
+		Map<Locale, String> titleMap = null;
+
+		if (MapUtil.isNotEmpty(role.getName_i18n())) {
+			titleMap = LocalizedMapUtil.getLocalizedMap(role.getName_i18n());
+		}
+
+		return titleMap;
 	}
 
 	@Reference

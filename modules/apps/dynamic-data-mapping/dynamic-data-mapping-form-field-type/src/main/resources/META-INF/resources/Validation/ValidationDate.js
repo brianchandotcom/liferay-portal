@@ -41,7 +41,11 @@ const getDateOptionsByType = (label, name) => ({
 
 /* TODO: enforce parameter type consistency and remove this function */
 function getFromParameter(parameter, key, getLocalizedValue) {
-	let value = getLocalizedValue(parameter) ?? parameter;
+	let value = getLocalizedValue(parameter);
+
+	if (value === undefined) {
+		value = parameter[Liferay.ThemeDisplay.getLanguageId()];
+	}
 
 	if (value && typeof value === 'string') {
 		try {

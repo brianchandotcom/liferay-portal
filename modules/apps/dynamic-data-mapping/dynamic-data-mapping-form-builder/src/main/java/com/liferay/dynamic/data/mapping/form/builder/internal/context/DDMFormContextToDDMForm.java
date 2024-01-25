@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -254,10 +255,17 @@ public class DDMFormContextToDDMForm
 		LocalizedValue parameterLocalizedValue = new LocalizedValue(
 			defaultLocale);
 
+		String value = jsonObject.getString(
+			LocaleUtil.toLanguageId(defaultLocale));
+
+		if (Validator.isNull(value)) {
+			value = jsonObject.getString(
+				LocaleUtil.toLanguageId(
+					LocaleThreadLocal.getThemeDisplayLocale()));
+		}
+
 		for (Locale availableLocale : availableLocales) {
-			parameterLocalizedValue.addString(
-				availableLocale,
-				jsonObject.getString(LocaleUtil.toLanguageId(defaultLocale)));
+			parameterLocalizedValue.addString(availableLocale, value);
 		}
 
 		return parameterLocalizedValue;

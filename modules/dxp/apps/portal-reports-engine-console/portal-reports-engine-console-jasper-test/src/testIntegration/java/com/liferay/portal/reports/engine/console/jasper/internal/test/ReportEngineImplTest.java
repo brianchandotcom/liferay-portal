@@ -18,6 +18,8 @@ import com.liferay.portal.reports.engine.ReportFormat;
 import com.liferay.portal.reports.engine.ReportRequest;
 import com.liferay.portal.reports.engine.ReportRequestContext;
 import com.liferay.portal.reports.engine.ReportResultContainer;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -111,7 +113,11 @@ public class ReportEngineImplTest extends TestCase {
 
 	@Test
 	public void testExportXls() throws Exception {
-		_export(ReportFormat.XLS);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"org.apache.poi.POIDocument", LoggerTestUtil.WARN)) {
+
+			_export(ReportFormat.XLS);
+		}
 	}
 
 	@Test

@@ -212,18 +212,17 @@ public class CommerceOrderDiscountV2Test {
 		BigDecimal expectedValue = commercePriceEntryPrice.subtract(
 			commerceDiscountLevel1);
 
-		Assert.assertEquals(
-			expectedValue,
-			commerceOrderItem.getFinalPrice(
-			).stripTrailingZeros());
-		Assert.assertEquals(
-			expectedValue,
-			subtotalCommerceMoney.getPrice(
-			).stripTrailingZeros());
-		Assert.assertEquals(
-			expectedValue,
-			totalCommerceMoney.getPrice(
-			).stripTrailingZeros());
+		BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
+
+		Assert.assertEquals(expectedValue, finalPrice.stripTrailingZeros());
+
+		BigDecimal price = subtotalCommerceMoney.getPrice();
+
+		Assert.assertEquals(expectedValue, price.stripTrailingZeros());
+
+		price = totalCommerceMoney.getPrice();
+
+		Assert.assertEquals(expectedValue, price.stripTrailingZeros());
 	}
 
 	@Test

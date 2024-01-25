@@ -2528,7 +2528,7 @@ public class PropsValues {
 	public static int WEB_SERVER_HTTPS_PORT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.WEB_SERVER_HTTPS_PORT), -1);
 
-	public static final String WEB_SERVER_PROTOCOL = PropsUtil.get(
+	public static volatile String WEB_SERVER_PROTOCOL = PropsUtil.get(
 		PropsKeys.WEB_SERVER_PROTOCOL);
 
 	public static final boolean WEB_SERVER_PROXY_LEGACY_MODE =

@@ -43,7 +43,7 @@ public class OpenSearchExceptionHandler {
 	}
 
 	protected static final String INDEX_NOT_FOUND_EXCEPTION_MESSAGE =
-		"type=index_not_found_exception";
+		"index_not_found_exception";
 
 	private boolean _isIndexNotFound(Throwable throwable) {
 		String message = throwable.getMessage();

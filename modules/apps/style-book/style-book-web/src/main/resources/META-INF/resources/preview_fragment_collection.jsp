@@ -12,7 +12,7 @@ PreviewFragmentCollectionDisplayContext previewFragmentCollectionDisplayContext 
 %>
 
 <liferay-util:html-top
-	outputKey="style-book-fragment-preview"
+	outputKey="com.liferay.style.book.web#/preview_fragment_collection.jsp"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/FragmentCollectionPreview.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

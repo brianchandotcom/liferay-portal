@@ -28,6 +28,7 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -409,11 +410,10 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (CPDefinition cpDefinition : existingCPDefinitions) {
-			String externalReferenceCode = cpDefinition.getCProduct(
-			).getExternalReferenceCode();
+			CProduct cProduct = cpDefinition.getCProduct();
 
 			stringUtilReplaceValues.put(
-				"CP_DEFINITION_ID:" + externalReferenceCode,
+				"CP_DEFINITION_ID:" + cProduct.getExternalReferenceCode(),
 				String.valueOf(cpDefinition.getCPDefinitionId()));
 		}
 
@@ -442,11 +442,10 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 		}
 
 		for (CPDefinition cpDefinition : cpDefinitions) {
-			String externalReferenceCode = cpDefinition.getCProduct(
-			).getExternalReferenceCode();
+			CProduct cProduct = cpDefinition.getCProduct();
 
 			stringUtilReplaceValues.put(
-				"CP_DEFINITION_ID:" + externalReferenceCode,
+				"CP_DEFINITION_ID:" + cProduct.getExternalReferenceCode(),
 				String.valueOf(cpDefinition.getCPDefinitionId()));
 
 			List<CPInstance> cpInstances = cpDefinition.getCPInstances();

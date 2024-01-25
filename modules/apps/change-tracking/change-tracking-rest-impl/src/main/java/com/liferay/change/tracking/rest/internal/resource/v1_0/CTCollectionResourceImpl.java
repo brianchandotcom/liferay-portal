@@ -126,8 +126,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		throws Exception {
 
 		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
-			_ctCollectionHistoryProviderServiceTrackerMap.getService(
-				Long.valueOf(classNameId));
+			_serviceTrackerMap.getService(Long.valueOf(classNameId));
 
 		List<com.liferay.change.tracking.model.CTCollection> ctCollections;
 
@@ -287,25 +286,24 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_ctCollectionHistoryProviderServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext,
-				(Class<CTCollectionHistoryProvider<?>>)
-					(Class<?>)CTCollectionHistoryProvider.class,
-				null,
-				(serviceReference, emitter) -> {
-					CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
-						bundleContext.getService(serviceReference);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext,
+			(Class<CTCollectionHistoryProvider<?>>)
+				(Class<?>)CTCollectionHistoryProvider.class,
+			null,
+			(serviceReference, emitter) -> {
+				CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
+					bundleContext.getService(serviceReference);
 
-					try {
-						emitter.emit(
-							_classNameLocalService.getClassNameId(
-								ctCollectionHistoryProvider.getModelClass()));
-					}
-					finally {
-						bundleContext.ungetService(serviceReference);
-					}
-				});
+				try {
+					emitter.emit(
+						_classNameLocalService.getClassNameId(
+							ctCollectionHistoryProvider.getModelClass()));
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			});
 	}
 
 	private DefaultDTOConverterContext _getDTOConverterContext(
@@ -501,9 +499,6 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		<com.liferay.change.tracking.model.CTCollection, CTCollection>
 			_ctCollectionDTOConverter;
 
-	private ServiceTrackerMap<Long, CTCollectionHistoryProvider<?>>
-		_ctCollectionHistoryProviderServiceTrackerMap;
-
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
 
@@ -533,6 +528,9 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	private ServiceTrackerMap<Long, CTCollectionHistoryProvider<?>>
+		_serviceTrackerMap;
 
 	@Reference
 	private TriggerFactory _triggerFactory;

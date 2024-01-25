@@ -5,6 +5,9 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index;
 
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -24,6 +27,7 @@ import java.nio.charset.StandardCharsets;
 import org.opensearch.client.json.JsonpMapper;
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch._types.mapping.TypeMapping;
+import org.opensearch.client.opensearch.indices.CreateIndexRequest.Builder;
 import org.opensearch.client.opensearch.indices.IndexSettings;
 import org.opensearch.client.opensearch.indices.OpenSearchIndicesClient;
 
@@ -47,7 +51,7 @@ public class CreateIndexRequestExecutorImpl
 				createIndexRequest,
 				createCreateIndexRequest(createIndexRequest));
 
-		JsonpUtil.logInfoResponse(_log, createIndexResponse);
+		JsonpUtil.logInfoResponse(createIndexResponse, _log);
 
 		return new CreateIndexResponse(
 			createIndexResponse.acknowledged(), createIndexResponse.index());
@@ -56,15 +60,26 @@ public class CreateIndexRequestExecutorImpl
 	protected org.opensearch.client.opensearch.indices.CreateIndexRequest
 		createCreateIndexRequest(CreateIndexRequest createIndexRequest) {
 
-		org.opensearch.client.opensearch.indices.CreateIndexRequest.Builder
-			builder =
-				new org.opensearch.client.opensearch.indices.CreateIndexRequest.
-					Builder();
+		Builder builder = new Builder();
 
 		builder.index(createIndexRequest.getIndexName());
 
-		_setMappings(builder, createIndexRequest);
-		_setSettings(builder, createIndexRequest);
+		JsonpMapper jsonpMapper = _openSearchConnectionManager.getJsonpMapper(
+			createIndexRequest.getConnectionId());
+
+		if (!Validator.isBlank(createIndexRequest.getMappings())) {
+			_setMappings(
+				builder, jsonpMapper, createIndexRequest.getMappings());
+		}
+
+		if (!Validator.isBlank(createIndexRequest.getSettings())) {
+			_setSettings(
+				builder, jsonpMapper, createIndexRequest.getSettings());
+		}
+
+		if (!Validator.isBlank(createIndexRequest.getSource())) {
+			_setSource(builder, jsonpMapper, createIndexRequest.getSource());
+		}
 
 		return builder.build();
 	}
@@ -92,18 +107,7 @@ public class CreateIndexRequestExecutorImpl
 	}
 
 	private void _setMappings(
-		org.opensearch.client.opensearch.indices.CreateIndexRequest.Builder
-			builder,
-		CreateIndexRequest createIndexRequest) {
-
-		String mappings = createIndexRequest.getMappings();
-
-		if (Validator.isBlank(mappings)) {
-			return;
-		}
-
-		JsonpMapper jsonpMapper = _openSearchConnectionManager.getJsonpMapper(
-			createIndexRequest.getConnectionId());
+		Builder builder, JsonpMapper jsonpMapper, String mappings) {
 
 		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
 
@@ -120,18 +124,7 @@ public class CreateIndexRequestExecutorImpl
 	}
 
 	private void _setSettings(
-		org.opensearch.client.opensearch.indices.CreateIndexRequest.Builder
-			builder,
-		CreateIndexRequest createIndexRequest) {
-
-		String settings = createIndexRequest.getSettings();
-
-		if (Validator.isBlank(settings)) {
-			return;
-		}
-
-		JsonpMapper jsonpMapper = _openSearchConnectionManager.getJsonpMapper(
-			createIndexRequest.getConnectionId());
+		Builder builder, JsonpMapper jsonpMapper, String settings) {
 
 		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
 
@@ -147,8 +140,36 @@ public class CreateIndexRequestExecutorImpl
 		}
 	}
 
+	private void _setSource(
+		Builder builder, JsonpMapper jsonpMapper, String source) {
+
+		JSONObject jsonObject;
+
+		try {
+			jsonObject = _jsonFactory.createJSONObject(source);
+		}
+		catch (JSONException jsonException) {
+			throw new RuntimeException(jsonException);
+		}
+
+		JSONObject mappingsJSONObject = jsonObject.getJSONObject("mappings");
+
+		if (mappingsJSONObject != null) {
+			_setMappings(builder, jsonpMapper, mappingsJSONObject.toString());
+		}
+
+		JSONObject settingsJSONObject = jsonObject.getJSONObject("settings");
+
+		if (settingsJSONObject != null) {
+			_setSettings(builder, jsonpMapper, settingsJSONObject.toString());
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreateIndexRequestExecutorImpl.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;

@@ -47,7 +47,7 @@ public class GetSnapshotRepositoriesRequestExecutorImpl
 			(name, repository) ->
 				getSnapshotRepositoriesResponse.addSnapshotRepositoryMetadata(
 					new SnapshotRepositoryDetails(
-						name, null,
+						name, repository.type(),
 						JsonpUtil.toString(repository.settings()))));
 
 		return getSnapshotRepositoriesResponse;

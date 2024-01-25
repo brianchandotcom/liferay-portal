@@ -57,7 +57,12 @@ export default function SelectCategory({
 
 	const onSelectedClick = (selected, id) => {
 		if (selected && singleSelection) {
-			setCollectionFilterValue('category', fragmentEntryLinkId, [id]);
+			setCollectionFilterValue(
+				'category',
+				fragmentEntryLinkId,
+				[id],
+				targetCollections
+			);
 			setSelectedCategoryIds([id]);
 		}
 		else if (selected) {

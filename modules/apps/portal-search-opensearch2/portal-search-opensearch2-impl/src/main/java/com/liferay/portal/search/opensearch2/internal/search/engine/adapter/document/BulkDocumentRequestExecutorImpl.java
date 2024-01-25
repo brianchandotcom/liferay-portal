@@ -59,7 +59,7 @@ public class BulkDocumentRequestExecutorImpl
 		BulkResponse bulkResponse = _getBulkResponse(
 			bulkDocumentRequest, createBulkRequest(bulkDocumentRequest));
 
-		JsonpUtil.logInfoResponse(_log, bulkResponse);
+		JsonpUtil.logBulkResponse(bulkResponse, _log);
 
 		BulkDocumentResponse bulkDocumentResponse = new BulkDocumentResponse(
 			bulkResponse.took());
@@ -79,9 +79,20 @@ public class BulkDocumentRequestExecutorImpl
 			ErrorCause errorCause = bulkResponseItem.error();
 
 			if (errorCause != null) {
-				bulkDocumentItemResponse.setFailureMessage(errorCause.reason());
-				bulkDocumentItemResponse.setCause(
-					new Exception(errorCause.stackTrace()));
+				if (errorCause.causedBy() != null) {
+					ErrorCause causedByErrorCause = errorCause.causedBy();
+
+					bulkDocumentItemResponse.setFailureMessage(
+						causedByErrorCause.reason());
+					bulkDocumentItemResponse.setCause(
+						new Exception(JsonpUtil.toString(causedByErrorCause)));
+				}
+				else {
+					bulkDocumentItemResponse.setFailureMessage(
+						errorCause.reason());
+					bulkDocumentItemResponse.setCause(
+						new Exception(JsonpUtil.toString(errorCause)));
+				}
 
 				bulkDocumentResponse.setErrors(true);
 			}

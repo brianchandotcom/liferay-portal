@@ -153,5 +153,5 @@ renderResponse.setTitle((addressDisplay.getAddressId() == 0) ? LanguageUtil.get(
 			"regionSelectVal", (address == null) ? 0L : address.getRegionId()
 		).build()
 		%>'
-	module="account_entries_admin/js/CountryRegionDynamicSelect"
+	module="{CountryRegionDynamicSelect} from account-admin-web"
 />

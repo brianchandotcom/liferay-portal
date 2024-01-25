@@ -16,7 +16,7 @@ InviteUsersDisplayContext inviteUsersDisplayContext = new InviteUsersDisplayCont
 </portlet:actionURL>
 
 <react:component
-	module="account_entries_admin/js/InviteUsersForm"
+	module="{InviteUsersForm} from account-admin-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"accountEntryId", ParamUtil.getString(request, "accountEntryId")

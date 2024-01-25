@@ -65,6 +65,6 @@ renderResponse.setTitle((accountEntryDisplay.getAccountEntryId() == 0) ? Languag
 <c:if test="<%= accountEntryDisplay.getAccountEntryId() == 0 %>">
 	<liferay-frontend:component
 		componentId="AccountEntriesAdminPortlet"
-		module="account_entries_admin/js/AccountEntriesAdminPortlet.es"
+		module="{AccountEntriesAdminPortlet} from account-admin-web"
 	/>
 </c:if>

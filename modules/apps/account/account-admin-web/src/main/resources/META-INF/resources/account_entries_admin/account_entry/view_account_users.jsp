@@ -27,7 +27,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 		).build()
 	%>'
 	managementToolbarDisplayContext="<%= viewAccountUsersManagementToolbarDisplayContext %>"
-	propsTransformer="account_entries_admin/js/AccountUsersManagementToolbarPropsTransformer"
+	propsTransformer="{AccountUsersManagementToolbarPropsTransformer} from account-admin-web"
 />
 
 <clay:container-fluid>
@@ -89,7 +89,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 					<clay:dropdown-actions
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= accountUserActionDropdownItemsProvider.getActionDropdownItems() %>"
-						propsTransformer="account_entries_admin/js/AccountUserDropdownDefaultPropsTransformer"
+						propsTransformer="{AccountUserDropdownDefaultPropsTransformer} from account-admin-web"
 					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>

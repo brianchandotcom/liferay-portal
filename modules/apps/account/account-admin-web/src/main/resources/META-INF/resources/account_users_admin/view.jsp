@@ -26,7 +26,7 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= accountUsersAdminManagementToolbarDisplayContext %>"
-	propsTransformer="account_users_admin/js/AccountUsersAdminManagementToolbarPropsTransformer"
+	propsTransformer="{AccountUsersAdminManagementToolbarPropsTransformer} from account-admin-web"
 />
 
 <clay:container-fluid>

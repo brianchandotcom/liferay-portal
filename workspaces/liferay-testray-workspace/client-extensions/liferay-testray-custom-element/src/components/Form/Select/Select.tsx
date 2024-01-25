@@ -36,7 +36,7 @@ const InputSelect: React.FC<InputSelectProps> = ({
 	name,
 	register = () => {},
 	id = name,
-	isLoading = true,
+	isLoading,
 	options,
 	forceSelectOption = false,
 	required = false,

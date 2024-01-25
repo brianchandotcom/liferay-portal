@@ -8,7 +8,10 @@ package com.liferay.portal.scheduler.quartz.internal.upgrade;
 import com.liferay.petra.io.ProtectedClassLoaderObjectInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.InputStream;
 
@@ -41,6 +44,13 @@ public abstract class BaseQuartzRenameJobsUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (DBPartition.isPartitionEnabled() &&
+			(PortalUtil.getDefaultCompanyId() !=
+				CompanyThreadLocal.getCompanyId())) {
+
+			return;
+		}
+
 		Map<String, String> jobNamesMap = getJobNamesMap();
 
 		_updateTables(

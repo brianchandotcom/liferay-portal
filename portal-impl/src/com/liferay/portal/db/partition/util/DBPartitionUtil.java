@@ -467,7 +467,7 @@ public class DBPartitionUtil {
 			try (AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
 				for (String tableName : controlTableNames) {
 					try (Statement statement = connection.createStatement()) {
-						_restoreTable(
+						_restoreView(
 							companyId, tableName, statement, dbInspector);
 					}
 				}
@@ -930,7 +930,7 @@ public class DBPartitionUtil {
 		_deleteData(tableName, fromPartitionName, statement, whereClause);
 	}
 
-	private static void _restoreTable(
+	private static void _restoreView(
 			long companyId, String tableName, Statement statement,
 			DBInspector dbInspector)
 		throws Exception {

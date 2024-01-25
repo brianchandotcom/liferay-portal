@@ -206,8 +206,12 @@ public class AnalyzeIndexRequestExecutorImpl
 				Math.toIntExact(analyzeToken.endOffset()));
 			analysisIndexResponseToken.setPosition(
 				Math.toIntExact(analyzeToken.position()));
-			analysisIndexResponseToken.setPositionLength(
-				Math.toIntExact(analyzeToken.positionLength()));
+
+			if (analyzeToken.positionLength() != null) {
+				analysisIndexResponseToken.setPositionLength(
+					Math.toIntExact(analyzeToken.positionLength()));
+			}
+
 			analysisIndexResponseToken.setStartOffset(
 				Math.toIntExact(analyzeToken.startOffset()));
 			analysisIndexResponseToken.setType(analyzeToken.type());

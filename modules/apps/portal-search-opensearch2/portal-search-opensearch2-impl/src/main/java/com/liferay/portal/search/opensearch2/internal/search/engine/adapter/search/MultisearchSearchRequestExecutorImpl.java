@@ -29,6 +29,7 @@ import org.opensearch.client.opensearch.core.SearchRequest;
 import org.opensearch.client.opensearch.core.msearch.MultiSearchItem;
 import org.opensearch.client.opensearch.core.msearch.MultiSearchResponseItem;
 import org.opensearch.client.opensearch.core.msearch.MultisearchBody;
+import org.opensearch.client.opensearch.core.msearch.MultisearchHeader;
 import org.opensearch.client.opensearch.core.msearch.RequestItem;
 
 import org.osgi.service.component.annotations.Component;
@@ -164,7 +165,12 @@ public class MultisearchSearchRequestExecutorImpl
 		builder.trackScores(searchRequest.trackScores());
 		builder.trackTotalHits(searchRequest.trackTotalHits());
 
-		return RequestItem.of(requestItem -> requestItem.body(builder.build()));
+		return RequestItem.of(
+			requestItem -> requestItem.body(
+				builder.build()
+			).header(
+				MultisearchHeader.of(multisearchHeader -> multisearchHeader)
+			));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

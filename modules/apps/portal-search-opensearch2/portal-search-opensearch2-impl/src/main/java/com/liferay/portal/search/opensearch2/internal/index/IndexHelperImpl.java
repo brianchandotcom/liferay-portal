@@ -9,7 +9,6 @@ import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomize
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -27,6 +26,7 @@ import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchCo
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionNotInitializedException;
 import com.liferay.portal.search.opensearch2.internal.index.util.IndexFactoryCompanyIdRegistryUtil;
+import com.liferay.portal.search.opensearch2.internal.util.IndexUtil;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 import com.liferay.portal.search.spi.model.index.contributor.IndexContributor;
 import com.liferay.portal.search.spi.settings.IndexSettingsContributor;
@@ -107,11 +107,11 @@ public class IndexHelperImpl implements IndexHelper {
 
 		try {
 			JsonpUtil.logInfoResponse(
-				_log,
 				openSearchIndicesClient.delete(
 					DeleteIndexRequest.of(
 						deleteIndexRequest -> deleteIndexRequest.index(
-							indexName))));
+							indexName))),
+				_log);
 
 			if (companyId != CompanyConstants.SYSTEM) {
 				if (resetBothIndexNames) {
@@ -269,8 +269,8 @@ public class IndexHelperImpl implements IndexHelper {
 		builder.index(indexName);
 
 		JsonpUtil.logInfoResponse(
-			_log,
-			_getCreateIndexResponse(builder.build(), openSearchIndicesClient));
+			_getCreateIndexResponse(builder.build(), openSearchIndicesClient),
+			_log);
 	}
 
 	private JSONObject _createSettingsJSONObject(
@@ -278,8 +278,7 @@ public class IndexHelperImpl implements IndexHelper {
 
 		JSONObject settingsJSONObject = settingsFactory.getSettingsJSONObject();
 
-		settingsJSONObject = _executeIndexSettingsContributors(
-			settingsJSONObject);
+		_executeIndexSettingsContributors(settingsJSONObject);
 
 		JSONObject indexJSONObject = settingsJSONObject.getJSONObject("index");
 
@@ -312,13 +311,7 @@ public class IndexHelperImpl implements IndexHelper {
 				}
 			}
 
-			try {
-				settingsJSONObject = JSONUtil.merge(
-					settingsJSONObject, settingJSONObject);
-			}
-			catch (JSONException jsonException) {
-				throw new RuntimeException(jsonException);
-			}
+			IndexUtil.mergeToJsonObject(settingsJSONObject, settingJSONObject);
 		}
 
 		return settingsJSONObject;
@@ -347,7 +340,7 @@ public class IndexHelperImpl implements IndexHelper {
 		}
 	}
 
-	private JSONObject _executeIndexSettingsContributors(
+	private void _executeIndexSettingsContributors(
 		JSONObject indexSettingsJSONObject) {
 
 		Map<String, String> contributedSettings = new HashMap<>();
@@ -359,17 +352,12 @@ public class IndexHelperImpl implements IndexHelper {
 		}
 
 		if (MapUtil.isEmpty(contributedSettings)) {
-			return indexSettingsJSONObject;
+			return;
 		}
 
-		try {
-			return JSONUtil.merge(
-				indexSettingsJSONObject,
-				_dotNotationSettingsToJSONObject(contributedSettings));
-		}
-		catch (JSONException jsonException) {
-			throw new RuntimeException(jsonException);
-		}
+		IndexUtil.mergeToJsonObject(
+			indexSettingsJSONObject,
+			_dotNotationSettingsToJSONObject(contributedSettings));
 	}
 
 	private void _executeMappingsContributors(

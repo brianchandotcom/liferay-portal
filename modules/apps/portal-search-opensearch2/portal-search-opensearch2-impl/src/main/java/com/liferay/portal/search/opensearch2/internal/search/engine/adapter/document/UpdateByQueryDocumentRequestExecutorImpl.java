@@ -67,8 +67,9 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 		}
 		else {
 			builder.query(
-				_legacyQueryTranslator.translate(
-					updateByQueryDocumentRequest.getQuery(), null));
+				new Query(
+					_legacyQueryTranslator.translate(
+						updateByQueryDocumentRequest.getQuery(), null)));
 		}
 
 		if (updateByQueryDocumentRequest.isRefresh()) {
@@ -143,7 +144,7 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 	}
 
 	@Reference(target = "(search.engine.impl=OpenSearch)")
-	private com.liferay.portal.kernel.search.query.QueryTranslator<Query>
+	private com.liferay.portal.kernel.search.query.QueryTranslator<QueryVariant>
 		_legacyQueryTranslator;
 
 	@Reference

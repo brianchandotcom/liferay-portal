@@ -179,11 +179,10 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 
 			<div className="popover-footer">
 				<Form.Divider />
-
-				<ClayButton disabled={clearDisabled} onClick={onApply}>
+				<ClayButton onClick={onApply}>
 					{i18n.translate('apply')}
 				</ClayButton>
-
+				S
 				<ClayButton
 					className="ml-3"
 					disabled={clearDisabled}

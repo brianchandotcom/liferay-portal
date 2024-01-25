@@ -668,7 +668,7 @@ components:
                 externalReferenceCode:
                     # @review
                     description:
-                        The portable ID of this role.
+                        The optional external key of this role.
                     type: string
                 id:
                     description:
@@ -1264,7 +1264,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '4.0.55'."
+        'com.liferay.headless.admin.user.client', and version '4.0.56'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -1312,6 +1312,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/AccountGroup"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["AccountGroup"]
         post:
             description:
@@ -1360,6 +1362,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["AccountGroup"]
         post:
             # @review
@@ -1382,6 +1386,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["AccountGroup"]
     "/account-groups/by-external-reference-code/{externalReferenceCode}":
         delete:
@@ -1400,6 +1406,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["AccountGroup"]
         get:
             operationId: getAccountGroupByExternalReferenceCode
@@ -1418,6 +1426,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/AccountGroup"
+                    description:
+                        Successful operation
             tags: ["AccountGroup"]
         patch:
             # @review
@@ -1502,6 +1512,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["AccountGroup"]
         get:
             operationId: getAccountGroup
@@ -1521,6 +1533,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/AccountGroup"
+                    description:
+                        Successful operation
             tags: ["AccountGroup"]
         patch:
             # @review
@@ -1630,6 +1644,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Account"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Account"]
         post:
             description:
@@ -1687,6 +1703,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/AccountGroup"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["AccountGroup"]
     "/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{externalReferenceCode}":
         delete:
@@ -1716,6 +1734,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["AccountRole"]
         post:
             # @review
@@ -1744,6 +1764,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["AccountRole"]
     "/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}":
         delete:
@@ -1767,6 +1789,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserAccount"]
         get:
             # @review
@@ -1793,6 +1817,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
         post:
             # @review
@@ -1815,6 +1841,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserAccount"]
     "/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}/account-roles":
         get:
@@ -1846,6 +1874,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/AccountRole"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["AccountRole"]
     "/accounts/by-external-reference-code/{externalReferenceCode}":
         delete:
@@ -1864,6 +1894,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Account"]
         get:
             operationId: getAccountByExternalReferenceCode
@@ -1882,6 +1914,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Account"
+                    description:
+                        Successful operation
             tags: ["Account"]
         patch:
             # @review
@@ -1993,6 +2027,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/AccountRole"
                                 type: array
+                    description:
+                        Successful operation
                     # @review
             tags: ["AccountRole"]
         post:
@@ -2023,6 +2059,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/AccountRole"
+                    description:
+                        Successful operation
                     # @review
             tags: ["AccountRole"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-email-address/{emailAddress}":
@@ -2053,6 +2091,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["AccountRole"]
         post:
             # @review
@@ -2081,6 +2121,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["AccountRole"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/organizations":
         get:
@@ -2125,6 +2167,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Organization"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Organization"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/organizations/{organizationId}":
         delete:
@@ -2144,6 +2188,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Organization"]
         get:
             parameters:
@@ -2166,6 +2212,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Organization"
+                    description:
+                        Successful operation
             tags: ["Organization"]
         post:
             parameters:
@@ -2184,6 +2232,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Organization"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts":
         get:
@@ -2230,6 +2280,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/UserAccount"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
         post:
             # @review
@@ -2259,6 +2311,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/by-email-address":
         delete:
@@ -2295,6 +2349,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserAccount"]
         post:
             # @review
@@ -2330,6 +2386,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserAccount"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/by-email-address/{emailAddress}":
         delete:
@@ -2353,6 +2411,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserAccount"]
         post:
             # @review
@@ -2375,6 +2435,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserAccount"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/by-email-address/{emailAddress}/account-roles":
         get:
@@ -2406,6 +2468,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/AccountRole"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["AccountRole"]
     "/accounts/{accountId}":
         delete:
@@ -2425,6 +2489,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Account"]
         get:
             operationId: getAccount
@@ -2444,6 +2510,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Account"
+                    description:
+                        Successful operation
             tags: ["Account"]
         patch:
             # @review
@@ -2544,6 +2612,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/AccountGroup"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["AccountGroup"]
     "/accounts/{accountId}/account-roles":
         get:
@@ -2591,6 +2661,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/AccountRole"
                                 type: array
+                    description:
+                        Successful operation
                     # @review
             tags: ["AccountRole"]
         post:
@@ -2622,6 +2694,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/AccountRole"
+                    description:
+                        Successful operation
                     # @review
             tags: ["AccountRole"]
     "/accounts/{accountId}/account-roles/{accountRoleId}/user-accounts/{userAccountId}":
@@ -2654,6 +2728,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["AccountRole"]
         post:
             # @review
@@ -2684,6 +2760,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["AccountRole"]
     "/accounts/{accountId}/organizations":
         get:
@@ -2729,6 +2807,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Organization"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Organization"]
     "/accounts/{accountId}/organizations/{organizationId}":
         delete:
@@ -2749,6 +2829,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Organization"]
         get:
             parameters:
@@ -2772,6 +2854,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Organization"
+                    description:
+                        Successful operation
             tags: ["Organization"]
         post:
             parameters:
@@ -2791,6 +2875,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Organization"]
     "/accounts/{accountId}/postal-addresses":
         get:
@@ -2817,6 +2903,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/PostalAddress"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["PostalAddress"]
         post:
             operationId: postAccountPostalAddress
@@ -2844,6 +2932,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/PostalAddress"
+                    description:
+                        Successful operation
             tags: ["PostalAddress"]
     "/accounts/{accountId}/user-accounts":
         get:
@@ -2891,6 +2981,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/UserAccount"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
         post:
             # @review
@@ -2921,6 +3013,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
     "/accounts/{accountId}/user-accounts/by-email-address":
         delete:
@@ -2958,6 +3052,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserAccount"]
         post:
             # @review
@@ -3007,6 +3103,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/UserAccount"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
     "/accounts/{accountId}/user-accounts/by-email-address/{emailAddress}":
         delete:
@@ -3031,6 +3129,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserAccount"]
         post:
             # @review
@@ -3058,6 +3158,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
     "/accounts/{accountId}/user-accounts/{userAccountId}":
         delete:
@@ -3083,6 +3185,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserAccount"]
         get:
             # @review
@@ -3111,6 +3215,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
     "/email-addresses/{emailAddressId}":
         get:
@@ -3133,6 +3239,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/EmailAddress"
+                    description:
+                        Successful operation
             tags: ["EmailAddress"]
     "/my-user-account":
         get:
@@ -3148,6 +3256,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
     "/my-user-account/sites":
         get:
@@ -3174,6 +3284,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Site"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Site"]
     "/my-user-account/subscriptions":
         get:
@@ -3204,6 +3316,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Subscription"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Subscription"]
     "/my-user-account/subscriptions/{subscriptionId}":
         delete:
@@ -3220,6 +3334,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Subscription"]
         get:
             operationId: getMyUserAccountSubscription
@@ -3239,6 +3355,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Subscription"
+                    description:
+                        Successful operation
             tags: ["Subscription"]
     "/organizations":
         get:
@@ -3283,6 +3401,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Organization"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Organization"]
         post:
             description:
@@ -3324,6 +3444,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Organization"]
         get:
             parameters:
@@ -3341,6 +3463,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Organization"
+                    description:
+                        Successful operation
             tags: ["Organization"]
         patch:
             # @review
@@ -3444,6 +3568,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Account"]
     "/organizations/move-accounts/{sourceOrganizationId}/{targetOrganizationId}/by-external-reference-code":
         patch:
@@ -3482,6 +3608,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Account"]
     "/organizations/{organizationId}":
         delete:
@@ -3500,6 +3628,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Organization"]
         get:
             description:
@@ -3520,6 +3650,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Organization"
+                    description:
+                        Successful operation
             tags: ["Organization"]
         patch:
             # @review
@@ -3618,6 +3750,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Account"]
         get:
             description:
@@ -3663,6 +3797,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Account"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Account"]
         post:
             operationId: postOrganizationAccounts
@@ -3695,6 +3831,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Account"]
     "/organizations/{organizationId}/accounts/by-external-reference-code":
         delete:
@@ -3726,6 +3864,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Account"]
         post:
             operationId: postOrganizationAccountsByExternalReferenceCode
@@ -3756,6 +3896,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Account"]
     "/organizations/{organizationId}/child-organizations":
         get:
@@ -3806,6 +3948,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Organization"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Organization"]
     "/organizations/{organizationId}/email-addresses":
         get:
@@ -3831,6 +3975,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/EmailAddress"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["EmailAddress"]
     "/organizations/{organizationId}/phones":
         get:
@@ -3856,6 +4002,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Phone"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Phone"]
     "/organizations/{organizationId}/postal-addresses":
         get:
@@ -3881,6 +4029,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/PostalAddress"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["PostalAddress"]
     "/organizations/{organizationId}/user-accounts":
         get:
@@ -3926,6 +4076,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/UserAccount"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
     "/organizations/{organizationId}/user-accounts/by-email-address":
         delete:
@@ -3962,6 +4114,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Organization"]
         post:
             # @review
@@ -4010,6 +4164,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/UserAccount"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Organization"]
     "/organizations/{organizationId}/user-accounts/by-email-address/{emailAddress}":
         delete:
@@ -4033,6 +4189,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Organization"]
         post:
             # @review
@@ -4059,6 +4217,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+                    description:
+                        Successful operation
             tags: ["Organization"]
     "/organizations/{organizationId}/web-urls":
         get:
@@ -4084,6 +4244,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/WebUrl"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["WebUrl"]
     "/organizations/{parentOrganizationId}/organizations":
         get:
@@ -4134,6 +4296,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Organization"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Organization"]
     "/phones/{phoneId}":
         get:
@@ -4156,6 +4320,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Phone"
+                    description:
+                        Successful operation
             tags: ["Phone"]
     "/postal-addresses/{postalAddressId}":
         delete:
@@ -4174,6 +4340,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["PostalAddress"]
         get:
             description:
@@ -4195,6 +4363,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/PostalAddress"
+                    description:
+                        Successful operation
             tags: ["PostalAddress"]
         patch:
             operationId: patchPostalAddress
@@ -4222,6 +4392,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/PostalAddress"
+                    description:
+                        Successful operation
             tags: ["PostalAddress"]
         put:
             operationId: putPostalAddress
@@ -4249,6 +4421,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/PostalAddress"
+                    description:
+                        Successful operation
             tags: ["PostalAddress"]
     "/roles":
         get:
@@ -4287,6 +4461,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Role"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Role"]
         post:
             description:
@@ -4312,6 +4488,37 @@ paths:
                     description:
                         "Roles successfully created"
             tags: ["Role"]
+    "/roles/by-external-reference-code/{externalReferenceCode}":
+        put:
+            description:
+                update the given Role
+            operationId: putRoleByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Role"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Role"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Role"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Role"
+                    description:
+                        Successful operation
+            tags: ["Role"]
     "/roles/{roleId}":
         get:
             description:
@@ -4333,6 +4540,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Role"
+                    description:
+                        Successful operation
             tags: ["Role"]
     "/roles/{roleId}/association/user-account/{userAccountId}":
         delete:
@@ -4358,6 +4567,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Role"]
         post:
             # @review
@@ -4382,6 +4593,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        Successful operation
             tags: ["Role"]
     "/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}":
         delete:
@@ -4413,6 +4626,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Role"]
         post:
             # @review
@@ -4443,6 +4658,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        Successful operation
             tags: ["Role"]
     "/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}":
         delete:
@@ -4474,6 +4691,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["Role"]
         post:
             # @review
@@ -4504,6 +4723,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        Successful operation
             tags: ["Role"]
     "/segments/{segmentId}/user-accounts":
         get:
@@ -4538,6 +4759,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/SegmentUser"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["SegmentUser"]
     "/sites/by-friendly-url-path/{friendlyUrlPath}":
         get:
@@ -4557,6 +4780,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Site"
+                    description:
+                        Successful operation
             tags: ["Site"]
     "/sites/{siteId}":
         get:
@@ -4577,6 +4802,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Site"
+                    description:
+                        Successful operation
             tags: ["Site"]
     "/sites/{siteId}/segments":
         get:
@@ -4611,6 +4838,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Segment"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Segment"]
     "/sites/{siteId}/user-accounts":
         get:
@@ -4657,6 +4886,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/UserAccount"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
     "/sites/{siteId}/user-accounts/{userAccountId}/segments":
         get:
@@ -4694,6 +4925,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Segment"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Segment"]
     "/user-account-full-name-definition":
         get:
@@ -4714,6 +4947,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccountFullNameDefinition"
+                    description:
+                        Successful operation
             tags: ["UserAccountFullNameDefinition"]
     "/user-accounts":
         get:
@@ -4754,6 +4989,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/UserAccount"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
         post:
             description:
@@ -4776,6 +5013,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+                    description:
+                        Created
             tags: ["UserAccount"]
     "/user-accounts/by-email-address/{emailAddress}":
         get:
@@ -4795,6 +5034,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
     "/user-accounts/by-external-reference-code/{externalReferenceCode}":
         delete:
@@ -4810,6 +5051,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserAccount"]
         get:
             operationId: getUserAccountByExternalReferenceCode
@@ -4828,6 +5071,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
         put:
             operationId: putUserAccountByExternalReferenceCode
@@ -4854,6 +5099,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
     "/user-accounts/by-status/{status}":
         get:
@@ -4898,6 +5145,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/UserAccount"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
     "/user-accounts/{userAccountId}":
         delete:
@@ -4917,6 +5166,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserAccount"]
         get:
             description:
@@ -4938,6 +5189,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+                    description:
+                        Successful operation
             tags: ["UserAccount"]
         patch:
             # @review
@@ -5030,6 +5283,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/EmailAddress"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["EmailAddress"]
     "/user-accounts/{userAccountId}/email-verification-ticket":
         get:
@@ -5052,6 +5307,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Ticket"
+                    description:
+                        Successful operation
             tags: ["Ticket"]
     "/user-accounts/{userAccountId}/image":
         post:
@@ -5100,6 +5357,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Ticket"
+                    description:
+                        Successful operation
             tags: ["Ticket"]
     "/user-accounts/{userAccountId}/phones":
         get:
@@ -5126,6 +5385,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Phone"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["Phone"]
     "/user-accounts/{userAccountId}/postal-addresses":
         get:
@@ -5152,6 +5413,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/PostalAddress"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["PostalAddress"]
     "/user-accounts/{userAccountId}/user-groups":
         get:
@@ -5178,6 +5441,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/UserGroup"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["UserGroup"]
     "/user-accounts/{userAccountId}/web-urls":
         get:
@@ -5204,6 +5469,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/WebUrl"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["WebUrl"]
     "/user-groups":
         get:
@@ -5242,6 +5509,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/UserGroup"
                                 type: array
+                    description:
+                        Successful operation
             tags: ["UserGroup"]
         post:
             operationId: postUserGroup
@@ -5262,6 +5531,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
+                    description:
+                        Created
             tags: ["UserGroup"]
     "/user-groups/by-external-reference-code/{externalReferenceCode}":
         delete:
@@ -5277,6 +5548,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserGroup"]
         get:
             operationId: getUserGroupByExternalReferenceCode
@@ -5295,6 +5568,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
+                    description:
+                        Successful operation
             tags: ["UserGroup"]
         patch:
             operationId: patchUserGroupByExternalReferenceCode
@@ -5321,6 +5596,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
+                    description:
+                        Successful operation
             tags: ["UserGroup"]
         put:
             operationId: putUserGroupByExternalReferenceCode
@@ -5347,6 +5624,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
+                    description:
+                        Successful operation
             tags: ["UserGroup"]
     "/user-groups/{userGroupId}":
         delete:
@@ -5363,6 +5642,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserGroup"]
         get:
             operationId: getUserGroup
@@ -5382,6 +5663,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
+                    description:
+                        Successful operation
             tags: ["UserGroup"]
         patch:
             operationId: patchUserGroup
@@ -5409,6 +5692,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
+                    description:
+                        Successful operation
             tags: ["UserGroup"]
         put:
             operationId: putUserGroup
@@ -5436,6 +5721,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
+                    description:
+                        Successful operation
             tags: ["UserGroup"]
     "/user-groups/{userGroupId}/user-group-users":
         delete:
@@ -5466,6 +5753,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserGroup"]
         post:
             operationId: postUserGroupUsers
@@ -5495,6 +5784,8 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                    description:
+                        No content
             tags: ["UserGroup"]
     "/web-urls/{webUrlId}":
         get:
@@ -5517,4 +5808,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/WebUrl"
+                    description:
+                        Successful operation
             tags: ["WebUrl"]

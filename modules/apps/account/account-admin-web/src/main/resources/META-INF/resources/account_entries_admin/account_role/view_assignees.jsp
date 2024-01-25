@@ -30,7 +30,7 @@ SearchContainer<AccountUserDisplay> accountRoleUserDisplaySearchContainer = Acco
 		).build()
 	%>'
 	managementToolbarDisplayContext="<%= new ViewAccountRoleAssigneesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountRoleUserDisplaySearchContainer) %>"
-	propsTransformer="account_entries_admin/js/AccountUsersManagementToolbarPropsTransformer"
+	propsTransformer="{AccountUsersManagementToolbarPropsTransformer} from account-admin-web"
 />
 
 <clay:container-fluid>

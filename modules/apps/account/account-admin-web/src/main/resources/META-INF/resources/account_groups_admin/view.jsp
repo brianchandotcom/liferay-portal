@@ -15,7 +15,7 @@ ViewAccountGroupsManagementToolbarDisplayContext viewAccountGroupsManagementTool
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= viewAccountGroupsManagementToolbarDisplayContext %>"
-	propsTransformer="account_groups_admin/js/AccountGroupsManagementToolbarPropsTransformer"
+	propsTransformer="{AccountGroupsManagementToolbarPropsTransformer} from account-admin-web"
 />
 
 <clay:container-fluid>

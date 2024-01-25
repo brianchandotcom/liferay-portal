@@ -40,7 +40,7 @@ accountEntryAddressDisplaySearchContainer.setRowChecker(null);
 		).build()
 	%>'
 	managementToolbarDisplayContext="<%= new SelectAccountEntryAddressManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryAddressDisplaySearchContainer) %>"
-	propsTransformer="account_entries_admin/js/SelectAccountDefaultAddressManagementToolbarPropsTransformer"
+	propsTransformer="{SelectAccountDefaultAddressManagementToolbarPropsTransformer} from account-admin-web"
 	showCreationMenu="<%= true %>"
 />
 

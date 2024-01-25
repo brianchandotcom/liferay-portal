@@ -73,7 +73,7 @@ AccountUserDisplay accountUserDisplay = AccountUserDisplay.of(selUser);
 		<liferay-frontend:component
 			componentId="AccountUserEmailDomainValidator"
 			context="<%= context %>"
-			module="account_users_admin/js/AccountUserEmailDomainValidator.es"
+			module="{AccountUserEmailDomainValidator} from account-admin-web"
 		/>
 	</c:if>
 </c:if>

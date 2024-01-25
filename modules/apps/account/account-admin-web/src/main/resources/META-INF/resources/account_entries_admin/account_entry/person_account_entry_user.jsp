@@ -135,5 +135,5 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 			"userIdInput", "#personAccountEntryUserId"
 		).build()
 	%>'
-	module="account_entries_admin/js/PersonAccountEntryEventHandler.es"
+	module="{PersonAccountEntryEventHandler} from account-admin-web"
 />

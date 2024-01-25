@@ -22,7 +22,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= viewAccountOrganizationsManagementToolbarDisplayContext %>"
-	propsTransformer="account_entries_admin/js/AccountOrganizationsManagementToolbarPropsTransformer"
+	propsTransformer="{AccountOrganizationsManagementToolbarPropsTransformer} from account-admin-web"
 />
 
 <clay:container-fluid>

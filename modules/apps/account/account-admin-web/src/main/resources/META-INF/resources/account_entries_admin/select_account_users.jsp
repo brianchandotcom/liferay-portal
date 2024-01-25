@@ -28,7 +28,7 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 		).build()
 	%>'
 	managementToolbarDisplayContext="<%= selectAccountUsersManagementToolbarDisplayContext %>"
-	propsTransformer="account_entries_admin/js/SelectAccountUsersManagementToolbarPropsTransformer"
+	propsTransformer="{SelectAccountUsersManagementToolbarPropsTransformer} from account-admin-web"
 	showCreationMenu="<%= selectAccountUsersDisplayContext.isShowCreateButton() %>"
 />
 

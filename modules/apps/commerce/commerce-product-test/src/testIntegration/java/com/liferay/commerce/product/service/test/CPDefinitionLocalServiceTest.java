@@ -12,6 +12,7 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.constants.CPInstanceConstants;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CProduct;
@@ -355,6 +356,52 @@ public class CPDefinitionLocalServiceTest {
 		}
 
 		Assert.assertEquals(1, approvedCPInstances);
+	}
+
+	@Test
+	public void testAvoidMaliciousCodeInCPDefinitionFields() throws Exception {
+		frutillaRule.scenario(
+			"Add product definition with clean fields"
+		).given(
+			"I add a product definition"
+		).when(
+			"I try to set malicious value in fields"
+		).then(
+			"The value is escaped."
+		);
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
+
+		String testString =
+			"'\"></option><img src=x onerror=alert(document.location)>";
+
+		CPDefinitionLocalization cpDefinitionLocalization =
+			_cpDefinitionLocalService.updateCPDefinitionLocalization(
+				cpDefinition, cpDefinition.getDefaultLanguageId(), testString,
+				testString, testString, testString, testString, testString);
+
+		String expectedString = "'&quot;&gt;<img src=\"x\">";
+
+		Assert.assertEquals(
+			"Expected name", expectedString,
+			cpDefinitionLocalization.getName());
+		Assert.assertEquals(
+			"Expected short description", expectedString,
+			cpDefinitionLocalization.getShortDescription());
+		Assert.assertEquals(
+			"Expected description", expectedString,
+			cpDefinitionLocalization.getDescription());
+		Assert.assertEquals(
+			"Expected metaTitle", expectedString,
+			cpDefinitionLocalization.getMetaTitle());
+		Assert.assertEquals(
+			"Expected metaDescription", expectedString,
+			cpDefinitionLocalization.getMetaDescription());
+		Assert.assertEquals(
+			"Expected metaKeywords", expectedString,
+			cpDefinitionLocalization.getMetaKeywords());
 	}
 
 	@Test

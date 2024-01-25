@@ -5,7 +5,6 @@
 
 package com.liferay.product.navigation.site.administration.internal.menu;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
@@ -20,6 +19,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
@@ -87,9 +88,16 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 	}
 
 	@Override
-	public String getOnClickJSModuleURL() {
-		return _npmResolver.resolveModuleName(
-			"@liferay/product-navigation-site-administration/js/mySitesOpener");
+	public String getOnClickESModule(HttpServletRequest httpServletRequest) {
+		AbsolutePortalURLBuilder absolutePortalURLBuilder =
+			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				httpServletRequest);
+
+		String moduleURL = absolutePortalURLBuilder.forESModule(
+			"product-navigation-site-administration", "index.js"
+		).build();
+
+		return "{mySitesOpener} from " + moduleURL;
 	}
 
 	@Override
@@ -126,13 +134,13 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 	}
 
 	@Reference
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
+
+	@Reference
 	private ItemSelector _itemSelector;
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference
 	private Portal _portal;

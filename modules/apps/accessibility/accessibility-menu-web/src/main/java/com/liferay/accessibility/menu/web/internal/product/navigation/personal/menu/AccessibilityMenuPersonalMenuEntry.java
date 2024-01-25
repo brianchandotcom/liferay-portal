@@ -7,10 +7,11 @@ package com.liferay.accessibility.menu.web.internal.product.navigation.personal.
 
 import com.liferay.accessibility.menu.web.internal.constants.AccessibilityMenuPortletKeys;
 import com.liferay.accessibility.menu.web.internal.util.AccessibilitySettingsUtil;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.product.navigation.personal.menu.BasePersonalMenuEntry;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 
@@ -34,9 +35,16 @@ import org.osgi.service.component.annotations.Reference;
 public class AccessibilityMenuPersonalMenuEntry extends BasePersonalMenuEntry {
 
 	@Override
-	public String getOnClickJSModuleURL() {
-		return _npmResolver.resolveModuleName(
-			"@liferay/accessibility-menu-web/js/accessibilityMenuOpener");
+	public String getOnClickESModule(HttpServletRequest httpServletRequest) {
+		AbsolutePortalURLBuilder absolutePortalURLBuilder =
+			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				httpServletRequest);
+
+		String moduleURL = absolutePortalURLBuilder.forESModule(
+			"accessibility-menu-web", "index.js"
+		).build();
+
+		return "{accessibilityMenuOpener} from " + moduleURL;
 	}
 
 	@Override
@@ -64,10 +72,10 @@ public class AccessibilityMenuPersonalMenuEntry extends BasePersonalMenuEntry {
 	}
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	@Reference
-	private NPMResolver _npmResolver;
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Portal _portal;

@@ -28,9 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.opensearch.client.json.JsonData;
-import org.opensearch.client.opensearch._types.GeoHashLocation;
-import org.opensearch.client.opensearch._types.GeoLocation;
-import org.opensearch.client.opensearch._types.LatLonGeoLocation;
 
 /**
  * @author Bryan Engler
@@ -99,11 +96,9 @@ public class FieldsTranslator {
 			return;
 		}
 
-		JsonData geoPointJsonData = jsonDatas.get(
-			fieldName.concat(_GEOPOINT_SUFFIX));
-
-		if (geoPointJsonData != null) {
-			_translateGeoPoint(documentBuilder, fieldName, geoPointJsonData);
+		if (jsonDatas.get(fieldName.concat(_GEOPOINT_SUFFIX)) != null) {
+			_translateGeoPoint(
+				documentBuilder, fieldName, jsonDatas.get(fieldName));
 		}
 		else {
 			documentBuilder.setValues(
@@ -153,12 +148,12 @@ public class FieldsTranslator {
 		return values;
 	}
 
-	private Map<String, String> _toMap(JsonObject jsonObject) {
+	private Map<String, Object> _toMap(JsonObject jsonObject) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 
-			TypeReference<HashMap<String, String>> typeReference =
-				new TypeReference<HashMap<String, String>>() {
+			TypeReference<HashMap<String, Object>> typeReference =
+				new TypeReference<HashMap<String, Object>>() {
 				};
 
 			return objectMapper.readValue(jsonObject.toString(), typeReference);
@@ -199,27 +194,19 @@ public class FieldsTranslator {
 	private void _translateGeoPoint(
 		DocumentBuilder documentBuilder, String fieldName, JsonData jsonData) {
 
-		GeoLocation geoLocation = GeoLocation.of(
-			openSearchGeoLocation -> openSearchGeoLocation.geohash(
-				GeoHashLocation.of(
-					geoHashLocation -> geoHashLocation.geohash(
-						jsonData.toString()))));
+		JsonValue jsonValue = jsonData.toJson();
 
-		if (geoLocation.isGeohash()) {
-			GeoHashLocation geoHashLocation = geoLocation.geohash();
+		JsonArray jsonArray = jsonValue.asJsonArray();
 
-			documentBuilder.setGeoLocationPoint(
-				fieldName,
-				_geoBuilders.geoLocationPoint(geoHashLocation.geohash()));
-		}
-		else if (geoLocation.isLatlon()) {
-			LatLonGeoLocation latLonGeoLocation = geoLocation.latlon();
+		String coordinates = jsonArray.getString(0);
 
-			documentBuilder.setGeoLocationPoint(
-				fieldName,
-				_geoBuilders.geoLocationPoint(
-					latLonGeoLocation.lat(), latLonGeoLocation.lon()));
-		}
+		String[] coordinatesParts = coordinates.split(",");
+
+		documentBuilder.setGeoLocationPoint(
+			fieldName,
+			_geoBuilders.geoLocationPoint(
+				Double.valueOf(coordinatesParts[0]),
+				Double.valueOf(coordinatesParts[1])));
 	}
 
 	private static final String _GEOPOINT_SUFFIX = ".geopoint";

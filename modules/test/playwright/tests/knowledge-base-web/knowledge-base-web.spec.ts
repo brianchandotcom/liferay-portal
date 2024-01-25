@@ -66,3 +66,52 @@ test('can schedule the publication of an article and delete it afterward', async
 
 	await page.close();
 });
+
+test('can delete all articles without a recycle bin', async ({
+	apiHelpers,
+	knowledgeBaseEditArticle,
+	knowledgeBasePage,
+	page,
+}) => {
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-188058', false);
+
+	await knowledgeBaseEditArticle.publishNewKnowledgeBaseArticle(
+		getRandomString(),
+		getRandomString()
+	);
+
+	await knowledgeBasePage.deleteAll(page, false);
+	await expect(
+		page.getByRole('heading', {name: 'Knowledge base is empty.'})
+	).toBeVisible();
+
+	await page.close();
+});
+
+test('can delete all articles with a recycle bin', async ({
+	apiHelpers,
+	knowledgeBaseEditArticle,
+	knowledgeBasePage,
+	page,
+}) => {
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-188058', true);
+
+	await knowledgeBaseEditArticle.publishNewKnowledgeBaseArticleWithSchedule(
+		getRandomString(),
+		getRandomString()
+	);
+
+	await knowledgeBasePage.deleteAll(page, true);
+	await expect(
+		page.locator(
+			'[id="_com_liferay_knowledge_base_web_portlet_AdminPortlet_recycleBinAlert"]'
+		)
+	).toBeVisible();
+	await expect(
+		page.getByRole('heading', {name: 'Knowledge base is empty.'})
+	).toBeVisible();
+
+	await apiHelpers.featureFlag.updateFeatureFlag('LPS-188058', false);
+
+	await page.close();
+});

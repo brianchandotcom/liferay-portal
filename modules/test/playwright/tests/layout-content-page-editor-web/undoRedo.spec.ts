@@ -156,3 +156,97 @@ test('Undo and Redo buttons work as expected', async ({
 
 	await apiHelpers.headlessSite.deleteSite(site.id);
 });
+
+test('Undo history works as expected', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+}) => {
+	await page.goto('/');
+
+	// Create a site
+
+	const site = await apiHelpers.headlessSite.createSite(getRandomId());
+
+	// Create a page with a Heading fragment
+
+	const headingId = getRandomId();
+
+	const fragmentDefinition = getFragmentDefinition(
+		headingId,
+		'BASIC_COMPONENT-heading'
+	);
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage(
+		site.id,
+		getRandomId(),
+		getPageDefinition([fragmentDefinition])
+	);
+
+	// Go to edit mode of page
+
+	await pageEditorPage.goToEditMode(site, layout);
+
+	// Assert History button is visible
+
+	await expect(page.getByTitle('History')).toBeVisible();
+
+	// Go to General Panel and change the Heading level 3 times
+
+	await pageEditorPage.changeFragmentConfiguration(
+		headingId,
+		'General',
+		'Heading Level',
+		'h2'
+	);
+
+	await pageEditorPage.changeFragmentConfiguration(
+		headingId,
+		'General',
+		'Heading Level',
+		'h3'
+	);
+
+	await pageEditorPage.changeFragmentConfiguration(
+		headingId,
+		'General',
+		'Heading Level',
+		'h4'
+	);
+
+	// Open the History dropdown and assert we have 3 + 1 Action including Undo All
+
+	await page.getByTitle('History').click();
+
+	await expect(
+		pageEditorPage.undoHistory.locator('ul > li > button')
+	).toHaveCount(4);
+
+	// Assert the current (first) History position is disabled
+
+	await expect(
+		pageEditorPage.undoHistory.getByRole('menuitem').nth(0)
+	).toBeDisabled();
+
+	// Assert the heading fragment has the correct heading level after changing history
+
+	await pageEditorPage.undoHistory.getByRole('menuitem').nth(1).click();
+
+	await expect(
+		pageEditorPage.getFragment(headingId).locator('h3')
+	).toBeAttached();
+
+	// Assert the new History position is updated
+
+	await expect(
+		pageEditorPage.undoHistory.getByRole('menuitem').nth(0)
+	).toBeEnabled();
+
+	await expect(
+		pageEditorPage.undoHistory.getByRole('menuitem').nth(1)
+	).toBeDisabled();
+
+	// Delete the site
+
+	await apiHelpers.headlessSite.deleteSite(site.id);
+});

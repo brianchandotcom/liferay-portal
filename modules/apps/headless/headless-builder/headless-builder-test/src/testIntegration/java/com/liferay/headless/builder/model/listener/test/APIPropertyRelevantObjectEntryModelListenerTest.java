@@ -266,6 +266,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			apiPropertiesJSONArray.toString(), JSONCompareMode.LENIENT);
 	}
 
+	@FeatureFlags("LPD-10964")
 	@Test
 	public void testAddAPIPropertyWithSingleContainer() throws Exception {
 		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(

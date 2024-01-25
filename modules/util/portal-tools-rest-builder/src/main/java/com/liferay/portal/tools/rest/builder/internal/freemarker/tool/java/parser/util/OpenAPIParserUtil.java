@@ -554,7 +554,7 @@ public class OpenAPIParserUtil {
 				String reference = _getReference(currentSchema);
 
 				if (reference != null) {
-					if (reference.contains("#/components/schemas/")) {
+					if (reference.startsWith("#/components/schemas/")) {
 						String referenceName = getReferenceName(reference);
 
 						Schema referenceSchema = schemas.get(referenceName);

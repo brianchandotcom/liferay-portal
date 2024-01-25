@@ -488,7 +488,6 @@ definition {
 		property portal.acceptance = "true";
 
 		ObjectExportImport.importObject(
-			modelBuilder = "true",
 			objectFileName = "ImportedSimpleObject",
 			objectName = "ImportedSimpleObject146358");
 

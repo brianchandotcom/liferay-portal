@@ -25,12 +25,7 @@ definition {
 	macro importObject(objectFileName = null, objectName = null, tempFile = null, modelBuilder = null) {
 		ObjectAdmin.openObjectAdmin();
 
-		if (${modelBuilder} == "true") {
-			Click(locator1 = "ObjectModelBuilder#OBJECT_DEFINITONS_KEBAB");
-		}
-		else {
-			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
-		}
+		Click(locator1 = "ObjectModelBuilder#OBJECT_DEFINITONS_KEBAB");
 
 		MenuItem.click(menuItem = "Import Object Definition");
 

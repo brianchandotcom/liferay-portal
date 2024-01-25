@@ -276,7 +276,7 @@ public class HighlightTranslator {
 		}
 
 		throw new IllegalArgumentException(
-			"invalid highlighter type " + highlighterType);
+			"Invalid highlighter type " + highlighterType);
 	}
 
 	private HighlighterOrder _translateOrder(String order) {
@@ -293,7 +293,7 @@ public class HighlightTranslator {
 			return HighlighterTagsSchema.Styled;
 		}
 
-		throw new IllegalArgumentException("Invalid tags schema" + tagsSchema);
+		throw new IllegalArgumentException("Invalid tags schema " + tagsSchema);
 	}
 
 }

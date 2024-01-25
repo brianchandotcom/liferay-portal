@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.ccr.CrossClusterReplicationConfigurationHelper;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationObserver;
@@ -262,9 +261,6 @@ public class OpenSearchConnectionManagerImpl
 
 		return getOpenSearchConnection(remoteClusterConnectionId);
 	}
-
-	@Reference
-	protected Http http;
 
 	@Reference
 	protected OpenSearchConfigurationWrapper openSearchConfigurationWrapper;

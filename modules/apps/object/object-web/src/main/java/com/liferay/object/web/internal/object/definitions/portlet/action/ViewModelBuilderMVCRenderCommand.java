@@ -21,7 +21,9 @@ import com.liferay.object.web.internal.object.definitions.display.context.Object
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsFieldsDisplayContext;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsRelationshipsDisplayContext;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -48,6 +50,10 @@ public class ViewModelBuilderMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
+			return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
+		}
 
 		renderRequest.setAttribute(
 			ObjectWebKeys.OBJECT_DEFINITIONS_DETAILS_DISPLAY_CONTEXT,

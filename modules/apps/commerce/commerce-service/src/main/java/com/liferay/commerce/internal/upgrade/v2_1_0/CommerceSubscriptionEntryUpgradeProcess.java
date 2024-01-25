@@ -10,6 +10,8 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -18,7 +20,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -119,10 +120,10 @@ public class CommerceSubscriptionEntryUpgradeProcess extends UpgradeProcess {
 	private boolean _tableHasIndex(String tableName, String indexName)
 		throws Exception {
 
-		DatabaseMetaData metadata = connection.getMetaData();
+		DB db = DBManagerUtil.getDB();
 
-		try (ResultSet resultSet = metadata.getIndexInfo(
-				null, null, tableName, false, false)) {
+		try (ResultSet resultSet = db.getIndexResultSet(
+				connection, tableName, false)) {
 
 			while (resultSet.next()) {
 				String curIndexName = resultSet.getString("index_name");

@@ -15,6 +15,7 @@ import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
@@ -342,7 +343,8 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
-	public ResultSet getIndexResultSet(Connection connection, String tableName , Boolean onlyUnique)
+	public ResultSet getIndexResultSet(
+			Connection connection, String tableName, Boolean onlyUnique)
 		throws SQLException {
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -350,8 +352,8 @@ public abstract class BaseDB implements DB {
 		DBInspector dbInspector = new DBInspector(connection);
 
 		return databaseMetaData.getIndexInfo(
-			dbInspector.getCatalog(), dbInspector.getSchema(), tableName, onlyUnique,
-			false);
+			dbInspector.getCatalog(), dbInspector.getSchema(), tableName,
+			onlyUnique, false);
 	}
 
 	@Override
@@ -1262,6 +1264,8 @@ public abstract class BaseDB implements DB {
 
 		DBInspector dbInspector = new DBInspector(connection);
 
+		DB db = DBManagerUtil.getDB();
+
 		String catalog = dbInspector.getCatalog();
 		String schema = dbInspector.getSchema();
 
@@ -1286,9 +1290,8 @@ public abstract class BaseDB implements DB {
 				normalizedTableName = dbInspector.normalizeName(
 					tableResultSet.getString("TABLE_NAME"), databaseMetaData);
 
-				try (ResultSet indexResultSet = databaseMetaData.getIndexInfo(
-						catalog, schema, normalizedTableName, onlyUnique,
-						false)) {
+				try (ResultSet indexResultSet = db.getIndexResultSet(
+						connection, normalizedTableName, onlyUnique)) {
 
 					boolean unique = false;
 

@@ -8,7 +8,6 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.sea
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
@@ -38,7 +37,9 @@ public class CountSearchRequestExecutorImpl
 	public CountSearchResponse execute(CountSearchRequest countSearchRequest) {
 		SearchRequest.Builder builder = new SearchRequest.Builder();
 
-		builder.index(ListUtil.fromArray(countSearchRequest.getIndexNames()));
+		_commonSearchRequestBuilderAssembler.assemble(
+			countSearchRequest, builder);
+
 		builder.requestCache(countSearchRequest.isRequestCache());
 		builder.size(0);
 		builder.trackScores(false);
@@ -91,6 +92,10 @@ public class CountSearchRequestExecutorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CountSearchRequestExecutorImpl.class);
+
+	@Reference
+	private CommonSearchRequestBuilderAssembler
+		_commonSearchRequestBuilderAssembler;
 
 	@Reference
 	private CommonSearchResponseAssembler _commonSearchResponseAssembler;

@@ -9,21 +9,19 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapper;
 import com.liferay.portal.search.opensearch2.internal.index.constants.MappingsConstants;
+import com.liferay.portal.search.opensearch2.internal.util.IndexUtil;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
-import com.liferay.portal.search.opensearch2.internal.util.MappingsUtil;
 import com.liferay.portal.search.opensearch2.internal.util.ResourceUtil;
 import com.liferay.portal.search.spi.settings.TypeMappingsHelper;
 
 import java.io.IOException;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,13 +71,13 @@ public class MappingsFactory implements TypeMappingsHelper {
 		_mergeExistingDynamicTemplates(indexName, mappingsJSONObject);
 
 		List<Map<String, DynamicTemplate>> dynamicTemplates =
-			MappingsUtil.getDynamicTemplatesMap(mappingsJSONObject);
+			IndexUtil.getDynamicTemplatesMap(mappingsJSONObject);
 
 		if (dynamicTemplates != null) {
 			builder.dynamicTemplates(dynamicTemplates);
 		}
 
-		Map<String, Property> properties = MappingsUtil.getPropertiesMap(
+		Map<String, Property> properties = IndexUtil.getPropertiesMap(
 			mappingsJSONObject);
 
 		if (properties != null) {
@@ -90,7 +88,7 @@ public class MappingsFactory implements TypeMappingsHelper {
 			PutMappingResponse putMappingResponse =
 				_openSearchIndicesClient.putMapping(builder.build());
 
-			JsonpUtil.logInfoResponse(_log, putMappingResponse);
+			JsonpUtil.logInfoResponse(putMappingResponse, _log);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -124,18 +122,17 @@ public class MappingsFactory implements TypeMappingsHelper {
 		if (Validator.isNotNull(
 				_openSearchConfigurationWrapper.overrideTypeMappings())) {
 
-			mappingsJSONObject = _mergeMappings(
+			_mergeMappings(
 				_openSearchConfigurationWrapper.overrideTypeMappings(),
 				mappingsJSONObject);
 		}
 		else {
-			mappingsJSONObject = _mergeMappings(
+			_mergeMappings(
 				ResourceUtil.getResourceAsString(
 					getClass(), MappingsConstants.LIFERAY_MAPPING_FILE_NAME),
 				mappingsJSONObject);
 
-			mappingsJSONObject = _mergeAdditionalTypeMappings(
-				mappingsJSONObject);
+			_mergeAdditionalTypeMappings(mappingsJSONObject);
 		}
 
 		return mappingsJSONObject;
@@ -150,57 +147,26 @@ public class MappingsFactory implements TypeMappingsHelper {
 		}
 	}
 
-	private JSONArray _merge(JSONArray jsonArray1, JSONArray jsonArray2) {
-		LinkedHashMap<String, JSONObject> linkedHashMap = new LinkedHashMap<>();
-
-		_putAll(jsonArray1, linkedHashMap);
-
-		_putAll(jsonArray2, linkedHashMap);
-
-		JSONArray jsonArray3 = _jsonFactory.createJSONArray();
-
-		JSONObject defaultTemplateJSONObject = null;
-
-		for (Map.Entry<String, JSONObject> entry : linkedHashMap.entrySet()) {
-			String key = entry.getKey();
-
-			if (key.equals("template_")) {
-				defaultTemplateJSONObject = entry.getValue();
-			}
-			else {
-				jsonArray3.put(entry.getValue());
-			}
-		}
-
-		if (defaultTemplateJSONObject != null) {
-			jsonArray3.put(defaultTemplateJSONObject);
-		}
-
-		return jsonArray3;
-	}
-
-	private JSONObject _mergeAdditionalTypeMappings(
-		JSONObject mappingsJSONObject) {
-
-		if (Validator.isNull(
+	private void _mergeAdditionalTypeMappings(JSONObject mappingsJSONObject) {
+		if (Validator.isBlank(
 				_openSearchConfigurationWrapper.additionalTypeMappings())) {
 
-			return mappingsJSONObject;
+			return;
 		}
 
-		return _mergeMappings(
+		_mergeMappings(
 			_openSearchConfigurationWrapper.additionalTypeMappings(),
 			mappingsJSONObject);
 	}
 
-	private JSONObject _mergeExistingDynamicTemplates(
+	private void _mergeExistingDynamicTemplates(
 		String indexName, JSONObject mappingsJSONObject) {
 
 		JSONArray dynamicTemplatesJSONArray = mappingsJSONObject.getJSONArray(
 			"dynamic_templates");
 
 		if (dynamicTemplatesJSONArray == null) {
-			return mappingsJSONObject;
+			return;
 		}
 
 		JSONObject existingMappingsJSONObject = _createJSONObject(
@@ -211,33 +177,16 @@ public class MappingsFactory implements TypeMappingsHelper {
 
 		mappingsJSONObject.put(
 			"dynamic_templates",
-			_merge(
+			IndexUtil.mergeDynamicTemplates(
 				existingDynamicTemplatesJSONArray, dynamicTemplatesJSONArray));
-
-		return mappingsJSONObject;
 	}
 
-	private JSONObject _mergeMappings(
+	private void _mergeMappings(
 		String mappings, JSONObject mappingsJSONObject) {
 
-		try {
-			return JSONUtil.merge(
-				mappingsJSONObject,
-				_removeLegacyDocumentType(_createJSONObject(mappings)));
-		}
-		catch (JSONException jsonException) {
-			throw new RuntimeException(jsonException);
-		}
-	}
-
-	private void _putAll(JSONArray jsonArray, Map<String, JSONObject> map) {
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			JSONArray namesJSONArray = jsonObject.names();
-
-			map.put((String)namesJSONArray.get(0), jsonObject);
-		}
+		IndexUtil.mergeToJsonObject(
+			mappingsJSONObject,
+			_removeLegacyDocumentType(_createJSONObject(mappings)));
 	}
 
 	private JSONObject _removeLegacyDocumentType(JSONObject sourceJSONObject) {

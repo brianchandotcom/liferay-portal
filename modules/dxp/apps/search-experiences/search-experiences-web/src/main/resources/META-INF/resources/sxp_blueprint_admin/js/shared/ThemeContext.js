@@ -7,7 +7,6 @@ import React from 'react';
 
 export default React.createContext({
 	availableLanguages: {},
-	contextPath: '/o/search-experiences-web',
 	defaultLocale: 'en_US',
 	learnMessages: {},
 	locale: 'en_US',

@@ -83,12 +83,7 @@ function EditSXPBlueprintForm({
 	initialTitleI18n = {},
 	sxpBlueprintId,
 }) {
-	const {
-		featureFlagLps153813,
-		isCompanyAdmin,
-		locale,
-		redirectURL,
-	} = useContext(ThemeContext);
+	const {isCompanyAdmin, locale, redirectURL} = useContext(ThemeContext);
 
 	const formRef = useRef();
 	const sxpElementIdCounterRef = useRef(
@@ -426,7 +421,7 @@ function EditSXPBlueprintForm({
 	useShouldConfirmBeforeNavigate(formik.dirty && !formik.isSubmitting);
 
 	useEffect(() => {
-		if (featureFlagLps153813 && isCompanyAdmin) {
+		if (Liferay.FeatureFlags['LPS-153813'] && isCompanyAdmin) {
 
 			// Example response:
 			// {
@@ -528,7 +523,7 @@ function EditSXPBlueprintForm({
 			sortConfiguration: sortConfig ? JSON.parse(sortConfig) : {},
 		};
 
-		if (featureFlagLps153813) {
+		if (Liferay.FeatureFlags['LPS-153813']) {
 			configuration.indexConfiguration =
 				indexConfig || DEFAULT_INDEX_CONFIGURATION;
 		}

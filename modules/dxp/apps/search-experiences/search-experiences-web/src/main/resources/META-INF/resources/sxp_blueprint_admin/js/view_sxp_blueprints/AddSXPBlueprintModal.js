@@ -250,7 +250,6 @@ const AddModal = ({
 };
 
 export function AddSXPBlueprintModal({
-	contextPath,
 	defaultLocale,
 	editSXPBlueprintURL,
 	portletNamespace,
@@ -323,7 +322,6 @@ export function AddSXPBlueprintModal({
 						...modelPrefilterContributors,
 						...queryPrefilterContributors,
 					]}
-					contextPath={contextPath}
 					defaultLocale={defaultLocale}
 					editSXPBlueprintURL={editSXPBlueprintURL}
 					observer={observer}

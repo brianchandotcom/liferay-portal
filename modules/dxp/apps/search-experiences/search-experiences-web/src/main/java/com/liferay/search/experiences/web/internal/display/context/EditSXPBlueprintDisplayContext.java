@@ -9,7 +9,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.learn.LearnMessageUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
@@ -47,9 +46,6 @@ public class EditSXPBlueprintDisplayContext {
 	public Map<String, Object> getProps() {
 		return HashMapBuilder.<String, Object>put(
 			"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
-		).put(
-			"featureFlagLps153813",
-			FeatureFlagManagerUtil.isEnabled("LPS-153813")
 		).put(
 			"fetchSitesURL",
 			ResourceURLBuilder.createResourceURL(

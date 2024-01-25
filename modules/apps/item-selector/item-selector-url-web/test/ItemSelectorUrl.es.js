@@ -9,7 +9,7 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import {act} from 'react-dom/test-utils';
 
-import ItemSelectorUrl from '../src/main/resources/META-INF/resources/js/ItemSelectorUrl.es';
+import {ItemSelectorUrl} from '../src/main/resources/META-INF/resources/js/index';
 
 describe('ItemSelectorUrl', () => {
 	afterEach(() => {

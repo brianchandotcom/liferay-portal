@@ -3,11 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {ProductMenuPage} from '../product-navigation-product-menu/ProductMenu.page';
 
-const JS_HYDRATION_TIMEOUT = 2_000;
+async function showUI({
+	target,
+	trigger,
+}: {
+	target: Locator;
+	trigger: Locator;
+}) {
+	await expect(async () => {
+		await trigger.click();
+		await expect(target).toBeVisible({timeout: 100});
+	}).toPass();
+}
 
 export class KnowledgeBasePage {
 	readonly basicArticleMenuItem: Locator;
@@ -78,20 +89,22 @@ export class KnowledgeBasePage {
 		const disabled = await this.selectAllCheckBox.isDisabled();
 
 		if (!disabled) {
-			await page.waitForTimeout(JS_HYDRATION_TIMEOUT);
-			await this.selectAllCheckBox.click();
+			const dropdownItemDelete = page.getByRole('button', {
+				name: 'Delete',
+			});
 
-			await page.getByRole('button', {name: 'Delete'}).waitFor();
+			await showUI({
+				target: dropdownItemDelete,
+				trigger: this.selectAllCheckBox,
+			});
 
 			if (!recycleBin) {
 				page.once('dialog', (dialog) => {
 					dialog.accept().catch(() => {});
 				});
-				await page.getByRole('button', {name: 'Delete'}).click();
 			}
-			else {
-				await page.getByRole('button', {name: 'Delete'}).click();
-			}
+
+			await dropdownItemDelete.click();
 		}
 	}
 }

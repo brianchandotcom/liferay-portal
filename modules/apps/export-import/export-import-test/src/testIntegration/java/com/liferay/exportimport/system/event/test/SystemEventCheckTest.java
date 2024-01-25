@@ -24,7 +24,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -99,13 +98,6 @@ public class SystemEventCheckTest {
 
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, propertyName);
-
-		field.setAccessible(true);
-
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 
 		field.set(null, value);
 	}

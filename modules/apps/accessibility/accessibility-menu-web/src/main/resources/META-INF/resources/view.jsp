@@ -12,7 +12,7 @@ AccessibilityMenuDisplayContext accessibilityMenuDisplayContext = new Accessibil
 %>
 
 <react:component
-	module="js/AccessibilityMenu"
+	module="{AccessibilityMenu} from accessibility-menu-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"settings", accessibilityMenuDisplayContext.getAccessibilitySettingsJSONArray()

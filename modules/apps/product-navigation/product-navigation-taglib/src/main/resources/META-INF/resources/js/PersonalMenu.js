@@ -8,7 +8,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
-import {fetch, sub} from 'frontend-js-web';
+import {fetch, loadModule, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -17,7 +17,7 @@ function mapItemsOnClick(items) {
 		const {
 			items: nestedItems,
 			jsOnClickConfig,
-			onClickJSModuleURL,
+			onClickESModule,
 			...otherKeys
 		} = item;
 
@@ -27,14 +27,12 @@ function mapItemsOnClick(items) {
 			newVal.items = mapItemsOnClick(nestedItems);
 		}
 
-		if (onClickJSModuleURL) {
+		if (onClickESModule) {
 			newVal.onClick = async () => {
 				const onClickFn = await new Promise((resolve, reject) => {
-					Liferay.Loader.require(
-						onClickJSModuleURL,
-						(jsModule) => resolve(jsModule.default),
-						(error) => reject(error)
-					);
+					loadModule(onClickESModule)
+						.then((component) => resolve(component))
+						.catch((error) => reject(error));
 				});
 
 				onClickFn(jsOnClickConfig);

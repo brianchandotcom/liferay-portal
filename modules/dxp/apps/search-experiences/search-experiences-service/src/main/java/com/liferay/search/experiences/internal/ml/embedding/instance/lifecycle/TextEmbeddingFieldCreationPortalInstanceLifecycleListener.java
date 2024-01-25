@@ -53,7 +53,10 @@ public class TextEmbeddingFieldCreationPortalInstanceLifecycleListener
 
 		JSONArray jsonArray = _getDynamicTemplatesJSONArray(indexName);
 
-		if (_hasTextEmbeddingDynamicTemplates(jsonArray)) {
+		if (jsonArray == null) {
+			jsonArray = _jsonFactory.createJSONArray();
+		}
+		else if (_hasTextEmbeddingDynamicTemplates(jsonArray)) {
 			return;
 		}
 
@@ -77,24 +80,25 @@ public class TextEmbeddingFieldCreationPortalInstanceLifecycleListener
 
 	private JSONArray _getDynamicTemplatesJSONArray(String indexName) {
 		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				_indexInformation.getFieldMappings(indexName));
+
+			if (jsonObject == null) {
+				return null;
+			}
+
 			return JSONUtil.getValueAsJSONArray(
-				_jsonFactory.createJSONObject(
-					_indexInformation.getFieldMappings(indexName)),
-				"JSONObject/" + indexName, "JSONObject/mappings",
+				jsonObject, "JSONObject/" + indexName, "JSONObject/mappings",
 				"JSONArray/dynamic_templates");
 		}
 		catch (JSONException jsonException) {
 			_log.error(jsonException);
 		}
 
-		return _jsonFactory.createJSONArray();
+		return null;
 	}
 
 	private boolean _hasTextEmbeddingDynamicTemplates(JSONArray jsonArray) {
-		if (jsonArray == null) {
-			return false;
-		}
-
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 

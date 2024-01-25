@@ -21,6 +21,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -140,6 +141,11 @@ public class APIPropertyRelevantObjectEntryModelListener
 						apiPropertyType,
 						APIApplication.Property.PropertyType.
 							SINGLE_CONTAINER)) {
+
+				if (!FeatureFlagManagerUtil.isEnabled("LPD-10964")) {
+					throw new UnsupportedOperationException(
+						"Single container is not supported");
+				}
 
 				if (!Validator.isBlank(objectFieldERC) ||
 					!Validator.isBlank(objectRelationshipNames)) {

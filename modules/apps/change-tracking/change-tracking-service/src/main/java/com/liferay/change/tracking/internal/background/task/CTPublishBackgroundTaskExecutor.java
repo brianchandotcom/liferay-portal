@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -261,23 +262,31 @@ public class CTPublishBackgroundTaskExecutor
 		}
 
 		try {
-			long fromCTCollectionId = MapUtil.getLong(
-				backgroundTask.getTaskContextMap(), "fromCTCollectionId");
+			if (UserNotificationManagerUtil.isDeliver(
+					backgroundTask.getUserId(), CTPortletKeys.PUBLICATIONS, 0,
+					UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY,
+					UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
-			CTCollection fromCTCollection =
-				_ctCollectionLocalService.getCTCollection(fromCTCollectionId);
+				long fromCTCollectionId = MapUtil.getLong(
+					backgroundTask.getTaskContextMap(), "fromCTCollectionId");
 
-			_userNotificationEventLocalService.sendUserNotificationEvents(
-				backgroundTask.getUserId(), CTPortletKeys.PUBLICATIONS,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
-				JSONUtil.put(
-					"ctCollectionName", fromCTCollection.getName()
-				).put(
-					"notificationType",
-					UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY
-				).put(
-					"showConflicts", showConflicts
-				));
+				CTCollection fromCTCollection =
+					_ctCollectionLocalService.getCTCollection(
+						fromCTCollectionId);
+
+				_userNotificationEventLocalService.sendUserNotificationEvents(
+					backgroundTask.getUserId(), CTPortletKeys.PUBLICATIONS,
+					UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
+					JSONUtil.put(
+						"ctCollectionName", fromCTCollection.getName()
+					).put(
+						"notificationType",
+						UserNotificationDefinition.
+							NOTIFICATION_TYPE_REVIEW_ENTRY
+					).put(
+						"showConflicts", showConflicts
+					));
+			}
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

@@ -34,7 +34,7 @@ definition {
 			var command = StringUtil.add(${command}, " \ ${body}", "");
 		}
 
-		var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}", "\ ${command}", "");
+		var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}", " \ ${command}", "");
 
 		return ${curl};
 	}

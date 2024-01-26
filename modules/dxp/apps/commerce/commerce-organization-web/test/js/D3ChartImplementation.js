@@ -5,13 +5,13 @@
 
 import * as d3 from 'd3';
 
-import D3OrganizationChart from '../src/main/resources/META-INF/resources/js/D3OrganizationChart';
+import D3OrganizationChart from '../../src/main/resources/META-INF/resources/js/D3OrganizationChart';
 import {
 	ACCOUNTS_PROPERTY_NAME,
 	BRIEFS_KEYS_MAP,
 	ORGANIZATIONS_PROPERTY_NAME,
 	USERS_PROPERTY_NAME_IN_ORGANIZATION,
-} from '../src/main/resources/META-INF/resources/js/utils/constants';
+} from '../../src/main/resources/META-INF/resources/js/utils/constants';
 
 const actions = {
 	delete: {
@@ -25,7 +25,7 @@ const actions = {
 };
 
 jest.mock(
-	'../src/main/resources/META-INF/resources/js/data/organizations',
+	'../../src/main/resources/META-INF/resources/js/data/organizations',
 	() => ({
 		getOrganization: (id) => {
 			return Promise.resolve({
@@ -76,32 +76,35 @@ jest.mock(
 	})
 );
 
-jest.mock('../src/main/resources/META-INF/resources/js/data/accounts', () => ({
-	getAccount: () =>
-		Promise.resolve({
-			type: 'accountUserAccounts',
-			userAccounts: [
-				{
-					accountBriefs: [],
-					id: '2000',
-					name: `User Child 1`,
-					organizationBriefs: [],
-				},
-				{
-					accountBriefs: [],
-					id: '2001',
-					name: `User Child 2`,
-					organizationBriefs: [],
-				},
-				{
-					accountBriefs: [],
-					id: '2002',
-					name: `User Child 3`,
-					organizationBriefs: [],
-				},
-			],
-		}),
-}));
+jest.mock(
+	'../../src/main/resources/META-INF/resources/js/data/accounts',
+	() => ({
+		getAccount: () =>
+			Promise.resolve({
+				type: 'accountUserAccounts',
+				userAccounts: [
+					{
+						accountBriefs: [],
+						id: '2000',
+						name: `User Child 1`,
+						organizationBriefs: [],
+					},
+					{
+						accountBriefs: [],
+						id: '2001',
+						name: `User Child 2`,
+						organizationBriefs: [],
+					},
+					{
+						accountBriefs: [],
+						id: '2002',
+						name: `User Child 3`,
+						organizationBriefs: [],
+					},
+				],
+			}),
+	})
+);
 
 const countNodes = (root) => {
 	const structure = d3.hierarchy(root, (d) => d.children);

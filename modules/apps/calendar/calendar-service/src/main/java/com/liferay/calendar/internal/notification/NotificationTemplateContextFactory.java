@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -228,8 +230,18 @@ public class NotificationTemplateContextFactory {
 			LayoutLocalService layoutLocalService =
 				_layoutLocalServiceSnapshot.get();
 
-			layoutURL = PortalUtil.getLayoutActualURL(
-				layoutLocalService.fetchLayout(group.getDefaultPublicPlid()));
+			Layout layout = layoutLocalService.fetchLayout(
+				group.getDefaultPublicPlid());
+
+			if (layout == null) {
+				Group guestGroup = groupLocalService.getGroup(
+					user.getCompanyId(), GroupConstants.GUEST);
+
+				layout = layoutLocalService.fetchLayout(
+					guestGroup.getDefaultPublicPlid());
+			}
+
+			layoutURL = PortalUtil.getLayoutActualURL(layout);
 
 			portalURL = _getPortalURLOrCompanyPortalURL(
 				portalURL, user.getCompanyId(), group.getGroupId());

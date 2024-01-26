@@ -180,7 +180,7 @@ public class VerifyProperties {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			Properties portalProperties = loadPortalProperties();
 
-			for (String[] keys : _MIGRATED_PORTAL_KEYS) {
+			for (String[] keys : _migratedPortalKeys) {
 				String oldKey = keys[0];
 				String newKey = keys[1];
 
@@ -188,18 +188,18 @@ public class VerifyProperties {
 					portalProperties, oldKey, newKey, unmigratedKeys);
 			}
 
-			for (String[] keys : _RENAMED_PORTAL_KEYS) {
+			for (String[] keys : _renamedPortalKeys) {
 				String oldKey = keys[0];
 				String newKey = keys[1];
 
 				verifyRenamedPortalProperty(portalProperties, oldKey, newKey);
 			}
 
-			for (String key : _OBSOLETE_PORTAL_KEYS) {
+			for (String key : _obsoletePortalKeys) {
 				verifyObsoletePortalProperty(portalProperties, key);
 			}
 
-			for (String[] keys : _MODULARIZED_PORTAL_KEYS) {
+			for (String[] keys : _modularizedPortalKeys) {
 				String oldKey = keys[0];
 				String newKey = keys[1];
 				String moduleName = keys[2];
@@ -240,21 +240,21 @@ public class VerifyProperties {
 
 	protected static void verifySystemProperties() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			for (String[] keys : _MIGRATED_SYSTEM_KEYS) {
+			for (String[] keys : _migratedSystemKeys) {
 				String oldKey = keys[0];
 				String newKey = keys[1];
 
 				verifyMigratedSystemProperty(oldKey, newKey);
 			}
 
-			for (String[] keys : _RENAMED_SYSTEM_KEYS) {
+			for (String[] keys : _renamedSystemKeys) {
 				String oldKey = keys[0];
 				String newKey = keys[1];
 
 				verifyRenamedSystemProperty(oldKey, newKey);
 			}
 
-			for (String key : _OBSOLETE_SYSTEM_KEYS) {
+			for (String key : _obsoleteSystemKeys) {
 				verifyObsoleteSystemProperty(key);
 			}
 
@@ -271,7 +271,39 @@ public class VerifyProperties {
 		}
 	}
 
-	private static final String[][] _MIGRATED_PORTAL_KEYS = {
+	private static final String[][] _MODULARIZED_SYSTEM_KEYS = {
+
+		// Calendar
+
+		{
+			"ical4j.compatibility.outlook", "ical4j.compatibility.outlook",
+			"com.liferay.calendar.service"
+		},
+		{
+			"ical4j.parsing.relaxed", "ical4j.parsing.relaxed",
+			"com.liferay.calendar.service"
+		},
+		{
+			"ical4j.unfolding.relaxed", "ical4j.unfolding.relaxed",
+			"com.liferay.calendar.service"
+		},
+		{
+			"ical4j.validation.relaxed", "ical4j.validation.relaxed",
+			"com.liferay.calendar.service"
+		},
+
+		// Tika
+
+		{
+			"tika.config", "tika-config-xml", "com.liferay.portal.tika"
+		}
+
+	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		VerifyProperties.class);
+
+	private static volatile String[][] _migratedPortalKeys = {
 		{"cookie.http.only.names.excludes", "cookie.http.only.names.excludes"},
 		{
 			"http.header.secure.x.content.type.options",
@@ -324,8 +356,7 @@ public class VerifyProperties {
 		},
 		{"module.framework.web.start.level", "module.framework.web.start.level"}
 	};
-
-	private static final String[][] _MIGRATED_SYSTEM_KEYS = {
+	private static volatile String[][] _migratedSystemKeys = {
 		{
 			"com.liferay.filters.compression.CompressionFilter",
 			"com.liferay.portal.servlet.filters.gzip.GZipFilter"
@@ -422,7 +453,7 @@ public class VerifyProperties {
 		}
 	};
 
-	private static final String[][] _MODULARIZED_PORTAL_KEYS = {
+	private static volatile String[][] _modularizedPortalKeys = {
 
 		// Asset
 
@@ -1621,36 +1652,7 @@ public class VerifyProperties {
 		},
 	};
 
-	private static final String[][] _MODULARIZED_SYSTEM_KEYS = {
-
-		// Calendar
-
-		{
-			"ical4j.compatibility.outlook", "ical4j.compatibility.outlook",
-			"com.liferay.calendar.service"
-		},
-		{
-			"ical4j.parsing.relaxed", "ical4j.parsing.relaxed",
-			"com.liferay.calendar.service"
-		},
-		{
-			"ical4j.unfolding.relaxed", "ical4j.unfolding.relaxed",
-			"com.liferay.calendar.service"
-		},
-		{
-			"ical4j.validation.relaxed", "ical4j.validation.relaxed",
-			"com.liferay.calendar.service"
-		},
-
-		// Tika
-
-		{
-			"tika.config", "tika-config-xml", "com.liferay.portal.tika"
-		}
-
-	};
-
-	private static final String[] _OBSOLETE_PORTAL_KEYS = {
+	private static volatile String[] _obsoletePortalKeys = {
 		"aim.login", "aim.login", "amazon.access.key.id",
 		"amazon.associate.tag", "amazon.secret.access.key",
 		"asset.categories.properties.default", "asset.entry.validator",
@@ -2076,8 +2078,7 @@ public class VerifyProperties {
 		"xuggler.f.ffpreset.trellis", "xuggler.f.ffpreset.wpredp", "ym.login",
 		"ym.password", "zip.file.name.encoding"
 	};
-
-	private static final String[] _OBSOLETE_SYSTEM_KEYS = {
+	private static volatile String[] _obsoleteSystemKeys = {
 		"com.liferay.petra.memory.FinalizeManager.thread.enabled",
 		"com.liferay.portal.kernel.memory.FinalizeManager.thread.enabled",
 		"com.liferay.portal.kernel.util.ServiceProxyFactory.timeout",
@@ -2086,8 +2087,7 @@ public class VerifyProperties {
 		"com.liferay.util.XSSUtil.regexp.pattern",
 		"finalize.manager.thread.enabled"
 	};
-
-	private static final String[][] _RENAMED_PORTAL_KEYS = {
+	private static volatile String[][] _renamedPortalKeys = {
 		{"amazon.license.0", "amazon.access.key.id"},
 		{"amazon.license.1", "amazon.access.key.id"},
 		{"amazon.license.2", "amazon.access.key.id"},
@@ -2264,8 +2264,7 @@ public class VerifyProperties {
 		},
 		{"sql.data.max.parameters", "database.max.parameters"}
 	};
-
-	private static final String[][] _RENAMED_SYSTEM_KEYS = {
+	private static volatile String[][] _renamedSystemKeys = {
 		{
 			"com.liferay.portal.kernel.util.StringBundler.unsafe.create." +
 				"threshold",
@@ -2273,8 +2272,5 @@ public class VerifyProperties {
 				"limit"
 		}
 	};
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		VerifyProperties.class);
 
 }

@@ -136,6 +136,12 @@ components:
                     example: 2017-08-21
                     format: date
                     type: string
+                fileEntryId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
                 galleryEnabled:
                     readOnly: true
                     type: boolean

@@ -26,6 +26,8 @@ export {default as InputLocalized} from './forms/input/InputLocalized';
 export {default as FieldBase} from './forms/common/FieldBase';
 export {default as FieldFeedback} from './forms/common/FieldFeedback';
 
+export {translationsNormalizer} from './forms/input/InputLocalized';
+
 export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';
 export {
 	activeLanguageIdsAtom,

@@ -34,6 +34,9 @@ interface InputLocale {
 	label: Liferay.Language.Locale;
 	symbol: string;
 }
+export declare function translationsNormalizer(
+	translations: Liferay.Language.LocalizedValue<string>
+): Liferay.Language.LocalizedValue<string>;
 export default function InputLocalized({
 	disableFlag,
 	disabled,

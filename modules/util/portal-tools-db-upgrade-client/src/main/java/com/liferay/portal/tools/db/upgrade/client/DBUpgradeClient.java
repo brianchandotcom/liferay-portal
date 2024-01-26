@@ -174,12 +174,13 @@ public class DBUpgradeClient {
 
 		List<String> commands = new ArrayList<>();
 
-		if (_JAVA_HOME != null) {
-			commands.add(_JAVA_HOME + "/bin/java");
+		String javaHome = _JAVA_HOME;
+
+		if (javaHome == null) {
+			javaHome = System.getProperty("java.home");
 		}
-		else {
-			commands.add("java");
-		}
+
+		commands.add(javaHome + "/bin/java");
 
 		if (_isGTJDK8()) {
 			_jvmOpts.add("--add-opens=java.base/java.lang=ALL-UNNAMED");

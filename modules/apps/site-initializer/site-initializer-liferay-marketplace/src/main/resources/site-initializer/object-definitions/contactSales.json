@@ -1,0 +1,72 @@
+{
+	"label": {
+		"en_US": "Contact Sales"
+	},
+	"name": "ContactSales",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Account Name"
+			},
+			"name": "accountName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Email"
+			},
+			"name": "email",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Additional Apps Requested"
+			},
+			"name": "additionalAppsRequested",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Comments"
+			},
+			"name": "comments",
+			"required": false,
+			"type": "Clob"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Contacts Sales"
+	},
+	"scope": "company"
+}

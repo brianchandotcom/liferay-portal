@@ -44,7 +44,9 @@ interface ILiferay {
 		getPathThemeImages: () => string;
 		getPortalURL: () => string;
 		getScopeGroupId: () => number;
+		getUserEmailAddress: () => string;
 		getUserId: () => string;
+		getUserName: () => string;
 		isSignedIn: () => boolean;
 	};
 	Util: {

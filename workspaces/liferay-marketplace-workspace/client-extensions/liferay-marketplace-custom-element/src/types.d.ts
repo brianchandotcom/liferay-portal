@@ -113,6 +113,7 @@ type Cart = {
 	billingAddress: BillingAddress;
 	cartItems: CartItem[];
 	currencyCode: string;
+	customFields: any;
 	id: number;
 	orderStatusInfo: {[key: string]: string};
 	orderTypeExternalReferenceCode: string;
@@ -153,6 +154,14 @@ type Catalog = {
 	system: boolean;
 };
 
+type ContactSales = {
+	accountName: string;
+	additionalAppsRequested?: string | undefined;
+	comments?: string | undefined;
+	email: string;
+	name: string;
+};
+
 type EmailAppInformation = {
 	dashboardLink: string;
 	orderID: number;
@@ -186,6 +195,7 @@ type Channel = {
 
 type DefaultProperties = {
 	cloudBaseURL: string;
+	contactSupportUrl: string;
 	eulaBaseURL: string;
 };
 

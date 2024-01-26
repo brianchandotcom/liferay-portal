@@ -10,7 +10,7 @@ export type ConsoleProjectsUsage = {
 	userProjects: ConsoleUserProject[];
 };
 
-type ConsoleUserProject = {
+export type ConsoleUserProject = {
 	environments: string[];
 	rootProjectId: string;
 	rootProjectPlanUsage: {

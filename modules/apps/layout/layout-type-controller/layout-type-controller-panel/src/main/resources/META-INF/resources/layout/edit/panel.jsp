@@ -29,7 +29,7 @@ WidgetsTreeDisplayContext widgetsTreeDisplayContext = new WidgetsTreeDisplayCont
 
 <div>
 	<react:component
-		module="js/WidgetsTree"
+		module="{WidgetsTree} from layout-type-controller"
 		props="<%= widgetsTreeDisplayContext.getData() %>"
 	/>
 </div>

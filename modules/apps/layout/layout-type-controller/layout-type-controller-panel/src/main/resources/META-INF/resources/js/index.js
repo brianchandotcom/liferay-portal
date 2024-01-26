@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-export default function WidgetsTree({
+export function WidgetsTree({
 	items,
 	portletNamespace: namespace,
 	selectedPortlets,

@@ -1598,7 +1598,7 @@ components:
                     description:
                         A list of segments the experience is used for.
                     items:
-                        $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Segment"
+                        $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#/components/schemas/Segment"
                     type: array
             type: object
         Fragment:

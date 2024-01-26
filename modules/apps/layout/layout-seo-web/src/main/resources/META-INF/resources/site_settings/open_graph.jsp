@@ -95,6 +95,6 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 			"uploadOpenGraphImageURL", openGraphSettingsDisplayContext.getItemSelectorURL()
 		).build()
 	%>'
-	module="js/seo/openGraphSettings"
+	module="{openGraphSettings} from layout-seo-web"
 	servletContext="<%= application %>"
 />

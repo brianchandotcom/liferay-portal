@@ -15,7 +15,7 @@ interface Props {
 }
 export default function TranslationManager({
 	defaultLanguageId,
-	fields,
+	fields: initialFields,
 	locales,
 	selectedLanguageId: initialSelectedLanguageId,
 }: Props): JSX.Element;

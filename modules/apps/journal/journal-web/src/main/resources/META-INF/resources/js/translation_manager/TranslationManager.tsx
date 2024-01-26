@@ -4,9 +4,11 @@
  */
 
 import {Locale, TranslationAdminSelector} from 'frontend-js-components-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 type Field = Record<Liferay.Language.Locale, string>;
+
+type Fields = Record<string, Field> | null;
 
 interface Props {
 	defaultLanguageId: Liferay.Language.Locale;
@@ -17,19 +19,38 @@ interface Props {
 
 export default function TranslationManager({
 	defaultLanguageId,
-	fields,
+	fields: initialFields,
 	locales,
 	selectedLanguageId: initialSelectedLanguageId,
 }: Props) {
+	const [fields, setFields] = useState<Fields>(null);
 	const [selectedLanguageId, setSelectedLanguageId] = useState<
 		Liferay.Language.Locale
 	>(initialSelectedLanguageId);
 	const [translations, setTranslations] = useState(
-		fieldToTranslations(fields)
+		fieldToTranslations(initialFields)
 	);
+
+	const getLocalizableFields = useCallback(() => {
+		const ddmFields = Array.from(
+			document.querySelectorAll<HTMLInputElement>(
+				`[data-ddm-localizable-field]`
+			)
+		)
+			.map((field) => field.dataset.fieldName!)
+			.reduce((acc, name) => ({...acc, [name]: {}}), {});
+
+		const fields = {...initialFields, ...ddmFields};
+
+		setFields(fields);
+	}, [initialFields]);
 
 	useEffect(() => {
 		const updateTranslations = () => {
+			if (!fields) {
+				return;
+			}
+
 			const newTranslations = Object.keys(fields).map((fieldName) => {
 				const languages = Array.from(
 					document.querySelectorAll<HTMLInputElement>(
@@ -51,10 +72,12 @@ export default function TranslationManager({
 			setTranslations(newTranslations);
 		};
 
-		Liferay.on(
-			'inputLocalized:updateTranslationStatus',
-			updateTranslations
-		);
+		if (fields) {
+			Liferay.on(
+				'inputLocalized:updateTranslationStatus',
+				updateTranslations
+			);
+		}
 
 		return () => {
 			Liferay.detach(
@@ -94,11 +117,13 @@ export default function TranslationManager({
 			defaultLanguageId={defaultLanguageId}
 			displayType="HORIZONTAL"
 			onSelectedLanguageIdChange={setSelectedLanguageId}
+			onTriggerClick={getLocalizableFields}
 			selectedLanguageId={selectedLanguageId}
 			translationProgress={
 				Object.keys(translatedItems).length
 					? {
-							totalItems: Object.keys(fields).length,
+							totalItems: Object.keys(fields || initialFields)
+								.length,
 							translatedItems,
 					  }
 					: null

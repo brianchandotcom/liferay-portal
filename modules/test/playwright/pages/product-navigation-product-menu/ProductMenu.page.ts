@@ -35,22 +35,18 @@ export class ProductMenuPage {
 		await this.page.goto('/');
 	}
 
-	async openToProductMenu() {
+	async openProductMenu() {
 		await this.goto();
-		const openProductMenuVisible =
-			await this.openProductMenuButton.isVisible();
 
-		if (openProductMenuVisible) {
+		if (await this.openProductMenuButton.isVisible()) {
 			await this.openProductMenuButton.click();
 		}
 	}
 
-	async closeToProductMenu() {
+	async closeProductMenu() {
 		await this.goto();
-		const closeProductMenuVisible =
-			await this.closeProductMenuButton.isVisible();
 
-		if (closeProductMenuVisible) {
+		if (await this.closeProductMenuButton.isVisible()) {
 			await this.closeProductMenuButton.click();
 		}
 	}
@@ -60,13 +56,13 @@ export class ProductMenuPage {
 		await this.knowledgeBaseMenuItem.click();
 	}
 
-	async goToDocumentsAndMediaMenuItemMenuItem() {
+	async goToDocumentsAndMediaMenuItem() {
 		await this.goToContentAndData();
 		await this.documentsAndMediaMenuItem.click();
 	}
 
 	async goToContentAndData() {
-		await this.openToProductMenu();
+		await this.openProductMenu();
 		const isClosed =
 			(await this.contentAndDataMenuItem.getAttribute(
 				'aria-expanded'

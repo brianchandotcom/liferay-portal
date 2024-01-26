@@ -10,11 +10,11 @@ import {KnowledgeBaseEditArticlePage} from '../pages/knowledge-base-web/Knowledg
 import {KnowledgeBaseViewArticlePage} from '../pages/knowledge-base-web/KnowledgeBaseViewArticle.page';
 
 const knowledgeBasePages = test.extend<{
-	knowledgeBaseEditArticle: KnowledgeBaseEditArticlePage;
+	knowledgeBaseEditArticlePage: KnowledgeBaseEditArticlePage;
 	knowledgeBasePage: KnowledgeBasePage;
 	knowledgeBaseViewArticlePage: KnowledgeBaseViewArticlePage;
 }>({
-	knowledgeBaseEditArticle: async ({page}, use) => {
+	knowledgeBaseEditArticlePage: async ({page}, use) => {
 		await use(new KnowledgeBaseEditArticlePage(page));
 	},
 	knowledgeBasePage: async ({page}, use) => {

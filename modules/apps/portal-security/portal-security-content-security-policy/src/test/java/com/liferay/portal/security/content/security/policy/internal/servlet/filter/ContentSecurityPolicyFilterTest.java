@@ -31,11 +31,11 @@ public class ContentSecurityPolicyFilterTest {
 			StringBundler.concat(
 				_HTML_CONTEXT_START,
 				String.join(" nonce=\"" + _NONCE + "\"", _HTML_CONTENT),
-				"</body></html>"),
+				_HTML_CONTEXT_END),
 			_contentSecurityPolicyFilter.rewriteContent(
 				_NONCE,
 				StringBundler.concat(
-					"<html><body>",
+					_HTML_CONTEXT_START,
 					String.join(StringPool.BLANK, _HTML_CONTENT),
 					_HTML_CONTEXT_END)));
 	}

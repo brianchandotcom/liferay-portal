@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -127,14 +126,13 @@ public class LayoutLockManagerTest {
 
 	@Test
 	public void testGetLockWithSameUser() throws Exception {
-		long originalLockExpirationTime = LayoutModelImpl.LOCK_EXPIRATION_TIME;
+		long originalLockExpirationTime =
+			ReflectionTestUtil.getAndSetFieldValue(
+				_layoutLockManager, "_lockExpirationTime", 60000L);
 
 		Layout draftLayout = _getDraftLayout();
 
 		try {
-			ReflectionTestUtil.setFieldValue(
-				LayoutModelImpl.class, "LOCK_EXPIRATION_TIME", 60000);
-
 			_lockLayout(draftLayout, _user);
 
 			Lock lock1 = _lockManager.fetchLock(
@@ -160,7 +158,7 @@ public class LayoutLockManagerTest {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				LayoutModelImpl.class, "LOCK_EXPIRATION_TIME",
+				_layoutLockManager, "_lockExpirationTime",
 				originalLockExpirationTime);
 		}
 	}

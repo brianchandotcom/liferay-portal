@@ -69,13 +69,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(service = LayoutLockManager.class)
+@Component(
+	property = "lock.expiration.time=", service = LayoutLockManager.class
+)
 public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Override
@@ -101,8 +104,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 			try {
 				_lockManager.lock(
 					userId, Layout.class.getName(), layout.getPlid(),
-					String.valueOf(userId), false,
-					LayoutModelImpl.LOCK_EXPIRATION_TIME);
+					String.valueOf(userId), false, _lockExpirationTime);
 			}
 			catch (PortalException portalException) {
 				throw new LockedLayoutException(portalException);
@@ -111,8 +113,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		else if (lock.getUserId() == userId) {
 			try {
 				_lockManager.refresh(
-					lock.getUuid(), lock.getCompanyId(),
-					LayoutModelImpl.LOCK_EXPIRATION_TIME);
+					lock.getUuid(), lock.getCompanyId(), _lockExpirationTime);
 			}
 			catch (PortalException portalException) {
 				throw new LockedLayoutException(portalException);
@@ -370,6 +371,13 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_lockExpirationTime = GetterUtil.getLong(
+			properties.get("lock.expiration.time"),
+			LayoutModelImpl.LOCK_EXPIRATION_TIME);
+	}
+
 	private Date _getLastAutosaveDate(
 		long groupId, Date companyLastAutosaveDate,
 		Map<Long, Date> lastAutosaveDateMap,
@@ -530,6 +538,8 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	@Reference
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
+
+	private volatile long _lockExpirationTime;
 
 	@Reference
 	private LockLocalService _lockLocalService;

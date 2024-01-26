@@ -41,6 +41,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockMultipartHttpServletRequest;
 
 /**
  * @author Jürgen Kappler
@@ -63,6 +64,12 @@ public class UpdateDataEngineDefaultValuesMVCActionCommandTest {
 	@Test
 	public void testAddArticleDefaultValuesWithoutDisplayDate()
 		throws Exception {
+
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		mockMultipartHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
@@ -95,7 +102,7 @@ public class UpdateDataEngineDefaultValuesMVCActionCommandTest {
 		UploadPortletRequest uploadPortletRequest =
 			UploadTestUtil.createUploadPortletRequest(
 				UploadTestUtil.createUploadServletRequest(
-					new MockHttpServletRequest(), new HashMap<>(),
+					mockMultipartHttpServletRequest, new HashMap<>(),
 					HashMapBuilder.put(
 						ActionRequest.ACTION_NAME,
 						Collections.singletonList(

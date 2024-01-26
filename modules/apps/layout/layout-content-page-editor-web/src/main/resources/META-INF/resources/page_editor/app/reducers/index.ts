@@ -53,7 +53,7 @@ export type Action = Parameters<
 
 export type State = {
 	[key in keyof typeof REDUCER_MAP]: ReturnType<typeof REDUCER_MAP[key]>;
-};
+} & {segmentsExperienceId: string | null};
 
 const combinedReducer = (state: State, action: Action): State =>
 	Object.entries(REDUCER_MAP).reduce(

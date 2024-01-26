@@ -4,6 +4,7 @@
  */
 
 import {config} from '../config/index';
+import {State} from '../reducers';
 
 /**
  * Returns the selected segmentsExperienceId or the default one.
@@ -13,7 +14,7 @@ import {config} from '../config/index';
  * @param {object} state
  * @return {string}
  */
-export default function selectSegmentsExperienceId(state) {
+export default function selectSegmentsExperienceId(state: State) {
 	const segmentsExperienceId =
 		state.segmentsExperienceId || config.defaultSegmentsExperienceId;
 

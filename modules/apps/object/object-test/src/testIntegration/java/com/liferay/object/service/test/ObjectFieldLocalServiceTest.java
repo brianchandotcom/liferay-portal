@@ -1854,10 +1854,38 @@ public class ObjectFieldLocalServiceTest {
 
 	@Test
 	public void testUpdateRequired() throws Exception {
+		ObjectDefinition objectDefinition1 = _publishCustomObjectDefinition();
+
+		ObjectField objectField1 = _addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition1.getObjectDefinitionId()
+			).required(
+				true
+			).build());
+
+		Assert.assertTrue(objectField1.isRequired());
+
+		objectField1.setRequired(false);
+
+		objectField1 = _addOrUpdateCustomObjectField(objectField1);
+
+		Assert.assertFalse(objectField1.isRequired());
+
+		objectField1.setRequired(true);
+
+		ObjectField finalObjectField = objectField1;
+
+		AssertUtils.assertFailure(
+			ObjectFieldRequiredException.class, null,
+			() -> _addOrUpdateCustomObjectField(finalObjectField));
 
 		// Deletion type cascade
 
-		ObjectDefinition objectDefinition1 = _publishCustomObjectDefinition();
 		ObjectDefinition objectDefinition2 = _publishCustomObjectDefinition();
 
 		ObjectRelationship objectRelationship =
@@ -1870,10 +1898,10 @@ public class ObjectFieldLocalServiceTest {
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
-		ObjectField objectField = _objectFieldLocalService.updateRequired(
+		ObjectField objectField2 = _objectFieldLocalService.updateRequired(
 			objectRelationship.getObjectFieldId2(), true);
 
-		Assert.assertTrue(objectField.isRequired());
+		Assert.assertTrue(objectField2.isRequired());
 
 		// Deletion type disassociate
 
@@ -1884,10 +1912,10 @@ public class ObjectFieldLocalServiceTest {
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 			objectRelationship.getLabelMap(), null);
 
-		objectField = _objectFieldLocalService.fetchObjectField(
+		objectField2 = _objectFieldLocalService.fetchObjectField(
 			objectRelationship.getObjectFieldId2());
 
-		Assert.assertFalse(objectField.isRequired());
+		Assert.assertFalse(objectField2.isRequired());
 
 		AssertUtils.assertFailure(
 			PortalException.class,
@@ -1905,10 +1933,10 @@ public class ObjectFieldLocalServiceTest {
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			objectRelationship.getLabelMap(), null);
 
-		objectField = _objectFieldLocalService.updateRequired(
+		objectField2 = _objectFieldLocalService.updateRequired(
 			objectRelationship.getObjectFieldId2(), true);
 
-		Assert.assertTrue(objectField.isRequired());
+		Assert.assertTrue(objectField2.isRequired());
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);

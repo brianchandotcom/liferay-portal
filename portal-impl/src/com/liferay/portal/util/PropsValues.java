@@ -867,7 +867,7 @@ public class PropsValues {
 	public static final String GOOGLE_GADGET_SERVLET_MAPPING = PropsUtil.get(
 		PropsKeys.GOOGLE_GADGET_SERVLET_MAPPING);
 
-	public static final String[] GROUPS_COMPLEX_SQL_CLASS_NAMES =
+	public static volatile String[] GROUPS_COMPLEX_SQL_CLASS_NAMES =
 		PropsUtil.getArray(PropsKeys.GROUPS_COMPLEX_SQL_CLASS_NAMES);
 
 	public static final int GZIP_COMPRESSION_LEVEL = GetterUtil.getInteger(

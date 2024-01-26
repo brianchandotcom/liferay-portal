@@ -52,10 +52,9 @@ public class VerifyPropertiesTest {
 			List<String> keys = ReflectionTestUtil.invoke(
 				VerifyProperties.class, "verifyPortalProperties", null);
 
-			Assert.assertFalse(keys.isEmpty());
+			Assert.assertEquals(keys.toString(), 1, keys.size());
 
-			ReflectionTestUtil.invoke(
-				VerifyProperties.class, "verifySystemProperties", null);
+			Assert.assertEquals(migratedPortalKey, keys.get(0));
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 

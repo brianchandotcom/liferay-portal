@@ -26,7 +26,7 @@ LockedLayoutsDisplayContext lockedLayoutsDisplayContext = (LockedLayoutsDisplayC
 	>
 		<clay:management-toolbar
 			managementToolbarDisplayContext="<%= new LockedLayoutsSearchContainerManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, lockedLayoutsDisplayContext) %>"
-			propsTransformer="js/ManagementToolbarPropsTransformer"
+			propsTransformer="{ManagementToolbarPropsTransformer} from layout-locked-layouts-web"
 		/>
 
 		<portlet:actionURL name="/layout_locked_layouts/unlock_layouts" var="unlockLayoutsURL">
@@ -89,7 +89,7 @@ LockedLayoutsDisplayContext lockedLayoutsDisplayContext = (LockedLayoutsDisplayC
 						<clay:dropdown-actions
 							aria-label='<%= label %>'
 							dropdownItems="<%= lockedLayoutsDisplayContext.getLockedLayoutDropdownItems(lockedLayout) %>"
-							propsTransformer="js/LockedLayoutDropdownDefaultPropsTransformer"
+							propsTransformer="{LockedLayoutDropdownDefaultPropsTransformer} from layout-locked-layouts-web"
 							title='<%= label %>'
 						/>
 					</liferay-ui:search-container-column-text>

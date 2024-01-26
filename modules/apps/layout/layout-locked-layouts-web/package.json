@@ -2,6 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
+	"main": "js/index.ts",
 	"name": "@liferay/layout-locked-layouts-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

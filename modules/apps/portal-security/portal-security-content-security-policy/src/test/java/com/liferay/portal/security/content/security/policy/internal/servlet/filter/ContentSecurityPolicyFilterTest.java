@@ -7,6 +7,7 @@ package com.liferay.portal.security.content.security.policy.internal.servlet.fil
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -44,10 +45,12 @@ public class ContentSecurityPolicyFilterTest {
 		ContentSecurityPolicyFilter contentSecurityPolicyFilter =
 			new ContentSecurityPolicyFilter();
 
-		String jsObjectLiteralContextStart =
-			"<script>index.render('', {\\\"portletId\\\":\\\"xyz\\\", " +
-				"\\\"content\\\":\\\"";
-		String jsObjectLiteralContextEnd = "\\\"}, 'xyz');</script>";
+		String jsObjectLiteralContextStart = StringBundler.concat(
+			"<script>index.render('', {\\\"", StringUtil.randomString(),
+			"\\\":\\\"", StringUtil.randomString(), "\\\", ",
+			"\\\"content\\\":\\\"");
+		String jsObjectLiteralContextEnd =
+			"\\\"}, '" + StringUtil.randomString() + "');</script>";
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -68,8 +71,12 @@ public class ContentSecurityPolicyFilterTest {
 	}
 
 	private static final String[] _HTML_CONTENT = {
-		"<div id=\"fragment-x\"><div class=\"\">TEXTNODE</div></div><style",
-		">.someclass{tmax-width: 100%;}</style>"
+		StringBundler.concat(
+			"<div id=\"", StringUtil.randomString(), "\"><div class=\"\">",
+			StringUtil.randomString(), "</div></div><style"),
+		StringBundler.concat(
+			">.", StringUtil.randomString(), "{", StringUtil.randomString(),
+			":", StringUtil.randomString(), ";}</style>")
 	};
 
 	private static final String _HTML_CONTEXT_END = "</body></html>";

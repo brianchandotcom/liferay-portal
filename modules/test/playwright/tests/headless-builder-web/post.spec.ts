@@ -6,14 +6,12 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {headlessBuilderPagesTest} from '../../fixtures/headlessBuilderPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	loginTest,
-	applicationsMenuPageTest,
 	headlessBuilderPagesTest
 );
 
@@ -59,7 +57,7 @@ const subjectObjectDefinition = {
 			type: 'String',
 		},
 	],
-	panelCategoryKey: 'control_panel.objects',
+	panelCategoryKey: 'control_panel.object',
 	pluralLabel: {
 		en_US: 'Subjects',
 	},
@@ -145,7 +143,7 @@ const studentObjectDefinition = {
 			type: 'oneToMany',
 		},
 	],
-	panelCategoryKey: 'control_panel.objects',
+	panelCategoryKey: 'control_panel.object',
 	pluralLabel: {
 		en_US: 'Students',
 	},
@@ -234,8 +232,8 @@ test('can create post endpoint with different request and response schema', asyn
 	await page.goto(
 		`/o/api?endpoint=http://localhost:8080/o/c/${studentSubjectsApplication.baseURL}/openapi.json`
 	);
-	expect(page.getByLabel('post ​/student')).toBeDefined;
-
+	page.waitForLoadState();
+	expect(page.getByLabel('post ​/student')).toBeVisible();
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
@@ -277,7 +275,8 @@ test('can create post method endpoint with company scope', async ({
 	await page.goto(
 		`/o/api?endpoint=http://localhost:8080/o/c/${basicApiApplication.baseURL}/openapi.json`
 	);
-	expect(page.getByLabel('post ​/test-post-endpoint')).toBeDefined;
+	page.waitForLoadState();
+	expect(page.getByLabel('post ​/test-post-endpoint')).toBeVisible();
 
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(

@@ -19,6 +19,7 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTaskError;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
+import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.headless.batch.engine.dto.v1_0.FailedItem;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.internal.resource.v1_0.util.ParametersUtil;
@@ -111,7 +112,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	@Override
 	public ImportTask getImportTask(Long importTaskId) throws Exception {
 		return _toImportTask(
-			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
+			_batchEngineImportTaskService.getBatchEngineImportTask(
 				importTaskId));
 	}
 
@@ -154,7 +155,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	@Override
 	public Response getImportTaskContent(Long importTaskId) throws Exception {
 		return _getImportTaskContent(
-			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
+			_batchEngineImportTaskService.getBatchEngineImportTask(
 				importTaskId));
 	}
 
@@ -571,6 +572,9 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	@Reference
 	private BatchEngineImportTaskLocalService
 		_batchEngineImportTaskLocalService;
+
+	@Reference
+	private BatchEngineImportTaskService _batchEngineImportTaskService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

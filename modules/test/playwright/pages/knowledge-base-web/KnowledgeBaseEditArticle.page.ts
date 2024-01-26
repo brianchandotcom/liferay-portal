@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
+import {showUI} from '../../utils/showUI';
 import {KnowledgeBasePage} from './KnowledgeBase.page';
 
 export class KnowledgeBaseEditArticlePage {
@@ -45,8 +46,10 @@ export class KnowledgeBaseEditArticlePage {
 		await this.goto();
 		await this.titlePlaceholder.fill(title);
 		await this.contentTextBox.fill(content);
-		await this.publishButton.click();
-		await this.publishMenuItem.waitFor();
-		await this.publishMenuItem.click();
+		await showUI({
+			autoClick: true,
+			target: this.publishMenuItem,
+			trigger: this.publishButton,
+		});
 	}
 }

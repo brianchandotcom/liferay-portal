@@ -345,13 +345,14 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddsFileEntryWithExpirationDateReviewDate()
+	public void testAddsFileEntryWithDisplayDateExpirationDateReviewDate()
 		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
+		Date displayDate = new Date();
 		Date expirationDate = new Date();
 		Date reviewDate = new Date();
 
@@ -361,9 +362,10 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, -1, new HashMap<>(), null,
-			new ByteArrayInputStream(new byte[0]), 0, null, expirationDate,
-			reviewDate, serviceContext);
+			new ByteArrayInputStream(new byte[0]), 0, displayDate,
+			expirationDate, reviewDate, serviceContext);
 
+		Assert.assertEquals(displayDate, dlFileEntry.getDisplayDate());
 		Assert.assertEquals(expirationDate, dlFileEntry.getExpirationDate());
 		Assert.assertEquals(reviewDate, dlFileEntry.getReviewDate());
 	}
@@ -384,6 +386,29 @@ public class DLFileEntryLocalServiceTest {
 			DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID),
 			dlFileEntry.getFileEntryTypeId());
+	}
+
+	@Test
+	public void testAddsFileEntryWithoutDisplayDate() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Date reviewDate = new Date();
+		Date expitationDate = new Date();
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, -1, new HashMap<>(), null,
+			new ByteArrayInputStream(new byte[0]), 0, null, expitationDate,
+			reviewDate, serviceContext);
+
+		Assert.assertNull(dlFileEntry.getDisplayDate());
+		Assert.assertEquals(expitationDate, dlFileEntry.getExpirationDate());
+		Assert.assertEquals(reviewDate, dlFileEntry.getReviewDate());
 	}
 
 	@Test

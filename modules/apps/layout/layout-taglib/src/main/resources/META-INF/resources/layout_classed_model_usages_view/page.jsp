@@ -15,6 +15,6 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 %>
 
 <react:component
-	module="layout_classed_model_usages_view/js/ViewUsages"
+	module="{ViewUsages} from layout-taglib"
 	props="<%= layoutClassedModelUsagesDisplayContext.getUsagesData() %>"
 />

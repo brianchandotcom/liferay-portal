@@ -14,6 +14,7 @@
 		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},
+	"main": "js/index.js",
 	"name": "layout-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

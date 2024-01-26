@@ -124,7 +124,7 @@ public class LayoutStructureRenderer {
 				"infoItemActionComponent",
 				_renderLayoutStructureDisplayContext.
 					getInfoItemActionComponentContext(),
-				"render_layout_structure/js/InfoItemActionHandler");
+				"{InfoItemActionHandler} from layout-taglib");
 		}
 	}
 
@@ -457,9 +457,7 @@ public class LayoutStructureRenderer {
 					"collectionId",
 					collectionStyledLayoutStructureItem.getItemId()));
 			paginationBarTag.setCssClass("pb-2 pt-3");
-			paginationBarTag.setPropsTransformer(
-				"render_layout_structure/js" +
-					"/NumericCollectionPaginationPropsTransformer");
+			paginationBarTag.setPropsTransformer("{NumericCollectionPaginationPropsTransformer} from layout-taglib");
 			paginationBarTag.setShowDeltasDropDown(false);
 			paginationBarTag.setTotalItems(
 				renderCollectionLayoutStructureItemDisplayContext.
@@ -530,7 +528,7 @@ public class LayoutStructureRenderer {
 					"collectionId",
 					collectionStyledLayoutStructureItem.getItemId()
 				).build(),
-				"render_layout_structure/js/SimpleCollectionPagination");
+				"{SimpleCollectionPagination} from layout-taglib");
 		}
 
 		jspWriter.write("</div>");

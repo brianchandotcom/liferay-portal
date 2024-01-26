@@ -95,7 +95,7 @@ export default function PagesTree({
 				onLoadMore={onLoadMore}
 				onSelectionChange={() => {}}
 				selectedKeys={new Set(selectedLayoutIds)}
-				selectionMode="multiple-recursive"
+				selectionMode="multiple"
 				showExpanderOnHover={false}
 			>
 				{(item, selection, expand, load) => (

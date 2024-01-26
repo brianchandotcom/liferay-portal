@@ -274,7 +274,7 @@ definition {
 	test CanCancelImport {
 		ObjectAdmin.openObjectAdmin();
 
-		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+		Click(locator1 = "ObjectModelBuilder#OBJECT_DEFINITONS_KEBAB");
 
 		MenuItem.click(menuItem = "Import Object Definition");
 
@@ -298,7 +298,7 @@ definition {
 	test CanClearJsonFile {
 		ObjectAdmin.openObjectAdmin();
 
-		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+		Click(locator1 = "ObjectModelBuilder#OBJECT_DEFINITONS_KEBAB");
 
 		MenuItem.click(menuItem = "Import Object Definition");
 

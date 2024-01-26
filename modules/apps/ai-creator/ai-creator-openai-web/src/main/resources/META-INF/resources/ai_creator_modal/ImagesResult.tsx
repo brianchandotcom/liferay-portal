@@ -36,7 +36,7 @@ export function ImagesResult({
 								}
 								onChange={() => onSelectedChange(imageURL)}
 							>
-								<ClayCard.AspectRatio className="card-item-first">
+								<ClayCard.AspectRatio className="card-item-first card-item-last">
 									<img
 										className="aspect-ratio-item-center-middle aspect-ratio-item-fluid"
 										src={imageURL}

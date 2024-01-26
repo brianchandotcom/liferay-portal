@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.tuning.rankings.web.internal.upgrade.v0_0_1;
+package com.liferay.portal.search.tuning.rankings.web.internal.upgrade.v2_0_0;
 
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -15,9 +15,11 @@ import java.sql.PreparedStatement;
 /**
  * @author Almir Ferreira
  */
-public class RankingUpgradeProcess extends UpgradeProcess {
+public class RenameRankingUpgradeProcess extends UpgradeProcess {
 
-	public RankingUpgradeProcess(ClassNameLocalService classNameLocalService) {
+	public RenameRankingUpgradeProcess(
+		ClassNameLocalService classNameLocalService) {
+
 		_classNameLocalService = classNameLocalService;
 	}
 

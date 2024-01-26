@@ -5,7 +5,7 @@
 
 import {openAlertModal} from 'frontend-js-web';
 
-export default function ({...props}) {
+export function DisagreeButtonPropsTransformer({...props}) {
 	return {
 		...props,
 		onClick() {

@@ -91,7 +91,7 @@
 					<clay:button
 						displayType="secondary"
 						label="i-disagree"
-						propsTransformer="js/DisagreeButtonPropsTransformer"
+						propsTransformer="{DisagreeButtonPropsTransformer} from layout-utility-page"
 						type="button"
 					/>
 				</div>

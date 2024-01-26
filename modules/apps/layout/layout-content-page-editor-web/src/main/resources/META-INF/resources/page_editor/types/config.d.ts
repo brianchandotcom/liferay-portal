@@ -104,9 +104,6 @@ export interface Config {
 	editFragmentEntryLinkURL: string;
 	editSegmentsEntryURL: string;
 	frontendTokens: {
-		getAvailableImageConfigurationsURL: string;
-		getAvailableListItemRenderersURL: string;
-		getAvailableListRenderersURL: string;
 		[key: string]:
 			| {
 					cssVariable: string;
@@ -117,6 +114,9 @@ export interface Config {
 			  }
 			| string;
 	};
+	getAvailableImageConfigurationsURL: string;
+	getAvailableListItemRenderersURL: string;
+	getAvailableListRenderersURL: string;
 	getAvailableTemplatesURL: string;
 	getCollectionConfigurationURL: string;
 	getCollectionFieldURL: string;

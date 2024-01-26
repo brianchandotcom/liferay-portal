@@ -19,7 +19,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	label="javascript-client-extensions"
 >
 	<react:component
-		module="js/layout/look_and_feel/GlobalJSCETsConfiguration"
+		module="{GlobalJSCETsConfiguration} from layout-admin-web"
 		props="<%= layoutLookAndFeelDisplayContext.getGlobalJSCETsConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
 	/>
 </liferay-frontend:fieldset>

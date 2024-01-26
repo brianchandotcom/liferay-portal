@@ -33,7 +33,7 @@ portletDisplay.setShowStagingIcon(false);
 
 		<clay:management-toolbar
 			managementToolbarDisplayContext="<%= new LayoutsAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutsAdminDisplayContext) %>"
-			propsTransformer="js/LayoutsManagementToolbarPropsTransformer"
+			propsTransformer="{LayoutsManagementToolbarPropsTransformer} from layout-admin-web"
 		/>
 
 		<liferay-ui:error exception="<%= RequiredSegmentsExperienceException.MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments.class %>" message="this-page-cannot-be-deleted-because-it-has-ab-tests-in-progress" />
@@ -53,7 +53,7 @@ portletDisplay.setShowStagingIcon(false);
 
 							<div>
 								<react:component
-									module="js/layout/Layout"
+									module="{Layout} from layout-admin-web"
 									props="<%= millerColumnsDisplayContext.getLayoutData() %>"
 								/>
 							</div>

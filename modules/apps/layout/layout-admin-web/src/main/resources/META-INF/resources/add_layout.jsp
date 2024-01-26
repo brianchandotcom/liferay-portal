@@ -109,5 +109,5 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "addLayout" %>'
 	context="<%= layoutsAdminDisplayContext.getProps() %>"
-	module="js/AddLayout"
+	module="{AddLayout} from layout-admin-web"
 />

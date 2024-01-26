@@ -33,7 +33,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 					displayType="unstyled"
 					aria-label="<%= LanguageUtil.get(request, "close") %>"
 					icon="times"
-					propsTransformer="js/CustomizationButtonPropsTransformer"
+					propsTransformer="{CustomizationButtonPropsTransformer} from layout-admin-web"
 					small="<%= true %>"
 				/>
 			</div>
@@ -79,7 +79,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 					</li>
 
 					<liferay-frontend:component
-						module="js/LayoutCustomizationSettings"
+						module="{LayoutCustomizationSettings} from layout-admin-web"
 					/>
 				</c:if>
 
@@ -92,7 +92,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 					<clay:dropdown-actions
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= customizationSettingsActionDropdownItemsProvider.getActionDropdownItems() %>"
-						propsTransformer="js/CustomizationSettingsActionDropdownPropsTransformer"
+						propsTransformer="{CustomizationSettingsActionDropdownPropsTransformer} from layout-admin-web"
 					/>
 				</li>
 				<li class="c-ml-2 control-menu-nav-item d-block d-md-none flex-shrink-0">
@@ -102,7 +102,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 						label="show-actions"
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= customizationSettingsActionDropdownItemsProvider.getActionDropdownItems() %>"
-						propsTransformer="js/CustomizationSettingsActionDropdownPropsTransformer"
+						propsTransformer="{CustomizationSettingsActionDropdownPropsTransformer} from layout-admin-web"
 					/>
 				</li>
 			</ul>

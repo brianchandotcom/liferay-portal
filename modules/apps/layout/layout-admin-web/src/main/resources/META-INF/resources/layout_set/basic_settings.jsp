@@ -13,7 +13,7 @@
 	label="favicon"
 >
 	<react:component
-		module="js/layout/look_and_feel/Favicon"
+		module="{Favicon} from layout-admin-web"
 		props="<%= layoutsAdminDisplayContext.getFaviconButtonProps() %>"
 	/>
 </liferay-frontend:fieldset>

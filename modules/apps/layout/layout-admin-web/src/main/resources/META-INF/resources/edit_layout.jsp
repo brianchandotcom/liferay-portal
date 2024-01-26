@@ -97,7 +97,7 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 								"enableLayoutURL", enableLayoutURL
 							).build()
 						%>'
-						module="js/layout/IncompleteLayoutEventListener"
+						module="{IncompleteLayoutEventListener} from layout-admin-web"
 					/>
 				</aui:button-row>
 			</clay:sheet>

@@ -5,8 +5,6 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			ignore: ['**/config.js', '**/layout_customization_settings.js'],
-		},
+		main: 'src/main/resources/META-INF/resources/js/index.ts',
 	},
 };

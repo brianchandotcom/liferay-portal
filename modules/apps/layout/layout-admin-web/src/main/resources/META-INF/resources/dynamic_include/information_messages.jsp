@@ -24,6 +24,6 @@ LayoutInformationMessagesDisplayContext layoutInformationMessagesDisplayContext 
 
 	<react:component
 		data="<%= layoutInformationMessagesDisplayContext.getData() %>"
-		module="js/dynamic_include/InformationMessages"
+		module="{InformationMessages} from layout-admin-web"
 	/>
 </li>

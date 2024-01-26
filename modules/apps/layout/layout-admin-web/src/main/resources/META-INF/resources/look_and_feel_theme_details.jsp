@@ -168,7 +168,7 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 					"themeContainerId", liferayPortletResponse.getNamespace() + "currentThemeContainer"
 				).build()
 			%>'
-			module="js/LookAndFeelThemeEdit"
+			module="{LookAndFeelThemeEdit} from layout-admin-web"
 		/>
 	</clay:col>
 </clay:row>
@@ -236,6 +236,6 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 				"regularColorSchemeInputId", liferayPortletResponse.getNamespace() + "regularColorSchemeId"
 			).build()
 		%>'
-		module="js/LookAndFeelThemeDetails"
+		module="{LookAndFeelThemeDetails} from layout-admin-web"
 	/>
 </c:if>

@@ -24,7 +24,7 @@ LayoutActionsDisplayContext layoutActionsDisplayContext = (LayoutActionsDisplayC
 			).build()
 		%>'
 		monospaced="<%= true %>"
-		propsTransformer="js/LayoutActionDropdownPropsTransformer"
+		propsTransformer="{LayoutActionDropdownPropsTransformer} from layout-admin-web"
 		small="<%= true %>"
 	/>
 </li>

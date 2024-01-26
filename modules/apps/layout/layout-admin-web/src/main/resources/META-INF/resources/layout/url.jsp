@@ -83,6 +83,6 @@ if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsA
 				"namespace", liferayPortletResponse.getNamespace()
 			).build()
 		%>'
-		module="js/Advanced"
+		module="{Advanced} from layout-admin-web"
 	/>
 </c:if>

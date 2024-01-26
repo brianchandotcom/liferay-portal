@@ -22,7 +22,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 
 <div>
 	<react:component
-		module="js/layout/look_and_feel/Favicon"
+		module="{Favicon} from layout-admin-web"
 		props="<%= layoutsAdminDisplayContext.getFaviconButtonProps() %>"
 	/>
 </div>
@@ -31,7 +31,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	<c:if test="<%= layoutLookAndFeelDisplayContext.hasEditableMasterLayout() %>">
 		<div class="c-mr-4 flex-grow-1">
 			<react:component
-				module="js/layout/look_and_feel/MasterLayoutConfiguration"
+				module="{MasterLayoutConfiguration} from layout-admin-web"
 				props="<%= layoutLookAndFeelDisplayContext.getMasterLayoutConfigurationProps() %>"
 			/>
 		</div>
@@ -39,7 +39,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 
 	<div class="flex-grow-1">
 		<react:component
-			module="js/layout/look_and_feel/StyleBookConfiguration"
+			module="{StyleBookConfiguration} from layout-admin-web"
 			props="<%= layoutLookAndFeelDisplayContext.getStyleBookConfigurationProps() %>"
 		/>
 	</div>

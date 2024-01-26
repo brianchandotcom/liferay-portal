@@ -23,7 +23,7 @@ String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.
 		displayType="unstyled"
 		icon="pencil"
 		id='<%= portletNamespace + "customizationButton" %>'
-		propsTransformer="js/CustomizationButtonPropsTransformer"
+		propsTransformer="{CustomizationButtonPropsTransformer} from layout-admin-web"
 		small="<%= true %>"
 		title='<%= LanguageUtil.get(request, "this-page-can-be-customized") %>'
 	/>

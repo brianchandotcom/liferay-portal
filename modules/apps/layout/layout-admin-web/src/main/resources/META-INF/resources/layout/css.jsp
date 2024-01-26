@@ -19,7 +19,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	label="theme-css-client-extension"
 >
 	<react:component
-		module="js/ThemeCSSReplacementSelector"
+		module="{ThemeCSSReplacementSelector} from layout-admin-web"
 		props="<%= layoutsAdminDisplayContext.getThemeCSSReplacementSelectorProps() %>"
 	/>
 </liferay-frontend:fieldset>
@@ -30,7 +30,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	label="css-client-extensions"
 >
 	<react:component
-		module="js/layout/look_and_feel/GlobalCSSCETsConfiguration"
+		module="{GlobalCSSCETsConfiguration} from layout-admin-web"
 		props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
 	/>
 </liferay-frontend:fieldset>
@@ -41,7 +41,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	label="theme-spritemap-client-extension"
 >
 	<react:component
-		module="js/layout/look_and_feel/ThemeSpritemapCETsConfiguration"
+		module="{ThemeSpritemapCETsConfiguration} from layout-admin-web"
 		props="<%= layoutLookAndFeelDisplayContext.getThemeSpritemapCETConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
 	/>
 </liferay-frontend:fieldset>

@@ -24,7 +24,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= orphanPortletsManagementToolbarDisplayContext %>"
-	propsTransformer="js/OrphanPortletsManagementToolbarPropsTransformer"
+	propsTransformer="{OrphanPortletsManagementToolbarPropsTransformer} from layout-admin-web"
 />
 
 <portlet:actionURL name="/layout_admin/delete_orphan_portlets" var="deleteOrphanPortletsURL">

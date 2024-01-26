@@ -193,5 +193,5 @@ portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "editLayout" %>'
 	context="<%= layoutsAdminDisplayContext.getProps() %>"
-	module="js/EditLayout"
+	module="{EditLayout} from layout-admin-web"
 />

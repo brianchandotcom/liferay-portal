@@ -15,18 +15,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
+import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.model.ActionForward;
 import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.util.LicenseUtil;
 import com.liferay.portlet.admin.util.OmniadminUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.servlet.HttpMethods;
 
 import java.util.List;
 import java.util.Map;
@@ -61,7 +61,9 @@ public class UpdateLicenseAction implements Action {
 			return null;
 		}
 
-		if (StringUtil.equalsIgnoreCase(httpServletRequest.getMethod(), HttpMethods.GET)) {
+		if (StringUtil.equalsIgnoreCase(
+				httpServletRequest.getMethod(), HttpMethods.GET)) {
+
 			return actionMapping.getActionForward("portal.license");
 		}
 
@@ -161,6 +163,7 @@ public class UpdateLicenseAction implements Action {
 	}
 
 	private boolean _isOmniAdmin(HttpServletRequest httpServletRequest) {
+
 		// PLACEHOLDER 09
 		// PLACEHOLDER 10
 		// PLACEHOLDER 11

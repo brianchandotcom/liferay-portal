@@ -6,7 +6,7 @@
 const backButton = document.getElementById('back-button-detail-page');
 const siteURL = Liferay.ThemeDisplay.getPortalURL().split('/l/')[0];
 
-backButton.onclick = function () {
+backButton?.onclick = () => {
 	const urlParams = new URLSearchParams(window.location.href);
 
 	if (urlParams.has('returnurl')) {

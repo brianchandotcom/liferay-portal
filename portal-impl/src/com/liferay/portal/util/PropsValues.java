@@ -482,7 +482,7 @@ public class PropsValues {
 	public static final String DEFAULT_ADMIN_MIDDLE_NAME = PropsUtil.get(
 		PropsKeys.DEFAULT_ADMIN_MIDDLE_NAME);
 
-	public static final String DEFAULT_ADMIN_PASSWORD = PropsUtil.get(
+	public static volatile String DEFAULT_ADMIN_PASSWORD = PropsUtil.get(
 		PropsKeys.DEFAULT_ADMIN_PASSWORD);
 
 	public static String DEFAULT_ADMIN_SCREEN_NAME = PropsUtil.get(

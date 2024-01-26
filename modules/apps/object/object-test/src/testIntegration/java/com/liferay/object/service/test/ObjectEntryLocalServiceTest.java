@@ -110,6 +110,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -1149,23 +1150,27 @@ public class ObjectEntryLocalServiceTest {
 		ObjectFieldTestUtil.withEncryptedObjectFieldProperties(
 			"", true, key,
 			() -> {
+				String noSuchAlgorithmExceptionMessage =
+					"Null or empty transformation";
+
+				if (JavaDetector.isJDK8()) {
+					noSuchAlgorithmExceptionMessage =
+						"Invalid transformation format:";
+				}
+
+				String exceptionMessage = StringBundler.concat(
+					EncryptorException.class.getName(), ": ",
+					EncryptorException.class.getName(), ": ",
+					NoSuchAlgorithmException.class.getName(), ": ",
+					noSuchAlgorithmExceptionMessage);
+
 				AssertUtils.assertFailure(
-					PortalException.class,
-					StringBundler.concat(
-						EncryptorException.class.getName(), ": ",
-						EncryptorException.class.getName(), ": ",
-						NoSuchAlgorithmException.class.getName(),
-						": Invalid transformation format:"),
+					PortalException.class, exceptionMessage,
 					() -> _objectEntryLocalService.getValues(
 						objectEntry.getObjectEntryId()));
 
 				AssertUtils.assertFailure(
-					SystemException.class,
-					StringBundler.concat(
-						EncryptorException.class.getName(), ": ",
-						EncryptorException.class.getName(), ": ",
-						NoSuchAlgorithmException.class.getName(),
-						": Invalid transformation format:"),
+					SystemException.class, exceptionMessage,
 					() -> _addObjectEntry(
 						HashMapBuilder.<String, Serializable>put(
 							"emailAddress", RandomTestUtil.randomString()

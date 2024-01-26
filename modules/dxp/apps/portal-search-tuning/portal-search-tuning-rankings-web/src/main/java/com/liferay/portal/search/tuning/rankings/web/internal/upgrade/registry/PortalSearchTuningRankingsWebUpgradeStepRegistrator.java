@@ -24,6 +24,11 @@ public class PortalSearchTuningRankingsWebUpgradeStepRegistrator
 			"0.0.0", "0.0.1",
 			new com.liferay.portal.search.tuning.rankings.web.internal.upgrade.
 				v0_0_1.RankingUpgradeProcess(_classNameLocalService));
+
+		registry.register(
+			"0.0.1", "1.0.0",
+			new com.liferay.portal.search.tuning.rankings.web.internal.upgrade.
+				v1_0_0.RankingUpgradeProcess(_classNameLocalService));
 	}
 
 	@Reference

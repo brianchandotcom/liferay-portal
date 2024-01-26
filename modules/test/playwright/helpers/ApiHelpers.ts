@@ -12,6 +12,7 @@ import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
 import {HeadlessAdminUserApiHelper} from './HeadlessAdminUserApiHelper';
 import {HeadlessCommerceAdminCatalogApiHelper} from './HeadlessCommerceAdminCatalogApiHelper';
 import {HeadlessCommerceAdminChannelApiHelper} from './HeadlessCommerceAdminChannelApiHelper';
+import {HeadlessCommerceDeliveryCartApiHelper} from './HeadlessCommerceDeliveryCartApiHelper';
 import {HeadlessCommerceDeliveryCatalogApiHelper} from './HeadlessCommerceDeliveryCatalogApiHelper';
 import {HeadlessDeliveryApiHelper} from './HeadlessDeliveryApiHelper';
 import {HeadlessSiteApiHelper} from './HeadlessSiteApiHelper';
@@ -25,6 +26,7 @@ export class ApiHelpers {
 	readonly headlessCommerceAdminCatalog: HeadlessCommerceAdminCatalogApiHelper;
 	readonly headlessCommerceAdminChannel: HeadlessCommerceAdminChannelApiHelper;
 	readonly headlessCommerceDeliveryCatalog: HeadlessCommerceDeliveryCatalogApiHelper;
+	readonly headlessCommerceDeliveryCart: HeadlessCommerceDeliveryCartApiHelper;
 	readonly headlessDelivery: HeadlessDeliveryApiHelper;
 	readonly headlessSite: HeadlessSiteApiHelper;
 	readonly object: ObjectApiHelper;
@@ -41,6 +43,8 @@ export class ApiHelpers {
 			new HeadlessCommerceAdminChannelApiHelper(this);
 		this.headlessCommerceDeliveryCatalog =
 			new HeadlessCommerceDeliveryCatalogApiHelper(this);
+		this.headlessCommerceDeliveryCart =
+			new HeadlessCommerceDeliveryCartApiHelper(this);
 		this.headlessDelivery = new HeadlessDeliveryApiHelper(this);
 		this.headlessSite = new HeadlessSiteApiHelper(this);
 		this.object = new ObjectApiHelper(this);

@@ -6,6 +6,35 @@
 import {getRandomInt} from '../utils/util';
 import {ApiHelpers} from './ApiHelpers';
 
+type TCatalog = {
+	accountId?: number;
+	currencyCode?: string;
+	defaultLanguageId?: string;
+	name?: string;
+};
+
+type TProduct = {
+	active?: boolean;
+	catalogId: number;
+	name?: {
+		[key: string]: string;
+	};
+	productId?: number;
+	productSpecifications?: any[];
+	productStatus?: number;
+	productType?: string;
+	skus?: TSku[];
+};
+
+type TSku = {
+	cost: number;
+	id?: number;
+	price: number;
+	published: boolean;
+	purchasable: boolean;
+	sku: string;
+};
+
 export class HeadlessCommerceAdminCatalogApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -33,7 +62,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
-	async deleteProduct(productId: string) {
+	async deleteProduct(productId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}`
 		);
@@ -70,7 +99,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 	}
 
 	async postAttachment(
-		productId: string,
+		productId: number,
 		fileEntryId: number,
 		title: string = 'Attachment' + getRandomInt()
 	) {
@@ -85,18 +114,17 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		return postAttachment;
 	}
 
-	async postCatalog(catalogName: string = 'Catalog' + getRandomInt()) {
-		const postCatalog = await this.apiHelpers.post(
+	async postCatalog(catalog?: TCatalog) {
+		return await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/catalogs`,
 			{
 				accountId: 0,
 				currencyCode: 'USD',
 				defaultLanguageId: 'en_US',
-				name: catalogName,
+				name: 'Catalog' + getRandomInt(),
+				...(catalog || {}),
 			}
 		);
-
-		return postCatalog;
 	}
 
 	async postOptionCategory(
@@ -117,37 +145,27 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		return postOptionCategory;
 	}
 
-	async postProduct(
-		catalogId: number,
-		productName: string = 'Product' + getRandomInt(),
-		productSpecifications?: DataObject[]
-	) {
-		if (typeof productSpecifications !== 'undefined') {
-			return this.apiHelpers.post(
-				`${this.apiHelpers.baseUrl}${this.basePath}/products`,
-				{
-					active: true,
-					catalogId,
-					name: {
-						en_US: productName,
-					},
-					productSpecifications,
-					productStatus: 0,
-					productType: 'simple',
-				}
-			);
-		}
-
+	async postProduct(product: TProduct): Promise<TProduct> {
 		return await this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/products`,
+			`${this.apiHelpers.baseUrl}${this.basePath}/products?nestedFields=skus`,
 			{
 				active: true,
-				catalogId,
+				catalogId: 0,
 				name: {
-					en_US: productName,
+					en_US: 'Product' + getRandomInt(),
 				},
 				productStatus: 0,
 				productType: 'simple',
+				skus: [
+					{
+						cost: 0,
+						price: 0,
+						published: true,
+						purchasable: true,
+						sku: 'Sku' + getRandomInt(),
+					},
+				],
+				...product,
 			}
 		);
 	}

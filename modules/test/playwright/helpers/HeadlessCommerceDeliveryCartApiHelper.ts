@@ -1,0 +1,37 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {ApiHelpers} from './ApiHelpers';
+
+type TCartItem = {
+	options: string;
+	quantity: number;
+	replacedSkuId: number;
+	skuId: number;
+};
+
+type TCart = {
+	accountId: number;
+	cartItems?: TCartItem[];
+	currencyCode?: string;
+	id?: number;
+};
+
+export class HeadlessCommerceDeliveryCartApiHelper {
+	readonly apiHelpers: ApiHelpers;
+	readonly basePath: string;
+
+	constructor(apiHelpers: ApiHelpers) {
+		this.apiHelpers = apiHelpers;
+		this.basePath = 'headless-commerce-delivery-cart/v1.0/';
+	}
+
+	async postCart(cart: TCart, channelId: number): Promise<TCart> {
+		return await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channelId}/carts?nestedFields=cartItems`,
+			{accountId: 0, cartItems: [], currencyCode: 'USD', ...cart}
+		);
+	}
+}

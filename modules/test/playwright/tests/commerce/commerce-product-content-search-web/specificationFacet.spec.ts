@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore
+
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
@@ -28,10 +30,10 @@ test('can sort specifications by specification group priority', async ({
 		'guest'
 	);
 
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel(
-		'Specification Facet Channel',
-		site.id
-	);
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: 'Specification Facet Channel',
+		siteGroupId: site.id,
+	});
 
 	const optionCategory1 =
 		await apiHelpers.headlessCommerceAdminCatalog.postOptionCategory(
@@ -71,34 +73,38 @@ test('can sort specifications by specification group priority', async ({
 			}
 		);
 
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog(
-		'Specification Facet Catalog'
-	);
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+		name: 'Specification Facet Catalog',
+	});
 
-	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct(
-		catalog.id,
-		'Product1',
-		[
+	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {
+			en_US: 'Product1',
+		},
+		productSpecifications: [
 			{
 				specificationKey: specification1.key,
 				value: {
 					en_US: 'Product1',
 				},
 			},
-		]
-	);
-	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct(
-		catalog.id,
-		'Product2',
-		[
+		],
+	});
+	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {
+			en_US: 'Product2',
+		},
+		productSpecifications: [
 			{
 				specificationKey: specification2.key,
 				value: {
 					en_US: 'Product2',
 				},
 			},
-		]
-	);
+		],
+	});
 
 	await specificationFacetsPage.reloadPage();
 

@@ -15,8 +15,8 @@ export class HeadlessCommerceDeliveryCatalogApiHelper {
 	}
 
 	async getChannelProductAttachmentsPage(
-		channelId: string,
-		productId: string
+		channelId: number,
+		productId: number
 	) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channelId}/products/${productId}/attachments`

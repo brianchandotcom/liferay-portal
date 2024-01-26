@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore
+
 import {expect, mergeTests} from '@playwright/test';
 import * as path from 'path';
 
@@ -26,19 +28,21 @@ test('The download URL is present when the file entry is a file upload', async (
 		'guest'
 	);
 
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel(
-		'Channel',
-		site.id
-	);
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: 'Channel',
+		siteGroupId: site.id,
+	});
 
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog(
-		'Catalog'
-	);
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+		name: 'Catalog',
+	});
 
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct(
-		catalog.id,
-		'Product'
-	);
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {
+			en_US: 'Product',
+		},
+	});
 
 	const siteDocumentsPage =
 		await apiHelpers.headlessDelivery.getSiteDocumentsPage(site.id);
@@ -91,19 +95,21 @@ test('The download URL is not present when the file entry is an external resourc
 		'guest'
 	);
 
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel(
-		'Channel',
-		site.id
-	);
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: 'Channel',
+		siteGroupId: site.id,
+	});
 
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog(
-		'Catalog'
-	);
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+		name: 'Catalog',
+	});
 
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct(
-		catalog.id,
-		'Product'
-	);
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {
+			en_US: 'Product',
+		},
+	});
 
 	const siteDocumentsPage =
 		await apiHelpers.headlessDelivery.getSiteDocumentsPage(site.id);

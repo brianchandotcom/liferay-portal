@@ -6,6 +6,13 @@
 import {getRandomInt} from '../utils/util';
 import {ApiHelpers} from './ApiHelpers';
 
+type TChannel = {
+	currencyCode?: string;
+	name?: string;
+	siteGroupId: number;
+	type?: string;
+};
+
 export class HeadlessCommerceAdminChannelApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -15,32 +22,28 @@ export class HeadlessCommerceAdminChannelApiHelper {
 		this.basePath = 'headless-commerce-admin-channel/v1.0/';
 	}
 
-	async deleteChannel(channelId: string) {
+	async deleteChannel(channelId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channelId}`
 		);
 	}
 
-	async getChannel(channelId: string) {
+	async getChannel(channelId: number): Promise<TChannel> {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channelId}`
 		);
 	}
 
-	async postChannel(
-		channelName: string = 'Channel' + getRandomInt(),
-		siteGroupId: string
-	) {
-		const postChannel = await this.apiHelpers.post(
+	async postChannel(channel: TChannel) {
+		return await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels`,
 			{
 				currencyCode: 'USD',
-				name: channelName,
-				siteGroupId,
+				name: 'Channel' + getRandomInt(),
+				siteGroupId: 0,
 				type: 'site',
+				...channel,
 			}
 		);
-
-		return postChannel;
 	}
 }

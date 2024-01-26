@@ -45,8 +45,12 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Response;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.ResponseCode;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -369,7 +373,7 @@ public class RESTBuilder {
 			}
 
 			if (Validator.isNotNull(_configYAML.getClientDir())) {
-				_invokeJSClientGenerator(context);
+				_invokeJSClientGenerator(openAPIYAMLFile, openAPIYAML);
 			}
 		}
 
@@ -1853,7 +1857,8 @@ public class RESTBuilder {
 		return freeMarkerTool.getSchemaVarName(reference.substring(index + 1));
 	}
 
-	private void _invokeJSClientGenerator(Map<String, Object> context)
+	private void _invokeJSClientGenerator(
+			File openApiYamlFile, OpenAPIYAML openAPIYAML)
 		throws Exception {
 
 		String baseClientDir =
@@ -1875,7 +1880,8 @@ public class RESTBuilder {
 
 		String clientName = sb.toString();
 
-		File openApiYamlFile = (File)context.get("openApiYamlFile");
+		openApiYamlFile = _prepareForJSClientGenerator(
+			openApiYamlFile, openAPIYAML, _configYAML);
 
 		for (String target : Arrays.asList("fetch", "node")) {
 			Path outputDirPath = Paths.get(
@@ -1927,6 +1933,8 @@ public class RESTBuilder {
 					outputDirPath.toRealPath());
 			}
 		}
+
+		FileUtil.delete(openApiYamlFile);
 	}
 
 	private OpenAPIYAML _loadOpenAPIYAML(String yamlString) {
@@ -1998,6 +2006,47 @@ public class RESTBuilder {
 		}
 
 		return openAPIYAML;
+	}
+
+	private File _prepareForJSClientGenerator(
+			File openApiYamlFile, OpenAPIYAML openAPIYAML,
+			ConfigYAML configYAML)
+		throws Exception {
+
+		File outputOpenApiYamlFile = new File("openapi-js.yaml");
+
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new FileReader(openApiYamlFile));
+			BufferedWriter bufferedWriter = new BufferedWriter(
+				new FileWriter(outputOpenApiYamlFile))) {
+
+			String line;
+
+			Application application = configYAML.getApplication();
+
+			Info info = openAPIYAML.getInfo();
+
+			while ((line = bufferedReader.readLine()) != null) {
+				if (line.startsWith("    \"/")) {
+					line = line.trim();
+
+					line = StringBundler.concat(
+						"    \"", application.getBaseURI(), "/",
+						info.getVersion(), line.substring(1));
+				}
+				else if (line.startsWith("    /")) {
+					line = line.trim();
+
+					line = StringBundler.concat(
+						"    ", application.getBaseURI(), "/",
+						info.getVersion(), line);
+				}
+
+				bufferedWriter.write(line + "\n");
+			}
+
+			return outputOpenApiYamlFile;
+		}
 	}
 
 	private void _putSchema(

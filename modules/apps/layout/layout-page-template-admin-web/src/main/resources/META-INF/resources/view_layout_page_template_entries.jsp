@@ -15,7 +15,7 @@ LayoutPageTemplateManagementToolbarDisplayContext layoutPageTemplateManagementTo
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= layoutPageTemplateManagementToolbarDisplayContext %>"
-	propsTransformer="js/propsTransformers/LayoutPageTemplateEntryManagementToolbarPropsTransformer"
+	propsTransformer="{LayoutPageTemplateEntryManagementToolbarPropsTransformer} from layout-page-template-admin-web"
 />
 
 <portlet:actionURL name="/layout_page_template_admin/delete_layout_page_template_entry" var="deleteLayoutPageTemplateEntryURL">
@@ -45,7 +45,7 @@ LayoutPageTemplateManagementToolbarDisplayContext layoutPageTemplateManagementTo
 
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
-					propsTransformer="js/propsTransformers/LayoutPageTemplateEntryPropsTransformer"
+					propsTransformer="{LayoutPageTemplateEntryPropsTransformer} from layout-page-template-admin-web"
 					verticalCard="<%= new LayoutPageTemplateEntryVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>

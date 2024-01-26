@@ -18,6 +18,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "import"));
 %>
 
 <react:component
-	module="js/ImportPageTemplates"
+	module="{ImportPageTemplates} from layout-page-template-admin-web"
 	props="<%= importDisplayContext.getProps() %>"
 />

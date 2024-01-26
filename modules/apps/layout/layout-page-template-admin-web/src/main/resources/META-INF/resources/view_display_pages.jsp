@@ -24,7 +24,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= displayPageManagementToolbarDisplayContext %>"
-	propsTransformer="js/propsTransformers/DisplayPageManagementToolbarPropsTransformer"
+	propsTransformer="{DisplayPageManagementToolbarPropsTransformer} from layout-page-template-admin-web"
 />
 
 <c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-189856") %>'>
@@ -100,7 +100,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 						>
 							<clay:horizontal-card
 								horizontalCard="<%= new DisplayPageTemplateCollectionHorizontalCard (curLayoutPageTemplateCollection, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-								propsTransformer="js/propsTransformers/LayoutPageTemplateCollectionPropsTransformer"
+								propsTransformer="{LayoutPageTemplateCollectionPropsTransformer} from layout-page-template-admin-web"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
@@ -120,7 +120,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 										"mappingTypes", displayPageDisplayContext.getMappingTypesJSONArray()
 									).build()
 								%>'
-								propsTransformer="js/propsTransformers/DisplayPageDropdownPropsTransformer"
+								propsTransformer="{DisplayPageDropdownPropsTransformer} from layout-page-template-admin-web"
 								verticalCard="<%= new DisplayPageVerticalCard(displayPageDisplayContext.isAllowedMappedContentType(curLayoutPageTemplateEntry), curLayoutPageTemplateEntry, displayPageDisplayContext.existsMappedContentType(curLayoutPageTemplateEntry), renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 							/>
 						</liferay-ui:search-container-column-text>

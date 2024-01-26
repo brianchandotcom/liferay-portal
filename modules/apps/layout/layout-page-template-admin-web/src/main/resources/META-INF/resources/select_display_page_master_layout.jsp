@@ -46,7 +46,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 								"title", LanguageUtil.get(request, "add-display-page-template")
 							).build()
 						%>'
-						propsTransformer="js/propsTransformers/SelectDisplayPageMasterLayoutVerticalCardPropsTransformer"
+						propsTransformer="{SelectDisplayPageMasterLayoutVerticalCardPropsTransformer} from layout-page-template-admin-web"
 						verticalCard="<%= selectDisplayPageMasterLayoutVerticalCard %>"
 					/>
 				</li>

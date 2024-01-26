@@ -22,7 +22,7 @@ LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarD
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= layoutPrototypeManagementToolbarDisplayContext %>"
-	propsTransformer="js/propsTransformers/LayoutPrototypeManagementToolbarPropsTransformer"
+	propsTransformer="{LayoutPrototypeManagementToolbarPropsTransformer} from layout-page-template-admin-web"
 />
 
 <portlet:actionURL name="/layout_page_template_admin/delete_layout_prototype" var="deleteLayoutPrototypesURL">
@@ -53,7 +53,7 @@ LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarD
 
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
-					propsTransformer="js/propsTransformers/LayoutPrototypeDropdownPropsTransformer"
+					propsTransformer="{LayoutPrototypeDropdownPropsTransformer} from layout-page-template-admin-web"
 					verticalCard="<%= new LayoutPrototypeVerticalCard(layoutPrototype, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>

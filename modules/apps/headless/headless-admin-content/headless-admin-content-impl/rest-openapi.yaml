@@ -34,7 +34,7 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
+                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/Creator"
                     description:
                         The Display Page Template's creator.
                     readOnly: true
@@ -42,7 +42,7 @@ components:
                     description:
                         The custom fields associated to the page that renders the Display Page Template.
                     items:
-                        $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#CustomField"
+                        $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/CustomField"
                     type: array
                 dateCreated:
                     description:
@@ -69,7 +69,7 @@ components:
                         Specifies if the Display Page Template is the default one for the content type.
                     type: boolean
                 pageDefinition:
-                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#PageDefinition"
+                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/PageDefinition"
                 siteId:
                     description:
                         The ID of the site to which this Page Template is scoped.
@@ -304,10 +304,10 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#PageDefinition"
+                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/PageDefinition"
                     application/xml:
                         schema:
-                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#PageDefinition"
+                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/PageDefinition"
             responses:
                 200:
                     content:
@@ -381,12 +381,12 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/StructuredContent"
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/StructuredContent"
                                 type: array
             tags: ["StructuredContent"]
     "/sites/{siteId}/structured-contents/draft":
@@ -406,19 +406,19 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/StructuredContent"
                     application/xml:
                         schema:
-                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                            $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/StructuredContent"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/StructuredContent"
                         application/xml:
                             schema:
-                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/StructuredContent"
             tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}/by-version/{version}":
         delete:
@@ -480,10 +480,10 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/StructuredContent"
                         application/xml:
                             schema:
-                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/StructuredContent"
             tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}/versions":
         get:
@@ -520,11 +520,11 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/StructuredContent"
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#/components/schemas/StructuredContent"
                                 type: array
             tags: ["StructuredContent"]

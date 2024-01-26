@@ -16812,6 +16812,7 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 							failonerror="true"
 							fork="true"
 							jar="${liferay.home}/tools/portal-tools-db-upgrade-client/com.liferay.portal.tools.db.upgrade.client.jar"
+							jvm="${java.jdk.home}/bin/java"
 							timeout="${upgrade.client.timeout}"
 						>
 							<env key="JAVA_HOME" value="${java.jdk.home}" />
@@ -16824,6 +16825,7 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 							failonerror="true"
 							fork="true"
 							jar="${liferay.home}/tools/portal-tools-db-upgrade-client/com.liferay.portal.tools.db.upgrade.client.jar"
+							jvm="${java.jdk.home}/bin/java"
 							timeout="${upgrade.client.timeout}"
 						>
 							<env key="JAVA_HOME" value="${java.jdk.home}" />

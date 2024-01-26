@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -73,7 +74,11 @@ public class PublicationsPortlet extends MVCPortlet {
 			checkPermissions(renderRequest);
 		}
 		catch (Exception exception) {
-			throw new PortletException(exception);
+			SessionErrors.add(renderRequest, exception.getClass());
+
+			include("/publications/error.jsp", renderRequest, renderResponse);
+
+			return;
 		}
 
 		PublicationsDisplayContext publicationsDisplayContext =

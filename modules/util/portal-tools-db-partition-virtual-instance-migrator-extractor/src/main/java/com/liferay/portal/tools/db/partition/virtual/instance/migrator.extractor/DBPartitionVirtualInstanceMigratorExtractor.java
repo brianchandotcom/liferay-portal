@@ -113,9 +113,12 @@ public class DBPartitionVirtualInstanceMigratorExtractor {
 				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 
-			_writeToFile(
+			String exportFilePath = _writeToFile(
 				DatabaseUtil.exportInstanceData(_connection),
 				commandLine.getOptionValue("path"));
+
+			System.out.println(
+				"Export file generated successfully in " + exportFilePath);
 		}
 		catch (ParseException parseException) {
 			System.err.println("Unable to parse command line properties:");
@@ -135,7 +138,7 @@ public class DBPartitionVirtualInstanceMigratorExtractor {
 		_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 	}
 
-	private static void _writeToFile(InstanceData instanceData, String path)
+	private static String _writeToFile(InstanceData instanceData, String path)
 		throws Exception {
 
 		File exportDir = null;
@@ -168,13 +171,15 @@ public class DBPartitionVirtualInstanceMigratorExtractor {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
-		objectMapper.writeValue(
-			new File(
-				exportDir,
-				StringBundler.concat(
-					simpleDateFormat.format(instanceData.getDate()),
-					"_extraction_", instanceData.getCompanyId(), ".data")),
-			instanceData);
+		File exportFile = new File(
+			exportDir,
+			StringBundler.concat(
+				simpleDateFormat.format(instanceData.getDate()), "_extraction_",
+				instanceData.getCompanyId(), ".data"));
+
+		objectMapper.writeValue(exportFile, instanceData);
+
+		return exportFile.getCanonicalPath();
 	}
 
 	/**

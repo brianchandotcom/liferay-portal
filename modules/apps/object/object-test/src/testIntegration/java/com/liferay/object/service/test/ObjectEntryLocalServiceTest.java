@@ -2766,7 +2766,11 @@ public class ObjectEntryLocalServiceTest {
 		Date birthdayDate = calendar.getTime();
 
 		String script = RandomTestUtil.randomString(1500);
-		Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+		Timestamp timestamp = Timestamp.valueOf(
+			LocalDateTime.now(
+			).withNano(
+				0
+			));
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),

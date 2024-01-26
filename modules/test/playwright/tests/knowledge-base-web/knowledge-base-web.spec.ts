@@ -6,15 +6,15 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {knowledgeBasePages} from '../../fixtures/knowldegbeBasePages';
+import {knowledgeBasePages} from '../../fixtures/knowledgeBasePages';
 import {loginTest} from '../../fixtures/loginTest';
 import {getRandomString} from '../../utils/util';
 
 export const test = mergeTests(apiHelpersTest, knowledgeBasePages, loginTest);
 
-test('can publish and delete an article', async ({
+test('can publish and delete an article with scheduling disabled', async ({
 	apiHelpers,
-	knowledgeBaseEditArticle,
+	knowledgeBaseEditArticlePage,
 	knowledgeBasePage,
 	page,
 }) => {
@@ -24,7 +24,7 @@ test('can publish and delete an article', async ({
 	const title = getRandomString();
 	const kbArticle = page.getByRole('link', {name: title});
 
-	await knowledgeBaseEditArticle.publishNewKnowledgeBaseArticle(
+	await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticle(
 		content,
 		title
 	);
@@ -36,9 +36,9 @@ test('can publish and delete an article', async ({
 	await page.close();
 });
 
-test('can schedule the publication of an article and delete it afterward', async ({
+test('can publish and delete an article with scheduling enabled', async ({
 	apiHelpers,
-	knowledgeBaseEditArticle,
+	knowledgeBaseEditArticlePage,
 	knowledgeBaseViewArticlePage,
 	page,
 }) => {
@@ -48,7 +48,7 @@ test('can schedule the publication of an article and delete it afterward', async
 	const title = getRandomString();
 	const kbArticle = page.getByRole('link', {name: title});
 
-	await knowledgeBaseEditArticle.publishNewKnowledgeBaseArticleWithSchedule(
+	await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticleWithSchedule(
 		content,
 		title
 	);
@@ -67,15 +67,15 @@ test('can schedule the publication of an article and delete it afterward', async
 	await page.close();
 });
 
-test('can delete all articles without a recycle bin', async ({
+test('can delete all articles with a recycle bin disabled', async ({
 	apiHelpers,
-	knowledgeBaseEditArticle,
+	knowledgeBaseEditArticlePage,
 	knowledgeBasePage,
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('LPS-188058', false);
 
-	await knowledgeBaseEditArticle.publishNewKnowledgeBaseArticle(
+	await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticle(
 		getRandomString(),
 		getRandomString()
 	);
@@ -88,15 +88,15 @@ test('can delete all articles without a recycle bin', async ({
 	await page.close();
 });
 
-test('can delete all articles with a recycle bin', async ({
+test('can delete all articles with a recycle bin enabled', async ({
 	apiHelpers,
-	knowledgeBaseEditArticle,
+	knowledgeBaseEditArticlePage,
 	knowledgeBasePage,
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('LPS-188058', true);
 
-	await knowledgeBaseEditArticle.publishNewKnowledgeBaseArticleWithSchedule(
+	await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticleWithSchedule(
 		getRandomString(),
 		getRandomString()
 	);

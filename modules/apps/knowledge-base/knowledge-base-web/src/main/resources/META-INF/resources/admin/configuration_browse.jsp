@@ -246,7 +246,7 @@ portletDisplay.setURLBackTitle("knowledge-base");
 							%>'
 							cssClass="c-mr-2"
 							label="save"
-							propsTransformer="admin/js/SaveConfigurationButtonPropsTransformer"
+							propsTransformer="{SaveConfigurationButtonPropsTransformer} from knowledge-base-web"
 						/>
 
 						<clay:link

@@ -9,7 +9,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import VerticalNavigationBar from '../../../../src/main/resources/META-INF/resources/admin/js/components/VerticalBar';
+import VerticalNavigationBar from '../../../../src/main/resources/META-INF/resources/js/admin/components/VerticalBar';
 
 const FOLDERS_AND_ARTICLES_TITLE = 'Folders and articles';
 const TEMPLATES_TITLE = 'Templates';

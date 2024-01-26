@@ -8,7 +8,7 @@ import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import ScheduleKBArticle from '../../../../src/main/resources/META-INF/resources/admin/js/components/ScheduleKBArticle';
+import ScheduleKBArticle from '../../../../src/main/resources/META-INF/resources/js/admin/components/ScheduleKBArticle';
 
 const bridgeComponentId = '_portletNamespace_ScheduleKBArticleComponent';
 

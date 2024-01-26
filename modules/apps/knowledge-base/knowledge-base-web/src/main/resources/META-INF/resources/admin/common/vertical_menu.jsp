@@ -16,7 +16,7 @@ KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNav
 
 	<react:component
 		componentId="verticalBarId"
-		module="admin/js/components/VerticalBar"
+		module="{VerticalBar} from knowledge-base-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"items", kbAdminNavigationDisplayContext.getVerticalNavigationJSONObjects()

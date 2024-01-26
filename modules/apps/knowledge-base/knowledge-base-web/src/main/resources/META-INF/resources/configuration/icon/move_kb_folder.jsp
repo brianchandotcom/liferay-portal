@@ -9,7 +9,7 @@
 
 <liferay-frontend:component
 	componentId="MoveKBObject"
-	module="admin/js/MoveKBObject"
+	module="{MoveKBObject} from knowledge-base-web"
 />
 
 <aui:script>

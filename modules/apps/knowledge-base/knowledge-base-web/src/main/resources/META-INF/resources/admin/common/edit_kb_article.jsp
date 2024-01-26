@@ -374,12 +374,12 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 			"schedulerEnabled", FeatureFlagManagerUtil.isEnabled("LPS-188058") && editKBArticleDisplayContext.isSchedulerEnabled()
 		).build()
 	%>'
-	module="admin/js/EditKBArticle"
+	module="{EditKBArticle} from knowledge-base-web"
 />
 
 <div>
 	<react:component
-		module="admin/js/components/ScheduleKBArticle"
+		module="{ScheduleKBArticle} from knowledge-base-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"displayDate", editKBArticleDisplayContext.getDatePickerFormattedDisplayDate()
@@ -405,6 +405,6 @@ String kbArticleSuccessMessage = GetterUtil.getString(MultiSessionMessages.get(r
 				"message", kbArticleSuccessMessage
 			).build()
 		%>'
-		module="admin/js/utils/openToast"
+		module="{openToast} from knowledge-base-web"
 	/>
 </c:if>

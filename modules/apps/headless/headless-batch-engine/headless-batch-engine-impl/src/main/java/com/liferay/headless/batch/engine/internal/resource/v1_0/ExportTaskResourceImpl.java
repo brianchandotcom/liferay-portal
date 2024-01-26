@@ -10,6 +10,7 @@ import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.ItemClassRegistry;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
+import com.liferay.batch.engine.service.BatchEngineExportTaskService;
 import com.liferay.headless.batch.engine.dto.v1_0.ExportTask;
 import com.liferay.headless.batch.engine.internal.resource.v1_0.util.ParametersUtil;
 import com.liferay.headless.batch.engine.resource.v1_0.ExportTaskResource;
@@ -45,7 +46,7 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 	@Override
 	public ExportTask getExportTask(Long exportTaskId) throws Exception {
 		return _toExportTask(
-			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
+			_batchEngineExportTaskService.getBatchEngineExportTask(
 				exportTaskId));
 	}
 
@@ -76,7 +77,7 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 	@Override
 	public Response getExportTaskContent(Long exportTaskId) throws Exception {
 		return _getExportTaskContent(
-			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
+			_batchEngineExportTaskService.getBatchEngineExportTask(
 				exportTaskId));
 	}
 
@@ -184,6 +185,9 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 	@Reference
 	private BatchEngineExportTaskLocalService
 		_batchEngineExportTaskLocalService;
+
+	@Reference
+	private BatchEngineExportTaskService _batchEngineExportTaskService;
 
 	@Reference
 	private ItemClassRegistry _itemClassRegistry;

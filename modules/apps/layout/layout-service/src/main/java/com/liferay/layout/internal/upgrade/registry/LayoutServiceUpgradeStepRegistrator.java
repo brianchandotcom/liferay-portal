@@ -116,6 +116,11 @@ public class LayoutServiceUpgradeStepRegistrator
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
 
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.fragment.service)(&(release.schema.version>=2.5.0)))"
+	)
+	private Release _fragmentServiceRelease;
+
 	@Reference
 	private GroupLocalService _groupLocalService;
 
@@ -128,6 +133,11 @@ public class LayoutServiceUpgradeStepRegistrator
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.layout.page.template.service)(&(release.schema.version>=2.1.0)))"
+	)
+	private Release _layoutPageTemplateServiceRelease;
+
 	@Reference
 	private LayoutRevisionLocalService _layoutRevisionLocalService;
 
@@ -136,10 +146,5 @@ public class LayoutServiceUpgradeStepRegistrator
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.fragment.service)(&(release.schema.version>=2.5.0)))"
-	)
-	private Release _release;
 
 }

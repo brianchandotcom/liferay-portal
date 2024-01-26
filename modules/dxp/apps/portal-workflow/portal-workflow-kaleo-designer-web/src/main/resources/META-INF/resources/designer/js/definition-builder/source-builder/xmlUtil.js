@@ -20,9 +20,13 @@ import {
 } from './constants';
 
 const XMLUtil = {
+	REGEX_INNER_HTML: /innerHTML\s*=\s*.*?/,
+	REGEX_ON_ERROR: /onerror\s*=\s*.*?/,
+	REGEX_SRC: /src\s*=\s*.*?/,
 	REGEX_TOKEN_1: /.+<\/\w[^>]*>$/,
 	REGEX_TOKEN_2: /^<\/\w/,
 	REGEX_TOKEN_3: /^<\w[^>]*[^/]>.*$/,
+	REGEX_URL: /url\s*=\s*.*?/,
 
 	create(name, content, attrs) {
 		const instance = this;
@@ -165,8 +169,20 @@ const XMLUtil = {
 
 		let valid = true;
 
+		const maliciousContent = [
+			this.REGEX_INNER_HTML,
+			this.REGEX_ON_ERROR,
+			this.REGEX_SRC,
+			this.REGEX_URL,
+		];
+
+		const maliciousContentValidation = maliciousContent.some((item) =>
+			new RegExp(item).test(definition)
+		);
+
 		if (
 			xmlDoc === null ||
+			maliciousContentValidation ||
 			xmlDoc.documentElement === null ||
 			xmlDoc.querySelector('parsererror')
 		) {

@@ -18,6 +18,8 @@ import {editorConfig} from '../constants';
 import {xmlNamespace} from './constants';
 import {serializeDefinition} from './serializeUtil';
 
+const REGEX_ALERT = /alert\((.*?)\)/;
+
 export default function SourceBuilder() {
 	const {
 		currentEditor,
@@ -53,6 +55,22 @@ export default function SourceBuilder() {
 				);
 
 				if (xmlContent) {
+					const codeEditor = document.querySelector(
+						'div.cke_contents'
+					);
+
+					codeEditor.addEventListener('keyup', () => {
+						if (currentEditor.getData() !== xmlContent) {
+							const newXmlContent = currentEditor.getData();
+							const sanitizedXmlContent = newXmlContent.replace(
+								REGEX_ALERT,
+								''
+							);
+
+							currentEditor.setData(sanitizedXmlContent);
+						}
+					});
+
 					currentEditor.setData(xmlContent);
 
 					setLoading(false);
@@ -109,7 +127,12 @@ export default function SourceBuilder() {
 
 			reader.onloadend = (event) => {
 				if (event.target.readyState === FileReader.DONE) {
-					currentEditor.setData(event.target.result);
+					const sanitizedData = event.target.result.replace(
+						REGEX_ALERT,
+						''
+					);
+
+					currentEditor.setData(sanitizedData);
 
 					const fileInput = document.querySelector('#fileInput');
 

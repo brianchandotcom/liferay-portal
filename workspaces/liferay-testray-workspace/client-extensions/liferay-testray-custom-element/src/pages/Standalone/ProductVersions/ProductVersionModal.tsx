@@ -26,7 +26,7 @@ const ProductVersionModal: React.FC<ProductVersionModalProps> = ({
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
 				}}
-				resource={testrayProductVersionImpl.resource}
+				resource={`${testrayProductVersionImpl.resource}&sort=name:asc`}
 				tableProps={{
 					actions,
 					columns: [

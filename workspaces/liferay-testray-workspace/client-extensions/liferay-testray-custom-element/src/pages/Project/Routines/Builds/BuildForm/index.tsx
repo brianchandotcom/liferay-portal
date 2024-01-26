@@ -70,7 +70,7 @@ const BuildForm = () => {
 		`/productversions?fields=id,name&filter=${SearchBuilder.eq(
 			'projectId',
 			projectId as string
-		)}`
+		)}&sort=name:asc`
 	);
 
 	const {data: routinesData} = useFetch<APIResponse<TestrayRoutine>>(

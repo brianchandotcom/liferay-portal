@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +86,9 @@ public class FragmentEntryLinkModelListener
 					for (PortletPreferences curPortletPreferences :
 							portletPreferences) {
 
-						if (masterLayoutPlids.contains(
+						if ((curPortletPreferences.getPlid() ==
+								PortletKeys.PREFS_PLID_SHARED) ||
+							masterLayoutPlids.contains(
 								curPortletPreferences.getPlid())) {
 
 							continue;

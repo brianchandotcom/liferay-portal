@@ -79,6 +79,6 @@ KBArticleConfigurationDisplayContext kbArticleConfigurationDisplayContext = (KBA
 <liferay-frontend:component
 	componentId="<%= kbArticleConfigurationDisplayContext.getComponentId() %>"
 	context="<%= kbArticleConfigurationDisplayContext.getComponentContext() %>"
-	module="article/js/PortletConfiguration"
+	module="{PortletConfiguration} from knowledge-base-web"
 	servletContext="<%= application %>"
 />

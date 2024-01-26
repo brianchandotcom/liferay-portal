@@ -125,7 +125,7 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 					<clay:dropdown-actions
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= kbDropdownItemsProvider.getKBFolderDropdownItems(kbFolder) %>"
-						propsTransformer="admin/js/KBDropdownPropsTransformer"
+						propsTransformer="{KBDropdownPropsTransformer} from knowledge-base-web"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:when>
@@ -254,7 +254,7 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 					<clay:dropdown-actions
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= kbArticleViewDisplayContext.getKBArticleDropdownItems(kbArticle) %>"
-						propsTransformer="admin/js/KBDropdownPropsTransformer"
+						propsTransformer="{KBDropdownPropsTransformer} from knowledge-base-web"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:otherwise>

@@ -65,7 +65,7 @@
 						<clay:dropdown-actions
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= kbDropdownItemsProvider.getKBTemplateMoreActionsDropdownItems(kbTemplate) %>"
-							propsTransformer="admin/js/KBDropdownPropsTransformer"
+							propsTransformer="{KBDropdownPropsTransformer} from knowledge-base-web"
 						/>
 					</li>
 				</ul>

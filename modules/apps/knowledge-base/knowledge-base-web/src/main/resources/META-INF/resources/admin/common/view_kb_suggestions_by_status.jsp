@@ -103,7 +103,7 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 				<clay:dropdown-actions
 					aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 					dropdownItems="<%= kbDropdownItemsProvider.getKBCommentDropdownItems(kbArticle, kbComment) %>"
-					propsTransformer="admin/js/KBDropdownPropsTransformer"
+					propsTransformer="{KBDropdownPropsTransformer} from knowledge-base-web"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

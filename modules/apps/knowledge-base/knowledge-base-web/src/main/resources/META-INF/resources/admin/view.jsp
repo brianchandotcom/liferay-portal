@@ -39,7 +39,7 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 		infoPanelId="infoPanelId"
 		itemsTotal="<%= kbAdminManagementToolbarDisplayContext.getTotal() %>"
 		orderDropdownItems="<%= kbAdminManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
-		propsTransformer="admin/js/ManagementToolbarPropsTransformer"
+		propsTransformer="{ManagementToolbarPropsTransformer} from knowledge-base-web"
 		searchActionURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSearchURL()) %>"
 		searchContainerId="kbObjects"
 		selectable="<%= true %>"
@@ -156,14 +156,14 @@ String kbArticleSuccessMessage = GetterUtil.getString(MultiSessionMessages.get(r
 				"message", kbArticleSuccessMessage
 			).build()
 		%>'
-		module="admin/js/utils/openToast"
+		module="{openToast} from knowledge-base-web"
 	/>
 </c:if>
 
 <c:if test="<%= MultiSessionErrors.contains(liferayPortletRequest, DuplicateLockException.class.getName()) %>">
 	<div>
 		<react:component
-			module="admin/js/components/LockedArticleModal"
+			module="{LockedArticleModal} from knowledge-base-web"
 		/>
 	</div>
 </c:if>

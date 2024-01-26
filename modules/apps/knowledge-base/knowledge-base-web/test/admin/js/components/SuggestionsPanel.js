@@ -8,7 +8,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import SuggestionsPanel from '../../../../src/main/resources/META-INF/resources/admin/js/components/SuggestionsPanel';
+import SuggestionsPanel from '../../../../src/main/resources/META-INF/resources/js/admin/components/SuggestionsPanel';
 
 const EMPTY_STATE_TEXT = 'there-are-no-suggestions';
 

@@ -14,7 +14,7 @@ KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNav
 <div>
 	<react:component
 		componentId="moveObjectModalId"
-		module="admin/js/components/MoveModal"
+		module="{MoveModal} from knowledge-base-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"items", kbAdminNavigationDisplayContext.getKBFolderDataJSONArray()

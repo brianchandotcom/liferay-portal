@@ -14,4 +14,7 @@ public class CPAttachmentFileEntryConstants {
 
 	public static final int TYPE_OTHER = 1;
 
+	public static final String TYPE_VIDEO_EXTERNAL_SHORTCUT =
+		"DL_VIDEO_EXTERNAL_SHORTCUT";
+
 }

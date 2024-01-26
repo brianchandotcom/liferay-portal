@@ -7,11 +7,13 @@ package com.liferay.layout.seo.internal;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
+import com.liferay.layout.seo.internal.configuration.LayoutSEOGeneralGroupConfiguration;
 import com.liferay.layout.seo.internal.util.AlternateURLMapperProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -75,6 +77,15 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		String layoutTitle = _getPageTitle(
 			layout, portletId, tilesTitle, titleListMergeable,
 			subtitleListMergeable, locale);
+
+		LayoutSEOGeneralGroupConfiguration layoutSEOGeneralGroupConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				LayoutSEOGeneralGroupConfiguration.class, layout.getGroupId());
+
+		if (layoutSEOGeneralGroupConfiguration.showOnlyLayoutTitle()) {
+			return layoutTitle;
+		}
+
 		String siteAndCompanyName = _getPageTitleSuffix(layout, companyName);
 
 		return _merge(layoutTitle, siteAndCompanyName);
@@ -304,6 +315,9 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

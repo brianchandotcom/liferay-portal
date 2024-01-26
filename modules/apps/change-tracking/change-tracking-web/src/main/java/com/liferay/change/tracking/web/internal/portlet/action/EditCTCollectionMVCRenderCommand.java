@@ -6,6 +6,7 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionTemplateLocalService;
@@ -16,6 +17,9 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -51,6 +55,22 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 		long ctCollectionId = ParamUtil.getLong(
 			renderRequest, "ctCollectionId");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			if (ctCollectionId != 0) {
+				_ctCollectionModelResourcePermission.check(
+					themeDisplay.getPermissionChecker(), ctCollectionId,
+					ActionKeys.UPDATE);
+			}
+		}
+		catch (Exception exception) {
+			SessionErrors.add(renderRequest, exception.getClass());
+
+			return "/publications/error.jsp";
+		}
+
 		renderRequest.setAttribute(
 			CTWebKeys.CT_COLLECTION,
 			_ctCollectionLocalService.fetchCTCollection(ctCollectionId));
@@ -64,9 +84,6 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		List<CTCollectionTemplate> ctCollectionTemplates =
 			_ctCollectionTemplateLocalService.getCTCollectionTemplates(
@@ -110,6 +127,12 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.change.tracking.model.CTCollection)"
+	)
+	private ModelResourcePermission<CTCollection>
+		_ctCollectionModelResourcePermission;
 
 	@Reference
 	private CTCollectionTemplateLocalService _ctCollectionTemplateLocalService;

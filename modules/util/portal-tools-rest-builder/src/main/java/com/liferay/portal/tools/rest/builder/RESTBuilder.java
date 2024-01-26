@@ -381,7 +381,7 @@ public class RESTBuilder {
 			String validationErrorMessagesString = StringUtil.merge(
 				validationErrorMessages, StringPool.NEW_LINE);
 
-			throw new RuntimeException(
+			throw new OpenAPIValidatorException(
 				"OpenAPI validation errors:\n" + validationErrorMessagesString);
 		}
 

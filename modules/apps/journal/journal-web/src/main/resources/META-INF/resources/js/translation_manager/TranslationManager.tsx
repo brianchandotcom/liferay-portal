@@ -45,7 +45,7 @@ export default function TranslationManager({
 				.filter((input) => input.value)
 				.map(
 					(input) =>
-						input.dataset.languageId as Liferay.Language.Locale
+						input.dataset.languageid as Liferay.Language.Locale
 				);
 
 			return {

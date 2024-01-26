@@ -92,15 +92,7 @@ test('Create, edit and delete editor config contributor client extension', async
 	await clientExtensionsPage.itemDeleteButton.click();
 });
 
-/**
- * This test requires manual setup:
- *
- *     1. Run `gradle build` in /workspaces/liferay-sample-workspace/client-extensions/liferay-sample-editor-config-contributor
- *     2. Copy `liferay-sample-editor-config-contributor.zip` from /dist to @LIFERAY_HOME/osgi/client-extensions
- *
- * We are skipping the test until we automate these steps.
- */
-test.skip('Add a toolbar button to a CKEditor, by applying editor config contributor client extension', async ({
+test('Add a toolbar button to a CKEditor, by applying editor config contributor client extension', async ({
 	apiHelpers,
 	newEditorConfigContributorPage,
 }) => {

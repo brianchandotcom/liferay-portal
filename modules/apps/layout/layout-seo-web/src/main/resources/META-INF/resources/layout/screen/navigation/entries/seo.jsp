@@ -84,7 +84,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 								</div>
 
 								<react:component
-									module="js/seo/display_page_templates/SeoMapping"
+									module="{SeoMapping} from layout-seo-web"
 									props="<%= layoutsSEODisplayContext.getSEOMappingData() %>"
 									servletContext="<%= application %>"
 								/>
@@ -142,7 +142,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 								</c:choose>
 
 								<liferay-frontend:component
-									module="js/seo/toggleCanonicalURLFields"
+									module="{toggleCanonicalURLFields} from layout-seo-web"
 									servletContext="<%= application %>"
 								/>
 
@@ -154,7 +154,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 
 								<div>
 									<react:component
-										module="js/seo/PreviewSeo"
+										module="{PreviewSeo} from layout-seo-web"
 										props="<%= layoutsSEODisplayContext.getSEOPreviewSeoProperties() %>"
 										servletContext="<%= application %>"
 									/>
@@ -215,7 +215,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 			</clay:sheet>
 
 			<liferay-frontend:component
-				module="js/seo/toggleSitemapFields"
+				module="{toggleSitemapFields} from layout-seo-web"
 				servletContext="<%= application %>"
 			/>
 		</c:if>

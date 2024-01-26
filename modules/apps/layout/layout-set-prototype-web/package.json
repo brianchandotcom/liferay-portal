@@ -7,6 +7,7 @@
 		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},
+	"main": "js/index.js",
 	"name": "layout-set-prototype-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

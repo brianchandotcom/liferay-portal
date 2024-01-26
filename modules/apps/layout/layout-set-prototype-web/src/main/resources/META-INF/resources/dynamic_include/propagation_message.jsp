@@ -21,6 +21,6 @@ PropagationMessageDisplayContext propagationMessageDisplayContext = new Propagat
 
 	<react:component
 		data="<%= propagationMessageDisplayContext.getData() %>"
-		module="js/dynamic_include/PropagationMessage"
+		module="{PropagationMessage} from layout-set-prototype-web"
 	/>
 </li>

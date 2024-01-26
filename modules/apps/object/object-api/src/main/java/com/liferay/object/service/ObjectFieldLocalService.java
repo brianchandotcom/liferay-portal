@@ -442,7 +442,8 @@ public interface ObjectFieldLocalService
 		throws PortalException;
 
 	public void validateRequired(
-			long objectFieldId, String businessType, boolean required)
+			String businessType, boolean objectDefinitionApproved,
+			ObjectField oldObjectField, boolean required)
 		throws PortalException;
 
 }

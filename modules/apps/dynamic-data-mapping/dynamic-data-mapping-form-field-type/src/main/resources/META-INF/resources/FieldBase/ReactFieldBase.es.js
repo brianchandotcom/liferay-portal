@@ -217,6 +217,8 @@ export function FieldBase({
 
 			return (
 				<input
+					data-field-name={fieldName}
+					data-languageid={locale}
 					key={locale}
 					name={name.replace(editingLanguageId, locale)}
 					type="hidden"
@@ -224,7 +226,7 @@ export function FieldBase({
 				/>
 			);
 		});
-	}, [localizedValue, editingLanguageId, name, type]);
+	}, [localizedValue, editingLanguageId, fieldName, name, type]);
 
 	const renderLabel =
 		(label && showLabel) || hideField || repeatable || required || tooltip;

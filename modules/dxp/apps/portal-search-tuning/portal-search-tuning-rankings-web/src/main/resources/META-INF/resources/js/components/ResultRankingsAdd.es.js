@@ -42,7 +42,12 @@ const SCOPE_INFO = {
 	},
 };
 
-function ResultRankingsAdd({cancelURL, formName, selectSitesURL}) {
+function ResultRankingsAdd({
+	cancelURL,
+	enterpriseSearchEnabled = true,
+	formName,
+	selectSitesURL,
+}) {
 	const [errors, setErrors] = useState({});
 	const [groupName, setGroupName] = useState('');
 	const [scopeType, setScopeType] = useState(SCOPE_TYPES.EVERYTHING);
@@ -54,6 +59,10 @@ function ResultRankingsAdd({cancelURL, formName, selectSitesURL}) {
 	const alignElementRef = useRef();
 
 	const {namespace} = useContext(NamespaceContext);
+
+	const scopeItemsList = enterpriseSearchEnabled
+		? [SCOPE_TYPES.EVERYTHING, SCOPE_TYPES.SITE, SCOPE_TYPES.SXP_BLUEPRINT]
+		: [SCOPE_TYPES.EVERYTHING, SCOPE_TYPES.SITE];
 
 	const _getErrors = (searchQuery, scopeType, scope) => {
 		const errors = {};
@@ -197,13 +206,7 @@ function ResultRankingsAdd({cancelURL, formName, selectSitesURL}) {
 							alignElementRef.current.clientWidth + 'px',
 					}}
 				>
-					<ClayDropDown.ItemList
-						items={[
-							SCOPE_TYPES.EVERYTHING,
-							SCOPE_TYPES.SITE,
-							SCOPE_TYPES.SXP_BLUEPRINT,
-						]}
-					>
+					<ClayDropDown.ItemList items={scopeItemsList}>
 						{(item) => (
 							<ClayDropDown.Item
 								key={item}
@@ -378,6 +381,7 @@ function ResultRankingsAdd({cancelURL, formName, selectSitesURL}) {
 
 export default function ({
 	cancelURL,
+	enterpriseSearchEnabled,
 	formName,
 	learnResources,
 	namespace = '',
@@ -388,6 +392,7 @@ export default function ({
 			<NamespaceContext.Provider value={{namespace}}>
 				<ResultRankingsAdd
 					cancelURL={cancelURL}
+					enterpriseSearchEnabled={enterpriseSearchEnabled}
 					formName={formName}
 					selectSitesURL={selectSitesURL}
 				/>

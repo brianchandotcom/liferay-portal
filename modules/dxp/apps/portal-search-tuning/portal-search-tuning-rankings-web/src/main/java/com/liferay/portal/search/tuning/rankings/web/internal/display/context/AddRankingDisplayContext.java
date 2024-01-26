@@ -9,10 +9,12 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.learn.LearnMessageUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.search.experiences.SXPBlueprintTitleProvider;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.util.Map;
@@ -37,6 +39,8 @@ public class AddRankingDisplayContext {
 	public Map<String, Object> getProps() {
 		return HashMapBuilder.<String, Object>put(
 			"cancelURL", ParamUtil.getString(_renderRequest, "redirect")
+		).put(
+			"enterpriseSearchEnabled", getEnterpriseSearchEnabled()
 		).put(
 			"formName", "addResultRankingsFm"
 		).put(
@@ -64,6 +68,22 @@ public class AddRankingDisplayContext {
 			}
 		).build();
 	}
+
+	protected boolean getEnterpriseSearchEnabled() {
+		SXPBlueprintTitleProvider sxpBlueprintTitleProvider =
+			_sxpBlueprintTitleProviderSnapshot.get();
+
+		if (sxpBlueprintTitleProvider == null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static final Snapshot<SXPBlueprintTitleProvider>
+		_sxpBlueprintTitleProviderSnapshot = new Snapshot<>(
+			RankingPortletDisplayBuilder.class, SXPBlueprintTitleProvider.class,
+			null, true);
 
 	private final ItemSelector _itemSelector;
 	private final RenderRequest _renderRequest;

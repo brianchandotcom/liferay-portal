@@ -1,0 +1,77 @@
+/* generated using openapi-typescript-codegen -- do no edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+import type { Attachment } from './Attachment';
+import type { Catalog } from './Catalog';
+import type { Category } from './Category';
+import type { CustomField } from './CustomField';
+import type { Diagram } from './Diagram';
+import type { LinkedProduct } from './LinkedProduct';
+import type { MappedProduct } from './MappedProduct';
+import type { Pin } from './Pin';
+import type { ProductAccountGroup } from './ProductAccountGroup';
+import type { ProductChannel } from './ProductChannel';
+import type { ProductConfiguration } from './ProductConfiguration';
+import type { ProductOption } from './ProductOption';
+import type { ProductShippingConfiguration } from './ProductShippingConfiguration';
+import type { ProductSpecification } from './ProductSpecification';
+import type { ProductSubscriptionConfiguration } from './ProductSubscriptionConfiguration';
+import type { ProductTaxConfiguration } from './ProductTaxConfiguration';
+import type { ProductVirtualSettings } from './ProductVirtualSettings';
+import type { RelatedProduct } from './RelatedProduct';
+import type { Sku } from './Sku';
+import type { Status } from './Status';
+export type Product = {
+    readonly actions?: Record<string, Record<string, string>>;
+    active: boolean;
+    attachments?: Array<Attachment>;
+    readonly catalog?: Catalog;
+    catalogId: number;
+    categories?: Array<Category>;
+    createDate?: string;
+    customFields?: Array<CustomField>;
+    defaultSku?: string;
+    description?: Record<string, string>;
+    diagram?: Diagram;
+    displayDate?: string;
+    expando?: Record<string, any>;
+    expirationDate?: string;
+    externalReferenceCode?: string;
+    readonly id?: number;
+    images?: Array<Attachment>;
+    linkedProducts?: Array<LinkedProduct>;
+    mappedProducts?: Array<MappedProduct>;
+    metaDescription?: Record<string, string>;
+    metaKeyword?: Record<string, string>;
+    metaTitle?: Record<string, string>;
+    modifiedDate?: string;
+    name: Record<string, string>;
+    neverExpire?: boolean;
+    pins?: Array<Pin>;
+    productAccountGroupFilter?: boolean;
+    productAccountGroups?: Array<ProductAccountGroup>;
+    productChannelFilter?: boolean;
+    productChannels?: Array<ProductChannel>;
+    productConfiguration?: ProductConfiguration;
+    readonly productId?: number;
+    productOptions?: Array<ProductOption>;
+    productSpecifications?: Array<ProductSpecification>;
+    productStatus?: number;
+    productType: string;
+    readonly productTypeI18n?: string;
+    productVirtualSettings?: ProductVirtualSettings;
+    relatedProducts?: Array<RelatedProduct>;
+    shippingConfiguration?: ProductShippingConfiguration;
+    shortDescription?: Record<string, string>;
+    readonly skuFormatted?: string;
+    skus?: Array<Sku>;
+    subscriptionConfiguration?: ProductSubscriptionConfiguration;
+    tags?: Array<string>;
+    taxConfiguration?: ProductTaxConfiguration;
+    readonly thumbnail?: string;
+    urls?: Record<string, string>;
+    readonly version?: number;
+    readonly workflowStatusInfo?: Status;
+};
+

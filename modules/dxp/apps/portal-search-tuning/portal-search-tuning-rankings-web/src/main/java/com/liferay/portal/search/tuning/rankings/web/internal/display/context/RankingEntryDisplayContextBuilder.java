@@ -16,11 +16,8 @@ import java.util.List;
  */
 public class RankingEntryDisplayContextBuilder {
 
-	public RankingEntryDisplayContextBuilder(
-		Ranking ranking, String sxpBlueprintTitle) {
-
+	public RankingEntryDisplayContextBuilder(Ranking ranking) {
 		_ranking = ranking;
-		_sxpBlueprintTitle = sxpBlueprintTitle;
 	}
 
 	public RankingEntryDisplayContext build() {
@@ -39,6 +36,14 @@ public class RankingEntryDisplayContextBuilder {
 		_setUid(rankingEntryDisplayContext);
 
 		return rankingEntryDisplayContext;
+	}
+
+	public RankingEntryDisplayContextBuilder sxpBlueprintTitle(
+		String sxpBlueprintTitle) {
+
+		_sxpBlueprintTitle = sxpBlueprintTitle;
+
+		return this;
 	}
 
 	private String _getSizeString(List<?> list) {
@@ -112,6 +117,6 @@ public class RankingEntryDisplayContextBuilder {
 	}
 
 	private final Ranking _ranking;
-	private final String _sxpBlueprintTitle;
+	private String _sxpBlueprintTitle;
 
 }

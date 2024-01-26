@@ -190,6 +190,12 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 		await this.validate(build, id);
 	}
 
+	public async archiveUpdate(id: number, archived: boolean | undefined) {
+		await this.fetcher.patch(`/builds/${id}`, {
+			archived: !archived,
+		});
+	}
+
 	public async getCurrentCaseIds(buildId: string | number) {
 		const response = await this.fetcher(
 			`/caseresults?filter=${SearchBuilder.eq(

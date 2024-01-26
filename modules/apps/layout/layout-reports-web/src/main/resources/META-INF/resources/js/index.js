@@ -15,7 +15,7 @@ import '../css/main.scss';
 import SidebarHeader from './components/SidebarHeader';
 import {ConstantsContextProvider} from './context/ConstantsContext';
 
-export default function App(props) {
+export function App(props) {
 	const {isPanelStateOpen} = props;
 	const [panelIsOpen, setPanelIsOpen] = useState(isPanelStateOpen);
 

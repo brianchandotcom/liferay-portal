@@ -29,6 +29,7 @@
 			"test/js/mocks/*"
 		]
 	},
+	"main": "js/index.js",
 	"name": "layout-reports-web",
 	"private": true,
 	"scripts": {

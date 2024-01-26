@@ -7,7 +7,6 @@ package com.liferay.layout.reports.web.internal.product.navigation.control.menu;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ButtonTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
 import com.liferay.journal.model.JournalArticle;
@@ -334,8 +333,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(
-					_npmResolver.resolveModuleName("layout-reports-web") +
-						"/js/App"),
+					"{App} from layout-reports-web"),
 				HashMapBuilder.<String, Object>put(
 					"isPanelStateOpen",
 					isPanelStateOpen(
@@ -409,9 +407,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	@Reference
 	private LayoutReportsGooglePageSpeedConfigurationProvider
 		_layoutReportsGooglePageSpeedConfigurationProvider;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference
 	private Portal _portal;

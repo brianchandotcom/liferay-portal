@@ -36,6 +36,15 @@ export class ObjectApiHelper {
 		);
 	}
 
+	async getObjectEntryByExternalReferenceCode(
+		applicationName: string,
+		externalReferenceCode: string
+	) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${applicationName}/by-external-reference-code/${externalReferenceCode}`
+		);
+	}
+
 	async postObjectEntry(data: DataObject, applicationName: string) {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${applicationName}/`,

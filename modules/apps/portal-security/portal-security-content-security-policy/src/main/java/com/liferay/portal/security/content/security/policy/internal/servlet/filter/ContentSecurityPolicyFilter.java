@@ -130,22 +130,21 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 				StringBundler sb = new StringBundler(
 					(matcherArray.length * 2) - 1);
 
+				int open = 0;
 				boolean overwrite = false;
 
-				int open = 0;
-
 				for (int i = 0; i < (matcherArray.length - 1); i++) {
-					sb.append(matcherArray[i]);
-
 					open += StringUtil.count(
 						matcherArray[i], CharPool.OPEN_CURLY_BRACE);
-
 					open -= StringUtil.count(
 						matcherArray[i], CharPool.CLOSE_CURLY_BRACE);
 
+					sb.append(matcherArray[i]);
+
 					if (open > 0) {
-						sb.append(escapedNonceAttribute);
 						overwrite = true;
+
+						sb.append(escapedNonceAttribute);
 					}
 					else {
 						sb.append(nonceAttribute);

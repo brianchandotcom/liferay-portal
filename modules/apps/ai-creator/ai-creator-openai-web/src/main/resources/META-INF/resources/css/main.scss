@@ -8,3 +8,29 @@ html#{$cadmin-selector} .cadmin .portlet-ai-creator-openai textarea {
 	min-height: 10em;
 	white-space: pre-line;
 }
+
+html#{$cadmin-selector} .cadmin .portlet-ai-creator-openai .card-page {
+	.card-page-item-asset {
+		padding: 0;
+	}
+
+	@media only screen and (min-width: 480px) and (max-width: 768px) {
+		margin: auto -0.5rem;
+
+		.card-page-item-asset {
+			padding: 0.5rem;
+			max-width: 50%;
+			flex-basis: 50%;
+		}
+	}
+
+	@media only screen and (min-width: 768px) {
+		margin: auto -0.25rem;
+
+		.card-page-item-asset {
+			padding: 0.25rem;
+			max-width: 25%;
+			flex-basis: 25%;
+		}
+	}
+}

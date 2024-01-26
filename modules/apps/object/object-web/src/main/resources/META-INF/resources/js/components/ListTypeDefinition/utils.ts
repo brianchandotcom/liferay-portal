@@ -3,12 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export function fixLocaleKeys(name_i18n: LocalizedValue<string>) {
-	const newTranslationsObject: {[key: string]: string} = {};
+import {translationsNormalizer} from 'frontend-js-components-web';
+
+export function fixLocaleKeys(name_i18n: {[key: string]: string}) {
+	const newTranslationsObject: LocalizedValue<string> = {};
 
 	for (const [key, value] of Object.entries(name_i18n)) {
-		newTranslationsObject[key.replace(/-/g, '_')] = value;
+		newTranslationsObject[
+			key.replace(/-/g, '_') as Liferay.Language.Locale
+		] = value;
 	}
 
-	return newTranslationsObject;
+	return translationsNormalizer(newTranslationsObject);
 }

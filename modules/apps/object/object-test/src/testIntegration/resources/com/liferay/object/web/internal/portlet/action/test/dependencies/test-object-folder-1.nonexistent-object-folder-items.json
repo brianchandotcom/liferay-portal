@@ -9,9 +9,9 @@
 		"update": {
 		}
 	},
-	"externalReferenceCode": "OBJECTFOLDER1",
+	"externalReferenceCode": "TESTOBJECTFOLDER1",
 	"label": {
-		"en_US": "Empty Object Folder"
+		"en_US": "Test Object Folder 1"
 	},
 	"name": "TestObjectFolder1",
 	"objectFolderItems": [
@@ -19,14 +19,14 @@
 			"linkedObjectDefinition": true,
 			"objectDefinition": {
 			},
-			"objectDefinitionExternalReferenceCode": "nonExistentObjectDefinitionERC",
+			"objectDefinitionExternalReferenceCode": "NONEXISTENTTESTOBJECTDEFINITION1",
 			"positionX": 50,
 			"positionY": 35
 		},
 		{
 			"linkedObjectDefinition": false,
 			"objectDefinition": null,
-			"objectDefinitionExternalReferenceCode": "nonExistentObjectDefinition2ERC",
+			"objectDefinitionExternalReferenceCode": "NONEXISTENTTESTOBJECTDEFINITION2",
 			"positionX": 400,
 			"positionY": 92
 		}

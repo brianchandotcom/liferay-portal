@@ -17,7 +17,7 @@
 	"enableCategorization": true,
 	"enableComments": false,
 	"label": {
-		"en_US": "Object Definition"
+		"en_US": "Test Object Definition"
 	},
 	"name": "TestObjectDefinition",
 	"objectActions": [
@@ -51,7 +51,7 @@
 			"objectActionExecutorKey": "notification",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
-				"notificationTemplateExternalReferenceCode": "NOTIFICATION-TEMPLATE-ERC-001"
+				"notificationTemplateExternalReferenceCode": "TESTNOTIFICATIONTEMPLATE1"
 			},
 			"status": {
 				"code": 0,
@@ -185,14 +185,14 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "ERC-001",
+			"externalReferenceCode": "TESTOBJECTFIELD1",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Text Field 1"
+				"en_US": "Test Object Field 1"
 			},
-			"name": "textField1",
+			"name": "testObjectField1",
 			"objectFieldSettings": [
 			],
 			"required": false,
@@ -203,14 +203,14 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "ERC-002",
+			"externalReferenceCode": "TESTOBJECTFIELD2",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Text Field 2"
+				"en_US": "Test Object Field 2"
 			},
-			"name": "textField2",
+			"name": "testObjectField2",
 			"objectFieldSettings": [
 			],
 			"required": false,
@@ -240,7 +240,7 @@
 								{
 									"objectLayoutColumns": [
 										{
-											"objectFieldName": "textField1",
+											"objectFieldName": "testObjectField1",
 											"priority": 0,
 											"size": 12
 										}
@@ -250,7 +250,7 @@
 								{
 									"objectLayoutColumns": [
 										{
-											"objectFieldName": "textField2",
+											"objectFieldName": "testObjectField2",
 											"priority": 0,
 											"size": 12
 										}
@@ -293,14 +293,14 @@
 					"label": {
 						"en_US": "alias1"
 					},
-					"objectFieldName": "textField1",
+					"objectFieldName": "testObjectField1",
 					"priority": 0
 				},
 				{
 					"label": {
 						"en_US": "alias2"
 					},
-					"objectFieldName": "textField2",
+					"objectFieldName": "testObjectField2",
 					"priority": 1
 				}
 			],
@@ -320,12 +320,12 @@
 			],
 			"objectViewSortColumns": [
 				{
-					"objectFieldName": "textField1",
+					"objectFieldName": "testObjectField1",
 					"priority": 0,
 					"sortOrder": "asc"
 				},
 				{
-					"objectFieldName": "textField2",
+					"objectFieldName": "testObjectField2",
 					"priority": 1,
 					"sortOrder": "asc"
 				}
@@ -335,7 +335,7 @@
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "Object Definitions"
+		"en_US": "Test Object Definitions"
 	},
 	"portlet": false,
 	"scope": "company",
@@ -345,5 +345,5 @@
 		"label_i18n": "Draft"
 	},
 	"system": false,
-	"titleObjectFieldName": "textField1"
+	"titleObjectFieldName": "testObjectField1"
 }

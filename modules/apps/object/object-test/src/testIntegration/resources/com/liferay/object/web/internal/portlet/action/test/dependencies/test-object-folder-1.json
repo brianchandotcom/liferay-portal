@@ -9,9 +9,9 @@
 		"update": {
 		}
 	},
-	"externalReferenceCode": "OBJECTFOLDER1",
+	"externalReferenceCode": "TESTOBJECTFOLDER1",
 	"label": {
-		"en_US": "Empty Object Folder"
+		"en_US": "Test Object Folder 1"
 	},
 	"name": "TestObjectFolder1",
 	"objectFolderItems": [

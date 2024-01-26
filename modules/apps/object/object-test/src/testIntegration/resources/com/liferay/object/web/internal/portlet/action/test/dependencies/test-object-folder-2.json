@@ -9,11 +9,11 @@
 		"update": {
 		}
 	},
-	"externalReferenceCode": "OBJECTFOLDER3",
+	"externalReferenceCode": "TESTOBJECTFOLDER2",
 	"label": {
-		"en_US": "Object Folder 3"
+		"en_US": "Test Object Folder 2"
 	},
-	"name": "TestObjectFolder3",
+	"name": "TestObjectFolder2",
 	"objectFolderItems": [
 		{
 			"linkedObjectDefinition": false,
@@ -36,12 +36,12 @@
 				"enableComments": false,
 				"enableLocalization": false,
 				"enableObjectEntryHistory": false,
-				"externalReferenceCode": "OBJECTDEFINITION1",
+				"externalReferenceCode": "TESTOBJECTDEFINITION1",
 				"label": {
-					"en_US": "Object Definition 1"
+					"en_US": "Test Object Definition 1"
 				},
 				"modifiable": true,
-				"name": "ObjectDefinition1",
+				"name": "TestObjectDefinition1",
 				"objectActions": [
 				],
 				"objectFields": [
@@ -174,15 +174,15 @@
 					{
 						"DBType": "String",
 						"businessType": "Text",
-						"externalReferenceCode": "TextObjectFieldERC",
+						"externalReferenceCode": "TESTOBJECTFIELD1",
 						"indexed": true,
 						"indexedAsKeyword": false,
 						"indexedLanguageId": "en_US",
 						"label": {
-							"en_US": "Text Object Field"
+							"en_US": "Test Object Field1"
 						},
 						"localized": false,
-						"name": "textObjectField",
+						"name": "testObjectField1",
 						"objectFieldSettings": [
 						],
 						"readOnly": "false",
@@ -194,42 +194,42 @@
 						"unique": false
 					}
 				],
-				"objectFolderExternalReferenceCode": "OBJECTFOLDER3",
+				"objectFolderExternalReferenceCode": "TESTOBJECTFOLDER2",
 				"objectLayouts": [
 				],
 				"objectRelationships": [
 					{
 						"deletionType": "prevent",
-						"externalReferenceCode": "ObjectRelationship1ERC",
+						"externalReferenceCode": "TESTOBJECTRELATIONSHIP1",
 						"label": {
-							"en_US": "Object Relationship 1"
+							"en_US": "Test Object Relationship 1"
 						},
-						"name": "objectRelationship1",
-						"objectDefinitionExternalReferenceCode1": "OBJECTDEFINITION1",
-						"objectDefinitionExternalReferenceCode2": "OBJECTDEFINITION2",
+						"name": "testObjectRelationship1",
+						"objectDefinitionExternalReferenceCode1": "TESTOBJECTDEFINITION1",
+						"objectDefinitionExternalReferenceCode2": "TESTOBJECTDEFINITION2",
 						"objectDefinitionModifiable2": true,
-						"objectDefinitionName2": "OBJECTDEFINITION2",
+						"objectDefinitionName2": "TESTOBJECTDEFINITION2",
 						"objectDefinitionSystem2": false,
 						"objectField": {
 							"DBType": "Long",
 							"businessType": "Relationship",
-							"externalReferenceCode": "ObjectRelationship1ObjectFieldERC",
+							"externalReferenceCode": "TESTOBJECTRELATIONSHIP1OBJECTFIELD",
 							"indexed": true,
 							"indexedAsKeyword": false,
 							"indexedLanguageId": "",
 							"label": {
-								"en_US": "Object Relationship 1 Object Field"
+								"en_US": "Test Object Relationship 1 Object Field"
 							},
 							"localized": false,
-							"name": "r_objectRelationship1_c_objectDefinition1Id",
+							"name": "r_testObjectRelationship1_c_testObjectDefinition1Id",
 							"objectFieldSettings": [
 								{
 									"name": "objectDefinition1ShortName",
-									"value": "ObjectDefinition1"
+									"value": "TestObjectDefinition1"
 								},
 								{
 									"name": "objectRelationshipERCObjectFieldName",
-									"value": "r_objectRelationship1_c_objectDefinition1ERC"
+									"value": "r_testObjectRelationship1_c_testObjectDefinition1ERC"
 								}
 							],
 							"readOnly": "false",
@@ -255,10 +255,10 @@
 				"panelCategoryKey": "",
 				"parameterRequired": false,
 				"pluralLabel": {
-					"en_US": "Object Definition 1s"
+					"en_US": "Test Object Definitions 1"
 				},
 				"portlet": true,
-				"restContextPath": "/o/c/objectdefinition1s",
+				"restContextPath": "/o/c/testobjectdefinition1s",
 				"scope": "company",
 				"status": {
 					"code": 0,
@@ -268,13 +268,13 @@
 				"system": false,
 				"titleObjectFieldName": "id"
 			},
-			"objectDefinitionExternalReferenceCode": "OBJECTDEFINITION1",
+			"objectDefinitionExternalReferenceCode": "TESTOBJECTDEFINITION1",
 			"positionX": 432,
 			"positionY": 591
 		},
 		{
 			"linkedObjectDefinition": true,
-			"objectDefinitionExternalReferenceCode": "OBJECTDEFINITION2",
+			"objectDefinitionExternalReferenceCode": "TESTOBJECTDEFINITION2",
 			"positionX": 850,
 			"positionY": 408
 		}

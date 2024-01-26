@@ -60,71 +60,70 @@ public class ObjectFolderExportImportTest extends BaseExportImportTestCase {
 	@Test
 	public void testExportImportObjectFolder() throws Exception {
 		testExportImport(
-			"object_folder_1.json", "object_folder_1.json", "OBJECTFOLDER1",
-			"TestObjectFolder1");
+			"test-object-folder-1.json", "test-object-folder-1.json",
+			"TESTOBJECTFOLDER1", "TestObjectFolder1");
 
 		_assertObjectFolder(
 			"TestObjectFolder1", 0, Collections.emptyList(),
 			Collections.emptyList());
 
 		testExportImport(
-			"object_folder_2.json", "object_folder_1.json", "OBJECTFOLDER1",
+			"test-object-folder-1.nonexistent-object-folder-items.json",
+			"test-object-folder-1.json", "TESTOBJECTFOLDER1",
 			"TestObjectFolder1");
 
 		_assertObjectFolder(
 			"TestObjectFolder1", 0, Collections.emptyList(),
 			Collections.emptyList());
 
-		// Import and export an object folder that has a linked object that
-		// doesn't exist
+		// Import and export an object folder that has a linked object
+		// definition that doesn't exist
 
 		testExportImport(
-			"object_folder_3.json", "object_folder_3.json", "OBJECTFOLDER3",
-			"TestObjectFolder3");
+			"test-object-folder-2.json", "test-object-folder-2.json",
+			"TESTOBJECTFOLDER2", "TestObjectFolder2");
 
 		_assertObjectFolder(
-			"TestObjectFolder3", 2,
-			Collections.singletonList("OBJECTDEFINITION2"),
-			Collections.singletonList("OBJECTDEFINITION1"));
+			"TestObjectFolder2", 2,
+			Collections.singletonList("TESTOBJECTDEFINITION2"),
+			Collections.singletonList("TESTOBJECTDEFINITION1"));
 		_assertDefaultObjectFolder(
-			Collections.singletonList("OBJECTDEFINITION1"),
-			Collections.singletonList("OBJECTDEFINITION2"));
+			Collections.singletonList("TESTOBJECTDEFINITION1"),
+			Collections.singletonList("TESTOBJECTDEFINITION2"));
 
 		// Import and export an object folder that moves an object definition
 		// between object folders during import
 
 		testExportImport(
-			"object_folder_4.json", "object_folder_4.json", "OBJECTFOLDER4",
-			"TestObjectFolder4");
+			"test-object-folder-3.json", "test-object-folder-3.json",
+			"TESTOBJECTFOLDER3", "TestObjectFolder3");
 
 		_assertObjectFolder(
-			"TestObjectFolder3", 2,
-			Collections.singletonList("OBJECTDEFINITION2"),
-			Collections.singletonList("OBJECTDEFINITION1"));
+			"TestObjectFolder2", 2,
+			Collections.singletonList("TESTOBJECTDEFINITION2"),
+			Collections.singletonList("TESTOBJECTDEFINITION1"));
 		_assertObjectFolder(
-			"TestObjectFolder4", 2,
-			Collections.singletonList("OBJECTDEFINITION1"),
-			Collections.singletonList("OBJECTDEFINITION2"));
-		_assertDefaultObjectFolder(
-			Collections.emptyList(), Collections.emptyList());
+			"TestObjectFolder3", 2,
+			Collections.singletonList("TESTOBJECTDEFINITION1"),
+			Collections.singletonList("TESTOBJECTDEFINITION2"));
 
 		// Import and export an object folder with duplicate external reference
 		// code
 
 		testExportImport(
-			"object_folder_1.json", "object_folder_1.json", "OBJECTFOLDER4",
-			"TestObjectFolder1");
+			"test-object-folder-1.json", "test-object-folder-1.json",
+			"TESTOBJECTFOLDER3", "TestObjectFolder1");
 
 		_assertObjectFolder(
-			"TestObjectFolder3", 2,
-			Collections.singletonList("OBJECTDEFINITION2"),
-			Collections.singletonList("OBJECTDEFINITION1"));
+			"TestObjectFolder2", 2,
+			Collections.singletonList("TESTOBJECTDEFINITION2"),
+			Collections.singletonList("TESTOBJECTDEFINITION1"));
 		_assertObjectFolder(
-			"TestObjectFolder4", 0, Collections.emptyList(),
+			"TestObjectFolder3", 0, Collections.emptyList(),
 			Collections.emptyList());
 		_assertDefaultObjectFolder(
-			Collections.singletonList("OBJECTDEFINITION1"),
-			Collections.singletonList("OBJECTDEFINITION2"));
+			Collections.singletonList("TESTOBJECTDEFINITION1"),
+			Collections.singletonList("TESTOBJECTDEFINITION2"));
 	}
 
 	@Override

@@ -9,11 +9,11 @@
 		"update": {
 		}
 	},
-	"externalReferenceCode": "OBJECTFOLDER4",
+	"externalReferenceCode": "TESTOBJECTFOLDER3",
 	"label": {
-		"en_US": "Object Folder 4"
+		"en_US": "Test Object Folder 3"
 	},
-	"name": "TestObjectFolder4",
+	"name": "TestObjectFolder3",
 	"objectFolderItems": [
 		{
 			"linkedObjectDefinition": false,
@@ -38,12 +38,12 @@
 				"enableComments": false,
 				"enableLocalization": false,
 				"enableObjectEntryHistory": false,
-				"externalReferenceCode": "OBJECTDEFINITION2",
+				"externalReferenceCode": "TESTOBJECTDEFINITION2",
 				"label": {
-					"en_US": "Object Definition 2"
+					"en_US": "Test Object Definition 2"
 				},
 				"modifiable": true,
-				"name": "ObjectDefinition2",
+				"name": "TestObjectDefinition2",
 				"objectActions": [
 				],
 				"objectFields": [
@@ -174,7 +174,7 @@
 						"unique": false
 					}
 				],
-				"objectFolderExternalReferenceCode": "OBJECTFOLDER4",
+				"objectFolderExternalReferenceCode": "TESTOBJECTFOLDER3",
 				"objectLayouts": [
 				],
 				"objectRelationships": [
@@ -186,10 +186,10 @@
 				"panelCategoryKey": "",
 				"parameterRequired": false,
 				"pluralLabel": {
-					"en_US": "Object Definition 2s"
+					"en_US": "Test Object Definitions 2"
 				},
 				"portlet": true,
-				"restContextPath": "/o/c/objectdefinition2s",
+				"restContextPath": "/o/c/testobjectdefinition2s",
 				"scope": "company",
 				"status": {
 					"code": 2,
@@ -199,13 +199,13 @@
 				"system": false,
 				"titleObjectFieldName": "id"
 			},
-			"objectDefinitionExternalReferenceCode": "OBJECTDEFINITION2",
+			"objectDefinitionExternalReferenceCode": "TESTOBJECTDEFINITION2",
 			"positionX": 300,
 			"positionY": 350
 		},
 		{
 			"linkedObjectDefinition": true,
-			"objectDefinitionExternalReferenceCode": "OBJECTDEFINITION1",
+			"objectDefinitionExternalReferenceCode": "TESTOBJECTDEFINITION1",
 			"positionX": 350,
 			"positionY": 400
 		}

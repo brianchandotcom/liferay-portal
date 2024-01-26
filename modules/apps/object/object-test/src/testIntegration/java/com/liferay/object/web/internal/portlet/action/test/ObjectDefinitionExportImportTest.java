@@ -53,13 +53,13 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 			"AccountEntry");
 
 		testExportImport(
-			"account_entry_system_object_definition.json",
-			"account_entry_system_object_definition.json",
+			"test-account-entry-system-object-definition.json",
+			"test-account-entry-system-object-definition.json",
 			objectDefinition.getExternalReferenceCode(), "AccountEntry");
 
 		testExportImport(
-			"custom_object_definition.json", "custom_object_definition.json",
-			null, "TestObjectDefinition");
+			"test-object-definition.json", "test-object-definition.json", null,
+			"TestObjectDefinition");
 	}
 
 	@Override

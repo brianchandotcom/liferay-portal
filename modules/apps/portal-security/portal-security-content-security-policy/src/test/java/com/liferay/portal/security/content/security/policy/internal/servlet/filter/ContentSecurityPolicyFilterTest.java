@@ -41,6 +41,35 @@ public class ContentSecurityPolicyFilterTest {
 	}
 
 	@Test
+	public void testJSAdjoiningHTMLContent() {
+		ContentSecurityPolicyFilter contentSecurityPolicyFilter =
+			new ContentSecurityPolicyFilter();
+
+		String jsObjectLiteralContextStart = StringBundler.concat(
+			"<script>index.render('', {\\\"", StringUtil.randomString(),
+			"\\\":\\\"", StringUtil.randomString(), "\\\", ",
+			"\\\"content\\\":\\\"");
+		String jsObjectLiteralContextEnd =
+			"\\\"}, '" + StringUtil.randomString() + "');</script>";
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				_HTML_CONTEXT_START, jsObjectLiteralContextStart,
+				jsObjectLiteralContextEnd,
+				String.join(" nonce=\"" + _NONCE + "\"", _HTML_CONTENT),
+				jsObjectLiteralContextStart, jsObjectLiteralContextEnd,
+				_HTML_CONTEXT_END),
+			contentSecurityPolicyFilter.rewriteContent(
+				_NONCE,
+				StringBundler.concat(
+					_HTML_CONTEXT_START, jsObjectLiteralContextStart,
+					jsObjectLiteralContextEnd,
+					String.join(StringPool.BLANK, _HTML_CONTENT),
+					jsObjectLiteralContextStart, jsObjectLiteralContextEnd,
+					_HTML_CONTEXT_END)));
+	}
+
+	@Test
 	public void testJSProvidedHTMLContent() {
 		ContentSecurityPolicyFilter contentSecurityPolicyFilter =
 			new ContentSecurityPolicyFilter();

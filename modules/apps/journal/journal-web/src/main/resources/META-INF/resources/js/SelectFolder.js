@@ -17,8 +17,8 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 	const handleSelectionChange = (item) => {
 		getOpener().Liferay.fire(itemSelectorSaveEvent, {
 			data: {
-				folderId: item.id,
-				folderName: item.name,
+				resourceid: item.id,
+				resourcename: item.name,
 			},
 		});
 	};

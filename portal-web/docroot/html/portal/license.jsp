@@ -700,6 +700,8 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 		<br />
 
+		<input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
+
 		<c:choose>
 			<c:when test="<%= orderProducts != null %>">
 				<input class="btn btn-secondary" type="submit" value="<liferay-ui:message key="register" />" />

@@ -729,7 +729,8 @@ public class ObjectFieldLocalServiceImpl
 
 	@Override
 	public void validateRequired(
-			long objectFieldId, String businessType, boolean required)
+			String businessType, boolean objectDefinitionApproved,
+			ObjectField oldObjectField, boolean required)
 		throws PortalException {
 
 		if (Objects.equals(
@@ -740,18 +741,29 @@ public class ObjectFieldLocalServiceImpl
 			throw new ObjectFieldRequiredException();
 		}
 
-		if (!StringUtil.equals(
-				businessType,
-				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
-
+		if (oldObjectField == null) {
 			return;
 		}
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipPersistence.fetchByObjectFieldId2(objectFieldId);
+		if (StringUtil.equals(
+				businessType,
+				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
-		if ((objectRelationship != null) && objectRelationship.isEdge() &&
-			!required) {
+			ObjectRelationship objectRelationship =
+				_objectRelationshipPersistence.fetchByObjectFieldId2(
+					oldObjectField.getObjectFieldId());
+
+			if ((objectRelationship != null) && objectRelationship.isEdge() &&
+				!required) {
+
+				throw new ObjectFieldRequiredException();
+			}
+
+			_validateObjectRelationshipDeletionType(
+				oldObjectField.getObjectFieldId(), required);
+		}
+		else if (objectDefinitionApproved && !oldObjectField.isRequired() &&
+				 required) {
 
 			throw new ObjectFieldRequiredException();
 		}
@@ -1346,10 +1358,6 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		if (Validator.isNotNull(newObjectField.getRelationshipType())) {
-			_validateObjectRelationshipDeletionType(objectFieldId, required);
-
-			newObjectField.setRequired(required);
-
 			if (!Objects.equals(newObjectField.getDBType(), dbType) ||
 				!Objects.equals(newObjectField.getName(), name)) {
 

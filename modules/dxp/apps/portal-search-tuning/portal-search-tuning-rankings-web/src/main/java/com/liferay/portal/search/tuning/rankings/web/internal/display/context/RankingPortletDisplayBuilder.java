@@ -309,17 +309,26 @@ public class RankingPortletDisplayBuilder {
 		SXPBlueprintTitleProvider sxpBlueprintTitleProvider =
 			_sxpBlueprintTitleProviderSnapshot.get();
 
-		String sxpBlueprintTitle = StringPool.BLANK;
+		if ((sxpBlueprintTitleProvider == null) &&
+			!Validator.isBlank(
+				ranking.getSXPBlueprintExternalReferenceCode())) {
 
-		if (sxpBlueprintTitleProvider != null) {
-			sxpBlueprintTitle = sxpBlueprintTitleProvider.getSXPBlueprintTitle(
-				_portal.getCompanyId(_httpServletRequest),
-				_language.getLanguageId(_httpServletRequest),
-				ranking.getSXPBlueprintExternalReferenceCode());
+			return null;
 		}
 
 		RankingEntryDisplayContextBuilder rankingEntryDisplayContextBuilder =
-			new RankingEntryDisplayContextBuilder(ranking, sxpBlueprintTitle);
+			new RankingEntryDisplayContextBuilder(ranking);
+
+		if ((sxpBlueprintTitleProvider != null) &&
+			!Validator.isBlank(
+				ranking.getSXPBlueprintExternalReferenceCode())) {
+
+			rankingEntryDisplayContextBuilder.sxpBlueprintTitle(
+				sxpBlueprintTitleProvider.getSXPBlueprintTitle(
+					_portal.getCompanyId(_httpServletRequest),
+					_language.getLanguageId(_httpServletRequest),
+					ranking.getSXPBlueprintExternalReferenceCode()));
+		}
 
 		return rankingEntryDisplayContextBuilder.build();
 	}

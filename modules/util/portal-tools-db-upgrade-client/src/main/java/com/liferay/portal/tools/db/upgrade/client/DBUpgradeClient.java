@@ -27,8 +27,10 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -182,16 +184,6 @@ public class DBUpgradeClient {
 
 		commands.add(javaHome + "/bin/java");
 
-		if (_isGTJDK8()) {
-			_jvmOpts.add("--add-opens=java.base/java.lang=ALL-UNNAMED");
-			_jvmOpts.add("--add-opens=java.base/java.lang.reflect=ALL-UNNAMED");
-			_jvmOpts.add("--add-opens=java.base/java.net=ALL-UNNAMED");
-			_jvmOpts.add(
-				"--add-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED");
-			_jvmOpts.add("--add-opens=java.base/sun.util.calendar=ALL-UNNAMED");
-			_jvmOpts.add("--add-opens=jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED");
-		}
-
 		_jvmOpts.add("-Dexternal-properties=portal-upgrade.properties");
 		_jvmOpts.add(
 			"-Dliferay.shielded.container.lib.portal.dir=" +
@@ -213,6 +205,12 @@ public class DBUpgradeClient {
 		processBuilder.directory(_jarDir);
 
 		processBuilder.redirectErrorStream(true);
+
+		Map<String, String> environment = processBuilder.environment();
+
+		if (_isGTJDK8()) {
+			environment.put("JDK_JAVA_OPTIONS", _buildJdkJavaOptions());
+		}
 
 		Process process = processBuilder.start();
 
@@ -363,6 +361,21 @@ public class DBUpgradeClient {
 		for (File dir : dirs) {
 			_appendClassPath(sb, dir);
 		}
+	}
+
+	private String _buildJdkJavaOptions() {
+		StringBuilder sb = new StringBuilder();
+
+		for (String reflectionOpen : _reflectionOpens) {
+			sb.append(reflectionOpen);
+			sb.append(' ');
+		}
+
+		if (!_reflectionOpens.isEmpty()) {
+			sb.setLength(sb.length() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private void _close(Closeable closeable) throws IOException {
@@ -790,6 +803,13 @@ public class DBUpgradeClient {
 	private static final Pattern _gogoShellAddressPattern = Pattern.compile(
 		"^([^\\:]+):([0-9]{1,5})$");
 	private static File _jarDir;
+	private static final List<String> _reflectionOpens = Arrays.asList(
+		"--add-opens=java.base/java.lang=ALL-UNNAMED",
+		"--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
+		"--add-opens=java.base/java.net=ALL-UNNAMED",
+		"--add-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED",
+		"--add-opens=java.base/sun.util.calendar=ALL-UNNAMED",
+		"--add-opens=jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED");
 
 	static {
 		ProtectionDomain protectionDomain =

@@ -31,6 +31,8 @@ public class FacetCollectorFactory {
 			return new RangeFacetCollector(name, dateRangeAggregate.buckets());
 		}
 
+		// Order matters
+
 		if (object instanceof RangeAggregate) {
 			RangeAggregate rangeAggregate = aggregate.range();
 

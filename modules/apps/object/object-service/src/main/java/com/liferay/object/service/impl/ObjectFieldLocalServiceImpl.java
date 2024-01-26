@@ -729,12 +729,23 @@ public class ObjectFieldLocalServiceImpl
 
 	@Override
 	public void validateRequired(
-			long objectFieldId, String businessType, boolean required)
+			String businessType, boolean objectDefinitionApproved,
+			ObjectField oldObjectField, boolean required)
 		throws PortalException {
 
 		if (Objects.equals(
 				businessType,
 				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT) &&
+			required) {
+
+			throw new ObjectFieldRequiredException();
+		}
+
+		if (oldObjectField == null) {
+			return;
+		}
+
+		if (objectDefinitionApproved && !oldObjectField.isRequired() &&
 			required) {
 
 			throw new ObjectFieldRequiredException();
@@ -748,7 +759,8 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		ObjectRelationship objectRelationship =
-			_objectRelationshipPersistence.fetchByObjectFieldId2(objectFieldId);
+			_objectRelationshipPersistence.fetchByObjectFieldId2(
+				oldObjectField.getObjectFieldId());
 
 		if ((objectRelationship != null) && objectRelationship.isEdge() &&
 			!required) {

@@ -913,7 +913,8 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP, readOnly,
 			readOnlyConditionExpression, required);
 		_objectFieldLocalService.validateRequired(
-			0, ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP, required);
+			ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP,
+			objectDefinition2.isApproved(), null, required);
 
 		ObjectField objectField = _objectFieldPersistence.create(
 			counterLocalService.increment());

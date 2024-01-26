@@ -828,7 +828,8 @@ public class ObjectFieldLocalServiceImpl
 		_validateName(0, objectDefinition, name, system);
 		validateReadOnlyAndReadOnlyConditionExpression(
 			businessType, readOnly, readOnlyConditionExpression, required);
-		validateRequired(0, businessType, required);
+		validateRequired(
+			businessType, objectDefinition.isApproved(), null, required);
 		_validateState(required, state);
 
 		ObjectField objectField = objectFieldPersistence.create(
@@ -1340,11 +1341,14 @@ public class ObjectFieldLocalServiceImpl
 		_validateLocalized(
 			businessType, localized, oldObjectField.getObjectDefinition(),
 			required);
-		validateRequired(objectFieldId, businessType, required);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				newObjectField.getObjectDefinitionId());
+
+		validateRequired(
+			businessType, objectDefinition.isApproved(), oldObjectField,
+			required);
 
 		if (Objects.equals(
 				businessType,

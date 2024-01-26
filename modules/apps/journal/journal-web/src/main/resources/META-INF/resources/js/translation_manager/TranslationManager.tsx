@@ -31,6 +31,37 @@ export default function TranslationManager({
 		fieldToTranslations(initialFields)
 	);
 
+	const updateTranslations = (fields: Fields) => {
+		if (!fields) {
+			return;
+		}
+
+		const newTranslations = Object.keys(fields).map((fieldName) => {
+			const languages = Array.from(
+				document.querySelectorAll<HTMLInputElement>(
+					`[type="hidden"][data-field-name="${fieldName}"]`
+				)
+			)
+				.filter((input) => input.value)
+				.map(
+					(input) =>
+						input.dataset.languageId as Liferay.Language.Locale
+				);
+
+			return {
+				fieldName,
+				languages,
+			};
+		});
+
+		setTranslations(newTranslations);
+	};
+
+	const updateTranslationStatus = useCallback(
+		() => updateTranslations(fields),
+		[fields]
+	);
+
 	const getLocalizableFields = useCallback(() => {
 		const ddmFields = Array.from(
 			document.querySelectorAll<HTMLInputElement>(
@@ -43,49 +74,25 @@ export default function TranslationManager({
 		const fields = {...initialFields, ...ddmFields};
 
 		setFields(fields);
+
+		updateTranslations(fields);
 	}, [initialFields]);
 
 	useEffect(() => {
-		const updateTranslations = () => {
-			if (!fields) {
-				return;
-			}
-
-			const newTranslations = Object.keys(fields).map((fieldName) => {
-				const languages = Array.from(
-					document.querySelectorAll<HTMLInputElement>(
-						`[type="hidden"][data-field-name="${fieldName}"]`
-					)
-				)
-					.filter((input) => input.value)
-					.map(
-						(input) =>
-							input.dataset.languageId as Liferay.Language.Locale
-					);
-
-				return {
-					fieldName,
-					languages,
-				};
-			});
-
-			setTranslations(newTranslations);
-		};
-
 		if (fields) {
 			Liferay.on(
 				'inputLocalized:updateTranslationStatus',
-				updateTranslations
+				updateTranslationStatus
 			);
 		}
 
 		return () => {
 			Liferay.detach(
 				'inputLocalized:updateTranslationStatus',
-				updateTranslations
+				updateTranslationStatus
 			);
 		};
-	}, [fields]);
+	}, [fields, updateTranslationStatus]);
 
 	useEffect(() => {
 		Liferay.fire('inputLocalized:localeChanged', {

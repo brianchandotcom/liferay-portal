@@ -1382,6 +1382,7 @@ public class ObjectFieldLocalServiceImpl
 		newObjectField.setReadOnlyConditionExpression(
 			_getReadOnlyConditionExpression(
 				newObjectField.getReadOnly(), readOnlyConditionExpression));
+		newObjectField.setRequired(required);
 
 		if (objectDefinition.isApproved()) {
 			newObjectField = objectFieldPersistence.update(newObjectField);
@@ -1405,7 +1406,6 @@ public class ObjectFieldLocalServiceImpl
 
 		newObjectField.setLocalized(localized);
 		newObjectField.setName(name);
-		newObjectField.setRequired(required);
 		newObjectField.setState(state);
 
 		newObjectField = objectFieldPersistence.update(newObjectField);

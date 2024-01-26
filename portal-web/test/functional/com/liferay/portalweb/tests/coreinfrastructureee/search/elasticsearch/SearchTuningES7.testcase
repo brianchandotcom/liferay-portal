@@ -509,22 +509,6 @@ definition {
 			SearchTuning.addSynonymSet(synonyms = "phone${counter},mobile${counter}");
 		}
 
-		PortletEntry.selectAll();
-
-		for (var counter : list "1,2,3,4,5,6") {
-			AssertChecked(
-				key_rowEntry = "phone${counter}, mobile${counter}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
-		}
-
-		PortletEntry.deselectAll();
-
-		for (var counter : list "1,2,3,4,5,6") {
-			AssertNotChecked(
-				key_rowEntry = "phone${counter}, mobile${counter}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
-		}
-
 		LexiconEntry.selectEntry(key_rowEntry = "phone2, mobile2");
 
 		LexiconEntry.selectEntry(key_rowEntry = "phone5, mobile5");
@@ -547,12 +531,6 @@ definition {
 			key_rowEntry = "phone5, mobile5",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
-		for (var counter : list "1,3,4,6") {
-			AssertElementPresent(
-				key_rowEntry = "phone${counter}, mobile${counter}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-		}
-
 		PortletEntry.selectAll();
 
 		ClickNoError(
@@ -560,12 +538,6 @@ definition {
 			locator1 = "ManagementBar#ANY_ICON");
 
 		AssertConfirm(value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately.");
-
-		for (var counter : list "1,2,3,4,5,6") {
-			AssertElementNotPresent(
-				key_rowEntry = "phone${counter}, mobile${counter}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-		}
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",

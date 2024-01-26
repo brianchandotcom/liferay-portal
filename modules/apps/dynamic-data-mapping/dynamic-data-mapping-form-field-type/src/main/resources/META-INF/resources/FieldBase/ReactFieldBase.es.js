@@ -211,7 +211,10 @@ export function FieldBase({
 		}
 
 		return Object.entries(localizedValue).map(([locale, value]) => {
-			if (locale === editingLanguageId) {
+			if (
+				!Liferay.FeatureFlags['LPS-114700'] &&
+				locale === editingLanguageId
+			) {
 				return null;
 			}
 

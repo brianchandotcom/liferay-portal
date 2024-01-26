@@ -35,21 +35,16 @@ export class KnowledgeBasePage {
 
 	async goToCreateNewArticle() {
 		await this.goToFoldersAndArticles();
-		await this.newButton.waitFor();
-		await this.newButton.click();
-		await this.basicArticleMenuItem.waitFor();
-		await this.basicArticleMenuItem.click();
+		await showUI({
+			autoClick: true,
+			target: this.basicArticleMenuItem,
+			trigger: this.newButton,
+		});
 	}
 
 	private async goToFoldersAndArticles() {
 		await this.goto();
-
-		const foldersAndArticlesButtonVisible =
-			await this.foldersAndArticlesButton.isVisible();
-
-		if (foldersAndArticlesButtonVisible) {
-			await this.foldersAndArticlesButton.click();
-		}
+		await this.foldersAndArticlesButton.click();
 	}
 
 	async deleteKnowledgeBaseArticle(title: string) {

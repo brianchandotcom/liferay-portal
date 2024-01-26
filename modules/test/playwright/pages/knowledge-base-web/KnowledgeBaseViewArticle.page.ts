@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {showUI} from '../../utils/showUI';
 import {KnowledgeBasePage} from './KnowledgeBase.page';
 
 export class KnowledgeBaseViewArticlePage {
@@ -14,24 +15,23 @@ export class KnowledgeBaseViewArticlePage {
 	knowledgeBasePage: KnowledgeBasePage;
 
 	constructor(page: Page) {
-		this.showActionsButton = page
-			.getByLabel('Show Actions')
-			.and(page.locator('[aria-haspopup]'));
+		this.showActionsButton = page.getByLabel('Show Actions');
 		this.knowledgeBasePage = new KnowledgeBasePage(page);
 		this.page = page;
 	}
 
 	async goto(title: string) {
 		await this.knowledgeBasePage.goto();
-		await this.page.getByRole('link', {name: title}).waitFor();
 		await this.page.getByRole('link', {name: title}).click();
 		await this.page.locator('.kb-article-title').getByText(title).waitFor();
 	}
 
 	async deleteKnowledgeBaseArticle(title: string) {
 		await this.goto(title);
-		await this.showActionsButton.waitFor();
-		await this.showActionsButton.click();
-		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
+		showUI({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Delete'}),
+			trigger: this.showActionsButton,
+		});
 	}
 }

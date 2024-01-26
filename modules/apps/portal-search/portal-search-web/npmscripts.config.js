@@ -10,8 +10,6 @@ module.exports = {
 				'**/config.js',
 				'**/date_facet.js',
 				'**/modified_facet.js',
-				'**/sort_configuration.js',
-				'**/sort_util.js',
 			],
 		},
 	},

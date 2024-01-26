@@ -12,6 +12,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -24,6 +25,8 @@ page import="com.liferay.portal.search.web.internal.sort.display.context.SortDis
 page import="com.liferay.portal.search.web.internal.sort.display.context.SortTermDisplayContext" %>
 
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 SortDisplayContext sortDisplayContext = (SortDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
@@ -85,26 +88,11 @@ SortPortletInstanceConfiguration sortPortletInstanceConfiguration = sortDisplayC
 	</c:otherwise>
 </c:choose>
 
-<aui:script use="liferay-search-sort-util">
-	AUI().ready('aui-base', 'node', 'event', (A) => {
-		A.one('#<portlet:namespace />sortSelection').on('change', () => {
-			var selections = [];
-
-			var sortSelect = A.one('#<portlet:namespace />sortSelection').get(
-				'value'
-			);
-
-			selections.push(sortSelect);
-
-			var key = A.one('#<portlet:namespace />sort-parameter-name').get(
-				'value'
-			);
-
-			document.location.search = Liferay.Search.SortUtil.updateQueryString(
-				key,
-				selections,
-				document.location.search
-			);
-		});
-	});
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).build()
+	%>'
+	module="js/SortUtil"
+/>

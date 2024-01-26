@@ -19,14 +19,6 @@
 						path: 'modified_facet.js',
 						requires: ['aui-form-validator'],
 					},
-					'liferay-search-sort-configuration': {
-						path: 'sort_configuration.js',
-						requires: ['aui-node'],
-					},
-					'liferay-search-sort-util': {
-						path: 'sort_util.js',
-						requires: [],
-					},
 				},
 				root: MODULE_PATH + '/js/',
 			},

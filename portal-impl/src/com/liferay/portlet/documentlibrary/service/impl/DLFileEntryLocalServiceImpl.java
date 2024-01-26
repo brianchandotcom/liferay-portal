@@ -293,6 +293,7 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntry.setFileEntryTypeId(fileEntryTypeId);
 		dlFileEntry.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
 		dlFileEntry.setSize(size);
+		dlFileEntry.setDisplayDate(displayDate);
 		dlFileEntry.setExpirationDate(expirationDate);
 		dlFileEntry.setReviewDate(reviewDate);
 
@@ -308,8 +309,8 @@ public class DLFileEntryLocalServiceImpl
 			user, dlFileEntry, fileName, extension, mimeType, title,
 			description, changeLog, StringPool.BLANK, fileEntryTypeId,
 			ddmFormValuesMap, DLFileEntryConstants.VERSION_DEFAULT, size,
-			expirationDate, reviewDate, WorkflowConstants.STATUS_DRAFT,
-			serviceContext);
+			displayDate, expirationDate, reviewDate,
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		// Folder
 
@@ -2200,8 +2201,8 @@ public class DLFileEntryLocalServiceImpl
 			String extension, String mimeType, String title, String description,
 			String changeLog, String extraSettings, long fileEntryTypeId,
 			Map<String, DDMFormValues> ddmFormValuesMap, String version,
-			long size, Date expirationDate, Date reviewDate, int status,
-			ServiceContext serviceContext)
+			long size, Date displayDate, Date expirationDate, Date reviewDate,
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		long fileVersionId = counterLocalService.increment();
@@ -2231,6 +2232,7 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setVersion(version);
 		dlFileVersion.setSize(size);
 		dlFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
+		dlFileVersion.setDisplayDate(displayDate);
 		dlFileVersion.setExpirationDate(expirationDate);
 		dlFileVersion.setReviewDate(reviewDate);
 		dlFileVersion.setStatus(status);
@@ -2439,6 +2441,7 @@ public class DLFileEntryLocalServiceImpl
 					oldDLFileVersion.getFileEntryTypeId(), null,
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
 					oldDLFileVersion.getSize(),
+					oldDLFileVersion.getDisplayDate(),
 					oldDLFileVersion.getExpirationDate(),
 					oldDLFileVersion.getReviewDate(),
 					WorkflowConstants.STATUS_DRAFT, serviceContext);

@@ -18,9 +18,9 @@ html#{$cadmin-selector} .cadmin .portlet-ai-creator-openai .card-page {
 		margin: auto -0.5rem;
 
 		.card-page-item-asset {
-			padding: 0.5rem;
-			max-width: 50%;
 			flex-basis: 50%;
+			max-width: 50%;
+			padding: 0.5rem;
 		}
 	}
 
@@ -28,9 +28,9 @@ html#{$cadmin-selector} .cadmin .portlet-ai-creator-openai .card-page {
 		margin: auto -0.25rem;
 
 		.card-page-item-asset {
-			padding: 0.25rem;
-			max-width: 25%;
 			flex-basis: 25%;
+			max-width: 25%;
+			padding: 0.25rem;
 		}
 	}
 }

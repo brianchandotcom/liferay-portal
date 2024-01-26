@@ -151,6 +151,15 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 					RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
 					groupExternalReferenceCode));
 		}
+		else {
+			booleanQuery.addMustNotQueryClauses(
+				_queries.wildcard(
+					RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE,
+					StringPool.QUESTION + StringPool.STAR),
+				_queries.wildcard(
+					RankingFields.GROUP_EXTERNAL_REFERENCE_CODE,
+					StringPool.QUESTION + StringPool.STAR));
+		}
 
 		if (!Validator.isBlank(queryString)) {
 			booleanQuery.addFilterQueryClauses(

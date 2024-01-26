@@ -6,9 +6,16 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {headlessBuilderPagesTest} from '../../fixtures/headlessBuilderPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 
-export const test = mergeTests(apiHelpersTest, loginTest);
+export const test = mergeTests(
+	apiHelpersTest,
+	loginTest,
+	applicationsMenuPageTest,
+	headlessBuilderPagesTest
+);
 
 const basicApiApplication = {
 	apiApplicationToAPISchemas: [
@@ -189,125 +196,93 @@ const studentSubjectsApplication = {
 };
 
 test('can create post endpoint with different request and response schema', async ({
+	apiApplicationPage,
 	apiHelpers,
+	headlessBuilderPage,
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178642', true);
-
 	const subjectResponse = await apiHelpers.objectAdmin.postObjectDefinition(
 		subjectObjectDefinition
 	);
-
 	const studentResponse = await apiHelpers.objectAdmin.postObjectDefinition(
 		studentObjectDefinition
 	);
-
 	await apiHelpers.object.postObjectEntry(
 		studentSubjectsApplication,
 		'headless-builder/applications'
 	);
 
-	await page.goto(
-		'/group/guest/~/control_panel/manage?p_p_id=com_liferay_headless_builder_web_internal_portlet_HeadlessBuilderPortlet'
+	await headlessBuilderPage.goto();
+	await headlessBuilderPage.goToEditAPIApplication(
+		studentSubjectsApplication.title
 	);
-	await page.waitForLoadState();
-	await page
-		.getByRole('link', {name: studentSubjectsApplication.title})
-		.click();
-	await page.getByRole('button', {name: 'Endpoints'}).click();
-	await page.getByLabel('Add API Endpoint').click();
-	await page.getByLabel('Method').click();
-	await page.getByRole('menuitem', {name: 'POST'}).click();
-	await page.getByLabel('Select Scope').click();
-	await page.getByRole('menuitem', {name: 'Company'}).click();
-	await page.getByPlaceholder('Enter Path').click();
-	await page.getByPlaceholder('Enter Path').fill('student');
-	await page.getByRole('button', {name: 'Create'}).click();
-	await page.getByRole('tab', {name: 'Configuration'}).click();
-	await page.getByLabel('Request Body Schema').click();
-	await page
-		.getByRole('menuitem', {
-			name: studentSubjectsApplication.apiApplicationToAPISchemas[0].name,
-		})
-		.click();
-	await page.getByRole('button', {name: 'Select a Schema'}).click();
-	await page
-		.getByRole('menuitem', {
-			name: studentSubjectsApplication.apiApplicationToAPISchemas[1].name,
-		})
-		.click();
-	await page.getByRole('button', {name: 'Publish'}).click();
-
-	await page.goto(
-		`http://localhost:8080/o/api?endpoint=http://localhost:8080/o/c/${studentSubjectsApplication.baseURL}/openapi.json`
+	await apiApplicationPage.goToEndpointsTab();
+	await apiApplicationPage.addAPIEndpointButton.click();
+	await apiApplicationPage.setEndpointMethod('POST');
+	await apiApplicationPage.setEndpointScope('Company');
+	await apiApplicationPage.endpointPathTextBox.fill('student');
+	await apiApplicationPage.endpointCreateButton.click();
+	await apiApplicationPage.goToEndpointConfigurationTab();
+	await apiApplicationPage.selectEndpointRequestSchema(
+		studentSubjectsApplication.apiApplicationToAPISchemas[0].name
 	);
-
+	await apiApplicationPage.selectEndpointResponseSchema(
+		studentSubjectsApplication.apiApplicationToAPISchemas[1].name
+	);
+	await apiApplicationPage.publishButton.click();
+	await page.goto(
+		`/o/api?endpoint=http://localhost:8080/o/c/${studentSubjectsApplication.baseURL}/openapi.json`
+	);
 	expect(page.getByLabel('post ​/student')).toBeDefined;
 
-	await page.goto('http://localhost:8080');
-
+	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		studentSubjectsApplication.externalReferenceCode
 	);
-
 	await apiHelpers.objectAdmin.deleteObjectRelationship(
 		studentResponse.objectRelationships[0].id
 	);
-
 	await apiHelpers.objectAdmin.deleteObjectDefinition(studentResponse.id);
-
 	await apiHelpers.objectAdmin.deleteObjectDefinition(subjectResponse.id);
-
 	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178642', false);
 });
 
 test('can create post method endpoint with company scope', async ({
+	apiApplicationPage,
 	apiHelpers,
+	headlessBuilderPage,
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178642', true);
-
 	await apiHelpers.object.postObjectEntry(
 		basicApiApplication,
 		'headless-builder/applications'
 	);
 
-	await page.goto(
-		'/group/guest/~/control_panel/manage?p_p_id=com_liferay_headless_builder_web_internal_portlet_HeadlessBuilderPortlet'
+	await headlessBuilderPage.goto();
+	await headlessBuilderPage.goToEditAPIApplication(basicApiApplication.title);
+	await apiApplicationPage.goToEndpointsTab();
+	await apiApplicationPage.addAPIEndpointButton.click();
+	await apiApplicationPage.setEndpointMethod('POST');
+	await apiApplicationPage.setEndpointScope('Company');
+	await apiApplicationPage.endpointPathTextBox.fill('test-post-endpoint');
+	await apiApplicationPage.endpointCreateButton.click();
+	await apiApplicationPage.goToEndpointConfigurationTab();
+	await apiApplicationPage.selectEndpointRequestSchema(
+		basicApiApplication.apiApplicationToAPISchemas[0].name
 	);
-	await page.waitForLoadState();
-	await page.getByRole('link', {name: basicApiApplication.title}).click();
-	await page.getByRole('button', {name: 'Endpoints'}).click();
-	await page.getByLabel('Add API Endpoint').click();
-	await page.getByLabel('Method').click();
-	await page.getByRole('menuitem', {name: 'POST'}).click();
-	await page.getByLabel('Select Scope').click();
-	await page.getByRole('menuitem', {name: 'Company'}).click();
-	await page.getByPlaceholder('Enter Path').click();
-	await page.getByPlaceholder('Enter Path').fill('test-post-endpoint');
-	await page.getByRole('button', {name: 'Create'}).click();
-	await page.getByRole('tab', {name: 'Configuration'}).click();
-	await page.getByLabel('Request Body Schema').click();
-	await page
-		.getByRole('menuitem', {
-			name: basicApiApplication.apiApplicationToAPISchemas[0].name,
-		})
-		.click();
-	await page.getByRole('button', {name: 'Publish'}).click();
-
+	await apiApplicationPage.publishButton.click();
 	await page.goto(
-		`http://localhost:8080/o/api?endpoint=http://localhost:8080/o/c/${basicApiApplication.baseURL}/openapi.json`
+		`/o/api?endpoint=http://localhost:8080/o/c/${basicApiApplication.baseURL}/openapi.json`
 	);
-
 	expect(page.getByLabel('post ​/test-post-endpoint')).toBeDefined;
 
-	await page.goto('http://localhost:8080');
-
+	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		basicApiApplication.externalReferenceCode
 	);
-
 	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178642', false);
 });

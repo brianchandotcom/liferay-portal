@@ -147,12 +147,12 @@ public class CommerceOrderItemModelListener
 					BigDecimal commerceShippedQuantity =
 						customerCommerceOrderItem.getShippedQuantity();
 
-					customerCommerceOrderItem.setShippedQuantity(
+					BigDecimal shippedQuantityBalance =
 						commerceShippedQuantity.subtract(
-							originalShippedQuantity
-						).add(
-							newShippedQuantity
-						));
+							originalShippedQuantity);
+
+					customerCommerceOrderItem.setShippedQuantity(
+						shippedQuantityBalance.add(newShippedQuantity));
 
 					update = true;
 				}

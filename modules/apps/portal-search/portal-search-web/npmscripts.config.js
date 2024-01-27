@@ -8,7 +8,6 @@ module.exports = {
 		bundler: {
 			ignore: [
 				'**/config.js',
-				'**/custom_filter.js',
 				'**/date_facet.js',
 				'**/modified_facet.js',
 				'**/sort_configuration.js',

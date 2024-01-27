@@ -11,10 +11,6 @@
 				combine: Liferay.AUI.getCombine(),
 				filter: Liferay.AUI.getFilterConfig(),
 				modules: {
-					'liferay-search-custom-filter': {
-						path: 'custom_filter.js',
-						requires: [],
-					},
 					'liferay-search-date-facet': {
 						path: 'date_facet.js',
 						requires: ['aui-form-validator'],

@@ -93,8 +93,7 @@ export function ProvideVersionDetailsPage({
 			newOptionId = await postOption(
 				isDXP ? getDxpOptionBody() : getTrialOptionBody()
 			);
-		}
-		else {
+		} else {
 			newOptionId = optionId ?? targetOption!.id;
 		}
 
@@ -182,23 +181,10 @@ export function ProvideVersionDetailsPage({
 		if (isDXP) {
 			if (sku === 'DEVELOPER') {
 				value = skuProductOptions.developerOptionId;
-			}
-			else if (sku === 'STANDARD') {
+			} else if (sku === 'STANDARD') {
 				value = skuProductOptions.standardOptionId;
 			}
-			else {
-				(payload.body as any).skuSubscriptionConfiguration = {
-					enable: true,
-					length: 30,
-					numberOfLength: 1,
-					overrideSubscriptionInfo: true,
-					subscriptionType: 'daily',
-				};
-
-				value = skuProductOptions.trialOptionId;
-			}
-		}
-		else {
+		} else {
 			value = skuProductOptions.noOptionId;
 		}
 

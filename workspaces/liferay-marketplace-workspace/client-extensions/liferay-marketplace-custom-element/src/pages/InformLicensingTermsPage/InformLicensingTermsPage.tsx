@@ -134,8 +134,7 @@ export function InformLicensingTermsPage({
 
 		if (trialSku) {
 			_skuTrialId = trialSku.id;
-		}
-		else if (!isDXP) {
+		} else if (!isDXP) {
 			const response = await createAppSKU({
 				appProductId,
 				body: {
@@ -150,13 +149,6 @@ export function InformLicensingTermsPage({
 							value: optionValuesId.yesOptionId,
 						},
 					],
-					skuSubscriptionConfiguration: {
-						enable: true,
-						length: 30,
-						numberOfLength: 1,
-						overrideSubscriptionInfo: true,
-						subscriptionType: 'daily',
-					},
 				},
 			});
 

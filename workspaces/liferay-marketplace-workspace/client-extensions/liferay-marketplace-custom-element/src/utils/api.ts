@@ -148,6 +148,16 @@ export async function createAppSKU({
 	return (await response.json()) as SKU;
 }
 
+export async function createContactSales(formData: ContactSales) {
+	const response = await fetch(`${baseURL}/o/c/contactsaleses/`, {
+		body: JSON.stringify(formData),
+		headers,
+		method: 'POST',
+	});
+
+	return response.json();
+}
+
 export async function createAttachment({
 	body,
 	externalReferenceCode,

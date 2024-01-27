@@ -65,8 +65,7 @@ const AccountSelection = ({
 					if (accountInfo.type === 'person') {
 						displayAccount = true;
 					}
-				}
-				else {
+				} else {
 					displayAccount = accountBrief.roleBriefs.some((roleBrief) =>
 						enabledAccountRoles.includes(roleBrief.name)
 					);
@@ -109,13 +108,13 @@ const AccountSelection = ({
 
 	return (
 		<div>
-			<div className="mb-4">
+			<p className="mb-4 secondary-text">
 				{`Accounts available for `}
 
 				<strong>{userAccount?.emailAddress}</strong>
 
 				{` (you)`}
-			</div>
+			</p>
 
 			<RadioCardList
 				contentList={accounts}
@@ -147,8 +146,14 @@ const AccountSelection = ({
 				</div>
 			) : (
 				<>
-					<span className="mr-1">Not seeing a specific Account?</span>
-					<ClayLink href="http://help.liferay.com/">
+					<span className="mr-1 secondary-text">
+						Not seeing a specific Account?
+					</span>
+
+					<ClayLink
+						className="font-weight-bold"
+						href="http://help.liferay.com/"
+					>
 						Contact Support
 					</ClayLink>
 				</>

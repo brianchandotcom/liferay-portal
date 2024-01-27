@@ -22,6 +22,7 @@ import ProductFooter from './components/Footer';
 import {LicenseSelector} from './components/LicenseSelector';
 import ProductCard from './components/ProductCard/ProductCard';
 import {SelectPaymentMethod} from './components/SelectPaymentMethod/SelectPaymentMethod';
+import ProjectSelection from './components/SelectProject';
 import StepWizard from './components/StepWizard/StepWizard';
 import {initialBillingAddress} from './constants/initialBillingAddress';
 import {LicenseType} from './enums/licenseType';
@@ -29,6 +30,7 @@ import {PaymentMethod} from './enums/paymentMethod';
 import {SkuOptions} from './enums/skuOptions';
 import {StepType} from './enums/stepType';
 import useGetAddresses from './hooks/useGetAddresses';
+import useGetResourceInfo from './hooks/useGetResourceInfo';
 import buildNewCart from './utils/buildNewCart';
 import {getProductOrderTypes} from './utils/getProductOrderTypes';
 import getProductPriceModel from './utils/getProductPriceModel';
@@ -39,6 +41,7 @@ import {postCartByPaymentMethod} from './utils/postCartByPaymentMethod';
 export type GetAppForm = {
 	account?: Account;
 	product?: DeliveryProduct;
+	project: string;
 	selectedPaymentMethod: PaymentMethod;
 	selectedSKU?: DeliverySKU;
 	selectedTimeline?: string;
@@ -94,7 +97,7 @@ const getProductBasePriceAndTrial = (product: DeliveryProduct) => {
 	};
 };
 
-const GetAppFlow = () => {
+const GetAppPage = () => {
 	const [loading, setLoading] = useState(false);
 	const {channel, myUserAccount} = useMarketplaceContext();
 	const [billingAddress, setBillingAddress] = useState<BillingAddress>(
@@ -112,15 +115,21 @@ const GetAppFlow = () => {
 	const {setValue, watch} = useForm<GetAppForm>({
 		defaultValues: {
 			account: undefined,
+			project: undefined,
 			selectedPaymentMethod: PaymentMethod.PAY,
 			selectedSKU: undefined,
 			selectedTimeline: '',
 		},
 	});
 
-	const {account, selectedPaymentMethod, selectedSKU} = watch();
+	const {account, project, selectedPaymentMethod, selectedSKU} = watch();
 
 	const {data: product} = useDeliveryProduct(getUrlParam('productId') ?? '');
+
+	const {hasResources, resourceRequest} = useGetResourceInfo({
+		product,
+		selectedProject: project,
+	});
 
 	const {basePrice, firstSku, trialSku} = getProductBasePriceAndTrial(
 		(product as unknown) as DeliveryProduct
@@ -172,6 +181,7 @@ const GetAppFlow = () => {
 				isFreeApp,
 				orderType,
 				product,
+				project,
 				purchaseOrderNumber,
 				selectedAccount: account,
 				selectedPaymentMethod,
@@ -217,16 +227,12 @@ const GetAppFlow = () => {
 			}
 
 			window.location.href = nextStepsCallbackURL;
-		}
-		catch (error) {
-
+		} catch (error) {
 			// console.error('Unable to handleGetApp', error);
-
 		}
 
 		setLoading(false);
 	}
-
 	const StepsInformation = useMemo(
 		() => ({
 			[StepType.ACCOUNT]: {
@@ -241,12 +247,40 @@ const GetAppFlow = () => {
 						userAccount={myUserAccount}
 					/>
 				),
-				nextStep: StepType.LICENSES,
+				nextStep:
+					productSpecificationValues === 'cloud'
+						? StepType.PROJECT
+						: StepType.LICENSES,
 				stepTitle: 'Account',
 				title: 'Account Selection',
 			},
+			...(productSpecificationValues === 'cloud' && {
+				[StepType.PROJECT]: {
+					backStep: StepType.ACCOUNT,
+					component: (
+						<ProjectSelection
+							onSelectProject={(project) =>
+								setValue(
+									'project',
+									(project as unknown) as string
+								)
+							}
+							resourceRequest={resourceRequest}
+							selectedAccount={account as Account}
+							selectedProject={project}
+							userAccount={myUserAccount}
+						/>
+					),
+					nextStep: StepType.LICENSES,
+					stepTitle: 'Project',
+					title: 'Project Selection',
+				},
+			}),
 			[StepType.LICENSES]: {
-				backStep: StepType.ACCOUNT,
+				backStep:
+					productSpecificationValues === 'cloud'
+						? StepType.PROJECT
+						: StepType.ACCOUNT,
 				component: (
 					<LicenseSelector
 						cartUtil={cartUtil}
@@ -303,7 +337,10 @@ const GetAppFlow = () => {
 			isFreeApp,
 			myUserAccount,
 			product,
+			productSpecificationValues,
+			project,
 			purchaseOrderNumber,
+			resourceRequest,
 			selectedPaymentMethod,
 			setValue,
 			sku,
@@ -378,6 +415,12 @@ const GetAppFlow = () => {
 		</div>
 	);
 
+	const footerDisabled =
+		loading ||
+		(step === StepType.PROJECT &&
+			productSpecificationValues === 'cloud' &&
+			!project);
+
 	return (
 		<>
 			<ProductCard
@@ -393,15 +436,18 @@ const GetAppFlow = () => {
 					{!isFreeApp && product && (
 						<div className="d-flex justify-content-center mb-6">
 							<StepWizard
-								className="col-8"
+								className="col-9"
 								currentStep={step}
 								stepsInformation={StepsInformation}
 								wizardSteps={{
 									[StepType.ACCOUNT]:
 										step !== StepType.ACCOUNT && !!account,
+									[StepType.PROJECT]:
+										step !== StepType.PROJECT && !!project,
 									[StepType.LICENSES]:
 										step !== StepType.LICENSES &&
-										licenseSelected,
+										licenseSelected &&
+										!!project,
 									[StepType.PAYMENT]: false,
 								}}
 							/>
@@ -412,18 +458,22 @@ const GetAppFlow = () => {
 						{StepsInformation[step]?.title}
 					</div>
 
-					<div>{StepsInformation[step].component}</div>
+					<div>{StepsInformation[step]?.component}</div>
 				</div>
+
 				<ProductFooter
 					addresses={addresses}
 					cartUtil={cartUtil}
-					disabled={loading}
+					disabled={footerDisabled}
 					enablePurchaseButton={enablePurchaseButton}
 					handleGetApp={handleGetApp}
+					hasResource={hasResources as boolean}
 					isFreeApp={isFreeApp}
 					licenseSelected={licenseSelected}
+					productSpecificationValues={productSpecificationValues}
 					selectedAccount={account}
 					selectedPaymentMethod={selectedPaymentMethod}
+					selectedProject={project}
 					selectedSKU={selectedSKU}
 					setStep={setStep}
 					step={step}
@@ -434,4 +484,4 @@ const GetAppFlow = () => {
 	);
 };
 
-export default GetAppFlow;
+export default GetAppPage;

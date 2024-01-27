@@ -655,6 +655,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testReadabilityImprovement() throws Exception {
+		test(
+			"ReadabilityImprovement.testjava",
+			"Create a new variable for the left hand side operand of the '+' " +
+				"operator for better readability",
+			14);
+	}
+
+	@Test
 	public void testRedundantCommas() throws Exception {
 		test("RedundantCommas.testjava");
 	}

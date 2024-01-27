@@ -5,8 +5,6 @@
 
 package com.liferay.portal.search.opensearch2.internal.util;
 
-import com.liferay.portal.kernel.util.Validator;
-
 import java.util.function.Supplier;
 
 /**
@@ -17,11 +15,13 @@ public class OpenSearchStringUtil {
 	@SafeVarargs
 	public static String getFirstStringValue(Supplier<Object>... suppliers) {
 		for (Supplier<Object> supplier : suppliers) {
-			String value = String.valueOf(supplier.get());
+			Object object = supplier.get();
 
-			if (!Validator.isBlank(value)) {
-				return value;
+			if (object == null) {
+				continue;
 			}
+
+			return String.valueOf(object);
 		}
 
 		return null;

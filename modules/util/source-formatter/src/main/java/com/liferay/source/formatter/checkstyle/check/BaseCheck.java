@@ -189,8 +189,6 @@ public abstract class BaseCheck extends AbstractCheck {
 		chainInformation.addMethodName(getMethodName(methodCallDetailAST));
 
 		while (true) {
-			chainInformation.setLastMethodCallDetailAST(methodCallDetailAST);
-
 			DetailAST parentDetailAST = methodCallDetailAST.getParent();
 
 			if (parentDetailAST.getType() != TokenTypes.DOT) {
@@ -1337,10 +1335,6 @@ public abstract class BaseCheck extends AbstractCheck {
 			_methodNames.add(methodName);
 		}
 
-		public DetailAST getLastMethodCallDetailAST() {
-			return _lastMethodCallDetailAST;
-		}
-
 		public List<String> getMethodNames() {
 			return _methodNames;
 		}
@@ -1349,17 +1343,10 @@ public abstract class BaseCheck extends AbstractCheck {
 			return _returnType;
 		}
 
-		public void setLastMethodCallDetailAST(
-			DetailAST lastMethodCallDetailAST) {
-
-			_lastMethodCallDetailAST = lastMethodCallDetailAST;
-		}
-
 		public void setReturnType(String returnType) {
 			_returnType = returnType;
 		}
 
-		private DetailAST _lastMethodCallDetailAST;
 		private List<String> _methodNames = new ArrayList<>();
 		private String _returnType;
 

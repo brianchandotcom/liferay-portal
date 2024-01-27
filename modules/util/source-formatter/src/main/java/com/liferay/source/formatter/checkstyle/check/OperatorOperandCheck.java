@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
@@ -90,6 +92,14 @@ public class OperatorOperandCheck extends BaseCheck {
 
 		if (detailAST.getType() != TokenTypes.METHOD_CALL) {
 			return;
+		}
+
+		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.METHOD_CALL);
+
+		if (!methodCallDetailASTList.isEmpty()) {
+			detailAST = methodCallDetailASTList.get(
+				methodCallDetailASTList.size() - 1);
 		}
 
 		if (isAtLineEnd(detailAST, getLine(detailAST.getLineNo() - 1))) {

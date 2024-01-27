@@ -1886,8 +1886,8 @@ rerun your task.
 		<attribute name="test.includes" />
 		<attribute name="test.type" />
 		<attribute default="" name="test.excludes" />
-		<attribute default="" name="junit.jvm.override" />
-		<attribute default="" name="junit.jvm.override.version" />
+		<attribute default="${junit.jvm.override}" name="junit.jvm.override" />
+		<attribute default="${junit.jvm.override.version}" name="junit.jvm.override.version" />
 
 		<sequential>
 			<lstopwatch action="start" name="test.cmd" />

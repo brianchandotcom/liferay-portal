@@ -158,9 +158,10 @@ public class StructuredContentResourceTest
 		Iterator<StructuredContent> iterator = structuredContents.iterator();
 
 		while (iterator.hasNext()) {
+			structuredContent = iterator.next();
+
 			_structuredContentResource.deleteStructuredContent(
-				iterator.next(
-				).getId());
+				structuredContent.getId());
 		}
 
 		StructuredContent draftStructuredContent1 = _addDraftStructuredContent(

@@ -18,9 +18,6 @@ import TemplateItemCreateFolder from './controls/template-item-create-folder/Tem
 import NewTemplateItem from './controls/template-item-create/NewTemplateItem';
 
 import './template-list.css';
-
-import ClayIcon from '@clayui/icon';
-
 import {
 	deleteFolderTemplateInformation,
 	getAvailableTemplatesPage,
@@ -62,7 +59,7 @@ const TemplateList = () => {
 	const [delta, setDelta] = useState(5);
 	const [isDeletingLoading, setIsDeletingLoading] = useState(false);
 	const [pageIndex, setPageIndex] = useState(1);
-	const [selectedTemplateId, setSelectedTemplateId] = useState();
+	const [selectedTemplate, setSelectedTemplate] = useState();
 	const [totalItems, setTotalItems] = useState(0);
 
 	const [modalState, dispatchModal] = useContext(ModalContext);
@@ -100,7 +97,7 @@ const TemplateList = () => {
 	};
 
 	const openDesignerModal = (template) => {
-		setSelectedTemplateId(template);
+		setSelectedTemplate(template);
 
 		onOpenChange(true);
 	};
@@ -160,6 +157,12 @@ const TemplateList = () => {
 			type: MODAL_OPEN,
 		});
 	};
+
+	useEffect(() => {
+		if (!open) {
+			setSelectedTemplate(null);
+		}
+	}, [open]);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -314,33 +317,12 @@ const TemplateList = () => {
 				</>
 			)}
 
-			{open && selectedTemplateId && (
+			{open && selectedTemplate && (
 				<ClayModal observer={observer} size="full-screen">
-					<ClayModal.Header withTitle={false}>
-						<ClayModal.ItemGroup>
-							<ClayModal.Item>
-								<ClayModal.TitleSection>
-									<ClayModal.Title>
-										Design Template
-									</ClayModal.Title>
-								</ClayModal.TitleSection>
-							</ClayModal.Item>
-						</ClayModal.ItemGroup>
-						<ClayButton
-							aria-label="close"
-							className="close"
-							displayType="unstyled"
-							onClick={() => {
-								onOpenChange(false);
-								setSelectedTemplateId(null);
-							}}
-						>
-							<ClayIcon symbol="times" />
-						</ClayButton>
-					</ClayModal.Header>
+					<ClayModal.Header>Design Template</ClayModal.Header>
 					<ClayModal.Body className="p-0">
 						<FolderStructureDesigner
-							templateId={selectedTemplateId.id}
+							templateId={selectedTemplate.id}
 						/>
 					</ClayModal.Body>
 				</ClayModal>

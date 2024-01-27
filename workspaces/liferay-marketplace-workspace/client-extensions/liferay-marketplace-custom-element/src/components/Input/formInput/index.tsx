@@ -58,7 +58,7 @@ const FormInput: React.FC<InputProps> = ({
 			required={required}
 		>
 			<ClayInput
-				className={classNames('rounded-xs', className)}
+				className={classNames('rounded-xs custom-input', className)}
 				component={type === 'textarea' ? 'textarea' : 'input'}
 				disabled={disabled}
 				id={id}

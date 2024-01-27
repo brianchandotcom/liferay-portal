@@ -18,6 +18,7 @@ interface RadioCardProps {
 	activeRadio: boolean | undefined;
 	description?: ReactNode;
 	disabled?: boolean;
+	fullTitle?: boolean;
 	imageURL?: string;
 	index?: number;
 	label?: string;
@@ -31,6 +32,7 @@ const NewRadioCard = ({
 	activeRadio,
 	description,
 	disabled,
+	fullTitle = false,
 	imageURL,
 	index,
 	label,
@@ -90,7 +92,9 @@ const NewRadioCard = ({
 						)}
 
 						<div
-							className={classNames('mt-2 col-10 mb-0', {
+							className={classNames('mt-2  mb-0', {
+								'col-10': !fullTitle,
+								'col-12 pr-0': fullTitle,
 								'pl-0': !leftRadio,
 							})}
 						>

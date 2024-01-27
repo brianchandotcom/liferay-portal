@@ -16,3 +16,12 @@
 	color: #6c6c75;
 	font-size: 12px;
 }
+
+.form-group {
+	.required {
+		&::after {
+			color: #da1414;
+			content: '*';
+		}
+	}
+}

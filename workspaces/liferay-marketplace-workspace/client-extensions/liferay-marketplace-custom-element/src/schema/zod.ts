@@ -6,6 +6,8 @@
 import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
 
+import i18n from '../i18n';
+
 const zodSchema = {
 	accountCreator: z.object({
 		accounts: z.any().array().optional(),
@@ -15,7 +17,9 @@ const zodSchema = {
 			.min(1, {message: 'Please enter a company name to continue'}),
 		emailAddress: z.string().email('Please fill in valid email'),
 		extension: z.string().optional(),
-		familyName: z.string().min(3, {message: 'This field is required'}),
+		familyName: z
+			.string()
+			.min(3, {message: i18n.translate('this-field-is-required')}),
 		givenName: z.string(),
 		industry: z
 			.string()
@@ -24,9 +28,10 @@ const zodSchema = {
 			code: z.string(),
 			flag: z.string(),
 		}),
-		phoneNumber: z.string().min(1, {message: 'This field is required'}),
+		phoneNumber: z
+			.string()
+			.min(1, {message: i18n.translate('this-field-is-required')}),
 	}),
-
 	becomePublisherForm: z.object({
 		emailAddress: z.string().email('Please fill in valid email'),
 		extension: z.string().optional(),
@@ -38,12 +43,22 @@ const zodSchema = {
 				flag: z.string(),
 			})
 			.optional(),
-		phoneNumber: z.string().min(1, {message: 'This field is required'}),
+		phoneNumber: z
+			.string()
+			.min(1, {message: i18n.translate('this-field-is-required')}),
 		requestDescription: z
 			.string()
 			.max(500, {message: 'Request Description is required'}),
 	}),
-
+	contactSales: z.object({
+		accountName: z
+			.string()
+			.min(3, i18n.sub('x-is-required', 'account-name')),
+		additionalAppsRequested: z.string(),
+		comments: z.string(),
+		email: z.string().email(i18n.translate('please-fill-in-a-valid-email')),
+		name: z.string().min(3, i18n.sub('x-is-required', 'name')),
+	}),
 	generateLicenseKey: z.object({
 		description: z.string().max(100, {message: 'Invalid license name'}),
 		hostname: z.string(),
@@ -57,7 +72,6 @@ const zodSchema = {
 			})
 			.optional(),
 	}),
-
 	invitedNewMember: z.object({
 		emailAddress: z
 			.string()
@@ -67,7 +81,6 @@ const zodSchema = {
 		lastName: z.string().min(3, 'Last name is required'),
 		roles: z.string().array().min(5, 'Please select at least one role'),
 	}),
-
 	newCustomer: z.object({
 		accountBriefs: z.any().optional(),
 		alternateName: z.string().optional(),

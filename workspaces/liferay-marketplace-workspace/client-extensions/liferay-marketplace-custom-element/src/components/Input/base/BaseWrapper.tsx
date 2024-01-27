@@ -22,6 +22,7 @@ type BaseWrapperProps = {
 	label?: string;
 	required?: boolean;
 };
+
 const BaseWrapper: React.FC<BaseWrapperProps> = ({
 	boldLabel = false,
 	children,
@@ -32,41 +33,40 @@ const BaseWrapper: React.FC<BaseWrapperProps> = ({
 	id,
 	label,
 	required,
-}) => {
-	return (
-		<ClayForm.Group
-			className={classNames({
-				'has-error': error,
-			})}
-		>
-			{label && (
-				<label
-					className={classNames(
-						'font-weight-normal mb-1 mx-0 text-paragraph',
-						{
-							disabled,
-							'font-weight-bold': boldLabel,
-							required,
-						}
-					)}
-					htmlFor={id}
-				>
-					{label}
-				</label>
-			)}
-			{children}
-			{description && (
-				<small className="form-text text-muted" id="Help">
-					{description}
-				</small>
-			)}
+}) => (
+	<ClayForm.Group
+		className={classNames({
+			'has-error': error,
+		})}
+	>
+		{label && (
+			<label
+				className={classNames(
+					'font-weight-normal mb-1 mx-0 text-paragraph',
+					{
+						disabled,
+						'font-weight-bold': boldLabel,
+						required,
+					}
+				)}
+				htmlFor={id}
+			>
+				{label}
+			</label>
+		)}
+		{children}
+		{description && (
+			<small className="form-text text-muted" id="Help">
+				{description}
+			</small>
+		)}
 
-			{error && <BaseWarning>{error}</BaseWarning>}
+		{error && <BaseWarning>{error}</BaseWarning>}
 
-			{helpMessage && (
-				<p className="input__base-text ml-1 mt-2">{helpMessage}</p>
-			)}
-		</ClayForm.Group>
-	);
-};
+		{helpMessage && (
+			<p className="input__base-text ml-1 mt-2">{helpMessage}</p>
+		)}
+	</ClayForm.Group>
+);
+
 export default BaseWrapper;

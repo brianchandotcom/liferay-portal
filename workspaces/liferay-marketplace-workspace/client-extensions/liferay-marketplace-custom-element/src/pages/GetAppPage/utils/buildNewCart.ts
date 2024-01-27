@@ -10,6 +10,7 @@ export default function buildNewCart({
 	isFreeApp,
 	orderType,
 	product,
+	project,
 	purchaseOrderNumber,
 	selectedAccount,
 	selectedPaymentMethod,
@@ -22,6 +23,7 @@ export default function buildNewCart({
 	isFreeApp: boolean;
 	orderType: OrderType;
 	product?: DeliveryProduct;
+	project: string;
 	purchaseOrderNumber: string;
 	selectedAccount?: Account;
 	selectedPaymentMethod: PaymentMethodSelector;
@@ -45,6 +47,9 @@ export default function buildNewCart({
 			},
 		],
 		currencyCode: channel.currencyCode,
+		...(project && {
+			customFields: {'Project Name': project},
+		}),
 		orderTypeExternalReferenceCode: orderType.externalReferenceCode,
 	};
 

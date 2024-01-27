@@ -53,12 +53,28 @@ const deleteNodes = async (nodeIds) => {
 const getEdge = (nodeId, parentId) => {
 	return {
 		animated: false,
-		id: `e${nodeId}${parentId}`,
-		source: `${parentId}`,
-		target: `${nodeId}`,
+		id: `edge${nodeId}${parentId}`,
+		source: parentId.toString(),
+		target: nodeId.toString(),
 		type: EDGE_TYPE,
 	};
 };
+
+const getParentNodeId = (node) => {
+	if (node.root) {
+		return null;
+	}
+
+	if (node.pid){
+		return node.pid.toString();
+	}
+
+	if (node.parentId){
+		return node.parentId.toString()
+	}
+
+	return '';
+}
 
 const getLayoutedElements = (nodes, edges) => {
 	dagreGraph.setGraph({
@@ -93,18 +109,18 @@ const getLayoutedElements = (nodes, edges) => {
 	return {layoutedEdges: edges, layoutedNodes: updatedNodes};
 };
 
-const getChildNodeIds = (nodeId, subNodes = []) => {
-	subNodes.push(nodeId);
+const getChildNodeIds = (nodeId, subNodeIds = []) => {
+	subNodeIds.push(nodeId);
 
-	const childNodes = dagreGraph.successors(nodeId);
+	const childNodeIds = dagreGraph.successors(nodeId);
 
-	if (childNodes && childNodes.length) {
-		childNodes.forEach((nodeId) => {
-			getChildNodeIds(nodeId, subNodes);
+	if (childNodeIds && childNodeIds.length) {
+		childNodeIds.forEach((nodeId) => {
+			getChildNodeIds(nodeId, subNodeIds);
 		});
 	}
 
-	return subNodes;
+	return subNodeIds;
 };
 
 const normalizeNode = (node) => {
@@ -114,53 +130,36 @@ const normalizeNode = (node) => {
 			description: node.description,
 			label: node.name,
 			nodeId: node.id.toString(),
-			parent: node.root
-				? null
-				: node.pid
-				? node.pid.toString()
-				: node.parentId
-				? node.parentId.toString()
-				: '',
+			parent: getParentNodeId(node),
 			root: node.root,
 		},
 		deletable: !node.root,
 		id: node.id.toString(),
-		parent: node.root
-			? null
-			: node.pid
-			? node.pid.toString()
-			: node.parentId
-			? node.parentId.toString()
-			: '',
+		parent: getParentNodeId(node),
 		type: 'folderNode',
 	};
 };
 
-const Diagram = ({key, templateId}) => {
-	const [nodes, setNodes] = useNodesState(null);
-
+const Diagram = ({templateId}) => {
 	const [edges, setEdges] = useEdgesState(null);
+	const [nodes, setNodes] = useNodesState(null);
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [selectedNode, setSelectedNode] = useState();
 
 	const [form] = Form.useForm();
 
-	const handleNodeSelect = (data) => {
+	const handleNodeSelect = (node) => {
 		form.setFieldsValue({
-			description: data.description,
-			id: data.nodeId,
-			name: data.label,
-			parentId: data.root ? 0 : data.parent,
-			root: data.root,
+			description: node.description,
+			id: node.nodeId,
+			name: node.label,
+			parentId: node.root ? 0 : node.parent,
+			root: node.root,
 			templateId,
 		});
 
-		setSelectedNode(data);
-	};
-
-	const handlePanelClick = () => {
-		setSelectedNode(null);
+		setSelectedNode(node);
 	};
 
 	const updateDiagramDataSourceLocally = useCallback(
@@ -187,14 +186,13 @@ const Diagram = ({key, templateId}) => {
 
 	const updateDiagramSingleNodeLocally = useCallback(
 		(updatedNode) => {
-			const selectedDiagramNode = nodes.filter(
+			const selectedDiagramNode = nodes.find(
 				(node) => node.id.toString() === updatedNode.id
 			);
 
-			if (selectedDiagramNode && !!selectedDiagramNode.length) {
-				selectedDiagramNode[0].data.description =
-					updatedNode.description;
-				selectedDiagramNode[0].data.label = updatedNode.name;
+			if (selectedDiagramNode) {
+				selectedDiagramNode.data.description = updatedNode.description;
+				selectedDiagramNode.data.label = updatedNode.name;
 			}
 		},
 		[nodes]
@@ -229,6 +227,7 @@ const Diagram = ({key, templateId}) => {
 		[nodes, edges, setNodes, setEdges, templateId]
 	);
 
+	///todo pass only nodeid
 	const handleDelete = useCallback(
 		(params) => {
 			try {
@@ -331,7 +330,6 @@ const Diagram = ({key, templateId}) => {
 					connectionLineType={ConnectionLineType.SmoothStep}
 					edges={edges}
 					fitView
-					key={key}
 					nodeTypes={{
 						folderNode: (props) => (
 							<FolderNode
@@ -345,7 +343,7 @@ const Diagram = ({key, templateId}) => {
 					nodes={nodes}
 					onConnect={null}
 					onNodesDelete={handleDelete}
-					onPaneClick={handlePanelClick}
+					onPaneClick={() => setSelectedNode(null)}
 				>
 					<Controls />
 					<Background className="background" />
@@ -368,7 +366,7 @@ const Diagram = ({key, templateId}) => {
 											<ClayButtonWithIcon
 												aria-label="Close"
 												displayType="unstyled"
-												onClick={handlePanelClick}
+												onClick={() => setSelectedNode(null)}
 												symbol="times"
 												title="Close"
 											/>

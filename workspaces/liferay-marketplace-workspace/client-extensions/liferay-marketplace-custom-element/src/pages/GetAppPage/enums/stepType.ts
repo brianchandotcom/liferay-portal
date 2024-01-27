@@ -7,4 +7,5 @@ export enum StepType {
 	ACCOUNT = 'account',
 	LICENSES = 'licenses',
 	PAYMENT = 'payment',
+	PROJECT = 'project',
 }

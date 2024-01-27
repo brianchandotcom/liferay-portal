@@ -8,7 +8,7 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 import GetAppPage from './GetAppPage';
 import {InsuficientResources} from './InsuficientResources';
 import ContactSalesForm from './InsuficientResources/ContactSalesForm';
-import ContatctSalesPage from './InsuficientResources/ContactSalesPage';
+import ContactSalesPage from './InsuficientResources/ContactSalesPage';
 
 const GetAppRouter = () => {
 	return (
@@ -19,7 +19,7 @@ const GetAppRouter = () => {
 					element={<InsuficientResources />}
 					path="insuficient-resources/:projectId/:accountId"
 				>
-					<Route element={<ContatctSalesPage />} index />
+					<Route element={<ContactSalesPage />} index />
 					<Route element={<ContactSalesForm />} path="form" />
 				</Route>
 			</Routes>

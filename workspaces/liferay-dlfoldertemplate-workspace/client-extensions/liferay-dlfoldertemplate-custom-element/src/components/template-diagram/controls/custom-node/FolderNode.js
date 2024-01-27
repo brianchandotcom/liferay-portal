@@ -12,10 +12,10 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 
-const FolderNode = ({data, onAdd, onSelect}) => {
+const FolderNode = ({data:node, onAdd, onSelect}) => {
 	return (
 		<div className="folder-node-box">
-			{!data.root && (
+			{!node.root && (
 				<Handle
 					className="top-connector"
 					position={Position.Top}
@@ -31,7 +31,7 @@ const FolderNode = ({data, onAdd, onSelect}) => {
 			<div
 				className="node-icon"
 				onClick={() => {
-					onSelect(data);
+					onSelect(node);
 				}}
 			>
 				<div className="node-icon-box">
@@ -41,12 +41,12 @@ const FolderNode = ({data, onAdd, onSelect}) => {
 			<div
 				className="node-title"
 				onClick={() => {
-					onSelect(data);
+					onSelect(node);
 				}}
 			>
 				<div className="node-title-content">
 					<Text size={2} truncate>
-						{data.label}
+						{node.label}
 					</Text>
 				</div>
 			</div>
@@ -56,7 +56,7 @@ const FolderNode = ({data, onAdd, onSelect}) => {
 					className="add-action"
 					displayType="info"
 					onClick={() => {
-						onAdd(data.nodeId);
+						onAdd(node.nodeId);
 					}}
 					size="xs"
 					symbol="plus"

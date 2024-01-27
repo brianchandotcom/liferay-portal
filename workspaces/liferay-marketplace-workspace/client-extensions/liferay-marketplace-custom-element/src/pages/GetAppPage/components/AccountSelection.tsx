@@ -65,7 +65,8 @@ const AccountSelection = ({
 					if (accountInfo.type === 'person') {
 						displayAccount = true;
 					}
-				} else {
+				}
+				else {
 					displayAccount = accountBrief.roleBriefs.some((roleBrief) =>
 						enabledAccountRoles.includes(roleBrief.name)
 					);

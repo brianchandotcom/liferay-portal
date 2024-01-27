@@ -9,7 +9,7 @@ import './InsuficientResources.scss';
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {Outlet, useParams} from 'react-router-dom';
+import {Outlet, useLocation, useParams} from 'react-router-dom';
 
 import catalogIcon from '../../../assets/icons/catalog_icon.svg';
 import hourglass from '../../../assets/icons/hourglass_icon.svg';
@@ -19,62 +19,52 @@ import {ConsoleUserProject} from '../../../services/oauth/MarketplaceSpringBootO
 import {baseURL} from '../../../utils/api';
 import {getUrlParam} from '../../../utils/getUrlParam';
 import {
-	getAccountImage,
 	getThumbnailByProductAttachment,
 	showAppImage,
 } from '../../../utils/util';
-import useGetResourceInfo from '../hooks/useGetResourceInfo';
+import useGetResourceInfo, {
+	convertMegabyteToGigabyte,
+} from '../hooks/useGetResourceInfo';
 
-enum Requirements {
-	ram = 'ram',
-	cpu = 'cpu',
-}
-
-const getRequiredLabel = (product: DeliveryProduct | undefined) => {
-	let requirements = {
+const getRequiredLabel = (product: DeliveryProduct) => {
+	const requirements = {
 		cpu: 0,
 		ram: 0,
 	};
 
-	for (const requirement in Requirements) {
+	for (const requirement of ['ram', 'cpu']) {
 		const currentSpecification = product?.productSpecifications.find(
-			(specification) => {
-				if (specification.specificationKey === requirement) {
-					return true;
-				}
-			}
+			(specification) => specification.specificationKey === requirement
 		);
 
-		requirements = {
-			...requirements,
-			[requirement]: currentSpecification?.value,
-		};
+		(requirements as any)[requirement] = currentSpecification?.value;
 	}
 
 	return `${requirements.cpu}CPUs, ${requirements.ram}GB RAM`;
 };
 
+const getUsageLabel = (project: ConsoleUserProject) => {
+	return `${
+		project.rootProjectPlanUsage?.cpu.limit -
+		project.rootProjectPlanUsage?.cpu.used
+	}CPUs,
+		${convertMegabyteToGigabyte({
+			inverseOperation: true,
+			value:
+				project.rootProjectPlanUsage.memory.limit -
+				project.rootProjectPlanUsage?.memory?.used,
+		})}GB RAM`;
+};
+
 export function InsuficientResources() {
 	const {projectId} = useParams();
+	const location = useLocation();
 	const productId = getUrlParam('productId');
 	const {data: product} = useDeliveryProduct(productId ?? '');
-	const {convertMegabyteToGigabyte, project} = useGetResourceInfo({
+	const {project} = useGetResourceInfo({
 		product,
 		selectedProject: projectId,
 	});
-
-	const getUsageLabel = (project: ConsoleUserProject) => {
-		return `${
-			project.rootProjectPlanUsage?.cpu.limit -
-			project.rootProjectPlanUsage?.cpu.used
-		}CPUs,
-			${convertMegabyteToGigabyte({
-				inverseOperation: true,
-				value:
-					project.rootProjectPlanUsage.memory.limit -
-					project.rootProjectPlanUsage?.memory?.used,
-			})}GB RAM`;
-	};
 
 	const {name: appName = ''} = product ?? {};
 
@@ -91,7 +81,7 @@ export function InsuficientResources() {
 	return (
 		<div
 			className={classNames('contact-sales-page-content', {
-				'mt-0': window.location.href.includes('form'),
+				'mt-0': location.pathname.includes('form'),
 			})}
 		>
 			<div className="contact-sales-page-cards">
@@ -100,10 +90,10 @@ export function InsuficientResources() {
 					logo={appLogo || catalogIcon}
 					title={
 						<span className="m-0">
-							<b>{appName.toUpperCase()}</b>
+							<b>{appName}</b>
 
 							<p className="contact-sales-page-required-resource-card m-0">
-								{getRequiredLabel(product)}
+								{getRequiredLabel(product as DeliveryProduct)}
 							</p>
 						</span>
 					}
@@ -119,7 +109,7 @@ export function InsuficientResources() {
 				<AccountAndAppCard
 					category="Project"
 					className="contact-sales-page-no-resource"
-					logo={getAccountImage(hourglass) as string}
+					logo={hourglass as string}
 					title={
 						<span className="m-0">
 							<b>{project.rootProjectId.toUpperCase()}</b>
@@ -133,9 +123,7 @@ export function InsuficientResources() {
 			</div>
 
 			<div className="contact-sales-page-text">
-				<div className="contact-sales-page-text">
-					<Outlet />
-				</div>
+				<Outlet />
 			</div>
 		</div>
 	);

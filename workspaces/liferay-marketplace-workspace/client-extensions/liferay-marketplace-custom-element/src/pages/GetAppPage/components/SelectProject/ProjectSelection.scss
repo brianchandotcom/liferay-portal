@@ -8,14 +8,14 @@
 		background-color: #e6ebf5;
 		border: none;
 		height: 22px;
-		padding: 0 6px 0 6px;
+		padding: 0 6px;
 
 		&:hover {
 			background-color: #6a8fea;
 		}
 
 		&:hover > .project-selection-page-info-button-icon {
-			fill: #ffffff;
+			fill: #fff;
 		}
 
 		&-icon {

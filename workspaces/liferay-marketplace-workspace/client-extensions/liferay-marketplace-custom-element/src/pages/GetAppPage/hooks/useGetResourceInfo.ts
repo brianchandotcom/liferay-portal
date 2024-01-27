@@ -18,6 +18,17 @@ type convertMegabyteToGigabyteProps = {
 	value: number;
 };
 
+const convertMegabyteToGigabyte = ({
+	inverseOperation = false,
+	value,
+}: convertMegabyteToGigabyteProps) => {
+	if (inverseOperation) {
+		return value / ONE_GB;
+	}
+
+	return value * ONE_GB;
+};
+
 const useGetResourceInfo = ({
 	product,
 	selectedProject,
@@ -25,16 +36,6 @@ const useGetResourceInfo = ({
 	product: any;
 	selectedProject?: string;
 }) => {
-	const convertMegabyteToGigabyte = ({
-		inverseOperation = false,
-		value,
-	}: convertMegabyteToGigabyteProps) => {
-		if (inverseOperation) {
-			return value / ONE_GB;
-		}
-
-		return value * ONE_GB;
-	};
 	const resource = useMarketplaceSpringBootOAuth2();
 
 	const {data: productUsages} = useSWR('/product-usages', () =>
@@ -81,11 +82,12 @@ const useGetResourceInfo = ({
 	}
 
 	return {
-		convertMegabyteToGigabyte,
 		hasResources: suficientInstances && validateRamAndCpu,
 		project,
 		resourceRequest: productUsages,
 	};
 };
+
+export {convertMegabyteToGigabyte};
 
 export default useGetResourceInfo;

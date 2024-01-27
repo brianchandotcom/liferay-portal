@@ -227,8 +227,9 @@ const GetAppPage = () => {
 			}
 
 			window.location.href = nextStepsCallbackURL;
-		} catch (error) {
-			// console.error('Unable to handleGetApp', error);
+		}
+		catch (error) {
+			console.error('Unable to handleGetApp', error);
 		}
 
 		setLoading(false);

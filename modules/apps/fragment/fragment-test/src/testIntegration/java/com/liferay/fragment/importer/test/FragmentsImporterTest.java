@@ -413,7 +413,7 @@ public class FragmentsImporterTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_file = _generateZipFile(
-			_PATH_FRAGMENTS_WITH_UPDATED_FRAGMENT_NAME + "import-1/fragments");
+			_PATH_FRAGMENTS_WITH_UPDATED_NAME + "import-1/fragments");
 
 		try {
 			_fragmentsImporter.importFragmentEntries(
@@ -451,7 +451,7 @@ public class FragmentsImporterTest {
 			filteredFragmentEntries.size());
 
 		_file = _generateZipFile(
-			_PATH_FRAGMENTS_WITH_UPDATED_FRAGMENT_NAME + "import-2/fragments");
+			_PATH_FRAGMENTS_WITH_UPDATED_NAME + "import-2/fragments");
 
 		try {
 			_fragmentsImporter.importFragmentEntries(
@@ -874,8 +874,8 @@ public class FragmentsImporterTest {
 	private static final String _PATH_FRAGMENTS_WITH_FOLDER_RESOURCES =
 		_PATH_DEPENDENCIES + "fragments-with-folder-resources/";
 
-	private static final String _PATH_FRAGMENTS_WITH_UPDATED_FRAGMENT_NAME =
-		_PATH_DEPENDENCIES + "fragments-with-updated-fragment-name/";
+	private static final String _PATH_FRAGMENTS_WITH_UPDATED_NAME =
+		_PATH_DEPENDENCIES + "fragments-with-updated-name/";
 
 	private static final String _PATH_RESOURCES_COLLECTION =
 		_PATH_DEPENDENCIES + "resources-collection/";

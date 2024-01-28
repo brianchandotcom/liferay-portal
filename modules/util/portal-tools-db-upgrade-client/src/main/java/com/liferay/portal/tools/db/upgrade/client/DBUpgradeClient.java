@@ -209,7 +209,7 @@ public class DBUpgradeClient {
 		Map<String, String> environment = processBuilder.environment();
 
 		if (_isGTJDK8()) {
-			environment.put("JDK_JAVA_OPTIONS", _buildJdkJavaOptions());
+			environment.put("JDK_JAVA_OPTIONS", _buildJDKJavaOptions());
 		}
 
 		Process process = processBuilder.start();
@@ -363,7 +363,7 @@ public class DBUpgradeClient {
 		}
 	}
 
-	private String _buildJdkJavaOptions() {
+	private String _buildJDKJavaOptions() {
 		StringBuilder sb = new StringBuilder();
 
 		for (String reflectionOpen : _reflectionOpens) {

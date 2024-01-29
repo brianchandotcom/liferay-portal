@@ -17,6 +17,7 @@ import {getActivationKeysDownloadItems} from '../../utils/getActivationKeysDownl
 const ActionButton = ({
 	activationKeysByStatusPaginatedChecked,
 	filterCheckedActivationKeys,
+	hasRenewalSubscription,
 	identifier,
 	isAbleToDownloadAggregateKeys,
 	isAdminOrPartnerManager,
@@ -106,6 +107,15 @@ const ActionButton = ({
 	};
 	const handleDeactivatePage = () => navigate('deactivate');
 
+	const handleRedirectRenewPage = () => {
+		navigate(`${productName.toLowerCase()}-renew`, {
+			state: {
+				activationKeys: [],
+				id: identifier,
+			},
+		});
+	};
+
 	const activationKeysActionsItems = getActivationKeysActionsItems(
 		project?.accountKey,
 		provisioningServerAPI,
@@ -114,7 +124,9 @@ const ActionButton = ({
 		handleRedirectPage,
 		handleDeactivatePage,
 		productName,
-		allowSelfProvisioning
+		allowSelfProvisioning,
+		hasRenewalSubscription,
+		handleRedirectRenewPage
 	);
 
 	const filteredKeysActionsItems = getFilteredKeysActionsItems(

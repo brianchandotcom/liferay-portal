@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayDatePicker from '@clayui/date-picker';
 import {ClayInput} from '@clayui/form';
 import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import moment from 'moment/min/moment-with-locales';
+import React, {useEffect, useState} from 'react';
 
 export default function ScheduleOptions({
 	displayDate,
@@ -15,8 +17,28 @@ export default function ScheduleOptions({
 	timeZone,
 }) {
 	const [value, setValue] = useState(displayDate);
-
 	const {day, hour, minutes, month, year} = getDate(value);
+	const [error, setError] = useState('');
+
+	useEffect(() => {
+		if (value) {
+			const date = new Date(value);
+
+			if (date.valueOf() <= new Date().valueOf()) {
+				setError(
+					Liferay.Language.get(
+						'the-date-entered-has-already-occurred'
+					)
+				);
+			}
+			else if (!moment(date).isValid()) {
+				setError(Liferay.Language.get('please-enter-a-valid-date'));
+			}
+			else {
+				setError(Liferay.Language.get(''));
+			}
+		}
+	}, [value]);
 
 	return (
 		<>
@@ -37,7 +59,20 @@ export default function ScheduleOptions({
 				}}
 			/>
 
-			<p className="text-3 text-secondary">
+			{error ? (
+				<div className="error-container mt-1">
+					<ClayAlert
+						className="mt-1"
+						displayType="danger"
+						title={Liferay.Language.get('error-colon') + ' '}
+						variant="feedback"
+					>
+						{error}
+					</ClayAlert>
+				</div>
+			) : null}
+
+			<p className="mt-1 text-3 text-secondary">
 				{sub(Liferay.Language.get('time-zone-x'), timeZone)}
 			</p>
 

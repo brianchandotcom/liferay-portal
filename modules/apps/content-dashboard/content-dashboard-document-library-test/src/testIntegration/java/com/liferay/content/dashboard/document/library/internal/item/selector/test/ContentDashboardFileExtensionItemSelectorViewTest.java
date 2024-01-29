@@ -163,7 +163,7 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + "." + fileExtension,
 			MimeTypesUtil.getExtensionContentType(fileExtension), new byte[0],
-			null, null,
+			null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 

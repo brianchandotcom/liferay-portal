@@ -114,7 +114,7 @@ public class FileEntryStagedModelDataHandlerTest
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.APPLICATION_PDF,
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
-			null, serviceContext);
+			null, null, serviceContext);
 
 		fileEntry = _dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), StringPool.BLANK,
@@ -157,7 +157,7 @@ public class FileEntryStagedModelDataHandlerTest
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringPool.BLANK,
 			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
-			null, null,
+			null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				liveGroup.getGroupId(), TestPropsValues.getUserId()));
 
@@ -206,7 +206,7 @@ public class FileEntryStagedModelDataHandlerTest
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 				ContentTypes.APPLICATION_PDF,
 				FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
-				null, serviceContext);
+				null, null, serviceContext);
 
 			_dlFileEntryLocalService.checkOutFileEntry(
 				TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
@@ -238,7 +238,7 @@ public class FileEntryStagedModelDataHandlerTest
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.APPLICATION_PDF,
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
-			null, serviceContext);
+			null, null, serviceContext);
 
 		fileEntry = _dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), StringPool.BLANK,
@@ -301,7 +301,7 @@ public class FileEntryStagedModelDataHandlerTest
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.APPLICATION_PDF,
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
-			null, serviceContext);
+			null, null, serviceContext);
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
@@ -357,7 +357,7 @@ public class FileEntryStagedModelDataHandlerTest
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.APPLICATION_PDF,
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
-			null, serviceContext);
+			null, null, serviceContext);
 
 		exportImportStagedModel(fileEntry);
 
@@ -409,7 +409,7 @@ public class FileEntryStagedModelDataHandlerTest
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 				ContentTypes.APPLICATION_PDF,
 				FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
-				null, serviceContext);
+				null, null, serviceContext);
 
 			DDMForm ddmForm = ddmStructure.getDDMForm();
 
@@ -492,7 +492,7 @@ public class FileEntryStagedModelDataHandlerTest
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.APPLICATION_PDF,
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
-			null,
+			null, null,
 			ServiceContextTestUtil.getServiceContext(
 				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
@@ -540,7 +540,7 @@ public class FileEntryStagedModelDataHandlerTest
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), repository.getRepositoryId(),
 			folder.getFolderId(), "test.txt", "text/plain", new byte[] {0, 1},
-			null, null, serviceContext);
+			null, null, null, serviceContext);
 
 		exportImportStagedModel(fileEntry);
 
@@ -690,7 +690,7 @@ public class FileEntryStagedModelDataHandlerTest
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
 			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY, null,
-			null, serviceContext);
+			null, null, serviceContext);
 	}
 
 	@Override

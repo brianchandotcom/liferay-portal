@@ -1646,7 +1646,7 @@ public class ObjectEntryLocalServiceImpl
 					dlFileEntry.getGroupId(), dlFolder.getFolderId(),
 					FileUtil.stripExtension(originalFileName)),
 				StringPool.BLANK, null, null, dlFileEntry.getContentStream(),
-				dlFileEntry.getSize(), null, null, serviceContext);
+				dlFileEntry.getSize(), null, null, null, serviceContext);
 
 			entry.setValue(fileEntry.getFileEntryId());
 		}

@@ -113,7 +113,7 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		FileEntry fileEntry = dlAppService.addFileEntry(
 			null, repositoryId, folderId, sourceFileName, mimeType, uniqueTitle,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, new byte[0],
-			null, null, serviceContext);
+			null, null, null, serviceContext);
 
 		dlAppService.checkOutFileEntry(
 			fileEntry.getFileEntryId(), serviceContext);

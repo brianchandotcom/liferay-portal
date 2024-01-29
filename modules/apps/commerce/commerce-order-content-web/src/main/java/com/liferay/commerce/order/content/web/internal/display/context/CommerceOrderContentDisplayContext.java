@@ -468,7 +468,7 @@ public class CommerceOrderContentDisplayContext {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "csv_template.csv",
 				MimeTypesUtil.getContentType(file), "csv_template",
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, file,
-				null, null,
+				null, null, null,
 				ServiceContextFactory.getInstance(
 					_cpRequestHelper.getRequest()));
 

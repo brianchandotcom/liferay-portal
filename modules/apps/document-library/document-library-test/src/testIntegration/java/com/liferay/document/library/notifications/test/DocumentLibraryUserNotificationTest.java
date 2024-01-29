@@ -69,7 +69,7 @@ public class DocumentLibraryUserNotificationTest
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			_folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
 			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY, null,
-			null, serviceContext);
+			null, null, serviceContext);
 
 		return (BaseModel<?>)fileEntry.getModel();
 	}

@@ -124,7 +124,7 @@ public class AddRepositoryIdInitialRequestPortalInstanceLifecycleListener
 						repository.getRepositoryId(),
 						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 						"company_logo.png", mimeType, image.getTextObj(), null,
-						null, serviceContext);
+						null, null, serviceContext);
 				}
 				finally {
 					_file.delete(file);

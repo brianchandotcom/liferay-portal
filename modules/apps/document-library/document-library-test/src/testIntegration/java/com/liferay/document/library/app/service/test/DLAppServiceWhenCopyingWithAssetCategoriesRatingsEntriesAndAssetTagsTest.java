@@ -107,7 +107,7 @@ public class
 			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
 			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
-			serviceContext);
+			null, serviceContext);
 
 		String className = DLFileEntryConstants.getClassName();
 
@@ -147,7 +147,7 @@ public class
 			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
 			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
-			serviceContext);
+			null, serviceContext);
 
 		String className = DLFileEntryConstants.getClassName();
 
@@ -208,7 +208,7 @@ public class
 			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
 			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
-			serviceContext);
+			null, serviceContext);
 
 		String className = DLFileEntryConstants.getClassName();
 		double score = 0.3D;
@@ -264,7 +264,7 @@ public class
 			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
 			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
-			serviceContext);
+			null, serviceContext);
 
 		String className = DLFileEntryConstants.getClassName();
 
@@ -324,7 +324,8 @@ public class
 			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
 			ContentTypes.TEXT_PLAIN, DLAppServiceTestUtil.FILE_NAME,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			BaseDLAppTestCase.CONTENT.getBytes(), null, null, serviceContext);
+			BaseDLAppTestCase.CONTENT.getBytes(), null, null, null,
+			serviceContext);
 
 		Folder folder = dlAppService.copyFolder(
 			group.getGroupId(), parentFolder.getFolderId(),
@@ -374,7 +375,8 @@ public class
 			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
 			ContentTypes.TEXT_PLAIN, DLAppServiceTestUtil.FILE_NAME,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			BaseDLAppTestCase.CONTENT.getBytes(), null, null, serviceContext);
+			BaseDLAppTestCase.CONTENT.getBytes(), null, null, null,
+			serviceContext);
 
 		Folder folder = dlAppService.copyFolder(
 			group.getGroupId(), parentFolder.getFolderId(), group.getGroupId(),
@@ -416,7 +418,8 @@ public class
 			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
 			ContentTypes.TEXT_PLAIN, DLAppServiceTestUtil.FILE_NAME,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			BaseDLAppTestCase.CONTENT.getBytes(), null, null, serviceContext);
+			BaseDLAppTestCase.CONTENT.getBytes(), null, null, null,
+			serviceContext);
 
 		String className = DLFileEntryConstants.getClassName();
 		double score = 0.3D;
@@ -523,7 +526,8 @@ public class
 			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
 			ContentTypes.TEXT_PLAIN, DLAppServiceTestUtil.FILE_NAME,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			BaseDLAppTestCase.CONTENT.getBytes(), null, null, serviceContext);
+			BaseDLAppTestCase.CONTENT.getBytes(), null, null, null,
+			serviceContext);
 
 		Folder folder = dlAppService.copyFolder(
 			group.getGroupId(), parentFolder.getFolderId(),
@@ -570,7 +574,7 @@ public class
 			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
 			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
-			serviceContext);
+			null, serviceContext);
 
 		String className = DLFileEntryConstants.getClassName();
 
@@ -613,7 +617,7 @@ public class
 			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
 			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
-			serviceContext);
+			null, serviceContext);
 
 		String className = DLFileEntryConstants.getClassName();
 
@@ -656,7 +660,7 @@ public class
 			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
 			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
-			serviceContext);
+			null, serviceContext);
 
 		String className = DLFileEntryConstants.getClassName();
 

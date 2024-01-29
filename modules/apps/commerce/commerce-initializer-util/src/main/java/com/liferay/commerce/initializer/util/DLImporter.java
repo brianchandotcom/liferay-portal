@@ -147,7 +147,7 @@ public class DLImporter {
 				null, userId, repository.getRepositoryId(),
 				dlFolder.getFolderId(), fileName,
 				MimeTypesUtil.getContentType(file), title, StringPool.BLANK,
-				description, StringPool.BLANK, file, null, null,
+				description, StringPool.BLANK, file, null, null, null,
 				serviceContext);
 
 			dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(

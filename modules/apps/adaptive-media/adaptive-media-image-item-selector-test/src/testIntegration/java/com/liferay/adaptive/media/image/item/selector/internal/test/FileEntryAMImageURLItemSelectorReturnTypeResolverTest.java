@@ -480,7 +480,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), null, null, serviceContext);
+			_getImageBytes(), null, null, null, serviceContext);
 	}
 
 	private void _addTestVariant(

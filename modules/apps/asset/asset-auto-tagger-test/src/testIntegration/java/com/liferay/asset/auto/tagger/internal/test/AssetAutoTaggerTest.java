@@ -74,7 +74,7 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
-			null, null, serviceContext);
+			null, null, null, serviceContext);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 

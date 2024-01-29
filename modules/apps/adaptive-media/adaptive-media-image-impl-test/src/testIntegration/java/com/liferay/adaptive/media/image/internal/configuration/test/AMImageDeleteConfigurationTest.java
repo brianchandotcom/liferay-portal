@@ -651,7 +651,7 @@ public class AMImageDeleteConfigurationTest
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(
 				AMImageDeleteConfigurationTest.class, "dependencies/image.jpg"),
-			null, null, new ServiceContext());
+			null, null, null, new ServiceContext());
 	}
 
 	@Inject

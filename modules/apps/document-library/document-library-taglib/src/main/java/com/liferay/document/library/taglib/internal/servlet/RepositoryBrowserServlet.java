@@ -203,7 +203,7 @@ public class RepositoryBrowserServlet extends HttpServlet {
 				_dlAppService.addFileEntry(
 					null, repositoryId, parentFolderId, sourceFileName,
 					uploadServletRequest.getContentType("file"), title, null,
-					null, null, file, null, null, serviceContext);
+					null, null, file, null, null, null, serviceContext);
 
 				SessionMessages.add(httpServletRequest, "requestProcessed");
 

@@ -92,7 +92,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		return DLAppLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(), folderId,
 			sourceFileName, ContentTypes.TEXT_PLAIN,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 	}

@@ -80,7 +80,7 @@ public class DLFileVersionUpdateTest extends BaseDLAppTestCase {
 		FileEntry fileEntry = dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(), addFileName,
 			addMimeType, addFileName, null, description, changeLog, addBytes,
-			null, null, serviceContext);
+			null, null, null, serviceContext);
 
 		fileEntry = dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), updateFileName, updateMimeType,

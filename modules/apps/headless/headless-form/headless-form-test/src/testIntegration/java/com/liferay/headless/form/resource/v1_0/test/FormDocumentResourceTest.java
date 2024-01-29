@@ -59,7 +59,7 @@ public class FormDocumentResourceTest extends BaseFormDocumentResourceTestCase {
 					RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 					RandomTestUtil.randomString(), StringUtil.randomString(),
 					StringUtil.randomString(), StringUtil.randomString(),
-					new byte[0], null, null, new ServiceContext()));
+					new byte[0], null, null, null, new ServiceContext()));
 
 		return FormDocument.toDTO(formDocument.toString());
 	}

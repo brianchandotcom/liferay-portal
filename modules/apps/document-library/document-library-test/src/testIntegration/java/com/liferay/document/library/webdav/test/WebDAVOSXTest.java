@@ -222,7 +222,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				folder.getFolderId(), _TEST_FILE_NAME_2,
 				ContentTypes.APPLICATION_TEXT, _TEST_FILE_TITLE_2,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				_testFileBytes, null, null, serviceContext);
+				_testFileBytes, null, null, null, serviceContext);
 
 			lock(HttpServletResponse.SC_OK, _TEST_FILE_NAME_2);
 
@@ -375,6 +375,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				ContentTypes.APPLICATION_MSWORD,
 				_TEST_FILE_NAME_ILLEGAL_CHARACTERS, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, _testFileBytes, null, null,
+				null,
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 			assertCode(
@@ -708,7 +709,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				folder.getFolderId(), _TEST_FILE_NAME_2,
 				ContentTypes.APPLICATION_TEXT, _TEST_FILE_NAME_2,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				_testFileBytes, null, null, serviceContext);
+				_testFileBytes, null, null, null, serviceContext);
 
 			servicePut(_TEST_FILE_NAME_2, _testDeltaBytes);
 
@@ -802,7 +803,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				folder.getFolderId(), _TEST_FILE_NAME_2,
 				ContentTypes.APPLICATION_TEXT, _TEST_FILE_NAME_2,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				_testFileBytes, null, null, serviceContext);
+				_testFileBytes, null, null, null, serviceContext);
 
 			servicePut(_TEST_FILE_NAME_2, _testDeltaBytes);
 

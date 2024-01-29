@@ -63,7 +63,7 @@ public class DLAppDLStorageQuotaLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringPool.BLANK,
 			StringUtil.randomString(), StringUtil.randomString(),
-			new byte[size1], null, null,
+			new byte[size1], null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		int size2 = size1 + RandomTestUtil.randomInt(1, 100);
@@ -74,7 +74,7 @@ public class DLAppDLStorageQuotaLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringPool.BLANK,
 			StringUtil.randomString(), StringUtil.randomString(),
-			new byte[size2], null, null,
+			new byte[size2], null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
@@ -93,7 +93,7 @@ public class DLAppDLStorageQuotaLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			new byte[size], null, null,
+			new byte[size], null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
@@ -102,7 +102,7 @@ public class DLAppDLStorageQuotaLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringPool.BLANK,
 			StringUtil.randomString(), StringUtil.randomString(),
-			new byte[size + RandomTestUtil.randomInt(1, 100)], null, null,
+			new byte[size + RandomTestUtil.randomInt(1, 100)], null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());

@@ -353,7 +353,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			"Site", TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "fileName.pdf",
 			"application/pdf", new byte[0], new Date(150000), new Date(150000),
-			_serviceContext);
+			new Date(150000), _serviceContext);
 
 		return _contentDashboardFileItemFactory.create(
 			fileEntry.getPrimaryKey());

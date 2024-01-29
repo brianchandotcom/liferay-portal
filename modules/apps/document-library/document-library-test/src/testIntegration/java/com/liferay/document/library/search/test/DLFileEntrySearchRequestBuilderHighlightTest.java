@@ -32,6 +32,7 @@ public class DLFileEntrySearchRequestBuilderHighlightTest
 				StringUtil.randomString(),
 				ContentTypes.APPLICATION_OCTET_STREAM, title, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, new byte[0], null, null,
+				null,
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 		}
 	}

@@ -63,7 +63,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), null, StringUtil.randomString(),
-			StringPool.BLANK, (byte[])null, null, null, serviceContext);
+			StringPool.BLANK, (byte[])null, null, null, null, serviceContext);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -71,7 +71,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), null, StringUtil.randomString(),
-			StringPool.BLANK, (byte[])null, null, null, serviceContext);
+			StringPool.BLANK, (byte[])null, null, null, null, serviceContext);
 
 		Assert.assertEquals(
 			2,
@@ -89,7 +89,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), null, StringUtil.randomString(),
-			StringPool.BLANK, (byte[])null, null, null, serviceContext);
+			StringPool.BLANK, (byte[])null, null, null, null, serviceContext);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -97,7 +97,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), null, StringUtil.randomString(),
-			StringPool.BLANK, (byte[])null, null, null, serviceContext);
+			StringPool.BLANK, (byte[])null, null, null, null, serviceContext);
 
 		User user = UserTestUtil.addGroupUser(group, "User");
 
@@ -132,12 +132,12 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, targetGroup.getGroupId(), targetGroupFolder.getFolderId(),
 			StringUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			"title1", null, StringUtil.randomString(), StringPool.BLANK,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 		dlAppService.addFileEntry(
 			null, targetGroup.getGroupId(), targetGroupFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title2", null, StringUtil.randomString(), StringPool.BLANK,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 
 		Assert.assertEquals(
 			0,
@@ -157,7 +157,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), null, StringUtil.randomString(),
-			StringPool.BLANK, (byte[])null, null, null, serviceContext);
+			StringPool.BLANK, (byte[])null, null, null, null, serviceContext);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -165,7 +165,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), null, StringUtil.randomString(),
-			StringPool.BLANK, (byte[])null, null, null, serviceContext);
+			StringPool.BLANK, (byte[])null, null, null, null, serviceContext);
 
 		User user = UserTestUtil.addGroupUser(group, "User");
 
@@ -196,12 +196,12 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			"title1", null, StringUtil.randomString(), StringPool.BLANK,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 		dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title2", null, StringUtil.randomString(), StringPool.BLANK,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 
 		dlAppService.addFolder(
 			null, group.getGroupId(), parentFolder.getFolderId(),
@@ -226,7 +226,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), null, StringUtil.randomString(),
-			StringPool.BLANK, (byte[])null, null, null, serviceContext);
+			StringPool.BLANK, (byte[])null, null, null, null, serviceContext);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -234,7 +234,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), null, StringUtil.randomString(),
-			StringPool.BLANK, (byte[])null, null, null, serviceContext);
+			StringPool.BLANK, (byte[])null, null, null, null, serviceContext);
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
 			dlAppService.getFoldersAndFileEntriesAndFileShortcuts(
@@ -258,7 +258,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title1", null, StringUtil.randomString(), StringPool.BLANK,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 
 		_viewCountManager.incrementViewCount(
 			fileEntry1.getCompanyId(),
@@ -269,7 +269,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title2", null, StringUtil.randomString(), StringPool.BLANK,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 
 		_viewCountManager.incrementViewCount(
 			fileEntry2.getCompanyId(),
@@ -280,7 +280,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title3", null, StringUtil.randomString(), StringPool.BLANK,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 
 		_viewCountManager.incrementViewCount(
 			fileEntry3.getCompanyId(),
@@ -324,19 +324,19 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title2", null, StringUtil.randomString(), StringPool.BLANK,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 
 		FileEntry fileEntry2 = dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title1", null, StringUtil.randomString(), StringPool.BLANK,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 
 		FileEntry fileEntry3 = dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title3", null, StringUtil.randomString(), StringPool.BLANK,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 
 		expectedFileEntries.add(fileEntry2);
 		expectedFileEntries.add(fileEntry1);

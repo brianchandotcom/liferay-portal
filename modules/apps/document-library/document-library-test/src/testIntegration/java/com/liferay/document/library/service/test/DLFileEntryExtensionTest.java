@@ -346,7 +346,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			parentFolder.getFolderId(), sourceFileName, ContentTypes.TEXT_PLAIN,
 			title, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 	}

@@ -68,7 +68,7 @@ public class DLSubscriptionClassTypeTest
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			containerModelId, RandomTestUtil.randomString() + ".txt",
 			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY, null,
-			null, serviceContext);
+			null, null, serviceContext);
 
 		return fileEntry.getFileEntryId();
 	}

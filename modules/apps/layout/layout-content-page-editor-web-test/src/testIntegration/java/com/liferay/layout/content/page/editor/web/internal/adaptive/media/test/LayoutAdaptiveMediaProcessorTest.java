@@ -231,7 +231,7 @@ public class LayoutAdaptiveMediaProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		JSONObject editableValuesJSONObject = JSONUtil.put(
 			FragmentEntryProcessorConstants.

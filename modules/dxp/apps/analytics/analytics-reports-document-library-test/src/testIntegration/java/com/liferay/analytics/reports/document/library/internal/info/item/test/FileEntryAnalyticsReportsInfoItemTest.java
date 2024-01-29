@@ -232,7 +232,8 @@ public class FileEntryAnalyticsReportsInfoItemTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, "liferay".getBytes(), null, null, serviceContext);
+			StringPool.BLANK, "liferay".getBytes(), null, null, null,
+			serviceContext);
 	}
 
 	@Inject(

@@ -358,7 +358,7 @@ public class AMThumbnailsOSGiCommandsTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, _read("dependencies/sample.pdf"),
-			null, null, _serviceContext);
+			null, null, null, _serviceContext);
 	}
 
 	private FileEntry _addPNGFileEntry() throws Exception {
@@ -366,7 +366,8 @@ public class AMThumbnailsOSGiCommandsTest {
 			null, _user.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".png", ContentTypes.IMAGE_PNG,
-			_read("dependencies/sample.png"), null, null, _serviceContext);
+			_read("dependencies/sample.png"), null, null, null,
+			_serviceContext);
 
 		return _pngFileEntry;
 	}

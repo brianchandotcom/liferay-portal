@@ -371,7 +371,7 @@ public class DLFolderFinderTest {
 		return DLAppLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), groupId, folderId,
 			sourceFileName, mimeType, TestDataConstants.TEST_BYTE_ARRAY, null,
-			null, serviceContext);
+			null, null, serviceContext);
 	}
 
 	private FileShortcut _fileShortcut;

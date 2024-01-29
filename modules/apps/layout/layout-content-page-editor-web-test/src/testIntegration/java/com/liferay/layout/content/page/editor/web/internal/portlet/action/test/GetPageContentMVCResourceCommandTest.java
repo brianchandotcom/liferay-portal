@@ -157,7 +157,7 @@ public class GetPageContentMVCResourceCommandTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			new byte[0], null, null, new ServiceContext());
+			new byte[0], null, null, null, new ServiceContext());
 
 		_createLayoutStructure(
 			layoutStructure -> {

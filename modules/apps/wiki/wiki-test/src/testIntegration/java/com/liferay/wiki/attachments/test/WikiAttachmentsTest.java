@@ -338,7 +338,7 @@ public class WikiAttachmentsTest {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				_CONTENT.getBytes(), null, null, serviceContext);
+				_CONTENT.getBytes(), null, null, null, serviceContext);
 		}
 	}
 

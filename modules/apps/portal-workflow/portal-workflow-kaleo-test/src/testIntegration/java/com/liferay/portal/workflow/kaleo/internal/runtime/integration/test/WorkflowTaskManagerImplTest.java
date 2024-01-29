@@ -1454,7 +1454,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, TestDataConstants.TEST_BYTE_ARRAY, null, null,
-			serviceContext);
+			null, serviceContext);
 
 		return fileEntry.getLatestFileVersion();
 	}

@@ -245,7 +245,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 				serviceContext.getScopeGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName, mimeType,
 				fileName, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				file, null, null, serviceContext);
+				file, null, null, null, serviceContext);
 		}
 		finally {
 			FileUtil.delete(file);
@@ -262,7 +262,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"Document", StringPool.BLANK, StringUtil.randomString(),
-			StringUtil.randomString(), new byte[0], null, null,
+			StringUtil.randomString(), new byte[0], null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		Folder folder = DLAppLocalServiceUtil.addFolder(
@@ -276,7 +276,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			folder.getFolderId(), StringUtil.randomString(),
 			ContentTypes.APPLICATION_OCTET_STREAM, "Document", StringPool.BLANK,
 			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
-			null, null,
+			null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -349,7 +349,8 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, content.getBytes(), null, null, serviceContext);
+			StringPool.BLANK, content.getBytes(), null, null, null,
+			serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
 	}

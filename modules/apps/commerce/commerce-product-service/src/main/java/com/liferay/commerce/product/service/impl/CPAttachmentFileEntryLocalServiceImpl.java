@@ -949,7 +949,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, uniqueFileName,
 				MimeTypesUtil.getContentType(uniqueFileName), uniqueFileName,
 				null, null, null, fileEntry.getContentStream(),
-				fileEntry.getSize(), null, null, newServiceContext);
+				fileEntry.getSize(), null, null, null, newServiceContext);
 
 			TempFileEntryUtil.deleteTempFileEntry(fileEntry.getFileEntryId());
 

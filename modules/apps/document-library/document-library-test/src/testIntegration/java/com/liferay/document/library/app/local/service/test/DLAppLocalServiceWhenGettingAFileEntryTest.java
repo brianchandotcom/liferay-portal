@@ -49,7 +49,7 @@ public class DLAppLocalServiceWhenGettingAFileEntryTest
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			new byte[0], null, null,
+			new byte[0], null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		FileEntry fileEntry2 = DLAppLocalServiceUtil.getFileEntry(

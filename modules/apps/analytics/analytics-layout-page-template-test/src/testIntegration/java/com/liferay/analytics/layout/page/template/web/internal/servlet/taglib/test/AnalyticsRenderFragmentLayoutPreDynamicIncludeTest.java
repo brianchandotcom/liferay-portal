@@ -109,7 +109,7 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 			FileUtil.getBytes(
 				AnalyticsRenderFragmentLayoutPreDynamicIncludeTest.class,
 				"dependencies/image.jpg"),
-			null, null, new ServiceContext());
+			null, null, null, new ServiceContext());
 
 		mockHttpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,

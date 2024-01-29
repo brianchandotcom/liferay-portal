@@ -400,7 +400,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		for (String selectedFileName : selectedFileNames) {
 			_addMultipleFileEntries(
 				portletConfig, actionRequest, selectedFileName,
-				validFileNameKVPs, invalidFileNameKVPs, expirationDate,
+				validFileNameKVPs, invalidFileNameKVPs, null, expirationDate,
 				reviewDate, serviceContext);
 		}
 
@@ -440,8 +440,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private void _addMultipleFileEntries(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			String selectedFileName, List<KeyValuePair> validFileNameKVPs,
-			List<KeyValuePair> invalidFileNameKVPs, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
+			List<KeyValuePair> invalidFileNameKVPs, Date displayDate,
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -475,8 +475,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				null, repositoryId, folderId, uniqueFileName,
 				tempFileEntry.getMimeType(), uniqueFileTitle, StringPool.BLANK,
 				description, changeLog, tempFileEntry.getContentStream(),
-				tempFileEntry.getSize(), expirationDate, reviewDate,
-				serviceContext);
+				tempFileEntry.getSize(), displayDate, expirationDate,
+				reviewDate, serviceContext);
 
 			validFileNameKVPs.add(
 				new KeyValuePair(uniqueFileName, selectedFileName));
@@ -1327,7 +1327,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				fileEntry = _dlAppService.addFileEntry(
 					null, repositoryId, folderId, sourceFileName, contentType,
 					title, urlTitle, description, changeLog, inputStream, size,
-					expirationDate, reviewDate, serviceContext);
+					null, expirationDate, reviewDate, serviceContext);
 			}
 			else if (cmd.equals(Constants.ADD_DYNAMIC)) {
 
@@ -1344,7 +1344,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				fileEntry = _dlAppService.addFileEntry(
 					null, repositoryId, folderId, uniqueFileName, contentType,
 					uniqueFileTitle, StringPool.BLANK, description, changeLog,
-					inputStream, size, expirationDate, reviewDate,
+					inputStream, size, null, expirationDate, reviewDate,
 					serviceContext);
 
 				JSONObject jsonObject = JSONUtil.put(

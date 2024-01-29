@@ -745,7 +745,7 @@ public class FileSystemImporter extends BaseImporter {
 					null, userId, groupId, parentFolderId, fileName,
 					mimeTypes.getContentType(fileName), fileName,
 					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-					inputStream, length, null, null, serviceContext);
+					inputStream, length, null, null, null, serviceContext);
 			}
 			catch (DuplicateFileEntryException duplicateFileEntryException) {
 

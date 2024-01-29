@@ -53,7 +53,7 @@ public class FileEntryTextExtractorTest {
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, new ByteArrayInputStream(bytes), bytes.length,
-			null, null, ServiceContextTestUtil.getServiceContext());
+			null, null, null, ServiceContextTestUtil.getServiceContext());
 
 		TextExtractor<FileEntry> textExtractor =
 			(TextExtractor<FileEntry>)_textExtractorRegistry.getTextExtractor(

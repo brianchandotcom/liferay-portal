@@ -166,7 +166,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test.txt",
-			ContentTypes.TEXT, RandomTestUtil.randomBytes(), null, null,
+			ContentTypes.TEXT, RandomTestUtil.randomBytes(), null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		InfoItemFieldValuesProvider<ObjectEntry> infoItemFieldValuesProvider =

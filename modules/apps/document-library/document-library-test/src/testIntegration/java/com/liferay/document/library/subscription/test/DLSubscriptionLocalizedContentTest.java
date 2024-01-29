@@ -57,7 +57,8 @@ public class DLSubscriptionLocalizedContentTest
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			null, userId, group.getGroupId(), containerModelId,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
+			serviceContext);
 
 		return fileEntry.getFileEntryId();
 	}

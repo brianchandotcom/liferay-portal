@@ -161,6 +161,7 @@ public class SocialActivityServiceTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}

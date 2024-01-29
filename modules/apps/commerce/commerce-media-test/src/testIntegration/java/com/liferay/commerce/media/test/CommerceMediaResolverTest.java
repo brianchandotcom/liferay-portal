@@ -154,7 +154,7 @@ public class CommerceMediaResolverTest {
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(
 				CommerceMediaResolverTest.class, "dependencies/image.jpg"),
-			null, null, _serviceContext);
+			null, null, null, _serviceContext);
 
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
 			_commerceCatalog.getGroupId(), VirtualCPTypeConstants.NAME, true,

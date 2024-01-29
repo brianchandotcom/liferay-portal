@@ -308,7 +308,7 @@ public class CompanyLocalServiceTest {
 			_dlAppLocalService.addFileEntry(
 				null, userId, guestGroup.getGroupId(), 0, "test.xml",
 				"text/xml", "test.xml", "", "", "", "test".getBytes(), null,
-				null, serviceContext);
+				null, null, serviceContext);
 		}
 		finally {
 			_companyLocalService.deleteCompany(companyId);

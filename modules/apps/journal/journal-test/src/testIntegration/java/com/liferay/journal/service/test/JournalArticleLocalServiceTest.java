@@ -294,6 +294,7 @@ public class JournalArticleLocalServiceTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
@@ -1121,6 +1122,7 @@ public class JournalArticleLocalServiceTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		JournalArticle journalArticle =
@@ -1174,6 +1176,7 @@ public class JournalArticleLocalServiceTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		JournalArticle journalArticle =
@@ -1360,6 +1363,7 @@ public class JournalArticleLocalServiceTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
@@ -1432,6 +1436,7 @@ public class JournalArticleLocalServiceTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(

@@ -305,7 +305,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
 			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
-			serviceContext);
+			null, serviceContext);
 	}
 
 	@Inject

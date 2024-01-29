@@ -100,7 +100,7 @@ public class DeleteStalePWCVersionsUpgradeProcessTest {
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
-			null, null,
+			null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 	}

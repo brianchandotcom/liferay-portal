@@ -80,8 +80,8 @@ public class PhotoURLHelper {
 				dlFileEntry.getExternalReferenceCode(), userId,
 				dlFileEntry.getRepositoryId(), folderId,
 				dlFileEntry.getFileName(), mimeType, bytes,
-				dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
-				serviceContext);
+				dlFileEntry.getDisplayDate(), dlFileEntry.getExpirationDate(),
+				dlFileEntry.getReviewDate(), serviceContext);
 
 			if (bytes.length > _MINIMUM_IMAGE_SIZE) {
 				dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(

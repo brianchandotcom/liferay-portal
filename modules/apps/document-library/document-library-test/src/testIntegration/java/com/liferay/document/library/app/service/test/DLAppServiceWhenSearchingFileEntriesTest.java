@@ -43,7 +43,7 @@ public class DLAppServiceWhenSearchingFileEntriesTest
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			RandomTestUtil.randomString(), group.getGroupId(),
-			parentFolder.getFolderId(), fileName, fileName, null, null,
+			parentFolder.getFolderId(), fileName, fileName, null, null, null,
 			new String[] {"hello", "world"});
 
 		DLAppServiceTestUtil.search(fileEntry, "hello", true);
@@ -64,7 +64,7 @@ public class DLAppServiceWhenSearchingFileEntriesTest
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			RandomTestUtil.randomString(), group.getGroupId(),
-			parentFolder.getFolderId(), fileName, fileName, null, null,
+			parentFolder.getFolderId(), fileName, fileName, null, null, null,
 			assetTagNames);
 
 		assetTagNames = new String[] {"hello", "world", "liferay"};

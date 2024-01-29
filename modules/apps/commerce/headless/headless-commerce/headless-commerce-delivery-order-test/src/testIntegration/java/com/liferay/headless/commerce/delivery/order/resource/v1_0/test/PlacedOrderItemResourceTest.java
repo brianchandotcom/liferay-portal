@@ -277,7 +277,7 @@ public class PlacedOrderItemResourceTest
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(
 				PlacedOrderItemResourceTest.class, "dependencies/image.jpg"),
-			null, null, _serviceContext);
+			null, null, null, _serviceContext);
 
 		PlacedOrderItem postPlacedOrderItem = _addPlacedOrderItem(
 			_toPlacedOrderItem(

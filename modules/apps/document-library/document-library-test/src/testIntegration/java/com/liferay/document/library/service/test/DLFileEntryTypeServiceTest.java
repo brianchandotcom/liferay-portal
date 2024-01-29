@@ -210,7 +210,7 @@ public class DLFileEntryTypeServiceTest {
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			null, _group.getGroupId(), _folder.getFolderId(), name,
 			ContentTypes.TEXT_PLAIN, name, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, bytes, null, null,
+			StringPool.BLANK, bytes, null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		assertFileEntryType(fileEntry, _dlFileEntryType1);
@@ -220,7 +220,7 @@ public class DLFileEntryTypeServiceTest {
 		fileEntry = DLAppServiceUtil.addFileEntry(
 			null, _group.getGroupId(), _subfolder.getFolderId(), name,
 			ContentTypes.TEXT_PLAIN, name, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, bytes, null, null,
+			StringPool.BLANK, bytes, null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		assertFileEntryType(fileEntry, _dlFileEntryType1);

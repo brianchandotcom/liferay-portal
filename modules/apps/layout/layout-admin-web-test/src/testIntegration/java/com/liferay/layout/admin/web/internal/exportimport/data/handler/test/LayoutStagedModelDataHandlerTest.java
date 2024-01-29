@@ -395,7 +395,7 @@ public class LayoutStagedModelDataHandlerTest
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.APPLICATION_PDF,
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
-			null,
+			null, null,
 			ServiceContextTestUtil.getServiceContext(
 				liveGroup.getGroupId(), TestPropsValues.getUserId()));
 

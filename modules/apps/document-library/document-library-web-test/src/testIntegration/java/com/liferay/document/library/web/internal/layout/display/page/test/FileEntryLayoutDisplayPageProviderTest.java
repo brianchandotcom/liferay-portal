@@ -51,7 +51,7 @@ public class FileEntryLayoutDisplayPageProviderTest {
 			ContentTypes.APPLICATION_OCTET_STREAM,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new byte[0], null, null,
+			new byte[0], null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 

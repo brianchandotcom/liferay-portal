@@ -108,7 +108,7 @@ public class LayoutListRetrieverTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			new byte[0], null, null,
+			new byte[0], null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId(),
 				new String[] {"tag1", "tag2"}));

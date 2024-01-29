@@ -357,7 +357,7 @@ public class DDLRecordStagedModelDataHandlerTest
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.TEXT_PLAIN,
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
-			null,
+			null, null,
 			ServiceContextTestUtil.getServiceContext(
 				stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 

@@ -492,6 +492,7 @@ public class FileEntryStagedModelDataHandler
 						fileEntry.getMimeType(), fileEntryTitle,
 						StringPool.BLANK, fileEntry.getDescription(), null,
 						inputStream, fileEntry.getSize(),
+						fileEntry.getDisplayDate(),
 						fileEntry.getExpirationDate(),
 						fileEntry.getReviewDate(), serviceContext);
 
@@ -640,8 +641,9 @@ public class FileEntryStagedModelDataHandler
 					folderId, fileEntry.getFileName(), fileEntry.getMimeType(),
 					fileEntryTitle, StringPool.BLANK,
 					fileEntry.getDescription(), null, inputStream,
-					fileEntry.getSize(), fileEntry.getExpirationDate(),
-					fileEntry.getReviewDate(), serviceContext);
+					fileEntry.getSize(), fileEntry.getDisplayDate(),
+					fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+					serviceContext);
 			}
 
 			for (DLPluggableContentDataHandler<?>

@@ -119,7 +119,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		_dlAppService.checkOutFileEntry(
 			fileEntry.getFileEntryId(), _serviceContext);
@@ -140,7 +140,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
 
@@ -158,7 +158,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		_dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
@@ -186,7 +186,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), null, StringUtil.randomString(),
 			StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		byte[] bytes = FileUtil.getBytes(getClass(), "dependencies/test.pdf");
 
@@ -215,7 +215,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		_dlAppService.checkInFileEntry(
 			fileEntry.getFileEntryId(), DLVersionNumberIncrease.MAJOR,
@@ -236,7 +236,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		_dlAppService.checkOutFileEntry(
 			fileEntry.getFileEntryId(), _serviceContext);
@@ -256,7 +256,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		String version = fileEntry.getVersion();
 
@@ -291,7 +291,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		_dlAppService.updateFileEntryAndCheckIn(
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
@@ -318,7 +318,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		_dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
@@ -343,7 +343,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		Assert.assertEquals(1, count.get());
 	}
@@ -359,7 +359,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test_2.pdf"), null,
-			null, _serviceContext);
+			null, null, _serviceContext);
 
 		Assert.assertEquals(
 			2,
@@ -372,7 +372,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		Assert.assertEquals(
 			1,
@@ -394,7 +394,7 @@ public class PDFProcessorTest {
 					StringUtil.randomString(), StringUtil.randomString(),
 					StringUtil.randomString(),
 					FileUtil.getBytes(getClass(), "dependencies/test_2.pdf"),
-					null, null, _serviceContext);
+					null, null, null, _serviceContext);
 
 				Assert.assertEquals(
 					2,
@@ -418,7 +418,7 @@ public class PDFProcessorTest {
 					StringUtil.randomString(), StringUtil.randomString(),
 					StringUtil.randomString(),
 					FileUtil.getBytes(getClass(), "dependencies/test_2.pdf"),
-					null, null, _serviceContext);
+					null, null, null, _serviceContext);
 
 				Assert.assertEquals(
 					1,
@@ -439,7 +439,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		_dlAppService.checkOutFileEntry(
 			fileEntry.getFileEntryId(), _serviceContext);
@@ -464,7 +464,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		byte[] bytes = FileUtil.getBytes(getClass(), "dependencies/test.pdf");
 
@@ -495,7 +495,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		_dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",

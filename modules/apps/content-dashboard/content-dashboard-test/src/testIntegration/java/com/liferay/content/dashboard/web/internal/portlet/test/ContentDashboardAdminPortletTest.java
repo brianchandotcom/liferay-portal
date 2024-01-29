@@ -1522,7 +1522,7 @@ public class ContentDashboardAdminPortletTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + "." + fileExtension,
 			MimeTypesUtil.getExtensionContentType(fileExtension), new byte[0],
-			null, null,
+			null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 

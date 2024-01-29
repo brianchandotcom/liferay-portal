@@ -48,7 +48,7 @@ public class DLAppServiceTestUtil {
 
 		return addFileEntry(
 			RandomTestUtil.randomString(), groupId, folderId, FILE_NAME,
-			FILE_NAME, null, null, null);
+			FILE_NAME, null, null, null, null);
 	}
 
 	public static FileEntry addFileEntry(
@@ -57,13 +57,13 @@ public class DLAppServiceTestUtil {
 
 		return addFileEntry(
 			RandomTestUtil.randomString(), groupId, folderId, fileName,
-			fileName, null, null, null);
+			fileName, null, null, null, null);
 	}
 
 	public static FileEntry addFileEntry(
 			String externalReferenceCode, long groupId, long folderId,
-			String fileName, String title, Date expirationDate, Date reviewDate,
-			String[] assetTagNames)
+			String fileName, String title, Date displayDate,
+			Date expirationDate, Date reviewDate, String[] assetTagNames)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -74,7 +74,7 @@ public class DLAppServiceTestUtil {
 		return DLAppServiceUtil.addFileEntry(
 			externalReferenceCode, groupId, folderId, fileName,
 			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(),
+			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), displayDate,
 			expirationDate, reviewDate, serviceContext);
 	}
 

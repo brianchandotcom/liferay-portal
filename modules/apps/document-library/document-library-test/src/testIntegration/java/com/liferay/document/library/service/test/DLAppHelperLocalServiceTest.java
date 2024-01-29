@@ -47,7 +47,7 @@ public class DLAppHelperLocalServiceTest {
 			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			content.getBytes(), null, null,
+			content.getBytes(), null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		_dlAppHelperLocalService.moveFileEntryToTrash(
@@ -78,7 +78,7 @@ public class DLAppHelperLocalServiceTest {
 			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			content.getBytes(), null, null,
+			content.getBytes(), null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		_dlAppHelperLocalService.moveFileEntryToTrash(

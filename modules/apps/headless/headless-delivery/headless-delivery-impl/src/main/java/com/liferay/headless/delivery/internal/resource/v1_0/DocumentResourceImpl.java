@@ -563,6 +563,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 				externalReferenceCode, repositoryId, documentFolderId, fileName,
 				binaryFile.getContentType(), title, null, description, null,
 				binaryFile.getInputStream(), binaryFile.getSize(), null, null,
+				null,
 				_createServiceContext(
 					Constants.ADD, () -> new Long[0], () -> new String[0],
 					documentFolderId, document, groupId)));

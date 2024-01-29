@@ -511,7 +511,7 @@ public class DLCheckInCheckOutTest {
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			null, repositoryId, _folder.getFolderId(), fileName,
 			ContentTypes.TEXT_PLAIN, fileName, null, null, null, inputStream,
-			_TEST_CONTENT.length(), null, null, _serviceContext);
+			_TEST_CONTENT.length(), null, null, null, _serviceContext);
 
 		Assert.assertNotNull(fileEntry);
 

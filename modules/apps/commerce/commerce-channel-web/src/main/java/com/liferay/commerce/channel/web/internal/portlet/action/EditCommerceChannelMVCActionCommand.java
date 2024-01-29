@@ -425,7 +425,8 @@ public class EditCommerceChannelMVCActionCommand
 					newFileEntry.getFileName(), newFileEntry.getMimeType(),
 					formattedFileName, StringPool.BLANK, StringPool.BLANK,
 					StringPool.BLANK, newFileEntry.getContentStream(),
-					newFileEntry.getSize(), null, null, new ServiceContext());
+					newFileEntry.getSize(), null, null, null,
+					new ServiceContext());
 			}
 			finally {
 				_dlAppLocalService.deleteFileEntry(fileEntryId);

@@ -364,7 +364,8 @@ public class DLAMImageOptimizerTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),
 			ContentTypes.APPLICATION_OCTET_STREAM,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null, _serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
+			_serviceContext);
 
 		Assert.assertEquals(
 			count + 1,
@@ -416,7 +417,7 @@ public class DLAMImageOptimizerTest {
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(
 				DLAMImageOptimizerTest.class, "dependencies/image.jpg"),
-			null, null, serviceContext);
+			null, null, null, serviceContext);
 	}
 
 	private void _deleteAllAMImageConfigurationEntries() throws Exception {

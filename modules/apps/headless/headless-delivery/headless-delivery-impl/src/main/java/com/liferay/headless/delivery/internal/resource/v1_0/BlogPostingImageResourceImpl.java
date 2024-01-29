@@ -138,7 +138,7 @@ public class BlogPostingImageResourceImpl
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			null, siteId, folder.getFolderId(), binaryFile.getFileName(),
 			binaryFile.getContentType(), title, null, null, null,
-			binaryFile.getInputStream(), binaryFile.getSize(), null, null,
+			binaryFile.getInputStream(), binaryFile.getSize(), null, null, null,
 			ServiceContextBuilder.create(
 				siteId, contextHttpServletRequest, viewableBy
 			).build());

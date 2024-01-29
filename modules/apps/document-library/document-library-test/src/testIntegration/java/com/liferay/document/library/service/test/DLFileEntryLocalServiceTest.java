@@ -649,7 +649,7 @@ public class DLFileEntryLocalServiceTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY,
-				null, null, serviceContext);
+				null, null, null, serviceContext);
 
 			serviceContext = ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -729,7 +729,7 @@ public class DLFileEntryLocalServiceTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY,
-				null, null, serviceContext);
+				null, null, null, serviceContext);
 
 			LocalRepository localRepository =
 				RepositoryProviderUtil.getFileEntryLocalRepository(
@@ -745,7 +745,7 @@ public class DLFileEntryLocalServiceTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY,
-				null, null, serviceContext);
+				null, null, null, serviceContext);
 		}
 
 		DLFileEntryLocalServiceUtil.deleteFileEntries(
@@ -935,7 +935,7 @@ public class DLFileEntryLocalServiceTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, StringPool.BLANK,
 			ContentTypes.TEXT_PLAIN, "FE1.exe", StringPool.BLANK,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 
 		Assert.assertEquals("FE1.exe", fileEntry.getFileName());
 
@@ -974,7 +974,7 @@ public class DLFileEntryLocalServiceTest {
 			dlFolder.getFolderId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, inputStream,
-			bytes.length, null, null, serviceContext);
+			bytes.length, null, null, null, serviceContext);
 
 		inputStream = new ByteArrayInputStream(bytes);
 
@@ -983,7 +983,7 @@ public class DLFileEntryLocalServiceTest {
 			dlFolder.getFolderId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, inputStream,
-			bytes.length, null, null, serviceContext);
+			bytes.length, null, null, null, serviceContext);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			DLFileEntry.class.getName(), noAssetFileEntry.getFileEntryId());

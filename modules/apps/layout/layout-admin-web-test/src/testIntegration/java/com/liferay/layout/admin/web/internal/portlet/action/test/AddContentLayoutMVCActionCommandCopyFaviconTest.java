@@ -115,7 +115,7 @@ public class AddContentLayoutMVCActionCommandCopyFaviconTest {
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_TEXT, bytes,
-			null, null,
+			null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 

@@ -160,7 +160,7 @@ public class DLAMImageCounterTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),
 			ContentTypes.APPLICATION_OCTET_STREAM,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
@@ -183,7 +183,7 @@ public class DLAMImageCounterTest {
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), null, null, serviceContext);
+			_getImageBytes(), null, null, null, serviceContext);
 	}
 
 	private void _addPortletFileEntry() throws Exception {

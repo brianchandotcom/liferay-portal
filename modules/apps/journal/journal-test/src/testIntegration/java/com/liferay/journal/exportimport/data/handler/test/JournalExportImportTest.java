@@ -204,7 +204,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+			null, ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			_jsonFactory.looseSerialize(fileEntry));

@@ -288,7 +288,7 @@ public class EditFileEntryMVCActionCommandTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null, null,
-			null, ServiceContextTestUtil.getServiceContext());
+			null, null, ServiceContextTestUtil.getServiceContext());
 
 		_dlAppService.checkOutFileEntry(
 			initialFileEntry.getFileEntryId(),
@@ -325,7 +325,7 @@ public class EditFileEntryMVCActionCommandTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null, null,
-			null, ServiceContextTestUtil.getServiceContext());
+			null, null, ServiceContextTestUtil.getServiceContext());
 
 		_editFileEntryMVCActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(

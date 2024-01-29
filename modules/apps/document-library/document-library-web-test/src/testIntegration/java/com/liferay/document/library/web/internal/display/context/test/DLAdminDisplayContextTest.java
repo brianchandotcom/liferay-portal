@@ -116,7 +116,7 @@ public class DLAdminDisplayContextTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			content.getBytes(), null, null, serviceContext);
+			content.getBytes(), null, null, null, serviceContext);
 	}
 
 	private MockLiferayPortletActionRequest

@@ -167,7 +167,7 @@ public class CommerceOrderImporterTypeTest {
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 					MimeTypesUtil.getContentType(file, fileName), fileName,
 					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, file,
-					null, null, _serviceContext));
+					null, null, null, _serviceContext));
 
 		Assert.assertEquals(
 			commerceOrderImporterItems.toString(), 2,
@@ -236,7 +236,7 @@ public class CommerceOrderImporterTypeTest {
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 					MimeTypesUtil.getContentType(file, fileName), fileName,
 					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, file,
-					null, null, _serviceContext));
+					null, null, null, _serviceContext));
 
 		Assert.assertEquals(
 			commerceOrderImporterItems.toString(), 1,

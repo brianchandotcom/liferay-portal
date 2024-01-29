@@ -117,7 +117,7 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 				formDocument.getTitle(), formDocument.getTitle(),
 				formDocument.getDescription(), null,
 				binaryFile.getInputStream(), binaryFile.getSize(), null, null,
-				new ServiceContext()));
+				null, new ServiceContext()));
 	}
 
 	@Reference

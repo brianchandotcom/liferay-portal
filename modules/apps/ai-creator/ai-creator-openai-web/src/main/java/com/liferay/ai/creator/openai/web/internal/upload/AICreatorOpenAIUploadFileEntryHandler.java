@@ -102,7 +102,7 @@ public class AICreatorOpenAIUploadFileEntryHandler
 
 			return _dlAppService.addFileEntry(
 				null, repositoryId, folderId, title, mimeType, title, title,
-				null, null, file, null, null, serviceContext);
+				null, null, file, null, null, null, serviceContext);
 		}
 		finally {
 			if (file != null) {

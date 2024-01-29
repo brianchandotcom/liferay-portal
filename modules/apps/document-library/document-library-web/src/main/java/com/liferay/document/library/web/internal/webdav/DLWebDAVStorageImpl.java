@@ -218,7 +218,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				null, groupId, parentFolderId, fileName,
 				fileEntry.getMimeType(), FileUtil.stripExtension(fileName),
 				StringPool.BLANK, fileEntry.getDescription(), StringPool.BLANK,
-				file, null, null, serviceContext);
+				file, null, null, null, serviceContext);
 
 			return status;
 		}
@@ -455,7 +455,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				FileEntry fileEntry = _dlAppService.addFileEntry(
 					null, webDAVRequest.getGroupId(), parentFolderId, fileName,
 					contentType, title, StringPool.BLANK, StringPool.BLANK,
-					StringPool.BLANK, file, null, null, serviceContext);
+					StringPool.BLANK, file, null, null, null, serviceContext);
 
 				resource = _toResource(webDAVRequest, fileEntry, false);
 			}
@@ -814,7 +814,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				_dlAppService.addFileEntry(
 					null, webDAVRequest.getGroupId(), parentFolderId, fileName,
 					contentType, title, StringPool.BLANK, StringPool.BLANK,
-					StringPool.BLANK, file, null, null, serviceContext);
+					StringPool.BLANK, file, null, null, null, serviceContext);
 			}
 
 			if (_log.isInfoEnabled()) {

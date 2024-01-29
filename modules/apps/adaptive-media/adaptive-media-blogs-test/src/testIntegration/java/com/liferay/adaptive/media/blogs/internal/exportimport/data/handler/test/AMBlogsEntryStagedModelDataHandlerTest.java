@@ -204,7 +204,7 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
-			serviceContext);
+			null, serviceContext);
 	}
 
 	private String _getDynamicContent(FileEntry... fileEntries)

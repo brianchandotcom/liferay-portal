@@ -61,7 +61,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			RandomTestUtil.randomString(), group.getGroupId(),
-			parentFolder.getFolderId(), fileName, fileName, null, null,
+			parentFolder.getFolderId(), fileName, fileName, null, null, null,
 			assetTagNames);
 
 		assetTagNames = new String[] {"hello", "world"};
@@ -108,7 +108,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			RandomTestUtil.randomString(), group.getGroupId(),
-			parentFolder.getFolderId(), fileName, fileName, null, null,
+			parentFolder.getFolderId(), fileName, fileName, null, null, null,
 			assetTagNames);
 
 		assetTagNames = new String[] {"hello", "world"};
@@ -208,7 +208,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		FileEntry fileEntry = dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, null, 0, null, null,
+			StringPool.BLANK, StringPool.BLANK, null, 0, null, null, null,
 			serviceContext);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =

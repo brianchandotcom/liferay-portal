@@ -79,7 +79,7 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 			RandomTestUtil.randomString(),
 			MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			StringPool.BLANK, (byte[])null, null, null,
+			StringPool.BLANK, (byte[])null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		InfoItemFieldValues infoItemFieldValues =
@@ -104,7 +104,7 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 			RandomTestUtil.randomString(),
 			MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			StringPool.BLANK, (byte[])null, null, null,
+			StringPool.BLANK, (byte[])null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		InfoItemFieldValues infoItemFieldValues =

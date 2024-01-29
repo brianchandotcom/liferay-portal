@@ -166,7 +166,7 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				uniqueFileName, uniqueFileName,
 				_getDescription(uploadPortletRequest), StringPool.BLANK,
 				inputStream, uploadPortletRequest.getSize(parameterName), null,
-				null, _getServiceContext(uploadPortletRequest));
+				null, null, _getServiceContext(uploadPortletRequest));
 		}
 
 		private FileEntry _editImageFileEntry(

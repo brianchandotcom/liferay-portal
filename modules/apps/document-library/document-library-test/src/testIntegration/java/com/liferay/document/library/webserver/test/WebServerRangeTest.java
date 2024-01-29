@@ -181,7 +181,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			parentFolder.getFolderId(), fileName, ContentTypes.TEXT_PLAIN,
-			_SAMPLE_DATA.getBytes(), null, null,
+			_SAMPLE_DATA.getBytes(), null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 

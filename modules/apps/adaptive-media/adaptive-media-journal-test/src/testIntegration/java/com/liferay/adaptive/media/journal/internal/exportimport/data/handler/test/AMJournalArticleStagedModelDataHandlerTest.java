@@ -259,7 +259,7 @@ public class AMJournalArticleStagedModelDataHandlerTest
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
-			serviceContext);
+			null, serviceContext);
 	}
 
 	private JournalArticle _addJournalArticle(

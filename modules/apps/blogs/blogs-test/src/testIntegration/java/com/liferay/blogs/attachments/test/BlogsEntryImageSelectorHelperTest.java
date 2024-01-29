@@ -109,7 +109,7 @@ public class BlogsEntryImageSelectorHelperTest {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _IMAGE_TITLE,
 				MimeTypesUtil.getContentType(_IMAGE_TITLE), "image",
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, bytes,
-				null, null,
+				null, null, null,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 			Object blogsEntryImageSelectorHelper = _constructor.newInstance(
@@ -166,7 +166,7 @@ public class BlogsEntryImageSelectorHelperTest {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _IMAGE_TITLE,
 				MimeTypesUtil.getContentType(_IMAGE_TITLE), "image",
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				FileUtil.getBytes(inputStream), null, null,
+				FileUtil.getBytes(inputStream), null, null, null,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 			Object blogsEntryImageSelectorHelper = _constructor.newInstance(

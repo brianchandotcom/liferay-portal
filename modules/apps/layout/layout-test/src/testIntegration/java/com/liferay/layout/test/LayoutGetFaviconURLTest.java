@@ -224,7 +224,7 @@ public class LayoutGetFaviconURLTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG, bytes, null,
-			null, _serviceContext);
+			null, null, _serviceContext);
 	}
 
 	private byte[] _getBytes(String favicon) throws Exception {

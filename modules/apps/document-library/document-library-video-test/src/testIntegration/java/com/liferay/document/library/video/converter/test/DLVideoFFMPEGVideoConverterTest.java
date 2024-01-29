@@ -199,7 +199,7 @@ public class DLVideoFFMPEGVideoConverterTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
-			null, _serviceContext);
+			null, null, _serviceContext);
 	}
 
 	private void _withDLVideoFFMPEGVideoConverterConfiguration(

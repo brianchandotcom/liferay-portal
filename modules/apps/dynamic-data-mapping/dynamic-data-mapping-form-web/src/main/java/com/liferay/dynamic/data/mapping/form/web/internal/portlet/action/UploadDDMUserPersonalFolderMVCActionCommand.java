@@ -226,7 +226,7 @@ public class UploadDDMUserPersonalFolderMVCActionCommand
 				null, repositoryId, folderId, uniqueFileName,
 				uploadPortletRequest.getContentType(parameterName),
 				uniqueFileName, uniqueFileName, description, StringPool.BLANK,
-				inputStream, size, null, null, serviceContext);
+				inputStream, size, null, null, null, serviceContext);
 		}
 
 		private boolean _exists(

@@ -80,7 +80,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			parentFolder.getFolderId(), "Test Trash.txt",
 			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY, null,
-			null,
+			null, null,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 

@@ -66,7 +66,8 @@ public class DLFileVersionLocalServiceTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
+			serviceContext);
 
 		DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), null, ContentTypes.TEXT_PLAIN,

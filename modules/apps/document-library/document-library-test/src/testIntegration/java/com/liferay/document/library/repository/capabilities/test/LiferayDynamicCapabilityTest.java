@@ -441,7 +441,8 @@ public class LiferayDynamicCapabilityTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
+			serviceContext);
 	}
 
 	private Dictionary<String, Object> _getCapabilityProperties(

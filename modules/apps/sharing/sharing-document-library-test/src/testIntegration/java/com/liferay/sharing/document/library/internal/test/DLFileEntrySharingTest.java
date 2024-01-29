@@ -68,7 +68,8 @@ public class DLFileEntrySharingTest extends BaseSharingTestCase<DLFileEntry> {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), "text/plain", StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringPool.BLANK, "test".getBytes(), null, null, serviceContext);
+			StringPool.BLANK, "test".getBytes(), null, null, null,
+			serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
 	}
@@ -121,7 +122,7 @@ public class DLFileEntrySharingTest extends BaseSharingTestCase<DLFileEntry> {
 			RandomTestUtil.randomString(), "text",
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), StringPool.BLANK,
-			StringPool.SPACE.getBytes(), null, null, serviceContext);
+			StringPool.SPACE.getBytes(), null, null, null, serviceContext);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 

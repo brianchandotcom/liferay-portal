@@ -134,7 +134,7 @@ public class DocumentLibraryConvertProcessTest {
 			RandomTestUtil.randomString(),
 			ContentTypes.APPLICATION_OCTET_STREAM,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), (byte[])null, null, null,
+			RandomTestUtil.randomString(), (byte[])null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -242,7 +242,7 @@ public class DocumentLibraryConvertProcessTest {
 
 		return _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(), folderId,
-			fileName, mimeType, bytes, null, null,
+			fileName, mimeType, bytes, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}

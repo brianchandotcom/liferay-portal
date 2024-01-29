@@ -60,7 +60,7 @@ public class DLFileEntryTypeContentDashboardItemSubtypeFactoryTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg",
 			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
-			new byte[0], null, null,
+			new byte[0], null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(

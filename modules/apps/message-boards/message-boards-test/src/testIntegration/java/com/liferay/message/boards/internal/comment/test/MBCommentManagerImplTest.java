@@ -64,7 +64,7 @@ public class MBCommentManagerImplTest {
 			null, _user.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			null, null, null,
+			null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));
 

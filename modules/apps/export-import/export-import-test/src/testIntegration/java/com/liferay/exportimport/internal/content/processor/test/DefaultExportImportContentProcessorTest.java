@@ -137,7 +137,7 @@ public class DefaultExportImportContentProcessorTest {
 			null, TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
@@ -586,7 +586,7 @@ public class DefaultExportImportContentProcessorTest {
 			null, TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"00000000-0000-0000-0000-000000000000.txt", ContentTypes.TEXT_PLAIN,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 

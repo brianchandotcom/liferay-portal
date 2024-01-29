@@ -2177,7 +2177,7 @@ public class SXPBlueprintSearchResultTest {
 			FileUtil.getBytes(
 				SXPBlueprintSearchResultTest.class,
 				StringUtils.replace(clazzName, ".", "/") + fileName),
-			null, null, _serviceContext);
+			null, null, null, _serviceContext);
 	}
 
 	private Group _addGroup() throws Exception {

@@ -89,7 +89,7 @@ public class FileEntryOpenNLPDocumentAssetAutoTaggerTest
 			RandomTestUtil.randomString(), mimeType,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, new ByteArrayInputStream(bytes), bytes.length,
-			null, null, ServiceContextTestUtil.getServiceContext());
+			null, null, null, ServiceContextTestUtil.getServiceContext());
 
 		return assetEntryLocalService.fetchEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());

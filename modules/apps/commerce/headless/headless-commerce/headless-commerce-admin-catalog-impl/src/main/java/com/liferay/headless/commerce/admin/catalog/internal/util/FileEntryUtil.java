@@ -72,7 +72,7 @@ public class FileEntryUtil {
 			null, serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, uniqueFileName,
 			contentType, uniqueFileName, StringPool.BLANK, null,
-			StringPool.BLANK, file, null, null, serviceContext);
+			StringPool.BLANK, file, null, null, null, serviceContext);
 
 		FileUtil.delete(file);
 

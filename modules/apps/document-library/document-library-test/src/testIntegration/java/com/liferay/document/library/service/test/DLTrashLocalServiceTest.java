@@ -47,7 +47,7 @@ public class DLTrashLocalServiceTest {
 			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			content.getBytes(), null, null,
+			content.getBytes(), null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		_dlTrashLocalService.moveFileEntryToTrash(
@@ -74,7 +74,7 @@ public class DLTrashLocalServiceTest {
 			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			content.getBytes(), null, null,
+			content.getBytes(), null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		_dlTrashLocalService.moveFileEntryToTrash(

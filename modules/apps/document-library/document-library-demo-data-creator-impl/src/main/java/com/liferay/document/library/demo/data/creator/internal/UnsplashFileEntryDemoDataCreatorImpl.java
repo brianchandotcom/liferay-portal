@@ -58,7 +58,7 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, userId, folder.getGroupId(), folderId, name, "image/jpeg",
-			_getBytes(), null, null, new ServiceContext());
+			_getBytes(), null, null, null, new ServiceContext());
 
 		_fileEntryIds.add(fileEntry.getFileEntryId());
 

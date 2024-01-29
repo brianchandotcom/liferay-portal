@@ -88,7 +88,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 					groupId, dlFolder.getFolderId(),
 					FileUtil.stripExtension(fileName)),
 				StringPool.BLANK, null, null, inputStream, fileContent.length,
-				null, null, serviceContext);
+				null, null, null, serviceContext);
 		}
 	}
 
@@ -132,7 +132,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 				DLUtil.getUniqueTitle(
 					groupId, folderId, FileUtil.stripExtension(fileName)),
 				StringPool.BLANK, null, null, inputStream, fileContent.length,
-				null, null, cloneServiceContext);
+				null, null, null, cloneServiceContext);
 		}
 	}
 

@@ -299,7 +299,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
-			new ServiceContext());
+			null, new ServiceContext());
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -355,7 +355,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
-			new ServiceContext());
+			null, new ServiceContext());
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -485,7 +485,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			null, TestPropsValues.getUserId(), repository.getRepositoryId(),
 			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
 			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY, null,
-			null, serviceContext);
+			null, null, serviceContext);
 
 		return repository.getRepositoryId();
 	}
@@ -521,7 +521,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
 			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY, null,
-			null, serviceContext);
+			null, null, serviceContext);
 
 		DLAppLocalServiceUtil.addFileShortcut(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),

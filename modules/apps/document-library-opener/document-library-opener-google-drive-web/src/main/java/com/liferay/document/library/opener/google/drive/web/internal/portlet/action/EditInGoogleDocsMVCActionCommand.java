@@ -93,7 +93,7 @@ public class EditInGoogleDocsMVCActionCommand extends BaseMVCActionCommand {
 
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			null, repositoryId, folderId, null, contentType, title, null,
-			StringPool.BLANK, StringPool.BLANK, new byte[0], null, null,
+			StringPool.BLANK, StringPool.BLANK, new byte[0], null, null, null,
 			serviceContext);
 
 		_dlAppService.checkOutFileEntry(

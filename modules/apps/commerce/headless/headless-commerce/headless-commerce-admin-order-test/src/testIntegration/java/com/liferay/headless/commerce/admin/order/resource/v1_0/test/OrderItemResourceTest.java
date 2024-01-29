@@ -143,7 +143,7 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(
 				OrderItemResourceTest.class, "dependencies/image.jpg"),
-			null, null, _serviceContext);
+			null, null, null, _serviceContext);
 
 		OrderItem postOrderItem = _addCommerceOrderItem(
 			_getOrderItem(fileEntry.getFileEntryId(), null));

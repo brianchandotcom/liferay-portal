@@ -171,7 +171,7 @@ public class BlogsAMImageCounterTest {
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), null, null, serviceContext);
+			_getImageBytes(), null, null, null, serviceContext);
 
 		return _blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),

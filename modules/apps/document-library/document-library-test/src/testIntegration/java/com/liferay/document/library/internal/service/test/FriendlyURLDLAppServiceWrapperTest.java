@@ -54,6 +54,7 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
 			StringPool.BLANK, TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			null,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -75,6 +76,7 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
 			StringPool.BLANK, TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			null,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -92,6 +94,7 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
 			StringPool.BLANK, TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			null,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -113,7 +116,7 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 			FileUtil.createTempFile(
 				new UnsyncByteArrayInputStream(
 					TestDataConstants.TEST_BYTE_ARRAY)),
-			null, null,
+			null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -136,7 +139,7 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
 			StringPool.BLANK,
 			new UnsyncByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
-			0, null, null,
+			0, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -164,7 +167,7 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), RandomTestUtil.randomString(),
-			StringUtil.randomString(), StringPool.BLANK, file, null, null,
+			StringUtil.randomString(), StringPool.BLANK, file, null, null, null,
 			serviceContext);
 
 		fileEntry = dlAppService.updateFileEntryAndCheckIn(
@@ -198,7 +201,8 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
-			StringPool.BLANK, inputStream, size, null, null, serviceContext);
+			StringPool.BLANK, inputStream, size, null, null, null,
+			serviceContext);
 
 		fileEntry = dlAppService.updateFileEntryAndCheckIn(
 			fileEntry.getFileEntryId(), StringUtil.randomString(),
@@ -230,7 +234,7 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), RandomTestUtil.randomString(),
 			StringUtil.randomString(), StringPool.BLANK, bytes, null, null,
-			serviceContext);
+			null, serviceContext);
 
 		fileEntry = dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), StringUtil.randomString(),
@@ -262,7 +266,7 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), RandomTestUtil.randomString(),
-			StringUtil.randomString(), StringPool.BLANK, file, null, null,
+			StringUtil.randomString(), StringPool.BLANK, file, null, null, null,
 			serviceContext);
 
 		fileEntry = dlAppService.updateFileEntry(
@@ -296,7 +300,8 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
-			StringPool.BLANK, inputStream, size, null, null, serviceContext);
+			StringPool.BLANK, inputStream, size, null, null, null,
+			serviceContext);
 
 		fileEntry = dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), StringUtil.randomString(),

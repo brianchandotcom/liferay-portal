@@ -199,7 +199,7 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 			ContentTypes.APPLICATION_OCTET_STREAM,
 			RandomTestUtil.randomString(), urlTitle,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			(byte[])null, null, null,
+			(byte[])null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 

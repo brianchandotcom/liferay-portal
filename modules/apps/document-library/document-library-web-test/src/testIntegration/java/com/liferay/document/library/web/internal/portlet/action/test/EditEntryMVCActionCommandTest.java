@@ -75,7 +75,7 @@ public class EditEntryMVCActionCommandTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null, null,
-			null, ServiceContextTestUtil.getServiceContext());
+			null, null, ServiceContextTestUtil.getServiceContext());
 
 		_dlAppService.checkOutFileEntry(
 			initialFileEntry.getFileEntryId(),
@@ -116,7 +116,7 @@ public class EditEntryMVCActionCommandTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null, null,
-			null, ServiceContextTestUtil.getServiceContext());
+			null, null, ServiceContextTestUtil.getServiceContext());
 
 		_dlAppService.checkOutFileEntry(
 			initialFileEntry.getFileEntryId(),
@@ -154,7 +154,7 @@ public class EditEntryMVCActionCommandTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null, null,
-			null, ServiceContextTestUtil.getServiceContext());
+			null, null, ServiceContextTestUtil.getServiceContext());
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
@@ -184,7 +184,7 @@ public class EditEntryMVCActionCommandTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null, null,
-			null, ServiceContextTestUtil.getServiceContext());
+			null, null, ServiceContextTestUtil.getServiceContext());
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());

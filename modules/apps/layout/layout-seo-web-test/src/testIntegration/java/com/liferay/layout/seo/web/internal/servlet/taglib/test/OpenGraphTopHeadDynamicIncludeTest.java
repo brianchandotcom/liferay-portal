@@ -1432,7 +1432,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
-			null, serviceContext);
+			null, null, serviceContext);
 	}
 
 	private void _assertAlternateLinkTag(Document document, Set<Locale> locales)

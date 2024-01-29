@@ -67,7 +67,7 @@ public class DLFileEntryLocalServiceAdvancedFileSystemStoreTest {
 			MimeTypes.MIME_APPLICATION_OCTET_STREAM, StringUtil.randomString(),
 			null, null, null,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, new ByteArrayInputStream(new byte[0]), 0, null, null,
+			null, new ByteArrayInputStream(new byte[0]), 0, null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();

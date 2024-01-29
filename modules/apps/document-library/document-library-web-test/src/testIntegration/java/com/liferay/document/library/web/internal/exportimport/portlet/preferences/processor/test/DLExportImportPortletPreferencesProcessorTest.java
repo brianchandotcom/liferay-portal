@@ -311,7 +311,7 @@ public class DLExportImportPortletPreferencesProcessorTest {
 			null, TestPropsValues.getUserId(), groupId, folderId,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, RandomTestUtil.randomBytes(), null, null,
+			StringPool.BLANK, RandomTestUtil.randomBytes(), null, null, null,
 			serviceContext);
 	}
 

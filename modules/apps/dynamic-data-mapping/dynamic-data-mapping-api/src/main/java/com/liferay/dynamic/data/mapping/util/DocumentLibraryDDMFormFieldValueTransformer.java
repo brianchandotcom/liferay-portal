@@ -65,7 +65,7 @@ public class DocumentLibraryDDMFormFieldValueTransformer
 			tempFileEntry.getMimeType(), fileName, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK,
 			tempFileEntry.getContentStream(), tempFileEntry.getSize(), null,
-			null, new ServiceContext());
+			null, null, new ServiceContext());
 	}
 
 	protected FileEntry fetchTempFileEntry(String value)

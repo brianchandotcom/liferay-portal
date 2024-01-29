@@ -62,7 +62,7 @@ public class UniqueFileEntryTitleProviderTest {
 			_folder.getFolderId(), "someTitle.jpg",
 			ContentTypes.APPLICATION_TEXT, StringUtil.randomString(),
 			StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
-			"test".getBytes(), null, null,
+			"test".getBytes(), null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
@@ -78,7 +78,7 @@ public class UniqueFileEntryTitleProviderTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_folder.getFolderId(), null, ContentTypes.APPLICATION_TEXT,
 			"someTitle", StringPool.BLANK, StringUtil.randomString(),
-			StringPool.BLANK, "test".getBytes(), null, null,
+			StringPool.BLANK, "test".getBytes(), null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
@@ -111,7 +111,7 @@ public class UniqueFileEntryTitleProviderTest {
 			_folder.getFolderId(), "Untitled" + mimeTypeExtension,
 			ContentTypes.APPLICATION_TEXT, StringUtil.randomString(),
 			StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
-			"test".getBytes(), null, null,
+			"test".getBytes(), null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
@@ -129,7 +129,7 @@ public class UniqueFileEntryTitleProviderTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_folder.getFolderId(), null, ContentTypes.APPLICATION_TEXT,
 			"Untitled", StringPool.BLANK, StringUtil.randomString(),
-			StringPool.BLANK, "test".getBytes(), null, null,
+			StringPool.BLANK, "test".getBytes(), null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
@@ -150,7 +150,7 @@ public class UniqueFileEntryTitleProviderTest {
 			_folder.getFolderId(), "Untitled.ppt",
 			ContentTypes.APPLICATION_TEXT, "Untitled", StringPool.BLANK,
 			StringUtil.randomString(), StringPool.BLANK, "test".getBytes(),
-			null, null,
+			null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
@@ -179,7 +179,7 @@ public class UniqueFileEntryTitleProviderTest {
 			_folder.getFolderId(), "Untitled", ContentTypes.APPLICATION_TEXT,
 			StringUtil.randomString(), StringPool.BLANK,
 			StringUtil.randomString(), StringPool.BLANK, "test".getBytes(),
-			null, null,
+			null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
@@ -196,7 +196,7 @@ public class UniqueFileEntryTitleProviderTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_folder.getFolderId(), null, ContentTypes.APPLICATION_TEXT,
 			"Untitled", StringPool.BLANK, StringUtil.randomString(),
-			StringPool.BLANK, "test".getBytes(), null, null,
+			StringPool.BLANK, "test".getBytes(), null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(

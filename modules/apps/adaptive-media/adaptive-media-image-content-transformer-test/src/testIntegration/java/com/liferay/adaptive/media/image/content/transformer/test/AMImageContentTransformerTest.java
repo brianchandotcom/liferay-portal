@@ -104,7 +104,7 @@ public class AMImageContentTransformerTest {
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(
 				AMImageContentTransformerTest.class, "dependencies/image.jpg"),
-			null, null, serviceContext);
+			null, null, null, serviceContext);
 	}
 
 	private AMImageConfigurationEntry _amImageConfigurationEntry;

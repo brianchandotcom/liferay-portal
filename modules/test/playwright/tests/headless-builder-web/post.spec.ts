@@ -6,13 +6,17 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {headlessBuilderPagesTest} from '../../fixtures/headlessBuilderPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	loginTest,
-	headlessBuilderPagesTest
+	headlessBuilderPagesTest,
+	featureFlagsTest({
+		'LPS-178642': true,
+	})
 );
 
 const basicApiApplication = {
@@ -199,7 +203,6 @@ test('can create post endpoint with different request and response schema', asyn
 	headlessBuilderPage,
 	page,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178642', true);
 	const subjectResponse = await apiHelpers.objectAdmin.postObjectDefinition(
 		subjectObjectDefinition
 	);
@@ -215,12 +218,9 @@ test('can create post endpoint with different request and response schema', asyn
 	await headlessBuilderPage.goToEditAPIApplication(
 		studentSubjectsApplication.title
 	);
-	await apiApplicationPage.goToEndpointsTab();
-	await apiApplicationPage.addAPIEndpointButton.click();
-	await apiApplicationPage.setEndpointMethod('POST');
-	await apiApplicationPage.setEndpointScope('Company');
-	await apiApplicationPage.endpointPathTextBox.fill('student');
-	await apiApplicationPage.endpointCreateButton.click();
+
+	await apiApplicationPage.createApiEndpoin('POST', 'Company', 'student');
+
 	await apiApplicationPage.goToEndpointConfigurationTab();
 	await apiApplicationPage.selectEndpointRequestSchema(
 		studentSubjectsApplication.apiApplicationToAPISchemas[0].name
@@ -228,12 +228,18 @@ test('can create post endpoint with different request and response schema', asyn
 	await apiApplicationPage.selectEndpointResponseSchema(
 		studentSubjectsApplication.apiApplicationToAPISchemas[1].name
 	);
+
 	await apiApplicationPage.publishButton.click();
+
 	await page.goto(
 		`/o/api?endpoint=http://localhost:8080/o/c/${studentSubjectsApplication.baseURL}/openapi.json`
 	);
+
 	page.waitForLoadState();
-	expect(page.getByLabel('post ​/student')).toBeVisible();
+	await expect(
+		page.locator('//span[@data-path="/student"]/a/span')
+	).toBeVisible();
+
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
@@ -244,7 +250,6 @@ test('can create post endpoint with different request and response schema', asyn
 	);
 	await apiHelpers.objectAdmin.deleteObjectDefinition(studentResponse.id);
 	await apiHelpers.objectAdmin.deleteObjectDefinition(subjectResponse.id);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178642', false);
 });
 
 test('can create post method endpoint with company scope', async ({
@@ -253,7 +258,6 @@ test('can create post method endpoint with company scope', async ({
 	headlessBuilderPage,
 	page,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178642', true);
 	await apiHelpers.object.postObjectEntry(
 		basicApiApplication,
 		'headless-builder/applications'
@@ -261,27 +265,31 @@ test('can create post method endpoint with company scope', async ({
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.goToEditAPIApplication(basicApiApplication.title);
-	await apiApplicationPage.goToEndpointsTab();
-	await apiApplicationPage.addAPIEndpointButton.click();
-	await apiApplicationPage.setEndpointMethod('POST');
-	await apiApplicationPage.setEndpointScope('Company');
-	await apiApplicationPage.endpointPathTextBox.fill('test-post-endpoint');
-	await apiApplicationPage.endpointCreateButton.click();
+
+	await apiApplicationPage.createApiEndpoin(
+		'POST',
+		'Company',
+		'test-post-endpoint'
+	);
+
 	await apiApplicationPage.goToEndpointConfigurationTab();
 	await apiApplicationPage.selectEndpointRequestSchema(
 		basicApiApplication.apiApplicationToAPISchemas[0].name
 	);
 	await apiApplicationPage.publishButton.click();
+
 	await page.goto(
 		`/o/api?endpoint=http://localhost:8080/o/c/${basicApiApplication.baseURL}/openapi.json`
 	);
-	page.waitForLoadState();
-	expect(page.getByLabel('post ​/test-post-endpoint')).toBeVisible();
+
+	await page.waitForLoadState();
+	await expect(
+		page.locator('//span[@data-path="/test-post-endpoint"]/a/span')
+	).toBeVisible();
 
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		basicApiApplication.externalReferenceCode
 	);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178642', false);
 });

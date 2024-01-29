@@ -3,18 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayDropDown from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
-import React, {useEffect, useRef, useState} from 'react';
-import {EdgeProps, EdgeText} from 'react-flow-renderer';
+import React, {useEffect, useState} from 'react';
+import {EdgeProps} from 'react-flow-renderer';
 
-import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
-import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {ObjectRelationshipEdgeData} from '../types';
-import ManyMarker from './ManyMarker';
-import OneMarker from './OneMarker';
-
-import './Edge.scss';
+import {ManyObjectRelationshipEdge} from './ManyObjectRelationshipEdge';
+import {SimpleObjectRelationshipEdge} from './SimpleObjectRelationshipEdge';
 
 const labelStyle = {
 	cursor: 'pointer',
@@ -48,6 +42,16 @@ interface ObjectRelationshipEdge
 	reverseEdgePath?: string;
 }
 
+export interface BaseObjectRepationShipEdgeProps {
+	edgeCenterX: number;
+	edgeCenterY: number;
+	edgeId?: string;
+	edgePath: string;
+	labelBgStyle: React.CSSProperties;
+	labelStyle: React.CSSProperties;
+	objectRelationshipEdgeStyle: React.CSSProperties;
+}
+
 export default function ObjectRelationshipEdge({
 	edgePath,
 	edgeCenterX,
@@ -59,12 +63,11 @@ export default function ObjectRelationshipEdge({
 }: ObjectRelationshipEdge) {
 	const [{id, label, markerEndId, markerStartId, selected}] = data!;
 
-	const [_, dispatch] = useObjectFolderContext();
 	const [activePopover, setActivePopover] = useState(false);
 	const [
 		objectRelationshipEdgeStyle,
 		setObjectRelationshipEdgeStyle,
-	] = useState({
+	] = useState<React.CSSProperties>({
 		...style,
 		...getInitialObjectRelationshipEdgeStyle(selected),
 	});
@@ -73,9 +76,6 @@ export default function ObjectRelationshipEdge({
 	);
 
 	const hasManyObjectRelationships = data && data.length > 1;
-
-	const menuElementRef = useRef(null);
-	const triggerElementRef = useRef<HTMLElement | null>(null);
 
 	useEffect(() => {
 		if (activePopover || selected) {
@@ -103,111 +103,32 @@ export default function ObjectRelationshipEdge({
 	}, [activePopover, selected]);
 
 	return hasManyObjectRelationships ? (
-		<g className="react-flow__connection">
-			<path
-				className="react-flow__edge-path"
-				d={edgePath}
-				id={edgeId}
-				style={objectRelationshipEdgeStyle}
-			/>
-
-			<EdgeText
-				label={data.length}
-				labelBgBorderRadius={4}
-				labelBgPadding={[8, 5]}
-				labelBgStyle={labelBgStyle}
-				labelShowBg
-				labelStyle={labelStyle}
-				onClick={(event) => {
-					triggerElementRef.current = event.target as HTMLElement;
-
-					setActivePopover(!activePopover);
-				}}
-				x={edgeCenterX}
-				y={edgeCenterY}
-			/>
-
-			<ClayDropDown.Menu
-				active={activePopover}
-				alignElementRef={triggerElementRef}
-				onActiveChange={() => {
-					setActivePopover(!activePopover);
-				}}
-				ref={menuElementRef}
-			>
-				<ClayDropDown.ItemList>
-					{data.map((objectRelationshipEdgeData, index) => (
-						<ClayDropDown.Item
-							key={index}
-							onClick={() => {
-								dispatch({
-									payload: {
-										selectedObjectRelationshipId:
-											objectRelationshipEdgeData.id,
-									},
-									type:
-										TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
-								});
-							}}
-						>
-							<div className="lfr-objects__model-builder-self-edge-dropdown-item">
-								<div>
-									<div>
-										{objectRelationshipEdgeData.label}
-									</div>
-
-									<span className="text-small">
-										{objectRelationshipEdgeData.type}
-									</span>
-								</div>
-
-								<ClayIcon symbol="angle-right" />
-							</div>
-						</ClayDropDown.Item>
-					))}
-				</ClayDropDown.ItemList>
-			</ClayDropDown.Menu>
-		</g>
+		<ManyObjectRelationshipEdge
+			activePopover={activePopover}
+			data={data}
+			edgeCenterX={edgeCenterX}
+			edgeCenterY={edgeCenterY}
+			edgeId={edgeId}
+			edgePath={edgePath}
+			labelBgStyle={labelBgStyle}
+			labelStyle={labelStyle}
+			objectRelationshipEdgeStyle={objectRelationshipEdgeStyle}
+			setActivePopover={setActivePopover}
+		/>
 	) : (
-		<g className="react-flow__connection">
-			<OneMarker objectRelationshipId={id.toString()} />
-
-			<ManyMarker objectRelationshipId={id.toString()} />
-
-			<path
-				className="react-flow__edge-path"
-				d={edgePath}
-				id={edgeId}
-				markerEnd={`url(#${markerEndId})`}
-				style={objectRelationshipEdgeStyle}
-			/>
-
-			<path
-				className="react-flow__edge-path"
-				d={reverseEdgePath}
-				id={edgeId + 'reverse'}
-				markerEnd={`url(#${markerStartId})`}
-				style={objectRelationshipEdgeStyle}
-			/>
-
-			<EdgeText
-				label={label}
-				labelBgBorderRadius={4}
-				labelBgPadding={[8, 5]}
-				labelBgStyle={labelBgStyle}
-				labelShowBg
-				labelStyle={labelStyle}
-				onClick={() => {
-					dispatch({
-						payload: {
-							selectedObjectRelationshipId: id,
-						},
-						type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
-					});
-				}}
-				x={edgeCenterX}
-				y={edgeCenterY}
-			/>
-		</g>
+		<SimpleObjectRelationshipEdge
+			edgeCenterX={edgeCenterX}
+			edgeCenterY={edgeCenterY}
+			edgeId={edgeId}
+			edgePath={edgePath}
+			id={id}
+			label={label}
+			labelBgStyle={labelBgStyle}
+			labelStyle={labelStyle}
+			markerEndId={markerEndId}
+			markerStartId={markerStartId}
+			objectRelationshipEdgeStyle={objectRelationshipEdgeStyle}
+			reverseEdgePath={reverseEdgePath}
+		/>
 	);
 }

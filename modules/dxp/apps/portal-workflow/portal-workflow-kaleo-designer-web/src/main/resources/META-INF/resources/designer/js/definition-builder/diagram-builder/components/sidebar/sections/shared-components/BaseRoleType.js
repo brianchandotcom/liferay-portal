@@ -67,6 +67,24 @@ const BaseRoleType = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedRoleName]);
 
+	useEffect(() => {
+		if (autoCreate === 'false') {
+			autoCreate = false;
+		}
+		setChecked(autoCreate);
+		setSelectedRoleName(roleName || roleKey);
+		setSelectedRoleType(titleCase(roleType));
+
+		roleNameItemUpdate({
+			autoCreate,
+			roleKey,
+			roleName,
+			roleType: roleType.toLowerCase(),
+		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [autoCreate, roleKey, roleName, roleType]);
+
 	const deleteSection = () => {
 		setSections((prevSections) => {
 			const newSections = prevSections.filter(

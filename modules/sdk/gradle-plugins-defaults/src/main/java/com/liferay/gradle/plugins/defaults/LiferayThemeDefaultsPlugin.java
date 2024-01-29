@@ -25,7 +25,6 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
-import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -47,7 +46,6 @@ import org.gradle.api.publish.plugins.PublishingPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.Zip;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -372,33 +370,16 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		final LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 
-		boolean requiredForStartup = _getPluginPackageProperty(
-			project, "required-for-startup");
+		liferayExtension.setDeployDir(
+			new Callable<File>() {
 
-		if (requiredForStartup) {
-			liferayExtension.setDeployDir(
-				new Callable<File>() {
+				@Override
+				public File call() throws Exception {
+					return new File(
+						liferayExtension.getLiferayHome(), "osgi/portal-war");
+				}
 
-					@Override
-					public File call() throws Exception {
-						return new File(
-							liferayExtension.getLiferayHome(), "osgi/war");
-					}
-
-				});
-		}
-		else {
-			liferayExtension.setDeployDir(
-				new Callable<File>() {
-
-					@Override
-					public File call() throws Exception {
-						return new File(
-							liferayExtension.getLiferayHome(), "deploy");
-					}
-
-				});
-		}
+			});
 	}
 
 	private void _configureExtensionPublishing(final Project project) {
@@ -540,19 +521,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private boolean _getPluginPackageProperty(Project project, String key) {
-		File file = project.file(
-			"src/WEB-INF/liferay-plugin-package.properties");
-
-		if (!file.exists()) {
-			return false;
-		}
-
-		Properties properties = GUtil.loadProperties(file);
-
-		return Boolean.parseBoolean(properties.getProperty(key));
 	}
 
 	private Project _getThemeProject(Project project, String name) {

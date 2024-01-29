@@ -34,7 +34,7 @@ export const PLAN_TYPES = {
 	['LXC - CSP - Up to 5K Users - Extra User']: 'lxcCspUpTo5kUsersExtraUser',
 	['LXC Business']: 'lxcBusiness',
 	['LXC Enterprise']: 'lxcEnterprise',
-	['LXC Pro']: 'lxcBasic',
+	['LXC Pro']: 'lxcPro',
 	['LXC Subscription - Engage Site']: 'lxcSubscriptionEngageSite',
 	['LXC Subscription - Support Site']: 'lxcSubscriptionSupportSite',
 	['LXC Subscription - Transact Site']: 'lxcSubscriptionTransactSite'
@@ -113,7 +113,7 @@ export const DEFAULT_ADDONS = {
 };
 
 export function getPlanAddOns(planType) {
-	return planType === 'basic'
+	return planType === 'basic' || planType === 'lxcPro'
 		? [DEFAULT_ADDONS[INDIVIDUALS], DEFAULT_ADDONS[PAGEVIEWS]]
 		: [addOns[INDIVIDUALS][planType], addOns[PAGEVIEWS][planType]];
 }
@@ -159,6 +159,15 @@ export function getPlanLabel(name) {
 		case plans.lxcSubscriptionTransactSite.name:
 			return Liferay.Language.get('lxc-subscription-transact-site');
 
+		case plans.lxcPro.name:
+			return Liferay.Language.get('basic-plan');
+
+		case plans.lxcBusiness.name:
+			return Liferay.Language.get('business-plan');
+
+		case plans.lxcEnterprise.name:
+			return Liferay.Language.get('enterprise-plan');
+
 		default:
 			return '';
 	}
@@ -197,9 +206,6 @@ export function getPropLabel(name) {
 		case plans.lxcCspCustomUserTier.name:
 			return Liferay.Language.get('lxc-csp-custom-user-tier');
 
-		case plans.lxcCspCustomUserTierExtraUser.name:
-			return Liferay.Language.get('lxc-csp-custom-user-tier-extra-user');
-
 		case plans.lxcCspUpTo100Users.name:
 			return Liferay.Language.get('lxc-csp-up-to-100-user');
 
@@ -226,6 +232,15 @@ export function getPropLabel(name) {
 
 		case plans.lxcSubscriptionTransactSite.name:
 			return Liferay.Language.get('lxc-subscription-transact-site');
+
+		case plans.lxcPro.name:
+			return Liferay.Language.get('lxc-pro');
+
+		case plans.lxcBusiness.name:
+			return Liferay.Language.get('lxc-business');
+
+		case plans.lxcEnterprise.name:
+			return Liferay.Language.get('lxc-enterprise');
 
 		default:
 			return '';

@@ -11,11 +11,12 @@ import {
 	isValidMac,
 } from '../../../../../common/utils/validations.form';
 
-const KeyInputs = ({id}) => {
+const KeyInputs = ({id, isRenew}) => {
 	return (
 		<>
 			<div className="cp-input-generate-label">
 				<Input
+					disabled={isRenew}
 					label={i18n.translate('host-name')}
 					name={`keys[${id}].hostName`}
 					type="text"
@@ -31,6 +32,7 @@ const KeyInputs = ({id}) => {
 				<Input
 					className="cp-input-generate-placeholder w-100"
 					component="textarea"
+					disabled={isRenew}
 					label={i18n.translate('ip-address')}
 					name={`keys[${id}].ipAddresses`}
 					placeholder="1.1.1.1&#10;2.2.2.2"
@@ -48,6 +50,7 @@ const KeyInputs = ({id}) => {
 					<Input
 						className="cp-input-generate-placeholder"
 						component="textarea"
+						disabled={isRenew}
 						label={i18n.translate('mac-address')}
 						name={`keys[${id}].macAddresses`}
 						placeholder="XX-XX-XX-XX-XX-XX&#10;XX-XX-XX-XX-XX-XX"

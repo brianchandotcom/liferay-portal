@@ -9,19 +9,39 @@ import {FORMAT_DATE_TYPES} from '../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../common/utils/getDateCustomFormat';
 import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDate';
 
-const GenerateCardLayout = ({infoSelectedKey}) => {
+const GenerateCardLayout = ({
+	expirationRenewDate,
+	infoSelectedKey,
+	isRenew,
+	licenseEntryTypeName,
+}) => {
 	const startDate = infoSelectedKey?.selectedSubscription?.startDate;
-
 	const endDate = infoSelectedKey?.selectedSubscription?.endDate;
 	const licenseEndDate = getLicenseKeyEndDatesByLicenseType(infoSelectedKey);
 
-	const currentDate = `${getDateCustomFormat(
-		startDate,
-		FORMAT_DATE_TYPES.day2DMonthSYearN
-	)} - ${getDateCustomFormat(
-		licenseEndDate ?? endDate,
-		FORMAT_DATE_TYPES.day2DMonthSYearN
+	const formatDate = (
+		date,
+		formatType = FORMAT_DATE_TYPES.day2DMonthSYearN
+	) => getDateCustomFormat(date, formatType);
+
+	const currentDate = `${formatDate(startDate)} - ${formatDate(
+		licenseEndDate ?? endDate
 	)}`;
+	const renewalDates = `${formatDate(startDate)} - ${formatDate(
+		expirationRenewDate
+	)}`;
+
+	const HandleSelectedDates = () => {
+		if (infoSelectedKey?.selectedSubscription.perpetual) {
+			return i18n.translate('not-applicable');
+		}
+
+		if (isRenew) {
+			return renewalDates;
+		}
+
+		return currentDate;
+	};
 
 	return (
 		<ClayCard className="mr-5 position-absolute rounded-xl shadow-none">
@@ -43,7 +63,9 @@ const GenerateCardLayout = ({infoSelectedKey}) => {
 						<p className="m-0">{i18n.translate('key-type')}</p>
 
 						<p className="font-weight-normal">
-							{infoSelectedKey?.licenseEntryType}{' '}
+							{isRenew
+								? licenseEntryTypeName
+								: infoSelectedKey?.licenseEntryType}{' '}
 						</p>
 
 						<p className="m-0">
@@ -51,9 +73,7 @@ const GenerateCardLayout = ({infoSelectedKey}) => {
 						</p>
 
 						<p className="font-weight-normal">
-							{infoSelectedKey?.selectedSubscription.perpetual
-								? i18n.translate('not-applicable')
-								: currentDate}
+							<HandleSelectedDates />
 						</p>
 
 						<p className="m-0">

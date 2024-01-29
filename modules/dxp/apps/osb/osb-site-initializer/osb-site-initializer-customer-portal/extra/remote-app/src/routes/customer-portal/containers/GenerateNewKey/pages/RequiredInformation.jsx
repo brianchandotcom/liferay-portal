@@ -28,13 +28,17 @@ import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDate';
 const RequiredInformation = ({
 	accountKey,
 	errors,
+	expirationRenewDate,
 	hasKeyComplimentary,
 	infoSelectedKey,
-	purposeDescription,
+	licenseEntryTypeName,
 	sessionId,
 	setErrors,
 	setStep,
 	setTouched,
+	startRenewDate,
+	state,
+	submitKeyAction,
 	touched,
 	urlPreviousPage,
 	values,
@@ -58,12 +62,19 @@ const RequiredInformation = ({
 	const hasTouched = !Object.keys(touched).length;
 	const hasError = Object.keys(errors).length;
 
+	const isRenew = state?.id === 'renew' ? true : false;
+	const renewKey = state?.activationKeys[0];
+
 	const avaliableKeysMaximumCount =
 		infoSelectedKey?.selectedSubscription?.quantity;
 	const usedKeysCount =
 		infoSelectedKey?.selectedSubscription?.provisionedCount;
 
 	const hasFilledAtLeastOneField = values?.keys?.every((key) => {
+		if (isRenew) {
+			return true;
+		}
+
 		const fieldValues = Object.values(key).filter(Boolean);
 
 		return !!fieldValues.length;
@@ -77,11 +88,30 @@ const RequiredInformation = ({
 
 	const isOemOrEnterprise =
 		infoSelectedKey?.licenseEntryType.includes('OEM') ||
-		infoSelectedKey?.licenseEntryType.includes('Enterprise');
+		infoSelectedKey?.licenseEntryType.includes('Enterprise') ||
+		(state.activationKeys.length &&
+			(state?.activationKeys[0].licenseEntryType.includes('oem') ||
+				state?.activationKeys[0].licenseEntryType.includes(
+					'enterprise'
+				)));
+
+	const hasNotPermanentLicenceRenewKey =
+		(state.activationKeys.length &&
+			renewKey?.licenseEntryType.includes('virtual-cluster')) ||
+		renewKey?.licenseEntryType.includes('oem') ||
+		renewKey?.licenseEntryType.includes('enterprise');
+
+	const handleHasNotPermanentLicenceValidation = state?.activationKeys.length
+		? !infoSelectedKey.hasNotPermanentLicence &&
+		  !hasNotPermanentLicenceRenewKey
+		: !infoSelectedKey.hasNotPermanentLicence;
 
 	useEffect(() => {
 		const getVerificationDisabledType = () => {
-			if (infoSelectedKey.hasNotPermanentLicence) {
+			if (
+				infoSelectedKey.hasNotPermanentLicence ||
+				hasNotPermanentLicenceRenewKey
+			) {
 				if (isOemOrEnterprise) {
 					return !values.name;
 				}
@@ -100,6 +130,7 @@ const RequiredInformation = ({
 	}, [
 		hasError,
 		hasFilledAtLeastOneField,
+		hasNotPermanentLicenceRenewKey,
 		hasReachedMaximumKeys,
 		infoSelectedKey.hasNotPermanentLicence,
 		isOemOrEnterprise,
@@ -322,12 +353,24 @@ const RequiredInformation = ({
 		}
 	};
 
-	const handleDescription = () => {
-		if (hasKeyComplimentary) {
-			values.description = purposeDescription;
-
-			return values.description;
+	const HandleButtonValue = () => {
+		if (isRenew) {
+			return i18n.sub('renew-x-key', [state?.activationKeys.length]);
 		}
+
+		if (infoSelectedKey?.licenseEntryType.includes('Virtual Cluster')) {
+			return i18n.sub(
+				Number(values.maxClusterNodes) === 1
+					? 'generate-cluster-x-key'
+					: 'generate-cluster-x-keys',
+				[values.maxClusterNodes]
+			);
+		}
+
+		return i18n.sub(
+			availableKeys > 1 ? 'generate-x-keys' : 'generate-x-key',
+			[availableKeys]
+		);
 	};
 
 	return (
@@ -363,23 +406,17 @@ const RequiredInformation = ({
 								}
 								displayType="primary"
 								isLoading={isLoadingGenerateKey}
-								onClick={() => submitKey()}
+								onClick={() => {
+									if (isRenew) {
+										setIsLoadingGenerateKey(true);
+
+										return submitKeyAction.submitKey();
+									}
+
+									submitKey();
+								}}
 							>
-								{infoSelectedKey?.licenseEntryType.includes(
-									'Virtual Cluster'
-								)
-									? i18n.sub(
-											Number(values.maxClusterNodes) === 1
-												? 'generate-cluster-x-key'
-												: 'generate-cluster-x-keys',
-											[values.maxClusterNodes]
-									  )
-									: i18n.sub(
-											availableKeys > 1
-												? 'generate-x-keys'
-												: 'generate-x-key',
-											[availableKeys]
-									  )}
+								<HandleButtonValue />
 							</Button>
 						</div>
 					),
@@ -405,6 +442,7 @@ const RequiredInformation = ({
 								<div className="mb-3">
 									<div className="cp-input-generate-label">
 										<Input
+											disabled={isRenew}
 											label={i18n.translate(
 												'environment-name'
 											)}
@@ -426,14 +464,15 @@ const RequiredInformation = ({
 									<div className="cp-input-generate-label">
 										<Input
 											component="textarea"
-											disabled={hasKeyComplimentary}
+											disabled={
+												hasKeyComplimentary || isRenew
+											}
 											label={i18n.translate(
 												'description'
 											)}
 											name="description"
 											placeholder="e.g. Liferay Dev Environment – ECOM DXP 7.2 "
 											type="text"
-											value={handleDescription()}
 										/>
 									</div>
 
@@ -447,7 +486,7 @@ const RequiredInformation = ({
 								</div>
 							</div>
 
-							{!infoSelectedKey.hasNotPermanentLicence ? (
+							{handleHasNotPermanentLicenceValidation ? (
 								<div className="px-6">
 									<h4 className="mt-5">
 										{i18n.translate(
@@ -469,7 +508,11 @@ const RequiredInformation = ({
 									</ClayAlert>
 
 									{values?.keys?.map((_, index) => (
-										<KeyInputs id={index} key={index} />
+										<KeyInputs
+											id={index}
+											isRenew={isRenew}
+											key={index}
+										/>
 									))}
 
 									{showKeyEmptyError && !!hasError && (
@@ -566,6 +609,7 @@ const RequiredInformation = ({
 												avaliableKeysMaximumCount={
 													avaliableKeysMaximumCount
 												}
+												isRenew={isRenew}
 												minAvaliableKeysCount={
 													avaliableKeysMaximumCount -
 													usedKeysCount
@@ -585,19 +629,40 @@ const RequiredInformation = ({
 				/>
 			</Layout>
 
-			<GenerateCardLayout infoSelectedKey={infoSelectedKey} />
+			<GenerateCardLayout
+				expirationRenewDate={expirationRenewDate}
+				infoSelectedKey={infoSelectedKey}
+				isRenew={isRenew}
+				licenseEntryTypeName={licenseEntryTypeName}
+				startRenewDate={startRenewDate}
+			/>
 		</div>
 	);
 };
 
 const RequiredInformationForm = (props) => {
+	const isRenew = props.state?.id === 'renew' ? true : false;
+	const renewKey = props.state?.activationKeys[0];
+
+	const handleDescriptionValue = () => {
+		if (props?.hasKeyComplimentary) {
+			return props?.purposeDescription;
+		}
+
+		if (isRenew) {
+			return renewKey.description;
+		}
+
+		return '';
+	};
+
 	return (
 		<Formik
 			initialValues={{
-				description: '',
-				keys: [getInitialGenerateNewKey()],
-				maxClusterNodes: '',
-				name: '',
+				description: handleDescriptionValue(),
+				keys: [getInitialGenerateNewKey(isRenew, renewKey)],
+				maxClusterNodes: isRenew ? renewKey.maxClusterNodes : '',
+				name: isRenew ? renewKey.name : '',
 			}}
 		>
 			{(formikProps) => (

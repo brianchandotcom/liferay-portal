@@ -10,7 +10,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import WorkflowInstanceTracker from '@liferay/portal-workflow-instance-tracker-web/js/components/WorkflowInstanceTracker';
+import {WorkflowInstanceTracker} from '@liferay/portal-workflow-instance-tracker-web';
 import React, {useState} from 'react';
 
 import ContentView from '../../../../shared/components/content-view/ContentView.es';

@@ -11,7 +11,7 @@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <react:component
-	module="js/components/WorkflowInstanceTracker"
+	module="{WorkflowInstanceTracker} from portal-workflow-instance-tracker-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"workflowInstanceId", ParamUtil.getLong(request, "instanceId")

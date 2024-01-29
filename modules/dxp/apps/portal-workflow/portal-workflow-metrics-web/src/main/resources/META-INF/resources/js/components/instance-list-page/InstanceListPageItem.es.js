@@ -11,7 +11,7 @@ import ClayLayout from '@clayui/layout';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayPopover from '@clayui/popover';
 import ClayTable from '@clayui/table';
-import WorkflowInstanceTracker from '@liferay/portal-workflow-instance-tracker-web/js/components/WorkflowInstanceTracker';
+import {WorkflowInstanceTracker} from '@liferay/portal-workflow-instance-tracker-web';
 import {sub} from 'frontend-js-web';
 import React, {useContext, useState} from 'react';
 

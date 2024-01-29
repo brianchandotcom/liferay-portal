@@ -157,7 +157,7 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 		<div className="workflow-instance-tracker">
 			{!!layoutedElements.length && (
 				<ReactFlowProvider>
-					<ReactFlow
+					<ReactFlow.default
 						edgeTypes={edgeTypes}
 						elements={layoutedElements}
 						minZoom="0.1"

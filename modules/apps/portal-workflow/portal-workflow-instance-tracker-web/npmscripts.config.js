@@ -5,10 +5,6 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			exclude: {
-				lodash: false,
-			},
-		},
+		main: 'src/main/resources/META-INF/resources/js/index.js',
 	},
 };

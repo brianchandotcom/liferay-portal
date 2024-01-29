@@ -1,0 +1,233 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.friendly.url.web.internal.display.context;
+
+import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.impl.CompanyImpl;
+import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+/**
+ * @author Mikel Lorza
+ */
+public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@Test
+	public void testGetConfigurableFriendlyURLSeparatorsJSONArray()
+		throws Exception {
+
+		MockedStatic<FriendlyURLResolverRegistryUtil>
+			friendlyURLResolverRegistryUtilMockedStatic = null;
+
+		try {
+			FriendlyURLSeparatorConfigurationManager
+				friendlyURLSeparatorConfigurationManager = Mockito.mock(
+					FriendlyURLSeparatorConfigurationManager.class);
+
+			Mockito.when(
+				friendlyURLSeparatorConfigurationManager.
+					getFriendlyURLSeparators(Mockito.anyLong())
+			).thenReturn(
+				StringPool.BLANK
+			);
+
+			HttpServletRequest httpServletRequest = Mockito.mock(
+				HttpServletRequest.class);
+
+			Mockito.when(
+				httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+			).thenReturn(
+				_getThemeDisplay()
+			);
+
+			JSONFactory jsonFactory = Mockito.mock(JSONFactory.class);
+
+			Mockito.when(
+				jsonFactory.createJSONObject(Mockito.anyString())
+			).thenReturn(
+				JSONUtil.put(
+					"BlogsEntry", "blog-test1"
+				).put(
+					"JournalArticle", "journal-test1"
+				)
+			);
+
+			Portal portal = Mockito.mock(Portal.class);
+
+			Mockito.when(
+				portal.getPortletNamespace(Mockito.anyString())
+			).thenReturn(
+				"com_liferay_configuration_admin_web_portlet_" +
+					"InstanceSettingsPortlet_"
+			);
+
+			friendlyURLResolverRegistryUtilMockedStatic = Mockito.mockStatic(
+				FriendlyURLResolverRegistryUtil.class);
+
+			friendlyURLResolverRegistryUtilMockedStatic.when(
+				() ->
+					FriendlyURLResolverRegistryUtil.
+						getFriendlyURLResolversAsCollection()
+			).thenReturn(
+				ListUtil.fromArray(
+					new FriendlyURLResolverImpl(
+						"/b/", "BlogsEntry", "/blogs1/"),
+					new FriendlyURLResolverImpl(
+						"/w/", "JournalArticle", "/journal1/"))
+			);
+
+			FriendlyURLSeparatorCompanyConfigurationDisplayContext
+				friendlyURLSeparatorCompanyConfigurationDisplayContext =
+					new FriendlyURLSeparatorCompanyConfigurationDisplayContext(
+						friendlyURLSeparatorConfigurationManager,
+						httpServletRequest, jsonFactory,
+						Mockito.mock(Language.class), portal);
+
+			Assert.assertEquals(
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"name",
+						"com_liferay_configuration_admin_web_portlet_" +
+							"InstanceSettingsPortlet_BlogsEntry"
+					).put(
+						"value", "blog-test1"
+					),
+					JSONUtil.put(
+						"name",
+						"com_liferay_configuration_admin_web_portlet_" +
+							"InstanceSettingsPortlet_JournalArticle"
+					).put(
+						"value", "journal-test1"
+					)
+				).toString(),
+				friendlyURLSeparatorCompanyConfigurationDisplayContext.
+					getConfigurableFriendlyURLSeparatorsJSONArray(
+					).toString());
+		}
+		finally {
+			if (friendlyURLResolverRegistryUtilMockedStatic == null) {
+				friendlyURLResolverRegistryUtilMockedStatic.close();
+			}
+		}
+	}
+
+	private ThemeDisplay _getThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Company company = new CompanyImpl();
+
+		company.setCompanyId(0);
+
+		themeDisplay.setCompany(company);
+
+		Layout layout = new LayoutImpl();
+
+		layout.setType(LayoutConstants.TYPE_CONTROL_PANEL);
+
+		themeDisplay.setLayout(layout);
+
+		themeDisplay.setLocale(LocaleUtil.US);
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setPpid(
+			"com_liferay_configuration_admin_web_portlet_" +
+				"InstanceSettingsPortlet");
+
+		return themeDisplay;
+	}
+
+	private class FriendlyURLResolverImpl implements FriendlyURLResolver {
+
+		public FriendlyURLResolverImpl(
+			String defaultURLSeparator, String key, String urlSeparator) {
+
+			_defaultURLSeparator = defaultURLSeparator;
+			_key = key;
+			_urlSeparator = urlSeparator;
+		}
+
+		@Override
+		public String getActualURL(
+				long companyId, long groupId, boolean privateLayout,
+				String mainPath, String friendlyURL,
+				Map<String, String[]> params,
+				Map<String, Object> requestContext)
+			throws PortalException {
+
+			return null;
+		}
+
+		@Override
+		public String getDefaultURLSeparator() {
+			return _defaultURLSeparator;
+		}
+
+		@Override
+		public String getKey() {
+			return _key;
+		}
+
+		@Override
+		public LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
+				long companyId, long groupId, boolean privateLayout,
+				String friendlyURL, Map<String, String[]> params,
+				Map<String, Object> requestContext)
+			throws PortalException {
+
+			return null;
+		}
+
+		@Override
+		public String getURLSeparator() {
+			return _urlSeparator;
+		}
+
+		@Override
+		public boolean isURLSeparatorConfigurable() {
+			return true;
+		}
+
+		private final String _defaultURLSeparator;
+		private final String _key;
+		private final String _urlSeparator;
+
+	}
+
+}

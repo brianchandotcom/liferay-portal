@@ -8,7 +8,7 @@ import React, {useState} from 'react';
 
 const HEX_COLOR_REGEX = /^#?[0-9A-F]{3}(?:[0-9A-F]{3})?$/i;
 
-const ColorPicker = ({color, label, name}) => {
+export function ColorPicker({color, label, name}) {
 	const [colorValue, setColorValue] = useState(color);
 	const [customColors, setCustomColors] = useState([]);
 
@@ -43,6 +43,4 @@ const ColorPicker = ({color, label, name}) => {
 			/>
 		</div>
 	);
-};
-
-export default ColorPicker;
+}

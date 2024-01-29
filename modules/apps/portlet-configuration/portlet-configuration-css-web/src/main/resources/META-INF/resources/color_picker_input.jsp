@@ -37,7 +37,7 @@ String name = ParamUtil.getString(request, "name");
 	</div>
 
 	<react:component
-		module="js/ColorPickerInput.es"
+		module="{ColorPickerInput} from portlet-configuration-css-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"color", color

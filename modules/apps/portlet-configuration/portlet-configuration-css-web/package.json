@@ -3,6 +3,7 @@
 		"@clayui/color-picker": "3.109.0",
 		"react": "16.12.0"
 	},
+	"main": "js/index.js",
 	"name": "portlet-configuration-css-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

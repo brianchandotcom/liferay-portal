@@ -66,7 +66,7 @@ for (BackgroundTask backgroundTask : ListUtil.concat(reindexSingleBackgroundTask
 
 <div>
 	<react:component
-		module="js/IndexActions"
+		module="{IndexActions} from portal-search-admin-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"data", indexActionsDisplayContext.getData()

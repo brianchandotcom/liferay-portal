@@ -208,7 +208,7 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddFileEntryWithExpirationDateReviewDateUpdateDeletingThem()
+	public void testAddFileEntryWithDisplayDateExpirationDateReviewDateUpdateDeletingThem()
 		throws Exception {
 
 		String content = StringUtil.randomString();
@@ -217,6 +217,7 @@ public class DLFileEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
+		Date displayDate = new Date();
 		Date expirationDate = new Date();
 		Date reviewDate = new Date();
 
@@ -226,13 +227,15 @@ public class DLFileEntryLocalServiceTest {
 			"file.txt", ContentTypes.TEXT_PLAIN, "file.txt",
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
 			new HashMap<>(), null, new ByteArrayInputStream(content.getBytes()),
-			0, null, expirationDate, reviewDate, serviceContext);
+			0, displayDate, expirationDate, reviewDate, serviceContext);
 
+		Assert.assertEquals(displayDate, dlFileEntry.getDisplayDate());
 		Assert.assertEquals(expirationDate, dlFileEntry.getExpirationDate());
 		Assert.assertEquals(reviewDate, dlFileEntry.getReviewDate());
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
+		Assert.assertEquals(displayDate, dlFileVersion.getDisplayDate());
 		Assert.assertEquals(expirationDate, dlFileVersion.getExpirationDate());
 		Assert.assertEquals(reviewDate, dlFileVersion.getReviewDate());
 
@@ -248,6 +251,7 @@ public class DLFileEntryLocalServiceTest {
 
 		dlFileVersion = dlFileEntry.getFileVersion();
 
+		Assert.assertNull(dlFileVersion.getDisplayDate());
 		Assert.assertNull(dlFileVersion.getExpirationDate());
 		Assert.assertNull(dlFileVersion.getReviewDate());
 
@@ -255,6 +259,7 @@ public class DLFileEntryLocalServiceTest {
 			TestPropsValues.getUserId(), dlFileVersion.getFileVersionId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext, new HashMap<>());
 
+		Assert.assertNull(dlFileEntry.getDisplayDate());
 		Assert.assertNull(dlFileEntry.getExpirationDate());
 		Assert.assertNull(dlFileEntry.getReviewDate());
 	}
@@ -428,6 +433,7 @@ public class DLFileEntryLocalServiceTest {
 			new ByteArrayInputStream(new byte[0]), 0, null, null, reviewDate,
 			serviceContext);
 
+		Assert.assertNull(dlFileEntry.getDisplayDate());
 		Assert.assertNull(dlFileEntry.getExpirationDate());
 		Assert.assertEquals(reviewDate, dlFileEntry.getReviewDate());
 	}
@@ -449,8 +455,9 @@ public class DLFileEntryLocalServiceTest {
 			new ByteArrayInputStream(new byte[0]), 0, null, expirationDate,
 			null, serviceContext);
 
-		Assert.assertNull(dlFileEntry.getReviewDate());
+		Assert.assertNull(dlFileEntry.getDisplayDate());
 		Assert.assertEquals(expirationDate, dlFileEntry.getExpirationDate());
+		Assert.assertNull(dlFileEntry.getReviewDate());
 	}
 
 	@Test
@@ -1142,7 +1149,9 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateExpirationDateReviewDate() throws Exception {
+	public void testUpdateDisplayDateExpirationDateReviewDate()
+		throws Exception {
+
 		String content = StringUtil.randomString();
 
 		ServiceContext serviceContext =
@@ -1157,14 +1166,17 @@ public class DLFileEntryLocalServiceTest {
 			new HashMap<>(), null, new ByteArrayInputStream(content.getBytes()),
 			0, null, null, null, serviceContext);
 
+		Assert.assertNull(dlFileEntry.getDisplayDate());
 		Assert.assertNull(dlFileEntry.getExpirationDate());
 		Assert.assertNull(dlFileEntry.getReviewDate());
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
+		Assert.assertNull(dlFileVersion.getDisplayDate());
 		Assert.assertNull(dlFileVersion.getExpirationDate());
 		Assert.assertNull(dlFileVersion.getReviewDate());
 
+		Date displayDate = new Date();
 		Date expirationDate = new Date();
 		Date reviewDate = new Date();
 
@@ -1175,11 +1187,12 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), StringPool.BLANK,
 			DLVersionNumberIncrease.fromMajorVersion(false),
 			dlFileEntry.getFileEntryTypeId(), new HashMap<>(), null,
-			new ByteArrayInputStream(content.getBytes()), 0, null,
+			new ByteArrayInputStream(content.getBytes()), 0, displayDate,
 			expirationDate, reviewDate, serviceContext);
 
 		dlFileVersion = dlFileEntry.getFileVersion();
 
+		Assert.assertEquals(displayDate, dlFileVersion.getDisplayDate());
 		Assert.assertEquals(expirationDate, dlFileVersion.getExpirationDate());
 		Assert.assertEquals(reviewDate, dlFileVersion.getReviewDate());
 
@@ -1187,6 +1200,7 @@ public class DLFileEntryLocalServiceTest {
 			TestPropsValues.getUserId(), dlFileVersion.getFileVersionId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext, new HashMap<>());
 
+		Assert.assertEquals(displayDate, dlFileEntry.getDisplayDate());
 		Assert.assertEquals(expirationDate, dlFileEntry.getExpirationDate());
 		Assert.assertEquals(reviewDate, dlFileEntry.getReviewDate());
 	}

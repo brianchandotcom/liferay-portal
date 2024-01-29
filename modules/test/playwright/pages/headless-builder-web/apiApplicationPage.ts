@@ -55,8 +55,6 @@ export class ApiApplicationPage {
 		await this.page.getByRole('menuitem', {name: schemaName}).click();
 	}
 
-	// TODO Change when bug is fixed
-
 	async selectEndpointResponseSchema(schemaName: string) {
 		await this.page.getByRole('button', {name: 'Select a Schema'}).click();
 		await this.page.getByRole('menuitem', {name: schemaName}).click();
@@ -70,5 +68,18 @@ export class ApiApplicationPage {
 	async setEndpointScope(scopeValue: 'Company' | 'Site') {
 		await this.page.getByLabel('Select Scope').click();
 		await this.page.getByRole('menuitem', {name: scopeValue}).click();
+	}
+
+	async createApiEndpoin(
+		httpMethod: 'GET' | 'POST',
+		scope: 'Company' | 'Site',
+		path: string
+	) {
+		await this.goToEndpointsTab();
+		await this.addAPIEndpointButton.click();
+		await this.setEndpointMethod(httpMethod);
+		await this.setEndpointScope(scope);
+		await this.endpointPathTextBox.fill(path);
+		await this.endpointCreateButton.click();
 	}
 }

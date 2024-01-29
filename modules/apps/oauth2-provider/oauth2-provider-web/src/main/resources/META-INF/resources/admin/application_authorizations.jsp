@@ -36,7 +36,7 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 	disabled="<%= oAuth2AuthorizationsCount == 0 %>"
 	itemsTotal="<%= oAuth2AuthorizationsCount %>"
 	orderDropdownItems="<%= oAuth2AuthorizationsManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
-	propsTransformer="admin/js/OAuth2AuthorizationsManagementToolbarPropsTransformer"
+	propsTransformer="{OAuth2AuthorizationsManagementToolbarPropsTransformer} from oauth2-provider-web"
 	searchContainerId="oAuth2AuthorizationsSearchContainer"
 	selectable="<%= true %>"
 	showSearch="<%= false %>"

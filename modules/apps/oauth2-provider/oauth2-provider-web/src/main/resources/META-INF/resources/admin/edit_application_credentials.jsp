@@ -89,7 +89,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 					<c:if test="<%= oAuth2Application != null %>">
 						<aui:fieldset cssClass="mb-3" style="border-bottom: 2px solid #F0F0F0;">
 							<react:component
-								module="admin/js/components/EditClientDetails"
+								module="{EditClientDetails} from oauth2-provider-web"
 								props='<%=
 									HashMapBuilder.<String, Object>put(
 										"baseResourceURL", String.valueOf(baseResourceURL)

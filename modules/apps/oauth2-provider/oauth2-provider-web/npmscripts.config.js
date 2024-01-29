@@ -5,8 +5,6 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			ignore: ['**/js/liferay.js'],
-		},
+		main: 'src/main/resources/META-INF/resources/js/index.ts',
 	},
 };

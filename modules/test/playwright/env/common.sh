@@ -280,6 +280,18 @@ function reverse {
 	done
 }
 
+function start_ac() {
+	cd ${PROJECT_DIR}
+
+	ant -f build-test-analytics-cloud.xml start-analytics-cloud
+}
+
+function stop_ac() {
+	cd ${PROJECT_DIR}
+
+	ant -f build-test-analytics-cloud.xml stop-analytics-cloud
+}
+
 function start_app_server {
 	cd $(get_tomcat_dir)/bin
 

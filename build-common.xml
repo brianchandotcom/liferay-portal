@@ -1966,6 +1966,20 @@ rerun your task.
 
 			<property file="${project.dir}/ci.properties" />
 
+			<if>
+				<isset property="junit.java.add.opens[${junit.jvm.override.version}]" />
+				<then>
+					<propertycopy from="junit.java.add.opens[${junit.jvm.override.version}]" name="junit.java.add.opens" override="true" />
+				</then>
+			</if>
+
+			<if>
+				<equals arg1="${junit.jvm.override.version}" arg2="21" />
+				<then>
+					<property name="junit.java.security.manager" value="allow" />
+				</then>
+			</if>
+
 			<echoproperties destfile="${gradle.properties.file}">
 				<propertyset>
 					<propertyref name="app.server.type" />
@@ -1981,6 +1995,8 @@ rerun your task.
 					<propertyref name="jira.project.keys" />
 					<propertyref name="jsp.precompile.from.source" />
 					<propertyref name="junit.code.coverage" />
+					<propertyref if:set="junit.java.add.opens" name="junit.java.add.opens" />
+					<propertyref if:set="junit.java.security.manager" name="junit.java.security.manager" />
 					<propertyref name="junit.java.unit.gc" />
 					<propertyref name="junit.jvm.override.version" />
 					<propertyref name="liferay.home" />

@@ -549,6 +549,14 @@ gradle.beforeProject {
 					}
 				}
 
+				if (project.properties["junit.java.add.opens"]) {
+					jvmArgs project.properties["junit.java.add.opens"].split("\\s+")
+				}
+
+				if (project.properties["junit.java.security.manager"]) {
+					systemProperty "java.security.manager", project.properties["junit.java.security.manager"]
+				}
+
 				if (project.properties["junit.jvm.override.version"]) {
 					javaLauncher = javaToolchains.launcherFor {
 						languageVersion = JavaLanguageVersion.of(project.properties["junit.jvm.override.version"])

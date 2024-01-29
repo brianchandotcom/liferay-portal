@@ -28,7 +28,7 @@ const getKeyByValue = (word, dictionary) => {
 		([_key, value]) => value === word
 	);
 	const twoHyphensValidation =
-		(wordTranslated[0].match(/-/g) || []).length === 2;
+		(wordTranslated?.[0].match(/-/g) || []).length === 2;
 
 	if (wordTranslated) {
 		const translatedWord = wordTranslated[0];

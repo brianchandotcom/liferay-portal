@@ -42,7 +42,7 @@ PortletURL portletURL = viewPasswordPoliciesManagementToolbarDisplayContext.getP
 	clearResultsURL="<%= viewPasswordPoliciesManagementToolbarDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= viewPasswordPoliciesManagementToolbarDisplayContext.getCreationMenu() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
-	propsTransformer="js/ManagementToolbarDefaultPropsTransformer"
+	propsTransformer="{ManagementToolbarDefaultPropsTransformer} from password-policies-admin-web"
 	searchActionURL="<%= viewPasswordPoliciesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="passwordPolicies"
 	searchFormName="searchFm"

@@ -72,7 +72,7 @@ SearchContainer<?> searchContainer = editPasswordPolicyAssignmentsManagementTool
 	creationMenu="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getCreationMenu() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
 	orderDropdownItems="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
-	propsTransformer="js/EditPasswordPolicyAssignmentsManagementToolbarPropsTransformer"
+	propsTransformer="{EditPasswordPolicyAssignmentsManagementToolbarPropsTransformer} from password-policies-admin-web"
 	searchActionURL="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="passwordPolicyMembers"
 	searchFormName="searchFm"

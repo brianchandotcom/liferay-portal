@@ -2,6 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
+	"main": "js/index.js",
 	"name": "password-policies-admin-web",
 	"private": true,
 	"scripts": {

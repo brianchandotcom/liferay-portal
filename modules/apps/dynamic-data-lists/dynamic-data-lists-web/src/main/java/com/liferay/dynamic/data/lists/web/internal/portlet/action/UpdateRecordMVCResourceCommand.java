@@ -92,13 +92,13 @@ public class UpdateRecordMVCResourceCommand extends BaseMVCResourceCommand {
 	private Map<String, List<DDMFormFieldValue>> _toDDMFormFieldValues(
 		JSONArray jsonArray) {
 
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValues =
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			new HashMap<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			ddmFormFieldValues.putIfAbsent(
+			ddmFormFieldValuesMap.putIfAbsent(
 				jsonObject.getString("name"), new ArrayList<>());
 
 			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
@@ -128,13 +128,13 @@ public class UpdateRecordMVCResourceCommand extends BaseMVCResourceCommand {
 					new UnlocalizedValue(jsonObject.getString("value")));
 			}
 
-			List<DDMFormFieldValue> ddmFormFieldValueList =
-				ddmFormFieldValues.get(jsonObject.getString("name"));
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				ddmFormFieldValuesMap.get(jsonObject.getString("name"));
 
-			ddmFormFieldValueList.add(ddmFormFieldValue);
+			ddmFormFieldValues.add(ddmFormFieldValue);
 		}
 
-		return ddmFormFieldValues;
+		return ddmFormFieldValuesMap;
 	}
 
 	private void _updateDDMFormFieldValue(
@@ -149,12 +149,12 @@ public class UpdateRecordMVCResourceCommand extends BaseMVCResourceCommand {
 				ddmFormFieldValue.setValue(updatedDDMFormFieldValue.getValue());
 			}
 
-			if (ListUtil.isNotEmpty(
-					ddmFormFieldValue.getNestedDDMFormFieldValues())) {
+			List<DDMFormFieldValue> nestedDDMFormFieldValues =
+				ddmFormFieldValue.getNestedDDMFormFieldValues();
 
+			if (ListUtil.isNotEmpty(nestedDDMFormFieldValues)) {
 				_updateDDMFormFieldValue(
-					ddmFormFieldValue.getNestedDDMFormFieldValues(),
-					updatedDDMFormFieldValue);
+					nestedDDMFormFieldValues, updatedDDMFormFieldValue);
 			}
 		}
 	}

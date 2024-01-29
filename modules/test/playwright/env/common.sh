@@ -58,6 +58,13 @@ function deploy_osgi_modules() {
 	fi
 }
 
+function deploy_base_osgi_modules() {
+	if [[ -f ${PLAYWRIGHT_BASE_DIR}/env/osgi-modules.list ]]
+	then
+		deploy_osgi_modules $(cat ${PLAYWRIGHT_BASE_DIR}/env/osgi-modules.list)
+	fi
+}
+
 function deploy_project_client_extensions() {
 	if [[ -f ${PLAYWRIGHT_PROJECT_DIR}/env/client-extensions.list ]]
 	then

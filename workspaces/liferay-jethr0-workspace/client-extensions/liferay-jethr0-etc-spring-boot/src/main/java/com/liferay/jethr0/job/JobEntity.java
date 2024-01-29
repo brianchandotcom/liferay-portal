@@ -193,6 +193,8 @@ public interface JobEntity extends Entity {
 		MAINTENANCE_WEEKLY("maintenanceWeekly", "Maintenance Weekly"),
 		MAINTENANCE_WEEKLY_NODE(
 			"maintenanceWeeklyNode", "Maintenance Weekly Node"),
+		MERGE_PORTAL_SUBREPOSITORY(
+			"mergePortalSubrepository", "Merge Portal Subrepository"),
 		MIRRORS_LOCAL_CACHE_PROPAGATOR(
 			"mirrorsLocalCachePropagator", "Mirrors Local Cache Propagator"),
 		PLUGINS_EXTRA_APPS("pluginsExtraApps", "Plugins Extra Apps"),

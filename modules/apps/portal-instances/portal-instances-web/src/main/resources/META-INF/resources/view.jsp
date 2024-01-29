@@ -19,7 +19,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new PortalInstancesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse) %>"
-	propsTransformer="js/PortalInstancesManagementToolbarPropsTransformer"
+	propsTransformer="{PortalInstancesManagementToolbarPropsTransformer} from portal-instances-web"
 	propsTransformerServletContext="<%= application %>"
 />
 

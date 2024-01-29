@@ -98,5 +98,5 @@
 </clay:container-fluid>
 
 <liferay-frontend:component
-	module="js/AddInstance"
+	module="{AddInstance} from portal-instances-web"
 />

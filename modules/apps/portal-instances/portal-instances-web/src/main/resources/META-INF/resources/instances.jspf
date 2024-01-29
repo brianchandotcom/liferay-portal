@@ -94,7 +94,7 @@
 			<clay:dropdown-actions
 				aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 				dropdownItems="<%= companyActionDropdownItems.getActionDropdownItems() %>"
-				propsTransformer="js/CompanyDropdownDefaultPropsTransformer"
+				propsTransformer="{CompanyDropdownDefaultPropsTransformer} from portal-instances-web"
 			/>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>

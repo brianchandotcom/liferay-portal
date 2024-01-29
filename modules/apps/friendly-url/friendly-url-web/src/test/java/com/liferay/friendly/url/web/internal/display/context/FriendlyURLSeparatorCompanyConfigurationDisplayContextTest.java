@@ -8,7 +8,9 @@ package com.liferay.friendly.url.web.internal.display.context;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
@@ -222,6 +224,41 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 
 		Assert.assertEquals(
 			_jsonFactory.createJSONObject(),
+			friendlyURLSeparatorCompanyConfigurationDisplayContext.
+				getErrorsJSONObject());
+	}
+
+	@Test
+	public void testGetErrorsJSONObjectWithSomeErrors() throws JSONException {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		JSONObject errorsJSONObject = JSONUtil.put(
+			"com_liferay_configuration_admin_web_portlet_" +
+				"InstanceSettingsPortlet_JournalArticle",
+			"error-other-asset-type-may-use-this-prefix");
+
+		Mockito.when(
+			httpServletRequest.getParameter("errors")
+		).thenReturn(
+			errorsJSONObject.toString()
+		);
+
+		Mockito.when(
+			_jsonFactory.createJSONObject(Mockito.anyString())
+		).thenReturn(
+			errorsJSONObject
+		);
+
+		FriendlyURLSeparatorCompanyConfigurationDisplayContext
+			friendlyURLSeparatorCompanyConfigurationDisplayContext =
+				new FriendlyURLSeparatorCompanyConfigurationDisplayContext(
+					_friendlyURLSeparatorConfigurationManager,
+					httpServletRequest, _jsonFactory,
+					Mockito.mock(Language.class), _portal);
+
+		Assert.assertEquals(
+			errorsJSONObject,
 			friendlyURLSeparatorCompanyConfigurationDisplayContext.
 				getErrorsJSONObject());
 	}

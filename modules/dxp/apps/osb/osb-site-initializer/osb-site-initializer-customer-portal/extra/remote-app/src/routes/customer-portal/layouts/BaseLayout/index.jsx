@@ -5,7 +5,7 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect, useRef, useState} from 'react';
-import {Outlet, useParams} from 'react-router-dom';
+import {Outlet, useLocation, useParams} from 'react-router-dom';
 import {useProjectOrganizations} from '~/routes/home/hooks/useProjectCategoryItems';
 import ProjectBreadcrumb from '../../components/ProjectBreadcrumb/ProjectBreadcrumb';
 import ProjectErrorMessage from '../../components/ProjectErrorMessage';
@@ -16,6 +16,13 @@ const Layout = () => {
 
 	const {accountKey} = useParams();
 	const firstAccountKeyRef = useRef(accountKey);
+
+	const location = useLocation();
+	const routeParams = location.pathname;
+
+	const isRenewTablePage =
+		routeParams?.endsWith('dxp-renew') ||
+		routeParams?.endsWith('portal-renew');
 
 	useEffect(() => {
 		if (accountKey !== firstAccountKeyRef.current) {
@@ -37,7 +44,7 @@ const Layout = () => {
 	const teamMembersERC = myUserAccount?.accountBriefs?.map(
 		({externalReferenceCode}) => externalReferenceCode
 	);
-	const isTeamMember = teamMembersERC.includes(accountKey);
+	const isTeamMember = teamMembersERC?.includes(accountKey);
 
 	const liferayContactERC =
 		myUserAccount.accountBriefs
@@ -68,15 +75,17 @@ const Layout = () => {
 
 	return (
 		<div className="d-flex position-relative w-100">
-			<div>
-				<div className="align-items-center cp-layout-header d-flex justify-content-between ml-4 mt-4">
-					<ProjectBreadcrumb />
+			{!isRenewTablePage && (
+				<div>
+					<div className="align-items-center cp-layout-header d-flex justify-content-between ml-4 mt-4">
+						<ProjectBreadcrumb />
+					</div>
+
+					{hasSideMenu && <SideMenu />}
 				</div>
+			)}
 
-				{hasSideMenu && <SideMenu />}
-			</div>
-
-			<div className="d-flex flex-fill pt-4">
+			<div className="mx-4 px-2 w-100">
 				<div className="mx-4 px-2 w-100">
 					<Outlet
 						context={{

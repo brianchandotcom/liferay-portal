@@ -4,7 +4,7 @@
  */
 
 import {CustomerGatePage} from './pages/CustomerGatePage/CustomerGatePage';
-import GetAppRouter from './pages/GetAppPage/GetAppRouter';
+import GetAppRouter from './pages/GetApp/GetAppRouter';
 import {NextSteps} from './pages/NextSteps';
 import PublishedAppsDashboardRouter from './pages/PublishedAppsDashboard/PublishedAppsDashboardRouter';
 import PublisherGateRouter from './pages/PublisherGate/PublisheGateRouter';

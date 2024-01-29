@@ -24,11 +24,11 @@ import './NextSteps.scss';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
-import {PaymentStatus} from '../GetAppPage/enums/PaymentStatus';
-import getProductPriceModel from '../GetAppPage/utils/getProductPriceModel';
+import {PaymentStatus} from '../GetApp/enums/PaymentStatus';
+import getProductPriceModel from '../GetApp/utils/getProductPriceModel';
 import useNextSteps from './useNextSteps';
 
-interface NextStepsProps {
+type NextStepsProps = {
 	children?: ReactNode;
 	continueButtonText?: string;
 	header?: {
@@ -40,7 +40,7 @@ interface NextStepsProps {
 	showBackButton?: boolean;
 	showOrderId?: boolean;
 	size?: 'lg';
-}
+};
 
 type TypeNextStepBody = {
 	[key in string]?: ReactNode;

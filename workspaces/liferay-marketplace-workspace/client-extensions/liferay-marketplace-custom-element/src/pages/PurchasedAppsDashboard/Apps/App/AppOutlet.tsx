@@ -23,7 +23,7 @@ import './App.scss';
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
-import getProductPriceModel from '../../../GetAppPage/utils/getProductPriceModel';
+import getProductPriceModel from '../../../GetApp/utils/getProductPriceModel';
 
 type AppNavbarProps = {
 	showLicenseTab: boolean;

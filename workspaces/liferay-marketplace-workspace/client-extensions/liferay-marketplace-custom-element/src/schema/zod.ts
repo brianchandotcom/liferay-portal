@@ -50,6 +50,17 @@ const zodSchema = {
 			.string()
 			.max(500, {message: 'Request Description is required'}),
 	}),
+	billingAddress: z.object({
+		city: z.string().min(1),
+		country: z.string().min(1),
+		countryISOCode: z.string().min(1),
+		name: z.string().min(1),
+		phoneNumber: z.string().min(1),
+		regionISOCode: z.string().min(1),
+		street1: z.string().min(1),
+		street2: z.string().optional(),
+		zip: z.string().min(1),
+	}),
 	contactSales: z.object({
 		accountName: z
 			.string()

@@ -20,6 +20,7 @@ export interface RadioCardContent<T = any> {
 	description?: ReactNode;
 	disabled?: boolean;
 	fullTitle?: boolean;
+	id: number | string;
 	imageURL?: string;
 	label?: string;
 	selected: boolean;

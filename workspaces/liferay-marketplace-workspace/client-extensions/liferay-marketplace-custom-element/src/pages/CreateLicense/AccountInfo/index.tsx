@@ -9,14 +9,12 @@ import emptyPictureIcon from '../../../assets/icons/empty_picture_icon.svg';
 
 import './index.scss';
 
-type UserAccount = {
-	emailAddress?: string;
-	image?: string;
-	name?: string;
-};
-
 type AccountInfoProps = {
-	userAccount?: UserAccount;
+	userAccount?: {
+		emailAddress?: string;
+		image?: string;
+		name?: string;
+	};
 };
 
 const AccountEmailInfo: React.FC<AccountInfoProps> = ({userAccount}) => (

@@ -46,6 +46,7 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 	const [accounts, setAccounts] = useState<RadioCardContent<Account>[]>(
 		() => {
 			return accountForm.accounts.map((account: Account) => ({
+				id: account.id,
 				imageURL: account.logoURL,
 				selected:
 					accountSelected?.externalReferenceCode ===

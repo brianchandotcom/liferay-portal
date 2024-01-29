@@ -17,8 +17,8 @@ import useGetProductByOrderId from '../../hooks/useGetProductByOrderId';
 import useMarketplaceSpringBootOAuth2 from '../../hooks/useMarketplaceSpringBootOAuth2';
 import {Liferay} from '../../liferay/liferay';
 import zodSchema from '../../schema/zod';
-import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
-import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
+import ProductCard from '../GetApp/components/ProductCard/ProductCard';
+import StepWizard from '../GetApp/components/StepWizard/StepWizard';
 import {formatDate} from '../PublishedAppsDashboard/PublishedDashboardPageUtil';
 import AccountEmailInfo from './AccountInfo';
 import LicenseDetails from './LicenseDetails';
@@ -159,8 +159,7 @@ const CreateLicense = () => {
 				navigate(`/order/${orderId}/licenses`);
 
 				marketplaceSpringBootOAuth2.downloadLicenseKey(licenseKey.id);
-			}
-			catch {
+			} catch {
 				Liferay.Util.openToast({
 					message: 'Something went wrong to create a License Key',
 					type: 'danger',
@@ -220,12 +219,10 @@ const CreateLicense = () => {
 		<div className="align-items-center d-flex flex-column mb-6 mkt-create-license mt-6">
 			<div className="mt-6 product-card-content">
 				<ProductCard
-					ExtendBanner={() => (
-						<ExtendBanner subscription={subscription} />
-					)}
-					RightSideBanner={() => (
+					ExtendBanner={<ExtendBanner subscription={subscription} />}
+					RightSideBanner={
 						<AccountEmailInfo userAccount={myUserAccount} />
-					)}
+					}
 					creatorAccountName={productCreatorAccountName}
 					product={product as DeliveryProduct}
 					showExtendBanner={

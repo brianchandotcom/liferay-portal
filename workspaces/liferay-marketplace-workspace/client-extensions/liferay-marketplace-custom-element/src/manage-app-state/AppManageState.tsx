@@ -43,8 +43,6 @@ export type InitialStateProps = {
 	buildAppPackages: {[key: string]: UploadedFile[]};
 	catalogId: number;
 	dayTrial: string;
-	eula: string;
-	eulaCheckbox: boolean;
 	gravatarAPI: string;
 	optionId: number;
 	optionValuesId: {noOptionId: number; yesOptionId: number};
@@ -75,7 +73,6 @@ const initialState = ({
 	appType: {value: ''},
 	buildAppPackages: {},
 	dayTrial: 'no',
-	eulaCheckbox: false,
 	optionValuesId: {},
 	priceModel: {value: 'Paid'},
 	resourceRequirements: {

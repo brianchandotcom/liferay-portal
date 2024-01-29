@@ -26,6 +26,7 @@ import com.liferay.notification.service.NotificationQueueEntryAttachmentLocalSer
 import com.liferay.notification.type.BaseNotificationType;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
+import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,14 +35,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -78,6 +77,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.mail.internet.InternetAddress;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -184,8 +185,7 @@ public class EmailNotificationType extends BaseNotificationType {
 			notificationContext.getNotificationTemplate();
 
 		String body = _formatBody(
-			notificationTemplate.getBodyMap(), user.getCompanyId(), groupId,
-			notificationContext);
+			notificationTemplate.getBodyMap(), groupId, notificationContext);
 		NotificationRecipient notificationRecipient =
 			notificationTemplate.getNotificationRecipient();
 		String subject = formatLocalizedContent(
@@ -450,7 +450,7 @@ public class EmailNotificationType extends BaseNotificationType {
 	}
 
 	private String _formatBody(
-			Map<Locale, String> bodyMap, long companyId, long groupId,
+			Map<Locale, String> bodyMap, long groupId,
 			NotificationContext notificationContext)
 		throws PortalException {
 
@@ -524,9 +524,13 @@ public class EmailNotificationType extends BaseNotificationType {
 				template.put(infoField.getUniqueId(), templateNode);
 			}
 
-			Company company = _companyLocalService.getCompany(companyId);
+			HttpServletRequest httpServletRequest =
+				ObjectActionThreadLocal.getHttpServletRequest();
 
-			template.put("portalURL", company.getPortalURL(groupId));
+			if (httpServletRequest != null) {
+				template.put(
+					"portalURL", portal.getPortalURL(httpServletRequest));
+			}
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -646,9 +650,6 @@ public class EmailNotificationType extends BaseNotificationType {
 	private static final Pattern _emailAddressPattern = Pattern.compile(
 		"[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@" +
 			"(?:\\w(?:[\\w-]*\\w)?\\.)+(\\w(?:[\\w-]*\\w))");
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

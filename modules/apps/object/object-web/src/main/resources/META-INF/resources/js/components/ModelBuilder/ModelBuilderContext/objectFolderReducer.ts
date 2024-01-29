@@ -977,42 +977,32 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				| ObjectRelationshipEdgeData
 				| undefined;
 
-			edges.find((edge) => {
-				const selectedObjectRelationshipEdgeData = edge?.data?.find(
-					(objectRelationshipEdgeData) => {
-						return (
-							objectRelationshipEdgeData.id ===
-							selectedObjectRelationshipId
-						);
-					}
-				);
-
-				if (selectedObjectRelationshipEdgeData) {
-					selectedObjectRelationship = {
-						...selectedObjectRelationshipEdgeData,
-						selected: true,
-					};
-
-					return true;
-				}
-
-				return false;
-			});
-
 			const newObjectRelationshipEdges = edges.map(
 				(objectRelationshipEdge) => {
-					return {
-						...objectRelationshipEdge,
-						data: objectRelationshipEdge.data?.map(
-							(objectRelationshipEdgeData) => {
-								return {
+					const newObjectRelationshipEdgeData = objectRelationshipEdge?.data?.map(
+						(objectRelationshipEdgeData) => {
+							if (
+								objectRelationshipEdgeData.id ===
+								selectedObjectRelationshipId
+							) {
+								selectedObjectRelationship = {
 									...objectRelationshipEdgeData,
-									selected:
-										objectRelationshipEdgeData.id ===
-										selectedObjectRelationshipId,
+									selected: true,
 								};
 							}
-						),
+
+							return {
+								...objectRelationshipEdgeData,
+								selected:
+									objectRelationshipEdgeData.id ===
+									selectedObjectRelationshipId,
+							};
+						}
+					);
+
+					return {
+						...objectRelationshipEdge,
+						data: newObjectRelationshipEdgeData,
 					};
 				}
 			) as Edge<ObjectRelationshipEdgeData[]>[];

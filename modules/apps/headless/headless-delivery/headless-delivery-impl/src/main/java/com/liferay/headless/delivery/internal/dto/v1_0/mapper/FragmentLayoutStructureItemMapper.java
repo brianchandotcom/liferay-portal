@@ -48,16 +48,16 @@ public class FragmentLayoutStructureItemMapper
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
 		FragmentEntryLocalService fragmentEntryLocalService,
-		GroupLocalService groupLocalService, JSONFactory jsonFactory,
-		LayoutLocalService layoutLocalService,
-		PortletLocalService portletLocalService,
+		GroupLocalService groupLocalService,
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		JSONFactory jsonFactory, LayoutLocalService layoutLocalService,
+		Portal portal, PortletLocalService portletLocalService,
 		PortletPreferencesPortletConfigurationExporter
 			portletPreferencesPortletConfigurationExporter,
 		PortletRegistry portletRegistry,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
-		RoleLocalService roleLocalService, TeamLocalService teamLocalService,
-		InfoItemServiceRegistry infoItemServiceRegistry, Portal portal) {
+		RoleLocalService roleLocalService, TeamLocalService teamLocalService) {
 
 		super(infoItemServiceRegistry, portal);
 

@@ -5,7 +5,7 @@
 
 import {openSimpleInputModal} from 'frontend-js-web';
 
-export default function ({
+export function WorkflowTaskAction({
 	namespace: portletNamespace,
 	randomId,
 	workflowTasks,

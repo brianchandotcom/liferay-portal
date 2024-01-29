@@ -124,7 +124,7 @@ PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 				"workflowTasks", workflowTaskDisplayContext.getTransitionNames(workflowTask)
 			).build()
 		%>'
-		module="js/WorkflowTaskAction"
+		module="{WorkflowTaskAction} from portal-workflow-task-web"
 	/>
 </c:if>
 

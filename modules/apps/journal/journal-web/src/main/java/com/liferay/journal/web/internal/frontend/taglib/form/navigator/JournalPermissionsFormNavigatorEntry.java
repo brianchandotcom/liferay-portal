@@ -40,7 +40,7 @@ public class JournalPermissionsFormNavigatorEntry
 	public boolean isVisible(User user, JournalArticle article) {
 		if (((article != null) && (article.getId() > 0)) ||
 			!JournalUtil.isClassNameIdDefault(article) ||
-			FeatureFlagManagerUtil.isEnabled("LPS-198959")) {
+			FeatureFlagManagerUtil.isEnabled("LPD-15596")) {
 
 			return false;
 		}

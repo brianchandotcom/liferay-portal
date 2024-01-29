@@ -95,7 +95,7 @@ public class PermissionsPortletConfigurationIcon
 				_portal.getHttpServletRequest(portletRequest));
 
 			if ((article != null) &&
-				_featureFlagManager.isEnabled("LPS-198959")) {
+				_featureFlagManager.isEnabled("LPD-15596")) {
 
 				return true;
 			}

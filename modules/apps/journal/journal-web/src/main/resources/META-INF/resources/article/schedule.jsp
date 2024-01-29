@@ -23,7 +23,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = (JournalEdit
 
 <div class="schedule">
 	<c:choose>
-		<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-198959") %>'>
+		<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-15596") %>'>
 			<div class="font-weight-semi-bold mb-4">
 				<liferay-ui:message arguments="<%= journalEditArticleDisplayContext.getTimeZoneName() %>" key="time-zone-x" />
 			</div>

@@ -445,7 +445,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, portletResource + "requestProcessed");
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-198959")) {
+			if (FeatureFlagManagerUtil.isEnabled("LPD-15596")) {
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)actionRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);

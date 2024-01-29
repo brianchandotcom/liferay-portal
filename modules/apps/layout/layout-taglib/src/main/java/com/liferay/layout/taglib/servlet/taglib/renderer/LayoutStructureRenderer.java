@@ -50,7 +50,6 @@ import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -220,22 +219,19 @@ public class LayoutStructureRenderer {
 		jspWriter.write(collectionStyledLayoutStructureItem.getCssClass());
 		jspWriter.write("\"");
 
-		if (FeatureFlagManagerUtil.isEnabled("LRAC-14922")) {
-			ListObjectReference listObjectReference =
-				renderCollectionLayoutStructureItemDisplayContext.
-					getListObjectReference();
+		ListObjectReference listObjectReference =
+			renderCollectionLayoutStructureItemDisplayContext.
+				getListObjectReference();
 
-			if (listObjectReference != null) {
-				jspWriter.write(" data-analytics-targetable-collection=\"");
-				jspWriter.write(
-					HtmlUtil.escape(listObjectReference.toString()));
-				jspWriter.write("\"");
-			}
-
-			jspWriter.write(" id=\"analytics-targetable-collection-");
-			jspWriter.write(collectionStyledLayoutStructureItem.getNamespace());
+		if (listObjectReference != null) {
+			jspWriter.write(" data-analytics-targetable-collection=\"");
+			jspWriter.write(HtmlUtil.escape(listObjectReference.toString()));
 			jspWriter.write("\"");
 		}
+
+		jspWriter.write(" id=\"analytics-targetable-collection-");
+		jspWriter.write(collectionStyledLayoutStructureItem.getNamespace());
+		jspWriter.write("\"");
 
 		jspWriter.write("\" style=\"");
 		jspWriter.write(

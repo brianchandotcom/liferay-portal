@@ -35,16 +35,16 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 
 		outerLoop:
 		for (String taglibAnchorAttribute : taglibAnchorAttributes) {
-			String[] anchorTagArray = StringUtil.split(
+			String[] attributeParts = StringUtil.split(
 				taglibAnchorAttribute, "->");
 
-			if (anchorTagArray.length != 2) {
+			if (attributeParts.length != 2) {
 				continue;
 			}
 
-			String tagName = "<" + anchorTagArray[0];
+			String taglibName = "<" + attributeParts[0];
 
-			int pos = content.indexOf(tagName);
+			int pos = content.indexOf(taglibName);
 
 			while (true) {
 				if (pos == -1) {
@@ -54,7 +54,7 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 				Tag tag = parseTag(getTag(content, pos), false);
 
 				if (tag == null) {
-					pos = content.indexOf(tagName, pos + 1);
+					pos = content.indexOf(taglibName, pos + 1);
 
 					continue;
 				}
@@ -66,7 +66,7 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 
 					String attribute = entry.getKey();
 
-					if (!StringUtil.equals(attribute, anchorTagArray[1])) {
+					if (!StringUtil.equals(attribute, attributeParts[1])) {
 						continue;
 					}
 

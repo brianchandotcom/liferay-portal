@@ -1078,18 +1078,14 @@ public class BundleSiteInitializerTest {
 					_serviceContext.getScopeGroupId(), "journal",
 					"test-data-definition-1");
 
+		Map<String, Object> description = dataDefinition.getDescription();
+
 		Assert.assertEquals(
-			"Test Data Definition Description 1",
-			dataDefinition.getDescription(
-			).get(
-				"en_US"
-			));
-		Assert.assertEquals(
-			"Test Data Definition Name 1",
-			dataDefinition.getName(
-			).get(
-				"en_US"
-			));
+			"Test Data Definition Description 1", description.get("en_US"));
+
+		Map<String, Object> name = dataDefinition.getName();
+
+		Assert.assertEquals("Test Data Definition Name 1", name.get("en_US"));
 
 		dataDefinition =
 			dataDefinitionResource.
@@ -1097,18 +1093,14 @@ public class BundleSiteInitializerTest {
 					_serviceContext.getScopeGroupId(), "journal",
 					"test-data-definition-2");
 
+		description = dataDefinition.getDescription();
+
 		Assert.assertEquals(
-			"Test Data Definition Description 2",
-			dataDefinition.getDescription(
-			).get(
-				"en_US"
-			));
-		Assert.assertEquals(
-			"Test Data Definition Name 2",
-			dataDefinition.getName(
-			).get(
-				"en_US"
-			));
+			"Test Data Definition Description 2", description.get("en_US"));
+
+		name = dataDefinition.getName();
+
+		Assert.assertEquals("Test Data Definition Name 2", name.get("en_US"));
 	}
 
 	private void _assertDataDefinition2() throws Exception {
@@ -1126,18 +1118,14 @@ public class BundleSiteInitializerTest {
 					_serviceContext.getScopeGroupId(), "journal",
 					"test-data-definition-1");
 
+		Map<String, Object> description = dataDefinition.getDescription();
+
 		Assert.assertEquals(
-			"Test Data Definition Description 1",
-			dataDefinition.getDescription(
-			).get(
-				"en_US"
-			));
-		Assert.assertEquals(
-			"Test Data Definition Name 1",
-			dataDefinition.getName(
-			).get(
-				"en_US"
-			));
+			"Test Data Definition Description 1", description.get("en_US"));
+
+		Map<String, Object> name = dataDefinition.getName();
+
+		Assert.assertEquals("Test Data Definition Name 1", name.get("en_US"));
 
 		dataDefinition =
 			dataDefinitionResource.
@@ -1145,18 +1133,16 @@ public class BundleSiteInitializerTest {
 					_serviceContext.getScopeGroupId(), "journal",
 					"test-data-definition-2");
 
+		description = dataDefinition.getDescription();
+
 		Assert.assertEquals(
 			"Test Data Definition Description 2 Update",
-			dataDefinition.getDescription(
-			).get(
-				"en_US"
-			));
+			description.get("en_US"));
+
+		name = dataDefinition.getName();
+
 		Assert.assertEquals(
-			"Test Data Definition Name 2 Update",
-			dataDefinition.getName(
-			).get(
-				"en_US"
-			));
+			"Test Data Definition Name 2 Update", name.get("en_US"));
 	}
 
 	private void _assertDDMStructure() {

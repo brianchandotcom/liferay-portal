@@ -274,7 +274,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/CTCollection"
             tags: ["CTCollection"]
-    "/ct-collections-by-class":
+    "/ct-collections/get-histories":
         get:
             operationId: getCtCollectionsByClassPage
             parameters:

@@ -7,6 +7,7 @@ package com.liferay.object.internal.entry.util;
 
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
@@ -86,6 +87,10 @@ public class ObjectEntrySearchUtil {
 
 		Column<?, Long> primaryKeyColumn = (Column<?, Long>)table.getColumn(
 			objectDefinition.getPKObjectFieldDBColumnName());
+
+		if (primaryKeyColumn == null) {
+			primaryKeyColumn = ObjectEntryTable.INSTANCE.objectEntryId;
+		}
 
 		Predicate primaryKeyPredicate = primaryKeyColumn.eq(searchLong);
 

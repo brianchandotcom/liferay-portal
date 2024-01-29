@@ -2903,9 +2903,16 @@ public class ObjectEntryLocalServiceImpl
 			return null;
 		}
 
+		Column<?, Long> primaryKeyColumn = (Column<?, Long>)table.getColumn(
+			objectDefinition.getPKObjectFieldDBColumnName());
+
+		if (primaryKeyColumn == null) {
+			primaryKeyColumn = ObjectEntryTable.INSTANCE.objectEntryId;
+		}
+
 		return column.in(
 			DSLQueryFactoryUtil.select(
-				table.getColumn(objectDefinition.getPKObjectFieldDBColumnName())
+				table.getColumn(primaryKeyColumn.getName())
 			).from(
 				table
 			).where(

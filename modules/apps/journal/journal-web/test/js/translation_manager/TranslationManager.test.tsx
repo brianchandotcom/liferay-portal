@@ -5,6 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import TranslationManager, {
@@ -72,8 +73,10 @@ describe('TranslationManager', () => {
 		]);
 	});
 
-	it('attaches inputLocalized:updateTranslationStatus event on mount', () => {
+	it('attaches inputLocalized:updateTranslationStatus event when the button is clicked', () => {
 		renderComponent();
+
+		userEvent.click(screen.getByRole('button'));
 
 		expect(global.Liferay.on).toHaveBeenCalledWith(
 			'inputLocalized:updateTranslationStatus',

@@ -77,13 +77,7 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 
 					String expectedValue = null;
 
-					if (fileName.contains("/portal-web/docroot")) {
-						int index =
-							fileName.indexOf("/portal-web/docroot") + 19;
-
-						expectedValue = fileName.substring(index);
-					}
-					else {
+					if (isModulesFile(absolutePath)) {
 						String symbolicName = _getSymbolicName(fileName);
 
 						if (symbolicName == null) {
@@ -98,6 +92,12 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 
 						expectedValue = StringBundler.concat(
 							symbolicName, "#", fileName.substring(index + 10));
+					}
+					else if (absolutePath.contains("/portal-web/docroot")) {
+						int index =
+							absolutePath.indexOf("/portal-web/docroot") + 19;
+
+						expectedValue = absolutePath.substring(index);
 					}
 
 					if (!attributeValue.startsWith(expectedValue)) {

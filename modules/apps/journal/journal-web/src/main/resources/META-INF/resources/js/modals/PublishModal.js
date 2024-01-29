@@ -38,7 +38,7 @@ export default function PublishModal({
 	const [dateError, setDateError] = useState('');
 
 	return (
-		<ClayModal className="m-0" observer={observer} size="lg">
+		<ClayModal className="m-0" observer={observer} size="md">
 			<ClayModal.Header>{heading}</ClayModal.Header>
 
 			<ClayModal.Body className="m-0">

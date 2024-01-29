@@ -7,6 +7,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.AutoEscapeEntryModelArgumentsResolver" id="com.liferay.portal.tools.service.builder.test.service.persistence.impl.AutoEscapeEntryModelArgumentsResolver" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.AutoEscapeEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.AutoEscapeEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.BigDecimalEntryModelArgumentsResolver" id="com.liferay.portal.tools.service.builder.test.service.persistence.impl.BigDecimalEntryModelArgumentsResolver" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.BigDecimalEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.CacheDisabledEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.CacheDisabledEntryLocalService" />

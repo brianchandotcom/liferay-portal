@@ -30,7 +30,7 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 	additionalProps="<%= mbBannedUsersManagementToolbarDisplayContext.getAdditionalProps() %>"
 	disabled="<%= totalBannedUsers == 0 %>"
 	itemsTotal="<%= totalBannedUsers %>"
-	propsTransformer="message_boards_admin/js/BanUsersManagementToolbarPropsTransformer"
+	propsTransformer="{BanUsersManagementToolbarPropsTransformer} from message-boards-web"
 	searchContainerId="mbBanUsers"
 	showCreationMenu="<%= false %>"
 	showInfoButton="<%= false %>"

@@ -2,6 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
+	"main": "js/index.js",
 	"name": "message-boards-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

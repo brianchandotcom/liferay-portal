@@ -173,7 +173,7 @@ portletDisplay.setURLBackTitle("message-boards");
 												label="localized-language"
 												name="prioritiesLanguageId"
 												options="<%= mbConfigurationDisplayContext.getSelectOptions(locales) %>"
-												propsTransformer="message_boards_admin/js/UpdatePrioritiesLanguagePropsTransformer"
+												propsTransformer="{UpdatePrioritiesLanguagePropsTransformer} from message-boards-web"
 											/>
 										</td>
 									</tr>
@@ -342,7 +342,7 @@ portletDisplay.setURLBackTitle("message-boards");
 												label="localized-language"
 												name="ranksLanguageId"
 												options="<%= mbConfigurationDisplayContext.getSelectOptions(locales) %>"
-												propsTransformer="message_boards_admin/js/UpdateRanksLanguagePropsTransformer"
+												propsTransformer="{UpdateRanksLanguagePropsTransformer} from message-boards-web"
 											/>
 										</td>
 									</tr>
@@ -393,7 +393,7 @@ portletDisplay.setURLBackTitle("message-boards");
 						%>'
 						cssClass="c-mr-2"
 						label="save"
-						propsTransformer="message_boards_admin/js/SaveConfigurationButtonPropsTransformer"
+						propsTransformer="{SaveConfigurationButtonPropsTransformer} from message-boards-web"
 					/>
 
 					<clay:link

@@ -70,7 +70,7 @@ String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "al
 	filterLabelItems="<%= mbEntriesManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= entriesSearchContainer.getTotal() %>"
 	orderDropdownItems="<%= mbEntriesManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
-	propsTransformer="message_boards_admin/js/MBEntriesManagementToolbarPropsTransformer"
+	propsTransformer="{MBEntriesManagementToolbarPropsTransformer} from message-boards-web"
 	searchActionURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="mbEntries"
 	searchFormName="searchFm"

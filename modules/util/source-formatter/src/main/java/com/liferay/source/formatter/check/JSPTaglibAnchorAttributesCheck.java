@@ -78,9 +78,10 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 					String expectedValue = null;
 
 					if (isModulesFile(absolutePath)) {
-						String symbolicName = _getSymbolicName(fileName);
+						String bundleSymbolicName = _getBundleSymbolicName(
+							fileName);
 
-						if (symbolicName == null) {
+						if (bundleSymbolicName == null) {
 							break;
 						}
 
@@ -91,7 +92,8 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 						}
 
 						expectedValue = StringBundler.concat(
-							symbolicName, "#", fileName.substring(index + 10));
+							bundleSymbolicName, "#",
+							fileName.substring(index + 10));
 					}
 					else if (absolutePath.contains("/portal-web/docroot")) {
 						int index =
@@ -116,7 +118,7 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 		return content;
 	}
 
-	private String _getSymbolicName(String fileName) throws IOException {
+	private String _getBundleSymbolicName(String fileName) throws IOException {
 		BNDSettings bndSettings = getBNDSettings(fileName);
 
 		if (bndSettings == null) {

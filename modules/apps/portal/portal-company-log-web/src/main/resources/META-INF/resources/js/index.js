@@ -9,20 +9,20 @@ import {HashRouter, Route, Switch} from 'react-router-dom';
 import CompanyLogs from './pages/CompanyLogs';
 import LogPreview from './pages/LogPreview';
 
-const App = () => (
-	<div className="bg-white container mt-4 p-4">
-		<HashRouter>
-			<Switch>
-				<Route component={CompanyLogs} exact path="/" />
+export function App() {
+	return (
+		<div className="bg-white container mt-4 p-4">
+			<HashRouter>
+				<Switch>
+					<Route component={CompanyLogs} exact path="/" />
 
-				<Route
-					component={LogPreview}
-					exact
-					path="/:companyId/:fileName"
-				/>
-			</Switch>
-		</HashRouter>
-	</div>
-);
-
-export default App;
+					<Route
+						component={LogPreview}
+						exact
+						path="/:companyId/:fileName"
+					/>
+				</Switch>
+			</HashRouter>
+		</div>
+	);
+}

@@ -211,6 +211,21 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 				).toString());
 	}
 
+	@Test
+	public void testGetErrorsJSONObject() {
+		FriendlyURLSeparatorCompanyConfigurationDisplayContext
+			friendlyURLSeparatorCompanyConfigurationDisplayContext =
+				new FriendlyURLSeparatorCompanyConfigurationDisplayContext(
+					_friendlyURLSeparatorConfigurationManager,
+					Mockito.mock(HttpServletRequest.class), _jsonFactory,
+					Mockito.mock(Language.class), _portal);
+
+		Assert.assertEquals(
+			_jsonFactory.createJSONObject(),
+			friendlyURLSeparatorCompanyConfigurationDisplayContext.
+				getErrorsJSONObject());
+	}
+
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 

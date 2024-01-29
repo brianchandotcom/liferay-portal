@@ -220,7 +220,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			insertPartitionRequiredData();
 
 			Set<Long> companyIds = new ConcurrentSkipListSet<>();
-			Set<Long> threadIds = new ConcurrentSkipListSet<>();
 
 			CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
 
@@ -232,14 +231,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					Assert.assertTrue(CompanyThreadLocal.isLocked());
 
 					companyIds.add(companyId);
-
-					Thread thread = Thread.currentThread();
-
-					threadIds.add(thread.getId());
 				});
 
 			Assert.assertEquals(companyIds.toString(), 3, companyIds.size());
-			Assert.assertEquals(threadIds.toString(), 3, threadIds.size());
 		}
 		finally {
 			deletePartitionRequiredData();

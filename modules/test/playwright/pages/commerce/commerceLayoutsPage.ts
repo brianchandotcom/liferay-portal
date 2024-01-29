@@ -16,8 +16,6 @@ export class CommerceLayoutsPage {
 	readonly openProductMenuButton: Locator;
 	readonly page: Page;
 	readonly pagesMenuItem: Locator;
-	readonly pageLabel: Locator;
-	readonly selectSpecificationFacetPageInput: Locator;
 	readonly siteBuilderMenuItem: Locator;
 	readonly widgetPageTemplateButton: Locator;
 
@@ -53,12 +51,6 @@ export class CommerceLayoutsPage {
 		});
 		this.page = page;
 		this.pagesMenuItem = page.getByTestId('app').filter({hasText: 'Pages'});
-		this.pageLabel = page
-			.getByTestId('layoutHref')
-			.getByLabel('Specification Facet Page');
-		this.selectSpecificationFacetPageInput = page
-			.getByTestId('selectLayout')
-			.getByLabel('Select Specification Facet Page');
 		this.siteBuilderMenuItem = page
 			.getByTestId('appGroup')
 			.filter({hasText: 'Site Builder'});
@@ -81,26 +73,6 @@ export class CommerceLayoutsPage {
 		await this.addPageNameInput.fill(pageName);
 		await Promise.all([
 			this.addPageModalSubmitButton.click(),
-			this.page.waitForResponse(
-				(resp) =>
-					resp.status() === 200 &&
-					resp
-						.url()
-						.includes(
-							'p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet'
-						)
-			),
-		]);
-	}
-
-	async deleteSpecificationPage() {
-		await this.selectSpecificationFacetPageInput.click();
-		await this.deletePageButton.click();
-		await this.deleteLayoutModal.waitFor({
-			state: 'attached',
-		});
-		await Promise.all([
-			this.deleteLayoutModal.click(),
 			this.page.waitForResponse(
 				(resp) =>
 					resp.status() === 200 &&

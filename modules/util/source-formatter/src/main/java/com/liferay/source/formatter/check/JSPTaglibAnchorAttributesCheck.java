@@ -54,6 +54,18 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 			expectedValue = absolutePath.substring(x);
 		}
 
+		if (expectedValue != null) {
+			_checkAnchorAttributes(
+				fileName, absolutePath, content, expectedValue);
+		}
+
+		return content;
+	}
+
+	private void _checkAnchorAttributes(
+		String fileName, String absolutePath, String content,
+		String expectedValue) {
+
 		List<String> taglibAnchorAttributes = getAttributeValues(
 			_TAGLIB_ANCHOR_ATTRIBUTES_KEY, absolutePath);
 
@@ -109,8 +121,6 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 				}
 			}
 		}
-
-		return content;
 	}
 
 	private String _getBundleSymbolicName(String fileName) throws IOException {

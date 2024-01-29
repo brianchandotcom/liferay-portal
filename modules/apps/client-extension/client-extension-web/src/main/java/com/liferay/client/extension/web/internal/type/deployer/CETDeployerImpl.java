@@ -25,6 +25,7 @@ import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -58,7 +59,8 @@ public class CETDeployerImpl implements CETDeployer {
 	public List<ServiceRegistration<?>> deploy(CET cet) {
 		if (Objects.equals(
 				cet.getType(),
-				ClientExtensionEntryConstants.TYPE_COMMERCE_CHECKOUT_STEP)) {
+				ClientExtensionEntryConstants.TYPE_COMMERCE_CHECKOUT_STEP) &&
+			FeatureFlagManagerUtil.isEnabled("LPD-15804")) {
 
 			return _deploy((CommerceCheckoutStepCET)cet);
 		}

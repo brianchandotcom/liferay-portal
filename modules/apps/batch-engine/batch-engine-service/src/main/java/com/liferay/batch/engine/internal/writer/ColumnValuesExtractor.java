@@ -147,48 +147,19 @@ public class ColumnValuesExtractor {
 						ObjectFieldConstants.
 							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
-					int listTypeEntriesCount =
-						ListTypeEntryLocalServiceUtil.getListTypeEntriesCount(
-							objectField.getListTypeDefinitionId());
-
-					int listTypeEntriesHeaderIndex = 1;
-
-					ColumnDescriptor[] childFieldColumnDescriptors =
-						new ColumnDescriptor[listTypeEntriesCount * 2];
-
-					for (int i = 0; i < childFieldColumnDescriptors.length;
-						 i = i + 2) {
-
-						childFieldColumnDescriptors[i] = ColumnDescriptor._from(
-							null,
-							StringBundler.concat(
-								fieldName, ".key_", listTypeEntriesHeaderIndex),
-							masterIndex++, null, parentColumnDescriptor,
-							_getObjectEntryCustomFieldUnsafeFunction(
-								fieldNameObjectValuePairs.get("properties"),
-								fieldName,
-								"key_" + listTypeEntriesHeaderIndex));
-
-						childFieldColumnDescriptors[i + 1] =
-							ColumnDescriptor._from(
-								null,
-								StringBundler.concat(
-									fieldName, ".name_",
-									listTypeEntriesHeaderIndex),
-								masterIndex++, null, parentColumnDescriptor,
-								_getObjectEntryCustomFieldUnsafeFunction(
-									fieldNameObjectValuePairs.get("properties"),
-									fieldName,
-									"name_" + listTypeEntriesHeaderIndex));
-
-						listTypeEntriesHeaderIndex++;
-					}
+					ColumnDescriptor[] multiselectPickListColumnDescriptors =
+						_getMultiselectPickListColumnDescriptors(
+							fieldName, objectField.getListTypeDefinitionId(),
+							masterIndex, parentColumnDescriptor,
+							fieldNameObjectValuePairs.get("properties"));
 
 					columnDescriptors = _combine(
-						columnDescriptors, childFieldColumnDescriptors,
+						columnDescriptors, multiselectPickListColumnDescriptors,
 						localIndex);
 
-					localIndex = masterIndex;
+					masterIndex += multiselectPickListColumnDescriptors.length;
+
+					localIndex += multiselectPickListColumnDescriptors.length;
 
 					continue;
 				}
@@ -289,6 +260,48 @@ public class ColumnValuesExtractor {
 		}
 
 		return listEntry.getName();
+	}
+
+	private ColumnDescriptor[] _getMultiselectPickListColumnDescriptors(
+		String fieldName, long listTypeDefinitionId, int masterIndex,
+		ColumnDescriptor parentColumnDescriptor,
+		ObjectValuePair<Field, Method> propertiesObjectValuePair) {
+
+		int listTypeEntriesCount =
+			ListTypeEntryLocalServiceUtil.getListTypeEntriesCount(
+				listTypeDefinitionId);
+
+		ColumnDescriptor[] multiselectPickListColumnDescriptors =
+			new ColumnDescriptor[listTypeEntriesCount * 2];
+
+		int listTypeEntriesHeaderIndex = 1;
+
+		for (int i = 0; i < multiselectPickListColumnDescriptors.length;
+			 i = i + 2) {
+
+			multiselectPickListColumnDescriptors[i] = ColumnDescriptor._from(
+				null,
+				StringBundler.concat(
+					fieldName, ".key_", listTypeEntriesHeaderIndex),
+				masterIndex++, null, parentColumnDescriptor,
+				_getObjectEntryCustomFieldUnsafeFunction(
+					propertiesObjectValuePair, fieldName,
+					"key_" + listTypeEntriesHeaderIndex));
+
+			multiselectPickListColumnDescriptors[i + 1] =
+				ColumnDescriptor._from(
+					null,
+					StringBundler.concat(
+						fieldName, ".name_", listTypeEntriesHeaderIndex),
+					masterIndex++, null, parentColumnDescriptor,
+					_getObjectEntryCustomFieldUnsafeFunction(
+						propertiesObjectValuePair, fieldName,
+						"name_" + listTypeEntriesHeaderIndex));
+
+			listTypeEntriesHeaderIndex++;
+		}
+
+		return multiselectPickListColumnDescriptors;
 	}
 
 	private UnsafeFunction<Object, Object, ReflectiveOperationException>

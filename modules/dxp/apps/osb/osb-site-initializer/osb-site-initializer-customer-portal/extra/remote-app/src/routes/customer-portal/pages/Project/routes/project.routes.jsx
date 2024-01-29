@@ -24,6 +24,7 @@ import DXPCloud from '../DXPCloud';
 import LiferayExperienceCloud from '../LiferayExperienceCloud';
 import Overview from '../Overview';
 import Portal from '../Portal';
+import RenewTable from '../RenewTable';
 import TeamMembers from '../TeamMembers';
 import ActivationOutlet from './Outlets/ActivationOutlet';
 import ProductOutlet from './Outlets/ProductOutlet';
@@ -129,6 +130,18 @@ const ProjectRoutes = () => {
 									path="deactivate"
 								/>
 							)}
+
+							<Route
+								element={
+									<RenewTable
+										hasKeyComplimentary={
+											hasKeyComplimentary
+										}
+										isRenewTable
+									/>
+								}
+								path="portal-renew"
+							/>
 						</Route>
 
 						<Route
@@ -171,6 +184,19 @@ const ProjectRoutes = () => {
 									/>
 								}
 								path="deactivate"
+							/>
+
+							<Route
+								element={
+									<RenewTable
+										hasKeyComplimentary={
+											hasKeyComplimentary
+										}
+										isDXPTable
+										isRenewTable
+									/>
+								}
+								path="dxp-renew"
 							/>
 						</Route>
 

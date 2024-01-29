@@ -9,9 +9,13 @@
 <#else>
 	<#assign
 		portletDisplay = themeDisplay.getPortletDisplay()
-
-		navbarId = "navbar_" + portletDisplay.getId()
 	/>
+
+	<#if validator.isNull(portletDisplay.getId())>
+		<#assign navbarId = "navbar_" + stringUtil.randomId() />
+	<#else>
+		<#assign navbarId = "navbar_" + portletDisplay.getId() />
+	</#if>
 
 	<div id="${navbarId}">
 		<ul aria-label="<@liferay.language key="site-pages" />" class="navbar-blank navbar-nav navbar-site" role="menubar">

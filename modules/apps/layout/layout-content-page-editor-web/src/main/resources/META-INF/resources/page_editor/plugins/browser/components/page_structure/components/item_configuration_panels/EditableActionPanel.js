@@ -331,6 +331,7 @@ function InteractionSelector({
 								Liferay.Language.get('preview-x-notification'),
 								label
 							)}
+							disabled={showPreview}
 							displayType="secondary"
 							onClick={() => {
 								setShowPreview(true);

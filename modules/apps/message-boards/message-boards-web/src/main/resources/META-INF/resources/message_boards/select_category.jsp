@@ -102,9 +102,9 @@ else {
 						cssClass="selector-button"
 						data='<%=
 							HashMapBuilder.<String, Object>put(
-								"categoryId", curCategory.getCategoryId()
+								"resourceid", curCategory.getCategoryId()
 							).put(
-								"name", curCategory.getName()
+								"resourcename", curCategory.getName()
 							).build()
 						%>'
 						value="select"
@@ -117,9 +117,9 @@ else {
 					cssClass="selector-button"
 					data='<%=
 						HashMapBuilder.<String, Object>put(
-							"categoryId", categoryId
+							"resourceid", categoryId
 						).put(
-							"name", categoryName
+							"resourcename", categoryName
 						).build()
 					%>'
 					value="select-this-category"

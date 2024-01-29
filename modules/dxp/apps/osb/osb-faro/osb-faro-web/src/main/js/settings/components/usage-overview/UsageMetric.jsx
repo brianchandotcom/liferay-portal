@@ -36,7 +36,10 @@ export default class UsageMetric extends React.Component {
 		planType: PropTypes.oneOf([
 			PLAN_TYPES[PLANS.basic.name],
 			PLAN_TYPES[PLANS.business.name],
-			PLAN_TYPES[PLANS.enterprise.name]
+			PLAN_TYPES[PLANS.enterprise.name],
+			PLAN_TYPES[PLANS.lxcBusiness.name],
+			PLAN_TYPES[PLANS.lxcEnterprise.name],
+			PLAN_TYPES[PLANS.lxcPro.name]
 		]),
 		timeZoneId: PropTypes.string
 	};

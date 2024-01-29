@@ -4,7 +4,7 @@
  */
 
 export function hasAdminOrPartnerManager(project, userAccount) {
-	const currentAccountBrief = userAccount.accountBriefs?.find(
+	const currentAccountBrief = userAccount?.accountBriefs?.find(
 		(accountBrief) =>
 			accountBrief.externalReferenceCode === project?.accountKey
 	);

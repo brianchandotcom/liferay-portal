@@ -20,6 +20,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -92,6 +93,18 @@ public class ItemClassIndexUtil {
 		}
 
 		return true;
+	}
+
+	public static boolean isMultiselectList(Object object) {
+		if (object instanceof ArrayList) {
+			List<?> list = (List<?>)object;
+
+			if (!list.isEmpty() && (list.get(0) instanceof ListEntry)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean isObjectEntryProperties(

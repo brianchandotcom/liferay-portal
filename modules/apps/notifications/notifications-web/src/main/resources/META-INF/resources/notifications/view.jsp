@@ -96,7 +96,7 @@ if (Validator.isNotNull(backURL)) {
 	filterLabelItems="<%= notificationsManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= notificationsSearchContainer.getTotal() %>"
 	orderDropdownItems="<%= notificationsManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
-	propsTransformer="notifications/js/NotificationsManagementToolbarPropsTransformer"
+	propsTransformer="{NotificationsManagementToolbarPropsTransformer} from notifications-web"
 	searchContainerId="<%= searchContainerId %>"
 	selectable="<%= actionRequired ? false : true %>"
 	showCreationMenu="<%= false %>"

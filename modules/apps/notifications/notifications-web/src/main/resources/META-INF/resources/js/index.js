@@ -5,7 +5,7 @@
 
 import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
-export default function propsTransformer({
+export function NotificationsManagementToolbarPropsTransformer({
 	additionalProps: {
 		deleteNotificationsURL,
 		markNotificationsAsReadURL,

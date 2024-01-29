@@ -31,7 +31,8 @@ public class SubscriptionDLAppServiceWrapper extends DLAppServiceWrapper {
 			String externalReferenceCode, long repositoryId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String urlTitle, String description, String changeLog, byte[] bytes,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		serviceContext.setAttribute(
@@ -41,7 +42,7 @@ public class SubscriptionDLAppServiceWrapper extends DLAppServiceWrapper {
 		return super.addFileEntry(
 			externalReferenceCode, repositoryId, folderId, sourceFileName,
 			mimeType, title, urlTitle, description, changeLog, bytes,
-			expirationDate, reviewDate, serviceContext);
+			displayDate, expirationDate, reviewDate, serviceContext);
 	}
 
 	@Override
@@ -49,7 +50,8 @@ public class SubscriptionDLAppServiceWrapper extends DLAppServiceWrapper {
 			String externalReferenceCode, long repositoryId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String urlTitle, String description, String changeLog, File file,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		serviceContext.setAttribute(
@@ -59,7 +61,7 @@ public class SubscriptionDLAppServiceWrapper extends DLAppServiceWrapper {
 		return super.addFileEntry(
 			externalReferenceCode, repositoryId, folderId, sourceFileName,
 			mimeType, title, urlTitle, description, changeLog, file,
-			expirationDate, reviewDate, serviceContext);
+			displayDate, expirationDate, reviewDate, serviceContext);
 	}
 
 	@Override
@@ -67,8 +69,8 @@ public class SubscriptionDLAppServiceWrapper extends DLAppServiceWrapper {
 			String externalReferenceCode, long repositoryId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String urlTitle, String description, String changeLog,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date displayDate,
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		serviceContext.setAttribute(
@@ -78,7 +80,7 @@ public class SubscriptionDLAppServiceWrapper extends DLAppServiceWrapper {
 		return super.addFileEntry(
 			externalReferenceCode, repositoryId, folderId, sourceFileName,
 			mimeType, title, urlTitle, description, changeLog, inputStream,
-			size, expirationDate, reviewDate, serviceContext);
+			size, displayDate, expirationDate, reviewDate, serviceContext);
 	}
 
 	@Override

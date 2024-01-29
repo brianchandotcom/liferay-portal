@@ -40,8 +40,7 @@ public class UpdateFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
-		long parentFolderId = ParamUtil.getLong(
-			actionRequest, "parentFolderId");
+		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
@@ -58,7 +57,7 @@ public class UpdateFolderMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "mergeWithParentFolder");
 
 		_journalFolderService.updateFolder(
-			serviceContext.getScopeGroupId(), folderId, parentFolderId, name,
+			serviceContext.getScopeGroupId(), folderId, newFolderId, name,
 			description, ddmStructureIds, restrictionType,
 			mergeWithParentFolder, serviceContext);
 	}

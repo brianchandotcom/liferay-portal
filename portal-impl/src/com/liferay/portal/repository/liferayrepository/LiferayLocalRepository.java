@@ -624,11 +624,13 @@ public class LiferayLocalRepository
 			size = file.length();
 		}
 
+		Date displayDate = null;
+
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
 			description, changeLog, dlVersionNumberIncrease, fileEntryTypeId,
-			ddmFormValuesMap, file, null, size, expirationDate, reviewDate,
-			serviceContext);
+			ddmFormValuesMap, file, null, size, displayDate, expirationDate,
+			reviewDate, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}
@@ -647,12 +649,13 @@ public class LiferayLocalRepository
 
 		Map<String, DDMFormValues> ddmFormValuesMap = getDDMFormValuesMap(
 			serviceContext, fileEntryTypeId);
+		Date displayDate = null;
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
 			description, changeLog, dlVersionNumberIncrease, fileEntryTypeId,
-			ddmFormValuesMap, null, inputStream, size, expirationDate,
-			reviewDate, serviceContext);
+			ddmFormValuesMap, null, inputStream, size, displayDate,
+			expirationDate, reviewDate, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

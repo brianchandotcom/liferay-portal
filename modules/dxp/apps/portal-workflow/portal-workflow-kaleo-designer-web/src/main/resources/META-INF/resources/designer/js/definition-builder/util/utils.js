@@ -37,6 +37,18 @@ function replaceTabSpaces(string) {
 	return string.replace(/\t/g, ' ').trimStart().trimEnd();
 }
 
+function stringToBoolean(string) {
+	if (string === 'false') {
+		return false;
+	}
+	else if (string === 'true') {
+		return true;
+	}
+	else {
+		return string;
+	}
+}
+
 function titleCase(string) {
 	return string
 		.toLowerCase()
@@ -64,6 +76,7 @@ export {
 	removeNewLine,
 	repeatSymbol,
 	replaceTabSpaces,
+	stringToBoolean,
 	titleCase,
 	uncamelize,
 };

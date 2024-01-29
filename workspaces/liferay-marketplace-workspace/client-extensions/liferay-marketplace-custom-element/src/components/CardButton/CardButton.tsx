@@ -9,7 +9,7 @@ import {MouseEvent, ReactNode} from 'react';
 import sitesIcon from '../../assets/icons/sites_icon.svg';
 
 import './CardButton.scss';
-import {StepType} from '../../pages/GetAppPage/enums/stepType';
+import {StepType} from '../../pages/GetApp/enums/stepType';
 
 export function CardButton({
 	description,
@@ -68,7 +68,7 @@ export function CardButton({
 						{step !== StepType.PAYMENT && iconRight && icon}
 					</div>
 
-					<div
+					<small
 						className={classNames({
 							'card-button-description':
 								step === StepType.PAYMENT,
@@ -77,7 +77,7 @@ export function CardButton({
 						})}
 					>
 						{description}
-					</div>
+					</small>
 				</div>
 			</div>
 		</div>

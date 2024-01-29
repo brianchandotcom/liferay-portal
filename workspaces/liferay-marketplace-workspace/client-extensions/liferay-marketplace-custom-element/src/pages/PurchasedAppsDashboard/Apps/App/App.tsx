@@ -13,7 +13,7 @@ import {ReactNode} from 'react';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import i18n from '../../../../i18n';
 import formatLocaleCurrency from '../../../../utils/formatLocaleCurrency';
-import getProductPriceModel from '../../../GetAppPage/utils/getProductPriceModel';
+import getProductPriceModel from '../../../GetApp/utils/getProductPriceModel';
 import {formatDate} from '../../../PublishedAppsDashboard/PublishedDashboardPageUtil';
 
 const App = () => {

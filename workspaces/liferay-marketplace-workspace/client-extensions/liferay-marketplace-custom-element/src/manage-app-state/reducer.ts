@@ -237,18 +237,6 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			};
 		}
 
-		case TYPES.UPDATE_EULA: {
-			const eula = action.payload.value;
-
-			return {...state, eula};
-		}
-
-		case TYPES.UPDATE_EULA_CHECKBOX: {
-			const eulaCheckbox = action.payload.value;
-
-			return {...state, eulaCheckbox};
-		}
-
 		case TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL: {
 			const {id, value} = action.payload;
 

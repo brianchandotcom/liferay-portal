@@ -110,7 +110,7 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 					}
 				}
 
-				pos = content.indexOf("tagName", pos + 1);
+				pos = content.indexOf(taglibName, pos + 1);
 			}
 		}
 

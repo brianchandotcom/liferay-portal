@@ -1201,6 +1201,13 @@ information.
 				</then>
 			</if>
 
+			<if>
+				<equals arg1="${junit.jvm.override.version}" arg2="21" />
+				<then>
+					<property name="java.security.manager" value="allow" />
+				</then>
+			</if>
+
 			<local name="junit.jvm.bin" />
 
 			<condition else="${junit.jvm}" property="junit.jvm.bin" value="${junit.jvm.override}">
@@ -1211,6 +1218,7 @@ information.
 				<sysproperty if:true="${aspectj.weaver.enabled}" key="aspectj.agent" value="${aspectj.agent}" />
 				<sysproperty key="catalina.base" value="." />
 				<sysproperty file="woven-classes" key="junit.aspectj.dump" />
+				<sysproperty if:set="java.security.manager" key="java.security.manager" value="${java.security.manager}" />
 				<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
 				<sysproperty if:true="${jvm.debug}" key="jvm.debug" value="true" />
 				<sysproperty key="liferay.temp.dir" value="${app.server.tomcat.temp.dir}" />

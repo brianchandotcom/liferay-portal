@@ -412,6 +412,14 @@
 					}
 				},
 				{
+					"externalReferenceCode": "mergePortalSubrepository",
+					"key": "mergePortalSubrepository",
+					"name": "Merge Portal Subrepository",
+					"name_i18n": {
+						"en-US": "Merge Portal Subrepository"
+					}
+				},
+				{
 					"externalReferenceCode": "mirrorsLocalCachePropagator",
 					"key": "mirrorsLocalCachePropagator",
 					"name": "Mirrors Local Cache Propagator",

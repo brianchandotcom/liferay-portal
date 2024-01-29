@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE look-and-feel PUBLIC "-//Liferay//DTD Look and Feel 7.0.0//EN" "http://www.liferay.com/dtd/liferay-look-and-feel_7_0_0.dtd">
+
+<look-and-feel>
+	<compatibility>
+		<version>7.4.0+</version>
+	</compatibility>
+	<theme id="classic" name="Classic">
+	</theme>
+</look-and-feel>

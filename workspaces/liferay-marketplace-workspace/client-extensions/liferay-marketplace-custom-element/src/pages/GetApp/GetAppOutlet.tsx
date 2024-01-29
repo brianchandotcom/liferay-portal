@@ -196,7 +196,7 @@ const GetAppOutlet = () => {
 	}, [account, location.pathname, navigate]);
 
 	if (!product) {
-		return;
+		return null;
 	}
 
 	return (

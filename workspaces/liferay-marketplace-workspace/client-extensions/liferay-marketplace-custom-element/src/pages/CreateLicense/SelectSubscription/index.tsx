@@ -40,7 +40,7 @@ const SelectSubscription = ({
 			{isLoading && <ClayLoadingIndicator />}
 
 			<RadioCardList
-				contentList={subscriptions.map((licenseKey) => {
+				contentList={subscriptions.map((licenseKey, index) => {
 					const availableKeys = Math.abs(
 						licenseKey.provisionedCount - licenseKey.purchasedCount
 					);
@@ -60,6 +60,7 @@ const SelectSubscription = ({
 							</small>
 						),
 						disabled: availableKeys <= 0,
+						id: index,
 						label: `${formatDate(licenseKey.startDate)} - ${
 							licenseKey?.endDate
 								? formatDate(

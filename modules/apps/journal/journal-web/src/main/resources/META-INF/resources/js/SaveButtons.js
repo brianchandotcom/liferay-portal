@@ -145,7 +145,14 @@ export default function SaveButtons({
 			<ClayDropDown
 				hasLeftSymbols
 				trigger={
-					<ClayButton>
+					<ClayButton
+						aria-label={Liferay.Language.get(
+							'select-and-confirm-publish-settings'
+						)}
+						title={Liferay.Language.get(
+							'select-and-confirm-publish-settings'
+						)}
+					>
 						{publishButtonLabel}
 
 						<span className="inline-item inline-item-after">

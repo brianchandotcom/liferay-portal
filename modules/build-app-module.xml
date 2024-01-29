@@ -325,12 +325,7 @@
 		</condition>
 
 		<property name="artifact.location.dest" value="${output.dir}/${lpkg.title.prefix}${liferay.releng.app.title} - Impl/${artifact.name}-${artifact.version}.war" />
-
-		<condition property="artifact.location.src" value="${osgi.dir}/war/${artifact.name}.war">
-			<available file="${osgi.dir}/war/${artifact.name}.war" />
-		</condition>
-
-		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}.war" />
+		<property name="artifact.location.src" value="${osgi.dir}/portal-war/${artifact.name}.war" />
 	</target>
 
 	<target depends="get-artifact-version-from-releng" if="artifact.legacy" name="get-artifact-properties-legacy">
@@ -352,7 +347,7 @@
 		</condition>
 
 		<property name="artifact.location.dest" value="${output.dir}/${lpkg.title.prefix}${liferay.releng.app.title} - Impl/${artifact.name}-${artifact.version}.war" />
-		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}-${artifact.version}.war" />
+		<property name="artifact.location.src" value="${osgi.dir}/portal-war/${artifact.name}-${artifact.version}.war" />
 	</target>
 
 	<target name="get-artifact-properties-releng" unless="artifact.exclude">

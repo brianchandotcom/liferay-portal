@@ -6,12 +6,16 @@ Import-Package:\
 	\
 	!com.google.gson.*,\
 	\
+	!jakarta.json.*,\
+	\
 	!org.apache.commons.digester.*,\
 	!org.apache.commons.jexl2.*,\
 	!org.apache.commons.jxpath.*,\
 	!org.apache.commons.vfs2.*,\
 	!org.apache.tapestry5.json.*,\
 	!org.apache.xml.resolver.*,\
+	\
+	!org.codehaus.jettison.*,\
 	\
 	*
 Web-ContextPath: /dynamic-data-mapping-data-provider-impl

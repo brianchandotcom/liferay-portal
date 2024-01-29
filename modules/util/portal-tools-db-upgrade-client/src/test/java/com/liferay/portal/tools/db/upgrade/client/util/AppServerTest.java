@@ -25,39 +25,39 @@ public class AppServerTest {
 
 	@Test
 	public void testGetAppServer() throws Exception {
-		File tempFile = temporaryFolder.getRoot();
+		File rootDir = temporaryFolder.getRoot();
 
-		File dirFile = new File(tempFile, "tomcat");
+		File tomcatDir = new File(rootDir, "tomcat");
 
-		dirFile.mkdir();
+		tomcatDir.mkdir();
 
 		AppServer appServer = AppServer.getAppServer(
-			new File(tempFile.getCanonicalPath()), "tomcat");
+			new File(rootDir.getCanonicalPath()), "tomcat");
 
 		_assertAppServer(
-			appServer, dirFile, "bin", "lib",
+			appServer, tomcatDir, "bin", "lib",
 			"webapps" + File.separator + "ROOT", "tomcat");
 
-		dirFile.delete();
+		tomcatDir.delete();
 
-		dirFile = new File(tempFile, "tomcat-9.0.80");
+		tomcatDir = new File(rootDir, "tomcat-9.0.80");
 
-		dirFile.mkdirs();
+		tomcatDir.mkdirs();
 
 		appServer = AppServer.getAppServer(
-			new File(tempFile.getCanonicalPath()), "tomcat");
+			new File(rootDir.getCanonicalPath()), "tomcat");
 
 		_assertAppServer(
-			appServer, dirFile, "bin", "lib",
+			appServer, tomcatDir, "bin", "lib",
 			"webapps" + File.separator + "ROOT", "tomcat");
 	}
 
 	@Test
 	public void testNewAppServer() {
-		File dir = new File(
+		File appServerDir = new File(
 			temporaryFolder.getRoot(), RandomTestUtil.randomString());
 
-		dir.mkdir();
+		appServerDir.mkdir();
 
 		String extraDirLibName = RandomTestUtil.randomString();
 		String globalDirLibName = RandomTestUtil.randomString();
@@ -65,40 +65,40 @@ public class AppServerTest {
 		String serverDetectorServerId = RandomTestUtil.randomString();
 
 		AppServer appServer = new AppServer(
-			dir.getAbsolutePath(), extraDirLibName, globalDirLibName,
+			appServerDir.getAbsolutePath(), extraDirLibName, globalDirLibName,
 			portalDirName, serverDetectorServerId);
 
 		_assertAppServer(
-			appServer, dir, extraDirLibName, globalDirLibName, portalDirName,
-			serverDetectorServerId);
+			appServer, appServerDir, extraDirLibName, globalDirLibName,
+			portalDirName, serverDetectorServerId);
 
-		dir = new File(
+		appServerDir = new File(
 			temporaryFolder.getRoot(), RandomTestUtil.randomString());
 
-		dir.mkdir();
+		appServerDir.mkdir();
 
 		extraDirLibName = RandomTestUtil.randomString();
 		globalDirLibName = RandomTestUtil.randomString();
 		portalDirName = RandomTestUtil.randomString();
 
-		appServer.setDirName(dir.getAbsolutePath());
+		appServer.setDirName(appServerDir.getAbsolutePath());
 		appServer.setPortalDirName(portalDirName);
 		appServer.setExtraLibDirNames(extraDirLibName);
 		appServer.setGlobalLibDirName(globalDirLibName);
 
 		_assertAppServer(
-			appServer, dir, extraDirLibName, globalDirLibName, portalDirName,
-			serverDetectorServerId);
+			appServer, appServerDir, extraDirLibName, globalDirLibName,
+			portalDirName, serverDetectorServerId);
 	}
 
 	private void _assertAppServer(
-		AppServer appServer, File dirFile, String extraDirLibName,
+		AppServer appServer, File appServerDir, String extraDirLibName,
 		String globalDirLibName, String portalDirName,
 		String serverDetectorServerId) {
 
-		Assert.assertEquals(dirFile, appServer.getDir());
+		Assert.assertEquals(appServerDir, appServer.getDir());
 
-		File portalDir = new File(dirFile, portalDirName);
+		File portalDir = new File(appServerDir, portalDirName);
 
 		Assert.assertEquals(portalDir, appServer.getPortalDir());
 
@@ -119,7 +119,7 @@ public class AppServerTest {
 			portalShieldContainerLibDir,
 			appServer.getPortalShieldedContainerLibDir());
 
-		File extraLibDir = new File(dirFile, extraDirLibName);
+		File extraLibDir = new File(appServerDir, extraDirLibName);
 
 		Assert.assertEquals(
 			extraLibDir,
@@ -128,7 +128,7 @@ public class AppServerTest {
 				0
 			));
 
-		File globalLibDir = new File(dirFile, globalDirLibName);
+		File globalLibDir = new File(appServerDir, globalDirLibName);
 
 		Assert.assertEquals(globalLibDir, appServer.getGlobalLibDir());
 

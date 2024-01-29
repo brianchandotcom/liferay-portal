@@ -4,7 +4,11 @@ Bundle-Version: 3.0.104
 Import-Package:\
 	!com.fasterxml.jackson.*,\
 	\
+	!jakarta.json.*,\
+	\
 	!org.apache.tapestry5.json.*,\
+	\
+	!org.codehaus.jettison.*,\
 	\
 	*
 Web-ContextPath: /data-engine-rest-impl

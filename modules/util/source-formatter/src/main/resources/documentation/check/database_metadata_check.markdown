@@ -36,7 +36,7 @@ import java.sql.ResultSet;
 DB db = DBManagerUtil.getDB();
 
 try (ResultSet indexResultSet = db.getIndexResultSet(
-        connection, tableName)) {
+        connection, tableName, onlyUnique)) {
 
     doSomething(indexResultSet);
 }

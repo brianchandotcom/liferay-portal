@@ -108,7 +108,7 @@ describe('DropdownRangeKey', () => {
 		}
 		expect(
 			getByText(
-				"Dates prior to 13 months cannot be selected due to your workspace's data retention period."
+				"Dates prior to 7 months cannot be selected due to your workspace's data retention period."
 			)
 		).toBeInTheDocument();
 	});

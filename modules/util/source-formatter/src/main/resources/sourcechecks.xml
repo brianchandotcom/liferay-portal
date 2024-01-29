@@ -1179,10 +1179,6 @@
 			<category name="Styling" />
 			<description name="Validates `copyright` header." />
 		</check>
-		<check name="JSPAnchorPointKeyCheck">
-			<category name="Styling" />
-			<description name="Enforce anchor point key format style." />
-		</check>
 		<check name="JSPCoreTaglibCheck">
 			<category name="Styling" />
 			<description name="Finds cases where a `c:choose` or `c:if` tag can be used instead of an if-statement." />
@@ -1202,6 +1198,10 @@
 		<check name="JSPSendRedirectCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that there are no calls to `HttpServletResponse.sendRedirect` from `jsp` files." />
+		</check>
+		<check name="JSPTaglibAnchorAttributesCheck">
+			<category name="Styling" />
+			<description name="Checks that values of anchor attributes follow naming conventions." />
 		</check>
 		<check name="JSPUnusedJSPFCheck">
 			<category name="Performance" />

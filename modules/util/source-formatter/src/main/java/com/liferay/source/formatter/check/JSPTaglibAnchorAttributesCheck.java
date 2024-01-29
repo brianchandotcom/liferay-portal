@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * @author Qi Zhang
  */
-public class JSPAnchorPointKeyCheck extends BaseTagAttributesCheck {
+public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {
@@ -30,19 +30,18 @@ public class JSPAnchorPointKeyCheck extends BaseTagAttributesCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		List<String> anchorPointTags = getAttributeValues(
-			_ANCHOR_POINT_TAGS, absolutePath);
+		List<String> anchorTags = getAttributeValues(
+			_ANCHOR_TAGS, absolutePath);
 
 		outerLoop:
-		for (String anchorPointTag : anchorPointTags) {
-			String[] anchorPointTagArray = StringUtil.split(
-				anchorPointTag, "->");
+		for (String anchorTag : anchorTags) {
+			String[] anchorTagArray = StringUtil.split(anchorTag, "->");
 
-			if (anchorPointTagArray.length != 2) {
+			if (anchorTagArray.length != 2) {
 				continue;
 			}
 
-			String tagName = "<" + anchorPointTagArray[0];
+			String tagName = "<" + anchorTagArray[0];
 
 			int pos = content.indexOf(tagName);
 
@@ -66,7 +65,7 @@ public class JSPAnchorPointKeyCheck extends BaseTagAttributesCheck {
 
 					String attribute = entry.getKey();
 
-					if (!StringUtil.equals(attribute, anchorPointTagArray[1])) {
+					if (!StringUtil.equals(attribute, anchorTagArray[1])) {
 						continue;
 					}
 
@@ -127,6 +126,6 @@ public class JSPAnchorPointKeyCheck extends BaseTagAttributesCheck {
 			bndSettings.getContent(), "Bundle-SymbolicName");
 	}
 
-	private static final String _ANCHOR_POINT_TAGS = "anchorPointTags";
+	private static final String _ANCHOR_TAGS = "anchorTags";
 
 }

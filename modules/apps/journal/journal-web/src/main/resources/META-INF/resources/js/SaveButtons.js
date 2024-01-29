@@ -6,9 +6,11 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import PublishModal from './modals/PublishModal';
+import showAlert from './showAlert';
 
 export default function SaveButtons({
 	articleId,
@@ -31,14 +33,36 @@ export default function SaveButtons({
 	] = useState({publishModalAction: '', publishModalVisible: false});
 
 	const onClick = (action) => {
-		if (articleId) {
-			handleButtonClick(action);
+		const titleInputComponent = Liferay.component(
+			`${portletNamespace}titleMapAsXML`
+		);
+
+		if (titleInputComponent?.getValue(defaultLanguageId)) {
+			if (articleId) {
+				handleButtonClick(action);
+			}
+			else {
+				setPublishModalState({
+					publishModalAction: action,
+					publishModalVisible: true,
+				});
+			}
 		}
 		else {
-			setPublishModalState({
-				publishModalAction: action,
-				publishModalVisible: true,
-			});
+			document
+				.querySelectorAll('.journal-alert-container')
+				.forEach((alertElement) => {
+					alertElement.parentElement.removeChild(alertElement);
+				});
+
+			showAlert(
+				sub(
+					Liferay.Language.get(
+						'please-enter-a-valid-title-for-the-default-language-x'
+					),
+					defaultLanguageId.replaceAll('_', '-')
+				)
+			);
 		}
 	};
 
@@ -85,11 +109,11 @@ export default function SaveButtons({
 				: '/journal/add_article';
 		}
 
-		const descriptionInputComponent = Liferay.component(
-			`${portletNamespace}descriptionMapAsXML`
-		);
 		const titleInputComponent = Liferay.component(
 			`${portletNamespace}titleMapAsXML`
+		);
+		const descriptionInputComponent = Liferay.component(
+			`${portletNamespace}descriptionMapAsXML`
 		);
 
 		[titleInputComponent, descriptionInputComponent].forEach(
@@ -151,10 +175,37 @@ export default function SaveButtons({
 
 					<ClayDropDown.Item
 						onClick={() => {
-							setPublishModalState({
-								publishModalAction: 'schedule',
-								publishModalVisible: true,
-							});
+							const titleInputComponent = Liferay.component(
+								`${portletNamespace}titleMapAsXML`
+							);
+							if (
+								titleInputComponent?.getValue(defaultLanguageId)
+							) {
+								setPublishModalState({
+									publishModalAction: 'schedule',
+									publishModalVisible: true,
+								});
+							}
+							else {
+								document
+									.querySelectorAll(
+										'.journal-alert-container'
+									)
+									.forEach((alertElement) => {
+										alertElement.parentElement.removeChild(
+											alertElement
+										);
+									});
+
+								showAlert(
+									sub(
+										Liferay.Language.get(
+											'please-enter-a-valid-title-for-the-default-language-x'
+										),
+										defaultLanguageId.replaceAll('_', '-')
+									)
+								);
+							}
 						}}
 						symbolLeft="date-time"
 					>

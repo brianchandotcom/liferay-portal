@@ -8,6 +8,7 @@ package com.liferay.friendly.url.web.internal.display.context;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -261,6 +262,61 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 			errorsJSONObject,
 			friendlyURLSeparatorCompanyConfigurationDisplayContext.
 				getErrorsJSONObject());
+	}
+
+	@Test
+	public void testGetSeparatorFieldsProps() throws Exception {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			_getThemeDisplay()
+		);
+
+		FriendlyURLSeparatorCompanyConfigurationDisplayContext
+			friendlyURLSeparatorCompanyConfigurationDisplayContext =
+				new FriendlyURLSeparatorCompanyConfigurationDisplayContext(
+					_friendlyURLSeparatorConfigurationManager,
+					httpServletRequest, _jsonFactory,
+					Mockito.mock(Language.class), _portal);
+
+		Map<String, Object> actualSeparatorFieldsProps =
+			friendlyURLSeparatorCompanyConfigurationDisplayContext.
+				getSeparatorFieldsProps();
+
+		Assert.assertNull(actualSeparatorFieldsProps.get("errors"));
+
+		JSONArray fieldsJSONArray = (JSONArray)actualSeparatorFieldsProps.get(
+			"fields");
+
+		Assert.assertNotNull(fieldsJSONArray);
+		Assert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"name",
+					"com_liferay_configuration_admin_web_portlet_" +
+						"InstanceSettingsPortlet_BlogsEntry"
+				).put(
+					"value", "blog-test1"
+				),
+				JSONUtil.put(
+					"name",
+					"com_liferay_configuration_admin_web_portlet_" +
+						"InstanceSettingsPortlet_JournalArticle"
+				).put(
+					"value", "journal-test1"
+				)
+			).toString(),
+			fieldsJSONArray.toString());
+
+		String url = (String)actualSeparatorFieldsProps.get("url");
+
+		Assert.assertNotNull(url);
+
+		Assert.assertEquals(
+			"http://www.sitename.com", actualSeparatorFieldsProps.get("url"));
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

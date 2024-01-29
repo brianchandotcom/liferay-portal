@@ -69,6 +69,12 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 						continue;
 					}
 
+					String attributeValue = attributesMap.get(attributeName);
+
+					if (attributeValue.contains("<%")) {
+						continue;
+					}
+
 					String expectedValue = null;
 
 					if (fileName.contains("/portal-web/docroot")) {
@@ -94,11 +100,7 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 							symbolicName, "#", fileName.substring(index + 10));
 					}
 
-					String attributeValue = attributesMap.get(attributeName);
-
-					if (!attributeValue.contains("<%") &&
-						!attributeValue.startsWith(expectedValue)) {
-
+					if (!attributeValue.startsWith(expectedValue)) {
 						addMessage(
 							fileName,
 							StringBundler.concat(

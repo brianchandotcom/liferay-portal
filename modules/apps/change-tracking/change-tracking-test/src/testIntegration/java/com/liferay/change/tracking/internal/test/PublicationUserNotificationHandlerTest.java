@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -92,8 +95,7 @@ public class PublicationUserNotificationHandlerTest {
 			_group.getGroupId(), journalArticle.getArticleId(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_ctCollectionService.publishCTCollection(
-			TestPropsValues.getUserId(), ctCollection.getCtCollectionId());
+		_publishCTCollection(ctCollection.getCtCollectionId());
 
 		List<UserNotificationEvent> userNotificationEvents =
 			_userNotificationEventLocalService.getUserNotificationEvents(
@@ -173,8 +175,7 @@ public class PublicationUserNotificationHandlerTest {
 				}
 			}
 
-			_ctCollectionService.publishCTCollection(
-				TestPropsValues.getUserId(), ctCollection.getCtCollectionId());
+			_publishCTCollection(ctCollection.getCtCollectionId());
 
 			List<UserNotificationEvent> userNotificationEvents =
 				_userNotificationEventLocalService.getUserNotificationEvents(
@@ -221,6 +222,26 @@ public class PublicationUserNotificationHandlerTest {
 			if (journalServiceBundle != null) {
 				journalServiceBundle.start();
 			}
+		}
+	}
+
+	private void _publishCTCollection(long ctCollectionId) throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR)) {
+
+			_ctCollectionService.publishCTCollection(
+				TestPropsValues.getUserId(), ctCollectionId);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"Unable to execute background task", logEntry.getMessage());
 		}
 	}
 

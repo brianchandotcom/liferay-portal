@@ -151,6 +151,8 @@ public class PublicationUserNotificationHandlerTest {
 				StringPool.BLANK);
 		}
 
+		Bundle journalServiceBundle = null;
+
 		try {
 			Bundle bundle = FrameworkUtil.getBundle(
 				JournalArticleService.class);
@@ -158,10 +160,14 @@ public class PublicationUserNotificationHandlerTest {
 			BundleContext bundleContext = bundle.getBundleContext();
 
 			for (Bundle curBundle : bundleContext.getBundles()) {
-				if (_BUNDLE_SYMBOLIC_NAME.equals(curBundle.getSymbolicName())) {
-					if (curBundle.getState() == Bundle.ACTIVE) {
-						curBundle.stop();
-					}
+				if (Objects.equals(
+						curBundle.getSymbolicName(),
+						"com.liferay.journal.service") &&
+					(curBundle.getState() == Bundle.ACTIVE)) {
+
+					curBundle.stop();
+
+					journalServiceBundle = curBundle;
 
 					break;
 				}
@@ -212,25 +218,11 @@ public class PublicationUserNotificationHandlerTest {
 			}
 		}
 		finally {
-			Bundle bundle = FrameworkUtil.getBundle(
-				JournalArticleService.class);
-
-			BundleContext bundleContext = bundle.getBundleContext();
-
-			for (Bundle curBundle : bundleContext.getBundles()) {
-				if (_BUNDLE_SYMBOLIC_NAME.equals(curBundle.getSymbolicName())) {
-					if (curBundle.getState() != Bundle.ACTIVE) {
-						curBundle.start();
-					}
-
-					break;
-				}
+			if (journalServiceBundle != null) {
+				journalServiceBundle.start();
 			}
 		}
 	}
-
-	private static final String _BUNDLE_SYMBOLIC_NAME =
-		"com.liferay.journal.service";
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;

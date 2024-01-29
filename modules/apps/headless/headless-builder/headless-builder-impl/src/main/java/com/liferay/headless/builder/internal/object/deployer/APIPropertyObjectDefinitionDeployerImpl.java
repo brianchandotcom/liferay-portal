@@ -5,20 +5,34 @@
 
 package com.liferay.headless.builder.internal.object.deployer;
 
+import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.object.related.models.DeleteOnDisassociateObjectRelatedModelsProvider;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelper;
+import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 
+import java.io.Serializable;
+
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +78,8 @@ public class APIPropertyObjectDefinitionDeployerImpl
 				"=", ObjectRelationshipConstants.TYPE_ONE_TO_MANY, "))"),
 			new ObjectRelatedModelsProviderServiceTrackerCustomizer());
 
+		_updateExistentAPIProperties(objectDefinition);
+
 		return Collections.emptyList();
 	}
 
@@ -97,13 +113,71 @@ public class APIPropertyObjectDefinitionDeployerImpl
 			objectDefinition.getExternalReferenceCode(), "L_API_PROPERTY");
 	}
 
+	private void _updateExistentAPIProperties(
+		ObjectDefinition objectDefinition) {
+
+		try {
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				objectDefinition.getObjectDefinitionId(), "apiPropertyType");
+
+			if (objectField == null) {
+				return;
+			}
+
+			List<Map<String, Serializable>> valuesList =
+				_objectEntryLocalService.getValuesList(
+					GroupThreadLocal.getGroupId(),
+					objectDefinition.getCompanyId(),
+					objectDefinition.getUserId(),
+					objectDefinition.getObjectDefinitionId(),
+					_filterFactory.create(
+						"apiPropertyType eq null", objectDefinition),
+					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			if (!valuesList.isEmpty()) {
+				for (Map<String, Serializable> item : valuesList) {
+					Collection<Serializable> values = item.values();
+
+					values.removeAll(Collections.singleton(null));
+
+					item.put(
+						"apiPropertyType",
+						HeadlessBuilderConstants.PROPERTY_TYPE_NORMAL);
+
+					_objectEntryLocalService.addOrUpdateObjectEntry(
+						(String)item.get("externalReferenceCode"),
+						objectDefinition.getUserId(),
+						GroupThreadLocal.getGroupId(),
+						objectDefinition.getObjectDefinitionId(), item,
+						new ServiceContext());
+				}
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		APIPropertyObjectDefinitionDeployerImpl.class);
+
 	private BundleContext _bundleContext;
+
+	@Reference(
+		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
+	)
+	private FilterFactory<Predicate> _filterFactory;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectRelatedModelsProviderRegistrarHelper

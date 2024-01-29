@@ -10,7 +10,7 @@ import StatusLabel from './components/status-label/StatusLabel';
 
 import '../css/main.scss';
 
-export default function WorkflowStatus({
+export function WorkflowStatus({
 	id,
 	idLabel,
 	instanceId,

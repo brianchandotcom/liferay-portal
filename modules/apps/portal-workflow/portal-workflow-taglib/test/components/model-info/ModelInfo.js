@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import ModelInfo from '../../../src/main/resources/META-INF/resources/workflow_status/js/components/model-info/ModelInfo';
+import ModelInfo from '../../../src/main/resources/META-INF/resources/js/components/model-info/ModelInfo';
 
 describe('The ModelInfo component should', () => {
 	let label;

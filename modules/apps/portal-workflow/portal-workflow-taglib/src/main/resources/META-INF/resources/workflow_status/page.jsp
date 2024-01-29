@@ -9,7 +9,7 @@
 
 <div>
 	<react:component
-		module="workflow_status/js/WorkflowStatus"
+		module="{WorkflowStatus} from portal-workflow-taglib"
 		props="<%= workflowStatusDisplayContext.getData(request, locale) %>"
 	/>
 </div>

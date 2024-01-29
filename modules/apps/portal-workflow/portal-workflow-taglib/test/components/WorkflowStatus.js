@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import WorkflowStatus from '../../src/main/resources/META-INF/resources/workflow_status/js/WorkflowStatus';
+import {WorkflowStatus} from '../../src/main/resources/META-INF/resources/js/index';
 
 describe('The WorkflowStatus should', () => {
 	const INITIAL_PROPS = {

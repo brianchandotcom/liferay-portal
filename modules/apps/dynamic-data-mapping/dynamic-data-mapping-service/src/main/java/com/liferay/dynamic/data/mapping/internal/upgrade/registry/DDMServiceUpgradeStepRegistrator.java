@@ -55,6 +55,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMDataDefinitionConverter;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
@@ -547,6 +548,13 @@ public class DDMServiceUpgradeStepRegistrator
 			"5.4.1", "5.4.2",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_2.
 				PollsPortletIdToDDMPortletIdUpgradeProcess());
+
+		registry.register(
+			"5.4.2", "5.4.3",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_3.
+				DDMStructureUpgradeProcess(
+					_jsonDDMFormDeserializer, _jsonDDMFormSerializer,
+					_spiDDMFormRuleConverter));
 	}
 
 	@Activate
@@ -638,6 +646,9 @@ public class DDMServiceUpgradeStepRegistrator
 
 	private ServiceTrackerMap<String, DDMDataProviderSettingsProvider>
 		_serviceTrackerMap;
+
+	@Reference
+	private SPIDDMFormRuleConverter _spiDDMFormRuleConverter;
 
 	@Reference(target = "(default=true)")
 	private Store _store;

@@ -34,6 +34,7 @@ dependencies {
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-data-provider-impl")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type-api")
+	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-spi")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-validator")
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:info:info-api")

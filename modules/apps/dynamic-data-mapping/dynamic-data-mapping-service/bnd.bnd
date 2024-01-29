@@ -9,8 +9,12 @@ Import-Package:\
 	\
 	!com.graphbuilder.*,\
 	\
+	!jakarta.json.*,\
+	\
 	!org.apache.tapestry5.json.*,\
 	!org.apache.tools.ant.*,\
+	\
+	!org.codehaus.jettison.*,\
 	\
 	com.github.*;resolution:=optional,\
 	\

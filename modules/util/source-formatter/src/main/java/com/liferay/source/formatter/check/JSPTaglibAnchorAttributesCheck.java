@@ -30,12 +30,13 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		List<String> anchorTags = getAttributeValues(
-			_ANCHOR_TAGS, absolutePath);
+		List<String> taglibAnchorAttributes = getAttributeValues(
+			_TAGLIB_ANCHOR_ATTRIBUTES_KEY, absolutePath);
 
 		outerLoop:
-		for (String anchorTag : anchorTags) {
-			String[] anchorTagArray = StringUtil.split(anchorTag, "->");
+		for (String taglibAnchorAttribute : taglibAnchorAttributes) {
+			String[] anchorTagArray = StringUtil.split(
+				taglibAnchorAttribute, "->");
 
 			if (anchorTagArray.length != 2) {
 				continue;
@@ -126,6 +127,7 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 			bndSettings.getContent(), "Bundle-SymbolicName");
 	}
 
-	private static final String _ANCHOR_TAGS = "anchorTags";
+	private static final String _TAGLIB_ANCHOR_ATTRIBUTES_KEY =
+		"taglibAnchorAttributes";
 
 }

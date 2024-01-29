@@ -2785,7 +2785,7 @@ definition {
 
 		var expirationDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
 
-		echo("## * reviewDate: ${expirationDate}");
+		echo("## * expirationDate: ${expirationDate}");
 
 		if (${invalidExpirationDate} == "true") {
 			var expirationDate = DateUtil.getDateOffsetByYears("-1", "MM/dd/yyyy");

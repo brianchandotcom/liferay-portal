@@ -75,6 +75,9 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 		else if (type == JobEntity.Type.MAINTENANCE_WEEKLY_NODE) {
 			return new MaintenanceWeeklyNodeJobEntity(jsonObject);
 		}
+		else if (type == JobEntity.Type.MERGE_PORTAL_SUBREPOSITORY) {
+			return new MergePortalSubrepositoryJobEntity(jsonObject);
+		}
 		else if (type == JobEntity.Type.MIRRORS_LOCAL_CACHE_PROPAGATOR) {
 			return new MirrorsLocalCachePropagatorJobEntity(jsonObject);
 		}

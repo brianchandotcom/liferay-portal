@@ -141,6 +141,20 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
+	public void testFileEntryShouldSaveDisplayDate() throws Exception {
+		Date displayDate = new Date();
+
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			displayDate, null, null, null);
+
+		Assert.assertEquals(displayDate, fileEntry.getDisplayDate());
+		Assert.assertNull(fileEntry.getExpirationDate());
+		Assert.assertNull(fileEntry.getReviewDate());
+	}
+
+	@Test
 	public void testFileEntryShouldSaveExpirationDate() throws Exception {
 		Date expirationDate = new Date();
 
@@ -149,8 +163,8 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			expirationDate, null, null);
 
+		Assert.assertNull(fileEntry.getDisplayDate());
 		Assert.assertEquals(expirationDate, fileEntry.getExpirationDate());
-
 		Assert.assertNull(fileEntry.getReviewDate());
 	}
 
@@ -163,6 +177,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			null, reviewDate, null);
 
+		Assert.assertNull(fileEntry.getDisplayDate());
 		Assert.assertNull(fileEntry.getExpirationDate());
 		Assert.assertEquals(reviewDate, fileEntry.getReviewDate());
 	}

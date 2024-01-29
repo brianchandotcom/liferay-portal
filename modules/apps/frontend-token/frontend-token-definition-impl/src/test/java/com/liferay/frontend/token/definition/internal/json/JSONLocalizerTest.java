@@ -5,8 +5,7 @@
 
 package com.liferay.frontend.token.definition.internal.json;
 
-import com.liferay.frontend.token.definition.internal.FrontendTokenDefinitionImplTest;
-import com.liferay.frontend.token.definition.internal.FrontendTokenDefinitionRegistryImplTest;
+import com.liferay.frontend.token.definition.internal.FrontendTokenDefinitionManagerTest;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -44,7 +43,7 @@ public class JSONLocalizerTest {
 		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
 			ResourceBundleLoader.class);
 
-		Package pkg = FrontendTokenDefinitionImplTest.class.getPackage();
+		Package pkg = FrontendTokenDefinitionManagerTest.class.getPackage();
 
 		Mockito.when(
 			resourceBundleLoader.loadResourceBundle(LocaleUtil.ENGLISH)
@@ -93,7 +92,7 @@ public class JSONLocalizerTest {
 		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
 			ResourceBundleLoader.class);
 
-		Package pkg = FrontendTokenDefinitionImplTest.class.getPackage();
+		Package pkg = FrontendTokenDefinitionManagerTest.class.getPackage();
 
 		Mockito.when(
 			resourceBundleLoader.loadResourceBundle(LocaleUtil.ENGLISH)
@@ -124,7 +123,7 @@ public class JSONLocalizerTest {
 	static {
 		JSONFactory jsonFactory = new JSONFactoryImpl();
 
-		URL url = FrontendTokenDefinitionRegistryImplTest.class.getResource(
+		URL url = FrontendTokenDefinitionManagerTest.class.getResource(
 			"dependencies/frontend-token-definition.json");
 
 		try {
@@ -138,7 +137,7 @@ public class JSONLocalizerTest {
 			throw new RuntimeException(exception);
 		}
 
-		url = FrontendTokenDefinitionRegistryImplTest.class.getResource(
+		url = FrontendTokenDefinitionManagerTest.class.getResource(
 			"dependencies/translated-frontend-token-definition.json");
 
 		try {

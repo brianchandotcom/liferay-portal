@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.token.definition.internal.validator;
 
-import com.liferay.frontend.token.definition.internal.FrontendTokenDefinitionRegistryImplTest;
+import com.liferay.frontend.token.definition.internal.FrontendTokenDefinitionManagerTest;
 import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -33,7 +33,7 @@ public class FrontendTokenDefinitionValidatorTest {
 
 		_frontendTokenDefinitionValidator.validateFrontendTokenDefinition(
 			URLUtil.toString(
-				FrontendTokenDefinitionRegistryImplTest.class.getResource(
+					FrontendTokenDefinitionManagerTest.class.getResource(
 					"dependencies/empty-categories-frontend-token-" +
 						"definition.json")));
 
@@ -48,7 +48,7 @@ public class FrontendTokenDefinitionValidatorTest {
 
 		_frontendTokenDefinitionValidator.validateFrontendTokenDefinition(
 			URLUtil.toString(
-				FrontendTokenDefinitionRegistryImplTest.class.getResource(
+					FrontendTokenDefinitionManagerTest.class.getResource(
 					"dependencies/invalid-frontend-token-definition.json")));
 	}
 
@@ -58,7 +58,7 @@ public class FrontendTokenDefinitionValidatorTest {
 
 		_frontendTokenDefinitionValidator.validateFrontendTokenDefinition(
 			URLUtil.toString(
-				FrontendTokenDefinitionRegistryImplTest.class.getResource(
+				FrontendTokenDefinitionManagerTest.class.getResource(
 					"dependencies/frontend-token-definition.json")));
 	}
 

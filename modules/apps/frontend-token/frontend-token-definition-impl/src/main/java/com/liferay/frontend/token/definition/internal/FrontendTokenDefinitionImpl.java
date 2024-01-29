@@ -43,9 +43,13 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 		}
 
 		for (int i = 0; i < frontendTokenCategoriesJSONArray.length(); i++) {
+			JSONObject categoryJSONObject =
+				frontendTokenCategoriesJSONArray.getJSONObject(i);
+
 			FrontendTokenCategory frontendTokenCategory =
 				new FrontendTokenCategoryImpl(
-					this, frontendTokenCategoriesJSONArray.getJSONObject(i));
+					this, categoryJSONObject,
+					createJSONLocalizer(categoryJSONObject));
 
 			_frontendTokenCategories.add(frontendTokenCategory);
 

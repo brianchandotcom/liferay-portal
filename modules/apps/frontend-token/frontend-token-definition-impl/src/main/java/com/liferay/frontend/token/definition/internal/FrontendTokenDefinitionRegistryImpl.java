@@ -11,44 +11,23 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.type.ThemeCSSCET;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.concurrent.DCLSingleton;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.PortletConstants;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.URLUtil;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.io.IOException;
-
-import java.net.URL;
-
-import java.util.Dictionary;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleEvent;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.BundleTracker;
-import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Iván Zaera
@@ -72,79 +51,37 @@ public class FrontendTokenDefinitionRegistryImpl
 	public FrontendTokenDefinition getFrontendTokenDefinition(
 		long companyId, String externalReferenceCode, String themeId) {
 
-		if ((externalReferenceCode != null) &&
-			FeatureFlagManagerUtil.isEnabled("LPD-10773")) {
-
-			Map<String, FrontendTokenDefinition> frontendTokenDefinitionsMap =
-				_getFrontendTokenDefinitionsMap(companyId);
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10773") &&
+			(externalReferenceCode != null)) {
 
 			FrontendTokenDefinition frontendTokenDefinition =
-				frontendTokenDefinitionsMap.get(externalReferenceCode);
+				_frontendTokenDefinitionManager.getFrontendTokenDefinition(
+					companyId, externalReferenceCode);
 
 			if (frontendTokenDefinition != null) {
 				return frontendTokenDefinition;
 			}
 		}
 
-		Map<String, FrontendTokenDefinitionImpl>
-			themeIdFrontendTokenDefinitionImpls =
-				_themeIdFrontendTokenDefinitionImplsDCLSingleton.getSingleton(
-					() -> {
-						_bundleTracker.open();
-
-						return _themeIdFrontendTokenDefinitionImpls;
-					});
-
-		return themeIdFrontendTokenDefinitionImpls.get(themeId);
+		return _frontendTokenDefinitionManager.getFrontendTokenDefinition(
+			_openBundleTracker, themeId);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.ACTIVE, _bundleTrackerCustomizer);
+		_frontendTokenDefinitionManager = new FrontendTokenDefinitionManager(
+			_jsonFactory, new DCLSingleton<>(), new ConcurrentHashMap<>(),
+			new ConcurrentHashMap<>());
 
-		_companyFrontendTokenDefinitionsMap = new ConcurrentHashMap<>();
+		_bundleTracker = new BundleTracker<>(
+			bundleContext, Bundle.ACTIVE,
+			new ThemeBundleTrackerCustomizer(
+				_frontendTokenDefinitionManager, _portal));
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ThemeCSSCET.class, "external.reference.code",
-			new EagerServiceTrackerCustomizer<ThemeCSSCET, ThemeCSSCET>() {
-
-				@Override
-				public ThemeCSSCET addingService(
-					ServiceReference<ThemeCSSCET> serviceReference) {
-
-					ThemeCSSCET themeCSSCET = bundleContext.getService(
-						serviceReference);
-
-					String frontendTokenDefinition =
-						themeCSSCET.getFrontendTokenDefinition();
-
-					if (!Validator.isBlank(frontendTokenDefinition)) {
-						_registerClientExtensionFrontendTokenDefinition(
-							frontendTokenDefinition, themeCSSCET);
-					}
-
-					return themeCSSCET;
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<ThemeCSSCET> serviceReference,
-					ThemeCSSCET themeCSSCET) {
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<ThemeCSSCET> serviceReference,
-					ThemeCSSCET themeCSSCET) {
-
-					_unregisterClientExtensionFrontendTokenDefinition(
-						themeCSSCET);
-
-					bundleContext.ungetService(serviceReference);
-				}
-
-			});
+			new ThemeClientExtensionServiceTracker(
+				bundleContext, _frontendTokenDefinitionManager));
 	}
 
 	@Deactivate
@@ -152,128 +89,6 @@ public class FrontendTokenDefinitionRegistryImpl
 		_bundleTracker.close();
 
 		_serviceTrackerMap.close();
-	}
-
-	protected FrontendTokenDefinitionImpl getFrontendTokenDefinitionImpl(
-		Bundle bundle) {
-
-		String json = _getFrontendTokenDefinitionJSON(bundle);
-
-		if (json == null) {
-			return null;
-		}
-
-		String themeId = getThemeId(bundle);
-
-		try {
-			ResourceBundleLoader resourceBundleLoader =
-				ResourceBundleLoaderUtil.
-					getResourceBundleLoaderByBundleSymbolicName(
-						bundle.getSymbolicName());
-
-			if (resourceBundleLoader == null) {
-				resourceBundleLoader =
-					ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
-			}
-
-			return new FrontendTokenDefinitionImpl(
-				jsonFactory.createJSONObject(json), jsonFactory,
-				resourceBundleLoader, themeId);
-		}
-		catch (JSONException | RuntimeException exception) {
-			_log.error(
-				"Unable to parse frontend token definitions for theme " +
-					themeId,
-				exception);
-		}
-
-		return null;
-	}
-
-	protected String getServletContextName(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders(
-			StringPool.BLANK);
-
-		String webContextPath = headers.get("Web-ContextPath");
-
-		if (webContextPath == null) {
-			return null;
-		}
-
-		if (webContextPath.startsWith(StringPool.SLASH)) {
-			webContextPath = webContextPath.substring(1);
-		}
-
-		return webContextPath;
-	}
-
-	protected String getThemeId(Bundle bundle) {
-		URL url = bundle.getEntry("WEB-INF/liferay-look-and-feel.xml");
-
-		if (url == null) {
-			return null;
-		}
-
-		try {
-			String xml = URLUtil.toString(url);
-
-			xml = xml.replaceAll(StringPool.NEW_LINE, StringPool.SPACE);
-
-			Matcher matcher = _themeIdPattern.matcher(xml);
-
-			if (!matcher.matches()) {
-				return null;
-			}
-
-			String themeId = matcher.group(1);
-
-			String servletContextName = getServletContextName(bundle);
-
-			if (servletContextName != null) {
-				themeId =
-					themeId + PortletConstants.WAR_SEPARATOR +
-						servletContextName;
-			}
-
-			return portal.getJsSafePortletId(themeId);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to read WEB-INF/liferay-look-and-feel.xml",
-				ioException);
-		}
-	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
-
-	@Reference
-	protected Portal portal;
-
-	private String _getFrontendTokenDefinitionJSON(Bundle bundle) {
-		URL url = bundle.getEntry("WEB-INF/frontend-token-definition.json");
-
-		if (url == null) {
-			return null;
-		}
-
-		try {
-			return URLUtil.toString(url);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to read WEB-INF/frontend-token-definition.json",
-				ioException);
-		}
-	}
-
-	private Map<String, FrontendTokenDefinition>
-		_getFrontendTokenDefinitionsMap(long companyId) {
-
-		_companyFrontendTokenDefinitionsMap.putIfAbsent(
-			companyId, new ConcurrentHashMap<>());
-
-		return _companyFrontendTokenDefinitionsMap.get(companyId);
 	}
 
 	private String _getLayoutSetThemeCSSCETExternalReferenceCode(
@@ -291,102 +106,22 @@ public class FrontendTokenDefinitionRegistryImpl
 		return null;
 	}
 
-	private void _registerClientExtensionFrontendTokenDefinition(
-		String frontendTokenDefinitionString, ThemeCSSCET themeCSSCET) {
-
-		try {
-			FrontendTokenDefinition frontendTokenDefinition =
-				new FrontendTokenDefinitionImpl(
-					jsonFactory.createJSONObject(frontendTokenDefinitionString),
-					jsonFactory,
-					ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
-					themeCSSCET.getExternalReferenceCode());
-
-			Map<String, FrontendTokenDefinition> frontendTokenDefinitionsMap =
-				_getFrontendTokenDefinitionsMap(themeCSSCET.getCompanyId());
-
-			frontendTokenDefinitionsMap.put(
-				themeCSSCET.getExternalReferenceCode(),
-				frontendTokenDefinition);
-		}
-		catch (JSONException jsonException) {
-			throw new RuntimeException(jsonException);
-		}
-	}
-
-	private void _unregisterClientExtensionFrontendTokenDefinition(
-		ThemeCSSCET themeCSSCET) {
-
-		Map<String, FrontendTokenDefinition> frontendTokenDefinitionsMap =
-			_getFrontendTokenDefinitionsMap(themeCSSCET.getCompanyId());
-
-		frontendTokenDefinitionsMap.remove(
-			themeCSSCET.getExternalReferenceCode());
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FrontendTokenDefinitionRegistryImpl.class);
-
-	private static final Pattern _themeIdPattern = Pattern.compile(
-		".*<theme id=\"([^\"]*)\"[^>]*>.*");
-
 	private BundleTracker<FrontendTokenDefinitionImpl> _bundleTracker;
-
-	private final BundleTrackerCustomizer<FrontendTokenDefinitionImpl>
-		_bundleTrackerCustomizer =
-			new BundleTrackerCustomizer<FrontendTokenDefinitionImpl>() {
-
-				@Override
-				public FrontendTokenDefinitionImpl addingBundle(
-					Bundle bundle, BundleEvent bundleEvent) {
-
-					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
-						getFrontendTokenDefinitionImpl(bundle);
-
-					if ((frontendTokenDefinitionImpl != null) &&
-						(frontendTokenDefinitionImpl.getThemeId() != null)) {
-
-						_themeIdFrontendTokenDefinitionImpls.put(
-							frontendTokenDefinitionImpl.getThemeId(),
-							frontendTokenDefinitionImpl);
-
-						return frontendTokenDefinitionImpl;
-					}
-
-					return null;
-				}
-
-				@Override
-				public void modifiedBundle(
-					Bundle bundle, BundleEvent bundleEvent,
-					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl) {
-				}
-
-				@Override
-				public void removedBundle(
-					Bundle bundle, BundleEvent bundleEvent,
-					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl) {
-
-					_themeIdFrontendTokenDefinitionImpls.remove(
-						frontendTokenDefinitionImpl.getThemeId());
-				}
-
-			};
 
 	@Reference
 	private ClientExtensionEntryRelLocalService
 		_clientExtensionEntryRelLocalService;
 
-	private Map<Long, Map<String, FrontendTokenDefinition>>
-		_companyFrontendTokenDefinitionsMap;
+	private FrontendTokenDefinitionManager _frontendTokenDefinitionManager;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	private final Runnable _openBundleTracker = () -> _bundleTracker.open();
 
 	@Reference
 	private Portal _portal;
 
 	private ServiceTrackerMap<String, ThemeCSSCET> _serviceTrackerMap;
-	private final Map<String, FrontendTokenDefinitionImpl>
-		_themeIdFrontendTokenDefinitionImpls = new ConcurrentHashMap<>();
-	private final DCLSingleton<Map<String, FrontendTokenDefinitionImpl>>
-		_themeIdFrontendTokenDefinitionImplsDCLSingleton = new DCLSingleton<>();
 
 }

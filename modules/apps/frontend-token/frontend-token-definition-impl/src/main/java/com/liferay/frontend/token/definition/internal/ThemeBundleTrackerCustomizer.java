@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.Dictionary;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,15 +45,17 @@ public class ThemeBundleTrackerCustomizer
 	public FrontendTokenDefinitionImpl addingBundle(
 		Bundle bundle, BundleEvent event) {
 
-		String themeId = _getThemeId(bundle, _portal);
-
+		String themeId = null;
 		try {
 			String frontendTokenDefinitionAsJsonString =
 				_getFrontendTokenDefinitionJSONFromBundle(bundle);
 
-			return _manager.addFrontendTokenDefinition(
-				themeId, _getResourceBundleLoader(bundle.getSymbolicName()),
-				frontendTokenDefinitionAsJsonString);
+			if (Objects.nonNull(frontendTokenDefinitionAsJsonString)) {
+				themeId = _getThemeId(bundle, _portal);
+				return _manager.addFrontendTokenDefinition(
+						themeId, _getResourceBundleLoader(bundle.getSymbolicName()),
+						frontendTokenDefinitionAsJsonString);
+			}
 		}
 		catch (RuntimeException runtimeException) {
 			_log.error(

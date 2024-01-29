@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Before;
@@ -21,6 +22,9 @@ import org.mockito.Mockito;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleEvent;
+
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * @author Anderson Luiz
@@ -44,12 +48,14 @@ public class ThemeBundleTrackerCustomizerTest {
 	}
 
 	@Test
-	public void testAddingBundle() {
+	public void testAddingBundle() throws IOException {
 		Bundle bundle = Mockito.mock(Bundle.class);
+		Mockito.when(bundle.getEntry(Mockito.anyString())).thenReturn(Mockito.mock(URL.class));
 		BundleEvent bundleEvent = Mockito.mock(BundleEvent.class);
+		MockedStatic<URLUtil> urlUtilMockedStatic = Mockito.mockStatic(URLUtil.class);
+		urlUtilMockedStatic.when(() -> URLUtil.toString(Mockito.any())).thenReturn("{}");
 
-		try (MockedStatic<ResourceBundleLoaderUtil>
-				resourceBundleLoaderUtilMockedStatic = Mockito.mockStatic(
+		try (MockedStatic<ResourceBundleLoaderUtil>	resourceBundleLoaderUtilMockedStatic = Mockito.mockStatic(
 					ResourceBundleLoaderUtil.class)) {
 
 			ResourceBundleLoader resourceBundleLoader = Mockito.mock(

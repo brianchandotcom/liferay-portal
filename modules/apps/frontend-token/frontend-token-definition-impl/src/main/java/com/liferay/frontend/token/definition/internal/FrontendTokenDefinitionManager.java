@@ -12,10 +12,13 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import org.osgi.util.tracker.BundleTracker;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * @author Anderson Luiz
@@ -131,7 +134,6 @@ public class FrontendTokenDefinitionManager {
 			ResourceBundleLoader resourceBundleLoader, String themeId) {
 
 		try {
-			Objects.requireNonNull(frontendTokenDefinitionAsJsonString);
 			Objects.requireNonNull(themeId);
 
 			FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
@@ -139,10 +141,8 @@ public class FrontendTokenDefinitionManager {
 					frontendTokenDefinitionAsJsonString, resourceBundleLoader,
 					themeId);
 
-			if (frontendTokenDefinitionImpl != null) {
 				_themeIdFrontendTokenDefinitionImpls.put(
 					themeId, frontendTokenDefinitionImpl);
-			}
 
 			return frontendTokenDefinitionImpl;
 		}
@@ -189,4 +189,16 @@ public class FrontendTokenDefinitionManager {
 	private final DCLSingleton<Map<String, FrontendTokenDefinitionImpl>>
 		_themeIdFrontendTokenDefinitionImplsDCLSingleton;
 
+	public FrontendTokenDefinition getFrontendTokenDefinition(Runnable openBundleTrackerRunnable, String themeId) {
+		Map<String, FrontendTokenDefinitionImpl>
+				themeIdFrontendTokenDefinitionImpls =
+				_themeIdFrontendTokenDefinitionImplsDCLSingleton.getSingleton(
+						() -> {
+							openBundleTrackerRunnable.run();
+							return _themeIdFrontendTokenDefinitionImplsMap;
+						});
+
+		return themeIdFrontendTokenDefinitionImpls.get(themeId);
+
+	}
 }

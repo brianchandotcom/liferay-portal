@@ -44,18 +44,18 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 
 			String taglibName = "<" + attributeParts[0];
 
-			int pos = content.indexOf(taglibName);
+			int x = -1;
 
 			while (true) {
-				if (pos == -1) {
+				x = content.indexOf(taglibName, x + 1);
+
+				if (x == -1) {
 					continue outerLoop;
 				}
 
-				Tag tag = parseTag(getTag(content, pos), false);
+				Tag tag = parseTag(getTag(content, x), false);
 
 				if (tag == null) {
-					pos = content.indexOf(taglibName, pos + 1);
-
 					continue;
 				}
 
@@ -106,11 +106,9 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 								"Tag '", tag.getName(), "' attribute '",
 								attribute, "' value '", value,
 								"' should start with '", expectedValue, "'"),
-							getLineNumber(content, pos));
+							getLineNumber(content, x));
 					}
 				}
-
-				pos = content.indexOf(taglibName, pos + 1);
 			}
 		}
 

@@ -38,6 +38,8 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 
+import java.util.List;
+
 import org.opensearch.client.opensearch._types.aggregations.Aggregate;
 import org.opensearch.client.opensearch._types.aggregations.BucketMetricValueAggregate;
 import org.opensearch.client.opensearch._types.aggregations.DerivativeAggregate;
@@ -157,11 +159,9 @@ public class OpenSearchPipelineAggregationResultTranslator
 				maxBucketPipelineAggregation.getName(),
 				bucketMetricValueAggregate.value());
 
-		maxBucketPipelineAggregationResult.setKeys(
-			bucketMetricValueAggregate.keys(
-			).toArray(
-				new String[0]
-			));
+		List<String> keys = bucketMetricValueAggregate.keys();
+
+		maxBucketPipelineAggregationResult.setKeys(keys.toArray(new String[0]));
 
 		return maxBucketPipelineAggregationResult;
 	}
@@ -178,11 +178,9 @@ public class OpenSearchPipelineAggregationResultTranslator
 				minBucketPipelineAggregation.getName(),
 				bucketMetricValueAggregate.value());
 
-		minBucketPipelineAggregationResult.setKeys(
-			bucketMetricValueAggregate.keys(
-			).toArray(
-				new String[0]
-			));
+		List<String> keys = bucketMetricValueAggregate.keys();
+
+		minBucketPipelineAggregationResult.setKeys(keys.toArray(new String[0]));
 
 		return minBucketPipelineAggregationResult;
 	}

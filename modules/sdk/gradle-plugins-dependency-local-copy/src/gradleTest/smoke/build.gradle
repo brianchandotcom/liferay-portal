@@ -10,7 +10,7 @@ runGradleTest {
 		assert !FileUtil.exists(rootProject, "bar/build/local-copy/baz/guava-25.1-jre.jar")
 
 		assert FileUtil.exists(rootProject, "bar/build/local-copy/foo/foo.jar")
-		assert FileUtil.exists(rootProject, "bar/build/local-copy/foo/org.hibernate.core-5.6.7.LIFERAY-PATCHED-1.jar")
+		assert FileUtil.exists(rootProject, "bar/build/local-copy/foo/org.hibernate.core-5.6.7.LIFERAY-PATCHED-2.jar")
 	}
 }
 

@@ -37,7 +37,8 @@ public class SubscriptionDLAppLocalServiceWrapper
 	public FileEntry addFileEntry(
 			String externalReferenceCode, long userId, long repositoryId,
 			long folderId, String sourceFileName, String mimeType, byte[] bytes,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		serviceContext.setAttribute(
@@ -46,8 +47,8 @@ public class SubscriptionDLAppLocalServiceWrapper
 
 		return super.addFileEntry(
 			externalReferenceCode, userId, repositoryId, folderId,
-			sourceFileName, mimeType, bytes, expirationDate, reviewDate,
-			serviceContext);
+			sourceFileName, mimeType, bytes, displayDate, expirationDate,
+			reviewDate, serviceContext);
 	}
 
 	@Override
@@ -55,7 +56,8 @@ public class SubscriptionDLAppLocalServiceWrapper
 			String externalReferenceCode, long userId, long repositoryId,
 			long folderId, String sourceFileName, String mimeType, String title,
 			String urlTitle, String description, String changeLog, byte[] bytes,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		serviceContext.setAttribute(
@@ -65,7 +67,7 @@ public class SubscriptionDLAppLocalServiceWrapper
 		return super.addFileEntry(
 			externalReferenceCode, userId, repositoryId, folderId,
 			sourceFileName, mimeType, title, urlTitle, description, changeLog,
-			bytes, expirationDate, reviewDate, serviceContext);
+			bytes, displayDate, expirationDate, reviewDate, serviceContext);
 	}
 
 	@Override
@@ -73,6 +75,26 @@ public class SubscriptionDLAppLocalServiceWrapper
 			String externalReferenceCode, long userId, long repositoryId,
 			long folderId, String sourceFileName, String mimeType, String title,
 			String urlTitle, String description, String changeLog, File file,
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		serviceContext.setAttribute(
+			"hasAssetDisplayPage",
+			DLAssetDisplayPageUtil.hasAssetDisplayPage(serviceContext));
+
+		return super.addFileEntry(
+			externalReferenceCode, userId, repositoryId, folderId,
+			sourceFileName, mimeType, title, urlTitle, description, changeLog,
+			file, displayDate, expirationDate, reviewDate, serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long repositoryId,
+			long folderId, String sourceFileName, String mimeType, String title,
+			String urlTitle, String description, String changeLog,
+			InputStream inputStream, long size, Date displayDate,
 			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -83,26 +105,8 @@ public class SubscriptionDLAppLocalServiceWrapper
 		return super.addFileEntry(
 			externalReferenceCode, userId, repositoryId, folderId,
 			sourceFileName, mimeType, title, urlTitle, description, changeLog,
-			file, expirationDate, reviewDate, serviceContext);
-	}
-
-	@Override
-	public FileEntry addFileEntry(
-			String externalReferenceCode, long userId, long repositoryId,
-			long folderId, String sourceFileName, String mimeType, String title,
-			String urlTitle, String description, String changeLog,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
-		throws PortalException {
-
-		serviceContext.setAttribute(
-			"hasAssetDisplayPage",
-			DLAssetDisplayPageUtil.hasAssetDisplayPage(serviceContext));
-
-		return super.addFileEntry(
-			externalReferenceCode, userId, repositoryId, folderId,
-			sourceFileName, mimeType, title, urlTitle, description, changeLog,
-			inputStream, size, expirationDate, reviewDate, serviceContext);
+			inputStream, size, displayDate, expirationDate, reviewDate,
+			serviceContext);
 	}
 
 	@Override

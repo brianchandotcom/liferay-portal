@@ -9,7 +9,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 
-import {titleCase} from '../../../../../util/utils';
+import {stringToBoolean, titleCase} from '../../../../../util/utils';
 
 const BaseRoleType = ({
 	accountRoles,
@@ -40,11 +40,7 @@ const BaseRoleType = ({
 	const [selectedRoleType, setSelectedRoleType] = useState(
 		titleCase(roleType)
 	);
-	if (autoCreate === 'false') {
-		autoCreate = false;
-	}
-
-	const [checked, setChecked] = useState(autoCreate);
+	const [checked, setChecked] = useState(stringToBoolean(autoCreate));
 
 	const checkRoleTypeErrors = (errors, selectedRoleName) => {
 		const temp = errors?.roleName ? [...errors.roleName] : [];
@@ -68,10 +64,7 @@ const BaseRoleType = ({
 	}, [selectedRoleName]);
 
 	useEffect(() => {
-		if (autoCreate === 'false') {
-			autoCreate = false;
-		}
-		setChecked(autoCreate);
+		setChecked(stringToBoolean(autoCreate));
 		setSelectedRoleName(roleName || roleKey);
 		setSelectedRoleType(titleCase(roleType));
 

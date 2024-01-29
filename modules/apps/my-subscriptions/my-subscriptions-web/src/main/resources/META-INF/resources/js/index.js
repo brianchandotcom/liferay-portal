@@ -5,7 +5,10 @@
 
 import {getCheckedCheckboxes} from 'frontend-js-web';
 
-export default function propsTransformer({portletNamespace, ...otherProps}) {
+export function MySubscriptionsManagementToolbarPropsTransformer({
+	portletNamespace,
+	...otherProps
+}) {
 	return {
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {

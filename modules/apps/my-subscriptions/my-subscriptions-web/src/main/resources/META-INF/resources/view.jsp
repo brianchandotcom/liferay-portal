@@ -28,7 +28,7 @@ if (Validator.isNotNull(backURL)) {
 	actionDropdownItems="<%= mySubscriptionsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	disabled="<%= mySubscriptionsManagementToolbarDisplayContext.isDisabled() %>"
 	itemsTotal="<%= subscriptionsCount %>"
-	propsTransformer="js/MySubscriptionsManagementToolbarPropsTransformer"
+	propsTransformer="{MySubscriptionsManagementToolbarPropsTransformer} from my-subscriptions-web"
 	searchContainerId="subscriptions"
 	selectable="<%= mySubscriptionsManagementToolbarDisplayContext.isSelectable() %>"
 	showSearch="<%= mySubscriptionsManagementToolbarDisplayContext.isShowSearch() %>"

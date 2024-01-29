@@ -40,5 +40,5 @@ if (Validator.isNotNull(redirect)) {
 			"portletId", selPortlet.getPortletName()
 		).build()
 	%>'
-	module="js/EditConfigurationEventHandler"
+	module="{EditConfigurationEventHandler} from portlet-configuration-web"
 />

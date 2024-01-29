@@ -184,7 +184,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 								</div>
 
 								<react:component
-									module="js/PermissionsCheckbox"
+									module="{PermissionsCheckbox} from portlet-configuration-web"
 									props='<%=
 										HashMapBuilder.<String, Object>put(
 											"checked", checked

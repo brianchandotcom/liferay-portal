@@ -1,3 +1,45 @@
-.clay-tooltip-bottom .text-tooltip{
-    max-width: 296px;
+.clay-tooltip-bottom .text-tooltip {
+	max-width: 296px;
+}
+
+.modal-header {
+	border: none !important;
+	margin: 24px !important;
+	padding: 0 !important;
+}
+
+.modal-header h1 {
+	font-size: 30px !important;
+	font-weight: 700 !important;
+}
+
+.modal-body {
+	border: none !important;
+	padding: 0 24px 8px 24px !important;
+}
+
+.modal-content {
+	border-radius: 10px !important;
+}
+
+.modal-footer {
+	border-top: none !important;
+	padding: 28px !important;
+}
+
+.modal-footer > .modal-item,
+.modal-item-first {
+	display: none !important;
+}
+
+.modal-footer > .modal-item-last {
+	display: flex !important;
+	margin: 0 !important;
+	width: 100% !important;
+}
+
+.btn-group {
+	display: flex !important;
+	justify-content: space-between !important;
+	width: 100% !important;
 }

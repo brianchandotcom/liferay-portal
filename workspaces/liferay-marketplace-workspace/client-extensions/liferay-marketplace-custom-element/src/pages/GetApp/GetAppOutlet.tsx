@@ -182,7 +182,8 @@ const GetAppOutlet = () => {
 			}
 
 			window.location.href = nextStepsCallbackURL;
-		} catch (error) {
+		}
+		catch (error) {
 			console.error('Unable to handleGetApp', error);
 		}
 

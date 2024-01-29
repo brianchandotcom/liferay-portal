@@ -14,10 +14,41 @@ const getAppDescriptionElement = fragmentElement.querySelector(
 );
 const tooltipElement = fragmentElement.querySelector('.clay-tooltip-bottom');
 
+let consoleProjects;
+
 const productId = fragmentElement
 	.querySelector('.product-id')
 	.innerText.replace(/[\n\r]+|[\s]{2,}/g, ' ')
 	.trim();
+
+const getUserConsoleProjects = async () => {
+	if (consoleProjects) {
+		return consoleProjects;
+	}
+
+	try {
+		const oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
+			'liferay-marketplace-etc-spring-boot-oauth-application-user-agent'
+		);
+
+		const userConsoleProjects = await oAuth2Client.fetch(
+			'/console/projects-usage'
+		);
+
+		if (!userConsoleProjects.ok) {
+			console.error('getUserConsoleProjects', 'Unable to fetch');
+		}
+
+		const {userProjects = []} = await userConsoleProjects.json();
+
+		consoleProjects = userProjects;
+
+		return consoleProjects;
+	}
+	catch (error) {
+		return [];
+	}
+};
 
 const getSkuOptionValue = (sku, optionValue) =>
 	sku.toLowerCase() === optionValue ||
@@ -63,9 +94,50 @@ const getProductPrice = (product) => {
 	return `${price} ${licenseTypeText}`;
 };
 
+const openNoProjectsModal = () =>
+	Liferay.Util.openModal({
+		bodyHTML:
+			'<p>You currently do not have access to any Cloud Projects. Please login as a user that has access to a project or contact your project administrator to add you to a project.</p>',
+		buttons: [
+			{
+				displayType: 'unstyled',
+				label: 'Cancel',
+				type: 'cancel',
+			},
+			{
+				displayType: 'primary',
+				label: 'Sign in with a different Account',
+				onClick: () => Liferay.Util.navigate('/c/portal/logout'),
+				type: 'button',
+			},
+		],
+		center: true,
+		headerHTML: 'No Cloud Projects Available',
+		id: 'get-app-button-id',
+		size: 'md',
+	});
+
 const customizeGetAppButton = (product) => {
-	getAppButtonElement.onclick = () => {
-		window.location.href = `${getSiteURL()}/get-app?productId=${productId}`;
+	const isCloudApp =
+		product?.productSpecifications.some(
+			({specificationKey, value}) =>
+				specificationKey === 'type' && value === 'cloud'
+		) ?? false;
+
+	getAppButtonElement.onclick = async () => {
+		if (isCloudApp) {
+			getAppButtonElement.disabled = true;
+
+			const consoleProjects = await getUserConsoleProjects();
+
+			if (!consoleProjects.length) {
+				getAppButtonElement.disabled = false;
+
+				return openNoProjectsModal();
+			}
+		}
+
+		Liferay.Util.navigate(`${getSiteURL()}/get-app?productId=${productId}`);
 	};
 
 	getAppDescriptionElement.innerText = getProductPrice(product);

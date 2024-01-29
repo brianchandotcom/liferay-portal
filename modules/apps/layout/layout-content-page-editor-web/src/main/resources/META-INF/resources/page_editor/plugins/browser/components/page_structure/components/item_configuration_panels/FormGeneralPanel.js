@@ -401,6 +401,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 									aria-label={Liferay.Language.get(
 										'preview-success-notification'
 									)}
+									disabled={showNotificationPreview}
 									displayType="secondary"
 									onClick={() => {
 										setShowNotificationPreview(true);

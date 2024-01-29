@@ -47,6 +47,7 @@ public class RankingToDocumentTranslatorTest {
 		ReflectionTestUtil.setFieldValue(
 			_documentToRankingTranslator, "_rankingPinBuilderFactory",
 			_rankingPinBuilderFactory);
+
 		ReflectionTestUtil.setFieldValue(
 			_rankingBuilderFactory, "_rankingHelper", _rankingHelper);
 	}

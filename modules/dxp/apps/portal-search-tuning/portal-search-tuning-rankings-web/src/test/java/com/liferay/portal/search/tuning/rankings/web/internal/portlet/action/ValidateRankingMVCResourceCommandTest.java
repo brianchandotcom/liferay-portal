@@ -41,12 +41,6 @@ public class ValidateRankingMVCResourceCommandTest
 			_validateRankingMVCResourceCommand, "indexNameBuilder",
 			indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
-			_validateRankingMVCResourceCommand, "_jsonFactory",
-			new JSONFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			_validateRankingMVCResourceCommand, "_rankingHelper",
-			rankingHelper);
-		ReflectionTestUtil.setFieldValue(
 			_validateRankingMVCResourceCommand, "portal", portal);
 		ReflectionTestUtil.setFieldValue(
 			_validateRankingMVCResourceCommand, "rankingIndexNameBuilder",
@@ -54,6 +48,12 @@ public class ValidateRankingMVCResourceCommandTest
 		ReflectionTestUtil.setFieldValue(
 			_validateRankingMVCResourceCommand, "searchRequestBuilderFactory",
 			searchRequestBuilderFactory);
+		ReflectionTestUtil.setFieldValue(
+			_validateRankingMVCResourceCommand, "_jsonFactory",
+			new JSONFactoryImpl());
+		ReflectionTestUtil.setFieldValue(
+			_validateRankingMVCResourceCommand, "_rankingHelper",
+			rankingHelper);
 	}
 
 	@Test

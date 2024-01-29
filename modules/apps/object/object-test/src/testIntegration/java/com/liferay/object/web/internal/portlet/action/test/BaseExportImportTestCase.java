@@ -54,7 +54,7 @@ public abstract class BaseExportImportTestCase {
 
 		// MVCActionCommand
 
-		MVCActionCommand mvcActionCommand = getMvcActionCommand();
+		MVCActionCommand mvcActionCommand = getMVCActionCommand();
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
 			new MockMultipartHttpServletRequest();
@@ -129,7 +129,7 @@ public abstract class BaseExportImportTestCase {
 
 		// MVCResourceCommand
 
-		MVCResourceCommand mvcResourceCommand = getMvcResourceCommand();
+		MVCResourceCommand mvcResourceCommand = getMVCResourceCommand();
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
@@ -163,9 +163,9 @@ public abstract class BaseExportImportTestCase {
 
 	protected abstract String getJSONName();
 
-	protected abstract MVCActionCommand getMvcActionCommand();
+	protected abstract MVCActionCommand getMVCActionCommand();
 
-	protected abstract MVCResourceCommand getMvcResourceCommand();
+	protected abstract MVCResourceCommand getMVCResourceCommand();
 
 	protected User user;
 

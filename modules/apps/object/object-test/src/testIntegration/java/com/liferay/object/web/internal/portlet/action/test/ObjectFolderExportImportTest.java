@@ -77,7 +77,7 @@ public class ObjectFolderExportImportTest extends BaseExportImportTestCase {
 			Collections.emptyList());
 
 		// Import and export an object folder that has a linked object
-		// definition that doesn't exist
+		// definition that does not exist
 
 		testExportImport(
 			"test-object-folder-2.json", "test-object-folder-2.json",
@@ -107,8 +107,8 @@ public class ObjectFolderExportImportTest extends BaseExportImportTestCase {
 			Collections.singletonList("TESTOBJECTDEFINITION1"),
 			Collections.singletonList("TESTOBJECTDEFINITION2"));
 
-		// Import and export an object folder with duplicate external reference
-		// code
+		// Import and export an object folder with a duplicate external
+		// reference code
 
 		testExportImport(
 			"test-object-folder-1.json", "test-object-folder-1.json",
@@ -154,12 +154,12 @@ public class ObjectFolderExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Override
-	protected MVCActionCommand getMvcActionCommand() {
+	protected MVCActionCommand getMVCActionCommand() {
 		return _mvcActionCommand;
 	}
 
 	@Override
-	protected MVCResourceCommand getMvcResourceCommand() {
+	protected MVCResourceCommand getMVCResourceCommand() {
 		return _mvcResourceCommand;
 	}
 
@@ -179,7 +179,6 @@ public class ObjectFolderExportImportTest extends BaseExportImportTestCase {
 		Assert.assertTrue(
 			defaultObjectFolderItemExternalReferenceCodes.containsAll(
 				linkedObjectFolderItemExternalReferenceCodes));
-
 		Assert.assertTrue(
 			defaultObjectFolderItemExternalReferenceCodes.containsAll(
 				unlinkedObjectFolderItemExternalReferenceCodes));

@@ -90,12 +90,12 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Override
-	protected MVCActionCommand getMvcActionCommand() {
+	protected MVCActionCommand getMVCActionCommand() {
 		return _mvcActionCommand;
 	}
 
 	@Override
-	protected MVCResourceCommand getMvcResourceCommand() {
+	protected MVCResourceCommand getMVCResourceCommand() {
 		return _mvcResourceCommand;
 	}
 

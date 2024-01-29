@@ -5,13 +5,20 @@
 
 import {test} from '@playwright/test';
 
+import {SpecificationFacetsPage} from '../pages/commerce/commerce-product-content-search-web/specificationFacetsPage';
+import {
+	AttachmentsPage
+} from "../pages/commerce/commerce-product-definitions-web/attachmentsPage";
 import {CommerceLayoutsPage} from '../pages/commerce/commerceLayoutsPage';
-import {SpecificationFacetsPage} from '../pages/commerce/specificationFacetsPage';
 
 const commercePagesTest = test.extend<{
+	attachmentsPage: AttachmentsPage;
 	commerceLayoutsPage: CommerceLayoutsPage;
 	specificationFacetsPage: SpecificationFacetsPage;
 }>({
+	attachmentsPage: async ({page}, use) => {
+		await use(new AttachmentsPage(page));
+	},
 	commerceLayoutsPage: async ({page}, use) => {
 		await use(new CommerceLayoutsPage(page));
 	},

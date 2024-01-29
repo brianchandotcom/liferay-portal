@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {commercePagesTest} from '../../fixtures/commercePagesTest';
-import {loginTest} from '../../fixtures/loginTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {commercePagesTest} from '../../../fixtures/commercePagesTest';
+import {loginTest} from '../../../fixtures/loginTest';
 
 export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest);
 
@@ -137,5 +137,5 @@ test('can sort specifications by specification group priority', async ({
 	await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(catalog.id);
 
 	await commerceLayoutsPage.goToPages();
-	await commerceLayoutsPage.deleteSpecificationPage();
+	await specificationFacetsPage.deleteSpecificationPage();
 });

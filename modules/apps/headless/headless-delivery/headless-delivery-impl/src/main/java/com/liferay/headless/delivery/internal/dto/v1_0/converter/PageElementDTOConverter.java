@@ -141,12 +141,12 @@ public class PageElementDTOConverter
 				_fragmentCollectionContributorRegistry,
 				_fragmentEntryConfigurationParser,
 				_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
-				_groupLocalService, _jsonFactory, _layoutLocalService,
-				_portletLocalService,
+				_groupLocalService, _infoItemServiceRegistry, _jsonFactory,
+				_layoutLocalService, _portal, _portletLocalService,
 				_portletPreferencesPortletConfigurationExporter,
 				_portletRegistry, _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService,
-				_teamLocalService, _infoItemServiceRegistry, _portal));
+				_teamLocalService));
 		_layoutStructureItemMappers.put(
 			RootLayoutStructureItem.class, new RootLayoutStructureItemMapper());
 		_layoutStructureItemMappers.put(

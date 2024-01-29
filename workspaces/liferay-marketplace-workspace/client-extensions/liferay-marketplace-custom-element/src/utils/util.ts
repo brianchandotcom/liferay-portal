@@ -7,11 +7,8 @@ import accountPlaceholder from '../assets/images/account_placeholder.png';
 import appPlaceholder from '../assets/images/app_placeholder.png';
 import {
 	createProductSpecification,
-	getAccountGroup,
-	getCatalogs,
 	getSiteStructuredContentByKey,
 	getSpecifications,
-	getUserAccountsById,
 	updateProductSpecification,
 } from './api';
 
@@ -32,12 +29,6 @@ export function createSkuName(
 	return `${appProductId}v${appVersion.replace(/[^a-zA-Z0-9 ]/g, '')}${
 		concatValue ? concatValue : ''
 	}`;
-}
-
-export async function getCatalogId() {
-	const catalogs = await getCatalogs();
-
-	return catalogs[0].id;
 }
 
 export function getDxpOptionBody() {
@@ -135,31 +126,6 @@ export function getInitials(userName: string) {
 	return initials;
 }
 
-export async function userAccountChecker(verifiedAccounts: string[]) {
-	const response = await getUserAccountsById();
-
-	if (response.ok) {
-		const userAccounts = (await response.json()) as UserAccount;
-
-		const userHasPublisherGroup = await Promise.all(
-			userAccounts.accountBriefs.map(async (currentAccount) => {
-				const accountGroup = await getAccountGroup(currentAccount.id);
-
-				const accountGroupPublisher = accountGroup.some(
-					(currentAccountGroup) =>
-						verifiedAccounts.includes(currentAccountGroup.name)
-				);
-
-				return accountGroupPublisher;
-			})
-		);
-
-		return userHasPublisherGroup.some((item) => item);
-	}
-
-	return false;
-}
-
 export function getThumbnailByProductAttachment(
 	images?: Partial<ProductAttachment | DeliveryProductAttachment>[]
 ): string | undefined {
@@ -187,20 +153,6 @@ export function getProductVersionFromSpecifications(
 	});
 
 	return productVersion;
-}
-
-export function getValueFromSpecifications(
-	specifications: ProductSpecification[],
-	valueKey: string
-) {
-	let value = '';
-	specifications?.forEach((specification) => {
-		if (specification?.specificationKey === valueKey) {
-			value = specification?.value?.en_US;
-		}
-	});
-
-	return value;
 }
 
 export function getValueFromDeliverySpecifications(
@@ -247,11 +199,9 @@ export function getSkuPrice(appLicensePrice: LicenceTiersPrices, sku: SKU) {
 
 	if (dxpLicenseUsageTypeValue === 'standard') {
 		return appLicensePrice['standard'][0]?.value;
-	}
-	else if (dxpLicenseUsageTypeValue === 'developer') {
+	} else if (dxpLicenseUsageTypeValue === 'developer') {
 		return appLicensePrice['developer'][0]?.value;
-	}
-	else {
+	} else {
 		return 0;
 	}
 }
@@ -296,8 +246,7 @@ async function submitSpecification(
 		});
 
 		return -1;
-	}
-	else {
+	} else {
 		const {id} = await createProductSpecification({
 			body: {
 				productId,
@@ -370,17 +319,14 @@ export async function submitBase64EncodedFile({
 
 				if (result?.includes('application/zip')) {
 					result = result?.substring(28);
-				}
-				else if (
+				} else if (
 					result?.includes('image/gif') ||
 					result?.includes('image/png')
 				) {
 					result = result?.substring(22);
-				}
-				else if (result?.includes('image/jpeg')) {
+				} else if (result?.includes('image/jpeg')) {
 					result = result?.substring(23);
-				}
-				else if (
+				} else if (
 					result?.includes('application/octet-stream') ||
 					result?.includes('application/java-archive')
 				) {

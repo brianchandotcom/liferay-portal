@@ -128,10 +128,9 @@ public abstract class BaseUserActivityAsahSuggestionsContributor
 
 			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 
-			messageDigest.update(
-				portal.getUserEmailAddress(
-					userId
-				).getBytes());
+			String userEmailAddress = portal.getUserEmailAddress(userId);
+
+			messageDigest.update(userEmailAddress.getBytes());
 
 			byte[] digest = messageDigest.digest();
 

@@ -10,7 +10,6 @@
 <%
 String protocol = HttpComponentsUtil.getProtocol(request);
 
-String bootstrapRequire = (String)request.getAttribute("liferay-map:map:bootstrapRequire");
 boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-map:map:geolocation"));
 double latitude = (Double)request.getAttribute("liferay-map:map:latitude");
 double longitude = (Double)request.getAttribute("liferay-map:map:longitude");
@@ -50,59 +49,25 @@ name = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse) + nam
 	</aui:script>
 </liferay-util:html-top>
 
-<aui:script require="<%= bootstrapRequire %>">
-	var MapControls = Liferay.MapBase.CONTROLS;
-
-	var mapConfig = {
-		boundingBox: '#<%= HtmlUtil.escapeJS(name) %>Map',
-
-		<c:if test="<%= geolocation %>">
-			<c:choose>
-				<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
-					controls: [MapControls.HOME, MapControls.SEARCH],
-				</c:when>
-				<c:otherwise>
-					controls: [
-						MapControls.HOME,
-						MapControls.PAN,
-						MapControls.SEARCH,
-						MapControls.TYPE,
-						MapControls.ZOOM,
-					],
-				</c:otherwise>
-			</c:choose>
-		</c:if>
-
-		<c:if test="<%= Validator.isNotNull(points) %>">
-			data: <%= points %>,
-		</c:if>
-
-		geolocation: <%= geolocation %>,
-
-		<c:if test="<%= (latitude != 0) && (longitude != 0) %>">
-			position: {
-				location: {
-					lat: <%= latitude %>,
-					lng: <%= longitude %>,
-				},
-			},
-		</c:if>
-	};
-
-	var createMap = function () {
-		var map = new MapGoogleMaps.default(mapConfig);
-
-		Liferay.MapBase.register(
-			'<%= HtmlUtil.escapeJS(name) %>',
-			map,
-			'<%= portletDisplay.getId() %>'
-		);
-	};
-
-	if (Liferay.Maps.gmapsReady) {
-		createMap();
-	}
-	else {
-		Liferay.once('gmapsReady', createMap);
-	}
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"boundingBox", "#" + HtmlUtil.escapeJS(name) + "Map"
+		).put(
+			"name", HtmlUtil.escapeJS(name)
+		).put(
+			"portletId", portletDisplay.getId()
+		).put(
+			"geolocation", geolocation
+		).put(
+			"isMobile", BrowserSnifferUtil.isMobile(request)
+		).put(
+			"data", points
+		).put(
+			"latitude", latitude
+		).put(
+			"longitude", longitude
+		).build()
+	%>'
+	module="{App} from map-google-maps"
+/>

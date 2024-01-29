@@ -3,6 +3,7 @@
 		"@liferay/map-common": "*",
 		"frontend-js-web": "*"
 	},
+	"main": "js/index.js",
 	"name": "@liferay/map-openstreetmap",
 	"private": true,
 	"scripts": {

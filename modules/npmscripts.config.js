@@ -443,6 +443,8 @@ module.exports = {
 			'@liferay/frontend-js-walkthrough-web': [],
 			'@liferay/layout-js-components-web': [],
 			'@liferay/map-common': [],
+			'@liferay/map-google-maps': [],
+			'@liferay/map-openstreetmap': [],
 			'asset-taglib': [],
 			'frontend-js-components-web': [],
 			'frontend-js-web': [],

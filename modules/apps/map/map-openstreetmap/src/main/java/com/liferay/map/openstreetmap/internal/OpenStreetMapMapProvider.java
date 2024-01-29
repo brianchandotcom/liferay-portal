@@ -60,20 +60,10 @@ public class OpenStreetMapMapProvider extends BaseJSPMapProvider {
 	}
 
 	@Override
-	protected void prepareRequest(HttpServletRequest httpServletRequest) {
-		String resolvedModuleName = _npmResolver.resolveModuleName(
-			"@liferay/map-openstreetmap/js/MapOpenStreetMap");
-
-		httpServletRequest.setAttribute(
-			"liferay-map:map:bootstrapRequire",
-			resolvedModuleName + " as MapOpenStreetMap");
-	}
+	protected void prepareRequest(HttpServletRequest httpServletRequest) {}
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.map.openstreetmap)")
 	private ServletContext _servletContext;

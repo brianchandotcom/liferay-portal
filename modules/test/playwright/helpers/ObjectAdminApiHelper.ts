@@ -40,6 +40,15 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
+	async postObjectRelationship(
+		objectRelationship: Partial<ObjectRelationship>
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${objectRelationship.objectDefinitionExternalReferenceCode1}/object-relationships`,
+			objectRelationship
+		);
+	}
+
 	async postRandomObjectDefinition(
 		objectFolderExternalReferenceCode: string
 	) {

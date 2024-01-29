@@ -7,6 +7,9 @@ package com.liferay.batch.engine.internal.writer;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.OutputStream;
@@ -18,12 +21,19 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
 public class BatchEngineExportTaskItemWriterBuilder {
+
+	public BatchEngineExportTaskItemWriterBuilder(
+		ObjectDefinitionLocalService objectDefinitionLocalService) {
+
+		_objectDefinitionLocalService = objectDefinitionLocalService;
+	}
 
 	public BatchEngineExportTaskItemWriterBuilder batchEngineTaskContentType(
 		BatchEngineTaskContentType batchEngineTaskContentType) {
@@ -38,9 +48,19 @@ public class BatchEngineExportTaskItemWriterBuilder {
 			ItemClassIndexUtil.index(_itemClass);
 
 		if (_batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
+			long objectDefinitionId = 0;
+
+			if (Objects.equals(_itemClass, ObjectEntry.class)) {
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						_companyId, _taskItemDelegateName);
+
+				objectDefinitionId = objectDefinition.getObjectDefinitionId();
+			}
+
 			return new CSVBatchEngineExportTaskItemWriterImpl(
 				_csvFileColumnDelimiter, fieldNameObjectValuePairs, _fieldNames,
-				_outputStream, _parameters);
+				objectDefinitionId, _outputStream, _parameters);
 		}
 
 		if (_batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
@@ -56,8 +76,19 @@ public class BatchEngineExportTaskItemWriterBuilder {
 		if ((_batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
 			(_batchEngineTaskContentType == BatchEngineTaskContentType.XLSX)) {
 
+			long objectDefinitionId = 0;
+
+			if (Objects.equals(_itemClass, ObjectEntry.class)) {
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						_companyId, _taskItemDelegateName);
+
+				objectDefinitionId = objectDefinition.getObjectDefinitionId();
+			}
+
 			return new XLSBatchEngineExportTaskItemWriterImpl(
-				fieldNameObjectValuePairs, _fieldNames, _outputStream);
+				fieldNameObjectValuePairs, _fieldNames, objectDefinitionId,
+				_outputStream);
 		}
 
 		if (_batchEngineTaskContentType == BatchEngineTaskContentType.JSONT) {
@@ -156,6 +187,7 @@ public class BatchEngineExportTaskItemWriterBuilder {
 	private String _csvFileColumnDelimiter;
 	private List<String> _fieldNames;
 	private Class<?> _itemClass;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private OutputStream _outputStream;
 	private Map<String, Serializable> _parameters;
 	private String _taskItemDelegateName;

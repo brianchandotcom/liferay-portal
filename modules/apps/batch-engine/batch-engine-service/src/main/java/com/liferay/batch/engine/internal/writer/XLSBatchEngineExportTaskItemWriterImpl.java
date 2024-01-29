@@ -5,6 +5,7 @@
 
 package com.liferay.batch.engine.internal.writer;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.IOException;
@@ -34,8 +35,11 @@ public class XLSBatchEngineExportTaskItemWriterImpl
 	implements BatchEngineExportTaskItemWriter {
 
 	public XLSBatchEngineExportTaskItemWriterImpl(
-		Map<String, ObjectValuePair<Field, Method>> fieldNameObjectValuePairs,
-		List<String> fieldNames, OutputStream outputStream) {
+			Map<String, ObjectValuePair<Field, Method>>
+				fieldNameObjectValuePairs,
+			List<String> fieldNames, long objectDefinitionId,
+			OutputStream outputStream)
+		throws PortalException {
 
 		if (fieldNames.isEmpty()) {
 			throw new IllegalArgumentException("Field names are not set");
@@ -44,7 +48,7 @@ public class XLSBatchEngineExportTaskItemWriterImpl
 		_outputStream = outputStream;
 
 		_columnValuesExtractor = new ColumnValuesExtractor(
-			fieldNameObjectValuePairs, fieldNames);
+			fieldNameObjectValuePairs, fieldNames, objectDefinitionId);
 
 		_sheet = _workbook.createSheet();
 

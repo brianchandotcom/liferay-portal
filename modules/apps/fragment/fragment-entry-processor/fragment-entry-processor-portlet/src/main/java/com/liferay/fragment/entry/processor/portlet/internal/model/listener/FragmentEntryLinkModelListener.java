@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,16 +67,18 @@ public class FragmentEntryLinkModelListener
 						layoutPageTemplateEntry.getType(),
 						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
-					List<Long> masterLayoutPlids = new ArrayList<>();
-
-					masterLayoutPlids.add(fragmentEntryLink.getPlid());
+					long[] excludedPlids = {
+						PortletKeys.PREFS_PLID_SHARED,
+						fragmentEntryLink.getPlid()
+					};
 
 					Layout masterDraftLayout = _layoutLocalService.fetchLayout(
 						_portal.getClassNameId(Layout.class),
 						fragmentEntryLink.getPlid());
 
 					if (masterDraftLayout != null) {
-						masterLayoutPlids.add(masterDraftLayout.getPlid());
+						excludedPlids = ArrayUtil.append(
+							excludedPlids, masterDraftLayout.getPlid());
 					}
 
 					List<PortletPreferences> portletPreferences =
@@ -86,9 +88,8 @@ public class FragmentEntryLinkModelListener
 					for (PortletPreferences curPortletPreferences :
 							portletPreferences) {
 
-						if ((curPortletPreferences.getPlid() ==
-								PortletKeys.PREFS_PLID_SHARED) ||
-							masterLayoutPlids.contains(
+						if (ArrayUtil.contains(
+								excludedPlids,
 								curPortletPreferences.getPlid())) {
 
 							continue;

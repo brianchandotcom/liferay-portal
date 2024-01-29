@@ -18,6 +18,7 @@ import com.liferay.batch.engine.internal.writer.BatchEngineExportTaskItemWriterB
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.SafeCloseable;
@@ -201,7 +202,8 @@ public class BatchEngineExportTaskExecutorImpl
 
 		BatchEngineExportTaskItemWriterBuilder
 			batchEngineExportTaskItemWriterBuilder =
-				new BatchEngineExportTaskItemWriterBuilder();
+				new BatchEngineExportTaskItemWriterBuilder(
+					_objectDefinitionLocalService);
 
 		BatchEngineTaskContentType batchEngineTaskContentType =
 			BatchEngineTaskContentType.valueOf(
@@ -332,6 +334,9 @@ public class BatchEngineExportTaskExecutorImpl
 
 	@Reference
 	private ItemClassRegistry _itemClassRegistry;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private SortParserProvider _sortParserProvider;

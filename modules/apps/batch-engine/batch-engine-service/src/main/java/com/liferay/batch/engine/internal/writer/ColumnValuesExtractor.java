@@ -5,14 +5,20 @@
 
 package com.liferay.batch.engine.internal.writer;
 
+import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
@@ -36,11 +42,13 @@ import java.util.Set;
 public class ColumnValuesExtractor {
 
 	public ColumnValuesExtractor(
-		Map<String, ObjectValuePair<Field, Method>> fieldNameObjectValuePairs,
-		List<String> fieldNames) {
+			Map<String, ObjectValuePair<Field, Method>>
+				fieldNameObjectValuePairs,
+			List<String> fieldNames, long objectDefinitionId)
+		throws PortalException {
 
 		_columnDescriptors = _getColumnDescriptors(
-			fieldNameObjectValuePairs, fieldNames, 0, null);
+			fieldNameObjectValuePairs, fieldNames, 0, objectDefinitionId, null);
 	}
 
 	public List<Object[]> extractValues(Object item)
@@ -115,9 +123,11 @@ public class ColumnValuesExtractor {
 	}
 
 	private ColumnDescriptor[] _getColumnDescriptors(
-		Map<String, ObjectValuePair<Field, Method>> fieldNameObjectValuePairs,
-		Collection<String> fieldNames, int masterIndex,
-		ColumnDescriptor parentColumnDescriptor) {
+			Map<String, ObjectValuePair<Field, Method>>
+				fieldNameObjectValuePairs,
+			Collection<String> fieldNames, int masterIndex,
+			long objectDefinitionId, ColumnDescriptor parentColumnDescriptor)
+		throws PortalException {
 
 		ColumnDescriptor[] columnDescriptors =
 			new ColumnDescriptor[fieldNames.size()];
@@ -128,10 +138,67 @@ public class ColumnValuesExtractor {
 				fieldNameObjectValuePairs.get(fieldName);
 
 			if (objectValuePair == null) {
+				ObjectField objectField =
+					ObjectFieldLocalServiceUtil.getObjectField(
+						objectDefinitionId, fieldName);
+
+				if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.
+							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+					int listTypeEntriesCount =
+						ListTypeEntryLocalServiceUtil.getListTypeEntriesCount(
+							objectField.getListTypeDefinitionId());
+
+					int listTypeEntriesHeaderIndex = 1;
+
+					ColumnDescriptor[] childFieldColumnDescriptors =
+						new ColumnDescriptor[listTypeEntriesCount * 2];
+
+					for (int i = 0; i < childFieldColumnDescriptors.length;
+						 i = i + 2) {
+
+						childFieldColumnDescriptors[i] = ColumnDescriptor._from(
+							null,
+							StringBundler.concat(
+								fieldName, ".key_", listTypeEntriesHeaderIndex),
+							masterIndex++, null, parentColumnDescriptor,
+							_getObjectEntryCustomFieldUnsafeFunction(
+								fieldNameObjectValuePairs.get("properties"),
+								fieldName,
+								"key_" + listTypeEntriesHeaderIndex));
+
+						childFieldColumnDescriptors[i + 1] =
+							ColumnDescriptor._from(
+								null,
+								StringBundler.concat(
+									fieldName, ".name_",
+									listTypeEntriesHeaderIndex),
+								masterIndex++, null, parentColumnDescriptor,
+								_getObjectEntryCustomFieldUnsafeFunction(
+									fieldNameObjectValuePairs.get("properties"),
+									fieldName,
+									"name_" + listTypeEntriesHeaderIndex));
+
+						listTypeEntriesHeaderIndex++;
+					}
+
+					columnDescriptors = _combine(
+						columnDescriptors, childFieldColumnDescriptors,
+						localIndex);
+
+					localIndex = masterIndex;
+
+					continue;
+				}
+
 				columnDescriptors[localIndex] = ColumnDescriptor._from(
 					null, fieldName, masterIndex++, null,
 					parentColumnDescriptor,
-					_getUnsafeFunction(fieldNameObjectValuePairs, fieldName));
+					_getObjectEntryCustomFieldUnsafeFunction(
+						fieldNameObjectValuePairs.get("properties"),
+						fieldName));
 
 				localIndex++;
 
@@ -143,7 +210,8 @@ public class ColumnValuesExtractor {
 			columnDescriptors[localIndex] = ColumnDescriptor._from(
 				field, field.getName(), masterIndex++,
 				objectValuePair.getValue(), parentColumnDescriptor,
-				_getUnsafeFunction(fieldNameObjectValuePairs, fieldName));
+				_getPOJOFieldUnsafeFunction(
+					fieldNameObjectValuePairs.get(fieldName)));
 
 			Class<?> fieldClass = field.getType();
 
@@ -177,7 +245,7 @@ public class ColumnValuesExtractor {
 				_getColumnDescriptors(
 					childFieldMethodPairsMap,
 					_sort(childFieldMethodPairsMap.keySet()), localIndex,
-					columnDescriptors[localIndex]);
+					objectDefinitionId, columnDescriptors[localIndex]);
 
 			columnDescriptors = _combine(
 				columnDescriptors, childFieldColumnDescriptors, localIndex);
@@ -203,134 +271,30 @@ public class ColumnValuesExtractor {
 		return listEntry.getKey();
 	}
 
+	private String _getMultiselectListEntryValue(
+		List<ListEntry> listEntries, String fieldName) {
+
+		String[] parts = fieldName.split(StringPool.UNDERLINE);
+
+		int columnIndex = GetterUtil.getInteger(parts[1]);
+
+		if (listEntries.size() < columnIndex) {
+			return StringPool.BLANK;
+		}
+
+		ListEntry listEntry = listEntries.get(columnIndex - 1);
+
+		if (Objects.equals(parts[0], "key")) {
+			return listEntry.getKey();
+		}
+
+		return listEntry.getName();
+	}
+
 	private UnsafeFunction<Object, Object, ReflectiveOperationException>
-		_getUnsafeFunction(
-			Map<String, ObjectValuePair<Field, Method>>
-				fieldNameObjectValuePairs,
-			String fieldName) {
-
-		ObjectValuePair<Field, Method> objectValuePair =
-			fieldNameObjectValuePairs.get(fieldName);
-
-		if (objectValuePair != null) {
-			Field field = objectValuePair.getKey();
-
-			Class<?> fieldClass = field.getType();
-
-			if (ItemClassIndexUtil.isSingleColumnAdoptableValue(fieldClass)) {
-				return new UnsafeFunction
-					<Object, Object, ReflectiveOperationException>() {
-
-					@Override
-					public Object apply(Object object)
-						throws ReflectiveOperationException {
-
-						Object value = _getValue(object, objectValuePair);
-
-						if (value == null) {
-							return StringPool.BLANK;
-						}
-
-						return value;
-					}
-
-				};
-			}
-
-			if (ItemClassIndexUtil.isSingleColumnAdoptableArray(fieldClass)) {
-				return new UnsafeFunction
-					<Object, Object, ReflectiveOperationException>() {
-
-					@Override
-					public Object apply(Object object)
-						throws ReflectiveOperationException {
-
-						Object value = _getValue(object, objectValuePair);
-
-						if (value == null) {
-							return StringPool.BLANK;
-						}
-
-						return StringUtil.merge(
-							(Object[])value, CSVUtil::encode, StringPool.COMMA);
-					}
-
-				};
-			}
-
-			if (ItemClassIndexUtil.isMap(fieldClass)) {
-				return new UnsafeFunction
-					<Object, Object, ReflectiveOperationException>() {
-
-					@Override
-					public Object apply(Object object)
-						throws ReflectiveOperationException {
-
-						Map<?, ?> map = (Map<?, ?>)_getValue(
-							object, objectValuePair);
-
-						if (map == null) {
-							return StringPool.BLANK;
-						}
-
-						StringBundler sb = new StringBundler(map.size() * 3);
-
-						Set<? extends Map.Entry<?, ?>> entries = map.entrySet();
-
-						Iterator<? extends Map.Entry<?, ?>> iterator =
-							entries.iterator();
-
-						while (iterator.hasNext()) {
-							Map.Entry<?, ?> entry = iterator.next();
-
-							sb.append(CSVUtil.encode(entry.getKey()));
-
-							sb.append(StringPool.COLON);
-
-							if (entry.getValue() != null) {
-								sb.append(CSVUtil.encode(entry.getValue()));
-							}
-							else {
-								sb.append(StringPool.BLANK);
-							}
-
-							if (iterator.hasNext()) {
-								sb.append(StringPool.COMMA_AND_SPACE);
-							}
-						}
-
-						return sb.toString();
-					}
-
-				};
-			}
-
-			return new UnsafeFunction
-				<Object, Object, ReflectiveOperationException>() {
-
-				@Override
-				public Object apply(Object object)
-					throws ReflectiveOperationException {
-
-					if (_getValue(object, objectValuePair) == null) {
-						return StringPool.BLANK;
-					}
-
-					return CSVUtil.encode(object);
-				}
-
-			};
-		}
-
-		ObjectValuePair<Field, Method> propertiesObjectValuePair =
-			fieldNameObjectValuePairs.get("properties");
-
-		if (!ItemClassIndexUtil.isObjectEntryProperties(
-				propertiesObjectValuePair)) {
-
-			throw new IllegalArgumentException(
-				"Invalid field name: " + fieldName);
-		}
+		_getObjectEntryCustomFieldUnsafeFunction(
+			ObjectValuePair<Field, Method> propertiesObjectValuePair,
+			String... fieldNames) {
 
 		return new UnsafeFunction
 			<Object, Object, ReflectiveOperationException>() {
@@ -339,10 +303,12 @@ public class ColumnValuesExtractor {
 			public Object apply(Object object)
 				throws ReflectiveOperationException {
 
+				int i = 0;
+
 				Map<?, ?> map = (Map<?, ?>)_getValue(
 					object, propertiesObjectValuePair);
 
-				Object value = map.get(fieldName);
+				Object value = map.get(fieldNames[i++]);
 
 				if (value == null) {
 					return StringPool.BLANK;
@@ -352,11 +318,129 @@ public class ColumnValuesExtractor {
 					return _getListEntryKey(value);
 				}
 
+				if (ItemClassIndexUtil.isMultiselectList(value)) {
+					return _getMultiselectListEntryValue(
+						(List<ListEntry>)value, fieldNames[i++]);
+				}
+
 				if (value instanceof String) {
 					return CSVUtil.encode(value);
 				}
 
 				return value;
+			}
+
+		};
+	}
+
+	private UnsafeFunction<Object, Object, ReflectiveOperationException>
+		_getPOJOFieldUnsafeFunction(
+			ObjectValuePair<Field, Method> objectValuePair) {
+
+		Field field = objectValuePair.getKey();
+
+		Class<?> fieldClass = field.getType();
+
+		if (ItemClassIndexUtil.isSingleColumnAdoptableValue(fieldClass)) {
+			return new UnsafeFunction
+				<Object, Object, ReflectiveOperationException>() {
+
+				@Override
+				public Object apply(Object object)
+					throws ReflectiveOperationException {
+
+					Object value = _getValue(object, objectValuePair);
+
+					if (value == null) {
+						return StringPool.BLANK;
+					}
+
+					return value;
+				}
+
+			};
+		}
+
+		if (ItemClassIndexUtil.isSingleColumnAdoptableArray(fieldClass)) {
+			return new UnsafeFunction
+				<Object, Object, ReflectiveOperationException>() {
+
+				@Override
+				public Object apply(Object object)
+					throws ReflectiveOperationException {
+
+					Object value = _getValue(object, objectValuePair);
+
+					if (value == null) {
+						return StringPool.BLANK;
+					}
+
+					return StringUtil.merge(
+						(Object[])value, CSVUtil::encode, StringPool.COMMA);
+				}
+
+			};
+		}
+
+		if (ItemClassIndexUtil.isMap(fieldClass)) {
+			return new UnsafeFunction
+				<Object, Object, ReflectiveOperationException>() {
+
+				@Override
+				public Object apply(Object object)
+					throws ReflectiveOperationException {
+
+					Map<?, ?> map = (Map<?, ?>)_getValue(
+						object, objectValuePair);
+
+					if (map == null) {
+						return StringPool.BLANK;
+					}
+
+					StringBundler sb = new StringBundler(map.size() * 3);
+
+					Set<? extends Map.Entry<?, ?>> entries = map.entrySet();
+
+					Iterator<? extends Map.Entry<?, ?>> iterator =
+						entries.iterator();
+
+					while (iterator.hasNext()) {
+						Map.Entry<?, ?> entry = iterator.next();
+
+						sb.append(CSVUtil.encode(entry.getKey()));
+
+						sb.append(StringPool.COLON);
+
+						if (entry.getValue() != null) {
+							sb.append(CSVUtil.encode(entry.getValue()));
+						}
+						else {
+							sb.append(StringPool.BLANK);
+						}
+
+						if (iterator.hasNext()) {
+							sb.append(StringPool.COMMA_AND_SPACE);
+						}
+					}
+
+					return sb.toString();
+				}
+
+			};
+		}
+
+		return new UnsafeFunction
+			<Object, Object, ReflectiveOperationException>() {
+
+			@Override
+			public Object apply(Object object)
+				throws ReflectiveOperationException {
+
+				if (_getValue(object, objectValuePair) == null) {
+					return StringPool.BLANK;
+				}
+
+				return CSVUtil.encode(object);
 			}
 
 		};

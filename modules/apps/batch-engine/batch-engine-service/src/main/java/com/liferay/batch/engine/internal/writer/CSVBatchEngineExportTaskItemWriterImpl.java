@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
@@ -43,9 +44,9 @@ public class CSVBatchEngineExportTaskItemWriterImpl
 			String delimiter,
 			Map<String, ObjectValuePair<Field, Method>>
 				fieldNameObjectValuePairs,
-			List<String> fieldNames, OutputStream outputStream,
-			Map<String, Serializable> parameters)
-		throws IOException {
+			List<String> fieldNames, long objectDefinitionId,
+			OutputStream outputStream, Map<String, Serializable> parameters)
+		throws IOException, PortalException {
 
 		if (fieldNames.isEmpty()) {
 			throw new IllegalArgumentException("Field names are not set");
@@ -59,7 +60,7 @@ public class CSVBatchEngineExportTaskItemWriterImpl
 			fieldNames, (value1, value2) -> value1.compareToIgnoreCase(value2));
 
 		_columnValuesExtractor = new ColumnValuesExtractor(
-			fieldNameObjectValuePairs, fieldNames);
+			fieldNameObjectValuePairs, fieldNames, objectDefinitionId);
 
 		if (Boolean.valueOf(
 				(String)parameters.getOrDefault(

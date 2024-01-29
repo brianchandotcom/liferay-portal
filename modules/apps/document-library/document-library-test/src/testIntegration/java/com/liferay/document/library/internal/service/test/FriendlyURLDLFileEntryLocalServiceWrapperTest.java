@@ -318,7 +318,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 			RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
 			StringPool.BLANK, DLVersionNumberIncrease.MAJOR,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			Collections.emptyMap(), null, inputStream, 0, null, null,
+			Collections.emptyMap(), null, inputStream, 0, null, null, null,
 			serviceContext);
 
 		FriendlyURLEntry mainFriendlyURLEntry =
@@ -392,7 +392,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MAJOR,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			Collections.emptyMap(), null, inputStream, 0, null, null,
+			Collections.emptyMap(), null, inputStream, 0, null, null, null,
 			serviceContext);
 
 		FriendlyURLEntry mainFriendlyURLEntry =
@@ -464,7 +464,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 			RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
 			StringPool.BLANK, DLVersionNumberIncrease.MAJOR,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			Collections.emptyMap(), null, inputStream, 0, null, null,
+			Collections.emptyMap(), null, inputStream, 0, null, null, null,
 			serviceContext);
 
 		FriendlyURLEntry friendlyURLEntry =
@@ -504,7 +504,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 			StringPool.BLANK, DLVersionNumberIncrease.MAJOR,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			Collections.emptyMap(), null, inputStream, bytes.length, null, null,
-			serviceContext);
+			null, serviceContext);
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
@@ -543,7 +543,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 			StringPool.BLANK, DLVersionNumberIncrease.MAJOR,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			Collections.emptyMap(), null, inputStream, bytes.length, null, null,
-			serviceContext);
+			null, serviceContext);
 
 		FriendlyURLEntry mainFriendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
@@ -591,7 +591,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 			StringPool.BLANK, DLVersionNumberIncrease.MAJOR,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			Collections.emptyMap(), null, inputStream, bytes.length, null, null,
-			serviceContext);
+			null, serviceContext);
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
@@ -638,7 +638,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 			DLVersionNumberIncrease.MAJOR,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			Collections.emptyMap(), null, inputStream, bytes.length, null, null,
-			serviceContext);
+			null, serviceContext);
 
 		mainFriendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(

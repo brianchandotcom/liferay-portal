@@ -316,8 +316,9 @@ public class ContactsCSVHelper {
 				dlFileEntry.getFileEntryTypeId(),
 				dlFileEntry.getDDMFormValuesMap(
 					dlFileVersion.getFileVersionId()),
-				file, null, file.length(), dlFileEntry.getExpirationDate(),
-				dlFileEntry.getReviewDate(), serviceContext);
+				file, null, file.length(), dlFileEntry.getDisplayDate(),
+				dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
+				serviceContext);
 		}
 		else {
 			Repository repository = _portletFileRepository.addPortletRepository(

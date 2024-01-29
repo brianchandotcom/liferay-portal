@@ -5,7 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
-import React from 'react';
+import React, {useState} from 'react';
 
 import PermissionsOptions from '../PermissionsOptions';
 import ScheduleOptions from '../ScheduleOptions';
@@ -35,6 +35,8 @@ export default function PublishModal({
 		workflowEnabled,
 	});
 
+	const [dateError, setDateError] = useState('');
+
 	return (
 		<ClayModal className="m-0" observer={observer} size="lg">
 			<ClayModal.Header>{heading}</ClayModal.Header>
@@ -45,8 +47,10 @@ export default function PublishModal({
 				{actionButton === 'schedule' ? (
 					<ScheduleOptions
 						displayDate={displayDate}
+						error={dateError}
 						formId={formId}
 						portletNamespace={portletNamespace}
+						setError={setDateError}
 						timeZone={timeZone}
 					/>
 				) : null}
@@ -71,8 +75,12 @@ export default function PublishModal({
 						<ClayButton
 							displayType="primary"
 							form={formId}
-							onClick={onPublishButtonClick}
-							type="submit"
+							onClick={() => {
+								if (!dateError) {
+									onPublishButtonClick();
+								}
+							}}
+							type={!dateError ? 'submit' : 'button'}
 						>
 							{button}
 						</ClayButton>

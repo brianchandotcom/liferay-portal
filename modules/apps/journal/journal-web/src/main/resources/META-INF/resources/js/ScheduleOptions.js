@@ -12,13 +12,14 @@ import React, {useEffect, useState} from 'react';
 
 export default function ScheduleOptions({
 	displayDate,
+	error,
 	formId,
 	portletNamespace,
+	setError,
 	timeZone,
 }) {
 	const [value, setValue] = useState(displayDate);
 	const {day, hour, minutes, month, year} = getDate(value);
-	const [error, setError] = useState('');
 
 	useEffect(() => {
 		if (value) {
@@ -38,7 +39,7 @@ export default function ScheduleOptions({
 				setError(Liferay.Language.get(''));
 			}
 		}
-	}, [value]);
+	}, [setError, value]);
 
 	return (
 		<>

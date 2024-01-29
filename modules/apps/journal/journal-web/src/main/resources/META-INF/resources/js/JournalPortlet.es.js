@@ -8,11 +8,11 @@ import {
 	fetch,
 	navigate,
 	openConfirmModal,
-	openToast,
 	sub,
 } from 'frontend-js-web';
 
 import {LocaleChangedHandler} from './LocaleChangedHandler.es';
+import showAlert from './showAlert';
 
 const AUTO_SAVE_DELAY = 1500;
 
@@ -313,26 +313,6 @@ export default function _JournalPortlet({
 					publishingLock.unlock();
 				}
 			},
-		});
-	};
-
-	const showAlert = (message) => {
-		const articleContentWrapper = document.querySelector(
-			'.article-content-content'
-		);
-
-		const alertContainer = document.createElement('div');
-
-		alertContainer.classList.add('journal-alert-container');
-		articleContentWrapper.prepend(alertContainer);
-
-		openToast({
-			autoClose: false,
-			container: alertContainer,
-			message,
-			onClose: () => alertContainer.remove(),
-			title: Liferay.Language.get('error'),
-			type: 'danger',
 		});
 	};
 

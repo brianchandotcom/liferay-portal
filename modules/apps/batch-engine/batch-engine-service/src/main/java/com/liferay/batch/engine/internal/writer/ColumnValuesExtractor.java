@@ -150,7 +150,8 @@ public class ColumnValuesExtractor {
 					ColumnDescriptor[] multiselectPickListColumnDescriptors =
 						_getMultiselectPickListColumnDescriptors(
 							fieldName, objectField.getListTypeDefinitionId(),
-							masterIndex, parentColumnDescriptor,
+							masterIndex, objectField.getBusinessType(),
+							parentColumnDescriptor,
 							fieldNameObjectValuePairs.get("properties"));
 
 					columnDescriptors = _combine(
@@ -168,6 +169,7 @@ public class ColumnValuesExtractor {
 					null, fieldName, masterIndex++, null,
 					parentColumnDescriptor,
 					_getObjectEntryCustomFieldUnsafeFunction(
+						objectField.getBusinessType(),
 						fieldNameObjectValuePairs.get("properties"),
 						fieldName));
 
@@ -264,7 +266,7 @@ public class ColumnValuesExtractor {
 
 	private ColumnDescriptor[] _getMultiselectPickListColumnDescriptors(
 		String fieldName, long listTypeDefinitionId, int masterIndex,
-		ColumnDescriptor parentColumnDescriptor,
+		String objectFieldBusinessType, ColumnDescriptor parentColumnDescriptor,
 		ObjectValuePair<Field, Method> propertiesObjectValuePair) {
 
 		int listTypeEntriesCount =
@@ -285,8 +287,8 @@ public class ColumnValuesExtractor {
 					fieldName, ".key_", listTypeEntriesHeaderIndex),
 				masterIndex++, null, parentColumnDescriptor,
 				_getObjectEntryCustomFieldUnsafeFunction(
-					propertiesObjectValuePair, fieldName,
-					"key_" + listTypeEntriesHeaderIndex));
+					objectFieldBusinessType, propertiesObjectValuePair,
+					fieldName, "key_" + listTypeEntriesHeaderIndex));
 
 			multiselectPickListColumnDescriptors[i + 1] =
 				ColumnDescriptor._from(
@@ -295,8 +297,8 @@ public class ColumnValuesExtractor {
 						fieldName, ".name_", listTypeEntriesHeaderIndex),
 					masterIndex++, null, parentColumnDescriptor,
 					_getObjectEntryCustomFieldUnsafeFunction(
-						propertiesObjectValuePair, fieldName,
-						"name_" + listTypeEntriesHeaderIndex));
+						objectFieldBusinessType, propertiesObjectValuePair,
+						fieldName, "name_" + listTypeEntriesHeaderIndex));
 
 			listTypeEntriesHeaderIndex++;
 		}
@@ -306,8 +308,62 @@ public class ColumnValuesExtractor {
 
 	private UnsafeFunction<Object, Object, ReflectiveOperationException>
 		_getObjectEntryCustomFieldUnsafeFunction(
+			String objectFieldBusinessType,
 			ObjectValuePair<Field, Method> propertiesObjectValuePair,
 			String... fieldNames) {
+
+		if (Objects.equals(
+				objectFieldBusinessType,
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+			return new UnsafeFunction
+				<Object, Object, ReflectiveOperationException>() {
+
+				@Override
+				public Object apply(Object object)
+					throws ReflectiveOperationException {
+
+					Map<?, ?> map = (Map<?, ?>)_getValue(
+						object, propertiesObjectValuePair);
+
+					Object value = map.get(fieldNames[0]);
+
+					if (value == null) {
+						return StringPool.BLANK;
+					}
+
+					return _getMultiselectListEntryValue(
+						(List<ListEntry>)value, fieldNames[1]);
+				}
+
+			};
+		}
+
+		if (Objects.equals(
+				objectFieldBusinessType,
+				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+			return new UnsafeFunction
+				<Object, Object, ReflectiveOperationException>() {
+
+				@Override
+				public Object apply(Object object)
+					throws ReflectiveOperationException {
+
+					Map<?, ?> map = (Map<?, ?>)_getValue(
+						object, propertiesObjectValuePair);
+
+					Object value = map.get(fieldNames[0]);
+
+					if (value == null) {
+						return StringPool.BLANK;
+					}
+
+					return _getListEntryKey(value);
+				}
+
+			};
+		}
 
 		return new UnsafeFunction
 			<Object, Object, ReflectiveOperationException>() {
@@ -316,31 +372,16 @@ public class ColumnValuesExtractor {
 			public Object apply(Object object)
 				throws ReflectiveOperationException {
 
-				int i = 0;
-
 				Map<?, ?> map = (Map<?, ?>)_getValue(
 					object, propertiesObjectValuePair);
 
-				Object value = map.get(fieldNames[i++]);
+				Object value = map.get(fieldNames[0]);
 
 				if (value == null) {
 					return StringPool.BLANK;
 				}
 
-				if (ItemClassIndexUtil.isListEntry(value)) {
-					return _getListEntryKey(value);
-				}
-
-				if (ItemClassIndexUtil.isMultiselectList(value)) {
-					return _getMultiselectListEntryValue(
-						(List<ListEntry>)value, fieldNames[i++]);
-				}
-
-				if (value instanceof String) {
-					return CSVUtil.encode(value);
-				}
-
-				return value;
+				return CSVUtil.encode(value);
 			}
 
 		};

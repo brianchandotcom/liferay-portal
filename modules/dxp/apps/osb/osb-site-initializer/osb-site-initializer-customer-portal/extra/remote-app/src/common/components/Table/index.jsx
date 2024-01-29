@@ -6,9 +6,9 @@
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
+import {FilterIcon} from '../../../../src/common/icons/filter_icon';
 import TablePagination from './Pagination';
 import TableSkeleton from './Skeleton';
-import {FilterIcon} from '../../../../src/common/icons/filter_icon';
 
 const Table = ({
 	checkboxConfig,
@@ -80,7 +80,7 @@ const Table = ({
 
 	return (
 		<>
-			<ClayTable {...props}>
+			<ClayTable borderless={true} {...props}>
 				<ClayTable.Head>
 					<ClayTable.Row>
 						{hasCheckbox && (

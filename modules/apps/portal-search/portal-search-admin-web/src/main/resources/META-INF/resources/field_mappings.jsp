@@ -19,7 +19,7 @@ FieldMappingsDisplayContext fieldMappingsDisplayContext = (FieldMappingsDisplayC
 
 <div>
 	<react:component
-		module="js/FieldMappings.es"
+		module="{FieldMappings} from portal-search-admin-web"
 		props="<%= fieldMappingsDisplayContext.getData() %>"
 	/>
 </div>

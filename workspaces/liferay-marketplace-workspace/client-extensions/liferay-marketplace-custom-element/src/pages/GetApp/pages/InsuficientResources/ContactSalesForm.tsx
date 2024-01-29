@@ -63,7 +63,8 @@ const ContactSalesForm = () => {
 			Liferay.Util.navigate(
 				Liferay.ThemeDisplay.getCanonicalURL().replace('/get-app', '')
 			);
-		} catch (error) {
+		}
+		catch (error) {
 			Liferay.Util.openToast({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',

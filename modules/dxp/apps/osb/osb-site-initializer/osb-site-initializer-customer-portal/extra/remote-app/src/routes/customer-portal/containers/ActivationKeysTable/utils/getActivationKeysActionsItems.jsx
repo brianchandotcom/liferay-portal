@@ -15,33 +15,47 @@ export function getActivationKeysActionsItems(
 	handleRedirectPage,
 	handleDeactivatePage,
 	productName,
-	allowSelfProvisioning
+	allowSelfProvisioning,
+	hasRenewalSubscription,
+	handleRedirectRenewPage
 ) {
 	const dropdownItems = [];
 
 	if (allowSelfProvisioning) {
-		dropdownItems.push(
-			{
+		dropdownItems.push({
+			icon: (
+				<ClayIcon
+					className="mr-1 rounded text-neutral-4"
+					symbol="plus"
+				/>
+			),
+			label: i18n.translate('generate-new'),
+			onClick: handleRedirectPage,
+		});
+
+		if (hasRenewalSubscription) {
+			dropdownItems.push({
 				icon: (
 					<ClayIcon
 						className="mr-1 rounded text-neutral-4"
-						symbol="plus"
+						symbol="reload"
 					/>
 				),
-				label: i18n.translate('generate-new'),
-				onClick: handleRedirectPage,
-			},
-			{
-				icon: (
-					<ClayIcon
-						className="mr-1 text-neutral-4"
-						symbol="minus-circle"
-					/>
-				),
-				label: i18n.translate('deactivate'),
-				onClick: handleDeactivatePage,
-			}
-		);
+				label: i18n.translate('renew'),
+				onClick: handleRedirectRenewPage,
+			});
+		}
+
+		dropdownItems.push({
+			icon: (
+				<ClayIcon
+					className="mr-1 text-neutral-4"
+					symbol="minus-circle"
+				/>
+			),
+			label: i18n.translate('deactivate'),
+			onClick: handleDeactivatePage,
+		});
 	}
 
 	dropdownItems.push({

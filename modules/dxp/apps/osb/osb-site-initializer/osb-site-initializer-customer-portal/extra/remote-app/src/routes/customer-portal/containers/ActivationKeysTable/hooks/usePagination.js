@@ -5,9 +5,15 @@
 
 import {useEffect, useMemo, useState} from 'react';
 import i18n from '../../../../../common/I18n';
+import {getLicenseKeyPermanentStatus} from '../../GenerateNewKey/utils/licenseKeyPermanentStatus';
 import {ACTIVATION_KEYS_LICENSE_FILTER_TYPES} from '../utils/constants';
 
-export default function usePagination(activationKeys, statusFilter) {
+export default function usePagination(
+	activationKeys,
+	isRenewTable,
+	setAllActivationKeys,
+	statusFilter
+) {
 	const [activePage, setActivePage] = useState(1);
 	const [itemsPerPage, setItemsPerPage] = useState(5);
 	const [currentTotalCount, setCurrentTotalCount] = useState(0);
@@ -49,7 +55,35 @@ export default function usePagination(activationKeys, statusFilter) {
 				)
 		);
 
+		setAllActivationKeys(activationKeysFilteredByStatus);
+
 		if (activationKeysFilteredByStatus) {
+			if (isRenewTable) {
+				const activationKeysFilteredbyRenewable = activationKeysFilteredByStatus?.filter(
+					(activationKey) => {
+						const isPermanentLicenseKey = getLicenseKeyPermanentStatus(
+							activationKey?.startDate,
+							activationKey?.expirationDate
+						);
+
+						if (!isPermanentLicenseKey) {
+							return activationKey;
+						}
+					}
+				);
+
+				setCurrentTotalCount(activationKeysFilteredbyRenewable.length);
+
+				const activationKeysFilteredByRenewablePerPage = activationKeysFilteredbyRenewable.slice(
+					itemsPerPage * activePage - itemsPerPage,
+					itemsPerPage * activePage
+				);
+
+				return activationKeysFilteredByRenewablePerPage?.length
+					? activationKeysFilteredByRenewablePerPage
+					: activationKeysFilteredbyRenewable;
+			}
+
 			setCurrentTotalCount(activationKeysFilteredByStatus.length);
 
 			const activationKeysFilteredByStatusPerPage = activationKeysFilteredByStatus.slice(
@@ -63,7 +97,14 @@ export default function usePagination(activationKeys, statusFilter) {
 		}
 
 		return [];
-	}, [activationKeys, activePage, itemsPerPage, statusFilter]);
+	}, [
+		activationKeys,
+		activePage,
+		isRenewTable,
+		itemsPerPage,
+		setAllActivationKeys,
+		statusFilter,
+	]);
 
 	return {activationKeysByStatusPaginated, paginationConfig};
 }

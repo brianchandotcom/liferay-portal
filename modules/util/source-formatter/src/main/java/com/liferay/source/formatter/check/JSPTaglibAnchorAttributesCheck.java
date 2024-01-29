@@ -70,13 +70,13 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 						continue;
 					}
 
-					String expectValue = null;
+					String expectedValue = null;
 
 					if (fileName.contains("/portal-web/docroot")) {
 						int index =
 							fileName.indexOf("/portal-web/docroot") + 19;
 
-						expectValue = fileName.substring(index);
+						expectedValue = fileName.substring(index);
 					}
 					else {
 						String symbolicName = _getSymbolicName(fileName);
@@ -91,21 +91,21 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 							continue outerLoop;
 						}
 
-						expectValue = StringBundler.concat(
+						expectedValue = StringBundler.concat(
 							symbolicName, "#", fileName.substring(index + 10));
 					}
 
 					String value = attributesMap.get(attribute);
 
 					if (!value.contains("<%") &&
-						!value.startsWith(expectValue)) {
+						!value.startsWith(expectedValue)) {
 
 						addMessage(
 							fileName,
 							StringBundler.concat(
 								"Tag '", tag.getName(), "' attribute '",
 								attribute, "' value '", value,
-								"' should start with '", expectValue, "'"));
+								"' should start with '", expectedValue, "'"));
 					}
 				}
 

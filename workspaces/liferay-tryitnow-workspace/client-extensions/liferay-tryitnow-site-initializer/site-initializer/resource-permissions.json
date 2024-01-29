@@ -1,0 +1,196 @@
+[
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library",
+		"roleName": "Ticket_solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntryMetadata-com.liferay.dynamic.data.mapping.model.DDMStructure",
+		"roleName": "Ticket_solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
+		"roleName": "Ticket_solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileShortcut",
+		"roleName": "Ticket_solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.portal.kernel.model.User",
+		"roleName": "Ticket_solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
+		"roleName": "Ticket_solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
+		"roleName": "Ticket_solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW",
+			"UPDATE",
+			"DELETE",
+			"assignTicketToMe"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
+		"roleName": "Ticket_solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW",
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:M2H8ProgressTracker$]",
+		"roleName": "Ticket_solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
+		"roleName": "Ticket_solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library",
+		"roleName": "Petitionaries",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntryMetadata-com.liferay.dynamic.data.mapping.model.DDMStructure",
+		"roleName": "Petitionaries",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
+		"roleName": "Petitionaries",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileShortcut",
+		"roleName": "Petitionaries",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.portal.kernel.model.User",
+		"roleName": "Petitionaries",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
+		"roleName": "Petitionaries",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
+		"roleName": "Petitionaries",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
+		"roleName": "Petitionaries",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW",
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:M2H8ProgressTracker$]",
+		"roleName": "Petitionaries",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$LIST_TYPE_DEFINITION_ID:J3Y7 Statuses$]",
+		"resourceName": "com.liferay.list.type.model.ListTypeDefinition",
+		"roleName": "User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.portal.kernel.model.Role",
+		"roleName": "Ticket_solvers",
+		"scope": "1"
+	}
+]

@@ -116,7 +116,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 * 			   #addFileEntry(String, long, long, long, String, String,
-	 * 			   String, String, String, File, Date, Date, ServiceContext)}
+	 * 			   String, String, String, String, File, Date,
+	 * 			   Date expirationDate, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -130,21 +131,22 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		return addFileEntry(
 			null, userId, repositoryId, folderId, sourceFileName, mimeType,
 			title, StringPool.BLANK, description, changeLog, file, null, null,
-			serviceContext);
+			null, serviceContext);
 	}
 
 	@Override
 	public FileEntry addFileEntry(
 			String externalReferenceCode, long userId, long repositoryId,
 			long folderId, String sourceFileName, String mimeType, byte[] bytes,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addFileEntry(
 			externalReferenceCode, userId, repositoryId, folderId,
 			sourceFileName, mimeType, sourceFileName, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, bytes, expirationDate,
-			reviewDate, serviceContext);
+			StringPool.BLANK, StringPool.BLANK, bytes, displayDate,
+			expirationDate, reviewDate, serviceContext);
 	}
 
 	/**
@@ -170,6 +172,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  description the file's description
 	 * @param  changeLog the file's version change log
 	 * @param  bytes the file's data (optionally <code>null</code>)
+	 * @param  displayDate the date when file is set to display
+	 *                        (optionally <code>null</code>)
 	 * @param  expirationDate the file's expiration date (optionally <code>null
 	 *                           </code>)
 	 * @param  reviewDate the file's review Date (optionally <code>null</code>)
@@ -187,7 +191,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			String externalReferenceCode, long userId, long repositoryId,
 			long folderId, String sourceFileName, String mimeType, String title,
 			String urlTitle, String description, String changeLog, byte[] bytes,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		File file = null;
@@ -200,7 +205,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			return addFileEntry(
 				externalReferenceCode, userId, repositoryId, folderId,
 				sourceFileName, mimeType, title, urlTitle, description,
-				changeLog, file, expirationDate, reviewDate, serviceContext);
+				changeLog, file, displayDate, expirationDate, reviewDate,
+				serviceContext);
 		}
 		catch (IOException ioException) {
 			throw new SystemException(
@@ -234,7 +240,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  description the file's description
 	 * @param  changeLog the file's version change log
 	 * @param  file the file's data (optionally <code>null</code>)
-	 * @param  expirationDate the file's expiration date (optionally <code>null</code>)
+	 * @param  displayDate the date when file is set to display
+	 *                        (optionally <code>null</code>)
+	 * @param  expirationDate the file's expiration date
+	 *                           (optionally <code>null</code>)
 	 * @param  reviewDate the file's review Date (optionally <code>null</code>)
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         asset category IDs, asset tag names, and expando bridge
@@ -250,14 +259,16 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			String externalReferenceCode, long userId, long repositoryId,
 			long folderId, String sourceFileName, String mimeType, String title,
 			String urlTitle, String description, String changeLog, File file,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if ((file == null) || !file.exists() || (file.length() == 0)) {
 			return addFileEntry(
 				externalReferenceCode, userId, repositoryId, folderId,
 				sourceFileName, mimeType, title, urlTitle, description,
-				changeLog, null, 0, expirationDate, reviewDate, serviceContext);
+				changeLog, null, 0, displayDate, expirationDate, reviewDate,
+				serviceContext);
 		}
 
 		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
@@ -266,8 +277,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		return localRepository.addFileEntry(
 			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
-			title, urlTitle, description, changeLog, file, null, expirationDate,
-			reviewDate, serviceContext);
+			title, urlTitle, description, changeLog, file, displayDate,
+			expirationDate, reviewDate, serviceContext);
 	}
 
 	/**
@@ -295,6 +306,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  changeLog the file's version change log
 	 * @param  inputStream the file's data (optionally <code>null</code>)
 	 * @param  size the file's size (optionally <code>0</code>)
+	 * @param  displayDate the date when file is set to display
+	 *                        (optionally <code>null</code>)
 	 * @param  expirationDate the file's expiration date (optionally <code>null
 	 *                           </code>)
 	 * @param  reviewDate the file's review Date (optionally <code>null</code>)
@@ -312,8 +325,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			String externalReferenceCode, long userId, long repositoryId,
 			long folderId, String sourceFileName, String mimeType, String title,
 			String urlTitle, String description, String changeLog,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date displayDate,
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (inputStream == null) {
@@ -337,8 +350,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 					return addFileEntry(
 						externalReferenceCode, userId, repositoryId, folderId,
 						sourceFileName, mimeType, title, urlTitle, description,
-						changeLog, file, expirationDate, reviewDate,
-						serviceContext);
+						changeLog, file, displayDate, expirationDate,
+						reviewDate, serviceContext);
 				}
 				catch (IOException ioException) {
 					throw new SystemException(
@@ -354,8 +367,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		return localRepository.addFileEntry(
 			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
-			title, urlTitle, description, changeLog, inputStream, size, null,
-			expirationDate, reviewDate, serviceContext);
+			title, urlTitle, description, changeLog, inputStream, size,
+			displayDate, expirationDate, reviewDate, serviceContext);
 	}
 
 	/**

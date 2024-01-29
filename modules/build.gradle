@@ -548,6 +548,12 @@ gradle.beforeProject {
 						excludeTestsMatching project.property("excludeTestsMatching")
 					}
 				}
+
+				if (project.properties["junit.jvm.override.version"]) {
+					javaLauncher = javaToolchains.launcherFor {
+						languageVersion = JavaLanguageVersion.of(project.properties["junit.jvm.override.version"])
+					}
+				}
 			}
 
 			testIntegration {

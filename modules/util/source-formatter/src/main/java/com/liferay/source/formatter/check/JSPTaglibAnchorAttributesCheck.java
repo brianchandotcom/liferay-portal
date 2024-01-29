@@ -63,9 +63,9 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 				for (Map.Entry<String, String> entry :
 						attributesMap.entrySet()) {
 
-					String attribute = entry.getKey();
+					String attributeName = entry.getKey();
 
-					if (!StringUtil.equals(attribute, attributeParts[1])) {
+					if (!StringUtil.equals(attributeName, attributeParts[1])) {
 						continue;
 					}
 
@@ -94,16 +94,16 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 							symbolicName, "#", fileName.substring(index + 10));
 					}
 
-					String value = attributesMap.get(attribute);
+					String attributeValue = attributesMap.get(attributeName);
 
-					if (!value.contains("<%") &&
-						!value.startsWith(expectedValue)) {
+					if (!attributeValue.contains("<%") &&
+						!attributeValue.startsWith(expectedValue)) {
 
 						addMessage(
 							fileName,
 							StringBundler.concat(
 								"Tag '", tag.getName(), "' attribute '",
-								attribute, "' value '", value,
+								attributeName, "' value '", attributeValue,
 								"' should start with '", expectedValue, "'"),
 							getLineNumber(content, x));
 					}

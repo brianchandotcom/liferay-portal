@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import {IBaseVisualizationMode} from './VisualizationModes';
+import {IBaseVisualizationMode} from '../VisualizationModes';
 
 export interface IList extends IBaseVisualizationMode<'list'> {}
 

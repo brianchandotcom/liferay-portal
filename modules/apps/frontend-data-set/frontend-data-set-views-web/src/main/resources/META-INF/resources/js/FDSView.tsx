@@ -17,7 +17,7 @@ import Details from './fds_view/Details';
 import Filters from './fds_view/Filters';
 import Pagination from './fds_view/Pagination';
 import Sorting from './fds_view/Sorting';
-import Fields from './fds_view/fields/Fields';
+import Table from './fds_view/visualization_modes/table/Table';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 
 const NAVIGATION_BAR_ITEMS = [
@@ -26,7 +26,7 @@ const NAVIGATION_BAR_ITEMS = [
 		label: Liferay.Language.get('details'),
 	},
 	{
-		Component: Fields,
+		Component: Table,
 		label: Liferay.Language.get('fields'),
 	},
 	{

@@ -20,20 +20,23 @@ import {fetch, openModal} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
-import {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP} from '../../Constants';
-import {IFDSViewSectionProps} from '../../FDSView';
-import {FDSViewType} from '../../FDSViews';
-import {getFields} from '../../api';
-import OrderableTable from '../../components/OrderableTable';
-import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
-import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
+import {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP} from '../../../Constants';
+import {IFDSViewSectionProps} from '../../../FDSView';
+import {FDSViewType} from '../../../FDSViews';
+import {getFields} from '../../../api';
+import OrderableTable from '../../../components/OrderableTable';
+import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
+import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 
-import '../../../css/Fields.scss';
-import {IField} from '../../types';
+import '../../../../css/TableVisualizationMode.scss';
+import {IField} from '../../../types';
+import {IBaseVisualizationMode} from '../VisualizationModes';
 import AddFieldsModalContent from './modal_content/AddFieldsModalContent';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
+
+export interface ITable extends IBaseVisualizationMode<'table'> {}
 
 export interface IFDSField {
 	contextPath: string;
@@ -613,7 +616,7 @@ const EditFDSFieldModalContent = ({
 	);
 };
 
-const Fields = ({
+const Table = ({
 	fdsClientExtensionCellRenderers,
 	fdsView,
 	namespace,
@@ -956,4 +959,4 @@ const Fields = ({
 	);
 };
 
-export default Fields;
+export default Table;

@@ -14,13 +14,13 @@ import ClayModal from '@clayui/modal';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {FDSViewType} from '../../../FDSViews';
-import {getFields} from '../../../api';
-import Search from '../../../components/Search';
-import {IField} from '../../../types';
-import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
-import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
-import {IFDSField} from '../Fields';
+import {FDSViewType} from '../../../../FDSViews';
+import {getFields} from '../../../../api';
+import Search from '../../../../components/Search';
+import {IField} from '../../../../types';
+import openDefaultFailureToast from '../../../../utils/openDefaultFailureToast';
+import openDefaultSuccessToast from '../../../../utils/openDefaultSuccessToast';
+import {IFDSField} from '../Table';
 
 interface IFieldTreeItem extends IField {
 	children?: IFieldTreeItem[];

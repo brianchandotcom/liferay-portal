@@ -8,8 +8,8 @@ import ClayTabs from '@clayui/tabs';
 import React, {ComponentType, useState} from 'react';
 
 import {IFDSViewSectionProps} from '../../FDSView';
-import List, {IList} from './List';
-import Table, {ITable} from './Table';
+import List, {IList} from './list/List';
+import Table, {ITable} from './table/Table';
 
 export interface IBaseVisualizationMode<Type extends string> {
 	label: string;

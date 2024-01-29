@@ -30,6 +30,30 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		String expectedValue = null;
+
+		if (isModulesFile(absolutePath)) {
+			String bundleSymbolicName = _getBundleSymbolicName(fileName);
+
+			if (bundleSymbolicName == null) {
+				return content;
+			}
+
+			int x = fileName.lastIndexOf("/resources/");
+
+			if (x == -1) {
+				return content;
+			}
+
+			expectedValue = StringBundler.concat(
+				bundleSymbolicName, "#", fileName.substring(x + 10));
+		}
+		else if (absolutePath.contains("/portal-web/docroot")) {
+			int x = absolutePath.indexOf("/portal-web/docroot") + 19;
+
+			expectedValue = absolutePath.substring(x);
+		}
+
 		List<String> taglibAnchorAttributes = getAttributeValues(
 			_TAGLIB_ANCHOR_ATTRIBUTES_KEY, absolutePath);
 
@@ -71,38 +95,9 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 
 					String attributeValue = attributesMap.get(attributeName);
 
-					if (attributeValue.contains("<%")) {
-						continue;
-					}
+					if (!attributeValue.contains("<%") &&
+						!attributeValue.startsWith(expectedValue)) {
 
-					String expectedValue = null;
-
-					if (isModulesFile(absolutePath)) {
-						String bundleSymbolicName = _getBundleSymbolicName(
-							fileName);
-
-						if (bundleSymbolicName == null) {
-							break;
-						}
-
-						int index = fileName.lastIndexOf("/resources/");
-
-						if (index == -1) {
-							break;
-						}
-
-						expectedValue = StringBundler.concat(
-							bundleSymbolicName, "#",
-							fileName.substring(index + 10));
-					}
-					else if (absolutePath.contains("/portal-web/docroot")) {
-						int index =
-							absolutePath.indexOf("/portal-web/docroot") + 19;
-
-						expectedValue = absolutePath.substring(index);
-					}
-
-					if (!attributeValue.startsWith(expectedValue)) {
 						addMessage(
 							fileName,
 							StringBundler.concat(

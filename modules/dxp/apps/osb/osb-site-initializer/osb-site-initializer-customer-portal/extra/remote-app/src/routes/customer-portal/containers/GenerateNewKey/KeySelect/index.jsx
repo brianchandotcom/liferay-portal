@@ -9,6 +9,7 @@ import {Select} from '../../../../../common/components';
 
 const KeySelect = ({
 	avaliableKeysMaximumCount,
+	isRenew,
 	minAvaliableKeysCount,
 	selectedClusterNodes,
 }) => {
@@ -27,6 +28,7 @@ const KeySelect = ({
 		<ClayInput.Group className="m-0">
 			<ClayInput.GroupItem className="m-0">
 				<Select
+					disabled={isRenew}
 					label={
 						+selectedClusterNodes === +avaliableKeysMaximumCount
 							? i18n.translate('cluster-nodes-maxium')

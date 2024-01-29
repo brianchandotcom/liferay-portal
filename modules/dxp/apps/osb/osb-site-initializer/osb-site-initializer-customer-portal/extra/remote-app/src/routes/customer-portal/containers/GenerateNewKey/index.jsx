@@ -4,7 +4,7 @@
  */
 
 import {useEffect, useState} from 'react';
-import {Navigate, useOutletContext} from 'react-router-dom';
+import {Navigate, useLocation, useOutletContext} from 'react-router-dom';
 import {useGetMyUserAccount} from '~/common/services/liferay/graphql/user-accounts';
 import {useCustomerPortal} from '../../context';
 import {hasAdminOrPartnerManager} from '../ActivationKeysTable/utils/hasAdminOrPartnerManager';
@@ -22,6 +22,7 @@ const GenerateNewKey = ({
 	productGroupName,
 	setHasKeyComplimentary,
 }) => {
+	const {state} = useLocation();
 	const {data: myAccount} = useGetMyUserAccount();
 	const [{project, sessionId, userAccount}] = useCustomerPortal();
 	const [infoSelectedKey, setInfoSelectedKey] = useState();
@@ -34,6 +35,10 @@ const GenerateNewKey = ({
 	});
 
 	const [purposeDescription, setPurposeDescription] = useState('');
+	const [submitKeyAction, setSubmitKeyAction] = useState({});
+	const [licenseEntryTypeName, setLicenseEntryTypeName] = useState('');
+	const [expirationRenewDate, setExpirationRenewDate] = useState('');
+	const [startRenewDate, setStartRenewDate] = useState('');
 
 	useEffect(() => {
 		setHasSideMenu(false);
@@ -58,11 +63,16 @@ const GenerateNewKey = ({
 		[STEP_TYPES.generateKeys]: (
 			<RequiredInformation
 				accountKey={project?.accountKey}
+				expirationRenewDate={expirationRenewDate}
 				hasKeyComplimentary={hasKeyComplimentary}
 				infoSelectedKey={infoSelectedKey}
+				licenseEntryTypeName={licenseEntryTypeName}
 				purposeDescription={purposeDescription}
 				sessionId={sessionId}
 				setStep={setStep}
+				startRenewDate={startRenewDate}
+				state={state}
+				submitKeyAction={submitKeyAction}
 				urlPreviousPage={urlPreviousPage}
 			/>
 		),
@@ -76,9 +86,14 @@ const GenerateNewKey = ({
 				infoSelectedKey={infoSelectedKey}
 				productGroupName={productGroupName}
 				sessionId={sessionId}
+				setExpirationRenewDate={setExpirationRenewDate}
 				setHasKeyComplimentary={setHasKeyComplimentary}
 				setInfoSelectedKey={setInfoSelectedKey}
+				setLicenseEntryTypeName={setLicenseEntryTypeName}
+				setStartRenewDate={setStartRenewDate}
 				setStep={setStep}
+				setSubmitKeyAction={setSubmitKeyAction}
+				state={state}
 				urlPreviousPage={urlPreviousPage}
 			/>
 		),

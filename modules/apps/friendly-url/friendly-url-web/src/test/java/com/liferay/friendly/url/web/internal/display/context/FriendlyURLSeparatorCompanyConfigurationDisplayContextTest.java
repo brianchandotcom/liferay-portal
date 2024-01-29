@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -31,7 +32,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,103 +52,163 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Before
+	public void setUp() throws Exception {
+		_friendlyURLSeparatorConfigurationManager = Mockito.mock(
+			FriendlyURLSeparatorConfigurationManager.class);
+
+		Mockito.when(
+			_friendlyURLSeparatorConfigurationManager.getFriendlyURLSeparators(
+				Mockito.anyLong())
+		).thenReturn(
+			StringPool.BLANK
+		);
+
+		_jsonFactory = Mockito.mock(JSONFactory.class);
+
+		Mockito.when(
+			_jsonFactory.createJSONObject(Mockito.anyString())
+		).thenReturn(
+			JSONUtil.put(
+				"BlogsEntry", "blog-test1"
+			).put(
+				"JournalArticle", "journal-test1"
+			)
+		);
+
+		_portal = Mockito.mock(Portal.class);
+
+		Mockito.when(
+			_portal.getPortletNamespace(Mockito.anyString())
+		).thenReturn(
+			"com_liferay_configuration_admin_web_portlet_" +
+				"InstanceSettingsPortlet_"
+		);
+
+		_friendlyURLResolverRegistryUtilMockedStatic = Mockito.mockStatic(
+			FriendlyURLResolverRegistryUtil.class);
+
+		_friendlyURLResolverRegistryUtilMockedStatic.when(
+			() ->
+				FriendlyURLResolverRegistryUtil.
+					getFriendlyURLResolversAsCollection()
+		).thenReturn(
+			ListUtil.fromArray(
+				new FriendlyURLResolverImpl("/b/", "BlogsEntry", "/blogs1/"),
+				new FriendlyURLResolverImpl(
+					"/w/", "JournalArticle", "/journal1/"))
+		);
+	}
+
+	@After
+	public void tearDown() {
+		_friendlyURLResolverRegistryUtilMockedStatic.close();
+	}
+
 	@Test
 	public void testGetConfigurableFriendlyURLSeparatorsJSONArray()
 		throws Exception {
 
-		MockedStatic<FriendlyURLResolverRegistryUtil>
-			friendlyURLResolverRegistryUtilMockedStatic = null;
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
 
-		try {
-			FriendlyURLSeparatorConfigurationManager
-				friendlyURLSeparatorConfigurationManager = Mockito.mock(
-					FriendlyURLSeparatorConfigurationManager.class);
+		Mockito.when(
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			_getThemeDisplay()
+		);
 
-			Mockito.when(
-				friendlyURLSeparatorConfigurationManager.
-					getFriendlyURLSeparators(Mockito.anyLong())
-			).thenReturn(
-				StringPool.BLANK
-			);
+		FriendlyURLSeparatorCompanyConfigurationDisplayContext
+			friendlyURLSeparatorCompanyConfigurationDisplayContext =
+				new FriendlyURLSeparatorCompanyConfigurationDisplayContext(
+					_friendlyURLSeparatorConfigurationManager,
+					httpServletRequest, _jsonFactory,
+					Mockito.mock(Language.class), _portal);
 
-			HttpServletRequest httpServletRequest = Mockito.mock(
-				HttpServletRequest.class);
-
-			Mockito.when(
-				httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-			).thenReturn(
-				_getThemeDisplay()
-			);
-
-			JSONFactory jsonFactory = Mockito.mock(JSONFactory.class);
-
-			Mockito.when(
-				jsonFactory.createJSONObject(Mockito.anyString())
-			).thenReturn(
+		Assert.assertEquals(
+			JSONUtil.putAll(
 				JSONUtil.put(
-					"BlogsEntry", "blog-test1"
+					"name",
+					"com_liferay_configuration_admin_web_portlet_" +
+						"InstanceSettingsPortlet_BlogsEntry"
 				).put(
-					"JournalArticle", "journal-test1"
+					"value", "blog-test1"
+				),
+				JSONUtil.put(
+					"name",
+					"com_liferay_configuration_admin_web_portlet_" +
+						"InstanceSettingsPortlet_JournalArticle"
+				).put(
+					"value", "journal-test1"
 				)
-			);
+			).toString(),
+			friendlyURLSeparatorCompanyConfigurationDisplayContext.
+				getConfigurableFriendlyURLSeparatorsJSONArray(
+				).toString());
+	}
 
-			Portal portal = Mockito.mock(Portal.class);
+	@Test
+	public void testGetConfigurableFriendlyURLSeparatorsJSONArrayWithSomeErrors()
+		throws Exception {
 
-			Mockito.when(
-				portal.getPortletNamespace(Mockito.anyString())
-			).thenReturn(
-				"com_liferay_configuration_admin_web_portlet_" +
-					"InstanceSettingsPortlet_"
-			);
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
 
-			friendlyURLResolverRegistryUtilMockedStatic = Mockito.mockStatic(
-				FriendlyURLResolverRegistryUtil.class);
-
-			friendlyURLResolverRegistryUtilMockedStatic.when(
-				() ->
-					FriendlyURLResolverRegistryUtil.
-						getFriendlyURLResolversAsCollection()
-			).thenReturn(
-				ListUtil.fromArray(
-					new FriendlyURLResolverImpl(
-						"/b/", "BlogsEntry", "/blogs1/"),
-					new FriendlyURLResolverImpl(
-						"/w/", "JournalArticle", "/journal1/"))
-			);
-
-			FriendlyURLSeparatorCompanyConfigurationDisplayContext
-				friendlyURLSeparatorCompanyConfigurationDisplayContext =
-					new FriendlyURLSeparatorCompanyConfigurationDisplayContext(
-						friendlyURLSeparatorConfigurationManager,
-						httpServletRequest, jsonFactory,
-						Mockito.mock(Language.class), portal);
-
-			Assert.assertEquals(
-				JSONUtil.putAll(
+		Mockito.when(
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			_getThemeDisplay()
+		);
+		Mockito.when(
+			httpServletRequest.getParameterMap()
+		).thenReturn(
+			HashMapBuilder.put(
+				"errors",
+				new String[] {
 					JSONUtil.put(
-						"name",
 						"com_liferay_configuration_admin_web_portlet_" +
-							"InstanceSettingsPortlet_BlogsEntry"
-					).put(
-						"value", "blog-test1"
-					),
-					JSONUtil.put(
-						"name",
-						"com_liferay_configuration_admin_web_portlet_" +
-							"InstanceSettingsPortlet_JournalArticle"
-					).put(
-						"value", "journal-test1"
-					)
-				).toString(),
-				friendlyURLSeparatorCompanyConfigurationDisplayContext.
-					getConfigurableFriendlyURLSeparatorsJSONArray(
-					).toString());
-		}
-		finally {
-			if (friendlyURLResolverRegistryUtilMockedStatic == null) {
-				friendlyURLResolverRegistryUtilMockedStatic.close();
-			}
-		}
+							"InstanceSettingsPortlet_JournalArticle",
+						"error-other-asset-type-may-use-this-prefix"
+					).toString()
+				}
+			).put(
+				"JournalArticle", new String[] {"web"}
+			).build()
+		);
+
+		Mockito.when(
+			httpServletRequest.getParameter("JournalArticle")
+		).thenReturn(
+			"web"
+		);
+
+		FriendlyURLSeparatorCompanyConfigurationDisplayContext
+			friendlyURLSeparatorCompanyConfigurationDisplayContext =
+				new FriendlyURLSeparatorCompanyConfigurationDisplayContext(
+					_friendlyURLSeparatorConfigurationManager,
+					httpServletRequest, _jsonFactory,
+					Mockito.mock(Language.class), _portal);
+
+		Assert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"name",
+					"com_liferay_configuration_admin_web_portlet_" +
+						"InstanceSettingsPortlet_BlogsEntry"
+				).put(
+					"value", "blog-test1"
+				),
+				JSONUtil.put(
+					"name",
+					"com_liferay_configuration_admin_web_portlet_" +
+						"InstanceSettingsPortlet_JournalArticle"
+				).put(
+					"value", "web"
+				)
+			).toString(),
+			friendlyURLSeparatorCompanyConfigurationDisplayContext.
+				getConfigurableFriendlyURLSeparatorsJSONArray(
+				).toString());
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
@@ -172,6 +235,13 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 
 		return themeDisplay;
 	}
+
+	private static MockedStatic<FriendlyURLResolverRegistryUtil>
+		_friendlyURLResolverRegistryUtilMockedStatic;
+	private static FriendlyURLSeparatorConfigurationManager
+		_friendlyURLSeparatorConfigurationManager;
+	private static JSONFactory _jsonFactory;
+	private static Portal _portal;
 
 	private class FriendlyURLResolverImpl implements FriendlyURLResolver {
 

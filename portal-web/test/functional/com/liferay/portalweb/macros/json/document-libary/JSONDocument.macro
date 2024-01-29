@@ -144,6 +144,12 @@ definition {
 			var sourceFileName = ${fileName};
 		}
 
+		if (!(isSet(displayDate))) {
+			var displayDate = DateUtil.getDateOffsetByMinutes(${increaseMinutes}, "yyyy-MM-dd HH:mm");
+
+			echo("## * displayDate: ${displayDate}");
+		}
+
 		if (!(isSet(expirationDate))) {
 			var expirationDate = "2099-01-25 01:00";
 		}
@@ -195,6 +201,7 @@ definition {
 					-F urlTitle=${dmFriendlyURL} \
 					-F description=${description} \
 					-F changeLog= \
+					-F <CURL_DATA[displayDate=${displayDate}]CURL_DATA> \
 					-F <CURL_DATA[expirationDate=${expirationDate}]CURL_DATA> \
 					-F <CURL_DATA[reviewDate=${reviewDate}]CURL_DATA> \
 					-F file=@${filePath} \

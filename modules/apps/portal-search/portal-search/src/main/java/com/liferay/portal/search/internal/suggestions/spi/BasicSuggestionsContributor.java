@@ -123,6 +123,8 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 
 		searchRequestBuilder.withSearchContext(
 			searchContext2 -> {
+				searchContext2.setAttribute(
+					"search.contribute.tuning.rankings", Boolean.TRUE);
 				searchContext2.setCompanyId(searchContext1.getCompanyId());
 				searchContext2.setGroupIds(searchContext1.getGroupIds());
 				searchContext2.setKeywords(searchContext1.getKeywords());

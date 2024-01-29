@@ -33,7 +33,6 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 		List<String> taglibAnchorAttributes = getAttributeValues(
 			_TAGLIB_ANCHOR_ATTRIBUTES_KEY, absolutePath);
 
-		outerLoop:
 		for (String taglibAnchorAttribute : taglibAnchorAttributes) {
 			String[] attributeParts = StringUtil.split(
 				taglibAnchorAttribute, "->");
@@ -50,7 +49,7 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 				x = content.indexOf(taglibName, x + 1);
 
 				if (x == -1) {
-					continue outerLoop;
+					break;
 				}
 
 				Tag tag = parseTag(getTag(content, x), false);
@@ -82,13 +81,13 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 						String symbolicName = _getSymbolicName(fileName);
 
 						if (symbolicName == null) {
-							continue outerLoop;
+							break;
 						}
 
 						int index = fileName.lastIndexOf("/resources/");
 
 						if (index == -1) {
-							continue outerLoop;
+							break;
 						}
 
 						expectedValue = StringBundler.concat(

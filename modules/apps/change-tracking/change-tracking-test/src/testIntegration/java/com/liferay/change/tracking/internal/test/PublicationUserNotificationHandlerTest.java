@@ -112,14 +112,10 @@ public class PublicationUserNotificationHandlerTest {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				userNotificationEvent.getPayload());
 
-			int notificationType = jsonObject.getInt("notificationType");
-
-			boolean showConflicts = jsonObject.getBoolean("showConflicts");
-
-			if ((notificationType ==
+			if ((jsonObject.getInt("notificationType") !=
 					UserNotificationDefinition.
-						NOTIFICATION_TYPE_REVIEW_ENTRY) &&
-				!showConflicts) {
+						NOTIFICATION_TYPE_REVIEW_ENTRY) ||
+				!jsonObject.getBoolean("showConflicts")) {
 
 				continue;
 			}
@@ -191,14 +187,10 @@ public class PublicationUserNotificationHandlerTest {
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					userNotificationEvent.getPayload());
 
-				int notificationType = jsonObject.getInt("notificationType");
-
-				boolean showConflicts = jsonObject.getBoolean("showConflicts");
-
-				if ((notificationType ==
+				if ((jsonObject.getInt("notificationType") !=
 						UserNotificationDefinition.
-							NOTIFICATION_TYPE_REVIEW_ENTRY) &&
-					showConflicts) {
+							NOTIFICATION_TYPE_REVIEW_ENTRY) ||
+					jsonObject.getBoolean("showConflicts")) {
 
 					continue;
 				}

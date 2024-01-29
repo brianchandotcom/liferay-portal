@@ -38,6 +38,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 				template,
 				templateTestrayBuildId,
 			}) => ({
+				archived: false,
 				description,
 				dueStatus,
 				gitHash,
@@ -203,6 +204,12 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 			) || [];
 
 		return caseIds;
+	}
+
+	public async updateArchivedFlag(id: number, archived: boolean) {
+		await this.fetcher.patch(`/builds/${id}`, {
+			archived,
+		});
 	}
 }
 

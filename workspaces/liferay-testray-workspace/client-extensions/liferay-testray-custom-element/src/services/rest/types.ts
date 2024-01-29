@@ -105,6 +105,7 @@ export type UserRole = {
 
 export type TestrayBuild = {
 	actions: ObjectActionsItems;
+	archived?: boolean;
 	buildToTasks: TestrayTask[];
 	creator: {
 		name: string;

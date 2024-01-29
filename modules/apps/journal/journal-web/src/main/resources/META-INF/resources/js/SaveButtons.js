@@ -7,8 +7,9 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
+import initializeLock from './initializeLock';
 import PublishModal from './modals/PublishModal';
 import removeAlert from './removeAlert';
 import showAlert from './showAlert';
@@ -32,6 +33,31 @@ export default function SaveButtons({
 		{publishModalAction, publishModalVisible},
 		setPublishModalState,
 	] = useState({publishModalAction: '', publishModalVisible: false});
+
+	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
+
+	useEffect(() => {
+		initializeLock('publishing', {
+			lockedIndicator: document.getElementById(
+				`${portletNamespace}savingChangesIndicator`
+			),
+			namespace: portletNamespace,
+			onLockChange: ({isLocked}) => {
+				setSaveButtonDisabled(isLocked);
+
+				const resetValuesButton = document.getElementById(
+					`${portletNamespace}resetValuesButton`
+				);
+
+				if (resetValuesButton) {
+					resetValuesButton.disabled = isLocked;
+				}
+			},
+			unlockedIndicator: document.getElementById(
+				`${portletNamespace}changesSavedIndicator`
+			),
+		});
+	}, [portletNamespace]);
 
 	const onClick = (action) => {
 		const titleInputComponent = Liferay.component(
@@ -149,6 +175,7 @@ export default function SaveButtons({
 						aria-label={Liferay.Language.get(
 							'select-and-confirm-publish-settings'
 						)}
+						disabled={saveButtonDisabled}
 						title={Liferay.Language.get(
 							'select-and-confirm-publish-settings'
 						)}

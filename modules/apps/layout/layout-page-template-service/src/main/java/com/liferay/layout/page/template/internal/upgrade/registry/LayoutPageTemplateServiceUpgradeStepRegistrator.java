@@ -174,7 +174,14 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 				LayoutPageTemplateStructureUpgradeProcess());
 
 		registry.register(
-			"5.0.0", "5.1.0",
+			"5.0.0", "5.0.1",
+			new com.liferay.layout.page.template.internal.upgrade.v5_0_1.
+				LayoutPageTemplateStructureUpgradeProcess(
+					_fragmentEntryLinkLocalService,
+					_segmentsExperienceLocalService));
+
+		registry.register(
+			"5.0.1", "5.1.0",
 			new com.liferay.layout.page.template.internal.upgrade.v5_1_0.
 				LayoutPageTemplateStructureUpgradeProcess(
 					_layoutLocalService, _segmentsExperienceLocalService,

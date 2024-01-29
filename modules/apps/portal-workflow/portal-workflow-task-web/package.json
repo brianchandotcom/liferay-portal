@@ -2,6 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
+	"main": "js/index.js",
 	"name": "portal-workflow-task-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

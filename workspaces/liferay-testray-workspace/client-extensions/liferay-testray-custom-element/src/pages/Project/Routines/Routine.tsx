@@ -29,6 +29,8 @@ const Routine = () => {
 		.and()
 		.eq('template', false)
 		.and()
+		.eq('archived', false)
+		.and()
 		.build();
 
 	return (

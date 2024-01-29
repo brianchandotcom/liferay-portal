@@ -8,7 +8,10 @@ import {Locator, Page, expect} from '@playwright/test';
 import {ObjectDefinitionsPage} from './ObjectDefinitionsPage';
 
 export class ModelBuilderPage {
+	readonly deleteObjectRelationshipButton: Locator;
 	readonly fitViewButton: Locator;
+	readonly modalDeleteObjectRelationshipConfirmationButton: Locator;
+	readonly modalDeleteObjectRelationshipTextField: Locator;
 	readonly newObjectRelationshipLabel: Locator;
 	readonly newObjectRelationshipTitle: Locator;
 	readonly newObjectRelationshipType: Locator;
@@ -20,8 +23,18 @@ export class ModelBuilderPage {
 	readonly toggleSidebarsButton: Locator;
 
 	constructor(page: Page) {
+		this.deleteObjectRelationshipButton = page.getByLabel(
+			'Delete Relationship'
+		);
 		this.fitViewButton = page.locator(
 			'button.react-flow__controls-button.react-flow__controls-fitview'
+		);
+		this.modalDeleteObjectRelationshipConfirmationButton = page.getByRole(
+			'button',
+			{exact: true, name: 'Delete'}
+		);
+		this.modalDeleteObjectRelationshipTextField = page.getByPlaceholder(
+			'Confirm Relationship Name'
 		);
 		this.newObjectRelationshipLabel = page
 			.locator('div.form-group')
@@ -41,8 +54,27 @@ export class ModelBuilderPage {
 		this.toggleSidebarsButton = page.getByLabel('Toggle Sidebars');
 	}
 
+	async deleteObjectRelationship(objectRelationshipName: string) {
+		await this.deleteObjectRelationshipButton.click();
+		await this.modalDeleteObjectRelationshipTextField.click();
+		await this.modalDeleteObjectRelationshipTextField.fill(
+			objectRelationshipName
+		);
+		await this.modalDeleteObjectRelationshipConfirmationButton.click();
+	}
+
+	async clickDeleteObjectRelationshipButton() {
+		this.deleteObjectRelationshipButton.click();
+	}
+
 	async clickFitViewButton() {
 		this.fitViewButton.click({force: true});
+	}
+
+	async clickObjectRelationshipEdge(objectRelationshipLabel: string) {
+		this.objectRelationshipEdges
+			.filter({hasText: objectRelationshipLabel})
+			.click();
 	}
 
 	async clickObjectDefinitionShowAllFieldsButton(

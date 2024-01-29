@@ -1431,8 +1431,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		// Lock
-
 		if (!hasKBArticleLock(userId, resourcePrimKey)) {
 			lockKBArticle(userId, resourcePrimKey);
 		}

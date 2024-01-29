@@ -178,16 +178,16 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 			"rztm", "Name",
 			createLocalizedValue("Paul", "Paulo", LocaleUtil.US));
 
-		List<DDMFormFieldValue> paulNestedDDMFormFieldValue =
+		List<DDMFormFieldValue> paulNestedDDMFormFieldValues =
 			paulDDMFormFieldValue.getNestedDDMFormFieldValues();
 
-		paulNestedDDMFormFieldValue.add(
+		paulNestedDDMFormFieldValues.add(
 			createDDMFormFieldValue(
 				"ovho", "Phone",
 				createLocalizedValue(
 					"Paul's Phone 1", "Telefone de Paulo 1", LocaleUtil.US)));
 
-		paulNestedDDMFormFieldValue.add(
+		paulNestedDDMFormFieldValues.add(
 			createDDMFormFieldValue(
 				"krvx", "Phone",
 				createLocalizedValue(
@@ -198,22 +198,22 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		DDMFormFieldValue joeDDMFormFieldValue = createDDMFormFieldValue(
 			"rght", "Name", createLocalizedValue("Joe", "Joao", LocaleUtil.US));
 
-		List<DDMFormFieldValue> joeNestedDDMFormFieldValue =
+		List<DDMFormFieldValue> joeNestedDDMFormFieldValues =
 			joeDDMFormFieldValue.getNestedDDMFormFieldValues();
 
-		joeNestedDDMFormFieldValue.add(
+		joeNestedDDMFormFieldValues.add(
 			createDDMFormFieldValue(
 				"latb", "Phone",
 				createLocalizedValue(
 					"Joe's Phone 1", "Telefone de Joao 1", LocaleUtil.US)));
 
-		joeNestedDDMFormFieldValue.add(
+		joeNestedDDMFormFieldValues.add(
 			createDDMFormFieldValue(
 				"jewp", "Phone",
 				createLocalizedValue(
 					"Joe's Phone 2", "Telefone de Joao 2", LocaleUtil.US)));
 
-		joeNestedDDMFormFieldValue.add(
+		joeNestedDDMFormFieldValues.add(
 			createDDMFormFieldValue(
 				"mkar", "Phone",
 				createLocalizedValue(

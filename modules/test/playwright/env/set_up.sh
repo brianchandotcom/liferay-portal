@@ -8,6 +8,8 @@ update_portal_ext_properties
 
 start_app_server
 
+deploy_base_osgi_modules
+
 deploy_project_osgi_modules
 
 deploy_project_env_deploy_folder

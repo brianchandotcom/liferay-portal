@@ -24,7 +24,8 @@
 		"checkFormat": "tsc && liferay-npm-scripts lint && liferay-npm-scripts format:check",
 		"format": "tsc && liferay-npm-scripts lint:fix && liferay-npm-scripts format",
 		"playwright": "playwright",
-		"test": "playwright test"
+		"test": "playwright test",
+		"test:setup": "bash ./tools/test-setup.sh"
 	},
 	"version": "1.0.0"
 }

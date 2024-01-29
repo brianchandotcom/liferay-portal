@@ -254,7 +254,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
 		long groupId = themeDisplay.getScopeGroupId();
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String url = ParamUtil.getString(actionRequest, "url");
 		String description = ParamUtil.getString(actionRequest, "description");
@@ -268,6 +267,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			// Add entry
 
+			long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
 			entry = _bookmarksEntryService.addEntry(
 				groupId, folderId, name, url, description, serviceContext);
 		}
@@ -275,8 +276,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			// Update entry
 
+			long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
+
 			entry = _bookmarksEntryService.updateEntry(
-				entryId, groupId, folderId, name, url, description,
+				entryId, groupId, newFolderId, name, url, description,
 				serviceContext);
 		}
 

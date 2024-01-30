@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {headlessBuilderPagesTest} from '../../fixtures/headlessBuilderPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {liferayConfig} from '../../liferay.config';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -225,7 +226,7 @@ test('can create post endpoint with different request and response schema', asyn
 	await apiApplicationPage.publishButton.click();
 
 	await page.goto(
-		`/o/api?endpoint=http://localhost:8080/o/c/${studentSubjectsApplication.baseURL}/openapi.json`
+		`/o/api?endpoint=${liferayConfig.environment.baseUrl}/o/c/${studentSubjectsApplication.baseURL}/openapi.json`
 	);
 
 	page.waitForLoadState();
@@ -272,7 +273,7 @@ test('can create post method endpoint with company scope', async ({
 	await apiApplicationPage.publishButton.click();
 
 	await page.goto(
-		`/o/api?endpoint=http://localhost:8080/o/c/${basicApiApplication.baseURL}/openapi.json`
+		`/o/api?endpoint=${liferayConfig.environment.baseUrl}/o/c/${basicApiApplication.baseURL}/openapi.json`
 	);
 
 	await page.waitForLoadState();

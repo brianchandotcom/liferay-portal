@@ -46,7 +46,7 @@ String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-a
 			<c:if test="<%= articleDisplay.isPaginate() && (paginationURL != null) %>">
 				<div>
 					<react:component
-						module="journal_article/js/JournalArticlePagination.es"
+						module="{JournalArticlePagination} from journal-taglib"
 						props='<%=
 							HashMapBuilder.<String, Object>put(
 								"activePage", articleDisplay.getCurrentPage()

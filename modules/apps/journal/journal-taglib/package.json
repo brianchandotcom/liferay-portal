@@ -4,6 +4,7 @@
 		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},
+	"main": "journal_article/js/index.js",
 	"name": "@liferay/journal-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

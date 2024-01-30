@@ -7,7 +7,7 @@ import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import {addParams} from 'frontend-js-web';
 import React from 'react';
 
-function JournalArticlePagination({
+export function JournalArticlePagination({
 	activePage,
 	namespace,
 	paginationURL,
@@ -29,5 +29,3 @@ function JournalArticlePagination({
 		</>
 	);
 }
-
-export default JournalArticlePagination;

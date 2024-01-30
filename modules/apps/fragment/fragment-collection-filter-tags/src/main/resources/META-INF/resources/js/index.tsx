@@ -19,7 +19,7 @@ interface IProps {
 	targetCollections: Array<string>;
 }
 
-export default function SelectTags({
+export function SelectTags({
 	disabled,
 	fragmentEntryLinkId,
 	helpText,

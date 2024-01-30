@@ -18,6 +18,12 @@ onExit(() => {
 	}
 });
 
+export class TempFileMissingError extends Error {
+	constructor(fileName: string) {
+		super(`Temporary file ${fileName} does not exist`);
+	}
+}
+
 export default function createTempFile(
 	name: string,
 	content: string = ''
@@ -37,6 +43,10 @@ export default function createTempFile(
 
 export function readTempFile(name: string): string {
 	const filePath = path.join(TMP_DIR, name);
+
+	if (!fs.existsSync(filePath)) {
+		throw new TempFileMissingError(name);
+	}
 
 	try {
 		return fs.readFileSync(filePath, 'utf-8');

@@ -89,7 +89,7 @@ public class SugarCRMObjectEntryManagerImpl
 			ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
-		JSONObject responseJSONObject = _sugarcrmHttp.post(
+		JSONObject responseJSONObject = _sugarCRMHttp.post(
 			objectDefinition.getCompanyId(),
 			getGroupId(objectDefinition, scopeKey),
 			_getObjectLocation(objectDefinition),
@@ -111,7 +111,7 @@ public class SugarCRMObjectEntryManagerImpl
 			ActionKeys.DELETE, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
-		_sugarcrmHttp.delete(
+		_sugarCRMHttp.delete(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			objectDefinition.getExternalReferenceCode() +
 				StringPool.FORWARD_SLASH + externalReferenceCode);
@@ -149,7 +149,7 @@ public class SugarCRMObjectEntryManagerImpl
 			return null;
 		}
 
-		JSONObject jsonObject = _sugarcrmHttp.get(
+		JSONObject jsonObject = _sugarCRMHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			StringBundler.concat(
 				_getObjectLocation(objectDefinition), StringPool.FORWARD_SLASH,
@@ -308,7 +308,7 @@ public class SugarCRMObjectEntryManagerImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		JSONObject responseJSONObject = _sugarcrmHttp.get(
+		JSONObject responseJSONObject = _sugarCRMHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			_generatePreparedLocation(
 				objectDefinition, filterString, pagination, sorts, false),
@@ -366,7 +366,7 @@ public class SugarCRMObjectEntryManagerImpl
 			String filterString, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		JSONObject responseJSONObject = _sugarcrmHttp.get(
+		JSONObject responseJSONObject = _sugarCRMHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			_generatePreparedLocation(
 				objectDefinition, filterString, pagination, sorts, true),
@@ -563,7 +563,7 @@ public class SugarCRMObjectEntryManagerImpl
 	@Reference
 	private Portal _portal;
 
-	private final SugarCRMHttp _sugarcrmHttp = new SugarCRMHttp();
+	private final SugarCRMHttp _sugarCRMHttp = new SugarCRMHttp();
 
 	@Reference
 	private UserLocalService _userLocalService;

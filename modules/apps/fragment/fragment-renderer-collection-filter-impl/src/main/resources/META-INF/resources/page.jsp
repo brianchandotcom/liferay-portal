@@ -20,7 +20,7 @@ FragmentRendererContext fragmentRendererContext = (FragmentRendererContext)reque
 					"filterPrefix", FragmentCollectionFilterConstants.FILTER_PREFIX
 				).build()
 			%>'
-			module="js/CollectionFilterRegister"
+			module="{CollectionFilterRegister} from fragment-renderer-collection-filter-impl"
 			servletContext="<%= application %>"
 		/>
 

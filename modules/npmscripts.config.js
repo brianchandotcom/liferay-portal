@@ -370,6 +370,7 @@ module.exports = {
 			'@liferay/cookies-banner-web': [],
 			'@liferay/document-library-preview-css': [],
 			'@liferay/flags-taglib': [],
+			'@liferay/fragment-renderer-collection-filter-impl': [],
 			'@liferay/frontend-data-set-web': [],
 			'@liferay/frontend-icons-web': [],
 			'@liferay/frontend-js-dependencies-web': [

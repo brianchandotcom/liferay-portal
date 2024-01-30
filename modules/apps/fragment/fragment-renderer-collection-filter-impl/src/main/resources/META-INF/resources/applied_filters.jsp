@@ -84,5 +84,5 @@ List<Map<String, String>> appliedFilters = collectionAppliedFiltersFragmentRende
 
 <liferay-frontend:component
 	context="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getCollectionAppliedFiltersProps() %>"
-	module="js/CollectionAppliedFilters"
+	module="{CollectionAppliedFilters} from fragment-renderer-collection-filter-impl"
 />

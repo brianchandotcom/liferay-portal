@@ -79,6 +79,6 @@ export function setCollectionFilterValue(
  * @param {object} data
  * @param {string} data.filterPrefix
  */
-export default function CollectionFilterRegister({filterPrefix}) {
+export function CollectionFilterRegister({filterPrefix}) {
 	_filterPrefix = filterPrefix;
 }

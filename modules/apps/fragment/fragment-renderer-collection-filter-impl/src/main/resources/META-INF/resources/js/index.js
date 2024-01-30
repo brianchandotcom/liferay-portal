@@ -4,6 +4,9 @@
  */
 
 export {
+	CollectionFilterRegister,
 	getCollectionFilterValue,
 	setCollectionFilterValue,
 } from './CollectionFilterRegister';
+
+export {default as CollectionAppliedFilters} from './CollectionAppliedFilters';

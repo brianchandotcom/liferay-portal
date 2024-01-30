@@ -27,18 +27,26 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -187,6 +195,83 @@ public class OpenAPIResourceTest {
 				ObjectDefinitionConstants.SCOPE_SITE);
 
 		_testGetOpenAPI(_siteScopedObjectDefinition, _objectDefinition2);
+	}
+
+	@Test
+	public void testGetOpenAPIMultipleCompanies() throws Exception {
+		String objectDefinitionName = RandomTestUtil.randomString() + "abc";
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"domain", "able.com"
+			).put(
+				"portalInstanceId", "able.com"
+			).put(
+				"virtualHost", "www.able.com"
+			).toString(),
+			"headless-portal-instances/v1.0/portal-instances",
+			Http.Method.POST);
+
+		long companyId = (long)jsonObject.get("companyId");
+
+		User user = UserTestUtil.getAdminUser(companyId);
+
+		Group group = GroupLocalServiceUtil.getGroup(
+			companyId, GroupConstants.GUEST);
+
+		_user = UserTestUtil.addUser(
+			companyId, user.getUserId(),
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {group.getGroupId()},
+			ServiceContextTestUtil.getServiceContext());
+
+		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			"A" + StringUtil.toLowerCase(objectDefinitionName),
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)),
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			TestPropsValues.getUserId());
+
+		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			"A" + StringUtil.toUpperCase(objectDefinitionName),
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)),
+			ObjectDefinitionConstants.SCOPE_COMPANY, _user.getUserId());
+
+		HTTPTestUtil.customize(
+		).withBaseURL(
+			"http://www.able.com:8080"
+		).withCredentials(
+			"test@able.com", "test"
+		).apply(
+			() -> {
+				Assert.assertEquals(
+					200,
+					HTTPTestUtil.invokeToHttpCode(
+						null, _objectDefinition2.getRESTContextPath(),
+						Http.Method.GET));
+
+				JSONObject openAPIJSONObject = HTTPTestUtil.invokeToJSONObject(
+					null, "/openapi", Http.Method.GET);
+
+				JSONArray jsonArray = openAPIJSONObject.getJSONArray(
+					_objectDefinition2.getRESTContextPath());
+
+				Assert.assertEquals(1, jsonArray.length());
+				Assert.assertEquals(
+					"http://www.able.com:8080/o" +
+						_objectDefinition2.getRESTContextPath() +
+							"/openapi.yaml",
+					jsonArray.get(0));
+			}
+		);
 	}
 
 	@Ignore

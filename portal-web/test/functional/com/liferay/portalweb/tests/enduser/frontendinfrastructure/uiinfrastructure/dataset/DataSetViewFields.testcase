@@ -475,7 +475,9 @@ definition {
 		}
 
 		task ("Then Confirm the page translation according to PT-BR") {
-			Navigator.openSpecificURL(url = "http://localhost:8080/pt/data-set-test");
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/pt/data-set-test");
 
 			AssertElementPresent(
 				key_column = "PT-BR",
@@ -564,7 +566,9 @@ definition {
 		}
 
 		task ("Then the label of the field translated (but not saved) is displayed in the default language.") {
-			Navigator.openSpecificURL(url = "http://localhost:8080/pt/data-set-test");
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/pt/data-set-test");
 
 			AssertElementNotPresent(
 				key_column = "PT-BR",

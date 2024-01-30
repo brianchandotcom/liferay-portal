@@ -430,11 +430,11 @@ definition {
 		}
 
 		task ("And go to the page created, and put a "pt" in URL page") {
-			Navigator.openURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			Navigator.gotoPage(pageName = "Data Set Test");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/pt/data-set-test");
+			Navigator.openSpecificURL(url = "${portalURL}/pt/data-set-test");
 		}
 
 		task ("Then Confirm the page translation according to PT-BR") {
@@ -2360,11 +2360,11 @@ definition {
 		}
 
 		task ("And go to the page created, and put a "pt" in URL page") {
-			Navigator.openURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			Navigator.gotoPage(pageName = "Data Set Test");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/pt/data-set-test");
+			Navigator.openSpecificURL(url = "${portalURL}/pt/data-set-test");
 		}
 
 		task ("Then Confirm the page translation is not according to PT-BR") {
@@ -2483,11 +2483,11 @@ definition {
 		}
 
 		task ("And go to the page created, and put a "pt" in URL page") {
-			Navigator.openURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			Navigator.gotoPage(pageName = "Data Set Test");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/pt/data-set-test");
+			Navigator.openSpecificURL(url = "${portalURL}/pt/data-set-test");
 		}
 
 		task ("Then Confirm the page translation is not according to PT-BR") {

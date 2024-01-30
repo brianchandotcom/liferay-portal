@@ -1634,7 +1634,9 @@ definition {
 		}
 
 		task ("And change the URL page adding /pr/ and confirm the "Portugues"") {
-			Navigator.openSpecificURL(url = "http://localhost:8080/pt/test-page-name");
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/pt/test-page-name");
 
 			AssertElementPresent(
 				key_addressType = "Portugues",
@@ -2114,7 +2116,9 @@ definition {
 		}
 
 		task ("Then Confirm the “First Text Translated“ field is shown in the fragment") {
-			Navigator.openSpecificURL(url = "http://localhost:8080/pt/data-set-test");
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/pt/data-set-test");
 
 			Navigator.gotoPage(pageName = "Test Page Name");
 
@@ -2209,9 +2213,9 @@ definition {
 		}
 
 		task ("And go to the page created, and put a "pt" in URL page") {
-			Navigator.openURL();
+			var portalURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/pt/data-set-test");
+			Navigator.openSpecificURL(url = "${portalURL}/pt/data-set-test");
 
 			Navigator.gotoPage(pageName = "Data Set Test");
 

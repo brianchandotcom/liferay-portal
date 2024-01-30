@@ -22,7 +22,7 @@ type Props = {
 	url: string;
 };
 
-export default function SeparatorFields({errors, fields, url}: Props) {
+export function SeparatorFields({errors, fields, url}: Props) {
 	const id = useId();
 
 	return (

@@ -17,7 +17,7 @@ declare type Props = {
 	}>;
 	url: string;
 };
-export default function SeparatorFields({
+export declare function SeparatorFields({
 	errors,
 	fields,
 	url,

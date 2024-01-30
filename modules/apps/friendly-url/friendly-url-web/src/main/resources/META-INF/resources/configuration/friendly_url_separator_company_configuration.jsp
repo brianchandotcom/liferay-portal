@@ -69,7 +69,7 @@ String errorMessage = errorsJSONObject.getString("errorMessage");
 	%>
 
 	<react:component
-		module="js/SeparatorFields"
+		module="{SeparatorFields} from friendly-url-web"
 		props="<%= friendlyURLSeparatorCompanyConfigurationDisplayContext.getSeparatorFieldsProps() %>"
 	/>
 </div>

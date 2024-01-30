@@ -359,6 +359,40 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								objectDefinition.getRESTContextPath()
 							).build()),
 						_bundleContext.registerService(
+							ObjectEntryResource.class,
+							new PrototypeServiceFactory<ObjectEntryResource>() {
+
+								@Override
+								public ObjectEntryResource getService(
+									Bundle bundle,
+									ServiceRegistration<ObjectEntryResource>
+										serviceRegistration) {
+
+									return _createObjectEntryResourceImpl();
+								}
+
+								@Override
+								public void ungetService(
+									Bundle bundle,
+									ServiceRegistration<ObjectEntryResource>
+										serviceRegistration,
+									ObjectEntryResource objectEntryResource) {
+								}
+
+							},
+							HashMapDictionaryBuilder.<String, Object>put(
+								"batch.engine.task.item.delegate", "true"
+							).put(
+								"batch.engine.task.item.delegate.name",
+								objectDefinition.getName()
+							).put(
+								"batch.planner.export.enabled", "true"
+							).put(
+								"batch.planner.import.enabled", "true"
+							).put(
+								"companyId", objectDefinition.getCompanyId()
+							).build()),
+						_bundleContext.registerService(
 							ObjectRelationshipElementsParser.class,
 							new ObjectEntry1toMObjectRelationshipElementsParserImpl(
 								objectDefinition),
@@ -381,14 +415,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		).put(
 			"batch.engine.entity.class.name",
 			ObjectEntry.class.getName() + "#" + osgiJaxRsName
-		).put(
-			"batch.engine.task.item.delegate", "true"
-		).put(
-			"batch.engine.task.item.delegate.name", osgiJaxRsName
-		).put(
-			"batch.planner.export.enabled", "true"
-		).put(
-			"batch.planner.import.enabled", "true"
 		).put(
 			"companyId", companyIds
 		).put(

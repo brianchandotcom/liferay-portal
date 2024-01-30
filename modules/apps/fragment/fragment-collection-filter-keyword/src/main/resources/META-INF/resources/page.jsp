@@ -30,6 +30,6 @@
 
 	<liferay-frontend:component
 		context="<%= fragmentCollectionFilterKeywordDisplayContext.getProps() %>"
-		module="js/FragmentCollectionFilterKeyword"
+		module="{FragmentCollectionFilterKeyword} from fragment-collection-filter-keyword"
 	/>
 </div>

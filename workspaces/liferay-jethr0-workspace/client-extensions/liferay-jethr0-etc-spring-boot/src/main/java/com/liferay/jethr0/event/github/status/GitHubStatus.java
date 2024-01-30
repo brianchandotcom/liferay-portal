@@ -20,12 +20,20 @@ public class GitHubStatus {
 		_jsonObject = jsonObject;
 	}
 
+	public String getContext() {
+		return _jsonObject.getString("context");
+	}
+
 	public String getDescription() {
 		return _jsonObject.getString("description");
 	}
 
 	public GitHubClient getGitHubClient() {
 		return _gitHubFactory.getGitHubClient();
+	}
+
+	public String getState() {
+		return _jsonObject.getString("state");
 	}
 
 	private final GitHubFactory _gitHubFactory;

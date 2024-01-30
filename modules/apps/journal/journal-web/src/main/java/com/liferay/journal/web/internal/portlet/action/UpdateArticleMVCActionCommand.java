@@ -462,10 +462,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		boolean hideDefaultSuccessMessage = ParamUtil.getBoolean(
 			actionRequest, "hideDefaultSuccessMessage");
 
-		if (hideDefaultSuccessMessage) {
-			hideDefaultSuccessMessage(actionRequest);
-		}
-		else {
+		if (!hideDefaultSuccessMessage) {
 			SessionMessages.remove(
 				httpServletRequest,
 				_portal.getPortletId(actionRequest) +

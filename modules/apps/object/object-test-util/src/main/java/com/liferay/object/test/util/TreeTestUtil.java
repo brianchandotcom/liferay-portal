@@ -291,10 +291,10 @@ public class TreeTestUtil {
 		Assert.assertEquals(expectedMap.size(), actualMap.size());
 
 		for (Map.Entry<String, String[]> entry : expectedMap.entrySet()) {
-			String[] actualValues = actualMap.get(entry.getKey());
 			String[] expectedValues = entry.getValue();
+			String[] actualValues = actualMap.get(entry.getKey());
 
-			if ((actualValues.length == 0) && (expectedValues.length == 0)) {
+			if ((expectedValues.length == 0) && (actualValues.length == 0)) {
 				continue;
 			}
 
@@ -302,7 +302,7 @@ public class TreeTestUtil {
 				Arrays.toString(actualValues), expectedValues.length,
 				actualValues.length);
 			Assert.assertTrue(
-				ArrayUtil.containsAll(actualValues, expectedValues));
+				ArrayUtil.containsAll(expectedValues, actualValues));
 		}
 	}
 

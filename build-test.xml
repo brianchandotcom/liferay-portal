@@ -1101,7 +1101,7 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				</else>
 			</if>
 
-			<echo>## Using ${java.jdk.home} as JAVA_HOME</echo>
+			<echo>## Using ${java.jdk.home} as JAVA_HOME.</echo>
 		</sequential>
 	</macrodef>
 

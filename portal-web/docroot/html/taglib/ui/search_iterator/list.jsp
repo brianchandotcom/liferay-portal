@@ -11,7 +11,7 @@
 
 <%
 if (searchResultCssClass == null) {
-	searchResultCssClass = "show-quick-actions-on-hover table table-autofit table-heading-nowrap table-list";
+	searchResultCssClass = "show-quick-actions-on-hover table table-autofit table-heading-nowrap table-list table-head-bordered table-striped table-hover";
 }
 
 List<ResultRowSplitterEntry> resultRowSplitterEntries = new ArrayList<ResultRowSplitterEntry>();

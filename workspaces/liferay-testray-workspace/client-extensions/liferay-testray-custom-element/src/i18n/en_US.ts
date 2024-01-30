@@ -419,6 +419,7 @@ export default {
 	'total-test-cases': 'Total test cases',
 	'type': 'Type',
 	'type-is-a-required-field': 'Type is a required field',
+	'unarchive': 'Unarchive',
 	'unassign-myself': 'Unassign Myself',
 	'unassigned': 'Unassigned',
 	'undo-x': 'Undo ({0})',

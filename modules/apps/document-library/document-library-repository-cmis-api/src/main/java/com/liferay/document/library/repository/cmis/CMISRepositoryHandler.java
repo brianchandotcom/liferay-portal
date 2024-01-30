@@ -570,12 +570,13 @@ public abstract class CMISRepositoryHandler
 	public FileEntry updateFileEntry(
 			String objectId, String mimeType, Map<String, Object> properties,
 			InputStream inputStream, String sourceFileName, long size,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return _baseCmisRepository.updateFileEntry(
 			objectId, mimeType, properties, inputStream, sourceFileName, size,
-			expirationDate, reviewDate, serviceContext);
+			displayDate, expirationDate, reviewDate, serviceContext);
 	}
 
 	@Override

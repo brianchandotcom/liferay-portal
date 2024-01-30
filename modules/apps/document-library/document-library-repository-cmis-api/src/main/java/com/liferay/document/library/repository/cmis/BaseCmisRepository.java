@@ -49,7 +49,8 @@ public abstract class BaseCmisRepository extends BaseRepositoryImpl {
 	public abstract FileEntry updateFileEntry(
 			String objectId, String mimeType, Map<String, Object> properties,
 			InputStream inputStream, String sourceFileName, long size,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 }

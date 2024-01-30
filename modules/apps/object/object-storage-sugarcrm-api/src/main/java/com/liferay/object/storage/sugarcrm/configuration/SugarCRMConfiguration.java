@@ -16,10 +16,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "third-party", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.object.storage.sugarcrm.configuration.SugarcrmConfiguration",
+	id = "com.liferay.object.storage.sugarcrm.configuration.SugarCRMConfiguration",
 	localization = "content/Language", name = "sugarcrm-configuration-name"
 )
-public interface SugarcrmConfiguration {
+public interface SugarCRMConfiguration {
 
 	@Meta.AD(name = "base-url", required = false)
 	public String baseURL();

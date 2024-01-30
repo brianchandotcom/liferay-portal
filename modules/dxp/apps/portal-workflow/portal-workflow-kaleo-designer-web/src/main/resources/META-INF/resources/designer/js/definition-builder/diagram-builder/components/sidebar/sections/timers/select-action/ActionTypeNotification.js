@@ -243,6 +243,47 @@ const ActionTypeNotification = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [recipientType]);
 
+	useEffect(() => {
+		let sectionsData = [];
+
+		const recipients = actionData?.recipients;
+
+		if (recipients && recipientType === 'roleType') {
+			if (Array.isArray(recipients.roleKey)) {
+				for (let i = 0; i < recipients.roleKey.length; i++) {
+					sectionsData.push({
+						autoCreate: recipients.autoCreate?.[i],
+						identifier: `${Date.now()}-${i}`,
+						roleKey: recipients.roleKey[i],
+						roleName: recipients.roleName?.[i],
+						roleType: recipients.roleType[i],
+					});
+				}
+			}
+			else {
+				sectionsData.push({
+					autoCreate: recipients.autoCreate,
+					identifier: `${Date.now()}-0`,
+					roleKey: recipients.roleKey,
+					roleName: recipients.roleName?.[0],
+					roleType: recipients.roleType,
+				});
+			}
+		}
+		else if (
+			actionData?.recipients?.sectionsData &&
+			recipientType === 'user'
+		) {
+			sectionsData = actionData?.recipients?.sectionsData;
+		}
+
+		if (sectionsData.length) {
+			setInternalSections(sectionsData);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<BaseNotificationsInfo
 			accountEntryId={accountEntryId}

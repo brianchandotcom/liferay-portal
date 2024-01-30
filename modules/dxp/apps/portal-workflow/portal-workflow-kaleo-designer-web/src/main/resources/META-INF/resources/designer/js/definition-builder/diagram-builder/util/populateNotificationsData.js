@@ -200,7 +200,7 @@ const populateNotificationsData = (
 									accountRoles.items
 								);
 
-								const roleKey =
+								let roleKey =
 									element?.data?.taskTimers
 										?.timerNotifications[0]?.recipients[
 										index
@@ -210,6 +210,9 @@ const populateNotificationsData = (
 									return;
 								}
 
+								if (!Array.isArray(roleKey)) {
+									roleKey = [roleKey];
+								}
 								const roleNames = [];
 
 								roleKey.forEach((key) => {

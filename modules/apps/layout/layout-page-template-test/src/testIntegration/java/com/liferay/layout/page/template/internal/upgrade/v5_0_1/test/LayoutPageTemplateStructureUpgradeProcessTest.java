@@ -51,9 +51,10 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.sql.Connection;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -72,18 +73,21 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_db = DBManagerUtil.getDB();
 
 		_addClassPKColumn();
 	}
 
-	@After
-	public void tearDown() throws Exception {
+	@AfterClass
+	public static void tearDownClass() throws Exception {
 		_dropClassPKColumn();
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
@@ -252,7 +256,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 			MapUtil.isEmpty(layoutStructure.getFragmentLayoutStructureItems()));
 	}
 
-	private void _addClassPKColumn() throws Exception {
+	private static void _addClassPKColumn() throws Exception {
 		try (Connection connection = DataAccess.getConnection()) {
 			DBInspector dbInspector = new DBInspector(connection);
 
@@ -267,6 +271,25 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 					true);
 				_db.runSQLTemplateString(
 					"alter table LayoutPageTemplateStructure add classPK LONG;",
+					true);
+			}
+		}
+	}
+
+	private static void _dropClassPKColumn() throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			if (dbInspector.hasColumn(
+					"LayoutPageTemplateStructure", "classNameId") &&
+				dbInspector.hasColumn(
+					"LayoutPageTemplateStructure", "classPK")) {
+
+				_db.runSQLTemplateString(
+					"alter table LayoutPageTemplateStructure drop classNameId;",
+					true);
+				_db.runSQLTemplateString(
+					"alter table LayoutPageTemplateStructure drop classPK;",
 					true);
 			}
 		}
@@ -305,25 +328,6 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				_group.getGroupId(), layout.getPlid());
 	}
 
-	private void _dropClassPKColumn() throws Exception {
-		try (Connection connection = DataAccess.getConnection()) {
-			DBInspector dbInspector = new DBInspector(connection);
-
-			if (dbInspector.hasColumn(
-					"LayoutPageTemplateStructure", "classNameId") &&
-				dbInspector.hasColumn(
-					"LayoutPageTemplateStructure", "classPK")) {
-
-				_db.runSQLTemplateString(
-					"alter table LayoutPageTemplateStructure drop classNameId;",
-					true);
-				_db.runSQLTemplateString(
-					"alter table LayoutPageTemplateStructure drop classPK;",
-					true);
-			}
-		}
-	}
-
 	private void _runUpgrade() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.OFF)) {
@@ -348,12 +352,12 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		"com.liferay.layout.page.template.internal.upgrade.v5_0_1." +
 			"LayoutPageTemplateStructureUpgradeProcess";
 
+	private static DB _db;
+
 	@Inject(
 		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	private DB _db;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

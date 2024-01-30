@@ -15,6 +15,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		this.basePath = 'headless-commerce-admin-catalog/v1.0/';
 	}
 
+	async deleteAttachment(attachmentId: string) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/attachment/${attachmentId}`
+		);
+	}
+
 	async deleteCatalog(catalogId: string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/catalog/${catalogId}`
@@ -61,6 +67,22 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/specifications/${specificationId}`
 		);
+	}
+
+	async postAttachment(
+		productId: string,
+		fileEntryId: number,
+		title: string = 'Attachment' + getRandomInt()
+	) {
+		const postAttachment = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/attachments`,
+			{
+				fileEntryId,
+				title: {en_US: title},
+			}
+		);
+
+		return postAttachment;
 	}
 
 	async postCatalog(catalogName: string = 'Catalog' + getRandomInt()) {

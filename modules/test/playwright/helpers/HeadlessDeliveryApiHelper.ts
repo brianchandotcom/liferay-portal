@@ -27,11 +27,23 @@ export class HeadlessDeliveryApiHelper {
 		);
 	}
 
+	async deleteDocument(documentId: string) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/documents/${documentId}`
+		);
+	}
+
 	async deleteSiteDocumentsFolderByExternalReferenceCode(
 		externalReferenceCode: string
 	) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/Guest/documents-folder/by-external-reference-code/${externalReferenceCode}`
+		);
+	}
+
+	async getSiteDocumentsPage(siteId: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/documents`
 		);
 	}
 }

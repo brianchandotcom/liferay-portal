@@ -307,15 +307,12 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 			}
 		}
 
-		int count1 =
-			_layoutFriendlyURLLocalService.getLayoutFriendlyURLsCount(
-				themeDisplay.getCompanyId(), friendlyURL);
-		int count2 =
-			_layoutFriendlyURLLocalService.getLayoutFriendlyURLsCount(
-				themeDisplay.getCompanyId(), urlSeparator + CharPool.PERCENT);
+		int count1 = _layoutFriendlyURLLocalService.getLayoutFriendlyURLsCount(
+			themeDisplay.getCompanyId(), friendlyURL);
+		int count2 = _layoutFriendlyURLLocalService.getLayoutFriendlyURLsCount(
+			themeDisplay.getCompanyId(), urlSeparator + CharPool.PERCENT);
 
 		if ((count1 > 0) || (count2 > 0)) {
-
 			fieldsValidationErrorsJSONObject.put(
 				namespace + key,
 				_language.get(

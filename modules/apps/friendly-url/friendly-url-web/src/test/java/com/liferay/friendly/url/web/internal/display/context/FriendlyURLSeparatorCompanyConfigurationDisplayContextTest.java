@@ -64,9 +64,7 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 			FriendlyURLResolverRegistryUtil.class);
 
 		_friendlyURLResolverRegistryUtilMockedStatic.when(
-			() ->
-				FriendlyURLResolverRegistryUtil.
-					getFriendlyURLResolversAsCollection()
+			FriendlyURLResolverRegistryUtil::getFriendlyURLResolversAsCollection
 		).thenReturn(
 			ListUtil.fromArray(
 				new FriendlyURLResolverImpl(

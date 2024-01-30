@@ -288,7 +288,8 @@ public class TreeTestUtil {
 					node.getChildNodes(), unsafeFunction, String.class));
 		}
 
-		Assert.assertEquals(expectedMap.size(), actualMap.size());
+		Assert.assertEquals(
+			actualMap.toString(), expectedMap.size(), actualMap.size());
 
 		for (Map.Entry<String, String[]> entry : expectedMap.entrySet()) {
 			String[] expectedValues = entry.getValue();

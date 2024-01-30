@@ -1,5 +1,5 @@
 {
-	"main": "index.es.js",
+	"main": "js/index.js",
 	"name": "data-engine-rest-impl",
 	"private": true,
 	"scripts": {

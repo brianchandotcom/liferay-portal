@@ -4,6 +4,7 @@
 		"@liferay/fragment-renderer-collection-filter-impl": "*",
 		"react": "16.12.0"
 	},
+	"main": "js/index.js",
 	"name": "@liferay/fragment-collection-filter-date",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

@@ -341,7 +341,7 @@ public class PropsValues {
 	public static final int COMBO_MAX_FILES = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.COMBO_MAX_FILES), -1);
 
-	public static volatile String COMPANY_DEFAULT_HOME_URL = PropsUtil.get(
+	public static final String COMPANY_DEFAULT_HOME_URL = PropsUtil.get(
 		PropsKeys.COMPANY_DEFAULT_HOME_URL);
 
 	public static String COMPANY_DEFAULT_LOCALE = PropsUtil.get(
@@ -433,7 +433,7 @@ public class PropsValues {
 	public static final String CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID =
 		PropsUtil.get(PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
 
-	public static volatile boolean CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK =
+	public static final boolean CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK));
 
@@ -482,7 +482,7 @@ public class PropsValues {
 	public static final String DEFAULT_ADMIN_MIDDLE_NAME = PropsUtil.get(
 		PropsKeys.DEFAULT_ADMIN_MIDDLE_NAME);
 
-	public static volatile String DEFAULT_ADMIN_PASSWORD = PropsUtil.get(
+	public static final String DEFAULT_ADMIN_PASSWORD = PropsUtil.get(
 		PropsKeys.DEFAULT_ADMIN_PASSWORD);
 
 	public static String DEFAULT_ADMIN_SCREEN_NAME = PropsUtil.get(
@@ -614,9 +614,8 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.DL_FILE_ENTRY_IG_THUMBNAIL_GENERATION));
 
-	public static volatile int DL_FILE_ENTRY_LOCK_POLICY =
-		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.DL_FILE_ENTRY_LOCK_POLICY));
+	public static final int DL_FILE_ENTRY_LOCK_POLICY = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.DL_FILE_ENTRY_LOCK_POLICY));
 
 	public static final String[] DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS =
 		PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS);
@@ -640,7 +639,7 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_ENABLED));
 
-	public static volatile boolean DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED =
+	public static final boolean DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(
 				PropsKeys.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED));
@@ -867,7 +866,7 @@ public class PropsValues {
 	public static final String GOOGLE_GADGET_SERVLET_MAPPING = PropsUtil.get(
 		PropsKeys.GOOGLE_GADGET_SERVLET_MAPPING);
 
-	public static volatile String[] GROUPS_COMPLEX_SQL_CLASS_NAMES =
+	public static final String[] GROUPS_COMPLEX_SQL_CLASS_NAMES =
 		PropsUtil.getArray(PropsKeys.GROUPS_COMPLEX_SQL_CLASS_NAMES);
 
 	public static final int GZIP_COMPRESSION_LEVEL = GetterUtil.getInteger(
@@ -935,7 +934,7 @@ public class PropsValues {
 					PropsKeys.
 						INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD));
 
-	public static volatile int INDEX_SEARCH_LIMIT = GetterUtil.getInteger(
+	public static final int INDEX_SEARCH_LIMIT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.INDEX_SEARCH_LIMIT));
 
 	public static final boolean INDEX_SEARCH_QUERY_INDEXING_ENABLED =
@@ -1046,14 +1045,14 @@ public class PropsValues {
 	public static final String[] LAYOUT_FRIENDLY_URL_KEYWORDS =
 		PropsUtil.getArray(PropsKeys.LAYOUT_FRIENDLY_URL_KEYWORDS);
 
-	public static volatile String LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND =
+	public static final String LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND =
 		PropsUtil.get(PropsKeys.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND);
 
 	public static final String
 		LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING = PropsUtil.get(
 			PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING);
 
-	public static volatile String
+	public static final String
 		LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING = PropsUtil.get(
 			PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
 
@@ -1239,7 +1238,7 @@ public class PropsValues {
 	public static final String MAIL_AUDIT_TRAIL = PropsUtil.get(
 		PropsKeys.MAIL_AUDIT_TRAIL);
 
-	public static volatile boolean MAIL_MX_UPDATE = GetterUtil.getBoolean(
+	public static final boolean MAIL_MX_UPDATE = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.MAIL_MX_UPDATE));
 
 	public static final String[] MAIL_SEND_BLACKLIST = PropsUtil.getArray(
@@ -1298,7 +1297,7 @@ public class PropsValues {
 	public static final int MENU_MAX_DISPLAY_ITEMS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.MENU_MAX_DISPLAY_ITEMS));
 
-	public static volatile boolean MESSAGE_BOARDS_EMAIL_BULK =
+	public static final boolean MESSAGE_BOARDS_EMAIL_BULK =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_BULK));
 
@@ -1387,7 +1386,7 @@ public class PropsValues {
 					PropsKeys.
 						MODULE_FRAMEWORK_FILE_INSTALL_BUNDLES_START_TRANSIENT));
 
-	public static volatile boolean MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED =
+	public static final boolean MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED));
 
@@ -1548,7 +1547,7 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.ORGANIZATIONS_ASSIGNMENT_STRICT));
 
-	public static volatile boolean ORGANIZATIONS_MEMBERSHIP_STRICT =
+	public static final boolean ORGANIZATIONS_MEMBERSHIP_STRICT =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.ORGANIZATIONS_MEMBERSHIP_STRICT));
 
@@ -1774,7 +1773,7 @@ public class PropsValues {
 	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
 	 */
 	@Deprecated
-	public static volatile String PORTAL_JAAS_AUTH_TYPE = GetterUtil.getString(
+	public static final String PORTAL_JAAS_AUTH_TYPE = GetterUtil.getString(
 		PropsUtil.get(PropsKeys.PORTAL_JAAS_AUTH_TYPE));
 
 	/**
@@ -2246,7 +2245,7 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.STAGING_SYSTEM_EVENT_CHECK_INTERVAL));
 
-	public static volatile int STAGING_SYSTEM_EVENT_MAX_AGE =
+	public static final int STAGING_SYSTEM_EVENT_MAX_AGE =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.STAGING_SYSTEM_EVENT_MAX_AGE));
 
@@ -2271,7 +2270,7 @@ public class PropsValues {
 					PropsKeys.
 						TEMPLATE_ENGINE_FREEMARKER_TRANSACTION_READ_ONLY));
 
-	public static volatile boolean TEMPLATE_ENGINE_SERVICE_LOCATOR_RESTRICT =
+	public static final boolean TEMPLATE_ENGINE_SERVICE_LOCATOR_RESTRICT =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.TEMPLATE_ENGINE_SERVICE_LOCATOR_RESTRICT));
 
@@ -2344,17 +2343,17 @@ public class PropsValues {
 	public static final int TRASH_SEARCH_LIMIT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.TRASH_SEARCH_LIMIT));
 
-	public static volatile boolean TUNNEL_SERVLET_HIDE_EXCEPTION_DATA =
+	public static final boolean TUNNEL_SERVLET_HIDE_EXCEPTION_DATA =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.TUNNEL_SERVLET_HIDE_EXCEPTION_DATA));
 
 	public static final String TUNNELING_SERVLET_ENCRYPTION_ALGORITHM =
 		PropsUtil.get(PropsKeys.TUNNELING_SERVLET_ENCRYPTION_ALGORITHM);
 
-	public static volatile String TUNNELING_SERVLET_SHARED_SECRET =
-		PropsUtil.get(PropsKeys.TUNNELING_SERVLET_SHARED_SECRET);
+	public static final String TUNNELING_SERVLET_SHARED_SECRET = PropsUtil.get(
+		PropsKeys.TUNNELING_SERVLET_SHARED_SECRET);
 
-	public static volatile boolean TUNNELING_SERVLET_SHARED_SECRET_HEX =
+	public static final boolean TUNNELING_SERVLET_SHARED_SECRET_HEX =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.TUNNELING_SERVLET_SHARED_SECRET_HEX));
 
@@ -2368,25 +2367,25 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.UPGRADE_DATABASE_TRANSACTIONS_DISABLED));
 
-	public static volatile boolean UPGRADE_LOG_CONTEXT_ENABLED =
+	public static final boolean UPGRADE_LOG_CONTEXT_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.UPGRADE_LOG_CONTEXT_ENABLED));
 
-	public static volatile String UPGRADE_REPORT_DIR = GetterUtil.getString(
+	public static final String UPGRADE_REPORT_DIR = GetterUtil.getString(
 		PropsUtil.get(PropsKeys.UPGRADE_REPORT_DIR));
 
-	public static volatile long UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT =
+	public static final long UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT =
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT));
 
-	public static volatile boolean UPGRADE_REPORT_ENABLED =
-		GetterUtil.getBoolean(PropsUtil.get(PropsKeys.UPGRADE_REPORT_ENABLED));
+	public static final boolean UPGRADE_REPORT_ENABLED = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.UPGRADE_REPORT_ENABLED));
 
 	public static boolean USER_GROUPS_NAME_ALLOW_NUMERIC =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.USER_GROUPS_NAME_ALLOW_NUMERIC));
 
-	public static volatile boolean USER_GROUPS_SEARCH_WITH_INDEX =
+	public static final boolean USER_GROUPS_SEARCH_WITH_INDEX =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.USER_GROUPS_SEARCH_WITH_INDEX));
 
@@ -2416,8 +2415,8 @@ public class PropsValues {
 	public static boolean USERS_EMAIL_ADDRESS_REQUIRED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED));
 
-	public static volatile String[] USERS_EXPORT_CSV_FIELDS =
-		PropsUtil.getArray(PropsKeys.USERS_EXPORT_CSV_FIELDS);
+	public static final String[] USERS_EXPORT_CSV_FIELDS = PropsUtil.getArray(
+		PropsKeys.USERS_EXPORT_CSV_FIELDS);
 
 	public static final String USERS_PROFILE_FRIENDLY_URL = PropsUtil.get(
 		PropsKeys.USERS_PROFILE_FRIENDLY_URL);
@@ -2451,8 +2450,8 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE));
 
-	public static volatile boolean USERS_SEARCH_WITH_INDEX =
-		GetterUtil.getBoolean(PropsUtil.get(PropsKeys.USERS_SEARCH_WITH_INDEX));
+	public static final boolean USERS_SEARCH_WITH_INDEX = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.USERS_SEARCH_WITH_INDEX));
 
 	public static final boolean USERS_UPDATE_LAST_LOGIN = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.USERS_UPDATE_LAST_LOGIN));
@@ -2529,7 +2528,7 @@ public class PropsValues {
 	public static int WEB_SERVER_HTTPS_PORT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.WEB_SERVER_HTTPS_PORT), -1);
 
-	public static volatile String WEB_SERVER_PROTOCOL = PropsUtil.get(
+	public static final String WEB_SERVER_PROTOCOL = PropsUtil.get(
 		PropsKeys.WEB_SERVER_PROTOCOL);
 
 	public static final boolean WEB_SERVER_PROXY_LEGACY_MODE =

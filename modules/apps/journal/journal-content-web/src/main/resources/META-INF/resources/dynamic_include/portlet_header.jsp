@@ -18,6 +18,6 @@
 	<clay:dropdown-actions
 		aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 		dropdownItems="<%= portletHeaderActionDropdownItemsProvider.getActionDropdownItems() %>"
-		propsTransformer="js/PortletHeaderDefaultPropsTransformer"
+		propsTransformer="{PortletHeaderDefaultPropsTransformer} from journal-content-web"
 	/>
 </div>

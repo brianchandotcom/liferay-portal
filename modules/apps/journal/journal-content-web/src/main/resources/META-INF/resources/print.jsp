@@ -45,7 +45,7 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 				borderless="<%= true %>"
 				displayType="secondary"
 				icon="print"
-				propsTransformer="js/printPageButtonPropsTransformer"
+				propsTransformer="{printPageButtonPropsTransformer} from journal-content-web"
 				small="<%= true %>"
 				title="<%= title %>"
 				type="button"

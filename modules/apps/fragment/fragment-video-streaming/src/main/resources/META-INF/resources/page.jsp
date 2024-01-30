@@ -39,5 +39,5 @@
 			"videoWidth", (String)request.getAttribute(VideoStreamingWebKeys.VIDEO_STREAMING_VIDEO_WIDTH)
 		).build()
 	%>'
-	module="js/VideoStreaming"
+	module="{VideoStreaming} from fragment-video-streaming"
 />

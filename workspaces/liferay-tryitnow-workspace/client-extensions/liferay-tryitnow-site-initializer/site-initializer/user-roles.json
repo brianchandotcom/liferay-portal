@@ -5,7 +5,7 @@
 			"Administrator",
 			"Power User",
 			"User",
-			"Ticket_solvers"
+			"M2H8 Ticket Solvers"
 		]
 	},
 	{
@@ -13,7 +13,7 @@
 		"roles": [
 			"Publications User",
 			"User",
-			"Petitionaries"
+			"M2H8 Petitionaries"
 		]
 	},
 	{

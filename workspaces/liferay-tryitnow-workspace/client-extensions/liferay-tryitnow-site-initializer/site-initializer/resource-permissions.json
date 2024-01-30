@@ -5,7 +5,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.document.library",
-		"roleName": "Ticket_solvers",
+		"roleName": "M2H8 Ticket Solvers",
 		"scope": "1"
 	},
 	{
@@ -14,7 +14,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntryMetadata-com.liferay.dynamic.data.mapping.model.DDMStructure",
-		"roleName": "Ticket_solvers",
+		"roleName": "M2H8 Ticket Solvers",
 		"scope": "1"
 	},
 	{
@@ -23,7 +23,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
-		"roleName": "Ticket_solvers",
+		"roleName": "M2H8 Ticket Solvers",
 		"scope": "1"
 	},
 	{
@@ -32,7 +32,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.document.library.kernel.model.DLFileShortcut",
-		"roleName": "Ticket_solvers",
+		"roleName": "M2H8 Ticket Solvers",
 		"scope": "1"
 	},
 	{
@@ -41,7 +41,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.portal.kernel.model.User",
-		"roleName": "Ticket_solvers",
+		"roleName": "M2H8 Ticket Solvers",
 		"scope": "1"
 	},
 	{
@@ -50,7 +50,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
-		"roleName": "Ticket_solvers",
+		"roleName": "M2H8 Ticket Solvers",
 		"scope": "1"
 	},
 	{
@@ -59,7 +59,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
-		"roleName": "Ticket_solvers",
+		"roleName": "M2H8 Ticket Solvers",
 		"scope": "1"
 	},
 	{
@@ -71,7 +71,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
-		"roleName": "Ticket_solvers",
+		"roleName": "M2H8 Ticket Solvers",
 		"scope": "1"
 	},
 	{
@@ -81,7 +81,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:M2H8ProgressTracker$]",
-		"roleName": "Ticket_solvers",
+		"roleName": "M2H8 Ticket Solvers",
 		"scope": "1"
 	},
 	{
@@ -90,7 +90,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
-		"roleName": "Ticket_solvers",
+		"roleName": "M2H8 Ticket Solvers",
 		"scope": "1"
 	},
 	{
@@ -99,7 +99,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.document.library",
-		"roleName": "Petitionaries",
+		"roleName": "M2H8 Petitionaries",
 		"scope": "1"
 	},
 	{
@@ -108,7 +108,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntryMetadata-com.liferay.dynamic.data.mapping.model.DDMStructure",
-		"roleName": "Petitionaries",
+		"roleName": "M2H8 Petitionaries",
 		"scope": "1"
 	},
 	{
@@ -117,7 +117,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
-		"roleName": "Petitionaries",
+		"roleName": "M2H8 Petitionaries",
 		"scope": "1"
 	},
 	{
@@ -126,7 +126,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.document.library.kernel.model.DLFileShortcut",
-		"roleName": "Petitionaries",
+		"roleName": "M2H8 Petitionaries",
 		"scope": "1"
 	},
 	{
@@ -135,7 +135,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.portal.kernel.model.User",
-		"roleName": "Petitionaries",
+		"roleName": "M2H8 Petitionaries",
 		"scope": "1"
 	},
 	{
@@ -144,7 +144,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
-		"roleName": "Petitionaries",
+		"roleName": "M2H8 Petitionaries",
 		"scope": "1"
 	},
 	{
@@ -153,7 +153,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
-		"roleName": "Petitionaries",
+		"roleName": "M2H8 Petitionaries",
 		"scope": "1"
 	},
 	{
@@ -162,7 +162,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
-		"roleName": "Petitionaries",
+		"roleName": "M2H8 Petitionaries",
 		"scope": "1"
 	},
 	{
@@ -172,7 +172,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:M2H8ProgressTracker$]",
-		"roleName": "Petitionaries",
+		"roleName": "M2H8 Petitionaries",
 		"scope": "1"
 	},
 	{
@@ -190,7 +190,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.portal.kernel.model.Role",
-		"roleName": "Ticket_solvers",
+		"roleName": "M2H8 Ticket Solvers",
 		"scope": "1"
 	}
 ]

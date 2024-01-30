@@ -311,10 +311,7 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 			).toString(),
 			fieldsJSONArray.toString());
 
-		String url = (String)actualSeparatorFieldsProps.get("url");
-
-		Assert.assertNotNull(url);
-
+		Assert.assertNotNull(actualSeparatorFieldsProps.get("url"));
 		Assert.assertEquals(
 			"http://www.sitename.com", actualSeparatorFieldsProps.get("url"));
 	}

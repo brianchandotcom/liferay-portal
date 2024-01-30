@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMemo} from 'react';
+import {useContext, useMemo} from 'react';
 import {useParams, useSearchParams} from 'react-router-dom';
 import Avatar from '~/components/Avatar';
 import AssignToMe from '~/components/Avatar/AssignToMe/AssignToMe';
@@ -13,6 +13,7 @@ import Container from '~/components/Layout/Container';
 import ListView from '~/components/ListView';
 import StatusBadge from '~/components/StatusBadge';
 import {StatusBadgeType} from '~/components/StatusBadge/StatusBadge';
+import {TestrayContext} from '~/context/TestrayContext';
 import useMutate from '~/hooks/useMutate';
 import useSearchBuilder from '~/hooks/useSearchBuilder';
 import i18n from '~/i18n';
@@ -31,6 +32,8 @@ const Build = () => {
 	const {buildId} = useParams();
 	const {updateItemFromList} = useMutate();
 
+	const [{runNumber}] = useContext(TestrayContext);
+
 	const runId = searchParams.get('runId');
 
 	const filterInitialContext = useMemo(
@@ -39,12 +42,12 @@ const Build = () => {
 				{
 					label: i18n.translate('run'),
 					name: 'runToCaseResult/number',
-					value: runId as string,
+					value: runId && (runNumber as number),
 				},
 			],
 			filter: {'runToCaseResult/id': runId as string},
 		}),
-		[runId]
+		[runId, runNumber]
 	);
 
 	const caseResultFilter = useSearchBuilder({useURIEncode: false});

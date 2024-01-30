@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useContext} from 'react';
 import {useParams} from 'react-router-dom';
 import ProgressBar from '~/components/ProgressBar';
+import {TestrayContext, TestrayTypes} from '~/context/TestrayContext';
 
 import Container from '../../../../../../components/Layout/Container';
 import ListView from '../../../../../../components/ListView';
@@ -17,6 +19,7 @@ import useRunActions from './useRunActions';
 const Runs = () => {
 	const {actions, formModal} = useRunActions();
 	const {buildId} = useParams();
+	const [, dispatch] = useContext(TestrayContext);
 
 	return (
 		<Container className="mt-4">
@@ -136,6 +139,12 @@ const Runs = () => {
 						},
 					],
 					navigateTo: (run) => `..?runId=${run.id}`,
+					onClickRow(item) {
+						dispatch({
+							payload: item.number,
+							type: TestrayTypes.SET_RUN,
+						});
+					},
 				}}
 				transformData={(response) =>
 					testrayRunImpl.transformDataFromList(response)

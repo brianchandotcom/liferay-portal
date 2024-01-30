@@ -18,7 +18,7 @@ const testrayStorage = TestrayStorage.getInstance().getStorage('persisted');
 export type Entry = {
 	label: string;
 	name: string;
-	value: string;
+	value: number | string | null;
 };
 
 export type Sort = {

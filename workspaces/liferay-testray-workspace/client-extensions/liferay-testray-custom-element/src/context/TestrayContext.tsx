@@ -29,6 +29,7 @@ export type CompareRuns = {
 type InitialState = {
 	compareRuns: CompareRuns;
 	myUserAccount?: UserAccount;
+	runNumber: number;
 	testrayDispatchTriggers: APIResponse<TestrayDispatchTrigger>;
 };
 
@@ -38,6 +39,7 @@ const initialState: InitialState = {
 		runB: null,
 	},
 	myUserAccount: undefined,
+	runNumber: 0,
 	testrayDispatchTriggers: {
 		actions: {},
 		facets: [],
@@ -51,6 +53,7 @@ const initialState: InitialState = {
 
 export const enum TestrayTypes {
 	SET_MY_USER_ACCOUNT = 'SET_MY_USER_ACCOUNT',
+	SET_RUN = 'SET_RUN',
 	SET_RUN_A = 'SET_RUN_A',
 	SET_RUN_B = 'SET_RUN_B',
 }
@@ -59,6 +62,7 @@ type TestrayPayload = {
 	[TestrayTypes.SET_MY_USER_ACCOUNT]: {
 		account: UserAccount;
 	};
+	[TestrayTypes.SET_RUN]: number;
 	[TestrayTypes.SET_RUN_A]: RunId;
 	[TestrayTypes.SET_RUN_B]: RunId;
 };
@@ -94,6 +98,15 @@ const reducer = (state: InitialState, action: AppActions) => {
 				...state,
 				compareRuns: {...state.compareRuns, runB: action.payload},
 			};
+
+		case TestrayTypes.SET_RUN: {
+			const runNumber = action.payload;
+
+			return {
+				...state,
+				runNumber,
+			};
+		}
 
 		default:
 			return state;

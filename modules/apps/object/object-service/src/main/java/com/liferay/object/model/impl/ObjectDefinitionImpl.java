@@ -94,7 +94,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public String getOSGiJaxRsName(String className) {
-		return getName() + className;
+		return StringUtil.toLowerCase(getName()) + className;
 	}
 
 	@Override

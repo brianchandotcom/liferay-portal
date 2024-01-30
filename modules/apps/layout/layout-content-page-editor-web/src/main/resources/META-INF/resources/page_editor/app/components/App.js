@@ -21,6 +21,7 @@ import {
 	KeyboardMovementContextProvider,
 	useMovementSource,
 } from '../contexts/KeyboardMovementContext';
+import {LocalConfigContextProvider} from '../contexts/LocalConfigContext';
 import {StoreContextProvider} from '../contexts/StoreContext';
 import AppHooks from '../hooks/app_hooks/index';
 import {reducer} from '../reducers/index';
@@ -70,19 +71,21 @@ export default function App({state}) {
 
 											<KeyboardMovementText />
 
-											<GlobalContextProvider>
-												<CommonStylesManager />
+											<LocalConfigContextProvider>
+												<GlobalContextProvider>
+													<CommonStylesManager />
 
-												<LayoutViewport />
+													<LayoutViewport />
 
-												<LayoutBreadcrumbs />
+													<LayoutBreadcrumbs />
 
-												<StyleBookContextProvider>
-													<Sidebar />
+													<StyleBookContextProvider>
+														<Sidebar />
 
-													<ItemConfigurationSidebar />
-												</StyleBookContextProvider>
-											</GlobalContextProvider>
+														<ItemConfigurationSidebar />
+													</StyleBookContextProvider>
+												</GlobalContextProvider>
+											</LocalConfigContextProvider>
 										</KeyboardMovementContextProvider>
 									</FormValidationContextProvider>
 								</DisplayPagePreviewItemContextProvider>

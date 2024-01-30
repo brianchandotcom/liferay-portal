@@ -250,6 +250,10 @@ public class DLImpl implements DL {
 				themeDisplay.getLocale(),
 				"the-company-name-associated-with-the-document")
 		).put(
+			"[$DOCUMENT_STATUS_BY_USER_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-user-who-updated-the-document")
+		).put(
 			"[$DOCUMENT_TITLE$]",
 			LanguageUtil.get(themeDisplay.getLocale(), "the-document-title")
 		).put(

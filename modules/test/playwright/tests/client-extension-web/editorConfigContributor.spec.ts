@@ -13,7 +13,7 @@ import {newEditorConfigContributorPageTest} from './fixtures/newEditorConfigCont
 export const test = mergeTests(
 	apiHelpersTest,
 	clientExtensionsPageTest,
-	loginTest,
+	loginTest(),
 	newEditorConfigContributorPageTest
 );
 

@@ -5,7 +5,9 @@
 
 package com.liferay.friendly.url.web.internal.display.context;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -20,6 +22,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -84,8 +87,10 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		Mockito.when(
 			_portal.getPortletNamespace(Mockito.anyString())
 		).thenReturn(
-			"com_liferay_configuration_admin_web_portlet_" +
-				"InstanceSettingsPortlet_"
+			StringBundler.concat(
+				StringPool.UNDERLINE,
+				ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
+				StringPool.UNDERLINE)
 		);
 
 		_friendlyURLResolverRegistryUtilMockedStatic = Mockito.mockStatic(
@@ -97,9 +102,12 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 					getFriendlyURLResolversAsCollection()
 		).thenReturn(
 			ListUtil.fromArray(
-				new FriendlyURLResolverImpl("/b/", "BlogsEntry", "/blogs1/"),
 				new FriendlyURLResolverImpl(
-					"/w/", "JournalArticle", "/journal1/"))
+					FriendlyURLResolverConstants.URL_SEPARATOR_BLOGS_ENTRY,
+					"BlogsEntry", "/blogs1/"),
+				new FriendlyURLResolverImpl(
+					FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
+					"JournalArticle", "/journal1/"))
 		);
 	}
 
@@ -131,16 +139,12 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		Assert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"name",
-					"com_liferay_configuration_admin_web_portlet_" +
-						"InstanceSettingsPortlet_BlogsEntry"
+					"name", _BLOGS_ENTRY_KEY
 				).put(
 					"value", "blog-test1"
 				),
 				JSONUtil.put(
-					"name",
-					"com_liferay_configuration_admin_web_portlet_" +
-						"InstanceSettingsPortlet_JournalArticle"
+					"name", _JOURNAL_ARTICLE_KEY
 				).put(
 					"value", "journal-test1"
 				)
@@ -169,8 +173,7 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 				"errors",
 				new String[] {
 					JSONUtil.put(
-						"com_liferay_configuration_admin_web_portlet_" +
-							"InstanceSettingsPortlet_JournalArticle",
+						_JOURNAL_ARTICLE_KEY,
 						"error-other-asset-type-may-use-this-prefix"
 					).toString()
 				}
@@ -195,16 +198,12 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		Assert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"name",
-					"com_liferay_configuration_admin_web_portlet_" +
-						"InstanceSettingsPortlet_BlogsEntry"
+					"name", _BLOGS_ENTRY_KEY
 				).put(
 					"value", "blog-test1"
 				),
 				JSONUtil.put(
-					"name",
-					"com_liferay_configuration_admin_web_portlet_" +
-						"InstanceSettingsPortlet_JournalArticle"
+					"name", _JOURNAL_ARTICLE_KEY
 				).put(
 					"value", "web"
 				)
@@ -235,9 +234,7 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 			HttpServletRequest.class);
 
 		JSONObject errorsJSONObject = JSONUtil.put(
-			"com_liferay_configuration_admin_web_portlet_" +
-				"InstanceSettingsPortlet_JournalArticle",
-			"error-other-asset-type-may-use-this-prefix");
+			_JOURNAL_ARTICLE_KEY, "error-other-asset-type-may-use-this-prefix");
 
 		Mockito.when(
 			httpServletRequest.getParameter("errors")
@@ -295,16 +292,12 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		Assert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"name",
-					"com_liferay_configuration_admin_web_portlet_" +
-						"InstanceSettingsPortlet_BlogsEntry"
+					"name", _BLOGS_ENTRY_KEY
 				).put(
 					"value", "blog-test1"
 				),
 				JSONUtil.put(
-					"name",
-					"com_liferay_configuration_admin_web_portlet_" +
-						"InstanceSettingsPortlet_JournalArticle"
+					"name", _JOURNAL_ARTICLE_KEY
 				).put(
 					"value", "journal-test1"
 				)
@@ -334,12 +327,16 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		themeDisplay.setLocale(LocaleUtil.US);
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setPpid(
-			"com_liferay_configuration_admin_web_portlet_" +
-				"InstanceSettingsPortlet");
+		themeDisplay.setPpid(ConfigurationAdminPortletKeys.INSTANCE_SETTINGS);
 
 		return themeDisplay;
 	}
+
+	private static final String _BLOGS_ENTRY_KEY =
+		ConfigurationAdminPortletKeys.INSTANCE_SETTINGS + "_BlogsEntry";
+
+	private static final String _JOURNAL_ARTICLE_KEY =
+		ConfigurationAdminPortletKeys.INSTANCE_SETTINGS + "_JournalArticle";
 
 	private static MockedStatic<FriendlyURLResolverRegistryUtil>
 		_friendlyURLResolverRegistryUtilMockedStatic;

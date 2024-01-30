@@ -5847,6 +5847,10 @@ public class ObjectEntryResourceTest {
 			_objectDefinition2, _objectDefinition1, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
+		_objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition2, _objectDefinition1, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
 		_testPutCustomObjectEntryUnlinkNestedCustomObjectEntries(true);
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
@@ -8043,15 +8047,24 @@ public class ObjectEntryResourceTest {
 			objectEntryJSONObject.toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
-		JSONObject newObjectEntryJSONObject = JSONUtil.put(
-			_objectRelationship1.getName(),
-			() -> {
-				if (manyToOne) {
-					return JSONFactoryUtil.createJSONObject();
-				}
+		JSONObject newObjectEntryJSONObject;
 
-				return JSONFactoryUtil.createJSONArray();
-			});
+		if (manyToOne) {
+			newObjectEntryJSONObject = JSONUtil.put(
+				_objectRelationship1.getName(),
+				JSONFactoryUtil.createJSONObject()
+			).put(
+				StringBundler.concat(
+					"r_", _objectRelationship2.getName(), "_",
+					_objectDefinition2.getPKObjectFieldName()),
+				0
+			);
+		}
+		else {
+			newObjectEntryJSONObject = JSONUtil.put(
+				_objectRelationship1.getName(),
+				JSONFactoryUtil.createJSONArray());
+		}
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			newObjectEntryJSONObject.toString(),
@@ -8069,10 +8082,29 @@ public class ObjectEntryResourceTest {
 			));
 
 		if (manyToOne) {
-			JSONObject nestedObjectEntryJSONObject = jsonObject.getJSONObject(
+			JSONObject nestedObjectEntryJSONObject1 = jsonObject.getJSONObject(
 				_objectRelationship1.getName());
 
-			Assert.assertNull(nestedObjectEntryJSONObject);
+			Assert.assertNull(nestedObjectEntryJSONObject1);
+
+			JSONObject nestedObjectEntryJSONObject2 = jsonObject.getJSONObject(
+				_objectRelationship2.getName());
+
+			Assert.assertNull(nestedObjectEntryJSONObject2);
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					StringBundler.concat(
+						"r_", _objectRelationship1.getName(), "_",
+						_objectDefinition2.getPKObjectFieldName()),
+					0
+				).put(
+					StringBundler.concat(
+						"r_", _objectRelationship2.getName(), "_",
+						_objectDefinition2.getPKObjectFieldName()),
+					0
+				).toString(),
+				jsonObject.toString(), JSONCompareMode.LENIENT);
 		}
 		else {
 			JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(

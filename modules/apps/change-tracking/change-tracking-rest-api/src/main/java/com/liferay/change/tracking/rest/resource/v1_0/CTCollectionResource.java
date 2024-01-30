@@ -66,10 +66,6 @@ public interface CTCollectionResource {
 			CTCollection ctCollection, String callbackURL, Object object)
 		throws Exception;
 
-	public Page<CTCollection> getCtCollectionsByClassPage(
-			Integer classNameId, Integer classPK)
-		throws Exception;
-
 	public void deleteCTCollectionByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
@@ -95,6 +91,10 @@ public interface CTCollectionResource {
 		throws Exception;
 
 	public String getCTCollectionShareLink(Long ctCollectionId)
+		throws Exception;
+
+	public Page<CTCollection> getCTCollectionsGetHistoriesPage(
+			Integer classNameId, Integer classPK)
 		throws Exception;
 
 	public void deleteCTCollection(Long ctCollectionId) throws Exception;

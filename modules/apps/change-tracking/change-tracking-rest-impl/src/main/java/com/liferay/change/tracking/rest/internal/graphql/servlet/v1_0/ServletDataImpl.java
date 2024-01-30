@@ -215,11 +215,6 @@ public class ServletDataImpl implements ServletData {
 							CTCollectionResourceImpl.class,
 							"getCTCollectionsPage"));
 					put(
-						"query#ctCollectionsByClass",
-						new ObjectValuePair<>(
-							CTCollectionResourceImpl.class,
-							"getCtCollectionsByClassPage"));
-					put(
 						"query#cTCollectionByExternalReferenceCode",
 						new ObjectValuePair<>(
 							CTCollectionResourceImpl.class,
@@ -234,6 +229,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CTCollectionResourceImpl.class,
 							"getCTCollectionShareLink"));
+					put(
+						"query#cTCollectionsGetHistories",
+						new ObjectValuePair<>(
+							CTCollectionResourceImpl.class,
+							"getCTCollectionsGetHistoriesPage"));
 					put(
 						"query#cTCollection",
 						new ObjectValuePair<>(

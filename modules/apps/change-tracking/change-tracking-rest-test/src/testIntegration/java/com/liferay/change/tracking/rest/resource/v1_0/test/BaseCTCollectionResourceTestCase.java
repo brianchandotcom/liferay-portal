@@ -19,26 +19,18 @@ import com.liferay.change.tracking.rest.client.pagination.Page;
 import com.liferay.change.tracking.rest.client.pagination.Pagination;
 import com.liferay.change.tracking.rest.client.resource.v1_0.CTCollectionResource;
 import com.liferay.change.tracking.rest.client.serdes.v1_0.CTCollectionSerDes;
-import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -114,18 +106,12 @@ public abstract class BaseCTCollectionResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
-
-		_originalName = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
-
-		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -449,70 +435,6 @@ public abstract class BaseCTCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testGetCtCollectionsByClassPage() throws Exception {
-		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
-
-		long layoutClassNameId = ClassNameLocalServiceUtil.getClassNameId(Layout.class);
-		long classPK = layout.getPlid();
-
-		Page<CTCollection> page =
-			ctCollectionResource.getCtCollectionsByClassPage(
-				(int) layoutClassNameId, (int) classPK);
-
-		long totalCount = page.getTotalCount();
-
-		CTCollection ctCollection1 =
-			testGetCtCollectionsByClassPage_addCTCollection(
-				randomCTCollection());
-
-		try (SafeCloseable safeCloseable =
-				 CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					 ctCollection1.getId())) {
-			LayoutLocalServiceUtil.updateName(layout, ctCollection1.getName(), layout.getDefaultLanguageId());
-		}
-
-		CTCollection ctCollection2 =
-			testGetCtCollectionsByClassPage_addCTCollection(
-				randomCTCollection());
-
-		try (SafeCloseable safeCloseable =
-				 CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					 ctCollection2.getId())) {
-			LayoutLocalServiceUtil.updateName(layout, ctCollection2.getName(), layout.getDefaultLanguageId());
-		}
-
-		page = ctCollectionResource.getCtCollectionsByClassPage(
-				(int) layoutClassNameId, (int) classPK);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(ctCollection1, (List<CTCollection>)page.getItems());
-		assertContains(ctCollection2, (List<CTCollection>)page.getItems());
-		assertValid(page, testGetCtCollectionsByClassPage_getExpectedActions());
-
-		ctCollectionResource.deleteCTCollection(ctCollection1.getId());
-
-		ctCollectionResource.deleteCTCollection(ctCollection2.getId());
-	}
-
-	protected Map<String, Map<String, String>>
-			testGetCtCollectionsByClassPage_getExpectedActions()
-		throws Exception {
-
-		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		return expectedActions;
-	}
-
-	protected CTCollection testGetCtCollectionsByClassPage_addCTCollection(
-			CTCollection ctCollection)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testDeleteCTCollectionByExternalReferenceCode()
 		throws Exception {
 
@@ -734,6 +656,53 @@ public abstract class BaseCTCollectionResourceTestCase {
 	@Test
 	public void testGetCTCollectionShareLink() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetCTCollectionsGetHistoriesPage() throws Exception {
+		Page<CTCollection> page =
+			ctCollectionResource.getCTCollectionsGetHistoriesPage(null, null);
+
+		long totalCount = page.getTotalCount();
+
+		CTCollection ctCollection1 =
+			testGetCTCollectionsGetHistoriesPage_addCTCollection(
+				randomCTCollection());
+
+		CTCollection ctCollection2 =
+			testGetCTCollectionsGetHistoriesPage_addCTCollection(
+				randomCTCollection());
+
+		page = ctCollectionResource.getCTCollectionsGetHistoriesPage(
+			null, null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(ctCollection1, (List<CTCollection>)page.getItems());
+		assertContains(ctCollection2, (List<CTCollection>)page.getItems());
+		assertValid(
+			page, testGetCTCollectionsGetHistoriesPage_getExpectedActions());
+
+		ctCollectionResource.deleteCTCollection(ctCollection1.getId());
+
+		ctCollectionResource.deleteCTCollection(ctCollection2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetCTCollectionsGetHistoriesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected CTCollection testGetCTCollectionsGetHistoriesPage_addCTCollection(
+			CTCollection ctCollection)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -2036,7 +2005,5 @@ public abstract class BaseCTCollectionResourceTestCase {
 	@Inject
 	private com.liferay.change.tracking.rest.resource.v1_0.CTCollectionResource
 		_ctCollectionResource;
-
-	private String _originalName;
 
 }

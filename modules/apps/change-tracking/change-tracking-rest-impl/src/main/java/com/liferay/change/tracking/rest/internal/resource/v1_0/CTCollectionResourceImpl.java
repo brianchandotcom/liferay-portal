@@ -121,7 +121,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 	}
 
 	@Override
-	public Page<CTCollection> getCtCollectionsByClassPage(
+	public Page<CTCollection> getCTCollectionsGetHistoriesPage(
 			Integer classNameId, Integer classPK)
 		throws Exception {
 

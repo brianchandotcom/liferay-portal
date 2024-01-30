@@ -275,7 +275,7 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 	}
 
 	@Override
-	protected CTCollection testGetCtCollectionsByClassPage_addCTCollection(
+	protected CTCollection testGetCTCollectionsGetHistoriesPage_addCTCollection(
 			CTCollection ctCollection)
 		throws Exception {
 

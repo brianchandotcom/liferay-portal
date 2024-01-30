@@ -29,7 +29,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -60,6 +59,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -74,7 +74,6 @@ import com.liferay.sites.kernel.util.Sites;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -433,22 +432,15 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				continue;
 			}
 
-			Set<Long> roleIds = new HashSet<>();
-
-			for (Role role :
-					_roleLocalService.getGroupRelatedRoles(
-						targetLayout.getGroupId())) {
-
-				String roleName = role.getName();
-
-				if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
-					continue;
-				}
-
-				roleIds.add(role.getRoleId());
-			}
-
 			Map<Long, String[]> targetRoleIdsToActionIds = new HashMap<>();
+
+			List<Long> roleIds = TransformUtil.transform(
+				ListUtil.filter(
+					_roleLocalService.getGroupRelatedRoles(
+						targetLayout.getGroupId()),
+					role -> !Objects.equals(
+						RoleConstants.ADMINISTRATOR, role.getName())),
+				Role::getRoleId);
 
 			for (Map.Entry<Long, Set<String>> entry :
 					sourceRoleIdsToActionIds.entrySet()) {

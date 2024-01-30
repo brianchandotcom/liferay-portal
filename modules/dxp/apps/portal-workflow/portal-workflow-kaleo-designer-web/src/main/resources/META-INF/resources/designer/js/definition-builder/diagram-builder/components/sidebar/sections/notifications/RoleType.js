@@ -7,12 +7,20 @@ import React from 'react';
 
 import BaseRoleType from '../shared-components/BaseRoleType';
 
-const RoleType = ({notificationIndex, updateSelectedItem, ...restProps}) => {
+const RoleType = ({
+	accountRoles,
+	notificationIndex,
+	resource,
+	updateSelectedItem,
+	...restProps
+}) => {
 	return (
 		<BaseRoleType
+			accountRoles={accountRoles}
 			buttonName={Liferay.Language.get('new-role-type')}
 			inputLabel={Liferay.Language.get('role-type')}
 			notificationIndex={notificationIndex}
+			resource={resource}
 			updateSelectedItem={updateSelectedItem}
 			{...restProps}
 		/>

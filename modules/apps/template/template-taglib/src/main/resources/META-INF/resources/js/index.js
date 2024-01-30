@@ -8,7 +8,7 @@ import DropDown from '@clayui/drop-down';
 import Form, {ClayInput} from '@clayui/form';
 import React, {useState} from 'react';
 
-export default function DisplayTemplateSelector({namespace, props}) {
+export function DisplayTemplateSelector({namespace, props}) {
 	const {displayStyle, displayStyleGroupId, items} = props;
 
 	const [selectedDisplayStyle, setSelectedDisplayStyle] = useState({

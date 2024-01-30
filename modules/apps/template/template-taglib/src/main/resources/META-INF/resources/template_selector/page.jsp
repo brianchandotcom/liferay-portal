@@ -15,7 +15,7 @@
 		cssClass="inline-item-before"
 	>
 		<react:component
-			module="js/TemplateSelector"
+			module="{DisplayTemplateSelector} from template-taglib"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"namespace", liferayPortletResponse.getNamespace()

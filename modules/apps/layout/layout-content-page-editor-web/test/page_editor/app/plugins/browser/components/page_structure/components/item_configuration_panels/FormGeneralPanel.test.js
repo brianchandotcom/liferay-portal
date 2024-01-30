@@ -25,7 +25,7 @@ jest.mock(
 
 jest.mock(
 	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateFormItemConfig',
-	() => jest.fn()
+	() => jest.fn(() => () => Promise.resolve())
 );
 
 jest.mock(

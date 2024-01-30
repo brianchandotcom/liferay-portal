@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {showUI} from '../../utils/showUI';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ProductMenuPage} from '../product-navigation-product-menu/ProductMenu.page';
 
 export class KnowledgeBasePage {
@@ -35,7 +35,7 @@ export class KnowledgeBasePage {
 
 	async goToCreateNewArticle() {
 		await this.goToFoldersAndArticles();
-		await showUI({
+		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.basicArticleMenuItem,
 			trigger: this.newButton,
@@ -59,7 +59,7 @@ export class KnowledgeBasePage {
 		this.page.once('dialog', (dialog) => {
 			dialog.accept().catch(() => {});
 		});
-		await showUI({
+		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: 'Delete'}),
 			trigger: kbArticle.getByLabel('Show Actions'),
@@ -79,7 +79,7 @@ export class KnowledgeBasePage {
 			});
 		}
 
-		await showUI({
+		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('button', {
 				name: 'Delete',

@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {showUI} from '../../utils/showUI';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {KnowledgeBasePage} from './KnowledgeBase.page';
 
 export class KnowledgeBaseViewArticlePage {
@@ -28,7 +28,7 @@ export class KnowledgeBaseViewArticlePage {
 
 	async deleteKnowledgeBaseArticle(title: string) {
 		await this.goto(title);
-		showUI({
+		clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: 'Delete'}),
 			trigger: this.showActionsButton,

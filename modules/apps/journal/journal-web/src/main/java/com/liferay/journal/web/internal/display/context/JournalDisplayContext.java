@@ -129,6 +129,7 @@ import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -273,6 +274,37 @@ public class JournalDisplayContext {
 		throws Exception {
 
 		return getArticleActionDropdownItems(article);
+	}
+
+	public String getArticleSubtitle(JournalArticle article) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-202534") &&
+			isNavigationMine()) {
+
+			Date createDate = article.getCreateDate();
+
+			String dateDescription = LanguageUtil.getTimeDescription(
+				_httpServletRequest,
+				System.currentTimeMillis() - createDate.getTime(), true);
+
+			return LanguageUtil.format(
+				_httpServletRequest, "created-x-ago-by-x",
+				new String[] {
+					dateDescription, HtmlUtil.escape(article.getUserName())
+				});
+		}
+
+		Date modifiedDate = article.getModifiedDate();
+
+		String modifiedDateDescription = LanguageUtil.getTimeDescription(
+			_httpServletRequest,
+			System.currentTimeMillis() - modifiedDate.getTime(), true);
+
+		return LanguageUtil.format(
+			_httpServletRequest, "modified-x-ago-by-x",
+			new String[] {
+				modifiedDateDescription,
+				HtmlUtil.escape(article.getStatusByUserName())
+			});
 	}
 
 	public List<DropdownItem> getArticleVersionActionDropdownItems(

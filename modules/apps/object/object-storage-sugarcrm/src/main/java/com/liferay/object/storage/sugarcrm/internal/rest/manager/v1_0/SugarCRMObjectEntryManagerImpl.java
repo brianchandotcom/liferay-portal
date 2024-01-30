@@ -207,10 +207,9 @@ public class SugarCRMObjectEntryManagerImpl
 
 	private void _appendPagination(StringBuilder sb, Pagination pagination) {
 		int offset = (pagination.getPage() - 1) * pagination.getPageSize();
-		int max_num = pagination.getPageSize();
 
 		sb.append(
-			StringBundler.concat("max_num=", max_num, "&=offset", offset));
+			StringBundler.concat("max_num=", pagination.getPageSize(), "&=offset", offset));
 	}
 
 	private void _appendSorts(

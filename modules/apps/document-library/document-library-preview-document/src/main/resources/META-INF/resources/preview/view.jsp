@@ -43,7 +43,7 @@ String previewFileURL = previewFileURLs[0];
 
 <div id="<portlet:namespace /><%= randomNamespace %>previewDocument">
 	<react:component
-		module="preview/js/DocumentPreviewer.es"
+		module="{DocumentPreviewer} from document-library-preview-document"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"baseImageURL", previewFileURL

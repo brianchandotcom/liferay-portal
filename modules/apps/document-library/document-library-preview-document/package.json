@@ -10,6 +10,7 @@
 		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},
+	"main": "preview/js/index.js",
 	"name": "document-library-preview-document",
 	"private": true,
 	"scripts": {

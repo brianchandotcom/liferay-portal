@@ -309,4 +309,4 @@ DocumentPreviewer.propTypes = {
 	totalPages: PropTypes.number,
 };
 
-export default DocumentPreviewer;
+export {DocumentPreviewer};

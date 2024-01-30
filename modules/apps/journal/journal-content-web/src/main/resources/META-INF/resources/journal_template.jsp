@@ -65,5 +65,5 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 <liferay-frontend:component
 	componentId="journalTemplate"
 	context="<%= journalContentDisplayContext.getJournalTemplateContext() %>"
-	module="js/JournalTemplate"
+	module="{JournalTemplate} from journal-content-web"
 />

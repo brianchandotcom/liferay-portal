@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 type Errors = {
 	errorMessage?: string;
@@ -15,6 +16,7 @@ type Errors = {
 };
 
 type Field = {
+	defaultValue: string;
 	label: string;
 	name: string;
 	value: string;
@@ -49,8 +51,9 @@ type FieldProps = {
 
 function Field({errors, field, url}: FieldProps) {
 	const descriptionId = useId();
+	const ref = useRef<HTMLInputElement>(null);
 
-	const {label, name} = field;
+	const {defaultValue, label, name} = field;
 	const error = errors.fields?.[name];
 
 	const [value, setValue] = useState(field.value);
@@ -87,9 +90,30 @@ function Field({errors, field, url}: FieldProps) {
 						aria-describedby={descriptionId}
 						name={name}
 						onChange={(event) => setValue(event.target.value)}
+						ref={ref}
 						value={value}
 					/>
 				</ClayInput.GroupItem>
+
+				{value !== defaultValue ? (
+					<ClayInput.GroupItem shrink>
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get(
+								'reset-to-default-value'
+							)}
+							displayType="secondary"
+							onClick={() => {
+								setValue(defaultValue);
+
+								ref.current?.focus();
+							}}
+							symbol="restore"
+							title={Liferay.Language.get(
+								'reset-to-default-value'
+							)}
+						/>
+					</ClayInput.GroupItem>
+				) : null}
 			</ClayInput.Group>
 
 			{error ? (

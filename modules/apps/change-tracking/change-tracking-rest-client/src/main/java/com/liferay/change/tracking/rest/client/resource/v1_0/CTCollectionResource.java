@@ -73,14 +73,6 @@ public interface CTCollectionResource {
 			CTCollection ctCollection, String callbackURL, Object object)
 		throws Exception;
 
-	public Page<CTCollection> getCtCollectionsByClassPage(
-			Integer classNameId, Integer classPK)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getCtCollectionsByClassPageHttpResponse(
-			Integer classNameId, Integer classPK)
-		throws Exception;
-
 	public void deleteCTCollectionByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
@@ -140,6 +132,15 @@ public interface CTCollectionResource {
 
 	public HttpInvoker.HttpResponse getCTCollectionShareLinkHttpResponse(
 			Long ctCollectionId)
+		throws Exception;
+
+	public Page<CTCollection> getCTCollectionsGetHistoriesPage(
+			Integer classNameId, Integer classPK)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getCTCollectionsGetHistoriesPageHttpResponse(
+				Integer classNameId, Integer classPK)
 		throws Exception;
 
 	public void deleteCTCollection(Long ctCollectionId) throws Exception;
@@ -764,117 +765,6 @@ public interface CTCollectionResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/change-tracking-rest/v1.0/ct-collections/batch");
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<CTCollection> getCtCollectionsByClassPage(
-				Integer classNameId, Integer classPK)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getCtCollectionsByClassPageHttpResponse(classNameId, classPK);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, CTCollectionSerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse getCtCollectionsByClassPageHttpResponse(
-				Integer classNameId, Integer classPK)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (classNameId != null) {
-				httpInvoker.parameter(
-					"classNameId", String.valueOf(classNameId));
-			}
-
-			if (classPK != null) {
-				httpInvoker.parameter("classPK", String.valueOf(classPK));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-collections-by-class");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1628,6 +1518,119 @@ public interface CTCollectionResource {
 						"/o/change-tracking-rest/v1.0/ct-collections/b{ctCollectionId}/share-link");
 
 			httpInvoker.path("ctCollectionId", ctCollectionId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<CTCollection> getCTCollectionsGetHistoriesPage(
+				Integer classNameId, Integer classPK)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getCTCollectionsGetHistoriesPageHttpResponse(
+					classNameId, classPK);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, CTCollectionSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getCTCollectionsGetHistoriesPageHttpResponse(
+					Integer classNameId, Integer classPK)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (classNameId != null) {
+				httpInvoker.parameter(
+					"classNameId", String.valueOf(classNameId));
+			}
+
+			if (classPK != null) {
+				httpInvoker.parameter("classPK", String.valueOf(classPK));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/change-tracking-rest/v1.0/ct-collections/get-histories");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

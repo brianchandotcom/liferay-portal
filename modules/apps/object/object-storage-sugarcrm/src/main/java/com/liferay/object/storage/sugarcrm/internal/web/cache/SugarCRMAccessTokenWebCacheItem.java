@@ -35,8 +35,7 @@ public class SugarCRMAccessTokenWebCacheItem implements WebCacheItem {
 				StringPool.POUND, sugarCRMConfiguration.clientId(),
 				StringPool.POUND, sugarCRMConfiguration.grantType(),
 				StringPool.POUND, sugarCRMConfiguration.password(),
-				StringPool.POUND, sugarCRMConfiguration.username()
-			),
+				StringPool.POUND, sugarCRMConfiguration.username()),
 			new SugarCRMAccessTokenWebCacheItem(sugarCRMConfiguration));
 	}
 

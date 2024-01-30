@@ -2870,9 +2870,11 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = RepositoryProviderUtil.getFileEntryRepository(
 			fileEntryId);
 
+		Date displayDate = null;
+
 		FileEntry fileEntry = repository.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title, urlTitle,
-			description, changeLog, dlVersionNumberIncrease, file,
+			description, changeLog, dlVersionNumberIncrease, file, displayDate,
 			expirationDate, reviewDate, serviceContext);
 
 		_dlAppHelperLocalService.updateFileEntry(
@@ -2961,10 +2963,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = RepositoryProviderUtil.getFileEntryRepository(
 			fileEntryId);
 
+		Date displayDate = null;
+
 		FileEntry fileEntry = repository.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title, urlTitle,
 			description, changeLog, dlVersionNumberIncrease, inputStream, size,
-			expirationDate, reviewDate, serviceContext);
+			displayDate, expirationDate, reviewDate, serviceContext);
 
 		_dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileEntry.getLatestFileVersion(),
@@ -2991,11 +2995,13 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = RepositoryProviderUtil.getFileEntryRepository(
 			fileEntryId);
 
+		Date displayDate = null;
+
 		_withDLAppHelperDisabled(
 			() -> repository.updateFileEntry(
 				getUserId(), fileEntryId, sourceFileName, mimeType, title,
 				urlTitle, description, changeLog, dlVersionNumberIncrease, file,
-				expirationDate, reviewDate, serviceContext));
+				displayDate, expirationDate, reviewDate, serviceContext));
 
 		repository.checkInFileEntry(
 			getUserId(), fileEntryId, dlVersionNumberIncrease, changeLog,
@@ -3022,11 +3028,14 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = RepositoryProviderUtil.getFileEntryRepository(
 			fileEntryId);
 
+		Date displayDate = null;
+
 		_withDLAppHelperDisabled(
 			() -> repository.updateFileEntry(
 				getUserId(), fileEntryId, sourceFileName, mimeType, title,
 				urlTitle, description, changeLog, dlVersionNumberIncrease,
-				inputStream, size, expirationDate, reviewDate, serviceContext));
+				inputStream, size, displayDate, expirationDate, reviewDate,
+				serviceContext));
 
 		repository.checkInFileEntry(
 			getUserId(), fileEntryId, dlVersionNumberIncrease, changeLog,
@@ -3221,6 +3230,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 						DLAppUtil.isMajorVersion(
 							previousFileVersion, fileVersion)),
 					fileVersion.getContentStream(false), fileVersion.getSize(),
+					fileVersion.getDisplayDate(),
 					fileVersion.getExpirationDate(),
 					fileVersion.getReviewDate(), serviceContext);
 

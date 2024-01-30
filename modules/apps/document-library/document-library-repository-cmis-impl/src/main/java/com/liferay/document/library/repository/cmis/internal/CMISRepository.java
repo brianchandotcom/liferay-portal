@@ -1182,7 +1182,7 @@ public class CMISRepository extends BaseCmisRepository {
 				userId, fileEntryId, contentStream.getFileName(), mimeType,
 				title, StringPool.BLANK, StringPool.BLANK, changeLog,
 				DLVersionNumberIncrease.MAJOR, contentStream.getStream(),
-				contentStream.getLength(), null, null, serviceContext);
+				contentStream.getLength(), null, null, null, serviceContext);
 		}
 		catch (PortalException | SystemException exception) {
 			throw exception;
@@ -1290,8 +1290,8 @@ public class CMISRepository extends BaseCmisRepository {
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String urlTitle, String description,
 			String changeLog, DLVersionNumberIncrease dlVersionNumberIncrease,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date displayDate,
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		Document document = null;

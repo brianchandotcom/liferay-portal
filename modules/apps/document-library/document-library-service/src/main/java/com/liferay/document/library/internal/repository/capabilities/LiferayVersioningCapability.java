@@ -76,6 +76,26 @@ public class LiferayVersioningCapability
 					String mimeType, String title, String urlTitle,
 					String description, String changeLog,
 					DLVersionNumberIncrease dlVersionNumberIncrease, File file,
+					Date displayDate, Date expirationDate, Date reviewDate,
+					ServiceContext serviceContext)
+				throws PortalException {
+
+				return _purgeVersions(
+					dlAppServiceAdapter,
+					super.updateFileEntry(
+						userId, fileEntryId, sourceFileName, mimeType, title,
+						urlTitle, description, changeLog,
+						dlVersionNumberIncrease, file, displayDate,
+						expirationDate, reviewDate, serviceContext));
+			}
+
+			@Override
+			public FileEntry updateFileEntry(
+					long userId, long fileEntryId, String sourceFileName,
+					String mimeType, String title, String urlTitle,
+					String description, String changeLog,
+					DLVersionNumberIncrease dlVersionNumberIncrease,
+					InputStream inputStream, long size, Date displayDate,
 					Date expirationDate, Date reviewDate,
 					ServiceContext serviceContext)
 				throws PortalException {
@@ -85,26 +105,7 @@ public class LiferayVersioningCapability
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
 						urlTitle, description, changeLog,
-						dlVersionNumberIncrease, file, expirationDate,
-						reviewDate, serviceContext));
-			}
-
-			@Override
-			public FileEntry updateFileEntry(
-					long userId, long fileEntryId, String sourceFileName,
-					String mimeType, String title, String urlTitle,
-					String description, String changeLog,
-					DLVersionNumberIncrease dlVersionNumberIncrease,
-					InputStream inputStream, long size, Date expirationDate,
-					Date reviewDate, ServiceContext serviceContext)
-				throws PortalException {
-
-				return _purgeVersions(
-					dlAppServiceAdapter,
-					super.updateFileEntry(
-						userId, fileEntryId, sourceFileName, mimeType, title,
-						urlTitle, description, changeLog,
-						dlVersionNumberIncrease, inputStream, size,
+						dlVersionNumberIncrease, inputStream, size, displayDate,
 						expirationDate, reviewDate, serviceContext));
 			}
 
@@ -139,6 +140,26 @@ public class LiferayVersioningCapability
 					String mimeType, String title, String urlTitle,
 					String description, String changeLog,
 					DLVersionNumberIncrease dlVersionNumberIncrease, File file,
+					Date displayDate, Date expirationDate, Date reviewDate,
+					ServiceContext serviceContext)
+				throws PortalException {
+
+				return _purgeVersions(
+					dlAppServiceAdapter,
+					super.updateFileEntry(
+						userId, fileEntryId, sourceFileName, mimeType, title,
+						urlTitle, description, changeLog,
+						dlVersionNumberIncrease, file, displayDate,
+						expirationDate, reviewDate, serviceContext));
+			}
+
+			@Override
+			public FileEntry updateFileEntry(
+					long userId, long fileEntryId, String sourceFileName,
+					String mimeType, String title, String urlTitle,
+					String description, String changeLog,
+					DLVersionNumberIncrease dlVersionNumberIncrease,
+					InputStream inputStream, long size, Date displayDate,
 					Date expirationDate, Date reviewDate,
 					ServiceContext serviceContext)
 				throws PortalException {
@@ -148,26 +169,7 @@ public class LiferayVersioningCapability
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
 						urlTitle, description, changeLog,
-						dlVersionNumberIncrease, file, expirationDate,
-						reviewDate, serviceContext));
-			}
-
-			@Override
-			public FileEntry updateFileEntry(
-					long userId, long fileEntryId, String sourceFileName,
-					String mimeType, String title, String urlTitle,
-					String description, String changeLog,
-					DLVersionNumberIncrease dlVersionNumberIncrease,
-					InputStream inputStream, long size, Date expirationDate,
-					Date reviewDate, ServiceContext serviceContext)
-				throws PortalException {
-
-				return _purgeVersions(
-					dlAppServiceAdapter,
-					super.updateFileEntry(
-						userId, fileEntryId, sourceFileName, mimeType, title,
-						urlTitle, description, changeLog,
-						dlVersionNumberIncrease, inputStream, size,
+						dlVersionNumberIncrease, inputStream, size, displayDate,
 						expirationDate, reviewDate, serviceContext));
 			}
 

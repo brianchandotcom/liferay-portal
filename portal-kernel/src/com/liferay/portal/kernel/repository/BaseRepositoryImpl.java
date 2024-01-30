@@ -390,7 +390,7 @@ public abstract class BaseRepositoryImpl
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String urlTitle, String description,
 			String changeLog, DLVersionNumberIncrease dlVersionNumberIncrease,
-			File file, Date expirationDate, Date reviewDate,
+			File file, Date displayDate, Date expirationDate, Date reviewDate,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -398,7 +398,8 @@ public abstract class BaseRepositoryImpl
 			return updateFileEntry(
 				userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
 				description, changeLog, dlVersionNumberIncrease, inputStream,
-				file.length(), expirationDate, reviewDate, serviceContext);
+				file.length(), displayDate, expirationDate, reviewDate,
+				serviceContext);
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
@@ -410,8 +411,8 @@ public abstract class BaseRepositoryImpl
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String urlTitle, String description,
 			String changeLog, DLVersionNumberIncrease dlVersionNumberIncrease,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date displayDate,
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Override

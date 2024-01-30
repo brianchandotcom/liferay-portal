@@ -5,8 +5,18 @@
 
 import {expect, test} from '@playwright/test';
 
-import {liferayConfig} from '../liferay.config';
-import createTempFile, {readTempFile} from '../utils/createTempFile';
+import createTempFile, {
+	TempFileMissingError,
+	readTempFile,
+} from '../utils/createTempFile';
+
+export interface LoginOptions {
+	screenName?:
+		| 'default-company-admin'
+		| 'test'
+		| 'test-organization-owner'
+		| 'unprivileged';
+}
 
 export interface Login {
 	password: string;
@@ -14,60 +24,68 @@ export interface Login {
 	user: string;
 }
 
-let loggedIn = false;
+function loginTest(options: LoginOptions = {}) {
+	const fixtureImpl = test.extend<{
+		login: Login;
+	}>({
+		login: [
+			async ({page}, use) => {
+				const screenName = options.screenName || 'test';
+				const user = `${screenName}@liferay.com`;
+				const password = 'test';
+				const tempFile = `loginTest-${screenName}.json`;
 
-const loginTest = test.extend<{
-	login: Login;
-}>({
-	login: [
-		async ({page}, use) => {
-			const user = liferayConfig.user.login;
-			const password = liferayConfig.user.password;
+				try {
+					const {cookies} = JSON.parse(readTempFile(tempFile));
 
-			if (!loggedIn) {
-				const storageStatePath = createTempFile('storageState.json');
+					page.context().addCookies(cookies);
+				}
+				catch (error) {
+					if (!(error instanceof TempFileMissingError)) {
+						throw error;
+					}
 
-				await page.goto('/');
+					const storageStatePath = createTempFile(tempFile);
 
-				await page.getByRole('button', {name: 'Sign In'}).click();
+					await page.goto('/');
 
-				await page.getByLabel('Email Address').fill(user);
-				await page.getByLabel('Password').fill(password);
-				await page.getByLabel('Remember Me').check();
+					await page.getByRole('button', {name: 'Sign In'}).click();
 
-				await page
-					.getByLabel('Sign In- Loading')
-					.getByRole('button', {name: 'Sign In'})
-					.click();
+					await page.getByLabel('Email Address').fill(user);
+					await page.getByLabel('Password').fill(password);
+					await page.getByLabel('Remember Me').check();
 
-				await expect(
-					page.getByLabel('Open Applications MenuCtrl+')
-				).toBeVisible({
-					timeout: 30 * 1000,
+					await page
+						.getByLabel('Sign In- Loading')
+						.getByRole('button', {name: 'Sign In'})
+						.click();
+
+					await expect(
+						page.getByLabel(
+							`${screenName} ${screenName} User Profile`
+						)
+					).toBeVisible({
+						timeout: 30 * 1000,
+					});
+
+					await page.context().storageState({path: storageStatePath});
+				}
+
+				const cookies = await page.context().cookies();
+
+				await use({
+					password,
+					sessionId: cookies.find(
+						(cookie) => cookie.name === 'JSESSIONID'
+					).value,
+					user,
 				});
+			},
+			{auto: true},
+		],
+	});
 
-				await page.context().storageState({path: storageStatePath});
-
-				loggedIn = true;
-			}
-			else {
-				const {cookies} = JSON.parse(readTempFile('storageState.json'));
-
-				page.context().addCookies(cookies);
-			}
-
-			const cookies = await page.context().cookies();
-
-			await use({
-				password,
-				sessionId: cookies.find(
-					(cookie) => cookie.name === 'JSESSIONID'
-				).value,
-				user,
-			});
-		},
-		{auto: true},
-	],
-});
+	return fixtureImpl;
+}
 
 export {loginTest};

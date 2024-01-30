@@ -248,6 +248,26 @@ describe('ReactFieldBase', () => {
 		Liferay.FeatureFlags['LPS-114700'] = false;
 	});
 
+	it('renders the label with info icon and its corresponding styles when the field is non-localizable', () => {
+		Liferay.FeatureFlags['LPS-114700'] = true;
+
+		const {getByLabelText, getByTitle} = render(
+			<FieldBaseWithProvider
+				editOnlyInDefaultLanguage
+				label="my-label"
+				readOnly
+			/>
+		);
+
+		expect(
+			getByTitle('this-field-can-not-be-localized')
+		).toBeInTheDocument();
+
+		expect(getByLabelText('my-label')).toHaveClass('text-muted');
+
+		Liferay.FeatureFlags['LPS-114700'] = false;
+	});
+
 	describe('Hide Field', () => {
 		it('renders the FieldBase with hideField markup', () => {
 			const {getAllByText, getByText} = render(

@@ -20,8 +20,8 @@ import com.liferay.object.rest.manager.exception.ObjectEntryManagerHttpException
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.storage.sugarcrm.configuration.SugarcrmConfiguration;
-import com.liferay.object.storage.sugarcrm.internal.web.cache.SugarcrmAccessTokenWebCacheItem;
+import com.liferay.object.storage.sugarcrm.configuration.SugarCRMConfiguration;
+import com.liferay.object.storage.sugarcrm.internal.web.cache.SugarCRMAccessTokenWebCacheItem;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_SUGARCRM,
 	service = ObjectEntryManager.class
 )
-public class SugarcrmObjectEntryManagerImpl
+public class SugarCRMObjectEntryManagerImpl
 	extends BaseObjectEntryManager implements ObjectEntryManager {
 
 	@Override
@@ -543,7 +543,7 @@ public class SugarcrmObjectEntryManagerImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SugarcrmObjectEntryManagerImpl.class);
+		SugarCRMObjectEntryManagerImpl.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
@@ -563,12 +563,12 @@ public class SugarcrmObjectEntryManagerImpl
 	@Reference
 	private Portal _portal;
 
-	private final SugarcrmHttp _sugarcrmHttp = new SugarcrmHttp();
+	private final SugarCRMHttp _sugarcrmHttp = new SugarCRMHttp();
 
 	@Reference
 	private UserLocalService _userLocalService;
 
-	private class SugarcrmHttp {
+	private class SugarCRMHttp {
 
 		public JSONObject delete(
 			long companyId, long groupId, String location) {
@@ -623,10 +623,10 @@ public class SugarcrmObjectEntryManagerImpl
 			}
 		}
 
-		private JSONObject _getSugarcrmAccessTokenJSONObject(
-			SugarcrmConfiguration sugarcrmConfiguration) {
+		private JSONObject _getSugarCRMAccessTokenJSONObject(
+			SugarCRMConfiguration sugarcrmConfiguration) {
 
-			JSONObject jSONObject = SugarcrmAccessTokenWebCacheItem.get(
+			JSONObject jSONObject = SugarCRMAccessTokenWebCacheItem.get(
 				sugarcrmConfiguration);
 
 			if (jSONObject == null) {
@@ -637,7 +637,7 @@ public class SugarcrmObjectEntryManagerImpl
 			return jSONObject;
 		}
 
-		private SugarcrmConfiguration _getSugarcrmConfiguration(
+		private SugarCRMConfiguration _getSugarCRMConfiguration(
 			long companyId, long groupId) {
 
 			System.out.println(companyId + " - " + groupId);
@@ -646,11 +646,11 @@ public class SugarcrmObjectEntryManagerImpl
 			try {
 				if (groupId == 0) {
 					return _configurationProvider.getCompanyConfiguration(
-						SugarcrmConfiguration.class, companyId);
+						SugarCRMConfiguration.class, companyId);
 				}
 
 				return _configurationProvider.getGroupConfiguration(
-					SugarcrmConfiguration.class, groupId);
+					SugarCRMConfiguration.class, groupId);
 			}
 			catch (ConfigurationException configurationException) {
 				return ReflectionUtil.throwException(configurationException);
@@ -684,10 +684,10 @@ public class SugarcrmObjectEntryManagerImpl
 					HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 			}
 
-			SugarcrmConfiguration sugarcrmConfiguration =
-				_getSugarcrmConfiguration(companyId, groupId);
+			SugarCRMConfiguration sugarcrmConfiguration =
+				_getSugarCRMConfiguration(companyId, groupId);
 
-			JSONObject jsonObject = _getSugarcrmAccessTokenJSONObject(
+			JSONObject jsonObject = _getSugarCRMAccessTokenJSONObject(
 				sugarcrmConfiguration);
 
 			options.addHeader(

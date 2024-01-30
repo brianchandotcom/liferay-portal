@@ -5,7 +5,7 @@
 
 package com.liferay.object.storage.sugarcrm.internal.web.cache;
 
-import com.liferay.object.storage.sugarcrm.configuration.SugarcrmConfiguration;
+import com.liferay.object.storage.sugarcrm.configuration.SugarCRMConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -24,18 +24,18 @@ import java.net.HttpURLConnection;
 /**
  * @author Maurice Sepe
  */
-public class SugarcrmAccessTokenWebCacheItem implements WebCacheItem {
+public class SugarCRMAccessTokenWebCacheItem implements WebCacheItem {
 
-	public static JSONObject get(SugarcrmConfiguration sugarcrmConfiguration) {
+	public static JSONObject get(SugarCRMConfiguration sugarcrmConfiguration) {
 		return (JSONObject)WebCachePoolUtil.get(
 			StringBundler.concat(
-				SugarcrmAccessTokenWebCacheItem.class.getName(),
+				SugarCRMAccessTokenWebCacheItem.class.getName(),
 				StringPool.POUND, sugarcrmConfiguration.username()),
-			new SugarcrmAccessTokenWebCacheItem(sugarcrmConfiguration));
+			new SugarCRMAccessTokenWebCacheItem(sugarcrmConfiguration));
 	}
 
-	public SugarcrmAccessTokenWebCacheItem(
-		SugarcrmConfiguration sugarcrmConfiguration) {
+	public SugarCRMAccessTokenWebCacheItem(
+		SugarCRMConfiguration sugarcrmConfiguration) {
 
 		_sugarcrmConfiguration = sugarcrmConfiguration;
 	}
@@ -92,8 +92,8 @@ public class SugarcrmAccessTokenWebCacheItem implements WebCacheItem {
 	private static final long _REFRESH_TIME = Time.MINUTE * 60;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SugarcrmAccessTokenWebCacheItem.class);
+		SugarCRMAccessTokenWebCacheItem.class);
 
-	private final SugarcrmConfiguration _sugarcrmConfiguration;
+	private final SugarCRMConfiguration _sugarcrmConfiguration;
 
 }

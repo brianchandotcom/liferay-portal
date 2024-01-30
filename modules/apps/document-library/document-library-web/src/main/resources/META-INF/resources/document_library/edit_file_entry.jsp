@@ -630,7 +630,7 @@ renderResponse.setTitle(headerTitle);
 						</div>
 					</c:if>
 
-					<div class="sheet-footer">
+					<div class="sheet-footer" data-qa-id="addFileEntryFooter">
 						<c:if test="<%= dlEditFileEntryDisplayContext.isSaveButtonVisible() %>">
 							<aui:button disabled="<%= dlEditFileEntryDisplayContext.isSaveButtonDisabled() %>" name="saveButton" onClick='<%= liferayPortletResponse.getNamespace() + "saveFileEntry(true);" %>' value="<%= dlEditFileEntryDisplayContext.getSaveButtonLabel() %>" />
 						</c:if>

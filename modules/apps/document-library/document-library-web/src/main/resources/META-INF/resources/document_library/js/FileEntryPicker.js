@@ -59,6 +59,7 @@ const FileNamePicker = ({
 			})}
 		>
 			<ClayButton
+				data-qa-id="selectFileButton"
 				displayType="secondary"
 				onClick={() => inputFileRef.current?.click()}
 				title={Liferay.Language.get('select-file')}
@@ -68,7 +69,10 @@ const FileNamePicker = ({
 
 			{fileName && (
 				<>
-					<small className="inline-item inline-item-after">
+					<small
+						className="inline-item inline-item-after"
+						data-qa-id="uploadedFileName"
+					>
 						<strong>{fileName}</strong>
 					</small>
 

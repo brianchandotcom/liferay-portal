@@ -6,9 +6,7 @@
 import {test} from '@playwright/test';
 
 import {SpecificationFacetsPage} from '../pages/commerce/commerce-product-content-search-web/specificationFacetsPage';
-import {
-	AttachmentsPage
-} from "../pages/commerce/commerce-product-definitions-web/attachmentsPage";
+import {AttachmentsPage} from '../pages/commerce/commerce-product-definitions-web/attachmentsPage';
 import {CommerceLayoutsPage} from '../pages/commerce/commerceLayoutsPage';
 
 const commercePagesTest = test.extend<{

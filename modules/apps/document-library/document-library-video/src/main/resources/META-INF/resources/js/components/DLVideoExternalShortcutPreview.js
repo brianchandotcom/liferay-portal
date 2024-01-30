@@ -27,6 +27,7 @@ const DLVideoExternalShortcutPreview = ({
 				<div
 					className="video-preview-aspect-ratio"
 					dangerouslySetInnerHTML={{__html: videoHTML}}
+					data-qa-id="renderedVideo"
 				/>
 			) : (
 				<div className="video-preview-aspect-ratio">

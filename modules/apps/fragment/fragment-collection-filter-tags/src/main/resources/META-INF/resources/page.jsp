@@ -25,7 +25,7 @@
 	</div>
 
 	<react:component
-		module="js/SelectTags"
+		module="{SelectTags} from fragment-collection-filter-tags"
 		props="<%= fragmentCollectionFilterTagsDisplayContext.getProps() %>"
 	/>
 </div>

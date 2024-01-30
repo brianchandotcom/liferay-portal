@@ -181,7 +181,11 @@ const baseFilters: Filter = {
 	run: {
 		label: i18n.translate('run'),
 		name: 'run',
-		resource: '/runs?fields=id,number',
+		resource: ({buildId}) =>
+			`/runs?fields=id,number&filter=${SearchBuilder.eq(
+				'buildId',
+				buildId as string
+			)}`,
 		transformData(item) {
 			return dataToOptions(transformData<TestrayRun>(item), (run) => ({
 				label: run?.number?.toString().padStart(2, '0'),

@@ -5,11 +5,11 @@
 
 package com.liferay.portal.search.opensearch2.internal.index;
 
-import com.liferay.portal.search.opensearch2.internal.OpenSearchIndexingFixture;
-import com.liferay.portal.search.opensearch2.internal.OpenSearchIndexingFixtureFactory;
 import com.liferay.portal.search.opensearch2.internal.connection.IndexCreator;
 import com.liferay.portal.search.opensearch2.internal.connection.IndexName;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
+import com.liferay.portal.search.opensearch2.internal.indexing.OpenSearchIndexingFixture;
+import com.liferay.portal.search.opensearch2.internal.indexing.OpenSearchIndexingFixtureFactory;
 
 import java.io.IOException;
 

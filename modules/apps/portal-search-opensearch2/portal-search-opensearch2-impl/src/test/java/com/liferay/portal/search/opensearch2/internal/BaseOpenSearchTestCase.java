@@ -8,6 +8,8 @@ package com.liferay.portal.search.opensearch2.internal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
+import com.liferay.portal.search.opensearch2.internal.indexing.OpenSearchIndexingFixture;
+import com.liferay.portal.search.opensearch2.internal.indexing.OpenSearchIndexingFixtureFactory;
 
 import java.io.IOException;
 

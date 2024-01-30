@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.opensearch2.internal;
+package com.liferay.portal.search.opensearch2.internal.search.engine;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.opensearch2.internal.OpenSearchSearchEngine;
+import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnection;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.connection.TestOpenSearchConnectionManager;

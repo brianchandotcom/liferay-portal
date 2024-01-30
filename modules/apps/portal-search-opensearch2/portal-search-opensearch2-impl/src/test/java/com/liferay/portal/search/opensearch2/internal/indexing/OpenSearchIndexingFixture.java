@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.opensearch2.internal;
+package com.liferay.portal.search.opensearch2.internal.indexing;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.IndexSearcher;
@@ -20,6 +20,10 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderFactoryImpl;
 import com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration;
+import com.liferay.portal.search.opensearch2.internal.OpenSearchIndexSearcher;
+import com.liferay.portal.search.opensearch2.internal.OpenSearchIndexWriter;
+import com.liferay.portal.search.opensearch2.internal.OpenSearchQuerySuggester;
+import com.liferay.portal.search.opensearch2.internal.OpenSearchSpellCheckIndexWriter;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapper;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapperImpl;
 import com.liferay.portal.search.opensearch2.internal.connection.IndexCreator;

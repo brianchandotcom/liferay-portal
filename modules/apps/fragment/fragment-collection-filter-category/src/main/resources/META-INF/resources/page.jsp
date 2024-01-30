@@ -22,7 +22,7 @@
 		/>
 
 		<react:component
-			module="js/SelectCategory.es"
+			module="{SelectCategory} from fragment-collection-filter-category"
 			props="<%= fragmentCollectionFilterCategoryDisplayContext.getProps() %>"
 		/>
 	</div>

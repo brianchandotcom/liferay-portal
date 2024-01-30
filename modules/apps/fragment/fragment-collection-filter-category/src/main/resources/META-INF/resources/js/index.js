@@ -13,7 +13,7 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-export default function SelectCategory({
+export function SelectCategory({
 	assetCategories,
 	enableDropdown,
 	fragmentEntryLinkId,

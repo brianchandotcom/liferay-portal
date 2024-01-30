@@ -824,11 +824,11 @@ public class UserLocalServiceTest {
 	public void testUpdatePasswordWithChangedAlgorithm() throws Exception {
 		String oldPasswordsEncryptionAlgorithmFieldValue =
 			ReflectionTestUtil.getFieldValue(
-				PasswordEncryptorUtil.class, "_passwordEncryptionAlgorithm");
+				PasswordEncryptorUtil.class, "_PASSWORDS_ENCRYPTION_ALGORITHM");
 
 		try {
 			ReflectionTestUtil.setFieldValue(
-				PasswordEncryptorUtil.class, "_passwordEncryptionAlgorithm",
+				PasswordEncryptorUtil.class, "_PASSWORDS_ENCRYPTION_ALGORITHM",
 				"PBKDF2WithHmacSHA1/160/720000");
 
 			User user = UserTestUtil.addUser();
@@ -839,7 +839,7 @@ public class UserLocalServiceTest {
 				encryptedPassword.startsWith("{PBKDF2WithHmacSHA1}"));
 
 			ReflectionTestUtil.setFieldValue(
-				PasswordEncryptorUtil.class, "_passwordEncryptionAlgorithm",
+				PasswordEncryptorUtil.class, "_PASSWORDS_ENCRYPTION_ALGORITHM",
 				"MD5");
 
 			String password = RandomTestUtil.randomString(
@@ -854,7 +854,7 @@ public class UserLocalServiceTest {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				PasswordEncryptorUtil.class, "_passwordEncryptionAlgorithm",
+				PasswordEncryptorUtil.class, "_PASSWORDS_ENCRYPTION_ALGORITHM",
 				oldPasswordsEncryptionAlgorithmFieldValue);
 		}
 	}

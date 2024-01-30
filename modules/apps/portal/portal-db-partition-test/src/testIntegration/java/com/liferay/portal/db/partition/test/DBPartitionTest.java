@@ -323,7 +323,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					DBPartitionUtil.class, "_databasePartitionSchemaNamePrefix",
+					DBPartitionUtil.class,
+					"_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
 					"VeryLongIdentifier")) {
 
 			DBPartitionUtil.checkDatabasePartitionSchemaNamePrefix();

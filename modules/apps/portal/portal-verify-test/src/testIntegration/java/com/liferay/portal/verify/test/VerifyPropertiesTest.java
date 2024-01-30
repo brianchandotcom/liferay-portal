@@ -43,7 +43,7 @@ public class VerifyPropertiesTest {
 		String migratedPortalKey = getFirstPortalPropertyKey();
 
 		String[][] originalMigratedPortalKeys = _setPropertyKeys(
-			"_migratedPortalKeys",
+			"_MIGRATED_PORTAL_KEYS",
 			new String[][] {{migratedPortalKey, migratedPortalKey}});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -70,7 +70,8 @@ public class VerifyPropertiesTest {
 				logEntry.getMessage());
 		}
 		finally {
-			_setPropertyKeys("_migratedPortalKeys", originalMigratedPortalKeys);
+			_setPropertyKeys(
+				"_MIGRATED_PORTAL_KEYS", originalMigratedPortalKeys);
 		}
 	}
 
@@ -79,7 +80,7 @@ public class VerifyPropertiesTest {
 		String migratedSystemKey = getFirstSystemPropertyKey();
 
 		String[][] originalMigratedSystemKeys = _setPropertyKeys(
-			"_migratedSystemKeys",
+			"_MIGRATED_SYSTEM_KEYS",
 			new String[][] {{migratedSystemKey, migratedSystemKey}});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -101,7 +102,8 @@ public class VerifyPropertiesTest {
 				logEntry.getMessage());
 		}
 		finally {
-			_setPropertyKeys("_migratedSystemKeys", originalMigratedSystemKeys);
+			_setPropertyKeys(
+				"_MIGRATED_SYSTEM_KEYS", originalMigratedSystemKeys);
 		}
 	}
 
@@ -110,7 +112,7 @@ public class VerifyPropertiesTest {
 		String modularizedPortalKey = getFirstPortalPropertyKey();
 
 		String[][] originalModularizedPortalKeys = _setPropertyKeys(
-			"_modularizedPortalKeys",
+			"_MODULARIZED_PORTAL_KEYS",
 			new String[][] {
 				{
 					modularizedPortalKey, modularizedPortalKey,
@@ -138,7 +140,7 @@ public class VerifyPropertiesTest {
 		}
 		finally {
 			_setPropertyKeys(
-				"_modularizedPortalKeys", originalModularizedPortalKeys);
+				"_MODULARIZED_PORTAL_KEYS", originalModularizedPortalKeys);
 		}
 	}
 
@@ -147,7 +149,7 @@ public class VerifyPropertiesTest {
 		String obsoletePortalKey = getFirstPortalPropertyKey();
 
 		String[] originalObsoletePortalKeys = _setPropertyKeys(
-			"_obsoletePortalKeys", new String[] {obsoletePortalKey});
+			"_OBSOLETE_PORTAL_KEYS", new String[] {obsoletePortalKey});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
@@ -165,7 +167,8 @@ public class VerifyPropertiesTest {
 				logEntry.getMessage());
 		}
 		finally {
-			_setPropertyKeys("_obsoletePortalKeys", originalObsoletePortalKeys);
+			_setPropertyKeys(
+				"_OBSOLETE_PORTAL_KEYS", originalObsoletePortalKeys);
 		}
 	}
 
@@ -174,7 +177,7 @@ public class VerifyPropertiesTest {
 		String obsoleteSystemKey = getFirstSystemPropertyKey();
 
 		String[] originalObsoleteSystemKeys = _setPropertyKeys(
-			"_obsoleteSystemKeys", new String[] {obsoleteSystemKey});
+			"_OBSOLETE_SYSTEM_KEYS", new String[] {obsoleteSystemKey});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
@@ -192,7 +195,8 @@ public class VerifyPropertiesTest {
 				logEntry.getMessage());
 		}
 		finally {
-			_setPropertyKeys("_obsoleteSystemKeys", originalObsoleteSystemKeys);
+			_setPropertyKeys(
+				"_OBSOLETE_SYSTEM_KEYS", originalObsoleteSystemKeys);
 		}
 	}
 
@@ -201,7 +205,7 @@ public class VerifyPropertiesTest {
 		String renamedPortalKey = getFirstPortalPropertyKey();
 
 		String[][] originalRenamedPortalKeys = _setPropertyKeys(
-			"_renamedPortalKeys",
+			"_RENAMED_PORTAL_KEYS",
 			new String[][] {new String[] {renamedPortalKey, renamedPortalKey}});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -222,7 +226,7 @@ public class VerifyPropertiesTest {
 				logEntry.getMessage());
 		}
 		finally {
-			_setPropertyKeys("_renamedPortalKeys", originalRenamedPortalKeys);
+			_setPropertyKeys("_RENAMED_PORTAL_KEYS", originalRenamedPortalKeys);
 		}
 	}
 
@@ -231,7 +235,7 @@ public class VerifyPropertiesTest {
 		String renamedSystemKey = getFirstSystemPropertyKey();
 
 		String[][] originalRenamedSystemKeys = _setPropertyKeys(
-			"_renamedSystemKeys",
+			"_RENAMED_SYSTEM_KEYS",
 			new String[][] {new String[] {renamedSystemKey, renamedSystemKey}});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -252,7 +256,7 @@ public class VerifyPropertiesTest {
 				logEntry.getMessage());
 		}
 		finally {
-			_setPropertyKeys("_renamedSystemKeys", originalRenamedSystemKeys);
+			_setPropertyKeys("_RENAMED_SYSTEM_KEYS", originalRenamedSystemKeys);
 		}
 	}
 

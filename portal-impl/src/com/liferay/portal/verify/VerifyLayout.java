@@ -86,7 +86,6 @@ public class VerifyLayout extends VerifyProcess {
 		}
 	}
 
-	private static volatile Log _log = LogFactoryUtil.getLog(
-		VerifyLayout.class);
+	private static final Log _log = LogFactoryUtil.getLog(VerifyLayout.class);
 
 }

@@ -386,7 +386,7 @@ public class DefaultExportImportContentProcessorTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_layoutReferencesExportImportContentProcessor,
-			"_privateUserServletMapping", "/en/");
+			"_PRIVATE_USER_SERVLET_MAPPING", "/en/");
 
 		String content = _replaceParameters(
 			_getContent("layout_references.txt"), _fileEntry);
@@ -435,7 +435,7 @@ public class DefaultExportImportContentProcessorTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_layoutReferencesExportImportContentProcessor,
-			"_privateUserServletMapping",
+			"_PRIVATE_USER_SERVLET_MAPPING",
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING +
 				StringPool.SLASH);
 
@@ -457,7 +457,7 @@ public class DefaultExportImportContentProcessorTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_layoutReferencesExportImportContentProcessor,
-			"_privateUserServletMapping", "/en/");
+			"_PRIVATE_USER_SERVLET_MAPPING", "/en/");
 
 		String content = _replaceParameters(
 			_getContent("layout_references.txt"), _fileEntry);
@@ -503,7 +503,7 @@ public class DefaultExportImportContentProcessorTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_layoutReferencesExportImportContentProcessor,
-			"_privateUserServletMapping",
+			"_PRIVATE_USER_SERVLET_MAPPING",
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING +
 				StringPool.SLASH);
 	}

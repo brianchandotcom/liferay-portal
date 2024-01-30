@@ -47,7 +47,7 @@ public class EditorConfigurationFactoryUtil {
 		return new EditorConfigurationImpl(configJSONObject, editorOptions);
 	}
 
-	private static volatile EditorConfigProvider _editorConfigProvider =
+	private static final EditorConfigProvider _editorConfigProvider =
 		new EditorConfigProvider();
 	private static final ServiceTrackerMap<String, EditorConfigTransformer>
 		_editorConfigTransformerServiceTrackerMap =

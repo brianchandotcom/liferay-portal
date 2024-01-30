@@ -47,13 +47,14 @@ public class DatabasePartitionUpgradeProcessTest {
 			"database.partition.enabled");
 		_originalDatabasePartitionThreadPoolEnabled =
 			ReflectionTestUtil.getFieldValue(
-				DBPartitionUtil.class, "_databasePartitionThreadPoolEnabled");
+				DBPartitionUtil.class,
+				"_DATABASE_PARTITION_THREAD_POOL_ENABLED");
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		ReflectionTestUtil.setFieldValue(
-			DBPartitionUtil.class, "_databasePartitionThreadPoolEnabled",
+			DBPartitionUtil.class, "_DATABASE_PARTITION_THREAD_POOL_ENABLED",
 			_originalDatabasePartitionThreadPoolEnabled);
 
 		PropsUtil.set(
@@ -67,7 +68,8 @@ public class DatabasePartitionUpgradeProcessTest {
 		PropsUtil.set("database.partition.enabled", "false");
 
 		ReflectionTestUtil.setFieldValue(
-			DBPartitionUtil.class, "_databasePartitionThreadPoolEnabled", true);
+			DBPartitionUtil.class, "_DATABASE_PARTITION_THREAD_POOL_ENABLED",
+			true);
 
 		UpgradeProcess upgradeProcess = new AssertConnectionUpgradeProcess();
 
@@ -81,7 +83,8 @@ public class DatabasePartitionUpgradeProcessTest {
 		PropsUtil.set("database.partition.enabled", "true");
 
 		ReflectionTestUtil.setFieldValue(
-			DBPartitionUtil.class, "_databasePartitionThreadPoolEnabled", true);
+			DBPartitionUtil.class, "_DATABASE_PARTITION_THREAD_POOL_ENABLED",
+			true);
 
 		UpgradeProcess upgradeProcess = new AssertConnectionUpgradeProcess();
 

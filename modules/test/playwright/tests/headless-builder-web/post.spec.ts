@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {headlessBuilderPagesTest} from '../../fixtures/headlessBuilderPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {liferayConfig} from '../../liferay.config';
 
 export const test = mergeTests(
@@ -73,6 +74,27 @@ const studentSubjectsApplication = {
 	externalReferenceCode: 'student-subjects-application',
 	title: 'Student-Subject manager',
 };
+
+async function waitForHeadlessBuilderReady(apiHelpers: ApiHelpers, page: Page) {
+	for (const endpoint of [
+		'applications',
+		'endpoints',
+		'filters',
+		'properties',
+		'schemas',
+		'sorts',
+	]) {
+		await expect
+			.poll(async () =>
+				(
+					await page.request.get(`/o/headless-builder/${endpoint}`, {
+						headers: await apiHelpers.getHeader(),
+					})
+				).status()
+			)
+			.toBe(200);
+	}
+}
 
 test('can create post endpoint with different request and response schema', async ({
 	apiApplicationPage,
@@ -203,6 +225,8 @@ test('can create post endpoint with different request and response schema', asyn
 			code: 0,
 		},
 	});
+
+	await waitForHeadlessBuilderReady(apiHelpers, page);
 	await apiHelpers.object.postObjectEntry(
 		studentSubjectsApplication,
 		'headless-builder/applications'
@@ -252,6 +276,7 @@ test('can create post method endpoint with company scope', async ({
 	headlessBuilderPage,
 	page,
 }) => {
+	await waitForHeadlessBuilderReady(apiHelpers, page);
 	await apiHelpers.object.postObjectEntry(
 		basicApiApplication,
 		'headless-builder/applications'

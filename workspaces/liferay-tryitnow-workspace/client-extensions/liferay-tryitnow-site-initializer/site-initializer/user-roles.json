@@ -3,24 +3,24 @@
 		"emailAddress": "m2h8.admin.adam@liferay.com",
 		"roles": [
 			"Administrator",
+			"M2H8 Ticket Solvers",
 			"Power User",
-			"User",
-			"M2H8 Ticket Solvers"
+			"User"
 		]
 	},
 	{
 		"emailAddress": "m2h8.customer.carl@liferay.com",
 		"roles": [
+			"M2H8 Petitionaries",
 			"Publications User",
-			"User",
-			"M2H8 Petitionaries"
+			"User"
 		]
 	},
 	{
 		"emailAddress": "m2h8.support.sam@liferay.com",
 		"roles": [
-			"User",
-			"Ticket_solvers"
+			"M2H8 Ticket Solvers",
+			"User"
 		]
 	}
 ]

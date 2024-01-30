@@ -40,7 +40,7 @@
 			"<rootDir>/test/helpers.es.js"
 		]
 	},
-	"main": "js/index.es.js",
+	"main": "js/index.js",
 	"name": "questions-web",
 	"private": true,
 	"scripts": {

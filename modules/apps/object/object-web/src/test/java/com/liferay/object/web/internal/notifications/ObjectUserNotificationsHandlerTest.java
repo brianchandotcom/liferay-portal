@@ -54,9 +54,11 @@ public class ObjectUserNotificationsHandlerTest {
 	@Test
 	public void testGetLinkToAccessSubmittedObjectEntry1() throws Exception {
 		Mockito.when(
-			_userNotificationEvent.getPayload()
+			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				Mockito.any(InfoItemReference.class),
+				Mockito.any(ThemeDisplay.class))
 		).thenReturn(
-			StringPool.BLANK
+			"http://localhost:8080/web/l/54321"
 		);
 
 		Mockito.when(
@@ -66,11 +68,9 @@ public class ObjectUserNotificationsHandlerTest {
 		);
 
 		Mockito.when(
-			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				Mockito.any(InfoItemReference.class),
-				Mockito.any(ThemeDisplay.class))
+			_userNotificationEvent.getPayload()
 		).thenReturn(
-			"http://localhost:8080/web/l/54321"
+			StringPool.BLANK
 		);
 
 		Assert.assertEquals(

@@ -941,7 +941,7 @@ public class JournalDisplayContext {
 			return _searchContainer;
 		}
 
-		if (isIndexAllArticleVersions() && isShowVersions()) {
+		if (isShowVersions()) {
 			_searchContainer = _getVersionsSearchContainer();
 
 			return _searchContainer;
@@ -1251,14 +1251,8 @@ public class JournalDisplayContext {
 		return false;
 	}
 
-	public boolean isShowComments() throws PortalException {
-		if ((isTypeWebContent() && !hasResults() && !hasVersionsResults() &&
-			 hasCommentsResults()) ||
-			(isTypeVersions() && !hasVersionsResults() &&
-			 hasCommentsResults())) {
-
-			_searchIn = "comments";
-
+	public boolean isShowComments() {
+		if (isSearch() && _isSearchInComments()) {
 			return true;
 		}
 
@@ -1275,24 +1269,8 @@ public class JournalDisplayContext {
 		return true;
 	}
 
-	public boolean isShowVersions() throws PortalException {
-		if (isTypeVersions()) {
-			return true;
-		}
-
-		if (isIndexAllArticleVersions() && isTypeWebContent() &&
-			!hasResults() && hasVersionsResults()) {
-
-			_type = "versions";
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isShowWebContent() throws PortalException {
-		if (isTypeWebContent() && !isShowComments() && !isShowVersions()) {
+	public boolean isShowVersions() {
+		if (isIndexAllArticleVersions() && isSearch() && isTypeVersions()) {
 			return true;
 		}
 
@@ -1301,14 +1279,6 @@ public class JournalDisplayContext {
 
 	public boolean isTypeVersions() {
 		if (Objects.equals(getType(), "versions")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isTypeWebContent() {
-		if (Objects.equals(getType(), "web-content")) {
 			return true;
 		}
 
@@ -1901,6 +1871,14 @@ public class JournalDisplayContext {
 
 	private boolean _isSearchInAllFields() {
 		if (Objects.equals(_getSearchIn(), "all-fields")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isSearchInComments() {
+		if (Objects.equals(_getSearchIn(), "comments")) {
 			return true;
 		}
 

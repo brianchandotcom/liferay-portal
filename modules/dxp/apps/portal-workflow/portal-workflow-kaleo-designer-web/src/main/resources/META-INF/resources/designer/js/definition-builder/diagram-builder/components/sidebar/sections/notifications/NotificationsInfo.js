@@ -410,27 +410,34 @@ const NotificationsInfo = ({
 	}, [notificationIndex, recipientType, setSelectedItem]);
 
 	useEffect(() => {
+		if (!selectedItem) {
+			return;
+		}
 		let sectionsData = [];
 
 		const recipients =
-			selectedItem.data.notifications &&
-			(selectedItem.data.notifications.recipients[notificationIndex][0] ||
-				selectedItem.data.notifications.recipients[notificationIndex]);
+			selectedItem?.data?.notifications &&
+			(selectedItem?.data?.notifications?.recipients?.[
+				notificationIndex
+			]?.[0] ||
+				selectedItem?.data?.notifications?.recipients?.[
+					notificationIndex
+				]);
 
 		if (recipients && recipientType === 'roleType') {
-			for (let i = 0; i < recipients.roleType.length; i++) {
+			for (let i = 0; i < recipients?.roleType?.length; i++) {
 				sectionsData.push({
-					autoCreate: recipients.autoCreate?.[i],
+					autoCreate: recipients?.autoCreate?.[i],
 					identifier: `${Date.now()}-${i}`,
-					roleKey: recipients.roleKey[i],
-					roleName: recipients.roleName?.[i],
-					roleType: recipients.roleType[i],
+					roleKey: recipients?.roleKey[i],
+					roleName: recipients?.roleName?.[i],
+					roleType: recipients?.roleType?.[i],
 				});
 			}
 		}
 		else if (
-			selectedItem.data.notifications.recipients[notificationIndex]
-				.sectionsData &&
+			selectedItem?.data?.notifications?.recipients?.[notificationIndex]
+				?.sectionsData &&
 			recipientType === 'user'
 		) {
 			sectionsData =

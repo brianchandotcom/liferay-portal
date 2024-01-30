@@ -60,6 +60,23 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_friendlyURLResolverRegistryUtilMockedStatic = Mockito.mockStatic(
+			FriendlyURLResolverRegistryUtil.class);
+
+		_friendlyURLResolverRegistryUtilMockedStatic.when(
+			() ->
+				FriendlyURLResolverRegistryUtil.
+					getFriendlyURLResolversAsCollection()
+		).thenReturn(
+			ListUtil.fromArray(
+				new FriendlyURLResolverImpl(
+					FriendlyURLResolverConstants.URL_SEPARATOR_BLOGS_ENTRY,
+					"BlogsEntry", "/blogs1/"),
+				new FriendlyURLResolverImpl(
+					FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
+					"JournalArticle", "/journal1/"))
+		);
+
 		_friendlyURLSeparatorConfigurationManager = Mockito.mock(
 			FriendlyURLSeparatorConfigurationManager.class);
 
@@ -91,23 +108,6 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 				StringPool.UNDERLINE,
 				ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
 				StringPool.UNDERLINE)
-		);
-
-		_friendlyURLResolverRegistryUtilMockedStatic = Mockito.mockStatic(
-			FriendlyURLResolverRegistryUtil.class);
-
-		_friendlyURLResolverRegistryUtilMockedStatic.when(
-			() ->
-				FriendlyURLResolverRegistryUtil.
-					getFriendlyURLResolversAsCollection()
-		).thenReturn(
-			ListUtil.fromArray(
-				new FriendlyURLResolverImpl(
-					FriendlyURLResolverConstants.URL_SEPARATOR_BLOGS_ENTRY,
-					"BlogsEntry", "/blogs1/"),
-				new FriendlyURLResolverImpl(
-					FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
-					"JournalArticle", "/journal1/"))
 		);
 	}
 

@@ -8100,9 +8100,23 @@ public class ObjectEntryResourceTest {
 					0
 				).put(
 					StringBundler.concat(
+						"r_", _objectRelationship1.getName(), "_",
+						StringUtil.replaceLast(
+							_objectDefinition2.getPKObjectFieldName(), "Id",
+							"ERC")),
+					""
+				).put(
+					StringBundler.concat(
 						"r_", _objectRelationship2.getName(), "_",
 						_objectDefinition2.getPKObjectFieldName()),
 					0
+				).put(
+					StringBundler.concat(
+						"r_", _objectRelationship2.getName(), "_",
+						StringUtil.replaceLast(
+							_objectDefinition2.getPKObjectFieldName(), "Id",
+							"ERC")),
+					""
 				).toString(),
 				jsonObject.toString(), JSONCompareMode.LENIENT);
 		}

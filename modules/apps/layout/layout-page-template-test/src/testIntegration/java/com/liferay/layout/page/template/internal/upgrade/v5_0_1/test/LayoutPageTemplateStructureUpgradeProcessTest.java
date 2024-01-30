@@ -332,8 +332,6 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				_upgradeStepRegistrator, _CLASS_NAME);
 
 			upgradeProcess.upgrade();
-
-			_multiVMPool.clear();
 		}
 	}
 
@@ -342,6 +340,8 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 			StringBundler.concat(
 				"update LayoutPageTemplateStructure set plid = ", plid,
 				" where classPK = ", plid));
+
+		_multiVMPool.clear();
 	}
 
 	private static final String _CLASS_NAME =

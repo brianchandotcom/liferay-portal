@@ -143,9 +143,9 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 					"value", "journal-test1"
 				)
 			).toString(),
-			friendlyURLSeparatorCompanyConfigurationDisplayContext.
-				getConfigurableFriendlyURLSeparatorsJSONArray(
-				).toString());
+			String.valueOf(
+				friendlyURLSeparatorCompanyConfigurationDisplayContext.
+					getConfigurableFriendlyURLSeparatorsJSONArray()));
 	}
 
 	@Test
@@ -202,9 +202,9 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 					"value", "web"
 				)
 			).toString(),
-			friendlyURLSeparatorCompanyConfigurationDisplayContext.
-				getConfigurableFriendlyURLSeparatorsJSONArray(
-				).toString());
+			String.valueOf(
+				friendlyURLSeparatorCompanyConfigurationDisplayContext.
+					getConfigurableFriendlyURLSeparatorsJSONArray()));
 	}
 
 	@Test

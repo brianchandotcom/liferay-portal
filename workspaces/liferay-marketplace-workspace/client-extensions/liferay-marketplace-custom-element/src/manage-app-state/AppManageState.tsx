@@ -71,6 +71,7 @@ const initialState = ({
 		standard: [{key: 1, value: 0}],
 	},
 	appType: {value: ''},
+	appVersion: '1.0',
 	buildAppPackages: {},
 	dayTrial: 'no',
 	optionValuesId: {},

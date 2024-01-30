@@ -76,7 +76,7 @@ export function ReviewAndSubmitAppPage({
 			};
 
 			nonTrialSKU?.customFields?.forEach(({customValue, name}) => {
-				if (name === 'version') {
+				if (name === 'Version') {
 					dataProduct.version = customValue.data as string;
 				}
 

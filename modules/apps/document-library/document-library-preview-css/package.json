@@ -1,7 +1,6 @@
 {
-	"dependencies": {
-	},
-	"main": "index.js",
+	"dependencies": {},
+	"main": "js/index.js",
 	"name": "@liferay/document-library-preview-css",
 	"private": true,
 	"scripts": {

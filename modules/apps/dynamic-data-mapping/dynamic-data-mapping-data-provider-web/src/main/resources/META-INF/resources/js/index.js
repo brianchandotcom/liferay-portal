@@ -9,7 +9,7 @@ import {
 	postForm,
 } from 'frontend-js-web';
 
-export default function propsTransformer({
+export function DDMDataProviderManagementToolbarPropsTransformer({
 	additionalProps: {deleteDataProviderURL},
 	portletNamespace,
 	...otherProps

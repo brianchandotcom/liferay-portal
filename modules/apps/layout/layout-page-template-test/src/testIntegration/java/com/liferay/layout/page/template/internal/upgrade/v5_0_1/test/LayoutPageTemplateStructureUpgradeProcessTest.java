@@ -257,6 +257,8 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 	}
 
 	private static void _addClassPKColumn() throws Exception {
+		_classPKColumnsAdded = false;
+
 		try (Connection connection = DataAccess.getConnection()) {
 			DBInspector dbInspector = new DBInspector(connection);
 
@@ -272,11 +274,17 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				_db.runSQLTemplateString(
 					"alter table LayoutPageTemplateStructure add classPK LONG;",
 					true);
+
+				_classPKColumnsAdded = true;
 			}
 		}
 	}
 
 	private static void _dropClassPKColumn() throws Exception {
+		if (!_classPKColumnsAdded) {
+			return;
+		}
+
 		try (Connection connection = DataAccess.getConnection()) {
 			DBInspector dbInspector = new DBInspector(connection);
 
@@ -352,6 +360,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		"com.liferay.layout.page.template.internal.upgrade.v5_0_1." +
 			"LayoutPageTemplateStructureUpgradeProcess";
 
+	private static boolean _classPKColumnsAdded;
 	private static DB _db;
 
 	@Inject(

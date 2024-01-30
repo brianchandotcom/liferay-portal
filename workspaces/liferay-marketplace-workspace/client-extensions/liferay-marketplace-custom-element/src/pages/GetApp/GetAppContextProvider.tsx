@@ -69,7 +69,10 @@ const initialState: InitialState = {
 		billingAddress: {} as BillingAddress,
 		eula: '',
 		eulaCheckbox: false,
-		invoice: {} as Invoice,
+		invoice: {
+			email: '',
+			purchaseOrderNumber: '',
+		} as Invoice,
 		method: 'pay',
 	},
 	product: {} as DeliveryProduct,
@@ -286,7 +289,12 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 		}
 
 		if (paymentMethod === 'order') {
-			return Object.values(state.payment.invoice).every(Boolean);
+			const invoiceValues = Object.values(state.payment.invoice);
+
+			return (
+				!!invoiceValues.length &&
+				invoiceValues.every((value) => value.trim())
+			);
 		}
 
 		return false;
@@ -295,6 +303,7 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 	const appResourceInfo = useGetResourceInfo({
 		product,
 		selectedProject: state.project,
+		shouldFetch: isCloudApp,
 	});
 
 	return (

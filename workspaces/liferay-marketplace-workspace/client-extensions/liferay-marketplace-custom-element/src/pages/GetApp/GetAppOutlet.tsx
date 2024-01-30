@@ -145,7 +145,7 @@ const GetAppOutlet = () => {
 			});
 
 			const cartResponse = orderId
-				? await cartUtil.updateCartItems(orderId, {
+				? await cartUtil.updateCart(orderId, {
 						...cart,
 						cartItems: cartUtil.cartItems,
 				  })
@@ -182,8 +182,7 @@ const GetAppOutlet = () => {
 			}
 
 			window.location.href = nextStepsCallbackURL;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error('Unable to handleGetApp', error);
 		}
 

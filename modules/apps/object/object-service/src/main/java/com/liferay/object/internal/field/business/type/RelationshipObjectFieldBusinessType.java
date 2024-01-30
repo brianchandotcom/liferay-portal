@@ -93,7 +93,9 @@ public class RelationshipObjectFieldBusinessType
 
 			Object value = values.get(objectField.getName());
 
-			if (Validator.isNull(value)) {
+			Long longValue = GetterUtil.getLong(value);
+
+			if (Validator.isNull(longValue)) {
 				return value;
 			}
 
@@ -116,15 +118,14 @@ public class RelationshipObjectFieldBusinessType
 					systemObjectDefinitionManager.
 						getBaseModelByExternalReferenceCode(
 							systemObjectDefinitionManager.
-								getBaseModelExternalReferenceCode(
-									GetterUtil.getLong(value)),
+								getBaseModelExternalReferenceCode(longValue),
 							objectDefinition.getCompanyId());
 
 				return baseModel.getPrimaryKeyObj();
 			}
 
 			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-				GetterUtil.getLong(value));
+				longValue);
 
 			return objectEntry.getObjectEntryId();
 		}

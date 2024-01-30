@@ -5,8 +5,8 @@
 
 /// <reference types="react" />
 
-import {FDSViewType} from '../../../FDSViews';
-import {IFDSField} from '../Fields';
+import {FDSViewType} from '../../../../FDSViews';
+import {IFDSField} from '../Table';
 declare const AddFieldsModalContent: ({
 	closeModal,
 	fdsView,

@@ -5,9 +5,11 @@
 
 /// <reference types="react" />
 
-import {IFDSViewSectionProps} from '../../FDSView';
-import '../../../css/Fields.scss';
+import {IFDSViewSectionProps} from '../../../FDSView';
+import '../../../../css/TableVisualizationMode.scss';
+import {IBaseVisualizationMode} from '../VisualizationModes';
 declare type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
+export interface ITable extends IBaseVisualizationMode<'table'> {}
 export interface IFDSField {
 	contextPath: string;
 	externalReferenceCode: string;
@@ -20,10 +22,14 @@ export interface IFDSField {
 	sortable: boolean;
 	type: string;
 }
-declare const Fields: ({
+declare function Table({
 	fdsClientExtensionCellRenderers,
 	fdsView,
 	namespace,
 	saveFDSFieldsURL,
-}: IFDSViewSectionProps) => JSX.Element;
-export default Fields;
+	title,
+}: IFDSViewSectionProps & {
+	title?: string;
+}): JSX.Element;
+export declare function Fields(props: IFDSViewSectionProps): JSX.Element;
+export default Table;

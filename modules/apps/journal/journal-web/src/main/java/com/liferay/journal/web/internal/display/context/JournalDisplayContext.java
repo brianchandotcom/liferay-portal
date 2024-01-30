@@ -43,6 +43,8 @@ import com.liferay.journal.util.comparator.FolderArticleTitleComparator;
 import com.liferay.journal.web.internal.asset.model.JournalArticleAssetRenderer;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
+import com.liferay.journal.web.internal.dao.search.JournalRecentArticlesResultRowSplitter;
+import com.liferay.journal.web.internal.dao.search.JournalResultRowSplitter;
 import com.liferay.journal.web.internal.display.context.helper.JournalWebRequestHelper;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.search.EntriesChecker;
@@ -62,6 +64,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -1008,6 +1011,20 @@ public class JournalDisplayContext {
 		}
 
 		return _restrictionType;
+	}
+
+	public ResultRowSplitter getResultRowSplitter() {
+		if (isNavigationRecent() &&
+			FeatureFlagManagerUtil.isEnabled("LPS-202534")) {
+
+			return new JournalRecentArticlesResultRowSplitter(_themeDisplay);
+		}
+
+		if (Objects.equals(getDisplayStyle(), "icon")) {
+			return new JournalResultRowSplitter();
+		}
+
+		return null;
 	}
 
 	public String getScheduledArticleMessage(JournalArticle journalArticle) {

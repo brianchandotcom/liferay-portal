@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -24,7 +23,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.Date;
@@ -79,37 +77,14 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		return layoutStructure.toString();
 	}
 
-	private boolean _hasLayoutPageTemplateStructure(long classPK, long groupId)
-		throws UpgradeException {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from LayoutPageTemplateStructure where " +
-					"groupId = ? and classPK = ?")) {
-
-			preparedStatement.setLong(1, groupId);
-			preparedStatement.setLong(2, classPK);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					int count = resultSet.getInt(1);
-
-					if (count > 0) {
-						return true;
-					}
-				}
-
-				return false;
-			}
-		}
-		catch (SQLException sqlException) {
-			throw new UpgradeException(sqlException);
-		}
-	}
-
 	private void _upgradeLayouts() {
-		String selectLayoutSQL =
-			"select plid, groupId, companyId, userId, userName, createDate " +
-				"from Layout where type_ = ? or type_ = ?";
+		String selectLayoutSQL = StringBundler.concat(
+			"select Layout.plid, Layout.groupId, Layout.companyId, ",
+			"Layout.userId, Layout.userName, Layout.createDate from Layout ",
+			"where (Layout.type_ = ? or Layout.type_ = ?) and not exists ",
+			"(select 1 from LayoutPageTemplateStructure where ",
+			"LayoutPageTemplateStructure.groupId = Layout.groupId and ",
+			"LayoutPageTemplateStructure.classPK = Layout.plid)");
 		String insertLayoutPageTemplateStructureSQL = StringBundler.concat(
 			"insert into LayoutPageTemplateStructure (uuid_, ",
 			"layoutPageTemplateStructureId, groupId, companyId, userId, ",
@@ -138,28 +113,23 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 
 			while (resultSet.next()) {
-				long plid = resultSet.getLong("plid");
-				long groupId = resultSet.getLong("groupId");
-
-				if (_hasLayoutPageTemplateStructure(plid, groupId)) {
-					continue;
-				}
-
-				long companyId = resultSet.getLong("companyId");
-				long userId = resultSet.getLong("userId");
-				String userName = resultSet.getString("userName");
-				Date createDate = resultSet.getDate("createDate");
-
 				preparedStatement2.setString(1, PortalUUIDUtil.generate());
 
 				long layoutPageTemplateStructureId = increment();
 
 				preparedStatement2.setLong(2, layoutPageTemplateStructureId);
 
+				long groupId = resultSet.getLong("groupId");
+				long companyId = resultSet.getLong("companyId");
+				long userId = resultSet.getLong("userId");
+				String userName = resultSet.getString("userName");
+
 				preparedStatement2.setLong(3, groupId);
 				preparedStatement2.setLong(4, companyId);
 				preparedStatement2.setLong(5, userId);
 				preparedStatement2.setString(6, userName);
+
+				Date createDate = resultSet.getDate("createDate");
 
 				Timestamp timestamp = new Timestamp(createDate.getTime());
 
@@ -167,7 +137,10 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 				preparedStatement2.setTimestamp(8, timestamp);
 
 				preparedStatement2.setLong(9, _classNameId);
-				preparedStatement2.setLong(10, plid);
+
+				long plid = resultSet.getLong("plid");
+
+				preparedStatement2.setLong(10, resultSet.getLong("plid"));
 
 				preparedStatement2.addBatch();
 

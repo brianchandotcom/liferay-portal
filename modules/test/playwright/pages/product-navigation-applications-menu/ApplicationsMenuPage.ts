@@ -12,6 +12,7 @@ export class ApplicationsMenuPage {
 	private readonly clientExtensionsLink: Locator;
 	private readonly controlPanelButton: Locator;
 	private readonly dataMigrationCenterMenuItem: Locator;
+	private readonly dataSetManagerMenuItem: Locator;
 	private readonly homePage: HomePage;
 	private readonly instanceSettingsLink: Locator;
 	private readonly objectsMenuItem: Locator;
@@ -36,6 +37,10 @@ export class ApplicationsMenuPage {
 			exact: true,
 			name: 'Data Migration Center',
 		});
+		this.dataSetManagerMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Data Sets',
+		});
 		this.objectsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Objects',
@@ -52,6 +57,11 @@ export class ApplicationsMenuPage {
 		await this.homePage.openApplicationMenu();
 
 		await expect(this.applicationsMenuTabButton).toBeVisible();
+	}
+
+	async goToDataSetManager() {
+		await this.goToControlPanel();
+		await this.dataSetManagerMenuItem.click();
 	}
 
 	async goToApplicationsMenu() {

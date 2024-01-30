@@ -368,6 +368,7 @@ module.exports = {
 			'@liferay/address-web': [],
 			'@liferay/content-dashboard-web': [],
 			'@liferay/cookies-banner-web': [],
+			'@liferay/document-library-preview-css': [],
 			'@liferay/flags-taglib': [],
 			'@liferay/frontend-data-set-web': [],
 			'@liferay/frontend-icons-web': [],

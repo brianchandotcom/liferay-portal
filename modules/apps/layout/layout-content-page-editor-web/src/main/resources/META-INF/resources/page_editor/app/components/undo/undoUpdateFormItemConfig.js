@@ -4,7 +4,6 @@
  */
 
 import updateFormItemConfig from '../../actions/updateFormItemConfig';
-import updateItemLocalConfig from '../../actions/updateItemLocalConfig';
 import LayoutService from '../../services/LayoutService';
 import getFragmentItem from '../../utils/getFragmentItem';
 
@@ -44,18 +43,6 @@ function undoAction({action, store}) {
 	};
 
 	return (dispatch) => {
-		if (isMapping) {
-			dispatch(
-				updateItemLocalConfig({
-					disableUndo: true,
-					itemConfig: {
-						loading: true,
-					},
-					itemId,
-				})
-			);
-		}
-
 		return LayoutService.updateLayoutData({
 			layoutData: nextLayoutData,
 			onNetworkStatus: dispatch,

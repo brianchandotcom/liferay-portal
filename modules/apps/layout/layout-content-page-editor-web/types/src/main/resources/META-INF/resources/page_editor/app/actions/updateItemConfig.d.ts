@@ -7,14 +7,11 @@ import type {LayoutData} from '../../types/layout_data/LayoutData';
 export default function updateItemConfig({
 	itemId,
 	layoutData,
-	overridePreviousConfig,
 }: {
 	itemId: string;
 	layoutData: LayoutData;
-	overridePreviousConfig?: boolean;
 }): {
 	readonly itemId: string;
 	readonly layoutData: LayoutData;
-	readonly overridePreviousConfig: boolean;
 	readonly type: 'UPDATE_ITEM_CONFIG';
 };

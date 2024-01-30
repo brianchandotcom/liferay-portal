@@ -16,7 +16,6 @@ import updateCollectionDisplayCollection from '../actions/updateCollectionDispla
 import updateFormItemConfig from '../actions/updateFormItemConfig';
 import updateFragmentEntryLinkConfiguration from '../actions/updateFragmentEntryLinkConfiguration';
 import updateItemConfig from '../actions/updateItemConfig';
-import updateItemLocalConfig from '../actions/updateItemLocalConfig';
 import updatePreviewImage from '../actions/updatePreviewImage';
 import updateRowColumns from '../actions/updateRowColumns';
 import updateRule from '../actions/updateRule';
@@ -36,7 +35,6 @@ export default function layoutDataReducer(
 		| ReturnType<typeof updateFormItemConfig>
 		| ReturnType<typeof updateFragmentEntryLinkConfiguration>
 		| ReturnType<typeof updateItemConfig>
-		| ReturnType<typeof updateItemLocalConfig>
 		| ReturnType<typeof updatePreviewImage>
 		| ReturnType<typeof updateRowColumns>
 		| ReturnType<typeof updateRule>

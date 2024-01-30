@@ -39,7 +39,7 @@ renderResponse.setTitle((amImageConfigurationEntry != null) ? amImageConfigurati
 		</portlet:actionURL>
 
 		<react:component
-			module="adaptive_media/js/EditAdaptiveMedia"
+			module="{EditAdaptiveMedia} from adaptive-media-web"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"actionUrl", editImageConfigurationEntryURL

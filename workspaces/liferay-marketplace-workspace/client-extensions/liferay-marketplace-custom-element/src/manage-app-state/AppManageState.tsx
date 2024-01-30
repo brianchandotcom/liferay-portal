@@ -80,6 +80,7 @@ const initialState = ({
 		cpu: '',
 		ram: '',
 	},
+	supportURL: '',
 } as unknown) as InitialStateProps;
 
 interface AppContextProps extends Array<InitialStateProps | Function> {

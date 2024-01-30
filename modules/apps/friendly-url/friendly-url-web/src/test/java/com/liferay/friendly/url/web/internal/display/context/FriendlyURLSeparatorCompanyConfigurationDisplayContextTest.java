@@ -351,7 +351,8 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 	private static JSONFactory _jsonFactory;
 	private static Portal _portal;
 
-	private class FriendlyURLResolverImpl implements FriendlyURLResolver {
+	private static class FriendlyURLResolverImpl
+		implements FriendlyURLResolver {
 
 		public FriendlyURLResolverImpl(
 			String defaultURLSeparator, String key, String urlSeparator) {

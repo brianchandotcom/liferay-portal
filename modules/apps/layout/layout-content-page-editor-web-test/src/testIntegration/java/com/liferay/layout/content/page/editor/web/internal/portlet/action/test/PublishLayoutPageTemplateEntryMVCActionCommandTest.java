@@ -82,11 +82,6 @@ public class PublishLayoutPageTemplateEntryMVCActionCommandTest {
 		_serviceContext.setUserId(TestPropsValues.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
-	}
-
-	@Test
-	public void testDeletedItemsAreRemovedWhenLayoutPageTemplateEntryIsPublished()
-		throws Exception {
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
@@ -107,12 +102,17 @@ public class PublishLayoutPageTemplateEntryMVCActionCommandTest {
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
-		Layout layout = _layoutLocalService.fetchLayout(
+		_layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		Layout draftLayout = layout.fetchDraftLayout();
+		_draftLayout = _layout.fetchDraftLayout();
+	}
 
-		LayoutStructure layoutStructure = _getLayoutStructure(draftLayout);
+	@Test
+	public void testDeletedItemsAreRemovedWhenLayoutPageTemplateEntryIsPublished()
+		throws Exception {
+
+		LayoutStructure layoutStructure = _getLayoutStructure(_draftLayout);
 
 		LayoutStructureItem layoutStructureItem1 =
 			layoutStructure.addContainerStyledLayoutStructureItem(
@@ -134,16 +134,16 @@ public class PublishLayoutPageTemplateEntryMVCActionCommandTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), draftLayout.getPlid(),
+				_group.getGroupId(), _draftLayout.getPlid(),
 				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(layout.getPlid()),
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				layoutStructure.toString());
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_publishLayoutPageTemplateEntry",
-			new Class<?>[] {Layout.class, Layout.class}, draftLayout, layout);
+			new Class<?>[] {Layout.class, Layout.class}, _draftLayout, _layout);
 
-		layoutStructure = _getLayoutStructure(draftLayout);
+		layoutStructure = _getLayoutStructure(_draftLayout);
 
 		List<DeletedLayoutStructureItem> deletedLayoutStructureItems =
 			layoutStructure.getDeletedLayoutStructureItems();
@@ -165,80 +165,32 @@ public class PublishLayoutPageTemplateEntryMVCActionCommandTest {
 
 	@Test
 	public void testPortletWithGuestViewPermission() throws Exception {
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionService.
-				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(), null,
-					LayoutPageTemplateCollectionTypeConstants.BASIC,
-					_serviceContext);
+		Assert.assertNotNull(_draftLayout);
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				_group.getGroupId(),
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+		String portletId = _addTestPortletToLayout(_draftLayout);
 
-		Layout layout = _layoutLocalService.fetchLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		Assert.assertNotNull(draftLayout);
-
-		String portletId = _addTestPortletToLayout(draftLayout);
-
-		_addTestPortletGuestViewPermission(draftLayout, portletId);
+		_addTestPortletGuestViewPermission(_draftLayout, portletId);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_publishLayoutPageTemplateEntry",
-			new Class<?>[] {Layout.class, Layout.class}, draftLayout, layout);
+			new Class<?>[] {Layout.class, Layout.class}, _draftLayout, _layout);
 
-		_assertGuestViewPermission(layout, portletId, true);
+		_assertGuestViewPermission(_layout, portletId, true);
 	}
 
 	@Test
 	public void testPortletWithoutGuestViewPermission() throws Exception {
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionService.
-				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(), null,
-					LayoutPageTemplateCollectionTypeConstants.BASIC,
-					_serviceContext);
+		Assert.assertNotNull(_draftLayout);
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				_group.getGroupId(),
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+		String portletId = _addTestPortletToLayout(_draftLayout);
 
-		Layout layout = _layoutLocalService.fetchLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		Assert.assertNotNull(draftLayout);
-
-		String portletId = _addTestPortletToLayout(draftLayout);
-
-		_assertGuestViewPermission(draftLayout, portletId, false);
+		_assertGuestViewPermission(_draftLayout, portletId, false);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_publishLayoutPageTemplateEntry",
-			new Class<?>[] {Layout.class, Layout.class}, draftLayout, layout);
+			new Class<?>[] {Layout.class, Layout.class}, _draftLayout, _layout);
 
-		_assertGuestViewPermission(layout, portletId, false);
+		_assertGuestViewPermission(_layout, portletId, false);
 	}
 
 	private void _addTestPortletGuestViewPermission(
@@ -316,8 +268,12 @@ public class PublishLayoutPageTemplateEntryMVCActionCommandTest {
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
 	}
 
+	private Layout _draftLayout;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private Layout _layout;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

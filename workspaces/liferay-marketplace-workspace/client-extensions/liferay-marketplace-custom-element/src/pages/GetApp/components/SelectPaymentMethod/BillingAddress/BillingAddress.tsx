@@ -11,10 +11,14 @@ import {Section} from '../../../../../components/Section/Section';
 import getPostalAddressDescription from './getPostalAddressDescription';
 
 import './BillingAddress.scss';
+import Select from '../../../../../components/Select/Select';
+import {Liferay} from '../../../../../liferay/liferay';
+import {Region} from '../../../../../services/rest/HeadlessCommerceAdminAddress';
 
 type BillingAddressProps = {
 	addresses: BillingAddress[];
 	billingAddress: BillingAddress;
+	regions: Region[];
 	selectedAddress: string;
 	setBillingAddress: React.Dispatch<BillingAddress>;
 	setSelectedAddress: React.Dispatch<string>;
@@ -22,15 +26,32 @@ type BillingAddressProps = {
 	showNewAddressButton: boolean;
 };
 
+const defaultBillingAddress = {
+	city: '',
+	country: 'US',
+	countryISOCode: 'US',
+	name: '',
+	phoneNumber: '',
+	regionISOCode: '',
+	street1: '',
+	street2: '',
+	zip: '',
+};
+
 export function BillingAddress({
 	addresses,
 	billingAddress,
+	regions,
 	selectedAddress,
 	setBillingAddress,
 	setSelectedAddress,
 	setShowNewAddressButton,
 	showNewAddressButton,
 }: BillingAddressProps) {
+	const states =
+		regions.find((region) => region.a2 === billingAddress.country)
+			?.regions ?? [];
+
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
 		setBillingAddress({
 			...billingAddress,
@@ -87,7 +108,14 @@ export function BillingAddress({
 			{showNewAddressButton ? (
 				<button
 					className="align-items-center billing-address-section-card-new-address d-flex justify-content-center mt-4 w-100"
-					onClick={() => setShowNewAddressButton(false)}
+					onClick={() => {
+						setShowNewAddressButton(false);
+
+						setBillingAddress({
+							...defaultBillingAddress,
+							countryISOCode: regions[0].a2,
+						});
+					}}
 				>
 					<ClayIcon symbol="plus" />
 
@@ -106,17 +134,7 @@ export function BillingAddress({
 								setShowNewAddressButton(true);
 								setSelectedAddress('');
 
-								setBillingAddress({
-									city: '',
-									country: '',
-									countryISOCode: 'US',
-									name: '',
-									phoneNumber: '',
-									regionISOCode: '',
-									street1: '',
-									street2: '',
-									zip: '',
-								});
+								setBillingAddress(defaultBillingAddress);
 							}}
 						>
 							Cancel
@@ -136,6 +154,7 @@ export function BillingAddress({
 							label="Address"
 							name="street1"
 							onChange={onChange}
+							placeholder="Address 1"
 							required
 							value={billingAddress?.street1}
 						/>
@@ -143,26 +162,73 @@ export function BillingAddress({
 						<Input
 							name="street2"
 							onChange={onChange}
+							placeholder="Address 2"
 							value={billingAddress?.street2}
 						/>
 
-						<div className="billing-address-double-input">
-							<Input
-								label="City"
-								name="city"
-								onChange={onChange}
-								required
-								value={billingAddress?.city}
-							/>
+						<Select
+							className="custom-input"
+							label="Country"
+							name="country"
+							onChange={({target: {value}}) => {
+								const states =
+									regions.find(
+										(region) => region.a2 === value
+									)?.regions ?? [];
 
-							<Input
-								label="State"
-								name="regionISOCode"
-								onChange={onChange}
-								required
-								value={billingAddress?.regionISOCode}
-							/>
-						</div>
+								setBillingAddress({
+									...billingAddress,
+									country: value,
+									countryISOCode: value,
+									...(!!states.length && {
+										regionISOCode: states[0].regionCode,
+									}),
+								});
+							}}
+							options={regions.map((region) => ({
+								key: region.a2,
+								name:
+									region.title_i18n[
+										Liferay.ThemeDisplay.getLanguageId()
+									] ||
+									region.title_i18n[
+										Liferay.ThemeDisplay.getDefaultLanguageId()
+									] ||
+									region.name,
+							}))}
+							required
+							value={billingAddress?.country}
+						/>
+
+						<Select
+							className="custom-input"
+							defaultOption={false}
+							disabled={!states.length}
+							label="State"
+							name="regionISOCode"
+							onChange={onChange}
+							options={states.map((state) => ({
+								key: state.regionCode,
+								name:
+									state.title_i18n[
+										Liferay.ThemeDisplay.getLanguageId()
+									] ||
+									state.title_i18n[
+										Liferay.ThemeDisplay.getDefaultLanguageId()
+									] ||
+									state.name,
+							}))}
+							required={!!states.length}
+							value={billingAddress?.regionISOCode}
+						/>
+
+						<Input
+							label="City"
+							name="city"
+							onChange={onChange}
+							required
+							value={billingAddress?.city}
+						/>
 
 						<div className="billing-address-double-input">
 							<Input
@@ -171,14 +237,6 @@ export function BillingAddress({
 								onChange={onChange}
 								required
 								value={billingAddress?.zip}
-							/>
-
-							<Input
-								label="Country"
-								name="country"
-								onChange={onChange}
-								required
-								value={billingAddress?.country}
 							/>
 						</div>
 

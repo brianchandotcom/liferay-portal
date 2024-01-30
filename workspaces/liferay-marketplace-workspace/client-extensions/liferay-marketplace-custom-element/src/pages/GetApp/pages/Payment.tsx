@@ -5,8 +5,10 @@
 
 import {useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
+import useSWR from 'swr';
 
 import {Input} from '../../../components/Input/Input';
+import headlessCommerceAdminAddress from '../../../services/rest/HeadlessCommerceAdminAddress';
 import {useGetAppContext} from '../GetAppContextProvider';
 import {GetAppOutletContext} from '../GetAppOutlet';
 import {BillingAddress} from '../components/SelectPaymentMethod/BillingAddress/BillingAddress';
@@ -16,6 +18,10 @@ import {TrialMethod} from '../components/SelectPaymentMethod/TrialMethod/TrialMe
 import {PaymentMethod} from '../enums/paymentMethod';
 
 export default function SelectPaymentMethod() {
+	const {data: regionsResponse} = useSWR(
+		'/commerce-regions',
+		headlessCommerceAdminAddress.getRegions
+	);
 	const [selectedAddress, setSelectedAddress] = useState('');
 	const [showNewAddressButton, setShowNewAddressButton] = useState(true);
 	const {
@@ -49,6 +55,7 @@ export default function SelectPaymentMethod() {
 			<BillingAddress
 				addresses={addresses}
 				billingAddress={billingAddress}
+				regions={regionsResponse?.items ?? []}
 				selectedAddress={selectedAddress}
 				setBillingAddress={(billingAddress) =>
 					dispatch({

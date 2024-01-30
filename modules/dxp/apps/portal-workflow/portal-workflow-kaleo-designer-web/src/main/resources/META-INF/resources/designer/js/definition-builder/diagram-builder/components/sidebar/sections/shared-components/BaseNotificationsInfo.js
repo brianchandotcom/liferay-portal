@@ -15,10 +15,36 @@ import Role from '../notifications/Role';
 import RoleType from '../notifications/RoleType';
 import User from '../notifications/User';
 
+let recipientTypeOptions = [
+	{
+		label: Liferay.Language.get('asset-creator'),
+		value: 'assetCreator',
+	},
+	{
+		label: Liferay.Language.get('role'),
+		value: 'role',
+	},
+	{
+		label: Liferay.Language.get('role-type'),
+		value: 'roleType',
+	},
+	{
+		label: Liferay.Language.get('scripted-recipient'),
+		value: 'scriptedRecipient',
+	},
+	{
+		label: Liferay.Language.get('user'),
+		value: 'user',
+	},
+];
+
 const BaseNotificationsInfo = ({
+	defaultScript,
+	defaultScriptLanguage,
 	deleteSection,
 	executionType,
 	executionTypeOptions,
+	handleClickCapture,
 	identifier,
 	internalSections,
 	items,
@@ -28,10 +54,10 @@ const BaseNotificationsInfo = ({
 	notificationTypeEmail,
 	notificationTypeUserNotification,
 	recipientType,
-	recipientTypeOptions,
 	roleRecipientUpdateSelectedItem,
 	roleTypeRecipientUpdateSelectedItem,
 	scriptedRecipientUpdateSelectedItem,
+	sectionsData,
 	sectionsLength,
 	selectedItem,
 	setExecutionType,
@@ -43,7 +69,6 @@ const BaseNotificationsInfo = ({
 	setNotificationTypeUserNotification,
 	setRecipientType,
 	setSections,
-	setSelectedItem,
 	setTemplate,
 	setTemplateLanguage,
 	showAddButton,
@@ -53,6 +78,24 @@ const BaseNotificationsInfo = ({
 	userRecipientUpdateSelectedItem,
 	...restProps
 }) => {
+	if (selectedItem.type === 'task') {
+		if (
+			!recipientTypeOptions
+				.map((option) => option.value)
+				.includes('taskAssignees')
+		) {
+			recipientTypeOptions.push({
+				label: Liferay.Language.get('task-assignees'),
+				value: 'taskAssignees',
+			});
+		}
+	}
+	else if (selectedItem.type !== 'task') {
+		recipientTypeOptions = recipientTypeOptions.filter(({value}) => {
+			return value !== 'taskAssignees';
+		});
+	}
+
 	const recipientTypeComponents = {
 		role: Role,
 		roleType: RoleType,
@@ -275,37 +318,14 @@ const BaseNotificationsInfo = ({
 							{internalSections.map((props, index) => (
 								<RecipientTypeComponent
 									defaultScriptLanguage={
-										selectedItem.data.notifications
-											?.recipients?.[
-											notificationIndex
-										]?.[0]?.scriptLanguage
+										defaultScriptLanguage
 									}
-									handleClickCapture={(scriptLanguage) =>
-										setSelectedItem((previousItem) => {
-											previousItem.data.notifications.recipients[
-												notificationIndex
-											] = {
-												...previousItem.data
-													.notifications.recipients[
-													notificationIndex
-												],
-												scriptLanguage: [
-													scriptLanguage,
-												],
-											};
-
-											return previousItem;
-										})
-									}
+									handleClickCapture={handleClickCapture}
 									index={index}
-									inputValue={
-										selectedItem.data.notifications
-											?.recipients?.[
-											notificationIndex
-										]?.[0]?.script?.[0]
-									}
+									inputValue={defaultScript}
 									key={`section-${identifier}`}
 									notificationIndex={notificationIndex}
+									sectionsData={sectionsData}
 									sectionsLength={internalSections.length}
 									setSections={setInternalSections}
 									updateSelectedItem={getUpdateSelectedItem(

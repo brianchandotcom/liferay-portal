@@ -3,33 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
+import {getRecipientType} from '../../notifications/utils';
 import BaseNotificationsInfo from '../../shared-components/BaseNotificationsInfo';
-
-const recipientTypeOptions = [
-	{
-		label: Liferay.Language.get('asset-creator'),
-		value: 'assetCreator',
-	},
-	{
-		label: Liferay.Language.get('role'),
-		value: 'role',
-	},
-	{
-		label: Liferay.Language.get('role-type'),
-		value: 'roleType',
-	},
-	{
-		label: Liferay.Language.get('scripted-recipient'),
-		value: 'scriptedRecipient',
-	},
-	{
-		label: Liferay.Language.get('user'),
-		value: 'user',
-	},
-];
 
 const ActionTypeNotification = ({
 	actionData,
@@ -39,7 +17,7 @@ const ActionTypeNotification = ({
 	setActionSections,
 	...restProps
 }) => {
-	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
+	const {selectedItem} = useContext(DiagramBuilderContext);
 
 	const identifier = actionData?.identifier;
 
@@ -87,7 +65,21 @@ const ActionTypeNotification = ({
 
 	const [items, setItems] = useState(notificationTypesOptions);
 
-	const [recipientType, setRecipientType] = useState('assetCreator');
+	let recipientTypeHolder;
+
+	if (actionData?.recipients?.length !== 0) {
+		if (!actionData?.recipients?.[0]) {
+			recipientTypeHolder = getRecipientType(actionData?.recipients);
+		}
+		else {
+			recipientTypeHolder = getRecipientType(actionData?.recipients[0]);
+		}
+	}
+	else {
+		recipientTypeHolder = 'assetCreator';
+	}
+
+	const [recipientType, setRecipientType] = useState(recipientTypeHolder);
 
 	const [template, setTemplate] = useState(actionData?.template || '');
 
@@ -152,6 +144,7 @@ const ActionTypeNotification = ({
 			updatedSections[actionSectionsIndex] = {
 				...prevSections[actionSectionsIndex],
 				recipients: {
+					...prevSections[actionSectionsIndex]?.recipients,
 					assignmentType: ['scriptedRecipient'],
 					script: [target.value],
 				},
@@ -216,9 +209,64 @@ const ActionTypeNotification = ({
 		});
 	};
 
+	useEffect(() => {
+		if (
+			actionData?.recipients &&
+			recipientType !== 'assetCreator' &&
+			recipientType !== 'taskAssignees'
+		) {
+			return;
+		}
+
+		let recipients = {};
+
+		if (recipientType === 'assetCreator') {
+			recipients = {assignmentType: ['user']};
+		}
+		else if (recipientType === 'taskAssignees') {
+			recipients = {assignmentType: ['taskAssignees']};
+		}
+
+		setActionSections((prevSections) => {
+			const updatedSections = [...prevSections];
+
+			updatedSections[actionSectionsIndex] = {
+				...prevSections[actionSectionsIndex],
+				recipients,
+			};
+
+			return updatedSections;
+		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [recipientType]);
+
 	return (
 		<BaseNotificationsInfo
+			defaultScript={
+				actionData?.recipients?.script ||
+				actionData?.recipients?.[0]?.script?.[0]
+			}
+			defaultScriptLanguage={
+				actionData?.recipients?.scriptLanguage ||
+				actionData?.recipients?.[0]?.scriptLanguage
+			}
 			deleteSection={deleteSection}
+			handleClickCapture={(scriptLanguage) =>
+				setActionSections((prevSections) => {
+					const updatedSections = [...prevSections];
+
+					updatedSections[actionSectionsIndex] = {
+						...prevSections[actionSectionsIndex],
+						recipients: {
+							...prevSections?.[actionSectionsIndex]?.recipients,
+							scriptLanguage: [scriptLanguage],
+						},
+					};
+
+					return updatedSections;
+				})
+			}
 			identifier={identifier}
 			internalSections={internalSections}
 			items={items}
@@ -228,7 +276,6 @@ const ActionTypeNotification = ({
 			notificationTypeEmail={notificationTypeEmail}
 			notificationTypeUserNotification={notificationTypeUserNotification}
 			recipientType={recipientType}
-			recipientTypeOptions={recipientTypeOptions}
 			roleRecipientUpdateSelectedItem={roleRecipientUpdateSelectedItem}
 			roleTypeRecipientUpdateSelectedItem={
 				roleTypeRecipientUpdateSelectedItem
@@ -236,6 +283,7 @@ const ActionTypeNotification = ({
 			scriptedRecipientUpdateSelectedItem={
 				scriptedRecipientUpdateSelectedItem
 			}
+			sectionsData={actionData?.recipients?.sectionsData}
 			sectionsLength={sectionsLength}
 			selectedItem={selectedItem}
 			setInternalSections={setInternalSections}
@@ -248,7 +296,6 @@ const ActionTypeNotification = ({
 			}
 			setRecipientType={setRecipientType}
 			setSections={setActionSections}
-			setSelectedItem={setSelectedItem}
 			setTemplate={setTemplate}
 			setTemplateLanguage={setTemplateLanguage}
 			template={template}

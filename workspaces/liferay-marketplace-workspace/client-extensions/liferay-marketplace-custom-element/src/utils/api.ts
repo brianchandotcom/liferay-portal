@@ -324,29 +324,6 @@ export async function createCart({
 	return response.json();
 }
 
-export async function updateCart(cartId: number, cart: Cart) {
-	const response = await fetch(
-		`${baseURL}/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}`,
-		{
-			body: JSON.stringify(cart),
-			headers,
-			method: 'PATCH',
-		}
-	);
-
-	return response.json();
-}
-
-export async function deleteCart(cartId: number) {
-	await fetch(
-		`${baseURL}/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}`,
-		{
-			headers,
-			method: 'DELETE',
-		}
-	);
-}
-
 export async function getCart(cartId: number | string) {
 	const cartResponse = await fetch(
 		`${baseURL}/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}`,

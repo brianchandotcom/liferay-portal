@@ -81,6 +81,39 @@ public class LDAPExportConfigurationProviderImplTest {
 	}
 
 	@Test
+	public void testGetInstanceSettingsWithSystemSettings() throws Exception {
+		ConfigurationTestUtil.saveConfiguration(
+			LDAPExportConfiguration.class.getName(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", 0
+			).put(
+				"exportEnabled", true
+			).put(
+				"exportGroupEnabled", true
+			).build());
+
+
+		String pid = ConfigurationTestUtil.createFactoryConfiguration(
+			LDAPExportConfiguration.class.getName(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", _companyId
+			).put(
+				"exportEnabled", false
+			).put(
+				"exportGroupEnabled", false
+			).build());
+
+		LDAPExportConfiguration ldapExportConfiguration =
+			_ldapExportConfigurationProvider.getConfiguration(_companyId);
+
+		ConfigurationTestUtil.deleteFactoryConfiguration(
+			pid, LDAPExportConfiguration.class.getName());
+
+		Assert.assertFalse(ldapExportConfiguration.exportEnabled());
+		Assert.assertFalse(ldapExportConfiguration.exportGroupEnabled());
+	}
+
+	@Test
 	public void testGetSystemSettings() throws Exception {
 		ConfigurationTestUtil.saveConfiguration(
 			LDAPExportConfiguration.class.getName(),

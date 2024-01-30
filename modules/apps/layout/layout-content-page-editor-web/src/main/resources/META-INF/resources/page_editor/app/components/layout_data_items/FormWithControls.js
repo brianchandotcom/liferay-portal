@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import React, {useCallback} from 'react';
 
 import FormMappingOptions from '../../../plugins/browser/components/page_structure/components/item_configuration_panels/FormMappingOptions';
+import {useItemLocalConfig} from '../../contexts/LocalConfigContext';
 import {
 	useDispatch,
 	useSelector,
@@ -24,12 +25,12 @@ import isItemEmpty from '../../utils/isItemEmpty';
 import ContainerWithControls from './ContainerWithControls';
 
 const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
-	const showMessagePreview = item.config?.showMessagePreview;
+	const localConfig = useItemLocalConfig(item.itemId);
 
 	return (
 		<form
 			className={classNames('page-editor__form', {
-				'page-editor__form--success': showMessagePreview,
+				'page-editor__form--success': localConfig.showMessagePreview,
 			})}
 			onSubmit={(event) => event.preventDefault()}
 			ref={ref}
@@ -42,6 +43,8 @@ const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 });
 
 function Form({children, item}) {
+	const localConfig = useItemLocalConfig(item.itemId);
+
 	const showLoadingState = item.config?.loading;
 
 	const isEmpty = useSelectorCallback(
@@ -82,7 +85,7 @@ function Form({children, item}) {
 		return <FormEmptyState isMapped={isMapped} item={item} />;
 	}
 
-	const {showMessagePreview} = item.config;
+	const {showMessagePreview} = localConfig;
 
 	return (
 		<>
@@ -113,7 +116,9 @@ function FormEmptyState({isMapped, item}) {
 		[dispatch, item.itemId]
 	);
 
-	if (item.config.showMessagePreview) {
+	const localConfig = useItemLocalConfig(item.itemId);
+
+	if (localConfig.showMessagePreview) {
 		return <FormSuccessMessage item={item} />;
 	}
 

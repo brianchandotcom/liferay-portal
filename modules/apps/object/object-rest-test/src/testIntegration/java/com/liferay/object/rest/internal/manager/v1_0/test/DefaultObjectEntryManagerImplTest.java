@@ -2697,24 +2697,12 @@ public class DefaultObjectEntryManagerImplTest
 					"textObjectFieldName"
 				).build()));
 
-		List<ObjectField> objectFields =
-			objectFieldLocalService.getObjectFields(
-				_objectDefinition3.getObjectDefinitionId());
-
-		ObjectField externalReferenceCodeObjectField = null;
-
-		for (ObjectField objectField : objectFields) {
-			if (StringUtil.equals(
-					objectField.getName(), "externalReferenceCode")) {
-
-				externalReferenceCodeObjectField = objectField;
-
-				break;
-			}
-		}
+		ObjectField objectField = objectFieldLocalService.getObjectField(
+			_objectDefinition3.getObjectDefinitionId(),
+			"externalReferenceCode");
 
 		_objectDefinition3.setTitleObjectFieldId(
-			externalReferenceCodeObjectField.getObjectFieldId());
+			objectField.getObjectFieldId());
 
 		objectDefinitionLocalService.updateObjectDefinition(_objectDefinition3);
 

@@ -616,12 +616,13 @@ const EditFDSFieldModalContent = ({
 	);
 };
 
-const Table = ({
+function Table({
 	fdsClientExtensionCellRenderers,
 	fdsView,
 	namespace,
 	saveFDSFieldsURL,
-}: IFDSViewSectionProps) => {
+	title,
+}: IFDSViewSectionProps & {title?: string}) {
 	const [fdsFields, setFDSFields] = useState<Array<IFDSField> | null>(null);
 
 	const getFDSFields = async () => {
@@ -860,103 +861,105 @@ const Table = ({
 		);
 	};
 
+	return fdsFields ? (
+		<OrderableTable
+			actions={[
+				{
+					icon: 'pencil',
+					label: Liferay.Language.get('edit'),
+					onClick: ({item}: {item: IFDSField}) => {
+						openModal({
+							className: 'overflow-auto',
+							contentComponent: ({
+								closeModal,
+							}: {
+								closeModal: Function;
+							}) => (
+								<EditFDSFieldModalContent
+									closeModal={closeModal}
+									fdsClientExtensionCellRenderers={
+										fdsClientExtensionCellRenderers
+									}
+									fdsField={item}
+									namespace={namespace}
+									onSave={onEditFDSField}
+								/>
+							),
+						});
+					},
+				},
+				{
+					icon: 'trash',
+					label: Liferay.Language.get('delete'),
+					onClick: handleDelete,
+				},
+			]}
+			creationMenuItems={[
+				{
+					label: Liferay.Language.get('add-fields'),
+					onClick: onCreationButtonClick,
+				},
+			]}
+			fields={[
+				{
+					label: Liferay.Language.get('name'),
+					name: 'name',
+				},
+				{
+					label: Liferay.Language.get('label'),
+					name: 'label',
+				},
+				{
+					label: Liferay.Language.get('type'),
+					name: 'type',
+				},
+				{
+					contentRenderer: {
+						component: ({item, query}) => (
+							<RendererLabelCellRendererComponent
+								cetRenderers={fdsClientExtensionCellRenderers}
+								item={item}
+								query={query}
+							/>
+						),
+						textMatch: (item: IFDSField) =>
+							getRendererLabel({
+								cetRenderers: fdsClientExtensionCellRenderers,
+								rendererName: item.renderer,
+							}),
+					},
+					label: Liferay.Language.get('renderer'),
+					name: 'renderer',
+				},
+				{
+					label: Liferay.Language.get('sortable'),
+					name: 'sortable',
+				},
+			]}
+			items={fdsFields}
+			noItemsButtonLabel={Liferay.Language.get('add-fields')}
+			noItemsDescription={Liferay.Language.get(
+				'add-fields-to-show-in-your-view'
+			)}
+			noItemsTitle={Liferay.Language.get('no-fields-added-yet')}
+			onOrderChange={({order}: {order: string}) => {
+				updateFDSFieldsOrder({
+					fdsFieldsOrder: order,
+				});
+			}}
+			title={title}
+		/>
+	) : (
+		<ClayLoadingIndicator />
+	);
+}
+
+export function Fields(props: IFDSViewSectionProps) {
 	return (
 		<ClayLayout.ContainerFluid>
-			{fdsFields ? (
-				<OrderableTable
-					actions={[
-						{
-							icon: 'pencil',
-							label: Liferay.Language.get('edit'),
-							onClick: ({item}: {item: IFDSField}) => {
-								openModal({
-									className: 'overflow-auto',
-									contentComponent: ({
-										closeModal,
-									}: {
-										closeModal: Function;
-									}) => (
-										<EditFDSFieldModalContent
-											closeModal={closeModal}
-											fdsClientExtensionCellRenderers={
-												fdsClientExtensionCellRenderers
-											}
-											fdsField={item}
-											namespace={namespace}
-											onSave={onEditFDSField}
-										/>
-									),
-								});
-							},
-						},
-						{
-							icon: 'trash',
-							label: Liferay.Language.get('delete'),
-							onClick: handleDelete,
-						},
-					]}
-					creationMenuItems={[
-						{
-							label: Liferay.Language.get('add-fields'),
-							onClick: onCreationButtonClick,
-						},
-					]}
-					fields={[
-						{
-							label: Liferay.Language.get('name'),
-							name: 'name',
-						},
-						{
-							label: Liferay.Language.get('label'),
-							name: 'label',
-						},
-						{
-							label: Liferay.Language.get('type'),
-							name: 'type',
-						},
-						{
-							contentRenderer: {
-								component: ({item, query}) => (
-									<RendererLabelCellRendererComponent
-										cetRenderers={
-											fdsClientExtensionCellRenderers
-										}
-										item={item}
-										query={query}
-									/>
-								),
-								textMatch: (item: IFDSField) =>
-									getRendererLabel({
-										cetRenderers: fdsClientExtensionCellRenderers,
-										rendererName: item.renderer,
-									}),
-							},
-							label: Liferay.Language.get('renderer'),
-							name: 'renderer',
-						},
-						{
-							label: Liferay.Language.get('sortable'),
-							name: 'sortable',
-						},
-					]}
-					items={fdsFields}
-					noItemsButtonLabel={Liferay.Language.get('add-fields')}
-					noItemsDescription={Liferay.Language.get(
-						'add-fields-to-show-in-your-view'
-					)}
-					noItemsTitle={Liferay.Language.get('no-fields-added-yet')}
-					onOrderChange={({order}: {order: string}) => {
-						updateFDSFieldsOrder({
-							fdsFieldsOrder: order,
-						});
-					}}
-					title={Liferay.Language.get('fields')}
-				/>
-			) : (
-				<ClayLoadingIndicator />
-			)}
+			<Table {...props} title={Liferay.Language.get('fields')} />
 		</ClayLayout.ContainerFluid>
 	);
-};
+}
 
 export default Table;

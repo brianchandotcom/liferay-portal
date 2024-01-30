@@ -10,7 +10,7 @@ import {
 
 const ENTER_KEY = 'Enter';
 
-export default function FragmentCollectionFilterKeyword({
+export function FragmentCollectionFilterKeyword({
 	fragmentEntryLinkId,
 	fragmentEntryLinkNamespace,
 	isDisabled,

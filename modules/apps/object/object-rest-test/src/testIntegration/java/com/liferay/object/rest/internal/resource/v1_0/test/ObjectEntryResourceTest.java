@@ -8069,10 +8069,10 @@ public class ObjectEntryResourceTest {
 			));
 
 		if (manyToOne) {
-			JSONObject systemObjectEntryJSONObject = jsonObject.getJSONObject(
+			JSONObject nestedObjectEntryJSONObject = jsonObject.getJSONObject(
 				_objectRelationship1.getName());
 
-			Assert.assertNull(systemObjectEntryJSONObject);
+			Assert.assertNull(nestedObjectEntryJSONObject);
 		}
 		else {
 			JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(

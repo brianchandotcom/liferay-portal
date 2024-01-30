@@ -30,19 +30,19 @@ name = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse) + nam
 		HashMapBuilder.<String, Object>put(
 			"boundingBox", "#" + HtmlUtil.escapeJS(name) + "Map"
 		).put(
-			"name", HtmlUtil.escapeJS(name)
-		).put(
-			"portletId", portletDisplay.getId()
+			"data", points
 		).put(
 			"geolocation", geolocation
 		).put(
 			"isMobile", BrowserSnifferUtil.isMobile(request)
 		).put(
-			"data", points
-		).put(
 			"latitude", latitude
 		).put(
 			"longitude", longitude
+		).put(
+			"name", HtmlUtil.escapeJS(name)
+		).put(
+			"portletId", portletDisplay.getId()
 		).build()
 	%>'
 	module="{App} from map-openstreetmap"

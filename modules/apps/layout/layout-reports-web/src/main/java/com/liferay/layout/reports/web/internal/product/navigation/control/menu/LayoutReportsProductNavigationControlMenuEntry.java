@@ -332,8 +332,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			jspWriter.write(sb.toString());
 
 			_reactRenderer.renderReact(
-				new ComponentDescriptor(
-					"{App} from layout-reports-web"),
+				new ComponentDescriptor("{App} from layout-reports-web"),
 				HashMapBuilder.<String, Object>put(
 					"isPanelStateOpen",
 					isPanelStateOpen(

@@ -457,7 +457,9 @@ public class LayoutStructureRenderer {
 					"collectionId",
 					collectionStyledLayoutStructureItem.getItemId()));
 			paginationBarTag.setCssClass("pb-2 pt-3");
-			paginationBarTag.setPropsTransformer("{NumericCollectionPaginationPropsTransformer} from layout-taglib");
+			paginationBarTag.setPropsTransformer(
+				"{NumericCollectionPaginationPropsTransformer} from " +
+					"layout-taglib");
 			paginationBarTag.setShowDeltasDropDown(false);
 			paginationBarTag.setTotalItems(
 				renderCollectionLayoutStructureItemDisplayContext.

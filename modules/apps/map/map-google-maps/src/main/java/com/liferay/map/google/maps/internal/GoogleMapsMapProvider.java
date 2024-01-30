@@ -59,7 +59,8 @@ public class GoogleMapsMapProvider extends BaseJSPMapProvider {
 	}
 
 	@Override
-	protected void prepareRequest(HttpServletRequest httpServletRequest) {}
+	protected void prepareRequest(HttpServletRequest httpServletRequest) {
+	}
 
 	@Reference
 	private Language _language;

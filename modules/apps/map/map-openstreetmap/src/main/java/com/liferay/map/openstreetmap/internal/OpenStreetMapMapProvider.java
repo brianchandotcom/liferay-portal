@@ -5,7 +5,6 @@
 
 package com.liferay.map.openstreetmap.internal;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.map.BaseJSPMapProvider;
 import com.liferay.map.MapProvider;
 import com.liferay.portal.kernel.language.Language;
@@ -60,7 +59,8 @@ public class OpenStreetMapMapProvider extends BaseJSPMapProvider {
 	}
 
 	@Override
-	protected void prepareRequest(HttpServletRequest httpServletRequest) {}
+	protected void prepareRequest(HttpServletRequest httpServletRequest) {
+	}
 
 	@Reference
 	private Language _language;

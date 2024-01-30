@@ -624,10 +624,10 @@ public class SugarCRMObjectEntryManagerImpl
 		}
 
 		private JSONObject _getSugarCRMAccessTokenJSONObject(
-			SugarCRMConfiguration sugarcrmConfiguration) {
+			SugarCRMConfiguration sugarCRMConfiguration) {
 
 			JSONObject jSONObject = SugarCRMAccessTokenWebCacheItem.get(
-				sugarcrmConfiguration);
+				sugarCRMConfiguration);
 
 			if (jSONObject == null) {
 				throw new ObjectEntryManagerHttpException(
@@ -684,11 +684,11 @@ public class SugarCRMObjectEntryManagerImpl
 					HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 			}
 
-			SugarCRMConfiguration sugarcrmConfiguration =
+			SugarCRMConfiguration sugarCRMConfiguration =
 				_getSugarCRMConfiguration(companyId, groupId);
 
 			JSONObject jsonObject = _getSugarCRMAccessTokenJSONObject(
-				sugarcrmConfiguration);
+				sugarCRMConfiguration);
 
 			options.addHeader(
 				"Authorization",
@@ -701,7 +701,7 @@ public class SugarCRMObjectEntryManagerImpl
 			}
 
 			options.setFollowRedirects(false);
-			options.setLocation(sugarcrmConfiguration.baseURL() + location);
+			options.setLocation(sugarCRMConfiguration.baseURL() + location);
 			options.setMethod(method);
 
 			if (_log.isDebugEnabled()) {

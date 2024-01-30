@@ -26,18 +26,18 @@ import java.net.HttpURLConnection;
  */
 public class SugarCRMAccessTokenWebCacheItem implements WebCacheItem {
 
-	public static JSONObject get(SugarCRMConfiguration sugarcrmConfiguration) {
+	public static JSONObject get(SugarCRMConfiguration sugarCRMConfiguration) {
 		return (JSONObject)WebCachePoolUtil.get(
 			StringBundler.concat(
 				SugarCRMAccessTokenWebCacheItem.class.getName(),
-				StringPool.POUND, sugarcrmConfiguration.username()),
-			new SugarCRMAccessTokenWebCacheItem(sugarcrmConfiguration));
+				StringPool.POUND, sugarCRMConfiguration.username()),
+			new SugarCRMAccessTokenWebCacheItem(sugarCRMConfiguration));
 	}
 
 	public SugarCRMAccessTokenWebCacheItem(
-		SugarCRMConfiguration sugarcrmConfiguration) {
+		SugarCRMConfiguration sugarCRMConfiguration) {
 
-		_sugarcrmConfiguration = sugarcrmConfiguration;
+		_sugarCRMConfiguration = sugarCRMConfiguration;
 	}
 
 	@Override
@@ -47,15 +47,15 @@ public class SugarCRMAccessTokenWebCacheItem implements WebCacheItem {
 
 			options.setParts(
 				HashMapBuilder.put(
-					"client_id", _sugarcrmConfiguration.clientId()
+					"client_id", _sugarCRMConfiguration.clientId()
 				).put(
-					"grant_type", _sugarcrmConfiguration.grantType()
+					"grant_type", _sugarCRMConfiguration.grantType()
 				).put(
-					"password", _sugarcrmConfiguration.password()
+					"password", _sugarCRMConfiguration.password()
 				).put(
-					"username", _sugarcrmConfiguration.username()
+					"username", _sugarCRMConfiguration.username()
 				).build());
-			options.setLocation(_sugarcrmConfiguration.accessTokenURL());
+			options.setLocation(_sugarCRMConfiguration.accessTokenURL());
 			options.setPost(true);
 
 			String responseJSON = HttpUtil.URLtoString(options);
@@ -94,6 +94,6 @@ public class SugarCRMAccessTokenWebCacheItem implements WebCacheItem {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SugarCRMAccessTokenWebCacheItem.class);
 
-	private final SugarCRMConfiguration _sugarcrmConfiguration;
+	private final SugarCRMConfiguration _sugarCRMConfiguration;
 
 }

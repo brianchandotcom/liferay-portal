@@ -302,13 +302,10 @@ public class DBPartitionSchemaValidator {
 	}
 
 	private static final String _MYSQL_DEFAULT_JDBC_URL =
-		"jdbc:mysql://localhost/db-name?characterEncoding=UTF-8&" +
-			"dontTrackOpenResources=true&holdResultsOpenOverStatementClose=" +
-				"true&serverTimezone=GMT&useFastDateParsing=false&useUnicode=" +
-					"true";
+		"jdbc:mysql://localhost/db-name";
 
 	private static final String _POSTGRESQL_DEFAULT_JDBC_URL =
-		"jdbc:postgresql://localhost:5432/db-name?reWriteBatchedInserts=true";
+		"jdbc:postgresql://localhost:5432/db-name";
 
 	private static Connection _connection;
 	private static final Set<String> _controlTableNames = new HashSet<>(

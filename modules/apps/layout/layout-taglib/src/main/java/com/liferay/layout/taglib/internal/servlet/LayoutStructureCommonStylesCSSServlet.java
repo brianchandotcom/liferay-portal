@@ -167,8 +167,7 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 			".lfr-layout-structure-item-container {padding: 0;} ");
 		printWriter.write(
 			".lfr-layout-structure-item-row {overflow: hidden;} ");
-		printWriter.write(
-			".portlet-borderless .portlet-content {padding: 0;}");
+		printWriter.write(".portlet-borderless .portlet-content {padding: 0;}");
 
 		JSONObject frontendTokensJSONObject = _getFrontendTokensJSONObject(
 			layout.getGroupId(), layout,

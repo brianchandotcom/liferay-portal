@@ -11,17 +11,21 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRule;
 import com.liferay.dynamic.data.mapping.spi.converter.serializer.SPIDDMFormRuleSerializerContext;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -246,6 +250,34 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 	}
 
 	@Test
+	public void testEqualsToCondition() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.addDDMFormField(
+			_createDDMFormField("CheckboxMultiple", "checkbox_multiple"));
+		ddmForm.addDDMFormField(_createDDMFormField("Select", "select"));
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"Text1", false, false, false));
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"Text2", false, false, false));
+
+		Mockito.when(
+			_spiDDMFormRuleSerializerContext.getAttribute("form")
+		).thenReturn(
+			ddmForm
+		);
+
+		_assertConversionToConvertModel(
+			"ddm-form-rules-model-equals-to-condition.json",
+			"ddm-form-rules-equals-to-condition.json");
+		_assertConversionToModel(
+			"ddm-form-rules-equals-to-condition.json",
+			"ddm-form-rules-model-equals-to-condition.json");
+	}
+
+	@Test
 	public void testIsEmptyCondition1() throws Exception {
 		_assertConversionToModel(
 			"ddm-form-rules-is-empty-condition.json",
@@ -361,6 +393,23 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 			read(toFileName), serialize(ddmFormRules), false);
 	}
 
+	private DDMFormField _createDDMFormField(String name, String type) {
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			name, RandomTestUtil.randomString(), type, "string", false, false,
+			false);
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel(
+			"option1", LocaleUtil.US, "Option 1");
+		ddmFormFieldOptions.addOptionLabel(
+			"option2", LocaleUtil.US, "Option 2");
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		return ddmFormField;
+	}
+
 	private List<String> _extractCallFunctionParameters(String callFunction) {
 		Matcher matcher = _callFunctionPattern.matcher(callFunction);
 
@@ -379,8 +428,8 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 
 		List<String> ddmExpressionFunctionNames = Arrays.asList(
 			"belongsTo", "calculate", "call", "contains", "custom", "equals",
-			"getValue", "isEmpty", "jumpPage", "setEnabled", "setRequired",
-			"setVisible");
+			"getOptionLabel", "getValue", "isEmpty", "jumpPage", "setEnabled",
+			"setRequired", "setVisible");
 
 		for (String ddmExpressionFunctionName : ddmExpressionFunctionNames) {
 			ddmExpressionFunctionFactories.put(

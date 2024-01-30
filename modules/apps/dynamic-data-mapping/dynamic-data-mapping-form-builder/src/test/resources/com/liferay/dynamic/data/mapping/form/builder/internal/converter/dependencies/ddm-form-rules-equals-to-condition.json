@@ -1,0 +1,48 @@
+[
+	{
+		"actions": [
+			{
+				"action": "show",
+				"target": "Text1"
+			}
+		],
+		"conditions": [
+			{
+				"operands": [
+					{
+						"type": "field",
+						"value": "CheckboxMultiple"
+					},
+					{
+						"type": "field",
+						"value": "Select"
+					}
+				],
+				"operator": "equals-to"
+			}
+		]
+	},
+	{
+		"actions": [
+			{
+				"action": "show",
+				"target": "Text2"
+			}
+		],
+		"conditions": [
+			{
+				"operands": [
+					{
+						"type": "field",
+						"value": "Select"
+					},
+					{
+						"type": "option",
+						"value": "option2"
+					}
+				],
+				"operator": "equals-to"
+			}
+		]
+	}
+]

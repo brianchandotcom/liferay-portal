@@ -549,6 +549,8 @@ gradle.beforeProject {
 					}
 				}
 
+				systemProperty "net.bytebuddy.experimental", "true"
+
 				if (project.properties["junit.java.add.opens"]) {
 					jvmArgs project.properties["junit.java.add.opens"].split("\\s+")
 				}

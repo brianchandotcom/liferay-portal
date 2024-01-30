@@ -136,18 +136,18 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 		return _jsonFactory.createJSONObject();
 	}
 
+	public String getSampleURL() {
+		return _SAMPLE_URL;
+	}
+
 	public Map<String, Object> getSeparatorFieldsProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"errors", getErrorsJSONObject()
 		).put(
 			"fields", getConfigurableFriendlyURLSeparatorsJSONArray()
 		).put(
-			"url", getURLLabel()
+			"url", getSampleURL()
 		).build();
-	}
-
-	public String getURLLabel() {
-		return _URL_LABEL;
 	}
 
 	private JSONObject _getConfiguredFriendlyURLSeparatorsJSONObject() {
@@ -165,7 +165,7 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 		return _jsonFactory.createJSONObject();
 	}
 
-	private static final String _URL_LABEL = "http://www.sitename.com";
+	private static final String _SAMPLE_URL = "http://www.sitename.com";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLSeparatorCompanyConfigurationDisplayContext.class.getName());

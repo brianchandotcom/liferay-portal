@@ -10,7 +10,7 @@ import {
 } from '@liferay/fragment-renderer-collection-filter-impl';
 import React from 'react';
 
-export default function FragmentCollectionFilterDate({
+export function FragmentCollectionFilterDate({
 	date,
 	fragmentEntryLinkId,
 	isDisabled,

@@ -28,7 +28,7 @@
 	</div>
 
 	<react:component
-		module="js/FragmentCollectionFilterDate"
+		module="{FragmentCollectionFilterDate} from fragment-collection-filter-date"
 		props="<%= fragmentCollectionFilterDateDisplayContext.getProps() %>"
 	/>
 </div>

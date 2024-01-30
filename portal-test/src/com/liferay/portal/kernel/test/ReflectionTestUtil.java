@@ -31,12 +31,12 @@ public class ReflectionTestUtil {
 		try {
 			T t = (T)field.get(null);
 
-			field.set(null, newValue);
+			_setFieldValue(field, null, newValue);
 
 			return t;
 		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
+		catch (Throwable throwable) {
+			return ReflectionUtil.throwException(throwable);
 		}
 	}
 
@@ -48,12 +48,12 @@ public class ReflectionTestUtil {
 		try {
 			T t = (T)field.get(instance);
 
-			field.set(instance, newValue);
+			_setFieldValue(field, instance, newValue);
 
 			return t;
 		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
+		catch (Throwable throwable) {
+			return ReflectionUtil.throwException(throwable);
 		}
 	}
 
@@ -355,12 +355,19 @@ public class ReflectionTestUtil {
 		try {
 			Object value = field.get(null);
 
-			field.set(null, newValue);
+			_setFieldValue(field, null, newValue);
 
-			return () -> field.set(null, value);
+			return () -> {
+				try {
+					_setFieldValue(field, null, value);
+				}
+				catch (Throwable throwable) {
+					ReflectionUtil.throwException(throwable);
+				}
+			};
 		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
+		catch (Throwable throwable) {
+			return ReflectionUtil.throwException(throwable);
 		}
 	}
 
@@ -372,12 +379,19 @@ public class ReflectionTestUtil {
 		try {
 			Object value = field.get(instance);
 
-			field.set(instance, newValue);
+			_setFieldValue(field, instance, newValue);
 
-			return () -> field.set(instance, value);
+			return () -> {
+				try {
+					_setFieldValue(field, instance, value);
+				}
+				catch (Throwable throwable) {
+					ReflectionUtil.throwException(throwable);
+				}
+			};
 		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
+		catch (Throwable throwable) {
+			return ReflectionUtil.throwException(throwable);
 		}
 	}
 

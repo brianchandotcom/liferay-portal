@@ -212,7 +212,7 @@ test('can create post endpoint with different request and response schema', asyn
 		studentSubjectsApplication.title
 	);
 
-	await apiApplicationPage.createApiEndpoin('POST', 'Company', 'student');
+	await apiApplicationPage.createApiEndpoint('POST', 'Company', 'student');
 
 	await apiApplicationPage.goToEndpointConfigurationTab();
 	await apiApplicationPage.selectEndpointRequestSchema(
@@ -259,7 +259,7 @@ test('can create post method endpoint with company scope', async ({
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.goToEditAPIApplication(basicApiApplication.title);
 
-	await apiApplicationPage.createApiEndpoin(
+	await apiApplicationPage.createApiEndpoint(
 		'POST',
 		'Company',
 		'test-post-endpoint'

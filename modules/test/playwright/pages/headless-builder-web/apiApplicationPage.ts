@@ -70,7 +70,7 @@ export class ApiApplicationPage {
 		await this.page.getByRole('menuitem', {name: scopeValue}).click();
 	}
 
-	async createApiEndpoin(
+	async createApiEndpoint(
 		httpMethod: 'GET' | 'POST',
 		scope: 'Company' | 'Site',
 		path: string

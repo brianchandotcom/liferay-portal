@@ -154,11 +154,12 @@ public class OpenSearchPipelineAggregationResultTranslator
 		BucketMetricValueAggregate bucketMetricValueAggregate =
 			_aggregate.bucketMetricValue();
 
-		List<String> keys = bucketMetricValueAggregate.keys();
 		MaxBucketPipelineAggregationResult maxBucketPipelineAggregationResult =
 			_aggregationResults.maxBucket(
 				maxBucketPipelineAggregation.getName(),
 				bucketMetricValueAggregate.value());
+
+		List<String> keys = bucketMetricValueAggregate.keys();
 
 		maxBucketPipelineAggregationResult.setKeys(keys.toArray(new String[0]));
 
@@ -172,11 +173,12 @@ public class OpenSearchPipelineAggregationResultTranslator
 		BucketMetricValueAggregate bucketMetricValueAggregate =
 			_aggregate.bucketMetricValue();
 
-		List<String> keys = bucketMetricValueAggregate.keys();
 		MinBucketPipelineAggregationResult minBucketPipelineAggregationResult =
 			_aggregationResults.minBucket(
 				minBucketPipelineAggregation.getName(),
 				bucketMetricValueAggregate.value());
+
+		List<String> keys = bucketMetricValueAggregate.keys();
 
 		minBucketPipelineAggregationResult.setKeys(keys.toArray(new String[0]));
 

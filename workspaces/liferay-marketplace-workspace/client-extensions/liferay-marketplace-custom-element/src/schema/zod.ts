@@ -53,10 +53,10 @@ const zodSchema = {
 	billingAddress: z.object({
 		city: z.string().min(1),
 		country: z.string().min(1),
-		countryISOCode: z.string().min(1),
+		countryISOCode: z.string().optional(),
 		name: z.string().min(1),
 		phoneNumber: z.string().min(1),
-		regionISOCode: z.string().min(1),
+		regionISOCode: z.string().optional(),
 		street1: z.string().min(1),
 		street2: z.string().optional(),
 		zip: z.string().min(1),

@@ -149,15 +149,14 @@ public class SugarCRMObjectEntryManagerImpl
 			return null;
 		}
 
-		JSONObject jsonObject = _sugarCRMHttp.get(
-			companyId, getGroupId(objectDefinition, scopeKey),
-			StringBundler.concat(
-				_getObjectLocation(objectDefinition), StringPool.FORWARD_SLASH,
-				externalReferenceCode),
-			null);
-
 		return _toObjectEntry(
-			companyId, _getDateFormat(), dtoConverterContext, jsonObject,
+			companyId, _getDateFormat(), dtoConverterContext,
+			_sugarCRMHttp.get(
+				companyId, getGroupId(objectDefinition, scopeKey),
+				StringBundler.concat(
+					_getObjectLocation(objectDefinition),
+					StringPool.FORWARD_SLASH, externalReferenceCode),
+				null),
 			objectDefinition);
 	}
 
@@ -183,10 +182,10 @@ public class SugarCRMObjectEntryManagerImpl
 			ActionKeys.UPDATE, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
-		// TODO Auto-generated method stub
+		// TODO LPD-11274
 
 		throw new UnsupportedOperationException(
-			"Unimplemented method 'updateObjectEntry'");
+			"This method needs to be implemented");
 	}
 
 	private void _appendFilter(StringBuilder sb, String filterString) {

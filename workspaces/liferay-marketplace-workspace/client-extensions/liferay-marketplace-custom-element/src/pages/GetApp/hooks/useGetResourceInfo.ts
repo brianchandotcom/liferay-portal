@@ -32,14 +32,17 @@ const convertMegabyteToGigabyte = ({
 const useGetResourceInfo = ({
 	product,
 	selectedProject,
+	shouldFetch,
 }: {
 	product: any;
 	selectedProject?: string;
+	shouldFetch: boolean;
 }) => {
 	const resource = useMarketplaceSpringBootOAuth2();
 
-	const {data: productUsages} = useSWR('/product-usages', () =>
-		resource.getProductUsages()
+	const {data: productUsages} = useSWR(
+		shouldFetch ? '/product-usages' : null,
+		() => resource.getProductUsages()
 	);
 
 	const project = productUsages?.userProjects.find(

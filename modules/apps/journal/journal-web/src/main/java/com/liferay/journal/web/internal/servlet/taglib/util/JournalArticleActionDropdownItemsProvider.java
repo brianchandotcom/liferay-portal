@@ -599,8 +599,7 @@ public class JournalArticleActionDropdownItemsProvider {
 
 			String label = "edit";
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
-				!JournalArticleLocalServiceUtil.isLatestVersion(
+			if (!JournalArticleLocalServiceUtil.isLatestVersion(
 					_article.getGroupId(), _article.getArticleId(),
 					_article.getVersion())) {
 

@@ -61,7 +61,6 @@ describe('updateItemConfig', () => {
 				items: {},
 				version: 1,
 			},
-			overridePreviousConfig: false,
 		});
 	});
 });

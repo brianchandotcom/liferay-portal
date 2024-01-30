@@ -27,7 +27,6 @@ function undoAction({action, store}) {
 				updateItemConfig({
 					itemId,
 					layoutData: nextLayoutData,
-					overridePreviousConfig: true,
 				})
 			);
 		});

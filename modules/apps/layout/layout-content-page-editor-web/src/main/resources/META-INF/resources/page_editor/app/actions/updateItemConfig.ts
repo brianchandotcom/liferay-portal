@@ -10,16 +10,13 @@ import type {LayoutData} from '../../types/layout_data/LayoutData';
 export default function updateItemConfig({
 	itemId,
 	layoutData,
-	overridePreviousConfig = false,
 }: {
 	itemId: string;
 	layoutData: LayoutData;
-	overridePreviousConfig?: boolean;
 }) {
 	return {
 		itemId,
 		layoutData,
-		overridePreviousConfig,
 		type: UPDATE_ITEM_CONFIG,
 	} as const;
 }

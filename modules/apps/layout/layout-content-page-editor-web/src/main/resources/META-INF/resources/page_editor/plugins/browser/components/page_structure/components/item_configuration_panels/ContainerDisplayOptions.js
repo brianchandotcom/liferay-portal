@@ -72,7 +72,6 @@ export default function ContainerDisplayOptions({item}) {
 						updateItemConfig({
 							itemConfig,
 							itemId: item.itemId,
-							overridePreviousConfig: true,
 						})
 					);
 				}}

@@ -3,33 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import BaseRole from '../shared-components/BaseRole';
 
-const Role = ({notificationIndex, updateSelectedItem}) => {
-	const {selectedItem} = useContext(DiagramBuilderContext);
-
+const Role = ({sectionsData, updateSelectedItem}) => {
 	return (
 		<BaseRole
 			defaultFieldValue={{
-				id:
-					selectedItem.data.notifications?.recipients?.[
-						notificationIndex
-					]?.[0]?.sectionsData?.id ||
-					selectedItem.data.notifications?.recipients?.[
-						notificationIndex
-					]?.sectionsData?.id ||
-					'',
-				name:
-					selectedItem.data.notifications?.recipients?.[
-						notificationIndex
-					]?.[0]?.sectionsData?.name ||
-					selectedItem.data.notifications?.recipients?.[
-						notificationIndex
-					]?.sectionsData?.name ||
-					'',
+				id: sectionsData?.id ? sectionsData?.id : '',
+				name: sectionsData?.name ? sectionsData?.name : '',
 			}}
 			inputLabel={Liferay.Language.get('role-id')}
 			selectLabel={Liferay.Language.get('role-name')}

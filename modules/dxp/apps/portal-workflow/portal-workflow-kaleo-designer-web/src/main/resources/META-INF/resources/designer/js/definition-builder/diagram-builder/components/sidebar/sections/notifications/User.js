@@ -7,10 +7,10 @@ import React from 'react';
 
 import BaseUser from '../shared-components/BaseUser';
 
-const User = ({notificationIndex, updateSelectedItem, ...restProps}) => {
+const User = ({sectionsData, updateSelectedItem, ...restProps}) => {
 	return (
 		<BaseUser
-			notificationIndex={notificationIndex}
+			sectionsData={sectionsData}
 			updateSelectedItem={updateSelectedItem}
 			{...restProps}
 		/>

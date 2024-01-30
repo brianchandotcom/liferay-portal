@@ -22,29 +22,6 @@ let executionTypeOptions = [
 	},
 ];
 
-let recipientTypeOptions = [
-	{
-		label: Liferay.Language.get('asset-creator'),
-		value: 'assetCreator',
-	},
-	{
-		label: Liferay.Language.get('role'),
-		value: 'role',
-	},
-	{
-		label: Liferay.Language.get('role-type'),
-		value: 'roleType',
-	},
-	{
-		label: Liferay.Language.get('scripted-recipient'),
-		value: 'scriptedRecipient',
-	},
-	{
-		label: Liferay.Language.get('user'),
-		value: 'user',
-	},
-];
-
 const NotificationsInfo = ({
 	identifier,
 	index: notificationIndex,
@@ -362,17 +339,6 @@ const NotificationsInfo = ({
 
 	if (selectedItem.type === 'task') {
 		if (
-			!recipientTypeOptions
-				.map((option) => option.value)
-				.includes('taskAssignees')
-		) {
-			recipientTypeOptions.push({
-				label: Liferay.Language.get('task-assignees'),
-				value: 'taskAssignees',
-			});
-		}
-
-		if (
 			!executionTypeOptions
 				.map((option) => option.value)
 				.includes('onAssignment')
@@ -384,10 +350,6 @@ const NotificationsInfo = ({
 		}
 	}
 	else if (selectedItem.type !== 'task') {
-		recipientTypeOptions = recipientTypeOptions.filter(({value}) => {
-			return value !== 'taskAssignees';
-		});
-
 		executionTypeOptions = executionTypeOptions.filter(({value}) => {
 			return value !== 'onAssignment';
 		});
@@ -466,7 +428,6 @@ const NotificationsInfo = ({
 			}
 		}
 		else if (
-			recipients &&
 			selectedItem.data.notifications.recipients[notificationIndex]
 				.sectionsData &&
 			recipientType === 'user'
@@ -486,9 +447,33 @@ const NotificationsInfo = ({
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('information')}>
 			<BaseNotificationsInfo
+				defaultScript={
+					selectedItem.data.notifications?.recipients?.[
+						notificationIndex
+					]?.[0]?.script?.[0]
+				}
+				defaultScriptLanguage={
+					selectedItem.data.notifications?.recipients?.[
+						notificationIndex
+					]?.[0]?.scriptLanguage
+				}
 				deleteSection={deleteSection}
 				executionType={executionType}
 				executionTypeOptions={executionTypeOptions}
+				handleClickCapture={(scriptLanguage) =>
+					setSelectedItem((previousItem) => {
+						previousItem.data.notifications.recipients[
+							notificationIndex
+						] = {
+							...previousItem.data.notifications.recipients[
+								notificationIndex
+							],
+							scriptLanguage: [scriptLanguage],
+						};
+
+						return previousItem;
+					})
+				}
 				identifier={identifier}
 				internalSections={internalSections}
 				items={items}
@@ -500,7 +485,6 @@ const NotificationsInfo = ({
 					notificationTypeUserNotification
 				}
 				recipientType={recipientType}
-				recipientTypeOptions={recipientTypeOptions}
 				roleRecipientUpdateSelectedItem={
 					roleRecipientUpdateSelectedItem
 				}
@@ -509,6 +493,14 @@ const NotificationsInfo = ({
 				}
 				scriptedRecipientUpdateSelectedItem={
 					scriptedRecipientUpdateSelectedItem
+				}
+				sectionsData={
+					selectedItem.data.notifications?.recipients?.[
+						notificationIndex
+					]?.sectionsData ||
+					selectedItem.data.notifications?.recipients?.[
+						notificationIndex
+					]?.[0]?.sectionsData
 				}
 				sectionsLength={sectionsLength}
 				selectedItem={selectedItem}
@@ -523,7 +515,6 @@ const NotificationsInfo = ({
 				}
 				setRecipientType={setRecipientType}
 				setSections={setSections}
-				setSelectedItem={setSelectedItem}
 				setTemplate={setTemplate}
 				setTemplateLanguage={setTemplateLanguage}
 				showAddButton

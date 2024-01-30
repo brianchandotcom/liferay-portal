@@ -24,7 +24,6 @@ import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.tag.AssetTagNamesFacetFactory;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.FacetsAssert;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -56,7 +55,6 @@ public class AssetTagNamesFacetedSearcherTest
 		_testAggregation(StringUtil::toLowerCase);
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testAggregationWithCaseSensitiveTags() throws Exception {
 		_testAggregation(string -> string);
@@ -87,7 +85,6 @@ public class AssetTagNamesFacetedSearcherTest
 		_testAggregation(StringUtil::toLowerCase);
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testSearchQuotedWithCaseSensitiveTags() throws Exception {
 		_testSearchQuoted(string -> string);
@@ -98,7 +95,6 @@ public class AssetTagNamesFacetedSearcherTest
 		_testSelection(StringUtil::toLowerCase);
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testSelectionWithCaseSensitiveTags() throws Exception {
 		_testSelection(string -> string);

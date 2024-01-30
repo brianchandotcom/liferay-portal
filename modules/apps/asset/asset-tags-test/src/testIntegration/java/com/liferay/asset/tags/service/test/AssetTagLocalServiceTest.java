@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -101,7 +100,6 @@ public class AssetTagLocalServiceTest {
 		_testAddMultipleTags(Arrays.asList("tag1", "tag2"));
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testAddMultipleTagsWithCaseSensitive() throws PortalException {
 		_testAddMultipleTags(Arrays.asList("tag1", "Tag1", "tAg1", "TAG1"));
@@ -186,7 +184,6 @@ public class AssetTagLocalServiceTest {
 		Assert.assertEquals("標籤名稱", assetTag.getName());
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testCheckTagsWithCaseSensitive() throws PortalException {
 		String[] tagNames = {"TAG1", "tAG1", "TAG1 duplicate"};
@@ -252,7 +249,6 @@ public class AssetTagLocalServiceTest {
 		}
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testFetchTagWithCaseSensitive() throws PortalException {
 		List<AssetTag> assetTags = _addAssetTags(new String[] {"tag", "TAG"});
@@ -269,7 +265,6 @@ public class AssetTagLocalServiceTest {
 			_assetTagLocalService.fetchTag(_group.getGroupId(), "Tag"));
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testGetTagIdsFilterByGroupIdWithCaseSensitive()
 		throws Exception {
@@ -301,7 +296,6 @@ public class AssetTagLocalServiceTest {
 		}
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testGetTagIdsWithCaseSensitive() throws Exception {
 		Group group = GroupTestUtil.addGroup();
@@ -335,7 +329,6 @@ public class AssetTagLocalServiceTest {
 		}
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testGetTagSizeWithCaseInsensitive() throws Exception {
 		String[] tagNames = {"tag1", "Tag1"};
@@ -362,7 +355,6 @@ public class AssetTagLocalServiceTest {
 				_group.getGroupId(), classNameId, "TAG1"));
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testGetTagsWithCaseInsensitive() throws Exception {
 		String[] expectedTagNames = {"tag1", "Tag1"};
@@ -379,7 +371,6 @@ public class AssetTagLocalServiceTest {
 		_assertGetTags(1, expectedTagNames, "Tag1", 0, 1);
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testGetTagWithCaseSensitive() throws PortalException {
 		List<AssetTag> assetTags = _addAssetTags(new String[] {"tag", "TAG"});
@@ -404,7 +395,6 @@ public class AssetTagLocalServiceTest {
 		_testIncrementAssetCountWhenUpdatingAssetEntry(new String[] {"tag1"});
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testIncrementAssetCountWhenUpdatingAssetEntryWithCaseSensitive()
 		throws PortalException {
@@ -422,7 +412,6 @@ public class AssetTagLocalServiceTest {
 			RandomTestUtil.randomString(100), _serviceContext);
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testSearchTagsWithCaseInsensitive() throws PortalException {
 		String[] tagNames = {"tag1", "Tag1", "TAG1"};
@@ -448,7 +437,6 @@ public class AssetTagLocalServiceTest {
 		}
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testSearchWithCaseInsensitive() throws PortalException {
 		String[] tagNames = {"tag1", "Tag1", "TAG1"};
@@ -470,7 +458,6 @@ public class AssetTagLocalServiceTest {
 		}
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testUpdateTagWithCaseSensitive() throws PortalException {
 		AssetTag assetTag = _assetTagLocalService.addTag(

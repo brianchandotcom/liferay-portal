@@ -11,6 +11,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration;
 
 import java.util.Map;
@@ -40,6 +41,13 @@ public class IFrameSanitizerImpl implements Sanitizer {
 		Map<String, Object> options) {
 
 		if (!_iFrameConfiguration.enabled()) {
+			return content;
+		}
+
+		if (Validator.isNull(content) || Validator.isNull(contentType) ||
+			(!contentType.equals(ContentTypes.TEXT_HTML) &&
+			 !contentType.equals(ContentTypes.TEXT_PLAIN))) {
+
 			return content;
 		}
 

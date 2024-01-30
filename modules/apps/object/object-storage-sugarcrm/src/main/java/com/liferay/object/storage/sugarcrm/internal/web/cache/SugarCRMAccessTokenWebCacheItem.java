@@ -30,7 +30,13 @@ public class SugarCRMAccessTokenWebCacheItem implements WebCacheItem {
 		return (JSONObject)WebCachePoolUtil.get(
 			StringBundler.concat(
 				SugarCRMAccessTokenWebCacheItem.class.getName(),
-				StringPool.POUND, sugarCRMConfiguration.username()),
+				StringPool.POUND, sugarCRMConfiguration.accessTokenURL(),
+				StringPool.POUND, sugarCRMConfiguration.baseURL(),
+				StringPool.POUND, sugarCRMConfiguration.clientId(),
+				StringPool.POUND, sugarCRMConfiguration.grantType(),
+				StringPool.POUND, sugarCRMConfiguration.password(),
+				StringPool.POUND, sugarCRMConfiguration.username()
+			),
 			new SugarCRMAccessTokenWebCacheItem(sugarCRMConfiguration));
 	}
 

@@ -9,7 +9,7 @@
 
 <div>
 	<react:component
-		module="translation_manager/index"
+		module="{TranslationManager} from frontend-taglib"
 		props='<%= (Map<String, Object>)request.getAttribute("liferay-frontend:translation-manager:data") %>'
 	/>
 </div>

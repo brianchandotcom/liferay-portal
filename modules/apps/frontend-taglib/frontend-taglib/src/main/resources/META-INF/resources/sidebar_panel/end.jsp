@@ -22,6 +22,6 @@
 				"targetNodeId", namespace + "sidebarPanel"
 			).build()
 				%>'
-		module="sidebar_panel/js/SidebarPanel"
+		module="{SidebarPanel} from frontend-taglib"
 	/>
 </c:if>

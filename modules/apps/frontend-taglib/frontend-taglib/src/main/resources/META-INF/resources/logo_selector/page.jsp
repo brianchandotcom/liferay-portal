@@ -22,7 +22,7 @@ String selectLogoURL = (String)request.getAttribute("liferay-frontend:logo-selec
 
 <div>
 	<react:component
-		module="logo_selector/LogoSelector"
+		module="{LogoSelector} from frontend-taglib"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"defaultLogoURL", defaultLogoURL

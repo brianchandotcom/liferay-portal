@@ -13,7 +13,7 @@
 
 <div>
 	<react:component
-		module="diff_version_comparator/index"
+		module="{DiffVersionComparator} from frontend-taglib"
 		props='<%= (Map<String, Object>)request.getAttribute("liferay-frontend:diff-version-comparator:data") %>'
 	/>
 </div>

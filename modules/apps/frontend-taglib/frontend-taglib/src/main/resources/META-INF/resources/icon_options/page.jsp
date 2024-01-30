@@ -19,7 +19,7 @@ List<PortletConfigurationIcon> portletConfigurationIcons = (List<PortletConfigur
 	dropdownItems='<%= (List<DropdownItem>)request.getAttribute("liferay-frontend:icon-options:dropdownItems") %>'
 	icon="ellipsis-v"
 	monospaced='<%= (boolean)request.getAttribute("liferay-frontend:icon-options:monospaced") %>'
-	propsTransformer="icon_options/js/PortletOptionsDropdownPropsTransformer"
+	propsTransformer="{PortletOptionsDropdownPropsTransformer} from frontend-taglib"
 	small="<%= true %>"
 	title='<%= LanguageUtil.get(request, "options") %>'
 />

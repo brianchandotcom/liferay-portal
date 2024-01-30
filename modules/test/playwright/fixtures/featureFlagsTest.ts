@@ -7,9 +7,9 @@ import {Page, mergeTests, test} from '@playwright/test';
 
 import {loginTest} from './loginTest';
 
-export type FeatureFlagsOptions = {
+export interface FeatureFlagsOptions {
 	[key: string]: boolean;
-};
+}
 
 export type FeatureFlags = FeatureFlag[];
 
@@ -111,7 +111,7 @@ function featureFlagsTest(options: FeatureFlagsOptions) {
 		],
 	});
 
-	return mergeTests(loginTest, fixtureImpl);
+	return mergeTests(loginTest(), fixtureImpl);
 }
 
 interface IsEnabledResult {

@@ -304,9 +304,16 @@ const Timers = ({setContentName, setErrors}) => {
 				section.notificationTypes = data.find(
 					(entry) => entry[0] === 'notificationTypes'
 				)[1][index];
-				section.recipients = data.find(
+
+				let recipients = data.find(
 					(entry) => entry[0] === 'recipients'
 				)[1][index];
+
+				if (Array.isArray(recipients)) {
+					recipients = recipients[0];
+				}
+
+				section.recipients = recipients;
 				section.template = data.find(
 					(entry) => entry[0] === 'template'
 				)[1][index];

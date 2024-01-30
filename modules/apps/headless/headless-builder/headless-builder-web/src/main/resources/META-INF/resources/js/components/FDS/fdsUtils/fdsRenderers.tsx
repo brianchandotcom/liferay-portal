@@ -11,13 +11,27 @@ import React, {Dispatch, SetStateAction} from 'react';
 import StatusLabel from '../../StatusLabel';
 import {wrapStringInForwardSlashes} from '../../utils/string';
 
+export function getDisplayType(httpMethodName: string) {
+	if (httpMethodName === 'post') {
+		return 'success';
+	}
+	else {
+		return 'info';
+	}
+}
+
 export function itemMethodRenderer({
 	itemData,
 }: {
 	itemData: {httpMethod: {name: string}};
 }) {
-	return <ClayLabel displayType="info">{itemData.httpMethod.name}</ClayLabel>;
+	return (
+		<ClayLabel displayType={getDisplayType(itemData.httpMethod.name)}>
+			{itemData.httpMethod.name}
+		</ClayLabel>
+	);
 }
+
 export function itemPathRenderer({
 	fdsItem,
 	setMainEndpointNav,

@@ -4,6 +4,9 @@
  */
 
 import {Dispatch, SetStateAction} from 'react';
+export declare function getDisplayType(
+	httpMethodName: string
+): 'success' | 'info';
 export declare function itemMethodRenderer({
 	itemData,
 }: {

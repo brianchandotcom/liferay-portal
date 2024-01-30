@@ -7,6 +7,7 @@ package com.liferay.portal.security.iframe.sanitizer.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -85,6 +86,36 @@ public class IFrameSanitizerImplTest {
 	}
 
 	@Test
+	public void testSanitizeHTMLWithInvalidContentType() throws Exception {
+		_withConfiguration(
+			true, false, "",
+			() -> Assert.assertEquals(
+				_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+				_sanitize(
+					_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG, "text/creole")));
+	}
+
+	@Test
+	public void testSanitizeHTMLWithNullContent() throws Exception {
+		_withConfiguration(
+			true, false, "",
+			() -> Assert.assertEquals(
+				StringPool.BLANK,
+				_sanitize(StringPool.BLANK, ContentTypes.TEXT_HTML)));
+	}
+
+	@Test
+	public void testSanitizeHTMLWithNullContentType() throws Exception {
+		_withConfiguration(
+			true, false, "",
+			() -> Assert.assertEquals(
+				_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+				_sanitize(
+					_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+					StringPool.BLANK)));
+	}
+
+	@Test
 	public void testSanitizeHTMLWithoutIFrame() throws Exception {
 		_withConfiguration(
 			true, false, "",
@@ -112,7 +143,7 @@ public class IFrameSanitizerImplTest {
 		throws Exception {
 
 		return _iFrameSanitizer.sanitize(
-			0, 0, 0, "", 0, contentType, new String[0], content,
+			0, 0, 0, StringPool.BLANK, 0, contentType, new String[0], content,
 			new HashMap<>());
 	}
 

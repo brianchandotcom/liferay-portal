@@ -52,6 +52,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -106,6 +107,11 @@ public class PublishLayoutPageTemplateEntryMVCActionCommandTest {
 			layoutPageTemplateEntry.getPlid());
 
 		_draftLayout = _layout.fetchDraftLayout();
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test

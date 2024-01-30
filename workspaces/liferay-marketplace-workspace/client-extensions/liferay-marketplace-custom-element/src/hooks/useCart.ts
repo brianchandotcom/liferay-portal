@@ -8,7 +8,8 @@ import {useCallback, useEffect} from 'react';
 import {Liferay} from '../liferay/liferay';
 import {useGetAppContext} from '../pages/GetApp/GetAppContextProvider';
 import fetcher from '../services/fetcher';
-import {createCart, deleteCart, updateCart} from '../utils/api';
+import headlessCommerceDeliveryCart from '../services/rest/HeadlessCommerceDeliveryCart';
+import {createCart} from '../utils/api';
 
 const channelId = Liferay.CommerceContext.commerceChannelId;
 
@@ -79,30 +80,17 @@ const useCart = ({
 				.filter((item) => item.quantity > 0)
 		);
 
-	const updateCartItems = async (cartId: number, data: any) => {
-		return updateCart(cartId, data);
-	};
-
 	const removeCart = useCallback(
-		(cartId: number) => {
-			deleteCart(cartId);
-			setCart(undefined);
-			setCartItems([]);
-		},
+		(id: number) =>
+			headlessCommerceDeliveryCart
+				.deleteCart(id)
+				.then(() => {
+					setCart(undefined);
+					setCartItems([]);
+				})
+				.catch(console.error),
 		[setCart, setCartItems]
 	);
-
-	useEffect(() => {
-		(async () => {
-			if (cart?.id && cartItems.length) {
-				const response = await updateCartItems(cart?.id, {
-					cartItems,
-				});
-
-				setCart(response);
-			}
-		})();
-	}, [cart?.id, cartItems, setCart]);
 
 	useEffect(() => {
 		(async () => {
@@ -163,8 +151,9 @@ const useCart = ({
 		removeCart,
 		removeFromCart,
 		setCart,
-		updateCart,
-		updateCartItems,
+		updateCart: headlessCommerceDeliveryCart.updateCart.bind(
+			headlessCommerceDeliveryCart
+		),
 	};
 };
 

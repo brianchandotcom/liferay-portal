@@ -99,6 +99,50 @@ public class SystemLDAPConfigurationProviderImplTest {
 	}
 
 	@Test
+	public void testGetInstanceSettingsWithSystemSettings() throws Exception {
+		int randomValueSystem = RandomTestUtil.randomInt(0, 1000);
+
+		ConfigurationTestUtil.saveConfiguration(
+			SystemLDAPConfiguration.class.getName(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", 0
+			).put(
+				"pageSize", randomValueSystem
+			).put(
+				"rangeSize", randomValueSystem
+			).build());
+
+		int randomValueInstance = RandomTestUtil.randomInt(0, 1000);
+
+		String pid = ConfigurationTestUtil.createFactoryConfiguration(
+			SystemLDAPConfiguration.class.getName(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", _companyId
+			).put(
+				"pageSize", randomValueInstance
+			).put(
+				"rangeSize", randomValueInstance
+			).build());
+
+		SystemLDAPConfiguration systemLDAPConfiguration =
+			_systemLDAPConfigurationProvider.getConfiguration(_companyId);
+
+		ConfigurationTestUtil.deleteFactoryConfiguration(
+			pid, SystemLDAPConfiguration.class.getName());
+
+		Assert.assertEquals(systemLDAPConfiguration.pageSize(), randomValueInstance);
+		Assert.assertEquals(systemLDAPConfiguration.rangeSize(), randomValueInstance);
+
+		Assert.assertEquals(
+			_defaultSystemLDAPConfiguration.factoryInitial(),
+			systemLDAPConfiguration.factoryInitial());
+
+		Assert.assertEquals(
+			_defaultSystemLDAPConfiguration.referral(),
+			systemLDAPConfiguration.referral());
+	}
+
+	@Test
 	public void testGetSystemSettings() throws Exception {
 		int randomValue = RandomTestUtil.randomInt(0, 1000);
 

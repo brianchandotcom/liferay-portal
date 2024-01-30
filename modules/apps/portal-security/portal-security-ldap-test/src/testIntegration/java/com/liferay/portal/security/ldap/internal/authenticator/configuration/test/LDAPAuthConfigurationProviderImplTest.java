@@ -97,6 +97,49 @@ public class LDAPAuthConfigurationProviderImplTest {
 			ldapAuthConfiguration.passwordPolicyEnabled());
 	}
 
+
+	@Test
+	public void testGetInstanceSettingsWithSystemSettings() throws Exception {
+		ConfigurationTestUtil.saveConfiguration(
+			LDAPAuthConfiguration.class.getName(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", 0
+			).put(
+				"enabled", false
+			).put(
+				"required", false
+			).build());
+
+		String pid = ConfigurationTestUtil.createFactoryConfiguration(
+			LDAPAuthConfiguration.class.getName(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", _companyId
+			).put(
+				"enabled", true
+			).put(
+				"required", true
+			).build());
+
+		LDAPAuthConfiguration ldapAuthConfiguration =
+			_ldapAuthConfigurationProvider.getConfiguration(_companyId);
+
+		ConfigurationTestUtil.deleteFactoryConfiguration(
+			pid, LDAPAuthConfiguration.class.getName());
+
+		Assert.assertTrue(ldapAuthConfiguration.enabled());
+		Assert.assertTrue(ldapAuthConfiguration.required());
+		Assert.assertEquals(
+			_defaultLDAPAuthConfiguration.method(),
+			ldapAuthConfiguration.method());
+		Assert.assertEquals(
+			_defaultLDAPAuthConfiguration.passwordEncryptionAlgorithm(),
+			ldapAuthConfiguration.passwordEncryptionAlgorithm());
+		Assert.assertEquals(
+			_defaultLDAPAuthConfiguration.passwordPolicyEnabled(),
+			ldapAuthConfiguration.passwordPolicyEnabled());
+	}
+
+
 	@Test
 	public void testGetSystemSettings() throws Exception {
 		ConfigurationTestUtil.saveConfiguration(

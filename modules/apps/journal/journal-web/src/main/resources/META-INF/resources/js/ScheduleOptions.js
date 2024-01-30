@@ -123,7 +123,7 @@ function getDate(value) {
 			day: date.getDate(),
 			hour: date.getHours(),
 			minutes: date.getMinutes(),
-			month: date.getMonth() + 1,
+			month: date.getMonth(),
 			year: date.getFullYear(),
 		};
 	}

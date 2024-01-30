@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.SearchMapUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
@@ -50,7 +49,6 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		_testSearchByKeywordsIgnoresInactiveSites(StringUtil::toLowerCase);
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testSearchByKeywordsIgnoresInactiveSitesWithCaseSensitiveTags()
 		throws Exception {
@@ -58,7 +56,6 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		_testSearchByKeywordsIgnoresInactiveSites(string -> string);
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testSearchByKeywordsWithCaseSensitiveTags() throws Exception {
 		_testSearchByKeywords(string -> string);
@@ -69,7 +66,6 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		_testSearchByQuotedRegexKeywords(StringUtil::toLowerCase);
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testSearchByQuotedRegexKeywordsWithCaseSensitiveTags()
 		throws Exception {

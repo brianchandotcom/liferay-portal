@@ -346,7 +346,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefNonsitePage();
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testPostSiteSitePageSuccessKeywordsWithCaseSensitiveTags()
 		throws Exception {

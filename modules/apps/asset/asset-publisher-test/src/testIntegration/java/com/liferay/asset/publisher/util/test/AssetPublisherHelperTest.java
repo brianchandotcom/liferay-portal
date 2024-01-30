@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -298,14 +297,7 @@ public class AssetPublisherHelperTest {
 
 		Assert.assertEquals(
 			Arrays.toString(assetTagNames), 1, assetTagNames.length);
-
-		if (!_featureFlagManager.isEnabled("LPS-194362")) {
-			Assert.assertEquals(
-				StringUtil.toLowerCase(assetTagName), assetTagNames[0]);
-		}
-		else {
-			Assert.assertEquals(assetTagName, assetTagNames[0]);
-		}
+		Assert.assertEquals(assetTagName, assetTagNames[0]);
 	}
 
 	@Test
@@ -326,17 +318,8 @@ public class AssetPublisherHelperTest {
 
 		Assert.assertEquals(
 			Arrays.toString(assetTagNames), 2, assetTagNames.length);
-
-		if (!_featureFlagManager.isEnabled("LPS-194362")) {
-			Assert.assertEquals(
-				StringUtil.toLowerCase(assetTagName1), assetTagNames[0]);
-			Assert.assertEquals(
-				StringUtil.toLowerCase(assetTagName2), assetTagNames[1]);
-		}
-		else {
-			Assert.assertEquals(assetTagName1, assetTagNames[0]);
-			Assert.assertEquals(assetTagName2, assetTagNames[1]);
-		}
+		Assert.assertEquals(assetTagName1, assetTagNames[0]);
+		Assert.assertEquals(assetTagName2, assetTagNames[1]);
 	}
 
 	@Test
@@ -355,14 +338,7 @@ public class AssetPublisherHelperTest {
 
 		Assert.assertEquals(
 			Arrays.toString(assetTagNames), 1, assetTagNames.length);
-
-		if (!_featureFlagManager.isEnabled("LPS-194362")) {
-			Assert.assertEquals(
-				StringUtil.toLowerCase(assetTagName), assetTagNames[0]);
-		}
-		else {
-			Assert.assertEquals(assetTagName, assetTagNames[0]);
-		}
+		Assert.assertEquals(assetTagName, assetTagNames[0]);
 	}
 
 	@Test

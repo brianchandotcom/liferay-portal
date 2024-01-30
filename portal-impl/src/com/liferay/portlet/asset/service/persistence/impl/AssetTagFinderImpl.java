@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -196,8 +195,7 @@ public class AssetTagFinderImpl
 								return null;
 							}
 
-							return AssetTagTable.INSTANCE.name.like(
-								_getName(name));
+							return AssetTagTable.INSTANCE.name.like(name);
 						}
 					)
 				));
@@ -207,23 +205,15 @@ public class AssetTagFinderImpl
 			List<AssetTag> assetTags = (List<AssetTag>)QueryUtil.list(
 				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			List<Long> assetTagIds;
+			List<Long> assetTagIds = TransformUtil.unsafeTransform(
+				assetTags,
+				assetTag -> {
+					if (!StringUtil.equals(assetTag.getName(), name)) {
+						return null;
+					}
 
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
-				assetTagIds = TransformUtil.unsafeTransform(
-					assetTags, AssetTag::getTagId);
-			}
-			else {
-				assetTagIds = TransformUtil.unsafeTransform(
-					assetTags,
-					assetTag -> {
-						if (!StringUtil.equals(assetTag.getName(), name)) {
-							return null;
-						}
-
-						return Long.valueOf(assetTag.getTagId());
-					});
-			}
+					return Long.valueOf(assetTag.getTagId());
+				});
 
 			return assetTagIds.toArray(new Long[0]);
 		}
@@ -233,14 +223,6 @@ public class AssetTagFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	private String _getName(String name) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
-			name = StringUtil.toLowerCase(name);
-		}
-
-		return name;
 	}
 
 }

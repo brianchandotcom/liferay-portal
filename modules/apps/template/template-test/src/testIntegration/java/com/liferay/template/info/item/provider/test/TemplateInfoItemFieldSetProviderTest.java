@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -646,7 +645,6 @@ public class TemplateInfoItemFieldSetProviderTest {
 			StringUtil::toLowerCase);
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testGetInfoFieldValuesRenderingOtherListInfoFieldTypeWithCaseSensitiveTags()
 		throws Exception {

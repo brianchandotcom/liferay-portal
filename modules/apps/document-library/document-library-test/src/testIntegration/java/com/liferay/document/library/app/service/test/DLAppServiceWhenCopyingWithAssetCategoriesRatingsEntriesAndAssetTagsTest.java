@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.ratings.kernel.model.RatingsEntry;
@@ -177,7 +176,6 @@ public class
 		_testCopyFileShouldCopyAssetTagsParentGroup(StringUtil::toLowerCase);
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testCopyFileShouldCopyAssetTagsParentGroupWithCaseSensitiveTags()
 		throws Exception {
@@ -190,7 +188,6 @@ public class
 		_testCopyFileShouldCopyAssetTagsSameGroup(StringUtil::toLowerCase);
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testCopyFileShouldCopyAssetTagsSameGroupWithCaseSensitiveTags()
 		throws Exception {
@@ -296,7 +293,6 @@ public class
 			StringUtil::toLowerCase);
 	}
 
-	@FeatureFlags("LPS-194362")
 	@Test
 	public void testCopyFileShouldNotCopyAssetTagsDifferentGroupWithCaseSensitiveTags()
 		throws Exception {

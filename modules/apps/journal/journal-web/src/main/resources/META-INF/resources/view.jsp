@@ -10,10 +10,7 @@
 <%
 JournalManagementToolbarDisplayContext journalManagementToolbarDisplayContext = null;
 
-if (!journalDisplayContext.isSearch() || journalDisplayContext.isShowWebContent()) {
-	journalManagementToolbarDisplayContext = new JournalManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalDisplayContext, trashHelper);
-}
-else if (journalDisplayContext.isIndexAllArticleVersions() && journalDisplayContext.isShowVersions()) {
+if (journalDisplayContext.isShowVersions()) {
 	journalManagementToolbarDisplayContext = new JournalArticleVersionsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalDisplayContext, trashHelper);
 }
 else if (journalDisplayContext.isShowComments()) {

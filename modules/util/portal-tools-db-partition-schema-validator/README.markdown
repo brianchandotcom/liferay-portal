@@ -13,7 +13,7 @@ This tool validates DB Partition schemas to be sure that all of them only contai
     -j,--jdbc-url <arg> JDBC url.
     -p,--password <arg> Database user password.
     -s,--schema-prefix <arg> Schema prefix for non-default partitions.
-    -t,--db-type Database type [mysql or postgresql]
+    -t,--db-type Database type [mysql or postgresql].
     -u,--user <arg> Database user name.
 
 ## Execution example

@@ -312,22 +312,34 @@ export function parseNotifications(node) {
 			}
 		}
 
-		if (item['role-type']) {
+		if (
+			item['role-type'] ||
+			(item['recipients'] && item['recipients'][0]['roles']['role-type'])
+		) {
+			const autoCreate =
+				item['auto-create'] ||
+				item['recipients'][0]['roles']['auto-create'];
+			const roleKey =
+				item['role-name'] || item['recipients'][0]['roles']['name'];
+			const roleType =
+				item['role-type'] ||
+				item['recipients'][0]['roles']['role-type'];
+
 			if (receptionType) {
 				notifications.recipients[index].push({
 					assignmentType: ['roleType'],
-					autoCreate: item['auto-create'],
+					autoCreate,
 					receptionType: [receptionType],
-					roleKey: item['role-name'],
-					roleType: item['role-type'],
+					roleKey,
+					roleType,
 				});
 			}
 			else {
 				notifications.recipients[index].push({
 					assignmentType: ['roleType'],
-					autoCreate: item['auto-create'],
-					roleKey: item['role-name'],
-					roleType: item['role-type'],
+					autoCreate,
+					roleKey,
+					roleType,
 				});
 			}
 		}
@@ -341,7 +353,7 @@ export function parseNotifications(node) {
 			const roleId = item['role-id']
 				? item['role-id'][0]
 				: item['recipients'][0]['roles']['role'] ||
-				  item['recipients'][0]?.['roles']?.['role-id'];
+				  item['recipients'][0]['roles']['role-id'];
 
 			if (receptionType) {
 				notifications.recipients[index].push({

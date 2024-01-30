@@ -171,12 +171,49 @@ function getLocationValue(field, context) {
 														] = {};
 
 														for (const grandGrandChild of grandGrand.children) {
-															grandGrandContent[
-																grandGrand.tagName
-															][
-																grandGrandChild.tagName
-															] =
-																grandGrandChild.textContent;
+															if (
+																!grandGrandChild
+																	.children
+																	.length
+															) {
+																fillContent(
+																	grandGrandChild.tagName,
+																	grandGrandContent[
+																		grandGrand
+																			.tagName
+																	],
+																	grandGrandChild.textContent
+																);
+															}
+															else {
+																for (const grandGrandGrandChild of grandGrandChild.children) {
+																	if (
+																		!grandGrandContent[
+																			grandGrand
+																				.tagName
+																		][
+																			grandGrandGrandChild
+																				.tagName
+																		]
+																	) {
+																		grandGrandContent[
+																			grandGrand.tagName
+																		][
+																			grandGrandGrandChild.tagName
+																		] = [];
+																	}
+
+																	grandGrandContent[
+																		grandGrand
+																			.tagName
+																	][
+																		grandGrandGrandChild
+																			.tagName
+																	].push(
+																		grandGrandGrandChild.textContent
+																	);
+																}
+															}
 														}
 													}
 													else {

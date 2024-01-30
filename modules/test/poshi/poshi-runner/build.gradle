@@ -17,7 +17,6 @@ dependencies {
 	api group: "com.jayway.jsonpath", name: "json-path", version: "2.9.0"
 	api group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.156"
 	api group: "com.liferay", name: "jodd.util", version: "6.0.1.LIFERAY-PATCHED-1"
-	api group: "com.liferay", name: "net.jsourcerer.webdriver.JSErrorCollector", version: "0.6"
 	api group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"
 	api group: "commons-io", name: "commons-io", version: "2.11.0"
 	api group: "commons-lang", name: "commons-lang", version: "2.6"

@@ -14,7 +14,7 @@ export async function addNode(
 	template
 ) {
 	try {
-		const result = await postFolderTemplate({
+		const result = await postFolderTemplateNode({
 			description: '',
 			name,
 			parentId: parentNode,
@@ -61,7 +61,7 @@ export async function getAvailableTemplatesNodesPage(templateId) {
 	});
 }
 
-export async function postFolderTemplate(FolderTemplate) {
+export async function postFolderTemplateNode(FolderTemplate) {
 	return request({
 		data: FolderTemplate,
 		method: 'post',
@@ -69,7 +69,7 @@ export async function postFolderTemplate(FolderTemplate) {
 	});
 }
 
-export async function updateFolderTemplate(nodeId, FolderTemplate) {
+export async function updateFolderTemplateNode(nodeId, FolderTemplate) {
 	return request({
 		data: FolderTemplate,
 		method: 'patch',

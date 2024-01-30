@@ -10,6 +10,7 @@ import ReactFlow, {
 	ConnectionLineType,
 	Controls,
 	Panel,
+	ReactFlowProvider,
 	useEdgesState,
 	useNodesState,
 } from 'reactflow';
@@ -23,7 +24,7 @@ import {
 	addNode,
 	deleteFolderTemplateBatch,
 	getAvailableTemplatesNodesPage,
-	updateFolderTemplate,
+	updateFolderTemplateNode,
 } from '../../services/TemplateDiagramService';
 import {showError} from '../../utils/util';
 import FolderNode from './controls/custom-node/FolderNode';
@@ -65,16 +66,16 @@ const getParentNodeId = (node) => {
 		return null;
 	}
 
-	if (node.pid){
+	if (node.pid) {
 		return node.pid.toString();
 	}
 
-	if (node.parentId){
-		return node.parentId.toString()
+	if (node.parentId) {
+		return node.parentId.toString();
 	}
 
 	return '';
-}
+};
 
 const getLayoutedElements = (nodes, edges) => {
 	dagreGraph.setGraph({
@@ -184,7 +185,7 @@ const Diagram = ({templateId}) => {
 		[setNodes, setEdges]
 	);
 
-	const updateDiagramSingleNodeLocally = useCallback(
+	const updateNode = useCallback(
 		(updatedNode) => {
 			const selectedDiagramNode = nodes.find(
 				(node) => node.id.toString() === updatedNode.id
@@ -227,17 +228,14 @@ const Diagram = ({templateId}) => {
 		[nodes, edges, setNodes, setEdges, templateId]
 	);
 
-	///todo pass only nodeid
 	const handleDelete = useCallback(
-		(params) => {
+		(nodeId) => {
 			try {
-				const nodeId = params[0].id || params || selectedNode.id;
+				const nodeIds = getChildNodeIds(nodeId || selectedNode.id);
 
-				const nodesToBeDeleted = getChildNodeIds(nodeId);
+				updateDiagramDataSourceLocally(nodes, edges, nodeIds);
 
-				updateDiagramDataSourceLocally(nodes, edges, nodesToBeDeleted);
-
-				deleteNodes(nodesToBeDeleted);
+				deleteNodes(nodeIds);
 
 				setSelectedNode(null);
 			}
@@ -270,7 +268,7 @@ const Diagram = ({templateId}) => {
 			const templateEdges = [];
 
 			const normalizedNodes = templateNodes.map((node) => {
-				if (node.parentId !== 0) {
+				if (!node.root) {
 					const edge = getEdge(node.id, node.parentId);
 
 					templateEdges.push(edge);
@@ -295,18 +293,18 @@ const Diagram = ({templateId}) => {
 		loadNodes(templateId);
 	}, [loadNodes, templateId]);
 
-	const handleSave = () => {
+	const handleNodeSave = () => {
 		form.validateFields()
 			.then(
 				async (values) => {
 					try {
 						setIsLoading(true);
 
-						await updateFolderTemplate(values.id, values);
+						await updateFolderTemplateNode(values.id, values);
 
 						setIsLoading(false);
 
-						updateDiagramSingleNodeLocally(values);
+						updateNode(values);
 					}
 					catch (error) {
 						setIsLoading(false);
@@ -324,7 +322,7 @@ const Diagram = ({templateId}) => {
 	};
 
 	return (
-		<>
+		<ReactFlowProvider>
 			{nodes && edges && (
 				<ReactFlow
 					connectionLineType={ConnectionLineType.SmoothStep}
@@ -334,6 +332,7 @@ const Diagram = ({templateId}) => {
 						folderNode: (props) => (
 							<FolderNode
 								{...props}
+								nodeWidth={NODE_WIDTH}
 								onAdd={handleAdd}
 								onDelete={handleDelete}
 								onSelect={handleNodeSelect}
@@ -342,11 +341,13 @@ const Diagram = ({templateId}) => {
 					}}
 					nodes={nodes}
 					onConnect={null}
-					onNodesDelete={handleDelete}
+					onNodesDelete={(nodes) => handleDelete(nodes[0].id)}
 					onPaneClick={() => setSelectedNode(null)}
 				>
 					<Controls />
-					<Background className="background" />
+
+					<Background className="bg-light" />
+
 					{selectedNode && (
 						<Panel
 							className="h-100 m-0 side-panel w-25"
@@ -366,7 +367,9 @@ const Diagram = ({templateId}) => {
 											<ClayButtonWithIcon
 												aria-label="Close"
 												displayType="unstyled"
-												onClick={() => setSelectedNode(null)}
+												onClick={() =>
+													setSelectedNode(null)
+												}
 												symbol="times"
 												title="Close"
 											/>
@@ -380,13 +383,66 @@ const Diagram = ({templateId}) => {
 										layout="vertical"
 									>
 										<Form.Item
+											hidden={true}
+											initialValue={selectedNode.id}
+											name="id"
+											rules={[
+												{
+													required: true,
+												},
+											]}
+										>
+											<Input />
+										</Form.Item>
+										<Form.Item
+											hidden={true}
+											initialValue={selectedNode.parent}
+											name="parentId"
+											rules={[
+												{
+													message:
+														'Please provide a node parent id.',
+													required: true,
+												},
+											]}
+										>
+											<Input />
+										</Form.Item>
+										<Form.Item
+											hidden={true}
+											initialValue={selectedNode.root}
+											name="root"
+											rules={[
+												{
+													required: true,
+												},
+											]}
+										>
+											<Input />
+										</Form.Item>
+										<Form.Item
+											hidden={true}
+											initialValue={templateId}
+											name="templateId"
+											rules={[
+												{
+													message:
+														'Please provide a template id.',
+													required: true,
+												},
+											]}
+										>
+											<Input />
+										</Form.Item>
+
+										<Form.Item
 											initialValue={selectedNode.label}
 											label="Title"
 											name="name"
 											rules={[
 												{
 													message:
-														'Please provide node name.',
+														'Please provide a title.',
 													required: true,
 												},
 											]}
@@ -405,62 +461,6 @@ const Diagram = ({templateId}) => {
 												type="text"
 											/>
 										</Form.Item>
-										<Form.Item
-											hidden={true}
-											initialValue={selectedNode.parent}
-											label="parentId"
-											name="parentId"
-											rules={[
-												{
-													message:
-														'Please provide node parent id.',
-													required: true,
-												},
-											]}
-										>
-											<Input />
-										</Form.Item>
-										<Form.Item
-											hidden={true}
-											initialValue={templateId}
-											label="templateId"
-											name="templateId"
-											rules={[
-												{
-													message:
-														'Please provide a template id.',
-													required: true,
-												},
-											]}
-										>
-											<Input />
-										</Form.Item>
-										<Form.Item
-											hidden={true}
-											initialValue={selectedNode.root}
-											label="root"
-											name="root"
-											rules={[
-												{
-													required: true,
-												},
-											]}
-										>
-											<Input />
-										</Form.Item>
-										<Form.Item
-											hidden={true}
-											initialValue={selectedNode.id}
-											label="id"
-											name="id"
-											rules={[
-												{
-													required: true,
-												},
-											]}
-										>
-											<Input />
-										</Form.Item>
 									</Form>
 								</div>
 								<div className="d-flex justify-content-between sidebar-footer">
@@ -477,11 +477,10 @@ const Diagram = ({templateId}) => {
 											Delete
 										</ClayButton>
 									)}
+
 									<ClayButton
 										disabled={isLoading}
-										onClick={() => {
-											handleSave();
-										}}
+										onClick={handleNodeSave}
 									>
 										Save
 									</ClayButton>
@@ -491,7 +490,7 @@ const Diagram = ({templateId}) => {
 					)}
 				</ReactFlow>
 			)}
-		</>
+		</ReactFlowProvider>
 	);
 };
 

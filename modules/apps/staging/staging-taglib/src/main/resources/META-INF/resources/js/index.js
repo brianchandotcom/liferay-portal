@@ -17,7 +17,7 @@ import '../css/PagesTree.scss';
 const ROOT_ITEM_ID = '0';
 const SPACE_KEYCODE = 32;
 
-export default function PagesTree({
+export function PagesTree({
 	config,
 	groupId,
 	items,

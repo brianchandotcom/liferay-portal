@@ -75,7 +75,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 						<c:otherwise>
 							<div>
 								<react:component
-									module="select_pages/js/PagesTree"
+									module="{PagesTree} from staging-taglib"
 									props="<%= layoutsTreeDisplayContext.getPagesTreeData() %>"
 								/>
 							</div>

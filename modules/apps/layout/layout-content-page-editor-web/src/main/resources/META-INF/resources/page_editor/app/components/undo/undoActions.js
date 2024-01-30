@@ -22,7 +22,6 @@ import {
 	UPDATE_FORM_ITEM_CONFIG,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_ITEM_CONFIG,
-	UPDATE_ITEM_LOCAL_CONFIG,
 	UPDATE_LANGUAGE_ID,
 	UPDATE_ROW_COLUMNS,
 	UPDATE_RULE,
@@ -46,7 +45,6 @@ import * as undoUpdateEditableValuesAction from './undoUpdateEditableValuesActio
 import * as undoUpdateFormItemConfig from './undoUpdateFormItemConfig';
 import * as undoUpdateFragmentConfiguration from './undoUpdateFragmentConfiguration';
 import * as undoUpdateItemConfig from './undoUpdateItemConfig';
-import * as undoUpdateItemLocalConfig from './undoUpdateItemLocalConfig';
 import * as undoUpdateLanguage from './undoUpdateLanguage';
 import * as undoUpdateRowColumns from './undoUpdateRowColumns';
 import * as undoUpdateRule from './undoUpdateRule';
@@ -70,7 +68,6 @@ const UNDO_ACTIONS = {
 	[UPDATE_FORM_ITEM_CONFIG]: undoUpdateFormItemConfig,
 	[UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION]: undoUpdateFragmentConfiguration,
 	[UPDATE_ITEM_CONFIG]: undoUpdateItemConfig,
-	[UPDATE_ITEM_LOCAL_CONFIG]: undoUpdateItemLocalConfig,
 	[UPDATE_LANGUAGE_ID]: undoUpdateLanguage,
 	[UPDATE_ROW_COLUMNS]: undoUpdateRowColumns,
 	[UPDATE_RULE]: undoUpdateRule,

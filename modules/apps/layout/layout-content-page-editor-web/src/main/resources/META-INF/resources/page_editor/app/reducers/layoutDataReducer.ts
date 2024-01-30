@@ -24,7 +24,6 @@ import {
 	UPDATE_FORM_ITEM_CONFIG,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_ITEM_CONFIG,
-	UPDATE_ITEM_LOCAL_CONFIG,
 	UPDATE_PREVIEW_IMAGE,
 	UPDATE_ROW_COLUMNS,
 	UPDATE_RULE,
@@ -34,7 +33,6 @@ import updateCollectionDisplayCollection from '../actions/updateCollectionDispla
 import updateFormItemConfig from '../actions/updateFormItemConfig';
 import updateFragmentEntryLinkConfiguration from '../actions/updateFragmentEntryLinkConfiguration';
 import updateItemConfig from '../actions/updateItemConfig';
-import updateItemLocalConfig from '../actions/updateItemLocalConfig';
 import updatePreviewImage from '../actions/updatePreviewImage';
 import updateRowColumns from '../actions/updateRowColumns';
 import updateRule from '../actions/updateRule';
@@ -63,7 +61,6 @@ export default function layoutDataReducer(
 		| ReturnType<typeof updateFormItemConfig>
 		| ReturnType<typeof updateFragmentEntryLinkConfiguration>
 		| ReturnType<typeof updateItemConfig>
-		| ReturnType<typeof updateItemLocalConfig>
 		| ReturnType<typeof updatePreviewImage>
 		| ReturnType<typeof updateRowColumns>
 		| ReturnType<typeof updateRule>
@@ -93,17 +90,6 @@ export default function layoutDataReducer(
 			return setIn(nextLayoutData, ['items', itemId, 'config'], {
 				...(action.overridePreviousConfig ? {} : previousItem.config),
 				...nextItem.config,
-			});
-		}
-
-		case UPDATE_ITEM_LOCAL_CONFIG: {
-			const {itemConfig, itemId} = action;
-
-			const item = layoutData.items[itemId] || {};
-
-			return setIn(layoutData, ['items', itemId, 'config'], {
-				...(action.overridePreviousConfig ? {} : item.config),
-				...itemConfig,
 			});
 		}
 

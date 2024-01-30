@@ -117,3 +117,10 @@
 .f-content-container .content-container-translucent.interactive:active {
 	background: rgba(255, 255, 255, 0.2);
 }
+
+.lfr-layout-structure-item-content-container > div[id^='fragment-'] > .f-content-container.force-equal-height > .content-container,
+.lfr-layout-structure-item-content-container > div[id^='fragment-'] > .f-content-container.force-equal-height,
+.lfr-layout-structure-item-content-container:has(.f-content-container.force-equal-height) > div[id^='fragment-'],
+.lfr-layout-structure-item-content-container:has(.f-content-container.force-equal-height) {
+	height: 100%;
+}

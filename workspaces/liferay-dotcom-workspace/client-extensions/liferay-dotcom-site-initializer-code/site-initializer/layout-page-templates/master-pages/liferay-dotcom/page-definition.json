@@ -2453,8 +2453,8 @@
 	"settings": {
 		"colorSchemeName": "01",
 		"styleBook": {
-			"key": "custom",
-			"name": "WWW Dialect"
+			"key": "liferay-dotcom",
+			"name": "Liferay Dotcom"
 		},
 		"themeName": "Dialect",
 		"themeSettings": {

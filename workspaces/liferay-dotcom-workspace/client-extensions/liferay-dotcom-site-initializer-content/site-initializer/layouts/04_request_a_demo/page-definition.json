@@ -107,7 +107,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "main"
+			"key": "liferay-dotcom"
 		}
 	}
 }

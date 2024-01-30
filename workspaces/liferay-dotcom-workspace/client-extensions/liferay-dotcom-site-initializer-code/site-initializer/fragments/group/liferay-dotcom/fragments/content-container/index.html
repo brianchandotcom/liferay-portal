@@ -1,8 +1,8 @@
 [#assign color = configuration.color /]
-[#assign padding = configuration.padding /]
-[#assign interactive = configuration.interactive /]
-[#assign url = configuration.url /]
 [#assign forceEqualHeightColumn = configuration.forceEqualHeightColumn /]
+[#assign interactive = configuration.interactive /]
+[#assign padding = configuration.padding /]
+[#assign url = configuration.url /]
 
 <div class="f-content-container f-content-container-${fragmentEntryLinkNamespace} ${forceEqualHeightColumn?then('force-equal-height', '')} text-decoration-none">
 	[#if url?has_content]
@@ -19,12 +19,3 @@
 		</div>
 	[/#if]
 </div>
-
-<style>
-	div[class^='lfr-layout-structure-item-content-container'] > div[id^='fragment-'] > .f-content-container-${fragmentEntryLinkNamespace}.force-equal-height > .content-container,
-	div[class^='lfr-layout-structure-item-content-container'] > div[id^='fragment-'] > .f-content-container-${fragmentEntryLinkNamespace}.force-equal-height,
-	div[class^='lfr-layout-structure-item-content-container']:has(.f-content-container-${fragmentEntryLinkNamespace}.force-equal-height) > div[id^='fragment-'],
-	div[class^='lfr-layout-structure-item-content-container']:has(.f-content-container-${fragmentEntryLinkNamespace}.force-equal-height) {
-		height: 100%;
-	}
-</style>

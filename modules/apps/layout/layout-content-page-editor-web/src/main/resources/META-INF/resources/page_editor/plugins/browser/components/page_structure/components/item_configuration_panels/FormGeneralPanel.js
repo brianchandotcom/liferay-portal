@@ -44,15 +44,29 @@ export function FormGeneralPanel({item}) {
 	const updateItemLocalConfig = useUpdateItemLocalConfig();
 
 	const onValueSelect = useCallback(
-		(nextConfig, overridePreviousConfig = true) =>
+		(nextConfig, overridePreviousConfig = true) => {
+			const isMapping = Boolean(nextConfig.classNameId);
+
+			if (isMapping) {
+				updateItemLocalConfig(item.itemId, {
+					loading: true,
+					showMessagePreview: false,
+				});
+			}
+
 			dispatch(
 				updateFormItemConfig({
 					itemConfig: nextConfig,
 					itemId: item.itemId,
 					overridePreviousConfig,
 				})
-			),
-		[dispatch, item.itemId]
+			).then(() =>
+				updateItemLocalConfig(item.itemId, {
+					loading: false,
+				})
+			);
+		},
+		[dispatch, item.itemId, updateItemLocalConfig]
 	);
 
 	useEffect(() => {

@@ -9,7 +9,10 @@ import classNames from 'classnames';
 import React, {useCallback} from 'react';
 
 import FormMappingOptions from '../../../plugins/browser/components/page_structure/components/item_configuration_panels/FormMappingOptions';
-import {useItemLocalConfig} from '../../contexts/LocalConfigContext';
+import {
+	useItemLocalConfig,
+	useUpdateItemLocalConfig,
+} from '../../contexts/LocalConfigContext';
 import {
 	useDispatch,
 	useSelector,
@@ -45,7 +48,7 @@ const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 function Form({children, item}) {
 	const localConfig = useItemLocalConfig(item.itemId);
 
-	const showLoadingState = item.config?.loading;
+	const showLoadingState = localConfig.loading;
 
 	const isEmpty = useSelectorCallback(
 		(state) =>
@@ -104,16 +107,30 @@ function Form({children, item}) {
 
 function FormEmptyState({isMapped, item}) {
 	const dispatch = useDispatch();
+	const updateItemLocalConfig = useUpdateItemLocalConfig();
 
 	const onValueSelect = useCallback(
-		(nextConfig) =>
+		(nextConfig) => {
+			const isMapping = Boolean(nextConfig.classNameId);
+
+			if (isMapping) {
+				updateItemLocalConfig(item.itemId, {
+					loading: true,
+				});
+			}
+
 			dispatch(
 				updateFormItemConfig({
 					itemConfig: nextConfig,
 					itemId: item.itemId,
 				})
-			),
-		[dispatch, item.itemId]
+			).then(() =>
+				updateItemLocalConfig(item.itemId, {
+					loading: false,
+				})
+			);
+		},
+		[dispatch, item.itemId, updateItemLocalConfig]
 	);
 
 	const localConfig = useItemLocalConfig(item.itemId);

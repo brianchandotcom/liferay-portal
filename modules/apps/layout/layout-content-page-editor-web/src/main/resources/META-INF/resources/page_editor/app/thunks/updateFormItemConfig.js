@@ -6,7 +6,6 @@
 import {openToast} from 'frontend-js-web';
 
 import updateFormItemConfigAction from '../actions/updateFormItemConfig';
-import updateItemLocalConfig from '../actions/updateItemLocalConfig';
 import FormService from '../services/FormService';
 
 export default function updateFormItemConfig({
@@ -17,18 +16,6 @@ export default function updateFormItemConfig({
 	const isMapping = Boolean(itemConfig.classNameId);
 
 	return (dispatch, getState) => {
-		if (isMapping) {
-			dispatch(
-				updateItemLocalConfig({
-					disableUndo: true,
-					itemConfig: {
-						loading: true,
-					},
-					itemId,
-				})
-			);
-		}
-
 		return FormService.updateFormItemConfig({
 			itemConfig,
 			itemId,

@@ -412,15 +412,12 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	}
 
 	private void _setDescription(
-		AssetRenderer<?> assetRenderer,
-		com.liferay.portal.kernel.search.Document legacyDocument,
-		String entryClassName, List<String> fields, SearchResult searchResult) {
+		AssetRenderer<?> assetRenderer, List<String> fields,
+		SearchResult searchResult, Summary summary) {
 
 		if (!_isEmptyOrContains(fields, "description")) {
 			return;
 		}
-
-		Summary summary = _getSummary(entryClassName, legacyDocument);
 
 		if (summary != null) {
 			searchResult.setDescription(summary.getContent());
@@ -527,14 +524,20 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 	private void _setTitle(
 		AssetRenderer<?> assetRenderer, List<String> fields,
-		SearchResult searchResult) {
+		SearchResult searchResult, Summary summary) {
 
 		if (!_isEmptyOrContains(fields, "title")) {
 			return;
 		}
 
-		searchResult.setTitle(
-			assetRenderer.getTitle(contextAcceptLanguage.getPreferredLocale()));
+		if (summary != null) {
+			searchResult.setTitle(summary.getTitle());
+		}
+		else {
+			searchResult.setTitle(
+				assetRenderer.getTitle(
+					contextAcceptLanguage.getPreferredLocale()));
+		}
 	}
 
 	private Object _toAggregations(
@@ -606,14 +609,14 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 					legacyDocument = null;
 				}
 
-				_setDescription(
-					assetRenderer, legacyDocument, _getEntryClassName(document),
-					fields, searchResult);
+				Summary summary = _getSummary(entryClassName, legacyDocument);
+
+				_setDescription(assetRenderer, fields, searchResult, summary);
 
 				_setDTOFields(
 					embedded, entryClassName, entryClassPK, fields,
 					searchResult);
-				_setTitle(assetRenderer, fields, searchResult);
+				_setTitle(assetRenderer, fields, searchResult, summary);
 			}
 
 			_setDateModified(document, fields, searchResult);

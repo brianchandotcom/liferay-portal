@@ -3,6 +3,17 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.portal.tools.service.builder.test">
 	<namespace>SBTest</namespace>
+	<entity local-service="false" name="AutoEscapeEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="autoEscapeEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="autoEscapeEnabledColumn" type="String" />
+		<column name="autoEscapeDisabledColumn" type="String" />
+	</entity>
 	<entity local-service="false" name="BigDecimalEntry" remote-service="false">
 
 		<!-- PK fields -->

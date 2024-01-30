@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.portal.tools.service.builder.test.model.AutoEscapeEntry">
+		<field name="autoEscapeEntryId" type="long" />
+		<field name="autoEscapeEnabledColumn" type="String" />
+		<field name="autoEscapeDisabledColumn" type="String">
+			<hint name="auto-escape">false</hint>
+		</field>
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry">
 		<field name="bigDecimalEntryId" type="long" />
 		<field name="companyId" type="long" />

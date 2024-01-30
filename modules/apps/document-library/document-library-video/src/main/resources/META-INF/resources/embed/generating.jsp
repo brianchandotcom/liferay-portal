@@ -35,5 +35,5 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(FileVersion.class.ge
 			"getEmbedVideoStatusURL", getEmbedVideoStatusURL
 		).build()
 	%>'
-	module="js/embed/generating"
+	module="{generating} from document-library-video"
 />

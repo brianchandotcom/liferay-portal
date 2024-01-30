@@ -45,7 +45,7 @@ String onFilePickCallback = (String)request.getAttribute(DLVideoWebKeys.ON_FILE_
 	<liferay-portlet:resourceURL id="/document_library_video/get_dl_video_external_shortcut_fields" portletName="<%= DLVideoPortletKeys.DL_VIDEO %>" var="getDLVideoExternalShortcutFieldsURL" />
 
 	<react:component
-		module="js/DLVideoExternalShortcutDLFilePicker"
+		module="{DLVideoExternalShortcutDLFilePicker} from document-library-video"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"dlVideoExternalShortcutHTML", (dlVideoExternalShortcut != null) ? dlVideoExternalShortcut.renderHTML(request) : ""

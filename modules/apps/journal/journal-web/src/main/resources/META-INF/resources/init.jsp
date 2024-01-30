@@ -105,7 +105,6 @@ page import="com.liferay.journal.util.comparator.ArticleVersionComparator" %><%@
 page import="com.liferay.journal.web.internal.asset.model.JournalArticleAssetRenderer" %><%@
 page import="com.liferay.journal.web.internal.configuration.JournalWebConfiguration" %><%@
 page import="com.liferay.journal.web.internal.constants.JournalWebConstants" %><%@
-page import="com.liferay.journal.web.internal.dao.search.JournalResultRowSplitter" %><%@
 page import="com.liferay.journal.web.internal.display.context.EditJournalFeedDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalArticleCommentsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalArticleVersionsManagementToolbarDisplayContext" %><%@

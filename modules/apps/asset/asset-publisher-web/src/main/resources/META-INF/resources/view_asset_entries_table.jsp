@@ -32,7 +32,7 @@ if (stageableGroup.isLayout()) {
 
 	<clay:sheet-section>
 		<div class="table-responsive">
-			<table class="table table-autofit table-head-bordered table-striped table-hover">
+			<table class="table table-autofit table-head-bordered table-hover table-striped">
 				<thead>
 					<tr>
 						<th class="table-cell-expand table-title">

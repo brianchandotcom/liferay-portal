@@ -57,7 +57,7 @@
 						collapsible="<%= true %>"
 						label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
 					>
-						<table class="table table-autofit table-condensed table-responsive table-head-bordered table-striped table-hover">
+						<table class="table table-autofit table-condensed table-head-bordered table-hover table-responsive table-striped">
 							<tbody>
 
 								<%

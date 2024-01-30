@@ -126,7 +126,7 @@
 									</div>
 
 									<div class="hide search-results-list table-details table-responsive">
-										<table class="table table-sm table-head-bordered table-striped table-hover">
+										<table class="table table-head-bordered table-hover table-sm table-striped">
 											<thead>
 												<tr>
 													<th class="table-cell-expand-smaller table-cell-text-end">

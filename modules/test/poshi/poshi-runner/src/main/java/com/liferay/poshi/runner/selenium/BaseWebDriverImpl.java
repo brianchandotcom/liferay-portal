@@ -21,7 +21,6 @@ import com.liferay.poshi.core.util.StringPool;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.exception.ElementNotFoundPoshiRunnerException;
-import com.liferay.poshi.runner.exception.JavaScriptException;
 import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.util.AntCommands;
 import com.liferay.poshi.runner.util.ArchiveUtil;
@@ -76,8 +75,6 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import junit.framework.TestCase;
-
-import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -477,66 +474,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public void assertJavaScriptErrors(String ignoreJavaScriptError)
 		throws Exception {
-
-		if (!poshiProperties.testAssertJavascriptErrors) {
-			return;
-		}
-
-		String pageSource = null;
-
-		try {
-			pageSource = getPageSource();
-		}
-		catch (Exception exception) {
-			WebDriver.TargetLocator targetLocator = switchTo();
-
-			targetLocator.window(_defaultWindowHandle);
-
-			pageSource = getPageSource();
-		}
-
-		if (pageSource == null) {
-			System.out.println("Unable to obtain HTML source");
-		}
-		else if (pageSource.contains(
-					"html id=\"feedHandler\" xmlns=" +
-						"\"http://www.w3.org/1999/xhtml\"")) {
-
-			return;
-		}
-
-		JavaScriptException javaScriptException = null;
-
-		List<JavaScriptError> javaScriptErrors = JavaScriptError.readErrors(
-			getWrappedWebDriver("//body"));
-
-		for (JavaScriptError javaScriptError : javaScriptErrors) {
-			String javaScriptErrorValue = javaScriptError.toString();
-
-			if ((Validator.isNotNull(ignoreJavaScriptError) &&
-				 javaScriptErrorValue.contains(ignoreJavaScriptError)) ||
-				LiferaySeleniumUtil.isInIgnoreErrorsFile(
-					javaScriptErrorValue, "javascript")) {
-
-				continue;
-			}
-
-			String message = "JAVA_SCRIPT_ERROR: " + javaScriptErrorValue;
-
-			System.out.println(message);
-
-			if (javaScriptException == null) {
-				javaScriptException = new JavaScriptException(message);
-			}
-			else {
-				PoshiRunnerWarningException.addException(
-					new JavaScriptException(message));
-			}
-		}
-
-		if (javaScriptException != null) {
-			throw javaScriptException;
-		}
 	}
 
 	@Override

@@ -45,8 +45,8 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -140,15 +140,8 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 				classNameId, classPK);
 		}
 
-		List<CTCollection> dtoCTCollections = new ArrayList<>();
-
-		for (com.liferay.change.tracking.model.CTCollection ctCollection :
-				ctCollections) {
-
-			dtoCTCollections.add(_toCTCollection(ctCollection));
-		}
-
-		return Page.of(dtoCTCollections);
+		return Page.of(
+			TransformUtil.transform(ctCollections, this::_toCTCollection));
 	}
 
 	@Override

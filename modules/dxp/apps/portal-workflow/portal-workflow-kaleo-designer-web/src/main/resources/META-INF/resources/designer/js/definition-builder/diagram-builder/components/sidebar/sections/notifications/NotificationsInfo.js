@@ -23,6 +23,7 @@ let executionTypeOptions = [
 ];
 
 const NotificationsInfo = ({
+	accountEntryId,
 	identifier,
 	index: notificationIndex,
 	sectionsLength,
@@ -447,6 +448,7 @@ const NotificationsInfo = ({
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('information')}>
 			<BaseNotificationsInfo
+				accountEntryId={accountEntryId}
 				defaultScript={
 					selectedItem.data.notifications?.recipients?.[
 						notificationIndex

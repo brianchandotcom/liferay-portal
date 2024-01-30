@@ -4,11 +4,18 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import {MultipleSelect} from '@liferay/object-js-components-web';
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
+import {contextUrl} from '../../../../../constants';
+import {
+	headers,
+	retrieveAccountRoles,
+	userBaseURL,
+} from '../../../../../util/fetchUtil';
 import ScriptInput from '../../../shared-components/ScriptInput';
 import SidebarPanel from '../../SidebarPanel';
 import Role from '../notifications/Role';
@@ -39,6 +46,7 @@ let recipientTypeOptions = [
 ];
 
 const BaseNotificationsInfo = ({
+	accountEntryId,
 	defaultScript,
 	defaultScriptLanguage,
 	deleteSection,
@@ -78,6 +86,23 @@ const BaseNotificationsInfo = ({
 	userRecipientUpdateSelectedItem,
 	...restProps
 }) => {
+	const [networkStatus, setNetworkStatus] = useState(4);
+	const {resource} = useResource({
+		fetchOptions: {
+			headers: {
+				...headers,
+				'accept': `application/json`,
+				'x-csrf-token': Liferay.authToken,
+			},
+		},
+		fetchPolicy: 'cache-first',
+		link: `${window.location.origin}${contextUrl}${userBaseURL}/roles`,
+		onNetworkStatusChange: setNetworkStatus,
+		variables: {
+			pageSize: -1,
+		},
+	});
+
 	if (selectedItem.type === 'task') {
 		if (
 			!recipientTypeOptions
@@ -138,6 +163,29 @@ const BaseNotificationsInfo = ({
 
 		return updateSelectedItem;
 	};
+
+	const [accountRoles, setAccountRoles] = useState([]);
+
+	useEffect(() => {
+		if (!accountEntryId) {
+			return;
+		}
+		retrieveAccountRoles(accountEntryId)
+			.then((response) => response.json())
+			.then(({items}) => {
+				const accountRoleItems = items.map(({displayName, name}) => {
+					return {
+						roleKey: name,
+						roleName: displayName,
+						roleType: 'Account',
+					};
+				});
+
+				setAccountRoles(accountRoleItems);
+			});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [accountEntryId]);
+
 	useEffect(() => {
 		const checkedTrue = items
 			.filter((item) => {
@@ -317,6 +365,7 @@ const BaseNotificationsInfo = ({
 						<ClayForm.Group className="recipient-type-form-group">
 							{internalSections.map((props, index) => (
 								<RecipientTypeComponent
+									accountRoles={accountRoles}
 									defaultScriptLanguage={
 										defaultScriptLanguage
 									}
@@ -324,7 +373,9 @@ const BaseNotificationsInfo = ({
 									index={index}
 									inputValue={defaultScript}
 									key={`section-${identifier}`}
+									networkStatus={networkStatus}
 									notificationIndex={notificationIndex}
+									resource={resource}
 									sectionsData={sectionsData}
 									sectionsLength={internalSections.length}
 									setSections={setInternalSections}

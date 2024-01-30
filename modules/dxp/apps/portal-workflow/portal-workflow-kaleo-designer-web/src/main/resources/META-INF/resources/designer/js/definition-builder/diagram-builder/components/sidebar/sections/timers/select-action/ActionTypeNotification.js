@@ -5,6 +5,7 @@
 
 import React, {useContext, useEffect, useState} from 'react';
 
+import {DefinitionBuilderContext} from '../../../../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import {getRecipientType} from '../../notifications/utils';
 import BaseNotificationsInfo from '../../shared-components/BaseNotificationsInfo';
@@ -17,6 +18,7 @@ const ActionTypeNotification = ({
 	setActionSections,
 	...restProps
 }) => {
+	const {accountEntryId} = useContext(DefinitionBuilderContext);
 	const {selectedItem} = useContext(DiagramBuilderContext);
 
 	const identifier = actionData?.identifier;
@@ -243,6 +245,7 @@ const ActionTypeNotification = ({
 
 	return (
 		<BaseNotificationsInfo
+			accountEntryId={accountEntryId}
 			defaultScript={
 				actionData?.recipients?.script ||
 				actionData?.recipients?.[0]?.script?.[0]

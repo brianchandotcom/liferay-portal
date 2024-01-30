@@ -33,9 +33,8 @@ const Solutions = () => {
 		>
 			<DashboardTable
 				emptyStateMessage={{
-					description1:
-						'Purchase and install new solutions and they will show up here.',
-					description2: 'Click on “New Solutions” to start.',
+					description1: '',
+					description2: '',
 					title: 'No Solutions Yet',
 				}}
 				icon={solutionsIcon}

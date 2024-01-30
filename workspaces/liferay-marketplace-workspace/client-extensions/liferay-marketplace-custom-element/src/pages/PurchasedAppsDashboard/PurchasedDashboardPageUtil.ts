@@ -5,7 +5,6 @@
 
 import solutionsIcon from '../../assets/icons/analytics_icon.svg';
 import appsIcon from '../../assets/icons/apps_fill_icon.svg';
-import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import {DashboardListItems} from '../../components/DashboardNavigation/DashboardNavigation';
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
 
@@ -109,12 +108,6 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 		itemName: 'solutions',
 		itemTitle: 'Solutions',
 		path: '/solutions',
-	},
-	{
-		itemIcon: membersIcon,
-		itemName: 'members',
-		itemTitle: 'Members',
-		path: '/members',
 	},
 ];
 

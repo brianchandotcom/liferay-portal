@@ -6,7 +6,6 @@
 import solutionsIcon from '../../assets/icons/analytics_icon.svg';
 import appsIcon from '../../assets/icons/apps_fill_icon.svg';
 import businessIcon from '../../assets/icons/business_center_icon.svg';
-import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import {DashboardListItems} from '../../components/DashboardNavigation/DashboardNavigation';
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
 import {Liferay} from '../../liferay/liferay';
@@ -81,13 +80,6 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 		itemSelected: false,
 		itemTitle: 'Solutions',
 		path: '/solutions',
-	},
-	{
-		itemIcon: membersIcon,
-		itemName: 'members',
-		itemSelected: false,
-		itemTitle: 'Members',
-		path: '/members',
 	},
 	{
 		itemIcon: businessIcon,

@@ -39,7 +39,7 @@ String eventName = (String)request.getAttribute(DLVideoWebKeys.EVENT_NAME);
 			<liferay-portlet:resourceURL id="/document_library_video/get_dl_video_external_shortcut_fields" portletName="<%= DLVideoPortletKeys.DL_VIDEO %>" var="getDLVideoExternalShortcutFieldsURL" />
 
 			<react:component
-				module="js/DLVideoExternalShortcutURLItemSelectorView"
+				module="{DLVideoExternalShortcutURLItemSelectorView} from document-library-video"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
 						"eventName", eventName

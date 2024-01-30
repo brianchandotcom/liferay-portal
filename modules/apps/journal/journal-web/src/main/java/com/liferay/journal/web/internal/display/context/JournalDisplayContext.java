@@ -2344,8 +2344,10 @@ public class JournalDisplayContext {
 		searchContext.setCompanyId(_themeDisplay.getCompanyId());
 		searchContext.setEnd(end);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
-			(isHighlightedDDMStructure() || isNavigationStructure())) {
+		if ((FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
+			 (isHighlightedDDMStructure() || isNavigationStructure())) ||
+			(FeatureFlagManagerUtil.isEnabled("LPS-202534") &&
+			 isNavigationMine())) {
 
 			searchContext.setEntryClassNames(
 				new String[] {JournalArticle.class.getName()});

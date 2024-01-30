@@ -14,7 +14,7 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 <clay:management-toolbar
 	additionalProps="<%= repositoryBrowserTagDisplayContext.getAdditionalProps() %>"
 	managementToolbarDisplayContext="<%= repositoryBrowserTagDisplayContext.getManagementToolbarDisplayContext() %>"
-	propsTransformer="repository_browser/js/RepositoryBrowserManagementToolbarPropsTransformer"
+	propsTransformer="{RepositoryBrowserManagementToolbarPropsTransformer} from document-library-taglib"
 />
 
 <clay:container-fluid>
@@ -78,7 +78,7 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 						<clay:dropdown-actions
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= repositoryBrowserTagDisplayContext.getActionDropdownItems(repositoryEntry) %>"
-							propsTransformer="repository_browser/js/RepositoryBrowserDropdownPropsTransformer"
+							propsTransformer="{RepositoryBrowserDropdownPropsTransformer} from document-library-taglib"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
@@ -124,7 +124,7 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 						<clay:dropdown-actions
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= repositoryBrowserTagDisplayContext.getActionDropdownItems(repositoryEntry) %>"
-							propsTransformer="repository_browser/js/RepositoryBrowserDropdownPropsTransformer"
+							propsTransformer="{RepositoryBrowserDropdownPropsTransformer} from document-library-taglib"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>
@@ -142,11 +142,11 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 <div>
 	<liferay-frontend:component
 		componentId="repositoryBrowserEventHandler"
-		module="repository_browser/js/RepositoryBrowserDropdownDefaultEventHandler"
+		module="{RepositoryBrowserDropdownDefaultEventHandler} from document-library-taglib"
 	/>
 
 	<liferay-frontend:component
 		context="<%= repositoryBrowserTagDisplayContext.getRepositoryBrowserComponentContext() %>"
-		module="repository_browser/js/RepositoryBrowserComponent"
+		module="{RepositoryBrowserComponent} from document-library-taglib"
 	/>
 </div>

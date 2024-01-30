@@ -310,15 +310,14 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 				else {
-					redirect = _portal.escapeRedirect(
-						ParamUtil.getString(actionRequest, "redirect"));
+					redirect = ParamUtil.getString(actionRequest, "redirect");
 
 					if (Validator.isNotNull(redirect)) {
-						if (cmd.equals(Constants.ADD) && (fileEntry != null)) {
-							String portletResource =
-								HttpComponentsUtil.getParameter(
-									redirect, "portletResource", false);
+						String portletResource =
+							HttpComponentsUtil.getParameter(
+								redirect, "portletResource", false);
 
+						if (cmd.equals(Constants.ADD) && (fileEntry != null)) {
 							String namespace = _portal.getPortletNamespace(
 								portletResource);
 
@@ -332,7 +331,15 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 							}
 						}
 
-						actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+						if (Validator.isNotNull(portletResource) ||
+							cmd.equals(Constants.ADD_DYNAMIC)) {
+
+							hideDefaultSuccessMessage(actionRequest);
+						}
+
+						sendRedirect(
+							actionRequest, actionResponse,
+							_portal.escapeRedirect(redirect));
 					}
 				}
 			}

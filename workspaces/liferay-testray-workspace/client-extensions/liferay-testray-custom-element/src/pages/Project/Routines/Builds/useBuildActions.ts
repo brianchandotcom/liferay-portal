@@ -71,7 +71,7 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			},
 			icon: 'archive',
 			name: (build) =>
-				i18n.translate(build.archived ? 'Unarchive' : 'Archive'),
+				i18n.translate(build.archived ? 'unarchive' : 'archive'),
 			permission: 'UPDATE',
 		},
 		{

@@ -5,22 +5,22 @@
 
 import {Locator, expect} from '@playwright/test';
 
-export async function showUI({
+export async function clickAndExpectToBeVisible({
 	autoClick,
 	target,
+	timeout = 100,
 	trigger,
 }: {
-	autoClick?: Boolean;
+	autoClick?: boolean;
 	target: Locator;
+	timeout?: number;
 	trigger: Locator;
 }) {
-	const timeout = 100;
-
 	await expect(async () => {
 		await trigger.click();
 		await expect(target).toBeVisible({timeout});
 
-		if (autoClick && (await target.isVisible({timeout}))) {
+		if (autoClick) {
 			await target.click();
 		}
 	}).toPass();

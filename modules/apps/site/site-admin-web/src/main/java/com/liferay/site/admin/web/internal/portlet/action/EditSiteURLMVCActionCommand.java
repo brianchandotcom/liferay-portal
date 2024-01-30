@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutSetService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -51,25 +49,12 @@ public class EditSiteURLMVCActionCommand
 
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
-		ServiceContext serviceContext = ActionUtil.getServiceContext(
-			actionRequest, liveGroupId);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
 		Group liveGroup = _groupLocalService.getGroup(liveGroupId);
 
 		String friendlyURL = ParamUtil.getString(
 			actionRequest, "groupFriendlyURL", liveGroup.getFriendlyURL());
 
-		boolean redirect = !Objects.equals(
-			friendlyURL, liveGroup.getFriendlyURL());
-
-		liveGroup = _groupService.updateGroup(
-			liveGroupId, liveGroup.getParentGroupId(), liveGroup.getNameMap(),
-			liveGroup.getDescriptionMap(), liveGroup.getType(),
-			liveGroup.isManualMembership(),
-			liveGroup.getMembershipRestriction(), friendlyURL,
-			liveGroup.isInheritContent(), liveGroup.isActive(), serviceContext);
+		_groupService.updateFriendlyURL(liveGroup.getGroupId(), friendlyURL);
 
 		Set<Locale> availableLocales = _language.getAvailableLocales(
 			liveGroup.getGroupId());
@@ -107,7 +92,7 @@ public class EditSiteURLMVCActionCommand
 					availableLocales));
 		}
 
-		if (!redirect) {
+		if (!_isRedirect(actionRequest, liveGroup)) {
 			return;
 		}
 
@@ -144,6 +129,37 @@ public class EditSiteURLMVCActionCommand
 			"site-configuration-site-url");
 
 		return siteAdministrationURL;
+	}
+
+	private boolean _isRedirect(ActionRequest actionRequest, Group liveGroup) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String friendlyURL = ParamUtil.getString(
+			actionRequest, "groupFriendlyURL", liveGroup.getFriendlyURL());
+
+		if ((themeDisplay.getScopeGroupId() == liveGroup.getGroupId()) &&
+			!Objects.equals(friendlyURL, liveGroup.getFriendlyURL())) {
+
+			return true;
+		}
+
+		if (liveGroup.hasStagingGroup()) {
+			Group stagingGroup = liveGroup.getStagingGroup();
+
+			String stagingFriendlyURL = ParamUtil.getString(
+				actionRequest, "stagingFriendlyURL",
+				stagingGroup.getFriendlyURL());
+
+			if ((themeDisplay.getScopeGroupId() == stagingGroup.getGroupId()) &&
+				!Objects.equals(
+					stagingFriendlyURL, stagingGroup.getFriendlyURL())) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Reference

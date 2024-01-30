@@ -25,15 +25,6 @@
 			<div>
 				<div class="cadmin row">
 					<div class="col d-flex">
-						<c:choose>
-							<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-196768") %>'>
-								<div class="c-mr-2 d-inline-flex form-group">
-									<button class="btn btn-secondary btn-sm form-control-select">
-										<%= journalDisplayContext.getSearchResultsLabel() %>
-									</button>
-								</div>
-							</c:when>
-						</c:choose>
 
 						<%
 						String searchLocationLabel = journalDisplayContext.getSearchLocationLabel();
@@ -59,7 +50,7 @@
 					</div>
 				</div>
 
-				<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-196768") || (FeatureFlagManagerUtil.isEnabled("LPS-196768") && journalDisplayContext.isSearch()) %>'>
+				<c:if test="<%= journalDisplayContext.isSearch() %>">
 					<react:component
 						module="js/SearchOptions"
 						props="<%= journalDisplayContext.getSearchProps() %>"

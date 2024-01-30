@@ -53,7 +53,6 @@ type Props = {
 	searchLocation: Key;
 	searchLocationOptions: Option[];
 	searchResults: Key;
-	searchResultsOptions: Option[];
 	searchURL: string;
 };
 
@@ -65,7 +64,6 @@ const SearchOptions = ({
 	searchLocation: initialLocation,
 	searchLocationOptions,
 	searchResults: initialResults,
-	searchResultsOptions,
 	searchURL,
 }: Props) => {
 	const onChange = ({
@@ -98,31 +96,6 @@ const SearchOptions = ({
 	return (
 		<ClayLayout.Row className="cadmin">
 			<ClayLayout.Col>
-				{!Liferay.FeatureFlags['LPS-196768'] && (
-					<ClayForm.Group className="c-mr-2 d-inline-flex">
-						<Picker
-							aria-label={Liferay.Language.get('results')}
-							as={Trigger}
-							id={`${namespace}searchResults`}
-							onSelectionChange={(key: Key) =>
-								onChange({results: key})
-							}
-							selectedKey={initialResults}
-						>
-							<DropDown.Group
-								header={Liferay.Language.get('results')}
-								items={searchResultsOptions}
-							>
-								{(item) => (
-									<Option key={item.value}>
-										{item.label}
-									</Option>
-								)}
-							</DropDown.Group>
-						</Picker>
-					</ClayForm.Group>
-				)}
-
 				{searchLocationOptions ? (
 					<ClayForm.Group className="c-mr-2 d-inline-flex">
 						<Picker

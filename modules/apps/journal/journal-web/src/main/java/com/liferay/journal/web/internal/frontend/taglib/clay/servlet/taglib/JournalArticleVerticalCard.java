@@ -11,12 +11,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.web.internal.display.context.JournalDisplayContext;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItemsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.TrashHelper;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,7 +49,7 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 		BaseModel<?> baseModel, RenderRequest renderRequest,
 		RenderResponse renderResponse, RowChecker rowChecker,
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
-		TrashHelper trashHelper, boolean navigationMine) {
+		TrashHelper trashHelper, JournalDisplayContext journalDisplayContext) {
 
 		super(baseModel, renderRequest, rowChecker);
 
@@ -59,7 +57,7 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
 		_trashHelper = trashHelper;
-		_navigationMine = navigationMine;
+		_journalDisplayContext = journalDisplayContext;
 
 		_article = (JournalArticle)baseModel;
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
@@ -201,32 +199,7 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-202534") && _navigationMine) {
-			Date createDate = _article.getCreateDate();
-
-			String dateDescription = LanguageUtil.getTimeDescription(
-				_httpServletRequest,
-				System.currentTimeMillis() - createDate.getTime(), true);
-
-			return LanguageUtil.format(
-				_httpServletRequest, "created-x-ago-by-x",
-				new String[] {
-					dateDescription, HtmlUtil.escape(_article.getUserName())
-				});
-		}
-
-		Date modifiedDate = _article.getModifiedDate();
-
-		String modifiedDateDescription = LanguageUtil.getTimeDescription(
-			_httpServletRequest,
-			System.currentTimeMillis() - modifiedDate.getTime(), true);
-
-		return LanguageUtil.format(
-			_httpServletRequest, "modified-x-ago-by-x",
-			new String[] {
-				modifiedDateDescription,
-				HtmlUtil.escape(_article.getStatusByUserName())
-			});
+		return _journalDisplayContext.getArticleSubtitle(_article);
 	}
 
 	@Override
@@ -250,7 +223,7 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private final HttpServletRequest _httpServletRequest;
-	private final boolean _navigationMine;
+	private final JournalDisplayContext _journalDisplayContext;
 	private final RenderResponse _renderResponse;
 	private final TrashHelper _trashHelper;
 

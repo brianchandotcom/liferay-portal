@@ -12,16 +12,14 @@ import ClayToolbar from '@clayui/toolbar';
 import moment from 'moment';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
-import {showError} from '../../utils/util';
-import FolderStructureDesigner from '../template-diagram/FolderStructureDesigner';
-import TemplateItemCreateFolder from './controls/template-item-create-folder/TemplateItemCreateFolder';
-import NewTemplateItem from './controls/template-item-create/NewTemplateItem';
-
-import './template-list.css';
 import {
 	deleteFolderTemplateInformation,
 	getAvailableTemplatesPage,
 } from '../../services/TemplateListService';
+import {showError} from '../../utils/util';
+import Diagram from '../template-diagram/Diagram';
+import TemplateItemCreateFolder from './controls/template-item-create-folder/TemplateItemCreateFolder';
+import NewTemplateItem from './controls/template-item-create/NewTemplateItem';
 
 const DELTAS = [{label: 5}, {label: 10}, {label: 20}, {label: 40}];
 
@@ -106,7 +104,7 @@ const TemplateList = () => {
 		try {
 			dispatchModal({
 				payload: {
-					body: <TemplateItemCreateFolder templateID={template.id} />,
+					body: <TemplateItemCreateFolder templateId={template.id} />,
 					center: true,
 					header: 'Create Folder Structure',
 					size: 'lg',
@@ -321,9 +319,7 @@ const TemplateList = () => {
 				<ClayModal observer={observer} size="full-screen">
 					<ClayModal.Header>Design Template</ClayModal.Header>
 					<ClayModal.Body className="p-0">
-						<FolderStructureDesigner
-							templateId={selectedTemplate.id}
-						/>
+						<Diagram templateId={selectedTemplate.id} />
 					</ClayModal.Body>
 				</ClayModal>
 			)}

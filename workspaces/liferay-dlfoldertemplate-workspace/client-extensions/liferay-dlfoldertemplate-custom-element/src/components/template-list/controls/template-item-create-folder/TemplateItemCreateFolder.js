@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {Flex, Form, TreeSelect} from 'antd';
+import {Form, TreeSelect} from 'antd';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {
@@ -175,22 +175,17 @@ const TemplateItemCreateFolder = ({templateID}) => {
 				)}
 			</Form.Item>
 			<Form.Item>
-				<Flex gap={6}>
-					{!isSubmitting ? (
-						<ClayButton
-							onClick={() => {
-								handleSubmit();
-							}}
-						>
-							Submit
-						</ClayButton>
-					) : (
-						<ClayLoadingIndicator
-							displayType="secondary"
-							size="sm"
-						/>
-					)}
-				</Flex>
+				{!isSubmitting ? (
+					<ClayButton
+						onClick={() => {
+							handleSubmit();
+						}}
+					>
+						Submit
+					</ClayButton>
+				) : (
+					<ClayLoadingIndicator displayType="secondary" size="sm" />
+				)}
 			</Form.Item>
 		</Form>
 	);

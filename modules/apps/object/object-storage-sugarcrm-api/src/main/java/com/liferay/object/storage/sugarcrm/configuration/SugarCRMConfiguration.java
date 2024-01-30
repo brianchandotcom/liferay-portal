@@ -21,11 +21,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SugarCRMConfiguration {
 
-	@Meta.AD(name = "base-url", required = false)
-	public String baseURL();
-
 	@Meta.AD(name = "access-token-url", required = false)
 	public String accessTokenURL();
+
+	@Meta.AD(name = "base-url", required = false)
+	public String baseURL();
 
 	@Meta.AD(name = "client-id", required = false)
 	public String clientId();
@@ -33,10 +33,10 @@ public interface SugarCRMConfiguration {
 	@Meta.AD(name = "grant-type", required = false)
 	public String grantType();
 
-	@Meta.AD(name = "username", required = false)
-	public String username();
-
 	@Meta.AD(name = "password", required = false, type = Meta.Type.Password)
 	public String password();
+
+	@Meta.AD(name = "username", required = false)
+	public String username();
 
 }

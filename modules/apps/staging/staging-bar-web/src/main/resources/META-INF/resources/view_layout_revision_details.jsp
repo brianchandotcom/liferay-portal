@@ -71,7 +71,7 @@ else {
 							"publishURL", publishURL
 						).build()
 					%>'
-					module="js/PublishProcess"
+					module="{PublishProcess} from staging-bar-web"
 				/>
 
 				<c:choose>
@@ -190,7 +190,7 @@ else {
 				dropdownItems="<%= stagingBarDisplayContext.getDropdownItems(layout, layoutRevision, hasWorkflowTask, layoutSetBranch) %>"
 				icon="ellipsis-v"
 				monospaced="<%= true %>"
-				propsTransformer="js/StagingVersionPropsTransformer"
+				propsTransformer="{StagingVersionPropsTransformer} from staging-bar-web"
 				small="<%= true %>"
 			/>
 		</div>

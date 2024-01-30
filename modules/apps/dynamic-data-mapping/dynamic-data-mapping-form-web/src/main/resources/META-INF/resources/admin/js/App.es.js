@@ -9,18 +9,14 @@ import {
 	ConfigProvider,
 	FormProvider,
 	KeyboardDNDContextProvider,
-	parseProps,
-} from 'data-engine-js-components-web';
-import {
 	dragAndDropReducer,
 	fieldEditableReducer,
 	languageReducer,
-	pagesStructureReducer,
-} from 'data-engine-js-components-web/js/core/reducers/index.es';
-import {
 	objectFieldsReducer,
 	pageReducer,
-} from 'data-engine-js-components-web/js/custom/form/reducers/index.es';
+	pagesStructureReducer,
+	parseProps,
+} from 'data-engine-js-components-web';
 import React, {Suspense} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';

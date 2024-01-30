@@ -11,17 +11,15 @@ import {
 	EVENT_TYPES as CORE_EVENT_TYPES,
 	FormProvider,
 	KeyboardDNDContextProvider,
+	dragAndDropReducer,
+	fieldEditableReducer,
+	languageReducer,
+	pageReducer,
+	pagesStructureReducer,
 	useConfig,
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
-import {
-	dragAndDropReducer,
-	fieldEditableReducer,
-	languageReducer,
-	pagesStructureReducer,
-} from 'data-engine-js-components-web/js/core/reducers/index.es';
-import {pageReducer} from 'data-engine-js-components-web/js/custom/form/reducers/index.es';
 import {sub} from 'frontend-js-web';
 import {default as React, useCallback, useState} from 'react';
 

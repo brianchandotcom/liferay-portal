@@ -4,28 +4,18 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {Suspense, lazy, useContext} from 'react';
+import React, {Suspense, useContext} from 'react';
 
 import toDataArray, {sumTotalEntries, toArray} from '../../utils/data';
 import fieldTypes from '../../utils/fieldTypes';
+import MultiBarChart from '../chart/bar/MultiBarChart';
+import SimpleBarChart from '../chart/bar/SimpleBarChart';
+import PieChart from '../chart/pie/PieChart';
 import EmptyState from '../empty-state/EmptyState';
 import List from '../list/List';
 import {SidebarContext} from '../sidebar/SidebarContext';
 import Table from '../table/Table';
 import Card from './Card';
-
-const lazyLoader = ({dataEngineModule, path}) => {
-	return lazy(
-		() =>
-			new Promise((resolve, reject) => {
-				Liferay.Loader.require(
-					[`${dataEngineModule}${path}`],
-					(Component) => resolve(Component),
-					(error) => reject(error)
-				);
-			})
-	);
-};
 
 const chartFactory = (
 	{
@@ -40,21 +30,6 @@ const chartFactory = (
 	dataEngineModule
 ) => {
 	const {options, type} = field;
-
-	const MultiBarChart = lazyLoader({
-		dataEngineModule,
-		path: '/js/custom/form-report/components/chart/bar/MultiBarChart',
-	});
-
-	const PieChart = lazyLoader({
-		dataEngineModule,
-		path: '/js/custom/form-report/components/chart/pie/PieChart',
-	});
-
-	const SimpleBarChart = lazyLoader({
-		dataEngineModule,
-		path: '/js/custom/form-report/components/chart/bar/SimpleBarChart',
-	});
 
 	switch (type) {
 		case 'address':

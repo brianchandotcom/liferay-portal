@@ -37,7 +37,7 @@
 			"<rootDir>/test/js/[^/]+\\.js"
 		]
 	},
-	"main": "js/index.es.js",
+	"main": "js/index.js",
 	"name": "data-engine-js-components-web",
 	"private": true,
 	"scripts": {

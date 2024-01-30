@@ -447,6 +447,7 @@ module.exports = {
 			'@liferay/map-openstreetmap': [],
 			'@liferay/portal-workflow-instance-tracker-web': [],
 			'asset-taglib': [],
+			'data-engine-js-components-web': [],
 			'frontend-js-components-web': [],
 			'frontend-js-web': [],
 			'frontend-taglib-clay': [

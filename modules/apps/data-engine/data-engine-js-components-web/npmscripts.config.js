@@ -5,8 +5,6 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			ignore: ['**/__tests__/*.js'],
-		},
+		main: 'src/main/resources/META-INF/resources/js/index.js',
 	},
 };

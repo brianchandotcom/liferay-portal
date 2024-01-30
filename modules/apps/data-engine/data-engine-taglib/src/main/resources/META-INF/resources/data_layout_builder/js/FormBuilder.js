@@ -9,11 +9,11 @@ import classNames from 'classnames';
 import {
 	EVENT_TYPES as CORE_EVENT_TYPES,
 	Pages,
+	fieldDelete,
 	useConfig,
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
-import fieldDelete from 'data-engine-js-components-web/js/core/thunks/fieldDelete.es';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import MultiPanelSidebar from './components/sidebar/MultiPanelSidebar.es';

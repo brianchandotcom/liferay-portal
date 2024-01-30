@@ -40,7 +40,6 @@ export {FieldFeedback} from './core/components/FieldFeedback';
 export * as DefaultVariant from './core/components/PageRenderer/DefaultVariant.es';
 export {Layout} from './core/components/PageRenderer/Layout.es';
 export {default as Pages} from './core/components/Pages.es';
-export * from './core/config/index.es';
 export {ConfigProvider, useConfig} from './core/hooks/useConfig.es';
 export {FormProvider, useForm, useFormState} from './core/hooks/useForm.es';
 export {PageProvider, usePage} from './core/hooks/usePage.es';
@@ -72,3 +71,24 @@ export {
 	useText as useKeyboardDNDText,
 	useSetSourceItem as useSetKeyboardDNDSourceItem,
 } from './core/components/KeyboardDNDContext';
+
+export {
+	dataLayoutReducer,
+	dragAndDropReducer,
+	fieldEditableReducer,
+	languageReducer,
+	pagesStructureReducer,
+	activePageReducer,
+} from './core/reducers/index.es';
+export {
+	pageReducer,
+	objectFieldsReducer,
+} from './custom/form/reducers/index.es';
+
+export {default as fieldDelete} from './core/thunks/fieldDelete.es';
+
+export {
+	INITIAL_CONFIG_STATE,
+	INITIAL_PAGES,
+	INITIAL_STATE,
+} from './core/config/index.es';

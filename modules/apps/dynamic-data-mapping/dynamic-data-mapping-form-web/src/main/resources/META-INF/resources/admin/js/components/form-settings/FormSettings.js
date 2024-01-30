@@ -7,12 +7,10 @@ import {
 	ConfigProvider,
 	FormProvider,
 	Pages,
-	parseProps,
-} from 'data-engine-js-components-web';
-import {
 	activePageReducer,
 	pagesStructureReducer,
-} from 'data-engine-js-components-web/js/core/reducers/index.es';
+	parseProps,
+} from 'data-engine-js-components-web';
 import React, {useRef} from 'react';
 
 import FormSettingsApi from './FormSettingsApi';

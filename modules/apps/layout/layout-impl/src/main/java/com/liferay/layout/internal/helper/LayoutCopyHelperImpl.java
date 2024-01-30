@@ -433,8 +433,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				continue;
 			}
 
-			Group targetGroup = targetLayout.getGroup();
-
 			Set<Long> roleIds = new HashSet<>();
 
 			for (Role role :
@@ -443,11 +441,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 				String roleName = role.getName();
 
-				if (roleName.equals(RoleConstants.ADMINISTRATOR) ||
-					(!targetGroup.isLayoutSetPrototype() &&
-					 targetLayout.isPrivateLayout() &&
-					 roleName.equals(RoleConstants.GUEST))) {
-
+				if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
 					continue;
 				}
 

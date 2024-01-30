@@ -1,0 +1,14 @@
+[
+	{
+		"actions": [
+			"setVisible('Text1', true)"
+		],
+		"condition": "equals(getOptionLabel('CheckboxMultiple', getValue('CheckboxMultiple')), getOptionLabel('Select', getValue('Select')))"
+	},
+	{
+		"actions": [
+			"setVisible('Text2', true)"
+		],
+		"condition": "equals(getOptionLabel('Select', getValue('Select')), getOptionLabel('Select', 'option2'))"
+	}
+]

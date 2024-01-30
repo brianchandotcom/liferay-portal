@@ -10,6 +10,7 @@ import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import PublishModal from './modals/PublishModal';
+import removeAlert from './removeAlert';
 import showAlert from './showAlert';
 
 export default function SaveButtons({
@@ -49,12 +50,6 @@ export default function SaveButtons({
 			}
 		}
 		else {
-			document
-				.querySelectorAll('.journal-alert-container')
-				.forEach((alertElement) => {
-					alertElement.parentElement.removeChild(alertElement);
-				});
-
 			showAlert(
 				sub(
 					Liferay.Language.get(
@@ -67,11 +62,7 @@ export default function SaveButtons({
 	};
 
 	const handleButtonClick = (action) => {
-		document
-			.querySelectorAll('.journal-alert-container')
-			.forEach((alertElement) => {
-				alertElement?.parentElement?.removeChild(alertElement);
-			});
+		removeAlert();
 
 		const workflowActionInput = document.getElementById(
 			`${portletNamespace}workflowAction`
@@ -187,16 +178,6 @@ export default function SaveButtons({
 								});
 							}
 							else {
-								document
-									.querySelectorAll(
-										'.journal-alert-container'
-									)
-									.forEach((alertElement) => {
-										alertElement.parentElement.removeChild(
-											alertElement
-										);
-									});
-
 								showAlert(
 									sub(
 										Liferay.Language.get(

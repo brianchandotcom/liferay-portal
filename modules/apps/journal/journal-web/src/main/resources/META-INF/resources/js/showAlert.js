@@ -5,7 +5,11 @@
 
 import {openToast} from 'frontend-js-web';
 
+import removeAlert from './removeAlert';
+
 export default function showAlert(message) {
+	removeAlert();
+
 	const articleContentWrapper = document.querySelector(
 		'.article-content-content'
 	);

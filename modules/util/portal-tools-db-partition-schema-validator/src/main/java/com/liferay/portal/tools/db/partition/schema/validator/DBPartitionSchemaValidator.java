@@ -51,17 +51,21 @@ public class DBPartitionSchemaValidator {
 		_dbType = commandLine.getOptionValue("db-type");
 		_dbType = _dbType.toLowerCase();
 
-		String jdbcURL = null;
+		String jdbcURL;
 
 		if (_dbType.equals("mysql")) {
 			jdbcURL = _MYSQL_DEFAULT_JDBC_URL;
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		}
-		else {
+		else if (_dbType.equals("postgresql")) {
 			jdbcURL = _POSTGRESQL_DEFAULT_JDBC_URL;
 
 			Class.forName("org.postgresql.Driver");
+		}
+		else {
+			throw new UnsupportedOperationException(
+				"Invalid database type " + _dbType);
 		}
 
 		_dbName = commandLine.getOptionValue("db-name");

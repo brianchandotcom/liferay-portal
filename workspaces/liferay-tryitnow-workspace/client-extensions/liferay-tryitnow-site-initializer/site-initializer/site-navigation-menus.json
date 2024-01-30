@@ -42,6 +42,7 @@
 						"type": "layout"
 					}
 				],
+				"name": "Learning",
 				"name_i18n": {
 					"en_US": "Learning"
 				},
@@ -49,6 +50,7 @@
 				"type": "node"
 			}
 		],
+		"name": "Main Menu",
 		"name_i18n": {
 			"en_US": "Main Menu"
 		},
@@ -74,6 +76,7 @@
 				"type": "layout"
 			}
 		],
+		"name": "Footer Clarity Menu",
 		"name_i18n": {
 			"en_US": "Footer Clarity Menu"
 		},
@@ -88,6 +91,7 @@
 				"type": "layout"
 			},
 			{
+				"name": "Documentation",
 				"name_i18n": {
 					"en_US": "Documentation"
 				},
@@ -106,6 +110,7 @@
 				"type": "layout"
 			}
 		],
+		"name": "Footer Trial Menu",
 		"name_i18n": {
 			"en_US": "Footer Trial Menu"
 		},
@@ -115,6 +120,7 @@
 	{
 		"menuItems": [
 			{
+				"name": "About Liferay",
 				"name_i18n": {
 					"en_US": "About Liferay"
 				},
@@ -123,6 +129,7 @@
 				"useNewTab": "true"
 			},
 			{
+				"name": "Liferay Experience Cloud",
 				"name_i18n": {
 					"en_US": "Liferay Experience Cloud"
 				},
@@ -131,6 +138,7 @@
 				"useNewTab": "true"
 			},
 			{
+				"name": "Liferay.com",
 				"name_i18n": {
 					"en_US": "Liferay.com"
 				},
@@ -139,6 +147,7 @@
 				"useNewTab": "true"
 			}
 		],
+		"name": "Footer Liferay Menu",
 		"name_i18n": {
 			"en_US": "Footer Liferay Menu"
 		},

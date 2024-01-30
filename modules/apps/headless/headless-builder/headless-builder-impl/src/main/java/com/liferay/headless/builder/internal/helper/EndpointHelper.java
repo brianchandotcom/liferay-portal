@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -154,6 +156,26 @@ public class EndpointHelper {
 			responseSchema);
 	}
 
+	private Set<String> _getChildPropertiesERCSet(
+		Set<APIApplication.Property> orphanPropertySet,
+		String propertyExternalReferenceCode) {
+
+		Set<String> propertyERCSet = new HashSet<>();
+
+		for (APIApplication.Property orphanProperty : orphanPropertySet) {
+			if (Objects.equals(
+					propertyExternalReferenceCode,
+					orphanProperty.getRelatedPropertyERC())) {
+
+				propertyERCSet.add(orphanProperty.getExternalReferenceCode());
+
+				orphanPropertySet.remove(orphanProperty);
+			}
+		}
+
+		return propertyERCSet;
+	}
+
 	private Map<String, Object> _getObjectEntryProperties(
 		ObjectEntry objectEntry) {
 
@@ -225,6 +247,15 @@ public class EndpointHelper {
 			return null;
 		}
 
+		Set<APIApplication.Property> orphanPropertiesSet =
+			new CopyOnWriteArraySet<>();
+
+		Map<String, Object> registeredObjectEntryPropertiesMap =
+			new HashMap<>();
+
+		Map<String, APIApplication.Property> registeredPropertiesMap =
+			new HashMap<>();
+
 		Map<String, Object> responseEntityMap = new HashMap<>();
 
 		Map<String, Object> objectEntryProperties = _getObjectEntryProperties(
@@ -235,20 +266,130 @@ public class EndpointHelper {
 				property.getObjectRelationshipNames();
 
 			if (objectRelationshipNames.isEmpty()) {
-				responseEntityMap.put(
-					property.getName(),
+				registeredObjectEntryPropertiesMap.put(
+					property.getExternalReferenceCode(),
 					objectEntryProperties.get(property.getSourceFieldName()));
-
-				continue;
+			}
+			else {
+				registeredObjectEntryPropertiesMap.put(
+					property.getExternalReferenceCode(),
+					_getRelatedObjectValue(
+						objectEntry, property, objectRelationshipNames));
 			}
 
-			responseEntityMap.put(
-				property.getName(),
-				_getRelatedObjectValue(
-					objectEntry, property, objectRelationshipNames));
+			Set<String> childPropertiesERCSet = _getChildPropertiesERCSet(
+				orphanPropertiesSet, property.getExternalReferenceCode());
+
+			if (!childPropertiesERCSet.isEmpty() &&
+				Objects.equals(
+					APIApplication.Property.PropertyType.SINGLE_CONTAINER,
+					property.getPropertyType())) {
+
+				_updateObjectEntryProperties(
+					childPropertiesERCSet, property.getExternalReferenceCode(),
+					registeredObjectEntryPropertiesMap,
+					registeredPropertiesMap);
+			}
+
+			String relatedPropertyERC = property.getRelatedPropertyERC();
+
+			if (Validator.isNull(relatedPropertyERC)) {
+				responseEntityMap.put(
+					property.getName(),
+					registeredObjectEntryPropertiesMap.get(
+						property.getExternalReferenceCode()));
+			}
+			else {
+				if (registeredObjectEntryPropertiesMap.containsKey(
+						property.getRelatedPropertyERC())) {
+
+					_updateRelatedObjectEntryProperties(
+						property, relatedPropertyERC,
+						registeredObjectEntryPropertiesMap,
+						registeredPropertiesMap, responseEntityMap);
+				}
+				else {
+					orphanPropertiesSet.add(property);
+				}
+			}
+
+			registeredPropertiesMap.put(
+				property.getExternalReferenceCode(), property);
 		}
 
 		return responseEntityMap;
+	}
+
+	private void _updateObjectEntryProperties(
+		Set<String> childPropertyERCSet, String propertyExternalReferenceCode,
+		Map<String, Object> registeredObjectEntryPropertiesMap,
+		Map<String, APIApplication.Property> registeredPropertyMap) {
+
+		Map<String, Object> objectEntryProperty =
+			(Map<String, Object>)registeredObjectEntryPropertiesMap.get(
+				propertyExternalReferenceCode);
+
+		if (MapUtil.isEmpty(objectEntryProperty)) {
+			objectEntryProperty = new HashMap<>();
+		}
+
+		for (String childPropertyERC : childPropertyERCSet) {
+			Object childObjectEntryProperty =
+				registeredObjectEntryPropertiesMap.get(childPropertyERC);
+
+			APIApplication.Property property = registeredPropertyMap.get(
+				childPropertyERC);
+
+			objectEntryProperty.put(
+				property.getName(), childObjectEntryProperty);
+		}
+
+		registeredObjectEntryPropertiesMap.put(
+			propertyExternalReferenceCode, objectEntryProperty);
+	}
+
+	private void _updateRelatedObjectEntryProperties(
+		APIApplication.Property childProperty,
+		String propertyExternalReferenceCode,
+		Map<String, Object> registeredObjectEntryPropertiesMap,
+		Map<String, APIApplication.Property> registeredPropertyMap,
+		Map<String, Object> responseEntityMap) {
+
+		Map<String, Object> objectEntryPropertyValue =
+			(Map<String, Object>)registeredObjectEntryPropertiesMap.get(
+				propertyExternalReferenceCode);
+
+		if (MapUtil.isEmpty(objectEntryPropertyValue)) {
+			objectEntryPropertyValue = new HashMap<>();
+		}
+
+		APIApplication.Property property = registeredPropertyMap.get(
+			propertyExternalReferenceCode);
+
+		objectEntryPropertyValue.put(
+			childProperty.getName(),
+			registeredObjectEntryPropertiesMap.get(
+				childProperty.getExternalReferenceCode()));
+
+		registeredObjectEntryPropertiesMap.put(
+			property.getExternalReferenceCode(), objectEntryPropertyValue);
+
+		String relatedPropertyERC = property.getRelatedPropertyERC();
+
+		if (Validator.isNotNull(relatedPropertyERC)) {
+			if (registeredPropertyMap.containsKey(relatedPropertyERC)) {
+				_updateRelatedObjectEntryProperties(
+					property, relatedPropertyERC,
+					registeredObjectEntryPropertiesMap, registeredPropertyMap,
+					responseEntityMap);
+			}
+		}
+		else {
+			responseEntityMap.put(
+				property.getName(),
+				registeredObjectEntryPropertiesMap.get(
+					property.getExternalReferenceCode()));
+		}
 	}
 
 	@Reference

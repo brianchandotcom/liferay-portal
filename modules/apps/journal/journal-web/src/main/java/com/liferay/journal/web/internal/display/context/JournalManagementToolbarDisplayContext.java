@@ -478,9 +478,14 @@ public class JournalManagementToolbarDisplayContext
 					).buildString());
 
 				labelItem.setCloseable(true);
+
+				String statusLabel = LanguageUtil.get(
+					httpServletRequest,
+					WorkflowConstants.getStatusLabel(status));
+
 				labelItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "status") + ": " +
-						_getStatusLabel(status));
+						statusLabel);
 			}
 		).add(
 			_journalDisplayContext::isTypeVersions,
@@ -757,7 +762,10 @@ public class JournalManagementToolbarDisplayContext
 							dropdownItem.setHref(
 								getPortletURL(), "status",
 								String.valueOf(status));
-							dropdownItem.setLabel(_getStatusLabel(status));
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									httpServletRequest,
+									WorkflowConstants.getStatusLabel(status)));
 						});
 				}
 			}
@@ -1154,25 +1162,6 @@ public class JournalManagementToolbarDisplayContext
 		statuses.add(WorkflowConstants.STATUS_SCHEDULED);
 
 		return statuses;
-	}
-
-	private String _getStatusLabel(int status) {
-		String label = null;
-
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			label = "approved";
-		}
-		else if (status == WorkflowConstants.STATUS_EXPIRED) {
-			label = "expired";
-		}
-		else if (status == WorkflowConstants.STATUS_SCHEDULED) {
-			label = "scheduled";
-		}
-		else {
-			label = WorkflowConstants.getStatusLabel(status);
-		}
-
-		return LanguageUtil.get(httpServletRequest, label);
 	}
 
 	private boolean _isShowAddButton() throws PortalException {

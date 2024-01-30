@@ -40,7 +40,7 @@ String previewURL = DLURLHelperUtil.getPreviewURL(fileVersion.getFileEntry(), fi
 	<c:otherwise>
 		<div id="<portlet:namespace /><%= randomNamespace %>previewImage">
 			<react:component
-				module="preview/js/ImagePreviewer.es"
+				module="{ImagePreviewer} from document-library-preview-image"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
 						"alt", fileVersion.getDescription()

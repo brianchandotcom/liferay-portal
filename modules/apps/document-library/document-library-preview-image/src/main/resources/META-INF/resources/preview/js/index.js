@@ -235,4 +235,4 @@ ImagePreviewer.propTypes = {
 	imageURL: PropTypes.string,
 };
 
-export default ImagePreviewer;
+export {ImagePreviewer};

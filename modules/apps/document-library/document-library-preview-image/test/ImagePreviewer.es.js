@@ -6,7 +6,7 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import ImagePreviewer from '../src/main/resources/META-INF/resources/preview/js/ImagePreviewer.es';
+import {ImagePreviewer} from '../src/main/resources/META-INF/resources/preview/js/index';
 
 describe('document-library-preview-image', () => {
 	afterEach(cleanup);

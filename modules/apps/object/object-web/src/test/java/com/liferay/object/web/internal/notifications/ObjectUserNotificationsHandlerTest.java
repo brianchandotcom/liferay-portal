@@ -87,10 +87,10 @@ public class ObjectUserNotificationsHandlerTest {
 			"{\"externalReferenceCode\": \"externalReferenceCode\"}"
 		);
 
-		try (MockedStatic<PortletURLBuilder> portletURLBuilderMockedStatic =
-				Mockito.mockStatic(PortletURLBuilder.class);
-			MockedStatic<PortalUtil> portalUtilMockedStatic =
-				Mockito.mockStatic(PortalUtil.class)) {
+		try (MockedStatic<PortalUtil> portalUtilMockedStatic =
+				Mockito.mockStatic(PortalUtil.class);
+			MockedStatic<PortletURLBuilder> portletURLBuilderMockedStatic =
+				Mockito.mockStatic(PortletURLBuilder.class)) {
 
 			MockLiferayPortletURL mockLiferayPortletURL =
 				new MockLiferayPortletURL();

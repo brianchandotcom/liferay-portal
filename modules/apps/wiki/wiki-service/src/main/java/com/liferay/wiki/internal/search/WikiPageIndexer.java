@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -26,12 +27,15 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -148,9 +152,28 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 			SearchContext searchContext)
 		throws Exception {
 
+		BooleanQuery keywordsBooleanQuery = new BooleanQueryImpl();
+
 		addSearchLocalizedTerm(
-			searchQuery, searchContext, Field.CONTENT, false);
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+			keywordsBooleanQuery, searchContext, Field.CONTENT, false);
+		addSearchLocalizedTerm(
+			keywordsBooleanQuery, searchContext, Field.TITLE, false);
+
+		try {
+			BooleanQuery modelBooleanQuery = new BooleanQueryImpl();
+
+			modelBooleanQuery.add(
+				new TermQueryImpl("entryClassName", CLASS_NAME),
+				BooleanClauseOccur.MUST);
+
+			modelBooleanQuery.add(
+				keywordsBooleanQuery, BooleanClauseOccur.SHOULD);
+
+			searchQuery.add(modelBooleanQuery, BooleanClauseOccur.SHOULD);
+		}
+		catch (ParseException parseException) {
+			throw new SystemException(parseException);
+		}
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

@@ -201,7 +201,7 @@ public class AssetTagIndexerIndexedFieldsTest {
 			"assetCount_Number_sortable",
 			String.valueOf(assetTag.getAssetCount())
 		).put(
-			"name_String_sortable", assetTag.getName()
+			"name_String_sortable", StringUtil.toLowerCase(assetTag.getName())
 		).put(
 			"subscribed", "false"
 		).build();

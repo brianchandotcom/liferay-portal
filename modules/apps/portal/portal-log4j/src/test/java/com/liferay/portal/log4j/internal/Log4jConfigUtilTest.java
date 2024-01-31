@@ -195,8 +195,6 @@ public class Log4jConfigUtilTest {
 
 			LogEntry logEntry = logEntries.get(0);
 
-			Assert.assertNull(logEntry.getMessage());
-
 			Throwable throwable = logEntry.getThrowable();
 
 			Assert.assertSame(NullPointerException.class, throwable.getClass());

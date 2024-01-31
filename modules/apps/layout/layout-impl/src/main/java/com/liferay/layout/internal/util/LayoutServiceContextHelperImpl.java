@@ -454,7 +454,7 @@ public class LayoutServiceContextHelperImpl
 
 		@Override
 		public void setAttribute(String name, Object value) {
-			if ((name != null) && (value != null)) {
+			if (name != null) {
 				_attributes.put(name, value);
 			}
 		}

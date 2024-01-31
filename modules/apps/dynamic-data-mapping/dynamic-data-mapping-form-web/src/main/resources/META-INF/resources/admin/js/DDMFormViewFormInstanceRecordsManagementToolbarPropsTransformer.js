@@ -10,7 +10,11 @@ import {
 } from 'frontend-js-web';
 
 export default function propsTransformer({
-	additionalProps: {ddmFormInstanceRecordIds, deleteFormInstanceRecordURL},
+	additionalProps: {
+		allSelectedLocalizedMessage,
+		ddmFormInstanceRecordIds,
+		deleteFormInstanceRecordURL,
+	},
 	portletNamespace,
 	...otherProps
 }) {
@@ -40,7 +44,7 @@ export default function propsTransformer({
 								if (
 									managementBarSelection &&
 									managementBarSelection.includes(
-										'All Selected'
+										allSelectedLocalizedMessage
 									)
 								) {
 									postForm(form, {

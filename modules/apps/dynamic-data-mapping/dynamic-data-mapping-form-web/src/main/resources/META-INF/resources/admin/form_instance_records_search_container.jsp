@@ -22,6 +22,8 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 	actionDropdownItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getActionItemsDropdownItems() %>"
 	additionalProps='<%=
 		HashMapBuilder.<String, Object>put(
+			"allSelectedLocalizedMessage", ddmFormViewFormInstanceRecordsDisplayContext.getLocalizedMessage(themeDisplay.getLocale(), "all-selected")
+		).put(
 			"ddmFormInstanceRecordIds", ddmFormViewFormInstanceRecordsDisplayContext.getDDMFormInstanceRecordIds()
 		).put(
 			"deleteFormInstanceRecordURL", deleteFormInstanceRecordURL.toString()

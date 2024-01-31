@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Tools DB Partition Virtual Instance Migration Common
+Bundle-SymbolicName: com.liferay.portal.tools.db.partition.virtual.instance.migration.common
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.tools.db.partition.virtual.instance.migration.common
+-includeresource: @com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/version/Version.class

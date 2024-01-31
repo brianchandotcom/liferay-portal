@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,6 +10,7 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -21,7 +22,9 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
@@ -36,8 +39,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -101,11 +106,42 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 
 	@Test
 	public void testGetFriendlyURL() throws PortalException {
+		_assertGetFriendlyURL(
+			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
+	}
+
+	@FeatureFlags("LPS-203351")
+	@Test
+	public void testGetFriendlyURLWithConfiguredURLSeparator()
+		throws Exception {
+
+		String journalArticleFriendlyURLSeparator = "/journal-test1/";
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						_group.getCompanyId(),
+						FriendlyURLSeparatorCompanyConfiguration.class.
+							getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"friendlyURLSeparators",
+							JSONUtil.put(
+								JournalArticle.class.getName(),
+								journalArticleFriendlyURLSeparator)
+						).build())) {
+
+			_assertGetFriendlyURL(journalArticleFriendlyURLSeparator);
+		}
+	}
+
+	private void _assertGetFriendlyURL(String urlSeparator)
+		throws PortalException {
+
 		Assert.assertEquals(
 			StringBundler.concat(
 				_portal.getGroupFriendlyURL(
 					_group.getPublicLayoutSet(), _themeDisplay, false, false),
-				FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
+				urlSeparator,
 				_journalArticle.getUrlTitle(LocaleUtil.getSiteDefault())),
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 				new InfoItemReference(

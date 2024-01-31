@@ -48,7 +48,7 @@
 
 <tr>
 	<td>FORMS_TABLE_NAME</td>
-	<td>//div[contains(@class,'searchcontainer')]//a[contains(.,'${key_formName}')] | //div[contains(@class,'searchcontainer')]//h2[contains(.,'${key_formName}')] </td>
+	<td>//div[contains(@class,'searchcontainer')]//a[contains(.,'${key_formName}')] | //div[contains(@class,'searchcontainer')]//h2[contains(.,'${key_formName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -140,7 +140,16 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, ActionRequest.ACTION_NAME);
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
+
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
+
+		long newFolderId = ParamUtil.getLong(
+			uploadPortletRequest, "newFolderId");
+
+		if (newFolderId > 0) {
+			folderId = newFolderId;
+		}
+
 		String articleId = ParamUtil.getString(
 			uploadPortletRequest, "articleId");
 

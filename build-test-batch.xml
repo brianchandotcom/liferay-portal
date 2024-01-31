@@ -7308,6 +7308,10 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="playwright-js-tomcat90-mysql57-jdk8_stable">
+		<antcall target="playwright-js-tomcat90-mysql57-jdk8" />
+	</target>
+
 	<target name="plugins-compile-jdk8">
 		<run-batch-test>
 			<test-action>

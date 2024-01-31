@@ -31,7 +31,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
@@ -82,15 +81,12 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
-
 		_group = GroupTestUtil.addGroup();
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		_journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
@@ -99,7 +95,7 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 			true, RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), null,
-			LocaleUtil.getSiteDefault(), null, false, false, _serviceContext);
+			LocaleUtil.getSiteDefault(), null, false, false, serviceContext);
 
 		_classNameId = _portal.getClassNameId(JournalArticle.class.getName());
 
@@ -109,14 +105,14 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 				_journalArticle.getDDMStructureId(),
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
-				0, 0, 0, _serviceContext);
+				0, 0, 0, serviceContext);
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(), _classNameId,
 				_journalArticle.getResourcePrimKey(),
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				AssetDisplayPageConstants.TYPE_SPECIFIC, _serviceContext);
+				AssetDisplayPageConstants.TYPE_SPECIFIC, serviceContext);
 
 		_layout = _layoutLocalService.getLayout(
 			assetDisplayPageEntry.getPlid());
@@ -223,7 +219,8 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 
 	private void _setUpThemeDisplay() throws Exception {
 		_themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
-			_company, _group, _layout);
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+			_group, _layout);
 
 		_themeDisplay.setPortalURL("http://localhost:8080");
 
@@ -255,7 +252,6 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 		_assetDisplayPageFriendlyURLProvider;
 
 	private long _classNameId;
-	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
@@ -288,7 +284,6 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 	@Inject
 	private Portal _portal;
 
-	private ServiceContext _serviceContext;
 	private ThemeDisplay _themeDisplay;
 
 }

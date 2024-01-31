@@ -29,9 +29,9 @@ const RequiredInformation = ({
 	accountKey,
 	errors,
 	expirationRenewDate,
-	hasKeyComplimentary,
-	infoSelectedKey,
+	hasComplimentaryKey,
 	licenseEntryTypeName,
+	selectedKeyData,
 	sessionId,
 	setErrors,
 	setStep,
@@ -66,9 +66,9 @@ const RequiredInformation = ({
 	const renewKey = state?.activationKeys[0];
 
 	const avaliableKeysMaximumCount =
-		infoSelectedKey?.selectedSubscription?.quantity;
+		selectedKeyData?.selectedSubscription?.quantity;
 	const usedKeysCount =
-		infoSelectedKey?.selectedSubscription?.provisionedCount;
+		selectedKeyData?.selectedSubscription?.provisionedCount;
 
 	const hasFilledAtLeastOneField = values?.keys?.every((key) => {
 		if (isRenew) {
@@ -81,36 +81,36 @@ const RequiredInformation = ({
 	});
 
 	const isComplimentaryKey =
-		infoSelectedKey?.selectedSubscription.complimentary;
+		selectedKeyData?.selectedSubscription.complimentary;
 
 	const newUsedKeys = usedKeysCount + values?.keys?.length;
 	const hasReachedMaximumKeys = newUsedKeys === avaliableKeysMaximumCount;
 
 	const isOemOrEnterprise =
-		infoSelectedKey?.licenseEntryType.includes('OEM') ||
-		infoSelectedKey?.licenseEntryType.includes('Enterprise') ||
+		selectedKeyData?.licenseEntryType.includes('OEM') ||
+		selectedKeyData?.licenseEntryType.includes('Enterprise') ||
 		(state.activationKeys.length &&
 			(state?.activationKeys[0].licenseEntryType.includes('oem') ||
 				state?.activationKeys[0].licenseEntryType.includes(
 					'enterprise'
 				)));
 
-	const hasNotPermanentLicenceRenewKey =
+	const hasNotPermanentLicenseRenewKeyType =
 		(state.activationKeys.length &&
 			renewKey?.licenseEntryType.includes('virtual-cluster')) ||
 		renewKey?.licenseEntryType.includes('oem') ||
 		renewKey?.licenseEntryType.includes('enterprise');
 
-	const handleHasNotPermanentLicenceValidation = state?.activationKeys.length
-		? !infoSelectedKey.hasNotPermanentLicence &&
-		  !hasNotPermanentLicenceRenewKey
-		: !infoSelectedKey.hasNotPermanentLicence;
+	const handleHasNotPermanentLicenseValidation = state?.activationKeys.length
+		? !selectedKeyData.hasNotPermanentLicense &&
+		  !hasNotPermanentLicenseRenewKeyType
+		: !selectedKeyData.hasNotPermanentLicense;
 
 	useEffect(() => {
 		const getVerificationDisabledType = () => {
 			if (
-				infoSelectedKey.hasNotPermanentLicence ||
-				hasNotPermanentLicenceRenewKey
+				selectedKeyData.hasNotPermanentLicense ||
+				hasNotPermanentLicenseRenewKeyType
 			) {
 				if (isOemOrEnterprise) {
 					return !values.name;
@@ -130,9 +130,9 @@ const RequiredInformation = ({
 	}, [
 		hasError,
 		hasFilledAtLeastOneField,
-		hasNotPermanentLicenceRenewKey,
+		hasNotPermanentLicenseRenewKeyType,
 		hasReachedMaximumKeys,
-		infoSelectedKey.hasNotPermanentLicence,
+		selectedKeyData.hasNotPermanentLicense,
 		isOemOrEnterprise,
 		values.maxClusterNodes,
 		values.name,
@@ -150,27 +150,27 @@ const RequiredInformation = ({
 		() => ({
 			accountKey,
 			active: true,
-			complimentary: infoSelectedKey?.selectedSubscription.complimentary,
+			complimentary: selectedKeyData?.selectedSubscription.complimentary,
 			description: values?.description,
 			expirationDate:
-				getLicenseKeyEndDatesByLicenseType(infoSelectedKey) ??
-				infoSelectedKey?.selectedSubscription.endDate,
-			licenseEntryType: getLicenseEntryTypeSelected(infoSelectedKey),
+				getLicenseKeyEndDatesByLicenseType(selectedKeyData) ??
+				selectedKeyData?.selectedSubscription.endDate,
+			licenseEntryType: getLicenseEntryTypeSelected(selectedKeyData),
 			maxClusterNodes: values?.maxClusterNodes || 0,
 			name: values?.name,
-			productKey: infoSelectedKey?.selectedSubscription.productKey,
-			productName: `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`,
+			productKey: selectedKeyData?.selectedSubscription.productKey,
+			productName: `${selectedKeyData?.productType} ${selectedKeyData?.licenseEntryType}`,
 			productPurchaseKey:
-				infoSelectedKey?.selectedSubscription.productPurchaseKey,
-			productVersion: infoSelectedKey?.productVersion,
+				selectedKeyData?.selectedSubscription.productPurchaseKey,
+			productVersion: selectedKeyData?.productVersion,
 			sizing: `Sizing ${
-				infoSelectedKey?.selectedSubscription?.instanceSize || 1
+				selectedKeyData?.selectedSubscription?.instanceSize || 1
 			}`,
-			startDate: infoSelectedKey?.selectedSubscription.startDate,
+			startDate: selectedKeyData?.selectedSubscription.startDate,
 		}),
 		[
 			accountKey,
-			infoSelectedKey,
+			selectedKeyData,
 			values?.description,
 			values?.maxClusterNodes,
 			values?.name,
@@ -179,7 +179,7 @@ const RequiredInformation = ({
 
 	const submitKey = useCallback(async () => {
 		if (
-			!infoSelectedKey.hasNotPermanentLicence &&
+			!selectedKeyData.hasNotPermanentLicense &&
 			!hasFilledAtLeastOneField
 		) {
 			setErrors({
@@ -211,7 +211,7 @@ const RequiredInformation = ({
 		};
 
 		try {
-			if (infoSelectedKey.hasNotPermanentLicence) {
+			if (selectedKeyData.hasNotPermanentLicense) {
 				setIsLoadingGenerateKey(true);
 
 				const response = await provisioningService.createNewGenerateKey(
@@ -272,7 +272,7 @@ const RequiredInformation = ({
 									{
 										customValue: {
 											data:
-												infoSelectedKey
+												selectedKeyData
 													.selectedSubscription
 													.provisionedCount + 1,
 										},
@@ -306,8 +306,8 @@ const RequiredInformation = ({
 		checkedBoxSubscription,
 		client,
 		hasFilledAtLeastOneField,
-		infoSelectedKey.hasNotPermanentLicence,
-		infoSelectedKey.selectedSubscription.provisionedCount,
+		selectedKeyData.hasNotPermanentLicense,
+		selectedKeyData.selectedSubscription.provisionedCount,
 		isComplimentaryKey,
 		licenseKey,
 		navigate,
@@ -323,7 +323,7 @@ const RequiredInformation = ({
 	const CheckboxSubscriptionNotification = () => {
 		if (
 			featureFlags.includes('LPS-180001') &&
-			(infoSelectedKey?.hasNotPermanentLicence || isComplimentaryKey)
+			(selectedKeyData?.hasNotPermanentLicense || isComplimentaryKey)
 		) {
 			return (
 				<>
@@ -358,7 +358,7 @@ const RequiredInformation = ({
 			return i18n.sub('renew-x-key', [state?.activationKeys.length]);
 		}
 
-		if (infoSelectedKey?.licenseEntryType.includes('Virtual Cluster')) {
+		if (selectedKeyData?.licenseEntryType.includes('Virtual Cluster')) {
 			return i18n.sub(
 				Number(values.maxClusterNodes) === 1
 					? 'generate-cluster-x-key'
@@ -465,7 +465,7 @@ const RequiredInformation = ({
 										<Input
 											component="textarea"
 											disabled={
-												hasKeyComplimentary || isRenew
+												hasComplimentaryKey || isRenew
 											}
 											label={i18n.translate(
 												'description'
@@ -476,7 +476,7 @@ const RequiredInformation = ({
 										/>
 									</div>
 
-									{!hasKeyComplimentary && (
+									{!hasComplimentaryKey && (
 										<h6 className="font-weight-normal ml-3 mr-0 mt-1">
 											{i18n.translate(
 												'include-a-description-to-uniquely-identify-this-environment-this-cannot-be-edited-later'
@@ -486,7 +486,7 @@ const RequiredInformation = ({
 								</div>
 							</div>
 
-							{handleHasNotPermanentLicenceValidation ? (
+							{handleHasNotPermanentLicenseValidation ? (
 								<div className="px-6">
 									<h4 className="mt-5">
 										{i18n.translate(
@@ -631,9 +631,9 @@ const RequiredInformation = ({
 
 			<GenerateCardLayout
 				expirationRenewDate={expirationRenewDate}
-				infoSelectedKey={infoSelectedKey}
 				isRenew={isRenew}
 				licenseEntryTypeName={licenseEntryTypeName}
+				selectedKeyData={selectedKeyData}
 				startRenewDate={startRenewDate}
 			/>
 		</div>
@@ -645,7 +645,7 @@ const RequiredInformationForm = (props) => {
 	const renewKey = props.state?.activationKeys[0];
 
 	const handleDescriptionValue = () => {
-		if (props?.hasKeyComplimentary) {
+		if (props?.hasComplimentaryKey) {
 			return props?.purposeDescription;
 		}
 

@@ -2,6 +2,7 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 import {useState} from 'react';
 import {useGetMyUserAccount} from '~/common/services/liferay/graphql/user-accounts';
 import RenewTableFooter from '~/routes/customer-portal/containers/ActivationKeysTable/components/RenewTableFooter';
@@ -9,7 +10,7 @@ import {hasAdminUserAccount} from '~/routes/customer-portal/containers/Activatio
 import ActivationKeysTable from '../../../containers/ActivationKeysTable';
 import {useCustomerPortal} from '../../../context';
 
-const RenewTable = ({hasKeyComplimentary, isDXPTable, isRenewTable}) => {
+const RenewTable = ({hasComplimentaryKey, isDXPTable, isRenewTable}) => {
 	const productName = isDXPTable ? 'DXP' : 'Portal';
 
 	const [{project, sessionId}] = useCustomerPortal();
@@ -17,9 +18,9 @@ const RenewTable = ({hasKeyComplimentary, isDXPTable, isRenewTable}) => {
 
 	const isAdminUserAccount = hasAdminUserAccount(myAccount);
 
-	const [keysSelected, setKeysSelected] = useState('');
+	const [keysSelectedCount, setKeysSelectedCount] = useState('');
 	const [activationKeysChecked, setActivationKeysChecked] = useState('');
-	const [filterCheckedRenewKeys, setFilterCheckedRenewKeys] = useState('');
+	const [renewKeysFilterChecked, setRenewKeysFilterChecked] = useState('');
 
 	const initialFilter = isDXPTable
 		? "(startswith(productName,'DXP') or startswith(productName,'Digital'))"
@@ -28,25 +29,25 @@ const RenewTable = ({hasKeyComplimentary, isDXPTable, isRenewTable}) => {
 	return (
 		<div className="container renew-table">
 			<ActivationKeysTable
-				hasKeyComplimentary={hasKeyComplimentary}
+				hasComplimentaryKey={hasComplimentaryKey}
 				initialFilter={initialFilter}
 				isRenewTable={isRenewTable}
 				productName={productName}
 				project={project}
 				sessionId={sessionId}
 				setActivationKeysChecked={setActivationKeysChecked}
-				setFilterCheckedRenewKeys={setFilterCheckedRenewKeys}
-				setKeysSelected={setKeysSelected}
+				setKeysSelectedCount={setKeysSelectedCount}
+				setRenewKeysFilterChecked={setRenewKeysFilterChecked}
 			/>
 
 			<RenewTableFooter
 				activationKeysChecked={activationKeysChecked}
-				filterCheckedRenewKeys={filterCheckedRenewKeys}
 				isAdminUserAccount={isAdminUserAccount}
 				isRenewTable={isRenewTable}
-				keysSelected={keysSelected}
+				keysSelectedCount={keysSelectedCount}
 				productName={productName}
 				project={project}
+				renewKeysFilterChecked={renewKeysFilterChecked}
 			/>
 		</div>
 	);

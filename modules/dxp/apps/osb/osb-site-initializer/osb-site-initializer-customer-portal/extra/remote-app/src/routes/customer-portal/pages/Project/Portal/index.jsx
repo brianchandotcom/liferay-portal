@@ -10,7 +10,7 @@ import {useCustomerPortal} from '../../../context';
 import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
 import {LIST_TYPES} from '../../../utils/constants';
 
-const Portal = ({hasKeyComplimentary}) => {
+const Portal = ({hasComplimentaryKey}) => {
 	const [{project, sessionId}] = useCustomerPortal();
 	const {setHasSideMenu} = useOutletContext();
 
@@ -21,7 +21,7 @@ const Portal = ({hasKeyComplimentary}) => {
 	return (
 		<div className="mr-4">
 			<ActivationKeysTable
-				hasKeyComplimentary={hasKeyComplimentary}
+				hasComplimentaryKey={hasComplimentaryKey}
 				initialFilter="startswith(productName,'Portal')"
 				productName="Portal"
 				project={project}

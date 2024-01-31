@@ -14,8 +14,7 @@ import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/consta
 import {ALERT_ACTIVATION_MULTIPLE_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertMultipleKeysDownloadText';
 import {DOWNLOADABLE_LICENSE_KEYS} from '../../utils/constants/downlodableLicenseKeys';
 import {hasAdminUserAccount} from '../../utils/hasAdminUserAccount';
-import {hasComplimentaryKey} from '../../utils/hasComplimentaryKey';
-import {isBulkRenewAvailable} from '../../utils/isBulkRenewAvaible';
+import {isBulkRenewAvailable} from '../../utils/isBulkRenewAvailable';
 import ActionButton from '../ActionButton';
 import BadgeFilter from '../BadgeFilter';
 import DeactivateButton from '../Deactivate';
@@ -30,7 +29,7 @@ const ActivationKeysTableHeader = ({
 	hasRenewalSubscription,
 	isRenewTable,
 	project,
-	setFilterCheckedRenewKeys,
+	setRenewKeysFilterChecked,
 	productName,
 	sessionId,
 	loading,
@@ -48,7 +47,7 @@ const ActivationKeysTableHeader = ({
 
 	const isAdminOrPartnerManager = useMemo(() => {
 		const currentUser = userAccounts?.find(
-			({id}) => id === +Liferay.ThemeDisplay.getUserId()
+			({id}) => id === Number(Liferay.ThemeDisplay.getUserId())
 		);
 
 		if (currentUser) {
@@ -127,7 +126,7 @@ const ActivationKeysTableHeader = ({
 	const complimentaryKeyValidation = (activationKey) => activationKey;
 
 	const handleComplimentaryKey = activationKeysByStatusPaginatedChecked?.map(
-		(activationKey) => hasComplimentaryKey(activationKey)
+		(activationKey) => activationKey.complimentary
 	);
 
 	const isComplimentaryKey = handleComplimentaryKey.some(
@@ -136,9 +135,9 @@ const ActivationKeysTableHeader = ({
 
 	useEffect(() => {
 		if (isRenewTable) {
-			setFilterCheckedRenewKeys(filterCheckedActivationKeys);
+			setRenewKeysFilterChecked(filterCheckedActivationKeys);
 		}
-	}, [filterCheckedActivationKeys, isRenewTable, setFilterCheckedRenewKeys]);
+	}, [filterCheckedActivationKeys, isRenewTable, setRenewKeysFilterChecked]);
 
 	return (
 		<>
@@ -227,7 +226,6 @@ const ActivationKeysTableHeader = ({
 									isAdminOrPartnerManager
 								}
 								isAdminUserAccount={isAdminUserAccount}
-								isRenewTable={isRenewTable}
 								productName={productName}
 								project={project}
 								sessionId={sessionId}

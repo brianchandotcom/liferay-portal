@@ -10,9 +10,9 @@ import RequiredInformation from './RequiredInformation';
 
 const featureFlags = ['LPS-180001'];
 
-const infoSelectedKey = {
+const selectedKeyData = {
 	doesNotAllowPermanentLicense: false,
-	hasNotPermanentLicence: false,
+	hasNotPermanentLicense: false,
 	index: 3,
 	licenseEntryType: '',
 	productType: '',
@@ -37,9 +37,9 @@ describe('when user selects the enterprise license type to generate a new key', 
 			<MemoryRouter>
 				<AppPropertiesContext.Provider value={{featureFlags}}>
 					<RequiredInformation
-						infoSelectedKey={{
-							...infoSelectedKey,
-							hasNotPermanentLicence: true,
+						selectedKeyData={{
+							...selectedKeyData,
+							hasNotPermanentLicense: true,
 							licenseEntryType: 'Enterprise',
 						}}
 					/>
@@ -96,9 +96,9 @@ describe('when user selects the oem license type to generate a new key', () => {
 			<MemoryRouter>
 				<AppPropertiesContext.Provider value={{featureFlags}}>
 					<RequiredInformation
-						infoSelectedKey={{
-							...infoSelectedKey,
-							hasNotPermanentLicence: true,
+						selectedKeyData={{
+							...selectedKeyData,
+							hasNotPermanentLicense: true,
 							licenseEntryType: 'OEM',
 						}}
 					/>
@@ -155,9 +155,9 @@ describe('when user selects the production license type to generate a new key', 
 			<MemoryRouter>
 				<AppPropertiesContext.Provider value={{featureFlags}}>
 					<RequiredInformation
-						infoSelectedKey={{
-							...infoSelectedKey,
-							hasNotPermanentLicence: false,
+						selectedKeyData={{
+							...selectedKeyData,
+							hasNotPermanentLicense: false,
 						}}
 					/>
 				</AppPropertiesContext.Provider>
@@ -217,9 +217,9 @@ describe('when user selects the virtual cluster license type to generate a new k
 			<MemoryRouter>
 				<AppPropertiesContext.Provider value={{featureFlags}}>
 					<RequiredInformation
-						infoSelectedKey={{
-							...infoSelectedKey,
-							hasNotPermanentLicence: true,
+						selectedKeyData={{
+							...selectedKeyData,
+							hasNotPermanentLicense: true,
 							licenseEntryType: 'Backup (Virtual Cluster)',
 						}}
 					/>

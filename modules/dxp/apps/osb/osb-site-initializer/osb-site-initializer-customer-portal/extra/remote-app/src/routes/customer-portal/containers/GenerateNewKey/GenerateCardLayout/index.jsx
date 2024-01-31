@@ -11,13 +11,13 @@ import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDate';
 
 const GenerateCardLayout = ({
 	expirationRenewDate,
-	infoSelectedKey,
 	isRenew,
 	licenseEntryTypeName,
+	selectedKeyData,
 }) => {
-	const startDate = infoSelectedKey?.selectedSubscription?.startDate;
-	const endDate = infoSelectedKey?.selectedSubscription?.endDate;
-	const licenseEndDate = getLicenseKeyEndDatesByLicenseType(infoSelectedKey);
+	const startDate = selectedKeyData?.selectedSubscription?.startDate;
+	const endDate = selectedKeyData?.selectedSubscription?.endDate;
+	const licenseEndDate = getLicenseKeyEndDatesByLicenseType(selectedKeyData);
 
 	const formatDate = (
 		date,
@@ -32,7 +32,7 @@ const GenerateCardLayout = ({
 	)}`;
 
 	const HandleSelectedDates = () => {
-		if (infoSelectedKey?.selectedSubscription.perpetual) {
+		if (selectedKeyData?.selectedSubscription.perpetual) {
 			return i18n.translate('not-applicable');
 		}
 
@@ -51,13 +51,13 @@ const GenerateCardLayout = ({
 						<p className="m-0">{i18n.translate('product')}</p>
 
 						<p className="font-weight-normal">
-							{infoSelectedKey?.productType}
+							{selectedKeyData?.productType}
 						</p>
 
 						<p className="m-0">{i18n.translate('version')}</p>
 
 						<p className="font-weight-normal">
-							{infoSelectedKey?.productVersion}
+							{selectedKeyData?.productVersion}
 						</p>
 
 						<p className="m-0">{i18n.translate('key-type')}</p>
@@ -65,7 +65,7 @@ const GenerateCardLayout = ({
 						<p className="font-weight-normal">
 							{isRenew
 								? licenseEntryTypeName
-								: infoSelectedKey?.licenseEntryType}{' '}
+								: selectedKeyData?.licenseEntryType}{' '}
 						</p>
 
 						<p className="m-0">
@@ -81,19 +81,19 @@ const GenerateCardLayout = ({
 						</p>
 
 						<p className="font-weight-normal">
-							{infoSelectedKey?.selectedSubscription?.quantity -
-								infoSelectedKey?.selectedSubscription
+							{selectedKeyData?.selectedSubscription?.quantity -
+								selectedKeyData?.selectedSubscription
 									?.provisionedCount}
 
 							{' of '}
 
-							{infoSelectedKey?.selectedSubscription?.quantity}
+							{selectedKeyData?.selectedSubscription?.quantity}
 						</p>
 
 						<p className="m-0">{i18n.translate('instance-size')}</p>
 
 						<p className="font-weight-normal m-0">
-							{infoSelectedKey?.selectedSubscription
+							{selectedKeyData?.selectedSubscription
 								?.instanceSize || 1}
 						</p>
 					</div>

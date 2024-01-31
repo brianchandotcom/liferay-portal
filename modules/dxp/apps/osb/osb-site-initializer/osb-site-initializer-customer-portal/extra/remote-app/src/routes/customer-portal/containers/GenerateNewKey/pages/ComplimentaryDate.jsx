@@ -22,11 +22,11 @@ const SELECTED_PURPOSE_OTHER = 'Other, please specify';
 
 const ComplimentaryDate = ({
 	accountKey,
-	infoSelectedKey,
 	purposeDescription,
+	selectedKeyData,
 	sessionId,
-	setInfoSelectedKey,
 	setPurposeDescription,
+	setSelectedKeyData,
 	setStep,
 	urlPreviousPage,
 }) => {
@@ -34,7 +34,7 @@ const ComplimentaryDate = ({
 	const provisioningService = useProvisioningLicenseKeys();
 	const currentDate = now.toISOString().split('T')[0];
 	const [selectedSubscription] = useState(
-		infoSelectedKey?.selectedSubscription
+		selectedKeyData?.selectedSubscription
 	);
 	const purposeComplimentaryKeyList = useGetPurposeComplimentaryKeyList();
 	const [selectedPurpose, setSelectedPurpose] = useState('');
@@ -128,7 +128,7 @@ const ComplimentaryDate = ({
 				accountKey,
 				complimentary: 'true',
 				expirationDate: endDate,
-				productKey: infoSelectedKey.selectedSubscription.productKey,
+				productKey: selectedKeyData.selectedSubscription.productKey,
 				startDate,
 			};
 			selectedFields.forEach((field) => {
@@ -196,7 +196,7 @@ const ComplimentaryDate = ({
 		endDate,
 		hasDesiredEntry,
 		isComplimentaryKey,
-		infoSelectedKey,
+		selectedKeyData,
 		navigate,
 		provisioningServerAPI,
 		provisioningService,
@@ -227,7 +227,7 @@ const ComplimentaryDate = ({
 								className="btn btn-secondary mr-3"
 								displayType="secundary"
 								onClick={() => {
-									setInfoSelectedKey(() => ({
+									setSelectedKeyData(() => ({
 										selectedSubscription: {},
 									}));
 									setStep(0);
@@ -250,9 +250,9 @@ const ComplimentaryDate = ({
 									if (state.id === 'renew') {
 										submitKey();
 									} else {
-										setInfoSelectedKey(
-											(previousInfoSelectedKey) => ({
-												...previousInfoSelectedKey,
+										setSelectedKeyData(
+											(previousSelectedKeyData) => ({
+												...previousSelectedKeyData,
 												selectedSubscription: updatedSelectedSubscription,
 											})
 										);

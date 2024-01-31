@@ -15,22 +15,27 @@ export default {
 		'process.env.LIFERAY_ROUTES_DXP',
 	],
 
-	'liferay.oauth.application.external.reference.codes': 'liferay-dlfoldertemplate-oauth-application-server,liferay-dlfoldertemplate-oauth-application-user-agent',
-
-	'liferay.dlfoldertemplate.oauth.application.server.oauth2.headless.server.client.id': 'id-a11aa351-254b-7f6e-a788-f437ace5e625',
-
-	'liferay.dlfoldertemplate.oauth.application.server.oauth2.headless.server.client.secret': 'secret-2073dc13-fb7f-dc48-591a-d387e69ec5',
-
-	'liferay.dlfoldertemplate.oauth.application.user.agent.oauth2.user.agent.client.id': 'id-ac5f8b38-50ae-8629-27df-37c198a1d551',
-
-	'liferay.dlfoldertemplate.oauth.application.user.agent.oauth2.jwks.uri': '/o/oauth2/jwks',
-
-	'liferay.dlfoldertemplate.oauth.application.server.oauth2.token.uri': '/o/oauth2/token',
-
 	'folder.template.nodes.end.point': '/o/c/t4t14foldertemplatenodes/',
+
+	'liferay.dlfoldertemplate.oauth.application.server.oauth2.headless.server.client.id':
+		'id-a11aa351-254b-7f6e-a788-f437ace5e625',
+
+	'liferay.dlfoldertemplate.oauth.application.server.oauth2.headless.server.client.secret':
+		'secret-2073dc13-fb7f-dc48-591a-d387e69ec5',
+
+	'liferay.dlfoldertemplate.oauth.application.server.oauth2.token.uri':
+		'/o/oauth2/token',
+
+	'liferay.dlfoldertemplate.oauth.application.user.agent.oauth2.jwks.uri':
+		'/o/oauth2/jwks',
+
+	'liferay.dlfoldertemplate.oauth.application.user.agent.oauth2.user.agent.client.id':
+		'id-ac5f8b38-50ae-8629-27df-37c198a1d551',
+
+	'liferay.oauth.application.external.reference.codes':
+		'liferay-dlfoldertemplate-oauth-application-server,liferay-dlfoldertemplate-oauth-application-user-agent',
 
 	'ready.path': '/ready',
 
 	'server.port': 8050,
-
 };

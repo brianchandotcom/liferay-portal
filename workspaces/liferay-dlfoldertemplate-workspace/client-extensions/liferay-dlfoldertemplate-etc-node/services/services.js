@@ -9,24 +9,22 @@ import {createFolders} from '../util/folder-structure.js';
 
 const router = express.Router();
 
-router.post('/create/folder/direct/:templateId/:containerId/:rootName',
+router.post(
+	'/create/folder/direct/:templateId/:containerId/:rootName',
 	async (request, response) => {
 		try {
-
-			const  {containerId , rootName, templateId } = request.params
+			const {containerId, rootName, templateId} = request.params;
 
 			await createFolders(rootName, templateId, containerId);
 
 			response.status(200).json({});
-
-		}catch (error) {
-
+		}
+		catch (error) {
+			// eslint-disable-next-line no-console
 			console.log(error.message);
 
-			response.status(500).json({errorMessage:error});
-
+			response.status(500).json({errorMessage: error});
 		}
-
 	}
 );
 export default router;

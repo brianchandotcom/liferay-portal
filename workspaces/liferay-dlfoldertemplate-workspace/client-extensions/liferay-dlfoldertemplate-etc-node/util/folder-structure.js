@@ -3,60 +3,73 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getFolderTemplateNodesPage, postDocumentFolder} from '../headless-wrapper/liferayServices.js';
+import {
+	getFolderTemplateNodesPage,
+	postDocumentFolder,
+} from '../headless-wrapper/liferayServices.js';
 
 async function createFolder(parentFolderId, folderName, folderDescription) {
+	const folderObject = {
+		description: folderDescription,
+		name: folderName.toString().trim(),
+		viewableBy: 'Anyone',
+	};
 
-    const folderObject = {
-        description: folderDescription,
-        name: folderName.toString().trim(),
-        viewableBy: 'Anyone'
-    };
+	const folder = await postDocumentFolder(parentFolderId, folderObject);
 
-    const folder = await postDocumentFolder(parentFolderId, folderObject);
-
-    return folder.id;
+	return folder.id;
 }
 
-export async function createFolders(rootFolderName, templateId, containerFolderId) {
+export async function createFolders(
+	rootFolderName,
+	templateId,
+	containerFolderId
+) {
+	try {
+		const templateNodes = await getFolderTemplateNodesPage(templateId);
 
-    try {
-        const templateNodes = await getFolderTemplateNodesPage(templateId);
+		const rootNode = templateNodes.find((node) => node.root);
 
-        const rootNode = templateNodes.find( node => node.root);
-
-        await traverseTemplateNodes(templateNodes, rootNode.id, containerFolderId,rootFolderName);
-
-    }catch (error) {
-
-        throw new Error(error.message);
-
-    }
-
+		await traverseTemplateNodes(
+			templateNodes,
+			rootNode.id,
+			containerFolderId,
+			rootFolderName
+		);
+	}
+	catch (error) {
+		throw new Error(error.message);
+	}
 }
 
-async function traverseTemplateNodes(templateNodes, rootFolderId, parentFolderId,rootFolderName) {
+async function traverseTemplateNodes(
+	templateNodes,
+	rootFolderId,
+	parentFolderId,
+	rootFolderName
+) {
+	const currentNode = templateNodes.find(
+		(node) => node.id.toString() === rootFolderId.toString()
+	);
 
-    const currentNode = templateNodes.find(
-        node => node.id.toString() === rootFolderId.toString()
-    )
+	const folderId = await createFolder(
+		parentFolderId,
+		currentNode.root ? rootFolderName : currentNode.name,
+		currentNode.description
+	);
 
-    const folderId = await createFolder(
-        parentFolderId,
-        currentNode.root?rootFolderName:currentNode.name,
-        currentNode.description
-    );
+	const childNodes = templateNodes.filter(
+		(node) => node.parentId.toString() === currentNode.id.toString()
+	);
 
-    const childNodes = templateNodes.filter(
-        node => node.parentId.toString() === currentNode.id.toString()
-    );
-
-    if (childNodes.length) {
-
-        await childNodes.forEach(async node => {
-
-            await traverseTemplateNodes(templateNodes, node.id, folderId,rootFolderName);
-
-        });
-    }
+	if (childNodes.length) {
+		await childNodes.forEach(async (node) => {
+			await traverseTemplateNodes(
+				templateNodes,
+				node.id,
+				folderId,
+				rootFolderName
+			);
+		});
+	}
 }

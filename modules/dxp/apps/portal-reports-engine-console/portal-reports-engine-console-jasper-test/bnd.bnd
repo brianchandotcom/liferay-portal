@@ -7,6 +7,3 @@ Import-Package:\
 	!org.bouncycastle.*,\
 	\
 	*
--includeresource:\
-	fontbox-[0-9.]*.jar;lib:=true,\
-	pdfbox-[0-9.]*.jar;lib:=true

@@ -10,7 +10,7 @@ import {
 } from 'frontend-js-web';
 
 export default function propsTransformer({
-	additionalProps: {deleteFormInstanceRecordURL},
+	additionalProps: {ddmFormInstanceRecordIds, deleteFormInstanceRecordURL},
 	portletNamespace,
 	...otherProps
 }) {
@@ -32,16 +32,35 @@ export default function propsTransformer({
 								`${portletNamespace}ddmFormInstanceRecord`
 							);
 
+							const managementBarSelection = document.querySelector(
+								'.management-bar'
+							)?.textContent;
+
 							if (form && searchContainer) {
-								postForm(form, {
-									data: {
-										deleteFormInstanceRecordIds: getCheckedCheckboxes(
-											searchContainer,
-											`${portletNamespace}allRowIds`
-										),
-									},
-									url: deleteFormInstanceRecordURL,
-								});
+								if (
+									managementBarSelection &&
+									managementBarSelection.includes(
+										'All Selected'
+									)
+								) {
+									postForm(form, {
+										data: {
+											deleteFormInstanceRecordIds: ddmFormInstanceRecordIds,
+										},
+										url: deleteFormInstanceRecordURL,
+									});
+								}
+								else {
+									postForm(form, {
+										data: {
+											deleteFormInstanceRecordIds: getCheckedCheckboxes(
+												searchContainer,
+												`${portletNamespace}allRowIds`
+											),
+										},
+										url: deleteFormInstanceRecordURL,
+									});
+								}
 							}
 						}
 					},

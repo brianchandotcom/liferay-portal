@@ -23,7 +23,7 @@ const convertMegabyteToGigabyte = ({
 	value,
 }: convertMegabyteToGigabyteProps) => {
 	if (inverseOperation) {
-		return value / ONE_GB;
+		return Number((value / ONE_GB).toFixed(2));
 	}
 
 	return value * ONE_GB;
@@ -68,7 +68,10 @@ const useGetResourceInfo = ({
 			.some((requirement: any) => {
 				if (requirement.specificationKey === 'ram') {
 					return compareResource(
-						convertMegabyteToGigabyte({value: requirement.value}),
+						convertMegabyteToGigabyte({
+							inverseOperation: true,
+							value: requirement.value,
+						}),
 						project?.rootProjectPlanUsage?.memory.limit -
 							project?.rootProjectPlanUsage?.memory.used
 					);

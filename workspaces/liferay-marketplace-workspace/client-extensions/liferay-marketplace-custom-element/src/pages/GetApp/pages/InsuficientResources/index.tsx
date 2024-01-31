@@ -9,7 +9,7 @@ import './index.scss';
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {Outlet, useLocation, useParams} from 'react-router-dom';
+import {Outlet, useLocation} from 'react-router-dom';
 
 import catalogIcon from '../../../../assets/icons/catalog_icon.svg';
 import hourglass from '../../../../assets/icons/hourglass_icon.svg';
@@ -22,11 +22,10 @@ import {
 	getThumbnailByProductAttachment,
 	showAppImage,
 } from '../../../../utils/util';
-import useGetResourceInfo, {
-	convertMegabyteToGigabyte,
-} from '../../hooks/useGetResourceInfo';
+import {useGetAppContext} from '../../GetAppContextProvider';
+import {convertMegabyteToGigabyte} from '../../hooks/useGetResourceInfo';
 
-const getRequiredLabel = (product: DeliveryProduct) => {
+const getProductRequirements = (product: DeliveryProduct) => {
 	const requirements = {
 		cpu: 0,
 		ram: 0,
@@ -40,31 +39,46 @@ const getRequiredLabel = (product: DeliveryProduct) => {
 		(requirements as any)[requirement] = currentSpecification?.value;
 	}
 
+	return requirements;
+};
+
+const getRequiredLabel = (product: DeliveryProduct) => {
+	const requirements = getProductRequirements(product);
+
 	return `${requirements.cpu}CPUs, ${requirements.ram}GB RAM`;
 };
 
-const getUsageLabel = (project: ConsoleUserProject) => {
-	return `${
-		project.rootProjectPlanUsage?.cpu.limit -
-		project.rootProjectPlanUsage?.cpu.used
-	}CPUs,
-		${convertMegabyteToGigabyte({
+const getUsageLabel = (
+	project: ConsoleUserProject,
+	product: DeliveryProduct
+) => {
+	const requirements = getProductRequirements(product);
+
+	const remainingResource = {
+		cpu:
+			project.rootProjectPlanUsage?.cpu.limit -
+			project.rootProjectPlanUsage?.cpu.used,
+		ram: convertMegabyteToGigabyte({
 			inverseOperation: true,
 			value:
 				project.rootProjectPlanUsage.memory.limit -
 				project.rootProjectPlanUsage?.memory?.used,
-		})}GB RAM`;
+		}),
+	};
+
+	return `${requirements.cpu - remainingResource.cpu}CPUs,
+		${requirements.ram - remainingResource.ram}GB RAM`;
 };
 
 export function InsuficientResources() {
-	const {projectId} = useParams();
+	const [
+		{
+			appResourceInfo: {project},
+		},
+	] = useGetAppContext();
 	const location = useLocation();
 	const productId = getUrlParam('productId');
 	const {data: product} = useDeliveryProduct(productId ?? '');
-	const {project} = useGetResourceInfo({
-		product,
-		selectedProject: projectId,
-	});
 
 	const {name: appName = ''} = product ?? {};
 
@@ -115,7 +129,10 @@ export function InsuficientResources() {
 							<b>{project.rootProjectId.toUpperCase()}</b>
 
 							<p className="contact-sales-page-no-resource-card m-0">
-								{getUsageLabel(project)}
+								{getUsageLabel(
+									project,
+									product as DeliveryProduct
+								)}
 							</p>
 						</span>
 					}

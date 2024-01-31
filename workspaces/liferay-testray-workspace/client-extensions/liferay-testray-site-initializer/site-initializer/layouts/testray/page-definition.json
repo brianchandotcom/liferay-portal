@@ -26,14 +26,12 @@
 							"fragment": {
 								"key": "login"
 							},
-							"fragmentConfig": {
-							},
+							"fragmentConfig": {},
 							"fragmentFields": [
 								{
 									"id": "testray-logo",
 									"value": {
-										"fragmentLink": {
-										}
+										"fragmentLink": {}
 									}
 								}
 							],
@@ -46,7 +44,7 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"properties": "jiraBaseURL=https://issues.liferay.com"
+													"properties": "jiraBaseURL=https://liferay.atlassian.net"
 												},
 												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:LXC:liferay-testray-custom-element$]"
 											}
@@ -65,6 +63,5 @@
 		],
 		"type": "Root"
 	},
-	"settings": {
-	}
+	"settings": {}
 }

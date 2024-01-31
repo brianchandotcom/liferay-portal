@@ -99,11 +99,11 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "Consumer Goods & Services",
+		"externalReferenceCode": "Consumer Goods and Services",
 		"key": "consumerGoodsServices",
-		"name": "Consumer Goods & Services",
+		"name": "Consumer Goods and Services",
 		"name_i18n": {
-			"en-US": "Consumer Goods & Services"
+			"en-US": "Consumer Goods and Services"
 		},
 		"type": "string"
 	},
@@ -144,11 +144,11 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "Hospitality, Travel, & Recreation",
+		"externalReferenceCode": "Hospitality, Travel, and Recreation",
 		"key": "hospitalityTravelRecreation",
-		"name": "Hospitality, Travel, & Recreation",
+		"name": "Hospitality, Travel, and Recreation",
 		"name_i18n": {
-			"en-US": "Hospitality, Travel, & Recreation"
+			"en-US": "Hospitality, Travel, and Recreation"
 		},
 		"type": "string"
 	},
@@ -180,11 +180,11 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "Real Estate, Rentals, & Leasing",
+		"externalReferenceCode": "Real Estate, Rentals, and Leasing",
 		"key": "realEstateRentalsLeasing",
-		"name": "Real Estate, Rentals, & Leasing",
+		"name": "Real Estate, Rentals, and Leasing",
 		"name_i18n": {
-			"en-US": "Real Estate, Rentals, & Leasing"
+			"en-US": "Real Estate, Rentals, and Leasing"
 		},
 		"type": "string"
 	},

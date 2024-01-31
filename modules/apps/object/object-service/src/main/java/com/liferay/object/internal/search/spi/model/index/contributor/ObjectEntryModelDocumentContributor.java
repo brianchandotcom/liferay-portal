@@ -36,6 +36,7 @@ import java.text.Format;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marco Leo
@@ -93,68 +94,11 @@ public class ObjectEntryModelDocumentContributor
 		sb.append(StringPool.COMMA_AND_SPACE);
 	}
 
-	private void _contribute(Document document, ObjectEntry objectEntry)
-		throws Exception {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + document);
-			_log.debug("Object entry " + objectEntry);
-		}
-
-		document.add(
-			new Field(
-				Field.getSortableFieldName(Field.ENTRY_CLASS_PK),
-				document.get(Field.ENTRY_CLASS_PK)));
-		document.add(
-			new Field(
-				Field.getSortableFieldName("externalReferenceCode"),
-				objectEntry.getExternalReferenceCode()));
-
-		FieldArray fieldArray = (FieldArray)document.getField(
-			"nestedFieldArray");
-
-		if (fieldArray == null) {
-			fieldArray = new FieldArray("nestedFieldArray");
-
-			document.add(fieldArray);
-		}
-
-		document.addKeyword(
-			"objectDefinitionId", objectEntry.getObjectDefinitionId());
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		document.addKeyword(
-			"objectDefinitionName", objectDefinition.getShortName());
-
-		Map<String, Serializable> values = _objectEntryLocalService.getValues(
-			objectEntry.getObjectEntryId());
-
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectEntry.getObjectDefinitionId(), false);
-
-		StringBundler sb = new StringBundler(objectFields.size() * 4);
-
-		for (ObjectField objectField : objectFields) {
-			_contribute(fieldArray, objectEntry, objectField, sb, values);
-		}
-
-		if (sb.index() > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		document.add(new Field("objectEntryContent", sb.toString()));
-
-		document.add(
-			new Field("objectEntryTitle", objectEntry.getTitleValue()));
-	}
-
 	private void _contribute(
-		FieldArray fieldArray, ObjectEntry objectEntry, ObjectField objectField,
-		StringBundler sb, Map<String, Serializable> values) {
+		Document document, FieldArray fieldArray,
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+		ObjectField objectField, StringBundler sb,
+		Map<String, Serializable> values) {
 
 		if (!objectField.isIndexed()) {
 			return;
@@ -190,6 +134,13 @@ public class ObjectEntryModelDocumentContributor
 					ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL)) {
 
 			value = BigDecimalUtil.stripTrailingZeros((BigDecimal)value);
+		}
+		else if (Objects.equals(
+					objectDefinition.getAccountEntryRestrictedObjectFieldId(),
+					objectField.getObjectFieldId())) {
+
+			document.addKeyword(
+				"accountEntryRestrictedObjectFieldValue", (Long)value);
 		}
 
 		String valueString = String.valueOf(value);
@@ -269,6 +220,67 @@ public class ObjectEntryModelDocumentContributor
 						"\" with unsupported value ", value));
 			}
 		}
+	}
+
+	private void _contribute(Document document, ObjectEntry objectEntry)
+		throws Exception {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Document " + document);
+			_log.debug("Object entry " + objectEntry);
+		}
+
+		document.add(
+			new Field(
+				Field.getSortableFieldName(Field.ENTRY_CLASS_PK),
+				document.get(Field.ENTRY_CLASS_PK)));
+		document.add(
+			new Field(
+				Field.getSortableFieldName("externalReferenceCode"),
+				objectEntry.getExternalReferenceCode()));
+
+		FieldArray fieldArray = (FieldArray)document.getField(
+			"nestedFieldArray");
+
+		if (fieldArray == null) {
+			fieldArray = new FieldArray("nestedFieldArray");
+
+			document.add(fieldArray);
+		}
+
+		document.addKeyword(
+			"objectDefinitionId", objectEntry.getObjectDefinitionId());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		document.addKeyword(
+			"objectDefinitionName", objectDefinition.getShortName());
+
+		Map<String, Serializable> values = _objectEntryLocalService.getValues(
+			objectEntry.getObjectEntryId());
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectEntry.getObjectDefinitionId(), false);
+
+		StringBundler sb = new StringBundler(objectFields.size() * 4);
+
+		for (ObjectField objectField : objectFields) {
+			_contribute(
+				document, fieldArray, objectDefinition, objectEntry,
+				objectField, sb, values);
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		document.add(new Field("objectEntryContent", sb.toString()));
+
+		document.add(
+			new Field("objectEntryTitle", objectEntry.getTitleValue()));
 	}
 
 	private String _getDateString(Object value) {

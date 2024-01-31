@@ -61,16 +61,21 @@ public class FriendlyURLResolverRegistryUtilTest {
 
 	@Test
 	public void testGetFriendlyURLResolver() {
-		Collection<FriendlyURLResolver> friendlyURLResolvers =
-			FriendlyURLResolverRegistryUtil.
-				getFriendlyURLResolversAsCollection();
-
-		Assert.assertFalse(
-			friendlyURLResolvers.toString(), friendlyURLResolvers.isEmpty());
+		_assertGetFriendlyURLResolversAsCollection();
 
 		Assert.assertSame(
 			_friendlyURLResolver,
 			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(_SEPARATOR));
+	}
+
+	@Test
+	public void testGetFriendlyURLResolverByDefaultURLSeparator() {
+		_assertGetFriendlyURLResolversAsCollection();
+
+		Assert.assertSame(
+			_friendlyURLResolver,
+			FriendlyURLResolverRegistryUtil.
+				getFriendlyURLResolverByDefaultURLSeparator(_SEPARATOR));
 	}
 
 	@Test
@@ -131,12 +136,24 @@ public class FriendlyURLResolverRegistryUtilTest {
 			FriendlyURLResolver.class.getClassLoader(),
 			new Class<?>[] {FriendlyURLResolver.class},
 			(proxy, method, args) -> {
-				if (Objects.equals(method.getName(), "getURLSeparator")) {
+				if (Objects.equals(method.getName(), "getURLSeparator") ||
+					Objects.equals(
+						method.getName(), "getDefaultURLSeparator")) {
+
 					return _SEPARATOR;
 				}
 
 				return null;
 			});
+	}
+
+	private void _assertGetFriendlyURLResolversAsCollection() {
+		Collection<FriendlyURLResolver> friendlyURLResolvers =
+			FriendlyURLResolverRegistryUtil.
+				getFriendlyURLResolversAsCollection();
+
+		Assert.assertFalse(
+			friendlyURLResolvers.toString(), friendlyURLResolvers.isEmpty());
 	}
 
 	private static final String _SEPARATOR = "/-foo-";

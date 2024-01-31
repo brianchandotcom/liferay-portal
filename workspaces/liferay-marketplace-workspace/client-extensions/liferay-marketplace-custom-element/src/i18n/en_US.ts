@@ -55,7 +55,7 @@ export default {
 	'create-license-key': 'Create License Key',
 	'create-new-licenses-and-they-will-show-up-here':
 		'Create new licenses and they will show up here.',
-	'customer-account': 'Cutomer Account',
+	'customer-account': 'Customer Account',
 	'customer-roject': 'Customer Project',
 	'deactivate': 'Deactivate',
 	'description': 'Description',

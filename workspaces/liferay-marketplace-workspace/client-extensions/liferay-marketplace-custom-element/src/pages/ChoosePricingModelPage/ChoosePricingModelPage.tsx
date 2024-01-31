@@ -57,7 +57,7 @@ export function ChoosePricingModelPage({
 							});
 						}}
 						selected={priceModel.value === 'Free'}
-						title="FREE"
+						title="Free"
 						tooltip="The app is offered in the Marketplace with no charge."
 					/>
 
@@ -112,8 +112,7 @@ export function ChoosePricingModelPage({
 									type: TYPES.UPDATE_APP_LICENSE_PRICES,
 								});
 							}
-						}
-						else {
+						} else {
 							const dataSpecification = await getSpecification(
 								'price-model'
 							);

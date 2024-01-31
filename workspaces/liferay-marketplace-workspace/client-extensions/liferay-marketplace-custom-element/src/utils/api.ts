@@ -304,7 +304,7 @@ export async function createCart({
 	orderTypeExternalReferenceCode,
 }: {
 	accountId: number;
-	channelId: number;
+	channelId: number | string;
 	currencyCode?: string;
 	orderTypeExternalReferenceCode: string;
 }) {

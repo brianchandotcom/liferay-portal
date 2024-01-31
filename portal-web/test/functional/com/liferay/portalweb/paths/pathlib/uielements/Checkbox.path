@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ADAPTIVE_MEDIA_IMAGE</td>
-	<td>//td[contains(.,'${key_imageName}')]//..//td/input[contains(@type,'checkbox')]</td>
+	<td>//td[contains(.,'${key_imageName}')]//..//input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>

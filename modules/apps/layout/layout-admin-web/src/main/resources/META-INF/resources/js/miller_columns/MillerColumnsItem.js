@@ -570,7 +570,7 @@ const MillerColumnsItem = ({
 				</ClayLayout.ContentCol>
 			))}
 
-			{!!getItemActionsURL && (
+			{!!getItemActionsURL && itemId !== '0' ? (
 				<ClayLayout.ContentCol className="miller-columns-item-actions">
 					<ClayDropDownWithItems
 						caption={
@@ -609,7 +609,7 @@ const MillerColumnsItem = ({
 						/>
 					)}
 				</ClayLayout.ContentCol>
-			)}
+			) : null}
 
 			{hasChild && (
 				<ClayLayout.ContentCol className="miller-columns-item-child-indicator text-secondary">

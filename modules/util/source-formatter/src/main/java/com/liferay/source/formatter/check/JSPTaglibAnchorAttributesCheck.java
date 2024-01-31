@@ -21,7 +21,7 @@ import java.util.Map;
 public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 
 	@Override
-	public boolean isLiferaySourceCheck() {
+	public boolean isModuleSourceCheck() {
 		return true;
 	}
 
@@ -30,34 +30,22 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		String expectedValue = null;
+		String bundleSymbolicName = _getBundleSymbolicName(fileName);
 
-		if (isModulesFile(absolutePath)) {
-			String bundleSymbolicName = _getBundleSymbolicName(fileName);
-
-			if (bundleSymbolicName == null) {
-				return content;
-			}
-
-			int x = fileName.lastIndexOf("/resources/");
-
-			if (x == -1) {
-				return content;
-			}
-
-			expectedValue = StringBundler.concat(
-				bundleSymbolicName, "#", fileName.substring(x + 10));
-		}
-		else if (absolutePath.contains("/portal-web/docroot")) {
-			int x = absolutePath.indexOf("/portal-web/docroot") + 19;
-
-			expectedValue = absolutePath.substring(x);
+		if (bundleSymbolicName == null) {
+			return content;
 		}
 
-		if (expectedValue != null) {
-			_checkAnchorAttributes(
-				fileName, absolutePath, content, expectedValue);
+		int x = fileName.lastIndexOf("/src/main/resources/META-INF/resources/");
+
+		if (x == -1) {
+			return content;
 		}
+
+		String expectedValue = StringBundler.concat(
+			bundleSymbolicName, "#", fileName.substring(x + 38));
+
+		_checkAnchorAttributes(fileName, absolutePath, content, expectedValue);
 
 		return content;
 	}

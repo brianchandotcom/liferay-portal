@@ -1199,10 +1199,6 @@
 			<category name="Bug Prevention" />
 			<description name="Checks that there are no calls to `HttpServletResponse.sendRedirect` from `jsp` files." />
 		</check>
-		<check name="JSPTaglibAnchorAttributesCheck">
-			<category name="Styling" />
-			<description name="Checks that values of anchor attributes follow naming conventions." />
-		</check>
 		<check name="JSPUnusedJSPFCheck">
 			<category name="Performance" />
 			<description name="Finds `.jspf` files that are not used." />
@@ -1247,6 +1243,10 @@
 		<check name="JSPServiceUtilCheck">
 			<category name="Miscellaneous" />
 			<description name="Finds incorrect use of `*ServiceUtil` in `.jsp` files in modules." />
+		</check>
+		<check name="JSPTaglibAnchorAttributesCheck">
+			<category name="Styling" />
+			<description name="Checks that values of anchor attributes follow naming conventions." />
 		</check>
 
 		<!-- Plugin Source Checks -->

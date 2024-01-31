@@ -29,6 +29,7 @@ export type CollectionLayoutDataItem = BaseLayoutDataItem<
 		numberOfPages?: number;
 		paginationType?: 'simple';
 		showAllItems?: boolean;
+		templateKey?: string;
 	} & ResponsiveConfig<{
 			numberOfColumns?: number;
 		}>

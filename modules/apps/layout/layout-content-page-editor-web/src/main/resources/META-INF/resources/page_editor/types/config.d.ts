@@ -123,6 +123,7 @@ export interface Config {
 	getCollectionItemCountURL: string;
 	getCollectionMappingFieldsURL: string;
 	getCollectionSupportedFiltersURL: string;
+	getCollectionVariationsURL: string;
 	getCollectionWarningMessageURL: string;
 	getEditCollectionConfigurationURL: string;
 	getExperienceDataURL: string;

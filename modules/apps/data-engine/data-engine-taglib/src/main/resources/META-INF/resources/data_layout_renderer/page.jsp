@@ -9,7 +9,9 @@
 
 <c:choose>
 	<c:when test='<%= Objects.equals(displayType, "borderless") %>'>
-		<%= content %>
+		<div class="borderless ddm-form-builder-app">
+			<%= content %>
+		</div>
 	</c:when>
 	<c:otherwise>
 		<div class="sheet">

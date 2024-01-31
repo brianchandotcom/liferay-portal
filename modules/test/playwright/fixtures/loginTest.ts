@@ -22,6 +22,26 @@ export interface Login {
 	};
 }
 
+/**
+ * This fixture performs a login in the default test page for the user with the given screen name
+ * and leaves it in the home page.
+ *
+ * This fixture needs some pre-cooked users in the test DXP instance. They are created by deploying
+ * the `modules/test/playwright-setup` OSGi bundle before Playwright is run.
+ *
+ * That is automatically done by the CI. In local environments, you need to run
+ * `npm run test:setup <name of the test>` before running Playwright to achieve the same results.
+ *
+ * @param options the screen name to use for performing the login
+ *
+ * @example
+ * export const test = mergeTests(
+ *   loginTest('unprivileged'),
+ *   ...
+ * );
+ *
+ * test('something', ...);
+ */
 function loginTest(options: LoginOptions = {}) {
 	const fixtureImpl = test.extend<Login>({
 		login: [

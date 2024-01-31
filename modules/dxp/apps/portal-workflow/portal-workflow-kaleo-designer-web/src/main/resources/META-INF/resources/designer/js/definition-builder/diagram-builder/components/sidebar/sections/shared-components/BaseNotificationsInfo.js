@@ -433,9 +433,13 @@ const BaseNotificationsInfo = ({
 };
 
 BaseNotificationsInfo.propTypes = {
+	accountEntryId: PropTypes.string,
+	defaultScript: PropTypes.string,
+	defaultScriptLanguage: PropTypes.string,
 	deleteSection: PropTypes.func,
 	executionType: PropTypes.string,
 	executionTypeOptions: PropTypes.array,
+	handleClickCapture: PropTypes.func,
 	identifier: PropTypes.string,
 	internalSections: PropTypes.array,
 	items: PropTypes.array,
@@ -445,7 +449,10 @@ BaseNotificationsInfo.propTypes = {
 	notificationTypeEmail: PropTypes.bool,
 	notificationTypeUserNotification: PropTypes.bool,
 	recipientType: PropTypes.string,
-	recipientTypeOptions: PropTypes.array,
+	roleRecipientUpdateSelectedItem: PropTypes.func,
+	roleTypeRecipientUpdateSelectedItem: PropTypes.func,
+	scriptedRecipientUpdateSelectedItem: PropTypes.func,
+	sectionsData: PropTypes.array,
 	sectionsLength: PropTypes.number,
 	selectedItem: PropTypes.object,
 	setExecutionType: PropTypes.func,
@@ -453,13 +460,17 @@ BaseNotificationsInfo.propTypes = {
 	setItems: PropTypes.func,
 	setNotificationDescription: PropTypes.func,
 	setNotificationName: PropTypes.func,
+	setNotificationTypeEmail: PropTypes.func,
+	setNotificationTypeUserNotification: PropTypes.func,
 	setRecipientType: PropTypes.func,
 	setSections: PropTypes.func,
 	setSelectedItem: PropTypes.func,
 	setTemplate: PropTypes.func,
 	setTemplateLanguage: PropTypes.func,
+	showAddButton: PropTypes.bool,
 	template: PropTypes.string,
 	templateLanguage: PropTypes.string,
 	updateNotificationType: PropTypes.func,
+	userRecipientUpdateSelectedItem: PropTypes.func,
 };
 export default BaseNotificationsInfo;

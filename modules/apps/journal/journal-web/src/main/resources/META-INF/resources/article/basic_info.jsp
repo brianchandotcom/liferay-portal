@@ -28,40 +28,25 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 </c:if>
 
 <c:if test="<%= journalEditArticleDisplayContext.isShowSelectFolder() %>">
-	<p class="article-folder"><b><liferay-ui:message key="folder" /></b></p>
-
-	<div class="form-group input-group mb-2">
-		<div class="input-group-item">
-			<input class="field form-control lfr-input-text" id="<portlet:namespace />folderName" readonly="readonly" title="<%= LanguageUtil.get(request, "folder-name") %>" type="text" value="<%= journalEditArticleDisplayContext.getFolderName() %>" />
-		</div>
-	</div>
-
-	<div class="form-group">
-		<clay:button
-			displayType="secondary"
-			id='<%= liferayPortletResponse.getNamespace() + "selectFolderButton" %>'
-			label="select"
-		/>
-	</div>
-
-	<liferay-frontend:component
-		context='<%=
-			HashMapBuilder.<String, Object>put(
-				"inputName", "folderId"
-			).put(
-				"selectFolderURL",
-				PortletURLBuilder.createRenderURL(
-					liferayPortletResponse
-				).setMVCPath(
-					"/select_folder.jsp"
-				).setParameter(
-					"folderId", journalEditArticleDisplayContext.getFolderId()
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString()
-			).build()
+	<liferay-frontend:resource-selector
+		inputLabel='<%= LanguageUtil.get(request, "folder") %>'
+		inputName="newFolderId"
+		modalTitle='<%= LanguageUtil.get(request, "select-folder") %>'
+		resourceName="<%= journalEditArticleDisplayContext.getFolderName() %>"
+		resourceValue="<%= journalEditArticleDisplayContext.getFolderId() %>"
+		selectEventName="selectFolder"
+		selectResourceURL='<%=
+			PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCPath(
+				"/select_folder.jsp"
+			).setParameter(
+				"folderId", journalEditArticleDisplayContext.getFolderId()
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
 		%>'
-		module="js/SelectFolderButton"
+		showRemoveButton="<%= false %>"
 	/>
 </c:if>
 

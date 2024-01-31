@@ -147,14 +147,47 @@ public class
 	public void testCopyFileShouldCopyAssetTagsToRelatedGroup()
 		throws Exception {
 
-		_testCopyFileShouldCopyAssetTagsToRelatedGroup(StringUtil::toLowerCase);
-	}
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			_depotEntry.getDepotEntryId(), _group.getGroupId());
 
-	@Test
-	public void testCopyFileShouldCopyAssetTagsToRelatedGroupWithCaseSensitiveTags()
-		throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_depotGroup.getGroupId());
 
-		_testCopyFileShouldCopyAssetTagsToRelatedGroup(string -> string);
+		String assetTagName = RandomTestUtil.randomString();
+
+		_addAssetTag(_depotGroup.getGroupId(), assetTagName);
+
+		serviceContext.setAssetTagNames(new String[] {assetTagName});
+
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
+			RandomTestUtil.randomString(), _depotGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _FILE_NAME,
+			ContentTypes.TEXT_PLAIN, _FILE_NAME, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, new byte[0], null, null, null,
+			serviceContext);
+
+		String className = DLFileEntryConstants.getClassName();
+
+		Assert.assertArrayEquals(
+			new String[] {assetTagName},
+			_assetTagLocalService.getTagNames(
+				className, fileEntry1.getFileEntryId()));
+
+		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
+			fileEntry1.getFileEntryId(), _groupParentFolder.getFolderId(),
+			_groupParentFolder.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			_siteConnectedGroupGroupProvider.
+				getCurrentAndAncestorSiteAndDepotGroupIds(
+					_groupParentFolder.getGroupId()),
+			ServiceContextTestUtil.getServiceContext(
+				_groupParentFolder.getGroupId()));
+
+		Assert.assertArrayEquals(
+			_assetTagLocalService.getTagNames(
+				className, fileEntry1.getFileEntryId()),
+			_assetTagLocalService.getTagNames(
+				className, fileEntry2.getFileEntryId()));
 	}
 
 	@Test
@@ -344,53 +377,6 @@ public class
 		_depotEntries.add(depotEntry);
 
 		return depotEntry;
-	}
-
-	private void _testCopyFileShouldCopyAssetTagsToRelatedGroup(
-			UnsafeFunction<String, String, Exception> unsafeFunction)
-		throws Exception {
-
-		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			_depotEntry.getDepotEntryId(), _group.getGroupId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_depotGroup.getGroupId());
-
-		String assetTagName = RandomTestUtil.randomString();
-
-		_addAssetTag(_depotGroup.getGroupId(), assetTagName);
-
-		serviceContext.setAssetTagNames(new String[] {assetTagName});
-
-		FileEntry fileEntry1 = _dlAppService.addFileEntry(
-			RandomTestUtil.randomString(), _depotGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _FILE_NAME,
-			ContentTypes.TEXT_PLAIN, _FILE_NAME, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, new byte[0], null, null, null,
-			serviceContext);
-
-		String className = DLFileEntryConstants.getClassName();
-
-		Assert.assertArrayEquals(
-			new String[] {unsafeFunction.apply(assetTagName)},
-			_assetTagLocalService.getTagNames(
-				className, fileEntry1.getFileEntryId()));
-
-		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
-			fileEntry1.getFileEntryId(), _groupParentFolder.getFolderId(),
-			_groupParentFolder.getGroupId(),
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			_siteConnectedGroupGroupProvider.
-				getCurrentAndAncestorSiteAndDepotGroupIds(
-					_groupParentFolder.getGroupId()),
-			ServiceContextTestUtil.getServiceContext(
-				_groupParentFolder.getGroupId()));
-
-		Assert.assertArrayEquals(
-			_assetTagLocalService.getTagNames(
-				className, fileEntry1.getFileEntryId()),
-			_assetTagLocalService.getTagNames(
-				className, fileEntry2.getFileEntryId()));
 	}
 
 	private void _testCopyFileShouldNotCopyAssetTagsToUnrelatedGroup(

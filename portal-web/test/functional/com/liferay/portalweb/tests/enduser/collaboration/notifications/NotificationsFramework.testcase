@@ -358,7 +358,7 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		AssertVisible(
+		AssertElementPresent(
 			key_rowEntry = "Notification no longer applies",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX_DISABLED");
 

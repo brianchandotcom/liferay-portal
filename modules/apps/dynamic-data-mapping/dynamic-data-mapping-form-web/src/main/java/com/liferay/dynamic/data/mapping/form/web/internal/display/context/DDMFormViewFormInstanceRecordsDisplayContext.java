@@ -230,6 +230,13 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		return _ddmFormInstance;
 	}
 
+	public List<Long> getDDMFormInstanceRecordIds() {
+		return TransformUtil.transform(
+			_ddmFormInstanceRecordLocalService.getFormInstanceRecords(
+				_ddmFormInstance.getFormInstanceId()),
+			DDMFormInstanceRecord::getFormInstanceRecordId);
+	}
+
 	public Locale getDefaultLocale(DDMFormInstanceRecord ddmFormInstanceRecord)
 		throws Exception {
 

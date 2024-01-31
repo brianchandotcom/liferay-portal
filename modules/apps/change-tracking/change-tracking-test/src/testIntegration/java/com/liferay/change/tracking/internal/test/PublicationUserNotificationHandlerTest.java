@@ -132,8 +132,8 @@ public class PublicationUserNotificationHandlerTest {
 				StringBundler.concat(
 					"<div class=\"title\">", ctCollection.getName(),
 					" scheduled publication failed</div><div class=\"body\">",
-					"To see the list of conflicts which need manual ",
-					"resolution click on this notification.</div>"),
+					"Click on this notification to see the list of conflicts ",
+					"that need to be manually resolved.</div>"),
 				userNotificationFeedEntry.getBody());
 		}
 	}

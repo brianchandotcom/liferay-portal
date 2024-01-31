@@ -44,8 +44,8 @@ public class ScheduledPublicationUserNotificationHandler
 		if (showConflicts) {
 			body = _language.get(
 				serviceContext.getLocale(),
-				"to-see-the-list-of-conflicts-which-need-manual-resolution-" +
-					"click-on-this-notification");
+				"click-on-this-notification-to-see-the-list-of-conflicts-" +
+					"that-need-to-be-manually-resolved");
 		}
 		else {
 			body = _language.get(

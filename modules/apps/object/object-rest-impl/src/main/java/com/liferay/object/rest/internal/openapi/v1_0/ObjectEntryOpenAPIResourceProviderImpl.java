@@ -28,8 +28,7 @@ public class ObjectEntryOpenAPIResourceProviderImpl
 		ObjectDefinition objectDefinition) {
 
 		return _scopedServiceTrackerMap.getService(
-			objectDefinition.getCompanyId(),
-			objectDefinition.getOSGiJaxRsName("ObjectEntryOpenAPIResource"));
+			objectDefinition.getCompanyId(), objectDefinition.getName());
 	}
 
 	@Activate

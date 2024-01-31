@@ -30,6 +30,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
@@ -173,16 +174,15 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 				name, serviceContext);
 
 		if (kaleoDefinition == null) {
-			kaleoDefinition = _kaleoDefinitionLocalService.addKaleoDefinition(
+			kaleoDefinition = _kaleoDefinitionService.addKaleoDefinition(
 				name, title, definition.getDescription(),
 				definition.getContent(), scope, 1, serviceContext);
 		}
 		else {
-			kaleoDefinition =
-				_kaleoDefinitionLocalService.updatedKaleoDefinition(
-					kaleoDefinition.getKaleoDefinitionId(), title,
-					definition.getDescription(), definition.getContent(),
-					serviceContext);
+			kaleoDefinition = _kaleoDefinitionService.updateKaleoDefinition(
+				kaleoDefinition.getKaleoDefinitionId(), title,
+				definition.getDescription(), definition.getContent(),
+				serviceContext);
 		}
 
 		return kaleoDefinition;
@@ -211,6 +211,9 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	@Reference
+	private KaleoDefinitionService _kaleoDefinitionService;
 
 	@Reference
 	private KaleoDefinitionVersionLocalService

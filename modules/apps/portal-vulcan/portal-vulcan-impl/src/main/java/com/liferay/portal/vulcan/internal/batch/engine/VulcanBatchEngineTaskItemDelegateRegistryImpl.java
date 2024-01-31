@@ -161,7 +161,7 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 				serviceReference.getProperty("batch.planner.import.enabled"));
 			List<String> companyIdStrings = _companyIdStrings(serviceReference);
 			String entityClassName = (String)serviceReference.getProperty(
-				"entity.class.name");
+				"batch.engine.entity.class.name");
 			VulcanBatchEngineTaskItemDelegate<?>
 				vulcanBatchEngineTaskItemDelegate = _bundleContext.getService(
 					serviceReference);
@@ -236,7 +236,7 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 			}
 
 			String entityClassName = (String)serviceReference.getProperty(
-				"entity.class.name");
+				"batch.engine.entity.class.name");
 
 			for (Map.Entry<Long, Map<String, Boolean>> entry :
 					_companyScopedBatchPlannerExportEnabledsMap.entrySet()) {
@@ -295,7 +295,7 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 			List<String> companyIdStrings = _companyIdStrings(serviceReference);
 
 			String entityClassName = (String)serviceReference.getProperty(
-				"entity.class.name");
+				"batch.engine.entity.class.name");
 
 			if (companyIdStrings == null) {
 				_batchPlannerExportEnableds.remove(entityClassName);

@@ -23,13 +23,19 @@ else {
 
 <liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
 
-<c:if test='<%= MultiSessionMessages.contains(renderRequest, "articleCreated") || MultiSessionMessages.contains(renderRequest, "articleUpdated") %>'>
+<c:if test='<%= MultiSessionMessages.contains(renderRequest, "articleCreated") || MultiSessionMessages.contains(renderRequest, "articleUpdated") || MultiSessionMessages.contains(renderRequest, "articleScheduled") || MultiSessionMessages.contains(renderRequest, "articleSchedulePending") %>'>
 
 	<%
 	long id = GetterUtil.getLong(MultiSessionMessages.get(renderRequest, "articleCreated"));
 
 	if (MultiSessionMessages.contains(renderRequest, "articleUpdated")) {
 		id = GetterUtil.getLong(MultiSessionMessages.get(renderRequest, "articleUpdated"));
+	}
+	else if (MultiSessionMessages.contains(renderRequest, "articleScheduled")) {
+		id = GetterUtil.getLong(MultiSessionMessages.get(renderRequest, "articleScheduled"));
+	}
+	else if (MultiSessionMessages.contains(renderRequest, "articleSchedulePending")) {
+		id = GetterUtil.getLong(MultiSessionMessages.get(renderRequest, "articleSchedulePending"));
 	}
 
 	JournalArticle article = JournalArticleLocalServiceUtil.fetchJournalArticle(id);
@@ -70,6 +76,12 @@ else {
 			<c:choose>
 				<c:when test='<%= MultiSessionMessages.contains(renderRequest, "articleCreated") %>'>
 					<liferay-ui:message arguments="<%= articleLink %>" key="x-was-created-successfully" />
+				</c:when>
+				<c:when test='<%= MultiSessionMessages.contains(renderRequest, "articleScheduled") %>'>
+					<liferay-ui:message arguments="<%= new Object[] {articleLink, dateTimeFormat.format(article.getDisplayDate())} %>" key="x-will-be-published-on-x" />
+				</c:when>
+				<c:when test='<%= MultiSessionMessages.contains(renderRequest, "articleSchedulePending") %>'>
+					<liferay-ui:message arguments="<%= articleLink %>" key="x-has-been-scheduled-and-submitted-for-workflow" />
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:message arguments="<%= articleLink %>" key="x-was-updated-successfully" />

@@ -9,10 +9,12 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
 
@@ -53,17 +55,49 @@ public class ObjectEntrySearchPermissionFilterContributor
 			return;
 		}
 
-		TermsFilter termsFilter = new TermsFilter(
-			"accountEntryRestrictedObjectFieldValue");
+		TermsFilter accountEntryRestrictedObjectFieldValueTermsFilter =
+			new TermsFilter("accountEntryRestrictedObjectFieldValue");
 
 		for (long accountEntryId : accountEntryIds) {
-			termsFilter.addValue(String.valueOf(accountEntryId));
+			accountEntryRestrictedObjectFieldValueTermsFilter.addValue(
+				String.valueOf(accountEntryId));
 		}
 
-		booleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
+		booleanFilter.add(
+			accountEntryRestrictedObjectFieldValueTermsFilter,
+			BooleanClauseOccur.SHOULD);
+
+		List<Organization> organizations =
+			_organizationLocalService.getUserOrganizations(
+				permissionChecker.getUserId());
+
+		if (organizations.isEmpty()) {
+			return;
+		}
+
+		TermsFilter accountEntryRestrictedOrganizationIds = new TermsFilter(
+			"accountEntryRestrictedOrganizationIds");
+
+		for (Organization organization : organizations) {
+			accountEntryRestrictedOrganizationIds.addValue(
+				String.valueOf(organization.getOrganizationId()));
+
+			for (Organization descendantOrganization :
+					organization.getDescendants()) {
+
+				accountEntryRestrictedOrganizationIds.addValue(
+					String.valueOf(descendantOrganization.getOrganizationId()));
+			}
+		}
+
+		booleanFilter.add(
+			accountEntryRestrictedOrganizationIds, BooleanClauseOccur.SHOULD);
 	}
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 }

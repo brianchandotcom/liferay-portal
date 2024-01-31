@@ -73,10 +73,6 @@ public class DLFileEntryLocalServiceAdvancedFileSystemStoreTest {
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 		Assert.assertTrue(
-			StringBundler.concat(
-				"File with name ", dlFileEntry.getName(),
-				" and store file name ", dlFileVersion.getStoreFileName(),
-				" does not exist in the store."),
 			_store.hasFile(
 				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 				dlFileEntry.getName(), dlFileVersion.getStoreFileName()));
@@ -84,10 +80,6 @@ public class DLFileEntryLocalServiceAdvancedFileSystemStoreTest {
 		_dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
 
 		Assert.assertFalse(
-			StringBundler.concat(
-				"File with name ", dlFileEntry.getName(),
-				" and store file name ", dlFileVersion.getStoreFileName(),
-				" exists in the store."),
 			_store.hasFile(
 				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 				dlFileEntry.getName(), dlFileVersion.getStoreFileName()));

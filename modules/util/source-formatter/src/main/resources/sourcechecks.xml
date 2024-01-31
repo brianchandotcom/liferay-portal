@@ -1240,14 +1240,14 @@
 			<category name="Miscellaneous" />
 			<description name="Finds incorrect use of `com.liferay.registry.Registry` or `com.liferay.util.ContentUtil`." />
 		</check>
+		<check name="JSPOutputTaglibsCheck">
+			<category name="Styling" />
+			<description name="Checks that value of `outputKey` follows naming conventions." />
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JSPServiceUtilCheck">
 			<category name="Miscellaneous" />
 			<description name="Finds incorrect use of `*ServiceUtil` in `.jsp` files in modules." />
-		</check>
-		<check name="JSPTaglibAnchorAttributesCheck">
-			<category name="Styling" />
-			<description name="Checks that values of anchor attributes follow naming conventions." />
-			<property name="enabled" value="false" />
 		</check>
 
 		<!-- Plugin Source Checks -->

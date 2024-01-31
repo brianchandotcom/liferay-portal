@@ -5,15 +5,21 @@
 
 package com.liferay.batch.engine.service.impl;
 
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,6 +37,44 @@ public class BatchEngineImportTaskServiceImpl
 	extends BatchEngineImportTaskServiceBaseImpl {
 
 	@Override
+	public BatchEngineImportTask addBatchEngineImportTask(
+			String externalReferenceCode, long companyId, long userId,
+			long batchSize, String callbackURL, String className,
+			byte[] content, String contentType, String executeStatus,
+			Map<String, String> fieldNameMappingMap, int importStrategy,
+			String operation, Map<String, Serializable> parameters,
+			String taskItemDelegateName)
+		throws PortalException {
+
+		_checkCrossCompanyPermissions(companyId);
+
+		return batchEngineImportTaskLocalService.addBatchEngineImportTask(
+			externalReferenceCode, companyId, userId, batchSize, callbackURL,
+			className, content, contentType, executeStatus, fieldNameMappingMap,
+			importStrategy, operation, parameters, taskItemDelegateName);
+	}
+
+	@Override
+	public BatchEngineImportTask addBatchEngineImportTask(
+			String externalReferenceCode, long companyId, long userId,
+			long batchSize, String callbackURL, String className,
+			byte[] content, String contentType, String executeStatus,
+			Map<String, String> fieldNameMappingMap, int importStrategy,
+			String operation, Map<String, Serializable> parameters,
+			String taskItemDelegateName,
+			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate)
+		throws PortalException {
+
+		_checkCrossCompanyPermissions(companyId);
+
+		return batchEngineImportTaskLocalService.addBatchEngineImportTask(
+			externalReferenceCode, companyId, userId, batchSize, callbackURL,
+			className, content, contentType, executeStatus, fieldNameMappingMap,
+			importStrategy, operation, parameters, taskItemDelegateName,
+			batchEngineTaskItemDelegate);
+	}
+
+	@Override
 	public BatchEngineImportTask getBatchEngineImportTask(
 			long batchEngineImportTaskId)
 		throws PortalException {
@@ -39,14 +83,27 @@ public class BatchEngineImportTaskServiceImpl
 			batchEngineImportTaskLocalService.getBatchEngineImportTask(
 				batchEngineImportTaskId);
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		_checkCrossCompanyPermissions(batchEngineImportTask.getCompanyId());
 
-		if ((batchEngineImportTask.getCompanyId() !=
-				permissionChecker.getCompanyId()) &&
-			!permissionChecker.isOmniadmin()) {
+		_checkTaskPermissions(batchEngineImportTask);
 
-			throw new PrincipalException();
-		}
+		return batchEngineImportTask;
+	}
+
+	@Override
+	public BatchEngineImportTask
+			getBatchEngineImportTaskByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		_checkCrossCompanyPermissions(companyId);
+
+		BatchEngineImportTask batchEngineImportTask =
+			batchEngineImportTaskLocalService.
+				getBatchEngineImportTaskByExternalReferenceCode(
+					externalReferenceCode, companyId);
+
+		_checkTaskPermissions(batchEngineImportTask);
 
 		return batchEngineImportTask;
 	}
@@ -56,16 +113,11 @@ public class BatchEngineImportTaskServiceImpl
 			long companyId, int start, int end)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		_checkCrossCompanyPermissions(companyId);
 
-		if ((companyId != permissionChecker.getCompanyId()) &&
-			!permissionChecker.isOmniadmin()) {
-
-			throw new PrincipalException();
-		}
-
-		return batchEngineImportTaskLocalService.getBatchEngineImportTasks(
-			companyId, start, end);
+		return _filterTaskListByPermissions(
+			batchEngineImportTaskLocalService.getBatchEngineImportTasks(
+				companyId, start, end));
 	}
 
 	@Override
@@ -74,22 +126,28 @@ public class BatchEngineImportTaskServiceImpl
 			OrderByComparator<BatchEngineImportTask> orderByComparator)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		_checkCrossCompanyPermissions(companyId);
 
-		if ((companyId != permissionChecker.getCompanyId()) &&
-			!permissionChecker.isOmniadmin()) {
-
-			throw new PrincipalException();
-		}
-
-		return batchEngineImportTaskLocalService.getBatchEngineImportTasks(
-			companyId, start, end, orderByComparator);
+		return _filterTaskListByPermissions(
+			batchEngineImportTaskLocalService.getBatchEngineImportTasks(
+				companyId, start, end, orderByComparator));
 	}
 
 	@Override
 	public int getBatchEngineImportTasksCount(long companyId)
 		throws PortalException {
 
+		_checkCrossCompanyPermissions(companyId);
+
+		return _filterTaskListByPermissions(
+			batchEngineImportTaskLocalService.getBatchEngineImportTasks(
+				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS)
+		).size();
+	}
+
+	private void _checkCrossCompanyPermissions(long companyId)
+		throws PrincipalException {
+
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if ((companyId != permissionChecker.getCompanyId()) &&
@@ -97,9 +155,52 @@ public class BatchEngineImportTaskServiceImpl
 
 			throw new PrincipalException();
 		}
+	}
 
-		return batchEngineImportTaskLocalService.getBatchEngineImportTasksCount(
-			companyId);
+	private void _checkTaskPermissions(
+			BatchEngineImportTask batchEngineImportTask)
+		throws PrincipalException {
+
+		if (!_hasTaskPermissions(
+				batchEngineImportTask, getPermissionChecker())) {
+
+			throw new PrincipalException();
+		}
+	}
+
+	private List<BatchEngineImportTask> _filterTaskListByPermissions(
+			List<BatchEngineImportTask> batchEngineImportTasks)
+		throws PrincipalException {
+
+		List<BatchEngineImportTask> filteredBatchEngineImportTasks =
+			new ArrayList<>();
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		for (BatchEngineImportTask batchEngineImportTask :
+				batchEngineImportTasks) {
+
+			if (_hasTaskPermissions(batchEngineImportTask, permissionChecker)) {
+				filteredBatchEngineImportTasks.add(batchEngineImportTask);
+			}
+		}
+
+		return filteredBatchEngineImportTasks;
+	}
+
+	private boolean _hasTaskPermissions(
+		BatchEngineImportTask batchEngineImportTask,
+		PermissionChecker permissionChecker) {
+
+		if (permissionChecker.isCompanyAdmin(
+				batchEngineImportTask.getCompanyId()) ||
+			(batchEngineImportTask.getUserId() ==
+				permissionChecker.getUserId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

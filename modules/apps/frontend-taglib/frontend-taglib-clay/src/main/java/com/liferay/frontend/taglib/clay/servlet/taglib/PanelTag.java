@@ -234,10 +234,18 @@ public class PanelTag extends BaseContainerTag {
 	}
 
 	private String _getType() {
-		if (Validator.isNotNull(_displayType) &&
-			_displayType.equals("secondary")) {
+		if (Validator.isNotNull(_displayType)) {
+			if (_displayType.equals("block")) {
+				return "block";
+			}
 
-			return "secondary";
+			if (_displayType.equals("default")) {
+				return "default";
+			}
+
+			if (_displayType.equals("secondary")) {
+				return "secondary";
+			}
 		}
 
 		return "unstyled";

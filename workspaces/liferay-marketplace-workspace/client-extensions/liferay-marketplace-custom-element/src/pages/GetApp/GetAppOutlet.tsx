@@ -29,7 +29,10 @@ import {postCartByPaymentMethod} from './utils/postCartByPaymentMethod';
 
 import './styles/index.scss';
 
-const getProductBasePriceAndTrial = (product: DeliveryProduct) => {
+const getProductBasePriceAndTrial = (
+	product: DeliveryProduct,
+	isCloudApp: boolean
+) => {
 	const baseValue = {
 		basePrice: 0,
 		firstSku: undefined,
@@ -51,24 +54,46 @@ const getProductBasePriceAndTrial = (product: DeliveryProduct) => {
 		};
 	}
 
-	const skusLicenseUsageTypes = skus
-		.map(({skuOptions, ...sku}) => ({
-			...sku,
-			skuOptions: skuOptions.find((skuOption) =>
-				[SkuOptions.STANDARD, SkuOptions.TRIAL].includes(
-					skuOption.skuOptionValueKey as SkuOptions
-				)
-			),
-		}))
-		.filter(({skuOptions}) => skuOptions);
+	let standardSku;
+	let trialSku;
 
-	const standardSku = skusLicenseUsageTypes.find(
-		({skuOptions}) => skuOptions?.skuOptionValueKey === SkuOptions.STANDARD
-	);
+	if (isCloudApp) {
+		trialSku = skus.find(({skuOptions}) =>
+			skuOptions.find(
+				(skuOption) =>
+					skuOption.skuOptionKey === SkuOptions.TRIAL &&
+					skuOption.skuOptionValueKey === 'yes'
+			)
+		);
 
-	const trialSku = skusLicenseUsageTypes.find(
-		({skuOptions}) => skuOptions?.skuOptionValueKey === SkuOptions.TRIAL
-	);
+		standardSku = skus.find(({skuOptions}) =>
+			skuOptions.find(
+				(skuOption) =>
+					skuOption.skuOptionKey === SkuOptions.TRIAL &&
+					skuOption.skuOptionValueKey === 'no'
+			)
+		);
+	} else {
+		const skusLicenseUsageTypes = skus
+			.map(({skuOptions, ...sku}) => ({
+				...sku,
+				skuOptions: skuOptions.find((skuOption) =>
+					[SkuOptions.STANDARD, SkuOptions.TRIAL].includes(
+						skuOption.skuOptionValueKey as SkuOptions
+					)
+				),
+			}))
+			.filter(({skuOptions}) => skuOptions);
+
+		standardSku = skusLicenseUsageTypes.find(
+			({skuOptions}) =>
+				skuOptions?.skuOptionValueKey === SkuOptions.STANDARD
+		);
+
+		trialSku = skusLicenseUsageTypes.find(
+			({skuOptions}) => skuOptions?.skuOptionValueKey === SkuOptions.TRIAL
+		);
+	}
 
 	return {
 		basePrice: standardSku?.price?.price,
@@ -82,6 +107,7 @@ const GetAppOutlet = () => {
 	const [
 		{
 			account,
+			isCloudApp,
 			license: {selectedSKU},
 			payment: {
 				billingAddress,
@@ -100,7 +126,8 @@ const GetAppOutlet = () => {
 	const navigate = useNavigate();
 
 	const productBasePriceAndTrial = getProductBasePriceAndTrial(
-		(product as unknown) as DeliveryProduct
+		(product as unknown) as DeliveryProduct,
+		isCloudApp
 	);
 
 	const {firstSku, trialSku} = productBasePriceAndTrial;

@@ -352,8 +352,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								"openapi.resource", "true"
 							).put(
 								"openapi.resource.key",
-								objectDefinition.getOSGiJaxRsName(
-									"ObjectEntryOpenAPIResource")
+								objectDefinition.getName()
 							).put(
 								"openapi.resource.path",
 								objectDefinition.getRESTContextPath()

@@ -75,7 +75,7 @@ const initialState = ({
 	buildAppPackages: {},
 	dayTrial: 'no',
 	optionValuesId: {},
-	priceModel: {value: 'Paid'},
+	priceModel: {value: 'Free'},
 	resourceRequirements: {
 		cpu: '',
 		ram: '',

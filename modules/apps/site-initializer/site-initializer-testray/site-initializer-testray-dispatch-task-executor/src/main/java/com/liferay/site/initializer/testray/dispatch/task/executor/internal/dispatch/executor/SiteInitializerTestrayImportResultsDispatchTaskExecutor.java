@@ -261,6 +261,14 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			testrayCaseId = objectEntry.getId();
 
 			_objectEntryIds.put(objectEntryIdsKey, testrayCaseId);
+
+			ObjectEntryUtil.addObjectEntry(
+				_defaultDTOConverterContext, "BuildsCases", _objectEntryManager,
+				HashMapBuilder.<String, Object>put(
+					"r_buildToBuildsCases_c_buildId", testrayBuildId
+				).put(
+					"r_caseToBuildsCases_c_caseId", testrayCaseId
+				).build());
 		}
 
 		long testrayCaseResultId = _getTestrayCaseResultId(

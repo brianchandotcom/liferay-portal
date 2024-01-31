@@ -7,7 +7,7 @@
 [#assign mdf_request_id = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
 
 [#function days_difference_from_now date]
-	[#return (date?long + (30 * 1000 * 60 * 60 * 24) - (.now?long)) / (1000 * 60 * 60 * 24) /]
+	[#return (date?long + (45 * 1000 * 60 * 60 * 24) - (.now?long)) / (1000 * 60 * 60 * 24) /]
 [/#function]
 
 [#function get_event_fields activity]

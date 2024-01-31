@@ -6,6 +6,7 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.search.tuning.rankings.web.internal.upgrade.v2_0_0.RenameRankingUpgradeProcess;
 import com.liferay.portal.search.tuning.rankings.web.internal.upgrade.v3_0_0.RankingJSONStorageEntryUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -23,6 +24,8 @@ public class PortalSearchTuningRankingsWebUpgradeStepRegistrator
 	@Override
 	public void register(Registry registry) {
 		registry.registerInitialization();
+
+		registry.register("0.0.1", "1.0.0", new DummyUpgradeStep());
 
 		registry.register(
 			"1.0.0", "2.0.0",

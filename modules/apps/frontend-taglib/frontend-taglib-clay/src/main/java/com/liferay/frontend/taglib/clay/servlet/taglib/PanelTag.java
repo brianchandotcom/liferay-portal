@@ -54,6 +54,10 @@ public class PanelTag extends BaseContainerTag {
 		return _showCollapseIcon;
 	}
 
+	public String getSize() {
+		return _size;
+	}
+
 	public void setCollapsable(Boolean collapsable) {
 		_collapsable = collapsable;
 	}
@@ -78,6 +82,10 @@ public class PanelTag extends BaseContainerTag {
 		_showCollapseIcon = showCollapseIcon;
 	}
 
+	public void setSize(String size) {
+		_size = size;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -88,6 +96,7 @@ public class PanelTag extends BaseContainerTag {
 		_displayType = "unstyled";
 		_expanded = false;
 		_showCollapseIcon = true;
+		_size = null;
 	}
 
 	@Override
@@ -103,6 +112,7 @@ public class PanelTag extends BaseContainerTag {
 		props.put("displayTitle", _displayTitle);
 		props.put("displayType", _displayType);
 		props.put("showCollapseIcon", _showCollapseIcon);
+		props.put("size", _size);
 
 		return super.prepareProps(props);
 	}
@@ -241,5 +251,6 @@ public class PanelTag extends BaseContainerTag {
 	private String _displayType = "unstyled";
 	private boolean _expanded;
 	private boolean _showCollapseIcon = true;
+	private String _size;
 
 }

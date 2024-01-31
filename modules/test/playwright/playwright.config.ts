@@ -15,6 +15,7 @@ import {config as knowledgeBaseWebConfig} from './tests/knowledge-base-web/confi
 import {config as layoutContentPageEditorWebConfig} from './tests/layout-content-page-editor-web/config';
 import {config as objectWebConfig} from './tests/object-web/config';
 import {config as portalWebConfig} from './tests/portal-web/config';
+import {config as stableConfig} from './tests/stable/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
 
 export default defineConfig({
@@ -33,6 +34,7 @@ export default defineConfig({
 		layoutContentPageEditorWebConfig,
 		objectWebConfig,
 		portalWebConfig,
+		stableConfig,
 		usersAdminWebConfig,
 	],
 	reporter: [

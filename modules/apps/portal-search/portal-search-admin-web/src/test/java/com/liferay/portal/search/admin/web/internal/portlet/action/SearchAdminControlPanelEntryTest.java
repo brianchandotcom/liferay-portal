@@ -72,12 +72,11 @@ public class SearchAdminControlPanelEntryTest {
 	public void testIndexActionsVirtualInstancesEnabledForTheGivenCompany()
 		throws Exception {
 
+		_setUpPermissionChecker(false, true);
+
 		long companyId = RandomTestUtil.randomLong();
 
 		_setUpGroup(companyId);
-
-		_setUpPermissionChecker(false, true);
-
 		_setUpReindexConfiguration(String.valueOf(companyId), false);
 
 		Assert.assertTrue(

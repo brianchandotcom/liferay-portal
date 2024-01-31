@@ -8,23 +8,39 @@ import {verify} from 'jsonwebtoken';
 import jwktopem from 'jwk-to-pem';
 import fetch from 'node-fetch';
 
-import {getConfigByKey, getOAuthConfigByKey} from "./config-util.js";
+import {getConfigByKey, getOAuthConfigByKey} from './config-util.js';
 import config from './configTreePath.js';
-import {applicationERCs, environmentConfigKeys, oauthAgentConfigKeys} from "./constants.js";
+import {
+	applicationERCs,
+	environmentConfigKeys,
+	oauthAgentConfigKeys,
+} from './constants.js';
 
+const domains = getConfigByKey(
+	environmentConfigKeys.COM_LIFERAY_LXC_DXP_DOMAINS
+);
 
-const domains = getConfigByKey(environmentConfigKeys.COM_LIFERAY_LXC_DXP_DOMAINS);
+const lxcDXPMainDomain = getConfigByKey(
+	environmentConfigKeys.COM_LIFERAY_LXC_DXP_MAIN_DOMAIN
+);
 
-const lxcDXPMainDomain = getConfigByKey(environmentConfigKeys.COM_LIFERAY_LXC_DXP_MAIN_DOMAIN);
+const lxcDXPServerProtocol = getConfigByKey(
+	environmentConfigKeys.COM_LIFERAY_LXC_DXP_SERVER_PROTOCOL
+);
 
-const lxcDXPServerProtocol = getConfigByKey(environmentConfigKeys.COM_LIFERAY_LXC_DXP_SERVER_PROTOCOL);
+const agentUriPath = getOAuthConfigByKey(
+	applicationERCs.OAUTH_AGENT_ERC,
+	oauthAgentConfigKeys._OAUTH2_JWKS_URI
+);
 
-const agentUriPath = getOAuthConfigByKey(applicationERCs.OAUTH_AGENT_ERC,oauthAgentConfigKeys._OAUTH2_JWKS_URI);
+const allowList = domains
+	? domains.split(',').map((domain) => `${lxcDXPServerProtocol}://${domain}`)
+	: '';
 
-const allowList = domains ? domains.split(',').map((domain) => `${lxcDXPServerProtocol}://${domain}`) : '';
-
-const oauthAgentClientId = getOAuthConfigByKey(applicationERCs.OAUTH_AGENT_ERC,oauthAgentConfigKeys._OAUTH2_USER_AGENT_CLIENT_ID)
-
+const oauthAgentClientId = getOAuthConfigByKey(
+	applicationERCs.OAUTH_AGENT_ERC,
+	oauthAgentConfigKeys._OAUTH2_USER_AGENT_CLIENT_ID
+);
 
 const corsOptions = {
 	origin(origin, callback) {
@@ -72,14 +88,17 @@ async function clientLiferayJWT(req, res, next) {
 				next();
 			}
 			else {
-				logger.log(
+				// eslint-disable-next-line no-console
+				console.error(
 					'JWT token client_id value does not match expected client_id value.'
 				);
+
 				res.status(401).send('Invalid authorization');
 			}
 		}
 		else {
-			logger.error(
+			// eslint-disable-next-line no-console
+			console.error(
 				'Error fetching JWKS %s %s',
 				jwksResponse.status,
 				jwksResponse.statusText
@@ -89,7 +108,8 @@ async function clientLiferayJWT(req, res, next) {
 		}
 	}
 	catch (error) {
-		logger.error('Error validating client JWT token\n%s', error);
+		// eslint-disable-next-line no-console
+		console.error('Error validating client JWT token\n%s', error);
 
 		res.status(401).send('Invalid authorization header');
 	}

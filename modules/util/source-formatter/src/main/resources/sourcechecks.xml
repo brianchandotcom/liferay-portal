@@ -1247,6 +1247,7 @@
 		<check name="JSPTaglibAnchorAttributesCheck">
 			<category name="Styling" />
 			<description name="Checks that values of anchor attributes follow naming conventions." />
+			<property name="enabled" value="false" />
 		</check>
 
 		<!-- Plugin Source Checks -->

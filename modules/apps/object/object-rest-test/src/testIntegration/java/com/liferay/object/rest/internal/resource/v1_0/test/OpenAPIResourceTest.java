@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerB
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -83,7 +82,19 @@ public class OpenAPIResourceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany(true);
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"domain", "able.com"
+			).put(
+				"portalInstanceId", "able.com"
+			).put(
+				"virtualHost", "www.able.com"
+			).toString(),
+			"headless-portal-instances/v1.0/portal-instances",
+			Http.Method.POST);
+
+		_company = _companyLocalService.getCompany(
+			jsonObject.getLong("companyId"));
 
 		_originalName = PrincipalThreadLocal.getName();
 
@@ -203,26 +214,13 @@ public class OpenAPIResourceTest {
 
 	@Test
 	public void testGetOpenAPIMultipleCompanies() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"domain", "able.com"
-			).put(
-				"portalInstanceId", "able.com"
-			).put(
-				"virtualHost", "www.able.com"
-			).toString(),
-			"headless-portal-instances/v1.0/portal-instances",
-			Http.Method.POST);
-
-		long companyId = (long)jsonObject.get("companyId");
-
-		User user = UserTestUtil.getAdminUser(companyId);
+		User user = UserTestUtil.getAdminUser(_company.getCompanyId());
 
 		Group group = GroupLocalServiceUtil.getGroup(
-			companyId, GroupConstants.GUEST);
+			_company.getCompanyId(), GroupConstants.GUEST);
 
 		_user = UserTestUtil.addUser(
-			companyId, user.getUserId(),
+			_company.getCompanyId(), user.getUserId(),
 			RandomTestUtil.randomString(
 				NumericStringRandomizerBumper.INSTANCE,
 				UniqueStringRandomizerBumper.INSTANCE),

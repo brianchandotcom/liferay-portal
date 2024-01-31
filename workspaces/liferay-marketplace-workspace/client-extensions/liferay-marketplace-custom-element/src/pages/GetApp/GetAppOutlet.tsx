@@ -208,7 +208,7 @@ const GetAppOutlet = () => {
 			<main>
 				<div className="border d-flex flex-column mt-7 p-5 rounded">
 					<div className="d-flex flex-column">
-						<ProductStepWizard />
+						{!isFreeApp && <ProductStepWizard />}
 
 						<Outlet
 							context={{

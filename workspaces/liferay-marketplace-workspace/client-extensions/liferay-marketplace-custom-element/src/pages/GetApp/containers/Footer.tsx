@@ -127,6 +127,10 @@ const ProductFooter: React.FC<ProductFooterProps> = ({
 
 	const onContinue = async () => {
 		if (nextStep) {
+			if (step.id === StepType.ACCOUNT && isFreeApp) {
+				return handleGetApp(cartUtil.cart?.id);
+			}
+
 			if (step.id === StepType.PROJECT && !hasResources) {
 				return navigate(
 					`/insuficient-resources/${project}/${

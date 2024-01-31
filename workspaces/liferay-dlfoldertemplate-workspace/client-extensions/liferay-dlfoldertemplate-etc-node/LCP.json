@@ -1,8 +1,8 @@
 {
 	"cpu": 1,
 	"env": {
-		"COM_LIFERAY_LXC_DXP_DOMAINS": "liferay",
-		"COM_LIFERAY_LXC_DXP_MAIN_DOMAIN": "liferay",
+		"COM_LIFERAY_LXC_DXP_DOMAINS": "liferay:8080",
+		"COM_LIFERAY_LXC_DXP_MAIN_DOMAIN": "liferay:8080",
 		"COM_LIFERAY_LXC_DXP_SERVER_PROTOCOL": "http",
 		"LIFERAY_ROUTES_CLIENT_EXTENSION": "/etc/liferay/lxc/ext-init-metadata",
 		"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata",

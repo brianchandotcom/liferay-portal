@@ -14,6 +14,7 @@ import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordSetT
 import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordSetVersionTable;
 import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordTable;
 import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordVersionTable;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -85,5 +86,10 @@ public class DDLServiceUpgradeStepRegistrator
 
 	@Reference
 	private CounterLocalService _counterLocalService;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.dynamic.data.mapping.service)(&(release.schema.version>=1.0.0)))"
+	)
+	private Release _release;
 
 }

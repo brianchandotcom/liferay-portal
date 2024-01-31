@@ -54,25 +54,25 @@ public abstract class BaseOpenNLPDocumentAssetAutoTaggerTestCase {
 					assetEntry.getTagNames());
 
 				Collection<String> expectedTagNames = Arrays.asList(
-					"adventures", "at all.", "ah", "alice", "alice .",
-					"archive foundation", "australia", "beau--ootiful", "bill",
-					"chapter", "cheshire cat",
-					"dr. gregory b. newby chief executive", "edgar atheling",
-					"foundation", "general information about project",
-					"general terms", "geography", "herald", "i", "if", "irs",
-					"internal revenue service", "king", "latitude", "laughing",
-					"lewis carroll", "lewis carroll posting date",
-					"lewis carroll this", "lizard", "london", "mine", "ma !",
-					"mary ann", "michael hart", "michael s. hart",
-					"mississippi", "not", "new zealand", "paris", "pat",
-					"pat !", "pepper", "pray",
-					"project gutenberg literary archive foundation",
-					"project gutenberg literary archive foundation project " +
-						"gutenberg-tm",
-					"project gutenberg-tm", "public domain", "queen", "queens",
-					"rabbit", "rome", "salt lake city", "shakespeare", "shark",
-					"soup", "there", "the", "united states", "very", "would",
-					"white rabbit", "whoever", "william", "you.--come", "your");
+					"ADVENTURES", "AT ALL.", "Adventures", "Ah", "Alice",
+					"Alice .", "Archive Foundation", "Australia", "Bill",
+					"CHAPTER", "Beau--ootiful", "Cheshire Cat",
+					"Dr. Gregory B. Newby Chief Executive", "Edgar Atheling",
+					"Foundation", "General Information About Project",
+					"General Terms", "Geography", "Herald", "I", "IF", "IRS",
+					"Internal Revenue Service", "King", "Latitude", "Laughing",
+					"Lewis Carroll", "Lewis Carroll Posting Date",
+					"Lewis Carroll This", "Lizard", "London", "MINE", "Ma !",
+					"Mary Ann", "Michael Hart", "Michael S. Hart",
+					"Mississippi", "NOT", "New Zealand", "Paris", "Pat",
+					"Pat !", "Pepper", "Pray",
+					"Project Gutenberg Literary Archive Foundation",
+					"Project Gutenberg Literary Archive Foundation Project " +
+						"Gutenberg-tm",
+					"Project Gutenberg-tm", "Public Domain", "Queen", "Queens",
+					"Rabbit", "Rome", "Salt Lake City", "Shakespeare", "Shark",
+					"Soup", "THERE", "The", "United States", "VERY", "WOULD",
+					"White Rabbit", "Whoever", "William", "YOU.--Come", "YOUR");
 
 				Assert.assertEquals(
 					actualTagNames.toString(), expectedTagNames.size(),

@@ -6,13 +6,11 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
 
 import java.io.IOException;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,27 +43,16 @@ public class JSPOutputTaglibsCheck extends BaseTagAttributesCheck {
 		String expectedValue = StringBundler.concat(
 			bundleSymbolicName, "#", fileName.substring(x + 38));
 
-		_checkAnchorAttributes(fileName, absolutePath, content, expectedValue);
+		_checkOutputKey(fileName, content, expectedValue);
 
 		return content;
 	}
 
-	private void _checkAnchorAttributes(
-		String fileName, String absolutePath, String content,
-		String expectedValue) {
+	private void _checkOutputKey(
+		String fileName, String content, String expectedValue) {
 
-		List<String> taglibAnchorAttributes = getAttributeValues(
-			_TAGLIB_ANCHOR_ATTRIBUTES_KEY, absolutePath);
-
-		for (String taglibAnchorAttribute : taglibAnchorAttributes) {
-			String[] attributeParts = StringUtil.split(
-				taglibAnchorAttribute, "->");
-
-			if (attributeParts.length != 2) {
-				continue;
-			}
-
-			String taglibName = "<" + attributeParts[0];
+		for (String outputTaglibName : _OUTPUT_TAGLIB_NAMES) {
+			String taglibName = "<" + outputTaglibName;
 
 			int x = -1;
 
@@ -89,7 +76,7 @@ public class JSPOutputTaglibsCheck extends BaseTagAttributesCheck {
 
 					String attributeName = entry.getKey();
 
-					if (!StringUtil.equals(attributeName, attributeParts[1])) {
+					if (!attributeName.equals("outputKey")) {
 						continue;
 					}
 
@@ -102,7 +89,7 @@ public class JSPOutputTaglibsCheck extends BaseTagAttributesCheck {
 							fileName,
 							StringBundler.concat(
 								"The value for 'outputKey' in <",
-								attributeParts[0], "> should start with '",
+								outputTaglibName, "> should start with '",
 								expectedValue, "'"),
 							getLineNumber(content, x));
 					}
@@ -122,7 +109,9 @@ public class JSPOutputTaglibsCheck extends BaseTagAttributesCheck {
 			bndSettings.getContent(), "Bundle-SymbolicName");
 	}
 
-	private static final String _TAGLIB_ANCHOR_ATTRIBUTES_KEY =
-		"taglibAnchorAttributes";
+	private static final String[] _OUTPUT_TAGLIB_NAMES = {
+		"liferay-util:body-bottom", "liferay-util:body-top",
+		"liferay-util:html-bottom", "liferay-util:html-top"
+	};
 
 }

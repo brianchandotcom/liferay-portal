@@ -2127,7 +2127,7 @@ definition {
 
 			Click(locator1 = "ManagementBar#FILTER");
 
-			for (var filterName : list "Draft,With Scheduled Versions,With Approved Versions,With Expired Versions") {
+			for (var filterName : list "Draft,Scheduled,Approved,Expired") {
 				MenuItem.viewVisible(menuItem = ${filterName});
 			}
 
@@ -2151,7 +2151,7 @@ definition {
 
 			Click(locator1 = "ManagementBar#FILTER");
 
-			for (var filterName : list "Draft,Denied,Pending,With Scheduled Versions,With Approved Versions,With Expired Versions") {
+			for (var filterName : list "Draft,Denied,Pending,Scheduled,Approved,Expired") {
 				MenuItem.viewVisible(menuItem = ${filterName});
 			}
 		}

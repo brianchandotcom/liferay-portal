@@ -8,7 +8,7 @@ import {Locator, Page} from '@playwright/test';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 
-export class DataSetPage {
+export class DataSetsPage {
 	readonly apiHelpers: ApiHelpers;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly basePath: string;

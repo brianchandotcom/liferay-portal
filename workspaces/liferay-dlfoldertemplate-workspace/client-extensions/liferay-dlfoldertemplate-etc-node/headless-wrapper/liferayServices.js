@@ -5,22 +5,27 @@
 
 import fetch from 'node-fetch';
 
-import {getConfigByKey} from "../util/config-util.js";
-import {applicationSpecificConfigKeys, environmentConfigKeys} from "../util/constants.js";
-import {getServerToken} from "../util/silent-authorization.js";
+import {getConfigByKey} from '../util/config-util.js';
+import {
+	applicationSpecificConfigKeys,
+	environmentConfigKeys,
+} from '../util/constants.js';
+import {getServerToken} from '../util/silent-authorization.js';
 
-const lxcDXPMainDomain =getConfigByKey(environmentConfigKeys.COM_LIFERAY_LXC_DXP_MAIN_DOMAIN);
+const lxcDXPMainDomain = getConfigByKey(
+	environmentConfigKeys.COM_LIFERAY_LXC_DXP_MAIN_DOMAIN
+);
 
-const lxcDXPServerProtocol =getConfigByKey(environmentConfigKeys.COM_LIFERAY_LXC_DXP_SERVER_PROTOCOL);
+const lxcDXPServerProtocol = getConfigByKey(
+	environmentConfigKeys.COM_LIFERAY_LXC_DXP_SERVER_PROTOCOL
+);
 
 const oauth2JWKSURI = `${lxcDXPServerProtocol}://${lxcDXPMainDomain}`;
 
 export async function getFolderTemplateNodesPage(templateID) {
-
 	const token = await getServerToken();
 
 	const prom = new Promise((resolve, reject) => {
-
 		const requestHeaders = new Headers();
 
 		requestHeaders.append('Authorization', `Bearer ${token}`);
@@ -31,7 +36,12 @@ export async function getFolderTemplateNodesPage(templateID) {
 			redirect: 'follow',
 		};
 
-		fetch(`${oauth2JWKSURI}${getConfigByKey(applicationSpecificConfigKeys.FOLDER_TEMPLATE_NODES_END_POINT)}?filter=templateId eq ${templateID}&page=0`, requestOptions)
+		fetch(
+			`${oauth2JWKSURI}${getConfigByKey(
+				applicationSpecificConfigKeys.FOLDER_TEMPLATE_NODES_END_POINT
+			)}?filter=templateId eq ${templateID}&page=0`,
+			requestOptions
+		)
 			.then((response) => response.json())
 			.then((result) => resolve(result.items))
 			.catch((error) => reject(error));
@@ -40,12 +50,13 @@ export async function getFolderTemplateNodesPage(templateID) {
 	return prom;
 }
 
-export async function postDocumentFolder(parentDocumentFolderId, DocumentFolder) {
-
+export async function postDocumentFolder(
+	parentDocumentFolderId,
+	DocumentFolder
+) {
 	const token = await getServerToken();
 
 	const prom = new Promise((resolve, reject) => {
-
 		const requestHeaders = new Headers();
 
 		requestHeaders.append('Authorization', `Bearer ${token}`);

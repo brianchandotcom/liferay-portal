@@ -141,12 +141,6 @@ const reducer = (state: InitialState, action: Actions) => {
 			};
 		}
 
-		case 'SET_EULA': {
-			const eula = action.payload;
-
-			return {...state, payment: {...state.payment, eula}};
-		}
-
 		case 'SET_EULA_CHECKBOX': {
 			const eulaCheckbox = action.payload;
 
@@ -217,7 +211,6 @@ type GetAppPayload = {
 	SET_BILLING_ADDRESS: BillingAddress;
 	SET_CART: Cart | undefined;
 	SET_CART_ITEMS: CartItem[];
-	SET_EULA: string;
 	SET_EULA_CHECKBOX: boolean;
 	SET_INVOICE: Invoice;
 	SET_LICENSE_TYPE: LicenseType;

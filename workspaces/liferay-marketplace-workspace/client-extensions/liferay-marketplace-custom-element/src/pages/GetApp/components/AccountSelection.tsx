@@ -4,19 +4,13 @@
  */
 
 import ClayLink from '@clayui/link';
-import {useModal} from '@clayui/modal';
 import useSWR from 'swr';
 
-import {Checkbox} from '../../../components/Checkbox/Checkbox';
-import {ContentModal} from '../../../components/ContentModal/ContentModal';
 import RadioCardList, {
 	RadioCardContent,
 } from '../../../components/RadioCardList/RadioCardList';
-import {useMarketplaceContext} from '../../../context/MarketplaceContext';
-import i18n from '../../../i18n';
 import {getAccountInfo} from '../../../utils/api';
-import {getEulaDescription} from '../../../utils/util';
-import {useGetAppContext} from '../GetAppContextProvider';
+import LicenseTermsCheckbox from '../containers/LicenseTermsCheckbox';
 
 const enabledAccountRoles = ['Account Administrator', 'Account Buyer'];
 
@@ -33,17 +27,6 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 	selectedAccount,
 	userAccount,
 }) => {
-	const [
-		{
-			payment: {eulaCheckbox},
-		},
-		dispatch,
-	] = useGetAppContext();
-
-	const {properties} = useMarketplaceContext();
-	const eulaModal = useModal();
-
-	const {data: eula = ''} = useSWR('/eula', getEulaDescription);
 	const {data: accounts = []} = useSWR('/accounts', async () => {
 		const radioAccountList: RadioCardContent<Account>[] = [];
 
@@ -57,8 +40,7 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 				if (accountInfo.type === 'person') {
 					displayAccount = true;
 				}
-			}
-			else {
+			} else {
 				displayAccount = accountBrief.roleBriefs.some((roleBrief) =>
 					enabledAccountRoles.includes(roleBrief.name)
 				);
@@ -112,26 +94,7 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 			/>
 
 			{isFreeApp ? (
-				<div className="align-items-start d-flex eula-container mt-4">
-					<Checkbox
-						checked={eulaCheckbox}
-						onChange={() =>
-							dispatch({
-								payload: !eulaCheckbox,
-								type: 'SET_EULA_CHECKBOX',
-							})
-						}
-					/>
-					I have read and agree to the
-					<a onClick={() => eulaModal.onOpenChange(true)}>
-						&nbsp;End User License Agreement&nbsp;
-					</a>
-					and the
-					<a onClick={() => window.open(properties.eulaBaseURL)}>
-						&nbsp;Terms&nbsp;
-					</a>
-					of Service.
-				</div>
+				<LicenseTermsCheckbox />
 			) : (
 				<>
 					<span className="mr-1 secondary-text">
@@ -145,14 +108,6 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 						Contact Support
 					</ClayLink>
 				</>
-			)}
-
-			{eulaModal.open && (
-				<ContentModal
-					description={eula}
-					header={i18n.translate('end-user-license-agreement')}
-					{...eulaModal}
-				/>
 			)}
 		</div>
 	);

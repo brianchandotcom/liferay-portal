@@ -5,60 +5,16 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {useModal} from '@clayui/modal';
 import {useNavigate} from 'react-router-dom';
 
-import {Checkbox} from '../../../components/Checkbox/Checkbox';
-import {ContentModal} from '../../../components/ContentModal/ContentModal';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
-import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import useCart from '../../../hooks/useCart';
-import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import {useGetAppContext} from '../GetAppContextProvider';
 import {PaymentMethod} from '../enums/paymentMethod';
 import {StepType} from '../enums/stepType';
+import LicenseTermsCheckbox from './LicenseTermsCheckbox';
 
-const LicenseTermsCheckbox = () => {
-	const [
-		{
-			payment: {eula, eulaCheckbox},
-		},
-		dispatch,
-	] = useGetAppContext();
-	const {properties} = useMarketplaceContext();
-	const eulaModal = useModal();
-
-	return (
-		<div className="align-items-start d-flex eula-container mt-4">
-			{eulaModal.open && (
-				<ContentModal
-					description={eula}
-					header={i18n.translate('end-user-license-agreement')}
-					{...eulaModal}
-				/>
-			)}
-			<Checkbox
-				checked={eulaCheckbox}
-				onChange={() =>
-					dispatch({
-						payload: !eulaCheckbox,
-						type: 'SET_EULA_CHECKBOX',
-					})
-				}
-			/>
-			I have read and agree to the
-			<a onClick={() => eulaModal.onOpenChange(true)}>
-				&nbsp;End User License Agreement&nbsp;
-			</a>
-			and the
-			<a onClick={() => window.open(properties.eulaBaseURL)}>
-				&nbsp;Terms&nbsp;
-			</a>
-			of Service.
-		</div>
-	);
-};
 
 type ProductFooterProps = {
 	cartUtil: ReturnType<typeof useCart>;

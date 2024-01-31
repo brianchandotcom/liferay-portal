@@ -8,11 +8,13 @@ import cors from 'cors';
 import express from 'express';
 
 import Services from './services/services.js';
+import {getConfigByKey} from './util/config-util.js';
 import config from './util/configTreePath.js';
-import {corsWithReady, liferayJWT,} from './util/liferay-oauth2-resource-server.js';
-import {getConfigByKey} from "./util/config-util.js";
-import {serviceConfigKeys} from "./util/constants.js";
-
+import {serviceConfigKeys} from './util/constants.js';
+import {
+	corsWithReady,
+	liferayJWT,
+} from './util/liferay-oauth2-resource-server.js';
 
 const serverPort = getConfigByKey(serviceConfigKeys.SERVER_PORT);
 
@@ -31,13 +33,10 @@ app.use(liferayJWT);
 app.use('/jobs', Services);
 
 app.get(getConfigByKey(serviceConfigKeys.READY_PATH), (req, res) => {
-
 	res.send({groups: ['liveness', 'readiness'], status: 'UP'});
-
 });
 
 app.listen(serverPort, () => {
-
 	// eslint-disable-next-line no-console
 	console.log(`config: ${JSON.stringify(config, null, '\t')}`);
 

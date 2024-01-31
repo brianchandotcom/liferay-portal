@@ -746,6 +746,8 @@ definition {
 			category = "Contenido",
 			portlet = "Formularios");
 
+		Refresh();
+
 		FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
 
 		Form.editNameLocalized(

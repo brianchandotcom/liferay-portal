@@ -454,7 +454,7 @@ public class UserSearchFixture {
 	public String toStringTags(String[] tags) {
 		List<String> list = new ArrayList<>(tags.length);
 
-		list.addAll(Arrays.asList(tags));
+		Collections.addAll(list, tags);
 
 		Collections.sort(list);
 

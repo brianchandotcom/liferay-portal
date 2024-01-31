@@ -354,6 +354,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuUnitOfMeasure",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification",
+		"com.liferay.headless.commerce.admin.channel.dto.v1_0.ChannelAccount",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
 			"AccountAddressChannel",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
@@ -441,6 +442,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem",
 		"com.liferay.headless.commerce.delivery.cart.dto.v1_0.PaymentMethod",
 		"com.liferay.headless.commerce.delivery.cart.dto.v1_0.ShippingMethod",
+		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Account",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Attachment",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Category",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Channel",

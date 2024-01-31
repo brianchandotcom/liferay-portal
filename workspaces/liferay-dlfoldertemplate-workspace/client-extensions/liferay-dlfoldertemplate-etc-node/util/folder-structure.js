@@ -3,130 +3,60 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {foldertemplatesService} from '../headless-wrapper/foldertemplates.js';
-import {headless_deliveryService} from '../headless-wrapper/headless-delivery.js';
-import config from '../util/configTreePath.js';
-import {getServerToken} from './silent-authorization.js';
-const viewByAnyone = 'Anyone';
-const viewOption = viewByAnyone;
-const employee_folder_external_reference_code =
-	config['employee.folder.external.reference.code'];
-const employee_folder_site_id = config['employee.folder.site.id'];
+import {getFolderTemplateNodesPage, postDocumentFolder} from '../headless-wrapper/liferayServices.js';
 
-async function getOrCreateMainFolder() {
-	const token = await getServerToken(0);
-	const delivery_srv = new headless_deliveryService(token);
-	const folder = await delivery_srv.getSiteDocumentsFolderByExternalReferenceCode(
-		employee_folder_site_id,
-		employee_folder_external_reference_code
-	);
-	if (folder && folder.id) {
-		return folder.id;
-	}
-	else {
-		const folderObject = {
-			description: 'Liferay Employees Folder',
-			externalReferenceCode: employee_folder_external_reference_code,
-			name: employee_folder_external_reference_code,
-			parentDocumentFolderId: 0,
-			viewableBy: viewOption,
-		};
-		const folder = await delivery_srv.postSiteDocumentFolder(
-			employee_folder_site_id,
-			folderObject
-		);
+async function createFolder(parentFolderId, folderName, folderDescription) {
 
-		return folder.id;
-	}
-}
-async function getOrCreateMainFolderById(folderId) {
-	const token = await getServerToken(0);
-	const delivery_srv = new headless_deliveryService(token);
-	const folder = await delivery_srv.getDocumentFolder(folderId);
-	if (folder && folder.id) {
-		return folder.id;
-	}
-	else {
-		const folderObject = {
-			description: 'Liferay Employees Folder',
-			externalReferenceCode: employee_folder_external_reference_code,
-			name: employee_folder_external_reference_code,
-			parentDocumentFolderId: 0,
-			viewableBy: viewOption,
-		};
-		const folder = await delivery_srv.postSiteDocumentFolder(
-			employee_folder_site_id,
-			folderObject
-		);
+    const folderObject = {
+        description: folderDescription,
+        name: folderName.toString().trim(),
+        viewableBy: 'Anyone'
+    };
 
-		return folder.id;
-	}
-}
-async function getOrCreateUserFolder(
-	parentFolderId,
-	folderName,
-	folderDescription
-) {
-	const token = await getServerToken(0);
-	const delivery_srv = new headless_deliveryService(token);
-	const folderObject = {
-		description: folderDescription,
-		name: `${folderName.trim()}`,
-		viewableBy: viewOption,
-	};
-	const folder = await delivery_srv.postDocumentFolderDocumentFolder(
-		parentFolderId,
-		folderObject
-	);
+    const folder = await postDocumentFolder(parentFolderId, folderObject);
 
-	return folder.id;
-}
-async function getTemplate(templateId) {
-	const token = await getServerToken(0);
-	const foldertemplateSrv = new foldertemplatesService(token);
-	const dynamicTemplateData = await foldertemplateSrv.getFolderTemplatesPage(
-		templateId
-	);
-	const template = dynamicTemplateData.items;
-
-	return template;
+    return folder.id;
 }
 
-export async function start(userId, templateId) {
-	const template = await getTemplate(templateId);
-	const root = template.filter((folder) => folder.root)[0];
-	root.name = userId;
-	const mainFolderId = await getOrCreateMainFolder();
-	await traverseFolders(template, root.id, mainFolderId);
+export async function createFolders(rootFolderName, templateId, containerFolderId) {
+
+    try {
+        const templateNodes = await getFolderTemplateNodesPage(templateId);
+
+        const rootNode = templateNodes.find( node => node.root);
+
+        await traverseTemplateNodes(templateNodes, rootNode.id, containerFolderId,rootFolderName);
+
+    }catch (error) {
+
+        throw new Error(error.message);
+
+    }
+
 }
 
-export async function startCustom(
-	rootFolderName,
-	templateId,
-	containerFolderId
-) {
-	const template = await getTemplate(templateId);
-	const root = template.filter((folder) => folder.root)[0];
-	root.name = rootFolderName;
-	const mainFolderId = await getOrCreateMainFolderById(containerFolderId);
-	await traverseFolders(template, root.id, mainFolderId);
-}
+async function traverseTemplateNodes(templateNodes, rootFolderId, parentFolderId,rootFolderName) {
 
-async function traverseFolders(folders, rootFolderId, actualParentFolderId) {
-	const rootFolder = folders.filter(
-		(folder) => folder.id.toString() === rootFolderId.toString()
-	)[0];
-	const actualFolderId = await getOrCreateUserFolder(
-		actualParentFolderId,
-		rootFolder.name,
-		rootFolder.description
-	);
-	const subFolders = folders.filter(
-		(folder) => folder.parentID.toString() === rootFolderId.toString()
-	);
-	if (subFolders.length) {
-		await subFolders.forEach(async (folder) => {
-			await traverseFolders(folders, folder.id, actualFolderId);
-		});
-	}
+    const currentNode = templateNodes.find(
+        node => node.id.toString() === rootFolderId.toString()
+    )
+
+    const folderId = await createFolder(
+        parentFolderId,
+        currentNode.root?rootFolderName:currentNode.name,
+        currentNode.description
+    );
+
+    const childNodes = templateNodes.filter(
+        node => node.parentId.toString() === currentNode.id.toString()
+    );
+
+    if (childNodes.length) {
+
+        await childNodes.forEach(async node => {
+
+            await traverseTemplateNodes(templateNodes, node.id, folderId,rootFolderName);
+
+        });
+    }
 }

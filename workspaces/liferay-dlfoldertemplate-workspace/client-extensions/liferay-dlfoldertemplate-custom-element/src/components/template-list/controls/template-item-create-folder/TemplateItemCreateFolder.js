@@ -16,7 +16,7 @@ import {
 import {createFolder} from '../../../../services/TemplateItemCreateFolderService';
 import {showError, showSuccess} from '../../../../utils/util';
 
-const TemplateItemCreateFolder = ({templateID}) => {
+const TemplateItemCreateFolder = ({templateId}) => {
 	const [folderTree, setFolderTree] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -117,7 +117,7 @@ const TemplateItemCreateFolder = ({templateID}) => {
 						setIsSubmitting(true);
 
 						await createFolder(
-							templateID,
+							templateId,
 							values.parentFolder,
 							values.name
 						);

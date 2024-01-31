@@ -67,9 +67,9 @@ public class EditMVCActionCommandTest {
 
 	@Test
 	public void testReindexAll() throws Exception {
-		_setUpPermissionCheckerOmniadmin(true);
-		_setUpActionRequest(StringPool.BLANK, "reindex");
-		_setUpHttpServletRequest(new String[] {RandomTestUtil.randomString()});
+		_setUpPermissionsAndRequests(
+			StringPool.BLANK, new String[] {RandomTestUtil.randomString()},
+			"reindex", true);
 
 		_editMVCActionCommand.doProcessAction(_actionRequest, _actionResponse);
 
@@ -80,9 +80,9 @@ public class EditMVCActionCommandTest {
 
 	@Test
 	public void testReindexDictionaries() throws Exception {
-		_setUpPermissionCheckerOmniadmin(true);
-		_setUpActionRequest("reindexDictionaries");
-		_setUpHttpServletRequest(new String[] {RandomTestUtil.randomString()});
+		_setUpPermissionsAndRequests(
+			new String[] {RandomTestUtil.randomString()}, "reindexDictionaries",
+			true);
 
 		_editMVCActionCommand.doProcessAction(_actionRequest, _actionResponse);
 
@@ -103,9 +103,9 @@ public class EditMVCActionCommandTest {
 
 	@Test
 	public void testReindexIndexReindexer() throws Exception {
-		_setUpPermissionCheckerOmniadmin(true);
-		_setUpActionRequest("reindexIndexReindexer");
-		_setUpHttpServletRequest(new String[] {RandomTestUtil.randomString()});
+		_setUpPermissionsAndRequests(
+			new String[] {RandomTestUtil.randomString()},
+			"reindexIndexReindexer", true);
 
 		_editMVCActionCommand.doProcessAction(_actionRequest, _actionResponse);
 
@@ -115,13 +115,12 @@ public class EditMVCActionCommandTest {
 
 	@Test
 	public void testReindexMultipleCompanies() throws Exception {
-		_setUpPermissionCheckerOmniadmin(true);
-		_setUpActionRequest("reindex");
-		_setUpHttpServletRequest(
+		_setUpPermissionsAndRequests(
 			ArrayUtil.toStringArray(
 				new long[] {
 					RandomTestUtil.randomLong(), RandomTestUtil.randomLong()
-				}));
+				}),
+			"reindex", true);
 
 		_editMVCActionCommand.doProcessAction(_actionRequest, _actionResponse);
 
@@ -133,14 +132,13 @@ public class EditMVCActionCommandTest {
 	public void testReindexMultipleCompaniesWithoutPermission()
 		throws Exception {
 
-		_setUpActionRequest("reindex");
-		_setUpPermissionCheckerOmniadmin(false);
-
 		long[] companyIds = {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong()
 		};
 
-		_setUpHttpServletRequest(ArrayUtil.toStringArray(companyIds));
+		_setUpPermissionsAndRequests(
+			ArrayUtil.toStringArray(companyIds), "reindex", false);
+
 		_setUpPermissionCheckerCompanyAdmin(true, companyIds[0]);
 		_setUpPermissionCheckerCompanyAdmin(false, companyIds[1]);
 
@@ -153,9 +151,8 @@ public class EditMVCActionCommandTest {
 
 	@Test
 	public void testReindexOneClassName() throws Exception {
-		_setUpActionRequest("reindex");
-		_setUpHttpServletRequest(new String[] {RandomTestUtil.randomString()});
-		_setUpPermissionCheckerOmniadmin(true);
+		_setUpPermissionsAndRequests(
+			new String[] {RandomTestUtil.randomString()}, "reindex", true);
 
 		_editMVCActionCommand.doProcessAction(_actionRequest, _actionResponse);
 
@@ -168,10 +165,10 @@ public class EditMVCActionCommandTest {
 	public void testReindexWithoutPermission() throws Exception {
 		long[] companyIds = {RandomTestUtil.randomLong()};
 
-		_setUpHttpServletRequest(ArrayUtil.toStringArray(companyIds));
-		_setUpPermissionCheckerCompanyAdmin(false, companyIds[0]);
+		_setUpPermissionsAndRequests(
+			ArrayUtil.toStringArray(companyIds), "reindex", false);
 
-		_setUpPermissionCheckerOmniadmin(false);
+		_setUpPermissionCheckerCompanyAdmin(false, companyIds[0]);
 
 		_editMVCActionCommand.doProcessAction(_actionRequest, _actionResponse);
 
@@ -196,13 +193,9 @@ public class EditMVCActionCommandTest {
 		);
 	}
 
-	private void _setUpActionRequest(String cmd) {
-		_setUpActionRequest(RandomTestUtil.randomString(), cmd);
-	}
-
-	private void _setUpActionRequest(String className, String cdm) {
+	private void _setUpActionRequest(String className, String cmd) {
 		Mockito.doReturn(
-			cdm
+			cmd
 		).when(
 			_actionRequest
 		).getParameter(
@@ -271,6 +264,21 @@ public class EditMVCActionCommandTest {
 		if (omniadmin) {
 			_verifyPermissionCheckerIsCompanyAdmin(0);
 		}
+	}
+
+	private void _setUpPermissionsAndRequests(
+		String className, String[] companyIds, String cmd, boolean omniadmin) {
+
+		_setUpActionRequest(className, cmd);
+		_setUpHttpServletRequest(companyIds);
+		_setUpPermissionCheckerOmniadmin(omniadmin);
+	}
+
+	private void _setUpPermissionsAndRequests(
+		String[] companyIds, String cmd, boolean omniadmin) {
+
+		_setUpPermissionsAndRequests(
+			RandomTestUtil.randomString(), companyIds, cmd, omniadmin);
 	}
 
 	private void _setUpThemeDisplay() {

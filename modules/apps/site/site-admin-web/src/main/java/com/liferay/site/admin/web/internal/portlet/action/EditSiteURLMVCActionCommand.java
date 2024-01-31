@@ -47,12 +47,23 @@ public class EditSiteURLMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
 		Group liveGroup = _groupLocalService.getGroup(liveGroupId);
 
 		String friendlyURL = ParamUtil.getString(
 			actionRequest, "groupFriendlyURL", liveGroup.getFriendlyURL());
+
+		boolean redirect = false;
+
+		if ((themeDisplay.getScopeGroupId() == liveGroup.getGroupId()) &&
+			!Objects.equals(friendlyURL, liveGroup.getFriendlyURL())) {
+
+			redirect = true;
+		}
 
 		_groupService.updateFriendlyURL(liveGroup.getGroupId(), friendlyURL);
 
@@ -76,6 +87,12 @@ public class EditSiteURLMVCActionCommand
 				actionRequest, "stagingFriendlyURL",
 				stagingGroup.getFriendlyURL());
 
+			if ((themeDisplay.getScopeGroupId() == stagingGroup.getGroupId()) &&
+				!Objects.equals(friendlyURL, stagingGroup.getFriendlyURL())) {
+
+				redirect = true;
+			}
+
 			_groupService.updateFriendlyURL(
 				stagingGroup.getGroupId(), friendlyURL);
 
@@ -92,21 +109,18 @@ public class EditSiteURLMVCActionCommand
 					availableLocales));
 		}
 
-		if (!_isRedirect(actionRequest, liveGroup)) {
+		if (!redirect) {
 			return;
 		}
 
 		actionRequest.setAttribute(
 			WebKeys.REDIRECT,
-			_getSiteAdministrationURL(actionRequest, liveGroup));
+			_getSiteAdministrationURL(liveGroup, themeDisplay));
 	}
 
 	private String _getSiteAdministrationURL(
-			ActionRequest actionRequest, Group group)
+			Group group, ThemeDisplay themeDisplay)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
@@ -129,37 +143,6 @@ public class EditSiteURLMVCActionCommand
 			"site-configuration-site-url");
 
 		return siteAdministrationURL;
-	}
-
-	private boolean _isRedirect(ActionRequest actionRequest, Group liveGroup) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String friendlyURL = ParamUtil.getString(
-			actionRequest, "groupFriendlyURL", liveGroup.getFriendlyURL());
-
-		if ((themeDisplay.getScopeGroupId() == liveGroup.getGroupId()) &&
-			!Objects.equals(friendlyURL, liveGroup.getFriendlyURL())) {
-
-			return true;
-		}
-
-		if (liveGroup.hasStagingGroup()) {
-			Group stagingGroup = liveGroup.getStagingGroup();
-
-			String stagingFriendlyURL = ParamUtil.getString(
-				actionRequest, "stagingFriendlyURL",
-				stagingGroup.getFriendlyURL());
-
-			if ((themeDisplay.getScopeGroupId() == stagingGroup.getGroupId()) &&
-				!Objects.equals(
-					stagingFriendlyURL, stagingGroup.getFriendlyURL())) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	@Reference

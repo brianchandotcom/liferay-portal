@@ -61,17 +61,12 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			List<JobProperty> relevantPlaywrightJobProperties =
 				getRelevantPlaywrightJobProperties();
 
-			if (relevantPlaywrightJobProperties.isEmpty()) {
-				return;
+			if (!relevantPlaywrightJobProperties.isEmpty()) {
+				recordJobProperties(relevantPlaywrightJobProperties);
 			}
-
-			recordJobProperties(relevantPlaywrightJobProperties);
-
-			addDefaultProjectJobProperty(batchName);
 		}
-		else {
-			addDefaultProjectJobProperty(batchName);
-		}
+
+		addDefaultProjectJobProperty(batchName);
 
 		File buildTestBatchFile = new File(
 			portalGitWorkingDirectory.getWorkingDirectory(),

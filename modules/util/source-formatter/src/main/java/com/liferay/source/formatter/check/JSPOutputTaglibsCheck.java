@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * @author Qi Zhang
  */
-public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
+public class JSPOutputTaglibsCheck extends BaseTagAttributesCheck {
 
 	@Override
 	public boolean isModuleSourceCheck() {

@@ -6,6 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayButtonGroup from '@clayui/button/lib/Group';
 import {Body, Cell, Head, Row, Table} from '@clayui/core';
+import ClayIcon from "@clayui/icon";
 import ClayModal, {Context as ModalContext, useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayToolbar from '@clayui/toolbar';
@@ -20,7 +21,6 @@ import {showError} from '../../utils/util';
 import Diagram from '../template-diagram/Diagram';
 import TemplateItemCreateFolder from './controls/template-item-create-folder/TemplateItemCreateFolder';
 import NewTemplateItem from './controls/template-item-create/NewTemplateItem';
-import ClayIcon from "@clayui/icon";
 
 const DELTAS = [{label: 5}, {label: 10}, {label: 20}, {label: 40}];
 

@@ -6,32 +6,26 @@
 import cors from 'cors';
 import {verify} from 'jsonwebtoken';
 import jwktopem from 'jwk-to-pem';
-import cache from 'memory-cache';
 import fetch from 'node-fetch';
 
-import {headless_admin_userService} from '../headless-wrapper/headless-admin-user.js';
+import {getConfigByKey, getOAuthConfigByKey} from "./config-util.js";
 import config from './configTreePath.js';
-import {logger} from './logger.js';
-import {getServerToken} from './silent-authorization.js';
+import {applicationERCs, environmentConfigKeys, oauthAgentConfigKeys} from "./constants.js";
 
-const projectId = config['project-id'];
-const domains =
-	config['com.liferay.lxc.dxp.domains'] ||
-	config['com.liferay.sh.dxp.domains'];
-const [agentExternalReferenceCode] = config[
-	'liferay.oauth.application.external.reference.codes'
-].split(',');
-const lxcDXPMainDomain =
-	config['com.liferay.lxc.dxp.mainDomain'] ||
-	config['com.liferay.sh.dxp.mainDomain'];
-const lxcDXPServerProtocol =
-	config['com.liferay.lxc.dxp.server.protocol'] ||
-	config['com.liferay.sh.dxp.server.protocol'];
-const agentUriPath =
-	config[agentExternalReferenceCode + '.oauth2.jwks.uri'] || '/o/oauth2/jwks';
-const allowList = domains
-	? domains.split(',').map((domain) => `${lxcDXPServerProtocol}://${domain}`)
-	: '';
+
+const domains = getConfigByKey(environmentConfigKeys.COM_LIFERAY_LXC_DXP_DOMAINS);
+
+const lxcDXPMainDomain = getConfigByKey(environmentConfigKeys.COM_LIFERAY_LXC_DXP_MAIN_DOMAIN);
+
+const lxcDXPServerProtocol = getConfigByKey(environmentConfigKeys.COM_LIFERAY_LXC_DXP_SERVER_PROTOCOL);
+
+const agentUriPath = getOAuthConfigByKey(applicationERCs.OAUTH_AGENT_ERC,oauthAgentConfigKeys._OAUTH2_JWKS_URI);
+
+const allowList = domains ? domains.split(',').map((domain) => `${lxcDXPServerProtocol}://${domain}`) : '';
+
+const oauthAgentClientId = getOAuthConfigByKey(applicationERCs.OAUTH_AGENT_ERC,oauthAgentConfigKeys._OAUTH2_USER_AGENT_CLIENT_ID)
+
+
 const corsOptions = {
 	origin(origin, callback) {
 		callback(null, allowList.includes(origin));
@@ -48,7 +42,9 @@ export async function corsWithReady(req, res, next) {
 
 async function clientLiferayJWT(req, res, next) {
 	const authorization = req.headers.authorization;
+
 	const AgentOauth2JWKSURI = `${lxcDXPServerProtocol}://${lxcDXPMainDomain}${agentUriPath}`;
+
 	if (!authorization) {
 		res.status(401).send('No authorization header Agent');
 
@@ -65,23 +61,14 @@ async function clientLiferayJWT(req, res, next) {
 
 			const decoded = verify(bearerToken, jwksPublicKey, {
 				algorithms: ['RS256'],
-				ignoreExpiration: true, // TODO we need to use refresh token
+				ignoreExpiration: true,
 			});
-			const client_id =
-				config[
-					`${projectId}-oauth-application-user-agent.oauth2.user.agent.client.id`
-				] ||
-				config[
-					`${projectId}-oauth-application-user-agent.sh.oauth2.headless.agent.client.id`
-				];
 			if (
 				decoded.client_id.replaceAll(' ', '') ===
-				client_id.replaceAll(' ', '')
+				oauthAgentClientId.replaceAll(' ', '')
 			) {
 				req.token = bearerToken;
 				req.jwt = decoded;
-				const username = req.jwt.username;
-				req.user = await getUserProfile(username);
 				next();
 			}
 			else {
@@ -107,28 +94,12 @@ async function clientLiferayJWT(req, res, next) {
 		res.status(401).send('Invalid authorization header');
 	}
 }
+
 export async function liferayJWT(req, res, next) {
 	if (req.path === config.readyPath) {
 		return next();
 	}
 	else {
 		return clientLiferayJWT(req, res, next);
-	}
-}
-
-async function getUserProfile(username) {
-	const cacheKey = `user_profile_${username}`;
-	const profile = cache.get(cacheKey);
-	if (profile) {
-		return profile;
-	}
-	else {
-		const token = await getServerToken('System');
-		const usersService = new headless_admin_userService(`Bearer ${token}`);
-		const filter = `filter=emailAddress eq '${username}'`;
-		const userProfile = await usersService.getUserAccountsPage(filter);
-		cache.put(cacheKey, userProfile.items[0], 60 * 1000 * 4);
-
-		return userProfile.items[0];
 	}
 }

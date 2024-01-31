@@ -16,10 +16,12 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -27,10 +29,13 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -92,10 +97,30 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 			SearchContext searchContext)
 		throws Exception {
 
-		addSearchTerm(searchQuery, searchContext, Field.CONTENT, true);
-		addSearchTerm(searchQuery, searchContext, Field.DESCRIPTION, true);
-		addSearchTerm(searchQuery, searchContext, Field.TITLE, true);
-		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, true);
+		BooleanQuery keywordsBooleanQuery = new BooleanQueryImpl();
+
+		addSearchTerm(keywordsBooleanQuery, searchContext, Field.CONTENT, true);
+		addSearchTerm(
+			keywordsBooleanQuery, searchContext, Field.DESCRIPTION, true);
+		addSearchTerm(keywordsBooleanQuery, searchContext, Field.TITLE, true);
+		addSearchTerm(
+			keywordsBooleanQuery, searchContext, Field.USER_NAME, true);
+
+		try {
+			BooleanQuery modelBooleanQuery = new BooleanQueryImpl();
+
+			modelBooleanQuery.add(
+				new TermQueryImpl("entryClassName", CLASS_NAME),
+				BooleanClauseOccur.MUST);
+
+			modelBooleanQuery.add(
+				keywordsBooleanQuery, BooleanClauseOccur.SHOULD);
+
+			searchQuery.add(modelBooleanQuery, BooleanClauseOccur.SHOULD);
+		}
+		catch (ParseException parseException) {
+			throw new SystemException(parseException);
+		}
 	}
 
 	@Override

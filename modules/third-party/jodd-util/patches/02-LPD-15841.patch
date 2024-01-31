@@ -1,0 +1,90 @@
+diff --git a/jodd/introspector/Fields.java b/jodd/introspector/Fields.java
+index aa41c52fdd215..2918123568543 100644
+--- a/jodd/introspector/Fields.java
++++ b/jodd/introspector/Fields.java
+@@ -28,6 +28,7 @@ package jodd.introspector;
+ import jodd.util.ClassUtil;
+ 
+ import java.lang.reflect.Field;
++import java.lang.reflect.Proxy;
+ import java.util.Arrays;
+ import java.util.Collections;
+ import java.util.Comparator;
+@@ -63,7 +64,14 @@ public class Fields {
+ 		final boolean scanAccessible = classDescriptor.isScanAccessible();
+ 		final Class type = classDescriptor.getType();
+ 
+-		final Field[] fields = scanAccessible ? ClassUtil.getAccessibleFields(type) : ClassUtil.getSupportedFields(type);
++		Field[] fields = null;
++
++		if (Proxy.isProxyClass(type)) {
++			fields = new Field[0];
++		}
++		else {
++			fields = scanAccessible ? ClassUtil.getAccessibleFields(type) : ClassUtil.getSupportedFields(type);
++		}
+ 
+ 		final HashMap<String, FieldDescriptor> map = new HashMap<>(fields.length);
+ 
+@@ -127,4 +135,5 @@ public class Fields {
+ 		return allFields;
+ 	}
+ 
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/jodd/introspector/Methods.java b/jodd/introspector/Methods.java
+index e7aa0341ff133..a1fa6ede0ed62 100644
+--- a/jodd/introspector/Methods.java
++++ b/jodd/introspector/Methods.java
+@@ -29,12 +29,15 @@ import jodd.util.ArraysUtil;
+ import jodd.util.ClassUtil;
+ 
+ import java.lang.reflect.Method;
++import java.lang.reflect.Proxy;
+ import java.util.ArrayList;
+ import java.util.Arrays;
+ import java.util.Collections;
+ import java.util.Comparator;
+ import java.util.HashMap;
++import java.util.HashSet;
+ import java.util.List;
++import java.util.Set;
+ 
+ /**
+  * Methods collection.
+@@ -64,7 +67,22 @@ public class Methods {
+ 
+ 		final Class type = classDescriptor.getType();
+ 
+-		final Method[] methods = scanAccessible ? ClassUtil.getAccessibleMethods(type) : ClassUtil.getSupportedMethods(type);
++		Method[] methods = null;
++
++		if (Proxy.isProxyClass(type)) {
++			Set<Method> methodSet = new HashSet<>();
++
++			for (Class<?> clazz : ClassUtil.resolveAllInterfaces(type)) {
++				for (Method method : ClassUtil.getAccessibleMethods(clazz)) {
++					methodSet.add(method);
++				}
++			}
++
++			methods = methodSet.toArray(new Method[0]);
++		}
++		else {
++			methods = scanAccessible ? ClassUtil.getAccessibleMethods(type) : ClassUtil.getSupportedMethods(type);
++		}
+ 
+ 		final HashMap<String, MethodDescriptor[]> map = new HashMap<>(methods.length);
+ 
+@@ -159,4 +177,5 @@ public class Methods {
+ 		return allMethods;
+ 	}
+ 
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file

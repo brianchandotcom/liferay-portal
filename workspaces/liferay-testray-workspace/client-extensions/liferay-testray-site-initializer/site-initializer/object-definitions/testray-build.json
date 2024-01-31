@@ -104,6 +104,17 @@
 			"name": "dueStatus",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Archived"
+			},
+			"name": "archived",
+			"required": false,
+			"type": "Boolean"
 		}
 	],
 	"pluralLabel": {

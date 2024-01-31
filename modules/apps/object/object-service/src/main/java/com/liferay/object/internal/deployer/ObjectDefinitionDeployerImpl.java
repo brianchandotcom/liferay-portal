@@ -208,6 +208,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				ModelDocumentContributor.class,
 				new ObjectEntryModelDocumentContributor(
+					_accountEntryOrganizationRelLocalService,
 					objectDefinition.getClassName(),
 					_objectDefinitionLocalService, _objectEntryLocalService,
 					_objectFieldLocalService),

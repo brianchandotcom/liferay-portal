@@ -5,6 +5,8 @@
 
 package com.liferay.object.internal.search.spi.model.index.contributor;
 
+import com.liferay.account.model.AccountEntryOrganizationRel;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -13,6 +15,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -46,11 +49,15 @@ public class ObjectEntryModelDocumentContributor
 	implements ModelDocumentContributor<ObjectEntry> {
 
 	public ObjectEntryModelDocumentContributor(
+		AccountEntryOrganizationRelLocalService
+			accountEntryOrganizationRelLocalService,
 		String className,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService) {
 
+		_accountEntryOrganizationRelLocalService =
+			accountEntryOrganizationRelLocalService;
 		_className = className;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
@@ -139,8 +146,18 @@ public class ObjectEntryModelDocumentContributor
 					objectDefinition.getAccountEntryRestrictedObjectFieldId(),
 					objectField.getObjectFieldId())) {
 
+			Long accountEntryId = (Long)value;
+
 			document.addKeyword(
-				"accountEntryRestrictedObjectFieldValue", (Long)value);
+				"accountEntryRestrictedObjectFieldValue", accountEntryId);
+
+			document.addKeyword(
+				"accountEntryRestrictedOrganizationIds",
+				TransformUtil.transformToArray(
+					_accountEntryOrganizationRelLocalService.
+						getAccountEntryOrganizationRels(accountEntryId),
+					AccountEntryOrganizationRel::getOrganizationId,
+					Long.class));
 		}
 
 		String valueString = String.valueOf(value);
@@ -309,6 +326,8 @@ public class ObjectEntryModelDocumentContributor
 	private static final Format _format =
 		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss");
 
+	private final AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
 	private final String _className;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;

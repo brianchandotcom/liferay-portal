@@ -4,30 +4,33 @@
  */
 
 export default {
-	'com.liferay.sh.dxp.domains': '127.0.0.1:8080',
-	'com.liferay.sh.dxp.mainDomain': '127.0.0.1:8080',
-	'com.liferay.sh.dxp.server.protocol': 'http',
+	'com.liferay.lxc.dxp.domains': '127.0.0.1:8080',
+
+	'com.liferay.lxc.dxp.main.domain': '127.0.0.1:8080',
+
+	'com.liferay.lxc.dxp.server.protocol': 'http',
+
 	'configTreePaths': [
 		'process.env.LIFERAY_ROUTES_CLIENT_EXTENSION',
 		'process.env.LIFERAY_ROUTES_DXP',
 	],
-	'employee.folder.external.reference.code': 'HR',
-	'employee.folder.site.id': '20118',
-	'jobs.attachments.folder.external.reference.code':
-		'liferay-jobs-attachments-folder',
-	'liferay.oauth.application.external.reference.codes':
-		'liferay-dlfoldertemplate-oauth-application-server,liferay-dlfoldertemplate-oauth-application-user-agent',
-	'liferay-dlfoldertemplate-oauth-application-server.sh.oauth2.headless.server.client.id':
-		'id-48cba9c9-7cf8-f55d-f884-9f162496b2c',
-	'liferay-dlfoldertemplate-oauth-application-server.sh.oauth2.headless.server.client.secret':
-		'secret-c72013da-2923-6418-9b82-9c5967ea832',
-	'liferay-dlfoldertemplate-oauth-application-user-agent.sh.oauth2.headless.agent.client.id':
-		'id-2a98188a-9ca2-39ad-a714-2850efd344f0',
-	'project-id': 'liferay-dlfoldertemplate',
-	'readyPath': '/ready',
-	'self.initialization': 'process.env.Self_Initialization',
+
+	'liferay.oauth.application.external.reference.codes': 'liferay-dlfoldertemplate-oauth-application-server,liferay-dlfoldertemplate-oauth-application-user-agent',
+
+	'liferay.dlfoldertemplate.oauth.application.server.oauth2.headless.server.client.id': 'id-a11aa351-254b-7f6e-a788-f437ace5e625',
+
+	'liferay.dlfoldertemplate.oauth.application.server.oauth2.headless.server.client.secret': 'secret-2073dc13-fb7f-dc48-591a-d387e69ec5',
+
+	'liferay.dlfoldertemplate.oauth.application.user.agent.oauth2.user.agent.client.id': 'id-ac5f8b38-50ae-8629-27df-37c198a1d551',
+
+	'liferay.dlfoldertemplate.oauth.application.user.agent.oauth2.jwks.uri': '/o/oauth2/jwks',
+
+	'liferay.dlfoldertemplate.oauth.application.server.oauth2.token.uri': '/o/oauth2/token',
+
+	'folder.template.nodes.end.point': '/o/c/t4t14foldertemplatenodes/',
+
+	'ready.path': '/ready',
+
 	'server.port': 8050,
-	'services.endpoints': '',
-	'services.main.address': '/jobs',
-	'templateId': '59455',
+
 };

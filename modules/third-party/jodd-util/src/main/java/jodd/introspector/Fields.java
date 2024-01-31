@@ -28,6 +28,7 @@ package jodd.introspector;
 import jodd.util.ClassUtil;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -63,7 +64,14 @@ public class Fields {
 		final boolean scanAccessible = classDescriptor.isScanAccessible();
 		final Class type = classDescriptor.getType();
 
-		final Field[] fields = scanAccessible ? ClassUtil.getAccessibleFields(type) : ClassUtil.getSupportedFields(type);
+		Field[] fields = null;
+
+		if (Proxy.isProxyClass(type)) {
+			fields = new Field[0];
+		}
+		else {
+			fields = scanAccessible ? ClassUtil.getAccessibleFields(type) : ClassUtil.getSupportedFields(type);
+		}
 
 		final HashMap<String, FieldDescriptor> map = new HashMap<>(fields.length);
 
@@ -128,3 +136,4 @@ public class Fields {
 	}
 
 }
+/* @generated */

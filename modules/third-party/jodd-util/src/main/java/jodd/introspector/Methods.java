@@ -29,12 +29,15 @@ import jodd.util.ArraysUtil;
 import jodd.util.ClassUtil;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Methods collection.
@@ -64,7 +67,22 @@ public class Methods {
 
 		final Class type = classDescriptor.getType();
 
-		final Method[] methods = scanAccessible ? ClassUtil.getAccessibleMethods(type) : ClassUtil.getSupportedMethods(type);
+		Method[] methods = null;
+
+		if (Proxy.isProxyClass(type)) {
+			Set<Method> methodSet = new HashSet<>();
+
+			for (Class<?> clazz : ClassUtil.resolveAllInterfaces(type)) {
+				for (Method method : ClassUtil.getAccessibleMethods(clazz)) {
+					methodSet.add(method);
+				}
+			}
+
+			methods = methodSet.toArray(new Method[0]);
+		}
+		else {
+			methods = scanAccessible ? ClassUtil.getAccessibleMethods(type) : ClassUtil.getSupportedMethods(type);
+		}
 
 		final HashMap<String, MethodDescriptor[]> map = new HashMap<>(methods.length);
 
@@ -160,3 +178,4 @@ public class Methods {
 	}
 
 }
+/* @generated */

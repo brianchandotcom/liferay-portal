@@ -391,6 +391,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								"batch.planner.import.enabled", "true"
 							).put(
 								"companyId", objectDefinition.getCompanyId()
+							).put(
+								"entity.class.name",
+								ObjectEntry.class.getName() + "#" +
+									osgiJaxRsName
 							).build()),
 						_bundleContext.registerService(
 							ObjectRelationshipElementsParser.class,

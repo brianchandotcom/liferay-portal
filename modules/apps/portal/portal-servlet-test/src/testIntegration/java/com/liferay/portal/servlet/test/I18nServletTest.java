@@ -6,6 +6,7 @@
 package com.liferay.portal.servlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
@@ -13,11 +14,11 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -316,36 +317,39 @@ public class I18nServletTest extends I18nServlet {
 
 		String layoutFriendlyUrlPageNotFound = "/web/guest/page-404";
 
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND",
-			layoutFriendlyUrlPageNotFound);
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND",
+					layoutFriendlyUrlPageNotFound)) {
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+			MockHttpServletRequest mockHttpServletRequest =
+				new MockHttpServletRequest();
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.COMPANY_ID, _group.getCompanyId());
-		mockHttpServletRequest.setPathInfo(
-			StringBundler.concat(
-				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING,
-				"/nonexistingfriendlyurl", RandomTestUtil.randomString()));
+			mockHttpServletRequest.setAttribute(
+				WebKeys.COMPANY_ID, _group.getCompanyId());
+			mockHttpServletRequest.setPathInfo(
+				StringBundler.concat(
+					PropsValues.
+						LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING,
+					"/nonexistingfriendlyurl", RandomTestUtil.randomString()));
 
-		String expectedI18nErrorPath =
-			StringPool.SLASH + LocaleUtil.SPAIN.getLanguage();
+			String expectedI18nErrorPath =
+				StringPool.SLASH + LocaleUtil.SPAIN.getLanguage();
 
-		mockHttpServletRequest.setServletPath(expectedI18nErrorPath);
+			mockHttpServletRequest.setServletPath(expectedI18nErrorPath);
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
 
-		service(mockHttpServletRequest, mockHttpServletResponse);
+			service(mockHttpServletRequest, mockHttpServletResponse);
 
-		Assert.assertEquals(
-			expectedI18nErrorPath + layoutFriendlyUrlPageNotFound,
-			mockHttpServletResponse.getForwardedUrl());
-		Assert.assertEquals(
-			HttpServletResponse.SC_NOT_FOUND,
-			mockHttpServletResponse.getStatus());
+			Assert.assertEquals(
+				expectedI18nErrorPath + layoutFriendlyUrlPageNotFound,
+				mockHttpServletResponse.getForwardedUrl());
+			Assert.assertEquals(
+				HttpServletResponse.SC_NOT_FOUND,
+				mockHttpServletResponse.getStatus());
+		}
 	}
 
 	@Test

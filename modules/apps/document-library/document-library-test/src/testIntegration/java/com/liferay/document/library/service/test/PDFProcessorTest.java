@@ -14,7 +14,6 @@ import com.liferay.document.library.kernel.processor.PDFProcessorUtil;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -41,15 +41,15 @@ import com.liferay.portal.util.PropsValues;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import java.lang.reflect.Field;
-
 import java.util.Dictionary;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -74,18 +74,23 @@ public class PDFProcessorTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() {
+		_originalDLFileEntryPreviewForkProcessEnabled =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED",
+				false);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED",
+			_originalDLFileEntryPreviewForkProcessEnabled);
+	}
+
 	@Before
 	public void setUp() throws Exception {
-		Field dlFileEntryPreviewForkProcessEnabledField =
-			ReflectionUtil.getDeclaredField(
-				PropsValues.class,
-				"DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED");
-
-		_dlFileEntryPreviewForkProcessEnabled =
-			dlFileEntryPreviewForkProcessEnabledField.get(null);
-
-		dlFileEntryPreviewForkProcessEnabledField.set(null, Boolean.FALSE);
-
 		_group = GroupTestUtil.addGroup();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
@@ -94,14 +99,6 @@ public class PDFProcessorTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Field dlFileEntryPreviewForkProcessEnabledField =
-			ReflectionUtil.getDeclaredField(
-				PropsValues.class,
-				"DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED");
-
-		dlFileEntryPreviewForkProcessEnabledField.set(
-			null, _dlFileEntryPreviewForkProcessEnabled);
-
 		if (_dlProcessorServiceRegistration != null) {
 			_dlProcessorServiceRegistration.unregister();
 		}
@@ -656,10 +653,11 @@ public class PDFProcessorTest {
 		}
 	}
 
+	private static boolean _originalDLFileEntryPreviewForkProcessEnabled;
+
 	@Inject
 	private DLAppService _dlAppService;
 
-	private Object _dlFileEntryPreviewForkProcessEnabled;
 	private ServiceRegistration<DLProcessor> _dlProcessorServiceRegistration;
 
 	@DeleteAfterTestRun

@@ -6,6 +6,7 @@
 package com.liferay.user.groups.admin.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateUserGroupExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -19,8 +20,8 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -31,7 +32,6 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.LinkedHashMap;
@@ -179,18 +179,14 @@ public class UserGroupLocalServiceTest {
 	public void testSearchUserGroupsWithNullParamsAndIndexerDisabled()
 		throws Exception {
 
-		Object value = ReflectionTestUtil.getAndSetFieldValue(
-			PropsValues.class, "USER_GROUPS_SEARCH_WITH_INDEX", Boolean.FALSE);
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"USER_GROUPS_SEARCH_WITH_INDEX", Boolean.FALSE)) {
 
-		try {
 			List<UserGroup> userGroups = _search(null, null);
 
 			Assert.assertEquals(
 				userGroups.toString(), _count + 2, userGroups.size());
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "USER_GROUPS_SEARCH_WITH_INDEX", value);
 		}
 	}
 

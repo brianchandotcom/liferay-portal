@@ -13,6 +13,7 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.expando.test.util.ExpandoTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -21,12 +22,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -47,14 +48,10 @@ public class ExportUsersMVCResourceCommandTest {
 
 	@Test
 	public void testGetUserCSVWithExpando() throws Exception {
-		boolean permissionsCustomAttributeReadCheckByDefault =
-			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT;
-		String[] usersExportCSVfields = PropsValues.USERS_EXPORT_CSV_FIELDS;
-
-		try {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class,
-				"PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT", false);
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT",
+					false)) {
 
 			Company company1 = CompanyTestUtil.addCompany();
 
@@ -73,37 +70,30 @@ public class ExportUsersMVCResourceCommandTest {
 				expandoTable.getName(), expandoColumn.getName(),
 				user1.getUserId(), RandomTestUtil.randomString());
 
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "USERS_EXPORT_CSV_FIELDS",
-				new String[] {
-					"fullName", "expando:" + expandoColumn.getName()
-				});
+			try (SafeCloseable safeCloseable2 =
+					PropsValuesTestUtil.swapWithSafeCloseable(
+						"USERS_EXPORT_CSV_FIELDS",
+						new String[] {
+							"fullName", "expando:" + expandoColumn.getName()
+						})) {
 
-			Assert.assertEquals(
-				StringBundler.concat(
-					CSVUtil.encode(user1.getFullName()), StringPool.COMMA,
-					CSVUtil.encode(expandoValue.getString()),
-					StringPool.NEW_LINE),
-				_getUserCSV(user1));
+				Assert.assertEquals(
+					StringBundler.concat(
+						CSVUtil.encode(user1.getFullName()), StringPool.COMMA,
+						CSVUtil.encode(expandoValue.getString()),
+						StringPool.NEW_LINE),
+					_getUserCSV(user1));
 
-			Company company2 = CompanyTestUtil.addCompany();
+				Company company2 = CompanyTestUtil.addCompany();
 
-			User user2 = UserTestUtil.addUser(company2);
+				User user2 = UserTestUtil.addUser(company2);
 
-			Assert.assertEquals(
-				StringBundler.concat(
-					CSVUtil.encode(user2.getFullName()), StringPool.COMMA,
-					StringPool.BLANK, StringPool.NEW_LINE),
-				_getUserCSV(user2));
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class,
-				"PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT",
-				permissionsCustomAttributeReadCheckByDefault);
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "USERS_EXPORT_CSV_FIELDS",
-				usersExportCSVfields);
+				Assert.assertEquals(
+					StringBundler.concat(
+						CSVUtil.encode(user2.getFullName()), StringPool.COMMA,
+						StringPool.BLANK, StringPool.NEW_LINE),
+					_getUserCSV(user2));
+			}
 		}
 	}
 

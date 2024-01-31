@@ -6,6 +6,7 @@
 package com.liferay.user.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -20,10 +21,10 @@ import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.social.kernel.service.SocialRelationLocalService;
 
@@ -67,9 +67,6 @@ public class UserFinderTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_organizationsMembershipStrict =
-			PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT;
-
 		_group = GroupTestUtil.addGroup();
 		_groupUser = UserTestUtil.addUser();
 
@@ -132,8 +129,6 @@ public class UserFinderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setOrganizationsMembershipStrict(_organizationsMembershipStrict);
-
 		_inheritedUserGroupsParams = LinkedHashMapBuilder.<String, Object>put(
 			"inherit", Boolean.TRUE
 		).put(
@@ -258,13 +253,19 @@ public class UserFinderTest {
 	public void testFindByKeywordsOrganizationsMembershipStrict()
 		throws Exception {
 
-		_setOrganizationsMembershipStrict(false);
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"ORGANIZATIONS_MEMBERSHIP_STRICT", false)) {
 
-		testFindByKeywordsWithInheritedGroups();
+			testFindByKeywordsWithInheritedGroups();
+		}
 
-		_setOrganizationsMembershipStrict(true);
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"ORGANIZATIONS_MEMBERSHIP_STRICT", true)) {
 
-		testFindByKeywordsWithInheritedGroups();
+			testFindByKeywordsWithInheritedGroups();
+		}
 	}
 
 	@Test
@@ -396,13 +397,6 @@ public class UserFinderTest {
 		Assert.assertEquals(users.toString(), 1, users.size());
 	}
 
-	private void _setOrganizationsMembershipStrict(boolean strict)
-		throws Exception {
-
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "ORGANIZATIONS_MEMBERSHIP_STRICT", strict);
-	}
-
 	private static Group _group;
 
 	@Inject
@@ -415,7 +409,6 @@ public class UserFinderTest {
 	@Inject
 	private static OrganizationLocalService _organizationLocalService;
 
-	private static boolean _organizationsMembershipStrict;
 	private static User _organizationUser1;
 	private static User _organizationUser2;
 

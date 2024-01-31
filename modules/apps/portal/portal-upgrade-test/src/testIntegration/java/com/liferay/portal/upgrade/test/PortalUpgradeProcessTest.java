@@ -149,15 +149,16 @@ public class PortalUpgradeProcessTest {
 	}
 
 	@Test
-	public void testGetRequiredSchemaVersionWithMultipleSteps() {
+	public void testGetRequiredSchemaVersionWithMultipleSteps()
+		throws Exception {
+
 		UpgradeVersionTreeMap newUpgradeProcesses = new UpgradeVersionTreeMap();
 
-		UpgradeVersionTreeMap currentUpgradeProcesses =
-			ReflectionTestUtil.getAndSetFieldValue(
-				PortalUpgradeProcess.class, "_upgradeVersionTreeMap",
-				newUpgradeProcesses);
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PortalUpgradeProcess.class, "_upgradeVersionTreeMap",
+					newUpgradeProcesses)) {
 
-		try {
 			newUpgradeProcesses.put(
 				new Version(2, 3, 2), new DummyUpgradeProcess());
 			newUpgradeProcesses.put(
@@ -175,11 +176,6 @@ public class PortalUpgradeProcessTest {
 
 			Assert.assertEquals(
 				StringPool.BLANK, requiredSchemaVersion.getQualifier());
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				PortalUpgradeProcess.class, "_upgradeVersionTreeMap",
-				currentUpgradeProcesses);
 		}
 	}
 

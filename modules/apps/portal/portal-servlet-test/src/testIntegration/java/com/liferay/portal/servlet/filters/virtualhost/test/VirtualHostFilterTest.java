@@ -6,6 +6,7 @@
 package com.liferay.portal.servlet.filters.virtualhost.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -13,6 +14,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -22,7 +24,6 @@ import com.liferay.portal.servlet.filters.virtualhost.VirtualHostFilter;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalImpl;
-import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -129,12 +130,10 @@ public class VirtualHostFilterTest {
 
 	@Test
 	public void testProcessFilter4() {
-		String homeURL = PropsValues.COMPANY_DEFAULT_HOME_URL;
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"COMPANY_DEFAULT_HOME_URL", StringPool.SLASH)) {
 
-		try {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "COMPANY_DEFAULT_HOME_URL",
-				StringPool.SLASH);
 			_mockHttpServletRequest.setRequestURI(StringPool.SLASH);
 
 			_virtualHostFilter.init(_mockFilterConfig);
@@ -147,10 +146,6 @@ public class VirtualHostFilterTest {
 				},
 				_mockHttpServletRequest, _mockHttpServletResponse,
 				_mockFilterChain);
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "COMPANY_DEFAULT_HOME_URL", homeURL);
 		}
 
 		Assert.assertNotEquals(

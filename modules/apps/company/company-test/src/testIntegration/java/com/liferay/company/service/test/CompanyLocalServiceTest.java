@@ -22,7 +22,7 @@ import com.liferay.expando.model.adapter.StagedExpandoTable;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
-import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerB
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -1117,22 +1118,9 @@ public class CompanyLocalServiceTest {
 
 		String originalMx = company.getMx();
 
-		Field field = null;
-
-		Object value = null;
-
-		try {
-			field = ReflectionUtil.getDeclaredField(
-				PropsValues.class, "MAIL_MX_UPDATE");
-
-			value = field.get(null);
-
-			if (mailMxUpdate) {
-				field.set(null, Boolean.TRUE);
-			}
-			else {
-				field.set(null, Boolean.FALSE);
-			}
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"MAIL_MX_UPDATE", mailMxUpdate)) {
 
 			_companyLocalService.updateCompany(
 				company.getCompanyId(), company.getVirtualHostname(), mx,
@@ -1159,10 +1147,6 @@ public class CompanyLocalServiceTest {
 		}
 		finally {
 			_companyLocalService.deleteCompany(company.getCompanyId());
-
-			if (field != null) {
-				field.set(null, value);
-			}
 		}
 	}
 

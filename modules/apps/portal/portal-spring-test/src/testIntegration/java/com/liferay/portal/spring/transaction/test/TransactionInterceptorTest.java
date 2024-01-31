@@ -46,7 +46,7 @@ public class TransactionInterceptorTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testFailOnCommit() {
+	public void testFailOnCommit() throws Exception {
 		CacheRegistryUtil.clear();
 
 		long classNameId = _counterLocalService.increment();
@@ -55,14 +55,13 @@ public class TransactionInterceptorTest {
 			(TransactionExecutor)PortalBeanLocatorUtil.locate(
 				"transactionExecutor");
 
-		PlatformTransactionManager platformTransactionManager =
-			ReflectionTestUtil.getAndSetFieldValue(
-				transactionExecutor, "_platformTransactionManager",
-				new MockPlatformTransactionManager(
-					(HibernateTransactionManager)
-						InfrastructureUtil.getTransactionManager()));
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					transactionExecutor, "_platformTransactionManager",
+					new MockPlatformTransactionManager(
+						(HibernateTransactionManager)
+							InfrastructureUtil.getTransactionManager()))) {
 
-		try {
 			_classNameLocalService.addClassName(
 				_classNamePersistence.create(classNameId));
 
@@ -72,11 +71,6 @@ public class TransactionInterceptorTest {
 			Assert.assertEquals(
 				"MockPlatformTransactionManager",
 				runtimeException.getMessage());
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				transactionExecutor, "_platformTransactionManager",
-				platformTransactionManager);
 		}
 
 		Assert.assertNull(

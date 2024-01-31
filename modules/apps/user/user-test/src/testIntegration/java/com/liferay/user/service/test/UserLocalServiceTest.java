@@ -7,7 +7,7 @@ package com.liferay.user.service.test;
 
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -71,9 +73,6 @@ import com.liferay.portal.security.audit.AuditMessageProcessor;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
-
-import java.lang.reflect.Field;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -717,24 +716,16 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testSearchUsersFromDatabase() throws Exception {
-		Field propsValuesField = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "USERS_SEARCH_WITH_INDEX");
-
-		boolean propsValuesFieldValue = (boolean)propsValuesField.get(null);
-
-		try {
-			propsValuesField.set(null, false);
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"USERS_SEARCH_WITH_INDEX", false)) {
 
 			_userLocalService.searchCount(
 				TestPropsValues.getCompanyId(), null,
 				WorkflowConstants.STATUS_APPROVED,
 				LinkedHashMapBuilder.<String, Object>put(
-					com.liferay.portal.kernel.search.Field.GROUP_ID,
-					TestPropsValues.getGroupId()
+					Field.GROUP_ID, TestPropsValues.getGroupId()
 				).build());
-		}
-		finally {
-			propsValuesField.set(null, propsValuesFieldValue);
 		}
 	}
 
@@ -822,14 +813,11 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testUpdatePasswordWithChangedAlgorithm() throws Exception {
-		String oldPasswordsEncryptionAlgorithmFieldValue =
-			ReflectionTestUtil.getFieldValue(
-				PasswordEncryptorUtil.class, "_PASSWORDS_ENCRYPTION_ALGORITHM");
-
-		try {
-			ReflectionTestUtil.setFieldValue(
-				PasswordEncryptorUtil.class, "_PASSWORDS_ENCRYPTION_ALGORITHM",
-				"PBKDF2WithHmacSHA1/160/720000");
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM",
+					"PBKDF2WithHmacSHA1/160/720000")) {
 
 			User user = UserTestUtil.addUser();
 
@@ -851,11 +839,6 @@ public class UserLocalServiceTest {
 			encryptedPassword = user.getPassword();
 
 			Assert.assertTrue(encryptedPassword.startsWith("{MD5}"));
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				PasswordEncryptorUtil.class, "_PASSWORDS_ENCRYPTION_ALGORITHM",
-				oldPasswordsEncryptionAlgorithmFieldValue);
 		}
 	}
 

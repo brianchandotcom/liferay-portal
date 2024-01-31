@@ -33,7 +33,7 @@ const ProjectRoutes = () => {
 	const [{project, subscriptionGroups}, dispatch] = useCustomerPortal();
 	const {featureFlags} = useAppPropertiesContext();
 
-	const [hasKeyComplimentary, setHasKeyComplimentary] = useState(false);
+	const [hasComplimentaryKey, setHasComplimentaryKey] = useState(false);
 
 	useEffect(() => {
 		if (project && subscriptionGroups) {
@@ -96,8 +96,8 @@ const ProjectRoutes = () => {
 							<Route
 								element={
 									<Portal
-										hasKeyComplimentary={
-											hasKeyComplimentary
+										hasComplimentaryKey={
+											hasComplimentaryKey
 										}
 									/>
 								}
@@ -107,12 +107,12 @@ const ProjectRoutes = () => {
 							<Route
 								element={
 									<GenerateNewKey
-										hasKeyComplimentary={
-											hasKeyComplimentary
+										hasComplimentaryKey={
+											hasComplimentaryKey
 										}
 										productGroupName={PRODUCT_TYPES.portal}
-										setHasKeyComplimentary={
-											setHasKeyComplimentary
+										setHasComplimentaryKey={
+											setHasComplimentaryKey
 										}
 									/>
 								}
@@ -134,8 +134,8 @@ const ProjectRoutes = () => {
 							<Route
 								element={
 									<RenewTable
-										hasKeyComplimentary={
-											hasKeyComplimentary
+										hasComplimentaryKey={
+											hasComplimentaryKey
 										}
 										isRenewTable
 									/>
@@ -153,8 +153,8 @@ const ProjectRoutes = () => {
 							<Route
 								element={
 									<DXP
-										hasKeyComplimentary={
-											hasKeyComplimentary
+										hasComplimentaryKey={
+											hasComplimentaryKey
 										}
 									/>
 								}
@@ -164,12 +164,12 @@ const ProjectRoutes = () => {
 							<Route
 								element={
 									<GenerateNewKey
-										hasKeyComplimentary={
-											hasKeyComplimentary
+										hasComplimentaryKey={
+											hasComplimentaryKey
 										}
 										productGroupName={PRODUCT_TYPES.dxp}
-										setHasKeyComplimentary={
-											setHasKeyComplimentary
+										setHasComplimentaryKey={
+											setHasComplimentaryKey
 										}
 									/>
 								}
@@ -189,8 +189,8 @@ const ProjectRoutes = () => {
 							<Route
 								element={
 									<RenewTable
-										hasKeyComplimentary={
-											hasKeyComplimentary
+										hasComplimentaryKey={
+											hasComplimentaryKey
 										}
 										isDXPTable
 										isRenewTable

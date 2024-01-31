@@ -8,18 +8,17 @@ import i18n from '~/common/I18n';
 import {Button} from '~/common/components';
 import RenewButton from '~/routes/customer-portal/containers/ActivationKeysTable/components/Renew';
 import {hasAdminOrPartnerManager} from '../../utils/hasAdminOrPartnerManager';
-import {hasComplimentaryKey} from '../../utils/hasComplimentaryKey';
-import {isBulkRenewAvailable} from '../../utils/isBulkRenewAvaible';
+import {isBulkRenewAvailable} from '../../utils/isBulkRenewAvailable';
 import useGetAccountUserAccount from '../Header/hooks/useGetAccountUserAccount';
 
 const RenewTableFooter = ({
 	activationKeysChecked,
-	filterCheckedRenewKeys,
 	isAdminUserAccount,
 	isRenewTable,
-	keysSelected,
+	keysSelectedCount,
 	productName,
 	project,
+	renewKeysFilterChecked,
 }) => {
 	const {
 		userAccountsState: [userAccounts],
@@ -28,7 +27,7 @@ const RenewTableFooter = ({
 	const [isComplimentaryKey, setIsComplimentaryKey] = useState('');
 
 	const currentUser = userAccounts?.find(
-		({id}) => id === +Liferay.ThemeDisplay.getUserId()
+		({id}) => id === Number(Liferay.ThemeDisplay.getUserId())
 	);
 	const allowSelfProvisioning = project.allowSelfProvisioning;
 	const isAdminOrPartnerManager = hasAdminOrPartnerManager(
@@ -47,14 +46,14 @@ const RenewTableFooter = ({
 			const complimentaryKeyValidation = (activationKey) => activationKey;
 
 			const handleComplimentaryKey = activationKeysChecked?.map(
-				(activationKey) => hasComplimentaryKey(activationKey)
+				(activationKey) => activationKey.complimentary
 			);
 
-			const isComplimentaryKey = handleComplimentaryKey.some(
+			const hasComplimentaryKey = handleComplimentaryKey.some(
 				complimentaryKeyValidation
 			);
 
-			if (isComplimentaryKey) {
+			if (hasComplimentaryKey) {
 				return setIsComplimentaryKey(true);
 			}
 
@@ -82,14 +81,14 @@ const RenewTableFooter = ({
 							activationKeysChecked={activationKeysChecked}
 							bulkRenewAvailable={bulkRenewAvailable}
 							displayType="primary"
-							filterCheckedRenewKeys={filterCheckedRenewKeys}
 							identifier="renew"
 							isComplimentaryKey={isComplimentaryKey}
 							isRenewTable={isRenewTable}
-							keysSelected={keysSelected}
+							keysSelectedCount={keysSelectedCount}
 							project={project}
+							renewKeysFilterChecked={renewKeysFilterChecked}
 						>
-							{i18n.sub('renew-x-key', [keysSelected])}
+							{i18n.sub('renew-x-key', [keysSelectedCount])}
 						</RenewButton>
 					)}
 			</div>

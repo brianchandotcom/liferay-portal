@@ -18,14 +18,14 @@ import {STEP_TYPES} from './utils/constants/stepType';
 const ACTIVATION_ROOT_ROUTER = 'activation';
 
 const GenerateNewKey = ({
-	hasKeyComplimentary,
+	hasComplimentaryKey,
 	productGroupName,
-	setHasKeyComplimentary,
+	setHasComplimentaryKey,
 }) => {
 	const {state} = useLocation();
 	const {data: myAccount} = useGetMyUserAccount();
 	const [{project, sessionId, userAccount}] = useCustomerPortal();
-	const [infoSelectedKey, setInfoSelectedKey] = useState();
+	const [selectedKeyData, setSelectedKeyData] = useState();
 	const [step, setStep] = useState(STEP_TYPES.selectDescriptions);
 	const {setHasSideMenu} = useOutletContext();
 	const [status, setStatus] = useState({
@@ -64,10 +64,10 @@ const GenerateNewKey = ({
 			<RequiredInformation
 				accountKey={project?.accountKey}
 				expirationRenewDate={expirationRenewDate}
-				hasKeyComplimentary={hasKeyComplimentary}
-				infoSelectedKey={infoSelectedKey}
+				hasComplimentaryKey={hasComplimentaryKey}
 				licenseEntryTypeName={licenseEntryTypeName}
 				purposeDescription={purposeDescription}
+				selectedKeyData={selectedKeyData}
 				sessionId={sessionId}
 				setStep={setStep}
 				startRenewDate={startRenewDate}
@@ -81,15 +81,15 @@ const GenerateNewKey = ({
 				accountKey={project?.accountKey}
 				activationKeysByStatusPaginatedChecked
 				filterCheckedActivationKeys
-				hasKeyComplimentary={hasKeyComplimentary}
+				hasComplimentaryKey={hasComplimentaryKey}
 				identifier
-				infoSelectedKey={infoSelectedKey}
 				productGroupName={productGroupName}
+				selectedKeyData={selectedKeyData}
 				sessionId={sessionId}
 				setExpirationRenewDate={setExpirationRenewDate}
-				setHasKeyComplimentary={setHasKeyComplimentary}
-				setInfoSelectedKey={setInfoSelectedKey}
+				setHasComplimentaryKey={setHasComplimentaryKey}
 				setLicenseEntryTypeName={setLicenseEntryTypeName}
+				setSelectedKeyData={setSelectedKeyData}
 				setStartRenewDate={setStartRenewDate}
 				setStep={setStep}
 				setSubmitKeyAction={setSubmitKeyAction}
@@ -102,9 +102,9 @@ const GenerateNewKey = ({
 				accountKey={project?.accountKey}
 				deactivateKeysStatus={status.deactivate}
 				filterCheckedActivationKeys
-				infoSelectedKey={infoSelectedKey}
 				productGroupName={productGroupName}
 				purposeDescription={purposeDescription}
+				selectedKeyData={selectedKeyData}
 				sessionId={sessionId}
 				setDeactivateKeysStatus={(value) =>
 					setStatus((previousStatus) => ({
@@ -112,8 +112,8 @@ const GenerateNewKey = ({
 						deactivate: value,
 					}))
 				}
-				setInfoSelectedKey={setInfoSelectedKey}
 				setPurposeDescription={setPurposeDescription}
+				setSelectedKeyData={setSelectedKeyData}
 				setStep={setStep}
 				urlPreviousPage={urlPreviousPage}
 			/>

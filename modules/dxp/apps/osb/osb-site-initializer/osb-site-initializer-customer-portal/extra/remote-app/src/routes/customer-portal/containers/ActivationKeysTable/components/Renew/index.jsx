@@ -15,15 +15,14 @@ const RenewButton = ({
 	children,
 	currentActivationKeyModal,
 	filterCheckedActivationKeys,
-	filterCheckedRenewKeys,
 	identifier,
 	isComplimentaryKey,
 	isRenewTable,
 	isVisibleModal,
-	keysSelected,
+	keysSelectedCount,
 	project,
+	renewKeysFilterChecked,
 }) => {
-	const singleKey = 1;
 	const navigate = useNavigate();
 	const [isDisable, setIsDisable] = useState('');
 
@@ -32,15 +31,11 @@ const RenewButton = ({
 	useEffect(() => {
 		const isDisableRenewButton = () => {
 			if (isRenewTable) {
-				if (keysSelected > 0 && keysSelected < 1) {
-					return setIsDisable(false);
-				}
-
-				if (keysSelected > 1 && !bulkRenewAvailable) {
+				if (keysSelectedCount > 1 && !bulkRenewAvailable) {
 					return setIsDisable(true);
 				}
 
-				if (!keysSelected) {
+				if (!keysSelectedCount) {
 					return setIsDisable(true);
 				}
 			}
@@ -53,7 +48,12 @@ const RenewButton = ({
 		};
 
 		isDisableRenewButton();
-	}, [bulkRenewAvailable, isComplimentaryKey, isRenewTable, keysSelected]);
+	}, [
+		bulkRenewAvailable,
+		isComplimentaryKey,
+		isRenewTable,
+		keysSelectedCount,
+	]);
 
 	const handleRedirectPage = () => {
 		if (isVisibleModal) {
@@ -66,7 +66,7 @@ const RenewButton = ({
 		}
 
 		if (isRenewTable) {
-			if (activationKeysChecked.length === singleKey) {
+			if (activationKeysChecked.length === 1) {
 				return navigate(renewUrl, {
 					state: {
 						activationKeys: [activationKeysChecked[0]],
@@ -78,8 +78,8 @@ const RenewButton = ({
 			return navigate(renewUrl, {
 				state: {
 					activationKeys: activationKeysChecked,
-					filterCheckedRenewKeys,
 					id: identifier,
+					renewKeysFilterChecked,
 				},
 			});
 		}

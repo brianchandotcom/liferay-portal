@@ -22,7 +22,6 @@ import {AUTO_CLOSE_ALERT_TIME} from '../../../../utils/constants/autoCloseAlertT
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {downloadActivationLicenseKey} from '../../utils/downloadActivationLicenseKey';
 import {hasAdminUserAccount} from '../../utils/hasAdminUserAccount';
-import {hasComplimentaryKey} from '../../utils/hasComplimentaryKey';
 import RenewButton from '../Renew';
 import TableKeyDetails from '../TableKeyDetails';
 
@@ -113,7 +112,9 @@ const ModalKeyDetails = ({
 		}
 	};
 
-	const isComplimentaryKey = hasComplimentaryKey(currentActivationKey);
+	const isComplimentaryKey = currentActivationKey?.complimentary
+		? true
+		: false;
 
 	return (
 		<ClayModal center observer={observer} size="lg">

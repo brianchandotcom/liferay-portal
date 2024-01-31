@@ -45,15 +45,15 @@ const messageDeactivateKey = i18n.translate(
 );
 
 const ActivationKeysTable = ({
-	hasKeyComplimentary,
+	hasComplimentaryKey,
 	initialFilter,
 	isRenewTable,
 	productName,
 	project,
 	sessionId,
 	setActivationKeysChecked,
-	setFilterCheckedRenewKeys,
-	setKeysSelected,
+	setKeysSelectedCount,
+	setRenewKeysFilterChecked,
 }) => {
 	const {provisioningServerAPI} = useAppPropertiesContext();
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
@@ -122,7 +122,7 @@ const ActivationKeysTable = ({
 					activationKeysByStatusPaginatedChecked
 				);
 
-				setKeysSelected(activationKeysIdChecked?.length);
+				setKeysSelectedCount(activationKeysIdChecked?.length);
 			}
 		};
 		renewKeysSelected();
@@ -132,7 +132,7 @@ const ActivationKeysTable = ({
 		allActivationKeys,
 		isRenewTable,
 		setActivationKeysChecked,
-		setKeysSelected,
+		setKeysSelectedCount,
 	]);
 
 	useEffect(() => {
@@ -265,8 +265,8 @@ const ActivationKeysTable = ({
 							productName={productName}
 							project={project}
 							sessionId={sessionId}
-							setFilterCheckedRenewKeys={
-								setFilterCheckedRenewKeys
+							setRenewKeysFilterChecked={
+								setRenewKeysFilterChecked
 							}
 						/>
 					</div>
@@ -317,7 +317,7 @@ const ActivationKeysTable = ({
 				<DownloadAlert
 					downloadStatus={newKeyGeneratedAlertStatus}
 					message={
-						!hasKeyComplimentary
+						!hasComplimentaryKey
 							? messageNewKeyGeneratedAlert
 							: messageNewKeyGeneratedAlertForComplimentary
 					}

@@ -28,14 +28,14 @@ import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDate';
 
 const SelectSubscription = ({
 	accountKey,
-	hasKeyComplimentary,
-	infoSelectedKey,
+	hasComplimentaryKey,
 	productGroupName,
+	selectedKeyData,
 	sessionId,
 	setExpirationRenewDate,
-	setHasKeyComplimentary,
-	setInfoSelectedKey,
+	setHasComplimentaryKey,
 	setLicenseEntryTypeName,
+	setSelectedKeyData,
 	setStep,
 	setSubmitKeyAction,
 	state,
@@ -79,20 +79,20 @@ const SelectSubscription = ({
 	}, [accountKey, provisioningServerAPI, productGroupName, sessionId]);
 
 	const [selectedSubscription, setSelectedSubscription] = useState(
-		infoSelectedKey?.selectedSubscription
+		selectedKeyData?.selectedSubscription
 	);
 	const [selectedVersion, setSelectedVersion] = useState(
-		infoSelectedKey?.productVersion
+		selectedKeyData?.productVersion
 	);
 	const [selectedKeyType, setSelectedKeyType] = useState(
-		infoSelectedKey?.licenseEntryType
+		selectedKeyData?.licenseEntryType
 	);
 
 	const doesNotAllowPermanentLicense = !generateFormValues?.allowPermanentLicenses;
 
 	const allowComplimentary = generateFormValues?.allowComplimentary;
 
-	const hasNotPermanentLicence =
+	const hasNotPermanentLicense =
 		selectedKeyType?.includes('Virtual Cluster') ||
 		selectedKeyType?.includes('OEM') ||
 		selectedKeyType?.includes('Enterprise');
@@ -129,10 +129,10 @@ const SelectSubscription = ({
 	}, [generateFormValues?.versions]);
 
 	useEffect(() => {
-		if (productVersions?.length && !infoSelectedKey?.productVersion) {
+		if (productVersions?.length && !selectedKeyData?.productVersion) {
 			setSelectedVersion(productVersions[0].label);
 		}
-	}, [infoSelectedKey?.productVersion, productVersions]);
+	}, [selectedKeyData?.productVersion, productVersions]);
 
 	const selectedVersionIndex = useMemo(() => {
 		if (selectedVersion) {
@@ -160,11 +160,11 @@ const SelectSubscription = ({
 	);
 
 	useEffect(() => {
-		if (productKeyTypes?.length && !infoSelectedKey?.licenseEntryType) {
+		if (productKeyTypes?.length && !selectedKeyData?.licenseEntryType) {
 			setSelectedKeyType(productKeyTypes[selectedVersionIndex][0]);
 		}
 	}, [
-		infoSelectedKey?.licenseEntryType,
+		selectedKeyData?.licenseEntryType,
 		productKeyTypes,
 		selectedVersionIndex,
 	]);
@@ -299,11 +299,11 @@ const SelectSubscription = ({
 		(item) => item.licenseEntryType.includes(selectedProductNames)
 	);
 
-	const endDateSelected = selectedProductItem
+	const selectedEndDate = selectedProductItem
 		? selectedProductItem.endDate
 		: null;
 
-	setExpirationRenewDate(endDateSelected);
+	setExpirationRenewDate(selectedEndDate);
 
 	const submitKey = useCallback(async () => {
 		const licenseEntryType =
@@ -332,7 +332,7 @@ const SelectSubscription = ({
 		const generateLicenseKey = async (item) => {
 			const licenseKey = {
 				accountKey,
-				expirationDate: endDateSelected,
+				expirationDate: selectedEndDate,
 				productKey: selectedSubscription?.productKey,
 				productPurchaseKey: selectedSubscription?.productPurchaseKey,
 				sizing: 'Sizing ' + selectedSubscription?.instanceSize,
@@ -367,11 +367,11 @@ const SelectSubscription = ({
 			} else {
 				const results = await Promise.all(
 					state.activationKeys?.map(async (item) => {
-						await generateLicenseKey(item, hasKeyComplimentary);
+						await generateLicenseKey(item, hasComplimentaryKey);
 					})
 				);
 
-				if (hasKeyComplimentary) {
+				if (hasComplimentaryKey) {
 					await saveSubscriptionKey(results?.items?.[0]?.id);
 				}
 
@@ -380,7 +380,7 @@ const SelectSubscription = ({
 				setIsLoadingGenerateKey(false);
 
 				try {
-					if (!hasKeyComplimentary) {
+					if (!hasComplimentaryKey) {
 						await client.mutate({
 							context: {
 								displaySuccess: false,
@@ -432,8 +432,8 @@ const SelectSubscription = ({
 	}, [
 		accountKey,
 		client,
-		endDateSelected,
-		hasKeyComplimentary,
+		selectedEndDate,
+		hasComplimentaryKey,
 		licenseEntryTypes,
 		navigate,
 		provisioningServerAPI,
@@ -500,12 +500,12 @@ const SelectSubscription = ({
 		return (
 			<ClayAlert className="px-4 py-3" displayType="info">
 				<span className="text-paragraph">
-					{hasNotPermanentLicence || doesNotAllowPermanentLicense
+					{hasNotPermanentLicense || doesNotAllowPermanentLicense
 						? i18n.sub('activation-keys-will-be-valid-x-x', [
 								handleAlertFirstDate(),
 								getDateCustomFormat(
 									getLicenseKeyEndDatesByLicenseType({
-										...infoSelectedKey,
+										...selectedKeyData,
 										selectedSubscription: {
 											...subscriptionTerm,
 										},
@@ -552,7 +552,7 @@ const SelectSubscription = ({
 						disabled={
 							(state.activationKeys?.length >
 								availableActivationKeysTotal &&
-								!hasKeyComplimentary) ||
+								!hasComplimentaryKey) ||
 							!selectedSubscription ||
 							isLoadingGenerateKey ||
 							!Object.keys(selectedSubscription).length
@@ -560,32 +560,30 @@ const SelectSubscription = ({
 						displayType="primary"
 						isLoading={isLoadingGenerateKey}
 						onClick={() => {
-							const updatedInfoSelectedKey = {
+							const updatedSelectedKeyData = {
 								doesNotAllowPermanentLicense,
-								hasNotPermanentLicence,
+								hasNotPermanentLicense,
 								selectedSubscription: {...selectedSubscription},
 							};
 
-							if (!hasKeyComplimentary && state.id === 'renew') {
+							if (!hasComplimentaryKey && state.id === 'renew') {
 								if (state.activationKeys?.length === 1) {
 									setStep(2);
 									setSubmitKeyAction({submitKey});
-								}
-
-								if (state.activationKeys?.length > 1) {
+								} else {
 									submitKey();
 								}
 							} else {
-								setStep(hasKeyComplimentary ? 1 : 2);
+								setStep(hasComplimentaryKey ? 1 : 2);
 							}
 
-							setInfoSelectedKey((previousInfoSelectedKey) => ({
-								...previousInfoSelectedKey,
-								...updatedInfoSelectedKey,
+							setSelectedKeyData((previousSelectedKeyData) => ({
+								...previousSelectedKeyData,
+								...updatedSelectedKeyData,
 							}));
 						}}
 					>
-						{!hasKeyComplimentary &&
+						{!hasComplimentaryKey &&
 						state.id === 'renew' &&
 						state.activationKeys?.length > 1
 							? i18n.sub('generate-x-keys', [
@@ -642,7 +640,7 @@ const SelectSubscription = ({
 								className="cp-select-card mr-2"
 								disabled={state.id === 'renew' ? true : false}
 								onChange={({target}) => {
-									setInfoSelectedKey({
+									setSelectedKeyData({
 										licenseEntryType: selectedKeyType,
 										productType: productGroupName,
 										productVersion: target.value,
@@ -687,7 +685,7 @@ const SelectSubscription = ({
 							onChange={({target}) => {
 								setSelectedKeyType(target.value);
 								setSelectedSubscription({});
-								setHasKeyComplimentary(false);
+								setHasComplimentaryKey(false);
 							}}
 							value={selectedKeyType}
 						>
@@ -766,7 +764,7 @@ const SelectSubscription = ({
 									FORMAT_DATE_TYPES.day2DMonthSYearN
 								)}`;
 
-								const infoSelectedKey = {
+								const selectedKeyData = {
 									index,
 									licenseEntryType: selectedKeyType,
 									productType: productGroupName,
@@ -827,8 +825,8 @@ const SelectSubscription = ({
 											setAvailableActivationKeysTotal(
 												numberOfActivationKeysAvailable
 											);
-											setInfoSelectedKey(infoSelectedKey);
-											setHasKeyComplimentary(false);
+											setSelectedKeyData(selectedKeyData);
+											setHasComplimentaryKey(false);
 										}}
 										selected={selected}
 										subtitle={i18n.sub('instance-size-x', [
@@ -843,7 +841,7 @@ const SelectSubscription = ({
 					{featureFlags.includes('LPS-148342') && allowComplimentary && (
 						<Radio
 							hasCustomAlert={
-								hasKeyComplimentary && (
+								hasComplimentaryKey && (
 									<CustomComplimentaryKeyAlert />
 								)
 							}
@@ -853,9 +851,9 @@ const SelectSubscription = ({
 								setSelectedSubscription({
 									...event.target.value,
 								});
-								setHasKeyComplimentary(true);
+								setHasComplimentaryKey(true);
 
-								setInfoSelectedKey({
+								setSelectedKeyData({
 									licenseEntryType:
 										state.id === 'renew'
 											? productName
@@ -867,7 +865,7 @@ const SelectSubscription = ({
 											: selectedVersion,
 								});
 							}}
-							selected={hasKeyComplimentary}
+							selected={hasComplimentaryKey}
 							subtitle={i18n.translate(
 								'choose-this-option-if-you-want-an-activation-key-for-60-days'
 							)}

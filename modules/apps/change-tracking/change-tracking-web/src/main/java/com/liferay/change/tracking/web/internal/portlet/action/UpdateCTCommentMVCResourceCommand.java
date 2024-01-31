@@ -7,9 +7,13 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTComment;
+import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -18,6 +22,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Trong Tran
@@ -37,6 +42,27 @@ public class UpdateCTCommentMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long ctCollectionId = ParamUtil.getLong(
+			resourceRequest, "ctCollectionId");
+
+		if (!CTCollectionPermission.contains(
+				themeDisplay.getPermissionChecker(), ctCollectionId,
+				ActionKeys.VIEW)) {
+
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						themeDisplay.getLocale(),
+						"you-do-not-have-the-required-permissions")));
+
+			return;
+		}
+
 		CTComment ctComment = null;
 
 		long ctCommentId = ParamUtil.getLong(resourceRequest, "ctCommentId");
@@ -44,16 +70,26 @@ public class UpdateCTCommentMVCResourceCommand
 		String value = ParamUtil.getString(resourceRequest, "value");
 
 		if (ctCommentId > 0) {
-			ctComment = ctCommentLocalService.updateCTComment(
-				ctCommentId, value);
+			CTComment existingCTComment = ctCommentLocalService.getCTComment(
+				ctCommentId);
+
+			if (existingCTComment.getUserId() == themeDisplay.getUserId()) {
+				ctComment = ctCommentLocalService.updateCTComment(
+					ctCommentId, value);
+			}
+			else {
+				JSONPortletResponseUtil.writeJSON(
+					resourceRequest, resourceResponse,
+					JSONUtil.put(
+						"errorMessage",
+						_language.get(
+							themeDisplay.getLocale(),
+							"you-do-not-have-the-required-permissions")));
+
+				return;
+			}
 		}
 		else {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)resourceRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			long ctCollectionId = ParamUtil.getLong(
-				resourceRequest, "ctCollectionId");
 			long ctEntryId = ParamUtil.getLong(resourceRequest, "ctEntryId");
 
 			ctComment = ctCommentLocalService.addCTComment(
@@ -67,5 +103,8 @@ public class UpdateCTCommentMVCResourceCommand
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);
 	}
+
+	@Reference
+	private Language _language;
 
 }

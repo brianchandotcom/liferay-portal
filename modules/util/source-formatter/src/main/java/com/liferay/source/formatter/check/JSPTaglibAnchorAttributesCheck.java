@@ -101,9 +101,9 @@ public class JSPTaglibAnchorAttributesCheck extends BaseTagAttributesCheck {
 						addMessage(
 							fileName,
 							StringBundler.concat(
-								"Tag '", tag.getName(), "' attribute '",
-								attributeName, "' value '", attributeValue,
-								"' should start with '", expectedValue, "'"),
+								"The value for 'outputKey' in <",
+								attributeParts[0], "> should start with '",
+								expectedValue, "'"),
 							getLineNumber(content, x));
 					}
 				}

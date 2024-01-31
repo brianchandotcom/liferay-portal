@@ -241,7 +241,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 					<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-114700") %>'>
 						<clay:panel
 							displayTitle='<%= LanguageUtil.get(request, "metadata") %>'
-							displayType="secondary"
+							displayType="block"
 							expanded="<%= true %>"
 						>
 							<div class="c-gap-4 d-flex flex-column panel-body">
@@ -306,7 +306,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 
 						<clay:panel
 							displayTitle='<%= LanguageUtil.get(request, "fields") %>'
-							displayType="secondary"
+							displayType="block"
 							expanded="<%= true %>"
 						>
 							<div class="c-px-2 panel-body">

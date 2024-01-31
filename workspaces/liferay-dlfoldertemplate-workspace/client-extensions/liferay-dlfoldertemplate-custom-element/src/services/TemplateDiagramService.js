@@ -7,7 +7,7 @@ import {config} from '../utils/constants';
 import {request} from '../utils/request';
 import {getHostUrl, showError} from '../utils/util';
 
-export async function addNode(
+export async function addFolderTemplateNode(
 	parentNode,
 	root = false,
 	name = 'Unnamed',
@@ -38,14 +38,7 @@ export async function addNode(
 	}
 }
 
-export async function deleteFolderTemplate(nodeId) {
-	return request({
-		method: 'delete',
-		url: `${getHostUrl()}/${config.templateNodeApi}/${nodeId}`,
-	});
-}
-
-export async function deleteFolderTemplateBatch(data) {
+export async function deleteFolderTemplateNodesBatch(data) {
 	return request({
 		data,
 		method: 'delete',

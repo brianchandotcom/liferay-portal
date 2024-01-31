@@ -7,7 +7,7 @@ import {config} from '../utils/constants';
 import {request} from '../utils/request';
 import {getHostUrl, showError, showSuccess} from '../utils/util';
 import {
-	deleteFolderTemplateBatch,
+	deleteFolderTemplateNodesBatch,
 	getAvailableTemplatesNodesPage,
 } from './TemplateDiagramService';
 
@@ -20,7 +20,7 @@ export async function deleteFolderTemplateInformation(
 		);
 
 		if (templateNodes.items.length) {
-			await deleteFolderTemplateBatch(templateNodes.items);
+			await deleteFolderTemplateNodesBatch(templateNodes.items);
 		}
 
 		await deleteFolderTemplateInformationItem(FolderTemplateInformationId);

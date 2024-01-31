@@ -21,8 +21,8 @@ import {ClayInput} from '@clayui/form';
 import {Form, Input} from 'antd';
 
 import {
-	addNode,
-	deleteFolderTemplateBatch,
+	addFolderTemplateNode,
+	deleteFolderTemplateNodesBatch,
 	getAvailableTemplatesNodesPage,
 	updateFolderTemplateNode,
 } from '../../services/TemplateDiagramService';
@@ -42,7 +42,7 @@ const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 
 const deleteNodes = async (nodeIds) => {
-	await deleteFolderTemplateBatch(
+	await deleteFolderTemplateNodesBatch(
 		nodeIds.map((nodeId) => {
 			return {
 				id: nodeId,
@@ -201,7 +201,7 @@ const Diagram = ({templateId}) => {
 
 	const handleAdd = useCallback(
 		async (parentNodeId) => {
-			const newNode = await addNode(
+			const newNode = await addFolderTemplateNode(
 				parentNodeId,
 				false,
 				'New Node',
@@ -255,7 +255,7 @@ const Diagram = ({templateId}) => {
 			const templateNodes = templateNodesPage.items;
 
 			if (!templateNodes.length) {
-				const rootNode = await addNode(
+				const rootNode = await addFolderTemplateNode(
 					0,
 					true,
 					'Root Node',

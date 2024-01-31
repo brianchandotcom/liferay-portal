@@ -16,7 +16,6 @@ const DEFAULT_PROPS = {
 	searchLocation: null,
 	searchLocationOptions: null,
 	searchResults: 'search-results',
-	searchResultsOptions: [{label: 'Search Results', value: 'search-results'}],
 	searchURL: 'search-url',
 };
 
@@ -27,15 +26,14 @@ const renderComponent = (props) => {
 };
 
 describe('SearchOptions', () => {
-	it('renders only search in and search results selectors if there is no any search location option', () => {
+	it('renders only search in selector if there is no any search location option', () => {
 		renderComponent();
 
 		const selectors = document.querySelectorAll('.form-control-select');
 
-		expect(selectors.length).toBe(2);
+		expect(selectors.length).toBe(1);
 
 		expect(screen.getByText('Search In')).toBeInTheDocument();
-		expect(screen.getByText('Search Results')).toBeInTheDocument();
 	});
 
 	it('renders search location selector if it has any location option', () => {
@@ -48,7 +46,7 @@ describe('SearchOptions', () => {
 
 		const selectors = document.querySelectorAll('.form-control-select');
 
-		expect(selectors.length).toBe(3);
+		expect(selectors.length).toBe(2);
 
 		expect(screen.getByText('Search Location')).toBeInTheDocument();
 	});

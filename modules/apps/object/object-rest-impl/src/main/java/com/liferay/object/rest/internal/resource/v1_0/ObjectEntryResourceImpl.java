@@ -161,7 +161,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		vulcanBatchEngineImportTaskResource.setTaskItemDelegateName(
-			_objectDefinition.getOSGiJaxRsName());
+			_objectDefinition.getName());
 
 		return super.deleteObjectEntryBatch(callbackURL, object);
 	}
@@ -310,7 +310,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		vulcanBatchEngineExportTaskResource.setTaskItemDelegateName(
-			_objectDefinition.getOSGiJaxRsName());
+			_objectDefinition.getName());
 
 		return super.postObjectEntriesPageExportBatch(
 			search, filter, sorts, callbackURL, contentType, fieldNames);
@@ -334,7 +334,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		vulcanBatchEngineImportTaskResource.setTaskItemDelegateName(
-			_objectDefinition.getOSGiJaxRsName());
+			_objectDefinition.getName());
 
 		return super.postObjectEntryBatch(callbackURL, object);
 	}
@@ -436,7 +436,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		vulcanBatchEngineImportTaskResource.setTaskItemDelegateName(
-			_objectDefinition.getOSGiJaxRsName());
+			_objectDefinition.getName());
 
 		return super.putObjectEntryBatch(callbackURL, object);
 	}

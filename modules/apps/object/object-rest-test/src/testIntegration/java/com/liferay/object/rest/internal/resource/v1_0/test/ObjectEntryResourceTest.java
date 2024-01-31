@@ -6640,7 +6640,7 @@ public class ObjectEntryResourceTest {
 					StringBundler.concat(
 						com.liferay.object.rest.dto.v1_0.ObjectEntry.class.
 							getName(),
-						StringPool.POUND, objectDefinition.getOSGiJaxRsName()));
+						StringPool.POUND, objectDefinition.getName()));
 
 			objectEntryResource.setContextAcceptLanguage(
 				new AcceptLanguage() {

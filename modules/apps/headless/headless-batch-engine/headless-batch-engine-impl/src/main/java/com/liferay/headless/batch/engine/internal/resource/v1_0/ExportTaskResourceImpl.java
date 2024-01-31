@@ -56,7 +56,7 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 		throws Exception {
 
 		return _toExportTask(
-			_batchEngineExportTaskLocalService.
+			_batchEngineExportTaskService.
 				getBatchEngineExportTaskByExternalReferenceCode(
 					externalReferenceCode, contextCompany.getCompanyId()));
 	}
@@ -67,7 +67,7 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 		throws Exception {
 
 		BatchEngineExportTask batchEngineExportTask =
-			_batchEngineExportTaskLocalService.
+			_batchEngineExportTaskService.
 				getBatchEngineExportTaskByExternalReferenceCode(
 					externalReferenceCode, contextCompany.getCompanyId());
 
@@ -100,7 +100,7 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 				ExportTaskResourceImpl.class.getName());
 
 		BatchEngineExportTask batchEngineExportTask =
-			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
+			_batchEngineExportTaskService.addBatchEngineExportTask(
 				externalReferenceCode, contextCompany.getCompanyId(),
 				contextUser.getUserId(), callbackURL, className,
 				StringUtil.upperCase(contentType),

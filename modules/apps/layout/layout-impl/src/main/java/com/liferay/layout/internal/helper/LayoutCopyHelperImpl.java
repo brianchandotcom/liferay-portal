@@ -432,8 +432,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				continue;
 			}
 
-			Map<Long, String[]> targetRoleIdsToActionIds = new HashMap<>();
-
 			List<Long> roleIds = TransformUtil.transform(
 				ListUtil.filter(
 					_roleLocalService.getGroupRelatedRoles(
@@ -441,6 +439,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					role -> !Objects.equals(
 						RoleConstants.ADMINISTRATOR, role.getName())),
 				Role::getRoleId);
+
+			Map<Long, String[]> targetRoleIdsToActionIds = new HashMap<>();
 
 			for (Map.Entry<Long, Set<String>> entry :
 					sourceRoleIdsToActionIds.entrySet()) {

@@ -241,6 +241,8 @@ public class PublishLayoutPageTemplateEntryMVCActionCommandTest {
 			Layout layout, String portletId, boolean guestViewPermission)
 		throws Exception {
 
+		boolean guestRoleFound = false;
+
 		List<Role> roles = _resourcePermissionLocalService.getRoles(
 			layout.getCompanyId(),
 			LayoutContentPageEditorWebPortletKeys.
@@ -248,8 +250,6 @@ public class PublishLayoutPageTemplateEntryMVCActionCommandTest {
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			PortletPermissionUtil.getPrimaryKey(layout.getPlid(), portletId),
 			ActionKeys.VIEW);
-
-		boolean guestRoleFound = false;
 
 		for (Role role : roles) {
 			if (Objects.equals(role.getName(), RoleConstants.GUEST)) {

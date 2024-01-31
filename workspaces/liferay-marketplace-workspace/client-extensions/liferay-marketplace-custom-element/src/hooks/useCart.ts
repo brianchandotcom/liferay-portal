@@ -29,6 +29,8 @@ const useCart = ({
 		dispatch,
 	] = useGetAppContext();
 
+	const cartId = cart?.id;
+
 	const setCart = useCallback(
 		(payload?: Cart) => dispatch({payload, type: 'SET_CART'}),
 		[dispatch]
@@ -41,10 +43,10 @@ const useCart = ({
 	);
 
 	const addCart = async (productId: number, skuId: number) => {
-		if (!cart?.id) {
+		if (!cartId) {
 			const response = await createCart({
 				accountId,
-				channelId: Number(channelId),
+				channelId,
 				orderTypeExternalReferenceCode: orderType?.externalReferenceCode as string,
 			});
 
@@ -68,6 +70,17 @@ const useCart = ({
 			{productId, quantity: 1, skuId} as CartItem,
 		]);
 	};
+
+	useEffect(() => {
+		if (cartId && cartItems.length) {
+			headlessCommerceDeliveryCart
+				.updateCart(cartId, {
+					cartItems,
+				})
+				.then(setCart)
+				.catch(console.error);
+		}
+	}, [cartId, cartItems, setCart]);
 
 	const removeFromCart = (skuId: number) =>
 		setCartItems(

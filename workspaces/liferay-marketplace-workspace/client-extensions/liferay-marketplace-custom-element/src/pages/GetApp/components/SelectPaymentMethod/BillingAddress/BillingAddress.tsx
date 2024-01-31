@@ -209,14 +209,7 @@ export function BillingAddress({
 							onChange={onChange}
 							options={states.map((state) => ({
 								key: state.regionCode,
-								name:
-									state.title_i18n[
-										Liferay.ThemeDisplay.getLanguageId()
-									] ||
-									state.title_i18n[
-										Liferay.ThemeDisplay.getDefaultLanguageId()
-									] ||
-									state.name,
+								name: state.name,
 							}))}
 							required={!!states.length}
 							value={billingAddress?.regionISOCode}

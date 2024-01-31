@@ -15,7 +15,6 @@ import {PaymentMethod} from '../enums/paymentMethod';
 import {StepType} from '../enums/stepType';
 import LicenseTermsCheckbox from './LicenseTermsCheckbox';
 
-
 type ProductFooterProps = {
 	cartUtil: ReturnType<typeof useCart>;
 	disabled: boolean;

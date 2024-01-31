@@ -11,10 +11,12 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcela Cunha
@@ -34,7 +36,11 @@ public class RichTextDDMFormFieldValueRenderer
 			return StringPool.BLANK;
 		}
 
-		return GetterUtil.getString(value.getString(locale));
+		return GetterUtil.getString(
+			_htmlParser.extractText(value.getString(locale)));
 	}
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 }

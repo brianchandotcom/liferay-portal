@@ -3,20 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, mergeTests, test} from '@playwright/test';
+import {Page, mergeTests} from '@playwright/test';
 
-import {loginTest} from './loginTest';
+import {backendPageTest} from './backendPageTest';
 
 export interface FeatureFlagsOptions {
 	[key: string]: boolean;
 }
 
-export type FeatureFlags = FeatureFlag[];
-
 export interface FeatureFlag {
 	readonly enabled: boolean;
 	readonly key: string;
 }
+
+export interface FeatureFlags {
+	featureFlags: FeatureFlag[];
+}
+
+const test = mergeTests(backendPageTest);
 
 /**
  * Declare the FF needs of a test.
@@ -47,18 +51,22 @@ export interface FeatureFlag {
  * testWithFF('another thing', ...);
  */
 function featureFlagsTest(options: FeatureFlagsOptions) {
-	const fixtureImpl = test.extend<{
-		featureFlags: FeatureFlags;
-	}>({
+	return test.extend<FeatureFlags>({
 		featureFlags: [
-			async ({page}, use) => {
+			async ({backendPage, page}, use) => {
 
 				// Save original state of FFs
 
 				const originalFeatureFlags: FeatureFlagResult[] = [];
 
 				for (const key of Object.keys(options)) {
-					const result = await isEnabled(key, page);
+					const result = await invokeServer<IsEnabledResult>(
+						backendPage,
+						'/o/com-liferay-feature-flag-web/is-enabled',
+						{
+							key,
+						}
+					);
 
 					originalFeatureFlags.push(result.featureFlag);
 					originalFeatureFlags.push(...result.dependentFeatureFlags);
@@ -69,7 +77,14 @@ function featureFlagsTest(options: FeatureFlagsOptions) {
 					// Set requested state of FFs
 
 					for (const [key, enabled] of Object.entries(options)) {
-						await setEnabled(enabled, key, page);
+						await invokeServer<SetEnabledResult>(
+							backendPage,
+							'/o/com-liferay-feature-flag-web/set-enabled',
+							{
+								enabled,
+								key,
+							}
+						);
 					}
 
 					// Reload page to account for FF changes (eg: update Liferay.FeatureFlags)
@@ -80,7 +95,7 @@ function featureFlagsTest(options: FeatureFlagsOptions) {
 
 					await use(
 						Object.entries(options).reduce(
-							(featureFlags: FeatureFlags, [key, enabled]) => {
+							(featureFlags: FeatureFlag[], [key, enabled]) => {
 								featureFlags.push({
 									enabled,
 									key,
@@ -99,10 +114,10 @@ function featureFlagsTest(options: FeatureFlagsOptions) {
 					originalFeatureFlags.reverse();
 
 					for (const featureFlag of originalFeatureFlags) {
-						await setEnabled(
-							featureFlag.enabled,
-							featureFlag.key,
-							page
+						await invokeServer<SetEnabledResult>(
+							backendPage,
+							'/o/com-liferay-feature-flag-web/set-enabled',
+							featureFlag
 						);
 					}
 				}
@@ -110,8 +125,6 @@ function featureFlagsTest(options: FeatureFlagsOptions) {
 			{auto: true},
 		],
 	});
-
-	return mergeTests(loginTest(), fixtureImpl);
 }
 
 interface IsEnabledResult {
@@ -132,45 +145,6 @@ interface FeatureFlagResult {
 	featureFlagType: 'BETA' | 'DEPRECATION' | 'DEV' | 'RELEASE';
 	key: string;
 	title: string;
-}
-
-async function isEnabled(key: string, page: Page): Promise<IsEnabledResult> {
-	return invokeServerWithRetry(
-		page,
-		'/o/com-liferay-feature-flag-web/is-enabled',
-		{key}
-	);
-}
-
-async function setEnabled(
-	enabled: boolean,
-	key: string,
-	page: Page
-): Promise<SetEnabledResult> {
-	return invokeServerWithRetry(
-		page,
-		'/o/com-liferay-feature-flag-web/set-enabled',
-		{enabled, key}
-	);
-}
-
-async function invokeServerWithRetry<T>(
-	page: Page,
-	url: string,
-	partialBody: object
-): Promise<T> {
-	let result: T;
-
-	try {
-		result = await invokeServer(page, url, partialBody);
-	}
-	catch (error) {
-		await page.goto('/');
-
-		result = await invokeServer(page, url, partialBody);
-	}
-
-	return result;
 }
 
 async function invokeServer<T>(

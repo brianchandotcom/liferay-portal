@@ -332,6 +332,9 @@ public class VulcanBatchEngineTaskItemDelegateRegistryTest {
 			VulcanBatchEngineTaskItemDelegate.class,
 			new TestVulcanBatchEngineTaskItemDelegate(),
 			HashMapDictionaryBuilder.<String, Object>put(
+				"batch.engine.entity.class.name",
+				TestVulcanBatchEngineTaskItemDelegate.class.getName()
+			).put(
 				"batch.engine.task.item.delegate", "true"
 			).put(
 				"batch.planner.export.enabled", String.valueOf(exportEnabled)
@@ -346,9 +349,6 @@ public class VulcanBatchEngineTaskItemDelegateRegistryTest {
 
 					return null;
 				}
-			).put(
-				"entity.class.name",
-				TestVulcanBatchEngineTaskItemDelegate.class.getName()
 			).build());
 	}
 

@@ -12,6 +12,8 @@ import './article';
 
 import './highlighting-alert';
 
+import './keyboard-shortcut';
+
 export default {
 	DropdownProvider,
 	SpatialNavigationProvider,

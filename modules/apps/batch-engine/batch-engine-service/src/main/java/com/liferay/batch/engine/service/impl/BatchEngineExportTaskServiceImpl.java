@@ -13,7 +13,11 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,6 +35,22 @@ public class BatchEngineExportTaskServiceImpl
 	extends BatchEngineExportTaskServiceBaseImpl {
 
 	@Override
+	public BatchEngineExportTask addBatchEngineExportTask(
+			String externalReferenceCode, long companyId, long userId,
+			String callbackURL, String className, String contentType,
+			String executeStatus, List<String> fieldNamesList,
+			Map<String, Serializable> parameters, String taskItemDelegateName)
+		throws PortalException {
+
+		_checkCrossCompanyPermissions(companyId);
+
+		return batchEngineExportTaskLocalService.addBatchEngineExportTask(
+			externalReferenceCode, companyId, userId, callbackURL, className,
+			contentType, executeStatus, fieldNamesList, parameters,
+			taskItemDelegateName);
+	}
+
+	@Override
 	public BatchEngineExportTask getBatchEngineExportTask(
 			long batchEngineExportTaskId)
 		throws PortalException {
@@ -39,14 +59,27 @@ public class BatchEngineExportTaskServiceImpl
 			batchEngineExportTaskLocalService.getBatchEngineExportTask(
 				batchEngineExportTaskId);
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		_checkCrossCompanyPermissions(batchEngineExportTask.getCompanyId());
 
-		if ((batchEngineExportTask.getCompanyId() !=
-				permissionChecker.getCompanyId()) &&
-			!permissionChecker.isOmniadmin()) {
+		_checkTaskPermissions(batchEngineExportTask);
 
-			throw new PrincipalException();
-		}
+		return batchEngineExportTask;
+	}
+
+	@Override
+	public BatchEngineExportTask
+			getBatchEngineExportTaskByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		_checkCrossCompanyPermissions(companyId);
+
+		BatchEngineExportTask batchEngineExportTask =
+			batchEngineExportTaskLocalService.
+				getBatchEngineExportTaskByExternalReferenceCode(
+					externalReferenceCode, companyId);
+
+		_checkTaskPermissions(batchEngineExportTask);
 
 		return batchEngineExportTask;
 	}
@@ -56,16 +89,11 @@ public class BatchEngineExportTaskServiceImpl
 			long companyId, int start, int end)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		_checkCrossCompanyPermissions(companyId);
 
-		if ((companyId != permissionChecker.getCompanyId()) &&
-			!permissionChecker.isOmniadmin()) {
-
-			throw new PrincipalException();
-		}
-
-		return batchEngineExportTaskLocalService.getBatchEngineExportTasks(
-			companyId, start, end);
+		return _filterTaskListByPermissions(
+			batchEngineExportTaskLocalService.getBatchEngineExportTasks(
+				companyId, start, end));
 	}
 
 	@Override
@@ -74,22 +102,27 @@ public class BatchEngineExportTaskServiceImpl
 			OrderByComparator<BatchEngineExportTask> orderByComparator)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		_checkCrossCompanyPermissions(companyId);
 
-		if ((companyId != permissionChecker.getCompanyId()) &&
-			!permissionChecker.isOmniadmin()) {
-
-			throw new PrincipalException();
-		}
-
-		return batchEngineExportTaskPersistence.findByCompanyId(
-			companyId, start, end, orderByComparator);
+		return _filterTaskListByPermissions(
+			batchEngineExportTaskPersistence.findByCompanyId(
+				companyId, start, end, orderByComparator));
 	}
 
 	@Override
 	public int getBatchEngineExportTasksCount(long companyId)
 		throws PortalException {
 
+		_checkCrossCompanyPermissions(companyId);
+
+		return _filterTaskListByPermissions(
+			batchEngineExportTaskPersistence.findByCompanyId(companyId)
+		).size();
+	}
+
+	private void _checkCrossCompanyPermissions(long companyId)
+		throws PrincipalException {
+
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if ((companyId != permissionChecker.getCompanyId()) &&
@@ -97,9 +130,52 @@ public class BatchEngineExportTaskServiceImpl
 
 			throw new PrincipalException();
 		}
+	}
 
-		return batchEngineExportTaskLocalService.getBatchEngineExportTasksCount(
-			companyId);
+	private void _checkTaskPermissions(
+			BatchEngineExportTask batchEngineExportTask)
+		throws PrincipalException {
+
+		if (!_hasTaskPermissions(
+				batchEngineExportTask, getPermissionChecker())) {
+
+			throw new PrincipalException();
+		}
+	}
+
+	private List<BatchEngineExportTask> _filterTaskListByPermissions(
+			List<BatchEngineExportTask> batchEngineExportTasks)
+		throws PrincipalException {
+
+		List<BatchEngineExportTask> filteredBatchEngineExportTasks =
+			new ArrayList<>();
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		for (BatchEngineExportTask batchEngineExportTask :
+				batchEngineExportTasks) {
+
+			if (_hasTaskPermissions(batchEngineExportTask, permissionChecker)) {
+				filteredBatchEngineExportTasks.add(batchEngineExportTask);
+			}
+		}
+
+		return filteredBatchEngineExportTasks;
+	}
+
+	private boolean _hasTaskPermissions(
+		BatchEngineExportTask batchEngineExportTask,
+		PermissionChecker permissionChecker) {
+
+		if (permissionChecker.isCompanyAdmin(
+				batchEngineExportTask.getCompanyId()) ||
+			(batchEngineExportTask.getUserId() ==
+				permissionChecker.getUserId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

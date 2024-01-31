@@ -122,7 +122,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		throws Exception {
 
 		return _toImportTask(
-			_batchEngineImportTaskLocalService.
+			_batchEngineImportTaskService.
 				getBatchEngineImportTaskByExternalReferenceCode(
 					externalReferenceCode, contextCompany.getCompanyId()));
 	}
@@ -133,7 +133,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		throws Exception {
 
 		return _getImportTaskContent(
-			_batchEngineImportTaskLocalService.
+			_batchEngineImportTaskService.
 				getBatchEngineImportTaskByExternalReferenceCode(
 					externalReferenceCode, contextCompany.getCompanyId()));
 	}
@@ -144,7 +144,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		throws Exception {
 
 		BatchEngineImportTask batchEngineImportTask =
-			_batchEngineImportTaskLocalService.
+			_batchEngineImportTaskService.
 				getBatchEngineImportTaskByExternalReferenceCode(
 					externalReferenceCode, contextCompany.getCompanyId());
 
@@ -459,7 +459,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		}
 
 		BatchEngineImportTask batchEngineImportTask =
-			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
+			_batchEngineImportTaskService.addBatchEngineImportTask(
 				externalReferenceCode, contextCompany.getCompanyId(),
 				contextUser.getUserId(),
 				_itemClassBatchSizeMap.getOrDefault(

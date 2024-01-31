@@ -8,6 +8,7 @@ package com.liferay.blogs.item.selector.web.internal.display.context;
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.item.selector.web.internal.BlogsItemSelectorView;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
@@ -22,6 +23,8 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortletKeys;
 
@@ -141,6 +144,17 @@ public class BlogsItemSelectorViewDisplayContext {
 
 	public boolean isSearch() {
 		return _search;
+	}
+
+	public boolean showDragAndDropZone(ThemeDisplay themeDisplay) {
+		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				BlogsEntry.class.getName())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private BlogsFileUploadsConfiguration _getBlogsFileUploadsConfiguration()

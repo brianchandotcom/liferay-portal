@@ -1,0 +1,31 @@
+{
+	"externalReferenceCode": "OBJECTDEFINITION-BuildsCases",
+	"label": {
+		"en_US": "Testray Builds Cases"
+	},
+	"name": "BuildsCases",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "OBJECTFIELD-Name",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Name"
+			},
+			"localized": false,
+			"name": "name",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Testray Builds Cases"
+	},
+	"restContextPath": "/o/c/buildscaseses",
+	"scope": "company"
+}

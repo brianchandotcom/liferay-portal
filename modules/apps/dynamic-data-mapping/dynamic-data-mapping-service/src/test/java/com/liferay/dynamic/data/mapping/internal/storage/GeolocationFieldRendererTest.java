@@ -10,7 +10,6 @@ import com.liferay.dynamic.data.mapping.storage.FieldRenderer;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -44,16 +43,9 @@ public class GeolocationFieldRendererTest {
 		FieldRenderer fieldRenderer = new GeolocationFieldRenderer(
 			new JSONFactoryImpl(), _language);
 
-		if (JavaDetector.isJDK8()) {
-			Assert.assertEquals(
-				"Latitud: 9,877, Longitud: 1,234",
-				fieldRenderer.render(_createField(), LocaleUtil.SPAIN));
-		}
-		else {
-			Assert.assertEquals(
-				"Latitud: 9,876, Longitud: 1,234",
-				fieldRenderer.render(_createField(), LocaleUtil.SPAIN));
-		}
+		Assert.assertEquals(
+			"Latitud: 9,877, Longitud: 1,234",
+			fieldRenderer.render(_createField(), LocaleUtil.SPAIN));
 	}
 
 	@Test
@@ -61,16 +53,9 @@ public class GeolocationFieldRendererTest {
 		FieldRenderer fieldRenderer = new GeolocationFieldRenderer(
 			new JSONFactoryImpl(), _language);
 
-		if (JavaDetector.isJDK8()) {
-			Assert.assertEquals(
-				"Latitude: 9.877, Longitude: 1.234",
-				fieldRenderer.render(_createField(), LocaleUtil.US));
-		}
-		else {
-			Assert.assertEquals(
-				"Latitude: 9.876, Longitude: 1.234",
-				fieldRenderer.render(_createField(), LocaleUtil.US));
-		}
+		Assert.assertEquals(
+			"Latitude: 9.877, Longitude: 1.234",
+			fieldRenderer.render(_createField(), LocaleUtil.US));
 	}
 
 	private static void _setUpLanguageUtil() {

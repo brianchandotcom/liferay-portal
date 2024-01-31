@@ -131,6 +131,7 @@ export type TestrayBuild = {
 export type TestrayCase = {
 	actions: ObjectActionsItems;
 	caseResults?: TestrayCaseResult[];
+	caseToBuildsCases: TestrayBuildsCases[];
 	caseToCaseResult?: TestrayCaseResult[];
 	caseType?: TestrayCaseType;
 	component?: TestrayComponent;
@@ -150,6 +151,11 @@ export type TestrayCase = {
 	r_projectToCases_c_project?: TestrayProject;
 	steps: string;
 	stepsType: string;
+};
+
+export type TestrayBuildsCases = {
+	r_buildToBuildsCases_c_build: TestrayBuild;
+	r_caseToBuildsCases_c_caseId: TestrayCase;
 };
 
 export type TestrayCaseResult = {
@@ -196,6 +202,7 @@ export type TestrayCaseResultIssue = {
 };
 
 export type TestrayCaseType = {
+	caseTypeToCases: TestrayCase[];
 	dateCreated: string;
 	dateModified: string;
 	externalReferenceCode: string;

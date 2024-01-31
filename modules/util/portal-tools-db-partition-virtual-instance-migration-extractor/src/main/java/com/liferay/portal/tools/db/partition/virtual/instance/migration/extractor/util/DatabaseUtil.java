@@ -29,10 +29,6 @@ public class DatabaseUtil {
 
 		InstanceData instanceData = new InstanceData();
 
-		instanceData.setJdbcUrl(
-			connection.getMetaData(
-			).getURL());
-
 		instanceData.setCompanyId(_getCompanyId(connection));
 
 		instanceData.setDefaultPartition(_isDefaultPartition(connection));

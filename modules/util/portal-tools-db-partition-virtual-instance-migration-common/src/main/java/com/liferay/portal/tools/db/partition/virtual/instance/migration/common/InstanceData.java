@@ -29,10 +29,6 @@ public class InstanceData {
 		return _date;
 	}
 
-	public String getJdbcUrl() {
-		return _jdbcUrl;
-	}
-
 	public List<Release> getReleases() {
 		return _releases;
 	}
@@ -61,10 +57,6 @@ public class InstanceData {
 		_defaultPartition = defaultPartition;
 	}
 
-	public void setJdbcUrl(String jdbcUrl) {
-		_jdbcUrl = jdbcUrl;
-	}
-
 	public void setReleases(List<Release> releases) {
 		_releases = releases;
 	}
@@ -77,7 +69,6 @@ public class InstanceData {
 	private Long _companyId;
 	private Date _date;
 	private boolean _defaultPartition;
-	private String _jdbcUrl;
 	private List<Release> _releases;
 	private List<String> _tableNames;
 

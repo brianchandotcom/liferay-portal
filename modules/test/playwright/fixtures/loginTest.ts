@@ -3,82 +3,58 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, test} from '@playwright/test';
+import {Cookie, test} from '@playwright/test';
 
 import createTempFile, {
 	TempFileMissingError,
 	readTempFile,
 } from '../utils/createTempFile';
+import performLogin, {LoginScreenName} from '../utils/performLogin';
 
 export interface LoginOptions {
-	screenName?:
-		| 'default-company-admin'
-		| 'test'
-		| 'test-organization-owner'
-		| 'unprivileged';
+	screenName?: LoginScreenName;
 }
 
 export interface Login {
-	password: string;
-	sessionId: string;
-	user: string;
+	login: {
+		screenName: LoginScreenName;
+		sessionId: string;
+	};
 }
 
 function loginTest(options: LoginOptions = {}) {
-	const fixtureImpl = test.extend<{
-		login: Login;
-	}>({
+	const fixtureImpl = test.extend<Login>({
 		login: [
 			async ({page}, use) => {
 				const screenName = options.screenName || 'test';
-				const user = `${screenName}@liferay.com`;
-				const password = 'test';
 				const tempFile = `loginTest-${screenName}.json`;
 
+				let cookies: Cookie[];
+
 				try {
-					const {cookies} = JSON.parse(readTempFile(tempFile));
+					const json = JSON.parse(readTempFile(tempFile));
+
+					cookies = json.cookies;
 
 					page.context().addCookies(cookies);
+
+					await page.goto('/');
 				}
 				catch (error) {
 					if (!(error instanceof TempFileMissingError)) {
 						throw error;
 					}
 
-					const storageStatePath = createTempFile(tempFile);
+					cookies = await performLogin(page, screenName);
 
-					await page.goto('/');
-
-					await page.getByRole('button', {name: 'Sign In'}).click();
-
-					await page.getByLabel('Email Address').fill(user);
-					await page.getByLabel('Password').fill(password);
-					await page.getByLabel('Remember Me').check();
-
-					await page
-						.getByLabel('Sign In- Loading')
-						.getByRole('button', {name: 'Sign In'})
-						.click();
-
-					await expect(
-						page.getByLabel(
-							`${screenName} ${screenName} User Profile`
-						)
-					).toBeVisible({
-						timeout: 30 * 1000,
-					});
-
-					await page.context().storageState({path: storageStatePath});
+					createTempFile(tempFile, JSON.stringify({cookies}));
 				}
 
-				const cookies = await page.context().cookies();
-
 				await use({
-					password,
+					screenName,
 					sessionId: cookies.find(
 						(cookie) => cookie.name === 'JSESSIONID'
 					).value,
-					user,
 				});
 			},
 			{auto: true},

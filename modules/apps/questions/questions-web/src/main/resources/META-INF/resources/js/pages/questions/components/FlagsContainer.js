@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Flags from '@liferay/flags-taglib';
+import {App} from '@liferay/flags-taglib';
 import React from 'react';
 
 import useFlagsContainer from '../hooks/useFlagsContainer.es';
@@ -28,7 +28,7 @@ const FlagsContainer = ({
 	});
 
 	if (isFlagEnabled) {
-		return <Flags context={flagsContext} props={props} />;
+		return <App context={flagsContext} props={props} />;
 	}
 
 	return null;

@@ -7,7 +7,7 @@ import {Action} from '../../plugins/page_rules/components/Action';
 import {Condition} from '../../plugins/page_rules/components/Condition';
 import {ConditionType} from '../../plugins/page_rules/components/RuleBuilderSection';
 import {LayoutData} from '../../types/layout_data/LayoutData';
-import updateNetwork from '../actions/updateNetwork';
+import {OnNetworkStatus} from './draftServiceFetch';
 
 /**
  * Add a rule
@@ -17,7 +17,7 @@ declare type AddRuleProps = {
 	conditionType: ConditionType;
 	conditions: Condition[];
 	name: string;
-	onNetworkStatus: (action: ReturnType<typeof updateNetwork>) => void;
+	onNetworkStatus: OnNetworkStatus;
 	segmentsExperienceId: string;
 };
 declare function addRule({
@@ -36,7 +36,7 @@ declare function addRule({
  * Delete a rule
  */
 declare type DeleteRuleProps = {
-	onNetworkStatus: (action: ReturnType<typeof updateNetwork>) => void;
+	onNetworkStatus: OnNetworkStatus;
 	ruleId: string;
 	segmentsExperienceId: string;
 };
@@ -76,7 +76,7 @@ declare type UpdateRuleProps = {
 	conditionType: ConditionType;
 	conditions: Condition[];
 	name: string;
-	onNetworkStatus: (action: ReturnType<typeof updateNetwork>) => void;
+	onNetworkStatus: OnNetworkStatus;
 	ruleId: string;
 	segmentsExperienceId: string;
 };

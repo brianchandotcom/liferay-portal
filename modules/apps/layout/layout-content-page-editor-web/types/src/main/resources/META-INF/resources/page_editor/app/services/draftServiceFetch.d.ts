@@ -5,6 +5,9 @@
 
 import updateNetwork from '../actions/updateNetwork';
 import {Options} from './serviceFetch';
+export interface OnNetworkStatus {
+	(action: ReturnType<typeof updateNetwork>): void;
+}
 
 /**
  * Performs a POST request to the given url and parses an expected object response.
@@ -14,5 +17,5 @@ import {Options} from './serviceFetch';
 export default function draftServiceFetch<T>(
 	url: string,
 	options: Options,
-	onNetworkStatus: (action: ReturnType<typeof updateNetwork>) => void
+	onNetworkStatus: OnNetworkStatus
 ): Promise<T>;

@@ -49,8 +49,7 @@ public class ScheduledPublicationUserNotificationHandler
 		}
 		else {
 			body = _language.get(
-				serviceContext.getLocale(),
-				"an-unexpected-error-occurred");
+				serviceContext.getLocale(), "an-unexpected-error-occurred");
 		}
 
 		return StringUtil.replace(

@@ -1903,7 +1903,7 @@ public class RESTBuilder {
 
 			List<String> args = new ArrayList<>(
 				Arrays.asList(
-					"npx", "openapi-typescript-codegen", "--input",
+					"npx", "openapi-typescript-codegen@0.27.0", "--input",
 					openApiYamlFile.getPath(), "--output",
 					outputDirPath.toString(), "--client", target));
 

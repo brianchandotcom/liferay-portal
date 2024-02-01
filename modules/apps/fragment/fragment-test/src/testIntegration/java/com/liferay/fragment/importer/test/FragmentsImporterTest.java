@@ -14,7 +14,9 @@ import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.fragment.importer.FragmentsImporterResultEntry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -282,6 +284,61 @@ public class FragmentsImporterTest {
 			FragmentEntry::getFragmentEntryKey);
 
 		Assert.assertTrue(fragmentEntryNames.contains("resource"));
+	}
+
+	@Test
+	public void testImportFragmentsWithThumbnailPathAndPropagation()
+		throws Exception {
+
+		_configurationProvider.saveCompanyConfiguration(
+			FragmentServiceConfiguration.class, _group.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"propagateChanges", true
+			).build());
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try {
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0, _file,
+				FragmentsImportStrategy.OVERWRITE);
+
+			FragmentEntry fragmentEntry =
+				_fragmentEntryLocalService.fetchFragmentEntry(
+					_group.getGroupId(), "heading");
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					_user.getUserId(), _group.getGroupId(), 0,
+					fragmentEntry.getFragmentEntryId(), 0, 0,
+					fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+					StringPool.BLANK, StringPool.BLANK, 0, StringPool.BLANK, 0,
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId()));
+
+			Assert.assertTrue(fragmentEntryLink.isLatestVersion());
+
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0, _file,
+				FragmentsImportStrategy.OVERWRITE);
+
+			fragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId());
+
+			Assert.assertTrue(fragmentEntryLink.isLatestVersion());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+
+			_configurationProvider.saveCompanyConfiguration(
+				FragmentServiceConfiguration.class, _group.getCompanyId(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"propagateChanges", false
+				).build());
+		}
 	}
 
 	@Test
@@ -889,6 +946,9 @@ public class FragmentsImporterTest {
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;

@@ -43,12 +43,11 @@ public class ObjectEntryBatchReindexerImpl
 
 		batchIndexingActionable.setAddCriteriaMethod(
 			dynamicQuery -> {
-				Property objectDefinitionIdProperty =
-					PropertyFactoryUtil.forName("objectDefinitionId");
+				Property property = PropertyFactoryUtil.forName(
+					"objectDefinitionId");
 
 				dynamicQuery.add(
-					objectDefinitionIdProperty.eq(
-						_objectDefinition.getObjectDefinitionId()));
+					property.eq(_objectDefinition.getObjectDefinitionId()));
 			});
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(

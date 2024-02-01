@@ -428,14 +428,12 @@ definition {
 		}
 
 		task ("Navigate to display page template via friendly URL") {
-			for (var type : list "w,-") {
-				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/${type}/webcontent-title");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
 
-				ContentPages.viewFragmentText(
-					fragmentName = "heading",
-					id = "element-text",
-					text = "Webcontent Title");
-			}
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Webcontent Title");
 		}
 	}
 

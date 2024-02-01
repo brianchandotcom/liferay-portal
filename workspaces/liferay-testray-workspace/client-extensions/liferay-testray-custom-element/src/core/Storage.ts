@@ -9,6 +9,7 @@ import {CONSENT_TYPE} from '~/util/enum';
 
 export enum STORAGE_KEYS {
 	COMPARE_RUNS = '@testray/compare-runs',
+	FILTER_SCHEMA = '@testray/filter-schema',
 	EXPORT_CASE_IDS = '@testray/export-case-ids',
 	LIST_VIEW_COLUMNS = '@testray/listview-columns-',
 	LIST_VIEW_PIN = '@testray/listview-pin-',

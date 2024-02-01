@@ -4,8 +4,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ReactNode, createContext, useReducer} from 'react';
+import {ReactNode, createContext, useEffect, useReducer} from 'react';
+import {useSearchParams} from 'react-router-dom';
 import TestrayStorage, {STORAGE_KEYS} from '~/core/Storage';
+import useQueryParams from '~/hooks/useQueryParams';
 import useStorage from '~/hooks/useStorage';
 import {ActionMap, SortDirection, SortOption} from '~/types';
 import {safeJSONParse} from '~/util';
@@ -26,7 +28,7 @@ export type Sort = {
 	key: string;
 };
 
-type ListViewFilter = {
+export type ListViewFilter = {
 	entries: Entry[];
 	filter: {
 		[key: string]: string;
@@ -126,8 +128,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 				selectedRows = state.checkAll ? [] : rowIds;
 
 				state.checkAll = !state.checkAll;
-			}
-			else {
+			} else {
 				const rowAlreadyInserted = state.selectedRows.includes(
 					rowIds as number
 				);
@@ -195,15 +196,17 @@ const reducer = (state: InitialState, action: AppActions) => {
 
 			const storageName = STORAGE_KEYS.LIST_VIEW_PIN + state.id;
 
+			const schemaName = STORAGE_KEYS.FILTER_SCHEMA + state.id;
+
 			if (pin) {
 				testrayStorage.setItem(
 					storageName,
 					JSON.stringify(state.filters),
 					CONSENT_TYPE.NECESSARY
 				);
-			}
-			else {
+			} else {
 				testrayStorage.removeItem(storageName);
+				testrayStorage.removeItem(schemaName);
 			}
 
 			return {
@@ -267,6 +270,10 @@ const ListViewContextProvider: React.FC<
 	ListViewContextProviderProps & {children: ReactNode; id: string}
 > = ({children, id, ...initialStateProps}) => {
 	const {currentPage, filterInitialContext, pageSize} = useQueryParams();
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	const filter = searchParams.get('filter');
+
 	const [columnsStorage] = useStorage<ListViewColumns>(
 		(STORAGE_KEYS.LIST_VIEW_COLUMNS + id) as STORAGE_KEYS,
 		{consentType: CONSENT_TYPE.NECESSARY, storageType: 'persisted'}
@@ -275,6 +282,25 @@ const ListViewContextProvider: React.FC<
 		(STORAGE_KEYS.LIST_VIEW_PIN + id) as STORAGE_KEYS,
 		{consentType: CONSENT_TYPE.NECESSARY, storageType: 'persisted'}
 	);
+
+	const [filterSchemaStorage] = useStorage(
+		(STORAGE_KEYS.FILTER_SCHEMA + id) as STORAGE_KEYS,
+		{consentType: CONSENT_TYPE.NECESSARY, storageType: 'persisted'}
+	);
+
+	useEffect(() => {
+		if (!filter && filterSchemaStorage && filterPinnedStorage) {
+			setSearchParams(
+				new URLSearchParams({
+					filter: JSON.stringify(filterPinnedStorage?.filter),
+					filterSchema: filterSchemaStorage as string,
+					page: '1',
+					pageSize: '20',
+				})
+			);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const [state, dispatch] = useReducer(reducer, {
 		...initialState,

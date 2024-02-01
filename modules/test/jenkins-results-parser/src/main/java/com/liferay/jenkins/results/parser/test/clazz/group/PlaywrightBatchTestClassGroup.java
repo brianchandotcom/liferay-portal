@@ -33,11 +33,13 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		JobProperty jobProperty = getJobProperty(
 			PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME, testSuiteName, batchName);
 
-		if (jobProperty.getValue() == null) {
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
 			return;
 		}
 
-		_addProjectNames(jobProperty.getValue());
+		_addProjectNames(jobPropertyValue);
 
 		recordJobProperty(jobProperty);
 	}

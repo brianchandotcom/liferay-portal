@@ -14,6 +14,8 @@ import com.liferay.osb.faro.provisioning.client.model.OSBAccountEntry;
 import com.liferay.osb.faro.provisioning.client.model.OSBOfferingEntry;
 import com.liferay.osb.faro.web.internal.constants.FaroSubscriptionConstants;
 import com.liferay.osb.faro.web.internal.subscription.FaroSubscriptionPlan;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -175,8 +177,6 @@ public class FaroSubscriptionDisplay {
 			contactsEngineClient.getIndividualsCreatedSinceCount(
 				faroProject, _lastAnniversaryDate);
 
-		_individualsStatus = getStatus(_individualsCount, _individualsLimit);
-
 		_pageViewsCount = GetterUtil.getInteger(
 			cerebroEngineClient.getPageViews(
 				faroProject, subscriptionModifiedDate, new Date()));
@@ -185,7 +185,17 @@ public class FaroSubscriptionDisplay {
 			cerebroEngineClient.getPageViews(
 				faroProject, _lastAnniversaryDate, new Date()));
 
-		_pageViewsStatus = getStatus(_pageViewsCount, _pageViewsLimit);
+		if (_isBasicSubscription(faroProject.getSubscription())) {
+			_individualsStatus = getStatus(
+				_individualsCount, _individualsLimit);
+			_pageViewsStatus = getStatus(_pageViewsCount, _pageViewsLimit);
+		}
+		else {
+			_individualsStatus = getStatus(
+				_individualsCountSinceLastAnniversary, _individualsLimit);
+			_pageViewsStatus = getStatus(
+				_pageViewsCountSinceLastAnniversary, _pageViewsLimit);
+		}
 	}
 
 	public static class AddOn {
@@ -287,6 +297,23 @@ public class FaroSubscriptionDisplay {
 			baseOSBOfferingEntry.getStartDate());
 
 		if (value > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isBasicSubscription(String subscription) throws Exception {
+		JSONObject oldSubscriptionJSONObject = JSONFactoryUtil.createJSONObject(
+			subscription);
+
+		if (StringUtil.equals(
+				oldSubscriptionJSONObject.getString("name"),
+				ProductConstants.BASIC_PRODUCT_NAME) ||
+			StringUtil.equals(
+				oldSubscriptionJSONObject.getString("name"),
+				ProductConstants.LXC_PRO_PRODUCT_NAME)) {
+
 			return true;
 		}
 

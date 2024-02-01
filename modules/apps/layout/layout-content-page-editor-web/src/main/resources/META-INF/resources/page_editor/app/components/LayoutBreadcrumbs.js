@@ -4,7 +4,6 @@
  */
 
 import ClayBreadcrumb from '@clayui/breadcrumb';
-import {ReactPortal} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
@@ -53,7 +52,7 @@ export function LayoutBreadcrumbs() {
 	}, [wrapperElement, breadcrumbItems.length]);
 
 	return wrapperElement && breadcrumbItems.length ? (
-		<ReactPortal container={wrapperElement}>
+		<div>
 			<div
 				className="bg-white border-top cadmin page-editor__layout-breadcrumbs position-fixed px-3"
 				ref={containerRef}
@@ -69,7 +68,7 @@ export function LayoutBreadcrumbs() {
 					/>
 				</div>
 			</div>
-		</ReactPortal>
+		</div>
 	) : null;
 }
 

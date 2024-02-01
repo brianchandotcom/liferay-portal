@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {HeadlessDeliveryClient} from '@liferay/headless-delivery-client-js';
+
 // @ts-ignore
 
 import {expect, mergeTests} from '@playwright/test';
 import * as path from 'path';
 
-import {HeadlessDeliveryClient} from '../../../../apps/headless/headless-delivery/headless-delivery-client-js/src/main/resources/META-INF/resources/node';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {exportImportPagesTest} from '../../fixtures/exportImportPages.fixtures';
 import {loginTest} from '../../fixtures/loginTest';

@@ -1006,6 +1006,10 @@
 			<category name="Bug Prevention" />
 			<description name="Checks the version for dependencies in `package.json` files." />
 		</check>
+		<check name="JSONPageFileCheck">
+			<category name="Styling" />
+			<description name="Sorts by `roleName` in `page.json` files." />
+		</check>
 		<check name="JSONResourcePermissionsFileCheck">
 			<category name="Styling" />
 			<description name="Sorts by `resourceName` in `resource-permissions.json` files." />

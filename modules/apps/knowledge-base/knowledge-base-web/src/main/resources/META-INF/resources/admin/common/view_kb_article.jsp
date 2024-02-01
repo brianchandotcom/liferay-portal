@@ -108,8 +108,6 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 
 	<div class="sidenav-content <%= portletTitleBasedNavigation ? "container-fluid container-fluid-max-xl container-form-lg" : StringPool.BLANK %>">
-		<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="this-article-is-currently-being-edited-by-another-user" />
-
 		<c:if test="<%= !portletTitleBasedNavigation %>">
 			<div class="autofit-row">
 				<div class="autofit-col autofit-col-expand">
@@ -281,6 +279,16 @@ String kbArticleSuccessMessage = GetterUtil.getString(MultiSessionMessages.get(r
 		%>'
 		module="admin/js/utils/openToast"
 	/>
+</c:if>
+
+<c:if test="<%= MultiSessionErrors.contains(liferayPortletRequest, DuplicateLockException.class.getName()) %>">
+	<aui:script>
+		Liferay.Util.openToast({
+			message: 'LOCKED ARTICLE',
+			title: Liferay.Language.get('error'),
+			type: 'danger',
+		});
+	</aui:script>
 </c:if>
 
 <%

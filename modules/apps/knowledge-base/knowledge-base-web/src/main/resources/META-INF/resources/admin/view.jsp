@@ -71,7 +71,6 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 		<clay:container-fluid
 			cssClass="container-view sidenav-content"
 		>
-			<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="this-article-is-currently-being-edited-by-another-user" />
 
 			<%
 			KBAdminViewDisplayContext kbAdminViewDisplayContext = new KBAdminViewDisplayContext(parentResourceClassNameId, parentResourcePrimKey, request, liferayPortletResponse);
@@ -159,4 +158,14 @@ String kbArticleSuccessMessage = GetterUtil.getString(MultiSessionMessages.get(r
 		%>'
 		module="admin/js/utils/openToast"
 	/>
+</c:if>
+
+<c:if test="<%= MultiSessionErrors.contains(liferayPortletRequest, DuplicateLockException.class.getName()) %>">
+	<aui:script>
+		Liferay.Util.openToast({
+			message: 'LOCKED ARTICLE',
+			title: Liferay.Language.get('error'),
+			type: 'danger',
+		});
+	</aui:script>
 </c:if>

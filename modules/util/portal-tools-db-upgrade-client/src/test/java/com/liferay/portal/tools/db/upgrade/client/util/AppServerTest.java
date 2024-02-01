@@ -98,6 +98,19 @@ public class AppServerTest {
 
 		Assert.assertEquals(appServerDir, appServer.getDir());
 
+		File extraLibDir = new File(appServerDir, extraDirLibName);
+
+		Assert.assertEquals(
+			extraLibDir,
+			appServer.getExtraLibDirs(
+			).get(
+				0
+			));
+
+		File globalLibDir = new File(appServerDir, globalDirLibName);
+
+		Assert.assertEquals(globalLibDir, appServer.getGlobalLibDir());
+
 		File portalDir = new File(appServerDir, portalDirName);
 
 		Assert.assertEquals(portalDir, appServer.getPortalDir());
@@ -118,19 +131,6 @@ public class AppServerTest {
 		Assert.assertEquals(
 			portalShieldContainerLibDir,
 			appServer.getPortalShieldedContainerLibDir());
-
-		File extraLibDir = new File(appServerDir, extraDirLibName);
-
-		Assert.assertEquals(
-			extraLibDir,
-			appServer.getExtraLibDirs(
-			).get(
-				0
-			));
-
-		File globalLibDir = new File(appServerDir, globalDirLibName);
-
-		Assert.assertEquals(globalLibDir, appServer.getGlobalLibDir());
 
 		Assert.assertEquals(
 			serverDetectorServerId, appServer.getServerDetectorServerId());

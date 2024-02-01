@@ -54,6 +54,19 @@ public class ObjectEntrySearchUtil {
 		return null;
 	}
 
+	public static Column<?, Long> getPrimaryKeyColumn(
+		String pkObjectFieldDBColumnName, Table<?> table) {
+
+		Column<?, Long> primaryKeyColumn = (Column<?, Long>)table.getColumn(
+			pkObjectFieldDBColumnName);
+
+		if (primaryKeyColumn == null) {
+			primaryKeyColumn = ObjectEntryTable.INSTANCE.objectEntryId;
+		}
+
+		return primaryKeyColumn;
+	}
+
 	public static Predicate getRelatedModelsPredicate(
 		ObjectDefinition objectDefinition,
 		ObjectFieldLocalService objectFieldLocalService, String search,
@@ -85,12 +98,8 @@ public class ObjectEntrySearchUtil {
 			return objectFieldPredicate;
 		}
 
-		Column<?, Long> primaryKeyColumn = (Column<?, Long>)table.getColumn(
-			objectDefinition.getPKObjectFieldDBColumnName());
-
-		if (primaryKeyColumn == null) {
-			primaryKeyColumn = ObjectEntryTable.INSTANCE.objectEntryId;
-		}
+		Column<?, Long> primaryKeyColumn = getPrimaryKeyColumn(
+			objectDefinition.getPKObjectFieldDBColumnName(), table);
 
 		Predicate primaryKeyPredicate = primaryKeyColumn.eq(searchLong);
 

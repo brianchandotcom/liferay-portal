@@ -8,8 +8,8 @@ package com.liferay.batch.engine.internal;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
 import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemDelegateProvider;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.collections.map.ScopedServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ScopedServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,15 +34,15 @@ public class BatchEngineTaskItemDelegateRegistryImpl
 
 	@Override
 	public BatchEngineTaskItemDelegate<?> getBatchEngineTaskItemDelegate(
-		String itemClassName, String taskItemDelegateName) {
+		long companyId, String itemClassName, String taskItemDelegateName) {
 
-		return _serviceTrackerMap.getService(
-			_encodeKey(itemClassName, taskItemDelegateName));
+		return _scopedServiceTrackerMap.getService(
+			companyId, _encodeKey(itemClassName, taskItemDelegateName));
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+		_scopedServiceTrackerMap = ScopedServiceTrackerMapFactory.create(
 			bundleContext, null,
 			"(|(batch.engine.task.item.delegate=true)(objectClass=" +
 				BatchEngineTaskItemDelegate.class.getName() + "))",
@@ -62,11 +62,11 @@ public class BatchEngineTaskItemDelegateRegistryImpl
 				}
 			},
 			new ServiceTrackerCustomizer
-				<String, BatchEngineTaskItemDelegate<?>>() {
+				<Object, BatchEngineTaskItemDelegate<?>>() {
 
 				@Override
 				public BatchEngineTaskItemDelegate<?> addingService(
-					ServiceReference<String> serviceReference) {
+					ServiceReference<Object> serviceReference) {
 
 					return _batchEngineTaskItemDelegateProvider.
 						toBatchEngineTaskItemDelegate(
@@ -75,14 +75,14 @@ public class BatchEngineTaskItemDelegateRegistryImpl
 
 				@Override
 				public void modifiedService(
-					ServiceReference<String> serviceReference,
+					ServiceReference<Object> serviceReference,
 					BatchEngineTaskItemDelegate<?>
 						batchEngineTaskItemDelegate) {
 				}
 
 				@Override
 				public void removedService(
-					ServiceReference<String> serviceReference,
+					ServiceReference<Object> serviceReference,
 					BatchEngineTaskItemDelegate<?>
 						batchEngineTaskItemDelegate) {
 
@@ -94,7 +94,7 @@ public class BatchEngineTaskItemDelegateRegistryImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_scopedServiceTrackerMap.close();
 	}
 
 	private String _encodeKey(
@@ -182,7 +182,7 @@ public class BatchEngineTaskItemDelegateRegistryImpl
 	private BatchEngineTaskItemDelegateProvider
 		_batchEngineTaskItemDelegateProvider;
 
-	private ServiceTrackerMap<String, BatchEngineTaskItemDelegate<?>>
-		_serviceTrackerMap;
+	private ScopedServiceTrackerMap<BatchEngineTaskItemDelegate<?>>
+		_scopedServiceTrackerMap;
 
 }

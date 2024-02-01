@@ -199,7 +199,7 @@ public class CounterLocalServiceTest {
 	private static final int _PROCESS_COUNT = 4;
 
 	@Inject
-	private static volatile ProcessExecutor _processExecutor;
+	private static final ProcessExecutor _processExecutor = null;
 
 	private static class IncrementProcessCallable
 		implements ProcessCallable<Long[]> {

@@ -9,25 +9,35 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
 
 import java.util.List;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Feliphe Marinho
  * @author Gabriel Albuquerque
  */
-@Component(service = SearchPermissionFilterContributor.class)
+@Component(
+	configurationPid = "com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration",
+	service = SearchPermissionFilterContributor.class
+)
 public class ObjectEntrySearchPermissionFilterContributor
 	implements SearchPermissionFilterContributor {
 
@@ -51,7 +61,47 @@ public class ObjectEntrySearchPermissionFilterContributor
 				return accountEntry.getAccountEntryId();
 			});
 
-		if (ListUtil.isEmpty(accountEntryIds)) {
+		List<Organization> organizations =
+			_organizationLocalService.getUserOrganizations(
+				permissionChecker.getUserId());
+
+		int termsCount = accountEntryIds.size() + organizations.size();
+
+		int permissionTermsLimit =
+			_searchPermissionCheckerConfiguration.permissionTermsLimit();
+
+		if (termsCount > permissionTermsLimit) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Skipping presearch account restriction checking due ",
+						"to too many account entries and organizations: ",
+						termsCount, " > ", permissionTermsLimit));
+			}
+
+			return;
+		}
+
+		_contributeAccountEntries(booleanFilter, accountEntryIds);
+		_contributeOrganization(booleanFilter, organizations);
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		modified(properties);
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_searchPermissionCheckerConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SearchPermissionCheckerConfiguration.class, properties);
+	}
+
+	private void _contributeAccountEntries(
+		BooleanFilter booleanFilter, List<Long> accountEntryIds) {
+
+		if (accountEntryIds.isEmpty()) {
 			return;
 		}
 
@@ -66,10 +116,10 @@ public class ObjectEntrySearchPermissionFilterContributor
 		booleanFilter.add(
 			accountEntryRestrictedObjectFieldValueTermsFilter,
 			BooleanClauseOccur.SHOULD);
+	}
 
-		List<Organization> organizations =
-			_organizationLocalService.getUserOrganizations(
-				permissionChecker.getUserId());
+	private void _contributeOrganization(
+		BooleanFilter booleanFilter, List<Organization> organizations) {
 
 		if (organizations.isEmpty()) {
 			return;
@@ -94,10 +144,16 @@ public class ObjectEntrySearchPermissionFilterContributor
 			accountEntryRestrictedOrganizationIds, BooleanClauseOccur.SHOULD);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntrySearchPermissionFilterContributor.class);
+
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
+
+	private volatile SearchPermissionCheckerConfiguration
+		_searchPermissionCheckerConfiguration;
 
 }

@@ -49,6 +49,7 @@ public class DBPartitionSchemaValidator {
 		CommandLine commandLine = commandLineParser.parse(options, args);
 
 		_dbType = commandLine.getOptionValue("db-type");
+
 		_dbType = _dbType.toLowerCase();
 
 		String jdbcURL;

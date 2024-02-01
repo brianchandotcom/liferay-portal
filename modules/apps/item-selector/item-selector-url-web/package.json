@@ -10,6 +10,7 @@
 		"react": "16.12.0",
 		"react-dom": "16.12.0"
 	},
+	"main": "js/index.js",
 	"name": "item-selector-url-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

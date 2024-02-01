@@ -23,9 +23,10 @@
 	"scripts": {
 		"checkFormat": "tsc && liferay-npm-scripts lint && liferay-npm-scripts format:check",
 		"format": "tsc && liferay-npm-scripts lint:fix && liferay-npm-scripts format",
+		"local:setup": "node ./scripts/localSetup.mjs",
+		"local:teardown": "node ./scripts/localTeardown.mjs",
 		"playwright": "playwright",
-		"test": "playwright test",
-		"test:setup": "bash ./tools/test-setup.sh"
+		"test": "playwright test"
 	},
 	"version": "1.0.0"
 }

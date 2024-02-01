@@ -83,7 +83,7 @@ public class ObjectEntrySearchPermissionFilterContributor
 		}
 
 		_contributeAccountEntries(booleanFilter, accountEntryIds);
-		_contributeOrganization(booleanFilter, organizations);
+		_contributeOrganizations(booleanFilter, organizations);
 	}
 
 	@Activate
@@ -105,43 +105,39 @@ public class ObjectEntrySearchPermissionFilterContributor
 			return;
 		}
 
-		TermsFilter accountEntryRestrictedObjectFieldValueTermsFilter =
-			new TermsFilter("accountEntryRestrictedObjectFieldValue");
+		TermsFilter termsFilter = new TermsFilter(
+			"accountEntryRestrictedObjectFieldValue");
 
 		for (long accountEntryId : accountEntryIds) {
-			accountEntryRestrictedObjectFieldValueTermsFilter.addValue(
-				String.valueOf(accountEntryId));
+			termsFilter.addValue(String.valueOf(accountEntryId));
 		}
 
-		booleanFilter.add(
-			accountEntryRestrictedObjectFieldValueTermsFilter,
-			BooleanClauseOccur.SHOULD);
+		booleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
 	}
 
-	private void _contributeOrganization(
+	private void _contributeOrganizations(
 		BooleanFilter booleanFilter, List<Organization> organizations) {
 
 		if (organizations.isEmpty()) {
 			return;
 		}
 
-		TermsFilter accountEntryRestrictedOrganizationIds = new TermsFilter(
+		TermsFilter termsFilter = new TermsFilter(
 			"accountEntryRestrictedOrganizationIds");
 
 		for (Organization organization : organizations) {
-			accountEntryRestrictedOrganizationIds.addValue(
+			termsFilter.addValue(
 				String.valueOf(organization.getOrganizationId()));
 
 			for (Organization descendantOrganization :
 					organization.getDescendants()) {
 
-				accountEntryRestrictedOrganizationIds.addValue(
+				termsFilter.addValue(
 					String.valueOf(descendantOrganization.getOrganizationId()));
 			}
 		}
 
-		booleanFilter.add(
-			accountEntryRestrictedOrganizationIds, BooleanClauseOccur.SHOULD);
+		booleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -5,10 +5,10 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.background.task;
 
-import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchSearchEngineFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.elasticsearch7.internal.index.FieldMappingAssert;
 import com.liferay.portal.search.elasticsearch7.internal.index.constants.LiferayTypeMappingsConstants;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.ElasticsearchSearchEngineFixture;
 import com.liferay.portal.search.test.util.background.task.BaseReindexSingleIndexerBackgroundTaskExecutorTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 

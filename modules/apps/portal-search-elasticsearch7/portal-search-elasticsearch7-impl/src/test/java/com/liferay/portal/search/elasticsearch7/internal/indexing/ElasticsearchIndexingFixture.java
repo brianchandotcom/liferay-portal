@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.elasticsearch7.internal;
+package com.liferay.portal.search.elasticsearch7.internal.indexing;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.IndexSearcher;
@@ -16,6 +16,10 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexSearcher;
+import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexWriter;
+import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchQuerySuggester;
+import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchSpellCheckIndexWriter;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;

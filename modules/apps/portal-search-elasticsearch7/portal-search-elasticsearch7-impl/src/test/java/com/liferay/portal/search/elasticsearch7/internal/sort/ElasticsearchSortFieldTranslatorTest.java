@@ -8,7 +8,7 @@ package com.liferay.portal.search.elasticsearch7.internal.sort;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
-import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.internal.geolocation.GeoLocationPointImpl;
 import com.liferay.portal.search.internal.script.ScriptsImpl;

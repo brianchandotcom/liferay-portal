@@ -3,18 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.elasticsearch7.internal;
+package com.liferay.portal.search.elasticsearch7.internal.indexing;
 
 /**
  * @author André de Oliveira
  */
-public class LiferayElasticsearchIndexingFixtureFactory {
+public class ElasticsearchIndexingFixtureFactory {
 
 	public static ElasticsearchIndexingFixtureBuilder builder() {
-		return ElasticsearchIndexingFixtureFactory.builder(
-		).liferayMappingsAddedToIndex(
-			true
-		);
+		return new ElasticsearchIndexingFixtureBuilder();
 	}
 
 	public static ElasticsearchIndexingFixture getInstance() {

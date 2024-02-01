@@ -8,7 +8,7 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.aggregation.metrics.GeoCentroidAggregation;
 import com.liferay.portal.search.aggregation.metrics.GeoCentroidAggregationResult;
-import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.test.util.aggregation.metrics.BaseGeoCentroidAggregationTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;

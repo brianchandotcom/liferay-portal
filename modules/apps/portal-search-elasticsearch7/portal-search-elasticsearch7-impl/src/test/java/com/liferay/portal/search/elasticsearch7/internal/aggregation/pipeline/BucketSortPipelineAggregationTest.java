@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline;
 
-import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.aggregation.pipeline.BaseBucketSortPipelineAggregationTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;

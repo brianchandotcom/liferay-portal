@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.query.string;
 
-import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.indexing.ElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.query.string.BaseQueryStringTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;

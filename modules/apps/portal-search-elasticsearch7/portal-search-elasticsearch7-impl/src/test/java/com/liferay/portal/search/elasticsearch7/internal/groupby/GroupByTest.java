@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.groupby.GroupByResponse;
 import com.liferay.portal.search.test.util.groupby.BaseGroupByTestCase;

@@ -7,8 +7,8 @@ package com.liferay.portal.search.elasticsearch7.internal.mappings;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch7.internal.indexing.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.mappings.BaseMaxExpansionsTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;

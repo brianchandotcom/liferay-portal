@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.spellcheck;
 
-import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.indexing.ElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.spellcheck.BaseSpellCheckTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;

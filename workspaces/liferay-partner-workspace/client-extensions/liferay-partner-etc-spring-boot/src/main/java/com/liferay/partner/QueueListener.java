@@ -9,8 +9,14 @@ import com.liferay.petra.string.StringBundler;
 
 import com.rabbitmq.client.Channel;
 
+import java.net.URI;
+
+import java.util.function.Function;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import org.json.JSONObject;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -18,8 +24,16 @@ import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.AmqpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriBuilder;
 
 /**
  * @author Jair Medeiros
@@ -65,8 +79,6 @@ public class QueueListener {
 				return;
 			}
 
-			System.out.println("Update: " + body);
-
 			channel.basicAck(deliveryTag, false);
 		}
 		catch (Exception exception) {
@@ -74,6 +86,69 @@ public class QueueListener {
 		}
 	}
 
+	private JSONObject _get(Function<UriBuilder, URI> uriFunction) {
+		return new JSONObject(
+			_getWebClient(
+			).get(
+			).uri(
+				uriBuilder -> uriFunction.apply(uriBuilder)
+			).accept(
+				MediaType.APPLICATION_JSON
+			).header(
+				HttpHeaders.AUTHORIZATION,
+				"Bearer " + _oAuth2AccessToken.getTokenValue()
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
+	}
+
+	private WebClient _getWebClient() {
+		return WebClient.builder(
+		).baseUrl(
+			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+		).exchangeStrategies(
+			ExchangeStrategies.builder(
+			).codecs(
+				clientCodecConfigurer -> clientCodecConfigurer.defaultCodecs(
+				).maxInMemorySize(
+					5 * 1024 * 1024
+				)
+			).build()
+		).build();
+	}
+
+	private void _put(String bodyValue, String path) {
+		_getWebClient(
+		).put(
+		).uri(
+			uriBuilder -> uriBuilder.path(
+				path
+			).build()
+		).accept(
+			MediaType.APPLICATION_JSON
+		).contentType(
+			MediaType.APPLICATION_JSON
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			"Bearer " + _oAuth2AccessToken.getTokenValue()
+		).bodyValue(
+			bodyValue
+		).retrieve(
+		).bodyToMono(
+			Void.class
+		).block();
+	}
+
 	private static final Log _log = LogFactory.getLog(QueueListener.class);
+
+	@Value("${com.liferay.lxc.dxp.mainDomain}")
+	private String _lxcDXPMainDomain;
+
+	@Value("${com.liferay.lxc.dxp.server.protocol}")
+	private String _lxcDXPServerProtocol;
+
+	@Autowired
+	private OAuth2AccessToken _oAuth2AccessToken;
 
 }

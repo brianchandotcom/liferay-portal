@@ -1,0 +1,18 @@
+assemble:
+    - fromTask: bootJar
+liferay-stripe-payment-integration:
+    key: liferay-stripe-payment-integration
+    name: Liferay Stripe Payment Integration
+    oAuth2ApplicationExternalReferenceCode: liferay-stripe-payment-integration-oauth-application-user-agent
+    paymentIntegrationType: 4
+    paymentIntegrationTypeSettings:
+        apiKey: enter your secret key here
+    type: commercePaymentIntegration
+liferay-stripe-payment-integration-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Stripe Payment Integration OAuth Application User Agent
+    scopes:
+        - Liferay.Headless.Admin.Workflow.everything
+        - Liferay.Headless.Commerce.Admin.Order.everything
+    type: oAuthApplicationUserAgent

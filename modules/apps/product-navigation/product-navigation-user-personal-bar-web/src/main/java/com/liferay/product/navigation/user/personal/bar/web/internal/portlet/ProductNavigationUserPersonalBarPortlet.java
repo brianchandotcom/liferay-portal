@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfiguration;
+import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfigurationRegistry;
 import com.liferay.product.navigation.user.personal.bar.web.internal.constants.ProductNavigationUserPersonalBarPortletKeys;
 import com.liferay.product.navigation.user.personal.bar.web.internal.constants.ProductNavigationUserPersonalBarWebKeys;
 import com.liferay.site.manager.RecentGroupManager;
@@ -63,7 +65,14 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 
 		User user = themeDisplay.getUser();
 
-		if (!user.isGuestUser()) {
+		PersonalMenuConfiguration personalMenuConfiguration =
+			_personalMenuConfigurationRegistry.
+				getCompanyPersonalMenuConfiguration(
+					themeDisplay.getCompanyId());
+
+		if (personalMenuConfiguration.showNotificationBadgeInPersonalMenu() &&
+			!user.isGuestUser()) {
+
 			renderRequest.setAttribute(
 				ProductNavigationUserPersonalBarWebKeys.NOTIFICATIONS_COUNT,
 				_getNotificationsCount(themeDisplay));
@@ -86,6 +95,10 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 				themeDisplay.getUserId(),
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false);
 	}
+
+	@Reference
+	private PersonalMenuConfigurationRegistry
+		_personalMenuConfigurationRegistry;
 
 	@Reference
 	private Portal _portal;

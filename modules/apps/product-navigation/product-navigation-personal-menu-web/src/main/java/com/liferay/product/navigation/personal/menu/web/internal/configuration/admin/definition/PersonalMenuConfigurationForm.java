@@ -27,7 +27,8 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 							size = 12,
 							value = {
 								"personalApplicationsLookAndFeel",
-								"showInControlMenu"
+								"showInControlMenu",
+								"showNotificationBadgeInPersonalMenu"
 							}
 						)
 					}

@@ -39,4 +39,11 @@ public interface PersonalMenuConfiguration {
 	)
 	public boolean showInControlMenu();
 
+	@Meta.AD(
+		deflt = "true",
+		description = "show-notification-badge-in-personal-menu-help",
+		name = "show-notification-badge-in-personal-menu", required = false
+	)
+	public boolean showNotificationBadgeInPersonalMenu();
+
 }

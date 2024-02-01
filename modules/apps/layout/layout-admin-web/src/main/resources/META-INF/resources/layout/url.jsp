@@ -31,7 +31,7 @@ if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsA
 <liferay-friendly-url:input
 	className="<%= Layout.class.getName() %>"
 	classPK="<%= selLayout.getPlid() %>"
-	helpMessage='<%= selLayout.isTypeAssetDisplay() ? LanguageUtil.get(request, "this-friendly-url-is-used-only-when-the-display-page-template-is-not-marked-as-default-or-is-specifically-selected") : StringPool.BLANK %>'
+	helpMessage='<%= selLayout.isTypeAssetDisplay() ? LanguageUtil.get(request, "this-friendly-url-will-only-be-used-when-specifically-mapping-this-display-page-template-from-the-page-editor") : StringPool.BLANK %>'
 	inputAddon="<%= friendlyURLBase %>"
 	name="friendlyURL"
 />

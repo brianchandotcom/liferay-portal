@@ -9,6 +9,7 @@ import {HeadlessDeliveryClient} from '../../../../apps/headless/headless-deliver
 import {HeadlessSiteClient} from '../../../../apps/headless/headless-site/headless-site-client-js/src/main/resources/META-INF/resources/node';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPages';
 import getRandomId from '../../utils/getRandomId';
@@ -18,6 +19,9 @@ import getPageDefinition from './utils/getPageDefinition';
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
 	loginTest,
 	pageEditorPagesTest
 );

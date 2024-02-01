@@ -167,6 +167,7 @@ export function FieldBase({
 	hideField,
 	hideEditedFlag,
 	id,
+	instanceId,
 	itemPath,
 	label,
 	localizedValue = {},
@@ -220,7 +221,7 @@ export function FieldBase({
 
 			return (
 				<input
-					data-field-name={fieldName}
+					data-field-name={`${fieldName}${instanceId}`}
 					data-languageid={locale}
 					key={locale}
 					name={name.replace(editingLanguageId, locale)}
@@ -229,7 +230,7 @@ export function FieldBase({
 				/>
 			);
 		});
-	}, [localizedValue, editingLanguageId, fieldName, name, type]);
+	}, [localizedValue, editingLanguageId, fieldName, instanceId, name, type]);
 
 	const renderLabel =
 		(label && showLabel) || hideField || repeatable || required || tooltip;

@@ -239,9 +239,10 @@ export function Field({field, itemPath, loc, ...otherProps}) {
 			<AutoFocus>
 				<div
 					className="ddm-field"
-					data-ddm-localizable-field={
+					data-ddm-localizable-field-id={
 						(Liferay.FeatureFlags['LPS-114700'] &&
-							field.localizable) ||
+							field.localizable &&
+							field.instanceId) ||
 						null
 					}
 					data-field-name={field.fieldName}

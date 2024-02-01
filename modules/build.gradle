@@ -549,7 +549,11 @@ gradle.beforeProject {
 					}
 				}
 
-				systemProperty "net.bytebuddy.experimental", "true"
+				if (project.properties["junit.jvm.override.version"]) {
+					javaLauncher = javaToolchains.launcherFor {
+						languageVersion = JavaLanguageVersion.of(project.properties["junit.jvm.override.version"])
+					}
+				}
 
 				if (project.properties["junit.java.add.opens"]) {
 					jvmArgs project.properties["junit.java.add.opens"].split("\\s+")
@@ -559,11 +563,7 @@ gradle.beforeProject {
 					systemProperty "java.security.manager", project.properties["junit.java.security.manager"]
 				}
 
-				if (project.properties["junit.jvm.override.version"]) {
-					javaLauncher = javaToolchains.launcherFor {
-						languageVersion = JavaLanguageVersion.of(project.properties["junit.jvm.override.version"])
-					}
-				}
+				systemProperty "net.bytebuddy.experimental", "true"
 			}
 
 			testIntegration {

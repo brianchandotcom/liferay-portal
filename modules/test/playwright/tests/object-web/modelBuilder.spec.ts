@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {headlessClientsTest} from '../../fixtures/headlessClientsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/util';
@@ -15,6 +16,7 @@ import {getRandomInt} from '../../utils/util';
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
+	headlessClientsTest({objectAdminRestClient: ObjectAdminRestClient}),
 	loginTest,
 	objectPagesTest
 );
@@ -47,7 +49,7 @@ async function postRandomObjectDefinition(
 
 test('can create relationship by dragging node handles', async ({
 	apiHelpers,
-	authenticate,
+	headlessClients: {objectAdminRestClient},
 	modelBuilderPage,
 	objectDefinitionsPage,
 }) => {
@@ -55,25 +57,24 @@ test('can create relationship by dragging node handles', async ({
 
 	const objectFolderExternalReferenceCode = 'objectFolder' + getRandomInt();
 
-	const objectFolder = await authenticate(
-		ObjectAdminRestClient
-	).objectFolder.postObjectFolder({
-		requestBody: {
-			externalReferenceCode: objectFolderExternalReferenceCode,
-			label: {
-				en_US: objectFolderExternalReferenceCode,
+	const objectFolder =
+		await objectAdminRestClient.objectFolder.postObjectFolder({
+			requestBody: {
+				externalReferenceCode: objectFolderExternalReferenceCode,
+				label: {
+					en_US: objectFolderExternalReferenceCode,
+				},
+				name: objectFolderExternalReferenceCode,
 			},
-			name: objectFolderExternalReferenceCode,
-		},
-	});
+		});
 
 	const objectDefinition1 = await postRandomObjectDefinition(
-		authenticate(ObjectAdminRestClient),
+		objectAdminRestClient,
 		objectFolderExternalReferenceCode
 	);
 
 	const objectDefinition2 = await postRandomObjectDefinition(
-		authenticate(ObjectAdminRestClient),
+		objectAdminRestClient,
 		objectFolderExternalReferenceCode
 	);
 
@@ -118,22 +119,16 @@ test('can create relationship by dragging node handles', async ({
 
 	// Clean up
 
-	await authenticate(
-		ObjectAdminRestClient
-	).objectRelationship.deleteObjectRelationship({
+	await objectAdminRestClient.objectRelationship.deleteObjectRelationship({
 		objectRelationshipId: objectRelationship.id,
 	});
-	await authenticate(
-		ObjectAdminRestClient
-	).objectDefinition.deleteObjectDefinition({
+	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
 		objectDefinitionId: objectDefinition1.id,
 	});
-	await authenticate(
-		ObjectAdminRestClient
-	).objectDefinition.deleteObjectDefinition({
+	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
 		objectDefinitionId: objectDefinition2.id,
 	});
-	await authenticate(ObjectAdminRestClient).objectFolder.deleteObjectFolder({
+	await objectAdminRestClient.objectFolder.deleteObjectFolder({
 		objectFolderId: objectFolder.id,
 	});
 });

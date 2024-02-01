@@ -14,32 +14,11 @@ export interface Login {
 	user: string;
 }
 
-interface HeadlessClientConfig {
-	BASE: string;
-	PASSWORD: string;
-	USERNAME: string;
-}
-
 let loggedIn = false;
 
 const loginTest = test.extend<{
-	authenticate: <
-		T extends new (config: HeadlessClientConfig) => InstanceType<T>
-	>(
-		HeadlessClient: T
-	) => InstanceType<T>;
 	login: Login;
 }>({
-	authenticate: async ({login}, use) => {
-		await use(
-			(HeadlessClient) =>
-				new HeadlessClient({
-					BASE: liferayConfig.environment.baseUrl + '/o',
-					PASSWORD: login.password,
-					USERNAME: login.user,
-				})
-		);
-	},
 	login: [
 		async ({page}, use) => {
 			const user = liferayConfig.user.login;

@@ -9,6 +9,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {headlessClientsTest} from '../../fixtures/headlessClientsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/util';
@@ -19,12 +20,15 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-148856': true,
 	}),
+	headlessClientsTest({
+		objectAdminRestClient: ObjectAdminRestClient,
+	}),
 	loginTest,
 	objectPagesTest
 );
 
 test('created object folders are on the left side bar', async ({
-	authenticate,
+	headlessClients: {objectAdminRestClient},
 	objectDefinitionsPage,
 }) => {
 	await objectDefinitionsPage.goto();
@@ -43,7 +47,7 @@ test('created object folders are on the left side bar', async ({
 
 	// Clean up
 
-	await authenticate(ObjectAdminRestClient).objectFolder.deleteObjectFolder({
+	await objectAdminRestClient.objectFolder.deleteObjectFolder({
 		objectFolderId: objectFolder.id,
 	});
 });

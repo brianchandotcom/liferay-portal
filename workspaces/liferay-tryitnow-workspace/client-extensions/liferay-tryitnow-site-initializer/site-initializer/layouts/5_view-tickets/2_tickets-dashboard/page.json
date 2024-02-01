@@ -13,15 +13,15 @@
 		},
 		{
 			"actionIds": [
+				"VIEW"
 			],
-			"roleName": "Site Member",
+			"roleName": "M2H8 Ticket Solvers",
 			"scope": 4
 		},
 		{
 			"actionIds": [
-				"VIEW"
 			],
-			"roleName": "M2H8 Ticket Solvers",
+			"roleName": "Site Member",
 			"scope": 4
 		}
 	],

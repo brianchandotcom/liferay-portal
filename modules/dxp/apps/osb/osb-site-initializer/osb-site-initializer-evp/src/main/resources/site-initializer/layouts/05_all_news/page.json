@@ -7,34 +7,9 @@
 	"permissions": [
 		{
 			"actionIds": [
-			],
-			"roleName": "Guest",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-			],
-			"roleName": "User",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-			],
-			"roleName": "Site Member",
-			"scope": 4
-		},
-		{
-			"actionIds": [
 				"VIEW"
 			],
 			"roleName": "EVP Manager",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-				"VIEW"
-			],
-			"roleName": "Finance User",
 			"scope": 4
 		},
 		{
@@ -48,7 +23,32 @@
 			"actionIds": [
 				"VIEW"
 			],
+			"roleName": "Finance User",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "Liferay Manager",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+			],
+			"roleName": "Site Member",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+			],
+			"roleName": "User",
 			"scope": 4
 		}
 	],

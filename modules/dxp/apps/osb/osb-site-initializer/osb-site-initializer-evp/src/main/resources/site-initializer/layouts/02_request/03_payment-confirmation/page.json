@@ -7,14 +7,15 @@
 	"permissions": [
 		{
 			"actionIds": [
+				"VIEW"
 			],
-			"roleName": "Guest",
+			"roleName": "Finance User",
 			"scope": 4
 		},
 		{
 			"actionIds": [
 			],
-			"roleName": "User",
+			"roleName": "Guest",
 			"scope": 4
 		},
 		{
@@ -25,9 +26,8 @@
 		},
 		{
 			"actionIds": [
-				"VIEW"
 			],
-			"roleName": "Finance User",
+			"roleName": "User",
 			"scope": 4
 		}
 	],

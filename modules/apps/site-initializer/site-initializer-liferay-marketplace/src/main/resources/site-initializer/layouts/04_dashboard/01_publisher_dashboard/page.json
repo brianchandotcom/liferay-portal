@@ -16,15 +16,15 @@
 		},
 		{
 			"actionIds": [
-				"VIEW"
 			],
-			"roleName": "Supplier",
+			"roleName": "Site Member",
 			"scope": 4
 		},
 		{
 			"actionIds": [
+				"VIEW"
 			],
-			"roleName": "Site Member",
+			"roleName": "Supplier",
 			"scope": 4
 		}
 	],

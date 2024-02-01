@@ -1,9 +1,9 @@
 import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import Input from './Input';
 import Loading from 'shared/components/Loading';
-import Overlay from './Overlay';
 import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
 import {ARROW_DOWN, ARROW_UP, ENTER} from '../util/key-constants';
 import {DocumentNode} from 'graphql';
@@ -101,8 +101,7 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 	onInputValueChange = noop,
 	onSelect = noop,
 	placeholder = '',
-	selectedItem,
-	...otherProps
+	selectedItem
 }) => {
 	useImperativeHandle(forwardedRef, () => ({
 		focus: () => {
@@ -224,84 +223,85 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 	};
 
 	return (
-		<Overlay
-			{...otherProps}
-			active={active}
-			alignment='bottomLeft'
-			containerClass={getCN('base-select-container', containerClass)}
-			onOutsideClick={handleOutsideClick}
-		>
-			<Input.Group
-				className={getCN(
-					'base-select-input-root select-input-root',
-					className,
-					{inset}
-				)}
-				onClick={disabled ? null : handleFocus}
-			>
-				<Input.GroupItem>
-					<Input
-						autoComplete='off'
-						disabled={disabled}
-						id={id}
-						inset='after'
-						name={inputName}
-						onBlur={handleBlur}
-						onChange={(
-							event: React.ChangeEvent<HTMLInputElement>
-						) => {
-							onInputValueChange(event.target.value);
-						}}
-						onFocus={handleFocus}
-						onKeyDown={handleKeyDown}
-						placeholder={placeholder}
-						ref={_inputRef}
-						size={inputSize}
-						value={
-							active || !emptyInputOnInactive ? inputValue : ''
-						}
-					/>
-
-					<Input.Inset position='after'>
-						{loading ? (
-							<Loading />
-						) : (
-							<ClayIcon
-								className='icon-root'
-								symbol='caret-bottom'
-							/>
-						)}
-					</Input.Inset>
-				</Input.GroupItem>
-
-				{!active && selectedItem && itemRenderer && (
-					<div className='selected-item-container'>
-						{itemRenderer(selectedItem)}
-					</div>
-				)}
-			</Input.Group>
-
-			{!!items?.length && (
-				<div className='dropdown-root'>
-					<ul className='base-select-menu dropdown-menu show'>
-						{!!menuTitle && (
-							<li className='dropdown-header'>{menuTitle}</li>
-						)}
-
-						{items.map((item, i) => (
-							<Item
-								active={i === focusIndex}
-								disabled={loading}
-								item={item}
-								itemRenderer={itemRenderer || identity}
-								key={i}
-								onSelect={handleSelect}
-							/>
-						))}
-					</ul>
-				</div>
+		<ClayDropDown
+			className={getCN(
+				'dropdown-root',
+				'base-select-container',
+				containerClass
 			)}
-		</Overlay>
+			closeOnClick
+			trigger={
+				<div>
+					<Input.Group
+						className={getCN(
+							'base-select-input-root select-input-root',
+							className,
+							{inset}
+						)}
+						onClick={disabled ? null : handleFocus}
+					>
+						<Input.GroupItem>
+							<Input
+								autoComplete='off'
+								disabled={disabled}
+								id={id}
+								inset='after'
+								name={inputName}
+								onBlur={handleBlur}
+								onChange={(
+									event: React.ChangeEvent<HTMLInputElement>
+								) => {
+									onInputValueChange(event.target.value);
+								}}
+								onFocus={handleFocus}
+								onKeyDown={handleKeyDown}
+								placeholder={placeholder}
+								ref={_inputRef}
+								size={inputSize}
+								value={
+									active || !emptyInputOnInactive
+										? inputValue
+										: ''
+								}
+							/>
+
+							<Input.Inset position='after'>
+								{loading ? (
+									<Loading />
+								) : (
+									<ClayIcon
+										className='icon-root'
+										symbol='caret-bottom'
+									/>
+								)}
+							</Input.Inset>
+						</Input.GroupItem>
+
+						{!active && selectedItem && itemRenderer && (
+							<div className='selected-item-container'>
+								{itemRenderer(selectedItem)}
+							</div>
+						)}
+					</Input.Group>
+				</div>
+			}
+		>
+			{!!menuTitle && (
+				<ClayDropDown.Caption>{menuTitle}</ClayDropDown.Caption>
+			)}
+
+			{items.map((item, i) => (
+				<ClayDropDown.Item
+					active={i === focusIndex}
+					className={className}
+					disabled={loading}
+					key={i}
+					onClick={() => handleSelect(item)}
+				>
+					{itemRenderer ? itemRenderer(item) : identity(item)}
+				</ClayDropDown.Item>
+			))}
+		</ClayDropDown>
 	);
 };
 

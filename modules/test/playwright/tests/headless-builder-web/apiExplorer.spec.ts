@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect, mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {liferayConfig} from '../../liferay.config';
+import {waitForHeadlessBuilderReady} from './utils/headlessBuilder';
 
 export const test = mergeTests(apiHelpersTest, loginTest);
 
@@ -27,27 +27,6 @@ const basicApiApplication = {
 	externalReferenceCode: 'basic-application',
 	title: 'Basic application',
 };
-
-async function waitForHeadlessBuilderReady(apiHelpers: ApiHelpers, page: Page) {
-	for (const endpoint of [
-		'applications',
-		'endpoints',
-		'filters',
-		'properties',
-		'schemas',
-		'sorts',
-	]) {
-		await expect
-			.poll(async () =>
-				(
-					await page.request.get(`/o/headless-builder/${endpoint}`, {
-						headers: await apiHelpers.getHeader(),
-					})
-				).status()
-			)
-			.toBe(200);
-	}
-}
 
 test('can see filter and sort parameters for collection but not for singleElement endpoints', async ({
 	apiHelpers,

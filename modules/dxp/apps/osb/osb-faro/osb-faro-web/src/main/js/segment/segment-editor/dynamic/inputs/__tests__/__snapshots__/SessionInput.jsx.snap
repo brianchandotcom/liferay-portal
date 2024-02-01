@@ -49,30 +49,40 @@ exports[`SessionInput should render 1`] = `
             data-aria-hidden="true"
           >
             <div
-              aria-haspopup="true"
-              class="input-group base-select-input-root select-input-root"
+              class="dropdown dropdown-root base-select-container"
             >
               <div
-                class="input-group-item"
+                aria-controls="clay-dropdown-menu-1"
+                aria-expanded="false"
+                aria-haspopup="true"
+                class="dropdown-toggle"
               >
-                <input
-                  autocomplete="off"
-                  class="input-root form-control input-group-inset input-group-inset-after"
-                  placeholder=""
-                  type="text"
-                  value=""
-                />
                 <div
-                  class="input-group-inset-item input-group-inset-item-after"
+                  class="input-group base-select-input-root select-input-root"
                 >
-                  <svg
-                    class="lexicon-icon lexicon-icon-caret-bottom icon-root"
-                    role="presentation"
+                  <div
+                    class="input-group-item"
                   >
-                    <use
-                      href="#caret-bottom"
+                    <input
+                      autocomplete="off"
+                      class="input-root form-control input-group-inset input-group-inset-after"
+                      placeholder=""
+                      type="text"
+                      value=""
                     />
-                  </svg>
+                    <div
+                      class="input-group-inset-item input-group-inset-item-after"
+                    >
+                      <svg
+                        class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                        role="presentation"
+                      >
+                        <use
+                          href="#caret-bottom"
+                        />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -112,7 +122,7 @@ exports[`SessionInput should render 1`] = `
           class="dropdown dropdown-range-key-root"
         >
           <div
-            aria-controls="clay-dropdown-menu-1"
+            aria-controls="clay-dropdown-menu-2"
             aria-expanded="false"
             aria-haspopup="true"
             class="dropdown-toggle"
@@ -209,30 +219,40 @@ exports[`SessionInput should render with "ever" 1`] = `
             data-aria-hidden="true"
           >
             <div
-              aria-haspopup="true"
-              class="input-group base-select-input-root select-input-root"
+              class="dropdown dropdown-root base-select-container"
             >
               <div
-                class="input-group-item"
+                aria-controls="clay-dropdown-menu-3"
+                aria-expanded="false"
+                aria-haspopup="true"
+                class="dropdown-toggle"
               >
-                <input
-                  autocomplete="off"
-                  class="input-root form-control input-group-inset input-group-inset-after"
-                  placeholder=""
-                  type="text"
-                  value=""
-                />
                 <div
-                  class="input-group-inset-item input-group-inset-item-after"
+                  class="input-group base-select-input-root select-input-root"
                 >
-                  <svg
-                    class="lexicon-icon lexicon-icon-caret-bottom icon-root"
-                    role="presentation"
+                  <div
+                    class="input-group-item"
                   >
-                    <use
-                      href="#caret-bottom"
+                    <input
+                      autocomplete="off"
+                      class="input-root form-control input-group-inset input-group-inset-after"
+                      placeholder=""
+                      type="text"
+                      value=""
                     />
-                  </svg>
+                    <div
+                      class="input-group-inset-item input-group-inset-item-after"
+                    >
+                      <svg
+                        class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                        role="presentation"
+                      >
+                        <use
+                          href="#caret-bottom"
+                        />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

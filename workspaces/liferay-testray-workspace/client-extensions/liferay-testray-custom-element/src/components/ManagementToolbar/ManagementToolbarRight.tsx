@@ -9,7 +9,9 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayPopover from '@clayui/popover';
 import {ReactNode, useCallback, useContext, useState} from 'react';
 import {ListViewContext, ListViewTypes} from '~/context/ListViewContext';
+import TestrayStorage, {STORAGE_KEYS} from '~/core/Storage';
 import {Liferay} from '~/services/liferay';
+import {CONSENT_TYPE} from '~/util/enum';
 
 import i18n from '../../i18n';
 import {FilterSchema} from '../../schema/filter';
@@ -50,7 +52,10 @@ type ManagementToolbarRightProps = {
 		columns?: boolean;
 	};
 	filterSchema?: FilterSchema;
+	modal?: boolean;
 };
+
+const testrayStorage = TestrayStorage.getInstance().getStorage('persisted');
 
 const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	actions,
@@ -59,14 +64,21 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	columns,
 	display = {columns: true},
 	filterSchema,
+	modal = false,
 }) => {
-	const [{filters, pin}, dispatch] = useContext(ListViewContext);
+	const [{filters, id, pin}, dispatch] = useContext(ListViewContext);
 	const [columnsDropdownVisible, setColumnsDropdownVisible] = useState(false);
 
 	const hasAppliedFilters = !!filters.entries.length;
 
 	const onPin = useCallback(() => {
 		if (hasAppliedFilters) {
+			testrayStorage.setItem(
+				STORAGE_KEYS.FILTER_SCHEMA + id,
+				JSON.stringify(filterSchema?.name),
+				CONSENT_TYPE.NECESSARY
+			);
+
 			dispatch({type: ListViewTypes.SET_PIN});
 
 			return Liferay.Util.openToast({
@@ -85,7 +97,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 			),
 			type: 'danger',
 		});
-	}, [dispatch, hasAppliedFilters, pin]);
+	}, [dispatch, filterSchema?.name, hasAppliedFilters, id, pin]);
 
 	return (
 		<ClayManagementToolbar.ItemList>
@@ -102,7 +114,10 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 						/>
 					</ClayManagementToolbar.Item>
 
-					<ManagementToolbarFilter filterSchema={filterSchema} />
+					<ManagementToolbarFilter
+						filterSchema={filterSchema}
+						modal={modal}
+					/>
 				</>
 			)}
 

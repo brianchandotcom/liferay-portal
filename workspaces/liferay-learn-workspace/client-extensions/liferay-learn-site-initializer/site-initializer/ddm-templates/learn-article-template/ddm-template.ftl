@@ -662,18 +662,6 @@
 						</#if>
 
 						<hr class="mt-4 separator solid">
-						<div class="autofit-padded-no-gutters-x autofit-row border help-center-footer pb-3 pl-3 rounded-10">
-							<div class="autofit-col autofit-col-expand">
-								<h3 class="callout-title">${languageUtil.get(locale, "not-finding-what-you-are-looking-for", "Not finding what you're looking for?")}</h3>
-
-								<p class="w-50 overflow-auto">${languageUtil.get(locale, "pardon-our-dust-as-we-revamp", "Pardon our dust as we are in the process of revamping the documentation to the site. If something seems missing, cross reference the Liferay Help Center for a more thorough set of documentation on Liferay DXP 7.2 and previous versions.")}</p>
-
-								<a class="text-decoration-none" href="https://help.liferay.com/hc/en-us/categories/360001749912">
-									<strong >${languageUtil.get(locale, "try-liferays-help-center", "Try Liferay’s Help Center")}</strong>
-									<@clay["icon"] symbol="order-arrow-right" />
-								</a>
-							</div>
-						</div>
 					</div>
 
 					<div class="col-md-3 d-none d-sm-block">

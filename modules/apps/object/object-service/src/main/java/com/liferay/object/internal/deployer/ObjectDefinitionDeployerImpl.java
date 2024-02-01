@@ -22,6 +22,8 @@ import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedMo
 import com.liferay.object.internal.related.models.ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl;
 import com.liferay.object.internal.related.models.ObjectEntryMtoMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl;
+import com.liferay.object.internal.search.ObjectEntryBatchReindexer;
+import com.liferay.object.internal.search.ObjectEntryBatchReindexerImpl;
 import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryModelDocumentContributor;
 import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryModelIndexerWriterContributor;
 import com.liferay.object.internal.search.spi.model.query.contributor.ObjectEntryKeywordQueryContributor;
@@ -81,6 +83,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
@@ -99,6 +102,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
 /**
@@ -194,6 +199,40 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectEntryModelSummaryContributor objectEntryModelSummaryContributor =
 			new ObjectEntryModelSummaryContributor();
 
+		ModelSearchConfigurator<ObjectEntry> modelSearchConfigurator =
+			new ModelSearchConfigurator<ObjectEntry>() {
+
+				@Override
+				public String getClassName() {
+					return objectDefinition.getClassName();
+				}
+
+				@Override
+				public long getCompanyId() {
+					return objectDefinition.getCompanyId();
+				}
+
+				@Override
+				public ModelIndexerWriterContributor<ObjectEntry>
+					getModelIndexerWriterContributor() {
+
+					return _objectEntryModelIndexerWriterContributor;
+				}
+
+				@Override
+				public ModelSummaryContributor getModelSummaryContributor() {
+					return objectEntryModelSummaryContributor;
+				}
+
+				private final ObjectEntryModelIndexerWriterContributor
+					_objectEntryModelIndexerWriterContributor =
+						new ObjectEntryModelIndexerWriterContributor(
+							_dynamicQueryBatchIndexingActionableFactory,
+							objectDefinition.getObjectDefinitionId(),
+							_objectEntryLocalService);
+
+			};
+
 		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
 			_bundleContext.registerService(
 				KeywordQueryContributor.class,
@@ -288,42 +327,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"model.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
-				ModelSearchConfigurator.class,
-				new ModelSearchConfigurator<ObjectEntry>() {
-
-					@Override
-					public String getClassName() {
-						return objectDefinition.getClassName();
-					}
-
-					@Override
-					public long getCompanyId() {
-						return objectDefinition.getCompanyId();
-					}
-
-					@Override
-					public ModelIndexerWriterContributor<ObjectEntry>
-						getModelIndexerWriterContributor() {
-
-						return _objectEntryModelIndexerWriterContributor;
-					}
-
-					@Override
-					public ModelSummaryContributor
-						getModelSummaryContributor() {
-
-						return objectEntryModelSummaryContributor;
-					}
-
-					private final ObjectEntryModelIndexerWriterContributor
-						_objectEntryModelIndexerWriterContributor =
-							new ObjectEntryModelIndexerWriterContributor(
-								_dynamicQueryBatchIndexingActionableFactory,
-								objectDefinition.getObjectDefinitionId(),
-								_objectEntryLocalService);
-
-				},
-				null),
+				ModelSearchConfigurator.class, modelSearchConfigurator, null),
 			_objectRelatedModelsProviderRegistrarHelper.register(
 				_bundleContext, objectDefinition,
 				new ObjectEntryMtoMObjectRelatedModelsProviderImpl(
@@ -424,6 +428,31 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);
+		}
+
+		try {
+			if (objectDefinition.isAccountEntryRestricted()) {
+				List<ServiceReference<IndexerDocumentBuilder>>
+					serviceReferences =
+						(List<ServiceReference<IndexerDocumentBuilder>>)
+							_bundleContext.getServiceReferences(
+								IndexerDocumentBuilder.class,
+								"(indexer.class.name=" +
+									objectDefinition.getClassName() + ")");
+
+				serviceRegistrations.add(
+					_bundleContext.registerService(
+						ObjectEntryBatchReindexer.class,
+						new ObjectEntryBatchReindexerImpl(
+							_bundleContext.getService(serviceReferences.get(0)),
+							modelSearchConfigurator.
+								getModelIndexerWriterContributor(),
+							objectDefinition),
+						null));
+			}
+		}
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			return ReflectionUtil.throwException(invalidSyntaxException);
 		}
 
 		return serviceRegistrations;

@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,6 +39,10 @@ public class JSONPageFileCheck extends BaseFileCheck {
 		JSONObject jsonObject = new JSONObjectImpl(content);
 
 		String permissions = jsonObject.getString("permissions");
+
+		if (Validator.isNull(permissions)) {
+			return content;
+		}
 
 		JSONArray jsonArray = new JSONArrayImpl(permissions);
 

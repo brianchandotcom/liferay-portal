@@ -1883,6 +1883,19 @@ public class RESTBuilder {
 		openApiYamlFile = _prepareForJSClientGenerator(
 			openApiYamlFile, openAPIYAML, _configYAML);
 
+		Path packajeJsonPath = Paths.get(baseClientDir, "package.json");
+
+		FileUtil.write(
+			packajeJsonPath.toFile(),
+			FreeMarkerUtil.processTemplate(
+				null, null, "package_json",
+				HashMapBuilder.<String, Object>put(
+					"clientName",
+					Paths.get(
+						baseClientDir
+					).getFileName()
+				).build()));
+
 		for (String target : Arrays.asList("fetch", "node")) {
 			Path outputDirPath = Paths.get(
 				baseClientDir, "src", "main", "resources", "META-INF",

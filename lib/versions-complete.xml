@@ -5286,6 +5286,28 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.shared.dependencies.swagger.jar!swagger-annotations.jar</file-name>
+				<version>2.0.5</version>
+				<project-name>swagger-annotations</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.swagger.jar!swagger-models.jar</file-name>
+				<version>2.0.6</version>
+				<project-name>swagger-models</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.shared.dependencies.woodstox.core.jar!woodstox-core.jar</file-name>
 				<version>6.4.0</version>
 				<project-name>Woodstox</project-name>

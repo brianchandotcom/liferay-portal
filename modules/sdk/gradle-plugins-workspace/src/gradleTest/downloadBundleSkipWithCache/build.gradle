@@ -1,0 +1,20 @@
+task runGradleTest
+
+gradle.liferayWorkspace {
+	bundleUrl = uri("bundle.zip")
+	product = "portal-7.4-ga8"
+}
+
+runGradleTest {
+	dependsOn downloadBundle
+
+	doLast {
+		File bundleFile = file("foo/cacheDir/bundle.zip")
+
+		assert bundleFile.exists()
+
+		assert downloadBundle.state.skipped : "The downloadBundle task should be skipped when the file is in the cache."
+		assert downloadBundle.state.skipMessage == "SKIPPED" : "The downloadBundle skip message should be SKIPPED when the file is in the cache."
+
+	}
+}

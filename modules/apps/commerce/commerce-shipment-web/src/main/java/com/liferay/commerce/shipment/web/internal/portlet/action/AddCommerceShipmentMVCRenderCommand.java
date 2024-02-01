@@ -9,7 +9,7 @@ import com.liferay.commerce.address.CommerceAddressFormatter;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.commerce.service.CommerceAddressLocalService;
+import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
@@ -50,7 +50,7 @@ public class AddCommerceShipmentMVCRenderCommand implements MVCRenderCommand {
 		CommerceShipmentDisplayContext commerceShipmentDisplayContext =
 			new CommerceShipmentDisplayContext(
 				_actionHelper, _commerceAddressFormatter,
-				_commerceAddressLocalService, _commerceChannelService,
+				_commerceAddressService, _commerceChannelService,
 				_commerceOrderItemService, _commerceOrderLocalService,
 				_commerceShipmentItemService, _commerceShippingMethodService,
 				_countryService, _portal.getHttpServletRequest(renderRequest),
@@ -69,7 +69,7 @@ public class AddCommerceShipmentMVCRenderCommand implements MVCRenderCommand {
 	private CommerceAddressFormatter _commerceAddressFormatter;
 
 	@Reference
-	private CommerceAddressLocalService _commerceAddressLocalService;
+	private CommerceAddressService _commerceAddressService;
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;

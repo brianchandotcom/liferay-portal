@@ -1020,8 +1020,26 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					return Validator.isNotNull(
-						workspaceExtension.getBundleUrl());
+					if (Validator.isNull(workspaceExtension.getBundleUrl())) {
+						return false;
+					}
+
+					File downloadFile = _getDownloadFile((Download)task);
+
+					if (downloadFile.exists()) {
+						Logger logger = task.getLogger();
+
+						if (logger.isInfoEnabled()) {
+							logger.info(
+								"Bundle archive file is already downloaded " +
+									"at {}",
+								downloadFile);
+						}
+
+						return false;
+					}
+
+					return true;
 				}
 
 			});

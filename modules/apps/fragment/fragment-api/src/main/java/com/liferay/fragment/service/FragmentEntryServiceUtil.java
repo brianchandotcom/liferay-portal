@@ -34,6 +34,20 @@ public class FragmentEntryServiceUtil {
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
 			String name, String css, String html, String js, boolean cacheable,
 			String configuration, String icon, long previewFileEntryId,
+			boolean readOnly, int type, String typeOptions, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addFragmentEntry(
+			groupId, fragmentCollectionId, fragmentEntryKey, name, css, html,
+			js, cacheable, configuration, icon, previewFileEntryId, readOnly,
+			type, typeOptions, status, serviceContext);
+	}
+
+	public static FragmentEntry addFragmentEntry(
+			long groupId, long fragmentCollectionId, String fragmentEntryKey,
+			String name, String css, String html, String js, boolean cacheable,
+			String configuration, String icon, long previewFileEntryId,
 			int type, String typeOptions, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
@@ -303,6 +317,19 @@ public class FragmentEntryServiceUtil {
 
 		return getService().updateFragmentEntry(
 			fragmentEntryId, previewFileEntryId);
+	}
+
+	public static FragmentEntry updateFragmentEntry(
+			long fragmentEntryId, long fragmentCollectionId, String name,
+			String css, String html, String js, boolean cacheable,
+			String configuration, String icon, long previewFileEntryId,
+			boolean readOnly, String typeOptions, int status)
+		throws PortalException {
+
+		return getService().updateFragmentEntry(
+			fragmentEntryId, fragmentCollectionId, name, css, html, js,
+			cacheable, configuration, icon, previewFileEntryId, readOnly,
+			typeOptions, status);
 	}
 
 	public static FragmentEntry updateFragmentEntry(

@@ -209,7 +209,7 @@ $productMenuWidth: 320px;
 			padding-top: 0;
 			position: fixed;
 			width: $productMenuWidth;
-			z-index: 2;
+			z-index: 5;
 
 			@include media-breakpoint-down(xs) {
 				height: auto;

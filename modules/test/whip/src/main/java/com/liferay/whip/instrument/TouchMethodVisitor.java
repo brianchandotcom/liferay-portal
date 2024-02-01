@@ -26,7 +26,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 		Set<Label> jumpLabels, Map<Label, Integer> lineLabels,
 		Map<Label, SwitchHolder> switchLabels) {
 
-		super(Opcodes.ASM5, methodVisitor);
+		super(Opcodes.ASM9, methodVisitor);
 
 		_owner = owner;
 		_jumpLabels = jumpLabels;

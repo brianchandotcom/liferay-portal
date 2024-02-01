@@ -17,7 +17,7 @@ import org.objectweb.asm.Opcodes;
 public class WhipClassVisitor extends ClassVisitor {
 
 	public WhipClassVisitor(ClassData classData, ClassVisitor classVisitor) {
-		super(Opcodes.ASM5, classVisitor);
+		super(Opcodes.ASM9, classVisitor);
 
 		_classData = classData;
 	}

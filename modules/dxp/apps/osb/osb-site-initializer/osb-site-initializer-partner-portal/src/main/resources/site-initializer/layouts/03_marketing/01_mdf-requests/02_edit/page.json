@@ -7,14 +7,22 @@
 	"permissions": [
 		{
 			"actionIds": [
+				"VIEW"
 			],
-			"roleName": "Guest",
+			"roleName": "Channel Marketing Director (CMD)",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Channel Marketing Manager (CMM)",
 			"scope": 4
 		},
 		{
 			"actionIds": [
 			],
-			"roleName": "Site Member",
+			"roleName": "Guest",
 			"scope": 4
 		},
 		{
@@ -33,16 +41,8 @@
 		},
 		{
 			"actionIds": [
-				"VIEW"
 			],
-			"roleName": "Channel Marketing Manager (CMM)",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-				"VIEW"
-			],
-			"roleName": "Channel Marketing Director (CMD)",
+			"roleName": "Site Member",
 			"scope": 4
 		}
 	],

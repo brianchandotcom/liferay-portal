@@ -13,12 +13,6 @@
 		},
 		{
 			"actionIds": [
-			],
-			"roleName": "Site Member",
-			"scope": 4
-		},
-		{
-			"actionIds": [
 				"VIEW"
 			],
 			"roleName": "Partner Manager (PM)",
@@ -29,6 +23,12 @@
 				"VIEW"
 			],
 			"roleName": "Partner Sales User (PSU)",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+			],
+			"roleName": "Site Member",
 			"scope": 4
 		}
 	],

@@ -7,14 +7,15 @@
 	"permissions": [
 		{
 			"actionIds": [
+				"VIEW"
 			],
-			"roleName": "Guest",
+			"roleName": "Employee",
 			"scope": 4
 		},
 		{
 			"actionIds": [
 			],
-			"roleName": "User",
+			"roleName": "Guest",
 			"scope": 4
 		},
 		{
@@ -25,9 +26,8 @@
 		},
 		{
 			"actionIds": [
-				"VIEW"
 			],
-			"roleName": "Employee",
+			"roleName": "User",
 			"scope": 4
 		}
 	],

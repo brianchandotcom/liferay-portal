@@ -25,12 +25,19 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -42,6 +49,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.PortletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -52,6 +61,8 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Gislayne Vitorino
@@ -226,6 +237,105 @@ public class PublicationUserNotificationHandlerTest {
 		}
 	}
 
+	@Test
+	public void testGetLinkToViewConflictsPage() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			StringPool.BLANK);
+
+		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), null);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			journalArticle = _journalArticleLocalService.updateArticle(
+				journalArticle.getId(), RandomTestUtil.randomString());
+		}
+
+		_journalArticleLocalService.deleteArticle(
+			_group.getGroupId(), journalArticle.getArticleId(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_publishCTCollection(ctCollection.getCtCollectionId());
+
+		List<UserNotificationEvent> userNotificationEvents =
+			_userNotificationEventLocalService.getUserNotificationEvents(
+				TestPropsValues.getUserId());
+
+		for (UserNotificationEvent userNotificationEvent :
+				userNotificationEvents) {
+
+			if (!Objects.equals(
+					CTPortletKeys.PUBLICATIONS,
+					userNotificationEvent.getType())) {
+
+				continue;
+			}
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				userNotificationEvent.getPayload());
+
+			if ((jsonObject.getInt("notificationType") !=
+					UserNotificationDefinition.
+						NOTIFICATION_TYPE_REVIEW_ENTRY) ||
+				!jsonObject.getBoolean("showConflicts")) {
+
+				continue;
+			}
+
+			try {
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId());
+
+				MockHttpServletRequest mockHttpServletRequest =
+					new MockHttpServletRequest();
+
+				ThemeDisplay themeDisplay = new ThemeDisplay();
+
+				themeDisplay.setCompany(
+					_companyLocalService.fetchCompany(
+						TestPropsValues.getCompanyId()));
+
+				mockHttpServletRequest.setAttribute(
+					WebKeys.THEME_DISPLAY, themeDisplay);
+
+				serviceContext.setRequest(mockHttpServletRequest);
+
+				ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+				UserNotificationFeedEntry userNotificationFeedEntry =
+					_userNotificationHandler.interpret(
+						userNotificationEvent, serviceContext);
+
+				Assert.assertEquals(
+					userNotificationFeedEntry.getLink(),
+					PortletURLBuilder.create(
+						_portal.getControlPanelPortletURL(
+							serviceContext.getRequest(),
+							serviceContext.getScopeGroup(),
+							CTPortletKeys.PUBLICATIONS, 0, 0,
+							PortletRequest.RENDER_PHASE)
+					).setMVCRenderCommandName(
+						"/change_tracking/view_conflicts"
+					).setParameter(
+						"ctCollectionId",
+						_jsonFactory.createJSONObject(
+							userNotificationEvent.getPayload()
+						).getLong(
+							"ctCollectionId"
+						)
+					).buildString());
+			}
+			finally {
+				ServiceContextThreadLocal.popServiceContext();
+			}
+		}
+	}
+
 	private void _publishCTCollection(long ctCollectionId) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.background.task.internal.messaging." +
@@ -252,6 +362,9 @@ public class PublicationUserNotificationHandlerTest {
 	@Inject
 	private static CTCollectionService _ctCollectionService;
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	private Group _group;
 
 	@Inject
@@ -259,6 +372,9 @@ public class PublicationUserNotificationHandlerTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private UserNotificationEventLocalService

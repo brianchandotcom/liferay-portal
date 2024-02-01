@@ -47,6 +47,7 @@ import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
 import com.liferay.portal.search.opensearch2.constants.OpenSearchSearchContextAttributes;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapper;
 import com.liferay.portal.search.opensearch2.internal.deep.pagination.configuration.DeepPaginationConfigurationWrapper;
+import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
 import com.liferay.portal.search.pit.PointInTime;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -62,6 +63,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.time.StopWatch;
+
+import org.opensearch.client.opensearch._types.OpenSearchException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -285,13 +288,23 @@ public class OpenSearchIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected boolean handle(Exception exception) {
-		Throwable throwable = exception.getCause();
+		String message = null;
 
-		if (throwable == null) {
-			return false;
+		if (exception instanceof OpenSearchException) {
+			OpenSearchException openSearchException =
+				(OpenSearchException)exception;
+
+			message = JsonpUtil.toString(openSearchException.error());
 		}
+		else {
+			Throwable throwable = exception.getCause();
 
-		String message = throwable.getMessage();
+			if (throwable == null) {
+				return false;
+			}
+
+			message = throwable.getMessage();
+		}
 
 		if (message == null) {
 			return false;
@@ -413,8 +426,18 @@ public class OpenSearchIndexSearcher extends BaseIndexSearcher {
 	private String _getExceptionMessage(RuntimeException runtimeException) {
 		String message = runtimeException.toString();
 
-		for (Throwable throwable : runtimeException.getSuppressed()) {
-			message = message.concat("\nSuppressed: " + throwable.getMessage());
+		if (runtimeException instanceof OpenSearchException) {
+			OpenSearchException openSearchException =
+				(OpenSearchException)runtimeException;
+
+			message = message.concat(
+				"\n" + JsonpUtil.toString(openSearchException.error()));
+		}
+		else {
+			for (Throwable throwable : runtimeException.getSuppressed()) {
+				message = message.concat(
+					"\nSuppressed: " + throwable.getMessage());
+			}
 		}
 
 		return message;

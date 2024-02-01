@@ -465,8 +465,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 						 (displayDate != null)) {
 
 					MultiSessionMessages.add(
-						actionRequest, "articleSchedulePending",
-						article.getId());
+						actionRequest, "articlePending", article.getId());
 				}
 				else {
 					if (actionName.equals("/journal/add_article")) {

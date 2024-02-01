@@ -124,6 +124,18 @@ public class ElasticsearchSearchEngine
 			this, elasticsearchConfigurationObserver);
 	}
 
+	public void createBackupRepository() {
+		if (_hasBackupRepository()) {
+			return;
+		}
+
+		CreateSnapshotRepositoryRequest createSnapshotRepositoryRequest =
+			new CreateSnapshotRepositoryRequest(
+				_BACKUP_REPOSITORY_NAME, "es_backup");
+
+		_searchEngineAdapter.execute(createSnapshotRepositoryRequest);
+	}
+
 	@Override
 	public IndexSearcher getIndexSearcher() {
 		return _indexSearcher;
@@ -169,6 +181,18 @@ public class ElasticsearchSearchEngine
 			crossClusterReplicationHelper.follow(
 				_indexNameBuilder.getIndexName(companyId));
 		}
+	}
+
+	public boolean meetsMinimumVersionRequirement(
+		Version minimumVersion, String versionString) {
+
+		if (minimumVersion.compareTo(Version.parseVersion(versionString)) <=
+				0) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -264,30 +288,6 @@ public class ElasticsearchSearchEngine
 
 			initialize(CompanyConstants.SYSTEM);
 		}
-	}
-
-	protected void createBackupRepository() {
-		if (_hasBackupRepository()) {
-			return;
-		}
-
-		CreateSnapshotRepositoryRequest createSnapshotRepositoryRequest =
-			new CreateSnapshotRepositoryRequest(
-				_BACKUP_REPOSITORY_NAME, "es_backup");
-
-		_searchEngineAdapter.execute(createSnapshotRepositoryRequest);
-	}
-
-	protected boolean meetsMinimumVersionRequirement(
-		Version minimumVersion, String versionString) {
-
-		if (minimumVersion.compareTo(Version.parseVersion(versionString)) <=
-				0) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _checkNodeVersions() {

@@ -10,6 +10,9 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.AddressService;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -40,32 +43,56 @@ public class UpdateAccountEntryDefaultAddressMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long accountEntryId = ParamUtil.getLong(
-			actionRequest, "accountEntryId");
+		try {
+			long accountEntryId = ParamUtil.getLong(
+				actionRequest, "accountEntryId");
 
-		long addressId = ParamUtil.getLong(actionRequest, "addressId");
-		String type = ParamUtil.getString(actionRequest, "type");
+			long addressId = ParamUtil.getLong(actionRequest, "addressId");
+			String type = ParamUtil.getString(actionRequest, "type");
 
-		AccountEntry accountEntry = _accountEntryService.getAccountEntry(
-			accountEntryId);
+			_validateAddress(addressId);
 
-		if (Objects.equals(type, "billing")) {
-			accountEntry.setDefaultBillingAddressId(addressId);
+			AccountEntry accountEntry = _accountEntryService.getAccountEntry(
+				accountEntryId);
+
+			if (Objects.equals(type, "billing")) {
+				accountEntry.setDefaultBillingAddressId(addressId);
+			}
+			else if (Objects.equals(type, "shipping")) {
+				accountEntry.setDefaultShippingAddressId(addressId);
+			}
+
+			_accountEntryService.updateAccountEntry(accountEntry);
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
 		}
-		else if (Objects.equals(type, "shipping")) {
-			accountEntry.setDefaultShippingAddressId(addressId);
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.setRenderParameter(
+					"mvcPath", "/account_entries_admin/error.jsp");
+			}
+			else {
+				throw exception;
+			}
 		}
+	}
 
-		_accountEntryService.updateAccountEntry(accountEntry);
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		if (Validator.isNotNull(redirect)) {
-			sendRedirect(actionRequest, actionResponse, redirect);
+	private void _validateAddress(long addressId) throws Exception {
+		if (addressId > 0) {
+			_addressService.getAddress(addressId);
 		}
 	}
 
 	@Reference
 	private AccountEntryService _accountEntryService;
+
+	@Reference
+	private AddressService _addressService;
 
 }

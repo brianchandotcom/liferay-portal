@@ -14,7 +14,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.Arrays;
 
 import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -23,7 +22,6 @@ import org.junit.Test;
 public class StringQueryTest extends BaseStringQueryTestCase {
 
 	@ClassRule
-	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 

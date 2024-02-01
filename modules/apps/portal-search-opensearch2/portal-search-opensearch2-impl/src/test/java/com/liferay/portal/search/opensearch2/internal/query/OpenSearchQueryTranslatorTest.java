@@ -26,7 +26,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 import org.opensearch.client.opensearch._types.query_dsl.BoolQuery;
@@ -37,7 +36,6 @@ import org.opensearch.client.opensearch._types.query_dsl.BoolQuery;
 public class OpenSearchQueryTranslatorTest {
 
 	@ClassRule
-	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 

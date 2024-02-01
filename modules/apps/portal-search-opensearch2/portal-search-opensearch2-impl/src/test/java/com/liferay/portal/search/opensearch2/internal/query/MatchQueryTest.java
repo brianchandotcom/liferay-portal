@@ -12,7 +12,6 @@ import com.liferay.portal.search.test.util.query.BaseMatchQueryTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
-import org.junit.Rule;
 
 /**
  * @author Michael C. Han
@@ -20,7 +19,6 @@ import org.junit.Rule;
 public class MatchQueryTest extends BaseMatchQueryTestCase {
 
 	@ClassRule
-	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 

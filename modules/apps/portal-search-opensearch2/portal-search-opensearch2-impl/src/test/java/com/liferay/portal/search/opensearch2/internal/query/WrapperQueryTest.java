@@ -12,7 +12,6 @@ import com.liferay.portal.search.test.util.query.BaseWrapperQueryTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
-import org.junit.Rule;
 
 /**
  * @author Adam Brandizzi
@@ -20,7 +19,6 @@ import org.junit.Rule;
 public class WrapperQueryTest extends BaseWrapperQueryTestCase {
 
 	@ClassRule
-	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 

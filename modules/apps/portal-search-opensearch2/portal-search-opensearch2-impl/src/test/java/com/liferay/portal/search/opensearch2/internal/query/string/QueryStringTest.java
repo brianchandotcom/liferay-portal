@@ -12,7 +12,6 @@ import com.liferay.portal.search.test.util.query.string.BaseQueryStringTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
-import org.junit.Rule;
 
 /**
  * @author Wade Cao
@@ -21,7 +20,6 @@ import org.junit.Rule;
 public class QueryStringTest extends BaseQueryStringTestCase {
 
 	@ClassRule
-	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 

@@ -31,7 +31,6 @@ import org.opensearch.client.opensearch._types.OpenSearchException;
 public class MoreLikeThisQueryTest extends BaseMoreLikeThisQueryTestCase {
 
 	@ClassRule
-	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 

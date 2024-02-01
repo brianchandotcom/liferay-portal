@@ -16,7 +16,6 @@ import com.liferay.portal.search.test.util.query.BaseScoreFunctionTranslatorTest
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
-import org.junit.Rule;
 
 /**
  * @author André de Oliveira
@@ -25,7 +24,6 @@ public class OpenSearchScoreFunctionTranslatorTest
 	extends BaseScoreFunctionTranslatorTestCase {
 
 	@ClassRule
-	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 

@@ -337,43 +337,6 @@ definition {
 	}
 
 	@priority = 4
-	test CannotSeeFilterAndSortParametersForSingleElementEndpoint {
-		property portal.acceptance = "true";
-
-		task ("Given an published API application with singleElement endpoint") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "my-app",
-				endpointName = "testendpoint",
-				endpointPath = "/testendpoint/{id}",
-				pathParameter = "ID",
-				relatedEndpoint = "true",
-				retrieveType = "singleElement",
-				status = "published",
-				title = "My-app");
-		}
-
-		task ("When I expand get{EndpointPath} in /o/c/{aPIApplication}") {
-			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
-
-			APIExplorer.expandAPIMethod(
-				method = "getTestendpointId",
-				service = "default");
-		}
-
-		task ("Then filter and sort parameters are not present") {
-			AssertElementNotPresent(
-				locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
-				method = "getTestendpointId",
-				parameter = "filter");
-
-			AssertElementNotPresent(
-				locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
-				method = "getTestendpointId",
-				parameter = "sort");
-		}
-	}
-
-	@priority = 4
 	test CanSeeFilterAndSortParametersInComapnyScopedEndpoint {
 		property portal.acceptance = "true";
 

@@ -9,10 +9,14 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionIdSupplier;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
 
+import java.util.TimeZone;
 import java.util.function.Consumer;
 
 import org.junit.Assert;
@@ -45,6 +49,28 @@ public class CompanyThreadLocalTest {
 	@Test
 	public void testLockWithSetWithSafeCloseable() {
 		_testLock(CompanyThreadLocal::setWithSafeCloseable);
+	}
+
+	@Test
+	public void testUserThreadLocalsWithSetWithSafeCloseable() {
+		TimeZone pstTimeZone = TimeZone.getTimeZone("PST");
+
+		LocaleThreadLocal.setDefaultLocale(LocaleUtil.GERMAN);
+		TimeZoneThreadLocal.setDefaultTimeZone(pstTimeZone);
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(1L)) {
+
+			Assert.assertNotEquals(
+				LocaleUtil.GERMAN, LocaleThreadLocal.getDefaultLocale());
+			Assert.assertNotEquals(
+				pstTimeZone, TimeZoneThreadLocal.getDefaultTimeZone());
+		}
+
+		Assert.assertEquals(
+			LocaleUtil.GERMAN, LocaleThreadLocal.getDefaultLocale());
+		Assert.assertEquals(
+			pstTimeZone, TimeZoneThreadLocal.getDefaultTimeZone());
 	}
 
 	private void _testLock(Consumer<Long> consumer) {

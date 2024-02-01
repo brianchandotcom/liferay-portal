@@ -75,12 +75,12 @@ export default function App({state}) {
 												<GlobalContextProvider>
 													<CommonStylesManager />
 
-													<LayoutViewport />
-
-													<LayoutBreadcrumbs />
-
 													<StyleBookContextProvider>
 														<Sidebar />
+
+														<LayoutViewport />
+
+														<LayoutBreadcrumbs />
 
 														<ItemConfigurationSidebar />
 													</StyleBookContextProvider>

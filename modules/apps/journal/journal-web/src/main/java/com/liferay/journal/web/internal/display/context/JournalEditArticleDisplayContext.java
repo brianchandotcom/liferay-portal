@@ -727,19 +727,21 @@ public class JournalEditArticleDisplayContext {
 		Map<Locale, String> friendlyURLMap = _article.getFriendlyURLMap();
 
 		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
-			List<Long> groupIds = friendlyURLGroupIdsMap.computeIfAbsent(
-				entry.getValue(),
-				key -> ListUtil.remove(
-					JournalArticleLocalServiceUtil.getGroupIdsByUrlTitle(
-						_themeDisplay.getCompanyId(), key),
-					excludedGroupIds));
+			if (Validator.isNotNull(entry.getValue())) {
+				List<Long> groupIds = friendlyURLGroupIdsMap.computeIfAbsent(
+					entry.getValue(),
+					key -> ListUtil.remove(
+						JournalArticleLocalServiceUtil.getGroupIdsByUrlTitle(
+							_themeDisplay.getCompanyId(), key),
+						excludedGroupIds));
 
-			if (!groupIds.isEmpty() &&
-				((groupIds.size() > 1) ||
-				 !Objects.equals(
-					 groupIds.get(0), _themeDisplay.getScopeGroupId()))) {
+				if (!groupIds.isEmpty() &&
+					((groupIds.size() > 1) ||
+					 !Objects.equals(
+						 groupIds.get(0), _themeDisplay.getScopeGroupId()))) {
 
-				friendlyURLDuplicatedLocales.add(entry.getKey());
+					friendlyURLDuplicatedLocales.add(entry.getKey());
+				}
 			}
 		}
 

@@ -266,6 +266,7 @@ export type ListViewContextProviderProps = Partial<InitialState>;
 const ListViewContextProvider: React.FC<
 	ListViewContextProviderProps & {children: ReactNode; id: string}
 > = ({children, id, ...initialStateProps}) => {
+	const {currentPage, filterInitialContext, pageSize} = useQueryParams();
 	const [columnsStorage] = useStorage<ListViewColumns>(
 		(STORAGE_KEYS.LIST_VIEW_COLUMNS + id) as STORAGE_KEYS,
 		{consentType: CONSENT_TYPE.NECESSARY, storageType: 'persisted'}
@@ -283,6 +284,8 @@ const ListViewContextProvider: React.FC<
 			pin: !!filterPinnedStorage.entries.length,
 		}),
 		...(columnsStorage && {columns: columnsStorage}),
+		...(currentPage && {page: Number(currentPage)}),
+		...(pageSize && {pageSize: Number(pageSize)}),
 		id,
 	});
 

@@ -14,6 +14,7 @@ import {
 	useRef,
 } from 'react';
 import {KeyedMutator} from 'swr';
+import useQueryParams from '~/hooks/useQueryParams';
 
 import ListViewContextProvider, {
 	AppActions,
@@ -84,6 +85,7 @@ const ListView: React.FC<ListViewProps> = ({
 	variables,
 }) => {
 	const [listViewContext, dispatch] = useContext(ListViewContext);
+	const {updateUrlParams} = useQueryParams();
 
 	const {
 		columns: columnsContext,
@@ -237,12 +239,11 @@ const ListView: React.FC<ListViewProps> = ({
 				perPageItems: i18n.translate('x-items'),
 				selectPerPageItems: i18n.translate('x-items'),
 			}}
-			onDeltaChange={(delta) =>
-				dispatch({payload: delta, type: ListViewTypes.SET_PAGE_SIZE})
-			}
-			onPageChange={(page) =>
-				dispatch({payload: page, type: ListViewTypes.SET_PAGE})
-			}
+			onDeltaChange={(delta) => {
+				updateUrlParams({pageSize: delta});
+
+				dispatch({payload: delta, type: ListViewTypes.SET_PAGE_SIZE});
+			}}
 			totalItems={totalCount}
 		/>
 	);

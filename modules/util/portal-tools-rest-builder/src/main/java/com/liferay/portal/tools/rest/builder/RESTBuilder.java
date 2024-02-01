@@ -1907,17 +1907,11 @@ public class RESTBuilder {
 					openApiYamlFile.getPath(), "--output",
 					outputDirPath.toString(), "--client", target));
 
-			// See https://github.com/ferdikoomen/openapi-typescript-codegen/wiki/Client-instances
-
 			args.add("--name");
+
 			args.add(clientName);
 
-			// See https://github.com/ferdikoomen/openapi-typescript-codegen/wiki/Arguments-vs.-Object-style
-
 			args.add("--useOptions");
-
-			// See https://github.com/ferdikoomen/openapi-typescript-codegen/wiki/Enums-vs.-Union-types
-
 			args.add("--useUnionTypes");
 
 			ProcessBuilder processBuilder = new ProcessBuilder(args);

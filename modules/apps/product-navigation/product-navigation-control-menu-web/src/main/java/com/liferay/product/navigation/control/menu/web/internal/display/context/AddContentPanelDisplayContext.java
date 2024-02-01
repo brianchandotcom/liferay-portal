@@ -159,7 +159,7 @@ public class AddContentPanelDisplayContext {
 
 			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
-			if ((assetRenderer == null) || !assetRenderer.isDisplayable()) {
+			if (assetRenderer == null) {
 				continue;
 			}
 

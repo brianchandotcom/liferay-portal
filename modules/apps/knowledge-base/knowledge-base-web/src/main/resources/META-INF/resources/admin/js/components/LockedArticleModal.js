@@ -5,30 +5,43 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 export default function LockedArticleModal() {
-	const {observer, onClose} = useModal();
+	const {observer, onOpenChange, open} = useModal();
+
+	useEffect(() => {
+		onOpenChange(true);
+	}, [onOpenChange]);
 
 	return (
-		<ClayModal observer={observer} size="md" status="info">
-			<ClayModal.Header>
-				{Liferay.Language.get('article-in-edition')}
-			</ClayModal.Header>
+		<>
+			{open && (
+				<ClayModal observer={observer} size="md" status="info">
+					<ClayModal.Header>
+						{Liferay.Language.get('article-in-edition')}
+					</ClayModal.Header>
 
-			<ClayModal.Body>
-				<p>{Liferay.Language.get('article-in-edition-description')}</p>
-			</ClayModal.Body>
+					<ClayModal.Body>
+						<p>
+							{Liferay.Language.get(
+								'article-in-edition-description'
+							)}
+						</p>
+					</ClayModal.Body>
 
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group>
-						<ClayButton displayType="primary" onClick={onClose}>
-							{Liferay.Language.get('ok')}
-						</ClayButton>
-					</ClayButton.Group>
-				}
-			/>
-		</ClayModal>
+					<ClayModal.Footer
+						last={
+							<ClayButton
+								displayType="primary"
+								onClick={() => onOpenChange(false)}
+							>
+								{Liferay.Language.get('ok')}
+							</ClayButton>
+						}
+					/>
+				</ClayModal>
+			)}
+		</>
 	);
 }

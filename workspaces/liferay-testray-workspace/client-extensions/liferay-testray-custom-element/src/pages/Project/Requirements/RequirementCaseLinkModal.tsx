@@ -51,7 +51,7 @@ const RequirementCaseLinkModal: React.FC<RequirementCaseLinkModalProps> = ({
 						),
 					},
 					managementToolbarProps: {
-						modal: true,
+						isModal: true,
 						title: i18n.translate('cases'),
 					},
 					onContextChange: (context) => {

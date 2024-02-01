@@ -52,7 +52,7 @@ type ManagementToolbarRightProps = {
 		columns?: boolean;
 	};
 	filterSchema?: FilterSchema;
-	modal?: boolean;
+	isModal?: boolean;
 };
 
 const testrayStorage = TestrayStorage.getInstance().getStorage('persisted');
@@ -64,7 +64,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	columns,
 	display = {columns: true},
 	filterSchema,
-	modal = false,
+	isModal = false,
 }) => {
 	const [{filters, id, pin}, dispatch] = useContext(ListViewContext);
 	const [columnsDropdownVisible, setColumnsDropdownVisible] = useState(false);
@@ -116,7 +116,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 
 					<ManagementToolbarFilter
 						filterSchema={filterSchema}
-						modal={modal}
+						isModal={isModal}
 					/>
 				</>
 			)}

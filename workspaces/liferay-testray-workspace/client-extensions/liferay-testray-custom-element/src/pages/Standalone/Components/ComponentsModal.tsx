@@ -25,7 +25,7 @@ const ComponentsModal: React.FC<ComponentsModalProps> = ({projectId}) => {
 					addButton: () => formModal.modal.open(),
 					display: {columns: false},
 					filterSchema: 'components',
-					modal: true,
+					isModal: true,
 				}}
 				resource={testrayComponentImpl.resource}
 				tableProps={{

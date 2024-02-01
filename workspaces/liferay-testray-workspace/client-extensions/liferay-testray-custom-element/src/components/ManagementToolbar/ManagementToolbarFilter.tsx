@@ -27,7 +27,7 @@ import {RendererFields} from '../Form/Renderer';
 import {FieldOptions} from '../Form/Renderer/Renderer';
 type ManagementToolbarFilterProps = {
 	filterSchema?: FilterSchema;
-	modal?: boolean;
+	isModal?: boolean;
 };
 
 type Option = {label: string; value: string};
@@ -35,7 +35,7 @@ type Option = {label: string; value: string};
 type FilterBodyProps = {
 	buttonRef: React.RefObject<HTMLButtonElement>;
 	filterSchema: FilterSchema | undefined;
-	modal?: boolean;
+	isModal?: boolean;
 	setPosition: React.Dispatch<React.SetStateAction<number>>;
 	setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 	visible: boolean;
@@ -44,7 +44,7 @@ type FilterBodyProps = {
 const FilterBody: React.FC<FilterBodyProps> = ({
 	buttonRef,
 	filterSchema,
-	modal = false,
+	isModal = false,
 	setPosition,
 	setVisible,
 	visible,
@@ -141,7 +141,8 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 				value = (filterCleaned as any)[key].map(
 					(options: Option) => options.value || options
 				);
-			} else {
+			}
+			else {
 				value = filterCleaned[key];
 			}
 
@@ -161,7 +162,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 			{}
 		);
 
-		if (!modal && filterSchema) {
+		if (!isModal && filterSchema) {
 			updateUrlParams({
 				filter: JSON.stringify(formattedFilter),
 				filterSchema: filterSchema?.name as string,
@@ -179,7 +180,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		fields,
 		filterSchema,
 		form,
-		modal,
+		isModal,
 		setVisible,
 		updateUrlParams,
 	]);
@@ -250,7 +251,7 @@ const MENU_POPOVER_HEIGHT = 580;
 
 const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 	filterSchema,
-	modal = false,
+	isModal = false,
 }) => {
 	const [visible, setVisible] = useState(false);
 	const ref = useRef<HTMLButtonElement>(null);
@@ -293,7 +294,7 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 			<FilterBody
 				buttonRef={ref}
 				filterSchema={filterSchema}
-				modal={modal}
+				isModal={isModal}
 				setPosition={setPosition}
 				setVisible={setVisible}
 				visible={visible}

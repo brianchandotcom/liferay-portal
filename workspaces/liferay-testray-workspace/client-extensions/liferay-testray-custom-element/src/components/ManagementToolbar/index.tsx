@@ -28,7 +28,7 @@ export type ManagementToolbarProps = {
 	 * Check out the file {src/schema/filter.ts}
 	 */
 	filterSchema?: FilterSchemaOption;
-	modal?: boolean;
+	isModal?: boolean;
 	tableProps: Pick<TableProps, 'columns'>;
 	title?: string;
 	totalItems: number;
@@ -40,7 +40,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 	buttons,
 	display,
 	filterSchema,
-	modal = false,
+	isModal = false,
 	tableProps,
 	title,
 	totalItems,
@@ -66,7 +66,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 					disabled={disabled}
 					display={display}
 					filterSchema={(filterSchemas as any)[filterSchema ?? '']}
-					modal={modal}
+					isModal={isModal}
 				/>
 			</ClayManagementToolbar>
 

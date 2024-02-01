@@ -25,7 +25,7 @@ const ProductVersionModal: React.FC<ProductVersionModalProps> = ({
 				forceRefetch={formModal.forceRefetch}
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
-					modal: true,
+					isModal: true,
 				}}
 				resource={`${testrayProductVersionImpl.resource}&sort=name:asc`}
 				tableProps={{

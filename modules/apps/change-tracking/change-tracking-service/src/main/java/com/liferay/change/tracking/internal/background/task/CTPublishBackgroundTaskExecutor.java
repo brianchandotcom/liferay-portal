@@ -278,6 +278,8 @@ public class CTPublishBackgroundTaskExecutor
 					backgroundTask.getUserId(), CTPortletKeys.PUBLICATIONS,
 					UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
 					JSONUtil.put(
+						"ctCollectionId", fromCTCollectionId
+					).put(
 						"ctCollectionName", fromCTCollection.getName()
 					).put(
 						"notificationType",

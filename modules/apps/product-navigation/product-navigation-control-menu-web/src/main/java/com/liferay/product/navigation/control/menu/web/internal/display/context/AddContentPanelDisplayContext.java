@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -105,6 +106,9 @@ public class AddContentPanelDisplayContext {
 
 				resourceURL.setResourceID(
 					"/product_navigation_control_menu/get_contents");
+
+				resourceURL.setParameter(
+					"status", String.valueOf(WorkflowConstants.STATUS_ANY));
 
 				return resourceURL.toString();
 			}

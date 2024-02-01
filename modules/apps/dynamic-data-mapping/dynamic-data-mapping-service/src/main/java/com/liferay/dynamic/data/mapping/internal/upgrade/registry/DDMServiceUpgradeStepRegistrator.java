@@ -544,14 +544,16 @@ public class DDMServiceUpgradeStepRegistrator
 					_jsonDDMFormDeserializer, _jsonDDMFormSerializer,
 					_language));
 
-		registry.register(
-			"5.4.1", "5.4.2",
-			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_2.
-				PollsPortletIdToDDMPortletIdUpgradeProcess());
+		registry.register("5.4.1", "5.4.2", new DummyUpgradeStep());
 
 		registry.register(
 			"5.4.2", "5.4.3",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_3.
+				PollsPortletIdToDDMPortletIdUpgradeProcess());
+
+		registry.register(
+			"5.4.3", "5.4.4",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_4.
 				DDMStructureUpgradeProcess(
 					_jsonDDMFormDeserializer, _jsonDDMFormSerializer,
 					_spiDDMFormRuleConverter));

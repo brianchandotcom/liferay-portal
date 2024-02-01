@@ -5,14 +5,22 @@
 
 package com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_1;
 
+import com.liferay.petra.io.ProtectedClassLoaderObjectInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.scheduler.quartz.internal.upgrade.BaseQuartzRenameJobsUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.io.InputStream;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +33,7 @@ import org.quartz.JobDataMap;
 /**
  * @author Kevin Lee
  */
-public class QuartzUpgradeProcess extends BaseQuartzRenameJobsUpgradeProcess {
+public class QuartzUpgradeProcess extends UpgradeProcess {
 
 	public QuartzUpgradeProcess(
 		CompanyLocalService companyLocalService, JSONFactory jsonFactory) {
@@ -35,8 +43,15 @@ public class QuartzUpgradeProcess extends BaseQuartzRenameJobsUpgradeProcess {
 	}
 
 	@Override
-	protected Map<String, String> getJobNamesMap() throws Exception {
-		Map<String, String> jobNamesMap = new HashMap<>();
+	protected void doUpgrade() throws Exception {
+		if (DBPartition.isPartitionEnabled() &&
+			(PortalUtil.getDefaultCompanyId() !=
+				CompanyThreadLocal.getCompanyId())) {
+
+			return;
+		}
+
+		Map<String, Long> companyIds = new HashMap<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select job_name, job_data from QUARTZ_JOB_DETAILS where " +
@@ -44,90 +59,136 @@ public class QuartzUpgradeProcess extends BaseQuartzRenameJobsUpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				JobDataMap jobDataMap = deserializeJobDataMap(
+				JobDataMap jobDataMap = _deserializeJobDataMap(
 					resultSet.getBinaryStream("job_data"));
 
-				_loadJobNames(
-					jobNamesMap, resultSet.getString("job_name"), jobDataMap);
+				_loadCompanyId(
+					companyIds, resultSet.getString("job_name"), jobDataMap);
 			}
 		}
 
-		return jobNamesMap;
+		_updateTables(
+			companyIds, "job_name",
+			new String[] {
+				"QUARTZ_FIRED_TRIGGERS", "QUARTZ_JOB_DETAILS", "QUARTZ_TRIGGERS"
+			});
+
+		_updateTables(
+			companyIds, "trigger_name",
+			new String[] {
+				"QUARTZ_BLOB_TRIGGERS", "QUARTZ_CRON_TRIGGERS",
+				"QUARTZ_FIRED_TRIGGERS", "QUARTZ_SIMPLE_TRIGGERS",
+				"QUARTZ_SIMPROP_TRIGGERS", "QUARTZ_TRIGGERS"
+			});
 	}
 
-	private boolean _containsColumnId(
-			String tableName, String columnId, long columnValue)
+	private JobDataMap _deserializeJobDataMap(InputStream inputStream)
 		throws Exception {
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select 1 from ", tableName, " where ", columnId, " = ",
-					columnValue));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+		try (ProtectedClassLoaderObjectInputStream
+				protectedClassLoaderObjectInputStream =
+					new ProtectedClassLoaderObjectInputStream(
+						inputStream,
+						QuartzUpgradeProcess.class.getClassLoader())) {
 
-			return resultSet.next();
+			return (JobDataMap)
+				protectedClassLoaderObjectInputStream.readObject();
 		}
 	}
 
-	private void _loadJobNames(
-			Map<String, String> jobNamesMap, String jobName,
-			JobDataMap jobDataMap)
+	private void _getCompanyId(
+			Map<String, Long> companyIds, String jobName, String tableName,
+			String columnId, long columnValue)
 		throws Exception {
 
-		String destinationName = jobDataMap.getString(
-			SchedulerEngine.DESTINATION_NAME);
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				if (companyIds.containsKey(jobName)) {
+					return;
+				}
 
-		if (destinationName.equals("liferay/layouts_local_publisher") ||
-			destinationName.equals("liferay/layouts_remote_publisher")) {
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							StringBundler.concat(
+								"select 1 from ", tableName, " where ",
+								columnId, " = ", columnValue));
+					ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			return;
-		}
+					if (resultSet.next()) {
+						companyIds.put(jobName, companyId);
+					}
+				}
+			});
+	}
+
+	private void _loadCompanyId(
+			Map<String, Long> companyIds, String jobName, JobDataMap jobDataMap)
+		throws Exception {
 
 		Message message = (Message)_jsonFactory.deserialize(
 			jobDataMap.getString(SchedulerEngine.MESSAGE));
 
 		if (message.contains("companyId")) {
-			jobNamesMap.put(
-				jobName,
-				jobName.concat(StringPool.AT + message.getLong("companyId")));
+			companyIds.put(jobName, message.getLong("companyId"));
 
 			return;
 		}
 
-		_companyLocalService.forEachCompanyId(
-			companyId -> {
-				if (jobNamesMap.containsKey(jobName)) {
-					return;
+		String destinationName = jobDataMap.getString(
+			SchedulerEngine.DESTINATION_NAME);
+
+		if (destinationName.equals("liferay/ct_collection_scheduled_publish")) {
+			_getCompanyId(
+				companyIds, jobName, "CTCollection", "ctCollectionId",
+				message.getLong("ctCollectionId"));
+		}
+		else if (destinationName.equals("liferay/dispatch/executor")) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				(String)message.getPayload());
+
+			long dispatchTriggerId = jsonObject.getLong("dispatchTriggerId");
+
+			_getCompanyId(
+				companyIds, jobName, "DispatchTrigger", "dispatchTriggerId",
+				dispatchTriggerId);
+		}
+		else if (destinationName.equals("liferay/layouts_local_publisher") ||
+				 destinationName.equals("liferay/layouts_remote_publisher")) {
+
+			_getCompanyId(
+				companyIds, jobName, "ExportImportConfiguration",
+				"exportImportConfigurationId",
+				GetterUtil.getLong(message.getPayload()));
+		}
+	}
+
+	private void _updateTables(
+			Map<String, Long> companyIds, String columnName,
+			String[] tableNames)
+		throws Exception {
+
+		for (String tableName : tableNames) {
+			try (PreparedStatement preparedStatement =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection,
+						StringBundler.concat(
+							"update ", tableName, " set ", columnName,
+							" = ? where ", columnName, " = ?"))) {
+
+				for (Map.Entry<String, Long> entry : companyIds.entrySet()) {
+					String newJobName = StringBundler.concat(
+						entry.getKey(), StringPool.AT, entry.getValue());
+
+					preparedStatement.setString(1, newJobName);
+
+					preparedStatement.setString(2, entry.getKey());
+
+					preparedStatement.addBatch();
 				}
 
-				if (destinationName.equals(
-						"liferay/ct_collection_scheduled_publish")) {
-
-					long ctCollectionId = message.getLong("ctCollectionId");
-
-					if (_containsColumnId(
-							"CTCollection", "ctCollectionId", ctCollectionId)) {
-
-						jobNamesMap.put(
-							jobName, jobName.concat(StringPool.AT + companyId));
-					}
-				}
-				else if (destinationName.equals("liferay/dispatch/executor")) {
-					JSONObject jsonObject = _jsonFactory.createJSONObject(
-						(String)message.getPayload());
-
-					long dispatchTriggerId = jsonObject.getLong(
-						"dispatchTriggerId");
-
-					if (_containsColumnId(
-							"DispatchTrigger", "dispatchTriggerId",
-							dispatchTriggerId)) {
-
-						jobNamesMap.put(
-							jobName, jobName.concat(StringPool.AT + companyId));
-					}
-				}
-			});
+				preparedStatement.executeBatch();
+			}
+		}
 	}
 
 	private final CompanyLocalService _companyLocalService;

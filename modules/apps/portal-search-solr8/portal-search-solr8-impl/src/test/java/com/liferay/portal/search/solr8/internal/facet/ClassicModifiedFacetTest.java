@@ -6,7 +6,7 @@
 package com.liferay.portal.search.solr8.internal.facet;
 
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.search.solr8.internal.SolrIndexingFixture;
+import com.liferay.portal.search.solr8.internal.indexing.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.facet.BaseClassicModifiedFacetTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;

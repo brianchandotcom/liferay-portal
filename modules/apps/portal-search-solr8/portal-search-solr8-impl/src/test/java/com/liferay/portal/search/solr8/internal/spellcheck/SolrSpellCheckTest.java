@@ -6,7 +6,7 @@
 package com.liferay.portal.search.solr8.internal.spellcheck;
 
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.search.solr8.internal.SolrIndexingFixture;
+import com.liferay.portal.search.solr8.internal.indexing.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.spellcheck.BaseSpellCheckTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;

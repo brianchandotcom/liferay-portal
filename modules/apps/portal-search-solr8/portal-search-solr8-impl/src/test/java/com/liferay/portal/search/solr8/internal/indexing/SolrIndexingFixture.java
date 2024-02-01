@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.solr8.internal;
+package com.liferay.portal.search.solr8.internal.indexing;
 
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.IndexSearcher;
@@ -19,6 +19,11 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderFactoryImpl;
+import com.liferay.portal.search.solr8.internal.SolrIndexSearcher;
+import com.liferay.portal.search.solr8.internal.SolrIndexWriter;
+import com.liferay.portal.search.solr8.internal.SolrQuerySuggester;
+import com.liferay.portal.search.solr8.internal.SolrSpellCheckIndexWriter;
+import com.liferay.portal.search.solr8.internal.SolrUnitTestRequirements;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr8.internal.connection.TestSolrClientManager;
 import com.liferay.portal.search.solr8.internal.document.DefaultSolrDocumentFactory;

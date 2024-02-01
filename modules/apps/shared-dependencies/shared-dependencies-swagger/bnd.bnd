@@ -1,3 +1,29 @@
 Bundle-Name: Liferay Shared Dependencies Swagger
 Bundle-SymbolicName: com.liferay.shared.dependencies.swagger
 Bundle-Version: 1.0.2
+-exportcontents:\
+	io.swagger.v3.oas.annotations,\
+	io.swagger.v3.oas.annotations.callbacks,\
+	io.swagger.v3.oas.annotations.enums,\
+	io.swagger.v3.oas.annotations.extensions,\
+	io.swagger.v3.oas.annotations.headers,\
+	io.swagger.v3.oas.annotations.info,\
+	io.swagger.v3.oas.annotations.links,\
+	io.swagger.v3.oas.annotations.media,\
+	io.swagger.v3.oas.annotations.parameters,\
+	io.swagger.v3.oas.annotations.responses,\
+	io.swagger.v3.oas.annotations.security,\
+	io.swagger.v3.oas.annotations.servers,\
+	io.swagger.v3.oas.annotations.tags,\
+	io.swagger.v3.oas.models,\
+	io.swagger.v3.oas.models.callbacks,\
+	io.swagger.v3.oas.models.examples,\
+	io.swagger.v3.oas.models.headers,\
+	io.swagger.v3.oas.models.info,\
+	io.swagger.v3.oas.models.links,\
+	io.swagger.v3.oas.models.media,\
+	io.swagger.v3.oas.models.parameters,\
+	io.swagger.v3.oas.models.responses,\
+	io.swagger.v3.oas.models.security,\
+	io.swagger.v3.oas.models.servers,\
+	io.swagger.v3.oas.models.tags

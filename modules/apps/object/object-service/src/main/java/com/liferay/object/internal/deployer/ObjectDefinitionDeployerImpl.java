@@ -196,42 +196,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return ReflectionUtil.throwException(exception);
 		}
 
+		ObjectEntryModelIndexerWriterContributor
+			objectEntryModelIndexerWriterContributor =
+				new ObjectEntryModelIndexerWriterContributor(
+					_dynamicQueryBatchIndexingActionableFactory,
+					objectDefinition.getObjectDefinitionId(),
+					_objectEntryLocalService);
+
 		ObjectEntryModelSummaryContributor objectEntryModelSummaryContributor =
 			new ObjectEntryModelSummaryContributor();
-
-		ModelSearchConfigurator<ObjectEntry> modelSearchConfigurator =
-			new ModelSearchConfigurator<ObjectEntry>() {
-
-				@Override
-				public String getClassName() {
-					return objectDefinition.getClassName();
-				}
-
-				@Override
-				public long getCompanyId() {
-					return objectDefinition.getCompanyId();
-				}
-
-				@Override
-				public ModelIndexerWriterContributor<ObjectEntry>
-					getModelIndexerWriterContributor() {
-
-					return _objectEntryModelIndexerWriterContributor;
-				}
-
-				@Override
-				public ModelSummaryContributor getModelSummaryContributor() {
-					return objectEntryModelSummaryContributor;
-				}
-
-				private final ObjectEntryModelIndexerWriterContributor
-					_objectEntryModelIndexerWriterContributor =
-						new ObjectEntryModelIndexerWriterContributor(
-							_dynamicQueryBatchIndexingActionableFactory,
-							objectDefinition.getObjectDefinitionId(),
-							_objectEntryLocalService);
-
-			};
 
 		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
 			_bundleContext.registerService(
@@ -327,7 +300,35 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"model.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
-				ModelSearchConfigurator.class, modelSearchConfigurator, null),
+				ModelSearchConfigurator.class,
+				new ModelSearchConfigurator<ObjectEntry>() {
+
+					@Override
+					public String getClassName() {
+						return objectDefinition.getClassName();
+					}
+
+					@Override
+					public long getCompanyId() {
+						return objectDefinition.getCompanyId();
+					}
+
+					@Override
+					public ModelIndexerWriterContributor<ObjectEntry>
+						getModelIndexerWriterContributor() {
+
+						return objectEntryModelIndexerWriterContributor;
+					}
+
+					@Override
+					public ModelSummaryContributor
+						getModelSummaryContributor() {
+
+						return objectEntryModelSummaryContributor;
+					}
+
+				},
+				null),
 			_objectRelatedModelsProviderRegistrarHelper.register(
 				_bundleContext, objectDefinition,
 				new ObjectEntryMtoMObjectRelatedModelsProviderImpl(

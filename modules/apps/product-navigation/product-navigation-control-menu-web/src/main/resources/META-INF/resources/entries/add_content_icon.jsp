@@ -30,6 +30,8 @@ String portletNamespace = PortalUtil.getPortletNamespace(ProductNavigationContro
 				"/add_panel.jsp"
 			).setParameter(
 				"stateMaximized", themeDisplay.isStateMaximized()
+			).setParameter(
+				"status", WorkflowConstants.STATUS_ANY
 			).setWindowState(
 				LiferayWindowState.EXCLUSIVE
 			).buildString()

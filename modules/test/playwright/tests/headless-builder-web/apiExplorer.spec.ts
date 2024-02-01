@@ -3,14 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
 import {waitForHeadlessBuilderReady} from './utils/headlessBuilder';
 
-export const test = mergeTests(apiHelpersTest, loginTest);
+export const test = mergeTests(
+	apiHelpersTest,
+	headlessDiscoveryPagesTest,
+	loginTest
+);
 
 const basicApiApplication = {
 	apiApplicationToAPISchemas: [
@@ -29,6 +33,7 @@ const basicApiApplication = {
 };
 
 test('can see filter and sort parameters for collection but not for singleElement endpoints', async ({
+	apiExplorerPage,
 	apiHelpers,
 	page,
 }) => {
@@ -37,7 +42,7 @@ test('can see filter and sort parameters for collection but not for singleElemen
 		basicApiApplication,
 		'headless-builder/applications'
 	);
-	await apiHelpers.object.postObjectEntry(
+	const collectionEndpoint = await apiHelpers.object.postObjectEntry(
 		{
 			description: 'Test collection API Endpoint',
 			externalReferenceCode: 'basic-collection-endpoint',
@@ -51,7 +56,7 @@ test('can see filter and sort parameters for collection but not for singleElemen
 		},
 		'headless-builder/endpoints'
 	);
-	await apiHelpers.object.postObjectEntry(
+	const singleElementEndpoint = await apiHelpers.object.postObjectEntry(
 		{
 			description: 'Test Single Element API Endpoint',
 			externalReferenceCode: 'basic-singleElement-endpoint',
@@ -70,33 +75,21 @@ test('can see filter and sort parameters for collection but not for singleElemen
 		'headless-builder/endpoints'
 	);
 
-	await page.goto(
-		`/o/api?endpoint=${liferayConfig.environment.baseUrl}/o/c/${basicApiApplication.baseURL}/openapi.json`
+	await apiExplorerPage.goToSpecificApplication(
+		`c/${basicApiApplication.baseURL}`
 	);
 
-	await page
-		.locator('//span[@data-path="/collection-endpoint"]/a/span')
-		.click();
-	await expect(
-		page.getByRole('cell', {exact: true, name: 'filter'})
-	).toBeVisible();
-	await expect(
-		page.getByRole('cell', {exact: true, name: 'sort'})
-	).toBeVisible();
-	await page
-		.locator('//span[@data-path="/collection-endpoint"]/a/span')
-		.click();
-
 	page.waitForLoadState();
-	await page
-		.locator('//span[@data-path="/single-element-endpoint/{id}"]/a/span')
-		.click();
-	await expect(
-		page.getByRole('cell', {exact: true, name: 'filter'})
-	).toBeHidden();
-	await expect(
-		page.getByRole('cell', {exact: true, name: 'sort'})
-	).toBeHidden();
+
+	await apiExplorerPage.endpointHasSpecificParameters(
+		collectionEndpoint.path,
+		['filter', 'sort']
+	);
+
+	await apiExplorerPage.endpointHasNotSpecificParameters(
+		singleElementEndpoint.path,
+		['filter', 'sort']
+	);
 
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(

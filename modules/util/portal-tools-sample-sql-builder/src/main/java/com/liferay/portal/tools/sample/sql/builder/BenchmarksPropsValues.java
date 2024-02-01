@@ -8,7 +8,6 @@ package com.liferay.portal.tools.sample.sql.builder;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.FileReader;
 import java.io.Reader;
@@ -258,19 +257,7 @@ public class BenchmarksPropsValues {
 
 				properties.load(reader);
 
-				String timeZoneId = properties.getProperty(
-					"sample.sql.db.time.zone");
-
-				if (Validator.isNull(timeZoneId)) {
-					TimeZone timeZone = TimeZone.getDefault();
-
-					properties.setProperty(
-						"sample.sql.db.time.zone", timeZone.getID());
-				}
-				else {
-					TimeZone.setDefault(
-						TimeZone.getTimeZone(ZoneId.of(timeZoneId)));
-				}
+				TimeZone.setDefault(TimeZone.getTimeZone(ZoneId.of("GMT")));
 			}
 			catch (Exception exception) {
 				throw new ExceptionInInitializerError(exception);

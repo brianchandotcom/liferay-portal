@@ -5,17 +5,13 @@
 
 package com.liferay.change.tracking.web.internal.servlet.taglib;
 
-import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.model.CTEntry;
-import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTRemote;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTRemoteLocalService;
 import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
@@ -30,7 +26,6 @@ import com.liferay.change.tracking.web.internal.timeline.DefaultCTCollectionHist
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -64,7 +59,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 import com.liferay.taglib.util.HtmlTopTag;
@@ -277,72 +271,29 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private void _getConflictIconData(
-			long classNameId, long classPK, CTCollection currentCTCollection,
-			Map<String, Object> data, CTCollection possibleConflictCollection,
-			ThemeDisplay themeDisplay)
-		throws PortalException {
+		long classNameId, long classPK, CTCollection currentCTCollection,
+		Map<String, Object> data, HttpServletRequest httpServletRequest,
+		ThemeDisplay themeDisplay) {
 
 		if (currentCTCollection == null) {
 			return;
 		}
 
-		List<CTEntry> ctEntries = _ctEntryLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				CTEntryTable.INSTANCE
-			).from(
-				CTEntryTable.INSTANCE
-			).where(
-				CTEntryTable.INSTANCE.ctCollectionId.eq(
-					currentCTCollection.getCtCollectionId()
-				).and(
-					CTEntryTable.INSTANCE.modelClassNameId.eq(
-						classNameId
-					).and(
-						CTEntryTable.INSTANCE.modelClassPK.eq(classPK)
-					)
-				)
-			));
+		ResourceURL getConflictInfoURL =
+			(ResourceURL)_portal.getControlPanelPortletURL(
+				httpServletRequest, themeDisplay.getScopeGroup(),
+				CTPortletKeys.PUBLICATIONS, 0, 0,
+				PortletRequest.RESOURCE_PHASE);
 
-		if ((ctEntries != null) && !ctEntries.isEmpty()) {
-			Map<Long, List<ConflictInfo>> conflictInfoMap =
-				_ctCollectionLocalService.checkConflicts(
-					currentCTCollection.getCompanyId(), ctEntries,
-					currentCTCollection.getCtCollectionId(),
-					currentCTCollection.getName(),
-					CTConstants.CT_COLLECTION_ID_PRODUCTION,
-					_language.get(themeDisplay.getLocale(), "production"));
+		getConflictInfoURL.setParameter(
+			"classNameId", String.valueOf(classNameId));
+		getConflictInfoURL.setParameter("classPK", String.valueOf(classPK));
+		getConflictInfoURL.setParameter(
+			"currentCTCollectionId",
+			String.valueOf(currentCTCollection.getCtCollectionId()));
+		getConflictInfoURL.setResourceID("/change_tracking/get_conflict_info");
 
-			if (!conflictInfoMap.isEmpty()) {
-				data.put(
-					"conflictIconClass",
-					"change-tracking-conflict-icon-danger");
-				data.put(
-					"conflictIconLabel",
-					_language.get(
-						themeDisplay.getLocale(), "conflict-detected-help"));
-				data.put("conflictIconName", "warning-full");
-			}
-			else if (possibleConflictCollection != null) {
-				data.put(
-					"conflictIconClass",
-					"change-tracking-conflict-icon-warning");
-				data.put(
-					"conflictIconLabel",
-					_language.format(
-						themeDisplay.getLocale(),
-						"concurrent-modification-help-x",
-						possibleConflictCollection.getName()));
-				data.put("conflictIconName", "warning-full");
-			}
-		}
-		else {
-			data.put("conflictIconClass", "change-tracking-conflict-icon");
-			data.put(
-				"conflictIconLabel",
-				_language.get(
-					themeDisplay.getLocale(), "no-modifications-help"));
-			data.put("conflictIconName", "check");
-		}
+		data.put("getConflictInfoURL", getConflictInfoURL.toString());
 	}
 
 	private CTConfiguration _getCTConfiguration(long companyId) {
@@ -701,25 +652,12 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				ctCollectionHistoryProvider.getCTCollections(
 					classNameId, classPK);
 
-			CTCollection possibleConflictCollection = null;
-
 			JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 			Format format = _fastDateFormatFactory.getDate(
 				themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 			for (CTCollection ctCollection : ctCollections) {
-				if ((currentCTCollection != null) &&
-					((ctCollection.getStatus() ==
-						WorkflowConstants.STATUS_PENDING) ||
-					 ((ctCollection.getStatus() ==
-						 WorkflowConstants.STATUS_DRAFT) &&
-					  (ctCollection.getCtCollectionId() !=
-						  currentCTCollection.getCtCollectionId())))) {
-
-					possibleConflictCollection = ctCollection;
-				}
-
 				CTCollectionHistoryDataProvider
 					ctCollectionHistoryDataProvider =
 						new CTCollectionHistoryDataProvider(
@@ -757,7 +695,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 			_getConflictIconData(
 				classNameId, classPK, currentCTCollection, data,
-				possibleConflictCollection, themeDisplay);
+				httpServletRequest, themeDisplay);
 
 			data.put("timelineIconClass", "change-tracking-timeline-icon");
 			data.put("timelineIconName", "time");
@@ -786,9 +724,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
-
-	@Reference
-	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;

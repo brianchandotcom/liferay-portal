@@ -13,20 +13,19 @@ import ClayPopover from '@clayui/popover';
 import ClaySticker from '@clayui/sticker';
 import {
 	createPortletURL,
+	fetch,
 	navigate as navigateUtil,
 	openConfirmModal,
 } from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import PublicationTimeline from './PublicationTimeline';
 import PublicationsSearchContainer from './PublicationsSearchContainer';
 
 export default function ChangeTrackingIndicator({
 	checkoutDropdownItem,
-	conflictIconClass,
-	conflictIconLabel,
-	conflictIconName,
 	createDropdownItem,
+	getConflictInfoURL,
 	getSelectPublicationsURL,
 	iconClass,
 	iconName,
@@ -346,6 +345,32 @@ export default function ChangeTrackingIndicator({
 			</ClayModal>
 		);
 	};
+
+	const [fetchData, setFetchData] = useState(null);
+	const [conflictIconClass, setConflictIconClass] = useState(null);
+	const [conflictIconLabel, setConflictIconLabel] = useState(null);
+	const [conflictIconName, setConflictIconName] = useState(null);
+
+	useEffect(() => {
+		if (getConflictInfoURL) {
+			fetch(createPortletURL(getConflictInfoURL))
+				.then((response) => response.json())
+				.then((json) => {
+					if (json) {
+						setConflictIconClass(json.conflictIconClass);
+						setConflictIconLabel(json.conflictIconLabel);
+						setConflictIconName(json.conflictIconName);
+					}
+				})
+				.catch(() => {
+					setFetchData({
+						errorMessage: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+					});
+				});
+		}
+	}, [getConflictInfoURL]);
 
 	const renderConflictIcon = () => {
 		if (conflictIconClass && conflictIconName) {

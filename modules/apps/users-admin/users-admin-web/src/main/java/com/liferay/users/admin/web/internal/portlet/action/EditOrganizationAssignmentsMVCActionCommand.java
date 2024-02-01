@@ -84,6 +84,9 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
+		_validateUsers(addUserIds);
+		_validateUsers(removeUserIds);
+
 		_userService.addOrganizationUsers(organizationId, addUserIds);
 		_userService.unsetOrganizationUsers(organizationId, removeUserIds);
 
@@ -106,6 +109,12 @@ public class EditOrganizationAssignmentsMVCActionCommand
 				organization.getRegionId(), organization.getCountryId(),
 				organization.getStatusListTypeId(), organization.getComments(),
 				organizationGroup.isSite(), serviceContext);
+		}
+	}
+
+	private void _validateUsers(long[] userIds) throws Exception {
+		for (long userId : userIds) {
+			_userService.getUserById(userId);
 		}
 	}
 

@@ -181,17 +181,17 @@ public class DBPartitionSchemaValidator {
 		Options options = new Options();
 
 		options.addOption("a", "debug", false, "Print all log traces.");
+		options.addRequiredOption(
+			"d", "db-name", true, "Set the database name.");
 		options.addOption("h", "help", false, "Print help message.");
 		options.addOption("j", "jdbc-url", true, "Set the JDBC url.");
+		options.addRequiredOption(
+			"p", "password", true, "Set database user password.");
 		options.addOption(
 			"s", "schema-prefix", true,
 			"Set the schema prefix for nondefault partitions.");
 		options.addRequiredOption(
-			"d", "db-name", true, "Set the database name.");
-		options.addRequiredOption(
 			"t", "db-type", true, "Set database type [mysql, postgresql].");
-		options.addRequiredOption(
-			"p", "password", true, "Set database user password.");
 		options.addRequiredOption(
 			"u", "user", true, "Set the database user name.");
 

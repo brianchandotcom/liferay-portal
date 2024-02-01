@@ -7,9 +7,12 @@ package com.liferay.batch.engine.service.test;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -32,15 +35,28 @@ public class BaseBatchEngineTaskServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
 		otherCompany = CompanyTestUtil.addCompany();
 	}
 
 	@Before
 	public void setUp() throws Exception {
 		user = TestPropsValues.getUser();
+
+		companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
+
+		normalUser = UserTestUtil.addUser(company);
 	}
 
+	protected static Company company;
 	protected static Company otherCompany;
+
+	@DeleteAfterTestRun
+	protected User companyAdminUser;
+
+	@DeleteAfterTestRun
+	protected User normalUser;
 
 	protected User user;
 

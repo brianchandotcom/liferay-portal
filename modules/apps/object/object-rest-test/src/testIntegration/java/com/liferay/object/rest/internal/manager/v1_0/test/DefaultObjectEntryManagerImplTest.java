@@ -1569,7 +1569,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		_addAccountEntryOrganizationRel(accountEntry2, organization2);
 
-		_assertObjectEntriesSize(1);
+		_assertObjectEntriesSize1(1);
 
 		try {
 			_defaultObjectEntryManager.deleteObjectEntry(
@@ -1586,14 +1586,14 @@ public class DefaultObjectEntryManagerImplTest
 					objectEntry1.getId()));
 		}
 
-		_assertObjectEntriesSize(1);
+		_assertObjectEntriesSize1(1);
 
 		_addResourcePermission(ActionKeys.DELETE, _accountManagerRole);
 
 		_defaultObjectEntryManager.deleteObjectEntry(
 			_objectDefinition3, objectEntry1.getId());
 
-		_assertObjectEntriesSize(0);
+		_assertObjectEntriesSize1(0);
 
 		_deleteAccountEntryOrganizationRel(accountEntry1, organization1);
 		_deleteAccountEntryOrganizationRel(accountEntry2, organization2);
@@ -1623,7 +1623,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		_addAccountEntryOrganizationRel(accountEntry2, suborganization2);
 
-		_assertObjectEntriesSize(1);
+		_assertObjectEntriesSize1(1);
 
 		_removeResourcePermission(ActionKeys.DELETE, _accountManagerRole);
 
@@ -1642,14 +1642,14 @@ public class DefaultObjectEntryManagerImplTest
 					objectEntry1.getId()));
 		}
 
-		_assertObjectEntriesSize(1);
+		_assertObjectEntriesSize1(1);
 
 		_addResourcePermission(ActionKeys.DELETE, _accountManagerRole);
 
 		_defaultObjectEntryManager.deleteObjectEntry(
 			_objectDefinition3, objectEntry1.getId());
 
-		_assertObjectEntriesSize(0);
+		_assertObjectEntriesSize1(0);
 	}
 
 	@Test
@@ -2159,12 +2159,12 @@ public class DefaultObjectEntryManagerImplTest
 
 		_user = _addUser();
 
-		_assertObjectEntriesSize(0);
+		_assertObjectEntriesSize1(0);
 
 		Role role = _addRoleUser(
 			new String[] {ActionKeys.VIEW}, _objectDefinition3, _user);
 
-		_assertObjectEntriesSize(2);
+		_assertObjectEntriesSize1(2);
 
 		_resourcePermissionLocalService.removeResourcePermission(
 			companyId, _objectDefinition3.getClassName(),
@@ -2180,11 +2180,11 @@ public class DefaultObjectEntryManagerImplTest
 			String.valueOf(objectEntry1.getId()), role.getRoleId(),
 			new String[] {ActionKeys.VIEW});
 
-		_assertObjectEntriesSize(1);
+		_assertObjectEntriesSize1(1);
 
 		_userLocalService.deleteRoleUser(role.getRoleId(), _user);
 
-		_assertObjectEntriesSize(0);
+		_assertObjectEntriesSize1(0);
 
 		// User should be able to view object entries for account entry 1
 		// because he is a member of account entry 1
@@ -2196,12 +2196,12 @@ public class DefaultObjectEntryManagerImplTest
 			_accountEntryUserRelLocalService.addAccountEntryUserRel(
 				accountEntry1.getAccountEntryId(), _user.getUserId());
 
-		_assertObjectEntriesSize(1);
+		_assertObjectEntriesSize1(1);
 
 		_accountEntryUserRelLocalService.deleteAccountEntryUserRel(
 			accountEntryUserRel);
 
-		_assertObjectEntriesSize(0);
+		_assertObjectEntriesSize1(0);
 
 		// User should be able to view object entries for account entry 1 and
 		// account entry 2 because he is a member of an organization that
@@ -2217,16 +2217,16 @@ public class DefaultObjectEntryManagerImplTest
 		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), organization1.getOrganizationId());
 
-		_assertObjectEntriesSize(2);
+		_assertObjectEntriesSize1(2);
 
 		_deleteAccountEntryOrganizationRel(accountEntry2, organization1);
 
-		_assertObjectEntriesSize(1);
+		_assertObjectEntriesSize1(1);
 
 		_organizationLocalService.deleteUserOrganization(
 			_user.getUserId(), organization1.getOrganizationId());
 
-		_assertObjectEntriesSize(0);
+		_assertObjectEntriesSize1(0);
 
 		_deleteAccountEntryOrganizationRel(accountEntry1, organization1);
 
@@ -2251,22 +2251,22 @@ public class DefaultObjectEntryManagerImplTest
 		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), organization1.getOrganizationId());
 
-		_assertObjectEntriesSize(1);
+		_assertObjectEntriesSize1(1);
 
 		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), suborganization2.getOrganizationId());
 
-		_assertObjectEntriesSize(2);
+		_assertObjectEntriesSize1(2);
 
 		_organizationLocalService.deleteUserOrganization(
 			_user.getUserId(), suborganization2.getOrganizationId());
 
-		_assertObjectEntriesSize(1);
+		_assertObjectEntriesSize1(1);
 
 		_organizationLocalService.deleteUserOrganization(
 			_user.getUserId(), organization1.getOrganizationId());
 
-		_assertObjectEntriesSize(0);
+		_assertObjectEntriesSize1(0);
 	}
 
 	@Test
@@ -2288,19 +2288,19 @@ public class DefaultObjectEntryManagerImplTest
 
 		TreeTestUtil.forEachNodeObjectDefinition(
 			_tree.iterator(), objectDefinitionLocalService,
-			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 0));
+			objectDefinition -> _assertObjectEntriesSize1(objectDefinition, 0));
 
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
 			_tree.iterator(), objectDefinitionLocalService,
-			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 1));
+			objectDefinition -> _assertObjectEntriesSize1(objectDefinition, 1));
 
 		_assignAccountEntryRole(accountEntry2, _buyerRole, _user);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
 			_tree.iterator(), objectDefinitionLocalService,
-			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 2));
+			objectDefinition -> _assertObjectEntriesSize1(objectDefinition, 2));
 	}
 
 	@Test
@@ -2319,30 +2319,12 @@ public class DefaultObjectEntryManagerImplTest
 
 		_user = _addUser();
 
-		Page<ObjectEntry> page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			(Filter)null, null, StringPool.BLANK, null);
-
-		Collection<ObjectEntry> objectEntries = page.getItems();
-
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+		_assertObjectEntriesSize2(0);
 
 		Role role = _addRoleUser(
 			new String[] {ActionKeys.VIEW}, _objectDefinition3, _user);
 
-		page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			(Filter)null, null, StringPool.BLANK, null);
-
-		objectEntries = page.getItems();
-
-		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
+		_assertObjectEntriesSize2(2);
 
 		_resourcePermissionLocalService.removeResourcePermission(
 			companyId, _objectDefinition3.getClassName(),
@@ -2358,29 +2340,11 @@ public class DefaultObjectEntryManagerImplTest
 			String.valueOf(objectEntry1.getId()), role.getRoleId(),
 			new String[] {ActionKeys.VIEW});
 
-		page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			(Filter)null, null, StringPool.BLANK, null);
-
-		objectEntries = page.getItems();
-
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+		_assertObjectEntriesSize2(1);
 
 		_userLocalService.deleteRoleUser(role.getRoleId(), _user);
 
-		page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			(Filter)null, null, StringPool.BLANK, null);
-
-		objectEntries = page.getItems();
-
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+		_assertObjectEntriesSize2(0);
 
 		// User should be able to view object entries for account entry 1
 		// because he is a member of account entry 1
@@ -2392,30 +2356,12 @@ public class DefaultObjectEntryManagerImplTest
 			_accountEntryUserRelLocalService.addAccountEntryUserRel(
 				accountEntry1.getAccountEntryId(), _user.getUserId());
 
-		page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			(Filter)null, null, StringPool.BLANK, null);
-
-		objectEntries = page.getItems();
-
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+		_assertObjectEntriesSize2(1);
 
 		_accountEntryUserRelLocalService.deleteAccountEntryUserRel(
 			accountEntryUserRel);
 
-		page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			(Filter)null, null, StringPool.BLANK, null);
-
-		objectEntries = page.getItems();
-
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+		_assertObjectEntriesSize2(0);
 
 		// User should be able to view object entries for account entry 1 and
 		// account entry 2 because he is a member of an organization that
@@ -2431,43 +2377,16 @@ public class DefaultObjectEntryManagerImplTest
 		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), organization1.getOrganizationId());
 
-		page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			(Filter)null, null, StringPool.BLANK, null);
-
-		objectEntries = page.getItems();
-
-		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
+		_assertObjectEntriesSize2(2);
 
 		_deleteAccountEntryOrganizationRel(accountEntry2, organization1);
 
-		page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			(Filter)null, null, StringPool.BLANK, null);
-
-		objectEntries = page.getItems();
-
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+		_assertObjectEntriesSize2(1);
 
 		_organizationLocalService.deleteUserOrganization(
 			_user.getUserId(), organization1.getOrganizationId());
 
-		page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			(Filter)null, null, StringPool.BLANK, null);
-
-		objectEntries = page.getItems();
-
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+		_assertObjectEntriesSize2(0);
 
 		_deleteAccountEntryOrganizationRel(accountEntry1, organization1);
 
@@ -2492,58 +2411,22 @@ public class DefaultObjectEntryManagerImplTest
 		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), organization1.getOrganizationId());
 
-		page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			(Filter)null, null, StringPool.BLANK, null);
-
-		objectEntries = page.getItems();
-
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+		_assertObjectEntriesSize2(1);
 
 		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), suborganization2.getOrganizationId());
 
-		page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			(Filter)null, null, StringPool.BLANK, null);
-
-		objectEntries = page.getItems();
-
-		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
+		_assertObjectEntriesSize2(2);
 
 		_organizationLocalService.deleteUserOrganization(
 			_user.getUserId(), suborganization2.getOrganizationId());
 
-		page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			(Filter)null, null, StringPool.BLANK, null);
-
-		objectEntries = page.getItems();
-
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+		_assertObjectEntriesSize2(1);
 
 		_organizationLocalService.deleteUserOrganization(
 			_user.getUserId(), organization1.getOrganizationId());
 
-		page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			(Filter)null, null, StringPool.BLANK, null);
-
-		objectEntries = page.getItems();
-
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+		_assertObjectEntriesSize2(0);
 	}
 
 	@Test
@@ -2967,10 +2850,10 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assignAccountEntryRole(accountEntry2, _buyerRole, _user);
 
-		_assertObjectEntriesSize(_objectDefinition3, "Able", 0);
-		_assertObjectEntriesSize(_objectDefinition3, "Baker", 0);
-		_assertObjectEntriesSize(_objectDefinition3, "Charlie", 1);
-		_assertObjectEntriesSize(_objectDefinition3, "Delta", 1);
+		_assertObjectEntriesSize1(_objectDefinition3, "Able", 0);
+		_assertObjectEntriesSize1(_objectDefinition3, "Baker", 0);
+		_assertObjectEntriesSize1(_objectDefinition3, "Charlie", 1);
+		_assertObjectEntriesSize1(_objectDefinition3, "Delta", 1);
 	}
 
 	@Test
@@ -3275,7 +3158,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assignAccountEntryRole(accountEntry2, _buyerRole, _user);
 
-		_assertObjectEntriesSize(2);
+		_assertObjectEntriesSize1(2);
 
 		_defaultObjectEntryManager.updateObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition3,
@@ -3343,7 +3226,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assignOrganizationRole(organization1, _accountManagerRole, _user);
 
-		_assertObjectEntriesSize(1);
+		_assertObjectEntriesSize1(1);
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
@@ -3779,18 +3662,18 @@ public class DefaultObjectEntryManagerImplTest
 			});
 	}
 
-	private void _assertObjectEntriesSize(long size) throws Exception {
-		_assertObjectEntriesSize(_objectDefinition3, size);
+	private void _assertObjectEntriesSize1(long size) throws Exception {
+		_assertObjectEntriesSize1(_objectDefinition3, size);
 	}
 
-	private void _assertObjectEntriesSize(
+	private void _assertObjectEntriesSize1(
 			ObjectDefinition objectDefinition, long size)
 		throws Exception {
 
-		_assertObjectEntriesSize(objectDefinition, null, size);
+		_assertObjectEntriesSize1(objectDefinition, null, size);
 	}
 
-	private void _assertObjectEntriesSize(
+	private void _assertObjectEntriesSize1(
 			ObjectDefinition objectDefinition, String search, long size)
 		throws Exception {
 
@@ -3800,6 +3683,20 @@ public class DefaultObjectEntryManagerImplTest
 				false, Collections.emptyMap(), dtoConverterRegistry, null,
 				LocaleUtil.getDefault(), null, _user),
 			StringPool.BLANK, null, search, null);
+
+		Collection<ObjectEntry> objectEntries = page.getItems();
+
+		Assert.assertEquals(
+			objectEntries.toString(), size, objectEntries.size());
+	}
+
+	private void _assertObjectEntriesSize2(long size) throws Exception {
+		Page<ObjectEntry> page = _defaultObjectEntryManager.getObjectEntries(
+			companyId, _objectDefinition3, null, null,
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), dtoConverterRegistry, null,
+				LocaleUtil.getDefault(), null, _user),
+			(Filter)null, null, StringPool.BLANK, null);
 
 		Collection<ObjectEntry> objectEntries = page.getItems();
 

@@ -10,6 +10,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {headlessClientsTest} from '../../fixtures/headlessClientsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPages';
 import getRandomId from '../../utils/getRandomId';
@@ -21,6 +22,10 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	featureFlagsTest({
 		'LPS-178052': true,
+	}),
+	headlessClientsTest({
+		headlessDeliveryClient: HeadlessDeliveryClient,
+		headlessSiteClient: HeadlessSiteClient,
 	}),
 	loginTest,
 	pageEditorPagesTest
@@ -59,7 +64,7 @@ const NON_DESKTOP_PANELS: NonDesktopPanels = [
 ];
 
 test('shows correct sections on each configuration panel when viewport is not Desktop', async ({
-	authenticate,
+	headlessClients: {headlessDeliveryClient, headlessSiteClient},
 	page,
 	pageEditorPage,
 }) => {
@@ -67,7 +72,7 @@ test('shows correct sections on each configuration panel when viewport is not De
 
 	// Create a site
 
-	const site = await authenticate(HeadlessSiteClient).site.postSite({
+	const site = await headlessSiteClient.site.postSite({
 		requestBody: {name: getRandomId()},
 	});
 
@@ -80,9 +85,7 @@ test('shows correct sections on each configuration panel when viewport is not De
 		'BASIC_COMPONENT-heading'
 	);
 
-	const layout = await authenticate(
-		HeadlessDeliveryClient
-	).sitePage.postSiteSitePage({
+	const layout = await headlessDeliveryClient.sitePage.postSiteSitePage({
 		requestBody: {
 			pageDefinition: getPageDefinition([headingFragment]),
 			title: getRandomId(),
@@ -118,5 +121,5 @@ test('shows correct sections on each configuration panel when viewport is not De
 
 	// Delete the site
 
-	await authenticate(HeadlessSiteClient).site.deleteSite({siteId: site.id});
+	await headlessSiteClient.site.deleteSite({siteId: site.id});
 });

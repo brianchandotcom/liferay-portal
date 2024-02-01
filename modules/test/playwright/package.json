@@ -6,7 +6,10 @@
 	"description": "",
 	"devDependencies": {
 		"@liferay/eslint-plugin": "1.5.0",
+		"@liferay/headless-delivery-client-js": "file:../../apps/headless/headless-delivery/headless-delivery-client-js/src/main/resources/META-INF/resources/node",
+		"@liferay/headless-site-client-js": "file:../../apps/headless/headless-site/headless-site-client-js/src/main/resources/META-INF/resources/node",
 		"@liferay/npm-scripts": "49.2.0",
+		"@liferay/object-admin-rest-client-js": "file:../../apps/object/object-admin-rest-client-js/src/main/resources/META-INF/resources/node",
 		"@playwright/test": "1.39.0",
 		"@types/node": "^20.9.0",
 		"dotenv": "^16.3.2",

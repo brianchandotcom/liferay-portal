@@ -231,6 +231,7 @@ components:
                 unique:
                     readOnly: true
                     type: boolean
+            type: object
         ObjectFieldSetting:
             properties:
                 id:
@@ -244,6 +245,7 @@ components:
                     type: integer
                 value:
                     type: object
+            type: object
         ObjectFolder:
             properties:
                 actions:
@@ -277,6 +279,7 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectFolderItem"
                     type: array
+            type: object
         ObjectFolderItem:
             properties:
                 linkedObjectDefinition:
@@ -291,6 +294,7 @@ components:
                 positionY:
                     format: int32
                     type: integer
+            type: object
         ObjectLayout:
             properties:
                 actions:
@@ -327,6 +331,7 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectLayoutTab"
                     type: array
+            type: object
         ObjectLayoutBox:
             properties:
                 collapsable:
@@ -349,6 +354,7 @@ components:
                 type:
                     enum: [categorization, regular]
                     type: string
+            type: object
         ObjectLayoutColumn:
             properties:
                 id:
@@ -363,6 +369,7 @@ components:
                 size:
                     format: int32
                     type: integer
+            type: object
         ObjectLayoutRow:
             properties:
                 id:
@@ -376,6 +383,7 @@ components:
                 priority:
                     format: int32
                     type: integer
+            type: object
         ObjectLayoutTab:
             properties:
                 id:
@@ -398,6 +406,7 @@ components:
                 priority:
                     format: int32
                     type: integer
+            type: object
         ObjectRelationship:
             properties:
                 actions:
@@ -455,6 +464,7 @@ components:
                 type:
                     enum: [oneToMany, oneToOne, manyToMany]
                     type: string
+            type: object
         ObjectState:
             properties:
                 id:
@@ -466,6 +476,7 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectStateTransition"
                     type: array
+            type: object
         ObjectStateFlow:
             properties:
                 id:
@@ -475,6 +486,7 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectState"
                     type: array
+            type: object
         ObjectStateTransition:
             properties:
                 key:
@@ -541,6 +553,7 @@ components:
                     type: string
                 value:
                     type: object
+            type: object
         ObjectView:
             properties:
                 actions:
@@ -585,6 +598,7 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectViewSortColumn"
                     type: array
+            type: object
         ObjectViewColumn:
             properties:
                 id:
@@ -600,6 +614,7 @@ components:
                 priority:
                     format: int32
                     type: integer
+            type: object
         ObjectViewFilterColumn:
             properties:
                 filterType:
@@ -616,6 +631,7 @@ components:
                 valueSummary:
                     readOnly: true
                     type: string
+            type: object
         ObjectViewSortColumn:
             properties:
                 id:
@@ -630,6 +646,7 @@ components:
                 sortOrder:
                     enum: [asc, desc]
                     type: string
+            type: object
         Status:
             properties:
                 code:

@@ -244,6 +244,11 @@ const ListView: React.FC<ListViewProps> = ({
 
 				dispatch({payload: delta, type: ListViewTypes.SET_PAGE_SIZE});
 			}}
+			onPageChange={(page) => {
+				updateUrlParams({page});
+
+				dispatch({payload: page, type: ListViewTypes.SET_PAGE});
+			}}
 			totalItems={totalCount}
 		/>
 	);

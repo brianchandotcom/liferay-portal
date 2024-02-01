@@ -65,10 +65,13 @@ export default function TranslationManager({
 	const getLocalizableFields = useCallback(() => {
 		const ddmFields = Array.from(
 			document.querySelectorAll<HTMLInputElement>(
-				`[data-ddm-localizable-field]`
+				`[data-ddm-localizable-field-id]`
 			)
 		)
-			.map((field) => field.dataset.fieldName!)
+			.map(
+				(field) =>
+					`${field.dataset.fieldName}${field.dataset.ddmLocalizableFieldId}`
+			)
 			.reduce((acc, name) => ({...acc, [name]: {}}), {});
 
 		const fields = {...initialFields, ...ddmFields};

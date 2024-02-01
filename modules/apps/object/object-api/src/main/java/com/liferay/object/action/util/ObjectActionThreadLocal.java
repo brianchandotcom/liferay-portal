@@ -53,7 +53,7 @@ public class ObjectActionThreadLocal {
 		_clearObjectEntryIdsMapThreadLocal.set(clearObjectEntryIdsMap);
 	}
 
-	private static volatile ThreadLocal<Boolean>
+	private static final ThreadLocal<Boolean>
 		_clearObjectEntryIdsMapThreadLocal = new CentralizedThreadLocal<>(
 			ObjectActionThreadLocal.class +
 				"._clearObjectEntryIdsMapThreadLocal",

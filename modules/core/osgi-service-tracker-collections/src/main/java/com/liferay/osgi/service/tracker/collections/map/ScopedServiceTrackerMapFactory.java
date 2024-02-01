@@ -5,15 +5,30 @@
 
 package com.liferay.osgi.service.tracker.collections.map;
 
+import com.liferay.osgi.service.tracker.collections.internal.DefaultServiceTrackerCustomizer;
+
 import java.util.List;
 import java.util.function.Supplier;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Carlos Sierra Andrés
  */
 public class ScopedServiceTrackerMapFactory<T> {
+
+	public static <K, SR, T> ScopedServiceTrackerMap<T> create(
+		BundleContext bundleContext, Class<SR> clazz, String filterString,
+		ServiceReferenceMapper<String, SR> serviceReferenceMapper,
+		ServiceTrackerCustomizer<SR, T> serviceTrackerCustomizer) {
+
+		return new ScopedServiceTrackerMapImpl<>(
+			bundleContext, clazz, null, filterString, () -> null,
+			() -> {
+			},
+			serviceReferenceMapper, serviceTrackerCustomizer);
+	}
 
 	public static <T> ScopedServiceTrackerMap<T> create(
 		BundleContext bundleContext, Class<T> clazz, String property,
@@ -33,7 +48,9 @@ public class ScopedServiceTrackerMapFactory<T> {
 
 		return new ScopedServiceTrackerMapImpl<>(
 			bundleContext, clazz, property, filterString,
-			defaultServiceSupplier, onChangeRunnable);
+			defaultServiceSupplier, onChangeRunnable,
+			new PropertyServiceReferenceMapper<>(property),
+			new DefaultServiceTrackerCustomizer<>(bundleContext));
 	}
 
 	public static <T> ScopedServiceTrackerMap<T> create(
@@ -46,12 +63,15 @@ public class ScopedServiceTrackerMapFactory<T> {
 			});
 	}
 
-	private static class ScopedServiceTrackerMapImpl<T>
+	private static class ScopedServiceTrackerMapImpl<SR, T>
 		implements ScopedServiceTrackerMap<T> {
 
 		@Override
 		public void close() {
-			_servicesByCompany.close();
+			if (_servicesByCompany != null) {
+				_servicesByCompany.close();
+			}
+
 			_servicesByCompanyAndKey.close();
 			_servicesByKey.close();
 		}
@@ -73,7 +93,9 @@ public class ScopedServiceTrackerMapFactory<T> {
 				return services.get(0);
 			}
 
-			services = _servicesByCompany.getService(companyIdString);
+			if (_servicesByCompany != null) {
+				services = _servicesByCompany.getService(companyIdString);
+			}
 
 			if ((services != null) && !services.isEmpty()) {
 				return services.get(0);
@@ -83,40 +105,54 @@ public class ScopedServiceTrackerMapFactory<T> {
 		}
 
 		private ScopedServiceTrackerMapImpl(
-			BundleContext bundleContext, Class<T> clazz, String property,
+			BundleContext bundleContext, Class<SR> clazz, String property,
 			String filterString, Supplier<T> defaultServiceSupplier,
-			Runnable onChangeRunnable) {
+			Runnable onChangeRunnable,
+			ServiceReferenceMapper<String, SR> serviceReferenceMapper,
+			ServiceTrackerCustomizer<SR, T> serviceTrackerCustomizer) {
 
 			_defaultServiceSupplier = defaultServiceSupplier;
 			_onChangeRunnable = onChangeRunnable;
 
-			_servicesByCompany = ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, clazz,
-				"(&(companyId=*)(!(" + property + "=*))" + filterString + ")",
-				new PropertyServiceReferenceMapper<>("companyId"),
-				new ServiceTrackerMapListenerImpl());
+			String propertyFilterString = "";
+
+			if (property == null) {
+				_servicesByCompany = null;
+			}
+			else {
+				propertyFilterString = "(" + property + "=*)";
+
+				_servicesByCompany = ServiceTrackerMapFactory.openMultiValueMap(
+					bundleContext, clazz,
+					"(&(companyId=*)(!" + propertyFilterString + ")" +
+						filterString + ")",
+					new PropertyServiceReferenceMapper<>("companyId"),
+					serviceTrackerCustomizer,
+					new ServiceTrackerMapListenerImpl());
+			}
+
 			_servicesByCompanyAndKey =
 				ServiceTrackerMapFactory.openMultiValueMap(
 					bundleContext, clazz,
-					"(&(companyId=*)(" + property + "=*)" + filterString + ")",
+					"(&(companyId=*)" + propertyFilterString + filterString +
+						")",
 					(serviceReference, emitter) -> {
-						ServiceReferenceMapper<String, T> companyMapper =
+						ServiceReferenceMapper<String, SR> companyMapper =
 							new PropertyServiceReferenceMapper<>("companyId");
-						ServiceReferenceMapper<String, T> nameMapper =
-							new PropertyServiceReferenceMapper<>(property);
 
 						companyMapper.map(
 							serviceReference,
-							key1 -> nameMapper.map(
+							key1 -> serviceReferenceMapper.map(
 								serviceReference,
 								key2 -> emitter.emit(key1 + "-" + key2)));
 					},
+					serviceTrackerCustomizer,
 					new ServiceTrackerMapListenerImpl());
 			_servicesByKey = ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, clazz,
-				"(&(" + property + "=*)(|(!(companyId=*))(companyId=0))" +
-					filterString + ")",
-				new PropertyServiceReferenceMapper<>(property),
+				"(&" + propertyFilterString +
+					"(|(!(companyId=*))(companyId=0))" + filterString + ")",
+				serviceReferenceMapper, serviceTrackerCustomizer,
 				new ServiceTrackerMapListenerImpl());
 		}
 

@@ -115,6 +115,19 @@ public class ServiceTrackerMapFactory {
 			serviceTrackerMapListener);
 	}
 
+	public static <K, SR, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
+		BundleContext bundleContext, Class<SR> clazz, String filterString,
+		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
+		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
+		ServiceTrackerMapListener<K, S, List<S>> serviceTrackerMapListener) {
+
+		return new ServiceTrackerMapImpl<>(
+			bundleContext, clazz, filterString, serviceReferenceMapper,
+			serviceTrackerCustomizer,
+			new MultiValueServiceTrackerBucketFactory<SR, S>(),
+			serviceTrackerMapListener);
+	}
+
 	public static <SR, S> ServiceTrackerMap<String, List<S>> openMultiValueMap(
 		BundleContext bundleContext, Class<SR> clazz, String propertyKey,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer) {

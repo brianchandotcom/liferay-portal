@@ -52,7 +52,7 @@ public class BatchEngineTaskItemDelegateExecutorFactory {
 
 		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
 			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
-				className, taskItemDelegateName);
+				company.getCompanyId(), className, taskItemDelegateName);
 
 		if (batchEngineTaskItemDelegate == null) {
 			throw new IllegalStateException(

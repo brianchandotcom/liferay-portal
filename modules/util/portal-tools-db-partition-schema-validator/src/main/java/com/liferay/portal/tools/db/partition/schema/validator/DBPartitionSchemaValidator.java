@@ -214,8 +214,8 @@ public class DBPartitionSchemaValidator {
 
 		try (ResultSet resultSet = databaseMetaData.getColumns(
 				_getCatalog(partitionName), _getSchema(partitionName),
-				_normalizeName(tableName, databaseMetaData),
-				_normalizeName(columnName, databaseMetaData))) {
+				_normalizeName(databaseMetaData, tableName),
+				_normalizeName(databaseMetaData, columnName))) {
 
 			if (!resultSet.next()) {
 				return false;
@@ -226,7 +226,7 @@ public class DBPartitionSchemaValidator {
 	}
 
 	private static String _normalizeName(
-			String name, DatabaseMetaData databaseMetaData)
+			DatabaseMetaData databaseMetaData, String name)
 		throws SQLException {
 
 		if (databaseMetaData.storesLowerCaseIdentifiers()) {

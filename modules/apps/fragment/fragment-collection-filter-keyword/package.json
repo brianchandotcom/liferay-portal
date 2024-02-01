@@ -2,6 +2,7 @@
 	"dependencies": {
 		"@liferay/fragment-renderer-collection-filter-impl": "*"
 	},
+	"main": "js/index.js",
 	"name": "@liferay/fragment-collection-filter-keyword",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

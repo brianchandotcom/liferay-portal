@@ -1,4 +1,5 @@
 {
+	"main": "js/index.jt",
 	"name": "@liferay/application-list-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

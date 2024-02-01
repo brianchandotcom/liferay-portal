@@ -344,7 +344,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			if (fragmentEntry == null) {
 				fragmentEntry = _fragmentEntryService.addFragmentEntry(
 					groupId, fragmentCollectionId, fragmentEntryKey, name, css,
-					html, js, cacheable, configuration, icon, 0, type,
+					html, js, cacheable, configuration, icon, 0, readOnly, type,
 					typeOptions, status,
 					ServiceContextThreadLocal.getServiceContext());
 			}
@@ -358,22 +358,16 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 						groupId, fragmentEntryKey),
 					_fragmentEntryLocalService.getUniqueFragmentEntryName(
 						groupId, fragmentCollectionId, name),
-					css, html, js, cacheable, configuration, icon, 0, type,
-					typeOptions, status,
+					css, html, js, cacheable, configuration, icon, 0, readOnly,
+					type, typeOptions, status,
 					ServiceContextThreadLocal.getServiceContext());
 			}
 			else {
 				fragmentEntry = _fragmentEntryService.updateFragmentEntry(
 					fragmentEntry.getFragmentEntryId(), fragmentCollectionId,
 					name, css, html, js, cacheable, configuration, icon,
-					fragmentEntry.getPreviewFileEntryId(), typeOptions, status);
-			}
-
-			if (fragmentEntry.isReadOnly() != readOnly) {
-				fragmentEntry.setReadOnly(readOnly);
-
-				fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
-					fragmentEntry);
+					fragmentEntry.getPreviewFileEntryId(), readOnly,
+					typeOptions, status);
 			}
 
 			FragmentsImporterResultEntry.Status

@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
@@ -15,6 +16,10 @@ import java.util.Locale;
  * @author Brian Wing Shun Chan
  */
 public class LocaleThreadLocal {
+
+	public static SafeCloseable clearDefaultLocaleWithSafeCloseable() {
+		return _defaultLocale.setWithSafeCloseable(null);
+	}
 
 	public static Locale getDefaultLocale() {
 		return _defaultLocale.get();
@@ -44,7 +49,7 @@ public class LocaleThreadLocal {
 		_themeDisplayLocale.set(locale);
 	}
 
-	private static final ThreadLocal<Locale> _defaultLocale =
+	private static final CentralizedThreadLocal<Locale> _defaultLocale =
 		new CentralizedThreadLocal<>(
 			LocaleThreadLocal.class + "._defaultLocale",
 			() -> {

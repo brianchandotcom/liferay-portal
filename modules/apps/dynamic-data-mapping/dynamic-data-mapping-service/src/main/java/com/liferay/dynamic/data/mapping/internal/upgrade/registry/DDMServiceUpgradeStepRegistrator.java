@@ -13,7 +13,6 @@ import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.dynamic.data.mapping.data.provider.settings.DDMDataProviderSettingsProvider;
-import com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.SchemaUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.UpgradeKernelPackage;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.UpgradeLastPublishDate;
@@ -109,7 +108,10 @@ public class DDMServiceUpgradeStepRegistrator
 		DDMFormValuesDeserializer ddmFormValuesDeserializer =
 			_jsonDDMFormValuesDeserializer;
 
-		registry.register("0.0.1", "0.0.2", new SchemaUpgradeProcess());
+		registry.register(
+			"0.0.1", "0.0.2",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v0_0_2.
+				SchemaUpgradeProcess());
 
 		registry.register("0.0.2", "0.0.3", new UpgradeKernelPackage());
 

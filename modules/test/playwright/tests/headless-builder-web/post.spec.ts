@@ -8,14 +8,15 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {headlessBuilderPagesTest} from '../../fixtures/headlessBuilderPagesTest';
+import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
 import {waitForHeadlessBuilderReady} from './utils/headlessBuilder';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	loginTest,
 	headlessBuilderPagesTest,
+	headlessDiscoveryPagesTest,
 	featureFlagsTest({
 		'LPS-178642': true,
 	})
@@ -77,6 +78,7 @@ const studentSubjectsApplication = {
 
 test('can create post endpoint with different request and response schema', async ({
 	apiApplicationPage,
+	apiExplorerPage,
 	apiHelpers,
 	headlessBuilderPage,
 	page,
@@ -228,13 +230,13 @@ test('can create post endpoint with different request and response schema', asyn
 
 	await apiApplicationPage.publishButton.click();
 
-	await page.goto(
-		`/o/api?endpoint=${liferayConfig.environment.baseUrl}/o/c/${studentSubjectsApplication.baseURL}/openapi.json`
+	await apiExplorerPage.goToSpecificApplication(
+		`c/${studentSubjectsApplication.baseURL}`
 	);
-
 	page.waitForLoadState();
+
 	await expect(
-		page.locator('//span[@data-path="/student"]/a/span')
+		await apiExplorerPage.getEndpointLocator('/student')
 	).toBeVisible();
 
 	await page.goto('/');
@@ -251,6 +253,7 @@ test('can create post endpoint with different request and response schema', asyn
 
 test('can create post method endpoint with company scope', async ({
 	apiApplicationPage,
+	apiExplorerPage,
 	apiHelpers,
 	headlessBuilderPage,
 	page,
@@ -276,13 +279,13 @@ test('can create post method endpoint with company scope', async ({
 	);
 	await apiApplicationPage.publishButton.click();
 
-	await page.goto(
-		`/o/api?endpoint=${liferayConfig.environment.baseUrl}/o/c/${basicApiApplication.baseURL}/openapi.json`
+	await apiExplorerPage.goToSpecificApplication(
+		`c/${basicApiApplication.baseURL}`
 	);
+	page.waitForLoadState();
 
-	await page.waitForLoadState();
 	await expect(
-		page.locator('//span[@data-path="/test-post-endpoint"]/a/span')
+		await apiExplorerPage.getEndpointLocator('/test-post-endpoint')
 	).toBeVisible();
 
 	await page.goto('/');

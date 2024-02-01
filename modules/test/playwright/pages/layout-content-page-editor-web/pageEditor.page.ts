@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {SitePage} from '@liferay/headless-delivery-client-js';
+import {Site} from '@liferay/headless-site-client-js';
+
 // @ts-ignore
 
 import {Page} from '@playwright/test';
-
-import {SitePage} from '../../../../apps/headless/headless-delivery/headless-delivery-client-js/src/main/resources/META-INF/resources/node';
-import {Site} from '../../../../apps/headless/headless-site/headless-site-client-js/src/main/resources/META-INF/resources/node';
 
 type Viewport = 'Desktop' | 'Landscape Phone' | 'Portrait Phone' | 'Tablet';
 

@@ -30,6 +30,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import javax.ws.rs.BadRequestException;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -141,8 +143,18 @@ public class EndpointHelper {
 			Object object = properties.get(property.getName());
 
 			if (Validator.isNotNull(object)) {
-				objectEntryProperties.put(
-					property.getSourceFieldName(), object);
+				if (Objects.equals(
+						APIApplication.Property.PropertyType.SINGLE_CONTAINER,
+						property.getPropertyType())) {
+
+					_setObjectEntryProperties(
+						objectEntryProperties, properties, property,
+						requestSchema.getProperties());
+				}
+				else {
+					objectEntryProperties.put(
+						property.getSourceFieldName(), object);
+				}
 			}
 		}
 
@@ -192,6 +204,18 @@ public class EndpointHelper {
 		).put(
 			"modifiedDate", objectEntry.getDateModified()
 		).build();
+	}
+
+	private APIApplication.Property _getPropertyByName(
+		List<APIApplication.Property> properties, String propertyName) {
+
+		for (APIApplication.Property property : properties) {
+			if (Objects.equals(property.getName(), propertyName)) {
+				return property;
+			}
+		}
+
+		return null;
 	}
 
 	private Object _getRelatedObjectValue(
@@ -318,6 +342,52 @@ public class EndpointHelper {
 		}
 
 		return responseEntityMap;
+	}
+
+	private void _setObjectEntryProperties(
+		Map<String, Object> objectEntryProperties,
+		Map<String, Object> properties, APIApplication.Property property,
+		List<APIApplication.Property> requestSchemaProperties) {
+
+		Map<String, Object> singleContainerProperties =
+			(Map<String, Object>)properties.get(property.getName());
+
+		for (Map.Entry<String, Object> singleContainerProperty :
+				singleContainerProperties.entrySet()) {
+
+			Object object = singleContainerProperty.getValue();
+
+			if (Validator.isNotNull(object)) {
+				String propertyName = singleContainerProperty.getKey();
+
+				APIApplication.Property relatedProperty = _getPropertyByName(
+					requestSchemaProperties, propertyName);
+
+				if (Objects.equals(
+						relatedProperty.getPropertyType(),
+						APIApplication.Property.PropertyType.
+							SINGLE_CONTAINER)) {
+
+					_setObjectEntryProperties(
+						objectEntryProperties, singleContainerProperties,
+						relatedProperty, requestSchemaProperties);
+				}
+				else {
+					if (!Objects.equals(
+							relatedProperty.getRelatedPropertyERC(),
+							property.getExternalReferenceCode())) {
+
+						throw new BadRequestException(
+							StringBundler.concat(
+								"Property ", relatedProperty.getName(),
+								" is not related with ", property.getName()));
+					}
+
+					objectEntryProperties.put(
+						relatedProperty.getSourceFieldName(), object);
+				}
+			}
+		}
 	}
 
 	private void _updateObjectEntryProperties(

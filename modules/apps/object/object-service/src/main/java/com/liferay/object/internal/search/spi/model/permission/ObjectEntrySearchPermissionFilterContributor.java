@@ -82,8 +82,10 @@ public class ObjectEntrySearchPermissionFilterContributor
 			return;
 		}
 
-		_contributeAccountEntries(booleanFilter, accountEntryIds);
-		_contributeOrganizations(booleanFilter, organizations);
+		_contributeAccountEntryRestrictedObjectFieldValue(
+			accountEntryIds, booleanFilter);
+		_contributeAccountEntryRestrictedOrganizationIds(
+			booleanFilter, organizations);
 	}
 
 	@Activate
@@ -98,8 +100,8 @@ public class ObjectEntrySearchPermissionFilterContributor
 				SearchPermissionCheckerConfiguration.class, properties);
 	}
 
-	private void _contributeAccountEntries(
-		BooleanFilter booleanFilter, List<Long> accountEntryIds) {
+	private void _contributeAccountEntryRestrictedObjectFieldValue(
+		List<Long> accountEntryIds, BooleanFilter booleanFilter) {
 
 		if (accountEntryIds.isEmpty()) {
 			return;
@@ -115,7 +117,7 @@ public class ObjectEntrySearchPermissionFilterContributor
 		booleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
 	}
 
-	private void _contributeOrganizations(
+	private void _contributeAccountEntryRestrictedOrganizationIds(
 		BooleanFilter booleanFilter, List<Organization> organizations) {
 
 		if (organizations.isEmpty()) {

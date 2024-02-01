@@ -10,7 +10,6 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
-import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.Inject;
@@ -40,18 +39,11 @@ public class LayoutDisplayPageProviderRegistryImplTest {
 
 	@Test
 	public void testGetLayoutDisplayPageProviderByURLSeparator() {
-		ServiceRegistration<FriendlyURLResolver> serviceRegistration = null;
+		ServiceRegistration<LayoutDisplayPageProvider> serviceRegistration =
+			null;
 
 		try {
-			Bundle bundle = FrameworkUtil.getBundle(
-				LayoutDisplayPageProviderRegistryImplTest.class);
-
-			BundleContext bundleContext = bundle.getBundleContext();
-
-			serviceRegistration = bundleContext.registerService(
-				LayoutDisplayPageProvider.class,
-				new LayoutDisplayPageProviderImpl("", "/url-separator/"),
-				new HashMapDictionary());
+			serviceRegistration = _registerLayoutDisplayPageProvider(null);
 
 			Assert.assertNotNull(
 				_layoutDisplayPageProviderRegistry.
@@ -63,6 +55,41 @@ public class LayoutDisplayPageProviderRegistryImplTest {
 				serviceRegistration.unregister();
 			}
 		}
+	}
+
+	@Test
+	public void testGetLayoutDisplayPageProviderByURLSeparatorRegisteredByDefaultURLSeparator() {
+		ServiceRegistration<?> serviceRegistration = null;
+
+		try {
+			serviceRegistration = _registerLayoutDisplayPageProvider(
+				"/default-url-separator/");
+
+			Assert.assertNotNull(
+				_layoutDisplayPageProviderRegistry.
+					getLayoutDisplayPageProviderByURLSeparator(
+						"/default-url-separator/"));
+		}
+		finally {
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
+		}
+	}
+
+	private ServiceRegistration<LayoutDisplayPageProvider>
+		_registerLayoutDisplayPageProvider(String defaultURLSeparator) {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			LayoutDisplayPageProviderRegistryImplTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		return bundleContext.registerService(
+			LayoutDisplayPageProvider.class,
+			new LayoutDisplayPageProviderImpl(
+				defaultURLSeparator, "/url-separator/"),
+			new HashMapDictionary<>());
 	}
 
 	@Inject(

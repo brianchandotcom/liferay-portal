@@ -106,6 +106,7 @@ const BuildSelectSuitesModal: React.FC<BuildSelectSuitesModalProps> = ({
 				<ListView
 					managementToolbarProps={{
 						filterSchema: 'suites',
+						modal: true,
 						title: displayTitle ? i18n.translate('suites') : '',
 					}}
 					onContextChange={({selectedRows}) =>

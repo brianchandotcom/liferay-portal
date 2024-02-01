@@ -31,6 +31,7 @@ const useBuildTestActions = () => {
 							listViewProps={{
 								managementToolbarProps: {
 									display: {columns: false},
+									modal: true,
 								},
 							}}
 							tableProps={{

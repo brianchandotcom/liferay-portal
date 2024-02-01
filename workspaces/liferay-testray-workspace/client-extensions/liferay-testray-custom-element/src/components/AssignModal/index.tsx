@@ -26,6 +26,7 @@ const CaseResultAssignModal: React.FC<AssignModalProps> = ({
 				managementToolbarProps: {
 					addButton: undefined,
 					display: {columns: false},
+					modal: true,
 				},
 			}}
 			tableProps={{

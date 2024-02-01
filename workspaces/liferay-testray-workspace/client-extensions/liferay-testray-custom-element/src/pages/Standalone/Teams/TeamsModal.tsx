@@ -25,6 +25,7 @@ const TeamsModal: React.FC<TeamsModalProps> = ({projectId}) => {
 					addButton: () => formModal.modal.open(),
 					display: {columns: false},
 					filterSchema: 'teams',
+					modal: true,
 				}}
 				resource={testrayTeamImpl.resource}
 				tableProps={{

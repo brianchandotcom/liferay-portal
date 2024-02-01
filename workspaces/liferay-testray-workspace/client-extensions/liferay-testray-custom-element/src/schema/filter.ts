@@ -181,14 +181,8 @@ const baseFilters: Filter = {
 	run: {
 		label: i18n.translate('run'),
 		name: 'run',
-<<<<<<< HEAD
 		resource: ({buildId}) =>
 			`/runs?fields=id,number&filter=${SearchBuilder.eq(
-=======
-
-		resource: ({buildId}) =>
-			`/runs?fields=id,number&pageSize=100&filter=${SearchBuilder.eq(
->>>>>>> 79d5d46 (ISSD-2737 Add the filter to the url)
 				'buildId',
 				buildId as string
 			)}`,

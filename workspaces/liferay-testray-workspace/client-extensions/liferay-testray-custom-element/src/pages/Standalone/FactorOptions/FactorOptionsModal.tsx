@@ -24,6 +24,7 @@ const FactorOptionsModal = () => {
 				}}
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
+					modal: true,
 				}}
 				resource={testrayFactorOptionsImpl.resource}
 				tableProps={{

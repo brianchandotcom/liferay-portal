@@ -34,17 +34,16 @@ public class ResourceUtil {
 
 	public static Resolver getURLResolver(File cacheDir, String url) {
 		return () -> {
-			DownloadCommand downloadCommand = new DownloadCommand();
-
-			downloadCommand.setCacheDir(cacheDir);
-			downloadCommand.setConnectionTimeout(5 * 1000);
-			downloadCommand.setPassword(null);
-			downloadCommand.setQuiet(true);
-			downloadCommand.setToken(false);
-			downloadCommand.setUserName(null);
-
 			try {
+				DownloadCommand downloadCommand = new DownloadCommand();
+
+				downloadCommand.setCacheDir(cacheDir);
+				downloadCommand.setConnectionTimeout(5 * 1000);
+				downloadCommand.setPassword(null);
+				downloadCommand.setQuiet(true);
+				downloadCommand.setToken(false);
 				downloadCommand.setUrl(new URL(url));
+				downloadCommand.setUserName(null);
 
 				downloadCommand.execute();
 
@@ -53,7 +52,7 @@ public class ResourceUtil {
 			catch (Exception exception) {
 				throw new Exception(
 					String.format(
-						"Could not get resource from url %s: %s", url,
+						"Unable to get resource from URL %s: %s", url,
 						exception.getMessage()),
 					exception);
 			}
@@ -75,7 +74,7 @@ public class ResourceUtil {
 			}
 		}
 
-		throw new GradleException("Could not get resource");
+		throw new GradleException("Unable to get resource");
 	}
 
 	@FunctionalInterface

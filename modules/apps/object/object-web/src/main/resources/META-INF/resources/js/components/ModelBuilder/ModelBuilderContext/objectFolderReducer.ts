@@ -395,19 +395,24 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				}
 			);
 
-			const updatedObjectRelationshipEdges = objectRelationshipEdges.map(
-				(objectRelationshipEdge: Edge<ObjectRelationshipEdgeData[]>) => {
-					const sourceNode = updatedObjectDefinitionNodes.find(
-						(updatedObjectDefinitionNode) =>
-							updatedObjectDefinitionNode.id ===
-							objectRelationshipEdge.source
-					) as Node<ObjectDefinitionNodeData>;
+			const getObjectDefinitionNodeById = (id: string) => {
+				return updatedObjectDefinitionNodes.find(
+					(updatedObjectDefinitionNode) =>
+						updatedObjectDefinitionNode.id === id
+				) as Node<ObjectDefinitionNodeData>;
+			};
 
-					const targetNode = updatedObjectDefinitionNodes.find(
-						(updatedObjectDefinitionNode) =>
-							updatedObjectDefinitionNode.id ===
-							objectRelationshipEdge.target
-					) as Node<ObjectDefinitionNodeData>;
+			const updatedObjectRelationshipEdges = objectRelationshipEdges.map(
+				(
+					objectRelationshipEdge: Edge<ObjectRelationshipEdgeData[]>
+				) => {
+					const sourceNode = getObjectDefinitionNodeById(
+						objectRelationshipEdge.source
+					);
+
+					const targetNode = getObjectDefinitionNodeById(
+						objectRelationshipEdge.target
+					);
 
 					const bothNodesVisible =
 						!sourceNode.isHidden && !targetNode.isHidden;

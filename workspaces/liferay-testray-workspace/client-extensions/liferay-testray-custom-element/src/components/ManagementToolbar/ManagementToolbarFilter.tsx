@@ -18,6 +18,7 @@ import {
 import {ListViewContext, ListViewTypes} from '~/context/ListViewContext';
 import SearchBuilder from '~/core/SearchBuilder';
 import useFormActions from '~/hooks/useFormActions';
+import useQueryParams from '~/hooks/useQueryParams';
 import i18n from '~/i18n';
 import {FilterSchema} from '~/schema/filter';
 
@@ -26,11 +27,15 @@ import {RendererFields} from '../Form/Renderer';
 import {FieldOptions} from '../Form/Renderer/Renderer';
 type ManagementToolbarFilterProps = {
 	filterSchema?: FilterSchema;
+	modal?: boolean;
 };
+
+type Option = {label: string; value: string};
 
 type FilterBodyProps = {
 	buttonRef: React.RefObject<HTMLButtonElement>;
 	filterSchema: FilterSchema | undefined;
+	modal?: boolean;
 	setPosition: React.Dispatch<React.SetStateAction<number>>;
 	setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 	visible: boolean;
@@ -39,11 +44,14 @@ type FilterBodyProps = {
 const FilterBody: React.FC<FilterBodyProps> = ({
 	buttonRef,
 	filterSchema,
+	modal = false,
 	setPosition,
 	setVisible,
 	visible,
 }) => {
 	const [filter, setFilter] = useState('');
+	const {updateUrlParams} = useQueryParams();
+
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -125,13 +133,56 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 			};
 		});
 
+		const filters = Object.keys(filterCleaned).map((key) => {
+			const isArray = Array.isArray(filterCleaned[key]);
+
+			let value;
+			if (isArray) {
+				value = (filterCleaned as any)[key].map(
+					(options: Option) => options.value || options
+				);
+			} else {
+				value = filterCleaned[key];
+			}
+
+			return {
+				name: key,
+				value,
+			};
+		});
+
+		const formattedFilter = filters.reduce(
+			(previousValue, currentValue) => {
+				return {
+					...previousValue,
+					[currentValue.name]: currentValue.value,
+				};
+			},
+			{}
+		);
+
+		if (!modal && filterSchema) {
+			updateUrlParams({
+				filter: JSON.stringify(formattedFilter),
+				filterSchema: filterSchema?.name as string,
+			});
+		}
+
 		dispatch({
 			payload: {filters: {entries, filter: filterCleaned}},
 			type: ListViewTypes.SET_FILTERS,
 		});
 
 		setVisible(false);
-	}, [dispatch, fields, form, setVisible]);
+	}, [
+		dispatch,
+		fields,
+		filterSchema,
+		form,
+		modal,
+		setVisible,
+		updateUrlParams,
+	]);
 
 	return (
 		<div className="align-content-between d-flex flex-column">
@@ -199,6 +250,7 @@ const MENU_POPOVER_HEIGHT = 580;
 
 const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 	filterSchema,
+	modal = false,
 }) => {
 	const [visible, setVisible] = useState(false);
 	const ref = useRef<HTMLButtonElement>(null);
@@ -241,6 +293,7 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 			<FilterBody
 				buttonRef={ref}
 				filterSchema={filterSchema}
+				modal={modal}
 				setPosition={setPosition}
 				setVisible={setVisible}
 				visible={visible}

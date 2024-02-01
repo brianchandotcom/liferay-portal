@@ -181,8 +181,14 @@ const baseFilters: Filter = {
 	run: {
 		label: i18n.translate('run'),
 		name: 'run',
+<<<<<<< HEAD
 		resource: ({buildId}) =>
 			`/runs?fields=id,number&filter=${SearchBuilder.eq(
+=======
+
+		resource: ({buildId}) =>
+			`/runs?fields=id,number&pageSize=100&filter=${SearchBuilder.eq(
+>>>>>>> 79d5d46 (ISSD-2737 Add the filter to the url)
 				'buildId',
 				buildId as string
 			)}`,
@@ -228,6 +234,7 @@ const overrides = (
 const filterSchema = {
 	buildCaseTypes: {
 		fields: [baseFilters.priority, baseFilters.team] as RendererFields[],
+		name: 'buildCaseTypes',
 	},
 	buildComponents: {
 		fields: [
@@ -255,6 +262,7 @@ const filterSchema = {
 				},
 			}),
 		] as RendererFields[],
+		name: 'buildComponents',
 	},
 	buildResults: {
 		fields: [
@@ -335,6 +343,7 @@ const filterSchema = {
 				type: 'textarea',
 			},
 		] as RendererFields[],
+		name: 'buildResults',
 	},
 	buildResultsHistory: {
 		fields: [
@@ -409,6 +418,7 @@ const filterSchema = {
 				type: 'date',
 			},
 		] as RendererFields[],
+		name: 'buildResultsHistory',
 	},
 	buildRuns: {
 		fields: [
@@ -416,6 +426,7 @@ const filterSchema = {
 			baseFilters.caseType,
 			baseFilters.team,
 		] as RendererFields[],
+		name: 'buildRuns',
 	},
 	buildTeams: {
 		fields: [
@@ -424,6 +435,7 @@ const filterSchema = {
 			overrides(baseFilters.team, {name: 'id', type: 'multiselect'}),
 			overrides(baseFilters.run, {disabled: true}),
 		] as RendererFields[],
+		name: 'buildTeams',
 	},
 	buildTemplates: {
 		fields: [
@@ -447,6 +459,7 @@ const filterSchema = {
 				type: 'select',
 			}),
 		] as RendererFields[],
+		name: 'buildTemplates',
 	},
 	builds: {
 		fields: [
@@ -490,6 +503,7 @@ const filterSchema = {
 			},
 			overrides(baseFilters.team, {disabled: true}),
 		] as RendererFields[],
+		name: 'builds',
 	},
 	caseRequirements: {
 		fields: [
@@ -518,6 +532,7 @@ const filterSchema = {
 				type: 'text',
 			},
 		] as RendererFields[],
+		name: 'caseRequirements',
 	},
 	cases: {
 		fields: [
@@ -550,6 +565,7 @@ const filterSchema = {
 			}),
 			baseFilters.hasRequirements,
 		] as RendererFields[],
+		name: 'cases',
 	},
 	compareRunsCases: {
 		fields: [
@@ -637,6 +653,8 @@ const filterSchema = {
 				type: 'select',
 			}),
 		] as RendererFields[],
+
+		name: 'compareRunsCases',
 	},
 	components: {
 		fields: [
@@ -647,6 +665,7 @@ const filterSchema = {
 				type: 'text',
 			},
 		] as RendererFields[],
+		name: 'components',
 	},
 	requirementCases: {
 		fields: [
@@ -664,6 +683,7 @@ const filterSchema = {
 				type: 'text',
 			},
 		] as RendererFields[],
+		name: 'requirementCases',
 	},
 	requirements: {
 		fields: [
@@ -705,6 +725,7 @@ const filterSchema = {
 				type: 'textarea',
 			},
 		] as RendererFields[],
+		name: 'requirements',
 	},
 	routines: {
 		fields: [
@@ -712,6 +733,7 @@ const filterSchema = {
 			baseFilters.caseType,
 			baseFilters.team,
 		] as RendererFields[],
+		name: 'routines',
 	},
 	subtasks: {
 		fields: [
@@ -757,6 +779,7 @@ const filterSchema = {
 				type: 'text',
 			},
 		] as RendererFields[],
+		name: 'subtasks',
 	},
 	suites: {
 		fields: [
@@ -768,6 +791,7 @@ const filterSchema = {
 				type: 'text',
 			},
 		] as RendererFields[],
+		name: 'suites',
 	},
 	teams: {
 		fields: [
@@ -778,6 +802,7 @@ const filterSchema = {
 				type: 'text',
 			},
 		] as RendererFields[],
+		name: 'teams',
 	},
 	testflow: {
 		fields: [
@@ -825,9 +850,11 @@ const filterSchema = {
 				type: 'select',
 			}),
 		] as RendererFields[],
+		name: 'testflow',
 	},
 	user: {
 		fields: [overrides(baseFilters.user, {operator: 'contains'})],
+		name: 'user',
 	},
 } as const;
 

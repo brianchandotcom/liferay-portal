@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import {ClayResultsBar} from '@clayui/management-toolbar';
 import {useContext} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
 import i18n from '../../i18n';
@@ -19,6 +20,9 @@ type ManagementToolbarResultsBarProps = {
 const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = ({
 	totalItems,
 }) => {
+	const location = useLocation();
+	const navigate = useNavigate();
+
 	const [
 		{
 			filters: {entries},
@@ -30,8 +34,32 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 		dispatch({payload: null, type: ListViewTypes.SET_CLEAR});
 	};
 
+	const handleRemoveItemDoFilter = (itemToRemove: string) => {
+		const searchParams = new URLSearchParams(location.search);
+
+		const filtroAtual = searchParams.get('filter');
+
+		if (filtroAtual) {
+			const filtroObj = JSON.parse(decodeURIComponent(filtroAtual));
+
+			delete filtroObj[itemToRemove];
+
+			if (!Object.keys(filtroObj).length) {
+				searchParams.delete('filter');
+				searchParams.delete('filterSchema');
+			} else {
+				searchParams.set('filter', JSON.stringify(filtroObj));
+			}
+
+			navigate({
+				search: `?${searchParams.toString()}`,
+			});
+		}
+	};
+
 	const onRemoveFilter = (filterName: string) => {
 		dispatch({payload: filterName, type: ListViewTypes.SET_REMOVE_FILTER});
+		handleRemoveItemDoFilter(filterName);
 	};
 
 	return (
@@ -59,7 +87,7 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 							displayType="unstyled"
 						>
 							<span className="d-flex flex-row">
-								<b>{entry.label}</b>
+								<b>{entry?.label}</b>
 
 								{`: ${
 									Array.isArray(entry.value)
@@ -68,7 +96,7 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 													String(
 														typeof entryValue ===
 															'object'
-															? entryValue.label
+															? entryValue?.label
 															: entryValue
 													)
 												)
@@ -81,7 +109,7 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 
 								<ClayIcon
 									className="cursor-pointer ml-2"
-									onClick={() => onRemoveFilter(entry.name)}
+									onClick={() => onRemoveFilter(entry?.name)}
 									symbol="times"
 								/>
 							</span>

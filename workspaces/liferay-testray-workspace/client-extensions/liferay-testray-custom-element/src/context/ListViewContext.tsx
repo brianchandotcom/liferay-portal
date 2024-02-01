@@ -290,7 +290,17 @@ const ListViewContextProvider: React.FC<
 	});
 
 	return (
-		<ListViewContext.Provider value={[state, dispatch]}>
+		<ListViewContext.Provider
+			value={[
+				{
+					...state,
+					...(filter && {
+						filters: filterInitialContext as ListViewFilter,
+					}),
+				},
+				dispatch,
+			]}
+		>
 			{children}
 		</ListViewContext.Provider>
 	);

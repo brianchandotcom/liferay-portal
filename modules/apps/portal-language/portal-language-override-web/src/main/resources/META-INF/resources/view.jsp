@@ -21,8 +21,8 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 	<clay:dropdown-menu
 		displayType="secondary"
 		dropdownItems="<%= viewDisplayContext.getTranslationLanguageDropdownItems() %>"
-		icon="<%= StringUtil.toLowerCase(TextFormatter.format(viewDisplayContext.getSelectedLanguageId(), TextFormatter.O)) %>"
-		label="<%= TextFormatter.format(viewDisplayContext.getSelectedLanguageId(), TextFormatter.O) %>"
+		icon="<%= HtmlUtil.escape(StringUtil.toLowerCase(TextFormatter.format(viewDisplayContext.getSelectedLanguageId(), TextFormatter.O))) %>"
+		label="<%= HtmlUtil.escape(TextFormatter.format(viewDisplayContext.getSelectedLanguageId(), TextFormatter.O)) %>"
 		small="<%= true %>"
 	/>
 

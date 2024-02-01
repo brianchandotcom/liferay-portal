@@ -20,16 +20,6 @@
 	},
 	{
 		"actionIds": [
-			"DELETE",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]",
-		"roleName": "Test Role 2",
-		"scope": 1
-	},
-	{
-		"actionIds": [
 			"UPDATE",
 			"VIEW"
 		],
@@ -47,5 +37,15 @@
 		"resourceName": "com.liferay.layout.page.template.model.LayoutPageTemplateEntry",
 		"roleName": "Test Role 4",
 		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]",
+		"roleName": "Test Role 2",
+		"scope": 1
 	}
 ]

@@ -1,53 +1,6 @@
 [
 	{
 		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.commerce.product.model.CommerceChannel",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.account.model.AccountRole",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ASSIGN_MEMBERS",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.portal.kernel.model.Role",
-		"roleName": "Account Administrator (Regular)",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
 			"ADD_USER"
 		],
 		"primKey": "0",
@@ -69,7 +22,25 @@
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.portal.kernel.model.User",
+		"resourceName": "com.liferay.account.model.AccountRole",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.model.CommerceOrder",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.model.CommerceOrderType",
 		"roleName": "Account Administrator (Regular)",
 		"scope": "1"
 	},
@@ -84,12 +55,101 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE",
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
-		"roleName": "Account Administrator (Regular)",
+		"resourceName": "com.liferay.commerce.product.model.CPOption",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product.model.CPOptionCategory",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product.model.CPSpecificationOption",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product.model.CommerceChannel",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product.model.CommerceChannel",
+		"roleName": "Guest",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product.model.CommerceChannel",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_DOCUMENT"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.document.library",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.list.type.model.ListTypeDefinition",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LicenseTypesDescription$]",
+		"roleName": "User",
 		"scope": "1"
 	},
 	{
@@ -112,10 +172,11 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LicenseTypesDescription$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
 		"roleName": "User",
 		"scope": "1"
 	},
@@ -124,16 +185,18 @@
 			"UPDATE",
 			"VIEW"
 		],
-		"resourceName": "com.liferay.list.type.model.ListTypeDefinition",
-		"roleName": "User",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
+		"roleName": "Account Administrator (Regular)",
 		"scope": "1"
 	},
 	{
 		"actionIds": [
+			"ASSIGN_MEMBERS",
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.commerce.model.CommerceOrderType",
+		"resourceName": "com.liferay.portal.kernel.model.Role",
 		"roleName": "Account Administrator (Regular)",
 		"scope": "1"
 	},
@@ -142,71 +205,8 @@
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.commerce.model.CommerceOrder",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.commerce.product.model.CommerceChannel",
-		"roleName": "Guest",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.commerce.product.model.CommerceChannel",
-		"roleName": "Supplier",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
-		"roleName": "Supplier",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.commerce.product.model.CPOptionCategory",
-		"roleName": "Supplier",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.commerce.product.model.CPOption",
-		"roleName": "Supplier",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.commerce.product.model.CPSpecificationOption",
-		"roleName": "Supplier",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_DOCUMENT"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.document.library",
-		"roleName": "Supplier",
+		"resourceName": "com.liferay.portal.kernel.model.User",
+		"roleName": "Account Administrator (Regular)",
 		"scope": "1"
 	}
 ]

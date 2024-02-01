@@ -14,6 +14,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.ActionExecutionResult;
 import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
@@ -239,39 +240,63 @@ public class PageFragmentInstanceDefinitionMapper {
 
 			JSONObject jsonObject = configJSONObject;
 
+			List<FragmentConfigurationField> fragmentConfigurationFields =
+				_fragmentEntryConfigurationParser.
+					getFragmentConfigurationFields(
+						fragmentEntryLink.getConfiguration());
+
 			return new HashMap<String, Object>() {
 				{
-					for (String key : jsonObject.keySet()) {
-						Object value =
-							_fragmentEntryConfigurationParser.getFieldValue(
-								fragmentEntryLink.getConfiguration(),
-								fragmentEntryLink.getEditableValues(),
-								LocaleUtil.getMostRelevantLocale(), key);
+					for (FragmentConfigurationField fragmentConfigurationField :
+							fragmentConfigurationFields) {
 
-						if (value == null) {
-							value = jsonObject.get(key);
+						Object value = null;
+
+						if (Objects.equals(
+								fragmentConfigurationField.getType(),
+								"itemSelector") ||
+							Objects.equals(
+								fragmentConfigurationField.getType(), "url")) {
+
+							value = jsonObject.get(
+								fragmentConfigurationField.getName());
 						}
+						else {
+							value =
+								_fragmentEntryConfigurationParser.getFieldValue(
+									fragmentEntryLink.getConfiguration(),
+									fragmentEntryLink.getEditableValues(),
+									LocaleUtil.getMostRelevantLocale(),
+									fragmentConfigurationField.getName());
 
-						if (value instanceof JSONObject) {
-							JSONObject valueJSONObject = (JSONObject)value;
+							if (value == null) {
+								value = jsonObject.get(
+									fragmentConfigurationField.getName());
+							}
 
-							if (valueJSONObject.has("color")) {
-								value = valueJSONObject.getString("color");
+							if (value instanceof JSONObject) {
+								JSONObject valueJSONObject = (JSONObject)value;
+
+								if (valueJSONObject.has("color")) {
+									value = valueJSONObject.getString("color");
+								}
+							}
+
+							if (value instanceof JSONArray ||
+								value instanceof JSONObject) {
+
+								JSONDeserializer<Map<String, Object>>
+									jsonDeserializer =
+										_jsonFactory.createJSONDeserializer();
+
+								value = jsonDeserializer.deserialize(
+									value.toString());
 							}
 						}
 
-						if (value instanceof JSONArray ||
-							value instanceof JSONObject) {
-
-							JSONDeserializer<Map<String, Object>>
-								jsonDeserializer =
-									_jsonFactory.createJSONDeserializer();
-
-							value = jsonDeserializer.deserialize(
-								value.toString());
+						if (value != null) {
+							put(fragmentConfigurationField.getName(), value);
 						}
-
-						put(key, value);
 					}
 				}
 			};

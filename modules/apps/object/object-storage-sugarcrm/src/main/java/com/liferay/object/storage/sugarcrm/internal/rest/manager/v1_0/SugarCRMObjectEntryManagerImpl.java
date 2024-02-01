@@ -192,7 +192,7 @@ public class SugarCRMObjectEntryManagerImpl
 		if (!filterString.trim(
 			).isEmpty()) {
 
-			sb.append("&&");
+			sb.append("&");
 			sb.append("filter");
 
 			if (filterString.startsWith(StringPool.EQUAL)) {
@@ -267,7 +267,7 @@ public class SugarCRMObjectEntryManagerImpl
 			}
 		}
 
-		sb.append("&&");
+		sb.append("&");
 	}
 
 	private String _generatePreparedLocation(

@@ -430,26 +430,26 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return ReflectionUtil.throwException(portalException);
 		}
 
-		try {
-			if (objectDefinition.isAccountEntryRestricted()) {
-				List<ServiceReference<IndexerDocumentBuilder>>
-					serviceReferences =
-						(List<ServiceReference<IndexerDocumentBuilder>>)
-							_bundleContext.getServiceReferences(
-								IndexerDocumentBuilder.class,
-								"(indexer.class.name=" +
-									objectDefinition.getClassName() + ")");
+		if (!objectDefinition.isAccountEntryRestricted()) {
+			return serviceRegistrations;
+		}
 
-				serviceRegistrations.add(
-					_bundleContext.registerService(
-						ObjectEntryBatchReindexer.class,
-						new ObjectEntryBatchReindexerImpl(
-							_bundleContext.getService(serviceReferences.get(0)),
-							modelSearchConfigurator.
-								getModelIndexerWriterContributor(),
-							objectDefinition),
-						null));
-			}
+		try {
+			List<ServiceReference<IndexerDocumentBuilder>> serviceReferences =
+				(List<ServiceReference<IndexerDocumentBuilder>>)
+					_bundleContext.getServiceReferences(
+						IndexerDocumentBuilder.class,
+						"(indexer.class.name=" +
+							objectDefinition.getClassName() + ")");
+
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					ObjectEntryBatchReindexer.class,
+					new ObjectEntryBatchReindexerImpl(
+						_bundleContext.getService(serviceReferences.get(0)),
+						objectEntryModelIndexerWriterContributor,
+						objectDefinition),
+					null));
 		}
 		catch (InvalidSyntaxException invalidSyntaxException) {
 			return ReflectionUtil.throwException(invalidSyntaxException);

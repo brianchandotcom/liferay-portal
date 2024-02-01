@@ -20,9 +20,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -216,12 +220,30 @@ public class FunctionCommercePaymentIntegration
 
 		JSONObject typeSettingsJSONObject = _jsonFactory.createJSONObject();
 
-		typeSettingsUnicodeProperties.forEach(
-			(key, value) -> typeSettingsJSONObject.put(key, value));
+		typeSettingsUnicodeProperties.forEach(typeSettingsJSONObject::put);
+
+		JSONObject commercePaymentEntryJSONObject =
+			_jsonFactory.createJSONObject(
+				_jsonFactory.looseSerializeDeep(commercePaymentEntry));
+
+		String className = _portal.getClassName(
+			commercePaymentEntry.getClassNameId());
+
+		commercePaymentEntryJSONObject.put(
+			"className", className
+		).put(
+			"classNameLabel",
+			_language.get(
+				ResourceBundleUtil.getBundle(
+					"content.Language",
+					LocaleUtil.fromLanguageId(
+						commercePaymentEntry.getLanguageId()),
+					getClass()),
+				"model.resource." + className)
+		);
 
 		return JSONUtil.put(
-			"commercePaymentEntry",
-			_jsonFactory.looseSerializeDeep(commercePaymentEntry)
+			"commercePaymentEntry", commercePaymentEntryJSONObject
 		).put(
 			"typeSettings", typeSettingsJSONObject
 		);
@@ -309,6 +331,12 @@ public class FunctionCommercePaymentIntegration
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortalCatapult _portalCatapult;

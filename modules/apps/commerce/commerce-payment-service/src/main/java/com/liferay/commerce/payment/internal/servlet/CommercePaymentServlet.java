@@ -26,6 +26,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -153,6 +155,33 @@ public class CommercePaymentServlet extends HttpServlet {
 		}
 	}
 
+	private String _getApplicationContextURL(
+		long entryId, String entryKey, HttpServletRequest httpServletRequest,
+		String queryString, String redirect) {
+
+		StringBundler sb = new StringBundler(13);
+
+		sb.append(_portal.getPortalURL(httpServletRequest));
+		sb.append(_portal.getPathModule());
+		sb.append(CharPool.SLASH);
+		sb.append(CommercePaymentMethodConstants.SERVLET_PATH);
+		sb.append(CharPool.QUESTION);
+
+		if (Validator.isNotNull(redirect)) {
+			sb.append("redirect=");
+			sb.append(URLCodec.encodeURL(redirect));
+			sb.append(CharPool.AMPERSAND);
+		}
+
+		sb.append("entryId=");
+		sb.append(entryId);
+		sb.append("&entryKey=");
+		sb.append(entryKey);
+		sb.append(queryString);
+
+		return sb.toString();
+	}
+
 	private Map<String, String> _getQueryMap(String query) {
 		String[] params = query.split(StringPool.AMPERSAND);
 
@@ -209,13 +238,25 @@ public class CommercePaymentServlet extends HttpServlet {
 					currentUser.getUserId(),
 					_portal.getClassNameId(CommerceOrder.class),
 					commerceOrder.getCommerceOrderId(), commerceChannelId,
-					commerceOrder.getTotal(), _nextUrl, _nextUrl,
+					commerceOrder.getTotal(), null, null,
 					commerceCurrency.getCode(),
 					_language.getLanguageId(httpServletRequest), null,
 					commerceOrder.getCommercePaymentMethodKey(),
 					commercePaymentIntegration.getPaymentIntegrationType(),
 					null, null, CommercePaymentEntryConstants.TYPE_PAYMENT,
 					ServiceContextFactory.getInstance(httpServletRequest));
+
+			commercePaymentEntry.setCallbackURL(
+				_getApplicationContextURL(
+					commercePaymentEntry.getCommercePaymentEntryId(),
+					commercePaymentIntegration.getKey(), httpServletRequest,
+					"&orderType=normal", _nextUrl));
+
+			commercePaymentEntry.setCancelURL(
+				_getApplicationContextURL(
+					commercePaymentEntry.getCommercePaymentEntryId(),
+					commercePaymentIntegration.getKey(), httpServletRequest,
+					"&cancel=true", _nextUrl));
 
 			commercePaymentEntry =
 				_commercePaymentEntryLocalService.updateCommercePaymentEntry(
@@ -249,7 +290,9 @@ public class CommercePaymentServlet extends HttpServlet {
 
 			String token = ParamUtil.getString(httpServletRequest, "token");
 
-			commercePaymentEntry.setTransactionCode(token);
+			if (!Validator.isBlank(token)) {
+				commercePaymentEntry.setTransactionCode(token);
+			}
 
 			if (commercePaymentEntry.getPaymentStatus() ==
 					CommercePaymentEntryConstants.STATUS_CREATED) {
@@ -282,6 +325,11 @@ public class CommercePaymentServlet extends HttpServlet {
 			((CommercePaymentEntryConstants.STATUS_CREATED == paymentStatus) ||
 			 (CommercePaymentEntryConstants.STATUS_AUTHORIZED ==
 				 paymentStatus))) {
+
+			if (CommercePaymentEntryConstants.STATUS_CREATED == paymentStatus) {
+				commercePaymentEntry = _commercePaymentGateway.authorize(
+					httpServletRequest, commercePaymentEntry);
+			}
 
 			if (Validator.isNull(commercePaymentEntry.getRedirectURL())) {
 				_commercePaymentGateway.capture(
@@ -325,7 +373,7 @@ public class CommercePaymentServlet extends HttpServlet {
 				CommercePaymentIntegrationConstants.TYPE_FUNCTION_OFFLINE) ||
 			(commercePaymentIntegration.getPaymentIntegrationType() ==
 				CommercePaymentIntegrationConstants.
-					TYPE_FUNCTION_ONLINE_STANDARD) ||
+					TYPE_INTERNAL_ONLINE_STANDARD) ||
 			(commercePaymentIntegration.getPaymentIntegrationType() ==
 				CommercePaymentIntegrationConstants.
 					TYPE_FUNCTION_ONLINE_STANDARD)) {
@@ -343,9 +391,9 @@ public class CommercePaymentServlet extends HttpServlet {
 				_commercePaymentGateway.capture(
 					httpServletRequest, commercePaymentEntry);
 			}
-
-			httpServletResponse.sendRedirect(_nextUrl);
 		}
+
+		httpServletResponse.sendRedirect(_nextUrl);
 	}
 
 	private void _managePaymentMethod(

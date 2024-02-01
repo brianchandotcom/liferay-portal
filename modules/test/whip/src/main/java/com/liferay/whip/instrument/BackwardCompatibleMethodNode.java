@@ -23,7 +23,7 @@ public class BackwardCompatibleMethodNode extends MethodNode {
 		int access, String name, String desc, String signature,
 		String[] exceptions) {
 
-		super(Opcodes.ASM5, access, name, desc, signature, exceptions);
+		super(Opcodes.ASM9, access, name, desc, signature, exceptions);
 	}
 
 	@Override

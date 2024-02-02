@@ -1517,12 +1517,16 @@ public class ObjectFieldLocalServiceImpl
 					"or \"String\" that is not indexed as a keyword");
 		}
 
-		if (Objects.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED) &&
+		if ((Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+			 Objects.equals(
+				 businessType, ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED) ||
+			 Objects.equals(
+				 businessType, ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) &&
 			indexed) {
 
 			throw new ObjectFieldBusinessTypeException(
-				"Encrypted business type is not indexable");
+				businessType + " business type is not indexable");
 		}
 	}
 

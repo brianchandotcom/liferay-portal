@@ -165,6 +165,28 @@ public class ColumnValuesExtractor {
 					continue;
 				}
 
+				if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+					ColumnDescriptor[] pickListColumnDescriptors =
+						_getPickListColumnDescriptors(
+							fieldName, masterIndex,
+							objectField.getBusinessType(),
+							parentColumnDescriptor,
+							fieldNameObjectValuePairs.get("properties"));
+
+					columnDescriptors = _combine(
+						columnDescriptors, pickListColumnDescriptors,
+						localIndex);
+
+					masterIndex += pickListColumnDescriptors.length;
+
+					localIndex += pickListColumnDescriptors.length;
+
+					continue;
+				}
+
 				columnDescriptors[localIndex] = ColumnDescriptor._from(
 					null, fieldName, masterIndex++, null,
 					parentColumnDescriptor,
@@ -238,10 +260,14 @@ public class ColumnValuesExtractor {
 		return columnDescriptor._index;
 	}
 
-	private String _getListEntryKey(Object object) {
+	private String _getListEntryValue(Object object, String fieldName) {
 		ListEntry listEntry = (ListEntry)object;
 
-		return listEntry.getKey();
+		if (Objects.equals(fieldName, "key")) {
+			return listEntry.getKey();
+		}
+
+		return listEntry.getName();
 	}
 
 	private String _getMultiselectListEntryValue(
@@ -359,7 +385,7 @@ public class ColumnValuesExtractor {
 						return StringPool.BLANK;
 					}
 
-					return _getListEntryKey(value);
+					return _getListEntryValue(value, fieldNames[1]);
 				}
 
 			};
@@ -385,6 +411,30 @@ public class ColumnValuesExtractor {
 			}
 
 		};
+	}
+
+	private ColumnDescriptor[] _getPickListColumnDescriptors(
+		String fieldName, int masterIndex, String objectFieldBusinessType,
+		ColumnDescriptor parentColumnDescriptor,
+		ObjectValuePair<Field, Method> propertiesObjectValuePair) {
+
+		ColumnDescriptor[] pickListColumnDescriptors = new ColumnDescriptor[2];
+
+		pickListColumnDescriptors[0] = ColumnDescriptor._from(
+			null, fieldName + ".key", masterIndex++, null,
+			parentColumnDescriptor,
+			_getObjectEntryCustomFieldUnsafeFunction(
+				objectFieldBusinessType, propertiesObjectValuePair, fieldName,
+				"key"));
+
+		pickListColumnDescriptors[1] = ColumnDescriptor._from(
+			null, fieldName + ".name", masterIndex++, null,
+			parentColumnDescriptor,
+			_getObjectEntryCustomFieldUnsafeFunction(
+				objectFieldBusinessType, propertiesObjectValuePair, fieldName,
+				"name"));
+
+		return pickListColumnDescriptors;
 	}
 
 	private UnsafeFunction<Object, Object, ReflectiveOperationException>

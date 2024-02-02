@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.workflow.metrics.internal.search.index.creation.helper.WorkflowMetricsIndexCreator;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -29,6 +31,12 @@ public class WorkflowMetricsIndexInitialRequestPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
 		_workflowMetricsIndexCreator.removeIndex(company);
+	}
+
+	@Activate
+	@Override
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
 	}
 
 	@Override

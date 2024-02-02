@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -23,6 +25,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = PortalInstanceLifecycleListener.class)
 public class AddLayoutPrototypeInitialRequestPortalInstanceLifecycleListener
 	extends InitialRequestPortalInstanceLifecycleListener {
+
+	@Activate
+	@Override
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
+	}
 
 	@Override
 	protected void doPortalInstanceRegistered(long companyId) throws Exception {

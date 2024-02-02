@@ -750,6 +750,14 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public List<ObjectDefinition> getObjectDefinitions(
+		boolean accountEntryRestricted) {
+
+		return objectDefinitionPersistence.findByAccountEntryRestricted(
+			accountEntryRestricted);
+	}
+
+	@Override
+	public List<ObjectDefinition> getObjectDefinitions(
 		long companyId, boolean active, boolean system, int status) {
 
 		return objectDefinitionPersistence.findByC_A_S_S(

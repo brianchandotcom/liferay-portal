@@ -714,6 +714,15 @@
 		"actionIds": [
 			"VIEW"
 		],
+		"primKey": "[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition",
+		"roleName": "Testray Administrator",
+		"scope": 4
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
 		"primKey": "[$OBJECT_DEFINITION_ID:Case$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition",
 		"roleName": "Testray Analyst",
@@ -843,15 +852,6 @@
 		"primKey": "[$OBJECT_DEFINITION_ID:Case$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition",
 		"roleName": "Testray User",
-		"scope": 4
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "[$OBJECT_DEFINITION_ID:CaseResult$]",
-		"resourceName": "com.liferay.object.model.ObjectDefinition",
-		"roleName": "Testray Administrator",
 		"scope": 4
 	},
 	{

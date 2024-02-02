@@ -86,15 +86,6 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.commerce.product.model.CommerceChannel",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.commerce.product.model.CommerceChannel",
 		"roleName": "Guest",
 		"scope": "1"
 	},
@@ -109,10 +100,28 @@
 	},
 	{
 		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product.model.CommerceChannel",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"ADD_DOCUMENT"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.document.library",
+		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
 		"roleName": "Supplier",
 		"scope": "1"
 	},
@@ -123,15 +132,6 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
 		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
-		"roleName": "Supplier",
 		"scope": "1"
 	},
 	{
@@ -177,7 +177,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
-		"roleName": "User",
+		"roleName": "Account Administrator (Regular)",
 		"scope": "1"
 	},
 	{
@@ -187,7 +187,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
-		"roleName": "Account Administrator (Regular)",
+		"roleName": "User",
 		"scope": "1"
 	},
 	{

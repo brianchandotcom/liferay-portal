@@ -20,7 +20,7 @@
 			"VIEW"
 		],
 		"resourceName": "com.liferay.list.type.model.ListTypeDefinition",
-		"roleName": "Liferay Manager",
+		"roleName": "Finance User",
 		"scope": "1"
 	},
 	{
@@ -28,15 +28,7 @@
 			"VIEW"
 		],
 		"resourceName": "com.liferay.list.type.model.ListTypeDefinition",
-		"roleName": "Finance User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
-		"roleName": "Employee",
+		"roleName": "Liferay Manager",
 		"scope": "1"
 	},
 	{
@@ -52,7 +44,7 @@
 			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
-		"roleName": "Liferay Manager",
+		"roleName": "Employee",
 		"scope": "1"
 	},
 	{
@@ -67,8 +59,8 @@
 		"actionIds": [
 			"ADD_OBJECT_ENTRY"
 		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
-		"roleName": "Employee",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
+		"roleName": "Liferay Manager",
 		"scope": "1"
 	},
 	{
@@ -84,7 +76,7 @@
 			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
-		"roleName": "Liferay Manager",
+		"roleName": "Employee",
 		"scope": "1"
 	},
 	{
@@ -93,6 +85,14 @@
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
 		"roleName": "Finance User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
+		"roleName": "Liferay Manager",
 		"scope": "1"
 	},
 	{
@@ -108,7 +108,7 @@
 			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPRequest$]",
-		"roleName": "Employee",
+		"roleName": "EVP Manager",
 		"scope": "1"
 	},
 	{
@@ -116,7 +116,7 @@
 			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:EVPRequest$]",
-		"roleName": "EVP Manager",
+		"roleName": "Employee",
 		"scope": "1"
 	},
 	{
@@ -137,6 +137,14 @@
 	},
 	{
 		"actionIds": [
+			"VIEW"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
+		"roleName": "EVP Manager",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"VIEW",
 			"UPDATE"
 		],
@@ -149,7 +157,7 @@
 			"VIEW"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
-		"roleName": "EVP Manager",
+		"roleName": "Finance User",
 		"scope": "1"
 	},
 	{
@@ -158,14 +166,6 @@
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
 		"roleName": "Liferay Manager",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
-		"roleName": "Finance User",
 		"scope": "1"
 	},
 	{
@@ -181,6 +181,14 @@
 			"UPDATE"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
+		"roleName": "EVP Manager",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
 		"roleName": "Employee",
 		"scope": "1"
 	},
@@ -189,7 +197,15 @@
 			"UPDATE"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
-		"roleName": "EVP Manager",
+		"roleName": "Finance User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
+		"roleName": "Finance User",
 		"scope": "1"
 	},
 	{
@@ -205,16 +221,8 @@
 		"actionIds": [
 			"UPDATE"
 		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
-		"roleName": "Finance User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
-		"roleName": "Finance User",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequest$]",
+		"roleName": "EVP Manager",
 		"scope": "1"
 	},
 	{
@@ -230,7 +238,7 @@
 			"UPDATE"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequest$]",
-		"roleName": "EVP Manager",
+		"roleName": "Finance User",
 		"scope": "1"
 	},
 	{
@@ -240,14 +248,6 @@
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequest$]",
 		"roleName": "Liferay Manager",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequest$]",
-		"roleName": "Finance User",
 		"scope": "1"
 	},
 	{

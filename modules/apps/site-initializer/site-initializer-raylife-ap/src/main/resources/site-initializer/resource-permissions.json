@@ -41,7 +41,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.account.model.AccountRole",
-		"roleName": "Sales Agent",
+		"roleName": "Operations Manager",
 		"scope": "1"
 	},
 	{
@@ -50,7 +50,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.account.model.AccountRole",
-		"roleName": "Operations Manager",
+		"roleName": "Sales Agent",
 		"scope": "1"
 	},
 	{
@@ -92,12 +92,11 @@
 	},
 	{
 		"actionIds": [
-			"CHECKOUT_OPEN_COMMERCE_ORDERS",
-			"VIEW_OPEN_COMMERCE_ORDERS"
+			"MANAGE_COMMERCE_ORDERS"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.commerce.order",
-		"roleName": "Sales Agent",
+		"roleName": "Operations Manager",
 		"scope": "1"
 	},
 	{
@@ -113,11 +112,12 @@
 	},
 	{
 		"actionIds": [
-			"MANAGE_COMMERCE_ORDERS"
+			"CHECKOUT_OPEN_COMMERCE_ORDERS",
+			"VIEW_OPEN_COMMERCE_ORDERS"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.commerce.order",
-		"roleName": "Operations Manager",
+		"roleName": "Sales Agent",
 		"scope": "1"
 	},
 	{
@@ -247,7 +247,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RaylifeApplication$]",
-		"roleName": "Underwriter",
+		"roleName": "Producer",
 		"scope": "1"
 	},
 	{
@@ -257,7 +257,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:RaylifeApplication$]",
-		"roleName": "Producer",
+		"roleName": "Underwriter",
 		"scope": "1"
 	},
 	{
@@ -306,7 +306,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.portal.kernel.model.Organization",
-		"roleName": "Sales Agent",
+		"roleName": "Operations Manager",
 		"scope": "1"
 	},
 	{
@@ -315,7 +315,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.portal.kernel.model.Organization",
-		"roleName": "Operations Manager",
+		"roleName": "Sales Agent",
 		"scope": "1"
 	},
 	{
@@ -407,7 +407,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:RaylifeApplication$]",
-		"roleName": "Underwriter",
+		"roleName": "Producer",
 		"scope": "1"
 	},
 	{
@@ -417,7 +417,7 @@
 		],
 		"primKey": "0",
 		"resourceName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:RaylifeApplication$]",
-		"roleName": "Producer",
+		"roleName": "Underwriter",
 		"scope": "1"
 	},
 	{

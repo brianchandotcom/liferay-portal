@@ -21,6 +21,12 @@ import java.util.Locale;
  */
 public class UserTableItemView implements TableItemView {
 
+	public UserTableItemView(User user) {
+		_user = user;
+
+		_multipleSelection = false;
+	}
+
 	public UserTableItemView(User user, boolean multipleSelection) {
 		_user = user;
 		_multipleSelection = multipleSelection;

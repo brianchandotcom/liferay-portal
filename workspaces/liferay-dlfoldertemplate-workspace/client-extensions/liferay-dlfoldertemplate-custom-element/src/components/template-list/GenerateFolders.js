@@ -12,11 +12,11 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {
 	getDocumentFolderDocumentFoldersPage,
 	getSiteDocumentFoldersPage,
-} from '../../../../services/FolderSelectorService';
-import {createFolder} from '../../../../services/TemplateItemCreateFolderService';
-import {showError, showSuccess} from '../../../../utils/util';
+} from '../../services/FolderSelectorService';
+import {createFolder} from '../../services/TemplateItemCreateFolderService';
+import {showError, showSuccess} from '../../utils/util';
 
-const TemplateItemCreateFolder = ({templateId}) => {
+const GenerateFolders = ({templateId}) => {
 	const [folderTree, setFolderTree] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -94,7 +94,7 @@ const TemplateItemCreateFolder = ({templateId}) => {
 			setFolderTree(await loadFolderTree());
 		}
 		catch (error) {
-			showError(error.message);
+			showError('Error', error.message);
 		}
 		finally {
 			setIsLoading(false);
@@ -125,7 +125,7 @@ const TemplateItemCreateFolder = ({templateId}) => {
 						showSuccess('Folder created!');
 					}
 					catch (error) {
-						showError(error.message);
+						showError('Error', error.message);
 					}
 					finally {
 						form.resetFields();
@@ -134,11 +134,11 @@ const TemplateItemCreateFolder = ({templateId}) => {
 					}
 				},
 				(error) => {
-					showError(error);
+					showError('Error', error.message);
 				}
 			)
 			.catch((error) => {
-				showError(error);
+				showError('Error', error);
 			});
 	};
 
@@ -176,13 +176,7 @@ const TemplateItemCreateFolder = ({templateId}) => {
 			</Form.Item>
 			<Form.Item>
 				{!isSubmitting ? (
-					<ClayButton
-						onClick={() => {
-							handleSubmit();
-						}}
-					>
-						Submit
-					</ClayButton>
+					<ClayButton onClick={handleSubmit}>Submit</ClayButton>
 				) : (
 					<ClayLoadingIndicator displayType="secondary" size="sm" />
 				)}
@@ -191,4 +185,4 @@ const TemplateItemCreateFolder = ({templateId}) => {
 	);
 };
 
-export default TemplateItemCreateFolder;
+export default GenerateFolders;

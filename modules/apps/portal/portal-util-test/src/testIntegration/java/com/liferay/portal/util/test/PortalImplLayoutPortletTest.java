@@ -68,6 +68,11 @@ public class PortalImplLayoutPortletTest {
 				).put(
 					"com.liferay.portlet.preferences-owned-by-group", "true"
 				).put(
+					"javax.portlet.init-param.template-path",
+					"/META-INF/resources/"
+				).put(
+					"javax.portlet.init-param.view-template", "/view.jsp"
+				).put(
 					"javax.portlet.name",
 					_TEST_PORTLET_NAME_PREF_OWNER_TYPE_LAYOUT
 				).build()));
@@ -81,6 +86,11 @@ public class PortalImplLayoutPortletTest {
 					"com.liferay.portlet.preferences-owned-by-group", "true"
 				).put(
 					"com.liferay.portlet.preferences-unique-per-layout", "false"
+				).put(
+					"javax.portlet.init-param.template-path",
+					"/META-INF/resources/"
+				).put(
+					"javax.portlet.init-param.view-template", "/view.jsp"
 				).put(
 					"javax.portlet.name",
 					_TEST_PORTLET_NAME_PREF_OWNER_TYPE_GROUP

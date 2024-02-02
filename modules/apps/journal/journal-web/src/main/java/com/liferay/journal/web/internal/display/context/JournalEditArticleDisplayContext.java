@@ -559,7 +559,8 @@ public class JournalEditArticleDisplayContext {
 			return _defaultArticleLanguageId;
 		}
 
-		String defaultArticleLanguageId = null;
+		String defaultArticleLanguageId = ParamUtil.getString(
+			_httpServletRequest, "defaultLanguageId", null);
 
 		if (Validator.isNotNull(getArticleId())) {
 			DDMFormValues ddmFormValues = _article.getDDMFormValues();
@@ -567,8 +568,9 @@ public class JournalEditArticleDisplayContext {
 			defaultArticleLanguageId = LocaleUtil.toLanguageId(
 				ddmFormValues.getDefaultLocale());
 		}
-		else if (getClassNameId() ==
-					JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
+		else if ((defaultArticleLanguageId == null) &&
+				 (getClassNameId() ==
+					 JournalArticleConstants.CLASS_NAME_ID_DEFAULT)) {
 
 			defaultArticleLanguageId = _getDDMStructureDefaultLanguageId();
 		}
@@ -1705,7 +1707,6 @@ public class JournalEditArticleDisplayContext {
 	private DDMTemplate _ddmTemplate;
 	private String _ddmTemplateKey;
 	private String _defaultArticleLanguageId;
-	private String _selectedLanguageId;
 	private LayoutPageTemplateEntry _defaultLayoutPageTemplateEntry;
 	private Integer _displayPageType;
 	private Long _folderId;
@@ -1722,6 +1723,7 @@ public class JournalEditArticleDisplayContext {
 	private String _redirect;
 	private Long _refererPlid;
 	private String _referringPortletResource;
+	private String _selectedLanguageId;
 	private Boolean _showHeader;
 	private Boolean _showSelectFolder;
 	private final ThemeDisplay _themeDisplay;

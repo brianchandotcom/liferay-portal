@@ -235,9 +235,7 @@ test('can create post endpoint with different request and response schema', asyn
 	);
 	page.waitForLoadState();
 
-	await expect(
-		await apiExplorerPage.getEndpointLocator('/student')
-	).toBeVisible();
+	await expect(apiExplorerPage.getEndpointLocator('/student')).toBeVisible();
 
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
@@ -283,7 +281,7 @@ test('can create post method endpoint with company scope', async ({
 	page.waitForLoadState();
 
 	await expect(
-		await apiExplorerPage.getEndpointLocator('/test-post-endpoint')
+		apiExplorerPage.getEndpointLocator('/test-post-endpoint')
 	).toBeVisible();
 
 	await page.goto('/');

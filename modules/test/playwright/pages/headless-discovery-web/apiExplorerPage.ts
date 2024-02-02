@@ -18,26 +18,26 @@ export class ApiExplorerPage {
 		endpointPath: string,
 		parameters: string[]
 	) {
-		await (await this.getEndpointLocator(endpointPath)).click();
+		await this.getEndpointLocator(endpointPath).click();
 		for (const parameter of parameters) {
 			await expect(
 				this.page.getByRole('cell', {exact: true, name: parameter})
 			).toBeVisible();
 		}
-		await (await this.getEndpointLocator(endpointPath)).click();
+		await this.getEndpointLocator(endpointPath).click();
 	}
 
 	async expectEndpointWithoutParameters(
 		endpointPath: string,
 		parameters: string[]
 	) {
-		await (await this.getEndpointLocator(endpointPath)).click();
+		await this.getEndpointLocator(endpointPath).click();
 		for (const parameter of parameters) {
 			await expect(
 				this.page.getByRole('cell', {exact: true, name: parameter})
 			).toBeHidden();
 		}
-		await (await this.getEndpointLocator(endpointPath)).click();
+		await this.getEndpointLocator(endpointPath).click();
 	}
 
 	async goto() {
@@ -50,9 +50,7 @@ export class ApiExplorerPage {
 		);
 	}
 
-	async getEndpointLocator(endpointPath: string): Promise<Locator> {
-		return await this.page.locator(
-			`//span[@data-path="${endpointPath}"]/a/span`
-		);
+	getEndpointLocator(endpointPath: string): Locator {
+		return this.page.locator(`//span[@data-path="${endpointPath}"]/a/span`);
 	}
 }

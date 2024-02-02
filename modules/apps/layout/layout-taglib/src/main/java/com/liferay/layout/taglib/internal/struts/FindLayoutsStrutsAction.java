@@ -77,68 +77,72 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 				LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
 			});
 
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			groupId, privateLayout, keywords,
-			new String[] {
-				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
-				LayoutConstants.TYPE_EMBEDDED,
-				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-				LayoutConstants.TYPE_LINK_TO_LAYOUT, LayoutConstants.TYPE_PANEL,
-				LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
-			},
-			0, layoutsCount, null);
+		if (layoutsCount > 0) {
+			List<Layout> layouts = _layoutLocalService.getLayouts(
+				groupId, privateLayout, keywords,
+				new String[] {
+					LayoutConstants.TYPE_COLLECTION,
+					LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
+					LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
+					LayoutConstants.TYPE_LINK_TO_LAYOUT,
+					LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
+					LayoutConstants.TYPE_URL
+				},
+				0, layoutsCount, null);
 
-		boolean checkDisplayPage = ParamUtil.getBoolean(
-			httpServletRequest, "checkDisplayPage");
-		boolean enableCurrentPage = ParamUtil.getBoolean(
-			httpServletRequest, "enableCurrentPage");
-		String itemSelectorReturnType = ParamUtil.getString(
-			httpServletRequest, "itemSelectorReturnType");
-		long selPlid = ParamUtil.getLong(
-			httpServletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
+			boolean checkDisplayPage = ParamUtil.getBoolean(
+				httpServletRequest, "checkDisplayPage");
+			boolean enableCurrentPage = ParamUtil.getBoolean(
+				httpServletRequest, "enableCurrentPage");
+			String itemSelectorReturnType = ParamUtil.getString(
+				httpServletRequest, "itemSelectorReturnType");
+			long selPlid = ParamUtil.getLong(
+				httpServletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-		for (Layout layout : layouts) {
-			jsonArray.put(
-				JSONUtil.put(
-					"disabled",
-					() -> {
-						if ((checkDisplayPage &&
-							 !layout.isContentDisplayPage()) ||
-							(!enableCurrentPage &&
-							 (layout.getPlid() == selPlid))) {
+			for (Layout layout : layouts) {
+				jsonArray.put(
+					JSONUtil.put(
+						"disabled",
+						() -> {
+							if ((checkDisplayPage &&
+								 !layout.isContentDisplayPage()) ||
+								(!enableCurrentPage &&
+								 (layout.getPlid() == selPlid))) {
 
-							return true;
+								return true;
+							}
+
+							return false;
 						}
-
-						return false;
-					}
-				).put(
-					"groupId", layout.getGroupId()
-				).put(
-					"id", layout.getUuid()
-				).put(
-					"layoutId", layout.getLayoutId()
-				).put(
-					"name", layout.getName(themeDisplay.getLocale())
-				).put(
-					"path",
-					_getLayoutPathJSONArray(layout, themeDisplay.getLocale())
-				).put(
-					"payload",
-					LayoutUtil.getLayoutPayload(
-						httpServletRequest, itemSelectorReturnType, layout,
-						themeDisplay)
-				).put(
-					"privateLayout", layout.isPrivateLayout()
-				).put(
-					"returnType", itemSelectorReturnType
-				).put(
-					"value", layout.getBreadcrumb(themeDisplay.getLocale())
-				));
+					).put(
+						"groupId", layout.getGroupId()
+					).put(
+						"id", layout.getUuid()
+					).put(
+						"layoutId", layout.getLayoutId()
+					).put(
+						"name", layout.getName(themeDisplay.getLocale())
+					).put(
+						"path",
+						_getLayoutPathJSONArray(
+							layout, themeDisplay.getLocale())
+					).put(
+						"payload",
+						LayoutUtil.getLayoutPayload(
+							httpServletRequest, itemSelectorReturnType, layout,
+							themeDisplay)
+					).put(
+						"privateLayout", layout.isPrivateLayout()
+					).put(
+						"returnType", itemSelectorReturnType
+					).put(
+						"value", layout.getBreadcrumb(themeDisplay.getLocale())
+					));
+			}
 		}
 
 		jsonObject.put("layouts", jsonArray);

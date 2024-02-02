@@ -7,6 +7,8 @@ package com.liferay.contacts.internal.upgrade.registry;
 
 import com.liferay.contacts.internal.upgrade.v2_0_0.EntryUpgradeProcess;
 import com.liferay.contacts.internal.upgrade.v3_0_0.util.EntryTable;
+import com.liferay.contacts.internal.upgrade.v3_1_0.EntryResourceUpgradeProcess;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -43,7 +45,14 @@ public class ContactsServiceUpgradeStepRegistrator
 			"2.0.2", "3.0.0",
 			new BaseSQLServerDatetimeUpgradeProcess(
 				new Class<?>[] {EntryTable.class}));
+
+		registry.register(
+			"3.0.0", "3.1.0",
+			new EntryResourceUpgradeProcess(_resourceLocalService));
 	}
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -424,6 +424,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"9.0.2", "9.1.0",
 			UpgradeProcessFactory.addColumns(
 				"ObjectEntry", "rootObjectEntryId LONG"));
+
+		registry.register(
+			"9.1.0", "9.1.1",
+			new com.liferay.object.internal.upgrade.v9_1_1.
+				ObjectFieldUpgradeProcess());
 	}
 
 	@Reference

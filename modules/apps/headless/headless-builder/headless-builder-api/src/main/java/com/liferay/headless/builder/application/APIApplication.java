@@ -119,9 +119,9 @@ public interface APIApplication {
 
 		public List<String> getObjectRelationshipNames();
 
-		public PropertyType getPropertyType();
+		public List<Property> getProperties();
 
-		public String getRelatedPropertyERC();
+		public PropertyType getPropertyType();
 
 		public String getSourceFieldName();
 

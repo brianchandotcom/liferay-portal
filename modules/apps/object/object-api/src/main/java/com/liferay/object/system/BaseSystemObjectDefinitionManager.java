@@ -85,8 +85,17 @@ public abstract class BaseSystemObjectDefinitionManager
 	}
 
 	protected Map<Locale, String> createLabelMap(String labelKey) {
-		return LocalizedMapUtil.getLocalizedMap(
-			LanguageUtil.get(LocaleUtil.getDefault(), labelKey));
+		Map<Locale, String> labelMap = new HashMap<>();
+
+		String defaultLabel = LanguageUtil.get(
+			LocaleUtil.getDefault(), labelKey);
+
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			labelMap.put(
+				locale, LanguageUtil.get(locale, labelKey, defaultLabel));
+		}
+
+		return labelMap;
 	}
 
 	protected Map<String, String> getLanguageIdMap(

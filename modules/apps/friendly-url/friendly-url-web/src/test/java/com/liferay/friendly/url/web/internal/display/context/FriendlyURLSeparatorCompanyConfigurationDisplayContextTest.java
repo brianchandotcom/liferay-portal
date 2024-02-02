@@ -68,10 +68,10 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 			ListUtil.fromArray(
 				new FriendlyURLResolverImpl(
 					FriendlyURLResolverConstants.URL_SEPARATOR_BLOGS_ENTRY,
-					_BLOGS_ENTRY_SIMPLE_CLASS_NAME, "/blogs1/"),
+					_SIMPLE_CLASS_NAME_BLOGS_ENTRY, "/blogs1/"),
 				new FriendlyURLResolverImpl(
 					FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
-					_JOURNAL_ARTICLE_SIMPLE_CLASS_NAME, "/journal1/"))
+					_SIMPLE_CLASS_NAME_JOURNAL_ARTICLE, "/journal1/"))
 		);
 
 		_friendlyURLSeparatorConfigurationManager = Mockito.mock(
@@ -90,9 +90,9 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 			_jsonFactory.createJSONObject(Mockito.anyString())
 		).thenReturn(
 			JSONUtil.put(
-				_BLOGS_ENTRY_SIMPLE_CLASS_NAME, "blog-test1"
+				_SIMPLE_CLASS_NAME_BLOGS_ENTRY, "blog-test1"
 			).put(
-				_JOURNAL_ARTICLE_SIMPLE_CLASS_NAME, "journal-test1"
+				_SIMPLE_CLASS_NAME_JOURNAL_ARTICLE, "journal-test1"
 			)
 		);
 
@@ -133,12 +133,12 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		Assert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"name", _BLOGS_ENTRY_KEY
+					"name", _NAME_BLOGS_ENTRY
 				).put(
 					"value", "blog-test1"
 				),
 				JSONUtil.put(
-					"name", _JOURNAL_ARTICLE_KEY
+					"name", _NAME_JOURNAL_ARTICLE
 				).put(
 					"value", "journal-test1"
 				)
@@ -164,12 +164,12 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 			httpServletRequest.getParameterMap()
 		).thenReturn(
 			HashMapBuilder.put(
-				_JOURNAL_ARTICLE_SIMPLE_CLASS_NAME, new String[] {"web"}
+				_SIMPLE_CLASS_NAME_JOURNAL_ARTICLE, new String[] {"web"}
 			).put(
 				"errors",
 				new String[] {
 					JSONUtil.put(
-						_JOURNAL_ARTICLE_KEY,
+						_NAME_JOURNAL_ARTICLE,
 						"error-other-asset-type-may-use-this-prefix"
 					).toString()
 				}
@@ -177,7 +177,7 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		);
 
 		Mockito.when(
-			httpServletRequest.getParameter(_JOURNAL_ARTICLE_SIMPLE_CLASS_NAME)
+			httpServletRequest.getParameter(_SIMPLE_CLASS_NAME_JOURNAL_ARTICLE)
 		).thenReturn(
 			"web"
 		);
@@ -192,12 +192,12 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		Assert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"name", _BLOGS_ENTRY_KEY
+					"name", _NAME_BLOGS_ENTRY
 				).put(
 					"value", "blog-test1"
 				),
 				JSONUtil.put(
-					"name", _JOURNAL_ARTICLE_KEY
+					"name", _NAME_JOURNAL_ARTICLE
 				).put(
 					"value", "web"
 				)
@@ -228,7 +228,8 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 			HttpServletRequest.class);
 
 		JSONObject errorsJSONObject = JSONUtil.put(
-			_JOURNAL_ARTICLE_KEY, "error-other-asset-type-may-use-this-prefix");
+			_NAME_JOURNAL_ARTICLE,
+			"error-other-asset-type-may-use-this-prefix");
 
 		Mockito.when(
 			httpServletRequest.getParameter("errors")
@@ -286,12 +287,12 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		Assert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"name", _BLOGS_ENTRY_KEY
+					"name", _NAME_BLOGS_ENTRY
 				).put(
 					"value", "blog-test1"
 				),
 				JSONUtil.put(
-					"name", _JOURNAL_ARTICLE_KEY
+					"name", _NAME_JOURNAL_ARTICLE
 				).put(
 					"value", "journal-test1"
 				)
@@ -326,24 +327,23 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		return themeDisplay;
 	}
 
-	private static final String _BLOGS_ENTRY_KEY =
-		FriendlyURLSeparatorCompanyConfigurationDisplayContextTest.
-			_INSTANCE_SETTINGS_PORTLET_NAMESPACE +
-				FriendlyURLSeparatorCompanyConfigurationDisplayContextTest.
-					_BLOGS_ENTRY_SIMPLE_CLASS_NAME;
-
-	private static final String _BLOGS_ENTRY_SIMPLE_CLASS_NAME = "BlogsEntry";
-
 	private static final String _INSTANCE_SETTINGS_PORTLET_NAMESPACE =
 		StringPool.UNDERLINE + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS +
 			StringPool.UNDERLINE;
 
-	private static final String _JOURNAL_ARTICLE_KEY =
+	private static final String _NAME_BLOGS_ENTRY =
 		_INSTANCE_SETTINGS_PORTLET_NAMESPACE +
 			FriendlyURLSeparatorCompanyConfigurationDisplayContextTest.
-				_JOURNAL_ARTICLE_SIMPLE_CLASS_NAME;
+				_SIMPLE_CLASS_NAME_BLOGS_ENTRY;
 
-	private static final String _JOURNAL_ARTICLE_SIMPLE_CLASS_NAME =
+	private static final String _NAME_JOURNAL_ARTICLE =
+		_INSTANCE_SETTINGS_PORTLET_NAMESPACE +
+			FriendlyURLSeparatorCompanyConfigurationDisplayContextTest.
+				_SIMPLE_CLASS_NAME_JOURNAL_ARTICLE;
+
+	private static final String _SIMPLE_CLASS_NAME_BLOGS_ENTRY = "BlogsEntry";
+
+	private static final String _SIMPLE_CLASS_NAME_JOURNAL_ARTICLE =
 		"JournalArticle";
 
 	private static MockedStatic<FriendlyURLResolverRegistryUtil>

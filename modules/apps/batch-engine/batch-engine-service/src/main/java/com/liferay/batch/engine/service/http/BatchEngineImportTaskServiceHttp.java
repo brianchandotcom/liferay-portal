@@ -42,6 +42,114 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class BatchEngineImportTaskServiceHttp {
 
 	public static com.liferay.batch.engine.model.BatchEngineImportTask
+			addBatchEngineImportTask(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId, long userId, long batchSize, String callbackURL,
+				String className, byte[] content, String contentType,
+				String executeStatus,
+				java.util.Map<String, String> fieldNameMappingMap,
+				int importStrategy, String operation,
+				java.util.Map<String, java.io.Serializable> parameters,
+				String taskItemDelegateName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				BatchEngineImportTaskServiceUtil.class,
+				"addBatchEngineImportTask",
+				_addBatchEngineImportTaskParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId, userId, batchSize,
+				callbackURL, className, content, contentType, executeStatus,
+				fieldNameMappingMap, importStrategy, operation, parameters,
+				taskItemDelegateName);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.batch.engine.model.BatchEngineImportTask)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.batch.engine.model.BatchEngineImportTask
+			addBatchEngineImportTask(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId, long userId, long batchSize, String callbackURL,
+				String className, byte[] content, String contentType,
+				String executeStatus,
+				java.util.Map<String, String> fieldNameMappingMap,
+				int importStrategy, String operation,
+				java.util.Map<String, java.io.Serializable> parameters,
+				String taskItemDelegateName,
+				com.liferay.batch.engine.BatchEngineTaskItemDelegate<?>
+					batchEngineTaskItemDelegate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				BatchEngineImportTaskServiceUtil.class,
+				"addBatchEngineImportTask",
+				_addBatchEngineImportTaskParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId, userId, batchSize,
+				callbackURL, className, content, contentType, executeStatus,
+				fieldNameMappingMap, importStrategy, operation, parameters,
+				taskItemDelegateName, batchEngineTaskItemDelegate);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.batch.engine.model.BatchEngineImportTask)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.batch.engine.model.BatchEngineImportTask
 			getBatchEngineImportTask(
 				HttpPrincipal httpPrincipal, long batchEngineImportTaskId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -50,10 +158,54 @@ public class BatchEngineImportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineImportTaskServiceUtil.class,
 				"getBatchEngineImportTask",
-				_getBatchEngineImportTaskParameterTypes0);
+				_getBatchEngineImportTaskParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, batchEngineImportTaskId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.batch.engine.model.BatchEngineImportTask)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.batch.engine.model.BatchEngineImportTask
+			getBatchEngineImportTaskByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				BatchEngineImportTaskServiceUtil.class,
+				"getBatchEngineImportTaskByExternalReferenceCode",
+				_getBatchEngineImportTaskByExternalReferenceCodeParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -95,7 +247,7 @@ public class BatchEngineImportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineImportTaskServiceUtil.class,
 				"getBatchEngineImportTasks",
-				_getBatchEngineImportTasksParameterTypes1);
+				_getBatchEngineImportTasksParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, start, end);
@@ -144,7 +296,7 @@ public class BatchEngineImportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineImportTaskServiceUtil.class,
 				"getBatchEngineImportTasks",
-				_getBatchEngineImportTasksParameterTypes2);
+				_getBatchEngineImportTasksParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, start, end, orderByComparator);
@@ -187,7 +339,7 @@ public class BatchEngineImportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineImportTaskServiceUtil.class,
 				"getBatchEngineImportTasksCount",
-				_getBatchEngineImportTasksCountParameterTypes3);
+				_getBatchEngineImportTasksCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId);
@@ -223,17 +375,35 @@ public class BatchEngineImportTaskServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(
 		BatchEngineImportTaskServiceHttp.class);
 
-	private static final Class<?>[] _getBatchEngineImportTaskParameterTypes0 =
+	private static final Class<?>[] _addBatchEngineImportTaskParameterTypes0 =
+		new Class[] {
+			String.class, long.class, long.class, long.class, String.class,
+			String.class, byte[].class, String.class, String.class,
+			java.util.Map.class, int.class, String.class, java.util.Map.class,
+			String.class
+		};
+	private static final Class<?>[] _addBatchEngineImportTaskParameterTypes1 =
+		new Class[] {
+			String.class, long.class, long.class, long.class, String.class,
+			String.class, byte[].class, String.class, String.class,
+			java.util.Map.class, int.class, String.class, java.util.Map.class,
+			String.class,
+			com.liferay.batch.engine.BatchEngineTaskItemDelegate.class
+		};
+	private static final Class<?>[] _getBatchEngineImportTaskParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getBatchEngineImportTasksParameterTypes1 =
+	private static final Class<?>[]
+		_getBatchEngineImportTaskByExternalReferenceCodeParameterTypes3 =
+			new Class[] {String.class, long.class};
+	private static final Class<?>[] _getBatchEngineImportTasksParameterTypes4 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getBatchEngineImportTasksParameterTypes2 =
+	private static final Class<?>[] _getBatchEngineImportTasksParameterTypes5 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getBatchEngineImportTasksCountParameterTypes3 = new Class[] {
+		_getBatchEngineImportTasksCountParameterTypes6 = new Class[] {
 			long.class
 		};
 

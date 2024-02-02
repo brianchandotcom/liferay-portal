@@ -16,7 +16,10 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -43,9 +46,22 @@ public interface BatchEngineExportTaskService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.batch.engine.service.impl.BatchEngineExportTaskServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the batch engine export task remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link BatchEngineExportTaskServiceUtil} if injection and service tracking are not available.
 	 */
+	public BatchEngineExportTask addBatchEngineExportTask(
+			String externalReferenceCode, long companyId, long userId,
+			String callbackURL, String className, String contentType,
+			String executeStatus, List<String> fieldNamesList,
+			Map<String, Serializable> parameters, String taskItemDelegateName)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BatchEngineExportTask getBatchEngineExportTask(
 			long batchEngineExportTaskId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchEngineExportTask
+			getBatchEngineExportTaskByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

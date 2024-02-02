@@ -30,6 +30,13 @@ public class BatchEngineImportTaskServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.batch.engine.service.impl.BatchEngineImportTaskServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static BatchEngineImportTask getBatchEngineImportTask(
+			long batchEngineImportTaskId)
+		throws PortalException {
+
+		return getService().getBatchEngineImportTask(batchEngineImportTaskId);
+	}
+
 	public static List<BatchEngineImportTask> getBatchEngineImportTasks(
 			long companyId, int start, int end)
 		throws PortalException {

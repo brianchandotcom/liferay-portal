@@ -375,4 +375,22 @@ describe('TranslationAdminSelector', () => {
 
 		Liferay.FeatureFlags['LPS-114700'] = false;
 	});
+
+	it('calls onTriggerClick when the trigger is clicked', () => {
+		const onTriggerClick = jest.fn();
+
+		const {getByTitle} = render(
+			<TranslationAdminSelector
+				{...props}
+				onTriggerClick={onTriggerClick}
+				selectedLanguageId="en_US"
+			/>
+		);
+
+		const trigger = getByTitle('select-translation-language');
+
+		fireEvent.click(trigger);
+
+		expect(onTriggerClick).toBeCalled();
+	});
 });

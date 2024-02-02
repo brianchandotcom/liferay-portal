@@ -113,17 +113,17 @@ function getLabels({actionButton, articleId, workflowEnabled}) {
 			description: articleId
 				? workflowEnabled
 					? Liferay.Language.get(
-							'set-the-publication-date-and-time-for-the-web-content-and-submit-it-for-workflow'
+							'set-the-date-and-time-for-publishing-the-web-content-and-submit-it-for-workflow'
 					  )
 					: Liferay.Language.get(
-							'set-the-date-and-time-you-want-the-web-content-to-be-published'
+							'set-the-date-and-time-for-publishing-the-web-content'
 					  )
 				: workflowEnabled
 				? Liferay.Language.get(
-						'set-the-publication-date-and-time-for-the-web-content-confirm-the-visibility-and-submit-it-for-workflow'
+						'set-the-publishing-date-and-time-for-the-web-content-confirm-the-visibility-and-submit-it-for-workflow'
 				  )
 				: Liferay.Language.get(
-						'set-the-date-and-time-you-want-the-web-content-to-be-published-and-confirm-the-visibility-before-scheduling'
+						'set-the-date-and-time-for-publishing-the-web-content-and-confirm-the-visibility-before-scheduling'
 				  ),
 			heading: workflowEnabled
 				? Liferay.Language.get(

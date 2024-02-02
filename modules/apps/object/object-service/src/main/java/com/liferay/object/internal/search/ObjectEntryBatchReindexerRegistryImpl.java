@@ -5,9 +5,8 @@
 
 package com.liferay.object.internal.search;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 
 import java.util.Collection;
 
@@ -28,23 +27,21 @@ public class ObjectEntryBatchReindexerRegistryImpl
 	public Collection<ObjectEntryBatchReindexer>
 		getObjectEntryBatchReindexers() {
 
-		return _serviceTrackerMap.values();
+		return _objectEntryBatchReindexers.toList();
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ObjectEntryBatchReindexer.class, null,
-			ServiceReferenceMapperFactory.createFromFunction(
-				bundleContext, ObjectEntryBatchReindexer::getClassName));
+		_objectEntryBatchReindexers = ServiceTrackerListFactory.open(
+			bundleContext, ObjectEntryBatchReindexer.class);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_objectEntryBatchReindexers.close();
 	}
 
-	private ServiceTrackerMap<String, ObjectEntryBatchReindexer>
-		_serviceTrackerMap;
+	private ServiceTrackerList<ObjectEntryBatchReindexer>
+		_objectEntryBatchReindexers;
 
 }

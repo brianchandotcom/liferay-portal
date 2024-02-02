@@ -5,7 +5,6 @@
 
 package com.liferay.headless.builder.application;
 
-import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.portal.kernel.util.Http;
 
 import java.util.List;
@@ -130,11 +129,8 @@ public interface APIApplication {
 
 		public enum PropertyType {
 
-			ARRAY_CONTAINER(
-				HeadlessBuilderConstants.PROPERTY_TYPE_ARRAY_CONTAINER),
-			NORMAL(HeadlessBuilderConstants.PROPERTY_TYPE_NORMAL),
-			SINGLE_CONTAINER(
-				HeadlessBuilderConstants.PROPERTY_TYPE_SINGLE_CONTAINER);
+			ARRAY_CONTAINER("arrayContainer"), NORMAL("normal"),
+			SINGLE_CONTAINER("singleContainer");
 
 			public static PropertyType parse(String value) {
 				for (PropertyType propertyType :

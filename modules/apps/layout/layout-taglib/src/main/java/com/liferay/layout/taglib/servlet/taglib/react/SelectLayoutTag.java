@@ -136,18 +136,23 @@ public class SelectLayoutTag extends IncludeTag {
 
 		String[] selectedLayoutIds = ParamUtil.getStringValues(
 			httpServletRequest, "layoutUuid");
+
 		long selPlid = ParamUtil.getLong(
 			httpServletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
+
+		String findLayoutsURL = HttpComponentsUtil.addParameter(
+			themeDisplay.getPathMain() + "/portal/find_layouts", "selPlid",
+			selPlid);
+
+		findLayoutsURL = HttpComponentsUtil.addParameter(
+			findLayoutsURL, "privateLayout", _privateLayout);
 
 		return HashMapBuilder.<String, Object>put(
 			"checkDisplayPage", _checkDisplayPage
 		).put(
 			"config",
 			HashMapBuilder.<String, Object>put(
-				"findLayoutsURL",
-				HttpComponentsUtil.addParameter(
-					themeDisplay.getPathMain() + "/portal/find_layouts",
-					"selPlid", selPlid)
+				"findLayoutsURL", findLayoutsURL
 			).put(
 				"loadMoreItemsURL",
 				HttpComponentsUtil.addParameter(

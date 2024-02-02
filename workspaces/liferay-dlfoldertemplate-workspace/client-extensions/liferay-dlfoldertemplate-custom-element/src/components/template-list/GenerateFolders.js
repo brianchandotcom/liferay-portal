@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Form, TreeSelect} from 'antd';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
 	getDocumentFolderDocumentFoldersPage,
@@ -16,6 +16,65 @@ import {
 import {createFolder} from '../../services/TemplateItemCreateFolderService';
 import {showError, showSuccess} from '../../utils/util';
 
+const loadFolderTree = async () => {
+	const loadSubfolder = async (folder) => {
+		const subfolders = await getDocumentFolderDocumentFoldersPage(folder);
+
+		const normalizedFolders = subfolders.items.map((folder) => ({
+			childrenCount: folder.numberOfDocumentFolders,
+			icon: 'folder',
+			id: Number(folder.id),
+			isLeaf: folder.numberOfDocumentFolders === 0,
+			key: folder.id,
+			label: folder.name,
+			title: folder.name,
+			type: folder.numberOfDocumentFolders > 0 ? 'repository' : 'folder',
+			value: folder.id,
+		}));
+
+		return normalizedFolders;
+	};
+
+	const scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
+
+	const root = (await getSiteDocumentFoldersPage(scopeGroupId)).items.map(
+		(folder) => ({
+			childrenCount: folder.numberOfDocumentFolders,
+			id: Number(folder.id),
+			isLeaf: folder.childrenCount <= 0,
+			key: folder.id,
+			label: folder.name,
+			selected: false,
+			title: folder.name,
+			value: folder.id,
+		})
+	);
+
+	const loadFolderRecursively = async (folder) => {
+		const children = await loadSubfolder(folder.key);
+
+		return Promise.all(
+			children.map(async (subfolder) => ({
+				...subfolder,
+				children:
+					subfolder.childrenCount > 0
+						? await loadFolderRecursively(subfolder)
+						: null,
+			}))
+		);
+	};
+
+	return Promise.all(
+		root.map(async (folder) => ({
+			...folder,
+			children:
+				folder.childrenCount > 0
+					? await loadFolderRecursively(folder)
+					: null,
+		}))
+	);
+};
+
 const GenerateFolders = ({templateId}) => {
 	const [folderTree, setFolderTree] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
@@ -23,123 +82,30 @@ const GenerateFolders = ({templateId}) => {
 
 	const [form] = Form.useForm();
 
-	const loadFolderTree = async () => {
-		const loadSubfolder = async (folder) => {
-			const subfolders = await getDocumentFolderDocumentFoldersPage(
-				folder
-			);
-
-			const normalizedFolders = subfolders.items.map((folder) => ({
-				childrenCount: folder.numberOfDocumentFolders,
-				icon: 'folder',
-				id: Number(folder.id),
-				isLeaf: folder.numberOfDocumentFolders === 0,
-				key: folder.id,
-				label: folder.name,
-				title: folder.name,
-				type:
-					folder.numberOfDocumentFolders > 0
-						? 'repository'
-						: 'folder',
-				value: folder.id,
-			}));
-
-			return normalizedFolders;
-		};
-
-		const scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
-
-		const root = (await getSiteDocumentFoldersPage(scopeGroupId)).items.map(
-			(folder) => ({
-				childrenCount: folder.numberOfDocumentFolders,
-				id: Number(folder.id),
-				isLeaf: folder.childrenCount <= 0,
-				key: folder.id,
-				label: folder.name,
-				selected: false,
-				title: folder.name,
-				value: folder.id,
-			})
-		);
-
-		const loadFolderRecursively = async (folder) => {
-			const children = await loadSubfolder(folder.key);
-
-			return Promise.all(
-				children.map(async (subfolder) => ({
-					...subfolder,
-					children:
-						subfolder.childrenCount > 0
-							? await loadFolderRecursively(subfolder)
-							: null,
-				}))
-			);
-		};
-
-		return Promise.all(
-			root.map(async (folder) => ({
-				...folder,
-				children:
-					folder.childrenCount > 0
-						? await loadFolderRecursively(folder)
-						: null,
-			}))
-		);
-	};
-
-	const prepareComponentCallback = useCallback(async () => {
-		try {
-			setIsLoading(true);
-
-			setFolderTree(await loadFolderTree());
-		}
-		catch (error) {
-			showError('Error', error.message);
-		}
-		finally {
-			setIsLoading(false);
-		}
-	}, []);
-
 	useEffect(() => {
-		const fetchData = async () => {
-			await prepareComponentCallback();
-		};
+		setIsLoading(true);
 
-		fetchData();
-	}, [prepareComponentCallback]);
+		loadFolderTree()
+			.then((folderTree) => setFolderTree(folderTree))
+			.catch((error) => showError('Error', error.message))
+			.finally(() => setIsLoading(false));
+	}, []);
 
 	const handleSubmit = () => {
 		form.validateFields()
-			.then(
-				async (values) => {
-					try {
-						setIsSubmitting(true);
+			.then((values) => {
+				setIsSubmitting(true);
 
-						await createFolder(
-							templateId,
-							values.parentFolder,
-							values.name
-						);
-
-						showSuccess('Folder created!');
-					}
-					catch (error) {
-						showError('Error', error.message);
-					}
-					finally {
+				createFolder(templateId, values.parentFolder, values.name)
+					.then(() => showSuccess('Folder created!'))
+					.catch((error) => showError('Error', error.message))
+					.finally(() => {
 						form.resetFields();
 
 						setIsSubmitting(false);
-					}
-				},
-				(error) => {
-					showError('Error', error.message);
-				}
-			)
-			.catch((error) => {
-				showError('Error', error);
-			});
+					});
+			})
+			.catch((error) => showError('Error', error));
 	};
 
 	return (
@@ -174,12 +140,21 @@ const GenerateFolders = ({templateId}) => {
 					<TreeSelect multiple={false} treeData={folderTree} />
 				)}
 			</Form.Item>
-			<Form.Item>
-				{!isSubmitting ? (
-					<ClayButton onClick={handleSubmit}>Submit</ClayButton>
-				) : (
-					<ClayLoadingIndicator displayType="secondary" size="sm" />
-				)}
+			<Form.Item className="mb-0">
+				<ClayButton
+					className="align-items-center d-flex"
+					disabled={isSubmitting}
+					onClick={handleSubmit}
+				>
+					Submit
+					{isSubmitting && (
+						<ClayLoadingIndicator
+							className="ml-3 my-0"
+							displayType="light"
+							size="sm"
+						/>
+					)}
+				</ClayButton>
 			</Form.Item>
 		</Form>
 	);

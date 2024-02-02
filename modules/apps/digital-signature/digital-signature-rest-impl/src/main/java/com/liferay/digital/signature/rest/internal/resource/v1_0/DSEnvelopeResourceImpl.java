@@ -45,10 +45,20 @@ public class DSEnvelopeResourceImpl extends BaseDSEnvelopeResourceImpl {
 
 	@Override
 	public Page<DSEnvelope> getSiteDSEnvelopesPage(
-		Long siteId, Pagination pagination) {
+		Long siteId,
+		String fromDate,
+		String keywords,
+		String order,
+		String status,
+		Pagination pagination) {
 
-		return _mapToPaginatedDSEnvelopes(
-			contextCompany.getCompanyId(), siteId, pagination);
+		return Page.of(
+			transform(
+				_dsEnvelopeManager.getDSEnvelopesPage(
+					contextCompany.getCompanyId(), siteId, fromDate, keywords, order,
+					pagination, status
+				).getItems(),
+				dsEnvelope -> DSEnvelopeUtil.toDSEnvelope(dsEnvelope)));
 	}
 
 	@Override

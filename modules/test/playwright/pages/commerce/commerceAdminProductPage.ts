@@ -12,13 +12,19 @@ export class CommerceAdminProductPage {
 	readonly creationMenuNewButton: Locator;
 	readonly generateSkusMenuItem: Locator;
 	readonly managementToolbarSearchInput: Locator;
+	readonly modalAddButton: Locator;
+	readonly modalCancelButton: Locator;
 	readonly page: Page;
+	readonly productRelationsLink: Locator;
 	readonly productSkusLink: Locator;
 	readonly productsTableRowLink: (productName: string) => Locator;
+	readonly spareProductMenuButton: Locator;
+	readonly specificProductMenuLink: (productName: string) => Promise<Locator>;
+	readonly validProductCheckbox: (productName: string) => Promise<Locator>;
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.creationMenuNewButton = page.getByLabel('New', {exact: true});
+		this.creationMenuNewButton = page.getByRole('button', {name: 'New'});
 		this.generateSkusMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Generate All SKU Combinations',
@@ -26,12 +32,29 @@ export class CommerceAdminProductPage {
 		this.managementToolbarSearchInput = page
 			.getByTestId('management-toolbar')
 			.getByPlaceholder('Search', {exact: true});
+		this.modalAddButton = page.getByRole('button', {name: 'Add'});
+		this.modalCancelButton = page.getByRole('button', {name: 'Cancel'});
+		this.page = page;
 		this.productSkusLink = page.getByRole('link', {
 			exact: true,
 			name: 'SKUs',
 		});
 		this.productsTableRowLink = (productName: string) =>
 			page.getByRole('link', {exact: true, name: productName});
+		this.spareProductMenuButton = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Add Spare Product',
+		});
+		this.specificProductMenuLink = async (productName: string) => {
+			return page.getByRole('link', {name: productName});
+		};
+		this.validProductCheckbox = async (productName: string) => {
+			return page
+				.frameLocator('#modalIframe')
+				.getByTestId('row')
+				.filter({hasText: productName})
+				.getByRole('checkbox', {disabled: false});
+		};
 	}
 
 	async generateSkus() {

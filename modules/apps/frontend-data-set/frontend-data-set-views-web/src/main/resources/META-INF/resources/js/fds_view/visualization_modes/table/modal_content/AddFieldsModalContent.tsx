@@ -12,7 +12,7 @@ import ClayManagementToolbar, {
 } from '@clayui/management-toolbar';
 import ClayModal from '@clayui/modal';
 import {fetch, sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {ComponentProps, useEffect, useState} from 'react';
 
 import {FDSViewType} from '../../../../FDSViews';
 import {getFields} from '../../../../api';
@@ -166,6 +166,7 @@ const AddFieldsModalContent = ({
 	onSave,
 	saveFDSFieldsURL,
 	savedFDSFields,
+	selectionMode = 'multiple',
 }: {
 	closeModal: Function;
 	fdsView: FDSViewType;
@@ -179,6 +180,7 @@ const AddFieldsModalContent = ({
 	}) => void;
 	saveFDSFieldsURL: string;
 	savedFDSFields: Array<IFDSField>;
+	selectionMode?: ComponentProps<typeof TreeView>['selectionMode'];
 }) => {
 	const [initialFields, setInitialFields] = useState<Array<
 		IFieldTreeItem
@@ -354,7 +356,7 @@ const AddFieldsModalContent = ({
 								}
 								onSelectionChange={setSelectedKeys}
 								selectedKeys={selectedKeys}
-								selectionMode="multiple"
+								selectionMode={selectionMode}
 								showExpanderOnHover={false}
 							>
 								{({children, label, query}: IFieldTreeItem) => (

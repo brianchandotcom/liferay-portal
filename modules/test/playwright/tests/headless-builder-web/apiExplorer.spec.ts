@@ -36,7 +36,7 @@ const basicApiApplication = {
 	title: 'Basic application',
 };
 
-test('can see filter and sort parameters for collection but not for singleElement endpoints', async ({
+test('can see filter and sort parameters for collection endpoints', async ({
 	apiExplorerPage,
 	apiHelpers,
 	page,
@@ -60,6 +60,32 @@ test('can see filter and sort parameters for collection but not for singleElemen
 		},
 		'headless-builder/endpoints'
 	);
+
+	await apiExplorerPage.goToApplication(`c/${basicApiApplication.baseURL}`);
+
+	await apiExplorerPage.endpointHasParameters(collectionEndpoint.path, [
+		'filter',
+		'sort',
+	]);
+
+	await page.goto('/');
+	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+		'headless-builder/applications',
+		basicApiApplication.externalReferenceCode
+	);
+});
+
+test('cannot see filter and sort parameters for singleElement endpoints', async ({
+	apiExplorerPage,
+	apiHelpers,
+	page,
+}) => {
+	await waitForHeadlessBuilderReady(apiHelpers, page);
+	await apiHelpers.object.postObjectEntry(
+		basicApiApplication,
+		'headless-builder/applications'
+	);
+
 	const singleElementEndpoint = await apiHelpers.object.postObjectEntry(
 		{
 			description: 'Test Single Element API Endpoint',
@@ -80,11 +106,6 @@ test('can see filter and sort parameters for collection but not for singleElemen
 	);
 
 	await apiExplorerPage.goToApplication(`c/${basicApiApplication.baseURL}`);
-
-	await apiExplorerPage.endpointHasParameters(collectionEndpoint.path, [
-		'filter',
-		'sort',
-	]);
 
 	await apiExplorerPage.endpointHasNotParameters(singleElementEndpoint.path, [
 		'filter',

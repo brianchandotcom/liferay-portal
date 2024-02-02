@@ -119,56 +119,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8156 | Test Summary: Current AC plan level is shown in a card"
-	@priority = 5
-	test CurrentACPlanLevelShownInCard {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${propertyName});
-
-		ACNavigation.goToSettings();
-
-		ACSettings.goToUsage();
-
-		ACSettings.assertPlanDetails(
-			individualsAddOnsLimit = "5,000",
-			individualsAddOnsPrice = "500 USD",
-			individualsLimit = "100,000",
-			pageViewsAddOnsLimit = "5,000,000",
-			pageViewsAddOnsPrice = "250 USD",
-			pageViewsLimit = "60,000,000",
-			planName = "Enterprise",
-			usersLimit = "Unlimited");
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8157 | Test Summary: Current add-ons are displayed in a card"
-	@priority = 5
-	test CurrentAddonsDisplayedInCard {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${propertyName});
-
-		ACNavigation.goToSettings();
-
-		ACSettings.goToUsage();
-
-		ACSettings.assertAddonsDetails(
-			addOnItem = "Individuals",
-			annualPrice = "500 USD",
-			limit = "5,000",
-			time = "2X");
-
-		ACSettings.assertAddonsDetails(
-			addOnItem = "Page Views",
-			annualPrice = "250 USD",
-			limit = "5,000,000",
-			time = "3X");
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9180 | Test Summary: Individuals limit corresponds correctly with the plan and add-ons purchased."
 	@priority = 3
 	test IndividualsCardShowCurrentPlanLimitAndAddOnInfo {

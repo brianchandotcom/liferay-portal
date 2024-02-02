@@ -17,6 +17,7 @@ interface IFormDateInputProps
 		title: React.ReactNode;
 	};
 	required?: boolean;
+	showRetentionPeriod?: boolean;
 	usePortal?: boolean;
 	width: number;
 }
@@ -30,6 +31,7 @@ const FormDateInput: React.FC<IFormDateInputProps> = ({
 	overlayAlignment = 'bottomLeft',
 	popover,
 	required = false,
+	showRetentionPeriod = true,
 	usePortal = true,
 	width
 }) => {
@@ -67,6 +69,7 @@ const FormDateInput: React.FC<IFormDateInputProps> = ({
 				name={name}
 				onDateInputChange={handleChange}
 				overlayAlignment={overlayAlignment}
+				showRetentionPeriod={showRetentionPeriod}
 				usePortal={usePortal}
 				value={value}
 			/>

@@ -97,6 +97,7 @@ const DateFilter: React.FC<IFilterProps> = ({
 									<Form.DateInput
 										name='date'
 										overlayAlignment='rightCenter'
+										showRetentionPeriod={false}
 										usePortal={false}
 										validate={validateRequired}
 									/>

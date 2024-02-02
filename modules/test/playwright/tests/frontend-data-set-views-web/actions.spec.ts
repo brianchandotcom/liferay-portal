@@ -11,14 +11,24 @@ import {actionsPageTest} from './fixtures/actionsPageTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
 import {viewsPageTest} from './fixtures/viewsPageTest';
 
-export const test = mergeTests(actionsPageTest, dataSetsPageTest, loginTest, viewsPageTest);
+export const test = mergeTests(
+	actionsPageTest,
+	dataSetsPageTest,
+	loginTest,
+	viewsPageTest
+);
 
-test('Create a Creation Action', async ({actionsPage, dataSetsPage, page, viewsPage}) => {
-    await dataSetsPage.goto();
-    await dataSetsPage.createSampleDataSetUI();
+test('Create a Creation Action', async ({
+	actionsPage,
+	dataSetsPage,
+	page,
+	viewsPage,
+}) => {
+	await dataSetsPage.goto();
+	await dataSetsPage.createSampleDataSetUI();
 
-    await viewsPage.goto();
-    await viewsPage.createSampleDataSetViewUI();
+	await viewsPage.goto();
+	await viewsPage.createSampleDataSetViewUI();
 
 	await actionsPage.goto();
 	await actionsPage.createCreationAction({

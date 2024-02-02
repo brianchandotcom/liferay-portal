@@ -12,7 +12,7 @@ export class ActionsPage {
 	readonly creationActionsTab: Locator;
 	readonly itemActionsTab: Locator;
 	readonly newActionButton: Locator;
-	readonly newCreationActionForm: {
+	readonly newActionForm: {
 		addIconButton: Locator;
 		nameInput: Locator;
 		saveButton: Locator;
@@ -32,7 +32,7 @@ export class ActionsPage {
 		});
 		this.itemActionsTab = page.getByRole('tab', {name: 'Item Actions'});
 		this.newActionButton = page.getByRole('button', {name: 'Add Action'});
-		this.newCreationActionForm = {
+		this.newActionForm = {
 			addIconButton: page.getByLabel('add-icon'),
 			nameInput: page.getByPlaceholder('Action Name'),
 			saveButton: page.getByRole('button', {name: 'Save'}),
@@ -69,15 +69,15 @@ export class ActionsPage {
 
 		await this.newActionButton.click();
 
-		await this.newCreationActionForm.nameInput.fill(name);
-		await this.newCreationActionForm.addIconButton.click();
+		await this.newActionForm.nameInput.fill(name);
+		await this.newActionForm.addIconButton.click();
 
-		await this.newCreationActionForm.selectIconModal.searchInput.fill(icon);
-		await this.newCreationActionForm.selectIconModal.iconsList
+		await this.newActionForm.selectIconModal.searchInput.fill(icon);
+		await this.newActionForm.selectIconModal.iconsList
 			.filter({hasText: icon})
 			.click();
 
-		await this.newCreationActionForm.typeSelect.selectOption(type);
+		await this.newActionForm.typeSelect.selectOption(type);
 
 		if (type === 'modal' || type === 'sidePanel') {
 			await this.page.getByPlaceholder('add-here-the-title').click();
@@ -86,8 +86,8 @@ export class ActionsPage {
 				.fill(`${name} Title`);
 		}
 
-		await this.newCreationActionForm.urlText.fill(url);
-		await this.newCreationActionForm.saveButton.click();
+		await this.newActionForm.urlText.fill(url);
+		await this.newActionForm.saveButton.click();
 	}
 
 	async createItemAction({
@@ -105,15 +105,15 @@ export class ActionsPage {
 
 		await this.newActionButton.click();
 
-		await this.newCreationActionForm.nameInput.fill(name);
-		await this.newCreationActionForm.addIconButton.click();
+		await this.newActionForm.nameInput.fill(name);
+		await this.newActionForm.addIconButton.click();
 
-		await this.newCreationActionForm.selectIconModal.searchInput.fill(icon);
-		await this.newCreationActionForm.selectIconModal.iconsList
+		await this.newActionForm.selectIconModal.searchInput.fill(icon);
+		await this.newActionForm.selectIconModal.iconsList
 			.filter({hasText: icon})
 			.click();
 
-		await this.newCreationActionForm.typeSelect.selectOption(type);
+		await this.newActionForm.typeSelect.selectOption(type);
 
 		if (type === 'modal' || type === 'sidePanel') {
 			await this.page.getByPlaceholder('add-here-the-title').click();
@@ -122,7 +122,7 @@ export class ActionsPage {
 				.fill(`${name} Title`);
 		}
 
-		await this.newCreationActionForm.urlText.fill(url);
-		await this.newCreationActionForm.saveButton.click();
+		await this.newActionForm.urlText.fill(url);
+		await this.newActionForm.saveButton.click();
 	}
 }

@@ -30,7 +30,7 @@ export async function deleteFolderTemplateInformation(
 		);
 	}
 	catch (error) {
-		showError(error.message);
+		showError('Error', error.message);
 	}
 }
 

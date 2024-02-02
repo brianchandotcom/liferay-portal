@@ -3,20 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export const serviceConfigKeys = {
-	READY_PATH: 'READY_PATH',
-
-	SERVER_PORT: 'SERVER_PORT',
-};
-
-export const applicationSpecificConfigKeys = {
-	FOLDER_TEMPLATE_NODES_END_POINT: 'FOLDER_TEMPLATE_NODES_END_POINT',
-};
-
 export const applicationERCs = {
 	OAUTH_AGENT_ERC: 'liferay-dlfoldertemplate-oauth-application-user-agent',
 
 	OAUTH_SERVER_ERC: 'liferay-dlfoldertemplate-oauth-application-server',
+};
+
+export const applicationSpecificConfigKeys = {
+	FOLDER_TEMPLATE_NODES_END_POINT: 'FOLDER_TEMPLATE_NODES_END_POINT',
 };
 
 export const environmentConfigKeys = {
@@ -28,6 +22,30 @@ export const environmentConfigKeys = {
 
 	LIFERAY_OAUTH_APPLICATION_EXTERNAL_REFERENCE_CODES:
 		'LIFERAY_OAUTH_APPLICATION_EXTERNAL_REFERENCE_CODES',
+};
+
+export const serviceConfigKeys = {
+	READY_PATH: 'READY_PATH',
+
+	SERVER_PORT: 'SERVER_PORT',
+};
+
+export const oauthAgentConfigKeys = {
+	_OAUTH2_AUTHORIZATION_URI: '_OAUTH2_AUTHORIZATION_URI',
+
+	_OAUTH2_INTROSPECTION_URI: '_OAUTH2_INTROSPECTION_URI',
+
+	_OAUTH2_JWKS_URI: '_OAUTH2_JWKS_URI',
+
+	_OAUTH2_REDIRECT_URIS: '_OAUTH2_REDIRECT_URIS',
+
+	_OAUTH2_TOKEN_URI: '_OAUTH2_TOKEN_URI',
+
+	_OAUTH2_USER_AGENT_AUDIENCE: '_OAUTH2_USER_AGENT_AUDIENCE',
+
+	_OAUTH2_USER_AGENT_CLIENT_ID: '_OAUTH2_USER_AGENT_CLIENT_ID',
+
+	_OAUTH2_USER_AGENT_SCOPES: '_OAUTH2_USER_AGENT_SCOPES',
 };
 
 export const oauthServerConfigKeys = {
@@ -47,22 +65,4 @@ export const oauthServerConfigKeys = {
 	_OAUTH2_JWKS_URI: '_OAUTH2_JWKS_URI',
 
 	_OAUTH2_TOKEN_URI: '_OAUTH2_TOKEN_URI',
-};
-
-export const oauthAgentConfigKeys = {
-	_OAUTH2_AUTHORIZATION_URI: '_OAUTH2_AUTHORIZATION_URI',
-
-	_OAUTH2_INTROSPECTION_URI: '_OAUTH2_INTROSPECTION_URI',
-
-	_OAUTH2_JWKS_URI: '_OAUTH2_JWKS_URI',
-
-	_OAUTH2_REDIRECT_URIS: '_OAUTH2_REDIRECT_URIS',
-
-	_OAUTH2_TOKEN_URI: '_OAUTH2_TOKEN_URI',
-
-	_OAUTH2_USER_AGENT_AUDIENCE: '_OAUTH2_USER_AGENT_AUDIENCE',
-
-	_OAUTH2_USER_AGENT_CLIENT_ID: '_OAUTH2_USER_AGENT_CLIENT_ID',
-
-	_OAUTH2_USER_AGENT_SCOPES: '_OAUTH2_USER_AGENT_SCOPES',
 };

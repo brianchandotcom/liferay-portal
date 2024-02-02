@@ -34,7 +34,7 @@ export async function addFolderTemplateNode(
 		return node;
 	}
 	catch (error) {
-		showError(error);
+		showError('Error', error);
 	}
 }
 

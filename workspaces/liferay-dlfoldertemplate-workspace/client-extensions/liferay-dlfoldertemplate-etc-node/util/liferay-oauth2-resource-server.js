@@ -16,6 +16,11 @@ import {
 	oauthAgentConfigKeys,
 } from './constants.js';
 
+const agentUriPath = getOAuthConfigByKey(
+	applicationERCs.OAUTH_AGENT_ERC,
+	oauthAgentConfigKeys._OAUTH2_JWKS_URI
+);
+
 const domains = getConfigByKey(
 	environmentConfigKeys.COM_LIFERAY_LXC_DXP_DOMAINS
 );
@@ -28,19 +33,14 @@ const lxcDXPServerProtocol = getConfigByKey(
 	environmentConfigKeys.COM_LIFERAY_LXC_DXP_SERVER_PROTOCOL
 );
 
-const agentUriPath = getOAuthConfigByKey(
+const oauthAgentClientId = getOAuthConfigByKey(
 	applicationERCs.OAUTH_AGENT_ERC,
-	oauthAgentConfigKeys._OAUTH2_JWKS_URI
+	oauthAgentConfigKeys._OAUTH2_USER_AGENT_CLIENT_ID
 );
 
 const allowList = domains
 	? domains.split(',').map((domain) => `${lxcDXPServerProtocol}://${domain}`)
 	: '';
-
-const oauthAgentClientId = getOAuthConfigByKey(
-	applicationERCs.OAUTH_AGENT_ERC,
-	oauthAgentConfigKeys._OAUTH2_USER_AGENT_CLIENT_ID
-);
 
 const corsOptions = {
 	origin(origin, callback) {

@@ -9,10 +9,10 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Flex, Form} from 'antd';
 import React, {useState} from 'react';
 
-import {postFolderTemplateInformation} from '../../../../services/TemplateListService';
-import {showError, showSuccess} from '../../../../utils/util';
+import {postFolderTemplateInformation} from '../../services/TemplateListService';
+import {showError, showSuccess} from '../../utils/util';
 
-const NewTemplateItem = ({onClose}) => {
+const CreateTemplate = ({onClose, onSuccess}) => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const [form] = Form.useForm();
@@ -26,27 +26,27 @@ const NewTemplateItem = ({onClose}) => {
 
 						await postFolderTemplateInformation(values);
 
-						showSuccess('Template created!');
+						onSuccess();
 
-						onClose(true);
+						showSuccess('Template created!');
 					}
 					catch (error) {
-						showError(error.message);
-
-						onClose(false);
+						showError('Error', error.message);
 					}
 					finally {
 						form.resetFields();
 
 						setIsLoading(false);
+
+						onClose(false);
 					}
 				},
 				(error) => {
-					showError(error);
+					showError('Error', error);
 				}
 			)
 			.catch((error) => {
-				showError(error);
+				showError('Error', error);
 			});
 	};
 
@@ -67,7 +67,7 @@ const NewTemplateItem = ({onClose}) => {
 			<Form.Item label="Description" name="templateDescription">
 				<ClayInput component="textarea" type="text" />
 			</Form.Item>
-			<Form.Item>
+			<Form.Item className="mb-0">
 				<Flex gap={6}>
 					{!isLoading ? (
 						<ClayButton
@@ -89,4 +89,4 @@ const NewTemplateItem = ({onClose}) => {
 	);
 };
 
-export default NewTemplateItem;
+export default CreateTemplate;

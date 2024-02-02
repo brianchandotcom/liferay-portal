@@ -18,13 +18,13 @@ export async function getOAuthToken() {
 					resolve(token.access_token);
 				},
 				(error) => {
-					showError(error);
+					showError('Error', error);
 
 					reject(error);
 				}
 			)
 			.catch((error) => {
-				showError(error);
+				showError('Error', error);
 
 				reject(error);
 			});
@@ -34,14 +34,20 @@ export async function getOAuthToken() {
 }
 
 export function getServerUrl() {
+
 	return Liferay.OAuth2Client.FromUserAgentApplication(config.agentOauthAppId)
 		.homePageURL;
+
 }
 
-export function showError(message) {
-	Liferay.Util.openToast({title: message, type: 'danger'});
+export function showError(title, message) {
+
+	Liferay.Util.openToast({message, title, type: 'danger'});
+
 }
 
-export function showSuccess(message) {
-	Liferay.Util.openToast({title: message, type: 'success'});
+export function showSuccess(title, message='The request has been successfully completed') {
+
+	Liferay.Util.openToast({message, title, type: 'success'});
+
 }

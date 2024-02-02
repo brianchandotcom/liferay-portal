@@ -596,7 +596,7 @@
 							role="navigation"
 						>
 							<li>
-								<a href="${groupFriendlyURL}"><@clay["icon"] symbol="home-full" /></a>
+								<a href="${groupPathFriendlyURLPublic}"><@clay["icon"] symbol="home-full" /></a>
 							</li>
 
 							<#if !topLevelArticle>

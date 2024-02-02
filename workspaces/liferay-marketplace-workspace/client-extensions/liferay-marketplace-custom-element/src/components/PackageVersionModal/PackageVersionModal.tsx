@@ -54,12 +54,18 @@ export function PackageVersionModal({
 				productId: appProductId,
 			});
 
-			setVersions(
-				getCustomFieldValue(
-					product.customFields ?? [],
-					'Liferay Version'
-				) as any
-			);
+			const newVersionsList = [] as any;
+
+			const customFieldVersions = getCustomFieldValue(
+				product.customFields ?? [],
+				'Liferay Version'
+			) as any;
+
+			const revertedVersions = newVersionsList
+				.concat(customFieldVersions)
+				.reverse();
+
+			setVersions(revertedVersions);
 		};
 
 		getProductVersions();

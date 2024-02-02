@@ -12,7 +12,7 @@ apply plugin: "org.jenkins-ci.jpi"
 
 dependencies {
 	api group: "org.apache.activemq", name: "activemq-client", version: "5.16.7"
-	api group: "org.hudsonci.plugins", name: "nodelabelparameter", version: "1.4.1-h-1"
+	api group: "com.liferay", name: "nodelabelparameter", version: "1.4.1-h-1"
 	api group: "org.json", name: "json", version: "20231013"
 }
 

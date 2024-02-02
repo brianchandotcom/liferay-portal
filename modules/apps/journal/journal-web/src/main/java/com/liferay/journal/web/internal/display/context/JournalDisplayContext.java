@@ -881,8 +881,8 @@ public class JournalDisplayContext {
 		return _parentFolderId;
 	}
 
-	public PortletURL getPortletURL() {
-		PortletURL portletURL = _getBasePortletURL();
+	public PortletURL getPortletURL(String tab) {
+		PortletURL portletURL = _getBasePortletURL(tab);
 
 		String searchIn = _getSearchIn();
 
@@ -1022,16 +1022,9 @@ public class JournalDisplayContext {
 					));
 			}
 		).put(
-			"searchResults",
-			() -> {
-				if (Objects.equals(_getSearchIn(), "comments")) {
-					return "comments";
-				}
-
-				return getType();
-			}
+			"searchResults", getTab()
 		).put(
-			"searchURL", String.valueOf(_getBasePortletURL())
+			"searchURL", String.valueOf(_getBasePortletURL(getTab()))
 		).build();
 	}
 
@@ -1063,6 +1056,14 @@ public class JournalDisplayContext {
 			_httpServletRequest, "status", getDefaultStatus());
 
 		return _status;
+	}
+
+	public String getTab() {
+		if (Objects.equals(_getSearchIn(), "comments")) {
+			return "comments";
+		}
+
+		return getType();
 	}
 
 	public String getTitle() throws PortalException {
@@ -1351,7 +1352,8 @@ public class JournalDisplayContext {
 
 		SearchContainer<Object> articleAndFolderSearchContainer =
 			new SearchContainer<>(
-				_liferayPortletRequest, getPortletURL(), null, null);
+				_liferayPortletRequest, getPortletURL("web-content"), null,
+				null);
 
 		articleAndFolderSearchContainer.setOrderByCol(getOrderByCol());
 		articleAndFolderSearchContainer.setOrderByComparator(
@@ -1374,7 +1376,8 @@ public class JournalDisplayContext {
 
 		SearchContainer<JournalArticle> articleSearchContainer =
 			new SearchContainer<>(
-				_liferayPortletRequest, getPortletURL(), null, null);
+				_liferayPortletRequest, getPortletURL("web-content"), null,
+				null);
 
 		articleSearchContainer.setOrderByCol(getOrderByCol());
 		articleSearchContainer.setOrderByComparator(
@@ -1516,7 +1519,7 @@ public class JournalDisplayContext {
 		return booleanFilter;
 	}
 
-	private PortletURL _getBasePortletURL() {
+	private PortletURL _getBasePortletURL(String tab) {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		if (ArrayUtil.isNotEmpty(_getAssetCategoryIds())) {
@@ -1596,6 +1599,10 @@ public class JournalDisplayContext {
 			portletURL.setParameter("orderByType", orderByType);
 		}
 
+		if (Validator.isNotNull(tab)) {
+			portletURL.setParameter("tab", tab);
+		}
+
 		portletURL.setParameter("type", getType());
 
 		return portletURL;
@@ -1647,7 +1654,7 @@ public class JournalDisplayContext {
 		throws PortalException {
 
 		SearchContainer<MBMessage> searchContainer = new SearchContainer<>(
-			_liferayPortletRequest, getPortletURL(), null, null);
+			_liferayPortletRequest, getPortletURL("comments"), null, null);
 
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			_liferayPortletRequest.getHttpServletRequest());
@@ -1874,7 +1881,7 @@ public class JournalDisplayContext {
 
 		SearchContainer<JournalArticle> articleVersionsSearchContainer =
 			new SearchContainer<>(
-				_liferayPortletRequest, getPortletURL(), null, null);
+				_liferayPortletRequest, getPortletURL("versions"), null, null);
 
 		articleVersionsSearchContainer.setOrderByCol(getOrderByCol());
 		articleVersionsSearchContainer.setOrderByComparator(

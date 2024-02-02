@@ -1,0 +1,257 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+/* eslint-disable no-console */
+
+import {spawnSync} from 'child_process';
+import {
+	copyFileSync,
+	existsSync,
+	readFileSync,
+	rmSync,
+	writeFileSync,
+} from 'fs';
+import {join} from 'path';
+
+function copyFile(
+	setup: boolean,
+	bundlesDir: string,
+	from: string,
+	to: string
+) {
+	if (setup && !existsSync(from)) {
+		return;
+	}
+
+	const toPath = join(bundlesDir, to);
+
+	if (!setup && !existsSync(toPath)) {
+		return;
+	}
+
+	if (setup) {
+		process.stdout.write(`      Deploying file: ${to}`);
+
+		copyFileSync(from, toPath);
+	}
+	else {
+		process.stdout.write(`      Undeploying file: ${to}`);
+
+		rmSync(toPath);
+	}
+
+	console.log(' ✅');
+}
+
+function deployClientExtension(
+	setup: boolean,
+	portalSourceDir: string,
+	bundlesDir: string,
+	projectName: string
+) {
+	if (setup) {
+		process.stdout.write(
+			`      Deploying client extension: ${projectName}`
+		);
+
+		const {error, status, stderr, stdout} = spawnSync(
+			'gradlew',
+			['deploy', '-a'],
+			{
+				cwd: join(
+					portalSourceDir,
+					'workspace',
+					'liferay-sample-workspace',
+					'client-extensions',
+					projectName
+				),
+				stdio: 'pipe',
+			}
+		);
+
+		if (error) {
+			throw new Error(
+				`Failed to deploy client extension ${projectName}:\n\n` +
+					`${error.toString()}`
+			);
+		}
+
+		if (status !== 0) {
+			throw new Error(
+				`Failed to deploy client extension ${projectName}:\n\n` +
+					`${stdout.toString()}\n${stderr.toString()}`
+			);
+		}
+
+		copyFileSync(
+			join(
+				portalSourceDir,
+				'workspaces',
+				'liferay-sample-workspace',
+				'bundles',
+				'osgi',
+				'client-extensions',
+				`${projectName}.zip`
+			),
+			join(bundlesDir, 'deploy')
+		);
+	}
+	else {
+		process.stdout.write(
+			`      Undeploying client extension: ${projectName}`
+		);
+
+		rmSync(
+			join(bundlesDir, 'osgi', 'client-extensions', `${projectName}.zip`)
+		);
+	}
+
+	console.log(' ✅');
+}
+
+function deployOSGiModule(
+	setup: boolean,
+	portalSourceDir: string,
+	projectDir: string
+) {
+	if (setup) {
+		process.stdout.write(`      Deploying module: ${projectDir}`);
+
+		runCommand(join(portalSourceDir, projectDir), 'gradlew', ['deploy']);
+	}
+	else {
+		process.stdout.write(`      Undeploying module: ${projectDir}`);
+
+		runCommand(join(portalSourceDir, projectDir), 'gradlew', ['clean']);
+	}
+
+	console.log(' ✅');
+}
+
+function tweakPortalExtProperties(
+	setup: boolean,
+	bundlesDir: string,
+	fileQualifiers: string[]
+) {
+	console.log(`⚙️ Tweaking portal-ext.properties:`);
+
+	const portalExtPropertiesFile = join(bundlesDir, 'portal-ext.properties');
+	const lines = readFileSync(portalExtPropertiesFile, 'utf-8').split('\n');
+
+	if (setup) {
+		fileQualifiers.forEach((fileQualifier) => {
+			const fileName = `portal-ext.${fileQualifier}.properties`;
+
+			if (!existsSync(join(bundlesDir, fileName))) {
+				return;
+			}
+
+			const property = `include-and-override=${fileName}`;
+
+			const found = lines
+				.map((line) => line.trim())
+				.find((line) => line === property);
+
+			if (found) {
+				return;
+			}
+
+			console.log(`      Adding ${fileName} as include-and-override ✅`);
+
+			lines.push(property);
+		});
+	}
+	else {
+		fileQualifiers.forEach((fileQualifier) => {
+			const fileName = `portal-ext.${fileQualifier}.properties`;
+
+			const property = `include-and-override=${fileName}`;
+
+			const index = lines
+				.map((line) => line.trim())
+				.findIndex((line) => line === property);
+
+			if (index === -1) {
+				return;
+			}
+
+			console.log(
+				`      Removing ${fileName} as include-and-override ✅`
+			);
+
+			lines.splice(index, 1);
+		});
+	}
+
+	writeFileSync(portalExtPropertiesFile, lines.join('\n'), 'utf-8');
+}
+
+function runCommand(workDir: string, cmd: string, args: string[]) {
+	const {error, status, stderr, stdout} = spawnSync(cmd, args, {
+		cwd: workDir,
+		stdio: 'pipe',
+	});
+
+	if (error) {
+		throw new Error(
+			`Failed to run command '${cmd} ${args.join(' ')}':\n\n` +
+				`${error.toString()}`
+		);
+	}
+
+	if (status !== 0) {
+		throw new Error(
+			`Failed to run command '${cmd} ${args.join(' ')}':\n\n` +
+				`STDOUT:\n${stdout.toString()}\n\nSTDERR:\n${stderr.toString()}`
+		);
+	}
+
+	return {stderr, stdout};
+}
+
+export default {
+	setup: {
+		copyFile: (bundlesDir: string, from: string, to: string) =>
+			copyFile(true, bundlesDir, from, to),
+		deployClientExtension: (
+			portalSourceDir: string,
+			bundlesDir: string,
+			projectName: string
+		) =>
+			deployClientExtension(
+				true,
+				portalSourceDir,
+				bundlesDir,
+				projectName
+			),
+		deployOSGiModule: (portalSourceDir: string, projectDir: string) =>
+			deployOSGiModule(true, portalSourceDir, projectDir),
+		tweakPortalExtProperties: (
+			bundlesDir: string,
+			fileQualifiers: string[]
+		) => tweakPortalExtProperties(true, bundlesDir, fileQualifiers),
+	},
+	teardown: {
+		copyFile: (bundlesDir: string, from: string, to: string) =>
+			copyFile(false, bundlesDir, from, to),
+		deployClientExtension: (
+			portalSourceDir: string,
+			bundlesDir: string,
+			projectName: string
+		) =>
+			deployClientExtension(
+				false,
+				portalSourceDir,
+				bundlesDir,
+				projectName
+			),
+		deployOSGiModule: (portalSourceDir: string, projectDir: string) =>
+			deployOSGiModule(false, portalSourceDir, projectDir),
+		tweakPortalExtProperties: (
+			bundlesDir: string,
+			fileQualifiers: string[]
+		) => tweakPortalExtProperties(false, bundlesDir, fileQualifiers),
+	},
+};

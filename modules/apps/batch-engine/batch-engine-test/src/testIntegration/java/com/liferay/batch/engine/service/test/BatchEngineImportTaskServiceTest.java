@@ -13,13 +13,17 @@ import com.liferay.batch.engine.internal.test.BlogPosting;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -31,6 +35,167 @@ public class BatchEngineImportTaskServiceTest
 	extends BaseBatchEngineTaskServiceTest {
 
 	@Test
+	public void testAddBatchEngineImportTask() throws Exception {
+		UserTestUtil.setUser(normalUser);
+
+		_batchEngineImportTask1 = _createBatchEngineImportTask(
+			company.getCompanyId(), normalUser);
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testAddBatchEngineImportTaskOtherCompanyNotAllowed()
+		throws Exception {
+
+		UserTestUtil.setUser(normalUser);
+
+		_batchEngineImportTask1 = _createBatchEngineImportTask(
+			otherCompany.getCompanyId(), normalUser);
+	}
+
+	@Test
+	public void testGetBatchEngineImportTask() throws Exception {
+		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
+			company.getCompanyId(), omniadminUser);
+
+		_batchEngineImportTaskService.getBatchEngineImportTask(
+			_batchEngineImportTask1.getBatchEngineImportTaskId());
+	}
+
+	@Test
+	public void testGetBatchEngineImportTaskByExternalReferenceCode()
+		throws Exception {
+
+		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
+			company.getCompanyId(), normalUser);
+
+		UserTestUtil.setUser(normalUser);
+
+		_batchEngineImportTaskService.
+			getBatchEngineImportTaskByExternalReferenceCode(
+				_batchEngineImportTask1.getExternalReferenceCode(),
+				company.getCompanyId());
+	}
+
+	@Test
+	public void testGetBatchEngineImportTaskByExternalReferenceCodeCompanyAdminAllowed()
+		throws Exception {
+
+		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
+			company.getCompanyId(), normalUser);
+
+		UserTestUtil.setUser(companyAdminUser);
+
+		_batchEngineImportTaskService.
+			getBatchEngineImportTaskByExternalReferenceCode(
+				_batchEngineImportTask1.getExternalReferenceCode(),
+				company.getCompanyId());
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testGetBatchEngineImportTaskByExternalReferenceCodeNotOwnerNotAllowed()
+		throws Exception {
+
+		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
+			company.getCompanyId(), companyAdminUser);
+
+		UserTestUtil.setUser(normalUser);
+
+		_batchEngineImportTaskService.
+			getBatchEngineImportTaskByExternalReferenceCode(
+				_batchEngineImportTask1.getExternalReferenceCode(),
+				company.getCompanyId());
+	}
+
+	@Test
+	public void testGetBatchEngineImportTaskCompanyAdminAllowed()
+		throws Exception {
+
+		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
+			company.getCompanyId(), normalUser);
+
+		UserTestUtil.setUser(companyAdminUser);
+
+		_batchEngineImportTaskService.getBatchEngineImportTask(
+			_batchEngineImportTask1.getBatchEngineImportTaskId());
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testGetBatchEngineImportTaskNormalUserNotAllowed()
+		throws Exception {
+
+		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
+			company.getCompanyId(), companyAdminUser);
+
+		UserTestUtil.setUser(normalUser);
+
+		_batchEngineImportTaskService.getBatchEngineImportTask(
+			_batchEngineImportTask1.getBatchEngineImportTaskId());
+	}
+
+	@Test
+	public void testGetBatchEngineImportTaskNormalUserOwnerAllowed()
+		throws Exception {
+
+		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
+			company.getCompanyId(), normalUser);
+
+		UserTestUtil.setUser(normalUser);
+
+		_batchEngineImportTaskService.getBatchEngineImportTask(
+			_batchEngineImportTask1.getBatchEngineImportTaskId());
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testGetBatchEngineImportTaskOtherCompanyNotAllowed()
+		throws Exception {
+
+		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
+			otherCompany.getCompanyId(), omniadminUser);
+
+		UserTestUtil.setUser(normalUser);
+
+		_batchEngineImportTaskService.getBatchEngineImportTask(
+			_batchEngineImportTask1.getBatchEngineImportTaskId());
+	}
+
+	@Test
+	public void testGetBatchEngineImportTaskOtherCompanyOmniadminAllowed()
+		throws Exception {
+
+		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
+			otherCompany.getCompanyId(), omniadminUser);
+
+		_batchEngineImportTaskService.getBatchEngineImportTask(
+			_batchEngineImportTask1.getBatchEngineImportTaskId());
+	}
+
+	@Test
+	public void testGetBatchEngineImportTasks() throws Exception {
+		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
+			company.getCompanyId(), normalUser);
+
+		_batchEngineImportTask2 = _createTestBatchEngineImportTask(
+			company.getCompanyId(), omniadminUser);
+
+		UserTestUtil.setUser(normalUser);
+
+		List<BatchEngineImportTask> batchEngineImportTasks =
+			_batchEngineImportTaskService.getBatchEngineImportTasks(
+				company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			batchEngineImportTasks.toString(), 1,
+			batchEngineImportTasks.size());
+
+		BatchEngineImportTask actualBatchEngineImportTask =
+			batchEngineImportTasks.get(0);
+
+		Assert.assertEquals(
+			_batchEngineImportTask1.getBatchEngineImportTaskId(),
+			actualBatchEngineImportTask.getBatchEngineImportTaskId());
+	}
+
+	/*@Test
 	public void testGetBatchEngineImportTask() throws Exception {
 		BatchEngineImportTask batchEngineImportTask =
 			_createBatchEngineImportTask(user.getCompanyId());
@@ -68,9 +233,22 @@ public class BatchEngineImportTaskServiceTest
 
 		_batchEngineImportTaskService.getBatchEngineImportTask(
 			batchEngineImportTask.getBatchEngineImportTaskId());
+	}*/
+
+	private BatchEngineImportTask _createBatchEngineImportTask(
+			long companyId, User user)
+		throws Exception {
+
+		return _batchEngineImportTaskService.addBatchEngineImportTask(
+			null, companyId, user.getUserId(), 10, null,
+			BlogPosting.class.getName(), new byte[0], "JSON",
+			BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
+			BatchEngineTaskOperation.CREATE.name(), new HashMap<>(), null);
 	}
 
-	private BatchEngineImportTask _createBatchEngineImportTask(long companyId)
+	private BatchEngineImportTask _createTestBatchEngineImportTask(
+			long companyId, User user)
 		throws Exception {
 
 		return _batchEngineImportTaskLocalService.addBatchEngineImportTask(
@@ -80,6 +258,12 @@ public class BatchEngineImportTaskServiceTest
 			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
 			BatchEngineTaskOperation.CREATE.name(), new HashMap<>(), null);
 	}
+
+	@DeleteAfterTestRun
+	private BatchEngineImportTask _batchEngineImportTask1;
+
+	@DeleteAfterTestRun
+	private BatchEngineImportTask _batchEngineImportTask2;
 
 	@Inject
 	private BatchEngineImportTaskLocalService

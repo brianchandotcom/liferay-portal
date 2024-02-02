@@ -40,13 +40,9 @@ public class IFrameSanitizerImpl implements Sanitizer {
 		long classPK, String contentType, String[] modes, String content,
 		Map<String, Object> options) {
 
-		if (!_iFrameConfiguration.enabled()) {
-			return content;
-		}
-
-		if (Validator.isNull(content) || Validator.isNull(contentType) ||
-			(!contentType.equals(ContentTypes.TEXT_HTML) &&
-			 !contentType.equals(ContentTypes.TEXT_PLAIN))) {
+		if (!_iFrameConfiguration.enabled() || Validator.isNull(content) ||
+			Validator.isNull(contentType) ||
+			!contentType.equals(ContentTypes.TEXT_HTML)) {
 
 			return content;
 		}
@@ -66,19 +62,15 @@ public class IFrameSanitizerImpl implements Sanitizer {
 			}
 		}
 
-		if (contentType.equals(ContentTypes.TEXT_HTML)) {
-			Element body = document.body();
+		Element body = document.body();
 
-			StringBundler sb = new StringBundler(body.childNodeSize());
+		StringBundler sb = new StringBundler(body.childNodeSize());
 
-			for (Node childNode : body.childNodes()) {
-				sb.append(childNode.toString());
-			}
-
-			return sb.toString();
+		for (Node childNode : body.childNodes()) {
+			sb.append(childNode.toString());
 		}
 
-		return document.text();
+		return sb.toString();
 	}
 
 	@Activate

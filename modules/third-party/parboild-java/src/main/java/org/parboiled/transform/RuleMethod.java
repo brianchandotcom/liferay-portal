@@ -23,6 +23,7 @@
 package org.parboiled.transform;
 
 import static org.parboiled.common.Preconditions.*;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Type;
@@ -71,7 +72,7 @@ class RuleMethod extends MethodNode {
 
     public RuleMethod(Class<?> ownerClass, int access, String name, String desc, String signature, String[] exceptions,
                       boolean hasExplicitActionOnlyAnno, boolean hasDontLabelAnno, boolean hasSkipActionsInPredicates) {
-        super(access, name, desc, signature, exceptions);
+        super(Opcodes.ASM4, access, name, desc, signature, exceptions);
         this.ownerClass = ownerClass;
         parameterCount = Type.getArgumentTypes(desc).length;
         hasCachedAnnotation = parameterCount == 0;
@@ -345,3 +346,4 @@ class RuleMethod extends MethodNode {
     }
     
 }
+/* @generated */

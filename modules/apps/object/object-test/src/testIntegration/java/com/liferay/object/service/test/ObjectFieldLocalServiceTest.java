@@ -790,13 +790,13 @@ public class ObjectFieldLocalServiceTest {
 			_getReadOnlyTextObjectField(
 				objectDefinition.getObjectDefinitionId(), null, null));
 
-		ObjectField finalObjectField = objectField1;
+		ObjectField finalObjectField1 = objectField1;
 
 		AssertUtils.assertFailure(
 			ObjectFieldReadOnlyConditionExpressionException.class,
 			"Read only condition expression is required",
 			() -> _updateReadOnlyObjectField(
-				finalObjectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
+				finalObjectField1, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
 				null));
 
 		String invalidDDMScript = RandomTestUtil.randomString() + "()";
@@ -805,7 +805,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldReadOnlyConditionExpressionException.class,
 			"Syntax error in: " + invalidDDMScript,
 			() -> _updateReadOnlyObjectField(
-				finalObjectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
+				finalObjectField1, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
 				invalidDDMScript));
 
 		String invalidReadOnly = RandomTestUtil.randomString();
@@ -814,7 +814,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldReadOnlyException.class,
 			"Unknown read only: " + invalidReadOnly,
 			() -> _updateReadOnlyObjectField(
-				finalObjectField, invalidReadOnly, null));
+				finalObjectField1, invalidReadOnly, null));
 
 		ObjectDefinition relatedObjectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
@@ -928,6 +928,43 @@ public class ObjectFieldLocalServiceTest {
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
 			_objectEntryLocalService);
+
+		// Object field required
+
+		objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			_objectDefinitionLocalService);
+
+		ObjectField objectField3 = _addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).required(
+				true
+			).build());
+
+		Assert.assertTrue(objectField3.isRequired());
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		objectField3.setRequired(false);
+
+		objectField3 = _addOrUpdateCustomObjectField(objectField3);
+
+		Assert.assertFalse(objectField3.isRequired());
+
+		objectField3.setRequired(true);
+
+		ObjectField finalObjectField2 = objectField3;
+
+		AssertUtils.assertFailure(
+			ObjectFieldRequiredException.class, null,
+			() -> _addOrUpdateCustomObjectField(finalObjectField2));
 	}
 
 	@Test

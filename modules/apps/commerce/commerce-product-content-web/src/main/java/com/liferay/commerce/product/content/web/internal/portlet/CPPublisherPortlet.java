@@ -9,6 +9,8 @@ import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.commerce.media.CommerceCatalogDefaultImage;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.constants.CPContentWebKeys;
+import com.liferay.commerce.product.content.helper.CPContentHelper;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.display.context.CPPublisherDisplayContext;
@@ -87,6 +89,8 @@ public class CPPublisherPortlet extends MVCPortlet {
 					_portal.getHttpServletRequest(renderRequest), _portal);
 
 			renderRequest.setAttribute(
+				CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);
+			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpPublisherDisplayContext);
 		}
 		catch (PortalException portalException) {
@@ -111,6 +115,9 @@ public class CPPublisherPortlet extends MVCPortlet {
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private CPContentHelper _cpContentHelper;
 
 	@Reference
 	private CPContentListEntryRendererRegistry

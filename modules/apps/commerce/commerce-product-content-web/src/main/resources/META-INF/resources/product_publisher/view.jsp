@@ -19,6 +19,8 @@ SearchContainer<CPCatalogEntry> searchContainer = cpPublisherDisplayContext.getS
 			className="<%= CPPublisherPortlet.class.getName() %>"
 			contextObjects='<%=
 				HashMapBuilder.<String, Object>put(
+					"cpContentHelper", request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER)
+				).put(
 					"cpPublisherDisplayContext", cpPublisherDisplayContext
 				).build()
 			%>'

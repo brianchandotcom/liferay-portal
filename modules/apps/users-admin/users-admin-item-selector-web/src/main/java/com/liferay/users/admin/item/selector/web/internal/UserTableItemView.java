@@ -21,8 +21,9 @@ import java.util.Locale;
  */
 public class UserTableItemView implements TableItemView {
 
-	public UserTableItemView(User user) {
+	public UserTableItemView(User user, boolean multipleSelection) {
 		_user = user;
+		_multipleSelection = multipleSelection;
 	}
 
 	@Override
@@ -36,16 +37,26 @@ public class UserTableItemView implements TableItemView {
 
 		TextSearchEntry nameTextSearchEntry = new TextSearchEntry();
 
-		nameTextSearchEntry.setCssClass(
-			"table-cell-expand-smaller table-cell-minw-80");
+		String cssClass = "table-cell-expand-smaller table-cell-minw-80";
+
+		if (!_multipleSelection) {
+			cssClass = cssClass.concat(" entry entry-selector");
+		}
+
+		nameTextSearchEntry.setCssClass(cssClass);
 		nameTextSearchEntry.setName(HtmlUtil.escape(_user.getFullName()));
 
 		searchEntries.add(nameTextSearchEntry);
 
 		TextSearchEntry screenNameTextSearchEntry = new TextSearchEntry();
 
-		screenNameTextSearchEntry.setCssClass(
-			"table-cell-expand-smaller table-cell-minw-150");
+		cssClass = "table-cell-expand-smaller table-cell-minw-150";
+
+		if (!_multipleSelection) {
+			cssClass = cssClass.concat(" entry entry-selector");
+		}
+
+		screenNameTextSearchEntry.setCssClass(cssClass);
 		screenNameTextSearchEntry.setName(
 			HtmlUtil.escape(_user.getScreenName()));
 
@@ -54,6 +65,7 @@ public class UserTableItemView implements TableItemView {
 		return searchEntries;
 	}
 
+	private final boolean _multipleSelection;
 	private final User _user;
 
 }

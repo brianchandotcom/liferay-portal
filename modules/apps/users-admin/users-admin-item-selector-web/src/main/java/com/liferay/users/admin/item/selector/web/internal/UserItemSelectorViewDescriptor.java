@@ -61,7 +61,7 @@ public class UserItemSelectorViewDescriptor
 
 	@Override
 	public TableItemView getTableItemView(User user) {
-		return new UserTableItemView(user);
+		return new UserTableItemView(user, _multipleSelection);
 	}
 
 	@Override

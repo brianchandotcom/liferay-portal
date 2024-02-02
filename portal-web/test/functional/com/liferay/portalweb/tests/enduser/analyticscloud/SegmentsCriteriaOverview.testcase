@@ -118,8 +118,8 @@ definition {
 
 			ACSegments.editDateCriterion(
 				day = 10,
-				month = "September",
-				year = 2020);
+				month = "January",
+				year = 2024);
 		}
 
 		task ("Add a userName criteria from Individual Attributes nested in email") {
@@ -161,7 +161,7 @@ definition {
 
 			ACSegments.viewSegmentCriteriaIndividualAttributes(
 				attributeName = "birthDate",
-				attributeValue = "2020-09-10",
+				attributeValue = "2024-01-10",
 				condition = "is after",
 				conjunction = "OR",
 				index = 2);

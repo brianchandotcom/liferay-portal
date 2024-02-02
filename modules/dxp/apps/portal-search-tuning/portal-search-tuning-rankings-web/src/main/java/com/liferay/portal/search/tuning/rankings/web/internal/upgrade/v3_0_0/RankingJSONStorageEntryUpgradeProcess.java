@@ -55,7 +55,9 @@ public class RankingJSONStorageEntryUpgradeProcess extends UpgradeProcess {
 				preparedStatement2.setLong(
 					3, resultSet.getLong("jsonStorageEntryId"));
 
-				if (resultSet.getBoolean("valueString")) {
+				String inactiveValueString = resultSet.getString("valueString");
+
+				if (Boolean.valueOf(inactiveValueString)) {
 					preparedStatement2.setString(
 						2,
 						StringBundler.concat(

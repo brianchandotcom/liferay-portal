@@ -14,6 +14,8 @@ public interface WorkflowMetricsIndex {
 
 	public boolean createIndex(long companyId) throws PortalException;
 
+	public boolean deleteAllDocuments(long companyId) throws PortalException;
+
 	public String getIndexName(long companyId);
 
 	public String getIndexType();

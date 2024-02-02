@@ -328,7 +328,7 @@ public class FragmentEntryProcessorHelperImpl
 		Object value = infoFieldValue.getValue(locale);
 
 		if (value == null) {
-			return null;
+			return StringPool.BLANK;
 		}
 
 		if (value instanceof Collection) {

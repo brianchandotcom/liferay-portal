@@ -19,8 +19,8 @@ import {
 } from '../../services/TemplateListService';
 import {showError} from '../../utils/util';
 import Diagram from '../template-diagram/Diagram';
-import TemplateItemCreateFolder from './controls/template-item-create-folder/TemplateItemCreateFolder';
-import NewTemplateItem from './controls/template-item-create/NewTemplateItem';
+import CreateTemplate from './CreateTemplate';
+import GenerateFolders from './GenerateFolders';
 
 const DELTAS = [{label: 5}, {label: 10}, {label: 20}, {label: 40}];
 
@@ -28,7 +28,6 @@ const MODAL_OPEN = 'OPEN';
 
 const HEADERS = [
 	{
-		expanded: false,
 		key: 'id',
 		label: 'ID',
 		wrap: false,
@@ -40,13 +39,11 @@ const HEADERS = [
 		wrap: false,
 	},
 	{
-		expanded: false,
 		key: 'dateCreated',
 		label: 'Created Date',
 		wrap: false,
 	},
 	{
-		expanded: false,
 		key: 'actions',
 		label: '',
 		wrap: false,
@@ -106,7 +103,7 @@ const TemplateList = () => {
 		try {
 			dispatchModal({
 				payload: {
-					body: <TemplateItemCreateFolder templateId={template.id} />,
+					body: <GenerateFolders templateId={template.id} />,
 					center: true,
 					header: 'Create Folder Structure',
 					size: 'lg',
@@ -115,7 +112,7 @@ const TemplateList = () => {
 			});
 		}
 		catch (exp) {
-			showError(exp);
+			showError('Error', exp);
 		}
 	};
 
@@ -153,7 +150,12 @@ const TemplateList = () => {
 	const openNewItemModal = () => {
 		dispatchModal({
 			payload: {
-				body: <NewTemplateItem onClose={closeNewItemModal} />,
+				body: (
+					<CreateTemplate
+						onClose={closeNewItemModal}
+						onSuccess={reload}
+					/>
+				),
 				center: true,
 				header: 'Create Folder Template',
 				size: 'lg',
@@ -189,26 +191,33 @@ const TemplateList = () => {
 					<ClayToolbar.Item></ClayToolbar.Item>
 					<ClayToolbar.Item>
 						<ClayToolbar.Section>
-							<ClayButtonGroup spaced={true}>
-								<ClayButtonWithIcon
-									aria-label="Reload"
-									className="lfr-portal-tooltip"
-									disabled={isDeletingLoading || isLoading}
-									displayType="secondary"
-									onClick={reload}
-									symbol="reload"
-									title="Reload"
-								/>
-								<ClayButtonWithIcon
-									aria-label="Create New"
-									className="lfr-portal-tooltip"
-									disabled={isDeletingLoading || isLoading}
-									displayType="primary"
-									onClick={openNewItemModal}
-									symbol="plus"
-									title="Create New"
-								/>
-							</ClayButtonGroup>
+							{Liferay.ThemeDisplay.isSignedIn() && (
+								<ClayButtonGroup spaced={true}>
+									<ClayButtonWithIcon
+										aria-label="Reload"
+										className="lfr-portal-tooltip"
+										disabled={
+											isDeletingLoading || isLoading
+										}
+										displayType="secondary"
+										onClick={reload}
+										symbol="reload"
+										title="Reload"
+									/>
+
+									<ClayButtonWithIcon
+										aria-label="Create New"
+										className="lfr-portal-tooltip"
+										disabled={
+											isDeletingLoading || isLoading
+										}
+										displayType="primary"
+										onClick={openNewItemModal}
+										symbol="plus"
+										title="Create New"
+									/>
+								</ClayButtonGroup>
+							)}
 						</ClayToolbar.Section>
 					</ClayToolbar.Item>
 				</ClayToolbar.Nav>
@@ -336,19 +345,21 @@ const TemplateList = () => {
 						</span>
 					</div>
 					<div className="c-empty-state-footer">
-						<ClayButton
-							aria-label="Create New"
-							className="lfr-portal-tooltip"
-							disabled={isDeletingLoading || isLoading}
-							displayType="primary"
-							onClick={openNewItemModal}
-							title="Create New"
-						>
-							<span className="inline-item inline-item-before my-auto">
-								<ClayIcon symbol="plus" />
-							</span>
-							<span>Create New Template</span>
-						</ClayButton>
+						{Liferay.ThemeDisplay.isSignedIn() && (
+							<ClayButton
+								aria-label="Create New"
+								className="lfr-portal-tooltip"
+								disabled={isDeletingLoading || isLoading}
+								displayType="primary"
+								onClick={openNewItemModal}
+								title="Create New"
+							>
+								<span className="inline-item inline-item-before my-auto">
+									<ClayIcon symbol="plus" />
+								</span>
+								<span>Create New Template</span>
+							</ClayButton>
+						)}
 					</div>
 				</div>
 			)}

@@ -23,7 +23,7 @@ router.post(
 			// eslint-disable-next-line no-console
 			console.log(error.message);
 
-			response.status(500).json({errorMessage: error});
+			response.status(500).json({error: error.message});
 		}
 	}
 );

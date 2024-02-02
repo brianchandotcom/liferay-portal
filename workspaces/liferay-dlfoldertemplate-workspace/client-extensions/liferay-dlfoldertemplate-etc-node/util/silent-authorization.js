@@ -13,14 +13,6 @@ import {
 	oauthServerConfigKeys,
 } from './constants.js';
 
-const lxcDXPMainDomain = getConfigByKey(
-	environmentConfigKeys.COM_LIFERAY_LXC_DXP_MAIN_DOMAIN
-);
-
-const lxcDXPServerProtocol = getConfigByKey(
-	environmentConfigKeys.COM_LIFERAY_LXC_DXP_SERVER_PROTOCOL
-);
-
 const clientId = getOAuthConfigByKey(
 	applicationERCs.OAUTH_SERVER_ERC,
 	oauthServerConfigKeys._OAUTH2_HEADLESS_SERVER_CLIENT_ID
@@ -29,6 +21,14 @@ const clientId = getOAuthConfigByKey(
 const clientSecret = getOAuthConfigByKey(
 	applicationERCs.OAUTH_SERVER_ERC,
 	oauthServerConfigKeys._OAUTH2_HEADLESS_SERVER_CLIENT_SECRET
+);
+
+const lxcDXPMainDomain = getConfigByKey(
+	environmentConfigKeys.COM_LIFERAY_LXC_DXP_MAIN_DOMAIN
+);
+
+const lxcDXPServerProtocol = getConfigByKey(
+	environmentConfigKeys.COM_LIFERAY_LXC_DXP_SERVER_PROTOCOL
 );
 
 const uri = getOAuthConfigByKey(

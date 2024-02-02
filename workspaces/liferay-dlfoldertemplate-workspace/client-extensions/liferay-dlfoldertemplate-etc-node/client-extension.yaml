@@ -16,7 +16,6 @@ liferay-dlfoldertemplate-oauth-application-server:
         - C_T4T14FolderTemplate.everything
         - C_T4T14FolderTemplateNode.everything
     type: oAuthApplicationHeadlessServer
-    userAccountScreenName: default-service-account
 liferay-dlfoldertemplate-oauth-application-user-agent:
     .serviceAddress: localhost:8050
     .serviceScheme: http

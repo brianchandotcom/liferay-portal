@@ -28,6 +28,12 @@ export async function createFolders(
 	try {
 		const templateNodes = await getFolderTemplateNodesPage(templateId);
 
+		if (templateNodes.length <= 0) {
+			throw new Error(
+				'Template is empty; no template nodes have been located.'
+			);
+		}
+
 		const rootNode = templateNodes.find((node) => node.root);
 
 		await traverseTemplateNodes(

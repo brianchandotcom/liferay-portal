@@ -12,23 +12,13 @@ const FolderNode = ({data: node, nodeWidth, onAdd, onSelect}) => {
 	return (
 		<>
 			<div
-				className="card card-horizontal card-type-directory shadow-sm"
+				className="card card-horizontal card-type-directory"
 				onClick={() => onSelect(node)}
 				style={{width: nodeWidth}}
 			>
-				{!node.root && (
-					<Handle
-						className="top-connector"
-						position={Position.Top}
-						type="target"
-					/>
-				)}
-				<Handle
-					className="bottom-connector"
-					id="a"
-					position={Position.Bottom}
-					type="source"
-				/>
+				{!node.root && <Handle position={Position.Top} type="target" />}
+
+				<Handle position={Position.Bottom} type="source" />
 
 				<div className="card-body">
 					<div className="card-row">
@@ -42,9 +32,12 @@ const FolderNode = ({data: node, nodeWidth, onAdd, onSelect}) => {
 						<div className="autofit-col autofit-col-expand autofit-col-gutters">
 							<section className="autofit-section">
 								<span className="text-truncate-inline">
-									<label className="text-truncate">
+									<span
+										className="lfr-portal-tooltip text-truncate"
+										title={node.label}
+									>
 										{node.label}
-									</label>
+									</span>
 								</span>
 							</section>
 						</div>

@@ -105,8 +105,9 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 					catch (Exception exception) {
 						throw new RuntimeException(exception);
 					}
-
-					bundleContext.ungetService(serviceReference);
+					finally {
+						bundleContext.ungetService(serviceReference);
+					}
 				});
 
 		_classNameTemplateHandlersServiceTrackerMap =

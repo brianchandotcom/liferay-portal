@@ -14,7 +14,7 @@ long entryId = ParamUtil.getLong(request, "entryId");
 <c:if test="<%= entryId > 0 %>">
 
 	<%
-	Entry entry = EntryLocalServiceUtil.getEntry(entryId);
+	Entry entry = EntryServiceUtil.getEntry(entryId);
 
 	entry = entry.toEscapedModel();
 	%>

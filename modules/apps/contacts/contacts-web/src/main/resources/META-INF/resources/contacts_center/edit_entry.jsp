@@ -15,7 +15,7 @@ long entryId = ParamUtil.getLong(request, "entryId");
 Entry entry = null;
 
 if (entryId > 0) {
-	entry = EntryLocalServiceUtil.getEntry(entryId);
+	entry = EntryServiceUtil.getEntry(entryId);
 }
 %>
 

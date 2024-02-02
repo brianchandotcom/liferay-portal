@@ -26,6 +26,7 @@ page import="com.liferay.contacts.constants.ContactsConstants" %><%@
 page import="com.liferay.contacts.constants.ContactsWebKeys" %><%@
 page import="com.liferay.contacts.model.Entry" %><%@
 page import="com.liferay.contacts.service.EntryLocalServiceUtil" %><%@
+page import="com.liferay.contacts.service.EntryServiceUtil" %><%@
 page import="com.liferay.contacts.util.ContactsExtensionsUtil" %><%@
 page import="com.liferay.contacts.util.ContactsUtil" %><%@
 page import="com.liferay.contacts.web.internal.constants.ContactsPortletKeys" %><%@

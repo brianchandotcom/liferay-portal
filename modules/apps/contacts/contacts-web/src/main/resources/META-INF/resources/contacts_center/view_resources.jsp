@@ -22,7 +22,7 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 			<c:if test="<%= entryId > 0 %>">
 
 				<%
-				Entry entry = EntryLocalServiceUtil.getEntry(entryId);
+				Entry entry = EntryServiceUtil.getEntry(entryId);
 
 				String redirect = ParamUtil.getString(request, "redirect");
 				%>

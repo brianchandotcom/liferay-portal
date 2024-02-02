@@ -1,4 +1,5 @@
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import getInterestsQuery from 'contacts/queries/InterestsQuery';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
@@ -32,13 +33,13 @@ const TableWithData = withBaseResults(withData, {
 				)}
 			</span>
 
-			<a
+			<ClayLink
 				href={URLConstants.AccountIndividualsDocumentationLink}
 				key='DOCUMENTATION'
 				target='_blank'
 			>
 				{Liferay.Language.get('learn-more-about-interests')}
-			</a>
+			</ClayLink>
 		</>
 	),
 	emptyIcon: {

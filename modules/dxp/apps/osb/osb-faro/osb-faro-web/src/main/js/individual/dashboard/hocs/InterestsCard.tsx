@@ -97,7 +97,7 @@ const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 								)}
 							</span>
 
-							<a
+							<ClayLink
 								href={
 									URLConstants.IndividualsDashboardInterestsDocumentation
 								}
@@ -107,7 +107,7 @@ const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 								{Liferay.Language.get(
 									'learn-more-about-interests'
 								)}
-							</a>
+							</ClayLink>
 						</>
 					}
 					showIcon={false}

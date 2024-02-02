@@ -1,6 +1,7 @@
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import Nav from 'shared/components/Nav';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -234,7 +235,7 @@ const EventAnalysisListCard: React.FC<PropsFromRedux> = ({
 									'create-an-analysis-to-get-started'
 								)}
 
-								<a
+								<ClayLink
 									className='d-block'
 									href={
 										URLConstants.EventAnalysisDocumentationLink
@@ -245,7 +246,7 @@ const EventAnalysisListCard: React.FC<PropsFromRedux> = ({
 									{Liferay.Language.get(
 										'access-our-documentation-to-learn-more'
 									)}
-								</a>
+								</ClayLink>
 							</>
 						}
 						icon={{

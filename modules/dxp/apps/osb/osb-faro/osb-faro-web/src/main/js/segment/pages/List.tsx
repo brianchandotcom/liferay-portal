@@ -1,6 +1,7 @@
 import * as API from 'shared/api';
 import BaseListPage from 'contacts/components/BaseListPage';
 import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import RowActions from 'shared/components/RowActions';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
@@ -355,7 +356,7 @@ export const List: React.FC<IListProps> = ({
 							'create-a-segment-to-get-started'
 						)}
 
-						<a
+						<ClayLink
 							className='d-block'
 							href={URLConstants.SegmentsDocumentationLink}
 							key='DOCUMENTATION'
@@ -364,7 +365,7 @@ export const List: React.FC<IListProps> = ({
 							{Liferay.Language.get(
 								'access-our-documentation-to-learn-more'
 							)}
-						</a>
+						</ClayLink>
 					</>
 				),
 				icon: {

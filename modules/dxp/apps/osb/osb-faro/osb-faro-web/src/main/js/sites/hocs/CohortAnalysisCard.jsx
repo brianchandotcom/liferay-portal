@@ -1,5 +1,6 @@
 import BasePage from 'shared/components/base-page';
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import CohortAnalysis from 'sites/components/cohort-analysis';
 import CohortQuery from 'shared/queries/CohortQuery';
 import Form from 'shared/components/form';
@@ -31,7 +32,7 @@ const withEmpty = Component => ({empty, ...otherProps}) => {
 							)}
 						</span>
 
-						<a
+						<ClayLink
 							href={URLConstants.SitesDashboardCohortAnalysis}
 							key='DOCUMENTATION'
 							target='_blank'
@@ -39,7 +40,7 @@ const withEmpty = Component => ({empty, ...otherProps}) => {
 							{Liferay.Language.get(
 								'learn-more-about-cohort-analysis'
 							)}
-						</a>
+						</ClayLink>
 					</>
 				}
 				title={Liferay.Language.get(

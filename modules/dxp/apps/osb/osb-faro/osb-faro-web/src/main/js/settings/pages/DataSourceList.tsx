@@ -272,7 +272,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({
 			<>
 				{Liferay.Language.get('add-a-data-source-to-get-started')}
 
-				<a
+				<ClayLink
 					className='d-block mb-3'
 					href={URLConstants.DataSourceConnection}
 					key='DOCUMENTATION'
@@ -281,7 +281,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({
 					{Liferay.Language.get(
 						'access-our-documentation-to-learn-more'
 					)}
-				</a>
+				</ClayLink>
 			</>
 		) : (
 			Liferay.Language.get(

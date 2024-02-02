@@ -1,4 +1,5 @@
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import FormsListQuery from 'shared/queries/FormsListQuery';
 import ListComponent from 'shared/hoc/ListComponent';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -73,7 +74,7 @@ const FormsListCard: React.FC = () => {
 									)}
 								</span>
 
-								<a
+								<ClayLink
 									href={
 										URLConstants.AssetsFormsListDocumentation
 									}
@@ -83,7 +84,7 @@ const FormsListCard: React.FC = () => {
 									{Liferay.Language.get(
 										'learn-more-about-forms'
 									)}
-								</a>
+								</ClayLink>
 							</>
 						}
 						icon={{

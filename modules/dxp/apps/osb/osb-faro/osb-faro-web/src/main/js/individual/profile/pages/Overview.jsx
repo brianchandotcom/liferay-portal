@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
 import AssociatedSegmentsCard from 'contacts/components/AssociatedSegmentsCard';
+import ClayLink from '@clayui/link';
 import DetailsCard from '../components/DetailsCard';
 import IndividualProfileCard from '../hoc/ProfileCard';
 import InterestsCard from '../components/InterestsCard';
@@ -93,7 +94,7 @@ export class Overview extends React.Component {
 											'create-a-segment-to-get-started'
 										)}
 
-										<a
+										<ClayLink
 											className='d-block'
 											href={
 												URLConstants.IndividualProfilesDocumentSegments
@@ -104,7 +105,7 @@ export class Overview extends React.Component {
 											{Liferay.Language.get(
 												'learn-more-about-segments'
 											)}
-										</a>
+										</ClayLink>
 									</>
 								}
 								spacer

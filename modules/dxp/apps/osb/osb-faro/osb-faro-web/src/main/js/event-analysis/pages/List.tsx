@@ -68,7 +68,7 @@ const List: React.FC<IListProps> = ({currentUser}) => {
 									'connect-a-data-source-to-get-started'
 								)}
 
-								<a
+								<ClayLink
 									className='d-block mb-3'
 									href={URLConstants.DataSourceConnection}
 									key='DOCUMENTATION'
@@ -77,7 +77,7 @@ const List: React.FC<IListProps> = ({currentUser}) => {
 									{Liferay.Language.get(
 										'access-our-documentation-to-learn-more'
 									)}
-								</a>
+								</ClayLink>
 
 								{authorized && (
 									<ClayLink

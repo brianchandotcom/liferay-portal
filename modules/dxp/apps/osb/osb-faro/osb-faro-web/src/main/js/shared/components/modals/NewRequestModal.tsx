@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
 import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import FileDropTarget from 'shared/components/FileDropTarget';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
@@ -300,7 +301,7 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 															'please-upload-files-in-csv-format.-a-sample-file-can-be-found-x'
 														),
 														[
-															<a
+															<ClayLink
 																download='example_user_request.csv'
 																href={`data:text/octet-stream;charset=utf-8,${SAMPLE_CSV}`}
 																key='EXAMPLE_FILE'
@@ -308,7 +309,7 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 																{Liferay.Language.get(
 																	'here-fragment'
 																)}
-															</a>
+															</ClayLink>
 														],
 														false
 													)}

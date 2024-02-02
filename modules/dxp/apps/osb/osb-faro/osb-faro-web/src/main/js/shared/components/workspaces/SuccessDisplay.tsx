@@ -7,12 +7,12 @@ import {sub} from 'shared/util/lang';
 
 const SuccessDisplay = ({friendlyURL}) => {
 	const link = (
-		<a
+		<ClayLink
 			href={`https://analytics.liferay.com/workspace${friendlyURL}`}
 			key='link'
 		>
 			{`analytics.liferay.com/workspace${friendlyURL}`}
-		</a>
+		</ClayLink>
 	);
 
 	return (

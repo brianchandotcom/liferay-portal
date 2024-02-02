@@ -1,4 +1,5 @@
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import DocumentsAndMediaListQuery from 'shared/queries/DocumentsAndMediaListQuery';
 import ListComponent from 'shared/hoc/ListComponent';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -74,7 +75,7 @@ const DocumentsAndMediaListCard: React.FC = () => {
 									)}
 								</span>
 
-								<a
+								<ClayLink
 									href={
 										URLConstants.AssetsDocumentsAndMediaListDocumentation
 									}
@@ -84,7 +85,7 @@ const DocumentsAndMediaListCard: React.FC = () => {
 									{Liferay.Language.get(
 										'learn-more-about-documents-and-media'
 									)}
-								</a>
+								</ClayLink>
 							</>
 						}
 						icon={{

@@ -1,5 +1,6 @@
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import DataControlRequest from '../queries/DataControlRequestMutation';
 import getMetricsMapper from 'shared/hoc/mappers/metrics';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -168,7 +169,7 @@ const SuppressedUserList: React.FC<ISuppressedUserListProps> = props => (
 								'to-suppress-a-user,-go-to-data-control-&-privacy-under-settings-and-create-a-new-request-on-the-request-log'
 							)}
 
-							<a
+							<ClayLink
 								className='d-block mb-3'
 								href={URLConstants.SuppressedUsersDocumentation}
 								key='DOCUMENTATION'
@@ -177,7 +178,7 @@ const SuppressedUserList: React.FC<ISuppressedUserListProps> = props => (
 								{Liferay.Language.get(
 									'access-our-documentation-to-learn-more'
 								)}
-							</a>
+							</ClayLink>
 						</>
 					}
 					icon={{

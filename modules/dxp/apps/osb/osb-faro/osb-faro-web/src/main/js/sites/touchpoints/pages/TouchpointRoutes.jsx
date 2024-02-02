@@ -1,6 +1,7 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
+import ClayLink from '@clayui/link';
 import DownloadCSVReport from 'shared/components/download-report/DownloadCSVReport';
 import DownloadPDFReport, {
 	Containers
@@ -90,9 +91,9 @@ function TouchpointRoutes({className, router}) {
 				<BasePage.Header.TitleSection
 					subtitle={
 						<TextTruncate title={decodedTouchpoint}>
-							<a href={decodedTouchpoint} target='_blank'>
+							<ClayLink href={decodedTouchpoint} target='_blank'>
 								{decodedTouchpoint}
-							</a>
+							</ClayLink>
 						</TextTruncate>
 					}
 					title={decodedTitle}

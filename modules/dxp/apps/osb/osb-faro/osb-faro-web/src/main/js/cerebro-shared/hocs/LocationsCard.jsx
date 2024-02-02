@@ -1,5 +1,6 @@
 import BaseCard from 'shared/components/base-card';
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import React from 'react';
 import {compose} from 'redux';
 import {GeomapCard} from 'shared/components/geo-map/GeomapCard';
@@ -30,13 +31,13 @@ const withLocationsCard = (
 						)}
 					</span>
 
-					<a
+					<ClayLink
 						href={documentationUrl}
 						key='DOCUMENTATION'
 						target='_blank'
 					>
 						{documentationTitle}
-					</a>
+					</ClayLink>
 				</>
 			),
 			title

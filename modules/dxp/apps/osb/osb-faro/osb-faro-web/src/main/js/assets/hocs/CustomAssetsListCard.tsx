@@ -1,4 +1,5 @@
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import CustomAssetsListQuery from 'shared/queries/CustomAssetsListQuery';
 import ListComponent from 'shared/hoc/ListComponent';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -70,7 +71,7 @@ const CustomAssetsListCard: React.FC<{timeZoneId: string}> = ({timeZoneId}) => {
 									)}
 								</span>
 
-								<a
+								<ClayLink
 									href={
 										URLConstants.AssetsCustomAssetsListDocumentation
 									}
@@ -80,7 +81,7 @@ const CustomAssetsListCard: React.FC<{timeZoneId: string}> = ({timeZoneId}) => {
 									{Liferay.Language.get(
 										'learn-more-about-custom-assets'
 									)}
-								</a>
+								</ClayLink>
 							</>
 						}
 						icon={{

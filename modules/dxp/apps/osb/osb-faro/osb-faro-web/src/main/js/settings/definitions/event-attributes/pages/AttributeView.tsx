@@ -1,4 +1,5 @@
 import BasePage from 'settings/components/BasePage';
+import ClayLink from '@clayui/link';
 import EVENT_ATTRIBUTE_DEFINITION_QUERY, {
 	EVENT_ATTRIBUTE_DEFINITION_WITH_RECENT_VALUES_QUERY,
 	EventAttributeDefinitionData,
@@ -104,7 +105,7 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 										'you-can-come-back-later-and-check-if-there-is-any-data-received-from-your-events'
 									)}
 
-									<a
+									<ClayLink
 										className='d-block mb-3'
 										href={
 											URLConstants.EventAttributesDocumentation
@@ -115,7 +116,7 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 										{Liferay.Language.get(
 											'learn-more-about-event-tracking'
 										)}
-									</a>
+									</ClayLink>
 								</>
 							}
 							spacer

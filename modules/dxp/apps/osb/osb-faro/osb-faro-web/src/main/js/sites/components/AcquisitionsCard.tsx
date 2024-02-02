@@ -6,6 +6,7 @@ import BasePage from 'shared/components/base-page';
 import Card from 'shared/components/Card';
 import CardTabs from 'shared/components/CardTabs';
 import CardWithRangeKey from 'shared/hoc/CardWithRangeKey';
+import ClayLink from '@clayui/link';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import React, {useContext, useState} from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
@@ -181,13 +182,13 @@ const AcquisitionsCardWithStatesRenderer: React.FC<IAcquisitionsCardWithStatesRe
 						)}
 					</span>
 
-					<a
+					<ClayLink
 						href={URLConstants.SitesDashboardAcquisitions}
 						key='DOCUMENTATION'
 						target='_blank'
 					>
 						{Liferay.Language.get('learn-more-about-acquisitions')}
-					</a>
+					</ClayLink>
 				</>
 			}
 			showIcon={false}

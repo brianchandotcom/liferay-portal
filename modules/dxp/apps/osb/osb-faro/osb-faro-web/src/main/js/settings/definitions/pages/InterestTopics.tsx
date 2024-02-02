@@ -245,14 +245,14 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 			<>
 				{Liferay.Language.get('add-a-keyword-to-be-blocked')}
 
-				<a
+				<ClayLink
 					className='d-block mb-3'
 					href={URLConstants.InterestTopicsDocumentation}
 					key='DOCUMENTATION'
 					target='_blank'
 				>
 					{Liferay.Language.get('learn-more-about-interest-topics')}
-				</a>
+				</ClayLink>
 			</>
 		) : (
 			Liferay.Language.get(

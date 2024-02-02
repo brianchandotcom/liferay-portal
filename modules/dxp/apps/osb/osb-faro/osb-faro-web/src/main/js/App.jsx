@@ -263,11 +263,21 @@ export default class App extends React.Component {
 					<Provider store={store}>
 						<ClayIconSpriteContext.Provider value={spritemap}>
 							<ClayLinkContext.Provider
-								value={({children, href, ...otherProps}) => (
-									<Link to={href} {...otherProps}>
-										{children}
-									</Link>
-								)}
+								value={({children, href, ...otherProps}) => {
+									if (href?.startsWith('http')) {
+										return (
+											<a {...otherProps} href={href}>
+												{children}
+											</a>
+										);
+									}
+
+									return (
+										<Link {...otherProps} to={href}>
+											{children}
+										</Link>
+									);
+								}}
 							>
 								<UnassignedSegmentsProvider>
 									<OAuthUpgradeWarningContext.Provider

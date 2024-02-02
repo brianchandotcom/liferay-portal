@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
@@ -78,7 +79,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 									)}
 								</span>
 
-								<a
+								<ClayLink
 									href={
 										URLConstants.AccountIndividualsDocumentationLink
 									}
@@ -88,7 +89,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 									{Liferay.Language.get(
 										'learn-more-about-individuals'
 									)}
-								</a>
+								</ClayLink>
 							</>
 						}
 						icon={{

@@ -168,7 +168,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({currentUser, router}) => {
 											'connect-a-data-source-with-sites-data'
 										)}
 
-										<a
+										<ClayLink
 											className='d-block mb-3'
 											href={
 												URLConstants.DataSourceConnection
@@ -179,7 +179,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({currentUser, router}) => {
 											{Liferay.Language.get(
 												'access-our-documentation-to-learn-more'
 											)}
-										</a>
+										</ClayLink>
 
 										{authorized && (
 											<ClayLink

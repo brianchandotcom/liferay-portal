@@ -1,4 +1,5 @@
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import Constants, {
 	CompositionTypes,
 	RangeKeyTimeRanges,
@@ -46,13 +47,13 @@ const TableWithData = withTableData(withData, {
 				)}
 			</span>
 
-			<a
+			<ClayLink
 				href={URLConstants.SitesDashboardSearchTermsAndInterests}
 				key='DOCUMENTATION'
 				target='_blank'
 			>
 				{Liferay.Language.get('learn-more-about-interests')}
-			</a>
+			</ClayLink>
 		</>
 	),
 	emptyIcon: {

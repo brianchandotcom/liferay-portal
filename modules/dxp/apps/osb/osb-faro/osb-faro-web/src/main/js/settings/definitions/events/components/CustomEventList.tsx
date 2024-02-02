@@ -1,5 +1,6 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import EventDefinitionsQuery, {
 	EventDefinitionsData,
@@ -407,7 +408,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 									'create-some-custom-events-to-get-started'
 								)}
 
-								<a
+								<ClayLink
 									className='d-block mb-3'
 									href={
 										URLConstants.CustomEventsDocumentation
@@ -418,7 +419,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 									{Liferay.Language.get(
 										'learn-how-to-add-custom-events-on-your-site'
 									)}
-								</a>
+								</ClayLink>
 							</>
 						}
 						icon={{

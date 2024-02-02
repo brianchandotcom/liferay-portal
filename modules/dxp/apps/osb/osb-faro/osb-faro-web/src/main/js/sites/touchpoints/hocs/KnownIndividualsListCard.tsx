@@ -1,4 +1,5 @@
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import getMetricsMapper from 'shared/hoc/mappers/metrics';
 import knownIndividualsListTouchpointQuery from 'shared/queries/knownIndividualsListTouchpointQuery';
 import React, {useState} from 'react';
@@ -34,13 +35,13 @@ const TableWithData = withBaseResults(withData, {
 				)}
 			</span>
 
-			<a
+			<ClayLink
 				href={URLConstants.IndividualsDashboardDocumentation}
 				key='DOCUMENTATION'
 				target='_blank'
 			>
 				{Liferay.Language.get('learn-more-about-individuals')}
-			</a>
+			</ClayLink>
 		</>
 	),
 	emptyIcon: {

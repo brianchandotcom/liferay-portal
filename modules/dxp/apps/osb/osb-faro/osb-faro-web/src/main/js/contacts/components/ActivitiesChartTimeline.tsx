@@ -2,6 +2,7 @@ import * as API from 'shared/api';
 import ActivitiesChart from './ActivitiesChartDeprecated';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
@@ -201,7 +202,7 @@ const ActivitiesChartTimeline: React.FC<IActivitiesChartTimelineProps> = ({
 										'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 									)}
 
-									<a
+									<ClayLink
 										className='d-block'
 										href={
 											URLConstants.AccountActivitiesDocumentationLink
@@ -212,7 +213,7 @@ const ActivitiesChartTimeline: React.FC<IActivitiesChartTimelineProps> = ({
 										{Liferay.Language.get(
 											'learn-more-about-account-activities'
 										)}
-									</a>
+									</ClayLink>
 								</>
 							}
 							spacer

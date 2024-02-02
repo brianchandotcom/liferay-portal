@@ -1,5 +1,6 @@
 import AssetsTouchpointQuery from 'shared/queries/AssetsTouchpointQuery';
 import BaseCard from 'shared/components/base-card';
+import ClayLink from '@clayui/link';
 import React from 'react';
 import TouchpointsListCard from 'assets/components/TouchpointsListCard';
 import URLConstants from 'shared/util/url-constants';
@@ -28,13 +29,14 @@ const TouchpointListWithData = compose(
 						'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 					)}
 				</span>
-				<a
+
+				<ClayLink
 					href={URLConstants.AssetsDefinitionDocumentation}
 					key='DOCUMENTATION'
 					target='_blank'
 				>
 					{Liferay.Language.get('learn-more-about-assets')}
-				</a>
+				</ClayLink>
 			</>
 		),
 		emptyTitle: Liferay.Language.get(

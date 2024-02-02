@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
 import AssociatedSegmentsList from 'contacts/components/AssociatedSegmentsList';
+import ClayLink from '@clayui/link';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useState} from 'react';
 import URLConstants from 'shared/util/url-constants';
@@ -88,7 +89,7 @@ const AssociatedSegments: React.FC<IAssociatedSegmentsProps> = ({
 								'create-a-segment-to-get-started'
 							)}
 
-							<a
+							<ClayLink
 								className='d-block'
 								href={URLConstants.SegmentsDocumentationLink}
 								key='DOCUMENTATION'
@@ -97,7 +98,7 @@ const AssociatedSegments: React.FC<IAssociatedSegmentsProps> = ({
 								{Liferay.Language.get(
 									'learn-more-about-segments'
 								)}
-							</a>
+							</ClayLink>
 						</>
 					}
 					icon={{

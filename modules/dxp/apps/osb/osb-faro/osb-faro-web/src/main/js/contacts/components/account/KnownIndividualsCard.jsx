@@ -84,7 +84,7 @@ export default class KnownIndividualsCard extends React.Component {
 								)}
 							</span>
 
-							<a
+							<ClayLink
 								href={
 									URLConstants.IndividualsDashboardDocumentation
 								}
@@ -94,7 +94,7 @@ export default class KnownIndividualsCard extends React.Component {
 								{Liferay.Language.get(
 									'learn-more-about-individuals'
 								)}
-							</a>
+							</ClayLink>
 						</>
 					}
 					key='NO_RESULTS_DISPLAY'

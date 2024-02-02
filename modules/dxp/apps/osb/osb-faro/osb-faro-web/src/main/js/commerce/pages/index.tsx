@@ -95,7 +95,7 @@ export const CommerceDashboard: React.FC<ICommerceDashboardProps> = ({
 											'connect-a-data-source-with-sites-data'
 										)}
 
-										<a
+										<ClayLink
 											className='d-block mb-3'
 											href={
 												URLConstants.DataSourceConnection
@@ -106,7 +106,7 @@ export const CommerceDashboard: React.FC<ICommerceDashboardProps> = ({
 											{Liferay.Language.get(
 												'access-our-documentation-to-learn-more'
 											)}
-										</a>
+										</ClayLink>
 
 										{authorized && (
 											<ClayLink

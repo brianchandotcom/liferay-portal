@@ -1,6 +1,7 @@
 import BaseCard from 'shared/components/base-card';
 import Card from 'shared/components/Card';
 import CardTabs from 'shared/components/CardTabs';
+import ClayLink from '@clayui/link';
 import OperatingSystem from 'shared/components/OperatingSystem';
 import React, {useCallback, useState} from 'react';
 import WebBrowser from 'shared/components/WebBrowser';
@@ -105,13 +106,13 @@ const withDevicesCard = (
 						)}
 					</span>
 
-					<a
+					<ClayLink
 						href={documentationUrl}
 						key='DOCUMENTATION'
 						target='_blank'
 					>
 						{documentationTitle}
-					</a>
+					</ClayLink>
 				</>
 			),
 			title

@@ -3,6 +3,7 @@ import Alerts, {AlertTypes} from 'shared/components/Alert';
 import BasePage from 'settings/components/BasePage';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import CopyButton from 'shared/components/CopyButton';
 import GenerateTokenCard from '../components/GenerateTokenCard';
 import Loading, {Align} from 'shared/components/Loading';
@@ -295,13 +296,13 @@ export const AccessTokenList: React.FC<IAccessTokenListProps> = ({groupId}) => (
 				'access-this-workspaces-data-via-api-using-an-access-token.-a-full-list-of-endpoints-is-available-in-the-x'
 			),
 			[
-				<a
+				<ClayLink
 					href={URLConstants.APIOverviewDocumentationLink}
 					key='API_OVERVIEW_DOCUMENTATION'
 					target='_blank'
 				>
 					{Liferay.Language.get('documentation-fragment')}
-				</a>
+				</ClayLink>
 			],
 			false
 		)}

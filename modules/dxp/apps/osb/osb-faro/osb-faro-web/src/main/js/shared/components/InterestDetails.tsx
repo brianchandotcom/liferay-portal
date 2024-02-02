@@ -1,4 +1,5 @@
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import getMetricsMapper from 'shared/hoc/mappers/metrics';
 import React from 'react';
@@ -48,13 +49,13 @@ const TableWithData: React.FC<ITableWithDataProps> = withRangeKey(
 		emptyDescription: sub(
 			Liferay.Language.get('empty-message-lists'),
 			[
-				<a
+				<ClayLink
 					href={URLConstants.DocumentationLink}
 					key='DOCUMENTATION'
 					target='_blank'
 				>
 					{Liferay.Language.get('documentation').toLowerCase()}
-				</a>
+				</ClayLink>
 			],
 			false
 		),

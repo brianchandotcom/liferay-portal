@@ -74,13 +74,13 @@ const ListWithInterests = compose(
 					)}
 				</span>
 
-				<a
+				<ClayLink
 					href={URLConstants.IndividualProfilesDocumentInterests}
 					key='DOCUMENTATION'
 					target='_blank'
 				>
 					{Liferay.Language.get('learn-more-about-interests')}
-				</a>
+				</ClayLink>
 			</>
 		),
 		spacer: true,

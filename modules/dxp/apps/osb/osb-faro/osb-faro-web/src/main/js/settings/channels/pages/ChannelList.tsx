@@ -2,6 +2,7 @@ import * as API from 'shared/api';
 import BasePage from 'settings/components/BasePage';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import ListComponent from 'shared/hoc/ListComponent';
 import Nav from 'shared/components/Nav';
@@ -510,7 +511,7 @@ const ChannelList: React.FC<IChannelListProps> = ({
 										'create-a-property-to-get-started'
 									)}
 
-									<a
+									<ClayLink
 										className='d-block mb-3'
 										href={URLConstants.CreateProperty}
 										key='DOCUMENTATION'
@@ -519,7 +520,7 @@ const ChannelList: React.FC<IChannelListProps> = ({
 										{Liferay.Language.get(
 											'access-our-documentation-to-learn-more'
 										)}
-									</a>
+									</ClayLink>
 								</>
 							}
 							icon={{

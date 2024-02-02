@@ -168,7 +168,7 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 												'connect-a-data-source-to-get-started'
 											)}
 
-											<a
+											<ClayLink
 												className='d-block mb-3'
 												href={
 													URLConstants.DataSourceConnection
@@ -179,7 +179,7 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 												{Liferay.Language.get(
 													'access-our-documentation-to-learn-more'
 												)}
-											</a>
+											</ClayLink>
 
 											<ConnectDataSourceButton />
 										</>

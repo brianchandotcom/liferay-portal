@@ -1,6 +1,7 @@
 import * as API from 'shared/api';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import DocumentTitle from 'shared/components/DocumentTitle';
 import getCN from 'classnames';
 import React, {createContext} from 'react';
@@ -100,12 +101,12 @@ export class WorkspacesBasePage extends React.Component {
 					<DocumentTitle title={title} />
 
 					<div className='header-container'>
-						<a href='https://liferay.com' target='_blank'>
+						<ClayLink href='https://liferay.com' target='_blank'>
 							<ClayIcon
 								className='icon-root liferay-logo'
 								symbol='liferay-logo'
 							/>
-						</a>
+						</ClayLink>
 
 						<UserDropdown
 							alignmentPosition={Align.BottomRight}

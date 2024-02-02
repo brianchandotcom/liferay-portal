@@ -1,4 +1,5 @@
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import ListComponent from 'shared/hoc/ListComponent';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
@@ -71,7 +72,7 @@ const WebContentListCard: React.FC = () => {
 									)}
 								</span>
 
-								<a
+								<ClayLink
 									href={
 										URLConstants.AssetsWebContentListDocumentation
 									}
@@ -81,7 +82,7 @@ const WebContentListCard: React.FC = () => {
 									{Liferay.Language.get(
 										'learn-more-about-web-content'
 									)}
-								</a>
+								</ClayLink>
 							</>
 						}
 						icon={{

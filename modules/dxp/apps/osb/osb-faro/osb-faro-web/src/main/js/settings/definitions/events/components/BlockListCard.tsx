@@ -10,6 +10,7 @@ import BLOCKED_CUSTOM_EVENT_DEFINITIONS_QUERY, {
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import Nav from 'shared/components/Nav';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -319,13 +320,13 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 							'your-workspace-is-over-the-event-limit.-please-remove-some-events-from-the-allow-list-to-continue.-visit-our-x-to-learn-more'
 						),
 						[
-							<a
+							<ClayLink
 								href={URLConstants.DocumentationLink}
 								key='DOCUMENTATION_LINK'
 								target='_blank'
 							>
 								{Liferay.Language.get('documentation-fragment')}
-							</a>
+							</ClayLink>
 						],
 						false
 					);
@@ -404,7 +405,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 									'to-block-events,-select-one-from-the-events-table'
 								)}
 
-								<a
+								<ClayLink
 									className='d-block mb-3'
 									href={
 										URLConstants.DefinitionsForEventsDocumentation
@@ -415,7 +416,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 									{Liferay.Language.get(
 										'access-our-documentation-to-learn-how-to-manage-custom-events'
 									)}
-								</a>
+								</ClayLink>
 							</>
 						}
 						icon={{

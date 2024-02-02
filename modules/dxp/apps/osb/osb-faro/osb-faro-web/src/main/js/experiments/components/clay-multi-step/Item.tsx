@@ -1,3 +1,4 @@
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import React from 'react';
 
@@ -37,14 +38,15 @@ const ClayMultiStepItem: React.FC<ClayMultiStepItemIProps> = ({
 						{stepNumber}
 					</div>
 				)}
-				<a
+				<ClayLink
 					className='multi-step-icon'
 					data-multi-step-icon={stepNumber}
 					href={`#${stepNumber}`}
 				>
 					{''}
-				</a>
+				</ClayLink>
 			</div>
+
 			{Body && <Body status={status} />}
 		</li>
 	);

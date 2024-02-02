@@ -1,6 +1,7 @@
 import ActivitiesChart from 'contacts/components/ActivitiesChart';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import EventMetricQuery, {
 	EventMetricsData,
 	EventMetricsVariables
@@ -335,7 +336,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 									)}
 								</span>
 
-								<a
+								<ClayLink
 									href={
 										URLConstants.IndividualProfilesDocument
 									}
@@ -345,7 +346,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 									{Liferay.Language.get(
 										'learn-more-about-individuals'
 									)}
-								</a>
+								</ClayLink>
 							</>
 						}
 						spacer

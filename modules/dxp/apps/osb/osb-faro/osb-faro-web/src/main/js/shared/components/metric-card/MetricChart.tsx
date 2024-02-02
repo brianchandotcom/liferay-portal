@@ -1,6 +1,7 @@
 // @ts-nocheck - Fix it at this LRAC-13388
 
 import Checkbox from 'shared/components/Checkbox';
+import ClayLink from '@clayui/link';
 import ComposedChartWithEmptyState from 'shared/components/ComposedChartWithEmptyState';
 import MetricStateRenderer from './MetricStateRenderer';
 import MetricTooltip from './MetricTooltip';
@@ -398,7 +399,7 @@ const MetricChartWrapper: React.FC<IMetricChartWrapperProps> = ({
 							)}
 						</span>
 
-						<a
+						<ClayLink
 							href={URLConstants.SitesDashboardSitesActivities}
 							key='DOCUMENTATION'
 							target='_blank'
@@ -406,7 +407,7 @@ const MetricChartWrapper: React.FC<IMetricChartWrapperProps> = ({
 							{Liferay.Language.get(
 								'learn-more-about-site-activity'
 							)}
-						</a>
+						</ClayLink>
 					</>
 				}
 				emptyTitle={Liferay.Language.get(

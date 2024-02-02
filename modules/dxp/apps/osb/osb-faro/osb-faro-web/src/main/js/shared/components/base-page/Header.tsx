@@ -68,6 +68,10 @@ interface Action extends React.HTMLAttributes<HTMLElement> {
 	disabled: boolean;
 	label: string;
 	href: string;
+	icon?: {
+		symbol: string;
+	};
+	external?: boolean;
 }
 
 interface IPageActionsProps {
@@ -85,7 +89,7 @@ const PageActions: React.FC<IPageActionsProps> = ({
 }) => (
 	<>
 		{actions.length <= actionsDisplayLimit &&
-			actions.map(({label, ...props}) => {
+			actions.map(({icon, label, ...props}) => {
 				const Button = props.href ? ClayLink : ClayButton;
 
 				return (
@@ -100,6 +104,10 @@ const PageActions: React.FC<IPageActionsProps> = ({
 						key={label}
 						{...props}
 					>
+						{icon && (
+							<ClayIcon className='mr-2' symbol={icon.symbol} />
+						)}
+
 						{label}
 					</Button>
 				);
@@ -186,7 +194,7 @@ const Actions: React.FC<IActionsProps> = ({actions = []}) => (
 	<div className='header-actions'>
 		{actions.map(({displayType, label, onClick, redirectURL}, index) =>
 			redirectURL ? (
-				<a
+				<ClayLink
 					className={getCN(`btn btn-${displayType}`, 'ml-2')}
 					href={redirectURL}
 					key={index}
@@ -195,7 +203,7 @@ const Actions: React.FC<IActionsProps> = ({actions = []}) => (
 					<ClayIcon className='mr-2' symbol='shortcut' />
 
 					{label}
-				</a>
+				</ClayLink>
 			) : (
 				<ClayButton
 					className='ml-2'

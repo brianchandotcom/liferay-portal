@@ -5,6 +5,7 @@ import ChartTooltip, {
 	Alignments,
 	Weights
 } from 'shared/components/chart-tooltip';
+import ClayLink from '@clayui/link';
 import HeatmapChart from 'shared/components/HeatmapChart';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
@@ -80,7 +81,7 @@ const HeatmapChartWithData = compose<any>(
 					)}
 				</span>
 
-				<a
+				<ClayLink
 					href={URLConstants.SitesDashboardVisitorsByDayAndTime}
 					key='DOCUMENTATION'
 					target='_blank'
@@ -88,7 +89,7 @@ const HeatmapChartWithData = compose<any>(
 					{Liferay.Language.get(
 						'learn-more-about-visitors-by-day-and-time'
 					)}
-				</a>
+				</ClayLink>
 			</>
 		),
 		title: Liferay.Language.get(

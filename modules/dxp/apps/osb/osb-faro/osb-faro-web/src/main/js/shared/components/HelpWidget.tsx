@@ -1,6 +1,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {close, modalTypes, open} from 'shared/actions/modals';
@@ -107,14 +108,14 @@ const HelpWidget: React.FC<IHelpWidgetProps> = ({
 				}).map(({href, label, onClick, target}, index) => (
 					<ClayDropDown.Item key={index}>
 						{href ? (
-							<a
+							<ClayLink
 								className='btn btn-unstyled w-100'
 								href={href}
 								onClick={onClick}
 								target={target}
 							>
 								{label}
-							</a>
+							</ClayLink>
 						) : (
 							<ClayButton
 								displayType='unstyled'

@@ -1,4 +1,5 @@
 import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import Modal from 'shared/components/modal';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
@@ -20,7 +21,7 @@ const UnableDeletePropertyModal: React.FC<{
 						'ensure-no-sites-and-channels-are-assigned-to-it-before-deleting-a-property'
 					),
 					[
-						<a
+						<ClayLink
 							href={URLConstants.DeletePropertyDocumentation}
 							key='URL'
 							target='_blank'
@@ -28,7 +29,7 @@ const UnableDeletePropertyModal: React.FC<{
 							{Liferay.Language.get(
 								'access-our-documentation-to-learn-more'
 							)}
-						</a>
+						</ClayLink>
 					],
 					false
 				)}

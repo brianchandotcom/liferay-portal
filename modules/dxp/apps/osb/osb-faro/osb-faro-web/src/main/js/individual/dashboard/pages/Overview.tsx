@@ -57,7 +57,7 @@ const Overview: React.FC<IOverviewProps> = ({currentUser}) => {
 								'connect-a-data-source-with-sites-data'
 							)}
 
-							<a
+							<ClayLink
 								className='d-block mb-3'
 								href={URLConstants.DataSourceConnection}
 								key='DOCUMENTATION'
@@ -66,7 +66,7 @@ const Overview: React.FC<IOverviewProps> = ({currentUser}) => {
 								{Liferay.Language.get(
 									'access-our-documentation-to-learn-more'
 								)}
-							</a>
+							</ClayLink>
 
 							{authorized && (
 								<ClayLink

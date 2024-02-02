@@ -6,6 +6,7 @@ import ChartTooltip, {
 	Alignments,
 	Weights
 } from 'shared/components/chart-tooltip';
+import ClayLink from '@clayui/link';
 import ComposedChartWithEmptyState from 'shared/components/ComposedChartWithEmptyState';
 import getCN from 'classnames';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -311,7 +312,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 						)}
 					</span>
 
-					<a
+					<ClayLink
 						href={URLConstants.SegmentsOverviewTabDocumentationLink}
 						key='DOCUMENTATION'
 						target='_blank'
@@ -319,7 +320,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 						{Liferay.Language.get(
 							'learn-more-about-segment-membership'
 						)}
-					</a>
+					</ClayLink>
 				</>
 			}
 			emptyTitle={Liferay.Language.get(
@@ -676,7 +677,7 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 												)}
 											</span>
 
-											<a
+											<ClayLink
 												href={
 													URLConstants.SegmentsMembershipDocumentationLink
 												}
@@ -686,7 +687,7 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 												{Liferay.Language.get(
 													'learn-more-about-individuals'
 												)}
-											</a>
+											</ClayLink>
 										</>
 									}
 									spacer

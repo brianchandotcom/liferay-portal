@@ -1,3 +1,4 @@
+import ClayLink from '@clayui/link';
 import DistributionCard from 'contacts/components/distribution-card';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
@@ -20,7 +21,7 @@ const SegmentDistributionCard = ({channelId, groupId, id, ...otherProps}) => (
 							'try-choosing-a-different-breakdown'
 						)}
 
-						<a
+						<ClayLink
 							className='d-block'
 							href={
 								URLConstants.SegmentsDistributionDocumentationLink
@@ -31,7 +32,7 @@ const SegmentDistributionCard = ({channelId, groupId, id, ...otherProps}) => (
 							{Liferay.Language.get(
 								'learn-more-about-distribution'
 							)}
-						</a>
+						</ClayLink>
 					</>
 				}
 				title={Liferay.Language.get('there-are-no-results-found')}

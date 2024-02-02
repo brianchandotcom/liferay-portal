@@ -1,4 +1,5 @@
 import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import Constants from 'shared/util/constants';
 import Form, {
 	validateMaxLength,
@@ -273,11 +274,11 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 												[
 													// TODO: This should in the future direct to a
 													// suggestion form in the app
-													<a href="#1" key="suggestion">
+													<ClayLink href="#1" key="suggestion">
 														{Liferay.Language.get(
 															'suggestion-fragment'
 														)}
-													</a>
+													</ClayLink>
 												],
 												false
 											)}
@@ -465,7 +466,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 														'by-selecting-i-agree-,-you-agree-to-our-x-including-our-x'
 													),
 													[
-														<a
+														<ClayLink
 															href={
 																URLConstants.TermsAndConditions
 															}
@@ -474,8 +475,8 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 															{Liferay.Language.get(
 																'terms-and-conditions'
 															)}
-														</a>,
-														<a
+														</ClayLink>,
+														<ClayLink
 															href={
 																URLConstants.PrivacyPolicy
 															}
@@ -484,7 +485,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 															{Liferay.Language.get(
 																'privacy-policy'
 															)}
-														</a>
+														</ClayLink>
 													],
 													false
 												)}

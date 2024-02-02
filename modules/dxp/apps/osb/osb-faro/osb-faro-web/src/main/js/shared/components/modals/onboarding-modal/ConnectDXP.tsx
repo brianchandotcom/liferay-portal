@@ -396,7 +396,7 @@ const FixPackSelect: FC<React.HTMLAttributes<HTMLElement>> = () => {
 						'x-to-learn-how-to-connect-liferay-dxp-to-analytics-cloud'
 					),
 					[
-						<a
+						<ClayLink
 							href={URLConstants.HelpConnectDxp}
 							key='helpConnectDxpText'
 							target='_blank'
@@ -404,7 +404,7 @@ const FixPackSelect: FC<React.HTMLAttributes<HTMLElement>> = () => {
 							{upperFirst(
 								Liferay.Language.get('click-here').toLowerCase()
 							)}
-						</a>
+						</ClayLink>
 					],
 					false
 				)}
@@ -439,7 +439,7 @@ const FixPackSelect: FC<React.HTMLAttributes<HTMLElement>> = () => {
 				</div>
 
 				<div className='fix-pack-button'>
-					<a
+					<ClayLink
 						className='btn btn-secondary button-root more-information-link mt-4'
 						href={DXP_VERSIONS[dxpVersion].url}
 						target='_blank'
@@ -450,7 +450,7 @@ const FixPackSelect: FC<React.HTMLAttributes<HTMLElement>> = () => {
 						/>
 
 						{Liferay.Language.get('download')}
-					</a>
+					</ClayLink>
 				</div>
 			</div>
 		</>

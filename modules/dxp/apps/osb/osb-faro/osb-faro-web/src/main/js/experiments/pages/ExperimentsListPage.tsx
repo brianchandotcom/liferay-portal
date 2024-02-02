@@ -118,7 +118,7 @@ const ExperimentsListPage: React.FC<IExperimentsListPage> = ({
 										'connect-a-data-source-with-sites-data'
 									)}
 
-									<a
+									<ClayLink
 										className='d-block mb-3'
 										href={URLConstants.DataSourceConnection}
 										key='DOCUMENTATION'
@@ -127,7 +127,7 @@ const ExperimentsListPage: React.FC<IExperimentsListPage> = ({
 										{Liferay.Language.get(
 											'access-our-documentation-to-learn-more'
 										)}
-									</a>
+									</ClayLink>
 
 									{authorized && (
 										<ClayLink

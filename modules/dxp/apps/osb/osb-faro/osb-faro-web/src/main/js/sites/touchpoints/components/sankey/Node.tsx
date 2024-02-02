@@ -1,4 +1,5 @@
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import React from 'react';
 import {
 	EMPTY_NODE_COLOR,
@@ -177,7 +178,7 @@ export const Node = ({
 						y={y - 22}
 					/>
 
-					<a
+					<ClayLink
 						data-tooltip-align='right'
 						href={payload.url}
 						target='_blank'
@@ -198,7 +199,7 @@ export const Node = ({
 						>
 							{truncateText(payload.url, 18)}
 						</text>
-					</a>
+					</ClayLink>
 				</>
 			)}
 		</Layer>

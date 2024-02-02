@@ -1,4 +1,5 @@
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import IndividualInterestsQuery from 'shared/queries/IndividualInterestsQuery';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
@@ -77,7 +78,7 @@ const Interests: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 									'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 								)}
 
-								<a
+								<ClayLink
 									className='d-block mb-3'
 									href={
 										URLConstants.IndividualsDashboardInterestsDocumentation
@@ -88,7 +89,7 @@ const Interests: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 									{Liferay.Language.get(
 										'learn-more-about-interests'
 									)}
-								</a>
+								</ClayLink>
 							</>
 						}
 						icon={{

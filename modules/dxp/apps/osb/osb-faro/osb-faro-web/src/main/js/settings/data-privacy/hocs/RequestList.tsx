@@ -1,5 +1,6 @@
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import Constants, {OrderByDirections, Sizes} from 'shared/util/constants';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import DataControlRequest from '../queries/DataControlRequestMutation';
@@ -390,7 +391,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 									'create-a-request-to-get-started'
 								)}
 
-								<a
+								<ClayLink
 									className='d-block mb-3'
 									href={URLConstants.RequestLogDocumentation}
 									key='DOCUMENTATION'
@@ -399,7 +400,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 									{Liferay.Language.get(
 										'access-our-documentation-to-learn-more'
 									)}
-								</a>
+								</ClayLink>
 							</>
 						}
 						icon={{
@@ -441,7 +442,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 					return (
 						authorized &&
 						status === GDPRRequestStatuses.Completed && (
-							<a
+							<ClayLink
 								className={classnames}
 								{...(!itemsSelected && {
 									href: `/o/proxy/download/data-control-tasks/${id}?projectGroupId=${groupId}`
@@ -460,7 +461,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 								tabIndex={0}
 							>
 								{Liferay.Language.get('download')}
-							</a>
+							</ClayLink>
 						)
 					);
 				}}
@@ -468,7 +469,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 					<Nav>
 						<Nav.Item>
 							{authorized && selectedItems.size ? (
-								<a
+								<ClayLink
 									className='btn btn-primary button-root nav-btn '
 									href={`/o/proxy/download/data-control-tasks?projectGroupId=${groupId}&ids=${selectedItems
 										.map(({id}) => id)
@@ -480,7 +481,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 									}
 								>
 									{Liferay.Language.get('download-all')}
-								</a>
+								</ClayLink>
 							) : (
 								<>
 									{authorized && (

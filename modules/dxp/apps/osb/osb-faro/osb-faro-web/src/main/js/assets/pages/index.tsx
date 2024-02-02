@@ -197,7 +197,7 @@ const Assets: React.FC<IAssetsProps> = ({className, currentUser, router}) => {
 											'connect-a-data-source-with-sites-data'
 										)}
 
-										<a
+										<ClayLink
 											className='d-block mb-3'
 											href={
 												URLConstants.DataSourceConnection
@@ -208,7 +208,7 @@ const Assets: React.FC<IAssetsProps> = ({className, currentUser, router}) => {
 											{Liferay.Language.get(
 												'access-our-documentation-to-learn-more'
 											)}
-										</a>
+										</ClayLink>
 
 										{authorized && (
 											<ClayLink

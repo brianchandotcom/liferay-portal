@@ -1,5 +1,6 @@
 import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import getColumns from './columns';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
@@ -33,13 +34,13 @@ const ExperimentListCard = props => {
 					)}
 				</span>
 
-				<a
+				<ClayLink
 					href={URLConstants.ExperimentDocumentationLink}
 					key='DOCUMENTATION'
 					target='_blank'
 				>
 					{Liferay.Language.get('learn-more-about-tests')}
-				</a>
+				</ClayLink>
 			</>
 		),
 		emptyIcon: {

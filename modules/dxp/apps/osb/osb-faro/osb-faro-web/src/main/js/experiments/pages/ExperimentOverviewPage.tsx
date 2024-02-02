@@ -1,5 +1,6 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
+import ClayLink from '@clayui/link';
 import DeleteExperimentModal from 'experiments/components/modals/DeleteExperimentModal';
 import React, {useState} from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
@@ -119,12 +120,12 @@ const ExperimentOverviewContent = ({status}) => {
 									<TextTruncate
 										title={data.experiment.pageURL}
 									>
-										<a
+										<ClayLink
 											href={data.experiment.pageURL}
 											target='_blank'
 										>
 											{data.experiment.pageURL}
-										</a>
+										</ClayLink>
 									</TextTruncate>
 								}
 								title={data.experiment.name}

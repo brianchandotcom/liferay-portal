@@ -1,4 +1,5 @@
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import EmptySankey from './EmptySankey';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -166,7 +167,7 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 												'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 											)}
 
-											<a
+											<ClayLink
 												className='d-block mb-3'
 												href={
 													URLConstants.SitesDashboardPagesPath
@@ -177,7 +178,7 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 												{Liferay.Language.get(
 													'learn-more-about-path'
 												)}
-											</a>
+											</ClayLink>
 										</>
 									}
 									flexGrow={false}

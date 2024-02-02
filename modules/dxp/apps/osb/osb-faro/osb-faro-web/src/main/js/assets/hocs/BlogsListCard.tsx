@@ -1,5 +1,6 @@
 import BlogsListQuery from 'shared/queries/BlogsListQuery';
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import ListComponent from 'shared/hoc/ListComponent';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
@@ -74,7 +75,7 @@ const BlogsListCard: React.FC = () => {
 									)}
 								</span>
 
-								<a
+								<ClayLink
 									href={
 										URLConstants.AssetsBlogsListDocumentation
 									}
@@ -84,7 +85,7 @@ const BlogsListCard: React.FC = () => {
 									{Liferay.Language.get(
 										'learn-more-about-blogs'
 									)}
-								</a>
+								</ClayLink>
 							</>
 						}
 						icon={{

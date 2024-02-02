@@ -30,7 +30,7 @@ const InterestsPage: React.FC<IInterestsPageProps> = ({currentUser}) => {
 								'connect-a-data-source-with-sites-data'
 							)}
 
-							<a
+							<ClayLink
 								className='d-block mb-3'
 								href={URLConstants.DataSourceConnection}
 								key='DOCUMENTATION'
@@ -39,7 +39,7 @@ const InterestsPage: React.FC<IInterestsPageProps> = ({currentUser}) => {
 								{Liferay.Language.get(
 									'access-our-documentation-to-learn-more'
 								)}
-							</a>
+							</ClayLink>
 
 							{authorized && (
 								<ClayLink

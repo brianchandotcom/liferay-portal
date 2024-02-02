@@ -214,7 +214,7 @@ const Dropdown = ({channelId, groupId, items, loading, onFilterChange}) => {
 									'start-by-creating-a-segment'
 								)}
 
-								<a
+								<ClayLink
 									className='d-block mb-3'
 									href={
 										URLConstants.SegmentsDocumentationLink
@@ -225,7 +225,7 @@ const Dropdown = ({channelId, groupId, items, loading, onFilterChange}) => {
 									{Liferay.Language.get(
 										'learn-more-about-segments'
 									)}
-								</a>
+								</ClayLink>
 							</div>
 						}
 						title={null}

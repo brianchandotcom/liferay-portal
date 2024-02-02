@@ -141,7 +141,7 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 										'connect-a-data-source-with-people-data'
 									)}
 
-									<a
+									<ClayLink
 										className='d-block mb-3'
 										href={URLConstants.DataSourceConnection}
 										key='DOCUMENTATION'
@@ -150,7 +150,7 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 										{Liferay.Language.get(
 											'access-our-documentation-to-learn-more'
 										)}
-									</a>
+									</ClayLink>
 
 									{authorized && (
 										<ClayLink

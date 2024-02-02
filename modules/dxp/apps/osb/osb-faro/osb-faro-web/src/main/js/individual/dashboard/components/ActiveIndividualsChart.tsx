@@ -1,5 +1,6 @@
 // @ts-nocheck - Fix it at this LRAC-13388
 
+import ClayLink from '@clayui/link';
 import ComposedChartWithEmptyState from 'shared/components/ComposedChartWithEmptyState';
 import Loading from 'shared/components/Loading';
 import React, {useState} from 'react';
@@ -124,7 +125,7 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 						)}
 					</span>
 
-					<a
+					<ClayLink
 						href={
 							URLConstants.IndividualDashboardActiveIndividualsDocumentation
 						}
@@ -134,7 +135,7 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 						{Liferay.Language.get(
 							'learn-more-about-active-individuals'
 						)}
-					</a>
+					</ClayLink>
 				</>
 			}
 			emptyTitle={Liferay.Language.get(

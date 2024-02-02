@@ -47,7 +47,7 @@ export const IndividualsDistribution: React.FC<IIndividualsDistributionProps> = 
 							'connect-a-data-source-to-get-started'
 						)}
 
-						<a
+						<ClayLink
 							className='d-block mb-3'
 							href={URLConstants.DataSourceConnection}
 							key='DOCUMENTATION'
@@ -56,7 +56,7 @@ export const IndividualsDistribution: React.FC<IIndividualsDistributionProps> = 
 							{Liferay.Language.get(
 								'access-our-documentation-to-learn-more'
 							)}
-						</a>
+						</ClayLink>
 
 						{authorized && (
 							<ClayLink
@@ -96,7 +96,7 @@ export const IndividualsDistribution: React.FC<IIndividualsDistributionProps> = 
 													'try-choosing-a-different-breakdown'
 												)}
 
-												<a
+												<ClayLink
 													className='d-block'
 													href={
 														URLConstants.IndividualsDashboardBreakdownDocumentation
@@ -107,7 +107,7 @@ export const IndividualsDistribution: React.FC<IIndividualsDistributionProps> = 
 													{Liferay.Language.get(
 														'learn-more-about-distribution'
 													)}
-												</a>
+												</ClayLink>
 											</>
 										}
 										icon={{

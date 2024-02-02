@@ -222,7 +222,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 								'connect-a-data-source-with-people-data'
 							)}
 
-							<a
+							<ClayLink
 								className='d-block mb-3'
 								href={URLConstants.DataSourceConnection}
 								key='DOCUMENTATION'
@@ -231,7 +231,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 								{Liferay.Language.get(
 									'access-our-documentation-to-learn-more'
 								)}
-							</a>
+							</ClayLink>
 						</>
 					}
 					icon={{
@@ -270,7 +270,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 								'connect-a-data-source-to-get-started'
 							)}
 
-							<a
+							<ClayLink
 								className='d-block mb-3'
 								href={URLConstants.DataSourceConnection}
 								key='DOCUMENTATION'
@@ -279,7 +279,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 								{Liferay.Language.get(
 									'access-our-documentation-to-learn-more'
 								)}
-							</a>
+							</ClayLink>
 
 							{authorized && (
 								<ClayLink

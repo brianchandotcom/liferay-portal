@@ -30,13 +30,13 @@ const TableWithData = withTableData(withData, {
 				)}
 			</span>
 
-			<a
+			<ClayLink
 				href={URLConstants.SegmentsTopInterestsDocumentationLink}
 				key='DOCUMENTATION'
 				target='_blank'
 			>
 				{Liferay.Language.get('learn-more-about-interests')}
-			</a>
+			</ClayLink>
 		</>
 	),
 	emptyTitle: Liferay.Language.get('there-are-no-interests-found'),

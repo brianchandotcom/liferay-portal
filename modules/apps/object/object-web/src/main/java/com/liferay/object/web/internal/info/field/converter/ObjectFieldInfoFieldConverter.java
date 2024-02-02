@@ -401,7 +401,7 @@ public class ObjectFieldInfoFieldConverter {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		if (serviceContext == null) {
+		if ((serviceContext == null) || (serviceContext.getRequest() == null)) {
 			return StringPool.BLANK;
 		}
 

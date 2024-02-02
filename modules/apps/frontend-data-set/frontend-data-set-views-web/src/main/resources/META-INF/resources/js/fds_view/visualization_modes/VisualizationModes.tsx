@@ -46,7 +46,7 @@ export default function VisualizationModes(props: IFDSViewSectionProps) {
 	] = useState(0);
 
 	return (
-		<ClayLayout.ContainerFluid>
+		<ClayLayout.ContainerFluid className="mt-3">
 			<ClayLayout.ContainerFluid className="bg-white mb-4 p-0 rounded-sm">
 				<h2 className="mb-0 p-4">
 					{Liferay.Language.get('visualization-modes')}

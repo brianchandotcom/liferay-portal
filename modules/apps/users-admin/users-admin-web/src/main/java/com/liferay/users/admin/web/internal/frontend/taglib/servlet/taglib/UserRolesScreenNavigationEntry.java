@@ -51,6 +51,7 @@ public class UserRolesScreenNavigationEntry
 		return "/user/roles.jsp";
 	}
 
+	@Override
 	public boolean isEditable(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
@@ -62,11 +63,11 @@ public class UserRolesScreenNavigationEntry
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		String myAccountPortletId = PortletProviderUtil.getPortletId(
+		String portletId = PortletProviderUtil.getPortletId(
 			PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
 			PortletProvider.Action.VIEW);
 
-		if (myAccountPortletId.equals(portletDisplay.getPortletName())) {
+		if (portletId.equals(portletDisplay.getPortletName())) {
 			return false;
 		}
 

@@ -120,21 +120,25 @@ public class AttachmentDTOConverter
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
 			cpAttachmentFileEntry.getFileEntryId());
 
-		if (dlFileEntry != null) {
-			DLFileEntryType dlFileEntryType =
-				_dlFileEntryTypeLocalService.fetchDLFileEntryType(
-					dlFileEntry.getFileEntryTypeId());
+		if (dlFileEntry == null) {
+			return downloadURL;
+		}
 
-			if (dlFileEntryType != null) {
-				String fileEntryTypeKey = dlFileEntryType.getFileEntryTypeKey();
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
+				dlFileEntry.getFileEntryTypeId());
 
-				if (fileEntryTypeKey.equals(
-						CPAttachmentFileEntryConstants.
-							DL_VIDEO_EXTERNAL_SHORTCUT_TYPE_KEY)) {
+		if (dlFileEntryType == null) {
+			return downloadURL;
+		}
 
-					return StringPool.BLANK;
-				}
-			}
+		String fileEntryTypeKey = dlFileEntryType.getFileEntryTypeKey();
+
+		if (fileEntryTypeKey.equals(
+				CPAttachmentFileEntryConstants.
+					DL_VIDEO_EXTERNAL_SHORTCUT_TYPE_KEY)) {
+
+			return StringPool.BLANK;
 		}
 
 		return downloadURL;

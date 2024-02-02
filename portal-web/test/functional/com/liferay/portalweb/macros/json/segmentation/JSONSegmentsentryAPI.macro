@@ -15,7 +15,6 @@ definition {
 				-d descriptionMap=${descriptionMap} \
 				-d active=true \
 				-d <CURL_DATA[criteria=${criteria}]CURL_DATA> \
-				-d type=com.liferay.portal.kernel.model.User \
 				-d serviceContext=${serviceContext}
 		''';
 

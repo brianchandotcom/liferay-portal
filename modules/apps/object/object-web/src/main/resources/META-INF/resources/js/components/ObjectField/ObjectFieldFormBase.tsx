@@ -237,7 +237,10 @@ export default function ObjectFieldFormBase({
 		const objectFieldSettings: ObjectFieldSetting[] =
 			fieldSettingsMap.get(selectedBusinessType) || [];
 
-		const indexed = selectedBusinessType !== 'Encrypted';
+		const indexed =
+			selectedBusinessType !== 'Aggregation' &&
+			selectedBusinessType !== 'Formula' &&
+			selectedBusinessType !== 'Encrypted';
 
 		const isSearchableByText =
 			selectedBusinessType === 'Attachment' ||

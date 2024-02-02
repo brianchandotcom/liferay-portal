@@ -70,7 +70,10 @@ export function SearchableContainer({
 			<ClayForm.Group>
 				<Toggle
 					disabled={
-						values.businessType === 'Encrypted' || values.system
+						values.businessType === 'Aggregation' ||
+						values.businessType === 'Encrypted' ||
+						values.businessType === 'Formula' ||
+						values.system
 					}
 					label={Liferay.Language.get('searchable')}
 					name="indexed"

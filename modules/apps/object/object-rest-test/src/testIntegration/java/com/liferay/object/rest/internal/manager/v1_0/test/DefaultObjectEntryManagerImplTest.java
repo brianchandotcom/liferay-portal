@@ -2140,6 +2140,23 @@ public class DefaultObjectEntryManagerImplTest
 				"search", "Baker"
 			).build(),
 			childObjectEntry1);
+
+		objectField = objectFieldLocalService.getObjectField(
+			_objectDefinition1.getObjectDefinitionId(),
+			"externalReferenceCode");
+
+		_objectDefinition1.setTitleObjectFieldId(
+			objectField.getObjectFieldId());
+
+		_objectDefinition1 =
+			objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition1);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"search", parentObjectEntry1.getExternalReferenceCode()
+			).build(),
+			childObjectEntry1);
 	}
 
 	@Test
@@ -2681,64 +2698,6 @@ public class DefaultObjectEntryManagerImplTest
 					).build();
 				}
 			});
-	}
-
-	@Test
-	public void testSearchObjectEntriesWhenEntryTitleFieldIsExternalReferenceCode()
-		throws Exception {
-
-		ObjectDefinition childObjectDefinition = _createObjectDefinition(
-			Arrays.asList(
-				new TextObjectFieldBuilder(
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					"textObjectFieldName"
-				).build()));
-
-		ObjectField objectField = objectFieldLocalService.getObjectField(
-			_objectDefinition3.getObjectDefinitionId(),
-			"externalReferenceCode");
-
-		_objectDefinition3.setTitleObjectFieldId(
-			objectField.getObjectFieldId());
-
-		objectDefinitionLocalService.updateObjectDefinition(_objectDefinition3);
-
-		_objectRelationshipLocalService.addObjectRelationship(
-			null, adminUser.getUserId(),
-			_objectDefinition3.getObjectDefinitionId(),
-			childObjectDefinition.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"oneToManyRel", false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
-			null);
-
-		com.liferay.object.model.ObjectEntry objectEntry =
-			_objectEntryLocalService.addObjectEntry(
-				adminUser.getUserId(), 0,
-				_objectDefinition3.getObjectDefinitionId(),
-				HashMapBuilder.<String, Serializable>put(
-					"textObjectFieldName1", "Able"
-				).put(
-					"textObjectFieldName2", "Baker"
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
-
-		_objectEntryLocalService.addObjectEntry(
-			adminUser.getUserId(), 0,
-			childObjectDefinition.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"r_oneToManyRel_" + _objectDefinition3.getPKObjectFieldName(),
-				objectEntry.getPrimaryKey()
-			).put(
-				"textObjectFieldName", "Charlie"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		_assertObjectEntriesSize(
-			childObjectDefinition, objectEntry.getExternalReferenceCode(), 1);
 	}
 
 	@Test

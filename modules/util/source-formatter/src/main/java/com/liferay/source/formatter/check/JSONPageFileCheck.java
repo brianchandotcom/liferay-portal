@@ -48,7 +48,7 @@ public class JSONPageFileCheck extends BaseFileCheck {
 
 		List<Object> objectList = JSONUtil.toObjectList(jsonArray);
 
-		Collections.sort(objectList, new Page());
+		Collections.sort(objectList, new PageComparator());
 
 		jsonArray = new JSONArrayImpl();
 
@@ -61,7 +61,7 @@ public class JSONPageFileCheck extends BaseFileCheck {
 		return JSONUtil.toString(jsonObject);
 	}
 
-	private class Page implements Comparator<Object> {
+	private class PageComparator implements Comparator<Object> {
 
 		@Override
 		public int compare(Object object1, Object object2) {

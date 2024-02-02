@@ -10,6 +10,9 @@ package com.liferay.commerce.product.constants;
  */
 public class CPAttachmentFileEntryConstants {
 
+	public static final String DL_VIDEO_EXTERNAL_SHORTCUT_TYPE_KEY =
+		"DL_VIDEO_EXTERNAL_SHORTCUT";
+
 	public static final int TYPE_IMAGE = 0;
 
 	public static final int TYPE_OTHER = 1;

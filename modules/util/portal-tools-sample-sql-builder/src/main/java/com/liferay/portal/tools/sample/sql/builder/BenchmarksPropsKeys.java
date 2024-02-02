@@ -150,6 +150,9 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_SEGMENTS_ENTRY_COUNT =
 		"sample.sql.max.segments.entry.count";
 
+	public static final String MAX_SEGMENTS_ENTRY_SEGMENTS_EXPERIENCE_COUNT =
+		"sample.sql.max.segments.entry.segments.experience.count";
+
 	public static final String MAX_USER_TO_GROUP_COUNT =
 		"sample.sql.max.user.to.group.count";
 

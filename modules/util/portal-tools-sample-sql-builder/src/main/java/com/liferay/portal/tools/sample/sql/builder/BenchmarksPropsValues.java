@@ -211,6 +211,12 @@ public class BenchmarksPropsValues {
 	public static final int MAX_SEGMENTS_ENTRY_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_SEGMENTS_ENTRY_COUNT));
 
+	public static final int MAX_SEGMENTS_ENTRY_SEGMENTS_EXPERIENCE_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.
+					MAX_SEGMENTS_ENTRY_SEGMENTS_EXPERIENCE_COUNT));
+
 	public static final int MAX_USER_TO_GROUP_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_USER_TO_GROUP_COUNT));
 

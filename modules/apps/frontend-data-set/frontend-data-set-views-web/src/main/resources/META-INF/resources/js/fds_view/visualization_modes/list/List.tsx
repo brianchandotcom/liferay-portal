@@ -8,11 +8,14 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {Body, Cell, Head, Row, Table} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import classNames from 'classnames';
+import {openModal} from 'frontend-js-web';
 import React from 'react';
 
+import {IFDSViewSectionProps} from '../../../FDSView';
 import {IBaseVisualizationMode} from '../VisualizationModes';
-
-import classNames from 'classnames';
+import {IFDSField} from '../table/Table';
+import AddFieldsModalContent from '../table/modal_content/AddFieldsModalContent';
 
 export interface IList extends IBaseVisualizationMode<'list'> {}
 
@@ -31,17 +34,10 @@ const LIST_VISUALIZATION_MODE_FIELDS: IListField[] = [
 
 const LABEL_CELL_WIDTH = '30%';
 
-export default function List() {
+export default function List(props: IFDSViewSectionProps) {
 	const [fieldValues, setFieldValues] = React.useState<
-		Record<IListField['fieldId'], string>
+		Record<IListField['fieldId'], IFDSField>
 	>({});
-
-	const onValueChange = (fieldId: IListField['fieldId'], value: string) => {
-		setFieldValues({
-			...fieldValues,
-			[fieldId]: value,
-		});
-	};
 
 	return (
 		<ClayLayout.ContentCol className="c-gap-4">
@@ -71,8 +67,12 @@ export default function List() {
 						<ListField
 							field={field}
 							key={field.fieldId}
-							onValueChange={(value) =>
-								onValueChange(field.fieldId, value)
+							modalProps={props}
+							onSave={(fdsField) =>
+								setFieldValues({
+									...fieldValues,
+									[field.fieldId]: fdsField,
+								})
 							}
 							value={fieldValues[field.fieldId]}
 						/>
@@ -85,13 +85,26 @@ export default function List() {
 
 interface IListFieldProps {
 	field: IListField;
-	onValueChange: (value: string) => void;
-	value?: string;
+	modalProps: IFDSViewSectionProps;
+	onSave: (fdsField: IFDSField) => void;
+	value?: IFDSField;
 }
 
-function ListField({field, onValueChange, value}: IListFieldProps) {
+function ListField({field, modalProps, onSave, value}: IListFieldProps) {
 	const onClick = () => {
-		onValueChange(field.fieldId);
+		openModal({
+			contentComponent: ({closeModal}: {closeModal: Function}) => (
+				<AddFieldsModalContent
+					{...modalProps}
+					closeModal={closeModal}
+					onSave={({createdFDSFields: [createdFDSField]}) =>
+						onSave(createdFDSField)
+					}
+					savedFDSFields={value ? [value] : []}
+					selectionMode="single"
+				/>
+			),
+		});
 	};
 
 	return (
@@ -109,7 +122,8 @@ function ListField({field, onValueChange, value}: IListFieldProps) {
 								{'text-secondary': !value}
 							)}
 						>
-							{value || Liferay.Language.get('not-assigned')}
+							{value?.label ||
+								Liferay.Language.get('not-assigned')}
 						</p>
 					</ClayInput.GroupItem>
 

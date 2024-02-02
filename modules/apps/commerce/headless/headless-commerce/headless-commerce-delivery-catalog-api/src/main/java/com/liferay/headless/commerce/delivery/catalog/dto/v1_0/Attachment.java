@@ -221,6 +221,48 @@ public class Attachment implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
+	@DecimalMin("0")
+	@Schema(example = "30130")
+	public Long getFileEntryId() {
+		if (_fileEntryIdSupplier != null) {
+			fileEntryId = _fileEntryIdSupplier.get();
+
+			_fileEntryIdSupplier = null;
+		}
+
+		return fileEntryId;
+	}
+
+	public void setFileEntryId(Long fileEntryId) {
+		this.fileEntryId = fileEntryId;
+
+		_fileEntryIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFileEntryId(
+		UnsafeSupplier<Long, Exception> fileEntryIdUnsafeSupplier) {
+
+		_fileEntryIdSupplier = () -> {
+			try {
+				return fileEntryIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long fileEntryId;
+
+	@JsonIgnore
+	private Supplier<Long> _fileEntryIdSupplier;
+
 	@Schema
 	public Boolean getGalleryEnabled() {
 		if (_galleryEnabledSupplier != null) {
@@ -684,6 +726,18 @@ public class Attachment implements Serializable {
 			sb.append(liferayToJSONDateFormat.format(expirationDate));
 
 			sb.append("\"");
+		}
+
+		Long fileEntryId = getFileEntryId();
+
+		if (fileEntryId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileEntryId\": ");
+
+			sb.append(fileEntryId);
 		}
 
 		Boolean galleryEnabled = getGalleryEnabled();

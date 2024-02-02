@@ -115,6 +115,16 @@ public class AttachmentSerDes {
 			sb.append("\"");
 		}
 
+		if (attachment.getFileEntryId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileEntryId\": ");
+
+			sb.append(attachment.getFileEntryId());
+		}
+
 		if (attachment.getGalleryEnabled() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -281,6 +291,13 @@ public class AttachmentSerDes {
 				liferayToJSONDateFormat.format(attachment.getExpirationDate()));
 		}
 
+		if (attachment.getFileEntryId() == null) {
+			map.put("fileEntryId", null);
+		}
+		else {
+			map.put("fileEntryId", String.valueOf(attachment.getFileEntryId()));
+		}
+
 		if (attachment.getGalleryEnabled() == null) {
 			map.put("galleryEnabled", null);
 		}
@@ -398,6 +415,12 @@ public class AttachmentSerDes {
 				if (jsonParserFieldValue != null) {
 					attachment.setExpirationDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fileEntryId")) {
+				if (jsonParserFieldValue != null) {
+					attachment.setFileEntryId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "galleryEnabled")) {

@@ -144,13 +144,23 @@ function ImportForm({
 		function handleFileSchemaUpdate({fileContent, schema}) {
 			setFileContent(fileContent);
 
-			setFileFields(schema);
+			setFileFields(getFirstLevelFieldNames(schema));
 		}
 
 		function handleTemplateSelect({template}) {
 			if (template) {
 				setMappingsToBeEvaluated(template.mappings);
 			}
+		}
+
+		function getFirstLevelFieldNames(schema) {
+			return [
+				...new Set(
+					schema.map((fileField) => {
+						return fileField.split('.')[0];
+					})
+				),
+			];
 		}
 
 		function toggleDownloadTemplateAlert(schema) {

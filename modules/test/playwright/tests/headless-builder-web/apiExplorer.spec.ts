@@ -81,8 +81,6 @@ test('can see filter and sort parameters for collection but not for singleElemen
 
 	await apiExplorerPage.goToApplication(`c/${basicApiApplication.baseURL}`);
 
-	page.waitForLoadState();
-
 	await apiExplorerPage.endpointHasParameters(collectionEndpoint.path, [
 		'filter',
 		'sort',

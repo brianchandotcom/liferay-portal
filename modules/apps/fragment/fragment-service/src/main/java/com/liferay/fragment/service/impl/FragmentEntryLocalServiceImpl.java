@@ -154,21 +154,6 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
-	public FragmentEntry addFragmentEntry(
-			long userId, long groupId, long fragmentCollectionId,
-			String fragmentEntryKey, String name, String css, String html,
-			String js, boolean cacheable, String configuration, String icon,
-			long previewFileEntryId, int type, String typeOptions, int status,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addFragmentEntry(
-			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
-			html, js, cacheable, configuration, icon, previewFileEntryId, false,
-			type, typeOptions, status, serviceContext);
-	}
-
-	@Override
 	public FragmentEntry copyFragmentEntry(
 			long userId, long groupId, long sourceFragmentEntryId,
 			long fragmentCollectionId, ServiceContext serviceContext)
@@ -213,6 +198,7 @@ public class FragmentEntryLocalServiceImpl
 				publishedFragmentEntry.isCacheable(),
 				publishedFragmentEntry.getConfiguration(),
 				publishedFragmentEntry.getIcon(), 0,
+				publishedFragmentEntry.getReadOnly(),
 				publishedFragmentEntry.getType(),
 				publishedFragmentEntry.getTypeOptions(),
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
@@ -236,7 +222,8 @@ public class FragmentEntryLocalServiceImpl
 				draftFragmentEntry.getCss(), draftFragmentEntry.getHtml(),
 				draftFragmentEntry.getJs(), draftFragmentEntry.isCacheable(),
 				draftFragmentEntry.getConfiguration(),
-				draftFragmentEntry.getIcon(), 0, draftFragmentEntry.getType(),
+				draftFragmentEntry.getIcon(), 0,
+				draftFragmentEntry.isReadOnly(), draftFragmentEntry.getType(),
 				draftFragmentEntry.getTypeOptions(),
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 
@@ -761,21 +748,7 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntryLocalService.updateFragmentEntry(
 			userId, fragmentEntryId, fragmentCollectionId, name, css, html, js,
 			cacheable, configuration, icon, previewFileEntryId,
-			fragmentEntry.getTypeOptions(), status);
-	}
-
-	@Override
-	public FragmentEntry updateFragmentEntry(
-			long userId, long fragmentEntryId, long fragmentCollectionId,
-			String name, String css, String html, String js, boolean cacheable,
-			String configuration, String icon, long previewFileEntryId,
-			String typeOptions, int status)
-		throws PortalException {
-
-		return updateFragmentEntry(
-			userId, fragmentEntryId, fragmentCollectionId, name, css, html, js,
-			cacheable, configuration, icon, previewFileEntryId, false,
-			typeOptions, status);
+			false, fragmentEntry.getTypeOptions(), status);
 	}
 
 	@Override

@@ -15,8 +15,8 @@ import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyResponse;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;

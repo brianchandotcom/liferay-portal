@@ -77,11 +77,11 @@ definition {
 		task ("Navigate to page report entry") {
 			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
 
-			ACNavigation.openItem(itemName = "AC Page - Site Name - ${dataSourceName}");
+			ACNavigation.openItem(itemName = "Blogs AC Title - Site Name - ${dataSourceName}");
 		}
 
 		task ("Assert Page Profile") {
-			ACUtils.assertPageTitle(pageTitle = "AC Page - Site Name - ${dataSourceName}");
+			ACUtils.assertPageTitle(pageTitle = "Blogs AC Title - Site Name - ${dataSourceName}");
 
 			for (var cardTitle : list "Visitors Behavior,Audience,Views by Location,Views by Technology") {
 				ACCards.viewCards(cardTitle = ${cardTitle});

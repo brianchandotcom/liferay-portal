@@ -439,7 +439,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	private static class JNDIDataSourceWrapper extends DataSourceWrapper {
 
-		public JNDIDataSourceWrapper(DataSource dataSource) {
+		private JNDIDataSourceWrapper(DataSource dataSource) {
 			super(dataSource);
 		}
 

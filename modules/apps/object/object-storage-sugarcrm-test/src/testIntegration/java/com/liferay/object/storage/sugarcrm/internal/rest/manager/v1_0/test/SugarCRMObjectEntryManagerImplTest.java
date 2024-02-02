@@ -1,0 +1,459 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.object.storage.sugarcrm.internal.rest.manager.v1_0.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.builder.DateObjectFieldBuilder;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.text.DateFormat;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Maurice Sepe
+ */
+@FeatureFlags("LPS-135430")
+@RunWith(Arquillian.class)
+public class SugarCRMObjectEntryManagerImplTest
+	extends BaseObjectEntryManagerImplTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		adminUser = TestPropsValues.getUser();
+
+		companyId = TestPropsValues.getCompanyId();
+
+		_configurationProvider.saveCompanyConfiguration(
+			SalesforceConfiguration.class, companyId,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"accessTokenUrl",
+				TestPropsUtil.get("object.storage.sugarcrm.access.token.url")
+			).put(
+				"baseUrl", TestPropsUtil.get("object.storage.sugarcrm.base.url")
+			).put(
+				"clientId",
+				TestPropsUtil.get("object.storage.sugarcrm.client.id")
+			).put(
+				"grantType",
+				TestPropsUtil.get("object.storage.sugarcrm.grant.type")
+			).put(
+				"password",
+				TestPropsUtil.get("object.storage.sugarcrm.password")
+			).put(
+				"username",
+				TestPropsUtil.get("object.storage.sugarcrm.username")
+			).build());
+
+		_simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXXX");
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_configurationProvider.saveCompanyConfiguration(
+			SalesforceConfiguration.class, companyId,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"accessTokenUrl", ""
+			).put(
+				"baseUrl", ""
+			).put(
+				"clientId", ""
+			).put(
+				"grantType", ""
+			).put(
+				"password", ""
+			).put(
+				"username", ""
+			).build());
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_objectDefinition =
+			objectDefinitionLocalService.addCustomObjectDefinition(
+				adminUser.getUserId(), 0, false, false, false,
+				LocalizedMapUtil.getLocalizedMap("Ticket"), "Ticket", null,
+				null, LocalizedMapUtil.getLocalizedMap("Tickets"), true,
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_SUGARCRM,
+				Collections.emptyList());
+
+		ObjectFieldUtil.addCustomObjectField(
+			new DateObjectFieldBuilder(
+			).externalReferenceCode(
+				"Due_date__c"
+			).userId(
+				adminUser.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("Due Date")
+			).name(
+				"dueDate"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).build());
+
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).externalReferenceCode(
+				"Title__c"
+			).userId(
+				adminUser.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("Title")
+			).name(
+				"title"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).build());
+
+		_objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
+
+		_objectDefinition.setExternalReferenceCode("Ticket__c");
+
+		_objectDefinition = objectDefinitionLocalService.updateObjectDefinition(
+			_objectDefinition);
+
+		_objectDefinition =
+			objectDefinitionLocalService.publishCustomObjectDefinition(
+				adminUser.getUserId(),
+				_objectDefinition.getObjectDefinitionId());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		for (ObjectEntry objectEntry : _objectEntries) {
+			_objectEntryManager.deleteObjectEntry(
+				companyId, dtoConverterContext,
+				objectEntry.getExternalReferenceCode(), _objectDefinition,
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+		}
+
+		if (_objectDefinition != null) {
+			objectDefinitionLocalService.deleteObjectDefinition(
+				_objectDefinition.getObjectDefinitionId());
+		}
+	}
+
+	@Test
+	public void testAddObjectEntry() throws Exception {
+		ObjectEntry objectEntry = _addObjectEntry(
+			null, null, RandomTestUtil.randomString());
+
+		Assert.assertNotNull(objectEntry.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testAddOrUpdateObjectEntry() throws Exception {
+		ObjectEntry objectEntry = _addObjectEntry(
+			null, null, RandomTestUtil.randomString());
+
+		String title = RandomTestUtil.randomString();
+
+		objectEntry.setProperties(
+			HashMapBuilder.putAll(
+				objectEntry.getProperties()
+			).put(
+				"title", title
+			).build());
+
+		objectEntry = _objectEntryManager.updateObjectEntry(
+			companyId, dtoConverterContext,
+			objectEntry.getExternalReferenceCode(), _objectDefinition,
+			objectEntry, ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertEquals(
+			title, MapUtil.getString(objectEntry.getProperties(), "title"));
+	}
+
+	@Test
+	public void testGetObjectEntries() throws Exception {
+		String title1 = "a" + RandomTestUtil.randomString();
+		String title2 = "b" + RandomTestUtil.randomString();
+		String title3 = "c" + RandomTestUtil.randomString();
+		String title4 = "d" + RandomTestUtil.randomString();
+
+		Date date = RandomTestUtil.nextDate();
+
+		ObjectEntry objectEntry1 = _addObjectEntry("queued", date, title1);
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			"started", new Date(date.getTime() - Time.DAY), title2);
+		ObjectEntry objectEntry3 = _addObjectEntry(
+			"completed", new Date(date.getTime() + Time.DAY), title3);
+		ObjectEntry objectEntry4 = _addObjectEntry("queued", date, title4);
+
+		// And/or with equals/not equals expression
+
+		String filterString = StringBundler.concat(
+			"(title eq ", getValue(title1), " or title eq ", getValue(title2),
+			" or title eq ", getValue(title3), " or title eq ",
+			getValue(title4), ") and ");
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				StringBundler.concat(
+					filterString,
+					buildEqualsExpressionFilterString("customStatus", "queued"),
+					" and ", buildEqualsExpressionFilterString("dueDate", date),
+					" and ", buildEqualsExpressionFilterString("title", title1))
+			).build(),
+			objectEntry1);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				StringBundler.concat(
+					filterString,
+					_buildNotEqualsExpressionFilterString(
+						"customStatus", "queued"),
+					" and ",
+					_buildNotEqualsExpressionFilterString("dueDate", date),
+					" and ",
+					_buildNotEqualsExpressionFilterString("title", title1))
+			).build(),
+			objectEntry2, objectEntry3);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				StringBundler.concat(
+					filterString,
+					buildEqualsExpressionFilterString("customStatus", "queued"),
+					" or ", buildEqualsExpressionFilterString("dueDate", date),
+					" or ", buildEqualsExpressionFilterString("title", title1))
+			).build(),
+			objectEntry1, objectEntry4);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				StringBundler.concat(
+					filterString,
+					_buildNotEqualsExpressionFilterString(
+						"customStatus", "queued"),
+					" or ",
+					_buildNotEqualsExpressionFilterString("dueDate", date),
+					" or ",
+					_buildNotEqualsExpressionFilterString("title", title1))
+			).build(),
+			objectEntry2, objectEntry3, objectEntry4);
+
+		// Equals/not equals expression
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				filterString.concat(
+					buildEqualsExpressionFilterString("customStatus", "queued"))
+			).build(),
+			objectEntry1, objectEntry4);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				filterString.concat(
+					_buildNotEqualsExpressionFilterString(
+						"customStatus", "queued"))
+			).build(),
+			objectEntry2, objectEntry3);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				filterString.concat(
+					buildEqualsExpressionFilterString("dueDate", date))
+			).build(),
+			objectEntry1, objectEntry4);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				filterString.concat(
+					_buildNotEqualsExpressionFilterString("dueDate", date))
+			).build(),
+			objectEntry2, objectEntry3);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				filterString.concat(
+					buildEqualsExpressionFilterString("title", title1))
+			).build(),
+			objectEntry1);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				filterString.concat(
+					_buildNotEqualsExpressionFilterString("title", title1))
+			).build(),
+			objectEntry2, objectEntry3, objectEntry4);
+
+		// Range expression
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				buildRangeExpression(
+					_simpleDateFormat.parse(
+						MapUtil.getString(
+							objectEntry1.getProperties(), "dueDate")),
+					new Date(), "dueDate", "yyyy-MM-dd")
+			).build(),
+			objectEntry1, objectEntry4);
+	}
+
+	@Test
+	public void testGetObjectEntry() throws Exception {
+		String title = RandomTestUtil.randomString();
+
+		ObjectEntry objectEntry = _addObjectEntry(null, null, title);
+
+		_assertObjectEntry(objectEntry.getExternalReferenceCode(), title);
+	}
+
+	@Test
+	public void testPartialUpdateObjectEntry() throws Exception {
+		ObjectEntry objectEntry = _addObjectEntry(
+			null, null, RandomTestUtil.randomString());
+
+		_objectEntryManager.partialUpdateObjectEntry(
+			TestPropsValues.getCompanyId(), dtoConverterContext,
+			objectEntry.getExternalReferenceCode(), _objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"title", "Able"
+					).build();
+				}
+			},
+			null);
+
+		_assertObjectEntry(objectEntry.getExternalReferenceCode(), "Able");
+	}
+
+	@Override
+	protected Page<ObjectEntry> getObjectEntries(
+			Map<String, String> context, Sort[] sorts)
+		throws Exception {
+
+		if (sorts == null) {
+			sorts = new Sort[] {SortFactoryUtil.create("title", false)};
+		}
+
+		return _objectEntryManager.getObjectEntries(
+			companyId, _objectDefinition, null, null, dtoConverterContext,
+			context.get("filter"), Pagination.of(1, 3), context.get("search"),
+			sorts);
+	}
+
+	private ObjectEntry _addObjectEntry(
+			String customStatus, Date date, String title)
+		throws Exception {
+
+		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
+			dtoConverterContext, _objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"customStatus", customStatus
+					).put(
+						"dueDate",
+						(date != null) ? _simpleDateFormat.format(date) : null
+					).put(
+						"title", title
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_objectEntries.add(objectEntry);
+
+		return objectEntry;
+	}
+
+	private void _assertObjectEntry(String externalReferenceCode, String title)
+		throws Exception {
+
+		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			_objectDefinition, ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertEquals(
+			title, MapUtil.getString(objectEntry.getProperties(), "title"));
+	}
+
+	private String _buildNotEqualsExpressionFilterString(
+		String fieldName, Object value) {
+
+		return StringBundler.concat(fieldName, " ne ", getValue(value));
+	}
+
+	@Inject
+	private static ConfigurationProvider _configurationProvider;
+
+	private static DateFormat _simpleDateFormat;
+
+	private ObjectDefinition _objectDefinition;
+	private final List<ObjectEntry> _objectEntries = new ArrayList<>();
+
+	@Inject(
+		filter = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_SUGARCRM
+	)
+	private ObjectEntryManager _objectEntryManager;
+
+}

@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="true" dependency-injector="ds" package-path="com.liferay.contacts">
 	<namespace>Contacts</namespace>
-	<entity local-service="true" name="Entry" remote-service="false">
+	<entity local-service="true" name="Entry" remote-service="true">
 
 		<!-- PK fields -->
 

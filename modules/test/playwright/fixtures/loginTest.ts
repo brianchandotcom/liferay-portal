@@ -5,6 +5,7 @@
 
 import {Cookie, test} from '@playwright/test';
 
+import {liferayConfig} from '../liferay.config';
 import createTempFile, {
 	TempFileMissingError,
 	readTempFile,
@@ -58,7 +59,7 @@ function loginTest(options: LoginOptions = {}) {
 
 					page.context().addCookies(cookies);
 
-					await page.goto('/');
+					await page.goto(liferayConfig.environment.baseUrl);
 				}
 				catch (error) {
 					if (!(error instanceof TempFileMissingError)) {

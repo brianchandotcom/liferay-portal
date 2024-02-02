@@ -5,14 +5,16 @@
 
 import {expect, test} from '@playwright/test';
 
+import {liferayConfig} from '../../liferay.config';
+
 test('title is Home - Liferay DXP', async ({page}) => {
-	await page.goto('/');
+	await page.goto(liferayConfig.environment.baseUrl);
 
 	await expect(page).toHaveTitle('Home - Liferay DXP');
 });
 
 test('has homepage image', async ({page}) => {
-	await page.goto('/');
+	await page.goto(liferayConfig.environment.baseUrl);
 
 	await expect(page.locator('#main-content img')).toBeVisible();
 });

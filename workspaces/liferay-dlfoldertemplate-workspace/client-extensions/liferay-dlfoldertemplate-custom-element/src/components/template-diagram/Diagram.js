@@ -27,7 +27,7 @@ import {
 	updateFolderTemplateNode,
 } from '../../services/TemplateDiagramService';
 import {showError} from '../../utils/util';
-import FolderNode from './controls/custom-node/FolderNode';
+import FolderNode from './FolderNode';
 
 const EDGE_TYPE = 'SmoothStep';
 
@@ -240,7 +240,7 @@ const Diagram = ({templateId}) => {
 				setSelectedNode(null);
 			}
 			catch (error) {
-				showError(error.message);
+				showError('Error', error.message);
 			}
 		},
 		[nodes, edges, updateDiagramDataSourceLocally, selectedNode]
@@ -309,15 +309,15 @@ const Diagram = ({templateId}) => {
 					catch (error) {
 						setIsLoading(false);
 
-						showError(error.message);
+						showError('Error', error.message);
 					}
 				},
 				(error) => {
-					showError(error.message);
+					showError('Error', error.message);
 				}
 			)
 			.catch((error) => {
-				showError(error.message);
+				showError('Error', error.message);
 			});
 	};
 

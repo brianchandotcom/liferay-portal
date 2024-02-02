@@ -30,7 +30,7 @@ export function request(config) {
 				resolve(response.data);
 			})
 			.catch((error) => {
-				reject(error);
+				reject({error, message: error.response.data.error || ''});
 			});
 	});
 }

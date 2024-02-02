@@ -141,6 +141,8 @@ definition {
 	@description = "This is a test for LPS-202596. The content creator could filter web contents by Status type."
 	@priority = 3
 	test CanFilterByStatusType {
+		property custom.properties = "feature.flag.LPS-196768=true";
+
 		task ("Given a site administrator has a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -172,6 +174,8 @@ definition {
 	@description = "This is a test for LPS-202596. The content creator could filter web contents by Versions type."
 	@priority = 3
 	test CanFilterByVersionsType {
+		property custom.properties = "feature.flag.LPS-196768=true";
+
 		task ("Given a site administrator has a folder and a web content with three versions") {
 			JSONWebcontent.addFolder(
 				folderName = "WC Folder Name",
@@ -318,6 +322,8 @@ definition {
 	@description = "This is a test for LPS-202596. The content creator could filter assets by Web Content type in Web Content admin."
 	@priority = 3
 	test CanFilterByWebContentType {
+		property custom.properties = "feature.flag.LPS-196768=true";
+
 		task ("Given a site administrator has a folder and web contents") {
 			JSONWebcontent.addFolder(
 				folderName = "WC Folder Name",
@@ -390,6 +396,8 @@ definition {
 	@description = "This is a test for LPS-202596. The content creator cannot filter assets by type when Index All Article Versions disabled."
 	@priority = 3
 	test CanNotFilterAssetByTypeWhenDisableIndexAllArticleVersionsEnabled {
+		property custom.properties = "feature.flag.LPS-196768=true";
+
 		task ("Given a site administrator disable Index All Article Versions Enabled") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -486,6 +494,8 @@ definition {
 	@description = "This is a test for LPS-202596. The content creator could search comments associated to web contents by keywords."
 	@priority = 3
 	test CanSearchWebContentCommentsByKeyword {
+		property custom.properties = "feature.flag.LPS-196768=true";
+
 		task ("Given a site administrator has a folder and a web content with 2 comments") {
 			JSONWebcontent.addFolder(
 				folderName = "Liferay",
@@ -701,6 +711,8 @@ definition {
 	@description = "This is a test for LPS-197159. Assert could filter categories and tags filter for Web Content."
 	@priority = 4
 	test FilterWebContentsByCategoriesAndTags {
+		property custom.properties = "feature.flag.LPS-196768=true";
+
 		task ("Given a site administrator has web contents") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

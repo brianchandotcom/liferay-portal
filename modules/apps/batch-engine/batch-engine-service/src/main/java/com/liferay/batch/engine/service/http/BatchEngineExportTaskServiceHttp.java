@@ -41,6 +41,49 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 public class BatchEngineExportTaskServiceHttp {
 
+	public static com.liferay.batch.engine.model.BatchEngineExportTask
+			getBatchEngineExportTask(
+				HttpPrincipal httpPrincipal, long batchEngineExportTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				BatchEngineExportTaskServiceUtil.class,
+				"getBatchEngineExportTask",
+				_getBatchEngineExportTaskParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, batchEngineExportTaskId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.batch.engine.model.BatchEngineExportTask)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List
 		<com.liferay.batch.engine.model.BatchEngineExportTask>
 				getBatchEngineExportTasks(
@@ -52,7 +95,7 @@ public class BatchEngineExportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineExportTaskServiceUtil.class,
 				"getBatchEngineExportTasks",
-				_getBatchEngineExportTasksParameterTypes0);
+				_getBatchEngineExportTasksParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, start, end);
@@ -101,7 +144,7 @@ public class BatchEngineExportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineExportTaskServiceUtil.class,
 				"getBatchEngineExportTasks",
-				_getBatchEngineExportTasksParameterTypes1);
+				_getBatchEngineExportTasksParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, start, end, orderByComparator);
@@ -144,7 +187,7 @@ public class BatchEngineExportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineExportTaskServiceUtil.class,
 				"getBatchEngineExportTasksCount",
-				_getBatchEngineExportTasksCountParameterTypes2);
+				_getBatchEngineExportTasksCountParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId);
@@ -180,15 +223,17 @@ public class BatchEngineExportTaskServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(
 		BatchEngineExportTaskServiceHttp.class);
 
-	private static final Class<?>[] _getBatchEngineExportTasksParameterTypes0 =
-		new Class[] {long.class, int.class, int.class};
+	private static final Class<?>[] _getBatchEngineExportTaskParameterTypes0 =
+		new Class[] {long.class};
 	private static final Class<?>[] _getBatchEngineExportTasksParameterTypes1 =
+		new Class[] {long.class, int.class, int.class};
+	private static final Class<?>[] _getBatchEngineExportTasksParameterTypes2 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getBatchEngineExportTasksCountParameterTypes2 = new Class[] {
+		_getBatchEngineExportTasksCountParameterTypes3 = new Class[] {
 			long.class
 		};
 

@@ -29,6 +29,15 @@ public class BatchEngineExportTaskServiceWrapper
 	}
 
 	@Override
+	public com.liferay.batch.engine.model.BatchEngineExportTask
+			getBatchEngineExportTask(long batchEngineExportTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchEngineExportTaskService.getBatchEngineExportTask(
+			batchEngineExportTaskId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.batch.engine.model.BatchEngineExportTask>
 			getBatchEngineExportTasks(long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {

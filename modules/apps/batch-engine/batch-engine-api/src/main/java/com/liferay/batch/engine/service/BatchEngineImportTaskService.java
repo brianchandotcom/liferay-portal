@@ -44,6 +44,11 @@ public interface BatchEngineImportTaskService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.batch.engine.service.impl.BatchEngineImportTaskServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the batch engine import task remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link BatchEngineImportTaskServiceUtil} if injection and service tracking are not available.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchEngineImportTask getBatchEngineImportTask(
+			long batchEngineImportTaskId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchEngineImportTask> getBatchEngineImportTasks(
 			long companyId, int start, int end)
 		throws PortalException;

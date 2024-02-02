@@ -1,0 +1,22 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task deployJar(type: Copy)
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "org.ow2.asm", name: "asm-tree", version: "4.1"
+	compileOnly group: "org.parboiled", name: "parboiled-java", version: "1.1.6"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/parboiled/transform/ParserClassNode.java"
+	fileNames "org/parboiled/transform/RuleMethod.java"
+
+	originalLibModuleName = "parboiled-java"
+}

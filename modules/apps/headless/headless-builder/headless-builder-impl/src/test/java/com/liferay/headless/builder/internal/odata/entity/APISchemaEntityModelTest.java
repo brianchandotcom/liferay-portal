@@ -153,13 +153,13 @@ public class APISchemaEntityModelTest {
 					}
 
 					@Override
-					public PropertyType getPropertyType() {
-						return PropertyType.NORMAL;
+					public List<APIApplication.Property> getProperties() {
+						return Collections.emptyList();
 					}
 
 					@Override
-					public String getRelatedPropertyERC() {
-						return null;
+					public PropertyType getPropertyType() {
+						return PropertyType.NORMAL;
 					}
 
 					@Override

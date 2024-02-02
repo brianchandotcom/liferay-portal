@@ -390,6 +390,34 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates the Feature Indicator component.</description>
+		<name>feature-indicator</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.FeatureIndicatorTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>dark</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>interactive</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>tooltipAlign</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to group related form elements and offer additional styling.</description>
 		<name>fieldset</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.FieldsetTag</tag-class>

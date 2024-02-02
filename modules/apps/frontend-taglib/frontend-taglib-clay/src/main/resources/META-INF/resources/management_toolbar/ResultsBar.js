@@ -86,6 +86,7 @@ const ResultsBar = ({
 							`"${searchValue}"`
 						)}
 						className="component-text text-truncate-inline"
+						data-qa-id="searchResultText"
 						ref={resultsBarRef}
 						tabIndex={-1}
 					>

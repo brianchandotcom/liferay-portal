@@ -15,7 +15,7 @@ String randomNamespace = (String)row.getParameter("randomNamespace");
 WorkflowDefinitionLinkSearchEntry workflowDefinitionLinkSearchEntry = (WorkflowDefinitionLinkSearchEntry)row.getObject();
 %>
 
-<div data-qa-id='<%= "action" + workflowDefinitionLinkSearchEntry.getResource() %>'>
+<div data-qa-id='action<%= workflowDefinitionLinkSearchEntry.getResource() %>'>
 	<div class="btn-group btn-group-nowrap d-none" id="<%= randomNamespace %>saveCancelGroup">
 		<div class="btn-group-item">
 			<button class="btn btn-primary btn-sm" id="<%= randomNamespace %>saveButton" type="button")><liferay-ui:message key="save" /></button>

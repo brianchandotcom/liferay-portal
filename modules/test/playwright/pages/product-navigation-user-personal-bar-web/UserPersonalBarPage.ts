@@ -14,6 +14,9 @@ export class UserPersonalBarPage {
 	readonly page: Page;
 	readonly processBuilderConfigurationTab: Locator;
 	readonly productsMenuItem: Locator;
+	readonly searchInput: Locator;
+	readonly searchResultText: Locator;
+	readonly searchSubmit: Locator;
 	readonly showNotificationBadgeInPersonalMenuLabel: Locator;
 	readonly submitForWorkflowButton: Locator;
 	readonly usersSetting: Locator;
@@ -35,6 +38,17 @@ export class UserPersonalBarPage {
 		this.productsMenuItem = page.getByRole('menuitem', {
 			name: 'Products',
 		});
+		this.searchInput = page
+			.locator(
+				'#_com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet_fm_search'
+			)
+			.getByPlaceholder('Search for');
+		this.searchResultText = page.getByTestId('searchResultText');
+		this.searchSubmit = page
+			.locator(
+				'#_com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet_fm_search'
+			)
+			.getByLabel('Search', {exact: true});
 		this.showNotificationBadgeInPersonalMenuLabel = page
 			.getByTestId('showNotificationBadgeInPersonalMenu')
 			.getByLabel('Show Notification Badge in Personal Menu', {
@@ -63,11 +77,27 @@ export class UserPersonalBarPage {
 		await this.applicationsMenuPage.goToInstanceSettings();
 		await this.usersSetting.click();
 		await this.showNotificationBadgeInPersonalMenuLabel.uncheck();
-		await this.editConfigurationSubmitButton.click();
+		await Promise.all([
+			this.editConfigurationSubmitButton.click(),
+			this.page.waitForResponse(
+				(resp) =>
+					resp.status() === 200 &&
+					resp
+						.url()
+						.includes(
+							'p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet'
+						)
+			),
+		]);
 	}
 
 	async disableSingleApproverWorkflowProduct() {
 		await this.goToProcessBuilderConfigurationTab();
+		await this.searchInput.fill('Product');
+		await this.searchSubmit.click();
+		await this.searchResultText.waitFor({
+			state: 'attached',
+		});
 		await this.workflowDefinitionLinkEditButton.click();
 		await this.workflowDefinitionLinkSelectButton.selectOption(
 			'No Workflow'
@@ -79,11 +109,27 @@ export class UserPersonalBarPage {
 		await this.applicationsMenuPage.goToInstanceSettings();
 		await this.usersSetting.click();
 		await this.showNotificationBadgeInPersonalMenuLabel.check();
-		await this.editConfigurationSubmitButton.click();
+		await Promise.all([
+			this.editConfigurationSubmitButton.click(),
+			this.page.waitForResponse(
+				(resp) =>
+					resp.status() === 200 &&
+					resp
+						.url()
+						.includes(
+							'p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet'
+						)
+			),
+		]);
 	}
 
 	async enableSingleApproverWorkflowProduct() {
 		await this.goToProcessBuilderConfigurationTab();
+		await this.searchInput.fill('Product');
+		await this.searchSubmit.click();
+		await this.searchResultText.waitFor({
+			state: 'attached',
+		});
 		await this.workflowDefinitionLinkEditButton.click();
 		await this.workflowDefinitionLinkSelectButton.selectOption(
 			'Single Approver'
@@ -91,12 +137,19 @@ export class UserPersonalBarPage {
 		await this.workflowDefinitionLinkSaveButton.click();
 	}
 
-	async goto() {
-		await this.page.goto('/');
-	}
-
 	async goToProcessBuilderConfigurationTab() {
 		await this.applicationsMenuPage.goToProcessBuilder();
-		await this.processBuilderConfigurationTab.click();
+		await Promise.all([
+			this.processBuilderConfigurationTab.click(),
+			this.page.waitForResponse(
+				(resp) =>
+					resp.status() === 200 &&
+					resp
+						.url()
+						.includes(
+							'_com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet_tab=configuration'
+						)
+			),
+		]);
 	}
 }

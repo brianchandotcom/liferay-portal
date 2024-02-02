@@ -15,8 +15,9 @@ export const test = mergeTests(
 	loginTest
 );
 
-test('LPD-15423 notification badge is not visible when show notification badge in personal menu is disabled', async ({
+test('LPD-15423 notification badge configuration enables and disables notification badge in personal menu', async ({
 	apiHelpers,
+	page,
 	userPersonalBarPage,
 }) => {
 	await userPersonalBarPage.goToProcessBuilderConfigurationTab();
@@ -38,43 +39,13 @@ test('LPD-15423 notification badge is not visible when show notification badge i
 
 	expect(response.ok()).toBe(true);
 
-	await userPersonalBarPage.goto();
+	await page.goto('/');
 
 	await expect(userPersonalBarPage.notificationBadge).not.toBeVisible();
 
-	await userPersonalBarPage.disableSingleApproverWorkflowProduct();
 	await userPersonalBarPage.enableNotificationBadgeInPersonalMenu();
 
-	await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
-		product.productId
-	);
-
-	await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(catalog.id);
-});
-
-test('LPD-15423 notification badge is visible when show notification badge in personal menu is enabled', async ({
-	apiHelpers,
-	userPersonalBarPage,
-}) => {
-	await userPersonalBarPage.goToProcessBuilderConfigurationTab();
-	await userPersonalBarPage.enableSingleApproverWorkflowProduct();
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog(
-		'Catalog'
-	);
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct(
-		catalog.id,
-		'Product'
-	);
-
-	const response = await apiHelpers.headlessCommerceAdminCatalog.patchProduct(
-		product.productId
-	);
-
-	expect(response.ok()).toBe(true);
-
-	await userPersonalBarPage.goto();
+	await page.goto('/');
 
 	await expect(userPersonalBarPage.notificationBadge).toBeVisible();
 

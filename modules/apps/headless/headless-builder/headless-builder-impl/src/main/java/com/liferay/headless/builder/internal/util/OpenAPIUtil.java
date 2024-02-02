@@ -6,33 +6,16 @@
 package com.liferay.headless.builder.internal.util;
 
 import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.object.rest.dto.v1_0.FileEntry;
-import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.resource.OpenAPIResource;
-
-import io.swagger.v3.oas.models.media.ArraySchema;
-import io.swagger.v3.oas.models.media.BooleanSchema;
-import io.swagger.v3.oas.models.media.DateSchema;
-import io.swagger.v3.oas.models.media.DateTimeSchema;
-import io.swagger.v3.oas.models.media.IntegerSchema;
-import io.swagger.v3.oas.models.media.NumberSchema;
-import io.swagger.v3.oas.models.media.ObjectSchema;
-import io.swagger.v3.oas.models.media.Schema;
-import io.swagger.v3.oas.models.media.StringSchema;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.TreeMap;
 
 /**
  * @author Sergio Jiménez del Coso
@@ -131,61 +114,6 @@ public class OpenAPIUtil {
 		return pathParameter.replaceAll("\\}", StringPool.BLANK);
 	}
 
-	public static Map<String, Schema> toOpenAPISchemas(
-		OpenAPIResource openAPIResource, APIApplication.Schema schema) {
-
-		Map<String, Schema> schemas = new TreeMap<>();
-
-		Map<String, Schema> properties = new TreeMap<>();
-
-		for (APIApplication.Property property : schema.getProperties()) {
-			properties.put(
-				property.getName(),
-				_getPropertySchema(openAPIResource, property, schemas));
-		}
-
-		schemas.put(
-			schema.getName(),
-			new ObjectSchema() {
-				{
-					setDescription(schema.getDescription());
-					setName(schema.getName());
-					setProperties(properties);
-				}
-			});
-
-		Map<String, Schema> pageSchemas = openAPIResource.getSchemas(
-			Page.class);
-
-		Schema pageSchema = pageSchemas.remove("Page");
-
-		Map<String, Schema> pageProperties = pageSchema.getProperties();
-
-		ArraySchema itemsArraySchema = (ArraySchema)pageProperties.get("items");
-
-		itemsArraySchema.setItems(
-			new Schema() {
-				{
-					set$ref(schema.getName());
-				}
-			});
-
-		schemas.put("Page" + schema.getName(), pageSchema);
-
-		schemas.putAll(pageSchemas);
-
-		return schemas;
-	}
-
-	private static void _addSchemas(
-		Class<?> entityClass, OpenAPIResource openAPIResource,
-		Map<String, Schema> schemas) {
-
-		if (!schemas.containsKey(entityClass.getSimpleName())) {
-			schemas.putAll(openAPIResource.getSchemas(entityClass));
-		}
-	}
-
 	private static String _formatSingular(String s) {
 		if (s.endsWith("ases")) {
 
@@ -210,114 +138,6 @@ public class OpenAPIUtil {
 		}
 
 		return s;
-	}
-
-	private static Schema _getPropertySchema(
-		OpenAPIResource openAPIResource, APIApplication.Property property,
-		Map<String, Schema> schemas) {
-
-		APIApplication.Property.Type type = property.getType();
-
-		Schema schema = null;
-
-		if (type == APIApplication.Property.Type.AGGREGATION) {
-			schema = new StringSchema();
-		}
-		else if (type == APIApplication.Property.Type.ARRAY_CONTAINER) {
-			schema = new ArraySchema();
-		}
-		else if (type == APIApplication.Property.Type.ATTACHMENT) {
-			_addSchemas(FileEntry.class, openAPIResource, schemas);
-
-			schema = new Schema() {
-				{
-					set$ref("FileEntry");
-				}
-			};
-		}
-		else if (type == APIApplication.Property.Type.BOOLEAN) {
-			schema = new BooleanSchema();
-		}
-		else if (type == APIApplication.Property.Type.DATE) {
-			schema = new DateSchema();
-		}
-		else if (type == APIApplication.Property.Type.DATE_TIME) {
-			schema = new DateTimeSchema();
-		}
-		else if (type == APIApplication.Property.Type.DECIMAL) {
-			schema = new NumberSchema() {
-				{
-					setFormat("double");
-				}
-			};
-		}
-		else if (type == APIApplication.Property.Type.INTEGER) {
-			schema = new IntegerSchema();
-		}
-		else if (type == APIApplication.Property.Type.LONG_INTEGER) {
-			schema = new IntegerSchema() {
-				{
-					setFormat("int64");
-				}
-			};
-		}
-		else if (type == APIApplication.Property.Type.LONG_TEXT) {
-			schema = new StringSchema();
-		}
-		else if (type == APIApplication.Property.Type.MULTISELECT_PICKLIST) {
-			_addSchemas(ListEntry.class, openAPIResource, schemas);
-
-			schema = new ArraySchema() {
-				{
-					setItems(
-						new Schema() {
-							{
-								set$ref("ListEntry");
-							}
-						});
-				}
-			};
-		}
-		else if (type == APIApplication.Property.Type.SINGLE_CONTAINER) {
-			schema = new ObjectSchema();
-		}
-		else if (type == APIApplication.Property.Type.PICKLIST) {
-			_addSchemas(ListEntry.class, openAPIResource, schemas);
-
-			schema = new Schema() {
-				{
-					set$ref("ListEntry");
-				}
-			};
-		}
-		else if (type == APIApplication.Property.Type.PRECISION_DECIMAL) {
-			schema = new NumberSchema() {
-				{
-					setFormat("double");
-				}
-			};
-		}
-		else if (type == APIApplication.Property.Type.RICH_TEXT) {
-			schema = new StringSchema();
-		}
-		else if (type == APIApplication.Property.Type.TEXT) {
-			schema = new StringSchema();
-		}
-
-		schema.setDescription(property.getDescription());
-		schema.setName(property.getName());
-
-		for (APIApplication.Property childProperty : property.getProperties()) {
-			schema.setProperties(
-				HashMapBuilder.put(
-					childProperty.getName(),
-					_getPropertySchema(openAPIResource, childProperty, schemas)
-				).putAll(
-					schema.getProperties()
-				).build());
-		}
-
-		return schema;
 	}
 
 	private static String _toCamelCase(String path) {

@@ -14,6 +14,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -173,9 +174,15 @@ public class CTServiceRegistry {
 				CTService<?> ctService = bundleContext.getService(
 					serviceReference);
 
-				emitter.emit(
-					_classNameLocalService.getClassNameId(
-						ctService.getModelClass()));
+				try {
+					DBPartitionUtil.forEachCompanyId(
+						companyId -> emitter.emit(
+							_classNameLocalService.getClassNameId(
+								ctService.getModelClass())));
+				}
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
+				}
 			});
 	}
 

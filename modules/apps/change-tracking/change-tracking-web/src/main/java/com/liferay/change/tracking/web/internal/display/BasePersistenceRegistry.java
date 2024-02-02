@@ -10,6 +10,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -76,9 +77,15 @@ public class BasePersistenceRegistry {
 					BasePersistence<?> basePersistence =
 						tableReferenceDefinition.getBasePersistence();
 
-					emitter.emit(
-						_classNameLocalService.getClassNameId(
-							basePersistence.getModelClass()));
+					try {
+						DBPartitionUtil.forEachCompanyId(
+							companyId -> emitter.emit(
+								_classNameLocalService.getClassNameId(
+									basePersistence.getModelClass())));
+					}
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
+					}
 				});
 
 		_transactionExecutorServiceTrackerMap =

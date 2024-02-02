@@ -16,6 +16,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -463,9 +464,13 @@ public class CTDisplayRendererRegistryImpl
 						bundleContext.getService(serviceReference);
 
 					try {
-						emitter.emit(
-							_classNameLocalService.getClassNameId(
-								ctDisplayRenderer.getModelClass()));
+						DBPartitionUtil.forEachCompanyId(
+							companyId -> emitter.emit(
+								_classNameLocalService.getClassNameId(
+									ctDisplayRenderer.getModelClass())));
+					}
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
 					}
 					finally {
 						bundleContext.ungetService(serviceReference);

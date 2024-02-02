@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
@@ -58,9 +59,18 @@ public class SharingEntryInterpreterProviderImpl
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, SharingEntryInterpreter.class,
 			"(model.class.name=*)",
-			(serviceReference, emitter) -> emitter.emit(
-				_classNameLocalService.getClassNameId(
-					(String)serviceReference.getProperty("model.class.name"))));
+			(serviceReference, emitter) -> {
+				try {
+					DBPartitionUtil.forEachCompanyId(
+						companyId -> emitter.emit(
+							_classNameLocalService.getClassNameId(
+								(String)serviceReference.getProperty(
+									"model.class.name"))));
+				}
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
+				}
+			});
 	}
 
 	@Deactivate

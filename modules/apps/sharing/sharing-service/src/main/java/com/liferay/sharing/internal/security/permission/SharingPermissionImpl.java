@@ -12,6 +12,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -207,9 +208,18 @@ public class SharingPermissionImpl implements SharingPermission {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, SharingPermissionChecker.class,
 			"(model.class.name=*)",
-			(serviceReference, emitter) -> emitter.emit(
-				_classNameLocalService.getClassNameId(
-					(String)serviceReference.getProperty("model.class.name"))));
+			(serviceReference, emitter) -> {
+				try {
+					DBPartitionUtil.forEachCompanyId(
+						companyId -> emitter.emit(
+							_classNameLocalService.getClassNameId(
+								(String)serviceReference.getProperty(
+									"model.class.name"))));
+				}
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
+				}
+			});
 	}
 
 	@Deactivate

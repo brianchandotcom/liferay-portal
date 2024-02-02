@@ -1,0 +1,51 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "1025",
+					"description": "Form ID",
+					"label": "Form ID",
+					"localizable": true,
+					"name": "formId",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "Redirect URL",
+					"label": "Redirect URL",
+					"localizable": true,
+					"name": "redirectUrl",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "Submit",
+					"description": "Submit Button Text",
+					"label": "Submit Button Text",
+					"localizable": true,
+					"name": "submitButtonText",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "//pages.liferay.com",
+					"description": "Pod ID",
+					"label": "Pod ID",
+					"name": "podId",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "212-DQY-814",
+					"description": "Munchkin ID",
+					"label": "Munchkin ID",
+					"name": "munchkinId",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

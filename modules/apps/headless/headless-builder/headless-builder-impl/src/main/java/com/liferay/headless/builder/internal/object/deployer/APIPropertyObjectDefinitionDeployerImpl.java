@@ -5,7 +5,7 @@
 
 package com.liferay.headless.builder.internal.object.deployer;
 
-import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.internal.object.related.models.DeleteOnDisassociateObjectRelatedModelsProvider;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -142,7 +142,7 @@ public class APIPropertyObjectDefinitionDeployerImpl
 
 					item.put(
 						"apiPropertyType",
-						HeadlessBuilderConstants.PROPERTY_TYPE_NORMAL);
+						APIApplication.Property.PropertyType.NORMAL.getValue());
 
 					_objectEntryLocalService.addOrUpdateObjectEntry(
 						(String)item.get("externalReferenceCode"),

@@ -60,7 +60,6 @@ public class ObjectEntrySearchPermissionFilterContributor
 
 				return accountEntry.getAccountEntryId();
 			});
-
 		List<Organization> organizations =
 			_organizationLocalService.getUserOrganizations(
 				permissionChecker.getUserId());

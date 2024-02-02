@@ -202,7 +202,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_dynamicQueryBatchIndexingActionableFactory,
 					objectDefinition.getObjectDefinitionId(),
 					_objectEntryLocalService);
-
 		ObjectEntryModelSummaryContributor objectEntryModelSummaryContributor =
 			new ObjectEntryModelSummaryContributor();
 

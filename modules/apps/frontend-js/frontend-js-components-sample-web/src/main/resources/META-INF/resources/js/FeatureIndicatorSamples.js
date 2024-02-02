@@ -10,7 +10,7 @@ import React from 'react';
 export default function FeatureIndicatorSamples({learnResourceContext}) {
 	return (
 		<>
-			<ClayLayout.Row>
+			<ClayLayout.Row className="p-3">
 				<ClayLayout.Col>
 					<h3>Beta Interactive</h3>
 
@@ -44,9 +44,9 @@ export default function FeatureIndicatorSamples({learnResourceContext}) {
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 
-			<ClayLayout.Row className="bg-dark clay-dark text-white">
+			<ClayLayout.Row className="bg-dark clay-dark mb-3 p-3 text-white">
 				<ClayLayout.Col>
-					<h3>Beta Interactive</h3>
+					<h3>Dark Beta Interactive</h3>
 
 					<FeatureIndicator
 						interactive
@@ -56,13 +56,13 @@ export default function FeatureIndicatorSamples({learnResourceContext}) {
 				</ClayLayout.Col>
 
 				<ClayLayout.Col>
-					<h3>Beta</h3>
+					<h3>Dark Beta</h3>
 
 					<FeatureIndicator type="beta" />
 				</ClayLayout.Col>
 
 				<ClayLayout.Col>
-					<h3>Deprecated Interactive</h3>
+					<h3>Dark Deprecated Interactive</h3>
 
 					<FeatureIndicator
 						interactive
@@ -72,7 +72,7 @@ export default function FeatureIndicatorSamples({learnResourceContext}) {
 				</ClayLayout.Col>
 
 				<ClayLayout.Col>
-					<h3>Deprecated</h3>
+					<h3>Dark Deprecated</h3>
 
 					<FeatureIndicator type="deprecated" />
 				</ClayLayout.Col>

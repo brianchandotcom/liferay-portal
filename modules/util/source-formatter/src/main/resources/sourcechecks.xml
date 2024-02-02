@@ -1012,7 +1012,7 @@
 		</check>
 		<check name="JSONResourcePermissionsFileCheck">
 			<category name="Styling" />
-			<description name="Sorts by `resourceName` in `resource-permissions.json` files." />
+			<description name="Sorts by `resourceName` and `roleName` in `resource-permissions.json` files." />
 		</check>
 	</source-processor>
 	<source-processor name="JSPSourceProcessor">

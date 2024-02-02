@@ -61,7 +61,14 @@ public class JSONResourcePermissionsFileCheck extends BaseFileCheck {
 
 			String resourceName2 = jsonObject2.getString("resourceName");
 
-			return resourceName1.compareTo(resourceName2);
+			if (!resourceName1.equals(resourceName2)) {
+				return resourceName1.compareTo(resourceName2);
+			}
+
+			String roleName1 = jsonObject1.getString("roleName");
+			String roleName2 = jsonObject2.getString("roleName");
+
+			return roleName1.compareTo(roleName2);
 		}
 
 	}

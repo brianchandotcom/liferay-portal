@@ -16,6 +16,7 @@ const DEFAULT_PROPS = {
 	searchLocation: null,
 	searchLocationOptions: null,
 	searchResults: 'search-results',
+	searchResultsOptions: [{label: 'Search Results', value: 'search-results'}],
 	searchURL: 'search-url',
 };
 

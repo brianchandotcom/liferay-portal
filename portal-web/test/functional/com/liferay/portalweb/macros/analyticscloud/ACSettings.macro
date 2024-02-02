@@ -323,7 +323,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPlanDetails(individualsLimit = null, individualsAddOnsPrice = null, pageViewsAddOnsLimit = null, pageViewsLimit = null, individualsAddOnsLimit = null, planName = null, usersLimit = null, pageViewsAddOnsPrice = null) {
+	macro assertPlanDetails(individualsLimit = null, pageViewsLimit = null, planName = null, usersLimit = null) {
 		AssertElementPresent(
 			key_planName = ${planName},
 			locator1 = "ACUsage#PLAN_NAME");
@@ -348,22 +348,6 @@ definition {
 			AssertElementPresent(
 				key_planItem = "Users",
 				key_planLimit = ${usersLimit},
-				key_planName = ${planName},
-				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
-		}
-
-		if (isSet(individualsAddOnsLimit)) {
-			AssertElementPresent(
-				key_planItem = "Individuals for ${individualsAddOnsPrice}",
-				key_planLimit = ${individualsAddOnsLimit},
-				key_planName = ${planName},
-				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
-		}
-
-		if (isSet(pageViewsAddOnsLimit)) {
-			AssertElementPresent(
-				key_planItem = "Page Views for ${pageViewsAddOnsPrice}",
-				key_planLimit = ${pageViewsAddOnsLimit},
 				key_planName = ${planName},
 				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
 		}

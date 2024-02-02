@@ -19,6 +19,7 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationQueueEntryAttachmentLocalService;
 import com.liferay.notification.service.test.util.NotificationTemplateUtil;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
+import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -29,7 +30,6 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -68,12 +69,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Feliphe Marinho
@@ -131,12 +137,29 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		).put(
 			"${portalURL}",
 			() -> {
-				Company company = _companyLocalService.getCompany(
-					TestPropsValues.getCompanyId());
+				_originalHttpServletRequest =
+					ObjectActionThreadLocal.getHttpServletRequest();
 
-				return company.getPortalURL(TestPropsValues.getGroupId());
+				HttpServletRequest httpServletRequest =
+					_originalHttpServletRequest;
+
+				if (httpServletRequest == null) {
+					httpServletRequest = new MockHttpServletRequest(
+						null, StringPool.BLANK, RandomTestUtil.randomString());
+
+					ObjectActionThreadLocal.setHttpServletRequest(
+						httpServletRequest);
+				}
+
+				return _portal.getPortalURL(httpServletRequest);
 			}
 		).build();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		ObjectActionThreadLocal.setHttpServletRequest(
+			_originalHttpServletRequest);
 	}
 
 	@Test
@@ -565,6 +588,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	private static CompanyLocalService _companyLocalService;
 
 	private static Map<String, Object> _freeMarkerTermValues;
+	private static HttpServletRequest _originalHttpServletRequest;
+
+	@Inject
+	private static Portal _portal;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

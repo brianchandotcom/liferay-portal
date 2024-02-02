@@ -30,6 +30,7 @@ interface IProps extends Translations {
 		languageIds: Liferay.Language.Locale[]
 	) => void;
 	onSelectedLanguageIdChange?: (languageId: Liferay.Language.Locale) => void;
+	onTriggerClick?: () => void;
 	selectedLanguageId: Liferay.Language.Locale;
 	showOnlyFlags?: boolean;
 	small?: boolean;
@@ -111,11 +112,12 @@ export default function TranslationAdminSelector({
 	displayType = DISPLAY_TYPE.DEFAULT,
 	onActiveLanguageIdsChange = noop,
 	onSelectedLanguageIdChange = noop,
+	onTriggerClick = noop,
 	selectedLanguageId: initialSelectedLanguageId,
 	showOnlyFlags,
 	small = false,
-	translations = null,
 	translationProgress = null,
+	translations = null,
 }: IProps) {
 	const [activeLanguageIds, setActiveLanguageIds] = useState<
 		Liferay.Language.Locale[]
@@ -177,10 +179,18 @@ export default function TranslationAdminSelector({
 	if (Liferay.FeatureFlags['LPS-114700'] && !adminMode) {
 		return (
 			<Picker
+				active={selectorDropdownActive}
 				as={TriggerButton}
 				displayType={displayType}
 				id={selectorId}
 				items={activeLocales}
+				onActiveChange={(active: any) => {
+					if (active) {
+						onTriggerClick();
+					}
+
+					setSelectorDropdownActive(active);
+				}}
 				onSelectionChange={(id: React.Key) => {
 					setSelectedLanguageId(id as Liferay.Language.Locale);
 				}}
@@ -222,7 +232,13 @@ export default function TranslationAdminSelector({
 			<ClayDropDown
 				active={selectorDropdownActive}
 				hasLeftSymbols
-				onActiveChange={setSelectorDropdownActive}
+				onActiveChange={(active: any) => {
+					if (active) {
+						onTriggerClick();
+					}
+
+					setSelectorDropdownActive(active);
+				}}
 				trigger={
 					<TriggerButton
 						displayType={displayType}

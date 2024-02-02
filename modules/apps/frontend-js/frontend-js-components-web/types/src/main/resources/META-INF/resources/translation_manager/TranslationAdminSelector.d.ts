@@ -18,6 +18,7 @@ interface IProps extends Translations {
 		languageIds: Liferay.Language.Locale[]
 	) => void;
 	onSelectedLanguageIdChange?: (languageId: Liferay.Language.Locale) => void;
+	onTriggerClick?: () => void;
 	selectedLanguageId: Liferay.Language.Locale;
 	showOnlyFlags?: boolean;
 	small?: boolean;
@@ -36,10 +37,11 @@ export default function TranslationAdminSelector({
 	displayType,
 	onActiveLanguageIdsChange,
 	onSelectedLanguageIdChange,
+	onTriggerClick,
 	selectedLanguageId: initialSelectedLanguageId,
 	showOnlyFlags,
 	small,
-	translations,
 	translationProgress,
+	translations,
 }: IProps): JSX.Element;
 export {};

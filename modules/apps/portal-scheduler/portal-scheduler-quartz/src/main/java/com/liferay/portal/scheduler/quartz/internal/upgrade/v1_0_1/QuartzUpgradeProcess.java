@@ -101,8 +101,8 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 			String columnId, long columnValue)
 		throws Exception {
 
-		_companyLocalService.forEachCompanyId(
-			companyId -> {
+		_companyLocalService.forEachCompany(
+			company -> {
 				if (companyIds.containsKey(jobName)) {
 					return;
 				}
@@ -110,12 +110,12 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
 							StringBundler.concat(
-								"select 1 from ", tableName, " where ",
+								"select companyId from ", tableName, " where ",
 								columnId, " = ", columnValue));
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					if (resultSet.next()) {
-						companyIds.put(jobName, companyId);
+						companyIds.put(jobName, resultSet.getLong("companyId"));
 					}
 				}
 			});

@@ -71,29 +71,20 @@ public class JSPOutputTaglibsCheck extends BaseTagAttributesCheck {
 
 				Map<String, String> attributesMap = tag.getAttributesMap();
 
-				for (Map.Entry<String, String> entry :
-						attributesMap.entrySet()) {
+				String attributeValue = attributesMap.get("outputKey");
 
-					String attributeName = entry.getKey();
+				if ((attributeValue == null) || attributeValue.contains("<%") ||
+					attributeValue.startsWith(expectedValue)) {
 
-					if (!attributeName.equals("outputKey")) {
-						continue;
-					}
-
-					String attributeValue = attributesMap.get(attributeName);
-
-					if (!attributeValue.contains("<%") &&
-						!attributeValue.startsWith(expectedValue)) {
-
-						addMessage(
-							fileName,
-							StringBundler.concat(
-								"The value for 'outputKey' in <",
-								outputTaglibName, "> should start with '",
-								expectedValue, "'"),
-							getLineNumber(content, x));
-					}
+					continue;
 				}
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"The value for 'outputKey' in <", outputTaglibName,
+						"> should start with '", expectedValue, "'"),
+					getLineNumber(content, x));
 			}
 		}
 	}

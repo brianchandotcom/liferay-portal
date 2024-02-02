@@ -5,8 +5,13 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox.multiple;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -67,6 +72,47 @@ public class CheckboxMultipleDDMFormFieldValueAccessorTest {
 				ddmFormFieldValue, LocaleUtil.US);
 
 		Assert.assertTrue(actualJSONArray.length() == 0);
+	}
+
+	@Test
+	public void testGetCheckboxMultipleValueForEvaluation() {
+		JSONArray expectedJSONArray = createJSONArray("Option / test");
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			"CheckboxMultiple", "Checkbox Multiple", "checkbox-multiple",
+			"string", false, false, false);
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+
+		String optionValue = "Option12345678";
+
+		ddmFormFieldOptions.addOptionLabel(
+			optionValue, LocaleUtil.US,
+			String.valueOf(expectedJSONArray.get(0)));
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		JSONArray optionJSONArray = createJSONArray(optionValue);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"CheckboxMultiple",
+				new UnlocalizedValue(optionJSONArray.toString()));
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		JSONArray actualJSONArray =
+			_checkboxMultipleDDMFormFieldValueAccessor.getValueForEvaluation(
+				ddmFormFieldValue, LocaleUtil.US);
+
+		Assert.assertEquals(
+			expectedJSONArray.toString(), actualJSONArray.toString());
 	}
 
 	protected JSONArray createJSONArray(String... strings) {

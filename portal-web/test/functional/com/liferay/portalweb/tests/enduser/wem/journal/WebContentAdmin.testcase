@@ -807,7 +807,7 @@ definition {
 	@description = "This is a test for LPS-196819. The site administrator could manage web contents by structures."
 	@priority = 4
 	test ManageWebContentsByStructures {
-		property custom.properties = "feature.flag.LPS-197692=true";
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
 
 		task ("Given a site administrator has web contents") {
 			JSONWebcontent.addWebContent(
@@ -894,7 +894,7 @@ definition {
 	@description = "This is a test for LPS-196819. The site administrator could manage web contents by structures in Asset Library."
 	@priority = 3
 	test ManageWebContentsByStructuresInAssetLibrary {
-		property custom.properties = "feature.flag.LPS-197692=true";
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
 
 		task ("Given a site administrator has web contents in asset library") {
 			JSONDepot.addDepot(depotName = "Test Depot Name");
@@ -1250,7 +1250,7 @@ definition {
 	@description = "This is a test for LPS-196819. The site administrator could search web contents in Content Library sheet."
 	@priority = 4
 	test SearchWebContentsInContentLibrarySheet {
-		property custom.properties = "feature.flag.LPS-197692=true";
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
 
 		task ("Given a site administrator has web contents") {
 			JSONWebcontent.addWebContent(
@@ -1307,7 +1307,7 @@ definition {
 	@description = "This is a test for LPS-196819. The site administrator could search web contents in specific structure sheet."
 	@priority = 4
 	test SearchWebContentsInHighlightedStructureSheet {
-		property custom.properties = "feature.flag.LPS-197692=true";
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
 
 		task ("Given a site administrator has web contents") {
 			JSONWebcontent.addWebContent(
@@ -1366,7 +1366,7 @@ definition {
 	@description = "This is a test for LPS-196819. The site administrator could select structures from global site and asset library on modal."
 	@priority = 3
 	test SelectStructuresFromGlobalAndAssetLibraryAsHighlightedStrutures {
-		property custom.properties = "feature.flag.LPS-197692=true";
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
 
 		task ("Given a site administrator has web content structure in asset library") {
 			JSONDepot.addDepot(depotName = "Test Depot Name");
@@ -1562,7 +1562,7 @@ definition {
 	@description = "This is a test for LPS-196819. The site administrator could add all available type items in Content Library sheet."
 	@priority = 3
 	test ViewAvailableTypesInContentLibrarySheet {
-		property custom.properties = "feature.flag.LPS-197692=true";
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
 
 		task ("Given a site administrator has a web content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1893,7 +1893,7 @@ definition {
 	@description = "This is a test for LPS-196819. The site administrator could see info panel of web contents in specific structure sheet."
 	@priority = 3
 	test ViewInfoPanelOfWebContentsInHighlightedStructureSheet {
-		property custom.properties = "feature.flag.LPS-197692=true";
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
 
 		task ("Given a site administrator has web contents") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -2240,7 +2240,7 @@ definition {
 	@description = "This is a test for LPS-196819. The site administrator could see all web contents with specific structure on that structure sheet."
 	@priority = 4
 	test ViewWebContentsInHighlightedStructureSheet {
-		property custom.properties = "feature.flag.LPS-197692=true";
+		property custom.properties = "feature.flag.LPS-194763=true${line.separator}feature.flag.LPS-197692=true";
 
 		task ("Given a site administrator has a folder and web contents") {
 			JSONWebcontent.addFolder(

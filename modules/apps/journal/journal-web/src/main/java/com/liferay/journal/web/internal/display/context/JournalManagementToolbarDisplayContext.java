@@ -527,7 +527,9 @@ public class JournalManagementToolbarDisplayContext
 		).setParameter(
 			"highlightedDDMStructureId",
 			() -> {
-				if (_journalDisplayContext.isHighlightedDDMStructure()) {
+				if (FeatureFlagManagerUtil.isEnabled("LPS-194763") &&
+					_journalDisplayContext.isHighlightedDDMStructure()) {
+
 					return _journalDisplayContext.
 						getHighlightedDDMStructureId();
 				}
@@ -706,7 +708,10 @@ public class JournalManagementToolbarDisplayContext
 				LanguageUtil.get(httpServletRequest, "recent")
 			).build());
 
-		if (!_journalDisplayContext.isHighlightedDDMStructure()) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-194763") ||
+			(FeatureFlagManagerUtil.isEnabled("LPS-194763") &&
+			 !_journalDisplayContext.isHighlightedDDMStructure())) {
+
 			filterNavigationDropdownItems.add(
 				DropdownItemBuilder.putData(
 					"action", "openDDMStructuresSelector"

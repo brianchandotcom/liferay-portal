@@ -123,10 +123,11 @@ public abstract class EntryLocalServiceBaseImpl
 	 *
 	 * @param entry the entry
 	 * @return the entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Entry deleteEntry(Entry entry) {
+	public Entry deleteEntry(Entry entry) throws PortalException {
 		return entryPersistence.remove(entry);
 	}
 

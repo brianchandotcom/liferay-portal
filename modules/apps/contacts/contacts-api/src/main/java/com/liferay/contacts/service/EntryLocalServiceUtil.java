@@ -86,8 +86,9 @@ public class EntryLocalServiceUtil {
 	 *
 	 * @param entry the entry
 	 * @return the entry that was removed
+	 * @throws PortalException
 	 */
-	public static Entry deleteEntry(Entry entry) {
+	public static Entry deleteEntry(Entry entry) throws PortalException {
 		return getService().deleteEntry(entry);
 	}
 

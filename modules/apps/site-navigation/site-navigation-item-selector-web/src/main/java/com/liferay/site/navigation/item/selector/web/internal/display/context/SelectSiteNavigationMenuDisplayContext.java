@@ -358,7 +358,12 @@ public class SelectSiteNavigationMenuDisplayContext {
 
 				List<Layout> ancestors = layout.getAncestors();
 
-				Collections.reverse(ancestors);
+				if (ListUtil.isEmpty(ancestors)) {
+					ancestors = new ArrayList<>();
+				}
+				else {
+					Collections.reverse(ancestors);
+				}
 
 				ancestors.add(layout);
 

@@ -63,10 +63,10 @@ test('can see filter and sort parameters for collection endpoints', async ({
 
 	await apiExplorerPage.goToApplication(`c/${basicApiApplication.baseURL}`);
 
-	await apiExplorerPage.endpointHasParameters(collectionEndpoint.path, [
-		'filter',
-		'sort',
-	]);
+	await apiExplorerPage.expectEndpointWithParameters(
+		collectionEndpoint.path,
+		['filter', 'sort']
+	);
 
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
@@ -107,10 +107,10 @@ test('cannot see filter and sort parameters for singleElement endpoints', async 
 
 	await apiExplorerPage.goToApplication(`c/${basicApiApplication.baseURL}`);
 
-	await apiExplorerPage.endpointHasNotParameters(singleElementEndpoint.path, [
-		'filter',
-		'sort',
-	]);
+	await apiExplorerPage.expectEndpointWithoutParameters(
+		singleElementEndpoint.path,
+		['filter', 'sort']
+	);
 
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(

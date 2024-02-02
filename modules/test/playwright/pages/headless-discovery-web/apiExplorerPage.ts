@@ -14,7 +14,10 @@ export class ApiExplorerPage {
 		this.page = page;
 	}
 
-	async endpointHasParameters(endpointPath: string, parameters: string[]) {
+	async expectEndpointWithParameters(
+		endpointPath: string,
+		parameters: string[]
+	) {
 		await (await this.getEndpointLocator(endpointPath)).click();
 		for (const parameter of parameters) {
 			await expect(
@@ -24,7 +27,10 @@ export class ApiExplorerPage {
 		await (await this.getEndpointLocator(endpointPath)).click();
 	}
 
-	async endpointHasNotParameters(endpointPath: string, parameters: string[]) {
+	async expectEndpointWithoutParameters(
+		endpointPath: string,
+		parameters: string[]
+	) {
 		await (await this.getEndpointLocator(endpointPath)).click();
 		for (const parameter of parameters) {
 			await expect(

@@ -55,6 +55,7 @@ public class UserMembershipsScreenNavigationEntry
 		return "/user/memberships.jsp";
 	}
 
+	@Override
 	public boolean isEditable(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
@@ -66,11 +67,11 @@ public class UserMembershipsScreenNavigationEntry
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		String myAccountPortletId = PortletProviderUtil.getPortletId(
+		String portletId = PortletProviderUtil.getPortletId(
 			PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
 			PortletProvider.Action.VIEW);
 
-		if (myAccountPortletId.equals(portletDisplay.getPortletName())) {
+		if (portletId.equals(portletDisplay.getPortletName())) {
 			return false;
 		}
 

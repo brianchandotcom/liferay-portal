@@ -24,8 +24,8 @@
 	"scripts": {
 		"checkFormat": "tsc && liferay-npm-scripts lint && liferay-npm-scripts format:check",
 		"format": "tsc && liferay-npm-scripts lint:fix && liferay-npm-scripts format",
-		"local:setup": "node ./scripts/localSetup.mjs",
-		"local:teardown": "node ./scripts/localTeardown.mjs",
+		"local:setup": "ts-node ./scripts/localSetup.ts",
+		"local:teardown": "ts-node ./scripts/localTeardown.ts",
 		"playwright": "playwright",
 		"test": "playwright test"
 	},

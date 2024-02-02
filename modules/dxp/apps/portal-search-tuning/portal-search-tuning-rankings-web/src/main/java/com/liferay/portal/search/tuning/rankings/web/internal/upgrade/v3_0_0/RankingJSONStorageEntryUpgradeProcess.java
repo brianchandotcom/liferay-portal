@@ -29,6 +29,10 @@ public class RankingJSONStorageEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (!hasTable("JSONStorageEntry")) {
+			return;
+		}
+
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select jsonStorageEntryId, valueString from " +
 					"JSONStorageEntry where classNameId = ? and key_ = ?");

@@ -89,10 +89,21 @@ public class IFrameSanitizerImplTest {
 	public void testSanitizeHTMLWithInvalidContentType() throws Exception {
 		_withConfiguration(
 			true, false, "",
-			() -> Assert.assertEquals(
-				_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
-				_sanitize(
-					_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG, "text/creole")));
+			() -> {
+				Assert.assertEquals(
+					_BASIC_CONTENT,
+					_sanitize(_BASIC_CONTENT, ContentTypes.TEXT_PLAIN));
+
+				Assert.assertEquals(
+					_BASIC_HTML_CONTENT,
+					_sanitize(_BASIC_HTML_CONTENT, ContentTypes.TEXT_PLAIN));
+
+				Assert.assertEquals(
+					_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+					_sanitize(
+						_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+						"text/creole"));
+			});
 	}
 
 	@Test
@@ -122,21 +133,6 @@ public class IFrameSanitizerImplTest {
 			() -> Assert.assertEquals(
 				_BASIC_HTML_CONTENT,
 				_sanitize(_BASIC_HTML_CONTENT, ContentTypes.TEXT_HTML)));
-	}
-
-	@Test
-	public void testSanitizeTextWithoutIFrame() throws Exception {
-		_withConfiguration(
-			true, false, "",
-			() -> {
-				Assert.assertEquals(
-					_BASIC_CONTENT,
-					_sanitize(_BASIC_CONTENT, ContentTypes.TEXT_PLAIN));
-
-				Assert.assertEquals(
-					_BASIC_CONTENT,
-					_sanitize(_BASIC_HTML_CONTENT, ContentTypes.TEXT_PLAIN));
-			});
 	}
 
 	private String _sanitize(String content, String contentType)

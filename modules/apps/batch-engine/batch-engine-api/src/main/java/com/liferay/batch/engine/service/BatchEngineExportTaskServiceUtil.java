@@ -9,7 +9,10 @@ import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for BatchEngineExportTask. This utility wraps
@@ -30,11 +33,33 @@ public class BatchEngineExportTaskServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.batch.engine.service.impl.BatchEngineExportTaskServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static BatchEngineExportTask addBatchEngineExportTask(
+			String externalReferenceCode, long companyId, long userId,
+			String callbackURL, String className, String contentType,
+			String executeStatus, List<String> fieldNamesList,
+			Map<String, Serializable> parameters, String taskItemDelegateName)
+		throws PortalException {
+
+		return getService().addBatchEngineExportTask(
+			externalReferenceCode, companyId, userId, callbackURL, className,
+			contentType, executeStatus, fieldNamesList, parameters,
+			taskItemDelegateName);
+	}
+
 	public static BatchEngineExportTask getBatchEngineExportTask(
 			long batchEngineExportTaskId)
 		throws PortalException {
 
 		return getService().getBatchEngineExportTask(batchEngineExportTaskId);
+	}
+
+	public static BatchEngineExportTask
+			getBatchEngineExportTaskByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getBatchEngineExportTaskByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static List<BatchEngineExportTask> getBatchEngineExportTasks(

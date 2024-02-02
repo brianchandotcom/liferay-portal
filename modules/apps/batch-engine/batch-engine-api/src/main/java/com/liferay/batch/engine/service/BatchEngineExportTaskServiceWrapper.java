@@ -30,11 +30,38 @@ public class BatchEngineExportTaskServiceWrapper
 
 	@Override
 	public com.liferay.batch.engine.model.BatchEngineExportTask
+			addBatchEngineExportTask(
+				String externalReferenceCode, long companyId, long userId,
+				String callbackURL, String className, String contentType,
+				String executeStatus, java.util.List<String> fieldNamesList,
+				java.util.Map<String, java.io.Serializable> parameters,
+				String taskItemDelegateName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchEngineExportTaskService.addBatchEngineExportTask(
+			externalReferenceCode, companyId, userId, callbackURL, className,
+			contentType, executeStatus, fieldNamesList, parameters,
+			taskItemDelegateName);
+	}
+
+	@Override
+	public com.liferay.batch.engine.model.BatchEngineExportTask
 			getBatchEngineExportTask(long batchEngineExportTaskId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchEngineExportTaskService.getBatchEngineExportTask(
 			batchEngineExportTaskId);
+	}
+
+	@Override
+	public com.liferay.batch.engine.model.BatchEngineExportTask
+			getBatchEngineExportTaskByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchEngineExportTaskService.
+			getBatchEngineExportTaskByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	@Override

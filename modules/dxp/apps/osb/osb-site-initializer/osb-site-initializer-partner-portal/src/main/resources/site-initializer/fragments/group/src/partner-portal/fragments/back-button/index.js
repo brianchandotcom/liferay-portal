@@ -4,16 +4,19 @@
  */
 
 const backButton = document.getElementById('back-button-detail-page');
-const siteURL = Liferay.ThemeDisplay.getPortalURL().split('/l/')[0];
 
-backButton?.onclick = () => {
-	const urlParams = new URLSearchParams(window.location.href);
+if (backButton) {
+	const siteURL = Liferay.ThemeDisplay.getPortalURL().split('/l/')[0];
 
-	if (urlParams.has('returnurl')) {
-		const returnUrl = urlParams.get('returnurl');
+	backButton.onclick = () => {
+		const urlParams = new URLSearchParams(window.location.href);
 
-		location.assign(`${siteURL}${returnUrl}`);
-	} else {
-		history.back();
-	}
-};
+		if (urlParams.has('returnurl')) {
+			const returnUrl = urlParams.get('returnurl');
+
+			location.assign(`${siteURL}${returnUrl}`);
+		} else {
+			history.back();
+		}
+	};
+}

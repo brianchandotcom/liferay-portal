@@ -733,7 +733,7 @@ definition {
 				value1 = "This is a Text field - ${labelCount}");
 		}
 
-		WebContent.removeDuplicatedFieldsGroup(index = 3);
+		WebContent.removeDuplicatedFieldsGroup(index = 2);
 
 		PortletEntry.publish();
 

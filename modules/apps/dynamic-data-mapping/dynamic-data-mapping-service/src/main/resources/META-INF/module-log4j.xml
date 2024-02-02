@@ -5,6 +5,7 @@
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.io.exporter" />
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.storage" />
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.upgrade" />
+		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_0.DDMFieldUpgradeProcess" />
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.util" />
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.verify.DDMServiceVerifyProcess" />
 	</Loggers>

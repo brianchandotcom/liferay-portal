@@ -34,20 +34,17 @@ export async function getOAuthToken() {
 }
 
 export function getServerUrl() {
-
 	return Liferay.OAuth2Client.FromUserAgentApplication(config.agentOauthAppId)
 		.homePageURL;
-
 }
 
 export function showError(title, message) {
-
 	Liferay.Util.openToast({message, title, type: 'danger'});
-
 }
 
-export function showSuccess(title, message='The request has been successfully completed') {
-
+export function showSuccess(
+	title,
+	message = 'The request has been successfully completed.'
+) {
 	Liferay.Util.openToast({message, title, type: 'success'});
-
 }

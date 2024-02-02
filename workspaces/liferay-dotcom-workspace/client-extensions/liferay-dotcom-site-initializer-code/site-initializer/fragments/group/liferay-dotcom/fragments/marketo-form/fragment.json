@@ -1,0 +1,11 @@
+{
+	"cacheable": false,
+	"configurationPath": "index.json",
+	"cssPath": "index.css",
+	"fragmentEntryKey": "marketoForm",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Marketo Form",
+	"icon": "code",
+	"type": "component"
+}

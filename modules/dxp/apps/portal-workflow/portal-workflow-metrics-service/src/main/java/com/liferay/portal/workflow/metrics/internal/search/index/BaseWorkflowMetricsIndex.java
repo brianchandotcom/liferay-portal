@@ -14,10 +14,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
+import com.liferay.portal.search.query.Queries;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -52,6 +54,21 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	}
 
 	@Override
+	public boolean deleteAllDocuments(long companyId) throws PortalException {
+		if (!searchCapabilities.isWorkflowMetricsSupported() ||
+			!_hasIndex(getIndexName(companyId))) {
+
+			return false;
+		}
+
+		searchEngineAdapter.execute(
+			new DeleteByQueryDocumentRequest(
+				queries.matchAll(), getIndexName(companyId)));
+
+		return true;
+	}
+
+	@Override
 	public boolean removeIndex(long companyId) throws PortalException {
 		if (!searchCapabilities.isWorkflowMetricsSupported() ||
 			!_hasIndex(getIndexName(companyId))) {
@@ -64,6 +81,9 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 		return true;
 	}
+
+	@Reference
+	protected Queries queries;
 
 	@Reference
 	protected SearchCapabilities searchCapabilities;

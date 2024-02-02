@@ -82,9 +82,8 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 			WorkflowMetricsIndex workflowMetricsIndex =
 				_serviceTrackerMap.getService(indexEntityName);
 
-			workflowMetricsIndex.removeIndex(backgroundTask.getCompanyId());
-
-			workflowMetricsIndex.createIndex(backgroundTask.getCompanyId());
+			workflowMetricsIndex.deleteAllDocuments(
+				backgroundTask.getCompanyId());
 		}
 
 		List<NoticeableFuture<?>> noticeableFutures = new ArrayList<>();

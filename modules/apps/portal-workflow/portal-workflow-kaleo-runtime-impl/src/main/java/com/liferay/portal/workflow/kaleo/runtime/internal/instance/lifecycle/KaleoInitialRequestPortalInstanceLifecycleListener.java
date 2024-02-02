@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.workflow.kaleo.runtime.manager.PortalKaleoManager;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -20,6 +22,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = PortalInstanceLifecycleListener.class)
 public class KaleoInitialRequestPortalInstanceLifecycleListener
 	extends InitialRequestPortalInstanceLifecycleListener {
+
+	@Activate
+	@Override
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
+	}
 
 	@Override
 	protected void doPortalInstanceRegistered(long companyId) throws Exception {

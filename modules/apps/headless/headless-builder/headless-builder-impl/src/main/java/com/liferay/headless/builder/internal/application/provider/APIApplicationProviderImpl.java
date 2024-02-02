@@ -7,7 +7,6 @@ package com.liferay.headless.builder.internal.application.provider;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
-import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -445,10 +444,10 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 
 	private static final Map<String, APIApplication.Property.Type>
 		_propertyTypes = HashMapBuilder.put(
-			HeadlessBuilderConstants.PROPERTY_TYPE_ARRAY_CONTAINER,
+			APIApplication.Property.PropertyType.ARRAY_CONTAINER.getValue(),
 			APIApplication.Property.Type.ARRAY_CONTAINER
 		).put(
-			HeadlessBuilderConstants.PROPERTY_TYPE_SINGLE_CONTAINER,
+			APIApplication.Property.PropertyType.SINGLE_CONTAINER.getValue(),
 			APIApplication.Property.Type.SINGLE_CONTAINER
 		).put(
 			ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION,

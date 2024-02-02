@@ -18,9 +18,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -45,18 +42,14 @@ public class DSEnvelopeResourceImpl extends BaseDSEnvelopeResourceImpl {
 
 	@Override
 	public Page<DSEnvelope> getSiteDSEnvelopesPage(
-		Long siteId,
-		String fromDate,
-		String keywords,
-		String order,
-		String status,
-		Pagination pagination) {
+		Long siteId, String fromDate, String keywords, String order,
+		String status, Pagination pagination) {
 
 		return Page.of(
 			transform(
 				_dsEnvelopeManager.getDSEnvelopesPage(
-					contextCompany.getCompanyId(), siteId, fromDate, keywords, order,
-					pagination, status
+					contextCompany.getCompanyId(), siteId, fromDate, keywords,
+					order, pagination, status
 				).getItems(),
 				dsEnvelope -> DSEnvelopeUtil.toDSEnvelope(dsEnvelope)));
 	}
@@ -97,46 +90,6 @@ public class DSEnvelopeResourceImpl extends BaseDSEnvelopeResourceImpl {
 
 		return DSEnvelopeUtil.toDSEnvelope(dsEnvelope);
 	}
-
-	private Collection<DSEnvelope> _getDSEnvelopeCollection(
-		Page<com.liferay.digital.signature.model.DSEnvelope>
-			modelDSEnvelopesPage) {
-
-		Collection<DSEnvelope> dsEnvelopeCollection = new ArrayList<>();
-
-		for (com.liferay.digital.signature.model.DSEnvelope modelDSEnvelope :
-				modelDSEnvelopesPage.getItems()) {
-
-			dsEnvelopeCollection.add(
-				DSEnvelopeUtil.toDSEnvelope(modelDSEnvelope));
-		}
-
-		return dsEnvelopeCollection;
-	}
-
-	private Page<DSEnvelope> _mapToPaginatedDSEnvelopes(
-		long companyId, Long siteId, Pagination pagination) {
-
-		String fromDate = _MIN_QUERY_DATE;
-		String keywords = _EMPTY_STRING;
-		String order = _EMPTY_STRING;
-		String status = _EMPTY_STRING;
-
-		Page<com.liferay.digital.signature.model.DSEnvelope>
-			modelDSEnvelopesPage = _dsEnvelopeManager.getDSEnvelopesPage(
-				companyId, siteId, fromDate, keywords, order, pagination,
-				status);
-
-		long totalCount = modelDSEnvelopesPage.getTotalCount();
-
-		return Page.of(
-			_getDSEnvelopeCollection(modelDSEnvelopesPage), pagination,
-			totalCount);
-	}
-
-	private static final String _EMPTY_STRING = "";
-
-	private static final String _MIN_QUERY_DATE = "2000-01-01";
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

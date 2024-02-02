@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>ENTRY_LIST_WORKFLOW_STATUS</td>
-	<td>//*[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'label')]</td>
+	<td>//*[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'label-item')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -151,7 +151,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_WORKFLOW_STATUS</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]//span[contains(@class,'label')]</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]//span[contains(@class,'label-item')]</td>
 	<td></td>
 </tr>
 <tr>

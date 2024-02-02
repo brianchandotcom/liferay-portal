@@ -7,7 +7,6 @@ package com.liferay.commerce.internal.service;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryTable;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryLocalServiceWrapper;
 import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.context.CommerceGroupThreadLocal;
@@ -153,9 +152,6 @@ public class CommerceChannelAccountEntryRelAccountEntryLocalServiceWrapper
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceChannelAccountEntryRelAccountEntryLocalServiceWrapper.class);
-
-	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

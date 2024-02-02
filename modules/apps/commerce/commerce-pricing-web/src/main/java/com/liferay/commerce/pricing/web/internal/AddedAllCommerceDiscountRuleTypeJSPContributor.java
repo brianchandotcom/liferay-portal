@@ -9,7 +9,6 @@ import com.liferay.commerce.discount.constants.CommerceDiscountRuleConstants;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeJSPContributor;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.pricing.web.internal.display.context.AddedAllCommerceDiscountRuleDisplayContext;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 
 import javax.servlet.ServletContext;
@@ -52,9 +51,6 @@ public class AddedAllCommerceDiscountRuleTypeJSPContributor
 
 	@Reference
 	private CommerceDiscountRuleService _commerceDiscountRuleService;
-
-	@Reference
-	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

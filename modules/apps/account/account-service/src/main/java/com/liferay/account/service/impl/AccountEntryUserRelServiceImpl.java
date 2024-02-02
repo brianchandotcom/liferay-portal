@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.List;
 import java.util.Locale;
@@ -267,8 +266,5 @@ public class AccountEntryUserRelServiceImpl
 	)
 	private volatile ModelResourcePermission<AccountEntry>
 		_modelResourcePermission;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

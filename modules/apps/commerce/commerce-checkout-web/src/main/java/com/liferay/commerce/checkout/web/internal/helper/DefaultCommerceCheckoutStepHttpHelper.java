@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
-import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
 import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
@@ -1088,9 +1087,6 @@ public class DefaultCommerceCheckoutStepHttpHelper
 
 	@Reference
 	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
-
-	@Reference
-	private CommercePaymentEngine _commercePaymentEngine;
 
 	@Reference
 	private CommercePaymentIntegrationRegistry

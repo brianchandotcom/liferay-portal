@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
@@ -20,7 +19,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
@@ -60,8 +58,5 @@ public class EditCommerceInventoryItemMVCRenderCommand
 					themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
 			).buildString());
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

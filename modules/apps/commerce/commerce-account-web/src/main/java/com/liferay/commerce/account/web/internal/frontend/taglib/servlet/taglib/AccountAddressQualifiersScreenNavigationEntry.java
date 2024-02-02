@@ -9,11 +9,9 @@ import com.liferay.commerce.account.web.internal.display.context.AccountAddressQ
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.AddressLocalService;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -79,12 +77,6 @@ public class AccountAddressQualifiersScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.account.web)"

@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.EscapableObject;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -677,9 +676,6 @@ public class AccountEntryUserRelLocalServiceImpl
 
 	@Reference
 	private MailService _mailService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private TicketLocalService _ticketLocalService;

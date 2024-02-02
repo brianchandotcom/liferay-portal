@@ -11,7 +11,6 @@ import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -175,11 +174,6 @@ public class AccountEntriesAdminPortletFilter
 
 	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference(
-		target = "(component.name=com.liferay.account.admin.web.internal.portlet.action.EditAccountRoleMVCRenderCommand)"
-	)
-	private MVCRenderCommand _mvcRenderCommand;
 
 	@Reference
 	private Portal _portal;

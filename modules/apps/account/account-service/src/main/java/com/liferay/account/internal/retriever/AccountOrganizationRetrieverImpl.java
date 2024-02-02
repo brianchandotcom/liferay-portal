@@ -6,7 +6,6 @@
 package com.liferay.account.internal.retriever;
 
 import com.liferay.account.retriever.AccountOrganizationRetriever;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Organization;
@@ -117,9 +116,6 @@ public class AccountOrganizationRetrieverImpl
 		searchContext.setAttribute(
 			"accountEntryIds", new long[] {accountEntryId});
 	}
-
-	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
@@ -149,8 +148,5 @@ public class PendingCommerceOrderFDSDataProvider
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

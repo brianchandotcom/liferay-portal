@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -102,8 +102,12 @@ public class UserSystemObjectDefinitionManager
 	}
 
 	@Override
-	public Map<Locale, String> getLabelMap() {
-		return createLabelMap("user");
+	public Map<String, String> getLabelKeys() {
+		return HashMapBuilder.put(
+			"label", "user"
+		).put(
+			"pluralLabel", "users"
+		).build();
 	}
 
 	@Override
@@ -190,11 +194,6 @@ public class UserSystemObjectDefinitionManager
 			).system(
 				true
 			).build());
-	}
-
-	@Override
-	public Map<Locale, String> getPluralLabelMap() {
-		return createLabelMap("users");
 	}
 
 	@Override

@@ -26,13 +26,13 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -108,8 +108,12 @@ public class CommerceOrderSystemObjectDefinitionManager
 	}
 
 	@Override
-	public Map<Locale, String> getLabelMap() {
-		return createLabelMap("commerce-order");
+	public Map<String, String> getLabelKeys() {
+		return HashMapBuilder.put(
+			"label", "commerce-order"
+		).put(
+			"pluralLabel", "commerce-orders"
+		).build();
 	}
 
 	@Override
@@ -190,11 +194,6 @@ public class CommerceOrderSystemObjectDefinitionManager
 			).system(
 				true
 			).build());
-	}
-
-	@Override
-	public Map<Locale, String> getPluralLabelMap() {
-		return createLabelMap("commerce-orders");
 	}
 
 	@Override

@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.model.AddressTable;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -99,8 +99,12 @@ public class AddressSystemObjectDefinitionManager
 	}
 
 	@Override
-	public Map<Locale, String> getLabelMap() {
-		return createLabelMap("postal-address");
+	public Map<String, String> getLabelKeys() {
+		return HashMapBuilder.put(
+			"label", "postal-address"
+		).put(
+			"pluralLabel", "postal-addresses"
+		).build();
 	}
 
 	@Override
@@ -133,11 +137,6 @@ public class AddressSystemObjectDefinitionManager
 			).system(
 				true
 			).build());
-	}
-
-	@Override
-	public Map<Locale, String> getPluralLabelMap() {
-		return createLabelMap("postal-addresses");
 	}
 
 	@Override

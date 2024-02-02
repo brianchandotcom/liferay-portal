@@ -29,7 +29,7 @@ public class LayoutUtilityPageEntryLayoutProviderImpl
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.
-				getDefaultLayoutUtilityPageEntry(groupId, type);
+				fetchDefaultLayoutUtilityPageEntry(groupId, type);
 
 		if (layoutUtilityPageEntry == null) {
 			return null;

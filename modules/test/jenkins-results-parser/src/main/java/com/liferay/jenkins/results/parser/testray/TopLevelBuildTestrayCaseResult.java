@@ -188,85 +188,92 @@ public class TopLevelBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
 			Element testcaseElement = rootElement.addElement("testcase");
 
-			Map<String, String> testcasePropertiesMap = new HashMap<>();
-
-			testcasePropertiesMap.put(
-				"testray.case.type.name", testrayCaseResult.getType());
-			testcasePropertiesMap.put(
-				"testray.component.names",
-				testrayCaseResult.getSubcomponentNames());
-			testcasePropertiesMap.put(
-				"testray.main.component.name",
-				testrayCaseResult.getComponentName());
-			testcasePropertiesMap.put(
-				"testray.team.name", testrayCaseResult.getTeamName());
-
-			String testrayCaseName = testrayCaseResult.getName();
-
-			if (testrayCaseName.length() > 150) {
-				testrayCaseName = testrayCaseName.substring(0, 150);
-			}
-
-			testcasePropertiesMap.put("testray.testcase.name", testrayCaseName);
-
-			testcasePropertiesMap.put(
-				"testray.testcase.priority",
-				String.valueOf(testrayCaseResult.getPriority()));
-
-			TestrayCaseResult.Status testrayCaseStatus =
-				testrayCaseResult.getStatus();
-
-			testcasePropertiesMap.put(
-				"testray.testcase.status", testrayCaseStatus.getName());
-
-			Element propertiesElement = testcaseElement.addElement(
-				"properties");
-
-			_addPropertyElements(propertiesElement, testcasePropertiesMap);
-
-			String[] warnings = testrayCaseResult.getWarnings();
-
-			if ((warnings != null) && (warnings.length > 0)) {
-				Element warningsPropertyElement = propertiesElement.addElement(
-					"property");
-
-				warningsPropertyElement.addAttribute(
-					"name", "testray.testcase.warnings");
-				warningsPropertyElement.addAttribute(
-					"value", String.valueOf(warnings.length));
-
-				for (String warning : warnings) {
-					Element warningPropertyElement =
-						warningsPropertyElement.addElement("value");
-
-					warningPropertyElement.addText(
-						StringEscapeUtils.escapeHtml(warning));
+			try{
+				Map<String, String> testcasePropertiesMap = new HashMap<>();
+	
+				testcasePropertiesMap.put(
+					"testray.case.type.name", testrayCaseResult.getType());
+				testcasePropertiesMap.put(
+					"testray.component.names",
+					testrayCaseResult.getSubcomponentNames());
+				testcasePropertiesMap.put(
+					"testray.main.component.name",
+					testrayCaseResult.getComponentName());
+				testcasePropertiesMap.put(
+					"testray.team.name", testrayCaseResult.getTeamName());
+	
+				String testrayCaseName = testrayCaseResult.getName();
+	
+				if (testrayCaseName.length() > 150) {
+					testrayCaseName = testrayCaseName.substring(0, 150);
+				}
+	
+				testcasePropertiesMap.put("testray.testcase.name", testrayCaseName);
+	
+				testcasePropertiesMap.put(
+					"testray.testcase.priority",
+					String.valueOf(testrayCaseResult.getPriority()));
+	
+				TestrayCaseResult.Status testrayCaseStatus =
+					testrayCaseResult.getStatus();
+	
+				testcasePropertiesMap.put(
+					"testray.testcase.status", testrayCaseStatus.getName());
+	
+				Element propertiesElement = testcaseElement.addElement(
+					"properties");
+	
+				_addPropertyElements(propertiesElement, testcasePropertiesMap);
+	
+				String[] warnings = testrayCaseResult.getWarnings();
+	
+				if ((warnings != null) && (warnings.length > 0)) {
+					Element warningsPropertyElement = propertiesElement.addElement(
+						"property");
+	
+					warningsPropertyElement.addAttribute(
+						"name", "testray.testcase.warnings");
+					warningsPropertyElement.addAttribute(
+						"value", String.valueOf(warnings.length));
+	
+					for (String warning : warnings) {
+						Element warningPropertyElement =
+							warningsPropertyElement.addElement("value");
+	
+						warningPropertyElement.addText(
+							StringEscapeUtils.escapeHtml(warning));
+					}
+				}
+	
+				Element attachmentsElement = testcaseElement.addElement(
+					"attachments");
+	
+				for (TestrayAttachment testrayAttachment :
+						testrayCaseResult.getTestrayAttachments()) {
+	
+					Element attachmentFileElement = attachmentsElement.addElement(
+						"file");
+	
+					attachmentFileElement.addAttribute(
+						"name", testrayAttachment.getName());
+					attachmentFileElement.addAttribute(
+						"url", testrayAttachment.getURL() + "?authuser=0");
+					attachmentFileElement.addAttribute(
+						"value", testrayAttachment.getKey() + "?authuser=0");
+				}
+	
+				String errors = testrayCaseResult.getErrors();
+	
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(errors)) {
+					Element failureElement = testcaseElement.addElement("failure");
+	
+					failureElement.addAttribute("message", errors);
 				}
 			}
+			catch(IOException ioException) {
+				System.out.println(ioException);
 
-			Element attachmentsElement = testcaseElement.addElement(
-				"attachments");
-
-			for (TestrayAttachment testrayAttachment :
-					testrayCaseResult.getTestrayAttachments()) {
-
-				Element attachmentFileElement = attachmentsElement.addElement(
-					"file");
-
-				attachmentFileElement.addAttribute(
-					"name", testrayAttachment.getName());
-				attachmentFileElement.addAttribute(
-					"url", testrayAttachment.getURL() + "?authuser=0");
-				attachmentFileElement.addAttribute(
-					"value", testrayAttachment.getKey() + "?authuser=0");
-			}
-
-			String errors = testrayCaseResult.getErrors();
-
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(errors)) {
-				Element failureElement = testcaseElement.addElement("failure");
-
-				failureElement.addAttribute("message", errors);
+				continue;
 			}
 		}
 

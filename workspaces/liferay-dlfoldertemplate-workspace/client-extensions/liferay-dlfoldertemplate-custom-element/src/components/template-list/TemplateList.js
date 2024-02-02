@@ -11,13 +11,12 @@ import ClayModal, {Context as ModalContext, useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayToolbar from '@clayui/toolbar';
 import moment from 'moment';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {
 	deleteFolderTemplateInformation,
 	getAvailableTemplatesPage,
 } from '../../services/TemplateListService';
-import {showError} from '../../utils/util';
 import Diagram from '../template-diagram/Diagram';
 import CreateTemplate from './CreateTemplate';
 import GenerateFolders from './GenerateFolders';
@@ -30,30 +29,26 @@ const HEADERS = [
 	{
 		key: 'id',
 		label: 'ID',
-		wrap: false,
 	},
 	{
 		expanded: true,
 		key: 'templateName',
 		label: 'Template Name',
-		wrap: false,
 	},
 	{
 		key: 'dateCreated',
 		label: 'Created Date',
-		wrap: false,
 	},
 	{
 		key: 'actions',
 		label: '',
-		wrap: false,
 	},
 ];
 
 const TemplateList = () => {
 	const [data, setData] = useState([]);
 	const [delta, setDelta] = useState(5);
-	const [isDeletingLoading, setIsDeletingLoading] = useState(false);
+	const [isDeleting, setIsDeleting] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [pageIndex, setPageIndex] = useState(1);
 	const [selectedTemplate, setSelectedTemplate] = useState();
@@ -65,11 +60,11 @@ const TemplateList = () => {
 
 	const confirmDeleteItemModal = (template) => {
 		const deleteTemplate = async () => {
-			setIsDeletingLoading(true);
+			setIsDeleting(true);
 
 			await deleteFolderTemplateInformation(template.id);
 
-			setIsDeletingLoading(false);
+			setIsDeleting(false);
 
 			reload();
 		};
@@ -100,20 +95,15 @@ const TemplateList = () => {
 	};
 
 	const openCreateFolderModal = (template) => {
-		try {
-			dispatchModal({
-				payload: {
-					body: <GenerateFolders templateId={template.id} />,
-					center: true,
-					header: 'Create Folder Structure',
-					size: 'lg',
-				},
-				type: MODAL_OPEN,
-			});
-		}
-		catch (exp) {
-			showError('Error', exp);
-		}
+		dispatchModal({
+			payload: {
+				body: <GenerateFolders templateId={template.id} />,
+				center: true,
+				header: 'Create Folder Structure',
+				size: 'lg',
+			},
+			type: MODAL_OPEN,
+		});
 	};
 
 	const reload = () => {
@@ -139,14 +129,6 @@ const TemplateList = () => {
 		setIsLoading(false);
 	};
 
-	const loadPageCallback = useCallback(async () => {
-		const results = await getAvailableTemplatesPage(pageIndex, delta);
-
-		setData(results.items);
-
-		setTotalItems(results.totalCount);
-	}, [pageIndex, delta]);
-
 	const openNewItemModal = () => {
 		dispatchModal({
 			payload: {
@@ -165,21 +147,20 @@ const TemplateList = () => {
 	};
 
 	useEffect(() => {
-		if (!open) {
-			setSelectedTemplate(null);
-		}
-	}, [open]);
-
-	useEffect(() => {
 		const fetchData = async () => {
-			await loadPageCallback();
+			const results = await getAvailableTemplatesPage(pageIndex, delta);
+
+			setData(results.items);
+
+			setTotalItems(results.totalCount);
 		};
+
 		fetchData();
-	}, [loadPageCallback]);
+	}, [delta, pageIndex]);
 
 	return (
 		<>
-			<ClayToolbar style={{marginBottom: '1rem'}}>
+			<ClayToolbar className="mb-3">
 				<ClayToolbar.Nav>
 					<ClayToolbar.Item className="text-left" expand>
 						<ClayToolbar.Section>
@@ -197,7 +178,7 @@ const TemplateList = () => {
 										aria-label="Reload"
 										className="lfr-portal-tooltip"
 										disabled={
-											isDeletingLoading || isLoading
+											isDeleting || isLoading
 										}
 										displayType="secondary"
 										onClick={reload}
@@ -209,7 +190,7 @@ const TemplateList = () => {
 										aria-label="Create New"
 										className="lfr-portal-tooltip"
 										disabled={
-											isDeletingLoading || isLoading
+											isDeleting || isLoading
 										}
 										displayType="primary"
 										onClick={openNewItemModal}
@@ -231,7 +212,7 @@ const TemplateList = () => {
 								<Cell
 									expanded={column.expanded}
 									key={column.key}
-									wrap={column.wrap}
+									wrap={false}
 								>
 									{column.label}
 								</Cell>
@@ -259,7 +240,7 @@ const TemplateList = () => {
 												<ClayButtonWithIcon
 													aria-label="Create Folder Structure"
 													className="lfr-portal-tooltip"
-													displayType="default"
+													displayType="unstyled"
 													onClick={() => {
 														openCreateFolderModal(
 															row
@@ -268,28 +249,26 @@ const TemplateList = () => {
 													size="sm"
 													symbol="folder"
 													title="Create Folder Structure"
-													translucent
 												>
 													Create Folder
 												</ClayButtonWithIcon>
 												<ClayButtonWithIcon
 													aria-label="Design Template"
 													className="lfr-portal-tooltip"
-													displayType="default"
+													displayType="unstyled"
 													onClick={() => {
 														openDesignerModal(row);
 													}}
 													size="sm"
 													symbol="diagram"
 													title="Design Template"
-													translucent
 												>
 													Design Template
 												</ClayButtonWithIcon>
 												<ClayButtonWithIcon
 													aria-label="Delete Template"
 													className="lfr-portal-tooltip"
-													displayType="default"
+													displayType="unstyled"
 													onClick={() => {
 														confirmDeleteItemModal(
 															row
@@ -298,7 +277,6 @@ const TemplateList = () => {
 													size="sm"
 													symbol="trash"
 													title="Delete Template"
-													translucent
 												>
 													Delete
 												</ClayButtonWithIcon>
@@ -314,7 +292,6 @@ const TemplateList = () => {
 						defaultActive={1}
 						deltas={DELTAS}
 						ellipsisBuffer={3}
-						ellipsisProps={{'aria-label': 'More', 'title': 'More'}}
 						onActiveChange={(page) => {
 							setPageIndex(page);
 						}}
@@ -349,7 +326,7 @@ const TemplateList = () => {
 							<ClayButton
 								aria-label="Create New"
 								className="lfr-portal-tooltip"
-								disabled={isDeletingLoading || isLoading}
+								disabled={isDeleting || isLoading}
 								displayType="primary"
 								onClick={openNewItemModal}
 								title="Create New"

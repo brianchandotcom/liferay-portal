@@ -53,11 +53,9 @@ public class SystemLDAPConfigurationProviderImplTest {
 		Assert.assertEquals(
 			_defaultSystemLDAPConfiguration.factoryInitial(),
 			systemLDAPConfiguration.factoryInitial());
-
 		Assert.assertEquals(
 			_defaultSystemLDAPConfiguration.referral(),
 			systemLDAPConfiguration.referral());
-
 		Assert.assertEquals(
 			_defaultSystemLDAPConfiguration.pageSize(),
 			systemLDAPConfiguration.pageSize());
@@ -86,13 +84,11 @@ public class SystemLDAPConfigurationProviderImplTest {
 		ConfigurationTestUtil.deleteFactoryConfiguration(
 			pid, SystemLDAPConfiguration.class.getName());
 
-		Assert.assertEquals(systemLDAPConfiguration.pageSize(), randomValue);
-		Assert.assertEquals(systemLDAPConfiguration.rangeSize(), randomValue);
-
+		Assert.assertEquals(randomValue, systemLDAPConfiguration.pageSize());
+		Assert.assertEquals(randomValue, systemLDAPConfiguration.rangeSize());
 		Assert.assertEquals(
 			_defaultSystemLDAPConfiguration.factoryInitial(),
 			systemLDAPConfiguration.factoryInitial());
-
 		Assert.assertEquals(
 			_defaultSystemLDAPConfiguration.referral(),
 			systemLDAPConfiguration.referral());
@@ -131,14 +127,12 @@ public class SystemLDAPConfigurationProviderImplTest {
 			pid, SystemLDAPConfiguration.class.getName());
 
 		Assert.assertEquals(
-			systemLDAPConfiguration.pageSize(), randomValueInstance);
+			randomValueInstance, systemLDAPConfiguration.pageSize());
 		Assert.assertEquals(
-			systemLDAPConfiguration.rangeSize(), randomValueInstance);
-
+			randomValueInstance, systemLDAPConfiguration.rangeSize());
 		Assert.assertEquals(
 			_defaultSystemLDAPConfiguration.factoryInitial(),
 			systemLDAPConfiguration.factoryInitial());
-
 		Assert.assertEquals(
 			_defaultSystemLDAPConfiguration.referral(),
 			systemLDAPConfiguration.referral());
@@ -164,13 +158,11 @@ public class SystemLDAPConfigurationProviderImplTest {
 		ConfigurationTestUtil.deleteConfiguration(
 			SystemLDAPConfiguration.class.getName());
 
-		Assert.assertEquals(systemLDAPConfiguration.pageSize(), randomValue);
-		Assert.assertEquals(systemLDAPConfiguration.rangeSize(), randomValue);
-
+		Assert.assertEquals(randomValue, systemLDAPConfiguration.pageSize());
+		Assert.assertEquals(randomValue, systemLDAPConfiguration.rangeSize());
 		Assert.assertEquals(
 			_defaultSystemLDAPConfiguration.factoryInitial(),
 			systemLDAPConfiguration.factoryInitial());
-
 		Assert.assertEquals(
 			_defaultSystemLDAPConfiguration.referral(),
 			systemLDAPConfiguration.referral());

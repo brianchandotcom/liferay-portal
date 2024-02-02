@@ -52,7 +52,6 @@ public class LDAPExportConfigurationProviderImplTest {
 		Assert.assertEquals(
 			_defaultLDAPExportConfiguration.exportEnabled(),
 			ldapExportConfiguration.exportEnabled());
-
 		Assert.assertEquals(
 			_defaultLDAPExportConfiguration.exportGroupEnabled(),
 			ldapExportConfiguration.exportGroupEnabled());

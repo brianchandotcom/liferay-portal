@@ -309,7 +309,7 @@ public class LayoutsImporterTest {
 			TestPropsValues.getUserId(), groupId,
 			fragmentCollection.getFragmentCollectionId(), key, name,
 			StringPool.BLANK, html, StringPool.BLANK, false, StringPool.BLANK,
-			null, 0, FragmentConstants.TYPE_COMPONENT, null,
+			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 

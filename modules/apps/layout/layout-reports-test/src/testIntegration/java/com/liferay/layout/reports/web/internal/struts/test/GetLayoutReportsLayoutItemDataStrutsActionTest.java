@@ -389,7 +389,7 @@ public class GetLayoutReportsLayoutItemDataStrutsActionTest {
 			fragmentCollection.getFragmentCollectionId(), null,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			"Fragment Entry HTML", StringPool.BLANK, cacheable, null, null, 0,
-			FragmentConstants.TYPE_COMPONENT, null,
+			false, FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 

@@ -198,7 +198,7 @@ public class FragmentEntryLocalServiceImpl
 				publishedFragmentEntry.isCacheable(),
 				publishedFragmentEntry.getConfiguration(),
 				publishedFragmentEntry.getIcon(), 0,
-				publishedFragmentEntry.getReadOnly(),
+				publishedFragmentEntry.isReadOnly(),
 				publishedFragmentEntry.getType(),
 				publishedFragmentEntry.getTypeOptions(),
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
@@ -747,8 +747,8 @@ public class FragmentEntryLocalServiceImpl
 
 		return fragmentEntryLocalService.updateFragmentEntry(
 			userId, fragmentEntryId, fragmentCollectionId, name, css, html, js,
-			cacheable, configuration, icon, previewFileEntryId,
-			false, fragmentEntry.getTypeOptions(), status);
+			cacheable, configuration, icon, previewFileEntryId, false,
+			fragmentEntry.getTypeOptions(), status);
 	}
 
 	@Override

@@ -147,7 +147,7 @@ public class CopyFragmentEntryMVCActionCommandTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
 				StringUtil.randomString(), StringPool.BLANK, false,
-				StringPool.BLANK, StringPool.BLANK, 0,
+				StringPool.BLANK, StringPool.BLANK, 0, false,
 				FragmentConstants.TYPE_COMPONENT, StringPool.BLANK,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 

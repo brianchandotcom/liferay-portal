@@ -310,7 +310,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				StringUtil.randomString(), StringUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
-				0, FragmentConstants.TYPE_COMPONENT, null,
+				0, false, FragmentConstants.TYPE_COMPONENT, null,
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));

@@ -291,7 +291,7 @@ public class LayoutModelDocumentContributorTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(), null,
 				RandomTestUtil.randomString(), null, html, null, false, null,
-				null, 0, FragmentConstants.TYPE_COMPONENT, null,
+				null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(

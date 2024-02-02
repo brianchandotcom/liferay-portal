@@ -74,7 +74,7 @@ public class FragmentEntryStagingTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
-				FragmentConstants.TYPE_INPUT,
+				false, FragmentConstants.TYPE_INPUT,
 				JSONUtil.put(
 					"fieldTypes", JSONUtil.put("string")
 				).toString(),

@@ -64,9 +64,9 @@ public class FragmentEntryStagedModelRepository
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
 			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
-			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.getType(),
-			fragmentEntry.getTypeOptions(), fragmentEntry.getStatus(),
-			serviceContext);
+			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.isReadOnly(),
+			fragmentEntry.getType(), fragmentEntry.getTypeOptions(),
+			fragmentEntry.getStatus(), serviceContext);
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public class FragmentEntryStagedModelRepository
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
 			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
-			fragmentEntry.getPreviewFileEntryId(),
+			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.isReadOnly(),
 			fragmentEntry.getTypeOptions(), fragmentEntry.getStatus());
 	}
 

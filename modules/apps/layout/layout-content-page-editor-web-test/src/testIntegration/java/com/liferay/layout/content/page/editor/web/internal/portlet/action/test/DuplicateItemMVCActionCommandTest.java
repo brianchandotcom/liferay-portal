@@ -270,8 +270,9 @@ public class DuplicateItemMVCActionCommandTest {
 				fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				StringPool.BLANK, html, StringPool.BLANK, false,
-				StringPool.BLANK, null, 0, FragmentConstants.TYPE_COMPONENT,
-				null, WorkflowConstants.STATUS_APPROVED, _serviceContext);
+				StringPool.BLANK, null, 0, false,
+				FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(

@@ -30,7 +30,7 @@ export async function createFolders(
 
 		if (templateNodes.length <= 0) {
 			throw new Error(
-				'Template is empty; no template nodes have been located.'
+				'The template is empty. Please add at least one node to the template.'
 			);
 		}
 

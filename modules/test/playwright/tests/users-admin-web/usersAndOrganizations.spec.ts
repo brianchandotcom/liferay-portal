@@ -84,3 +84,19 @@ test('LPD-15224 check escape of memberships account name', async ({
 		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
 	}
 });
+
+test('LPD-15423 check WebDAV password is generated', async ({
+	editUserPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	await page.goto('/');
+
+	await usersAndOrganizationsPage.goToUsers();
+	await (await usersAndOrganizationsPage.usersTableRowLink('test')).click();
+
+	await editUserPage.passwordLink.click();
+	await editUserPage.generateWebDAVPasswordButton.click();
+
+	await expect(editUserPage.webDAVPasswordLabel).toBeVisible();
+});

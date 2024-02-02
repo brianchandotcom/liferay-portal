@@ -104,6 +104,22 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: fromDate
+                  schema:
+                      type: string
+                - in: query
+                  name: keywords
+                  schema:
+                      type: string
+                - in: query
+                  name: order
+                  schema:
+                      type: string
+                - in: query
+                  name: status
+                  schema:
+                      type: string
+                - in: query
                   name: page
                   schema:
                       type: integer

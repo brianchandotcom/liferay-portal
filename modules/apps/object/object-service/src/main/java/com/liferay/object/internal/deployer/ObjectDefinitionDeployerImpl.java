@@ -22,7 +22,6 @@ import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedMo
 import com.liferay.object.internal.related.models.ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl;
 import com.liferay.object.internal.related.models.ObjectEntryMtoMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl;
-import com.liferay.object.internal.search.ObjectEntryBatchReindexer;
 import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryModelDocumentContributor;
 import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryModelIndexerWriterContributor;
 import com.liferay.object.internal.search.spi.model.query.contributor.ObjectEntryKeywordQueryContributor;
@@ -425,18 +424,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);
 		}
-
-		if (!objectDefinition.isAccountEntryRestricted()) {
-			return serviceRegistrations;
-		}
-
-		serviceRegistrations.add(
-			_bundleContext.registerService(
-				ObjectEntryBatchReindexer.class,
-				new ObjectEntryBatchReindexer(
-					_dynamicQueryBatchIndexingActionableFactory,
-					_objectEntryLocalService, objectDefinition),
-				null));
 
 		return serviceRegistrations;
 	}

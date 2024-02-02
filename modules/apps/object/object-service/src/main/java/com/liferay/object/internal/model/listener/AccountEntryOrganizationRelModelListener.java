@@ -7,20 +7,23 @@ package com.liferay.object.internal.model.listener;
 
 import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.object.internal.search.ObjectEntryBatchReindexer;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Feliphe Marinho
@@ -58,9 +61,6 @@ public class AccountEntryOrganizationRelModelListener
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_objectEntryBatchReindexers = ServiceTrackerListFactory.open(
-			bundleContext, ObjectEntryBatchReindexer.class);
-
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, IndexerDocumentBuilder.class, "indexer.class.name");
 	}
@@ -68,15 +68,18 @@ public class AccountEntryOrganizationRelModelListener
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
-
-		_objectEntryBatchReindexers.close();
 	}
 
 	private void _reindex(
 		AccountEntryOrganizationRel accountEntryOrganizationRel) {
 
-		for (ObjectEntryBatchReindexer objectEntryBatchReindexer :
-				_objectEntryBatchReindexers) {
+		for (ObjectDefinition objectDefinition :
+				_objectDefinitionLocalService.getObjectDefinitions(true)) {
+
+			ObjectEntryBatchReindexer objectEntryBatchReindexer =
+				new ObjectEntryBatchReindexer(
+					_dynamicQueryBatchIndexingActionableFactory,
+					_objectEntryLocalService, objectDefinition);
 
 			IndexerDocumentBuilder indexerDocumentBuilder =
 				_serviceTrackerMap.getService(
@@ -89,8 +92,16 @@ public class AccountEntryOrganizationRelModelListener
 		}
 	}
 
-	private ServiceTrackerList<ObjectEntryBatchReindexer>
-		_objectEntryBatchReindexers;
+	@Reference
+	private DynamicQueryBatchIndexingActionableFactory
+		_dynamicQueryBatchIndexingActionableFactory;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
+
 	private ServiceTrackerMap<String, IndexerDocumentBuilder>
 		_serviceTrackerMap;
 

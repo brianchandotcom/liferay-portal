@@ -1683,21 +1683,20 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!parboiled-core.jar</file-name>
-				<version>1.1.6</version>
-				<project-name>org.parboiled.core</project-name>
-				<project-url>http://parboiled.org</project-url>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!org.parboiled.jar</file-name>
+				<version>1.1.6.LIFERAY-PATCHED-1</version>
+				<project-name>org.parboiled.java</project-name>
 				<licenses>
 					<license>
-						<license-name>Apache 2</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!parboiled-java.jar</file-name>
+				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!parboiled-core.jar</file-name>
 				<version>1.1.6</version>
-				<project-name>org.parboiled.java</project-name>
+				<project-name>org.parboiled.core</project-name>
 				<project-url>http://parboiled.org</project-url>
 				<licenses>
 					<license>

@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import org.opensearch.client.opensearch._types.aggregations.Aggregation;
 import org.opensearch.client.opensearch._types.aggregations.AggregationBuilders;
@@ -75,26 +74,17 @@ public class RangeFacetProcessor
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rangeJSONObject = jsonArray.getJSONObject(i);
 
-			String label = rangeJSONObject.getString("label");
-
-			if (Validator.isBlank(label)) {
-				label = rangeJSONObject.getString("range");
-			}
-
 			builder.ranges(
-				_createAggregationRange(
-					label,
-					RangeParserUtil.parserRange(
-						rangeJSONObject.getString("range"))));
+				_createAggregationRange(rangeJSONObject.getString("range")));
 		}
 	}
 
-	private AggregationRange _createAggregationRange(
-		String key, String[] rangeParts) {
+	private AggregationRange _createAggregationRange(String range) {
+		String[] rangeParts = RangeParserUtil.parserRange(range);
 
 		return AggregationRange.of(
 			aggregationRange -> aggregationRange.key(
-				key
+				range
 			).from(
 				rangeParts[0]
 			).to(

@@ -41,6 +41,7 @@ interface ICardProps extends React.HTMLAttributes<HTMLElement> {
 	horizontal?: boolean;
 	minHeight?: number;
 	pageDisplay?: boolean;
+	testId?: string;
 }
 
 const Card: React.FC<ICardProps> & {
@@ -54,7 +55,8 @@ const Card: React.FC<ICardProps> & {
 	horizontal = false,
 	id,
 	minHeight,
-	pageDisplay = false
+	pageDisplay = false,
+	testId
 }) => {
 	const classes = getCN('card', 'card-root', className, {
 		horizontal,
@@ -64,6 +66,7 @@ const Card: React.FC<ICardProps> & {
 	return (
 		<div
 			className={classes}
+			data-testid={testId}
 			id={id}
 			style={minHeight && {minHeight: `${minHeight}px`}}
 		>

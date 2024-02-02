@@ -3,8 +3,6 @@ import {fromJS, List, Map} from 'immutable';
 import {isNil} from 'lodash';
 import {Metric, Plan} from 'shared/util/records';
 
-const {subscriptionPlans} = Constants;
-
 export const INDIVIDUALS = 'individuals';
 
 export const PAGEVIEWS = 'pageViews';
@@ -41,7 +39,7 @@ export const PLAN_TYPES = {
 };
 
 function formatSubscriptions(allPlans) {
-	const addOns = {
+	const ADD_ONS = {
 		[INDIVIDUALS]: {},
 		['lxcCspUpTo100UsersExtraUser']: {},
 		['lxcCspUpTo10kUsersExtraUser']: {},
@@ -57,7 +55,7 @@ function formatSubscriptions(allPlans) {
 		[PAGEVIEWS]: {}
 	};
 
-	const plans = {};
+	const PLANS = {};
 
 	const hasKeyProperty = key =>
 		Object.prototype.hasOwnProperty.call(allPlans, key);
@@ -85,21 +83,19 @@ function formatSubscriptions(allPlans) {
 			const parentPlanType = PLAN_TYPES[baseSubscriptionPlan];
 
 			if (baseSubscriptionPlan) {
-				addOns[planType][parentPlanType] = formattedPlan;
+				ADD_ONS[planType][parentPlanType] = formattedPlan;
 			} else {
-				plans[planType] = formattedPlan;
+				PLANS[planType] = formattedPlan;
 			}
 		}
 	}
 
-	return {addOns, plans};
+	return {ADD_ONS, PLANS};
 }
 
-const {addOns, plans} = formatSubscriptions(subscriptionPlans);
+const {ADD_ONS, PLANS} = formatSubscriptions(Constants.subscriptionPlans);
 
-export {addOns as ADD_ONS};
-
-export {plans as PLANS};
+export {ADD_ONS, PLANS};
 
 export const STATUS_DISPLAY_MAP = {
 	[SubscriptionStatuses.Ok]: 'primary',
@@ -108,64 +104,68 @@ export const STATUS_DISPLAY_MAP = {
 };
 
 export const DEFAULT_ADDONS = {
-	[INDIVIDUALS]: addOns[INDIVIDUALS].business,
-	[PAGEVIEWS]: addOns[PAGEVIEWS].business
+	[INDIVIDUALS]: ADD_ONS[INDIVIDUALS].business,
+	[PAGEVIEWS]: ADD_ONS[PAGEVIEWS].business
 };
 
-export function getPlanAddOns(planType) {
-	return planType === 'basic' || planType === 'lxcPro'
-		? [DEFAULT_ADDONS[INDIVIDUALS], DEFAULT_ADDONS[PAGEVIEWS]]
-		: [addOns[INDIVIDUALS][planType], addOns[PAGEVIEWS][planType]];
+export function getPlanAddOns(currentPlan) {
+	if (isBasicPlan(currentPlan)) {
+		return [];
+	}
+
+	const planType = PLAN_TYPES[currentPlan.name];
+
+	return [ADD_ONS[INDIVIDUALS][planType], ADD_ONS[PAGEVIEWS][planType]];
 }
 
 export function getPlanLabel(name) {
 	switch (name) {
-		case plans.basic.name:
+		case PLANS.basic.name:
 			return Liferay.Language.get('basic-plan');
 
-		case plans.business.name:
+		case PLANS.business.name:
 			return Liferay.Language.get('business-plan');
 
-		case plans.enterprise.name:
+		case PLANS.enterprise.name:
 			return Liferay.Language.get('enterprise-plan');
 
-		case plans.lxcCspCustomUserTier.name:
+		case PLANS.lxcCspCustomUserTier.name:
 			return Liferay.Language.get('lxc-csp-custom-user-tier');
 
-		case plans.lxcCspUpTo100Users.name:
+		case PLANS.lxcCspUpTo100Users.name:
 			return Liferay.Language.get('lxc-csp-up-to-100-user');
 
-		case plans.lxcCspUpTo500Users.name:
+		case PLANS.lxcCspUpTo500Users.name:
 			return Liferay.Language.get('lxc-csp-up-to-500-users');
 
-		case plans.lxcCspUpTo1kUsers.name:
+		case PLANS.lxcCspUpTo1kUsers.name:
 			return Liferay.Language.get('lxc-csp-up-to-1k-users');
 
-		case plans.lxcCspUpTo5kUsers.name:
+		case PLANS.lxcCspUpTo5kUsers.name:
 			return Liferay.Language.get('lxc-csp-up-to-5k-users');
 
-		case plans.lxcCspUpTo10kUsers.name:
+		case PLANS.lxcCspUpTo10kUsers.name:
 			return Liferay.Language.get('lxc-csp-up-to-10k-users');
 
-		case plans.lxcCspUpTo20kUsers.name:
+		case PLANS.lxcCspUpTo20kUsers.name:
 			return Liferay.Language.get('lxc-csp-up-to-20k-users');
 
-		case plans.lxcSubscriptionEngageSite.name:
+		case PLANS.lxcSubscriptionEngageSite.name:
 			return Liferay.Language.get('lxc-subscription-engage-site');
 
-		case plans.lxcSubscriptionSupportSite.name:
+		case PLANS.lxcSubscriptionSupportSite.name:
 			return Liferay.Language.get('lxc-subscription-support-site');
 
-		case plans.lxcSubscriptionTransactSite.name:
+		case PLANS.lxcSubscriptionTransactSite.name:
 			return Liferay.Language.get('lxc-subscription-transact-site');
 
-		case plans.lxcPro.name:
+		case PLANS.lxcPro.name:
 			return Liferay.Language.get('basic-plan');
 
-		case plans.lxcBusiness.name:
+		case PLANS.lxcBusiness.name:
 			return Liferay.Language.get('business-plan');
 
-		case plans.lxcEnterprise.name:
+		case PLANS.lxcEnterprise.name:
 			return Liferay.Language.get('enterprise-plan');
 
 		default:
@@ -194,52 +194,52 @@ export function getPropLabel(name) {
 		case `${PAGEVIEWS}Limit`:
 			return Liferay.Language.get('page-views');
 
-		case plans.basic.name:
+		case PLANS.basic.name:
 			return Liferay.Language.get('basic');
 
-		case plans.business.name:
+		case PLANS.business.name:
 			return Liferay.Language.get('business');
 
-		case plans.enterprise.name:
+		case PLANS.enterprise.name:
 			return Liferay.Language.get('enterprise');
 
-		case plans.lxcCspCustomUserTier.name:
+		case PLANS.lxcCspCustomUserTier.name:
 			return Liferay.Language.get('lxc-csp-custom-user-tier');
 
-		case plans.lxcCspUpTo100Users.name:
+		case PLANS.lxcCspUpTo100Users.name:
 			return Liferay.Language.get('lxc-csp-up-to-100-user');
 
-		case plans.lxcCspUpTo500Users.name:
+		case PLANS.lxcCspUpTo500Users.name:
 			return Liferay.Language.get('lxc-csp-up-to-500-users');
 
-		case plans.lxcCspUpTo1kUsers.name:
+		case PLANS.lxcCspUpTo1kUsers.name:
 			return Liferay.Language.get('lxc-csp-up-to-1k-users');
 
-		case plans.lxcCspUpTo5kUsers.name:
+		case PLANS.lxcCspUpTo5kUsers.name:
 			return Liferay.Language.get('lxc-csp-up-to-5k-users');
 
-		case plans.lxcCspUpTo10kUsers.name:
+		case PLANS.lxcCspUpTo10kUsers.name:
 			return Liferay.Language.get('lxc-csp-up-to-10k-users');
 
-		case plans.lxcCspUpTo20kUsers.name:
+		case PLANS.lxcCspUpTo20kUsers.name:
 			return Liferay.Language.get('lxc-csp-up-to-20k-users');
 
-		case plans.lxcSubscriptionEngageSite.name:
+		case PLANS.lxcSubscriptionEngageSite.name:
 			return Liferay.Language.get('lxc-subscription-engage-site');
 
-		case plans.lxcSubscriptionSupportSite.name:
+		case PLANS.lxcSubscriptionSupportSite.name:
 			return Liferay.Language.get('lxc-subscription-support-site');
 
-		case plans.lxcSubscriptionTransactSite.name:
+		case PLANS.lxcSubscriptionTransactSite.name:
 			return Liferay.Language.get('lxc-subscription-transact-site');
 
-		case plans.lxcPro.name:
+		case PLANS.lxcPro.name:
 			return Liferay.Language.get('lxc-pro');
 
-		case plans.lxcBusiness.name:
+		case PLANS.lxcBusiness.name:
 			return Liferay.Language.get('lxc-business');
 
-		case plans.lxcEnterprise.name:
+		case PLANS.lxcEnterprise.name:
 			return Liferay.Language.get('lxc-enterprise');
 
 		default:
@@ -295,5 +295,12 @@ export function formatPlanData(subscriptionIMap) {
 			name: subscriptionIMap.get('name'),
 			startDate: subscriptionIMap.get('startDate')
 		})
+	);
+}
+
+export function isBasicPlan(currentPlan) {
+	return (
+		PLAN_TYPES[currentPlan.name] === 'basic' ||
+		PLAN_TYPES[currentPlan.name] === 'lxcPro'
 	);
 }

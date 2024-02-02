@@ -10,14 +10,12 @@ import {
 	INDIVIDUALS,
 	PAGEVIEWS,
 	PLAN_TYPES,
-	PLANS,
 	STATUS_DISPLAY_MAP
 } from 'shared/util/subscriptions';
-import {formatDateToTimeZone} from 'shared/util/date';
+import {CUSTOM_DATE_FORMAT, formatDateToTimeZone} from 'shared/util/date';
 import {get} from 'lodash';
-import {Plan} from 'shared/util/records';
-import {PropTypes} from 'prop-types';
 import {sub} from 'shared/util/lang';
+import {Text} from '@clayui/core';
 import {toRounded} from 'shared/util/numbers';
 
 const METRIC_DEFINITION_MAP = {
@@ -29,130 +27,85 @@ const METRIC_DEFINITION_MAP = {
 	)
 };
 
-export default class UsageMetric extends React.Component {
-	static propTypes = {
-		currentPlan: PropTypes.instanceOf(Plan),
-		metricType: PropTypes.oneOf([INDIVIDUALS, PAGEVIEWS]),
-		planType: PropTypes.oneOf([
-			PLAN_TYPES[PLANS.basic.name],
-			PLAN_TYPES[PLANS.business.name],
-			PLAN_TYPES[PLANS.enterprise.name],
-			PLAN_TYPES[PLANS.lxcBusiness.name],
-			PLAN_TYPES[PLANS.lxcEnterprise.name],
-			PLAN_TYPES[PLANS.lxcPro.name]
-		]),
-		timeZoneId: PropTypes.string
-	};
+export const UsageMetric = ({
+	className,
+	currentPlan: {addOns, lastAnniversaryDate, metrics, name, startDate},
+	metricType,
+	planType,
+	timeZoneId
+}) => {
+	const {count, limit, status} = metrics.get(metricType);
+	const percent = limit > 0 ? count / limit : 0;
 
-	getUsageMetricDetails() {
-		const {
-			currentPlan: {addOns: planAddOns, metrics, name},
-			metricType,
-			planType
-		} = this.props;
+	const addOnQuantity = addOns.getIn([metricType, 'quantity'], 0);
 
-		const limit = metrics.getIn([metricType, 'limit']);
+	const addOnPlan = get(
+		ADD_ONS,
+		[metricType, planType],
+		DEFAULT_ADDONS[metricType]
+	);
 
-		const addOnQuantity = planAddOns.getIn([metricType, 'quantity'], 0);
+	const addOnLimit = addOnPlan.limits[metricType];
 
-		const addOnPlan = get(
-			ADD_ONS,
-			[metricType, planType],
-			DEFAULT_ADDONS[metricType]
-		);
+	const actualPlanLimit = limit - addOnLimit * addOnQuantity;
 
-		const addOnLimit = addOnPlan.limits[metricType];
+	const planLabel = `${getPlanLabel(
+		name
+	)} ${actualPlanLimit.toLocaleString()}`;
 
-		const actualPlanLimit = limit - addOnLimit * addOnQuantity;
+	const addOnQuantityLabel = `+ ${addOnLimit.toLocaleString()} ${Liferay.Language.get(
+		'add-on'
+	)} (${addOnQuantity}x)`;
 
-		const planLabel = `${getPlanLabel(
-			name
-		)} ${actualPlanLimit.toLocaleString()}`;
+	return (
+		<div className={className}>
+			<h3 className='text-secondary'>{getPropLabel(metricType)}</h3>
 
-		const addOnQuantityLabel = `+ ${addOnLimit.toLocaleString()} ${Liferay.Language.get(
-			'add-on'
-		)} (${addOnQuantity}x)`;
+			<div className='d-flex align-items-center'>
+				<Sticker display='dark' symbol={getPropIcon(metricType)} />
 
-		return `${planLabel} ${addOnQuantityLabel}`;
-	}
+				<div className='m-2'>
+					<span className='mr-2'>
+						{sub(
+							Liferay.Language.get('x-of-x'),
+							[
+								<h2 className='m-0 d-inline' key={count}>
+									{count.toLocaleString()}
+								</h2>,
+								<Text key={limit} size={3} weight='semi-bold'>
+									{limit.toLocaleString()}
+								</Text>
+							],
+							false
+						)}
+					</span>
 
-	render() {
-		const {
-			currentPlan: {lastAnniversaryDate, metrics, name, startDate},
-			metricType,
-			timeZoneId
-		} = this.props;
+					<Text color='secondary' size={3} weight='semi-bold'>
+						{sub(Liferay.Language.get('x-percent-since-x'), [
+							toRounded(percent * 100),
+							formatDateToTimeZone(
+								PLAN_TYPES[name] === 'basic'
+									? startDate
+									: lastAnniversaryDate,
+								CUSTOM_DATE_FORMAT,
+								timeZoneId
+							)
+						])}
+					</Text>
 
-		const {count, limit, status} = metrics.get(metricType);
-
-		const percent = limit > 0 ? count / limit : 0;
-
-		return (
-			<div
-				className={`overview-usage-metric-root${
-					this.props.className ? ` ${this.props.className}` : ''
-				}`}
-			>
-				<h3 className='metric-name'>{getPropLabel(metricType)}</h3>
-
-				<div className='metric-breakdown'>
-					<Sticker display='dark' symbol={getPropIcon(metricType)} />
-
-					<div className='metric-breakdown-content'>
-						<div>
-							<span>
-								{sub(
-									Liferay.Language.get('x-of-x'),
-									[
-										<span
-											className='metric-current'
-											key={count}
-										>
-											{count.toLocaleString()}
-										</span>,
-										<span
-											className='metric-limit'
-											key={limit}
-										>
-											{limit.toLocaleString()}
-										</span>
-									],
-									false
-								)}
-							</span>
-
-							<span className='text-secondary usage-since-label semibold'>
-								{sub(
-									Liferay.Language.get('x-percent-since-x'),
-									[
-										toRounded(percent * 100),
-										formatDateToTimeZone(
-											PLAN_TYPES[name] === 'basic'
-												? startDate
-												: lastAnniversaryDate,
-											'MMMM D, YYYY',
-											timeZoneId
-										)
-									]
-								)}
-							</span>
-						</div>
-
-						<div className='text-muted small semibold'>
-							{this.getUsageMetricDetails()}
-						</div>
+					<div>
+						<Text color='muted' size={3} weight='semi-bold'>
+							{`${planLabel} ${addOnQuantityLabel}`}
+						</Text>
 					</div>
 				</div>
-
-				<MetricBar
-					display={STATUS_DISPLAY_MAP[status]}
-					percent={percent}
-				/>
-
-				<div className='metric-definition text-secondary'>
-					{METRIC_DEFINITION_MAP[metricType]}
-				</div>
 			</div>
-		);
-	}
-}
+
+			<MetricBar display={STATUS_DISPLAY_MAP[status]} percent={percent} />
+
+			<div className='metric-definition text-secondary'>
+				{METRIC_DEFINITION_MAP[metricType]}
+			</div>
+		</div>
+	);
+};

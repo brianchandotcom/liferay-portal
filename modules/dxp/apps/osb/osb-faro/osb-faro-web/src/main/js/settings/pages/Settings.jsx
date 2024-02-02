@@ -204,7 +204,7 @@ export class Settings extends React.Component {
 					},
 					{
 						icon: 'usage',
-						label: Liferay.Language.get('usage'),
+						label: Liferay.Language.get('subscription-&-usage'),
 						route: Routes.SETTINGS_USAGE,
 						url: toRoute(Routes.SETTINGS_USAGE, {groupId})
 					},

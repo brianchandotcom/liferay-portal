@@ -1,13 +1,13 @@
 import * as data from 'test/data';
 import mockStore from 'test/mock-store';
 import React from 'react';
+import UsageOverview from '../UsageOverview';
 import {fromJS} from 'immutable';
 import {Project, User} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
 import {SubscriptionStatuses, UserRoleNames} from 'shared/util/constants';
-import {UsageOverview} from '../UsageOverview';
 
 jest.unmock('react-dom');
 

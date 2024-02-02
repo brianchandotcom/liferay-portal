@@ -246,7 +246,7 @@ public class UserSystemObjectDefinitionManager
 
 	@Override
 	public int getVersion() {
-		return 3;
+		return 4;
 	}
 
 	@Override

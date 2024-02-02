@@ -284,7 +284,11 @@ public class ObjectDefinitionLocalServiceImpl
 			return objectDefinition;
 		}
 
+		objectDefinition.setLabelMap(
+			systemObjectDefinitionManager.getLabelMap());
 		objectDefinition.setObjectFolderId(objectFolderId);
+		objectDefinition.setPluralLabelMap(
+			systemObjectDefinitionManager.getPluralLabelMap());
 		objectDefinition.setVersion(systemObjectDefinitionManager.getVersion());
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);

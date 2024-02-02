@@ -214,7 +214,7 @@ public class CommerceOrderSystemObjectDefinitionManager
 
 	@Override
 	public int getVersion() {
-		return 3;
+		return 4;
 	}
 
 	@Override

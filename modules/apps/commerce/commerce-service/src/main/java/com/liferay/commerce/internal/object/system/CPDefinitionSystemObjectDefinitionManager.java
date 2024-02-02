@@ -242,7 +242,7 @@ public class CPDefinitionSystemObjectDefinitionManager
 
 	@Override
 	public int getVersion() {
-		return 2;
+		return 3;
 	}
 
 	@Override

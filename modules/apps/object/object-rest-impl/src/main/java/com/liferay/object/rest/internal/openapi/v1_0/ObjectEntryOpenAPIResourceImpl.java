@@ -301,17 +301,21 @@ public class ObjectEntryOpenAPIResourceImpl
 				() -> {
 					if (Objects.equals(
 							objectField.getBusinessType(),
-							ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-						Objects.equals(
-							objectField.getBusinessType(),
 							ObjectFieldConstants.
-								BUSINESS_TYPE_AUTO_INCREMENT) ||
-						Objects.equals(
-							objectField.getBusinessType(),
-							ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN) ||
-						Objects.equals(
-							objectField.getBusinessType(),
-							ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
+								BUSINESS_TYPE_AUTO_INCREMENT)) {
+
+						return "CSV";
+					}
+					else if (Objects.equals(
+								objectField.getBusinessType(),
+								ObjectFieldConstants.
+									BUSINESS_TYPE_AGGREGATION) ||
+							 Objects.equals(
+								 objectField.getBusinessType(),
+								 ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN) ||
+							 Objects.equals(
+								 objectField.getBusinessType(),
+								 ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
 						return "CSV";
 					}

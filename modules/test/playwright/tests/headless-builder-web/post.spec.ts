@@ -230,7 +230,7 @@ test('can create post endpoint with different request and response schema', asyn
 
 	await apiApplicationPage.publishButton.click();
 
-	await apiExplorerPage.goToSpecificApplication(
+	await apiExplorerPage.goToApplication(
 		`c/${studentSubjectsApplication.baseURL}`
 	);
 	page.waitForLoadState();
@@ -279,9 +279,7 @@ test('can create post method endpoint with company scope', async ({
 	);
 	await apiApplicationPage.publishButton.click();
 
-	await apiExplorerPage.goToSpecificApplication(
-		`c/${basicApiApplication.baseURL}`
-	);
+	await apiExplorerPage.goToApplication(`c/${basicApiApplication.baseURL}`);
 	page.waitForLoadState();
 
 	await expect(

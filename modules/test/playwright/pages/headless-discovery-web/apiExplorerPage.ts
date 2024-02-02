@@ -14,10 +14,7 @@ export class ApiExplorerPage {
 		this.page = page;
 	}
 
-	async endpointHasSpecificParameters(
-		endpointPath: string,
-		parameters: string[]
-	) {
+	async endpointHasParameters(endpointPath: string, parameters: string[]) {
 		await (await this.getEndpointLocator(endpointPath)).click();
 		for (const parameter of parameters) {
 			await expect(
@@ -27,10 +24,7 @@ export class ApiExplorerPage {
 		await (await this.getEndpointLocator(endpointPath)).click();
 	}
 
-	async endpointHasNotSpecificParameters(
-		endpointPath: string,
-		parameters: string[]
-	) {
+	async endpointHasNotParameters(endpointPath: string, parameters: string[]) {
 		await (await this.getEndpointLocator(endpointPath)).click();
 		for (const parameter of parameters) {
 			await expect(
@@ -44,7 +38,7 @@ export class ApiExplorerPage {
 		await this.page.goto('/o/api');
 	}
 
-	async goToSpecificApplication(applicationURL: string) {
+	async goToApplication(applicationURL: string) {
 		await this.page.goto(
 			`/o/api?endpoint=${liferayConfig.environment.baseUrl}/o/${applicationURL}/openapi.json`
 		);

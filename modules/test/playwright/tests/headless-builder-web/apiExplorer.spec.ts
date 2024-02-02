@@ -79,21 +79,19 @@ test('can see filter and sort parameters for collection but not for singleElemen
 		'headless-builder/endpoints'
 	);
 
-	await apiExplorerPage.goToSpecificApplication(
-		`c/${basicApiApplication.baseURL}`
-	);
+	await apiExplorerPage.goToApplication(`c/${basicApiApplication.baseURL}`);
 
 	page.waitForLoadState();
 
-	await apiExplorerPage.endpointHasSpecificParameters(
-		collectionEndpoint.path,
-		['filter', 'sort']
-	);
+	await apiExplorerPage.endpointHasParameters(collectionEndpoint.path, [
+		'filter',
+		'sort',
+	]);
 
-	await apiExplorerPage.endpointHasNotSpecificParameters(
-		singleElementEndpoint.path,
-		['filter', 'sort']
-	);
+	await apiExplorerPage.endpointHasNotParameters(singleElementEndpoint.path, [
+		'filter',
+		'sort',
+	]);
 
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(

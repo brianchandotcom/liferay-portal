@@ -10,6 +10,7 @@ import {Locator, Page} from '@playwright/test';
 import {searchTableRowByValue} from './UsersAndOrganizationsPage';
 
 export class EditUserPage {
+	readonly generateWebDAVPasswordButton: Locator;
 	readonly membershipsAccountsTableRow: (
 		colPosition: number,
 		value: string,
@@ -18,8 +19,13 @@ export class EditUserPage {
 	readonly membershipsAccountsTable: Locator;
 	readonly membershipsLink: Locator;
 	readonly page: Page;
+	readonly passwordLink: Locator;
+	readonly webDAVPasswordLabel: Locator;
 
 	constructor(page: Page) {
+		this.generateWebDAVPasswordButton = page.getByTestId(
+			'generateWebDAVPasswordButton'
+		);
 		this.membershipsAccountsTableRow = async (
 			colPosition: number,
 			value: string,
@@ -39,6 +45,13 @@ export class EditUserPage {
 			exact: true,
 			name: 'Memberships',
 		});
+		this.passwordLink = page.getByRole('link', {
+			exact: true,
+			name: 'Password',
+		});
 		this.page = page;
+		this.webDAVPasswordLabel = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_webDAVPassword'
+		);
 	}
 }

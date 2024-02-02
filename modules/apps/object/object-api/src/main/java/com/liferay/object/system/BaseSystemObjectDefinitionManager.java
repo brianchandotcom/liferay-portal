@@ -35,6 +35,11 @@ public abstract class BaseSystemObjectDefinitionManager
 	implements SystemObjectDefinitionManager {
 
 	@Override
+	public Map<Locale, String> getLabelMap() {
+		return createLabelMap(MapUtil.getString(getLabelKeys(), "label"));
+	}
+
+	@Override
 	public String getModelClassName() {
 		Class<?> modelClass = getModelClass();
 
@@ -52,6 +57,11 @@ public abstract class BaseSystemObjectDefinitionManager
 		}
 
 		return tableName;
+	}
+
+	@Override
+	public Map<Locale, String> getPluralLabelMap() {
+		return createLabelMap(MapUtil.getString(getLabelKeys(), "pluralLabel"));
 	}
 
 	@Override

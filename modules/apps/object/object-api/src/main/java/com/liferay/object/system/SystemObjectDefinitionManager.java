@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -54,6 +55,10 @@ public interface SystemObjectDefinitionManager {
 	public String getExternalReferenceCode();
 
 	public JaxRsApplicationDescriptor getJaxRsApplicationDescriptor();
+
+	public default Map<String, String> getLabelKeys() {
+		return Collections.emptyMap();
+	}
 
 	public Map<Locale, String> getLabelMap();
 

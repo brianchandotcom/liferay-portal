@@ -327,17 +327,13 @@ public class OpenAPIUtilTest {
 					}
 
 					@Override
-					public PropertyType getPropertyType() {
-						return entry.getValue();
+					public List<APIApplication.Property> getProperties() {
+						return null;
 					}
 
 					@Override
-					public String getRelatedPropertyERC() {
-						if (!fieldMapping.isEmpty()) {
-							return fieldMapping.get(entry.getKey());
-						}
-
-						return "";
+					public PropertyType getPropertyType() {
+						return entry.getValue();
 					}
 
 					@Override

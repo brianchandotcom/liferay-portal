@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
@@ -30,14 +29,10 @@ import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.StringSchema;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * @author Sergio Jiménez del Coso
@@ -141,51 +136,12 @@ public class OpenAPIUtil {
 
 		Map<String, Schema> schemas = new TreeMap<>();
 
-		Set<APIApplication.Property> orphanPropertySet =
-			new CopyOnWriteArraySet<>();
-
 		Map<String, Schema> properties = new TreeMap<>();
 
-		Map<String, Schema> propertySchemaMap = new TreeMap<>();
-
-		Map<String, APIApplication.Property> registeredPropertyMap =
-			new HashMap<>();
-
 		for (APIApplication.Property property : schema.getProperties()) {
-			Schema propertySchema = _getPropertySchema(
-				openAPIResource, property, schemas);
-
-			registeredPropertyMap.put(
-				property.getExternalReferenceCode(), property);
-
-			Set<String> childPropertiesERCSet = _getChildPropertiesERCSet(
-				orphanPropertySet, property);
-
-			if (!childPropertiesERCSet.isEmpty()) {
-				_updateSchemaProperties(
-					childPropertiesERCSet, propertySchema, propertySchemaMap);
-			}
-
-			String relatedPropertyERC = property.getRelatedPropertyERC();
-
-			if (Validator.isNull(relatedPropertyERC)) {
-				properties.put(property.getName(), propertySchema);
-			}
-			else {
-				if (registeredPropertyMap.containsKey(
-						property.getRelatedPropertyERC())) {
-
-					_updateRelatedSchemaProperties(
-						propertySchema, relatedPropertyERC, properties,
-						propertySchemaMap, registeredPropertyMap);
-				}
-				else {
-					orphanPropertySet.add(property);
-				}
-			}
-
-			propertySchemaMap.put(
-				property.getExternalReferenceCode(), propertySchema);
+			properties.put(
+				property.getName(),
+				_getPropertySchema(openAPIResource, property, schemas));
 		}
 
 		schemas.put(
@@ -254,26 +210,6 @@ public class OpenAPIUtil {
 		}
 
 		return s;
-	}
-
-	private static Set<String> _getChildPropertiesERCSet(
-		Set<APIApplication.Property> orphanPropertySet,
-		APIApplication.Property property) {
-
-		Set<String> propertyERCSet = new HashSet<>();
-
-		for (APIApplication.Property orphanProperty : orphanPropertySet) {
-			if (Objects.equals(
-					property.getExternalReferenceCode(),
-					orphanProperty.getRelatedPropertyERC())) {
-
-				propertyERCSet.add(orphanProperty.getExternalReferenceCode());
-
-				orphanPropertySet.remove(orphanProperty);
-			}
-		}
-
-		return propertyERCSet;
 	}
 
 	private static Schema _getPropertySchema(
@@ -371,6 +307,16 @@ public class OpenAPIUtil {
 		schema.setDescription(property.getDescription());
 		schema.setName(property.getName());
 
+		for (APIApplication.Property childProperty : property.getProperties()) {
+			schema.setProperties(
+				HashMapBuilder.put(
+					childProperty.getName(),
+					_getPropertySchema(openAPIResource, childProperty, schemas)
+				).putAll(
+					schema.getProperties()
+				).build());
+		}
+
 		return schema;
 	}
 
@@ -380,55 +326,6 @@ public class OpenAPIUtil {
 		return CamelCaseUtil.toCamelCase(
 			path.replaceAll(StringPool.MINUS, StringPool.SLASH),
 			CharPool.SLASH);
-	}
-
-	private static void _updateRelatedSchemaProperties(
-		Schema childPropertySchema, String propertyERC,
-		Map<String, Schema> properties, Map<String, Schema> propertySchemaMap,
-		Map<String, APIApplication.Property> registeredProperties) {
-
-		Schema schema = propertySchemaMap.get(propertyERC);
-
-		schema.setProperties(
-			HashMapBuilder.put(
-				childPropertySchema.getName(), childPropertySchema
-			).putAll(
-				schema.getProperties()
-			).build());
-
-		propertySchemaMap.put(propertyERC, schema);
-
-		APIApplication.Property property = registeredProperties.get(
-			propertyERC);
-
-		String relatedPropertyERC = property.getRelatedPropertyERC();
-
-		if (Validator.isNotNull(relatedPropertyERC)) {
-			if (registeredProperties.containsKey(relatedPropertyERC)) {
-				_updateRelatedSchemaProperties(
-					schema, relatedPropertyERC, properties, propertySchemaMap,
-					registeredProperties);
-			}
-		}
-		else {
-			properties.put(property.getName(), schema);
-		}
-	}
-
-	private static void _updateSchemaProperties(
-		Set<String> propertyERCSet, Schema propertySchema,
-		Map<String, Schema> propertySchemaMap) {
-
-		for (String propertyERC : propertyERCSet) {
-			Schema childPropertySchema = propertySchemaMap.get(propertyERC);
-
-			propertySchema.setProperties(
-				HashMapBuilder.put(
-					childPropertySchema.getName(), childPropertySchema
-				).putAll(
-					propertySchema.getProperties()
-				).build());
-		}
 	}
 
 }

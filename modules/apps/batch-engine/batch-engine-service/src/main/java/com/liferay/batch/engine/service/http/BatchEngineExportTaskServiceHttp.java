@@ -42,6 +42,56 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class BatchEngineExportTaskServiceHttp {
 
 	public static com.liferay.batch.engine.model.BatchEngineExportTask
+			addBatchEngineExportTask(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId, long userId, String callbackURL,
+				String className, String contentType, String executeStatus,
+				java.util.List<String> fieldNamesList,
+				java.util.Map<String, java.io.Serializable> parameters,
+				String taskItemDelegateName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				BatchEngineExportTaskServiceUtil.class,
+				"addBatchEngineExportTask",
+				_addBatchEngineExportTaskParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId, userId,
+				callbackURL, className, contentType, executeStatus,
+				fieldNamesList, parameters, taskItemDelegateName);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.batch.engine.model.BatchEngineExportTask)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.batch.engine.model.BatchEngineExportTask
 			getBatchEngineExportTask(
 				HttpPrincipal httpPrincipal, long batchEngineExportTaskId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -50,10 +100,54 @@ public class BatchEngineExportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineExportTaskServiceUtil.class,
 				"getBatchEngineExportTask",
-				_getBatchEngineExportTaskParameterTypes0);
+				_getBatchEngineExportTaskParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, batchEngineExportTaskId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.batch.engine.model.BatchEngineExportTask)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.batch.engine.model.BatchEngineExportTask
+			getBatchEngineExportTaskByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				BatchEngineExportTaskServiceUtil.class,
+				"getBatchEngineExportTaskByExternalReferenceCode",
+				_getBatchEngineExportTaskByExternalReferenceCodeParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -95,7 +189,7 @@ public class BatchEngineExportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineExportTaskServiceUtil.class,
 				"getBatchEngineExportTasks",
-				_getBatchEngineExportTasksParameterTypes1);
+				_getBatchEngineExportTasksParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, start, end);
@@ -144,7 +238,7 @@ public class BatchEngineExportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineExportTaskServiceUtil.class,
 				"getBatchEngineExportTasks",
-				_getBatchEngineExportTasksParameterTypes2);
+				_getBatchEngineExportTasksParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, start, end, orderByComparator);
@@ -187,7 +281,7 @@ public class BatchEngineExportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineExportTaskServiceUtil.class,
 				"getBatchEngineExportTasksCount",
-				_getBatchEngineExportTasksCountParameterTypes3);
+				_getBatchEngineExportTasksCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId);
@@ -223,17 +317,26 @@ public class BatchEngineExportTaskServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(
 		BatchEngineExportTaskServiceHttp.class);
 
-	private static final Class<?>[] _getBatchEngineExportTaskParameterTypes0 =
+	private static final Class<?>[] _addBatchEngineExportTaskParameterTypes0 =
+		new Class[] {
+			String.class, long.class, long.class, String.class, String.class,
+			String.class, String.class, java.util.List.class,
+			java.util.Map.class, String.class
+		};
+	private static final Class<?>[] _getBatchEngineExportTaskParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getBatchEngineExportTasksParameterTypes1 =
+	private static final Class<?>[]
+		_getBatchEngineExportTaskByExternalReferenceCodeParameterTypes2 =
+			new Class[] {String.class, long.class};
+	private static final Class<?>[] _getBatchEngineExportTasksParameterTypes3 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getBatchEngineExportTasksParameterTypes2 =
+	private static final Class<?>[] _getBatchEngineExportTasksParameterTypes4 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getBatchEngineExportTasksCountParameterTypes3 = new Class[] {
+		_getBatchEngineExportTasksCountParameterTypes5 = new Class[] {
 			long.class
 		};
 

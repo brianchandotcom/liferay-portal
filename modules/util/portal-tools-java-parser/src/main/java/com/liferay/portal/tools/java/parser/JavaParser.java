@@ -70,7 +70,18 @@ public class JavaParser {
 			File file, String content, int maxLineLength, boolean writeFile)
 		throws CheckstyleException, IOException {
 
-		String newContent = _parse(file, content, maxLineLength, false);
+		return parse(
+			file, ToolsUtil.getPackagePath(file), content, maxLineLength,
+			writeFile);
+	}
+
+	public static String parse(
+			File file, String packagePath, String content, int maxLineLength,
+			boolean writeFile)
+		throws CheckstyleException, IOException {
+
+		String newContent = _parse(
+			file, packagePath, content, maxLineLength, false);
 
 		if (writeFile && !newContent.equals(content)) {
 			FileUtil.write(file, newContent);
@@ -118,8 +129,10 @@ public class JavaParser {
 					StringPool.SLASH, System.currentTimeMillis(),
 					PwdGenerator.getPassword(8, PwdGenerator.KEY2), ".java");
 
+				File file = new File(fileName);
+
 				newJavaContent = _parse(
-					new File(fileName), javaContent,
+					file, ToolsUtil.getPackagePath(file), javaContent,
 					JavaParserUtil.NO_MAX_LINE_LENGTH, true);
 			}
 			catch (Exception exception) {
@@ -950,7 +963,7 @@ public class JavaParser {
 	}
 
 	private static String _parse(
-			File file, String content, int maxLineLength,
+			File file, String packagePath, String content, int maxLineLength,
 			boolean abortOnNestedCommentToken)
 		throws CheckstyleException, IOException {
 
@@ -976,23 +989,23 @@ public class JavaParser {
 			content, parsedJavaClass, fileContents);
 
 		if (!newContent.equals(content)) {
-			return _parse(file, newContent, maxLineLength, false);
+			return _parse(file, packagePath, newContent, maxLineLength, false);
 		}
 
 		newContent = _parseContent(parsedJavaClass, fileContents, lines);
 
 		if (!newContent.equals(content)) {
-			return _parse(file, newContent, maxLineLength, false);
+			return _parse(file, packagePath, newContent, maxLineLength, false);
 		}
 
 		ImportsFormatter importsFormatter = new JavaImportsFormatter();
 
 		newContent = importsFormatter.format(
-			_trimContent(newContent), ToolsUtil.getPackagePath(file),
+			_trimContent(newContent), packagePath,
 			StringUtil.replaceLast(file.getName(), ".java", StringPool.BLANK));
 
 		if (!newContent.equals(content)) {
-			return _parse(file, newContent, maxLineLength, false);
+			return _parse(file, packagePath, newContent, maxLineLength, false);
 		}
 
 		return newContent;

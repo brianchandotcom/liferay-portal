@@ -14,6 +14,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -41,6 +42,7 @@ public class CommerceOrderModelResourcePermissionLogic
 	public CommerceOrderModelResourcePermissionLogic(
 		AccountEntryLocalService accountEntryLocalService,
 		CommerceChannelLocalService commerceChannelLocalService,
+		CommerceOrderLocalService commerceOrderLocalService,
 		ConfigurationProvider configurationProvider,
 		GroupLocalService groupLocalService,
 		PortletResourcePermission portletResourcePermission,
@@ -49,6 +51,7 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		_accountEntryLocalService = accountEntryLocalService;
 		_commerceChannelLocalService = commerceChannelLocalService;
+		_commerceOrderLocalService = commerceOrderLocalService;
 		_configurationProvider = configurationProvider;
 		_groupLocalService = groupLocalService;
 		_portletResourcePermission = portletResourcePermission;
@@ -476,16 +479,6 @@ public class CommerceOrderModelResourcePermissionLogic
 			PermissionChecker permissionChecker, CommerceOrder commerceOrder)
 		throws PortalException {
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchCommerceChannelByGroupClassPK(
-				commerceOrder.getGroupId());
-
-		if ((commerceChannel != null) &&
-			(commerceChannel.getAccountEntryId() == 0)) {
-
-			return false;
-		}
-
 		List<AccountEntry> accountEntries =
 			_accountEntryLocalService.getUserAccountEntries(
 				permissionChecker.getUserId(), 0L, StringPool.BLANK,
@@ -493,6 +486,10 @@ public class CommerceOrderModelResourcePermissionLogic
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (AccountEntry accountEntry : accountEntries) {
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.fetchCommerceChannelByGroupClassPK(
+					commerceOrder.getGroupId());
+
 			if ((accountEntry.getAccountEntryId() ==
 					commerceChannel.getAccountEntryId()) &&
 				_userGroupRoleLocalService.hasUserGroupRole(
@@ -502,6 +499,29 @@ public class CommerceOrderModelResourcePermissionLogic
 
 				return true;
 			}
+
+			for (long commerceOrderIds :
+					commerceOrder.getSupplierCommerceOrderIds()) {
+
+				CommerceOrder supplierCommerceOrder =
+					_commerceOrderLocalService.getCommerceOrder(
+						commerceOrderIds);
+
+				commerceChannel =
+					_commerceChannelLocalService.
+						fetchCommerceChannelByGroupClassPK(
+							supplierCommerceOrder.getGroupId());
+
+				if ((accountEntry.getAccountEntryId() ==
+						commerceChannel.getAccountEntryId()) &&
+					_userGroupRoleLocalService.hasUserGroupRole(
+						permissionChecker.getUserId(),
+						accountEntry.getAccountEntryGroupId(),
+						AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER)) {
+
+					return true;
+				}
+			}
 		}
 
 		return false;
@@ -509,6 +529,7 @@ public class CommerceOrderModelResourcePermissionLogic
 
 	private final AccountEntryLocalService _accountEntryLocalService;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
+	private final CommerceOrderLocalService _commerceOrderLocalService;
 	private final ConfigurationProvider _configurationProvider;
 	private final GroupLocalService _groupLocalService;
 	private final PortletResourcePermission _portletResourcePermission;

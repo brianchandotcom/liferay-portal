@@ -13,12 +13,9 @@ import {loginTest} from '../../fixtures/loginTest';
 export const test = mergeTests(accountSettingsPagesTest, loginTest);
 
 test('LPD-15689 roles in account settings should have no save button', async ({
-    accountSettingsPage
+	accountSettingsPage,
 }) => {
-    await accountSettingsPage.goToAccountSettingsRoles();
+	await accountSettingsPage.goToAccountSettingsRoles();
 
-    await expect(
-        accountSettingsPage.saveButton
-    ).not.toBeVisible();
-
-})
+	await expect(accountSettingsPage.saveButton).not.toBeVisible();
+});

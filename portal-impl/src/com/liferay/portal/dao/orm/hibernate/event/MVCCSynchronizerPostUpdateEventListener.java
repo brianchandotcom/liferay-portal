@@ -33,7 +33,8 @@ public class MVCCSynchronizerPostUpdateEventListener
 		Object entity = postUpdateEvent.getEntity();
 
 		if (entity instanceof MVCCModel) {
-			long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+			long ctCollectionId =
+				CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION;
 
 			if (entity instanceof CTModel<?>) {
 				CTModel<?> ctModel = (CTModel<?>)entity;

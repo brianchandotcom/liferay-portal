@@ -901,6 +901,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		try {
 			CTRowUtil.copyCTRows(ctPersistence, connection, sb.toString());
+
+			ctPersistence.clearCache(new HashSet<>(resolvedPrimaryKeys));
 		}
 		catch (SQLException sqlException) {
 			throw new ORMException(sqlException);

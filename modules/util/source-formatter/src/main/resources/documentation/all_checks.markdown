@@ -216,6 +216,7 @@ JavaIOExceptionCheck | [Styling](styling_checks.markdown#styling-checks) | .java
 JavaIgnoreAnnotationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds methods with `@Ignore` annotation in test classes. |
 JavaImportsCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Sorts and groups imports in `.java` files. |
 [JavaIndexableCheck](check/java_indexable_check.markdown#javaindexablecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks that the type gets returned when using annotation `@Indexable`. |
+[JavaInitialRequestPortalInstanceLifecycleListenerCheck](check/java_initial_request_portal_instance_lifecycle_listener_check.markdown#javainitialrequestportalinstancelifecyclelistenercheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Performs several checks on `InitialRequestPortalInstanceLifecycleListener` subclasses. |
 JavaInjectAnnotationsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Performs several checks on classes with `@Inject` annotations. |
 JavaInnerClassImportsCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Finds cases where inner classes are imported. |
 JavaInterfaceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks that `interface` is not `static`. |

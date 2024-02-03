@@ -47,6 +47,7 @@ definition {
 				-d configuration=${configuration} \
 				-d icon= \
 				-d previewFileEntryId=0 \
+				-d readOnly=false \
 				-d type=${type} \
 				-d typeOptions= \
 				-d status=${status}

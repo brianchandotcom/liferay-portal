@@ -8051,8 +8051,36 @@ public class ServiceBuilder {
 
 		content = header + "\n\n" + content;
 
+		String fileName = file.toString();
+
+		int startIndex;
+
+		if (fileName.startsWith(_apiDirName)) {
+			startIndex = _apiDirName.length();
+		}
+		else if (fileName.startsWith(_implDirName)) {
+			startIndex = _implDirName.length();
+		}
+		else if (fileName.startsWith(_uadDirName)) {
+			startIndex = _uadDirName.length();
+		}
+		else if (fileName.startsWith(_testDirName)) {
+			startIndex = _testDirName.length();
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Unable to parse package path from " + fileName);
+		}
+
 		ToolsUtil.writeFileRaw(
-			file, JavaParser.parse(file, content, _MAX_LINE_LENGTH, false),
+			file,
+			JavaParser.parse(
+				file,
+				StringUtil.replace(
+					fileName.substring(
+						startIndex + 1, fileName.lastIndexOf(StringPool.SLASH)),
+					CharPool.SLASH, CharPool.PERIOD),
+				content, _MAX_LINE_LENGTH, false),
 			modifiedFileNames);
 	}
 

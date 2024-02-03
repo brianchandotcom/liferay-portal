@@ -15,7 +15,8 @@ if (backButton) {
 			const returnUrl = urlParams.get('returnurl');
 
 			location.assign(`${siteURL}${returnUrl}`);
-		} else {
+		}
+		else {
 			history.back();
 		}
 	};

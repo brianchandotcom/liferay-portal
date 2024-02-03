@@ -49,7 +49,8 @@ const patchRequestStatus = async (
 		}
 
 		return;
-	} catch (error: unknown) {
+	}
+	catch (error: unknown) {
 		Liferay.Util.openToast({
 			message: 'The MDF Request Status cannot be changed.',
 			type: 'danger',

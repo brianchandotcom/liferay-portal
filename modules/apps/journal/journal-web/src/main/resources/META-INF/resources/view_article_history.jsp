@@ -73,21 +73,21 @@ renderResponse.setTitle(article.getTitle(locale));
 						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 						%>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(articleVersion.getStatusByUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-						</h6>
+						</div>
 
 						<h5>
 							<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>
 						</h5>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<liferay-portal-workflow:status
 								showStatusLabel="<%= false %>"
 								status="<%= articleVersion.getStatus() %>"
 								version="<%= String.valueOf(articleVersion.getVersion()) %>"
 							/>
-						</h6>
+						</div>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text>

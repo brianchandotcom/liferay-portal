@@ -88,11 +88,11 @@ const UsageChart = ({data, loading}) => {
 			</div>
 
 			<div className="d-flex flex-row-reverse m-2 mr-3">
-				<h6>
+				<div className='h6'>
 					{i18n.translate('keys-provisioned-total') +
 						': ' +
 						data.currentConsumption}
-				</h6>
+				</div>
 			</div>
 		</div>
 	);

@@ -59,13 +59,13 @@ EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroup
 					>
 						<h5><%= userGroup.getName() %></h5>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<span><%= userGroup.getDescription() %></span>
-						</h6>
+						</div>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<span><liferay-ui:message arguments="<%= usersCount %>" key="x-users" /></span>
-						</h6>
+						</div>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp

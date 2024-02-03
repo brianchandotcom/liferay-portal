@@ -51,9 +51,9 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 				<%= organization.getName() %>
 			</h4>
 
-			<h6>
+			<div class="h6">
 				<liferay-ui:message key="<%= organization.getType() %>" />
-			</h6>
+			</div>
 
 			<%
 			Group group = siteMembershipsDisplayContext.getGroup();

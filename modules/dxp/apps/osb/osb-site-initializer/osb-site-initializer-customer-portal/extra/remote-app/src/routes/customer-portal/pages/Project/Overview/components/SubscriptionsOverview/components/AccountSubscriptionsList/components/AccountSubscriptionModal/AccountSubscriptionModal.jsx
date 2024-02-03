@@ -62,9 +62,9 @@ const AccountSubscriptionModal = ({
 			<div className="pt-4 px-4">
 				<div className="d-flex justify-content-between mb-4">
 					<div className="flex-row mb-1">
-						<h6 className="text-brand-primary">
+						<div className="h6 text-brand-primary">
 							{i18n.translate('subscription-terms').toUpperCase()}
-						</h6>
+						</div>
 
 						<h2 className="text-neutral-10">{title}</h2>
 					</div>

@@ -20,15 +20,15 @@ User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipReques
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
 		>
-			<h6 class="text-default">
+			<div class="h6 text-default">
 				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-			</h6>
+			</div>
 
 			<h5><%= HtmlUtil.escape(membershipRequestUser.getFullName()) %> (<%= membershipRequestUser.getEmailAddress() %>)</h5>
 
-			<h6 class="text-default">
+			<div class="h6 text-default">
 				<span><%= HtmlUtil.escape(membershipRequest.getComments()) %></span>
-			</h6>
+			</div>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text>

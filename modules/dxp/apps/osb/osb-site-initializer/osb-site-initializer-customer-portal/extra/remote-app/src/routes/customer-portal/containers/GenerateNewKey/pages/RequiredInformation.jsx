@@ -415,11 +415,11 @@ const RequiredInformation = ({
 										/>
 									</div>
 
-									<h6 className="font-weight-normal ml-3 mt-1">
+									<div className="font-weight-normal h6 ml-3 mt-1">
 										{i18n.translate(
 											'name-this-environment-this-cannot-be-edited-later'
 										)}
-									</h6>
+									</div>
 								</div>
 
 								<div className="mb-3">
@@ -438,11 +438,11 @@ const RequiredInformation = ({
 									</div>
 
 									{!hasKeyComplimentary && (
-										<h6 className="font-weight-normal ml-3 mr-0 mt-1">
+										<div className="font-weight-normal h6 ml-3 mr-0 mt-1">
 											{i18n.translate(
 												'include-a-description-to-uniquely-identify-this-environment-this-cannot-be-edited-later'
 											)}
-										</h6>
+										</div>
 									)}
 								</div>
 							</div>

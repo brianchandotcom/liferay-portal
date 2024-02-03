@@ -23,9 +23,9 @@ const KeyInputs = ({id}) => {
 				/>
 			</div>
 
-			<h6 className="font-weight-normal mb-3 mx-3">
+			<div className="font-weight-normal h6 mb-3 mx-3">
 				{i18n.translate('input-one-host-name-per-instance')}
-			</h6>
+			</div>
 
 			<div className="cp-input-generate-label">
 				<Input
@@ -38,11 +38,11 @@ const KeyInputs = ({id}) => {
 					validations={[(value) => isValidIp(value)]}
 				/>
 
-				<h6 className="font-weight-normal mb-3 mx-3">
+				<div className="font-weight-normal h6 mb-3 mx-3">
 					{i18n.translate(
 						'add-one-ip-addresses-per-line-ipv6-addresses-are-not-supported'
 					)}
-				</h6>
+				</div>
 
 				<div className="cp-input-generate-label">
 					<Input
@@ -55,11 +55,11 @@ const KeyInputs = ({id}) => {
 						validations={[(value) => isValidMac(value)]}
 					/>
 
-					<h6 className="font-weight-normal mb-3 mx-3">
+					<div className="font-weight-normal h6 mb-3 mx-3">
 						{i18n.translate(
 							'add-one-mac-addresses-per-line-if-available-as-a-static-value'
 						)}
-					</h6>
+					</div>
 				</div>
 			</div>
 		</>

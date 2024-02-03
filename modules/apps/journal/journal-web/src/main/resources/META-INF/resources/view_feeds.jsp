@@ -84,13 +84,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 							</aui:a>
 						</h5>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<%= feed.getDescription() %>
-						</h6>
+						</div>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<strong><liferay-ui:message key="id" /></strong>: <%= feed.getId() %>
-						</h6>
+						</div>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text>

@@ -91,7 +91,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 								StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 							%>
 
-								<h6 class="text-default">
+								<div class="h6 text-default">
 									<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getName(languageId)) %></strong>
 
 									<%
@@ -101,7 +101,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 									%>
 
 									<%= HtmlUtil.escape(stringJoiner.toString()) %>
-								</h6>
+								</div>
 
 							<%
 							}

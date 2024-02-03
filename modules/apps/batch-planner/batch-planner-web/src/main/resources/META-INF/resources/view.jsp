@@ -75,9 +75,9 @@ SearchContainer<BatchPlannerPlanDisplay> batchPlannerPlanDisplaySearchContainer 
 			<liferay-ui:search-container-column-text
 				name="status"
 			>
-				<h6 class="text-uppercase <%= BatchPlannerPlanConstants.getStatusCssClass(batchPlannerPlanDisplay.getStatus()) %>">
+				<div class="h6 text-uppercase <%= BatchPlannerPlanConstants.getStatusCssClass(batchPlannerPlanDisplay.getStatus()) %>">
 					<liferay-ui:message key="<%= BatchPlannerPlanConstants.getStatusLabel(batchPlannerPlanDisplay.getStatus()) %>" />
-				</h6>
+				</div>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text

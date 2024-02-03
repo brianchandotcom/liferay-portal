@@ -70,9 +70,9 @@ long commerceWishListId = commerceWishListDisplayContext.getCommerceWishListId()
 								<%= HtmlUtil.escape(cpDefinition.getName(themeDisplay.getLanguageId())) %>
 							</a>
 
-							<h6 class="text-default">
+							<div class="h6 text-default">
 								<%= HtmlUtil.escape(commerceWishListDisplayContext.getCommerceWishListItemDescription(commerceWishListItem)) %>
-							</h6>
+							</div>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text

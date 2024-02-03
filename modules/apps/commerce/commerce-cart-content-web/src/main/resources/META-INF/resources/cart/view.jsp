@@ -117,9 +117,9 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 							<%= HtmlUtil.escape(commerceOrderItem.getName(languageId)) %>
 						</a>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<%= HtmlUtil.escape(stringJoiner.toString()) %>
-						</h6>
+						</div>
 
 						<c:if test="<%= !commerceOrderValidatorResultsMap.isEmpty() %>">
 

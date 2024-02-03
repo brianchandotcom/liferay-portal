@@ -72,7 +72,7 @@ export default class DefinitionItem extends React.Component {
 					this.props.className ? ` ${this.props.className}` : ''
 				}`}
 			>
-				{label && <h6>{label}</h6>}
+				{label && <div className='h6'>{label}</div>}
 
 				{editing ? (
 					<Form

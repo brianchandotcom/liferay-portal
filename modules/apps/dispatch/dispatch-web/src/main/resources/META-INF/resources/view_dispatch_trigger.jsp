@@ -100,9 +100,9 @@ PortletURL portletURL = PortletURLBuilder.create(
 						DispatchTaskStatus dispatchTaskStatus = dispatchTrigger.getDispatchTaskStatus();
 						%>
 
-						<h6 class="background-task-status-row background-task-status-<%= dispatchTaskStatus.getLabel() %> <%= dispatchTaskStatus.getCssClass() %>">
+						<div class="background-task-status-row background-task-status-<%= dispatchTaskStatus.getLabel() %> h6 <%= dispatchTaskStatus.getCssClass() %>">
 							<liferay-ui:message key="<%= dispatchTaskStatus.getLabel() %>" />
-						</h6>
+						</div>
 					</liferay-ui:search-container-column-text>
 
 					<c:choose>
@@ -116,9 +116,9 @@ PortletURL portletURL = PortletURLBuilder.create(
 							<liferay-ui:search-container-column-text
 								cssClass="font-weight-bold important table-cell-ws-nowrap"
 							>
-								<h6 class="background-task-status-row text-warning">
+								<div class="background-task-status-row h6 text-warning">
 									<liferay-ui:message key="incomplete" />
-								</h6>
+								</div>
 							</liferay-ui:search-container-column-text>
 						</c:otherwise>
 					</c:choose>

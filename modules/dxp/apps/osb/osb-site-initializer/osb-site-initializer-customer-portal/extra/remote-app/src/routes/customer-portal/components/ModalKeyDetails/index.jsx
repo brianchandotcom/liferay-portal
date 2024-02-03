@@ -25,9 +25,9 @@ const ModalKeyDetails = ({
 			<div className="pt-4 px-4">
 				<div className="d-flex justify-content-between mb-4">
 					<div className="flex-row mb-1">
-						<h6 className="text-brand-primary">
+						<div className="h6 text-brand-primary">
 							ACTIVATION KEY DETAILS
-						</h6>
+						</div>
 
 						<h2 className="text-neutral-10">
 							{activationKeys.name}

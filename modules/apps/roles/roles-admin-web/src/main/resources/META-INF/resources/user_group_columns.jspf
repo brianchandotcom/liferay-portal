@@ -17,9 +17,9 @@
 		>
 			<h5><%= HtmlUtil.escape(userGroup.getName()) %></h5>
 
-			<h6 class="text-default">
+			<div class="h6 text-default">
 				<span><%= HtmlUtil.escape(userGroup.getDescription()) %></span>
-			</h6>
+			</div>
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>

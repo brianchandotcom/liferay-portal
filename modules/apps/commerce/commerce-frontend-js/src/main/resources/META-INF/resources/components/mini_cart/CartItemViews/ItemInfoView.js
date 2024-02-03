@@ -16,7 +16,7 @@ import {parseOptions, parseValue} from '../util/index';
 function ItemInfoViewOptions({options}) {
 	return (
 		<div className="item-info-extra mt-3">
-			<h6 className="options">{options}</h6>
+			<div className="h6 options">{options}</div>
 		</div>
 	);
 }
@@ -61,7 +61,9 @@ function ItemInfoViewBundle({childItems, options}) {
 
 						return name ? (
 							<div className="item-info-extra pt-2" key={index}>
-								<h6 className="item-name">{skuOptionName}</h6>
+								<div className="h6 item-name">
+									{skuOptionName}
+								</div>
 
 								<p className="item-sku">
 									<span>
@@ -80,7 +82,9 @@ function ItemInfoViewBundle({childItems, options}) {
 							</div>
 						) : (
 							<div className="item-info-extra pt-2" key={index}>
-								<h6 className="item-name">{skuOptionName}</h6>
+								<div className="h6 item-name">
+									{skuOptionName}
+								</div>
 
 								<p className="item-sku">
 									{parseValue(skuOptionValueNames) ||

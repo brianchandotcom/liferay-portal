@@ -19,19 +19,19 @@
 				<aui:a href="<%= String.valueOf(rowURL) %>"><%= organization.getName() %></aui:a>
 			</h5>
 
-			<h6 class="text-default">
+			<div class="h6 text-default">
 				<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>
-			</h6>
+			</div>
 
-			<h6 class="text-default">
+			<div class="h6 text-default">
 				<liferay-ui:message key="<%= organization.getType() %>" />
-			</h6>
+			</div>
 
-			<h6 class="text-default">
+			<div class="h6 text-default">
 				<%= HtmlUtil.escape(organization.getAddress().getCity()) %>
 				<%= UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>
 				<%= UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>
-			</h6>
+			</div>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text>

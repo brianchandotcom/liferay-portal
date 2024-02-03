@@ -9,15 +9,15 @@ import React from 'react';
 export function Label({children, className, label, name, required = false}) {
 	return (
 		<label className="align-items-center" htmlFor={name}>
-			<h6
+			<div
 				className={classNames(
-					'd-inline-block font-weight-bolder',
+					'd-inline-block font-weight-bolder h6',
 					className,
 					{required}
 				)}
 			>
 				{label}
-			</h6>
+			</div>
 
 			{children}
 		</label>

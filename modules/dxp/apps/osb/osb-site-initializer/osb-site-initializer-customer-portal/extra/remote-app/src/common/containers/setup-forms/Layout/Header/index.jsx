@@ -9,9 +9,9 @@ const Header = ({greetings, headerClass, helper, title}) => {
 	return (
 		<header className={classNames('p-4', headerClass)}>
 			{greetings && (
-				<h6 className="mb-1 text-brand-primary text-small-caps">
+				<div className="h6 mb-1 text-brand-primary text-small-caps">
 					{greetings}
-				</h6>
+				</div>
 			)}
 
 			<h2

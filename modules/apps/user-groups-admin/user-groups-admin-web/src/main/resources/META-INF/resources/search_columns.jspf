@@ -18,13 +18,13 @@
 				<aui:a href="<%= (rowURL != null) ? rowURL.toString() : null %>"><%= userGroup.getName() %></aui:a>
 			</h5>
 
-			<h6 class="text-default">
+			<div class="h6 text-default">
 				<span><%= userGroup.getDescription() %></span>
-			</h6>
+			</div>
 
-			<h6 class="text-default">
+			<div class="h6 text-default">
 				<span><%= LanguageUtil.format(request, usersCount > 1 ? "x-users" : "x-user", usersCount, false) %></span>
-			</h6>
+			</div>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp

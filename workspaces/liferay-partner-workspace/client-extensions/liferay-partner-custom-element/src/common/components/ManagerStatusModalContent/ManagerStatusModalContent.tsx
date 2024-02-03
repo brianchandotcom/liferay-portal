@@ -61,7 +61,8 @@ export default function ManagerStatusModalContent({
 				setPatchedStatus(newStatus);
 				onClose();
 			}
-		} else {
+		}
+		else {
 			Liferay.Util.openToast({
 				message:
 					'The MDF Status cannot be changed without a motivation.',

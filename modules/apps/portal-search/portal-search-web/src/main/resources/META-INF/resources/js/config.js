@@ -15,10 +15,6 @@
 						path: 'date_facet.js',
 						requires: ['aui-form-validator'],
 					},
-					'liferay-search-modified-facet': {
-						path: 'modified_facet.js',
-						requires: ['aui-form-validator'],
-					},
 				},
 				root: MODULE_PATH + '/js/',
 			},

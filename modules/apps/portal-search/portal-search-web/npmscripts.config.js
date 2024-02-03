@@ -6,11 +6,7 @@
 module.exports = {
 	build: {
 		bundler: {
-			ignore: [
-				'**/config.js',
-				'**/date_facet.js',
-				'**/modified_facet.js',
-			],
+			ignore: ['**/config.js', '**/date_facet.js'],
 		},
 	},
 };

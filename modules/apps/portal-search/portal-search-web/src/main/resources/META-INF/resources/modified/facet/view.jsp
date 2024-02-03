@@ -205,11 +205,12 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 		module="js/FacetUtil"
 	/>
 
-	<aui:script use="liferay-search-modified-facet">
-		new Liferay.Search.ModifiedFacetFilter({
+	<aui:script use="liferay-search-date-facet">
+		new Liferay.Search.DateFacetFilter({
 			form: A.one('#<portlet:namespace />fm'),
 			fromInputName: '<portlet:namespace />fromInput',
 			namespace: '<portlet:namespace />',
+			parameterName: 'modified',
 			searchCustomRangeButton: A.one(
 				'#<portlet:namespace />searchCustomRangeButton'
 			),

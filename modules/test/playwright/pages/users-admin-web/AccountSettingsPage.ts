@@ -8,40 +8,40 @@
 import {Locator, Page} from '@playwright/test';
 
 export class AccountSettingsPage {
-    readonly accountSettingsMenuItem: Locator;
-    readonly page: Page;
-    readonly userPersonalMenuButton: Locator;
-    readonly rolesMenuItem: Locator;
-    readonly saveButton: Locator;
+	readonly accountSettingsMenuItem: Locator;
+	readonly page: Page;
+	readonly rolesMenuItem: Locator;
+	readonly saveButton: Locator;
+	readonly userPersonalMenuButton: Locator;
 
-    constructor(page: Page) {
-        this.accountSettingsMenuItem = page.getByRole('menuitem', {
-                name: 'Account Settings'
-            });
-        this.userPersonalMenuButton = page.getByTestId('userPersonalMenu');
-        this.rolesMenuItem = page.getByRole('link', {
-                name: 'Roles'
-            });
-        this.saveButton = page.getByRole('button', {
-                name: 'Save'
-            });
-        this.page = page;
-    }
+	constructor(page: Page) {
+		this.accountSettingsMenuItem = page.getByRole('menuitem', {
+			name: 'Account Settings',
+		});
+		this.page = page;
+		this.rolesMenuItem = page.getByRole('link', {
+			name: 'Roles',
+		});
+		this.saveButton = page.getByRole('button', {
+			name: 'Save',
+		});
+		this.userPersonalMenuButton = page.getByTestId('userPersonalMenu');
+	}
 
-    async goToAccountSettings() {
-        await this.userPersonalMenuButton.click();
-        await this.accountSettingsMenuItem.click();
-    }
+	async goToAccountSettings() {
+		await this.userPersonalMenuButton.click();
+		await this.accountSettingsMenuItem.click();
+	}
 
-    async goToAccountSettingsRoles() {
-        await this.goToAccountSettings();
-        await Promise.all([
-            this.rolesMenuItem.click(),
-            this.page.waitForResponse(
-                (resp) =>
-                resp.status() === 200 &&
-                resp.url().includes('screenNavigationEntryKey=roles')
-            ),
-        ]);
-    }
+	async goToAccountSettingsRoles() {
+		await this.goToAccountSettings();
+		await Promise.all([
+			this.rolesMenuItem.click(),
+			this.page.waitForResponse(
+				(resp) =>
+					resp.status() === 200 &&
+					resp.url().includes('screenNavigationEntryKey=roles')
+			),
+		]);
+	}
 }

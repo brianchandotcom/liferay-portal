@@ -700,6 +700,10 @@
 			<category name="Bug Prevention" />
 			<description name="Finds methods with `@Ignore` annotation in test classes." />
 		</check>
+		<check name="JavaInitialRequestPortalInstanceLifecycleListenerCheck">
+			<category name="Bug Prevention" />
+			<description name="Performs several checks on `InitialRequestPortalInstanceLifecycleListener` subclasses." />
+		</check>
 		<check name="JavaInjectAnnotationsCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on classes with `@Inject` annotations." />

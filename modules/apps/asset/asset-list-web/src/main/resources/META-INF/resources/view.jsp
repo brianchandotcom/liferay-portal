@@ -74,13 +74,13 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 									</aui:a>
 								</h5>
 
-								<h6 class="text-default">
+								<div class="h6 text-default">
 									<%= assetListDisplayContext.getAssetEntrySubtypeLabel(assetListEntry) %>
-								</h6>
+								</div>
 
-								<h6 class="text-default">
+								<div class="h6 text-default">
 									<liferay-ui:message arguments="<%= assetListDisplayContext.getAssetListEntryUsageCount(assetListEntry) %>" key="x-usages" translateArguments="<%= false %>" />
-								</h6>
+								</div>
 
 								<c:choose>
 									<c:when test="<%= assetListEntrySegmentsEntryRelsCount > 0 %>">

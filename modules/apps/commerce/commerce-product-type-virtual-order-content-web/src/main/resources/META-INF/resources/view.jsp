@@ -69,9 +69,9 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 							>
 								<%= HtmlUtil.escape(commerceOrderItem.getName(languageId)) %>
 
-								<h6 class="text-default">
+								<div class="h6 text-default">
 									<%= HtmlUtil.escape(stringJoiner.toString()) %>
-								</h6>
+								</div>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text

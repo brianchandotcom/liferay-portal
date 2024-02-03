@@ -148,9 +148,9 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 							<liferay-ui:search-container-column-text
 								colspan="<%= 2 %>"
 							>
-								<h6 class="text-default">
+								<div class="h6 text-default">
 									<liferay-ui:message arguments="<%= dateTimeFormat.format(trashEntry.getCreateDate()) %>" key="removed-x" />
-								</h6>
+								</div>
 
 								<h5>
 									<aui:a href="<%= viewContentURLString %>">
@@ -158,9 +158,9 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 									</aui:a>
 								</h5>
 
-								<h6 class="text-default">
+								<div class="h6 text-default">
 									<strong><liferay-ui:message key="type" />:</strong> <%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>
-								</h6>
+								</div>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text>

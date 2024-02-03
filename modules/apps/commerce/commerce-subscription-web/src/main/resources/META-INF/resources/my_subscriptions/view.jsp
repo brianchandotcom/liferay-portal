@@ -55,17 +55,17 @@ CommerceSubscriptionContentDisplayContext commerceSubscriptionContentDisplayCont
 								<%= (commerceOrderItem == null) ? StringPool.BLANK : HtmlUtil.escape(commerceOrderItem.getName(languageId)) %>
 							</a>
 
-							<h6 class="text-default">
+							<div class="h6 text-default">
 								<%= HtmlUtil.escape(stringJoiner.toString()) %>
-							</h6>
+							</div>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
 							name="status"
 						>
-							<h6 class="text-default">
+							<div class="h6 text-default">
 								<%= HtmlUtil.escape(LanguageUtil.get(request, CommerceSubscriptionEntryConstants.getSubscriptionStatusLabel(commerceSubscriptionEntry.getSubscriptionStatus()))) %>
-							</h6>
+							</div>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-date

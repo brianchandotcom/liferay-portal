@@ -43,9 +43,9 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 					String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 					%>
 
-					<h6 class="text-default">
+					<div class="h6 text-default">
 						<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(articleVersion.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-					</h6>
+					</div>
 
 					<h5>
 						<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>
@@ -66,13 +66,13 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							/>
 						</c:when>
 						<c:otherwise>
-							<h6 class="text-default">
+							<div class="h6 text-default">
 								<liferay-portal-workflow:status
 									showStatusLabel="<%= false %>"
 									status="<%= articleVersion.getStatus() %>"
 									version="<%= String.valueOf(articleVersion.getVersion()) %>"
 								/>
-							</h6>
+							</div>
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:search-container-column-text>

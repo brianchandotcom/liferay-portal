@@ -35,15 +35,15 @@
 				<liferay-ui:search-container-column-text
 					colspan="<%= 2 %>"
 				>
-					<h6 class="text-default">
+					<div class="h6 text-default">
 						<%= HtmlParserUtil.extractText(content) %>
-					</h6>
+					</div>
 
-					<h6 class="text-default">
+					<div class="h6 text-default">
 						<strong><liferay-ui:message key="last-updated" />:</strong>
 
 						<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - mbMessage.getModifiedDate().getTime(), true), HtmlUtil.escape(mbMessage.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
-					</h6>
+					</div>
 				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "icon") %>'>

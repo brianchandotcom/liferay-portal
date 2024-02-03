@@ -20,9 +20,9 @@
 				<aui:a href="<%= String.valueOf(rowURL) %>"><%= user2.getFullName() %></aui:a>
 			</h5>
 
-			<h6 class="text-default">
+			<div class="h6 text-default">
 				<%= user2.getScreenName() %>
-			</h6>
+			</div>
 		</liferay-ui:search-container-column-text>
 
 		<%

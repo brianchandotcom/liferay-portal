@@ -27,7 +27,7 @@ const BarChart = ({
 		<div className="align-items-center bar-chart d-flex justify-content-between mt-2">
 			{titleTotal && (
 				<div className="bar-chart-title px-4">
-					<h6 className="mb-0 text-neutral-6">Total</h6>
+					<div className="h6 mb-0 text-neutral-6">Total</div>
 
 					<h1 className="font-weight-bold">{totalSum}</h1>
 				</div>

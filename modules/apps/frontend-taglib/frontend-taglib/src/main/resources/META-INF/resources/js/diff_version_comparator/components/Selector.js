@@ -51,7 +51,7 @@ export default function Selector({
 			)}
 
 			{selectedVersion === '0.0' && (
-				<h6 className="text-default">{uniqueVersionLabel}</h6>
+				<div className="h6 text-default">{uniqueVersionLabel}</div>
 			)}
 		</>
 	);

@@ -514,7 +514,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 										</h5>
 
 										<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
-											<h6 class="text-default">
+											<div class="h6 text-default">
 												<liferay-ui:message key="location" />:
 												<span class="text-secondary">
 													<clay:icon
@@ -523,14 +523,14 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 
 													<small><%= repositoryEntryBrowserDisplayContext.getGroupLabel(folder.getGroupId(), locale) %></small>
 												</span>
-											</h6>
+											</div>
 										</c:if>
 
-										<h6 class="text-default">
+										<div class="h6 text-default">
 											<liferay-ui:message key="created" />:
 
 											<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - folder.getCreateDate().getTime(), true), HtmlUtil.escape(folder.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
-										</h6>
+										</div>
 									</liferay-ui:search-container-column-text>
 								</c:if>
 
@@ -572,7 +572,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 											</h5>
 
 											<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
-												<h6 class="text-default">
+												<div class="h6 text-default">
 													<liferay-ui:message key="location" />:
 													<span class="text-secondary">
 														<clay:icon
@@ -581,20 +581,20 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 
 														<small><%= repositoryEntryBrowserDisplayContext.getGroupLabel(fileEntry.getGroupId(), locale) %></small>
 													</span>
-												</h6>
+												</div>
 											</c:if>
 
-											<h6 class="text-default">
+											<div class="h6 text-default">
 												<liferay-ui:message key="version" />:
 
 												<%= String.valueOf(fileEntry.getVersion()) %>
-											</h6>
+											</div>
 
-											<h6 class="text-default">
+											<div class="h6 text-default">
 												<liferay-ui:message key="last-updated" />:
 
 												<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(latestFileVersion.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
-											</h6>
+											</div>
 										</div>
 									</liferay-ui:search-container-column-text>
 

@@ -58,14 +58,14 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 							<strong><%= languageItemDisplay.getKey() %></strong>
 						</h5>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<%= HtmlUtil.escape(languageItemDisplay.getValue()) %>
-						</h6>
+						</div>
 
 						<c:if test="<%= languageItemDisplay.isOverride() %>">
-							<h6>
+							<div class="h6">
 								<liferay-ui:message key="languages-with-override" />: <%= languageItemDisplay.getOverrideLanguageIdsString() %>
-							</h6>
+							</div>
 						</c:if>
 					</liferay-ui:search-container-column-text>
 

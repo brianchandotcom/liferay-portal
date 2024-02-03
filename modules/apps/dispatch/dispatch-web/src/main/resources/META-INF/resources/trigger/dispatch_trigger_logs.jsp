@@ -97,9 +97,9 @@ SearchContainer<DispatchLog> dispatchLogSearchContainer = DispatchLogSearchConta
 							DispatchTaskStatus dispatchTaskStatus = DispatchTaskStatus.valueOf(dispatchLog.getStatus());
 							%>
 
-							<h6 class="background-task-status-row background-task-status-<%= dispatchTaskStatus.getLabel() %> <%= dispatchTaskStatus.getCssClass() %>">
+							<div class="background-task-status-row background-task-status-<%= dispatchTaskStatus.getLabel() %> h6 <%= dispatchTaskStatus.getCssClass() %>">
 								<liferay-ui:message key="<%= dispatchTaskStatus.getLabel() %>" />
-							</h6>
+							</div>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-jsp

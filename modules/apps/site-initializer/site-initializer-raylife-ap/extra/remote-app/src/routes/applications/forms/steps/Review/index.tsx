@@ -102,19 +102,19 @@ const Review = () => {
 					<ClayTable.Row className="no-gutters row text-uppercase">
 						<ClayTable.Cell className="col-6">
 							<span className="text-dark">
-								<h6>Coverages</h6>
+								<div className="h6">Coverages</div>
 							</span>
 						</ClayTable.Cell>
 
 						<ClayTable.Cell className="col-4">
 							<span className="text-dark">
-								<h6>Protection Amount</h6>
+								<div className="h6">Protection Amount</div>
 							</span>
 						</ClayTable.Cell>
 
 						<ClayTable.Cell className="col">
 							<span className="text-dark">
-								<h6>Premium</h6>
+								<div className="h6">Premium</div>
 							</span>
 						</ClayTable.Cell>
 					</ClayTable.Row>
@@ -157,7 +157,7 @@ const Review = () => {
 							headingCell
 						>
 							<span className="text-dark">
-								<h6>Total Premium</h6>
+								<div className="h6">Total Premium</div>
 							</span>
 						</ClayTable.Cell>
 
@@ -168,7 +168,7 @@ const Review = () => {
 
 						<ClayTable.Cell className="col" headingCell>
 							<span className="text-dark">
-								<h6>$611.00</h6>
+								<div className="h6">$611.00</div>
 							</span>
 						</ClayTable.Cell>
 					</ClayTable.Row>

@@ -95,7 +95,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 								</p>
 
 								<c:if test="<%= journalArticleItemSelectorViewDisplayContext.isSearchEverywhere() %>">
-									<h6 class="text-default">
+									<div class="h6 text-default">
 										<liferay-ui:message key="location" />:
 										<span class="text-secondary">
 											<clay:icon
@@ -104,7 +104,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 
 											<small><%= journalArticleItemSelectorViewDisplayContext.getGroupLabel(curArticle.getGroupId(), locale) %></small>
 										</span>
-									</h6>
+									</div>
 								</c:if>
 
 								<c:if test="<%= journalArticleItemSelectorViewDisplayContext.getStatus() == WorkflowConstants.STATUS_ANY %>">
@@ -265,7 +265,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 								</p>
 
 								<c:if test="<%= journalArticleItemSelectorViewDisplayContext.isSearchEverywhere() %>">
-									<h6 class="text-default">
+									<div class="h6 text-default">
 										<liferay-ui:message key="location" />:
 										<span class="text-secondary">
 											<clay:icon
@@ -274,7 +274,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 
 											<small><%= journalArticleItemSelectorViewDisplayContext.getGroupLabel(curFolder.getGroupId(), locale) %></small>
 										</span>
-									</h6>
+									</div>
 								</c:if>
 							</liferay-ui:search-container-column-text>
 						</c:when>

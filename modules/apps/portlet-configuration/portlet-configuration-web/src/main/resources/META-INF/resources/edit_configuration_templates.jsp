@@ -62,9 +62,9 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 								<liferay-ui:search-container-column-text
 									colspan="<%= 2 %>"
 								>
-									<h6 class="text-default">
+									<div class="h6 text-default">
 										<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - archivedSettings.getModifiedDate().getTime(), true), HtmlUtil.escape(archivedSettings.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
-									</h6>
+									</div>
 
 									<h5>
 										<%= HtmlUtil.escape(archivedSettings.getName()) %>

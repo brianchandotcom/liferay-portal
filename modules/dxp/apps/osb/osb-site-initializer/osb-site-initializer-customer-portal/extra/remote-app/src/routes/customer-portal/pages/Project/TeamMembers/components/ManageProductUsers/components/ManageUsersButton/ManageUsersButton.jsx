@@ -18,7 +18,7 @@ const ManageUsersButton = ({href, title}) => (
 			title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
 		/>
 
-		<h6 className="font-weight-semi-bold m-0 pr-1">{title}</h6>
+		<div className="font-weight-semi-bold h6 m-0 pr-1">{title}</div>
 
 		<span className="inline-item inline-item-after mt-0">
 			<ClayIcon className="cp-manage-users-icon" symbol="shortcut" />

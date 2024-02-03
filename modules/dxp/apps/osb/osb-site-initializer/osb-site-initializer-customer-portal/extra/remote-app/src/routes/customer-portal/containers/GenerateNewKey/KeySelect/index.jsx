@@ -37,12 +37,12 @@ const KeySelect = ({
 					required
 				/>
 
-				<h6 className="font-weight-normal ml-3 mt-1">
+				<div className="font-weight-normal h6 ml-3 mt-1">
 					{i18n.sub(
 						'cluster-nodes-may-not-exceed-the-maximum-number-of-x',
 						[avaliableKeysMaximumCount]
 					)}
-				</h6>
+				</div>
 			</ClayInput.GroupItem>
 		</ClayInput.Group>
 	);

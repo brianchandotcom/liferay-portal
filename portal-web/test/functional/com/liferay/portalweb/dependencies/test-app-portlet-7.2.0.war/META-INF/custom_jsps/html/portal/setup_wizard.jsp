@@ -5,7 +5,7 @@
  */
 --%>
 
-<h6>Custom Setup Wizard Header</h6>
+<div class="h6">Custom Setup Wizard Header</div>
 
 <liferay-util:buffer
 	var="html"

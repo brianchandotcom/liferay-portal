@@ -37,9 +37,9 @@ Group group = siteMembershipsDisplayContext.getGroup();
 				</c:if>
 			</h4>
 
-			<h6 class="text-secondary">
+			<div class="h6 text-secondary">
 				<liferay-ui:message arguments="<%= GroupUtil.getGroupTypeLabel(group, locale) %>" key='<%= "membership-type-" + GroupConstants.getTypeLabel(group.getType()) + "-help" %>' translateArguments="<%= false %>" />
-			</h6>
+			</div>
 		</div>
 
 		<div class="sheet-row">
@@ -75,9 +75,9 @@ Group group = siteMembershipsDisplayContext.getGroup();
 				<%= HtmlUtil.escape(curUser.getFullName()) %>
 			</h4>
 
-			<h6>
+			<div class="h6">
 				<%= curUser.getScreenName() %>
-			</h6>
+			</div>
 		</div>
 
 		<div class="sheet-row">

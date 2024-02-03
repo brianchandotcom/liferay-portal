@@ -145,17 +145,17 @@ Team team = usersDisplayContext.getTeam();
 										>
 											<h5><%= user2.getFullName() %></h5>
 
-											<h6 class="text-default">
+											<div class="h6 text-default">
 												<span><%= user2.getScreenName() %></span>
-											</h6>
+											</div>
 
 											<%
 											roles.addAll(teams);
 											%>
 
-											<h6>
+											<div class="h6">
 												<%= HtmlUtil.escape(StringUtil.merge(roles, StringPool.COMMA_AND_SPACE)) %>
-											</h6>
+											</div>
 										</liferay-ui:search-container-column-text>
 
 										<%

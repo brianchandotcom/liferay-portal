@@ -128,9 +128,9 @@ const InsuranceCard: React.FC<InsuranceProps> = ({
 											<ClayCard.Body className="d-flex h-100 justify-content-center">
 												<div className="border-dark text-break text-center">
 													<section className="align-items-center autofit-section d-flex h-100">
-														<h6 className="my-0">
+														<div className="h6 my-0">
 															{insuranceCard.name}
-														</h6>
+														</div>
 													</section>
 												</div>
 											</ClayCard.Body>

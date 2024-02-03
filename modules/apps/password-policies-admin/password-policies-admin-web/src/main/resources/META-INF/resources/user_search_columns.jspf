@@ -60,9 +60,9 @@
 			>
 				<h5><%= name %></h5>
 
-				<h6 class="text-default">
+				<div class="h6 text-default">
 					<span><%= user2.getScreenName() %></span>
-				</h6>
+				</div>
 			</liferay-ui:search-container-column-text>
 		</c:when>
 		<c:otherwise>

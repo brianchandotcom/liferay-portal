@@ -51,13 +51,13 @@ SelectRolesDisplayContext selectRolesDisplayContext = new SelectRolesDisplayCont
 							</aui:a>
 						</h5>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<span><%= HtmlUtil.escape(role.getDescription(locale)) %></span>
-						</h6>
+						</div>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<liferay-ui:message key="<%= role.getTypeLabel() %>" />
-						</h6>
+						</div>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(selectRolesDisplayContext.getDisplayStyle(), "list") %>'>

@@ -56,15 +56,15 @@
 						Date createDate = layoutSetPrototype.getModifiedDate();
 						%>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<span><liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true) %>" key="created-x-ago" /></span>
-						</h6>
+						</div>
 
 						<h5>
 							<aui:a href="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>" target="_blank"><%= layoutSetPrototype.getName(locale) %></aui:a>
 						</h5>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<c:choose>
 								<c:when test="<%= layoutSetPrototype.isActive() %>">
 									<span><liferay-ui:message key="active" /></span>
@@ -73,7 +73,7 @@
 									<span><liferay-ui:message key="not-active" /></span>
 								</c:otherwise>
 							</c:choose>
-						</h6>
+						</div>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text>

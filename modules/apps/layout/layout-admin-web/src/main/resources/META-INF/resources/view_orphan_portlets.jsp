@@ -64,13 +64,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 							<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
 						</h5>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<span><%= portlet.getPortletId() %></span>
-						</h6>
+						</div>
 
-						<h6 class="text-default">
+						<div class="h6 text-default">
 							<strong><liferay-ui:message key="status" /></strong>: <%= orphanPortletsDisplayContext.getStatus(portlet) %>
-						</h6>
+						</div>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp

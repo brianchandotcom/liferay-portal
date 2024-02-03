@@ -5,6 +5,8 @@
 
 package com.liferay.source.formatter.processor;
 
+import com.liferay.petra.string.StringBundler;
+
 import org.junit.Test;
 
 /**
@@ -295,6 +297,31 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Illegal import: jodd.util.StringPool"
 			).addExpectedMessage(
 				"Use ProxyUtil instead of java.lang.reflect.Proxy"
+			));
+	}
+
+	@Test
+	public void testIncorrectInitialRequestPortalInstanceLifecycleListener()
+		throws Exception {
+
+		test(
+			"IncorrectInitialRequestPortalInstanceLifecycleListener1.testjava",
+			StringBundler.concat(
+				"Missing 'activate(BundleContext bundleContext)' method with ",
+				"'@Activate' annotation that calls ",
+				"'super.activate(bundleContext)'"));
+
+		test(
+			SourceProcessorTestParameters.create(
+				"IncorrectInitialRequestPortalInstanceLifecycleListener2." +
+					"testjava"
+			).addExpectedMessage(
+				"The 'activate' method is missing the '@Override' annotation",
+				22
+			).addExpectedMessage(
+				"The 'activate' method must call 'super.activate(" +
+					"bundleContext)'",
+				22
 			));
 	}
 

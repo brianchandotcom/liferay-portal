@@ -49,8 +49,9 @@ public class CommerceOrderModelResourcePermissionWrapper
 				consumer.accept(
 					new CommerceOrderModelResourcePermissionLogic(
 						_accountEntryLocalService, _commerceChannelLocalService,
-						_configurationProvider, _groupLocalService,
-						_portletResourcePermission, _userGroupRoleLocalService,
+						_commerceOrderLocalService, _configurationProvider,
+						_groupLocalService, _portletResourcePermission,
+						_userGroupRoleLocalService,
 						_workflowDefinitionLinkLocalService));
 			});
 	}

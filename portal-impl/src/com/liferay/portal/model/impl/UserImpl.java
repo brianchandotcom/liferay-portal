@@ -801,11 +801,7 @@ public class UserImpl extends UserBaseImpl {
 			_log.error(portalException);
 		}
 
-		if (emailAddressVerificationRequired) {
-			return false;
-		}
-
-		return true;
+		return !emailAddressVerificationRequired;
 	}
 
 	@Override

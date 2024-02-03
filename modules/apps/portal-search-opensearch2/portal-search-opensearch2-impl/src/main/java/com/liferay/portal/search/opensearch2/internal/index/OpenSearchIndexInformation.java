@@ -21,10 +21,8 @@ import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch.indices.GetIndexRequest;
 import org.opensearch.client.opensearch.indices.GetIndexResponse;
 import org.opensearch.client.opensearch.indices.GetMappingRequest;
-import org.opensearch.client.opensearch.indices.GetMappingResponse;
 import org.opensearch.client.opensearch.indices.IndexState;
 import org.opensearch.client.opensearch.indices.OpenSearchIndicesClient;
-import org.opensearch.client.opensearch.indices.get_mapping.IndexMappingRecord;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,20 +45,12 @@ public class OpenSearchIndexInformation implements IndexInformation {
 			_getOpenSearchIndicesClient();
 
 		try {
-			GetMappingResponse getMappingResponse =
-				openSearchIndicesClient.getMapping(
-					GetMappingRequest.of(
-						getMappingRequest -> getMappingRequest.index(
-							indexName)));
-
-			Map<String, IndexMappingRecord> indexMappingRecords =
-				getMappingResponse.result();
-
-			IndexMappingRecord indexMappingRecord = indexMappingRecords.get(
-				indexName);
-
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				JsonpUtil.toString(indexMappingRecord.mappings()));
+				JsonpUtil.toString(
+					openSearchIndicesClient.getMapping(
+						GetMappingRequest.of(
+							getMappingRequest -> getMappingRequest.index(
+								indexName)))));
 
 			return jsonObject.toString(3);
 		}

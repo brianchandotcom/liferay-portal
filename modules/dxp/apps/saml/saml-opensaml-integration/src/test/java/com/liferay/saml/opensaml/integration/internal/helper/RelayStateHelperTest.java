@@ -36,10 +36,9 @@ public class RelayStateHelperTest extends BaseSamlTestCase {
 
 	@Test
 	public void testGetRedirectFromRelayStateTokenIdpInitiatedSso() {
-		String relayState =
-			_relayStateHelperImpl.getRedirectFromRelayStateToken(RELAY_STATE);
-
-		Assert.assertEquals(RELAY_STATE, relayState);
+		Assert.assertEquals(
+			RELAY_STATE,
+			_relayStateHelperImpl.getRedirectFromRelayStateToken(RELAY_STATE));
 	}
 
 	@Test

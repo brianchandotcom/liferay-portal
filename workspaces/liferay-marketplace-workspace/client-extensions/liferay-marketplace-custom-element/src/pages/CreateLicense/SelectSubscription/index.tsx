@@ -26,12 +26,14 @@ const SelectSubscription = ({
 
 	const orderId = Number(params.orderId);
 
-	const {getSubscriptions} = useMarketplaceSpringBootOAuth2();
+	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 
 	const {
 		data: subscriptions = [],
 		isLoading,
-	} = useSWR(`/subcriptions/${orderId}`, () => getSubscriptions(orderId));
+	} = useSWR(`/subcriptions/${orderId}`, () =>
+		marketplaceSpringBootOAuth2.getSubscriptions(orderId)
+	);
 
 	return (
 		<div className="mb-4 mt-3">

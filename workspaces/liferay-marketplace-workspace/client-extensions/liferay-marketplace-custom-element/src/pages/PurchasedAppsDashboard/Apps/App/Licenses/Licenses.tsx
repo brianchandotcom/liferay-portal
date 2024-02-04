@@ -49,20 +49,18 @@ const isLicenseExpired = (expirationDate: string) =>
 	!isBefore(new Date(), new Date(expirationDate));
 
 const Licenses = () => {
+	const [modalData, setModalData] = useState<LicenseKey>();
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(5);
+	const {myUserAccount} = useMarketplaceContext();
 	const {orderId} = useParams();
-	const outletContext = useOutletContext<OutletContext['data']>();
 	const deactivateLicenseModal = useModal();
 	const licenseKeyModal = useModal();
-
-	const [modalData, setModalData] = useState<LicenseKey>();
-	const {myUserAccount} = useMarketplaceContext();
+	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
+	const outletContext = useOutletContext<OutletContext['data']>();
 
 	const placedOrder = outletContext?.placedOrder;
 	const product = outletContext?.product;
-
-	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 
 	const keyType =
 		placedOrder?.orderTypeExternalReferenceCode === OrderType.DXP
@@ -70,7 +68,7 @@ const Licenses = () => {
 			: 'Cloud';
 
 	const {data: licenseKeysResponse, isLoading, mutate} = useSWR(
-		`/order-license-keys/${orderId}-${page}-${pageSize}`,
+		`/order-license-keys/${orderId}/${page}/${pageSize}`,
 		async () => {
 			try {
 				return marketplaceSpringBootOAuth2.getOrderLicenseKeys(

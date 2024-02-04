@@ -65,8 +65,6 @@ public class GroupSearchProviderImpl implements GroupSearchProvider {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Company company = themeDisplay.getCompany();
-
 		if (!_isSearch(portletRequest) &&
 			isFilterManageableGroups(portletRequest) && (parentGroupId <= 0)) {
 
@@ -78,13 +76,13 @@ public class GroupSearchProviderImpl implements GroupSearchProvider {
 		else if (_isSearch(portletRequest)) {
 			groupSearch.setResultsAndTotal(
 				() -> _groupLocalService.search(
-					company.getCompanyId(), _classNameIds,
+					themeDisplay.getCompanyId(), _classNameIds,
 					_getKeywords(portletRequest),
 					getGroupParams(portletRequest, parentGroupId),
 					groupSearch.getStart(), groupSearch.getEnd(),
 					groupSearch.getOrderByComparator()),
 				_groupLocalService.searchCount(
-					company.getCompanyId(), _classNameIds,
+					themeDisplay.getCompanyId(), _classNameIds,
 					_getKeywords(portletRequest),
 					getGroupParams(portletRequest, parentGroupId)));
 		}
@@ -95,13 +93,13 @@ public class GroupSearchProviderImpl implements GroupSearchProvider {
 
 			groupSearch.setResultsAndTotal(
 				() -> _groupLocalService.search(
-					company.getCompanyId(), _classNameIds, groupId,
+					themeDisplay.getCompanyId(), _classNameIds, groupId,
 					_getKeywords(portletRequest),
 					getGroupParams(portletRequest, parentGroupId),
 					groupSearch.getStart(), groupSearch.getEnd(),
 					groupSearch.getOrderByComparator()),
 				_groupLocalService.searchCount(
-					company.getCompanyId(), _classNameIds, groupId,
+					themeDisplay.getCompanyId(), _classNameIds, groupId,
 					_getKeywords(portletRequest),
 					getGroupParams(portletRequest, parentGroupId)));
 		}

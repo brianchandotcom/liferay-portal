@@ -4,12 +4,12 @@
  */
 
 import ClayLink from '@clayui/link';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {useMemo} from 'react';
 import useSWR from 'swr';
 
-import RadioCardList, {
-	RadioCardContent,
-} from '../../../components/RadioCardList/RadioCardList';
-import {getAccountInfo} from '../../../utils/api';
+import RadioCardList from '../../../components/RadioCardList/RadioCardList';
+import headlessCommerceAdminUser from '../../../services/rest/HeadlessCommerceAdminUser';
 import LicenseTermsCheckbox from '../containers/LicenseTermsCheckbox';
 
 const enabledAccountRoles = ['Account Administrator', 'Account Buyer'];
@@ -27,45 +27,51 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 	selectedAccount,
 	userAccount,
 }) => {
-	const {data: accounts = []} = useSWR('/accounts', async () => {
-		const radioAccountList: RadioCardContent<Account>[] = [];
+	const accountBriefs = useMemo(() => userAccount?.accountBriefs ?? [], [
+		userAccount?.accountBriefs,
+	]);
 
-		for (const accountBrief of userAccount?.accountBriefs ?? []) {
-			let displayAccount = false;
-			if (!accountBrief.roleBriefs.length) {
-				const accountInfo: Account = await getAccountInfo({
-					accountId: Number(accountBrief.id),
-				});
+	const accountBriefIds = accountBriefs.map(({id}) => id);
 
-				if (accountInfo.type === 'person') {
-					displayAccount = true;
-				}
-			}
-			else {
-				displayAccount = accountBrief.roleBriefs.some((roleBrief) =>
-					enabledAccountRoles.includes(roleBrief.name)
-				);
-			}
+	const {data: accountsInfo = [], isLoading} = useSWR(
+		{accountBriefIds, key: 'commerce-account-info'},
+		() =>
+			Promise.all(
+				accountBriefIds.map((accountBriefId) =>
+					headlessCommerceAdminUser.getAccountInfo(accountBriefId)
+				)
+			)
+	);
 
-			if (displayAccount) {
-				const accountInfo: Account = await getAccountInfo({
-					accountId: Number(accountBrief.id),
-				});
+	const accounts = useMemo(
+		() =>
+			accountsInfo
+				.map((accountInfo, index) => {
+					const accountBrief = accountBriefs[index];
+					let displayAccount = accountInfo.type === 'person';
 
-				radioAccountList.push({
-					id: accountBrief.id,
-					imageURL: accountInfo.logoURL,
-					selected:
-						selectedAccount?.externalReferenceCode ===
-						accountInfo.externalReferenceCode,
-					title: accountInfo.name,
-					value: accountInfo,
-				});
-			}
-		}
+					if (accountBrief.roleBriefs.length) {
+						displayAccount = accountBriefs[
+							index
+						].roleBriefs.some((roleBrief) =>
+							enabledAccountRoles.includes(roleBrief.name)
+						);
+					}
 
-		return radioAccountList;
-	});
+					return {
+						displayAccount,
+						id: accountBrief.id,
+						imageURL: accountInfo.logoURL,
+						selected:
+							selectedAccount?.externalReferenceCode ===
+							accountInfo.externalReferenceCode,
+						title: accountInfo.name,
+						value: accountInfo,
+					};
+				})
+				.filter(({displayAccount}) => displayAccount),
+		[accountBriefs, accountsInfo, selectedAccount?.externalReferenceCode]
+	);
 
 	const handleSelectAccount = (radioOption: RadioOption<Account>) => {
 		if (radioOption.value.id !== selectedAccount?.id) {
@@ -83,16 +89,22 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 				{` (you)`}
 			</p>
 
-			<RadioCardList
-				contentList={accounts.map((account) => ({
-					...account,
-					selected: selectedAccount?.id === account?.id,
-					title: <h5>{account.title}</h5>,
-				}))}
-				leftRadio
-				onSelect={handleSelectAccount}
-				showImage
-			/>
+			{isLoading ? (
+				<ClayLoadingIndicator />
+			) : accounts.length ? (
+				<RadioCardList
+					contentList={accounts.map((account) => ({
+						...account,
+						selected: selectedAccount?.id === account?.id,
+						title: <h5>{account.title}</h5>,
+					}))}
+					leftRadio
+					onSelect={handleSelectAccount}
+					showImage
+				/>
+			) : (
+				<p className="font-weight-bold my-5">No accounts available</p>
+			)}
 
 			{isFreeApp ? (
 				<LicenseTermsCheckbox />

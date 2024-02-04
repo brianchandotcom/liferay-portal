@@ -29,7 +29,7 @@ const useNextSteps = (orderId: string) => {
 
 	const {data: product, isLoading: productLoading} = useSWR(
 		productId
-			? `/next-steps/product/${productId}_${firstCartItem.id}`
+			? `/next-steps/product/${productId}/${firstCartItem.id}`
 			: null,
 		() =>
 			HeadlessCommerceDeliveryCatalogImpl.getProduct(

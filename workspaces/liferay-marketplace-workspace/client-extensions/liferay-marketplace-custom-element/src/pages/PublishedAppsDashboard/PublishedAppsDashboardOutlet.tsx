@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMemo, useState} from 'react';
+import {useState} from 'react';
 import {Outlet} from 'react-router-dom';
 import useSWR from 'swr';
 
@@ -14,38 +14,37 @@ import './PublishedAppsDashboard.scss';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import SearchBuilder from '../../core/SearchBuilder';
-import {useCatalogs} from '../../hooks/data/useCatalogs';
-import {
-	useSupplierAccount,
-	useSupplierAccounts,
-} from '../../hooks/data/useSupplierAccounts';
-import {Liferay} from '../../liferay/liferay';
+import {useSupplierAccount} from '../../hooks/data/useSupplierAccounts';
 import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
 import {getAccountImage} from '../../utils/util';
 import {initialDashboardNavigationItems} from './PublishedDashboardPageUtil';
 
-const PublishedAppsDashboardOutlet = () => {
-	const {accountId} = Liferay.CommerceContext.account || {};
+type PublishedAppsDashboardOutletProps = {
+	accountId?: number | string | null;
+	catalogId: any;
+	catalogs: Catalog[];
+	supplierAccounts: UserAccount[];
+};
+
+const PublishedAppsDashboardOutlet: React.FC<PublishedAppsDashboardOutletProps> = ({
+	catalogId,
+	supplierAccounts,
+}) => {
 	const [page, setPage] = useState(1);
-	const [showDashboardNavigation, setShowDashboardNavigation] = useState(
-		true
-	);
 
-	const {data: catalogs = []} = useCatalogs();
-	const {data: supplierAccount} = useSupplierAccount();
-	const {data: supplierAccounts = []} = useSupplierAccounts();
+	const {
+		data: supplierAccount,
+		isLoading: isLoadingSupplierAccount,
+	} = useSupplierAccount();
 
-	const catalogId = useMemo(
-		() => catalogs.find((catalog) => catalog.accountId === accountId)?.id,
-		[accountId, catalogs]
-	);
+	const {data: publishedProductTable = {}, isLoading, isValidating} = useSWR(
+		`/user-published-apps/${supplierAccount?.id}/${page}/${catalogId}`,
+		() => {
+			if (!catalogId) {
+				return {items: [], totalCount: 0};
+			}
 
-	const {data: publishedProductTable = {}, isLoading} = useSWR(
-		catalogId
-			? `/user-published-apps/${supplierAccount?.id}/${page}`
-			: null,
-		() =>
-			HeadlessCommerceAdminCatalogImpl.getProducts(
+			return HeadlessCommerceAdminCatalogImpl.getProducts(
 				new URLSearchParams({
 					'accountId': '-1',
 					'attachments.accountId': '-1',
@@ -60,8 +59,13 @@ const PublishedAppsDashboardOutlet = () => {
 					'page': page.toString(),
 					'skus.accountId': '-1',
 				})
-			)
+			);
+		}
 	);
+
+	if (isLoadingSupplierAccount) {
+		return <ClayLoadingIndicator />;
+	}
 
 	return (
 		<div className="published-apps-dashboard-page-container">
@@ -73,18 +77,17 @@ const PublishedAppsDashboardOutlet = () => {
 				dashboardNavigationItems={initialDashboardNavigationItems}
 			/>
 
-			{isLoading ? (
+			{isLoading || isValidating ? (
 				<ClayLoadingIndicator />
 			) : (
 				<Outlet
 					context={{
 						appsTotalCount: publishedProductTable.totalCount,
 						catalogId,
+						page,
 						publishedProductTable,
 						selectedAccount: supplierAccount,
 						setPage,
-						setShowDashboardNavigation,
-						showDashboardNavigation,
 					}}
 				/>
 			)}

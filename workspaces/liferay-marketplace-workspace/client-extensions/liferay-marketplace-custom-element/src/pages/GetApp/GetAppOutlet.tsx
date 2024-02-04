@@ -15,7 +15,6 @@ import {
 	postEmailAppInformation,
 } from '../../utils/api';
 import {useGetAppContext} from './GetAppContextProvider';
-import ProductFooter from './containers/Footer';
 import ProductHeader from './containers/ProductHeader';
 import ProductStepWizard from './containers/ProductStepWizard';
 import {PaymentMethod} from './enums/paymentMethod';
@@ -28,6 +27,8 @@ import getReplaceCurrentURL from './utils/getReplaceCurrentURL';
 import {postCartByPaymentMethod} from './utils/postCartByPaymentMethod';
 
 import './styles/index.scss';
+import i18n from '../../i18n';
+import {Liferay} from '../../liferay/liferay';
 
 const getProductBasePriceAndTrial = (
 	product: DeliveryProduct,
@@ -109,7 +110,7 @@ const GetAppOutlet = () => {
 		{
 			account,
 			isCloudApp,
-			license: {selectedSKU},
+			license: {selectedSKU, type},
 			payment: {
 				billingAddress,
 				invoice: {email, purchaseOrderNumber},
@@ -147,7 +148,7 @@ const GetAppOutlet = () => {
 
 	const {isFreeApp, priceModel} = getProductPriceModel(product);
 
-	async function handleGetApp(orderId?: number) {
+	async function handleGetApp(orderId = cartUtil?.cart?.id) {
 		setLoading(true);
 
 		const productSpecificationValues = getProductSpecificationValues(
@@ -167,7 +168,10 @@ const GetAppOutlet = () => {
 				project,
 				purchaseOrderNumber,
 				selectedAccount: account,
-				selectedPaymentMethod: paymentMethod,
+				selectedPaymentMethod:
+					type.toLowerCase() === PaymentMethod.TRIAL && selectedSKU
+						? 'trial'
+						: paymentMethod,
 				selectedSKU,
 				sku: sku as any,
 			});
@@ -213,6 +217,11 @@ const GetAppOutlet = () => {
 		}
 		catch (error) {
 			console.error('Unable to handleGetApp', error);
+
+			Liferay.Util.openToast({
+				message: i18n.translate('an-unexpected-error-occurred'),
+				type: 'danger',
+			});
 		}
 
 		setLoading(false);
@@ -234,8 +243,8 @@ const GetAppOutlet = () => {
 				productBasePriceAndTrial={productBasePriceAndTrial}
 			/>
 
-			<main>
-				<div className="border d-flex flex-column mt-7 p-5 rounded">
+			<div className="border d-flex flex-column mt-7 p-5 rounded">
+				<main>
 					<div className="d-flex flex-column">
 						{!isFreeApp && <ProductStepWizard />}
 
@@ -243,20 +252,16 @@ const GetAppOutlet = () => {
 							context={{
 								addresses,
 								cartUtil,
+								handleGetApp,
+								isFreeApp,
+								loading,
 								productBasePriceAndTrial,
+								selectedPaymentMethod: paymentMethod,
 							}}
 						/>
 					</div>
-				</div>
-			</main>
-
-			<ProductFooter
-				cartUtil={cartUtil}
-				disabled={loading}
-				handleGetApp={handleGetApp}
-				isFreeApp={isFreeApp}
-				selectedPaymentMethod={paymentMethod}
-			/>
+				</main>
+			</div>
 		</div>
 	);
 };
@@ -264,7 +269,11 @@ const GetAppOutlet = () => {
 export type GetAppOutletContext = {
 	addresses: BillingAddress[];
 	cartUtil: ReturnType<typeof useCart>;
+	handleGetApp: (orderId?: number) => void;
+	isFreeApp: boolean;
+	loading: boolean;
 	productBasePriceAndTrial: ReturnType<typeof getProductBasePriceAndTrial>;
+	selectedPaymentMethod: PaymentMethod;
 };
 
 export {getProductBasePriceAndTrial};

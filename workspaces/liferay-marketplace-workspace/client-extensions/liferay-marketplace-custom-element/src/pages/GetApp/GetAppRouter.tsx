@@ -16,8 +16,8 @@ import PaymentStep from './pages/Payment';
 import ProjectStep from './pages/Project';
 
 const GetAppRouter = () => (
-	<GetAppContextProvider>
-		<HashRouter>
+	<HashRouter>
+		<GetAppContextProvider>
 			<Routes>
 				<Route element={<GetAppOutlet />} path="/">
 					<Route element={<GetAppPage />} index />
@@ -34,8 +34,8 @@ const GetAppRouter = () => (
 					<Route element={<ContactSalesForm />} path="form" />
 				</Route>
 			</Routes>
-		</HashRouter>
-	</GetAppContextProvider>
+		</GetAppContextProvider>
+	</HashRouter>
 );
 
 export default GetAppRouter;

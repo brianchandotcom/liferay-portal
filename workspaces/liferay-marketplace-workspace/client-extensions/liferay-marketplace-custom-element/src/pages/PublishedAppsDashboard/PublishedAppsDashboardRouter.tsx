@@ -6,11 +6,10 @@
 import {useEffect} from 'react';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
-import SearchBuilder from '../../core/SearchBuilder';
+import {useCatalogs} from '../../hooks/data/useCatalogs';
+import {useSupplierAccounts} from '../../hooks/data/useSupplierAccounts';
 import {Liferay} from '../../liferay/liferay';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
-import HeadlessAdminUserImpl from '../../services/rest/HeadlessAdminUser';
-import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
 import Accounts from './Accounts/Accounts';
 import Apps from './Apps';
 import App from './Apps/App';
@@ -23,64 +22,76 @@ import Solutions from './Solutions';
 const PublishedAppsDashboardRouter = () => {
 	const {accountId} = Liferay.CommerceContext.account || {};
 
-	useEffect(() => {
-		const loadData = async () => {
-			const [
-				supplierAccountResponse,
-				catalogResponse,
-			] = await Promise.all([
-				HeadlessAdminUserImpl.getAccounts(
-					new URLSearchParams({
-						filter: SearchBuilder.eq('type', 'supplier'),
-					})
-				),
-				HeadlessCommerceAdminCatalogImpl.getCatalogs(
-					new URLSearchParams({
-						fields: 'accountId,id',
-						pageSize: '-1',
-					})
-				),
-			]);
+	const {
+		data: catalogs = [],
+		isValidating: isCatalogsValidating,
+	} = useCatalogs();
+	const {
+		data: supplierAccounts = [],
+		isValidating: isSupplierAccountsValidating,
+	} = useSupplierAccounts();
 
-			const {items: catalogs = []} = catalogResponse;
-			const {items: supplierAccounts = []} = supplierAccountResponse;
+	const catalogId = catalogs.find(
+		(catalog) => catalog.accountId === accountId
+	)?.id;
 
-			const suppliers = supplierAccounts.filter((supplierAccount) =>
-				catalogs.some(
-					(catalog) => catalog.accountId === supplierAccount.id
-				)
+	if (!isCatalogsValidating && !isSupplierAccountsValidating) {
+		if (!supplierAccounts.length) {
+			window.location.href = Liferay.ThemeDisplay.getCanonicalURL().replace(
+				'/publisher-dashboard',
+				'/home'
 			);
+		}
+	}
 
-			if (!suppliers.length) {
-				window.location.href = Liferay.ThemeDisplay.getCanonicalURL().replace(
-					'/publisher-dashboard',
-					'/home'
-				);
-			}
-
+	useEffect(() => {
+		const selectDefaultAccount = async () => {
 			if (
-				!accountId ||
-				!suppliers.find((supplier) => supplier.id === accountId)
+				(!accountId ||
+					!supplierAccounts.find(
+						(supplier) => supplier.id === accountId
+					)) &&
+				supplierAccounts.length
 			) {
-				await CommerceSelectAccountImpl.selectAccount(suppliers[0].id);
+				const newAccountId = supplierAccounts[0].id;
+
+				await CommerceSelectAccountImpl.selectAccount(newAccountId);
 
 				Liferay.CommerceContext.account = {
-					accountId: suppliers[0].id,
+					accountId: newAccountId,
 				};
 
 				window.location.reload();
 			}
 		};
 
-		loadData();
-	}, [accountId]);
+		selectDefaultAccount();
+	}, [accountId, supplierAccounts]);
 
 	return (
 		<HashRouter>
 			<Routes>
-				<Route element={<AppCreationFlow />} path="app/create" />
+				<Route
+					element={<AppCreationFlow catalogId={String(catalogId)} />}
+					path="app/create"
+				/>
 
-				<Route element={<PublishedAppsDashboardOutlet />}>
+				<Route
+					element={
+						<PublishedAppsDashboardOutlet
+							accountId={accountId}
+							catalogId={catalogId}
+							catalogs={catalogs}
+							supplierAccounts={supplierAccounts.filter(
+								(supplierAccount) =>
+									catalogs.some(
+										({accountId}) =>
+											supplierAccount.id === accountId
+									)
+							)}
+						/>
+					}
+				>
 					<Route element={<Apps />} index />
 					<Route path="app/:appId">
 						<Route element={<App />} index />

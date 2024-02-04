@@ -23,9 +23,7 @@ const Apps = () => {
 				description: 'Manage and publish apps on the Marketplace',
 				title: 'Apps',
 			}}
-			onButtonClick={() => {
-				navigate(`/app/create?catalogId=${catalogId}`);
-			}}
+			onButtonClick={() => navigate('/app/create')}
 		>
 			<PublishedAppsTable items={publishedProductTable?.items ?? []} />
 
@@ -33,14 +31,12 @@ const Apps = () => {
 				<ClayPaginationBarWithBasicItems
 					active={page}
 					activeDelta={publishedProductTable.pageSize}
-					defaultActive={1}
 					ellipsisBuffer={3}
 					ellipsisProps={{
 						'aria-label': 'More',
 						'title': 'More',
 					}}
 					onActiveChange={setPage}
-					showDeltasDropDown={false}
 					totalItems={publishedProductTable.totalCount}
 				/>
 			)}

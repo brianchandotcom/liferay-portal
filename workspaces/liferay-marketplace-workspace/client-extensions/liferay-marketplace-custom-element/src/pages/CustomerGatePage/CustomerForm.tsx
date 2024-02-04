@@ -249,10 +249,11 @@ const CreateCustomerAccountForm: React.FC<CreateCustomerAccountForm> = ({
 
 						<input
 							accept={acceptedImageFormat.join()}
+							className="d-none"
 							name="image"
 							onChange={handleFileChange}
 							ref={inputRef}
-							style={{display: 'none'}}
+							title=""
 							type="file"
 						/>
 

@@ -66,9 +66,7 @@ const App = () => {
 						<p className="col">{placedOrder.author}</p>
 					</div>
 					<div className="row">
-						<h5 className="col-6">
-							{i18n.translate('Purchase Order Number')}
-						</h5>
+						<h5 className="col-6">Purchase Order Number</h5>
 						<p className="col">
 							{placedOrder.purchaseOrderNumber || '-'}
 						</p>

@@ -74,7 +74,11 @@ export function FieldBase({
 			})}
 		>
 			<div className="field-base-container">
-				<div className="field-base-container_label">
+				<div
+					className={classNames('field-base-container_label', {
+						'w-100': !localized,
+					})}
+				>
 					{typeof label === 'string' ? (
 						<label
 							className={classNames(labelClassName, {disabled})}
@@ -89,7 +93,7 @@ export function FieldBase({
 					)}
 
 					{tooltip && (
-						<div className="field-base-tooltip ml-3">
+						<div className="field-base-tooltip mb-2 ml-3">
 							<Tooltip
 								tooltip={tooltip}
 								tooltipText={tooltipText}

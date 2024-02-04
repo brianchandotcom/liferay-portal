@@ -4,7 +4,7 @@
  */
 
 export enum ProductUploadType {
-	LXC = 'LXC',
+	LXC = 'Liferay SaaS',
 	GITHUB = 'GitHub',
 	ZIP_UPLOAD = 'upload',
 }

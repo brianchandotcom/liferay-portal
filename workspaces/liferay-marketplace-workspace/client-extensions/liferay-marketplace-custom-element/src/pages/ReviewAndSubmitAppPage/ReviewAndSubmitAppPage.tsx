@@ -17,13 +17,13 @@ import {App, supportAndHelpMap} from './ReviewAndSubmitAppPageUtil';
 
 import './ReviewAndSubmitAppPage.scss';
 
-interface ReviewAndSubmitAppPageProps {
+type ReviewAndSubmitAppPageProps = {
 	onClickBack: () => void;
 	onClickContinue: () => void;
 	productERC?: string;
 	productId?: number;
 	readonly?: boolean;
-}
+};
 
 export function ReviewAndSubmitAppPage({
 	onClickBack,
@@ -170,10 +170,9 @@ export function ReviewAndSubmitAppPage({
 
 			<Section
 				disabled={readonly}
-				label={!readonly ? 'App Submission' : ''}
-				required
-				tooltip={!readonly ? 'More info' : ''}
-				tooltipText={!readonly ? 'More Info' : ''}
+				label={readonly ? '' : 'App Submission'}
+				tooltip={readonly ? '' : 'More info'}
+				tooltipText={readonly ? '' : 'More Info'}
 			>
 				<div className="review-and-submit-app-page-card-container">
 					{!readonly && (

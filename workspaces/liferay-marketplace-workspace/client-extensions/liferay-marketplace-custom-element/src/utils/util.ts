@@ -144,7 +144,7 @@ export function getThumbnailByProductAttachment(
 export function getProductVersionFromSpecifications(
 	specifications: ProductSpecification[]
 ) {
-	let productVersion = '0';
+	let productVersion = '';
 
 	specifications.forEach((specification) => {
 		if (specification.specificationKey === 'latest-version') {

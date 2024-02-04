@@ -183,8 +183,13 @@ export function ProvideVersionDetailsPage({
 			if (sku === 'DEVELOPER') {
 				value = skuProductOptions.developerOptionId;
 			}
-			else if (sku === 'STANDARD') {
+
+			if (sku === 'STANDARD') {
 				value = skuProductOptions.standardOptionId;
+			}
+
+			if (sku === 'TRIAL') {
+				value = skuProductOptions.trialOptionId;
 			}
 		}
 		else {
@@ -268,7 +273,6 @@ export function ProvideVersionDetailsPage({
 				<Input
 					component="textarea"
 					label="Notes"
-					localized
 					onChange={({target}) =>
 						dispatch({
 							payload: {value: target.value},
@@ -284,6 +288,7 @@ export function ProvideVersionDetailsPage({
 
 			<NewAppPageFooterButtons
 				disableContinueButton={!appVersion || !appNotes || isProcessing}
+				isLoading={isProcessing}
 				onClickBack={() => onClickBack()}
 				onClickContinue={async () => {
 					if (!productOptionId) {

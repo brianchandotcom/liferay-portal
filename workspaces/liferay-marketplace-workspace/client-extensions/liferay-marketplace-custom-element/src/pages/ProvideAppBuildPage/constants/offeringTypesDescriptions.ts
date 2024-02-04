@@ -44,7 +44,6 @@ export const offeringTypesDescription = {
 			description: i18n.translate(
 				'dxp-module-based-apps-are-not-supported-on-liferay-experience-cloud-lxc'
 			),
-			disabled: true,
 			label: i18n.translate('fully-managed'),
 		},
 	],

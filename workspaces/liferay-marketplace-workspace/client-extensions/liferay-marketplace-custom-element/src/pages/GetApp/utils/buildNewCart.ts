@@ -48,7 +48,10 @@ export default function buildNewCart({
 		],
 		currencyCode: channel.currencyCode,
 		...(project && {
-			customFields: {'Project Name': project},
+			customFields: {
+				'Cloud Project Name': project,
+				'Project Name': project,
+			},
 		}),
 		orderTypeExternalReferenceCode: orderType.externalReferenceCode,
 	};
@@ -57,30 +60,25 @@ export default function buildNewCart({
 		return cart;
 	}
 
+	const baseCart = {...cart, billingAddress, shippingAddress: billingAddress};
+
 	const newCart = {
 		free: {
 			...cart,
-			billingAddress,
-			shippingAddress: billingAddress,
+			...baseCart,
 		},
 		order: {
 			...cart,
+			...baseCart,
 			author: email,
-			billingAddress,
 			purchaseOrderNumber,
-			shippingAddress: billingAddress,
 		},
 		pay: {
 			...cart,
-			billingAddress,
+			...baseCart,
 			paymentMethod: 'paypal-integration',
-			shippingAddress: billingAddress,
 		},
-		trial: {
-			...cart,
-			billingAddress,
-			shippingAddress: billingAddress,
-		},
+		trial: baseCart,
 	};
 
 	return newCart[selectedPaymentMethod];

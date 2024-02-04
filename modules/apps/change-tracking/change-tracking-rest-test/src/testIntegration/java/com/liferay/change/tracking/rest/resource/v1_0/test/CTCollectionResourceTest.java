@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -93,7 +93,7 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		try {
-			long layoutClassNameId = ClassNameLocalServiceUtil.getClassNameId(
+			long layoutClassNameId = _classNameLocalService.getClassNameId(
 				Layout.class);
 			long classPK = layout.getPlid();
 
@@ -111,7 +111,7 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 						ctCollection1.getId())) {
 
-				LayoutLocalServiceUtil.updateName(
+				_layoutLocalService.updateName(
 					layout, ctCollection1.getName(),
 					layout.getDefaultLanguageId());
 			}
@@ -124,7 +124,7 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 						ctCollection2.getId())) {
 
-				LayoutLocalServiceUtil.updateName(
+				_layoutLocalService.updateName(
 					layout, ctCollection2.getName(),
 					layout.getDefaultLanguageId());
 			}
@@ -145,7 +145,7 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 			ctCollectionResource.deleteCTCollection(ctCollection2.getId());
 		}
 		finally {
-			LayoutLocalServiceUtil.deleteLayout(layout);
+			_layoutLocalService.deleteLayout(layout);
 		}
 	}
 
@@ -488,6 +488,9 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 	}
 
 	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
@@ -495,5 +498,8 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 }

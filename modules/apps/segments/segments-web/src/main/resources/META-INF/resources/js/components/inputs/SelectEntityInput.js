@@ -90,6 +90,15 @@ function SelectEntityInput({
 								value: event.entityid,
 							});
 						}
+						else if (
+							event.groupdescriptivename &&
+							event.groupid
+						) {
+							onChange({
+								displayValue: event.groupdescriptivename,
+								value: event.groupid,
+							});
+						}
 						else {
 							const category = event
 								? event[Object.keys(event)[0]]

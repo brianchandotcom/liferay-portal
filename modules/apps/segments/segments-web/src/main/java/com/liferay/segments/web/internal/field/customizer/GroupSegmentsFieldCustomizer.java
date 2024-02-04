@@ -5,26 +5,27 @@
 
 package com.liferay.segments.web.internal.field.customizer;
 
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
+import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,22 +95,26 @@ public class GroupSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 	@Override
 	public Field.SelectEntity getSelectEntity(PortletRequest portletRequest) {
 		try {
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				portletRequest, Group.class.getName(),
-				PortletProvider.Action.BROWSE);
+			SiteItemSelectorCriterion siteItemSelectorCriterion =
+				new SiteItemSelectorCriterion();
 
-			if (portletURL == null) {
-				return null;
-			}
+			siteItemSelectorCriterion.setIncludeCompany(false);
+			siteItemSelectorCriterion.setIncludeRecentSites(false);
 
-			portletURL.setParameter("eventName", "selectEntity");
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
+			siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				new GroupItemSelectorReturnType());
 
 			return new Field.SelectEntity(
 				"selectEntity",
 				getSelectEntityTitle(
 					_portal.getLocale(portletRequest), Group.class.getName()),
-				portletURL.toString(), false);
+				PortletURLBuilder.create(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							portletRequest),
+						"selectSite", siteItemSelectorCriterion)
+				).buildString(),
+				false);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -138,6 +143,9 @@ public class GroupSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

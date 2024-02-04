@@ -71,17 +71,7 @@ const initialState: InitialState = {
 	isCloudApp: false,
 	license: {cart: undefined, cartItems: [], selectedSKU: undefined, type: ''},
 	payment: {
-		billingAddress: {
-			city: 'LA',
-			country: 'US',
-			countryISOCode: 'US',
-			name: 'LA',
-			phoneNumber: '',
-			regionISOCode: 'CA',
-			street1: 'LA',
-			street2: '',
-			zip: '90001',
-		} as BillingAddress,
+		billingAddress: {} as BillingAddress,
 		eula: '',
 		eulaCheckbox: false,
 		invoice: {

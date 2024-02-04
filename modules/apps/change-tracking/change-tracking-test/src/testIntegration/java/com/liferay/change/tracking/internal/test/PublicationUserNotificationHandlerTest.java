@@ -21,26 +21,19 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -54,7 +47,6 @@ import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -86,45 +78,6 @@ public class PublicationUserNotificationHandlerTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId());
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.CURRENT_COMPLETE_URL, StringPool.BLANK);
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
-
-		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-			StringPool.BLANK, _serviceContext);
-
-		themeDisplay.setLayoutSet(layout.getLayoutSet());
-
-		themeDisplay.setRequest(mockHttpServletRequest);
-		themeDisplay.setSiteGroupId(_group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		_serviceContext.setRequest(mockHttpServletRequest);
-
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -178,7 +131,7 @@ public class PublicationUserNotificationHandlerTest {
 
 			UserNotificationFeedEntry userNotificationFeedEntry =
 				_userNotificationHandler.interpret(
-					userNotificationEvent, _serviceContext);
+					userNotificationEvent, _getServiceContext());
 
 			Assert.assertEquals(
 				StringBundler.concat(
@@ -256,7 +209,8 @@ public class PublicationUserNotificationHandlerTest {
 
 				UserNotificationFeedEntry userNotificationFeedEntry =
 					_userNotificationHandler.interpret(
-						userNotificationEvent, _serviceContext);
+						userNotificationEvent,
+						ServiceContextTestUtil.getServiceContext());
 
 				Assert.assertEquals(
 					StringBundler.concat(
@@ -325,16 +279,18 @@ public class PublicationUserNotificationHandlerTest {
 				continue;
 			}
 
+			ServiceContext serviceContext = _getServiceContext();
+
 			UserNotificationFeedEntry userNotificationFeedEntry =
 				_userNotificationHandler.interpret(
-					userNotificationEvent, _serviceContext);
+					userNotificationEvent, serviceContext);
 
 			Assert.assertEquals(
 				userNotificationFeedEntry.getLink(),
 				PortletURLBuilder.create(
 					_portal.getControlPanelPortletURL(
-						_serviceContext.getRequest(),
-						_serviceContext.getScopeGroup(),
+						serviceContext.getRequest(),
+						serviceContext.getScopeGroup(),
 						CTPortletKeys.PUBLICATIONS, 0, 0,
 						PortletRequest.RENDER_PHASE)
 				).setMVCRenderCommandName(
@@ -348,6 +304,15 @@ public class PublicationUserNotificationHandlerTest {
 					)
 				).buildString());
 		}
+	}
+
+	private ServiceContext _getServiceContext() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setRequest(new MockHttpServletRequest());
+
+		return serviceContext;
 	}
 
 	private void _publishCTCollection(long ctCollectionId) throws Exception {
@@ -376,9 +341,6 @@ public class PublicationUserNotificationHandlerTest {
 	@Inject
 	private static CTCollectionService _ctCollectionService;
 
-	@Inject
-	private CompanyLocalService _companyLocalService;
-
 	private Group _group;
 
 	@Inject
@@ -388,12 +350,7 @@ public class PublicationUserNotificationHandlerTest {
 	private JSONFactory _jsonFactory;
 
 	@Inject
-	private LayoutLocalService _layoutLocalService;
-
-	@Inject
 	private Portal _portal;
-
-	private ServiceContext _serviceContext;
 
 	@Inject
 	private UserNotificationEventLocalService

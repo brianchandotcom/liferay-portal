@@ -22,7 +22,6 @@ interface CardSectionProps {
 
 export function CardSection({
 	children,
-	enableEdit = true,
 	localized,
 	required,
 	sectionName,
@@ -52,12 +51,6 @@ export function CardSection({
 								<Tooltip tooltip="choose a language" />
 							</>
 						</div>
-					)}
-
-					{enableEdit && (
-						<ClayButton className="edit-button" displayType={null}>
-							Edit
-						</ClayButton>
 					)}
 				</div>
 			</div>

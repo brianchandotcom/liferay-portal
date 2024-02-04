@@ -6,7 +6,6 @@
 /* eslint-disable react/no-unescaped-entities */
 
 import {filesize} from 'filesize';
-import {uniqueId} from 'lodash';
 import {useEffect, useState} from 'react';
 import ReactDOMServer from 'react-dom/server';
 
@@ -60,6 +59,7 @@ export function DefineAppProfilePage({
 	const [categories, setCategories] = useState<VocabDropdownItem[]>([]);
 	const [productType, setProductType] = useState<Categories>();
 	const [tags, setTags] = useState<VocabDropdownItem[]>([]);
+	const [isLoading, setLoading] = useState<boolean>(false);
 
 	const handleLogoUpload = (files: FileList) => {
 		const file = files[0];
@@ -68,7 +68,7 @@ export function DefineAppProfilePage({
 			error: false,
 			file,
 			fileName: file.name,
-			id: uniqueId(),
+			id: crypto.randomUUID(),
 			preview: URL.createObjectURL(file),
 			progress: 0,
 			readableSize: filesize(file.size),
@@ -95,6 +95,8 @@ export function DefineAppProfilePage({
 	const onContinue = async () => {
 		let product;
 		let response;
+
+		setLoading(true);
 
 		if (appERC) {
 			response = await updateApp({
@@ -149,6 +151,8 @@ export function DefineAppProfilePage({
 				title: appLogo.fileName,
 			});
 		}
+
+		setLoading(false);
 
 		onClickContinue();
 	};
@@ -233,9 +237,7 @@ export function DefineAppProfilePage({
 	return (
 		<div className="profile-page-container">
 			<Header
-				description="Enter your new app details. 
-                                This information will be used for submission, 
-                                presentation, customer support, and search capabilities."
+				description="Enter your new app details. This information will be used for submission, presentation, customer support, and search capabilities."
 				title="Define the app profile"
 			/>
 
@@ -309,7 +311,6 @@ export function DefineAppProfilePage({
 						<Input
 							component="textarea"
 							label="Description"
-							localized
 							localizedTooltipText="Descriptions can be localized for each language your app supports.  Please choose the appropriate language and enter description in the language selected."
 							onChange={({target}) =>
 								dispatch({
@@ -364,10 +365,15 @@ export function DefineAppProfilePage({
 
 			<NewAppPageFooterButtons
 				disableContinueButton={
-					!appCategories || !appDescription || !appName || !appTags
+					isLoading ||
+					!appCategories ||
+					!appDescription ||
+					!appName ||
+					!appTags
 				}
+				isLoading={isLoading}
 				onClickBack={() => onClickBack()}
-				onClickContinue={async () => await onContinue()}
+				onClickContinue={onContinue}
 				showBackButton
 			/>
 		</div>

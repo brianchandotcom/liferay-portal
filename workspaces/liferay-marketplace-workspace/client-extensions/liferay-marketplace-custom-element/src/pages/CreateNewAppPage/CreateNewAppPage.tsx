@@ -3,10 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useSearchParams} from 'react-router-dom';
-
 import documentIcon from '../../assets/icons/document_icon.svg';
-import downloadIcon from '../../assets/icons/download_icon.svg';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {useAppContext} from '../../manage-app-state/AppManageState';
@@ -14,16 +11,16 @@ import {TYPES} from '../../manage-app-state/actionTypes';
 
 import './CreateNewAppPage.scss';
 
-interface CreateNewAppPageProps {
+type CreateNewAppPageProps = {
+	catalogId: string;
 	onClickContinue: () => void;
-}
+};
 
-export function CreateNewAppPage({onClickContinue}: CreateNewAppPageProps) {
+export function CreateNewAppPage({
+	catalogId,
+	onClickContinue,
+}: CreateNewAppPageProps) {
 	const [_, dispatch] = useAppContext();
-
-	const [searchParams] = useSearchParams();
-
-	const catalogId = searchParams.get('catalogId');
 
 	return (
 		<div className="create-new-app-container">
@@ -49,15 +46,6 @@ export function CreateNewAppPage({onClickContinue}: CreateNewAppPageProps) {
 							Liferay Publisher License Agreement
 						</span>
 					</div>
-
-					<button className="create-new-app-card-header-button">
-						Download
-						<img
-							alt="Download Icon"
-							className="create-new-app-card-header-button-icon"
-							src={downloadIcon}
-						/>
-					</button>
 				</div>
 
 				<div className="create-new-app-card-body">

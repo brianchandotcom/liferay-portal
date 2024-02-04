@@ -33,8 +33,7 @@ type PublisherGateFormProps = {
 			phoneNumber: string;
 			requestDescription: string;
 		},
-		any,
-		undefined
+		any
 	>;
 	setStep: React.Dispatch<React.SetStateAction<StepType>>;
 };

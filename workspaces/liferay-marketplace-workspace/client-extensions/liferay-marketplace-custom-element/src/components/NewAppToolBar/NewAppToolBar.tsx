@@ -4,12 +4,10 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 
 import chevronRight from '../../assets/icons/chevron_right_icon.svg';
 import circleFill from '../../assets/icons/circle_fill_icon.svg';
-import dotsIcon from '../../assets/icons/dots_icon.svg';
 import emptyPicture from '../../assets/icons/empty_picture_icon.svg';
 import {getAccountImage} from '../../utils/util';
 
@@ -17,53 +15,18 @@ import './NewAppToolBar.scss';
 
 import {Link} from 'react-router-dom';
 
-interface NewAppToolBarProps {
+type NewAppToolBarProps = {
 	accountImage?: string;
 	accountName: string;
 	appImage?: string;
 	appName?: string;
-	enableDropdown?: boolean;
-}
-
-type Item = {
-	disabled?: boolean;
-	label?: string;
-	type?:
-		| 'checkbox'
-		| 'contextual'
-		| 'group'
-		| 'item'
-		| 'radio'
-		| 'radiogroup'
-		| 'divider';
 };
-
-const items: Item[] = [
-	{
-		disabled: true,
-		label: 'Publish app',
-	},
-	{
-		disabled: true,
-		label: 'Hide app',
-	},
-	{
-		label: 'Menu List Text',
-	},
-	{
-		type: 'divider',
-	},
-	{
-		label: 'Remove app',
-	},
-];
 
 export function NewAppToolBar({
 	accountImage,
 	accountName,
 	appImage,
 	appName,
-	enableDropdown,
 }: NewAppToolBarProps) {
 	return (
 		<div className="container new-app-tool-bar-container">
@@ -127,32 +90,7 @@ export function NewAppToolBar({
 							</span>
 						</ClayButton>
 					</Link>
-
-					<button className="new-app-tool-bar-button-save-draft">
-						Save as draft
-					</button>
-
-					<button className="new-app-tool-bar-button-preview-storefront">
-						Preview Storefront
-					</button>
 				</ClayButton.Group>
-
-				{enableDropdown && (
-					<div className="new-app-tool-bar-button-dropdown">
-						<ClayDropDownWithItems
-							items={items}
-							trigger={
-								<ClayButton displayType={null}>
-									<img
-										alt="Icon"
-										className="new-app-tool-bar-button-dropdown-icon"
-										src={dotsIcon}
-									/>
-								</ClayButton>
-							}
-						/>
-					</div>
-				)}
 			</ClayManagementToolbar.ItemList>
 		</div>
 	);

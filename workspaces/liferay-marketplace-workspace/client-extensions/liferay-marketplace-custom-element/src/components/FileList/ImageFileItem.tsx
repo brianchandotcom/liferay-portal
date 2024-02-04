@@ -4,21 +4,22 @@
  */
 
 import ClayButton from '@clayui/button';
+import {Text} from '@clayui/core';
 import {CircularProgressbarWithChildren} from 'react-circular-progressbar';
 
-import arrowNorth from '../../assets/icons/arrow_north_icon.svg';
-import arrowSouth from '../../assets/icons/arrow_south_icon.svg';
 import {Tooltip} from '../Tooltip/Tooltip';
 import {UploadedFile} from './FileList';
 
 import './ImageFileItem.scss';
 
-interface ImageFileItemProps {
+import {ClayInput} from '@clayui/form';
+
+type ImageFileItemProps = {
 	onDelete: (id: string, versionName?: string) => void;
 	tooltip?: string;
 	uploadedFile: UploadedFile;
 	versionName?: string;
-}
+};
 
 export function ImageFileItem({
 	onDelete,
@@ -28,24 +29,6 @@ export function ImageFileItem({
 }: ImageFileItemProps) {
 	return (
 		<div className="image-file-item-container">
-			<div className="image-file-item-arrow-container">
-				<ClayButton displayType="unstyled">
-					<img
-						alt="Arrow Up"
-						className="image-file-item-arrow-icon"
-						src={arrowNorth}
-					/>
-				</ClayButton>
-
-				<ClayButton displayType="unstyled">
-					<img
-						alt="Arrow South"
-						className="image-file-item-arrow-icon"
-						src={arrowSouth}
-					/>
-				</ClayButton>
-			</div>
-
 			{uploadedFile.uploaded && !uploadedFile.error ? (
 				<img
 					className="image-file-item-uploaded-preview"
@@ -78,25 +61,27 @@ export function ImageFileItem({
 
 			<div className="image-file-item-info-container">
 				<div className="image-file-item-info-content">
-					<span className="image-file-item-info-content-text">
+					<Text as="span" size={3} weight="normal">
 						{uploadedFile.fileName}
-					</span>
+					</Text>
 
-					<button
-						className="image-file-item-info-content-button"
+					<ClayButton
+						displayType="secondary"
 						onClick={() => onDelete(uploadedFile.id, versionName)}
+						size="sm"
 					>
 						Remove
-					</button>
+					</ClayButton>
 				</div>
 
-				<div className="image-file-item-info-input-container">
-					<input
-						className="image-file-item-info-input"
-						placeholder="Image description"
-					/>
+				<div className="align-items-center d-flex">
+					<ClayInput placeholder="Image description" />
 
-					{tooltip && <Tooltip tooltip={tooltip} />}
+					{tooltip && (
+						<div style={{marginLeft: '-40px'}}>
+							<Tooltip tooltip={tooltip} />
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

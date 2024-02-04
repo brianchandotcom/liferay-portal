@@ -6,7 +6,6 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {filesize} from 'filesize';
-import {uniqueId} from 'lodash';
 import {useCallback, useMemo, useState} from 'react';
 import ReactDOMServer from 'react-dom/server';
 
@@ -86,7 +85,7 @@ const UploadAppPackagesComponent = ({versionName}: {versionName: string}) => {
 			error: false,
 			file,
 			fileName: file.name,
-			id: uniqueId(),
+			id: crypto.randomUUID(),
 			preview: URL.createObjectURL(file),
 			progress: 0,
 			readableSize: filesize(file.size),
@@ -485,14 +484,14 @@ export function ProvideAppBuildPage({
 				label={i18n.translate('cloud-compatible')}
 				required
 				tooltip={i18n.translate(
-					'a-liferay-cloud-app-is-a-collection-of-1-to-n-client-extension-artifacts-made-available-via-the-liferay-marketplace-it-is-installed-and-managed-as-a-single-atomic-unit-in-liferay-experience-cloud-a-dxp-app-is-a-jar-based-collection-meant-to-run-within-liferay-dxp-it-is-only-supported-on-self-hosted-or-self-managed-liferay-cloud-instances'
+					'a-cloud-app-is-a-client-extension-delivered-as-a-deployed-service-to-liferay-saas-and-liferay-paas-customers-dxp-apps-include-jar-based-collection-meant-to-run-within-liferay-dxp-fragments-client-extensions-that-do-not-require-dedicated-resources'
 				)}
 				tooltipText={i18n.translate('more-info')}
 			>
 				<div className="provide-app-build-page-cloud-compatible-container">
 					<RadioCard
 						description={i18n.translate(
-							'create-a-cloud-app-using-client-extensions'
+							'create-a-cloud-app-to-be-delivered-as-a-live-service'
 						)}
 						icon={taskCheckedIcon}
 						onChange={() => handleAppTypeChange(ProductType.CLOUD)}
@@ -513,7 +512,7 @@ export function ProvideAppBuildPage({
 
 					<RadioCard
 						description={i18n.translate(
-							'create-a-dxp-app-using-a-plugin-package'
+							'create-a-dxp-app-to-be-delivered-as-a-download'
 						)}
 						icon={cancelIcon}
 						onChange={() => handleAppTypeChange(ProductType.DXP)}
@@ -670,7 +669,7 @@ export function ProvideAppBuildPage({
 						tooltip={i18n.translate(
 							appType.value === ProductType.CLOUD
 								? 'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb'
-								: 'only-jar-war-files-are-allowed-max-file-size-is-500mb.'
+								: 'only-jar-war-files-are-allowed-max-file-size-is-500mb'
 						)}
 						tooltipText={i18n.translate('more-info')}
 					>
@@ -740,6 +739,8 @@ export function ProvideAppBuildPage({
 
 			<NewAppPageFooterButtons
 				disableContinueButton={disableContinueButton}
+				isLoading={isProcessing}
+				loadingButtonText={i18n.translate('uploading-files')}
 				onClickBack={() => onClickBack()}
 				onClickContinue={async () => {
 					setProcessing(true);

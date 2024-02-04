@@ -45,6 +45,12 @@ class D3Handler extends DiagramZoomHandler {
 	_printSVGImage() {
 		return fetch(this._imageURL)
 			.then((response) => response.text())
+			.then((svContent) => {
+				return svContent
+					.replace(/<script[\s\S]*?<\/script>/gi, '')
+					.replace(/ on\w+="[^"]*"/gi, '')
+					.replace(/ xlink:href="[^"]*"/gi, '');
+			})
 			.then((svgContent) => {
 				this._d3zoomWrapper.html(svgContent);
 

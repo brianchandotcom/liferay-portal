@@ -42,7 +42,6 @@ import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.search.SiteChecker;
 import com.liferay.site.admin.web.internal.servlet.taglib.util.SiteActionDropdownItemsProvider;
-import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryBuilder;
 import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryListBuilder;
 import com.liferay.site.provider.GroupSearchProvider;
@@ -70,10 +69,6 @@ public class SiteAdminDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-
-		_groupSearchProvider =
-			(GroupSearchProvider)httpServletRequest.getAttribute(
-				SiteWebKeys.GROUP_SEARCH_PROVIDER);
 	}
 
 	public List<DropdownItem> getActionDropdownItems(Group group)
@@ -183,7 +178,7 @@ public class SiteAdminDisplayContext {
 				Objects.equals(groupSearch.getOrderByType(), "asc"),
 				themeDisplay.getLocale()));
 
-		_groupSearchProvider.setResultsAndTotal(
+		GroupSearchProvider.setResultsAndTotal(
 			groupSearch, _liferayPortletRequest);
 
 		SiteChecker siteChecker = new SiteChecker(_liferayPortletResponse);
@@ -303,7 +298,6 @@ public class SiteAdminDisplayContext {
 	private String _displayStyle;
 	private Group _group;
 	private long _groupId;
-	private final GroupSearchProvider _groupSearchProvider;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

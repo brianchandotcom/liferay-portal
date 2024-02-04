@@ -123,7 +123,7 @@ public class GroupSearchProviderTest {
 
 		_assertGroupSearch(
 			childGroup1,
-			_groupSearchProvider.getGroupSearch(
+			GroupSearchProvider.getGroupSearch(
 				mockLiferayPortletActionRequest, new MockLiferayPortletURL()));
 
 		ReflectionTestUtil.setFieldValue(
@@ -135,7 +135,7 @@ public class GroupSearchProviderTest {
 				"com.liferay.portal.kernel.model.Company"
 			});
 
-		GroupSearch complexSQLGroupSearch = _groupSearchProvider.getGroupSearch(
+		GroupSearch complexSQLGroupSearch = GroupSearchProvider.getGroupSearch(
 			mockLiferayPortletActionRequest, new MockLiferayPortletURL());
 
 		_assertGroupSearch(childGroup1, complexSQLGroupSearch);
@@ -177,8 +177,5 @@ public class GroupSearchProviderTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
-
-	@Inject
-	private GroupSearchProvider _groupSearchProvider;
 
 }

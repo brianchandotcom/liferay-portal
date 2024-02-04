@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminWebKeys;
-import com.liferay.site.constants.SiteWebKeys;
-import com.liferay.site.provider.GroupSearchProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,14 +49,8 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 
 		resourceRequest.setAttribute(SiteAdminWebKeys.GROUP_ENTRIES, groups);
 
-		resourceRequest.setAttribute(
-			SiteWebKeys.GROUP_SEARCH_PROVIDER, _groupSearchProvider);
-
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");
 	}
-
-	@Reference
-	private GroupSearchProvider _groupSearchProvider;
 
 	@Reference
 	private GroupService _groupService;

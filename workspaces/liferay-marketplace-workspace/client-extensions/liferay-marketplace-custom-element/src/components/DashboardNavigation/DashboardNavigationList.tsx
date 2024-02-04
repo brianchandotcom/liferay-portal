@@ -12,14 +12,14 @@ import {NavLink, useLocation} from 'react-router-dom';
 import {DashboardListItems} from './DashboardNavigation';
 import {DashboardNavigationListItem} from './DashboardNavigationListItem';
 
-interface DashboardNavigationListProps {
-	navigationItemMock: DashboardListItems;
-}
+type DashboardNavigationListProps = {
+	dashboardNavigation: DashboardListItems;
+};
 
 export function DashboardNavigationList({
-	navigationItemMock,
+	dashboardNavigation,
 }: DashboardNavigationListProps) {
-	const {itemIcon, itemTitle, items, path} = navigationItemMock;
+	const {itemIcon, itemTitle, items, path} = dashboardNavigation;
 
 	const location = useLocation();
 

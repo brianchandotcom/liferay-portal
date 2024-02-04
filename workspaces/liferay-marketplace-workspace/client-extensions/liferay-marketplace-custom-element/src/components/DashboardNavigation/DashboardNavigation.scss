@@ -3,6 +3,23 @@
 		display: flex;
 		flex-direction: column;
 		max-width: 17.5rem;
+
+		&-dropdown {
+			border-radius: 0.625rem;
+			max-width: 30.5rem;
+			min-width: 10.25rem;
+			overflow: hidden;
+			padding: 20px;
+			width: 17.5rem;
+
+			&-body {
+				padding: 1rem 0.5rem;
+
+				ul {
+					max-height: 16.563rem !important;
+				}
+			}
+		}
 	}
 
 	&-header {
@@ -24,6 +41,7 @@
 		}
 
 		&-logo {
+			border-radius: 50%;
 			height: 3rem;
 			margin-right: 0.75rem;
 			width: 3rem;

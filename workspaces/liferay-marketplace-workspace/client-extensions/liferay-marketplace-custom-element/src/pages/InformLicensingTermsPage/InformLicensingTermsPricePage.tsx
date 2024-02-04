@@ -13,6 +13,9 @@ import {
 } from '../../manage-app-state/AppManageState';
 
 import './InformLicensingTermsPage.scss';
+
+import {useState} from 'react';
+
 import {LicenseTier} from '../../enums/licenseTier';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {
@@ -37,6 +40,7 @@ export function InformLicensingTermsPricePage({
 	onClickContinue,
 }: InformLicensingTermsPricePageProps) {
 	const [{appLicensePrice, appProductId}, dispatch] = useAppContext();
+	const [isProcessing, setProcessing] = useState(false);
 
 	const handleAddPriceTier = (licenseTier: LicenseTier) =>
 		dispatch({
@@ -196,10 +200,15 @@ export function InformLicensingTermsPricePage({
 			</Section>
 
 			<NewAppPageFooterButtons
-				disableContinueButton={!appLicensePrice}
+				disableContinueButton={isProcessing || !appLicensePrice}
+				isLoading={isProcessing}
 				onClickBack={() => onClickBack()}
 				onClickContinue={async () => {
+					setProcessing(true);
+
 					await submitLicensePrice();
+
+					setProcessing(false);
 
 					onClickContinue();
 				}}

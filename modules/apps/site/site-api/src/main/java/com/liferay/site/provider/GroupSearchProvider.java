@@ -51,17 +51,17 @@ public class GroupSearchProvider {
 			GroupSearch groupSearch, PortletRequest portletRequest)
 		throws PortalException {
 
-		long parentGroupId = getParentGroupId(portletRequest);
+		long parentGroupId = _getParentGroupId(portletRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		if (!_isSearch(portletRequest) &&
-			isFilterManageableGroups(portletRequest) && (parentGroupId <= 0)) {
+			_isFilterManageableGroups(portletRequest) && (parentGroupId <= 0)) {
 
 			groupSearch.setResultsAndTotal(
 				ListUtil.sort(
-					getAllGroups(portletRequest),
+					_getAllGroups(portletRequest),
 					groupSearch.getOrderByComparator()));
 		}
 		else if (_isSearch(portletRequest)) {
@@ -69,13 +69,13 @@ public class GroupSearchProvider {
 				() -> GroupLocalServiceUtil.search(
 					themeDisplay.getCompanyId(), _getClassNameIds(),
 					_getKeywords(portletRequest),
-					getGroupParams(portletRequest, parentGroupId),
+					_getGroupParams(portletRequest, parentGroupId),
 					groupSearch.getStart(), groupSearch.getEnd(),
 					groupSearch.getOrderByComparator()),
 				GroupLocalServiceUtil.searchCount(
 					themeDisplay.getCompanyId(), _getClassNameIds(),
 					_getKeywords(portletRequest),
-					getGroupParams(portletRequest, parentGroupId)));
+					_getGroupParams(portletRequest, parentGroupId)));
 		}
 		else {
 			long groupId = ParamUtil.getLong(
@@ -86,17 +86,17 @@ public class GroupSearchProvider {
 				() -> GroupLocalServiceUtil.search(
 					themeDisplay.getCompanyId(), _getClassNameIds(), groupId,
 					_getKeywords(portletRequest),
-					getGroupParams(portletRequest, parentGroupId),
+					_getGroupParams(portletRequest, parentGroupId),
 					groupSearch.getStart(), groupSearch.getEnd(),
 					groupSearch.getOrderByComparator()),
 				GroupLocalServiceUtil.searchCount(
 					themeDisplay.getCompanyId(), _getClassNameIds(), groupId,
 					_getKeywords(portletRequest),
-					getGroupParams(portletRequest, parentGroupId)));
+					_getGroupParams(portletRequest, parentGroupId)));
 		}
 	}
 
-	protected static List<Group> getAllGroups(PortletRequest portletRequest)
+	private static List<Group> _getAllGroups(PortletRequest portletRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -123,7 +123,15 @@ public class GroupSearchProvider {
 		return groups;
 	}
 
-	protected static LinkedHashMap<String, Object> getGroupParams(
+	private static long[] _getClassNameIds() {
+		return new long[] {
+			PortalUtil.getClassNameId(Company.class),
+			PortalUtil.getClassNameId(Group.class),
+			PortalUtil.getClassNameId(Organization.class)
+		};
+	}
+
+	private static LinkedHashMap<String, Object> _getGroupParams(
 			PortletRequest portletRequest, long parentGroupId)
 		throws PortalException {
 
@@ -135,8 +143,8 @@ public class GroupSearchProvider {
 			).build();
 
 		if (_isSearch(portletRequest)) {
-			if (isFilterManageableGroups(portletRequest)) {
-				groupParams.put("groupsTree", getAllGroups(portletRequest));
+			if (_isFilterManageableGroups(portletRequest)) {
+				groupParams.put("groupsTree", _getAllGroups(portletRequest));
 			}
 			else if (parentGroupId > 0) {
 				List<Group> groupsTree = ListUtil.fromArray(
@@ -165,7 +173,11 @@ public class GroupSearchProvider {
 		return groupParams;
 	}
 
-	protected static long getParentGroupId(PortletRequest portletRequest) {
+	private static String _getKeywords(PortletRequest portletRequest) {
+		return ParamUtil.getString(portletRequest, "keywords");
+	}
+
+	private static long _getParentGroupId(PortletRequest portletRequest) {
 		Group group = null;
 
 		long groupId = ParamUtil.getLong(
@@ -179,14 +191,14 @@ public class GroupSearchProvider {
 			return group.getGroupId();
 		}
 
-		if (isFilterManageableGroups(portletRequest)) {
+		if (_isFilterManageableGroups(portletRequest)) {
 			return GroupConstants.ANY_PARENT_GROUP_ID;
 		}
 
 		return GroupConstants.DEFAULT_PARENT_GROUP_ID;
 	}
 
-	protected static boolean isFilterManageableGroups(
+	private static boolean _isFilterManageableGroups(
 		PortletRequest portletRequest) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -202,18 +214,6 @@ public class GroupSearchProvider {
 		}
 
 		return true;
-	}
-
-	private static long[] _getClassNameIds() {
-		return new long[] {
-			PortalUtil.getClassNameId(Company.class),
-			PortalUtil.getClassNameId(Group.class),
-			PortalUtil.getClassNameId(Organization.class)
-		};
-	}
-
-	private static String _getKeywords(PortletRequest portletRequest) {
-		return ParamUtil.getString(portletRequest, "keywords");
 	}
 
 	private static boolean _isSearch(PortletRequest portletRequest) {

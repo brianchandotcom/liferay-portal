@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.item.selector.web.internal.renderer.MyGroupItemSelectorViewRenderer;
-import com.liferay.site.provider.GroupSearchProvider;
 import com.liferay.site.provider.GroupURLProvider;
 
 import java.io.IOException;
@@ -96,7 +95,7 @@ public class MySitesItemSelectorView
 	@Activate
 	protected void activate() {
 		_myGroupItemSelectorViewRenderer = new MyGroupItemSelectorViewRenderer(
-			_groupSearchProvider, _groupURLProvider, _servletContext);
+			_groupURLProvider, _servletContext);
 	}
 
 	@Deactivate
@@ -110,9 +109,6 @@ public class MySitesItemSelectorView
 				new GroupItemSelectorReturnType(),
 				new URLItemSelectorReturnType(),
 				new UUIDItemSelectorReturnType()));
-
-	@Reference
-	private GroupSearchProvider _groupSearchProvider;
 
 	@Reference
 	private GroupURLProvider _groupURLProvider;

@@ -9,7 +9,6 @@ import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCrite
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.item.selector.web.internal.constants.SitesItemSelectorWebKeys;
 import com.liferay.site.item.selector.web.internal.display.context.MySitesItemSelectorViewDisplayContext;
-import com.liferay.site.provider.GroupSearchProvider;
 import com.liferay.site.provider.GroupURLProvider;
 
 import java.io.IOException;
@@ -29,10 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 public class MyGroupItemSelectorViewRenderer {
 
 	public MyGroupItemSelectorViewRenderer(
-		GroupSearchProvider groupSearchProvider,
 		GroupURLProvider groupURLProvider, ServletContext servletContext) {
 
-		_groupSearchProvider = groupSearchProvider;
 		_groupURLProvider = groupURLProvider;
 		_servletContext = servletContext;
 	}
@@ -44,15 +41,13 @@ public class MyGroupItemSelectorViewRenderer {
 		throws IOException, ServletException {
 
 		servletRequest.setAttribute(
-			SiteWebKeys.GROUP_SEARCH_PROVIDER, _groupSearchProvider);
-		servletRequest.setAttribute(
 			SiteWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
 
 		MySitesItemSelectorViewDisplayContext
 			mySitesItemSelectorViewDisplayContext =
 				new MySitesItemSelectorViewDisplayContext(
 					(HttpServletRequest)servletRequest, t,
-					itemSelectedEventName, portletURL, _groupSearchProvider);
+					itemSelectedEventName, portletURL);
 
 		servletRequest.setAttribute(
 			SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR_DISPLAY_CONTEXT,
@@ -64,7 +59,6 @@ public class MyGroupItemSelectorViewRenderer {
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
-	private final GroupSearchProvider _groupSearchProvider;
 	private final GroupURLProvider _groupURLProvider;
 	private final ServletContext _servletContext;
 

@@ -38,14 +38,11 @@ public class MySitesItemSelectorViewDisplayContext
 	public MySitesItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest,
 		GroupItemSelectorCriterion groupItemSelectorCriterion,
-		String itemSelectedEventName, PortletURL portletURL,
-		GroupSearchProvider groupSearchProvider) {
+		String itemSelectedEventName, PortletURL portletURL) {
 
 		super(
 			httpServletRequest, groupItemSelectorCriterion,
 			itemSelectedEventName, portletURL);
-
-		_groupSearchProvider = groupSearchProvider;
 
 		_portletRequest = getPortletRequest();
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -65,7 +62,7 @@ public class MySitesItemSelectorViewDisplayContext
 				"groupId", String.valueOf(group.getGroupId()));
 		}
 
-		GroupSearch groupSearch = _groupSearchProvider.getGroupSearch(
+		GroupSearch groupSearch = GroupSearchProvider.getGroupSearch(
 			_portletRequest, portletURL);
 
 		if (groupSearch.getStart() == 0) {
@@ -175,7 +172,6 @@ public class MySitesItemSelectorViewDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		MySitesItemSelectorViewDisplayContext.class);
 
-	private final GroupSearchProvider _groupSearchProvider;
 	private final PortletRequest _portletRequest;
 	private final ThemeDisplay _themeDisplay;
 

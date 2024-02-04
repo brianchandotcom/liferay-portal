@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.initializer.SiteInitializerRegistry;
-import com.liferay.site.provider.GroupSearchProvider;
 
 import java.io.IOException;
 
@@ -39,8 +38,6 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,23 +72,10 @@ import org.osgi.service.component.annotations.Reference;
 public class SiteAdminPortlet extends MVCPortlet {
 
 	@Override
-	public void serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws IOException, PortletException {
-
-		resourceRequest.setAttribute(
-			SiteWebKeys.GROUP_SEARCH_PROVIDER, groupSearchProvider);
-
-		super.serveResource(resourceRequest, resourceResponse);
-	}
-
-	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		renderRequest.setAttribute(
-			SiteWebKeys.GROUP_SEARCH_PROVIDER, groupSearchProvider);
 		renderRequest.setAttribute(
 			SiteWebKeys.SITE_INITIALIZER_REGISTRY, siteInitializerRegistry);
 
@@ -142,9 +126,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		return false;
 	}
-
-	@Reference
-	protected GroupSearchProvider groupSearchProvider;
 
 	@Reference
 	protected SiteInitializerRegistry siteInitializerRegistry;

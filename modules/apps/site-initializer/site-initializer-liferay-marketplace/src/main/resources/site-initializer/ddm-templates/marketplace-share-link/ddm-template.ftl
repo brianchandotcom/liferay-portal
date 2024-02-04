@@ -10,6 +10,8 @@
 	function copyToClipboard(text) {
 		if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
 			navigator.clipboard.writeText(text)
+
+			Liferay.Util.openToast({message: "Copied link to the clipboard"})
 		};
 
 		if (target) {

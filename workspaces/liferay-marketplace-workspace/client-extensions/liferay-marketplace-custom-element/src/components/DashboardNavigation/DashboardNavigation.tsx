@@ -55,13 +55,7 @@ export function DashboardNavigation({
 		<div className="dashboard-navigation-container">
 			<ClayDropDown
 				menuElementAttrs={{
-					className: classNames(
-						'dashboard-navigation-container-dropdown p-0',
-						{
-							'cp-extended-dropdown': true,
-							'cp-short-dropdown': false,
-						}
-					),
+					className: 'dashboard-navigation-container-dropdown p-0',
 				}}
 				trigger={
 					<div className="dashboard-navigation-header">

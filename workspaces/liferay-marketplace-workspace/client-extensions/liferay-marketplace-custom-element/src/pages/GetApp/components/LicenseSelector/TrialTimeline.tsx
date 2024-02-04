@@ -4,17 +4,18 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {useState} from 'react';
 
 import {CardButton} from '../../../../components/CardButton/CardButton';
 
 type TrialTimelineProps = {
 	handleLicenseSelect: () => void;
+	selectedSKU: any;
 };
 
-export function TrialTimeline({handleLicenseSelect}: TrialTimelineProps) {
-	const [selectedLicense, setSelectedLicense] = useState(false);
-
+export function TrialTimeline({
+	handleLicenseSelect,
+	selectedSKU,
+}: TrialTimelineProps) {
 	return (
 		<div className="d-flex flex-column trial-timeline">
 			<p className="d-flex mb-2 trial-info">
@@ -38,9 +39,8 @@ export function TrialTimeline({handleLicenseSelect}: TrialTimelineProps) {
 				iconRight
 				onClick={() => {
 					handleLicenseSelect();
-					setSelectedLicense(true);
 				}}
-				selected={selectedLicense}
+				selected={selectedSKU}
 				title="Trial License"
 			/>
 		</div>

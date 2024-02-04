@@ -8,13 +8,22 @@ import {useMemo} from 'react';
 import {useOutletContext} from 'react-router-dom';
 
 import CardButton from '../../../components/CardButton/CardButton';
+import i18n from '../../../i18n';
 import {useGetAppContext} from '../GetAppContextProvider';
 import {GetAppOutletContext} from '../GetAppOutlet';
 import {PaidTimeline} from '../components/LicenseSelector/PaidTimeline';
 import {TrialTimeline} from '../components/LicenseSelector/TrialTimeline';
+import Container from '../containers/Container';
 
 export default function LicenseSelector() {
-	const [{license, product}, dispatch] = useGetAppContext();
+	const [
+		{
+			formState: {isValid},
+			license,
+			product,
+		},
+		dispatch,
+	] = useGetAppContext();
 	const {
 		cartUtil,
 		productBasePriceAndTrial: {trialSku},
@@ -42,9 +51,16 @@ export default function LicenseSelector() {
 	);
 
 	return (
-		<div className="license-selector-timeline">
-			<h1 className="my-4 text-center">License Selection</h1>
-
+		<Container
+			className="d-flex flex-column license-selector-timeline"
+			footerProps={{
+				primaryButtonProps: {
+					children: i18n.translate('continue'),
+					disabled: !isValid,
+				},
+			}}
+			title="License Selection"
+		>
 			<div className="license-selector mb-6">
 				{licenseTypes.map((_licenseType, index) => (
 					<CardButton
@@ -75,6 +91,7 @@ export default function LicenseSelector() {
 								type: 'SET_SELETED_SKU',
 							})
 						}
+						selectedSKU={license.selectedSKU}
 					/>
 				)}
 
@@ -82,6 +99,6 @@ export default function LicenseSelector() {
 					<PaidTimeline cartUtil={cartUtil} product={product} />
 				)}
 			</div>
-		</div>
+		</Container>
 	);
 }

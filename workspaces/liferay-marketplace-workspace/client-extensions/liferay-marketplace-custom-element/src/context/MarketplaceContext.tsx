@@ -32,6 +32,13 @@ type MarketplaceContextProviderProps = {
 	properties: DefaultProperties;
 };
 
+const urlSearchParams = new URLSearchParams();
+
+urlSearchParams.set(
+	'filter',
+	SearchBuilder.contains('name', 'Marketplace Channel')
+);
+
 const MarketplaceContextProvider: React.FC<MarketplaceContextProviderProps> = ({
 	children,
 	properties,
@@ -39,13 +46,6 @@ const MarketplaceContextProvider: React.FC<MarketplaceContextProviderProps> = ({
 	const {data: marketplaceChannel} = useSWR(
 		'/marketplace/channel',
 		async () => {
-			const urlSearchParams = new URLSearchParams();
-
-			urlSearchParams.set(
-				'filter',
-				SearchBuilder.contains('name', 'Marketplace Channel')
-			);
-
 			const channelResponse = await HeadlessCommerceDeliveryCatalogImpl.getChannels(
 				urlSearchParams
 			);
@@ -54,13 +54,14 @@ const MarketplaceContextProvider: React.FC<MarketplaceContextProviderProps> = ({
 		}
 	);
 
-	const {data: myUserAccount, mutate} = useSWR(
+	const {
+		data: myUserAccount,
+		mutate,
+	} = useSWR(
 		Liferay.ThemeDisplay.isSignedIn()
 			? '/marketplace/my-user-account'
 			: null,
-		() => {
-			return HeadlessAdminUserImpl.getMyUserAccount();
-		}
+		() => HeadlessAdminUserImpl.getMyUserAccount()
 	);
 
 	return (

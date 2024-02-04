@@ -8,35 +8,59 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useContext, useMemo} from 'react';
 
-import './ProjectSelection.scss';
+import './index.scss';
+
+import {useNavigate, useOutletContext} from 'react-router-dom';
+
 import RadioCardList from '../../../components/RadioCardList/RadioCardList';
 import {MarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import {ConsoleUserProject} from '../../../services/oauth/MarketplaceSpringBootOAuth2';
 import {useGetAppContext} from '../GetAppContextProvider';
+import {GetAppOutletContext} from '../GetAppOutlet';
+import Container from '../containers/Container';
 import {convertMegabyteToGigabyte} from '../hooks/useGetResourceInfo';
 
 const getCardContent = (project: ConsoleUserProject) => {
-	const cpu = project.rootProjectPlanUsage.cpu.limit;
+	const cpu =
+		project.rootProjectPlanUsage.cpu.limit -
+		project.rootProjectPlanUsage.cpu.used;
+
 	const environment = project.environments.length;
+
 	const memory = convertMegabyteToGigabyte({
 		inverseOperation: true,
-		value: project.rootProjectPlanUsage.memory.limit,
+		value:
+			project.rootProjectPlanUsage.memory.limit -
+			project.rootProjectPlanUsage.memory.used,
 	});
 
 	return `${environment} Environments , ${cpu} CPUs, ${memory} GB Ram`;
 };
 
 const ProjectSelection = () => {
+	const navigate = useNavigate();
 	const [
 		{
 			account,
-			appResourceInfo: {resourceRequest},
+			appResourceInfo: {
+				hasConsoleProjectsAvailable,
+				hasResources,
+				isLoading,
+				resourceRequest,
+			},
+			formState: {isValid},
+			project,
 			project: selectedProject,
+			stepState,
 		},
 		dispatch,
 	] = useGetAppContext();
+
+	const {handleGetApp, isFreeApp, loading} = useOutletContext<
+		GetAppOutletContext
+	>();
 
 	const {properties} = useContext(MarketplaceContext);
 
@@ -44,16 +68,69 @@ const ProjectSelection = () => {
 		resourceRequest?.userProjects,
 	]);
 
-	if (!resourceRequest) {
+	if (isLoading) {
 		return <ClayLoadingIndicator />;
 	}
 
-	return (
-		<>
-			<h1 className="my-4 text-center">Project Selection</h1>
+	if (!hasConsoleProjectsAvailable) {
+		return (
+			<Container
+				className="d-flex flex-column"
+				footerProps={{
+					primaryButtonProps: {
+						children: i18n.translate(
+							'sign-in-with-a-different-account'
+						),
+						onClick: () =>
+							Liferay.Util.navigate('/c/portal/logout'),
+					},
+					secondaryButtonProps: {visible: false},
+				}}
+				title="No Cloud Projects Available"
+			>
+				<p className="my-6 text-justify">
+					You are attempting to Purchase a Cloud APP that is currently
+					only available for Liferay SaaS and Liferay PaaS customers.
+					You currently appear to not have access to any Cloud
+					Projects. Please login as a user that has access to a
+					project or contact your project administrator to add you to
+					a project.
+				</p>
+			</Container>
+		);
+	}
 
+	return (
+		<Container
+			className="d-flex flex-column"
+			footerProps={{
+				primaryButtonProps: {
+					children: isFreeApp
+						? i18n.translate('get-app')
+						: i18n.translate('continue'),
+					disabled: !isValid || loading,
+					onClick: () => {
+						if (hasResources) {
+							if (isFreeApp) {
+								return handleGetApp();
+							}
+
+							return stepState.onNext();
+						}
+
+						return navigate(
+							`/insuficient-resources/${project}/${
+								(account as Account).id
+							}`
+						);
+					},
+				},
+				secondaryButtonProps: {visible: true},
+			}}
+			title="Project Selection"
+		>
 			<p className="my-4 secondary-text">
-				{`${account?.name} projects available for `}
+				{`Projects and resources available for `}
 
 				<strong>{Liferay.ThemeDisplay.getUserEmailAddress()}</strong>
 
@@ -79,7 +156,10 @@ const ProjectSelection = () => {
 									</p>
 								</div>
 								<div className="d-flex justify-content-end w-100">
-									<ClayButton className="project-selection-page-info-button">
+									<ClayButton
+										aria-label="info-button"
+										className="project-selection-page-info-button"
+									>
 										<ClayIcon
 											className="project-selection-page-info-button-icon"
 											symbol="question-circle"
@@ -110,7 +190,7 @@ const ProjectSelection = () => {
 					{i18n.translate('contact-support')}
 				</a>
 			</p>
-		</>
+		</Container>
 	);
 };
 

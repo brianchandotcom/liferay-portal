@@ -28,8 +28,8 @@ type BillingAddressProps = {
 
 const defaultBillingAddress = {
 	city: '',
-	country: 'US',
-	countryISOCode: 'US',
+	country: '',
+	countryISOCode: '',
 	name: '',
 	phoneNumber: '',
 	regionISOCode: '',

@@ -4,6 +4,7 @@
  */
 
 import {ReactNode, createContext, useContext, useMemo, useReducer} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import {useDeliveryProduct} from '../../hooks/data/useProduct';
 import zodSchema from '../../schema/zod';
@@ -41,6 +42,10 @@ type InitialState = {
 	};
 	product: DeliveryProduct;
 	project?: string;
+	stepState: {
+		onNext: () => void;
+		onPrevious: () => void;
+	};
 	steps: {id: StepType; path: string; title: string}[];
 };
 
@@ -66,7 +71,17 @@ const initialState: InitialState = {
 	isCloudApp: false,
 	license: {cart: undefined, cartItems: [], selectedSKU: undefined, type: ''},
 	payment: {
-		billingAddress: {} as BillingAddress,
+		billingAddress: {
+			city: 'LA',
+			country: 'US',
+			countryISOCode: 'US',
+			name: 'LA',
+			phoneNumber: '',
+			regionISOCode: 'CA',
+			street1: 'LA',
+			street2: '',
+			zip: '90001',
+		} as BillingAddress,
 		eula: '',
 		eulaCheckbox: false,
 		invoice: {
@@ -76,6 +91,7 @@ const initialState: InitialState = {
 		method: 'pay',
 	},
 	product: {} as DeliveryProduct,
+	stepState: {} as InitialState['stepState'],
 	steps: [
 		{
 			id: StepType.ACCOUNT,
@@ -232,6 +248,7 @@ export const GetAppContext = createContext<
 const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 	children,
 }) => {
+	const navigate = useNavigate();
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const {data: product} = useDeliveryProduct(getUrlParam('productId') ?? '');
 
@@ -240,6 +257,14 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 			({specificationKey, value}) =>
 				specificationKey === 'type' && value === 'cloud'
 		) ?? false;
+
+	const appResourceInfo = useGetResourceInfo({
+		product,
+		selectedProject: state.project,
+		shouldFetch: isCloudApp,
+	});
+
+	const {hasConsoleProjectsAvailable} = appResourceInfo;
 
 	const isFreeApp =
 		product?.productSpecifications.some(
@@ -270,10 +295,14 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 		}
 
 		if (StepType.PROJECT === currentStepId) {
-			return !!state.project;
+			return state.project || !hasConsoleProjectsAvailable;
 		}
 
 		if (StepType.LICENSES === currentStepId) {
+			if (state.license.type === 'TRIAL') {
+				return state.license.selectedSKU;
+			}
+
 			return !!state.license.cart && !!state.license.cartItems.length;
 		}
 
@@ -303,13 +332,13 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 		}
 
 		return false;
-	}, [isFreeApp, state, steps]);
+	}, [hasConsoleProjectsAvailable, isFreeApp, state, steps]);
 
-	const appResourceInfo = useGetResourceInfo({
-		product,
-		selectedProject: state.project,
-		shouldFetch: isCloudApp,
-	});
+	const stepState = {
+		current: steps[state.currentStep],
+		next: steps[state.currentStep + 1],
+		previous: steps[state.currentStep - 1],
+	};
 
 	return (
 		<GetAppContext.Provider
@@ -322,6 +351,24 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 					},
 					isCloudApp,
 					product: product as DeliveryProduct,
+					stepState: {
+						onNext() {
+							dispatch({
+								payload: state.currentStep + 1,
+								type: 'SET_STEP',
+							});
+
+							navigate(stepState.next.path, {replace: true});
+						},
+						onPrevious() {
+							dispatch({
+								payload: state.currentStep - 1,
+								type: 'SET_STEP',
+							});
+
+							navigate(stepState.previous.path, {replace: true});
+						},
+					},
 					steps,
 				},
 				dispatch,

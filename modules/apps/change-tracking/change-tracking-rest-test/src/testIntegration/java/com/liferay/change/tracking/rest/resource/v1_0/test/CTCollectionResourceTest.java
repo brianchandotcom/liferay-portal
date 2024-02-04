@@ -139,10 +139,6 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 			assertValid(
 				page,
 				testGetCTCollectionsGetHistoriesPage_getExpectedActions());
-
-			ctCollectionResource.deleteCTCollection(ctCollection1.getId());
-
-			ctCollectionResource.deleteCTCollection(ctCollection2.getId());
 		}
 		finally {
 			_layoutLocalService.deleteLayout(layout);
@@ -361,7 +357,7 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 			CTCollection ctCollection)
 		throws Exception {
 
-		return _postShareableCTCollection(ctCollection);
+		return _postCTCollection(ctCollection);
 	}
 
 	@Override
@@ -369,7 +365,7 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 			CTCollection ctCollection)
 		throws Exception {
 
-		return _postShareableCTCollection(ctCollection);
+		return _postCTCollection(ctCollection);
 	}
 
 	@Override
@@ -463,7 +459,7 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		}
 	}
 
-	private CTCollection _postShareableCTCollection(CTCollection ctCollection)
+	private CTCollection _postCTCollection(CTCollection ctCollection)
 		throws Exception {
 
 		CTCollection postCTCollection = ctCollectionResource.postCTCollection(
@@ -477,7 +473,6 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		serviceBuilderCTCollection.setCreateDate(ctCollection.getDateCreated());
 		serviceBuilderCTCollection.setModifiedDate(
 			ctCollection.getDateModified());
-		serviceBuilderCTCollection.setShareable(true);
 
 		serviceBuilderCTCollection =
 			_ctCollectionLocalService.updateCTCollection(

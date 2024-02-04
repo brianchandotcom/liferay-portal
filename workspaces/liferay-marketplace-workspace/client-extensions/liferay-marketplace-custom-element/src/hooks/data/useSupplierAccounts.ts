@@ -15,6 +15,7 @@ const useSupplierAccounts = () => {
 			new URLSearchParams({
 				filter: SearchBuilder.eq('type', 'supplier'),
 				pageSize: '-1',
+				sort: 'name:asc',
 			})
 		).then((response) => response.items)
 	);

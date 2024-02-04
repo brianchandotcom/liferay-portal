@@ -156,10 +156,11 @@ public class KoroneikiRestController extends BaseRestController {
 				if (Objects.equals(
 						productConsumption.getProductPurchaseKey(),
 						productPurchase.getKey()) &&
-					productConsumption.getEndDate(
-					).after(
-						new Date()
-					)) {
+					(productPurchase.getPerpetual() ||
+					 productConsumption.getEndDate(
+					 ).after(
+						 new Date()
+					 ))) {
 
 					provisionedCount++;
 				}
@@ -267,7 +268,7 @@ public class KoroneikiRestController extends BaseRestController {
 						"type", "marketplace-app"
 					).build());
 
-				_koroneikiProductResource.postProduct(
+				koroneikiProduct = _koroneikiProductResource.postProduct(
 					jwt.getClaim("username"), jwt.getClaim("sub"),
 					koroneikiProduct);
 

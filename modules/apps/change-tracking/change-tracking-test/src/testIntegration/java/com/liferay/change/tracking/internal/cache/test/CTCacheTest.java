@@ -149,6 +149,9 @@ public class CTCacheTest {
 
 	@Test
 	public void testFinderCacheResults() throws Exception {
+
+		// Adding a layout so this production has 1 total
+
 		LayoutTestUtil.addTypePortletLayout(_group);
 
 		FinderPath finderPath = new FinderPath(
@@ -180,6 +183,8 @@ public class CTCacheTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					ctCollection1.getCtCollectionId())) {
 
+			// Adding a layout so this publication has 1 + 1 from prod
+
 			LayoutTestUtil.addTypePortletLayout(_group);
 
 			ctCollection1Layouts = _layoutLocalService.getLayouts(
@@ -205,6 +210,8 @@ public class CTCacheTest {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					ctCollection2.getCtCollectionId())) {
+
+			// Adding 2 layouts so this publication has 2 + 1 from prod
 
 			LayoutTestUtil.addTypePortletLayout(_group);
 			LayoutTestUtil.addTypePortletLayout(_group);

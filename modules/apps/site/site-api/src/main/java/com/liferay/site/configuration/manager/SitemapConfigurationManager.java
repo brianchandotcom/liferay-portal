@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
  */
 public interface SitemapConfigurationManager {
 
+	public Long[] getCompanySitemapGroupIds(long companyId) throws Exception;
+
 	public boolean includeCategoriesCompanyEnabled(long companyId)
 		throws ConfigurationException;
 

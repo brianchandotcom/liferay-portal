@@ -139,6 +139,91 @@ public class ObjectFieldLocalServiceTest {
 	public void testAddCustomObjectField() throws Exception {
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
+			ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION +
+				" business type is not indexable",
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					new AggregationObjectFieldBuilder(
+					).indexed(
+						true
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).objectFieldSettings(
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								"function"
+							).value(
+								"MAX"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								"objectFieldName"
+							).value(
+								"integer"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								"objectRelationshipName"
+							).value(
+								"oneToManyRelationshipName"
+							).build())
+					).build())));
+		AssertUtils.assertFailure(
+			ObjectFieldBusinessTypeException.class,
+			ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED +
+				" business type is not indexable",
+			() -> ObjectFieldTestUtil.withEncryptedObjectFieldProperties(
+				"AES", true, ObjectFieldTestUtil.generateKey("AES"),
+				() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
+					false, _objectDefinitionLocalService,
+					Arrays.asList(
+						new EncryptedObjectFieldBuilder(
+						).indexed(
+							true
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).name(
+							"a" + RandomTestUtil.randomString()
+						).build()))));
+		AssertUtils.assertFailure(
+			ObjectFieldBusinessTypeException.class,
+			ObjectFieldConstants.BUSINESS_TYPE_FORMULA +
+				" business type is not indexable",
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					new FormulaObjectFieldBuilder(
+					).indexed(
+						true
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).objectFieldSettings(
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								"script"
+							).value(
+								"weight + 10"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								"output"
+							).value(
+								ObjectFieldConstants.BUSINESS_TYPE_DECIMAL
+							).build())
+					).build())));
+
+		AssertUtils.assertFailure(
+			ObjectFieldBusinessTypeException.class,
 			"Business type encrypted can only be used in object definitions " +
 				"with a default storage type",
 			() -> _addCustomObjectDefinitionWithEncryptedObjectField(

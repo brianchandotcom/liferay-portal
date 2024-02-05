@@ -35,7 +35,6 @@ public class InjectTestBag {
 	}
 
 	public InjectTestBag(Class<?> testClass, Object target) throws Exception {
-		_testClass = testClass;
 		_target = target;
 
 		while (testClass != Object.class) {
@@ -75,15 +74,15 @@ public class InjectTestBag {
 			if (serviceReference != null) {
 				_serviceReferences.add(serviceReference);
 
-				_setFieldValue(
-					field, bundleContext.getService(serviceReference));
+				ReflectionTestUtil.setFieldValue(
+					field, _target, bundleContext.getService(serviceReference));
 			}
 		}
 	}
 
 	public void resetFields() throws Exception {
 		for (Field field : _fields) {
-			_setFieldValue(field, null);
+			ReflectionTestUtil.setFieldValue(field, _target, null);
 		}
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
@@ -242,22 +241,11 @@ public class InjectTestBag {
 		return (ServiceReference<T>)serviceReferences[0];
 	}
 
-	private void _setFieldValue(Field field, Object value) {
-		if (_target != null) {
-			ReflectionTestUtil.setFieldValue(_target, field.getName(), value);
-		}
-		else {
-			ReflectionTestUtil.setFieldValue(
-				_testClass, field.getName(), value);
-		}
-	}
-
 	private static final int _SLEEP_TIME = 2000;
 
 	private final List<Field> _fields = new ArrayList<>();
 	private final List<ServiceReference<?>> _serviceReferences =
 		new ArrayList<>();
 	private final Object _target;
-	private final Class<?> _testClass;
 
 }

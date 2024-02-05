@@ -41,4 +41,9 @@ public interface SitemapCompanyConfiguration {
 	)
 	public boolean includeWebContent();
 
+	@Meta.AD(
+		deflt = "", name = "sites-included-in-the-xml-sitemap", required = false
+	)
+	public String[] companySitemapGroupIds();
+
 }

@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import MDFRequestActivityDTO from '../../../common/interfaces/dto/mdfRequestActivityDTO';
 import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
@@ -6,10 +11,6 @@ import {ResourceName} from '../../../common/services/liferay/object/enum/resourc
 import patchObjectEntry from '../../../common/services/liferay/object/patchObjectEntry/patchObjectEntry';
 import {Status} from '../../../common/utils/constants/status';
 
-/**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
- */
 const patchRequestStatus = async (
 	mdfRequestStatus: LiferayPicklist,
 	mdfRequestId: string,
@@ -49,8 +50,7 @@ const patchRequestStatus = async (
 		}
 
 		return;
-	}
-	catch (error: unknown) {
+	} catch (error: unknown) {
 		Liferay.Util.openToast({
 			message: 'The MDF Request Status cannot be changed.',
 			type: 'danger',

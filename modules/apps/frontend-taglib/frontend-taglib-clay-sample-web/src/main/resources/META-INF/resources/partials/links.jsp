@@ -17,12 +17,14 @@
 	<p>Used for stand-alone hyperlinks. Can be a text or an image.</p>
 </blockquote>
 
-<clay:link
-	data-custom-property="customValue"
-	href="#"
-	label="link text"
-	target="_blank"
-/>
+<div>
+	<clay:link
+		data-custom-property="customValue"
+		href="#"
+		label="link text"
+		target="_blank"
+	/>
+</div>
 
 <clay:link
 	displayType="primary"

@@ -73,13 +73,10 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 
 	const onPin = useCallback(() => {
 		if (hasAppliedFilters) {
-			testrayStorage.setItem(
-				STORAGE_KEYS.FILTER_SCHEMA + id,
-				JSON.stringify(filterSchema?.name),
-				CONSENT_TYPE.NECESSARY
-			);
-
-			dispatch({type: ListViewTypes.SET_PIN});
+			dispatch({
+				payload: filterSchema?.name as string,
+				type: ListViewTypes.SET_PIN,
+			});
 
 			return Liferay.Util.openToast({
 				message: i18n.translate(

@@ -72,12 +72,15 @@ import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -115,6 +118,12 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -248,6 +257,8 @@ public class DefaultObjectEntryManagerImplTest
 		_objectDefinition1 = _createObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
+				).indexed(
+					true
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString())
@@ -259,6 +270,8 @@ public class DefaultObjectEntryManagerImplTest
 			new TextObjectFieldBuilder(
 			).userId(
 				adminUser.getUserId()
+			).indexed(
+				true
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).name(
@@ -2508,6 +2521,59 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testGetObjectEntryDocument() throws Exception {
+		_objectEntryLocalService.addObjectEntry(
+			adminUser.getUserId(), 0,
+			_objectDefinition1.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", StringUtil.randomId()
+			).put(
+				"textObjectFieldNameExtension", StringUtil.randomId()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		SearchResponse searchResponse = _searcher.search(
+			_searchRequestBuilderFactory.builder(
+			).emptySearchEnabled(
+				true
+			).entryClassNames(
+				_objectDefinition1.getClassName()
+			).withSearchContext(
+				searchContext -> {
+					searchContext.setAttribute(
+						Field.STATUS, WorkflowConstants.STATUS_ANY);
+					searchContext.setAttribute(
+						"objectDefinitionId",
+						_objectDefinition1.getObjectDefinitionId());
+					searchContext.setCompanyId(
+						_objectDefinition1.getCompanyId());
+					searchContext.setGroupIds(new long[] {0});
+				}
+			).build());
+
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		List<SearchHit> searchHitList = searchHits.getSearchHits();
+
+		SearchHit searchHit = searchHitList.get(0);
+
+		Document document = searchHit.getDocument();
+
+		JSONObject objectEntryContentJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				"{" + document.getString("objectEntryContent") + "}");
+
+		for (ObjectField objectField :
+				objectFieldLocalService.getObjectFields(
+					_objectDefinition1.getObjectDefinitionId(), false)) {
+
+			Assert.assertEquals(
+				objectField.isIndexed(),
+				objectEntryContentJSONObject.has(objectField.getName()));
+		}
+	}
+
+	@Test
 	public void testGetObjectEntryRelatedObjectEntriesWithAccountEntryRestricted()
 		throws Exception {
 
@@ -4054,6 +4120,13 @@ public class DefaultObjectEntryManagerImplTest
 	private RoleLocalService _roleLocalService;
 
 	private ObjectDefinition _rootObjectDefinition;
+
+	@Inject
+	private Searcher _searcher;
+
+	@Inject
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
 	private Tree _tree;
 
 	@Inject

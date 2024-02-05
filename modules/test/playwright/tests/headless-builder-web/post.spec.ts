@@ -12,7 +12,7 @@ import {loginTest} from '../../fixtures/loginTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	loginTest,
+	loginTest(),
 	headlessBuilderPagesTest,
 	headlessDiscoveryPagesTest
 );

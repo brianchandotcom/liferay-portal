@@ -1,6 +1,7 @@
 {
 	"author": "",
 	"dependencies": {
+		"datebook": "^7.0.1",
 		"spatial-navigation-js": "^1.0.0"
 	},
 	"description": "",

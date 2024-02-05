@@ -1,0 +1,91 @@
+.f-add-to-calendar {
+	position: relative;
+
+	&.alignment-center {
+		.btn {
+			display: flex;
+			justify-content: center;
+		}
+
+		.calendar-links {
+			left: 50%;
+			min-width: fit-content;
+			transform: translateX(-50%);
+		}
+	}
+
+	&.alignment-right {
+		.btn {
+			display: flex;
+			justify-content: flex-end;
+		}
+
+		.calendar-links {
+			right: 0;
+		}
+	}
+
+	.add-to-calendar-button {
+		display: inline-block;
+		font-size: 1rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		line-height: 24px;
+		margin: 0.25rem 0 0.375rem;
+		padding: 0.5rem 1rem;
+		text-align: center;
+		text-transform: uppercase;
+		word-wrap: break-word;
+
+		.btn-text,
+		.fragments-editor__editable {
+			float: left;
+			padding-right: 8px;
+		}
+
+		.lexicon-icon-plus {
+			height: 12px;
+			width: 12px;
+		}
+	}
+
+	.calendar-link {
+		padding-bottom: 0.5rem;
+		padding-top: 0.5rem;
+	}
+
+	.calendar-links {
+		background: var(--color-white);
+		border-radius: var(--border-radius);
+		box-shadow: var(--elevation-4);
+		display: none;
+		list-style: none;
+		padding: 0.5rem;
+		position: absolute;
+		z-index: 2;
+
+		&.active {
+			animation-duration: 0.3s;
+			animation-iteration-count: 1;
+			animation-name: fadeInOpacity;
+			animation-timing-function: ease-in;
+			display: block;
+			opacity: 1;
+		}
+
+		.calendar-link:hover {
+			background: rgba(11, 99, 206, 0.1);
+			border-radius: var(--border-radius);
+		}
+	}
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}

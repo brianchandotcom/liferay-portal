@@ -1,0 +1,151 @@
+<div 
+		class="f-add-to-calendar ${configuration.blockAlignment}"
+		data-event-details="${configuration.eventDetails}"
+		data-event-end-date="${configuration.eventEndDate}"
+		data-event-end-time="${configuration.eventEndTime}"
+		data-event-location="${configuration.eventLocation}"
+		data-event-name="${configuration.eventName}"
+		data-event-start-date="${configuration.eventStartDate}"
+		data-event-start-time="${configuration.eventStartTime}"
+	>
+	<a class="btn btn-${configuration.buttonStyle}" href="javascript:;">
+		<div class="add-to-calendar-button">
+			<span class="btn-text" data-lfr-editable-id="addToCalendarButton" data-lfr-editable-type="text">Add to Calendar</span>	
+			[@clay["icon"] symbol="plus"/]
+		</div>
+	</a>
+
+	<ul class="calendar-links elevation-4">
+		[#if configuration.showApple]
+			<li class="calendar-link color-neutral-3 link px-1" data-calendar-type="apple">
+				<a href="javascript:;">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M17.693 12.9101C17.6507 10.2858 19.8517 9.01593 19.9364 8.93127C18.7089 7.1535 16.8041 6.89953 16.1269 6.8572C14.5184 6.68789 12.9523 7.83075 12.148 7.83075C11.3438 7.83075 10.074 6.89953 8.71946 6.94186C6.94168 6.98418 5.33321 7.95773 4.402 9.5662C2.53956 12.7408 3.93639 17.4392 5.71416 20.0212C6.60305 21.2911 7.61893 22.6879 9.01575 22.6456C10.3279 22.6032 10.8359 21.799 12.4443 21.799C14.0528 21.799 14.4761 22.6456 15.8729 22.6456C17.312 22.6032 18.2009 21.3757 19.0475 20.1059C20.0634 18.6244 20.4443 17.2276 20.4867 17.1429C20.4443 17.1006 17.693 16.0847 17.693 12.9101Z" fill="#606060"/>
+						<path d="M15.0688 5.16398C15.7884 4.27509 16.2964 3.04758 16.1694 1.82007C15.1112 1.8624 13.8413 2.49732 13.1218 3.38621C12.4445 4.14811 11.8519 5.41795 12.0212 6.60314C13.1218 6.73012 14.3493 6.05287 15.0688 5.16398Z" fill="#606060"/>
+					</svg>
+
+					<span class="font-paragraph-paragraph-base font-weight-semi-bold pl-1">Apple</span>
+				</a>
+			</li>
+		[/#if]
+
+		[#if configuration.showGoogle]
+			<li class="calendar-link color-neutral-3 px-1" data-calendar-type="google">
+				<a href="javascript:;">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M5.17489 12C5.17489 11.2125 5.30614 10.4813 5.53114 9.7688L1.48114 6.67505C0.69364 8.28755 0.26239 10.0875 0.26239 12C0.26239 13.9125 0.71239 15.7125 1.49989 17.3063L5.54989 14.2125C5.30614 13.5188 5.17489 12.7688 5.17489 12Z" fill="#FBBC05"/>
+						<path d="M12.2811 4.9125C13.9686 4.9125 15.5061 5.5125 16.7061 6.4875L20.1936 3C18.0561 1.14375 15.3374 0 12.2811 0C7.51864 0 3.44989 2.71875 1.48114 6.675L5.53114 9.76875C6.46864 6.9375 9.11239 4.9125 12.2811 4.9125Z" fill="#EA4335"/>
+						<path d="M12.2811 19.0875C9.13114 19.0875 6.46864 17.0437 5.54989 14.2312L1.48114 17.325C3.44989 21.2812 7.51864 23.9999 12.2811 23.9999C15.2061 23.9999 18.0186 22.9499 20.1186 20.9999L16.2561 18.0374C15.1874 18.7312 13.8186 19.0875 12.2811 19.0875Z" fill="#34A853"/>
+						<path d="M23.7375 12C23.7375 11.2875 23.625 10.5187 23.4562 9.82495H12.2812V14.4562H18.7312C18.4125 16.0312 17.5312 17.2499 16.275 18.0374L20.1188 21C22.3125 18.9562 23.7375 15.9187 23.7375 12Z" fill="#4285F4"/>
+					</svg>
+
+					<span class="font-paragraph-paragraph-base font-weight-semi-bold pl-1">Google </span><span class="font-size-paragraph-xsmall">(Online)</span>
+				</a>
+			</li>
+		[/#if]
+
+		[#if configuration.showOutlook]
+			<li class="calendar-link color-neutral-3 px-1"  data-calendar-type="outlook">
+				<a href="javascript:;">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<g clip-path="url(#clip0)">
+							<path d="M15.1144 17.9157V11.5478C15.5667 11.8595 15.9909 12.1478 16.4128 12.4384C16.7925 12.6985 16.8558 12.6962 17.2472 12.436C19.4152 10.9946 21.5831 9.55557 23.7511 8.11416C23.8167 8.06963 23.8847 8.02979 23.9808 7.97119C23.9878 8.06963 23.9995 8.14463 23.9995 8.21729C23.9995 10.9876 24.0019 13.7579 23.9995 16.5306C23.9995 17.4517 23.5331 17.9157 22.6167 17.9157C20.2073 17.9157 17.798 17.9157 15.3886 17.9157C15.3019 17.9157 15.2152 17.9157 15.1144 17.9157Z" fill="#DAA603"/>
+							<path d="M15.1309 5.0835H15.377C17.9223 5.0835 20.4653 5.0835 23.0106 5.0835C23.4653 5.0835 23.8168 5.3624 23.9598 5.79834C24.0231 5.99053 23.9598 6.08428 23.8028 6.1874C21.8317 7.50693 19.8653 8.8335 17.8965 10.1577C17.6153 10.3476 17.3317 10.5304 17.0551 10.7272C16.9051 10.8351 16.7692 10.8397 16.6145 10.739C16.1645 10.4483 15.7075 10.1718 15.2598 9.87881C15.1848 9.82959 15.1075 9.71709 15.1075 9.63506C15.1004 8.14678 15.1028 6.6585 15.1051 5.17022C15.1051 5.15147 15.1145 5.13506 15.1309 5.0835Z" fill="#DAA603"/>
+							<path d="M13.9847 24C9.31845 23.0227 4.67094 22.05 0.00703102 21.075V20.768C0.00703102 14.85 0.0093747 8.93203 0 3.01406C0 2.76797 0.0656229 2.68359 0.304678 2.63906C4.03346 1.92656 7.76225 1.20469 11.491 0.482813C12.3137 0.321094 13.1363 0.164062 13.9847 0V24ZM10.2653 11.9766C10.2559 11.0016 10.1223 10.1016 9.63953 9.28359C9.25048 8.625 8.7255 8.12578 7.96849 7.91016C6.49667 7.49062 5.09046 8.17969 4.39673 9.66797C3.95378 10.6219 3.85769 11.6344 3.9444 12.6703C4.0194 13.568 4.27955 14.3977 4.85844 15.1078C6.00918 16.5187 8.10208 16.5281 9.26923 15.1266C10.0403 14.1984 10.2512 13.0945 10.2653 11.9766Z" fill="#DAA603"/>
+							<path d="M5.45884 11.9976C5.4565 11.3015 5.55025 10.6288 5.944 10.0335C6.30728 9.48274 6.85806 9.25774 7.46509 9.41009C7.93619 9.52727 8.22213 9.86243 8.41197 10.282C8.73541 11.0015 8.79166 11.7656 8.69556 12.5296C8.64166 12.9538 8.51978 13.3851 8.34869 13.7765C8.12603 14.2827 7.69713 14.5734 7.12525 14.5851C6.54869 14.5968 6.14791 14.2992 5.869 13.821C5.53853 13.2609 5.45884 12.6374 5.45884 11.9976Z" fill="#DAA603"/>
+						</g>
+						<defs>
+							<clipPath id="clip0">
+								<rect width="24" height="24" fill="white"/>
+							</clipPath>
+						</defs>
+					</svg>
+
+					<span class="font-paragraph-paragraph-base font-weight-semi-bold pl-1">Outlook</span>
+				</a>
+			</li>
+		[/#if]
+
+		[#if configuration.showOutlookOnline]
+			<li class="calendar-link color-neutral-3 px-1" data-calendar-type="outlook-online">
+				<a href="javascript:;">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<g clip-path="url(#clip1)">
+							<path d="M15.1149 17.9157V11.5478C15.5673 11.8595 15.9915 12.1478 16.4134 12.4384C16.7931 12.6985 16.8563 12.6962 17.2477 12.436C19.4157 10.9946 21.5837 9.55557 23.7517 8.11416C23.8173 8.06963 23.8852 8.02979 23.9813 7.97119C23.9884 8.06963 24.0001 8.14463 24.0001 8.21729C24.0001 10.9876 24.0024 13.7579 24.0001 16.5306C24.0001 17.4517 23.5337 17.9157 22.6173 17.9157C20.2079 17.9157 17.7985 17.9157 15.3891 17.9157C15.3024 17.9157 15.2157 17.9157 15.1149 17.9157Z" fill="#0072C6"/>
+							<path d="M15.1313 5.0835H15.3774C17.9227 5.0835 20.4656 5.0835 23.011 5.0835C23.4656 5.0835 23.8172 5.3624 23.9602 5.79834C24.0235 5.99053 23.9602 6.08428 23.8031 6.1874C21.8321 7.50694 19.8656 8.8335 17.8969 10.1577C17.6156 10.3476 17.3321 10.5304 17.0555 10.7273C16.9055 10.8351 16.7696 10.8398 16.6149 10.739C16.1649 10.4483 15.7078 10.1718 15.2602 9.87881C15.1852 9.82959 15.1078 9.71709 15.1078 9.63506C15.1008 8.14678 15.1031 6.6585 15.1055 5.17022C15.1055 5.15147 15.1149 5.13506 15.1313 5.0835Z" fill="#0072C6"/>
+							<path d="M13.9852 24C9.31875 23.0227 4.67109 22.05 0.00703125 21.075V20.768C0.00703125 14.85 0.009375 8.93203 0 3.01406C0 2.76797 0.065625 2.68359 0.304688 2.63906C4.03359 1.92656 7.7625 1.20469 11.4914 0.482813C12.3141 0.321094 13.1367 0.164062 13.9852 0V24ZM10.2656 11.9766C10.2563 11.0016 10.1227 10.1016 9.63984 9.28359C9.25078 8.625 8.72578 8.12578 7.96875 7.91016C6.49687 7.49062 5.09063 8.17969 4.39688 9.66797C3.95391 10.6219 3.85781 11.6344 3.94453 12.6703C4.01953 13.568 4.27969 14.3977 4.85859 15.1078C6.00938 16.5187 8.10234 16.5281 9.26953 15.1266C10.0406 14.1984 10.2516 13.0945 10.2656 11.9766Z" fill="#0072C6"/>
+							<path d="M5.45872 11.9976C5.45638 11.3015 5.55013 10.6288 5.94388 10.0335C6.30716 9.48274 6.85794 9.25774 7.46497 9.41009C7.93607 9.52727 8.222 9.86243 8.41185 10.282C8.73529 11.0015 8.79154 11.7656 8.69544 12.5296C8.64154 12.9538 8.51966 13.3851 8.34857 13.7765C8.12591 14.2827 7.697 14.5734 7.12513 14.5851C6.54857 14.5968 6.14778 14.2991 5.86888 13.821C5.53841 13.2609 5.45872 12.6374 5.45872 11.9976Z" fill="#0072C6"/>
+						</g>
+						<defs>
+							<clipPath id="clip1">
+								<rect width="24" height="24" fill="white"/>
+							</clipPath>
+						</defs>
+					</svg>
+
+					<span class="font-paragraph-paragraph-base font-weight-semi-bold pl-1">Outlook.com </span><span class="font-size-paragraph-xsmall">(Online)</span>
+				</a>
+			</li>
+		[/#if]
+
+		[#if configuration.showYahoo]
+			<li class="calendar-link color-neutral-3 px-1"  data-calendar-type="yahoo">
+				<a href="javascript:;">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M13.3905 13.8029L13.5706 24C12.9985 23.8947 12.5136 23.8413 12.116 23.8413C11.7377 23.8413 11.2528 23.8947 10.6613 24L10.8414 13.8029C10.4715 13.1394 9.69427 11.7188 8.50698 9.54087C7.31969 7.36298 6.32081 5.56298 5.50758 4.13942C4.69435 2.71587 3.85895 1.33702 3 0C3.53615 0.144231 4.0349 0.216346 4.49624 0.216346C4.89385 0.216346 5.40645 0.144231 6.03403 0C6.6159 1.06731 7.23241 2.17067 7.88355 3.3101C8.53469 4.44952 9.30636 5.77933 10.1972 7.29808C11.088 8.81683 11.728 9.90865 12.116 10.5721C12.4581 9.9851 12.9638 9.13269 13.633 8.01202C14.3021 6.89135 14.8452 5.97837 15.2608 5.27163C15.6764 4.5649 16.1613 3.71827 16.7155 2.73317C17.2697 1.74808 17.7642 0.836538 18.1979 0C18.6966 0.134135 19.1912 0.201923 19.6803 0.201923C20.197 0.201923 20.7235 0.134135 21.2596 0C21.0005 0.375 20.7235 0.800481 20.4284 1.27644C20.1333 1.7524 19.9047 2.13029 19.7426 2.40865C19.5805 2.68702 19.32 3.14856 18.9598 3.79327C18.5996 4.43798 18.3738 4.84183 18.281 5.00481C16.933 7.38894 15.3024 10.3226 13.3905 13.8029Z" fill="#4A089F"/>
+					</svg>
+
+					<span class="font-paragraph-paragraph-base font-weight-semi-bold pl-1">Yahoo </span><span class="font-size-paragraph-xsmall">(Online)</span>
+				</a>
+			</li>
+		[/#if]
+	</ul>
+</div>
+
+
+[@liferay_aui.script require="com.liferay.osb.www.frontend.support.web@1.0.0/Datebook as Datebook"]
+const addToCalendar = document.querySelector('.f-add-to-calendar');
+const addToCalendarButton = addToCalendar.querySelector('.add-to-calendar-button');
+const calendarLinksWrapper = addToCalendar.querySelector('.calendar-links');
+const calendarLinks = addToCalendar.querySelectorAll('.calendar-link');
+
+const eventStartDate = addToCalendar.getAttribute('data-event-start-date');
+const eventStartTime = addToCalendar.getAttribute('data-event-start-time');
+const eventEndDate = addToCalendar.getAttribute('data-event-end-date');
+const eventEndTime = addToCalendar.getAttribute('data-event-end-time');
+const eventDetails = addToCalendar.getAttribute('data-event-details');
+const eventLocation = addToCalendar.getAttribute('data-event-location');
+const eventName = addToCalendar.getAttribute('data-event-name');
+
+const endDateTime = new Date(eventEndDate + 'T' + eventEndTime + ':00Z');
+const startDateTime = new Date(eventStartDate + 'T' + eventStartTime + ':00Z');
+
+const config = {
+	description: eventDetails,
+	end: endDateTime,
+	location: eventLocation,
+	start: startDateTime,
+	title: eventName,
+};
+
+calendarLinks.forEach(function (link) {
+	link.addEventListener('click', function () {
+		new Datebook.default(link.getAttribute('data-calendar-type'), config);
+	});
+});
+
+
+addToCalendarButton.addEventListener('click', function (e) {
+	e.stopPropagation();
+	calendarLinksWrapper.classList.toggle('active');
+});
+
+window.onclick = function () {
+	calendarLinksWrapper.classList.remove('active');
+};
+
+if (startDateTime > endDateTime) {
+	addToCalendar.innerHTML =
+		'ERROR: Start Date/Time is not before End Date/Time';
+}
+[/@]

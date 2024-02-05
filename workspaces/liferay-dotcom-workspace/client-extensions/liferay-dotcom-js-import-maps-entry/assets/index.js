@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClassToggle from './ClassToggle';
+import Datebook from './Datebook';
 import DropdownProvider from './DropdownProvider';
 import SpatialNavigationProvider from './SpatialNavigation';
 
 export default {
-	ClassToggle,
+	Datebook,
 	DropdownProvider,
 	SpatialNavigationProvider,
 };

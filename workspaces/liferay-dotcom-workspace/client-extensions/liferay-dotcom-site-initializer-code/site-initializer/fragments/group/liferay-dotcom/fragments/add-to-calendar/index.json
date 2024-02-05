@@ -1,0 +1,153 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"description": "Button Style",
+					"label": "Button Style",
+					"name": "buttonStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Primary",
+								"value": "primary"
+							},
+							{
+								"label": "Secondary",
+								"value": "secondary"
+							},
+							{
+								"label": "Tertiary",
+								"value": "tertiary"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "Block Alignment",
+					"label": "Block Alignment",
+					"name": "blockAlignment",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Left",
+								"value": ""
+							},
+							{
+								"label": "Center",
+								"value": "alignment-center"
+							},
+							{
+								"label": "Right",
+								"value": "alignment-right"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "event-name",
+					"label": "event-name",
+					"name": "eventName",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "event-details",
+					"label": "event-details",
+					"name": "eventDetails",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "event-location",
+					"label": "event-location",
+					"name": "eventLocation",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "2022-01-11",
+					"description": "Event Start Date UTC",
+					"label": "Event Start Date UTC (YYYY-mm-dd)",
+					"name": "eventStartDate",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "00:00",
+					"description": "Event Start Time UTC",
+					"label": "Event Start Time UTC (00:00)",
+					"name": "eventStartTime",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "2022-01-12",
+					"description": "Event End Date UTC (YYYY-mm-dd)",
+					"label": "Event End Date UTC (YYYY-mm-dd)",
+					"name": "eventEndDate",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "02:30",
+					"description": "Event End Time UTC (00:00)",
+					"label": "Event End Time UTC (00:00)",
+					"name": "eventEndTime",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "show-apple",
+					"label": "show-apple",
+					"name": "showApple",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "show-google",
+					"label": "show-google",
+					"name": "showGoogle",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "show-outlook",
+					"label": "show-outlook",
+					"name": "showOutlook",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "show-outlook-online",
+					"label": "show-outlook-online",
+					"name": "showOutlookOnline",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "show-yahoo",
+					"label": "show-yahoo",
+					"name": "showYahoo",
+					"type": "checkbox"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

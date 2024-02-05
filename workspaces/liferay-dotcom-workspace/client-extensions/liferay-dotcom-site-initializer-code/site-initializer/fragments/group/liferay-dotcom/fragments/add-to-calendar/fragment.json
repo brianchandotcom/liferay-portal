@@ -1,0 +1,11 @@
+{
+	"cacheable": false,
+	"configurationPath": "index.json",
+	"cssPath": "index.css",
+	"fragmentEntryKey": "addToCalendar",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Add to Calendar - Events",
+	"thumbnail": "add_to_calendar.png",
+	"type": "component"
+}

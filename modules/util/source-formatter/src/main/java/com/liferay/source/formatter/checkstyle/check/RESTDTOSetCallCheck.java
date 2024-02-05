@@ -47,18 +47,11 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		DetailAST objBlockDetailAST = detailAST.findFirstToken(
 			TokenTypes.OBJBLOCK);
 
-		List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
-			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
+		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
+			objBlockDetailAST, true, TokenTypes.METHOD_CALL);
 
-		for (DetailAST methodDefinitionDetailAST :
-				methodDefinitionDetailASTList) {
-
-			List<DetailAST> methodCallDetailASTList = getAllChildTokens(
-				methodDefinitionDetailAST, true, TokenTypes.METHOD_CALL);
-
-			for (DetailAST childDetailAST : methodCallDetailASTList) {
-				_checkSetCall(absolutePath, childDetailAST);
-			}
+		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
+			_checkSetCall(absolutePath, methodCallDetailAST);
 		}
 	}
 

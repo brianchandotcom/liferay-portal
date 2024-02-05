@@ -2771,6 +2771,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @param  dlVersionNumberIncrease the kind of version number increase to
 	 *         apply for these changes.
 	 * @param  bytes the file's data (optionally <code>null</code>)
+	 * @param  displayDate the file's display date (optionally <code>null
+	 *         </code>)
 	 * @param  expirationDate the file's expiration date (optionally <code>null
 	 *         </code>)
 	 * @param  reviewDate the file's review date (optionally <code>null</code>)
@@ -2788,7 +2790,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease, byte[] bytes,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		File file = null;
@@ -2801,7 +2804,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			return updateFileEntry(
 				fileEntryId, sourceFileName, mimeType, title, urlTitle,
 				description, changeLog, dlVersionNumberIncrease, file,
-				expirationDate, reviewDate, serviceContext);
+				displayDate, expirationDate, reviewDate, serviceContext);
 		}
 		catch (IOException ioException) {
 			throw new SystemException(
@@ -2838,6 +2841,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @param  dlVersionNumberIncrease the kind of version number increase to
 	 *         apply for these changes.
 	 * @param  file the file's data (optionally <code>null</code>)
+	 * @param  displayDate the file's display date (optionally <code>null
+	 *         </code>)
 	 * @param  expirationDate the file's expiration date (optionally <code>null
 	 *         </code>)
 	 * @param  reviewDate the file's review date (optionally <code>null</code>)
@@ -2855,22 +2860,21 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if ((file == null) || !file.exists() || (file.length() == 0)) {
 			return updateFileEntry(
 				fileEntryId, sourceFileName, mimeType, title, urlTitle,
 				description, changeLog, dlVersionNumberIncrease, null, 0,
-				expirationDate, reviewDate, serviceContext);
+				displayDate, expirationDate, reviewDate, serviceContext);
 		}
 
 		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
 
 		Repository repository = RepositoryProviderUtil.getFileEntryRepository(
 			fileEntryId);
-
-		Date displayDate = null;
 
 		FileEntry fileEntry = repository.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title, urlTitle,
@@ -2911,6 +2915,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         apply for these changes.
 	 * @param  inputStream the file's data (optionally <code>null</code>)
 	 * @param  size the file's size (optionally <code>0</code>)
+	 * @param  displayDate the file's display date (optionally <code>null
+	 *         </code>)
 	 * @param  expirationDate the file's expiration date (optionally <code>null
 	 *         </code>)
 	 * @param  reviewDate the file's review date (optionally <code>null</code>)
@@ -2928,8 +2934,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date displayDate,
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isNull(mimeType) ||
@@ -2948,7 +2954,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 					return updateFileEntry(
 						fileEntryId, sourceFileName, mimeType, title, urlTitle,
 						description, changeLog, dlVersionNumberIncrease, file,
-						expirationDate, reviewDate, serviceContext);
+						displayDate, expirationDate, reviewDate,
+						serviceContext);
 				}
 				catch (IOException ioException) {
 					throw new SystemException(
@@ -2962,8 +2969,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = RepositoryProviderUtil.getFileEntryRepository(
 			fileEntryId);
-
-		Date displayDate = null;
 
 		FileEntry fileEntry = repository.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title, urlTitle,
@@ -2982,20 +2987,19 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if ((file == null) || !file.exists() || (file.length() == 0)) {
 			return updateFileEntryAndCheckIn(
 				fileEntryId, sourceFileName, mimeType, title, urlTitle,
 				description, changeLog, dlVersionNumberIncrease, null, 0,
-				expirationDate, reviewDate, serviceContext);
+				displayDate, expirationDate, reviewDate, serviceContext);
 		}
 
 		Repository repository = RepositoryProviderUtil.getFileEntryRepository(
 			fileEntryId);
-
-		Date displayDate = null;
 
 		_withDLAppHelperDisabled(
 			() -> repository.updateFileEntry(
@@ -3021,14 +3025,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date displayDate,
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		Repository repository = RepositoryProviderUtil.getFileEntryRepository(
 			fileEntryId);
-
-		Date displayDate = null;
 
 		_withDLAppHelperDisabled(
 			() -> repository.updateFileEntry(

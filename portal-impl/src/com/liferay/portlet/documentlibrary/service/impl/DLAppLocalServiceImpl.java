@@ -1045,6 +1045,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  dlVersionNumberIncrease the kind of version number increase to
 	 *         apply for these changes.
 	 * @param  bytes the file's data (optionally <code>null</code>)
+	 * @param  displayDate the file's display date (optionally <code>null
+	 *         </code>)
 	 * @param  expirationDate the file's expiration date (optionally <code>null
 	 *         </code>)
 	 * @param  reviewDate the file's review date (optionally <code>null</code>)
@@ -1062,8 +1064,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String urlTitle, String description,
 			String changeLog, DLVersionNumberIncrease dlVersionNumberIncrease,
-			byte[] bytes, Date expirationDate, Date reviewDate,
-			ServiceContext serviceContext)
+			byte[] bytes, Date displayDate, Date expirationDate,
+			Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		File file = null;
@@ -1076,7 +1078,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			return updateFileEntry(
 				userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
 				description, changeLog, dlVersionNumberIncrease, file,
-				expirationDate, reviewDate, serviceContext);
+				displayDate, expirationDate, reviewDate, serviceContext);
 		}
 		catch (IOException ioException) {
 			throw new SystemException(
@@ -1114,6 +1116,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  dlVersionNumberIncrease the kind of version number increase to
 	 *         apply for these changes.
 	 * @param  file the file's data (optionally <code>null</code>)
+	 * @param  displayDate the file's display date (optionally <code>null
+	 *         </code>)
 	 * @param  expirationDate the file's expiration date (optionally <code>null
 	 *         </code>)
 	 * @param  reviewDate the file's review date (optionally <code>null</code>)
@@ -1131,7 +1135,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String urlTitle, String description,
 			String changeLog, DLVersionNumberIncrease dlVersionNumberIncrease,
-			File file, Date expirationDate, Date reviewDate,
+			File file, Date displayDate, Date expirationDate, Date reviewDate,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1139,15 +1143,13 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			return updateFileEntry(
 				userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
 				description, changeLog, dlVersionNumberIncrease, null, 0,
-				expirationDate, reviewDate, serviceContext);
+				displayDate, expirationDate, reviewDate, serviceContext);
 		}
 
 		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
 
 		LocalRepository localRepository =
 			RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
-
-		Date displayDate = null;
 
 		FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
@@ -1189,6 +1191,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *         apply for these changes.
 	 * @param  inputStream the file's data (optionally <code>null</code>)
 	 * @param  size the file's size (optionally <code>0</code>)
+	 * @param  displayDate the file's displaydate (optionally <code>null
+	 *         </code>)
 	 * @param  expirationDate the file's expiration date (optionally <code>null
 	 *         </code>)
 	 * @param  reviewDate the file's review date (optionally <code>null</code>)
@@ -1206,8 +1210,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String urlTitle, String description,
 			String changeLog, DLVersionNumberIncrease dlVersionNumberIncrease,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date displayDate,
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isNull(mimeType) ||
@@ -1226,8 +1230,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 					return updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
 						urlTitle, description, changeLog,
-						dlVersionNumberIncrease, file, expirationDate,
-						reviewDate, serviceContext);
+						dlVersionNumberIncrease, file, displayDate,
+						expirationDate, reviewDate, serviceContext);
 				}
 				catch (IOException ioException) {
 					throw new SystemException(
@@ -1241,8 +1245,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository localRepository =
 			RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
-
-		Date displayDate = null;
 
 		FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,

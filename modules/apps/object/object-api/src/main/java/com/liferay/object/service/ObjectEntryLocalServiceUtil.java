@@ -435,6 +435,14 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static long getObjectEntriesCount(
+			long userId, long objectDefinitionId, java.util.Date startDate)
+		throws PortalException {
+
+		return getService().getObjectEntriesCount(
+			userId, objectDefinitionId, startDate);
+	}
+
+	public static long getObjectEntriesCount(
 			long groupId,
 			com.liferay.object.model.ObjectDefinition objectDefinition,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate)

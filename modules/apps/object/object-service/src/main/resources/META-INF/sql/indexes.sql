@@ -17,7 +17,7 @@ create index IX_7B61F95C on ObjectDefinition (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_C24831C4 on ObjectEntry (externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_D814E30A on ObjectEntry (objectDefinitionId, status, groupId);
-create index IX_4507FEF4 on ObjectEntry (objectDefinitionId, userId);
+create index IX_68B7FB2 on ObjectEntry (objectDefinitionId, userId, createDate);
 create index IX_BD205C3B on ObjectEntry (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_596BC23C on ObjectField (externalReferenceCode[$COLUMN_LENGTH:75$]);

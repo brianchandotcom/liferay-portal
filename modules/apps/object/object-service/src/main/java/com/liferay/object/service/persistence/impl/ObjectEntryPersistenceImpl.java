@@ -48,6 +48,8 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.sql.Timestamp;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -4730,6 +4732,620 @@ public class ObjectEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_G_ODI_S_STATUS_2 =
 		"objectEntry.status = ?";
 
+	private FinderPath _finderPathWithPaginationFindByU_GtC_ODI;
+	private FinderPath _finderPathWithPaginationCountByU_GtC_ODI;
+
+	/**
+	 * Returns all the object entries where userId = &#63; and createDate &gt; &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object entries
+	 */
+	@Override
+	public List<ObjectEntry> findByU_GtC_ODI(
+		long userId, Date createDate, long objectDefinitionId) {
+
+		return findByU_GtC_ODI(
+			userId, createDate, objectDefinitionId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the object entries where userId = &#63; and createDate &gt; &#63; and objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object entries
+	 * @param end the upper bound of the range of object entries (not inclusive)
+	 * @return the range of matching object entries
+	 */
+	@Override
+	public List<ObjectEntry> findByU_GtC_ODI(
+		long userId, Date createDate, long objectDefinitionId, int start,
+		int end) {
+
+		return findByU_GtC_ODI(
+			userId, createDate, objectDefinitionId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the object entries where userId = &#63; and createDate &gt; &#63; and objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object entries
+	 * @param end the upper bound of the range of object entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object entries
+	 */
+	@Override
+	public List<ObjectEntry> findByU_GtC_ODI(
+		long userId, Date createDate, long objectDefinitionId, int start,
+		int end, OrderByComparator<ObjectEntry> orderByComparator) {
+
+		return findByU_GtC_ODI(
+			userId, createDate, objectDefinitionId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object entries where userId = &#63; and createDate &gt; &#63; and objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object entries
+	 * @param end the upper bound of the range of object entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object entries
+	 */
+	@Override
+	public List<ObjectEntry> findByU_GtC_ODI(
+		long userId, Date createDate, long objectDefinitionId, int start,
+		int end, OrderByComparator<ObjectEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = _finderPathWithPaginationFindByU_GtC_ODI;
+		finderArgs = new Object[] {
+			userId, _getTime(createDate), objectDefinitionId, start, end,
+			orderByComparator
+		};
+
+		List<ObjectEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<ObjectEntry>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ObjectEntry objectEntry : list) {
+					if ((userId != objectEntry.getUserId()) ||
+						(createDate.getTime() >= objectEntry.getCreateDate(
+						).getTime()) ||
+						(objectDefinitionId !=
+							objectEntry.getObjectDefinitionId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(5);
+			}
+
+			sb.append(_SQL_SELECT_OBJECTENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_U_GTC_ODI_USERID_2);
+
+			boolean bindCreateDate = false;
+
+			if (createDate == null) {
+				sb.append(_FINDER_COLUMN_U_GTC_ODI_CREATEDATE_1);
+			}
+			else {
+				bindCreateDate = true;
+
+				sb.append(_FINDER_COLUMN_U_GTC_ODI_CREATEDATE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_U_GTC_ODI_OBJECTDEFINITIONID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(ObjectEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				if (bindCreateDate) {
+					queryPos.add(new Timestamp(createDate.getTime()));
+				}
+
+				queryPos.add(objectDefinitionId);
+
+				list = (List<ObjectEntry>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first object entry in the ordered set where userId = &#63; and createDate &gt; &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object entry
+	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
+	 */
+	@Override
+	public ObjectEntry findByU_GtC_ODI_First(
+			long userId, Date createDate, long objectDefinitionId,
+			OrderByComparator<ObjectEntry> orderByComparator)
+		throws NoSuchObjectEntryException {
+
+		ObjectEntry objectEntry = fetchByU_GtC_ODI_First(
+			userId, createDate, objectDefinitionId, orderByComparator);
+
+		if (objectEntry != null) {
+			return objectEntry;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("userId=");
+		sb.append(userId);
+
+		sb.append(", createDate>");
+		sb.append(createDate);
+
+		sb.append(", objectDefinitionId=");
+		sb.append(objectDefinitionId);
+
+		sb.append("}");
+
+		throw new NoSuchObjectEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first object entry in the ordered set where userId = &#63; and createDate &gt; &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	@Override
+	public ObjectEntry fetchByU_GtC_ODI_First(
+		long userId, Date createDate, long objectDefinitionId,
+		OrderByComparator<ObjectEntry> orderByComparator) {
+
+		List<ObjectEntry> list = findByU_GtC_ODI(
+			userId, createDate, objectDefinitionId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last object entry in the ordered set where userId = &#63; and createDate &gt; &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object entry
+	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
+	 */
+	@Override
+	public ObjectEntry findByU_GtC_ODI_Last(
+			long userId, Date createDate, long objectDefinitionId,
+			OrderByComparator<ObjectEntry> orderByComparator)
+		throws NoSuchObjectEntryException {
+
+		ObjectEntry objectEntry = fetchByU_GtC_ODI_Last(
+			userId, createDate, objectDefinitionId, orderByComparator);
+
+		if (objectEntry != null) {
+			return objectEntry;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("userId=");
+		sb.append(userId);
+
+		sb.append(", createDate>");
+		sb.append(createDate);
+
+		sb.append(", objectDefinitionId=");
+		sb.append(objectDefinitionId);
+
+		sb.append("}");
+
+		throw new NoSuchObjectEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last object entry in the ordered set where userId = &#63; and createDate &gt; &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	@Override
+	public ObjectEntry fetchByU_GtC_ODI_Last(
+		long userId, Date createDate, long objectDefinitionId,
+		OrderByComparator<ObjectEntry> orderByComparator) {
+
+		int count = countByU_GtC_ODI(userId, createDate, objectDefinitionId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ObjectEntry> list = findByU_GtC_ODI(
+			userId, createDate, objectDefinitionId, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the object entries before and after the current object entry in the ordered set where userId = &#63; and createDate &gt; &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param objectEntryId the primary key of the current object entry
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object entry
+	 * @throws NoSuchObjectEntryException if a object entry with the primary key could not be found
+	 */
+	@Override
+	public ObjectEntry[] findByU_GtC_ODI_PrevAndNext(
+			long objectEntryId, long userId, Date createDate,
+			long objectDefinitionId,
+			OrderByComparator<ObjectEntry> orderByComparator)
+		throws NoSuchObjectEntryException {
+
+		ObjectEntry objectEntry = findByPrimaryKey(objectEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ObjectEntry[] array = new ObjectEntryImpl[3];
+
+			array[0] = getByU_GtC_ODI_PrevAndNext(
+				session, objectEntry, userId, createDate, objectDefinitionId,
+				orderByComparator, true);
+
+			array[1] = objectEntry;
+
+			array[2] = getByU_GtC_ODI_PrevAndNext(
+				session, objectEntry, userId, createDate, objectDefinitionId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ObjectEntry getByU_GtC_ODI_PrevAndNext(
+		Session session, ObjectEntry objectEntry, long userId, Date createDate,
+		long objectDefinitionId,
+		OrderByComparator<ObjectEntry> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		sb.append(_SQL_SELECT_OBJECTENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_U_GTC_ODI_USERID_2);
+
+		boolean bindCreateDate = false;
+
+		if (createDate == null) {
+			sb.append(_FINDER_COLUMN_U_GTC_ODI_CREATEDATE_1);
+		}
+		else {
+			bindCreateDate = true;
+
+			sb.append(_FINDER_COLUMN_U_GTC_ODI_CREATEDATE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_U_GTC_ODI_OBJECTDEFINITIONID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(ObjectEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(userId);
+
+		if (bindCreateDate) {
+			queryPos.add(new Timestamp(createDate.getTime()));
+		}
+
+		queryPos.add(objectDefinitionId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(objectEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ObjectEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the object entries where userId = &#63; and createDate &gt; &#63; and objectDefinitionId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param objectDefinitionId the object definition ID
+	 */
+	@Override
+	public void removeByU_GtC_ODI(
+		long userId, Date createDate, long objectDefinitionId) {
+
+		for (ObjectEntry objectEntry :
+				findByU_GtC_ODI(
+					userId, createDate, objectDefinitionId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(objectEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of object entries where userId = &#63; and createDate &gt; &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param createDate the create date
+	 * @param objectDefinitionId the object definition ID
+	 * @return the number of matching object entries
+	 */
+	@Override
+	public int countByU_GtC_ODI(
+		long userId, Date createDate, long objectDefinitionId) {
+
+		FinderPath finderPath = _finderPathWithPaginationCountByU_GtC_ODI;
+
+		Object[] finderArgs = new Object[] {
+			userId, _getTime(createDate), objectDefinitionId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_OBJECTENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_U_GTC_ODI_USERID_2);
+
+			boolean bindCreateDate = false;
+
+			if (createDate == null) {
+				sb.append(_FINDER_COLUMN_U_GTC_ODI_CREATEDATE_1);
+			}
+			else {
+				bindCreateDate = true;
+
+				sb.append(_FINDER_COLUMN_U_GTC_ODI_CREATEDATE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_U_GTC_ODI_OBJECTDEFINITIONID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				if (bindCreateDate) {
+					queryPos.add(new Timestamp(createDate.getTime()));
+				}
+
+				queryPos.add(objectDefinitionId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_U_GTC_ODI_USERID_2 =
+		"objectEntry.userId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_GTC_ODI_CREATEDATE_1 =
+		"objectEntry.createDate IS NULL AND ";
+
+	private static final String _FINDER_COLUMN_U_GTC_ODI_CREATEDATE_2 =
+		"objectEntry.createDate > ? AND ";
+
+	private static final String _FINDER_COLUMN_U_GTC_ODI_OBJECTDEFINITIONID_2 =
+		"objectEntry.objectDefinitionId = ?";
+
 	public ObjectEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -5565,6 +6181,22 @@ public class ObjectEntryPersistenceImpl
 			},
 			new String[] {"groupId", "objectDefinitionId", "status"}, false);
 
+		_finderPathWithPaginationFindByU_GtC_ODI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_GtC_ODI",
+			new String[] {
+				Long.class.getName(), Date.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"userId", "createDate", "objectDefinitionId"}, true);
+
+		_finderPathWithPaginationCountByU_GtC_ODI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_GtC_ODI",
+			new String[] {
+				Long.class.getName(), Date.class.getName(), Long.class.getName()
+			},
+			new String[] {"userId", "createDate", "objectDefinitionId"}, false);
+
 		ObjectEntryUtil.setPersistence(this);
 	}
 
@@ -5606,6 +6238,14 @@ public class ObjectEntryPersistenceImpl
 
 	@Reference
 	protected FinderCache finderCache;
+
+	private static Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
 
 	private static final String _SQL_SELECT_OBJECTENTRY =
 		"SELECT objectEntry FROM ObjectEntry objectEntry";

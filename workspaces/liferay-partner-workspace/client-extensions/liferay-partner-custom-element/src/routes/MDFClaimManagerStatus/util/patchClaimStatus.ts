@@ -31,7 +31,8 @@ const patchClaimStatus = async (
 		}
 
 		return;
-	} catch (error: unknown) {
+	}
+	catch (error: unknown) {
 		Liferay.Util.openToast({
 			message: 'The MDF Claim Status cannot be changed.',
 			type: 'danger',

@@ -14,7 +14,7 @@ import {viewsPageTest} from './fixtures/viewsPageTest';
 export const test = mergeTests(
 	actionsPageTest,
 	dataSetsPageTest,
-	loginTest,
+	loginTest(),
 	viewsPageTest
 );
 

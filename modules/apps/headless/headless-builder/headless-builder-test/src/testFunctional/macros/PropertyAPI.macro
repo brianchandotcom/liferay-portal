@@ -35,11 +35,11 @@ definition {
 		}
 
 		var body = '''
-			"apiPropertyType": "value",
 			"name": "${name}",
 			"objectFieldERC": "${objectFieldERC}",
 			"objectRelationshipNames": "${relationshipName}",
-			"r_apiSchemaToAPIProperties_c_apiSchemaERC": "${schemaERC}"
+			"r_apiSchemaToAPIProperties_c_apiSchemaERC": "${schemaERC}",
+			"type": "value"
 		''';
 
 		var curl = StringUtil.add(${curl}, " -d { ${body} }", "");

@@ -158,11 +158,6 @@ public class APISchemaEntityModelTest {
 					}
 
 					@Override
-					public PropertyType getPropertyType() {
-						return PropertyType.VALUE;
-					}
-
-					@Override
 					public String getSourceFieldName() {
 						return entry.getValue();
 					}

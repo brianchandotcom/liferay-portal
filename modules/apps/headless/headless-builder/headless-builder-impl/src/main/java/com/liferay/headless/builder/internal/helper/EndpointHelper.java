@@ -170,9 +170,7 @@ public class EndpointHelper {
 	private Object _getPropertyValue(
 		ObjectEntry objectEntry, APIApplication.Property property) {
 
-		if (property.getPropertyType() ==
-				APIApplication.Property.PropertyType.CONTAINER) {
-
+		if (property.getType() == APIApplication.Property.Type.CONTAINER) {
 			Map<String, Object> containerProperties = new HashMap<>();
 
 			for (APIApplication.Property childProperty :
@@ -268,8 +266,7 @@ public class EndpointHelper {
 		Map<String, Object> properties, APIApplication.Property property) {
 
 		if (Objects.equals(
-				APIApplication.Property.PropertyType.CONTAINER,
-				property.getPropertyType())) {
+				APIApplication.Property.Type.CONTAINER, property.getType())) {
 
 			for (APIApplication.Property childProperty :
 					property.getProperties()) {

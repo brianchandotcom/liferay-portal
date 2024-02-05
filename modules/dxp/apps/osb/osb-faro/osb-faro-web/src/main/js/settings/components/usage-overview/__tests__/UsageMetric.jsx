@@ -1,10 +1,10 @@
 import React from 'react';
-import UsageMetric from '../UsageMetric';
 import {fromJS} from 'immutable';
 import {getTimestamp, mockPlan} from 'test/data';
 import {Plan} from 'shared/util/records';
 import {render} from '@testing-library/react';
 import {SubscriptionStatuses} from 'shared/util/constants';
+import {UsageMetric} from '../UsageMetric';
 
 jest.unmock('react-dom');
 
@@ -73,11 +73,9 @@ describe('UsageMetric', () => {
 			status: SubscriptionStatuses.Ok
 		};
 
-		const {container} = render(<DefaultComponent {...props} />);
+		const {getByText} = render(<DefaultComponent {...props} />);
 
-		expect(
-			container.querySelector('.usage-since-label').textContent
-		).toEqual('10% since July 8, 2018');
+		expect(getByText('10% since Jul 08, 2018.')).toBeInTheDocument();
 	});
 
 	it('should display last anniversary date when subscription plan is enterprise', () => {
@@ -91,10 +89,8 @@ describe('UsageMetric', () => {
 			status: SubscriptionStatuses.Ok
 		};
 
-		const {container} = render(<DefaultComponent {...props} />);
+		const {getByText} = render(<DefaultComponent {...props} />);
 
-		expect(
-			container.querySelector('.usage-since-label').textContent
-		).toEqual('10% since July 10, 2017');
+		expect(getByText('10% since Jul 10, 2017.')).toBeInTheDocument();
 	});
 });

@@ -142,7 +142,7 @@ describe('BlockListCard', () => {
 		expect(
 			container.querySelector('.no-results-description').textContent
 		).toEqual(
-			"To block events, select one from the events' table.Access our documentation to learn how to manage custom events."
+			"To block events, select one from the events' table.Access our documentation to learn how to manage custom events.(Opens a new window)"
 		);
 	});
 });

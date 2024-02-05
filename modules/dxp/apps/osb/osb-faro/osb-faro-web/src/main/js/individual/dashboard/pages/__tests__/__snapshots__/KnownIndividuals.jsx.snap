@@ -403,9 +403,15 @@ exports[`Individuals Dashboard KnownIndividuals List renders with data source em
             <a
               class="d-block mb-3"
               href="https://learn.liferay.com/analytics-cloud/latest/en/getting-started/connecting-liferay-dxp-to-analytics-cloud.html"
+              rel="noreferrer noopener"
               target="_blank"
             >
               Access our documentation to learn more.
+              <span
+                class="sr-only"
+              >
+                (Opens a new window)
+              </span>
             </a>
             <a
               class="button-root btn btn-primary"

@@ -268,6 +268,7 @@ exports[`NewRequestModal renders 1`] = `
                       >
                         Please upload files in CSV format. A sample file can be found 
                         <a
+                          class=""
                           download="example_user_request.csv"
                           href="data:text/octet-stream;charset=utf-8,user@example.com
 user1@example.com

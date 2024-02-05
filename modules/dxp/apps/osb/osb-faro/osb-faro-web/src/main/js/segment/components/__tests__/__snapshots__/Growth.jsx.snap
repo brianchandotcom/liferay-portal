@@ -29,10 +29,17 @@ exports[`SegmentGrowthChart should render 1`] = `
             Check back later to verify if data has been received from your data sources.
           </span>
           <a
+            class=""
             href="https://learn.liferay.com/analytics-cloud/latest/en/people/segments/segments.html#overview-tab"
+            rel="noreferrer noopener"
             target="_blank"
           >
             Learn more about segment membership.
+            <span
+              class="sr-only"
+            >
+              (Opens a new window)
+            </span>
           </a>
         </div>
       </div>

@@ -468,9 +468,15 @@ exports[`InterestTopics should render with a message to add keywords if there ar
       <a
         class="d-block mb-3"
         href="https://learn.liferay.com/analytics-cloud/latest/en/workspace-data/definitions/managing-interest-topics.html"
+        rel="noreferrer noopener"
         target="_blank"
       >
         Learn more about interest topics.
+        <span
+          class="sr-only"
+        >
+          (Opens a new window)
+        </span>
       </a>
     </div>
   </div>

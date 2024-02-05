@@ -9,7 +9,9 @@ exports[`SuccessDisplayIf should render a scheduled maintenance error page if th
       class="header-container"
     >
       <a
+        class=""
         href="https://liferay.com"
+        rel="noreferrer noopener"
         target="_blank"
       >
         <svg
@@ -20,6 +22,11 @@ exports[`SuccessDisplayIf should render a scheduled maintenance error page if th
             href="#liferay-logo"
           />
         </svg>
+        <span
+          class="sr-only"
+        >
+          (Opens a new window)
+        </span>
       </a>
       <div>
         <button
@@ -103,7 +110,9 @@ exports[`SuccessDisplayIf should render activating display if project state is "
       class="header-container"
     >
       <a
+        class=""
         href="https://liferay.com"
+        rel="noreferrer noopener"
         target="_blank"
       >
         <svg
@@ -114,6 +123,11 @@ exports[`SuccessDisplayIf should render activating display if project state is "
             href="#liferay-logo"
           />
         </svg>
+        <span
+          class="sr-only"
+        >
+          (Opens a new window)
+        </span>
       </a>
       <div>
         <button
@@ -239,7 +253,9 @@ exports[`SuccessDisplayIf should render activating display if project state is "
       class="header-container"
     >
       <a
+        class=""
         href="https://liferay.com"
+        rel="noreferrer noopener"
         target="_blank"
       >
         <svg
@@ -250,6 +266,11 @@ exports[`SuccessDisplayIf should render activating display if project state is "
             href="#liferay-logo"
           />
         </svg>
+        <span
+          class="sr-only"
+        >
+          (Opens a new window)
+        </span>
       </a>
       <div>
         <button
@@ -341,7 +362,9 @@ exports[`SuccessDisplayIf should render an error page if there was an error fetc
       class="header-container"
     >
       <a
+        class=""
         href="https://liferay.com"
+        rel="noreferrer noopener"
         target="_blank"
       >
         <svg
@@ -352,6 +375,11 @@ exports[`SuccessDisplayIf should render an error page if there was an error fetc
             href="#liferay-logo"
           />
         </svg>
+        <span
+          class="sr-only"
+        >
+          (Opens a new window)
+        </span>
       </a>
       <div>
         <button
@@ -476,7 +504,9 @@ exports[`SuccessDisplayIf should render an unavailable error page if the project
       class="header-container"
     >
       <a
+        class=""
         href="https://liferay.com"
+        rel="noreferrer noopener"
         target="_blank"
       >
         <svg
@@ -487,6 +517,11 @@ exports[`SuccessDisplayIf should render an unavailable error page if the project
             href="#liferay-logo"
           />
         </svg>
+        <span
+          class="sr-only"
+        >
+          (Opens a new window)
+        </span>
       </a>
       <div>
         <button

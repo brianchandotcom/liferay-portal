@@ -113,10 +113,17 @@ exports[`ConnectDXPModal renders 1`] = `
             class="secondary-description w-100 ml-6 mt-1"
           >
             <a
+              class=""
               href="https://learn.liferay.com/analytics-cloud/latest/en/connecting-data-sources/connecting-liferay-dxp-to-analytics-cloud.html"
+              rel="noreferrer noopener"
               target="_blank"
             >
               Click here
+              <span
+                class="sr-only"
+              >
+                (Opens a new window)
+              </span>
             </a>
              to learn how to connect Liferay DXP to Analytics Cloud.
           </div>
@@ -178,6 +185,7 @@ exports[`ConnectDXPModal renders 1`] = `
               <a
                 class="btn btn-secondary button-root more-information-link mt-4"
                 href="https://customer.liferay.com/downloads/-/download/liferay-dxp-7-0-fix-pack-98"
+                rel="noreferrer noopener"
                 target="_blank"
               >
                 <svg
@@ -189,6 +197,11 @@ exports[`ConnectDXPModal renders 1`] = `
                   />
                 </svg>
                 Download
+                <span
+                  class="sr-only"
+                >
+                  (Opens a new window)
+                </span>
               </a>
             </div>
           </div>

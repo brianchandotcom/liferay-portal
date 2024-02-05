@@ -134,6 +134,7 @@ exports[`SalesforceTabRoutes should render 1`] = `
                     Salesforce
                      Data Source. You will need to enter the credentials of the data source's administrator. If you need help setting this up, please refer to the 
                     <a
+                      class=""
                       href="https://developer.salesforce.com/page/Connected_Apps"
                     >
                       documentation

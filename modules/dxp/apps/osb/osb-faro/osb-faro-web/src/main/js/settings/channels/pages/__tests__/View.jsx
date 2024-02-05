@@ -143,7 +143,7 @@ describe('View Channel', () => {
 		const modalText = screen.getByText((content, node) => {
 			const hasText = node =>
 				node.textContent ===
-				'Ensure no sites and channels are assigned to it before deleting a property. To disconnect them from a property, navigate to Instance Settings > Analytics Cloud > Properties and select the properties with synchronizations that you wish to undo. Access our documentation to learn more.';
+				'Ensure no sites and channels are assigned to it before deleting a property. To disconnect them from a property, navigate to Instance Settings > Analytics Cloud > Properties and select the properties with synchronizations that you wish to undo. Access our documentation to learn more.(Opens a new window)';
 			const nodeHasText = hasText(node);
 			const childrenDontHaveText = Array.from(node.children).every(
 				child => !hasText(child)

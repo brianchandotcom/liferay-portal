@@ -124,9 +124,15 @@ exports[`Individuals Dashboard Distribution renders 1`] = `
                         <a
                           class="d-block"
                           href="https://learn.liferay.com/analytics-cloud/latest/en/people/individuals/individuals-dashboard.html#breakdown"
+                          rel="noreferrer noopener"
                           target="_blank"
                         >
                           Learn more about distribution.
+                          <span
+                            class="sr-only"
+                          >
+                            (Opens a new window)
+                          </span>
                         </a>
                       </div>
                     </div>
@@ -174,9 +180,15 @@ exports[`Individuals Dashboard Distribution renders with data source empty state
         <a
           class="d-block mb-3"
           href="https://learn.liferay.com/analytics-cloud/latest/en/getting-started/connecting-liferay-dxp-to-analytics-cloud.html"
+          rel="noreferrer noopener"
           target="_blank"
         >
           Access our documentation to learn more.
+          <span
+            class="sr-only"
+          >
+            (Opens a new window)
+          </span>
         </a>
         <a
           class="button-root btn btn-primary"

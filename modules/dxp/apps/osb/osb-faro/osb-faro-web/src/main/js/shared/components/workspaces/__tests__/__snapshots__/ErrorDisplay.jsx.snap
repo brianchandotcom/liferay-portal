@@ -9,7 +9,9 @@ exports[`WorkspacesErrorDisplay should render 1`] = `
       class="header-container"
     >
       <a
+        class=""
         href="https://liferay.com"
+        rel="noreferrer noopener"
         target="_blank"
       >
         <svg
@@ -20,6 +22,11 @@ exports[`WorkspacesErrorDisplay should render 1`] = `
             href="#liferay-logo"
           />
         </svg>
+        <span
+          class="sr-only"
+        >
+          (Opens a new window)
+        </span>
       </a>
       <div>
         <button

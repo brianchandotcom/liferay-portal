@@ -1,15 +1,366 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Subscription Details renders subscription details for BASIC PLAN 1`] = `
+<div
+  class="card card-root"
+  data-testid="subscription-details"
+>
+  <div
+    class="card-header py-2"
+  >
+    <h5
+      class="card-title"
+    >
+      <span
+        class="text-3 text-secondary"
+      >
+        SUBSCRIPTION DETAILS
+      </span>
+    </h5>
+  </div>
+  <hr
+    class="m-0"
+  />
+  <div
+    class="card-body pb-0"
+  >
+    <div
+      class="mb-2"
+    >
+      <span
+        class="text-3 font-weight-semi-bold"
+      >
+        Basic
+      </span>
+    </div>
+    <div
+      class="d-flex justify-content-between mb-1"
+    >
+      <span
+        class="text-3 text-secondary font-weight-semi-bold"
+      >
+        Individuals
+      </span>
+      <span
+        class="text-3 text-secondary"
+      >
+        1,000
+      </span>
+    </div>
+    <div
+      class="d-flex justify-content-between mb-1"
+    >
+      <span
+        class="text-3 text-secondary font-weight-semi-bold"
+      >
+        Page Views
+      </span>
+      <span
+        class="text-3 text-secondary"
+      >
+        300,000
+      </span>
+    </div>
+    <div
+      class="d-flex justify-content-between mb-1"
+    >
+      <span
+        class="text-3 text-secondary font-weight-semi-bold"
+      >
+        Workspace Users
+      </span>
+      <span
+        class="text-3 text-secondary"
+      >
+        Unlimited
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Subscription Details renders subscription details for BUSINESS PLAN 1`] = `
+<div
+  class="card card-root"
+  data-testid="subscription-details"
+>
+  <div
+    class="card-header py-2"
+  >
+    <h5
+      class="card-title"
+    >
+      <span
+        class="text-3 text-secondary"
+      >
+        SUBSCRIPTION DETAILS
+      </span>
+    </h5>
+  </div>
+  <hr
+    class="m-0"
+  />
+  <div
+    class="card-body pb-0"
+  >
+    <div
+      class="mb-2"
+    >
+      <span
+        class="text-3 font-weight-semi-bold"
+      >
+        Business
+      </span>
+    </div>
+    <div
+      class="d-flex justify-content-between mb-1"
+    >
+      <span
+        class="text-3 text-secondary font-weight-semi-bold"
+      >
+        Individuals
+      </span>
+      <span
+        class="text-3 text-secondary"
+      >
+        10,000
+      </span>
+    </div>
+    <div
+      class="d-flex justify-content-between mb-1"
+    >
+      <span
+        class="text-3 text-secondary font-weight-semi-bold"
+      >
+        Page Views
+      </span>
+      <span
+        class="text-3 text-secondary"
+      >
+        5,000,000
+      </span>
+    </div>
+    <div
+      class="d-flex justify-content-between mb-1"
+    >
+      <span
+        class="text-3 text-secondary font-weight-semi-bold"
+      >
+        Workspace Users
+      </span>
+      <span
+        class="text-3 text-secondary"
+      >
+        Unlimited
+      </span>
+    </div>
+  </div>
+  <div
+    class="card-header pb-2"
+  >
+    <h5
+      class="card-title"
+    >
+      <span
+        class="text-3 text-secondary"
+      >
+        PURCHASED ADD-ONS
+      </span>
+    </h5>
+  </div>
+  <div
+    class="card-body"
+  >
+    <hr
+      class="mt-0"
+    />
+    <div
+      class="mb-2"
+    >
+      <span
+        class="text-3 text-secondary"
+      >
+        Tailor limits to business needs. Incrementally increase individual or page view limits as needed without committing to a new plan.
+      </span>
+    </div>
+    <div
+      class="d-flex justify-content-between mb-1"
+    >
+      <span
+        class="text-3 text-secondary font-weight-semi-bold"
+      >
+        Individuals
+      </span>
+      <span
+        class="text-3 text-secondary"
+      >
+        5,000
+      </span>
+    </div>
+    <div
+      class="d-flex justify-content-between mb-1"
+    >
+      <span
+        class="text-3 text-secondary font-weight-semi-bold"
+      >
+        Page Views
+      </span>
+      <span
+        class="text-3 text-secondary"
+      >
+        5,000,000
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Subscription Details renders subscription details for ENTERPRISE PLAN 1`] = `
+<div
+  class="card card-root"
+  data-testid="subscription-details"
+>
+  <div
+    class="card-header py-2"
+  >
+    <h5
+      class="card-title"
+    >
+      <span
+        class="text-3 text-secondary"
+      >
+        SUBSCRIPTION DETAILS
+      </span>
+    </h5>
+  </div>
+  <hr
+    class="m-0"
+  />
+  <div
+    class="card-body pb-0"
+  >
+    <div
+      class="mb-2"
+    >
+      <span
+        class="text-3 font-weight-semi-bold"
+      >
+        Enterprise
+      </span>
+    </div>
+    <div
+      class="d-flex justify-content-between mb-1"
+    >
+      <span
+        class="text-3 text-secondary font-weight-semi-bold"
+      >
+        Individuals
+      </span>
+      <span
+        class="text-3 text-secondary"
+      >
+        100,000
+      </span>
+    </div>
+    <div
+      class="d-flex justify-content-between mb-1"
+    >
+      <span
+        class="text-3 text-secondary font-weight-semi-bold"
+      >
+        Page Views
+      </span>
+      <span
+        class="text-3 text-secondary"
+      >
+        60,000,000
+      </span>
+    </div>
+    <div
+      class="d-flex justify-content-between mb-1"
+    >
+      <span
+        class="text-3 text-secondary font-weight-semi-bold"
+      >
+        Workspace Users
+      </span>
+      <span
+        class="text-3 text-secondary"
+      >
+        Unlimited
+      </span>
+    </div>
+  </div>
+  <div
+    class="card-header pb-2"
+  >
+    <h5
+      class="card-title"
+    >
+      <span
+        class="text-3 text-secondary"
+      >
+        PURCHASED ADD-ONS
+      </span>
+    </h5>
+  </div>
+  <div
+    class="card-body"
+  >
+    <hr
+      class="mt-0"
+    />
+    <div
+      class="mb-2"
+    >
+      <span
+        class="text-3 text-secondary"
+      >
+        Tailor limits to business needs. Incrementally increase individual or page view limits as needed without committing to a new plan.
+      </span>
+    </div>
+    <div
+      class="d-flex justify-content-between mb-1"
+    >
+      <span
+        class="text-3 text-secondary font-weight-semi-bold"
+      >
+        Individuals
+      </span>
+      <span
+        class="text-3 text-secondary"
+      >
+        5,000
+      </span>
+    </div>
+    <div
+      class="d-flex justify-content-between mb-1"
+    >
+      <span
+        class="text-3 text-secondary font-weight-semi-bold"
+      >
+        Page Views
+      </span>
+      <span
+        class="text-3 text-secondary"
+      >
+        5,000,000
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`UsageOverview should render 1`] = `
 <div>
   <div
-    class="settings-base-page-root usage-overview-page-root"
+    class="settings-base-page-root"
   >
     <div
       class="maintenance-alert-root"
     />
     <div
-      class="content-header"
+      class="content-header has-page-actions"
     >
       <div
         class="header-text"
@@ -25,14 +376,41 @@ exports[`UsageOverview should render 1`] = `
               data-tooltip="false"
               title=""
             >
-              Current Usage Limits
+              Subscription & Usage
             </span>
           </h3>
+        </div>
+        <div
+          class="description"
+        >
+          Plans are limited by the total amount of individuals and page views.
         </div>
       </div>
       <div
         class="page-actions-container"
-      />
+      >
+        <a
+          class="button-root btn btn-primary"
+          href="https://support.liferay.com/"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-shortcut mr-2"
+            role="presentation"
+          >
+            <use
+              href="#shortcut"
+            />
+          </svg>
+          Manage Subscriptions
+          <span
+            class="sr-only"
+          >
+            (Opens a new window)
+          </span>
+        </a>
+      </div>
     </div>
     <div>
       <div
@@ -42,33 +420,50 @@ exports[`UsageOverview should render 1`] = `
           class="col-xl-8"
         >
           <div
-            class="text-secondary"
-          >
-            <p>
-              <b>
-                Plans are limited by the total amount of individuals and page views.
-              </b>
-            </p>
-            <p>
-              When either limit is exceeded, the current plan will either have to be upgraded or add-ons will have to be purchased to accommodate the overage.
-            </p>
-          </div>
-          <div
             class="card card-root"
           >
             <div
+              class="card-header"
+            >
+              <h5
+                class="card-title"
+              >
+                Usage Limits
+              </h5>
+            </div>
+            <div
               class="card-body"
             >
+              <p>
+                <span
+                  class="text-3 text-secondary"
+                >
+                  When either limit is exceeded, the current plan will either have to be upgraded or add-ons will have to be purchased to accommodate the overage.
+                </span>
+              </p>
+              <p
+                data-testid="next-anniversary-date"
+              >
+                <span
+                  class="text-3 text-secondary"
+                >
+                  Plan usage resets on 
+                  <b>
+                    Jul 08, 2019
+                  </b>
+                  .
+                </span>
+              </p>
               <div
-                class="overview-usage-metric-root"
+                class="my-4"
               >
                 <h3
-                  class="metric-name"
+                  class="text-secondary"
                 >
                   Individuals
                 </h3>
                 <div
-                  class="metric-breakdown"
+                  class="d-flex align-items-center"
                 >
                   <div
                     class="sticker sticker-root sticker-static sticker-rounded sticker-dark"
@@ -83,32 +478,34 @@ exports[`UsageOverview should render 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="metric-breakdown-content"
+                    class="m-2"
                   >
-                    <div>
-                      <span>
-                        <span
-                          class="metric-current"
-                        >
-                          2,057
-                        </span>
-                         of 
-                        <span
-                          class="metric-limit"
-                        >
-                          105,000
-                        </span>
-                      </span>
-                      <span
-                        class="text-secondary usage-since-label semibold"
-                      >
-                        2% since July 8, 2018
-                      </span>
-                    </div>
-                    <div
-                      class="text-muted small semibold"
+                    <span
+                      class="mr-2"
                     >
-                      Enterprise Plan 95,000 + 5,000 Add-On (2x)
+                      <h2
+                        class="m-0 d-inline"
+                      >
+                        2,057
+                      </h2>
+                       of 
+                      <span
+                        class="text-3 font-weight-semi-bold"
+                      >
+                        105,000
+                      </span>
+                    </span>
+                    <span
+                      class="text-3 text-secondary font-weight-semi-bold"
+                    >
+                      2% since Jul 08, 2018.
+                    </span>
+                    <div>
+                      <span
+                        class="text-3 text-muted font-weight-semi-bold"
+                      >
+                        Enterprise Plan 95,000 + 5,000 Add-On (2x)
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -127,15 +524,15 @@ exports[`UsageOverview should render 1`] = `
                 </div>
               </div>
               <div
-                class="overview-usage-metric-root"
+                class="mt-4"
               >
                 <h3
-                  class="metric-name"
+                  class="text-secondary"
                 >
                   Page Views
                 </h3>
                 <div
-                  class="metric-breakdown"
+                  class="d-flex align-items-center"
                 >
                   <div
                     class="sticker sticker-root sticker-static sticker-rounded sticker-dark"
@@ -150,32 +547,34 @@ exports[`UsageOverview should render 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="metric-breakdown-content"
+                    class="m-2"
                   >
-                    <div>
-                      <span>
-                        <span
-                          class="metric-current"
-                        >
-                          100,023
-                        </span>
-                         of 
-                        <span
-                          class="metric-limit"
-                        >
-                          7,000,000
-                        </span>
-                      </span>
-                      <span
-                        class="text-secondary usage-since-label semibold"
-                      >
-                        1.4% since July 8, 2018
-                      </span>
-                    </div>
-                    <div
-                      class="text-muted small semibold"
+                    <span
+                      class="mr-2"
                     >
-                      Enterprise Plan 2,000,000 + 5,000,000 Add-On (1x)
+                      <h2
+                        class="m-0 d-inline"
+                      >
+                        100,023
+                      </h2>
+                       of 
+                      <span
+                        class="text-3 font-weight-semi-bold"
+                      >
+                        7,000,000
+                      </span>
+                    </span>
+                    <span
+                      class="text-3 text-secondary font-weight-semi-bold"
+                    >
+                      1.4% since Jul 08, 2018.
+                    </span>
+                    <div>
+                      <span
+                        class="text-3 text-muted font-weight-semi-bold"
+                      >
+                        Enterprise Plan 2,000,000 + 5,000,000 Add-On (1x)
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -197,276 +596,138 @@ exports[`UsageOverview should render 1`] = `
           </div>
         </div>
         <div
-          class="col-xl-4 plans"
+          class="col-xl-4"
         >
-          <div>
-            <h4>
-              Plans
-            </h4>
+          <div
+            class="card card-root"
+            data-testid="subscription-details"
+          >
             <div
-              class="plans-list-root"
+              class="card-header py-2"
+            >
+              <h5
+                class="card-title"
+              >
+                <span
+                  class="text-3 text-secondary"
+                >
+                  SUBSCRIPTION DETAILS
+                </span>
+              </h5>
+            </div>
+            <hr
+              class="m-0"
+            />
+            <div
+              class="card-body pb-0"
             >
               <div
-                class="panel-root"
+                class="mb-2"
               >
-                <div
-                  class="panel-header"
-                  role="button"
-                  tabindex="0"
+                <span
+                  class="text-3 font-weight-semi-bold"
                 >
-                  <div
-                    class="trigger"
-                  >
-                    <svg
-                      class="lexicon-icon lexicon-icon-angle-up icon-root"
-                      role="presentation"
-                    >
-                      <use
-                        href="#angle-up"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="panel-title"
-                  >
-                    <div
-                      class="plan-title"
-                    >
-                      <div
-                        class="plan-name"
-                      >
-                        Enterprise
-                      </div>
-                      <div
-                        class="label label-root label-primary label-lg label-uppercase"
-                      >
-                        <span
-                          class="label-item"
-                        >
-                          Current Plan
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="panel-body"
-                >
-                  <div
-                    class="plan-breakdown small"
-                  >
-                    <div
-                      class="limits"
-                    >
-                      <ul>
-                        <li>
-                          <svg
-                            class="lexicon-icon lexicon-icon-ac-individual icon-root"
-                            role="presentation"
-                          >
-                            <use
-                              href="#ac-individual"
-                            />
-                          </svg>
-                          <span
-                            class="limit-amount semibold"
-                          >
-                            100,000
-                          </span>
-                          <span
-                            class="text-secondary"
-                          >
-                            Individuals
-                          </span>
-                        </li>
-                        <li>
-                          <svg
-                            class="lexicon-icon lexicon-icon-faro-page-views icon-root"
-                            role="presentation"
-                          >
-                            <use
-                              href="#faro-page-views"
-                            />
-                          </svg>
-                          <span
-                            class="limit-amount semibold"
-                          >
-                            60,000,000
-                          </span>
-                          <span
-                            class="text-secondary"
-                          >
-                            Page Views
-                          </span>
-                        </li>
-                        <li>
-                          <svg
-                            class="lexicon-icon lexicon-icon-ac-users icon-root"
-                            role="presentation"
-                          >
-                            <use
-                              href="#ac-users"
-                            />
-                          </svg>
-                          <span
-                            class="limit-amount semibold"
-                          >
-                            Unlimited
-                          </span>
-                          <span
-                            class="text-secondary"
-                          >
-                            Users
-                          </span>
-                        </li>
-                        <li>
-                          <svg
-                            class="lexicon-icon lexicon-icon-calendar-usage icon-root"
-                            role="presentation"
-                          >
-                            <use
-                              href="#calendar-usage"
-                            />
-                          </svg>
-                          <span
-                            class="limit-amount semibold"
-                          >
-                            Workspace Birthday
-                          </span>
-                          <span
-                            class="text-secondary"
-                          >
-                            2018-07-08
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <h4>
-              Add-ons
-            </h4>
-            <div
-              class="text-secondary"
-            >
-              <p>
-                Tailor limits to business needs. Incrementally increase individual or page view limits as needed without committing to a new plan.
-              </p>
-            </div>
-            <div
-              class="addons-list-root"
-            >
-              <div
-                class="panel-root"
-              >
-                <div
-                  class="panel-body"
-                >
-                  <div
-                    class="plan-title"
-                  >
-                    <div
-                      class="plan-name"
-                    >
-                      <span>
-                        <svg
-                          class="lexicon-icon lexicon-icon-ac-individual icon-root"
-                          role="presentation"
-                        >
-                          <use
-                            href="#ac-individual"
-                          />
-                        </svg>
-                        <span
-                          class="limit-amount semibold"
-                        >
-                          <b
-                            class="text-secondary"
-                          >
-                            +
-                          </b>
-                          5,000
-                        </span>
-                        <span
-                          class="text-secondary"
-                        >
-                          <b
-                            class="details-label"
-                          >
-                            Individuals
-                          </b>
-                        </span>
-                      </span>
-                    </div>
-                    <div
-                      class="label label-root label-primary label-lg label-uppercase"
-                    >
-                      <span
-                        class="label-item"
-                      >
-                        2X
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                  Enterprise
+                </span>
               </div>
               <div
-                class="panel-root"
+                class="d-flex justify-content-between mb-1"
               >
-                <div
-                  class="panel-body"
+                <span
+                  class="text-3 text-secondary font-weight-semi-bold"
                 >
-                  <div
-                    class="plan-title"
-                  >
-                    <div
-                      class="plan-name"
-                    >
-                      <span>
-                        <svg
-                          class="lexicon-icon lexicon-icon-faro-page-views icon-root"
-                          role="presentation"
-                        >
-                          <use
-                            href="#faro-page-views"
-                          />
-                        </svg>
-                        <span
-                          class="limit-amount semibold"
-                        >
-                          <b
-                            class="text-secondary"
-                          >
-                            +
-                          </b>
-                          5,000,000
-                        </span>
-                        <span
-                          class="text-secondary"
-                        >
-                          <b
-                            class="details-label"
-                          >
-                            Page Views
-                          </b>
-                        </span>
-                      </span>
-                    </div>
-                    <div
-                      class="label label-root label-primary label-lg label-uppercase"
-                    >
-                      <span
-                        class="label-item"
-                      >
-                        1X
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                  Individuals
+                </span>
+                <span
+                  class="text-3 text-secondary"
+                >
+                  100,000
+                </span>
+              </div>
+              <div
+                class="d-flex justify-content-between mb-1"
+              >
+                <span
+                  class="text-3 text-secondary font-weight-semi-bold"
+                >
+                  Page Views
+                </span>
+                <span
+                  class="text-3 text-secondary"
+                >
+                  60,000,000
+                </span>
+              </div>
+              <div
+                class="d-flex justify-content-between mb-1"
+              >
+                <span
+                  class="text-3 text-secondary font-weight-semi-bold"
+                >
+                  Workspace Users
+                </span>
+                <span
+                  class="text-3 text-secondary"
+                >
+                  Unlimited
+                </span>
+              </div>
+            </div>
+            <div
+              class="card-header pb-2"
+            >
+              <h5
+                class="card-title"
+              >
+                <span
+                  class="text-3 text-secondary"
+                >
+                  PURCHASED ADD-ONS
+                </span>
+              </h5>
+            </div>
+            <div
+              class="card-body"
+            >
+              <hr
+                class="mt-0"
+              />
+              <div
+                class="mb-2"
+              >
+                <span
+                  class="text-3 text-secondary"
+                >
+                  Tailor limits to business needs. Incrementally increase individual or page view limits as needed without committing to a new plan.
+                </span>
+              </div>
+              <div
+                class="d-flex justify-content-between mb-1"
+              >
+                <span
+                  class="text-3 text-secondary font-weight-semi-bold"
+                >
+                  Individuals
+                </span>
+                <span
+                  class="text-3 text-secondary"
+                >
+                  5,000
+                </span>
+              </div>
+              <div
+                class="d-flex justify-content-between mb-1"
+              >
+                <span
+                  class="text-3 text-secondary font-weight-semi-bold"
+                >
+                  Page Views
+                </span>
+                <span
+                  class="text-3 text-secondary"
+                >
+                  5,000,000
+                </span>
               </div>
             </div>
           </div>

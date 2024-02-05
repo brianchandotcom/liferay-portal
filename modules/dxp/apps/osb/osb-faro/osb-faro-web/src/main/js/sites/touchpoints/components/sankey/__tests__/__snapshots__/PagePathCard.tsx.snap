@@ -333,8 +333,10 @@ exports[`PagePathCard should render 1`] = `
                     />
                   </svg>
                   <a
+                    class=""
                     data-tooltip-align="right"
                     href="https://www.liferay.com"
+                    rel="noreferrer noopener"
                     target="_blank"
                     title="Visit https://www.liferay.com"
                   >
@@ -349,6 +351,11 @@ exports[`PagePathCard should render 1`] = `
                     >
                       https://www.lifera...
                     </text>
+                    <span
+                      class="sr-only"
+                    >
+                      (Opens a new window)
+                    </span>
                   </a>
                 </g>
               </g>
@@ -401,8 +408,10 @@ exports[`PagePathCard should render 1`] = `
                     />
                   </svg>
                   <a
+                    class=""
                     data-tooltip-align="right"
                     href="https://www.google.com"
+                    rel="noreferrer noopener"
                     target="_blank"
                     title="Visit https://www.google.com"
                   >
@@ -417,6 +426,11 @@ exports[`PagePathCard should render 1`] = `
                     >
                       https://www.google...
                     </text>
+                    <span
+                      class="sr-only"
+                    >
+                      (Opens a new window)
+                    </span>
                   </a>
                 </g>
               </g>
@@ -469,8 +483,10 @@ exports[`PagePathCard should render 1`] = `
                     />
                   </svg>
                   <a
+                    class=""
                     data-tooltip-align="right"
                     href="https://www.facebook.com"
+                    rel="noreferrer noopener"
                     target="_blank"
                     title="Visit https://www.facebook.com"
                   >
@@ -485,6 +501,11 @@ exports[`PagePathCard should render 1`] = `
                     >
                       https://www.facebo...
                     </text>
+                    <span
+                      class="sr-only"
+                    >
+                      (Opens a new window)
+                    </span>
                   </a>
                 </g>
               </g>
@@ -537,8 +558,10 @@ exports[`PagePathCard should render 1`] = `
                     />
                   </svg>
                   <a
+                    class=""
                     data-tooltip-align="right"
                     href="https://www.instagram.com"
+                    rel="noreferrer noopener"
                     target="_blank"
                     title="Visit https://www.instagram.com"
                   >
@@ -553,6 +576,11 @@ exports[`PagePathCard should render 1`] = `
                     >
                       https://www.instag...
                     </text>
+                    <span
+                      class="sr-only"
+                    >
+                      (Opens a new window)
+                    </span>
                   </a>
                 </g>
               </g>
@@ -688,8 +716,10 @@ exports[`PagePathCard should render 1`] = `
                     />
                   </svg>
                   <a
+                    class=""
                     data-tooltip-align="right"
                     href="https://www.site1.com"
+                    rel="noreferrer noopener"
                     target="_blank"
                     title="Visit https://www.site1.com"
                   >
@@ -704,6 +734,11 @@ exports[`PagePathCard should render 1`] = `
                     >
                       https://www.site1....
                     </text>
+                    <span
+                      class="sr-only"
+                    >
+                      (Opens a new window)
+                    </span>
                   </a>
                 </g>
               </g>
@@ -763,8 +798,10 @@ exports[`PagePathCard should render 1`] = `
                     />
                   </svg>
                   <a
+                    class=""
                     data-tooltip-align="right"
                     href="https://www.site2.com"
+                    rel="noreferrer noopener"
                     target="_blank"
                     title="Visit https://www.site2.com"
                   >
@@ -779,6 +816,11 @@ exports[`PagePathCard should render 1`] = `
                     >
                       https://www.site2....
                     </text>
+                    <span
+                      class="sr-only"
+                    >
+                      (Opens a new window)
+                    </span>
                   </a>
                 </g>
               </g>
@@ -838,8 +880,10 @@ exports[`PagePathCard should render 1`] = `
                     />
                   </svg>
                   <a
+                    class=""
                     data-tooltip-align="right"
                     href="https://www.site3.com"
+                    rel="noreferrer noopener"
                     target="_blank"
                     title="Visit https://www.site3.com"
                   >
@@ -854,6 +898,11 @@ exports[`PagePathCard should render 1`] = `
                     >
                       https://www.site3....
                     </text>
+                    <span
+                      class="sr-only"
+                    >
+                      (Opens a new window)
+                    </span>
                   </a>
                 </g>
               </g>

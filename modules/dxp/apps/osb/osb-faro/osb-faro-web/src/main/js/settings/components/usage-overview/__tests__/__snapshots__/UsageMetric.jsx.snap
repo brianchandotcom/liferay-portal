@@ -2,16 +2,14 @@
 
 exports[`UsageMetric should render 1`] = `
 <div>
-  <div
-    class="overview-usage-metric-root"
-  >
+  <div>
     <h3
-      class="metric-name"
+      class="text-secondary"
     >
       Page Views
     </h3>
     <div
-      class="metric-breakdown"
+      class="d-flex align-items-center"
     >
       <div
         class="sticker sticker-root sticker-static sticker-rounded sticker-dark"
@@ -26,32 +24,34 @@ exports[`UsageMetric should render 1`] = `
         </svg>
       </div>
       <div
-        class="metric-breakdown-content"
+        class="m-2"
       >
-        <div>
-          <span>
-            <span
-              class="metric-current"
-            >
-              0
-            </span>
-             of 
-            <span
-              class="metric-limit"
-            >
-              7,000,000
-            </span>
-          </span>
-          <span
-            class="text-secondary usage-since-label semibold"
-          >
-            0% since July 8, 2018
-          </span>
-        </div>
-        <div
-          class="text-muted small semibold"
+        <span
+          class="mr-2"
         >
-          Enterprise Plan 2,000,000 + 5,000,000 Add-On (1x)
+          <h2
+            class="m-0 d-inline"
+          >
+            0
+          </h2>
+           of 
+          <span
+            class="text-3 font-weight-semi-bold"
+          >
+            7,000,000
+          </span>
+        </span>
+        <span
+          class="text-3 text-secondary font-weight-semi-bold"
+        >
+          0% since Jul 08, 2018.
+        </span>
+        <div>
+          <span
+            class="text-3 text-muted font-weight-semi-bold"
+          >
+            Enterprise Plan 2,000,000 + 5,000,000 Add-On (1x)
+          </span>
         </div>
       </div>
     </div>

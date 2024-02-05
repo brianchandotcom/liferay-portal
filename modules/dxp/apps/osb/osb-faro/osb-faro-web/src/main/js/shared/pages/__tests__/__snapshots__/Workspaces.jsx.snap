@@ -12,7 +12,9 @@ exports[`Workspaces should render a list of projects if there is only one projec
         class="header-container"
       >
         <a
+          class=""
           href="https://liferay.com"
+          rel="noreferrer noopener"
           target="_blank"
         >
           <svg
@@ -23,6 +25,11 @@ exports[`Workspaces should render a list of projects if there is only one projec
               href="#liferay-logo"
             />
           </svg>
+          <span
+            class="sr-only"
+          >
+            (Opens a new window)
+          </span>
         </a>
         <div>
           <button
@@ -186,7 +193,9 @@ exports[`Workspaces should render empty state 1`] = `
         class="header-container"
       >
         <a
+          class=""
           href="https://liferay.com"
+          rel="noreferrer noopener"
           target="_blank"
         >
           <svg
@@ -197,6 +206,11 @@ exports[`Workspaces should render empty state 1`] = `
               href="#liferay-logo"
             />
           </svg>
+          <span
+            class="sr-only"
+          >
+            (Opens a new window)
+          </span>
         </a>
         <div>
           <button
@@ -340,7 +354,9 @@ exports[`Workspaces should render with a message that all basic tier plans have 
         class="header-container"
       >
         <a
+          class=""
           href="https://liferay.com"
+          rel="noreferrer noopener"
           target="_blank"
         >
           <svg
@@ -351,6 +367,11 @@ exports[`Workspaces should render with a message that all basic tier plans have 
               href="#liferay-logo"
             />
           </svg>
+          <span
+            class="sr-only"
+          >
+            (Opens a new window)
+          </span>
         </a>
         <div>
           <button
@@ -564,7 +585,9 @@ exports[`Workspaces should render with a message that one or more basic tier wor
         class="header-container"
       >
         <a
+          class=""
           href="https://liferay.com"
+          rel="noreferrer noopener"
           target="_blank"
         >
           <svg
@@ -575,6 +598,11 @@ exports[`Workspaces should render with a message that one or more basic tier wor
               href="#liferay-logo"
             />
           </svg>
+          <span
+            class="sr-only"
+          >
+            (Opens a new window)
+          </span>
         </a>
         <div>
           <button

@@ -413,10 +413,17 @@ exports[`InterestsCard renders with empty data 1`] = `
             Check back later to verify if data has been received from your data sources.
           </span>
           <a
+            class=""
             href="https://learn.liferay.com/analytics-cloud/latest/en/people/individuals/individuals-dashboard.html#interests"
+            rel="noreferrer noopener"
             target="_blank"
           >
             Learn more about interests.
+            <span
+              class="sr-only"
+            >
+              (Opens a new window)
+            </span>
           </a>
         </div>
       </div>

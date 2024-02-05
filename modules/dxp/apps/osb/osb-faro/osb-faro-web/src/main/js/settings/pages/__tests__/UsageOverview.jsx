@@ -1,13 +1,13 @@
 import * as data from 'test/data';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import UsageOverview from '../UsageOverview';
+import {cleanup, getByTestId, render} from '@testing-library/react';
 import {fromJS} from 'immutable';
 import {Project, User} from 'shared/util/records';
 import {Provider} from 'react-redux';
-import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
 import {SubscriptionStatuses, UserRoleNames} from 'shared/util/constants';
+import {UsageOverview} from '../UsageOverview';
 
 jest.unmock('react-dom');
 
@@ -91,7 +91,7 @@ describe('UsageOverview', () => {
 
 		expect(getByText('1,000')).toBeInTheDocument();
 
-		expect(getByText('1% since July 8, 2018')).toBeInTheDocument();
+		expect(getByText('1% since Jul 08, 2018.')).toBeInTheDocument();
 	});
 
 	it('should display the limit of INDIVIDUALS and PAGE VIEWS. Also, it should render a warning if INDIVIDUALS is over the limit. Also, it should render the current plan name.', () => {
@@ -111,15 +111,11 @@ describe('UsageOverview', () => {
 
 		expect(getByText('105,000')).toBeInTheDocument();
 
-		expect(getByText('105,000')).toHaveClass('metric-limit');
-
 		expect(
 			getByText('Enterprise Plan 95,000 + 5,000 Add-On (2x)')
 		).toBeInTheDocument();
 
 		expect(getByText('7,000,000')).toBeInTheDocument();
-
-		expect(getByText('7,000,000')).toHaveClass('metric-limit');
 
 		expect(
 			getByText('Enterprise Plan 2,000,000 + 5,000,000 Add-On (1x)')
@@ -128,10 +124,6 @@ describe('UsageOverview', () => {
 		expect(container.querySelector('.alert-warning')).toBeInTheDocument();
 
 		expect(getByText('Enterprise')).toBeInTheDocument();
-
-		expect(getByText('Enterprise')).toHaveClass('plan-name');
-
-		expect(getByText('Current Plan')).toBeInTheDocument();
 	});
 
 	it('should render the total of PAGE VIEWS since the last anniversary and the percentage used in the plan', () => {
@@ -152,7 +144,7 @@ describe('UsageOverview', () => {
 
 		expect(getByText('111,123')).toBeInTheDocument();
 
-		expect(getByText('1.6% since July 8, 2018')).toBeInTheDocument();
+		expect(getByText('1.6% since Jul 08, 2018.')).toBeInTheDocument();
 	});
 
 	it('should render with an overage warning if the PAGE VIEWS metric has exceeded the plan limit', () => {
@@ -202,7 +194,7 @@ describe('UsageOverview', () => {
 		).toBeInTheDocument();
 	});
 
-	it('should use default addons for basic plans', () => {
+	it('not renders next anniversary date for BASIC PLAN', () => {
 		const mockProject = new Project(
 			data.mockProject(23, {
 				faroSubscription: fromJS(
@@ -213,12 +205,206 @@ describe('UsageOverview', () => {
 			})
 		);
 
-		const {getAllByText} = render(
-			<WrappedComponent {...defaultProps} project={mockProject} />
+		const {queryByTestId} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(data.mockUser(0, {roleName: UserRoleNames.Member}))
+				}
+				project={mockProject}
+			/>
 		);
 
-		jest.runAllTimers();
+		expect(queryByTestId('next-anniversary-date')).toBeNull();
+	});
 
-		expect(getAllByText('Add-ons')[0]).toBeInTheDocument();
+	it('renders next anniversary date for ENTERPRISE PLAN', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(
+					data.mockSubscription({
+						name: 'Liferay Analytics Cloud Enterprise'
+					})
+				)
+			})
+		);
+
+		const {queryByTestId} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(data.mockUser(0, {roleName: UserRoleNames.Member}))
+				}
+				project={mockProject}
+			/>
+		);
+
+		expect(queryByTestId('next-anniversary-date').textContent).toEqual(
+			'Plan usage resets on Jul 08, 2019.'
+		);
+	});
+
+	it('renders next anniversary date for BUSINESS PLAN', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(
+					data.mockSubscription({
+						name: 'Liferay Analytics Cloud Business'
+					})
+				)
+			})
+		);
+
+		const {queryByTestId} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(data.mockUser(0, {roleName: UserRoleNames.Member}))
+				}
+				project={mockProject}
+			/>
+		);
+
+		expect(queryByTestId('next-anniversary-date').textContent).toEqual(
+			'Plan usage resets on Jul 08, 2019.'
+		);
+	});
+
+	it('not renders management button for Member view', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(data.mockSubscription())
+			})
+		);
+
+		const {queryByText} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(
+						data.mockUser(0, {
+							roleName: UserRoleNames.Member
+						})
+					)
+				}
+				project={mockProject}
+			/>
+		);
+
+		expect(
+			queryByText('Manage Subscriptions(Opens a new window)')
+		).toBeNull();
+	});
+
+	it('not renders management button for Admin view', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(data.mockSubscription())
+			})
+		);
+
+		const {queryByText} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(
+						data.mockUser(0, {
+							roleName: UserRoleNames.Administrator
+						})
+					)
+				}
+				project={mockProject}
+			/>
+		);
+
+		expect(queryByText('Manage Subscriptions')).toBeInTheDocument();
+	});
+});
+
+describe('Subscription Details', () => {
+	afterEach(cleanup);
+
+	it('renders subscription details for BASIC PLAN', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(
+					data.mockSubscription({
+						name: 'Liferay Analytics Cloud Basic'
+					})
+				)
+			})
+		);
+
+		const {container, queryByText} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(data.mockUser(0, {roleName: UserRoleNames.Member}))
+				}
+				project={mockProject}
+			/>
+		);
+
+		expect(queryByText('PURCHASED ADD-ONS')).toBeNull();
+
+		expect(
+			getByTestId(container, 'subscription-details')
+		).toMatchSnapshot();
+	});
+
+	it('renders subscription details for BUSINESS PLAN', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(
+					data.mockSubscription({
+						name: 'Liferay Analytics Cloud Business'
+					})
+				)
+			})
+		);
+
+		const {container, queryByText} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(data.mockUser(0, {roleName: UserRoleNames.Member}))
+				}
+				project={mockProject}
+			/>
+		);
+
+		expect(queryByText('PURCHASED ADD-ONS')).toBeInTheDocument();
+
+		expect(
+			getByTestId(container, 'subscription-details')
+		).toMatchSnapshot();
+	});
+
+	it('renders subscription details for ENTERPRISE PLAN', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(
+					data.mockSubscription({
+						name: 'Liferay Analytics Cloud Enterprise'
+					})
+				)
+			})
+		);
+
+		const {container, queryByText} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(data.mockUser(0, {roleName: UserRoleNames.Member}))
+				}
+				project={mockProject}
+			/>
+		);
+
+		expect(queryByText('PURCHASED ADD-ONS')).toBeInTheDocument();
+
+		expect(
+			getByTestId(container, 'subscription-details')
+		).toMatchSnapshot();
 	});
 });

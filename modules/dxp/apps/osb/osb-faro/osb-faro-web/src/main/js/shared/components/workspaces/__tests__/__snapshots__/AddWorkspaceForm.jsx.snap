@@ -406,12 +406,14 @@ exports[`AddWorkspaceForm should render 1`] = `
             <p>
               By selecting "I Agree", you agree to our 
               <a
+                class=""
                 href="https://web.liferay.com/legal/doc/SSA/AC/1001810"
               >
                 Terms and Conditions
               </a>
                including our 
               <a
+                class=""
                 href="https://www.liferay.com/privacy-policy"
               >
                 Privacy Policy

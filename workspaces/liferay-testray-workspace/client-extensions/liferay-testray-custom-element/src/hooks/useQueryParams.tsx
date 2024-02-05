@@ -98,11 +98,11 @@ const useQueryParams = () => {
 								)
 						);
 
-						if (filteredObjects.length) {
-							_resourceFieldOptions[field.name] = filteredObjects;
-						} else {
-							_resourceFieldOptions[field.name] = parsedValue;
-						}
+						_resourceFieldOptions[
+							field.name
+						] = filteredObjects.length
+							? filteredObjects
+							: parsedValue;
 					}
 				}
 			}

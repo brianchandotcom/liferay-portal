@@ -7,12 +7,15 @@ package com.liferay.site.sitemap.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.configuration.manager.SitemapConfigurationManager;
@@ -61,8 +64,18 @@ public class SaveCompanyConfigurationMVCActionCommand
 			ParamUtil.getBoolean(actionRequest, "includeCategories"),
 			ParamUtil.getBoolean(actionRequest, "includePages"),
 			ParamUtil.getBoolean(actionRequest, "includeWebContent"),
-			ParamUtil.getLongValues(
-				actionRequest, "groupsSearchContainerPrimaryKeys"));
+			ArrayUtil.filter(
+				ParamUtil.getLongValues(
+					actionRequest, "groupsSearchContainerPrimaryKeys"),
+				groupId -> {
+					Group group = _groupLocalService.fetchGroup(groupId);
+
+					if ((group == null) || group.isGuest()) {
+						return false;
+					}
+
+					return true;
+				}));
 
 		SessionMessages.add(
 			actionRequest, "requestProcessed",
@@ -72,6 +85,9 @@ public class SaveCompanyConfigurationMVCActionCommand
 
 		sendRedirect(actionRequest, actionResponse);
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

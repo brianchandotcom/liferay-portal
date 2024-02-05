@@ -5,7 +5,6 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
-import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.headless.builder.internal.helper.ValidationHelper;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -121,19 +120,14 @@ public class APIPropertyRelevantObjectEntryModelListener
 					"an-api-property-must-be-related-to-an-api-schema");
 			}
 
-			APIApplication.Property.PropertyType apiPropertyType =
-				APIApplication.Property.PropertyType.parse(
-					(String)values.get("apiPropertyType"));
-
 			String objectFieldERC = (String)values.get("objectFieldERC");
 
 			String objectRelationshipNames = (String)values.get(
 				"objectRelationshipNames");
 
-			if (Objects.equals(
-					apiPropertyType,
-					APIApplication.Property.PropertyType.CONTAINER)) {
+			String type = (String)values.get("type");
 
+			if (Objects.equals(type, "container")) {
 				if (!FeatureFlagManagerUtil.isEnabled("LPD-10964")) {
 					throw new UnsupportedOperationException(
 						"Container is not supported");
@@ -154,8 +148,8 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 				String filterString = StringBundler.concat(
 					"id ne '", objectEntry.getObjectEntryId(),
-					"' and apiPropertyType eq '", apiPropertyType.getValue(),
-					"' and name eq '", values.get("name"),
+					"' and type eq 'container' and name eq '",
+					values.get("name"),
 					"' and r_apiSchemaToAPIProperties_c_apiSchemaId eq '",
 					apiSchemaId, "'");
 
@@ -202,7 +196,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 			_validateRelatedAPIProperty(
 				(long)values.get(
 					"r_apiPropertyToAPIProperties_c_apiPropertyId"),
-				apiPropertyType, apiSchemaId);
+				apiSchemaId, type);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -210,9 +204,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 	}
 
 	private void _validateRelatedAPIProperty(
-			long apiPropertyId,
-			APIApplication.Property.PropertyType apiPropertyType,
-			long apiSchemaId)
+			long apiPropertyId, long apiSchemaId, String type)
 		throws Exception {
 
 		if (apiPropertyId != 0) {
@@ -242,13 +234,8 @@ public class APIPropertyRelevantObjectEntryModelListener
 						"schema");
 			}
 
-			if (Objects.equals(
-					apiPropertyType,
-					APIApplication.Property.PropertyType.VALUE) &&
-				Objects.equals(
-					APIApplication.Property.PropertyType.parse(
-						(String)apiPropertyValues.get("apiPropertyType")),
-					APIApplication.Property.PropertyType.VALUE)) {
+			if (Objects.equals(type, "value") &&
+				Objects.equals(apiPropertyValues.get("type"), "value")) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,
@@ -258,13 +245,8 @@ public class APIPropertyRelevantObjectEntryModelListener
 						"container-api-property");
 			}
 
-			if (Objects.equals(
-					apiPropertyType,
-					APIApplication.Property.PropertyType.CONTAINER) &&
-				Objects.equals(
-					APIApplication.Property.PropertyType.parse(
-						(String)apiPropertyValues.get("apiPropertyType")),
-					APIApplication.Property.PropertyType.VALUE)) {
+			if (Objects.equals(type, "container") &&
+				Objects.equals(apiPropertyValues.get("type"), "value")) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,

@@ -67,10 +67,7 @@ public class MySitesItemSelectorViewDisplayContext
 		GroupSearch groupSearch = new GroupSearch(_portletRequest, portletURL);
 
 		GroupSearchProvider.setResultsAndTotal(
-			Arrays.asList(
-				Company.class.getName(), Group.class.getName(),
-				Organization.class.getName()),
-			groupSearch, _portletRequest);
+			_getClassNames(), groupSearch, _portletRequest);
 
 		if (groupSearch.getStart() == 0) {
 			GroupItemSelectorCriterion groupItemSelectorCriterion =
@@ -155,6 +152,17 @@ public class MySitesItemSelectorViewDisplayContext
 		PortalUtil.addPortletBreadcrumbEntry(
 			httpServletRequest, unescapedGroup.getDescriptiveName(),
 			portletURL.toString());
+	}
+
+	private List<String> _getClassNames() {
+		if (groupItemSelectorCriterion.isIncludeCompany()) {
+			return Arrays.asList(
+				Company.class.getName(), Group.class.getName(),
+				Organization.class.getName());
+		}
+
+		return Arrays.asList(
+			Group.class.getName(), Organization.class.getName());
 	}
 
 	private Group _getGroup() {

@@ -12,7 +12,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
@@ -22,7 +21,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -69,6 +67,9 @@ public class SiteAdminDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems(Group group)
@@ -168,15 +169,10 @@ public class SiteAdminDisplayContext {
 
 		groupSearch.setId("sites");
 		groupSearch.setOrderByCol("descriptive-name");
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		groupSearch.setOrderByComparator(
 			new GroupDescriptiveNameComparator(
 				Objects.equals(groupSearch.getOrderByType(), "asc"),
-				themeDisplay.getLocale()));
+				_themeDisplay.getLocale()));
 
 		GroupSearchProvider.setResultsAndTotal(
 			groupSearch, _liferayPortletRequest);
@@ -194,14 +190,8 @@ public class SiteAdminDisplayContext {
 	}
 
 	public int getOrganizationsCount(Group group) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Company company = themeDisplay.getCompany();
-
 		return OrganizationLocalServiceUtil.searchCount(
-			company.getCompanyId(),
+			_themeDisplay.getCompanyId(),
 			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null, null,
 			null,
 			LinkedHashMapBuilder.<String, Object>put(
@@ -243,14 +233,8 @@ public class SiteAdminDisplayContext {
 	}
 
 	public int getUserGroupsCount(Group group) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Company company = themeDisplay.getCompany();
-
 		return UserGroupLocalServiceUtil.searchCount(
-			company.getCompanyId(), null,
+			_themeDisplay.getCompanyId(), null,
 			LinkedHashMapBuilder.<String, Object>put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS,
 				group.getGroupId()
@@ -258,14 +242,9 @@ public class SiteAdminDisplayContext {
 	}
 
 	public int getUsersCount(Group group) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Company company = themeDisplay.getCompany();
-
 		return UserLocalServiceUtil.searchCount(
-			company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+			_themeDisplay.getCompanyId(), null,
+			WorkflowConstants.STATUS_APPROVED,
 			LinkedHashMapBuilder.<String, Object>put(
 				"inherit", Boolean.TRUE
 			).put(
@@ -276,18 +255,13 @@ public class SiteAdminDisplayContext {
 	public boolean hasAddChildSitePermission(Group group)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		if (!group.isCompany() &&
 			(PortalPermissionUtil.contains(
-				permissionChecker, ActionKeys.ADD_COMMUNITY) ||
+				_themeDisplay.getPermissionChecker(),
+				ActionKeys.ADD_COMMUNITY) ||
 			 GroupPermissionUtil.contains(
-				 permissionChecker, group, ActionKeys.ADD_COMMUNITY))) {
+				 _themeDisplay.getPermissionChecker(), group,
+				 ActionKeys.ADD_COMMUNITY))) {
 
 			return true;
 		}
@@ -301,5 +275,6 @@ public class SiteAdminDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final ThemeDisplay _themeDisplay;
 
 }

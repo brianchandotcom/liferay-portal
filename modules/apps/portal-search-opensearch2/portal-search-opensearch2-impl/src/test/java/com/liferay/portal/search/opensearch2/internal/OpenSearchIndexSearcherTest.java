@@ -1,0 +1,120 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.search.opensearch2.internal;
+
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.search.constants.SearchContextAttributes;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.opensearch2.constants.OpenSearchSearchContextAttributes;
+import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapperImpl;
+import com.liferay.portal.search.searcher.SearchRequest;
+import com.liferay.portal.search.test.util.indexing.DocumentFixture;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Test;
+
+import org.mockito.Mockito;
+
+/**
+ * @author Michael C. Han
+ */
+public class OpenSearchIndexSearcherTest {
+
+	@ClassRule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@ClassRule
+	public static final OpenSearchTestRule openSearchTestRule =
+		OpenSearchTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		_documentFixture.setUp();
+
+		SearchRequestBuilderFactory searchRequestBuilderFactory =
+			new SearchRequestBuilderFactoryImpl();
+
+		_openSearchIndexSearcher = _createOpenSearchIndexSearcher(
+			searchRequestBuilderFactory);
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
+	}
+
+	@After
+	public void tearDown() {
+		_documentFixture.tearDown();
+	}
+
+	@Test
+	public void testSearchContextAttributes() throws SearchException {
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttribute(
+			OpenSearchSearchContextAttributes.
+				ATTRIBUTE_KEY_SEARCH_REQUEST_PREFERENCE,
+			"testValue");
+		searchContext.setAttribute(
+			SearchContextAttributes.ATTRIBUTE_KEY_BASIC_FACET_SELECTION,
+			Boolean.TRUE);
+		searchContext.setAttribute(
+			SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX, Boolean.TRUE);
+
+		SearchRequest searchRequest = _searchRequestBuilderFactory.builder(
+			searchContext
+		).build();
+
+		Query query = Mockito.mock(Query.class);
+
+		SearchSearchRequest searchSearchRequest =
+			_openSearchIndexSearcher.createSearchSearchRequest(
+				query, searchContext, searchRequest);
+
+		searchSearchRequest.setSize(0);
+		searchSearchRequest.setSorts(searchContext.getSorts());
+		searchSearchRequest.setSorts(searchRequest.getSorts());
+		searchSearchRequest.setStart(0);
+		searchSearchRequest.setStats(searchContext.getStats());
+
+		Assert.assertTrue(searchSearchRequest.isBasicFacetSelection());
+		Assert.assertTrue(searchSearchRequest.isLuceneSyntax());
+
+		Assert.assertEquals("testValue", searchSearchRequest.getPreference());
+	}
+
+	private OpenSearchIndexSearcher _createOpenSearchIndexSearcher(
+		SearchRequestBuilderFactory searchRequestBuilderFactory) {
+
+		OpenSearchIndexSearcher openSearchIndexSearcher =
+			new OpenSearchIndexSearcher();
+
+		ReflectionTestUtil.setFieldValue(
+			openSearchIndexSearcher, "_indexNameBuilder",
+			(IndexNameBuilder)String::valueOf);
+		ReflectionTestUtil.setFieldValue(
+			openSearchIndexSearcher, "_openSearchConfigurationWrapper",
+			Mockito.mock(OpenSearchConfigurationWrapperImpl.class));
+		ReflectionTestUtil.setFieldValue(
+			openSearchIndexSearcher, "_searchRequestBuilderFactory",
+			searchRequestBuilderFactory);
+
+		return openSearchIndexSearcher;
+	}
+
+	private final DocumentFixture _documentFixture = new DocumentFixture();
+	private OpenSearchIndexSearcher _openSearchIndexSearcher;
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+}

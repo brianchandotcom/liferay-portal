@@ -121,10 +121,13 @@ public class GroupSearchProviderTest {
 			PropsValues.class, "GROUPS_COMPLEX_SQL_CLASS_NAMES",
 			new String[] {"com.liferay.portal.kernel.model.User"});
 
-		_assertGroupSearch(
-			childGroup1,
-			GroupSearchProvider.getGroupSearch(
-				mockLiferayPortletActionRequest, new MockLiferayPortletURL()));
+		GroupSearch groupSearch = new GroupSearch(
+			mockLiferayPortletActionRequest, new MockLiferayPortletURL());
+
+		GroupSearchProvider.setResultsAndTotal(
+			groupSearch, mockLiferayPortletActionRequest);
+
+		_assertGroupSearch(childGroup1, groupSearch);
 
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "GROUPS_COMPLEX_SQL_CLASS_NAMES",
@@ -135,8 +138,11 @@ public class GroupSearchProviderTest {
 				"com.liferay.portal.kernel.model.Company"
 			});
 
-		GroupSearch complexSQLGroupSearch = GroupSearchProvider.getGroupSearch(
+		GroupSearch complexSQLGroupSearch = new GroupSearch(
 			mockLiferayPortletActionRequest, new MockLiferayPortletURL());
+
+		GroupSearchProvider.setResultsAndTotal(
+			complexSQLGroupSearch, mockLiferayPortletActionRequest);
 
 		_assertGroupSearch(childGroup1, complexSQLGroupSearch);
 	}

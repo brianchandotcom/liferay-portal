@@ -62,8 +62,9 @@ public class MySitesItemSelectorViewDisplayContext
 				"groupId", String.valueOf(group.getGroupId()));
 		}
 
-		GroupSearch groupSearch = GroupSearchProvider.getGroupSearch(
-			_portletRequest, portletURL);
+		GroupSearch groupSearch = new GroupSearch(_portletRequest, portletURL);
+
+		GroupSearchProvider.setResultsAndTotal(groupSearch, _portletRequest);
 
 		if (groupSearch.getStart() == 0) {
 			GroupItemSelectorCriterion groupItemSelectorCriterion =

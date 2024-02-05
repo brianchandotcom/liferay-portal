@@ -29,23 +29,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 /**
  * @author Julio Camarero
  */
 public class GroupSearchProvider {
-
-	public static GroupSearch getGroupSearch(
-			PortletRequest portletRequest, PortletURL portletURL)
-		throws PortalException {
-
-		GroupSearch groupSearch = new GroupSearch(portletRequest, portletURL);
-
-		setResultsAndTotal(groupSearch, portletRequest);
-
-		return groupSearch;
-	}
 
 	public static void setResultsAndTotal(
 			GroupSearch groupSearch, PortletRequest portletRequest)

@@ -11,17 +11,30 @@ import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.http.HttpInvoker;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -32,6 +45,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -52,6 +66,9 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * Modify the value of _testableClassNames to test specific class names.
@@ -139,6 +156,101 @@ public class ExportTaskResourceTest {
 	}
 
 	@Test
+	public void testExportCustomObjectEntryMultipleCompanies()
+		throws Exception {
+
+		String objectDefinitionName = RandomTestUtil.randomString() + "abc";
+
+		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"domain", "able.com"
+			).put(
+				"portalInstanceId", "able.com"
+			).put(
+				"virtualHost", "www.able.com"
+			).toString(),
+			"headless-portal-instances/v1.0/portal-instances",
+			Http.Method.POST);
+
+		_company = _companyLocalService.getCompany(
+			jsonObject1.getLong("companyId"));
+
+		_user = UserTestUtil.addUser(_company);
+
+		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			"A" + StringUtil.toLowerCase(objectDefinitionName),
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)),
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			TestPropsValues.getUserId());
+
+		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			"A" + StringUtil.toUpperCase(objectDefinitionName),
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)),
+			ObjectDefinitionConstants.SCOPE_COMPANY, _user.getUserId());
+
+		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
+			null, _exportTaskEndpoint() + _objectDefinition1.getName(),
+			Http.Method.POST);
+
+		JSONObject jsonObject3 = HTTPTestUtil.invokeToJSONObject(
+			null,
+			"headless-batch-engine/v1.0/export-task/" +
+				jsonObject2.getString("id"),
+			Http.Method.GET);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"className", "com.liferay.object.rest.dto.v1_0.ObjectEntry"
+			).put(
+				"errorMessage", ""
+			).put(
+				"executeStatus", "COMPLETED"
+			).toString(),
+			jsonObject3.toString(), JSONCompareMode.LENIENT);
+
+		HTTPTestUtil.customize(
+		).withBaseURL(
+			"http://www.able.com:8080"
+		).withCredentials(
+			"test@able.com", "test"
+		).apply(
+			() -> {
+				JSONObject jsonObject4 = HTTPTestUtil.invokeToJSONObject(
+					null, _exportTaskEndpoint() + _objectDefinition2.getName(),
+					Http.Method.POST);
+
+				JSONObject jsonObject5 = HTTPTestUtil.invokeToJSONObject(
+					null,
+					"headless-batch-engine/v1.0/export-task/" +
+						jsonObject4.getString("id"),
+					Http.Method.GET);
+
+				try {
+					JSONAssert.assertEquals(
+						JSONUtil.put(
+							"className",
+							"com.liferay.object.rest.dto.v1_0.ObjectEntry"
+						).put(
+							"errorMessage", ""
+						).put(
+							"executeStatus", "COMPLETED"
+						).toString(),
+						jsonObject5.toString(), JSONCompareMode.LENIENT);
+				}
+				catch (AssertionError error) {
+					Assert.fail(jsonObject5.getString("errorMessage"));
+				}
+			}
+		);
+	}
+
+	@Test
 	public void testPostExportTask() throws Exception {
 		Assert.assertFalse(_testableClassNames.isEmpty());
 
@@ -163,6 +275,12 @@ public class ExportTaskResourceTest {
 		if (sb.length() > 0) {
 			throw new AssertionError(sb.toString());
 		}
+	}
+
+	private String _exportTaskEndpoint() {
+		return "headless-batch-engine/v1.0/export-task" +
+			"/com.liferay.object.rest.dto.v1_0.ObjectEntry" +
+				"/json?fieldNames=id&taskItemDelegateName=";
 	}
 
 	private void _testPostExportTask(String className) throws Exception {
@@ -266,8 +384,17 @@ public class ExportTaskResourceTest {
 		}
 	}
 
+	private static final String _OBJECT_FIELD_NAME =
+		"x" + RandomTestUtil.randomString();
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportTaskResourceTest.class);
+
+	@DeleteAfterTestRun
+	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	private static ServiceTracker<Object, String> _serviceTracker;
 
@@ -548,5 +675,14 @@ public class ExportTaskResourceTest {
 	private JSONFactory _jsonFactory;
 
 	private final List<LogCapture> _logCaptures = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition1;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition2;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

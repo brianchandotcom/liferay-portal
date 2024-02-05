@@ -63,3 +63,51 @@ test('can see available path parameter properties of a singleElement endpoint', 
 
 	await headlessBuilderPage.goto();
 });
+
+test('can see path parameter property with map details', async ({
+	apiApplicationPage,
+	apiHelpers,
+	headlessBuilderPage,
+	page,
+}) => {
+	await waitForHeadlessBuilderReady(apiHelpers, page);
+
+	await headlessBuilderPage.goto();
+	await headlessBuilderPage.addNewAPIApplicationButton.click();
+	await headlessBuilderPage.newAPIApplicationTitleBox.fill('My-app');
+	await headlessBuilderPage.createApplicationButton.click();
+
+	await apiApplicationPage.goToSchemasTab();
+	await apiApplicationPage.addAPISchemaButton.click();
+	await apiApplicationPage.schemaNameTextBox.fill('API Application schema');
+	await apiApplicationPage.setSchemaMainObjectDefinition('APIApplication');
+	await apiApplicationPage.createButton.click();
+
+	await apiApplicationPage.createSingleElementApiEndpoint(
+		'Company',
+		'gettest',
+		'entryid'
+	);
+	await apiApplicationPage.goToEndpointConfigurationTab();
+
+	// TODO Change when LPD-16654 is fixed
+
+	await page.getByLabel('Response Body Schema').click();
+	await page.getByRole('menuitem', {name: 'API Application schema'}).click();
+
+	await expect(
+		page.getByRole('button', {name: 'Select an Option'})
+	).toBeVisible();
+	await expect(
+		page.getByPlaceholder('Add a description here.')
+	).toBeVisible();
+	await expect(
+		page.getByText(
+			'This property from the schema will be mapped to path Parameter: {entryid}.'
+		)
+	).toBeVisible();
+
+	// TODO see how to solve same behavior between different action buttons
+
+	await headlessBuilderPage.goto();
+});

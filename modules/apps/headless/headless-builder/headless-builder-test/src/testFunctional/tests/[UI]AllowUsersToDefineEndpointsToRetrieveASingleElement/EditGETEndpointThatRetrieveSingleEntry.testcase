@@ -38,33 +38,4 @@ definition {
 		}
 	}
 
-	@priority = 4
-	test CanSeePathParameterPropertyWithMapDetails {
-		property portal.acceptance = "true";
-
-		task ("When I select schema as the response body schema in edit api application > Endpoints > configuration") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "My-app");
-
-			APIBuilderUI.addAndPublishEndpointConfiguration(
-				entity = "Endpoints",
-				name = "/gettest/{entryId}",
-				schemaName = "testSchema",
-				title = "My-app");
-		}
-
-		task ("Then I can see Parameter Property* and Path Parameter Description are present") {
-			AssertElementPresent(
-				key_optionName = "testSchema",
-				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
-		}
-
-		task ("And Then I can see label about property will be mapped to path parameter") {
-			AssertTextEquals(
-				locator1 = "APIBuilder#PATH_PARAMETER_PROPERTY_PREVIEW",
-				value1 = "This property from the schema will be mapped to path Parameter: {entryId}.");
-		}
-	}
-
 }

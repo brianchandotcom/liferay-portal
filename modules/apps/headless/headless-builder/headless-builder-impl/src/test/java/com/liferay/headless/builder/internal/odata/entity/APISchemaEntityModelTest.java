@@ -159,7 +159,7 @@ public class APISchemaEntityModelTest {
 
 					@Override
 					public PropertyType getPropertyType() {
-						return PropertyType.NORMAL;
+						return PropertyType.VALUE;
 					}
 
 					@Override

@@ -82,6 +82,7 @@ const Text = ({
 	onFocus,
 	onKeyDown,
 	placeholder,
+	repeatable,
 	setError,
 	shouldUpdateValue,
 	showCounter,
@@ -169,6 +170,10 @@ const Text = ({
 						maxLength={showCounter ? '' : maxLength}
 						name={name}
 						onBlur={(event) => {
+							if (repeatable) {
+								Liferay.fire('disableRepeatableButton');
+							}
+
 							onBlur(event);
 							handleChangeInput(event);
 						}}
@@ -459,6 +464,7 @@ const Main = ({
 	placeholder,
 	predefinedValue = '',
 	readOnly,
+	repeatable,
 	shouldUpdateValue = false,
 	syncDelay = true,
 	valid,
@@ -488,6 +494,7 @@ const Main = ({
 			localizedValue={localizedValue}
 			name={name}
 			readOnly={readOnly}
+			repeatable={repeatable}
 			valid={error.valid ?? valid}
 		>
 			<Component
@@ -515,20 +522,12 @@ const Main = ({
 				name={name}
 				normalizeField={normalizeField}
 				onBlur={onBlur}
-				onChange={(event) => {
-					if (
-						!event?.relatedTarget ||
-						(event?.realatedTarget &&
-							event?.relatedTarget?.dataset?.restoreTitle !==
-								'Duplicate')
-					) {
-						onChange(event);
-					}
-				}}
+				onChange={onChange}
 				onFocus={onFocus}
 				onKeyDown={onKeyDown}
 				options={optionsMemo}
 				placeholder={placeholder}
+				repeatable={repeatable}
 				setError={setError}
 				shouldUpdateValue={shouldUpdateValue}
 				showCounter={showCounter}

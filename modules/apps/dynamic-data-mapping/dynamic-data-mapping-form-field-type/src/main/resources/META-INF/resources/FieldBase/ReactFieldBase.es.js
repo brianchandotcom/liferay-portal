@@ -19,7 +19,7 @@ import {
 } from 'data-engine-js-components-web';
 import {sub} from 'frontend-js-web';
 import moment from 'moment/min/moment-with-locales';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import './FieldBase.scss';
 
@@ -192,6 +192,9 @@ export function FieldBase({
 	warningMessage,
 }) {
 	const {editingLanguageId, pages} = useFormState();
+	const [disabledRepeatableButton, setDisabledRepeatableButton] = useState(
+		false
+	);
 	const dispatch = useForm();
 
 	const hasError = displayErrors && errorMessage && !valid;
@@ -324,6 +327,22 @@ export function FieldBase({
 		}
 	}, [fieldReference, name, pages, repeatable]);
 
+	const disableRepeatableButton = () => {
+		setDisabledRepeatableButton(true);
+
+		setTimeout(() => {
+			setDisabledRepeatableButton(false);
+		}, 1000);
+	};
+
+	useEffect(() => {
+		Liferay.on('disableRepeatableButton', disableRepeatableButton);
+
+		return () => {
+			Liferay.detach('disableRepeatableButton', disableRepeatableButton);
+		};
+	}, []);
+
 	return (
 		<ClayForm.Group
 			{...accessiblePropsGroup}
@@ -345,8 +364,13 @@ export function FieldBase({
 								Liferay.Language.get('remove-duplicate-field'),
 								label ? label : type
 							)}
-							className="ddm-form-field-repeatable-delete-button p-0"
-							disabled={readOnly}
+							className={classNames(
+								'ddm-form-field-repeatable-delete-button p-0',
+								{
+									'ddm-form-field-repeatable-button-disabled': disabledRepeatableButton,
+								}
+							)}
+							disabled={readOnly || disabledRepeatableButton}
 							onClick={() =>
 								dispatch({
 									payload: name,
@@ -369,17 +393,16 @@ export function FieldBase({
 						className={classNames(
 							'ddm-form-field-repeatable-add-button p-0',
 							{
-								hide: overMaximumRepetitionsLimit,
+								'ddm-form-field-repeatable-button-disabled': disabledRepeatableButton,
+								'hide': overMaximumRepetitionsLimit,
 							}
 						)}
-						disabled={readOnly}
+						disabled={readOnly || disabledRepeatableButton}
 						onClick={() =>
-							setTimeout(() => {
-								dispatch({
-									payload: name,
-									type: CORE_EVENT_TYPES.FIELD.REPEATED,
-								});
-							}, 200)
+							dispatch({
+								payload: name,
+								type: CORE_EVENT_TYPES.FIELD.REPEATED,
+							})
 						}
 						small
 						title={Liferay.Language.get('duplicate')}

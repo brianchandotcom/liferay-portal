@@ -50,12 +50,14 @@ export function createApp({
 	appName,
 	catalogId,
 	productChannels,
+	productSpecifications,
 }: {
 	appCategories: Categories[];
 	appDescription: string;
 	appName: string;
 	catalogId: number;
 	productChannels?: Partial<Channel>[];
+	productSpecifications?: ProductSpecification[];
 }) {
 	return fetch(`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products`, {
 		body: JSON.stringify({
@@ -67,6 +69,7 @@ export function createApp({
 			productChannelFilter: true,
 			productChannels,
 			productConfiguration: {allowBackOrder: true},
+			productSpecifications,
 			productStatus: 2,
 			productType: 'virtual',
 		}),

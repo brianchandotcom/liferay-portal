@@ -38,6 +38,15 @@ class HeadlessCommerceAdminCatalog {
 		);
 	}
 
+	async getCatalog(
+		catalogId: string | number,
+		searchParams = new URLSearchParams()
+	) {
+		return fetcher(
+			`/o/headless-commerce-admin-catalog/v1.0/catalog/${catalogId}?${searchParams.toString()}`
+		);
+	}
+
 	async getCatalogs(searchParams = new URLSearchParams()) {
 		return fetcher<APIResponse<Catalog>>(
 			`/o/headless-commerce-admin-catalog/v1.0/catalogs?${searchParams.toString()}`

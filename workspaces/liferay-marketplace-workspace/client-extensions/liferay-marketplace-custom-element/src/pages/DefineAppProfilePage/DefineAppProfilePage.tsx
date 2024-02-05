@@ -29,6 +29,7 @@ import {submitBase64EncodedFile} from '../../utils/util';
 
 import './DefineAppProfilePage.scss';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
 
 type DefineAppProfilePageProps = {
 	onClickBack: () => void;
@@ -98,6 +99,10 @@ export function DefineAppProfilePage({
 
 		setLoading(true);
 
+		const catalog = await HeadlessCommerceAdminCatalogImpl.getCatalog(
+			catalogId
+		);
+
 		if (appERC) {
 			response = await updateApp({
 				appDescription: appDescription.replace(/\n/g, '<br>'),
@@ -123,6 +128,12 @@ export function DefineAppProfilePage({
 						id: channel?.id as number,
 						name: channel?.name as string,
 						type: channel?.type as string,
+					},
+				],
+				productSpecifications: [
+					{
+						specificationKey: 'developer-name',
+						value: {en_US: catalog?.name},
 					},
 				],
 			});

@@ -78,7 +78,7 @@ public class APIPropertyObjectDefinitionDeployerImpl
 				"=", ObjectRelationshipConstants.TYPE_ONE_TO_MANY, "))"),
 			new ObjectRelatedModelsProviderServiceTrackerCustomizer());
 
-		_updateExistentAPIProperties(objectDefinition);
+		_updateExistingAPIProperties(objectDefinition);
 
 		return Collections.emptyList();
 	}
@@ -113,7 +113,7 @@ public class APIPropertyObjectDefinitionDeployerImpl
 			objectDefinition.getExternalReferenceCode(), "L_API_PROPERTY");
 	}
 
-	private void _updateExistentAPIProperties(
+	private void _updateExistingAPIProperties(
 		ObjectDefinition objectDefinition) {
 
 		try {

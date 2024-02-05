@@ -21,7 +21,7 @@ import com.liferay.calendar.exporter.CalendarDataHandler;
 import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
 import com.liferay.calendar.internal.notification.NotificationTemplateContextFactory;
 import com.liferay.calendar.internal.recurrence.RecurrenceSplit;
-import com.liferay.calendar.internal.recurrence.RecurrenceSplitter;
+import com.liferay.calendar.internal.recurrence.RecurrenceSplitterUtil;
 import com.liferay.calendar.internal.util.CalendarUtil;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
@@ -1703,9 +1703,6 @@ public class CalendarBookingLocalServiceImpl
 	protected MBMessageLocalService mbMessageLocalService;
 
 	@Reference
-	protected RecurrenceSplitter recurrenceSplitter;
-
-	@Reference
 	protected SubscriptionLocalService subscriptionLocalService;
 
 	@Reference
@@ -2436,8 +2433,9 @@ public class CalendarBookingLocalServiceImpl
 							recurringCalendarBooking.getStartTime(),
 							recurringCalendarBooking.getTimeZone());
 
-					RecurrenceSplit recurrenceSplit = recurrenceSplitter.split(
-						recurrenceObj, startTimeJCalendar, splitJCalendar);
+					RecurrenceSplit recurrenceSplit =
+						RecurrenceSplitterUtil.split(
+							recurrenceObj, startTimeJCalendar, splitJCalendar);
 
 					if (recurrenceSplit.isSplit()) {
 						java.util.Calendar newStartTimeJCalendar =

@@ -21,16 +21,25 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
+ * Executes a split operation and returns a {@link RecurrenceSplit} instance as
+ * a result.
+ *
  * @author Adam Brandizzi
  */
-@Component(service = RecurrenceSplitter.class)
-public class RecurrenceSplitterImpl implements RecurrenceSplitter {
+public class RecurrenceSplitterUtil {
 
-	@Override
-	public RecurrenceSplit split(
+	/**
+	 * Generates a {@link RecurrenceSplit} instance representing the result.
+	 *
+	 * @param  recurrence the <code>Recurrence</code> (in the
+	 *         <code>com.liferay.calendar.api</code> module) to be split into
+	 *         two new recurrences
+	 * @param  startTimeJCalendar the starting date for the original recurrence
+	 * @param  splitTimeJCalendar the date to split the recurrence
+	 * @return a {@link RecurrenceSplit} representing the operation result
+	 */
+	public static RecurrenceSplit split(
 		Recurrence recurrence, Calendar startTimeJCalendar,
 		Calendar splitTimeJCalendar) {
 
@@ -69,7 +78,7 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 		return new RecurrenceSplitImpl(firstRecurrence, secondRecurrence);
 	}
 
-	private void _copyExceptionJCalendars(
+	private static void _copyExceptionJCalendars(
 		Recurrence firstRecurrence, Recurrence secondRecurrence,
 		List<Calendar> exceptionJCalendars, Calendar splitTimeJCalendar) {
 
@@ -87,7 +96,7 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 		}
 	}
 
-	private RecurrenceIterator _getRecurrenceIterator(
+	private static RecurrenceIterator _getRecurrenceIterator(
 		Recurrence recurrence, DateValue startTimeDateValue) {
 
 		try {
@@ -100,7 +109,7 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 		}
 	}
 
-	private void _setCount(
+	private static void _setCount(
 			Recurrence recurrence, Recurrence firstRecurrence,
 			Recurrence secondRecurrence, Calendar startTimeJCalendar,
 			Calendar splitTimeJCalendar)
@@ -133,7 +142,7 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 		secondRecurrence.setCount(recurrence.getCount() - count);
 	}
 
-	private void _setUntilJCalendar(
+	private static void _setUntilJCalendar(
 			Recurrence recurrence, Recurrence firstRecurrence,
 			Calendar startTimeJCalendar, Calendar splitTimeJCalendar)
 		throws SplitTimeOutsideRecurrenceException {
@@ -148,13 +157,13 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 		firstRecurrence.setUntilJCalendar(untilJCalendar);
 	}
 
-	private DateValue _toDateValue(Calendar jCalendar) {
+	private static DateValue _toDateValue(Calendar jCalendar) {
 		return new DateValueImpl(
 			jCalendar.get(Calendar.YEAR), jCalendar.get(Calendar.MONTH) + 1,
 			jCalendar.get(Calendar.DAY_OF_MONTH));
 	}
 
-	private void _validateCount(
+	private static void _validateCount(
 			DateValue splitTimeDateValue, DateValue dateValue)
 		throws SplitTimeOutsideRecurrenceException {
 
@@ -164,7 +173,7 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 		}
 	}
 
-	private void _validateUntilJCalendar(
+	private static void _validateUntilJCalendar(
 			Calendar newUntilJCalendar, Calendar oldUntilJCalendar,
 			Calendar startTimeJCalendar)
 		throws SplitTimeOutsideRecurrenceException {
@@ -180,7 +189,7 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RecurrenceSplitterImpl.class);
+		RecurrenceSplitterUtil.class);
 
 	private static class SplitTimeOutsideRecurrenceException extends Exception {
 

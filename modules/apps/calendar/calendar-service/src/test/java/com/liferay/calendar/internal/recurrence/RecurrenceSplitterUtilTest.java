@@ -15,7 +15,6 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,17 +22,12 @@ import org.junit.Test;
 /**
  * @author Adam Brandizzi
  */
-public class RecurrenceSplitterTest {
+public class RecurrenceSplitterUtilTest {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		_recurrenceSplitter = new RecurrenceSplitterImpl();
-	}
 
 	@Test
 	public void testSplitRecurrence() {
@@ -43,7 +37,7 @@ public class RecurrenceSplitterTest {
 
 		Calendar splitTimeJCalendar = _getJCalendar(10);
 
-		RecurrenceSplit recurrenceSplit = _recurrenceSplitter.split(
+		RecurrenceSplit recurrenceSplit = RecurrenceSplitterUtil.split(
 			recurrence, startTimeJCalendar, splitTimeJCalendar);
 
 		_assertSplit(recurrenceSplit);
@@ -64,7 +58,7 @@ public class RecurrenceSplitterTest {
 
 		Calendar splitTimeJCalendar = _getJCalendar(10);
 
-		RecurrenceSplit recurrenceSplit = _recurrenceSplitter.split(
+		RecurrenceSplit recurrenceSplit = RecurrenceSplitterUtil.split(
 			recurrence, startTimeJCalendar, splitTimeJCalendar);
 
 		_assertSplit(recurrenceSplit);
@@ -85,7 +79,7 @@ public class RecurrenceSplitterTest {
 
 		Calendar splitTimeJCalendar = _getJCalendar(10);
 
-		RecurrenceSplit recurrenceSplit = _recurrenceSplitter.split(
+		RecurrenceSplit recurrenceSplit = RecurrenceSplitterUtil.split(
 			recurrence, startTimeJCalendar, splitTimeJCalendar);
 
 		_assertNotSplit(recurrenceSplit);
@@ -103,7 +97,7 @@ public class RecurrenceSplitterTest {
 
 		Calendar splitTimeJCalendar = _getJCalendar(10);
 
-		RecurrenceSplit recurrenceSplit = _recurrenceSplitter.split(
+		RecurrenceSplit recurrenceSplit = RecurrenceSplitterUtil.split(
 			recurrence, startTimeJCalendar, splitTimeJCalendar);
 
 		_assertNotSplit(recurrenceSplit);
@@ -122,7 +116,7 @@ public class RecurrenceSplitterTest {
 
 		Calendar splitTimeJCalendar = _getJCalendar(10);
 
-		RecurrenceSplit recurrenceSplit = _recurrenceSplitter.split(
+		RecurrenceSplit recurrenceSplit = RecurrenceSplitterUtil.split(
 			recurrence, startTimeJCalendar, splitTimeJCalendar);
 
 		_assertSplit(recurrenceSplit);
@@ -149,7 +143,7 @@ public class RecurrenceSplitterTest {
 
 		Calendar splitTimeJCalendar = _getJCalendar(10);
 
-		RecurrenceSplit recurrenceSplit = _recurrenceSplitter.split(
+		RecurrenceSplit recurrenceSplit = RecurrenceSplitterUtil.split(
 			recurrence, startTimeJCalendar, splitTimeJCalendar);
 
 		_assertNotSplit(recurrenceSplit);
@@ -166,7 +160,7 @@ public class RecurrenceSplitterTest {
 
 		Calendar splitTimeJCalendar = _getJCalendar(1);
 
-		RecurrenceSplit recurrenceSplit = _recurrenceSplitter.split(
+		RecurrenceSplit recurrenceSplit = RecurrenceSplitterUtil.split(
 			recurrence, startTimeJCalendar, splitTimeJCalendar);
 
 		_assertNotSplit(recurrenceSplit);
@@ -184,7 +178,7 @@ public class RecurrenceSplitterTest {
 
 		Calendar splitTimeJCalendar = _getJCalendar(10);
 
-		RecurrenceSplit recurrenceSplit = _recurrenceSplitter.split(
+		RecurrenceSplit recurrenceSplit = RecurrenceSplitterUtil.split(
 			recurrence, startTimeJCalendar, splitTimeJCalendar);
 
 		_assertSplit(recurrenceSplit);
@@ -236,7 +230,5 @@ public class RecurrenceSplitterTest {
 
 	private static final TimeZone _utcTimeZone = TimeZone.getTimeZone(
 		StringPool.UTC);
-
-	private RecurrenceSplitter _recurrenceSplitter;
 
 }

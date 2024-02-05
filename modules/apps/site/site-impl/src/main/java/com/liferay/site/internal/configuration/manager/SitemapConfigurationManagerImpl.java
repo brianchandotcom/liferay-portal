@@ -5,8 +5,10 @@
 
 package com.liferay.site.internal.configuration.manager;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.site.configuration.manager.SitemapConfigurationManager;
 import com.liferay.site.internal.configuration.SitemapCompanyConfiguration;
@@ -21,6 +23,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = SitemapConfigurationManager.class)
 public class SitemapConfigurationManagerImpl
 	implements SitemapConfigurationManager {
+
+	@Override
+	public Long[] getCompanySitemapGroupIds(long companyId) throws Exception {
+		SitemapCompanyConfiguration sitemapCompanyConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				SitemapCompanyConfiguration.class, companyId);
+
+		return TransformUtil.transform(
+			sitemapCompanyConfiguration.companySitemapGroupIds(),
+			GetterUtil::getLong, Long.class);
+	}
 
 	@Override
 	public boolean includeCategoriesCompanyEnabled(long companyId)

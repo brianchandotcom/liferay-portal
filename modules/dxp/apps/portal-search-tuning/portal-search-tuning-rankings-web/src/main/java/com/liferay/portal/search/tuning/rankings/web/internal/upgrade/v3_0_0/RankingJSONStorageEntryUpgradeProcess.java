@@ -52,9 +52,6 @@ public class RankingJSONStorageEntryUpgradeProcess extends UpgradeProcess {
 			preparedStatement2.setString(1, "status");
 
 			while (resultSet.next()) {
-				preparedStatement2.setLong(
-					3, resultSet.getLong("jsonStorageEntryId"));
-
 				String inactiveValueString = resultSet.getString("valueString");
 
 				if (Boolean.valueOf(inactiveValueString)) {
@@ -74,8 +71,13 @@ public class RankingJSONStorageEntryUpgradeProcess extends UpgradeProcess {
 							StringPool.QUOTE));
 				}
 
-				preparedStatement2.execute();
+				preparedStatement2.setLong(
+					3, resultSet.getLong("jsonStorageEntryId"));
+
+				preparedStatement2.addBatch();
 			}
+
+			preparedStatement2.executeBatch();
 		}
 	}
 

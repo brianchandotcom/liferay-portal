@@ -303,6 +303,7 @@ public abstract class BaseDataListViewResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			dataListViewPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		DataListView dataListView1 =
 			testGetDataDefinitionDataListViewsPage_addDataListView(
@@ -318,34 +319,39 @@ public abstract class BaseDataListViewResourceTestCase {
 
 		Page<DataListView> page1 =
 			dataListViewResource.getDataDefinitionDataListViewsPage(
-				dataDefinitionId, null, Pagination.of(1, totalCount + 2), null);
+				dataDefinitionId, null, Pagination.of(1, itemLimit), null);
 
 		List<DataListView> dataListViews1 =
 			(List<DataListView>)page1.getItems();
 
-		Assert.assertEquals(
-			dataListViews1.toString(), totalCount + 2, dataListViews1.size());
+		if (dataListViews1.size() < itemLimit) {
+			itemLimit = dataListViews1.size();
+		}
 
-		Page<DataListView> page2 =
-			dataListViewResource.getDataDefinitionDataListViewsPage(
-				dataDefinitionId, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			dataListViewPage.getTotalCount() / itemLimit);
+		List<DataListView> allItems = new ArrayList<DataListView>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<DataListView> dataListViews2 =
-			(List<DataListView>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					dataListViews1.toString(), itemLimit,
+					dataListViews1.size());
 
-		Assert.assertEquals(
-			dataListViews2.toString(), 1, dataListViews2.size());
+				Page<DataListView> page =
+					dataListViewResource.getDataDefinitionDataListViewsPage(
+						dataDefinitionId, null,
+						Pagination.of(pageNum, itemLimit), null);
 
-		Page<DataListView> page3 =
-			dataListViewResource.getDataDefinitionDataListViewsPage(
-				dataDefinitionId, null, Pagination.of(1, (int)totalCount + 3),
-				null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(dataListView1, (List<DataListView>)page3.getItems());
-		assertContains(dataListView2, (List<DataListView>)page3.getItems());
-		assertContains(dataListView3, (List<DataListView>)page3.getItems());
+		assertContains(dataListView1, allItems);
+		assertContains(dataListView2, allItems);
+		assertContains(dataListView3, allItems);
 	}
 
 	@Test

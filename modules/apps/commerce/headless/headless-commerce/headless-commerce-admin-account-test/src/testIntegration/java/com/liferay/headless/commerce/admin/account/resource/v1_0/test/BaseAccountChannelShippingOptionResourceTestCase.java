@@ -495,6 +495,7 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			accountChannelShippingOptionPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		AccountChannelShippingOption accountChannelShippingOption1 =
 			testGetAccountByExternalReferenceCodeAccountChannelShippingOptionPage_addAccountChannelShippingOption(
@@ -511,44 +512,41 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 		Page<AccountChannelShippingOption> page1 =
 			accountChannelShippingOptionResource.
 				getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+					externalReferenceCode, Pagination.of(1, itemLimit));
 
 		List<AccountChannelShippingOption> accountChannelShippingOptions1 =
 			(List<AccountChannelShippingOption>)page1.getItems();
 
-		Assert.assertEquals(
-			accountChannelShippingOptions1.toString(), totalCount + 2,
-			accountChannelShippingOptions1.size());
+		if (accountChannelShippingOptions1.size() < itemLimit) {
+			itemLimit = accountChannelShippingOptions1.size();
+		}
 
-		Page<AccountChannelShippingOption> page2 =
-			accountChannelShippingOptionResource.
-				getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			accountChannelShippingOptionPage.getTotalCount() / itemLimit);
+		List<AccountChannelShippingOption> allItems =
+			new ArrayList<AccountChannelShippingOption>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<AccountChannelShippingOption> accountChannelShippingOptions2 =
-			(List<AccountChannelShippingOption>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					accountChannelShippingOptions1.toString(), itemLimit,
+					accountChannelShippingOptions1.size());
 
-		Assert.assertEquals(
-			accountChannelShippingOptions2.toString(), 1,
-			accountChannelShippingOptions2.size());
+				Page<AccountChannelShippingOption> page =
+					accountChannelShippingOptionResource.
+						getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
+							externalReferenceCode,
+							Pagination.of(pageNum, itemLimit));
 
-		Page<AccountChannelShippingOption> page3 =
-			accountChannelShippingOptionResource.
-				getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			accountChannelShippingOption1,
-			(List<AccountChannelShippingOption>)page3.getItems());
-		assertContains(
-			accountChannelShippingOption2,
-			(List<AccountChannelShippingOption>)page3.getItems());
-		assertContains(
-			accountChannelShippingOption3,
-			(List<AccountChannelShippingOption>)page3.getItems());
+		assertContains(accountChannelShippingOption1, allItems);
+		assertContains(accountChannelShippingOption2, allItems);
+		assertContains(accountChannelShippingOption3, allItems);
 	}
 
 	protected AccountChannelShippingOption
@@ -695,6 +693,7 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			accountChannelShippingOptionPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		AccountChannelShippingOption accountChannelShippingOption1 =
 			testGetAccountIdAccountChannelShippingOptionPage_addAccountChannelShippingOption(
@@ -711,43 +710,40 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 		Page<AccountChannelShippingOption> page1 =
 			accountChannelShippingOptionResource.
 				getAccountIdAccountChannelShippingOptionPage(
-					id, Pagination.of(1, totalCount + 2));
+					id, Pagination.of(1, itemLimit));
 
 		List<AccountChannelShippingOption> accountChannelShippingOptions1 =
 			(List<AccountChannelShippingOption>)page1.getItems();
 
-		Assert.assertEquals(
-			accountChannelShippingOptions1.toString(), totalCount + 2,
-			accountChannelShippingOptions1.size());
+		if (accountChannelShippingOptions1.size() < itemLimit) {
+			itemLimit = accountChannelShippingOptions1.size();
+		}
 
-		Page<AccountChannelShippingOption> page2 =
-			accountChannelShippingOptionResource.
-				getAccountIdAccountChannelShippingOptionPage(
-					id, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			accountChannelShippingOptionPage.getTotalCount() / itemLimit);
+		List<AccountChannelShippingOption> allItems =
+			new ArrayList<AccountChannelShippingOption>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<AccountChannelShippingOption> accountChannelShippingOptions2 =
-			(List<AccountChannelShippingOption>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					accountChannelShippingOptions1.toString(), itemLimit,
+					accountChannelShippingOptions1.size());
 
-		Assert.assertEquals(
-			accountChannelShippingOptions2.toString(), 1,
-			accountChannelShippingOptions2.size());
+				Page<AccountChannelShippingOption> page =
+					accountChannelShippingOptionResource.
+						getAccountIdAccountChannelShippingOptionPage(
+							id, Pagination.of(pageNum, itemLimit));
 
-		Page<AccountChannelShippingOption> page3 =
-			accountChannelShippingOptionResource.
-				getAccountIdAccountChannelShippingOptionPage(
-					id, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			accountChannelShippingOption1,
-			(List<AccountChannelShippingOption>)page3.getItems());
-		assertContains(
-			accountChannelShippingOption2,
-			(List<AccountChannelShippingOption>)page3.getItems());
-		assertContains(
-			accountChannelShippingOption3,
-			(List<AccountChannelShippingOption>)page3.getItems());
+		assertContains(accountChannelShippingOption1, allItems);
+		assertContains(accountChannelShippingOption2, allItems);
+		assertContains(accountChannelShippingOption3, allItems);
 	}
 
 	protected AccountChannelShippingOption

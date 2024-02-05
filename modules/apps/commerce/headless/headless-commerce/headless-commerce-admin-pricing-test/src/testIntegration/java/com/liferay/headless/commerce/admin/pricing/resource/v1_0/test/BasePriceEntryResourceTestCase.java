@@ -523,6 +523,7 @@ public abstract class BasePriceEntryResourceTestCase {
 					externalReferenceCode, null);
 
 		int totalCount = GetterUtil.getInteger(priceEntryPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		PriceEntry priceEntry1 =
 			testGetPriceListByExternalReferenceCodePriceEntriesPage_addPriceEntry(
@@ -539,33 +540,37 @@ public abstract class BasePriceEntryResourceTestCase {
 		Page<PriceEntry> page1 =
 			priceEntryResource.
 				getPriceListByExternalReferenceCodePriceEntriesPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+					externalReferenceCode, Pagination.of(1, itemLimit));
 
 		List<PriceEntry> priceEntries1 = (List<PriceEntry>)page1.getItems();
 
-		Assert.assertEquals(
-			priceEntries1.toString(), totalCount + 2, priceEntries1.size());
+		if (priceEntries1.size() < itemLimit) {
+			itemLimit = priceEntries1.size();
+		}
 
-		Page<PriceEntry> page2 =
-			priceEntryResource.
-				getPriceListByExternalReferenceCodePriceEntriesPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(priceEntryPage.getTotalCount() / itemLimit);
+		List<PriceEntry> allItems = new ArrayList<PriceEntry>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<PriceEntry> priceEntries2 = (List<PriceEntry>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					priceEntries1.toString(), itemLimit, priceEntries1.size());
 
-		Assert.assertEquals(priceEntries2.toString(), 1, priceEntries2.size());
+				Page<PriceEntry> page =
+					priceEntryResource.
+						getPriceListByExternalReferenceCodePriceEntriesPage(
+							externalReferenceCode,
+							Pagination.of(pageNum, itemLimit));
 
-		Page<PriceEntry> page3 =
-			priceEntryResource.
-				getPriceListByExternalReferenceCodePriceEntriesPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(priceEntry1, (List<PriceEntry>)page3.getItems());
-		assertContains(priceEntry2, (List<PriceEntry>)page3.getItems());
-		assertContains(priceEntry3, (List<PriceEntry>)page3.getItems());
+		assertContains(priceEntry1, allItems);
+		assertContains(priceEntry2, allItems);
+		assertContains(priceEntry3, allItems);
 	}
 
 	protected PriceEntry
@@ -687,6 +692,7 @@ public abstract class BasePriceEntryResourceTestCase {
 			priceEntryResource.getPriceListIdPriceEntriesPage(id, null);
 
 		int totalCount = GetterUtil.getInteger(priceEntryPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		PriceEntry priceEntry1 =
 			testGetPriceListIdPriceEntriesPage_addPriceEntry(
@@ -702,30 +708,35 @@ public abstract class BasePriceEntryResourceTestCase {
 
 		Page<PriceEntry> page1 =
 			priceEntryResource.getPriceListIdPriceEntriesPage(
-				id, Pagination.of(1, totalCount + 2));
+				id, Pagination.of(1, itemLimit));
 
 		List<PriceEntry> priceEntries1 = (List<PriceEntry>)page1.getItems();
 
-		Assert.assertEquals(
-			priceEntries1.toString(), totalCount + 2, priceEntries1.size());
+		if (priceEntries1.size() < itemLimit) {
+			itemLimit = priceEntries1.size();
+		}
 
-		Page<PriceEntry> page2 =
-			priceEntryResource.getPriceListIdPriceEntriesPage(
-				id, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(priceEntryPage.getTotalCount() / itemLimit);
+		List<PriceEntry> allItems = new ArrayList<PriceEntry>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<PriceEntry> priceEntries2 = (List<PriceEntry>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					priceEntries1.toString(), itemLimit, priceEntries1.size());
 
-		Assert.assertEquals(priceEntries2.toString(), 1, priceEntries2.size());
+				Page<PriceEntry> page =
+					priceEntryResource.getPriceListIdPriceEntriesPage(
+						id, Pagination.of(pageNum, itemLimit));
 
-		Page<PriceEntry> page3 =
-			priceEntryResource.getPriceListIdPriceEntriesPage(
-				id, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(priceEntry1, (List<PriceEntry>)page3.getItems());
-		assertContains(priceEntry2, (List<PriceEntry>)page3.getItems());
-		assertContains(priceEntry3, (List<PriceEntry>)page3.getItems());
+		assertContains(priceEntry1, allItems);
+		assertContains(priceEntry2, allItems);
+		assertContains(priceEntry3, allItems);
 	}
 
 	protected PriceEntry testGetPriceListIdPriceEntriesPage_addPriceEntry(

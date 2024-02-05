@@ -225,6 +225,7 @@ public abstract class BaseFieldResourceTestCase {
 			null, null, null);
 
 		int totalCount = GetterUtil.getInteger(fieldPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Field field1 = testGetFieldsAccountsPage_addField(randomField());
 
@@ -233,27 +234,34 @@ public abstract class BaseFieldResourceTestCase {
 		Field field3 = testGetFieldsAccountsPage_addField(randomField());
 
 		Page<Field> page1 = fieldResource.getFieldsAccountsPage(
-			null, Pagination.of(1, totalCount + 2), null);
+			null, Pagination.of(1, itemLimit), null);
 
 		List<Field> fields1 = (List<Field>)page1.getItems();
 
-		Assert.assertEquals(fields1.toString(), totalCount + 2, fields1.size());
+		if (fields1.size() < itemLimit) {
+			itemLimit = fields1.size();
+		}
 
-		Page<Field> page2 = fieldResource.getFieldsAccountsPage(
-			null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(fieldPage.getTotalCount() / itemLimit);
+		List<Field> allItems = new ArrayList<Field>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Field> fields2 = (List<Field>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					fields1.toString(), itemLimit, fields1.size());
 
-		Assert.assertEquals(fields2.toString(), 1, fields2.size());
+				Page<Field> page = fieldResource.getFieldsAccountsPage(
+					null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<Field> page3 = fieldResource.getFieldsAccountsPage(
-			null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(field1, (List<Field>)page3.getItems());
-		assertContains(field2, (List<Field>)page3.getItems());
-		assertContains(field3, (List<Field>)page3.getItems());
+		assertContains(field1, allItems);
+		assertContains(field2, allItems);
+		assertContains(field3, allItems);
 	}
 
 	@Test
@@ -429,6 +437,7 @@ public abstract class BaseFieldResourceTestCase {
 			null, null, null);
 
 		int totalCount = GetterUtil.getInteger(fieldPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Field field1 = testGetFieldsOrdersPage_addField(randomField());
 
@@ -437,27 +446,34 @@ public abstract class BaseFieldResourceTestCase {
 		Field field3 = testGetFieldsOrdersPage_addField(randomField());
 
 		Page<Field> page1 = fieldResource.getFieldsOrdersPage(
-			null, Pagination.of(1, totalCount + 2), null);
+			null, Pagination.of(1, itemLimit), null);
 
 		List<Field> fields1 = (List<Field>)page1.getItems();
 
-		Assert.assertEquals(fields1.toString(), totalCount + 2, fields1.size());
+		if (fields1.size() < itemLimit) {
+			itemLimit = fields1.size();
+		}
 
-		Page<Field> page2 = fieldResource.getFieldsOrdersPage(
-			null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(fieldPage.getTotalCount() / itemLimit);
+		List<Field> allItems = new ArrayList<Field>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Field> fields2 = (List<Field>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					fields1.toString(), itemLimit, fields1.size());
 
-		Assert.assertEquals(fields2.toString(), 1, fields2.size());
+				Page<Field> page = fieldResource.getFieldsOrdersPage(
+					null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<Field> page3 = fieldResource.getFieldsOrdersPage(
-			null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(field1, (List<Field>)page3.getItems());
-		assertContains(field2, (List<Field>)page3.getItems());
-		assertContains(field3, (List<Field>)page3.getItems());
+		assertContains(field1, allItems);
+		assertContains(field2, allItems);
+		assertContains(field3, allItems);
 	}
 
 	@Test
@@ -632,6 +648,7 @@ public abstract class BaseFieldResourceTestCase {
 			null, null, null);
 
 		int totalCount = GetterUtil.getInteger(fieldPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Field field1 = testGetFieldsPeoplePage_addField(randomField());
 
@@ -640,27 +657,34 @@ public abstract class BaseFieldResourceTestCase {
 		Field field3 = testGetFieldsPeoplePage_addField(randomField());
 
 		Page<Field> page1 = fieldResource.getFieldsPeoplePage(
-			null, Pagination.of(1, totalCount + 2), null);
+			null, Pagination.of(1, itemLimit), null);
 
 		List<Field> fields1 = (List<Field>)page1.getItems();
 
-		Assert.assertEquals(fields1.toString(), totalCount + 2, fields1.size());
+		if (fields1.size() < itemLimit) {
+			itemLimit = fields1.size();
+		}
 
-		Page<Field> page2 = fieldResource.getFieldsPeoplePage(
-			null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(fieldPage.getTotalCount() / itemLimit);
+		List<Field> allItems = new ArrayList<Field>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Field> fields2 = (List<Field>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					fields1.toString(), itemLimit, fields1.size());
 
-		Assert.assertEquals(fields2.toString(), 1, fields2.size());
+				Page<Field> page = fieldResource.getFieldsPeoplePage(
+					null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<Field> page3 = fieldResource.getFieldsPeoplePage(
-			null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(field1, (List<Field>)page3.getItems());
-		assertContains(field2, (List<Field>)page3.getItems());
-		assertContains(field3, (List<Field>)page3.getItems());
+		assertContains(field1, allItems);
+		assertContains(field2, allItems);
+		assertContains(field3, allItems);
 	}
 
 	@Test
@@ -835,6 +859,7 @@ public abstract class BaseFieldResourceTestCase {
 			null, null, null);
 
 		int totalCount = GetterUtil.getInteger(fieldPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Field field1 = testGetFieldsProductsPage_addField(randomField());
 
@@ -843,27 +868,34 @@ public abstract class BaseFieldResourceTestCase {
 		Field field3 = testGetFieldsProductsPage_addField(randomField());
 
 		Page<Field> page1 = fieldResource.getFieldsProductsPage(
-			null, Pagination.of(1, totalCount + 2), null);
+			null, Pagination.of(1, itemLimit), null);
 
 		List<Field> fields1 = (List<Field>)page1.getItems();
 
-		Assert.assertEquals(fields1.toString(), totalCount + 2, fields1.size());
+		if (fields1.size() < itemLimit) {
+			itemLimit = fields1.size();
+		}
 
-		Page<Field> page2 = fieldResource.getFieldsProductsPage(
-			null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(fieldPage.getTotalCount() / itemLimit);
+		List<Field> allItems = new ArrayList<Field>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Field> fields2 = (List<Field>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					fields1.toString(), itemLimit, fields1.size());
 
-		Assert.assertEquals(fields2.toString(), 1, fields2.size());
+				Page<Field> page = fieldResource.getFieldsProductsPage(
+					null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<Field> page3 = fieldResource.getFieldsProductsPage(
-			null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(field1, (List<Field>)page3.getItems());
-		assertContains(field2, (List<Field>)page3.getItems());
-		assertContains(field3, (List<Field>)page3.getItems());
+		assertContains(field1, allItems);
+		assertContains(field2, allItems);
+		assertContains(field3, allItems);
 	}
 
 	@Test

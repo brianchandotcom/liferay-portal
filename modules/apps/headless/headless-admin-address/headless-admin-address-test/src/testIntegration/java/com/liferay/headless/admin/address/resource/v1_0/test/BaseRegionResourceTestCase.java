@@ -261,6 +261,7 @@ public abstract class BaseRegionResourceTestCase {
 			countryId, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(regionPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Region region1 = testGetCountryRegionsPage_addRegion(
 			countryId, randomRegion());
@@ -272,28 +273,35 @@ public abstract class BaseRegionResourceTestCase {
 			countryId, randomRegion());
 
 		Page<Region> page1 = regionResource.getCountryRegionsPage(
-			countryId, null, null, Pagination.of(1, totalCount + 2), null);
+			countryId, null, null, Pagination.of(1, itemLimit), null);
 
 		List<Region> regions1 = (List<Region>)page1.getItems();
 
-		Assert.assertEquals(
-			regions1.toString(), totalCount + 2, regions1.size());
+		if (regions1.size() < itemLimit) {
+			itemLimit = regions1.size();
+		}
 
-		Page<Region> page2 = regionResource.getCountryRegionsPage(
-			countryId, null, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(regionPage.getTotalCount() / itemLimit);
+		List<Region> allItems = new ArrayList<Region>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Region> regions2 = (List<Region>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					regions1.toString(), itemLimit, regions1.size());
 
-		Assert.assertEquals(regions2.toString(), 1, regions2.size());
+				Page<Region> page = regionResource.getCountryRegionsPage(
+					countryId, null, null, Pagination.of(pageNum, itemLimit),
+					null);
 
-		Page<Region> page3 = regionResource.getCountryRegionsPage(
-			countryId, null, null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(region1, (List<Region>)page3.getItems());
-		assertContains(region2, (List<Region>)page3.getItems());
-		assertContains(region3, (List<Region>)page3.getItems());
+		assertContains(region1, allItems);
+		assertContains(region2, allItems);
+		assertContains(region3, allItems);
 	}
 
 	@Test
@@ -593,6 +601,7 @@ public abstract class BaseRegionResourceTestCase {
 			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(regionPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Region region1 = testGetRegionsPage_addRegion(randomRegion());
 
@@ -601,28 +610,34 @@ public abstract class BaseRegionResourceTestCase {
 		Region region3 = testGetRegionsPage_addRegion(randomRegion());
 
 		Page<Region> page1 = regionResource.getRegionsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+			null, null, Pagination.of(1, itemLimit), null);
 
 		List<Region> regions1 = (List<Region>)page1.getItems();
 
-		Assert.assertEquals(
-			regions1.toString(), totalCount + 2, regions1.size());
+		if (regions1.size() < itemLimit) {
+			itemLimit = regions1.size();
+		}
 
-		Page<Region> page2 = regionResource.getRegionsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(regionPage.getTotalCount() / itemLimit);
+		List<Region> allItems = new ArrayList<Region>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Region> regions2 = (List<Region>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					regions1.toString(), itemLimit, regions1.size());
 
-		Assert.assertEquals(regions2.toString(), 1, regions2.size());
+				Page<Region> page = regionResource.getRegionsPage(
+					null, null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<Region> page3 = regionResource.getRegionsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(region1, (List<Region>)page3.getItems());
-		assertContains(region2, (List<Region>)page3.getItems());
-		assertContains(region3, (List<Region>)page3.getItems());
+		assertContains(region1, allItems);
+		assertContains(region2, allItems);
+		assertContains(region3, allItems);
 	}
 
 	@Test

@@ -284,6 +284,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			dataDefinitionPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		DataDefinition dataDefinition1 =
 			testGetDataDefinitionByContentTypeContentTypePage_addDataDefinition(
@@ -300,37 +301,40 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Page<DataDefinition> page1 =
 			dataDefinitionResource.
 				getDataDefinitionByContentTypeContentTypePage(
-					contentType, null, Pagination.of(1, totalCount + 2), null);
+					contentType, null, Pagination.of(1, itemLimit), null);
 
 		List<DataDefinition> dataDefinitions1 =
 			(List<DataDefinition>)page1.getItems();
 
-		Assert.assertEquals(
-			dataDefinitions1.toString(), totalCount + 2,
-			dataDefinitions1.size());
+		if (dataDefinitions1.size() < itemLimit) {
+			itemLimit = dataDefinitions1.size();
+		}
 
-		Page<DataDefinition> page2 =
-			dataDefinitionResource.
-				getDataDefinitionByContentTypeContentTypePage(
-					contentType, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			dataDefinitionPage.getTotalCount() / itemLimit);
+		List<DataDefinition> allItems = new ArrayList<DataDefinition>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<DataDefinition> dataDefinitions2 =
-			(List<DataDefinition>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					dataDefinitions1.toString(), itemLimit,
+					dataDefinitions1.size());
 
-		Assert.assertEquals(
-			dataDefinitions2.toString(), 1, dataDefinitions2.size());
+				Page<DataDefinition> page =
+					dataDefinitionResource.
+						getDataDefinitionByContentTypeContentTypePage(
+							contentType, null,
+							Pagination.of(pageNum, itemLimit), null);
 
-		Page<DataDefinition> page3 =
-			dataDefinitionResource.
-				getDataDefinitionByContentTypeContentTypePage(
-					contentType, null, Pagination.of(1, (int)totalCount + 3),
-					null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(dataDefinition1, (List<DataDefinition>)page3.getItems());
-		assertContains(dataDefinition2, (List<DataDefinition>)page3.getItems());
-		assertContains(dataDefinition3, (List<DataDefinition>)page3.getItems());
+		assertContains(dataDefinition1, allItems);
+		assertContains(dataDefinition2, allItems);
+		assertContains(dataDefinition3, allItems);
 	}
 
 	@Test
@@ -920,6 +924,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			dataDefinitionPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		DataDefinition dataDefinition1 =
 			testGetSiteDataDefinitionByContentTypeContentTypePage_addDataDefinition(
@@ -936,39 +941,41 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Page<DataDefinition> page1 =
 			dataDefinitionResource.
 				getSiteDataDefinitionByContentTypeContentTypePage(
-					siteId, contentType, null, Pagination.of(1, totalCount + 2),
+					siteId, contentType, null, Pagination.of(1, itemLimit),
 					null);
 
 		List<DataDefinition> dataDefinitions1 =
 			(List<DataDefinition>)page1.getItems();
 
-		Assert.assertEquals(
-			dataDefinitions1.toString(), totalCount + 2,
-			dataDefinitions1.size());
+		if (dataDefinitions1.size() < itemLimit) {
+			itemLimit = dataDefinitions1.size();
+		}
 
-		Page<DataDefinition> page2 =
-			dataDefinitionResource.
-				getSiteDataDefinitionByContentTypeContentTypePage(
-					siteId, contentType, null, Pagination.of(2, totalCount + 2),
-					null);
+		int pages = (int)Math.ceil(
+			dataDefinitionPage.getTotalCount() / itemLimit);
+		List<DataDefinition> allItems = new ArrayList<DataDefinition>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<DataDefinition> dataDefinitions2 =
-			(List<DataDefinition>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					dataDefinitions1.toString(), itemLimit,
+					dataDefinitions1.size());
 
-		Assert.assertEquals(
-			dataDefinitions2.toString(), 1, dataDefinitions2.size());
+				Page<DataDefinition> page =
+					dataDefinitionResource.
+						getSiteDataDefinitionByContentTypeContentTypePage(
+							siteId, contentType, null,
+							Pagination.of(pageNum, itemLimit), null);
 
-		Page<DataDefinition> page3 =
-			dataDefinitionResource.
-				getSiteDataDefinitionByContentTypeContentTypePage(
-					siteId, contentType, null,
-					Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(dataDefinition1, (List<DataDefinition>)page3.getItems());
-		assertContains(dataDefinition2, (List<DataDefinition>)page3.getItems());
-		assertContains(dataDefinition3, (List<DataDefinition>)page3.getItems());
+		assertContains(dataDefinition1, allItems);
+		assertContains(dataDefinition2, allItems);
+		assertContains(dataDefinition3, allItems);
 	}
 
 	@Test

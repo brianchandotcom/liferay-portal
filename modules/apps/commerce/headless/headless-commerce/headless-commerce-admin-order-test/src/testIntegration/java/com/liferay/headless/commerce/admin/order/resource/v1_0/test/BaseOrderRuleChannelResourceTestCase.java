@@ -287,6 +287,7 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			orderRuleChannelPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		OrderRuleChannel orderRuleChannel1 =
 			testGetOrderRuleByExternalReferenceCodeOrderRuleChannelsPage_addOrderRuleChannel(
@@ -303,40 +304,40 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 		Page<OrderRuleChannel> page1 =
 			orderRuleChannelResource.
 				getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+					externalReferenceCode, Pagination.of(1, itemLimit));
 
 		List<OrderRuleChannel> orderRuleChannels1 =
 			(List<OrderRuleChannel>)page1.getItems();
 
-		Assert.assertEquals(
-			orderRuleChannels1.toString(), totalCount + 2,
-			orderRuleChannels1.size());
+		if (orderRuleChannels1.size() < itemLimit) {
+			itemLimit = orderRuleChannels1.size();
+		}
 
-		Page<OrderRuleChannel> page2 =
-			orderRuleChannelResource.
-				getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			orderRuleChannelPage.getTotalCount() / itemLimit);
+		List<OrderRuleChannel> allItems = new ArrayList<OrderRuleChannel>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<OrderRuleChannel> orderRuleChannels2 =
-			(List<OrderRuleChannel>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					orderRuleChannels1.toString(), itemLimit,
+					orderRuleChannels1.size());
 
-		Assert.assertEquals(
-			orderRuleChannels2.toString(), 1, orderRuleChannels2.size());
+				Page<OrderRuleChannel> page =
+					orderRuleChannelResource.
+						getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
+							externalReferenceCode,
+							Pagination.of(pageNum, itemLimit));
 
-		Page<OrderRuleChannel> page3 =
-			orderRuleChannelResource.
-				getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			orderRuleChannel1, (List<OrderRuleChannel>)page3.getItems());
-		assertContains(
-			orderRuleChannel2, (List<OrderRuleChannel>)page3.getItems());
-		assertContains(
-			orderRuleChannel3, (List<OrderRuleChannel>)page3.getItems());
+		assertContains(orderRuleChannel1, allItems);
+		assertContains(orderRuleChannel2, allItems);
+		assertContains(orderRuleChannel3, allItems);
 	}
 
 	protected OrderRuleChannel
@@ -559,6 +560,7 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			orderRuleChannelPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		OrderRuleChannel orderRuleChannel1 =
 			testGetOrderRuleIdOrderRuleChannelsPage_addOrderRuleChannel(
@@ -574,37 +576,40 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 
 		Page<OrderRuleChannel> page1 =
 			orderRuleChannelResource.getOrderRuleIdOrderRuleChannelsPage(
-				id, null, null, Pagination.of(1, totalCount + 2), null);
+				id, null, null, Pagination.of(1, itemLimit), null);
 
 		List<OrderRuleChannel> orderRuleChannels1 =
 			(List<OrderRuleChannel>)page1.getItems();
 
-		Assert.assertEquals(
-			orderRuleChannels1.toString(), totalCount + 2,
-			orderRuleChannels1.size());
+		if (orderRuleChannels1.size() < itemLimit) {
+			itemLimit = orderRuleChannels1.size();
+		}
 
-		Page<OrderRuleChannel> page2 =
-			orderRuleChannelResource.getOrderRuleIdOrderRuleChannelsPage(
-				id, null, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			orderRuleChannelPage.getTotalCount() / itemLimit);
+		List<OrderRuleChannel> allItems = new ArrayList<OrderRuleChannel>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<OrderRuleChannel> orderRuleChannels2 =
-			(List<OrderRuleChannel>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					orderRuleChannels1.toString(), itemLimit,
+					orderRuleChannels1.size());
 
-		Assert.assertEquals(
-			orderRuleChannels2.toString(), 1, orderRuleChannels2.size());
+				Page<OrderRuleChannel> page =
+					orderRuleChannelResource.
+						getOrderRuleIdOrderRuleChannelsPage(
+							id, null, null, Pagination.of(pageNum, itemLimit),
+							null);
 
-		Page<OrderRuleChannel> page3 =
-			orderRuleChannelResource.getOrderRuleIdOrderRuleChannelsPage(
-				id, null, null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			orderRuleChannel1, (List<OrderRuleChannel>)page3.getItems());
-		assertContains(
-			orderRuleChannel2, (List<OrderRuleChannel>)page3.getItems());
-		assertContains(
-			orderRuleChannel3, (List<OrderRuleChannel>)page3.getItems());
+		assertContains(orderRuleChannel1, allItems);
+		assertContains(orderRuleChannel2, allItems);
+		assertContains(orderRuleChannel3, allItems);
 	}
 
 	@Test

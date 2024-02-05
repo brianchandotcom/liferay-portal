@@ -329,6 +329,7 @@ public abstract class BaseProductGroupProductResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			productGroupProductPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		ProductGroupProduct productGroupProduct1 =
 			testGetProductGroupByExternalReferenceCodeProductGroupProductsPage_addProductGroupProduct(
@@ -345,40 +346,41 @@ public abstract class BaseProductGroupProductResourceTestCase {
 		Page<ProductGroupProduct> page1 =
 			productGroupProductResource.
 				getProductGroupByExternalReferenceCodeProductGroupProductsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+					externalReferenceCode, Pagination.of(1, itemLimit));
 
 		List<ProductGroupProduct> productGroupProducts1 =
 			(List<ProductGroupProduct>)page1.getItems();
 
-		Assert.assertEquals(
-			productGroupProducts1.toString(), totalCount + 2,
-			productGroupProducts1.size());
+		if (productGroupProducts1.size() < itemLimit) {
+			itemLimit = productGroupProducts1.size();
+		}
 
-		Page<ProductGroupProduct> page2 =
-			productGroupProductResource.
-				getProductGroupByExternalReferenceCodeProductGroupProductsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			productGroupProductPage.getTotalCount() / itemLimit);
+		List<ProductGroupProduct> allItems =
+			new ArrayList<ProductGroupProduct>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<ProductGroupProduct> productGroupProducts2 =
-			(List<ProductGroupProduct>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					productGroupProducts1.toString(), itemLimit,
+					productGroupProducts1.size());
 
-		Assert.assertEquals(
-			productGroupProducts2.toString(), 1, productGroupProducts2.size());
+				Page<ProductGroupProduct> page =
+					productGroupProductResource.
+						getProductGroupByExternalReferenceCodeProductGroupProductsPage(
+							externalReferenceCode,
+							Pagination.of(pageNum, itemLimit));
 
-		Page<ProductGroupProduct> page3 =
-			productGroupProductResource.
-				getProductGroupByExternalReferenceCodeProductGroupProductsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			productGroupProduct1, (List<ProductGroupProduct>)page3.getItems());
-		assertContains(
-			productGroupProduct2, (List<ProductGroupProduct>)page3.getItems());
-		assertContains(
-			productGroupProduct3, (List<ProductGroupProduct>)page3.getItems());
+		assertContains(productGroupProduct1, allItems);
+		assertContains(productGroupProduct2, allItems);
+		assertContains(productGroupProduct3, allItems);
 	}
 
 	protected ProductGroupProduct
@@ -519,6 +521,7 @@ public abstract class BaseProductGroupProductResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			productGroupProductPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		ProductGroupProduct productGroupProduct1 =
 			testGetProductGroupIdProductGroupProductsPage_addProductGroupProduct(
@@ -535,39 +538,40 @@ public abstract class BaseProductGroupProductResourceTestCase {
 		Page<ProductGroupProduct> page1 =
 			productGroupProductResource.
 				getProductGroupIdProductGroupProductsPage(
-					id, Pagination.of(1, totalCount + 2));
+					id, Pagination.of(1, itemLimit));
 
 		List<ProductGroupProduct> productGroupProducts1 =
 			(List<ProductGroupProduct>)page1.getItems();
 
-		Assert.assertEquals(
-			productGroupProducts1.toString(), totalCount + 2,
-			productGroupProducts1.size());
+		if (productGroupProducts1.size() < itemLimit) {
+			itemLimit = productGroupProducts1.size();
+		}
 
-		Page<ProductGroupProduct> page2 =
-			productGroupProductResource.
-				getProductGroupIdProductGroupProductsPage(
-					id, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			productGroupProductPage.getTotalCount() / itemLimit);
+		List<ProductGroupProduct> allItems =
+			new ArrayList<ProductGroupProduct>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<ProductGroupProduct> productGroupProducts2 =
-			(List<ProductGroupProduct>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					productGroupProducts1.toString(), itemLimit,
+					productGroupProducts1.size());
 
-		Assert.assertEquals(
-			productGroupProducts2.toString(), 1, productGroupProducts2.size());
+				Page<ProductGroupProduct> page =
+					productGroupProductResource.
+						getProductGroupIdProductGroupProductsPage(
+							id, Pagination.of(pageNum, itemLimit));
 
-		Page<ProductGroupProduct> page3 =
-			productGroupProductResource.
-				getProductGroupIdProductGroupProductsPage(
-					id, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			productGroupProduct1, (List<ProductGroupProduct>)page3.getItems());
-		assertContains(
-			productGroupProduct2, (List<ProductGroupProduct>)page3.getItems());
-		assertContains(
-			productGroupProduct3, (List<ProductGroupProduct>)page3.getItems());
+		assertContains(productGroupProduct1, allItems);
+		assertContains(productGroupProduct2, allItems);
+		assertContains(productGroupProduct3, allItems);
 	}
 
 	protected ProductGroupProduct

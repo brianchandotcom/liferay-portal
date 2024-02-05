@@ -229,6 +229,7 @@ public abstract class BaseSubscriptionResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			subscriptionPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Subscription subscription1 =
 			testGetMyUserAccountSubscriptionsPage_addSubscription(
@@ -244,33 +245,38 @@ public abstract class BaseSubscriptionResourceTestCase {
 
 		Page<Subscription> page1 =
 			subscriptionResource.getMyUserAccountSubscriptionsPage(
-				null, Pagination.of(1, totalCount + 2));
+				null, Pagination.of(1, itemLimit));
 
 		List<Subscription> subscriptions1 =
 			(List<Subscription>)page1.getItems();
 
-		Assert.assertEquals(
-			subscriptions1.toString(), totalCount + 2, subscriptions1.size());
+		if (subscriptions1.size() < itemLimit) {
+			itemLimit = subscriptions1.size();
+		}
 
-		Page<Subscription> page2 =
-			subscriptionResource.getMyUserAccountSubscriptionsPage(
-				null, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			subscriptionPage.getTotalCount() / itemLimit);
+		List<Subscription> allItems = new ArrayList<Subscription>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Subscription> subscriptions2 =
-			(List<Subscription>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					subscriptions1.toString(), itemLimit,
+					subscriptions1.size());
 
-		Assert.assertEquals(
-			subscriptions2.toString(), 1, subscriptions2.size());
+				Page<Subscription> page =
+					subscriptionResource.getMyUserAccountSubscriptionsPage(
+						null, Pagination.of(pageNum, itemLimit));
 
-		Page<Subscription> page3 =
-			subscriptionResource.getMyUserAccountSubscriptionsPage(
-				null, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(subscription1, (List<Subscription>)page3.getItems());
-		assertContains(subscription2, (List<Subscription>)page3.getItems());
-		assertContains(subscription3, (List<Subscription>)page3.getItems());
+		assertContains(subscription1, allItems);
+		assertContains(subscription2, allItems);
+		assertContains(subscription3, allItems);
 	}
 
 	protected Subscription

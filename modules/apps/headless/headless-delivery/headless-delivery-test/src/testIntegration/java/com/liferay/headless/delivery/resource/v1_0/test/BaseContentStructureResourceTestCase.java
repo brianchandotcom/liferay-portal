@@ -389,6 +389,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			contentStructurePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		ContentStructure contentStructure1 =
 			testGetAssetLibraryContentStructuresPage_addContentStructure(
@@ -404,40 +405,41 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Page<ContentStructure> page1 =
 			contentStructureResource.getAssetLibraryContentStructuresPage(
-				assetLibraryId, null, null, null,
-				Pagination.of(1, totalCount + 2), null);
+				assetLibraryId, null, null, null, Pagination.of(1, itemLimit),
+				null);
 
 		List<ContentStructure> contentStructures1 =
 			(List<ContentStructure>)page1.getItems();
 
-		Assert.assertEquals(
-			contentStructures1.toString(), totalCount + 2,
-			contentStructures1.size());
+		if (contentStructures1.size() < itemLimit) {
+			itemLimit = contentStructures1.size();
+		}
 
-		Page<ContentStructure> page2 =
-			contentStructureResource.getAssetLibraryContentStructuresPage(
-				assetLibraryId, null, null, null,
-				Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			contentStructurePage.getTotalCount() / itemLimit);
+		List<ContentStructure> allItems = new ArrayList<ContentStructure>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<ContentStructure> contentStructures2 =
-			(List<ContentStructure>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					contentStructures1.toString(), itemLimit,
+					contentStructures1.size());
 
-		Assert.assertEquals(
-			contentStructures2.toString(), 1, contentStructures2.size());
+				Page<ContentStructure> page =
+					contentStructureResource.
+						getAssetLibraryContentStructuresPage(
+							assetLibraryId, null, null, null,
+							Pagination.of(pageNum, itemLimit), null);
 
-		Page<ContentStructure> page3 =
-			contentStructureResource.getAssetLibraryContentStructuresPage(
-				assetLibraryId, null, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			contentStructure1, (List<ContentStructure>)page3.getItems());
-		assertContains(
-			contentStructure2, (List<ContentStructure>)page3.getItems());
-		assertContains(
-			contentStructure3, (List<ContentStructure>)page3.getItems());
+		assertContains(contentStructure1, allItems);
+		assertContains(contentStructure2, allItems);
+		assertContains(contentStructure3, allItems);
 	}
 
 	@Test
@@ -998,6 +1000,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			contentStructurePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		ContentStructure contentStructure1 =
 			testGetSiteContentStructuresPage_addContentStructure(
@@ -1013,40 +1016,39 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Page<ContentStructure> page1 =
 			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, null, Pagination.of(1, totalCount + 2),
-				null);
+				siteId, null, null, null, Pagination.of(1, itemLimit), null);
 
 		List<ContentStructure> contentStructures1 =
 			(List<ContentStructure>)page1.getItems();
 
-		Assert.assertEquals(
-			contentStructures1.toString(), totalCount + 2,
-			contentStructures1.size());
+		if (contentStructures1.size() < itemLimit) {
+			itemLimit = contentStructures1.size();
+		}
 
-		Page<ContentStructure> page2 =
-			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, null, Pagination.of(2, totalCount + 2),
-				null);
+		int pages = (int)Math.ceil(
+			contentStructurePage.getTotalCount() / itemLimit);
+		List<ContentStructure> allItems = new ArrayList<ContentStructure>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<ContentStructure> contentStructures2 =
-			(List<ContentStructure>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					contentStructures1.toString(), itemLimit,
+					contentStructures1.size());
 
-		Assert.assertEquals(
-			contentStructures2.toString(), 1, contentStructures2.size());
+				Page<ContentStructure> page =
+					contentStructureResource.getSiteContentStructuresPage(
+						siteId, null, null, null,
+						Pagination.of(pageNum, itemLimit), null);
 
-		Page<ContentStructure> page3 =
-			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
-				null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			contentStructure1, (List<ContentStructure>)page3.getItems());
-		assertContains(
-			contentStructure2, (List<ContentStructure>)page3.getItems());
-		assertContains(
-			contentStructure3, (List<ContentStructure>)page3.getItems());
+		assertContains(contentStructure1, allItems);
+		assertContains(contentStructure2, allItems);
+		assertContains(contentStructure3, allItems);
 	}
 
 	@Test

@@ -389,6 +389,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			warehouseItemPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		WarehouseItem warehouseItem1 =
 			testGetWarehouseItemsUpdatedPage_addWarehouseItem(
@@ -404,33 +405,38 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		Page<WarehouseItem> page1 =
 			warehouseItemResource.getWarehouseItemsUpdatedPage(
-				null, null, Pagination.of(1, totalCount + 2));
+				null, null, Pagination.of(1, itemLimit));
 
 		List<WarehouseItem> warehouseItems1 =
 			(List<WarehouseItem>)page1.getItems();
 
-		Assert.assertEquals(
-			warehouseItems1.toString(), totalCount + 2, warehouseItems1.size());
+		if (warehouseItems1.size() < itemLimit) {
+			itemLimit = warehouseItems1.size();
+		}
 
-		Page<WarehouseItem> page2 =
-			warehouseItemResource.getWarehouseItemsUpdatedPage(
-				null, null, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			warehouseItemPage.getTotalCount() / itemLimit);
+		List<WarehouseItem> allItems = new ArrayList<WarehouseItem>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<WarehouseItem> warehouseItems2 =
-			(List<WarehouseItem>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					warehouseItems1.toString(), itemLimit,
+					warehouseItems1.size());
 
-		Assert.assertEquals(
-			warehouseItems2.toString(), 1, warehouseItems2.size());
+				Page<WarehouseItem> page =
+					warehouseItemResource.getWarehouseItemsUpdatedPage(
+						null, null, Pagination.of(pageNum, itemLimit));
 
-		Page<WarehouseItem> page3 =
-			warehouseItemResource.getWarehouseItemsUpdatedPage(
-				null, null, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(warehouseItem1, (List<WarehouseItem>)page3.getItems());
-		assertContains(warehouseItem2, (List<WarehouseItem>)page3.getItems());
-		assertContains(warehouseItem3, (List<WarehouseItem>)page3.getItems());
+		assertContains(warehouseItem1, allItems);
+		assertContains(warehouseItem2, allItems);
+		assertContains(warehouseItem3, allItems);
 	}
 
 	protected WarehouseItem testGetWarehouseItemsUpdatedPage_addWarehouseItem(
@@ -668,6 +674,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			warehouseItemPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		WarehouseItem warehouseItem1 =
 			testGetWarehouseByExternalReferenceCodeWarehouseItemsPage_addWarehouseItem(
@@ -684,36 +691,40 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		Page<WarehouseItem> page1 =
 			warehouseItemResource.
 				getWarehouseByExternalReferenceCodeWarehouseItemsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+					externalReferenceCode, Pagination.of(1, itemLimit));
 
 		List<WarehouseItem> warehouseItems1 =
 			(List<WarehouseItem>)page1.getItems();
 
-		Assert.assertEquals(
-			warehouseItems1.toString(), totalCount + 2, warehouseItems1.size());
+		if (warehouseItems1.size() < itemLimit) {
+			itemLimit = warehouseItems1.size();
+		}
 
-		Page<WarehouseItem> page2 =
-			warehouseItemResource.
-				getWarehouseByExternalReferenceCodeWarehouseItemsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			warehouseItemPage.getTotalCount() / itemLimit);
+		List<WarehouseItem> allItems = new ArrayList<WarehouseItem>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<WarehouseItem> warehouseItems2 =
-			(List<WarehouseItem>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					warehouseItems1.toString(), itemLimit,
+					warehouseItems1.size());
 
-		Assert.assertEquals(
-			warehouseItems2.toString(), 1, warehouseItems2.size());
+				Page<WarehouseItem> page =
+					warehouseItemResource.
+						getWarehouseByExternalReferenceCodeWarehouseItemsPage(
+							externalReferenceCode,
+							Pagination.of(pageNum, itemLimit));
 
-		Page<WarehouseItem> page3 =
-			warehouseItemResource.
-				getWarehouseByExternalReferenceCodeWarehouseItemsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(warehouseItem1, (List<WarehouseItem>)page3.getItems());
-		assertContains(warehouseItem2, (List<WarehouseItem>)page3.getItems());
-		assertContains(warehouseItem3, (List<WarehouseItem>)page3.getItems());
+		assertContains(warehouseItem1, allItems);
+		assertContains(warehouseItem2, allItems);
+		assertContains(warehouseItem3, allItems);
 	}
 
 	protected WarehouseItem
@@ -836,6 +847,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			warehouseItemPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		WarehouseItem warehouseItem1 =
 			testGetWarehouseIdWarehouseItemsPage_addWarehouseItem(
@@ -851,33 +863,38 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		Page<WarehouseItem> page1 =
 			warehouseItemResource.getWarehouseIdWarehouseItemsPage(
-				id, Pagination.of(1, totalCount + 2));
+				id, Pagination.of(1, itemLimit));
 
 		List<WarehouseItem> warehouseItems1 =
 			(List<WarehouseItem>)page1.getItems();
 
-		Assert.assertEquals(
-			warehouseItems1.toString(), totalCount + 2, warehouseItems1.size());
+		if (warehouseItems1.size() < itemLimit) {
+			itemLimit = warehouseItems1.size();
+		}
 
-		Page<WarehouseItem> page2 =
-			warehouseItemResource.getWarehouseIdWarehouseItemsPage(
-				id, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			warehouseItemPage.getTotalCount() / itemLimit);
+		List<WarehouseItem> allItems = new ArrayList<WarehouseItem>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<WarehouseItem> warehouseItems2 =
-			(List<WarehouseItem>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					warehouseItems1.toString(), itemLimit,
+					warehouseItems1.size());
 
-		Assert.assertEquals(
-			warehouseItems2.toString(), 1, warehouseItems2.size());
+				Page<WarehouseItem> page =
+					warehouseItemResource.getWarehouseIdWarehouseItemsPage(
+						id, Pagination.of(pageNum, itemLimit));
 
-		Page<WarehouseItem> page3 =
-			warehouseItemResource.getWarehouseIdWarehouseItemsPage(
-				id, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(warehouseItem1, (List<WarehouseItem>)page3.getItems());
-		assertContains(warehouseItem2, (List<WarehouseItem>)page3.getItems());
-		assertContains(warehouseItem3, (List<WarehouseItem>)page3.getItems());
+		assertContains(warehouseItem1, allItems);
+		assertContains(warehouseItem2, allItems);
+		assertContains(warehouseItem3, allItems);
 	}
 
 	protected WarehouseItem

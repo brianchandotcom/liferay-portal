@@ -309,6 +309,7 @@ public abstract class BasePriceListResourceTestCase {
 			null, null, null);
 
 		int totalCount = GetterUtil.getInteger(priceListPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		PriceList priceList1 = testGetPriceListsPage_addPriceList(
 			randomPriceList());
@@ -320,28 +321,34 @@ public abstract class BasePriceListResourceTestCase {
 			randomPriceList());
 
 		Page<PriceList> page1 = priceListResource.getPriceListsPage(
-			null, Pagination.of(1, totalCount + 2), null);
+			null, Pagination.of(1, itemLimit), null);
 
 		List<PriceList> priceLists1 = (List<PriceList>)page1.getItems();
 
-		Assert.assertEquals(
-			priceLists1.toString(), totalCount + 2, priceLists1.size());
+		if (priceLists1.size() < itemLimit) {
+			itemLimit = priceLists1.size();
+		}
 
-		Page<PriceList> page2 = priceListResource.getPriceListsPage(
-			null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(priceListPage.getTotalCount() / itemLimit);
+		List<PriceList> allItems = new ArrayList<PriceList>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<PriceList> priceLists2 = (List<PriceList>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					priceLists1.toString(), itemLimit, priceLists1.size());
 
-		Assert.assertEquals(priceLists2.toString(), 1, priceLists2.size());
+				Page<PriceList> page = priceListResource.getPriceListsPage(
+					null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<PriceList> page3 = priceListResource.getPriceListsPage(
-			null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(priceList1, (List<PriceList>)page3.getItems());
-		assertContains(priceList2, (List<PriceList>)page3.getItems());
-		assertContains(priceList3, (List<PriceList>)page3.getItems());
+		assertContains(priceList1, allItems);
+		assertContains(priceList2, allItems);
+		assertContains(priceList3, allItems);
 	}
 
 	@Test

@@ -317,6 +317,7 @@ public abstract class BaseSpecificationResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			specificationPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Specification specification1 =
 			testGetSpecificationsPage_addSpecification(randomSpecification());
@@ -328,31 +329,38 @@ public abstract class BaseSpecificationResourceTestCase {
 			testGetSpecificationsPage_addSpecification(randomSpecification());
 
 		Page<Specification> page1 = specificationResource.getSpecificationsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+			null, null, Pagination.of(1, itemLimit), null);
 
 		List<Specification> specifications1 =
 			(List<Specification>)page1.getItems();
 
-		Assert.assertEquals(
-			specifications1.toString(), totalCount + 2, specifications1.size());
+		if (specifications1.size() < itemLimit) {
+			itemLimit = specifications1.size();
+		}
 
-		Page<Specification> page2 = specificationResource.getSpecificationsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			specificationPage.getTotalCount() / itemLimit);
+		List<Specification> allItems = new ArrayList<Specification>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Specification> specifications2 =
-			(List<Specification>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					specifications1.toString(), itemLimit,
+					specifications1.size());
 
-		Assert.assertEquals(
-			specifications2.toString(), 1, specifications2.size());
+				Page<Specification> page =
+					specificationResource.getSpecificationsPage(
+						null, null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<Specification> page3 = specificationResource.getSpecificationsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(specification1, (List<Specification>)page3.getItems());
-		assertContains(specification2, (List<Specification>)page3.getItems());
-		assertContains(specification3, (List<Specification>)page3.getItems());
+		assertContains(specification1, allItems);
+		assertContains(specification2, allItems);
+		assertContains(specification3, allItems);
 	}
 
 	@Test

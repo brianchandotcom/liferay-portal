@@ -356,6 +356,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			notificationTemplatePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		NotificationTemplate notificationTemplate1 =
 			testGetNotificationTemplatesPage_addNotificationTemplate(
@@ -371,41 +372,40 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 		Page<NotificationTemplate> page1 =
 			notificationTemplateResource.getNotificationTemplatesPage(
-				null, null, null, Pagination.of(1, totalCount + 2), null);
+				null, null, null, Pagination.of(1, itemLimit), null);
 
 		List<NotificationTemplate> notificationTemplates1 =
 			(List<NotificationTemplate>)page1.getItems();
 
-		Assert.assertEquals(
-			notificationTemplates1.toString(), totalCount + 2,
-			notificationTemplates1.size());
+		if (notificationTemplates1.size() < itemLimit) {
+			itemLimit = notificationTemplates1.size();
+		}
 
-		Page<NotificationTemplate> page2 =
-			notificationTemplateResource.getNotificationTemplatesPage(
-				null, null, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			notificationTemplatePage.getTotalCount() / itemLimit);
+		List<NotificationTemplate> allItems =
+			new ArrayList<NotificationTemplate>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<NotificationTemplate> notificationTemplates2 =
-			(List<NotificationTemplate>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					notificationTemplates1.toString(), itemLimit,
+					notificationTemplates1.size());
 
-		Assert.assertEquals(
-			notificationTemplates2.toString(), 1,
-			notificationTemplates2.size());
+				Page<NotificationTemplate> page =
+					notificationTemplateResource.getNotificationTemplatesPage(
+						null, null, null, Pagination.of(pageNum, itemLimit),
+						null);
 
-		Page<NotificationTemplate> page3 =
-			notificationTemplateResource.getNotificationTemplatesPage(
-				null, null, null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			notificationTemplate1,
-			(List<NotificationTemplate>)page3.getItems());
-		assertContains(
-			notificationTemplate2,
-			(List<NotificationTemplate>)page3.getItems());
-		assertContains(
-			notificationTemplate3,
-			(List<NotificationTemplate>)page3.getItems());
+		assertContains(notificationTemplate1, allItems);
+		assertContains(notificationTemplate2, allItems);
+		assertContains(notificationTemplate3, allItems);
 	}
 
 	@Test

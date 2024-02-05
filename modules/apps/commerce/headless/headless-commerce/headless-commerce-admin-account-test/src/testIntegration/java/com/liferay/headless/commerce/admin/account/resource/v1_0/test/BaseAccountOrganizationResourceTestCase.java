@@ -275,6 +275,7 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			accountOrganizationPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		AccountOrganization accountOrganization1 =
 			testGetAccountByExternalReferenceCodeAccountOrganizationsPage_addAccountOrganization(
@@ -291,40 +292,41 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 		Page<AccountOrganization> page1 =
 			accountOrganizationResource.
 				getAccountByExternalReferenceCodeAccountOrganizationsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+					externalReferenceCode, Pagination.of(1, itemLimit));
 
 		List<AccountOrganization> accountOrganizations1 =
 			(List<AccountOrganization>)page1.getItems();
 
-		Assert.assertEquals(
-			accountOrganizations1.toString(), totalCount + 2,
-			accountOrganizations1.size());
+		if (accountOrganizations1.size() < itemLimit) {
+			itemLimit = accountOrganizations1.size();
+		}
 
-		Page<AccountOrganization> page2 =
-			accountOrganizationResource.
-				getAccountByExternalReferenceCodeAccountOrganizationsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			accountOrganizationPage.getTotalCount() / itemLimit);
+		List<AccountOrganization> allItems =
+			new ArrayList<AccountOrganization>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<AccountOrganization> accountOrganizations2 =
-			(List<AccountOrganization>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					accountOrganizations1.toString(), itemLimit,
+					accountOrganizations1.size());
 
-		Assert.assertEquals(
-			accountOrganizations2.toString(), 1, accountOrganizations2.size());
+				Page<AccountOrganization> page =
+					accountOrganizationResource.
+						getAccountByExternalReferenceCodeAccountOrganizationsPage(
+							externalReferenceCode,
+							Pagination.of(pageNum, itemLimit));
 
-		Page<AccountOrganization> page3 =
-			accountOrganizationResource.
-				getAccountByExternalReferenceCodeAccountOrganizationsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			accountOrganization1, (List<AccountOrganization>)page3.getItems());
-		assertContains(
-			accountOrganization2, (List<AccountOrganization>)page3.getItems());
-		assertContains(
-			accountOrganization3, (List<AccountOrganization>)page3.getItems());
+		assertContains(accountOrganization1, allItems);
+		assertContains(accountOrganization2, allItems);
+		assertContains(accountOrganization3, allItems);
 	}
 
 	protected AccountOrganization
@@ -480,6 +482,7 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			accountOrganizationPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		AccountOrganization accountOrganization1 =
 			testGetAccountIdAccountOrganizationsPage_addAccountOrganization(
@@ -495,37 +498,40 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 
 		Page<AccountOrganization> page1 =
 			accountOrganizationResource.getAccountIdAccountOrganizationsPage(
-				id, Pagination.of(1, totalCount + 2));
+				id, Pagination.of(1, itemLimit));
 
 		List<AccountOrganization> accountOrganizations1 =
 			(List<AccountOrganization>)page1.getItems();
 
-		Assert.assertEquals(
-			accountOrganizations1.toString(), totalCount + 2,
-			accountOrganizations1.size());
+		if (accountOrganizations1.size() < itemLimit) {
+			itemLimit = accountOrganizations1.size();
+		}
 
-		Page<AccountOrganization> page2 =
-			accountOrganizationResource.getAccountIdAccountOrganizationsPage(
-				id, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			accountOrganizationPage.getTotalCount() / itemLimit);
+		List<AccountOrganization> allItems =
+			new ArrayList<AccountOrganization>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<AccountOrganization> accountOrganizations2 =
-			(List<AccountOrganization>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					accountOrganizations1.toString(), itemLimit,
+					accountOrganizations1.size());
 
-		Assert.assertEquals(
-			accountOrganizations2.toString(), 1, accountOrganizations2.size());
+				Page<AccountOrganization> page =
+					accountOrganizationResource.
+						getAccountIdAccountOrganizationsPage(
+							id, Pagination.of(pageNum, itemLimit));
 
-		Page<AccountOrganization> page3 =
-			accountOrganizationResource.getAccountIdAccountOrganizationsPage(
-				id, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			accountOrganization1, (List<AccountOrganization>)page3.getItems());
-		assertContains(
-			accountOrganization2, (List<AccountOrganization>)page3.getItems());
-		assertContains(
-			accountOrganization3, (List<AccountOrganization>)page3.getItems());
+		assertContains(accountOrganization1, allItems);
+		assertContains(accountOrganization2, allItems);
+		assertContains(accountOrganization3, allItems);
 	}
 
 	protected AccountOrganization

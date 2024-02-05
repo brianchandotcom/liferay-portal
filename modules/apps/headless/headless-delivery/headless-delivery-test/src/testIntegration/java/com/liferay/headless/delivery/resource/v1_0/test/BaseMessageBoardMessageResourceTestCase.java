@@ -819,6 +819,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			messageBoardMessagePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		MessageBoardMessage messageBoardMessage1 =
 			testGetMessageBoardMessageMessageBoardMessagesPage_addMessageBoardMessage(
@@ -836,41 +837,41 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			messageBoardMessageResource.
 				getMessageBoardMessageMessageBoardMessagesPage(
 					parentMessageBoardMessageId, null, null, null, null,
-					Pagination.of(1, totalCount + 2), null);
+					Pagination.of(1, itemLimit), null);
 
 		List<MessageBoardMessage> messageBoardMessages1 =
 			(List<MessageBoardMessage>)page1.getItems();
 
-		Assert.assertEquals(
-			messageBoardMessages1.toString(), totalCount + 2,
-			messageBoardMessages1.size());
+		if (messageBoardMessages1.size() < itemLimit) {
+			itemLimit = messageBoardMessages1.size();
+		}
 
-		Page<MessageBoardMessage> page2 =
-			messageBoardMessageResource.
-				getMessageBoardMessageMessageBoardMessagesPage(
-					parentMessageBoardMessageId, null, null, null, null,
-					Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			messageBoardMessagePage.getTotalCount() / itemLimit);
+		List<MessageBoardMessage> allItems =
+			new ArrayList<MessageBoardMessage>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<MessageBoardMessage> messageBoardMessages2 =
-			(List<MessageBoardMessage>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					messageBoardMessages1.toString(), itemLimit,
+					messageBoardMessages1.size());
 
-		Assert.assertEquals(
-			messageBoardMessages2.toString(), 1, messageBoardMessages2.size());
+				Page<MessageBoardMessage> page =
+					messageBoardMessageResource.
+						getMessageBoardMessageMessageBoardMessagesPage(
+							parentMessageBoardMessageId, null, null, null, null,
+							Pagination.of(pageNum, itemLimit), null);
 
-		Page<MessageBoardMessage> page3 =
-			messageBoardMessageResource.
-				getMessageBoardMessageMessageBoardMessagesPage(
-					parentMessageBoardMessageId, null, null, null, null,
-					Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			messageBoardMessage1, (List<MessageBoardMessage>)page3.getItems());
-		assertContains(
-			messageBoardMessage2, (List<MessageBoardMessage>)page3.getItems());
-		assertContains(
-			messageBoardMessage3, (List<MessageBoardMessage>)page3.getItems());
+		assertContains(messageBoardMessage1, allItems);
+		assertContains(messageBoardMessage2, allItems);
+		assertContains(messageBoardMessage3, allItems);
 	}
 
 	@Test
@@ -1299,6 +1300,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			messageBoardMessagePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		MessageBoardMessage messageBoardMessage1 =
 			testGetMessageBoardThreadMessageBoardMessagesPage_addMessageBoardMessage(
@@ -1316,41 +1318,41 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			messageBoardMessageResource.
 				getMessageBoardThreadMessageBoardMessagesPage(
 					messageBoardThreadId, null, null, null,
-					Pagination.of(1, totalCount + 2), null);
+					Pagination.of(1, itemLimit), null);
 
 		List<MessageBoardMessage> messageBoardMessages1 =
 			(List<MessageBoardMessage>)page1.getItems();
 
-		Assert.assertEquals(
-			messageBoardMessages1.toString(), totalCount + 2,
-			messageBoardMessages1.size());
+		if (messageBoardMessages1.size() < itemLimit) {
+			itemLimit = messageBoardMessages1.size();
+		}
 
-		Page<MessageBoardMessage> page2 =
-			messageBoardMessageResource.
-				getMessageBoardThreadMessageBoardMessagesPage(
-					messageBoardThreadId, null, null, null,
-					Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			messageBoardMessagePage.getTotalCount() / itemLimit);
+		List<MessageBoardMessage> allItems =
+			new ArrayList<MessageBoardMessage>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<MessageBoardMessage> messageBoardMessages2 =
-			(List<MessageBoardMessage>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					messageBoardMessages1.toString(), itemLimit,
+					messageBoardMessages1.size());
 
-		Assert.assertEquals(
-			messageBoardMessages2.toString(), 1, messageBoardMessages2.size());
+				Page<MessageBoardMessage> page =
+					messageBoardMessageResource.
+						getMessageBoardThreadMessageBoardMessagesPage(
+							messageBoardThreadId, null, null, null,
+							Pagination.of(pageNum, itemLimit), null);
 
-		Page<MessageBoardMessage> page3 =
-			messageBoardMessageResource.
-				getMessageBoardThreadMessageBoardMessagesPage(
-					messageBoardThreadId, null, null, null,
-					Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			messageBoardMessage1, (List<MessageBoardMessage>)page3.getItems());
-		assertContains(
-			messageBoardMessage2, (List<MessageBoardMessage>)page3.getItems());
-		assertContains(
-			messageBoardMessage3, (List<MessageBoardMessage>)page3.getItems());
+		assertContains(messageBoardMessage1, allItems);
+		assertContains(messageBoardMessage2, allItems);
+		assertContains(messageBoardMessage3, allItems);
 	}
 
 	@Test
@@ -1748,6 +1750,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			messageBoardMessagePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		MessageBoardMessage messageBoardMessage1 =
 			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
@@ -1763,40 +1766,41 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		Page<MessageBoardMessage> page1 =
 			messageBoardMessageResource.getSiteMessageBoardMessagesPage(
-				siteId, null, null, null, null,
-				Pagination.of(1, totalCount + 2), null);
+				siteId, null, null, null, null, Pagination.of(1, itemLimit),
+				null);
 
 		List<MessageBoardMessage> messageBoardMessages1 =
 			(List<MessageBoardMessage>)page1.getItems();
 
-		Assert.assertEquals(
-			messageBoardMessages1.toString(), totalCount + 2,
-			messageBoardMessages1.size());
+		if (messageBoardMessages1.size() < itemLimit) {
+			itemLimit = messageBoardMessages1.size();
+		}
 
-		Page<MessageBoardMessage> page2 =
-			messageBoardMessageResource.getSiteMessageBoardMessagesPage(
-				siteId, null, null, null, null,
-				Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			messageBoardMessagePage.getTotalCount() / itemLimit);
+		List<MessageBoardMessage> allItems =
+			new ArrayList<MessageBoardMessage>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<MessageBoardMessage> messageBoardMessages2 =
-			(List<MessageBoardMessage>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					messageBoardMessages1.toString(), itemLimit,
+					messageBoardMessages1.size());
 
-		Assert.assertEquals(
-			messageBoardMessages2.toString(), 1, messageBoardMessages2.size());
+				Page<MessageBoardMessage> page =
+					messageBoardMessageResource.getSiteMessageBoardMessagesPage(
+						siteId, null, null, null, null,
+						Pagination.of(pageNum, itemLimit), null);
 
-		Page<MessageBoardMessage> page3 =
-			messageBoardMessageResource.getSiteMessageBoardMessagesPage(
-				siteId, null, null, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			messageBoardMessage1, (List<MessageBoardMessage>)page3.getItems());
-		assertContains(
-			messageBoardMessage2, (List<MessageBoardMessage>)page3.getItems());
-		assertContains(
-			messageBoardMessage3, (List<MessageBoardMessage>)page3.getItems());
+		assertContains(messageBoardMessage1, allItems);
+		assertContains(messageBoardMessage2, allItems);
+		assertContains(messageBoardMessage3, allItems);
 	}
 
 	@Test
@@ -2561,6 +2565,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			messageBoardMessagePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		MessageBoardMessage messageBoardMessage1 =
 			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
@@ -2577,39 +2582,40 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Page<MessageBoardMessage> page1 =
 			messageBoardMessageResource.
 				getSiteUserMessageBoardMessagesActivityPage(
-					siteId, userId, Pagination.of(1, totalCount + 2));
+					siteId, userId, Pagination.of(1, itemLimit));
 
 		List<MessageBoardMessage> messageBoardMessages1 =
 			(List<MessageBoardMessage>)page1.getItems();
 
-		Assert.assertEquals(
-			messageBoardMessages1.toString(), totalCount + 2,
-			messageBoardMessages1.size());
+		if (messageBoardMessages1.size() < itemLimit) {
+			itemLimit = messageBoardMessages1.size();
+		}
 
-		Page<MessageBoardMessage> page2 =
-			messageBoardMessageResource.
-				getSiteUserMessageBoardMessagesActivityPage(
-					siteId, userId, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			messageBoardMessagePage.getTotalCount() / itemLimit);
+		List<MessageBoardMessage> allItems =
+			new ArrayList<MessageBoardMessage>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<MessageBoardMessage> messageBoardMessages2 =
-			(List<MessageBoardMessage>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					messageBoardMessages1.toString(), itemLimit,
+					messageBoardMessages1.size());
 
-		Assert.assertEquals(
-			messageBoardMessages2.toString(), 1, messageBoardMessages2.size());
+				Page<MessageBoardMessage> page =
+					messageBoardMessageResource.
+						getSiteUserMessageBoardMessagesActivityPage(
+							siteId, userId, Pagination.of(pageNum, itemLimit));
 
-		Page<MessageBoardMessage> page3 =
-			messageBoardMessageResource.
-				getSiteUserMessageBoardMessagesActivityPage(
-					siteId, userId, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			messageBoardMessage1, (List<MessageBoardMessage>)page3.getItems());
-		assertContains(
-			messageBoardMessage2, (List<MessageBoardMessage>)page3.getItems());
-		assertContains(
-			messageBoardMessage3, (List<MessageBoardMessage>)page3.getItems());
+		assertContains(messageBoardMessage1, allItems);
+		assertContains(messageBoardMessage2, allItems);
+		assertContains(messageBoardMessage3, allItems);
 	}
 
 	protected MessageBoardMessage

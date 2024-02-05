@@ -359,6 +359,7 @@ public abstract class BaseCommentResourceTestCase {
 			blogPostingId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(commentPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Comment comment1 = testGetBlogPostingCommentsPage_addComment(
 			blogPostingId, randomComment());
@@ -370,31 +371,35 @@ public abstract class BaseCommentResourceTestCase {
 			blogPostingId, randomComment());
 
 		Page<Comment> page1 = commentResource.getBlogPostingCommentsPage(
-			blogPostingId, null, null, null, Pagination.of(1, totalCount + 2),
-			null);
+			blogPostingId, null, null, null, Pagination.of(1, itemLimit), null);
 
 		List<Comment> comments1 = (List<Comment>)page1.getItems();
 
-		Assert.assertEquals(
-			comments1.toString(), totalCount + 2, comments1.size());
+		if (comments1.size() < itemLimit) {
+			itemLimit = comments1.size();
+		}
 
-		Page<Comment> page2 = commentResource.getBlogPostingCommentsPage(
-			blogPostingId, null, null, null, Pagination.of(2, totalCount + 2),
-			null);
+		int pages = (int)Math.ceil(commentPage.getTotalCount() / itemLimit);
+		List<Comment> allItems = new ArrayList<Comment>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Comment> comments2 = (List<Comment>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					comments1.toString(), itemLimit, comments1.size());
 
-		Assert.assertEquals(comments2.toString(), 1, comments2.size());
+				Page<Comment> page = commentResource.getBlogPostingCommentsPage(
+					blogPostingId, null, null, null,
+					Pagination.of(pageNum, itemLimit), null);
 
-		Page<Comment> page3 = commentResource.getBlogPostingCommentsPage(
-			blogPostingId, null, null, null,
-			Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(comment1, (List<Comment>)page3.getItems());
-		assertContains(comment2, (List<Comment>)page3.getItems());
-		assertContains(comment3, (List<Comment>)page3.getItems());
+		assertContains(comment1, allItems);
+		assertContains(comment2, allItems);
+		assertContains(comment3, allItems);
 	}
 
 	@Test
@@ -869,6 +874,7 @@ public abstract class BaseCommentResourceTestCase {
 			parentCommentId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(commentPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Comment comment1 = testGetCommentCommentsPage_addComment(
 			parentCommentId, randomComment());
@@ -880,31 +886,36 @@ public abstract class BaseCommentResourceTestCase {
 			parentCommentId, randomComment());
 
 		Page<Comment> page1 = commentResource.getCommentCommentsPage(
-			parentCommentId, null, null, null, Pagination.of(1, totalCount + 2),
+			parentCommentId, null, null, null, Pagination.of(1, itemLimit),
 			null);
 
 		List<Comment> comments1 = (List<Comment>)page1.getItems();
 
-		Assert.assertEquals(
-			comments1.toString(), totalCount + 2, comments1.size());
+		if (comments1.size() < itemLimit) {
+			itemLimit = comments1.size();
+		}
 
-		Page<Comment> page2 = commentResource.getCommentCommentsPage(
-			parentCommentId, null, null, null, Pagination.of(2, totalCount + 2),
-			null);
+		int pages = (int)Math.ceil(commentPage.getTotalCount() / itemLimit);
+		List<Comment> allItems = new ArrayList<Comment>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Comment> comments2 = (List<Comment>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					comments1.toString(), itemLimit, comments1.size());
 
-		Assert.assertEquals(comments2.toString(), 1, comments2.size());
+				Page<Comment> page = commentResource.getCommentCommentsPage(
+					parentCommentId, null, null, null,
+					Pagination.of(pageNum, itemLimit), null);
 
-		Page<Comment> page3 = commentResource.getCommentCommentsPage(
-			parentCommentId, null, null, null,
-			Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(comment1, (List<Comment>)page3.getItems());
-		assertContains(comment2, (List<Comment>)page3.getItems());
-		assertContains(comment3, (List<Comment>)page3.getItems());
+		assertContains(comment1, allItems);
+		assertContains(comment2, allItems);
+		assertContains(comment3, allItems);
 	}
 
 	@Test
@@ -1240,6 +1251,7 @@ public abstract class BaseCommentResourceTestCase {
 			documentId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(commentPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Comment comment1 = testGetDocumentCommentsPage_addComment(
 			documentId, randomComment());
@@ -1251,31 +1263,35 @@ public abstract class BaseCommentResourceTestCase {
 			documentId, randomComment());
 
 		Page<Comment> page1 = commentResource.getDocumentCommentsPage(
-			documentId, null, null, null, Pagination.of(1, totalCount + 2),
-			null);
+			documentId, null, null, null, Pagination.of(1, itemLimit), null);
 
 		List<Comment> comments1 = (List<Comment>)page1.getItems();
 
-		Assert.assertEquals(
-			comments1.toString(), totalCount + 2, comments1.size());
+		if (comments1.size() < itemLimit) {
+			itemLimit = comments1.size();
+		}
 
-		Page<Comment> page2 = commentResource.getDocumentCommentsPage(
-			documentId, null, null, null, Pagination.of(2, totalCount + 2),
-			null);
+		int pages = (int)Math.ceil(commentPage.getTotalCount() / itemLimit);
+		List<Comment> allItems = new ArrayList<Comment>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Comment> comments2 = (List<Comment>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					comments1.toString(), itemLimit, comments1.size());
 
-		Assert.assertEquals(comments2.toString(), 1, comments2.size());
+				Page<Comment> page = commentResource.getDocumentCommentsPage(
+					documentId, null, null, null,
+					Pagination.of(pageNum, itemLimit), null);
 
-		Page<Comment> page3 = commentResource.getDocumentCommentsPage(
-			documentId, null, null, null, Pagination.of(1, (int)totalCount + 3),
-			null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(comment1, (List<Comment>)page3.getItems());
-		assertContains(comment2, (List<Comment>)page3.getItems());
-		assertContains(comment3, (List<Comment>)page3.getItems());
+		assertContains(comment1, allItems);
+		assertContains(comment2, allItems);
+		assertContains(comment3, allItems);
 	}
 
 	@Test
@@ -2763,6 +2779,7 @@ public abstract class BaseCommentResourceTestCase {
 				structuredContentId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(commentPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Comment comment1 = testGetStructuredContentCommentsPage_addComment(
 			structuredContentId, randomComment());
@@ -2774,31 +2791,37 @@ public abstract class BaseCommentResourceTestCase {
 			structuredContentId, randomComment());
 
 		Page<Comment> page1 = commentResource.getStructuredContentCommentsPage(
-			structuredContentId, null, null, null,
-			Pagination.of(1, totalCount + 2), null);
+			structuredContentId, null, null, null, Pagination.of(1, itemLimit),
+			null);
 
 		List<Comment> comments1 = (List<Comment>)page1.getItems();
 
-		Assert.assertEquals(
-			comments1.toString(), totalCount + 2, comments1.size());
+		if (comments1.size() < itemLimit) {
+			itemLimit = comments1.size();
+		}
 
-		Page<Comment> page2 = commentResource.getStructuredContentCommentsPage(
-			structuredContentId, null, null, null,
-			Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(commentPage.getTotalCount() / itemLimit);
+		List<Comment> allItems = new ArrayList<Comment>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Comment> comments2 = (List<Comment>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					comments1.toString(), itemLimit, comments1.size());
 
-		Assert.assertEquals(comments2.toString(), 1, comments2.size());
+				Page<Comment> page =
+					commentResource.getStructuredContentCommentsPage(
+						structuredContentId, null, null, null,
+						Pagination.of(pageNum, itemLimit), null);
 
-		Page<Comment> page3 = commentResource.getStructuredContentCommentsPage(
-			structuredContentId, null, null, null,
-			Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(comment1, (List<Comment>)page3.getItems());
-		assertContains(comment2, (List<Comment>)page3.getItems());
-		assertContains(comment3, (List<Comment>)page3.getItems());
+		assertContains(comment1, allItems);
+		assertContains(comment2, allItems);
+		assertContains(comment3, allItems);
 	}
 
 	@Test

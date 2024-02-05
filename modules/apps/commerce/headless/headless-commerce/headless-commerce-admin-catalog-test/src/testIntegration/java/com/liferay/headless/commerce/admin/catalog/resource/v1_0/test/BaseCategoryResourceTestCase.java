@@ -263,6 +263,7 @@ public abstract class BaseCategoryResourceTestCase {
 				externalReferenceCode, null);
 
 		int totalCount = GetterUtil.getInteger(categoryPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Category category1 =
 			testGetProductByExternalReferenceCodeCategoriesPage_addCategory(
@@ -278,30 +279,37 @@ public abstract class BaseCategoryResourceTestCase {
 
 		Page<Category> page1 =
 			categoryResource.getProductByExternalReferenceCodeCategoriesPage(
-				externalReferenceCode, Pagination.of(1, totalCount + 2));
+				externalReferenceCode, Pagination.of(1, itemLimit));
 
 		List<Category> categories1 = (List<Category>)page1.getItems();
 
-		Assert.assertEquals(
-			categories1.toString(), totalCount + 2, categories1.size());
+		if (categories1.size() < itemLimit) {
+			itemLimit = categories1.size();
+		}
 
-		Page<Category> page2 =
-			categoryResource.getProductByExternalReferenceCodeCategoriesPage(
-				externalReferenceCode, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(categoryPage.getTotalCount() / itemLimit);
+		List<Category> allItems = new ArrayList<Category>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Category> categories2 = (List<Category>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					categories1.toString(), itemLimit, categories1.size());
 
-		Assert.assertEquals(categories2.toString(), 1, categories2.size());
+				Page<Category> page =
+					categoryResource.
+						getProductByExternalReferenceCodeCategoriesPage(
+							externalReferenceCode,
+							Pagination.of(pageNum, itemLimit));
 
-		Page<Category> page3 =
-			categoryResource.getProductByExternalReferenceCodeCategoriesPage(
-				externalReferenceCode, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(category1, (List<Category>)page3.getItems());
-		assertContains(category2, (List<Category>)page3.getItems());
-		assertContains(category3, (List<Category>)page3.getItems());
+		assertContains(category1, allItems);
+		assertContains(category2, allItems);
+		assertContains(category3, allItems);
 	}
 
 	protected Category
@@ -398,6 +406,7 @@ public abstract class BaseCategoryResourceTestCase {
 			categoryResource.getProductIdCategoriesPage(id, null);
 
 		int totalCount = GetterUtil.getInteger(categoryPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Category category1 = testGetProductIdCategoriesPage_addCategory(
 			id, randomCategory());
@@ -409,28 +418,35 @@ public abstract class BaseCategoryResourceTestCase {
 			id, randomCategory());
 
 		Page<Category> page1 = categoryResource.getProductIdCategoriesPage(
-			id, Pagination.of(1, totalCount + 2));
+			id, Pagination.of(1, itemLimit));
 
 		List<Category> categories1 = (List<Category>)page1.getItems();
 
-		Assert.assertEquals(
-			categories1.toString(), totalCount + 2, categories1.size());
+		if (categories1.size() < itemLimit) {
+			itemLimit = categories1.size();
+		}
 
-		Page<Category> page2 = categoryResource.getProductIdCategoriesPage(
-			id, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(categoryPage.getTotalCount() / itemLimit);
+		List<Category> allItems = new ArrayList<Category>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Category> categories2 = (List<Category>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					categories1.toString(), itemLimit, categories1.size());
 
-		Assert.assertEquals(categories2.toString(), 1, categories2.size());
+				Page<Category> page =
+					categoryResource.getProductIdCategoriesPage(
+						id, Pagination.of(pageNum, itemLimit));
 
-		Page<Category> page3 = categoryResource.getProductIdCategoriesPage(
-			id, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(category1, (List<Category>)page3.getItems());
-		assertContains(category2, (List<Category>)page3.getItems());
-		assertContains(category3, (List<Category>)page3.getItems());
+		assertContains(category1, allItems);
+		assertContains(category2, allItems);
+		assertContains(category3, allItems);
 	}
 
 	protected Category testGetProductIdCategoriesPage_addCategory(

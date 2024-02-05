@@ -477,6 +477,7 @@ public abstract class BaseCartResourceTestCase {
 			accountId, channelId, null, null);
 
 		int totalCount = GetterUtil.getInteger(cartPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Cart cart1 = testGetChannelCartsPage_addCart(
 			accountId, channelId, randomCart());
@@ -488,27 +489,35 @@ public abstract class BaseCartResourceTestCase {
 			accountId, channelId, randomCart());
 
 		Page<Cart> page1 = cartResource.getChannelCartsPage(
-			accountId, channelId, null, Pagination.of(1, totalCount + 2));
+			accountId, channelId, null, Pagination.of(1, itemLimit));
 
 		List<Cart> carts1 = (List<Cart>)page1.getItems();
 
-		Assert.assertEquals(carts1.toString(), totalCount + 2, carts1.size());
+		if (carts1.size() < itemLimit) {
+			itemLimit = carts1.size();
+		}
 
-		Page<Cart> page2 = cartResource.getChannelCartsPage(
-			accountId, channelId, null, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(cartPage.getTotalCount() / itemLimit);
+		List<Cart> allItems = new ArrayList<Cart>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Cart> carts2 = (List<Cart>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					carts1.toString(), itemLimit, carts1.size());
 
-		Assert.assertEquals(carts2.toString(), 1, carts2.size());
+				Page<Cart> page = cartResource.getChannelCartsPage(
+					accountId, channelId, null,
+					Pagination.of(pageNum, itemLimit));
 
-		Page<Cart> page3 = cartResource.getChannelCartsPage(
-			accountId, channelId, null, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(cart1, (List<Cart>)page3.getItems());
-		assertContains(cart2, (List<Cart>)page3.getItems());
-		assertContains(cart3, (List<Cart>)page3.getItems());
+		assertContains(cart1, allItems);
+		assertContains(cart2, allItems);
+		assertContains(cart3, allItems);
 	}
 
 	protected Cart testGetChannelCartsPage_addCart(

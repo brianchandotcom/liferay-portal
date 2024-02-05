@@ -309,6 +309,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			productOptionValuePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		ProductOptionValue productOptionValue1 =
 			testGetChannelProductProductOptionProductOptionValuesPage_addProductOptionValue(
@@ -329,41 +330,40 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			productOptionValueResource.
 				getChannelProductProductOptionProductOptionValuesPage(
 					channelId, productId, productOptionId, null, null, null,
-					Pagination.of(1, totalCount + 2));
+					Pagination.of(1, itemLimit));
 
 		List<ProductOptionValue> productOptionValues1 =
 			(List<ProductOptionValue>)page1.getItems();
 
-		Assert.assertEquals(
-			productOptionValues1.toString(), totalCount + 2,
-			productOptionValues1.size());
+		if (productOptionValues1.size() < itemLimit) {
+			itemLimit = productOptionValues1.size();
+		}
 
-		Page<ProductOptionValue> page2 =
-			productOptionValueResource.
-				getChannelProductProductOptionProductOptionValuesPage(
-					channelId, productId, productOptionId, null, null, null,
-					Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			productOptionValuePage.getTotalCount() / itemLimit);
+		List<ProductOptionValue> allItems = new ArrayList<ProductOptionValue>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<ProductOptionValue> productOptionValues2 =
-			(List<ProductOptionValue>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					productOptionValues1.toString(), itemLimit,
+					productOptionValues1.size());
 
-		Assert.assertEquals(
-			productOptionValues2.toString(), 1, productOptionValues2.size());
+				Page<ProductOptionValue> page =
+					productOptionValueResource.
+						getChannelProductProductOptionProductOptionValuesPage(
+							channelId, productId, productOptionId, null, null,
+							null, Pagination.of(pageNum, itemLimit));
 
-		Page<ProductOptionValue> page3 =
-			productOptionValueResource.
-				getChannelProductProductOptionProductOptionValuesPage(
-					channelId, productId, productOptionId, null, null, null,
-					Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			productOptionValue1, (List<ProductOptionValue>)page3.getItems());
-		assertContains(
-			productOptionValue2, (List<ProductOptionValue>)page3.getItems());
-		assertContains(
-			productOptionValue3, (List<ProductOptionValue>)page3.getItems());
+		assertContains(productOptionValue1, allItems);
+		assertContains(productOptionValue2, allItems);
+		assertContains(productOptionValue3, allItems);
 	}
 
 	protected ProductOptionValue

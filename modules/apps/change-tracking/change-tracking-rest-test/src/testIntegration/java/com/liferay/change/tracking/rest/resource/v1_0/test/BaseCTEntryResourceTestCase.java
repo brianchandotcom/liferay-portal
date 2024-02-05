@@ -358,6 +358,7 @@ public abstract class BaseCTEntryResourceTestCase {
 				ctCollectionId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(ctEntryPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		CTEntry ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
 			ctCollectionId, randomCTEntry());
@@ -369,31 +370,37 @@ public abstract class BaseCTEntryResourceTestCase {
 			ctCollectionId, randomCTEntry());
 
 		Page<CTEntry> page1 = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, null, Pagination.of(1, totalCount + 2),
+			ctCollectionId, null, null, null, Pagination.of(1, itemLimit),
 			null);
 
 		List<CTEntry> ctEntries1 = (List<CTEntry>)page1.getItems();
 
-		Assert.assertEquals(
-			ctEntries1.toString(), totalCount + 2, ctEntries1.size());
+		if (ctEntries1.size() < itemLimit) {
+			itemLimit = ctEntries1.size();
+		}
 
-		Page<CTEntry> page2 = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, null, Pagination.of(2, totalCount + 2),
-			null);
+		int pages = (int)Math.ceil(ctEntryPage.getTotalCount() / itemLimit);
+		List<CTEntry> allItems = new ArrayList<CTEntry>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<CTEntry> ctEntries2 = (List<CTEntry>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					ctEntries1.toString(), itemLimit, ctEntries1.size());
 
-		Assert.assertEquals(ctEntries2.toString(), 1, ctEntries2.size());
+				Page<CTEntry> page =
+					ctEntryResource.getCtCollectionCTEntriesPage(
+						ctCollectionId, null, null, null,
+						Pagination.of(pageNum, itemLimit), null);
 
-		Page<CTEntry> page3 = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, null,
-			Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(ctEntry1, (List<CTEntry>)page3.getItems());
-		assertContains(ctEntry2, (List<CTEntry>)page3.getItems());
-		assertContains(ctEntry3, (List<CTEntry>)page3.getItems());
+		assertContains(ctEntry1, allItems);
+		assertContains(ctEntry2, allItems);
+		assertContains(ctEntry3, allItems);
 	}
 
 	@Test

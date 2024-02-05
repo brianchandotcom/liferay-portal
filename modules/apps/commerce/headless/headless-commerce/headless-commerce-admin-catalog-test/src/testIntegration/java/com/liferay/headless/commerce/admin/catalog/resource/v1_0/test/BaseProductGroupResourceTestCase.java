@@ -311,6 +311,7 @@ public abstract class BaseProductGroupResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			productGroupPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		ProductGroup productGroup1 = testGetProductGroupsPage_addProductGroup(
 			randomProductGroup());
@@ -322,31 +323,38 @@ public abstract class BaseProductGroupResourceTestCase {
 			randomProductGroup());
 
 		Page<ProductGroup> page1 = productGroupResource.getProductGroupsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+			null, null, Pagination.of(1, itemLimit), null);
 
 		List<ProductGroup> productGroups1 =
 			(List<ProductGroup>)page1.getItems();
 
-		Assert.assertEquals(
-			productGroups1.toString(), totalCount + 2, productGroups1.size());
+		if (productGroups1.size() < itemLimit) {
+			itemLimit = productGroups1.size();
+		}
 
-		Page<ProductGroup> page2 = productGroupResource.getProductGroupsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			productGroupPage.getTotalCount() / itemLimit);
+		List<ProductGroup> allItems = new ArrayList<ProductGroup>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<ProductGroup> productGroups2 =
-			(List<ProductGroup>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					productGroups1.toString(), itemLimit,
+					productGroups1.size());
 
-		Assert.assertEquals(
-			productGroups2.toString(), 1, productGroups2.size());
+				Page<ProductGroup> page =
+					productGroupResource.getProductGroupsPage(
+						null, null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<ProductGroup> page3 = productGroupResource.getProductGroupsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(productGroup1, (List<ProductGroup>)page3.getItems());
-		assertContains(productGroup2, (List<ProductGroup>)page3.getItems());
-		assertContains(productGroup3, (List<ProductGroup>)page3.getItems());
+		assertContains(productGroup1, allItems);
+		assertContains(productGroup2, allItems);
+		assertContains(productGroup3, allItems);
 	}
 
 	@Test

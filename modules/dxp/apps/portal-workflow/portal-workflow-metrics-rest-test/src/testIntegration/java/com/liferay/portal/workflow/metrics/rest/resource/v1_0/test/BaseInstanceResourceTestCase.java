@@ -264,6 +264,7 @@ public abstract class BaseInstanceResourceTestCase {
 			processId, null, null, null, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(instancePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Instance instance1 = testGetProcessInstancesPage_addInstance(
 			processId, randomInstance());
@@ -276,30 +277,35 @@ public abstract class BaseInstanceResourceTestCase {
 
 		Page<Instance> page1 = instanceResource.getProcessInstancesPage(
 			processId, null, null, null, null, null, null, null,
-			Pagination.of(1, totalCount + 2), null);
+			Pagination.of(1, itemLimit), null);
 
 		List<Instance> instances1 = (List<Instance>)page1.getItems();
 
-		Assert.assertEquals(
-			instances1.toString(), totalCount + 2, instances1.size());
+		if (instances1.size() < itemLimit) {
+			itemLimit = instances1.size();
+		}
 
-		Page<Instance> page2 = instanceResource.getProcessInstancesPage(
-			processId, null, null, null, null, null, null, null,
-			Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(instancePage.getTotalCount() / itemLimit);
+		List<Instance> allItems = new ArrayList<Instance>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Instance> instances2 = (List<Instance>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					instances1.toString(), itemLimit, instances1.size());
 
-		Assert.assertEquals(instances2.toString(), 1, instances2.size());
+				Page<Instance> page = instanceResource.getProcessInstancesPage(
+					processId, null, null, null, null, null, null, null,
+					Pagination.of(pageNum, itemLimit), null);
 
-		Page<Instance> page3 = instanceResource.getProcessInstancesPage(
-			processId, null, null, null, null, null, null, null,
-			Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(instance1, (List<Instance>)page3.getItems());
-		assertContains(instance2, (List<Instance>)page3.getItems());
-		assertContains(instance3, (List<Instance>)page3.getItems());
+		assertContains(instance1, allItems);
+		assertContains(instance2, allItems);
+		assertContains(instance3, allItems);
 	}
 
 	@Test

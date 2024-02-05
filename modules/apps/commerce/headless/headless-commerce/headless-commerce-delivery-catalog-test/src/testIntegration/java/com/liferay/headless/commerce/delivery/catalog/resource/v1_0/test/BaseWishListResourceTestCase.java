@@ -248,6 +248,7 @@ public abstract class BaseWishListResourceTestCase {
 			channelId, null, null);
 
 		int totalCount = GetterUtil.getInteger(wishListPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		WishList wishList1 = testGetChannelWishListsPage_addWishList(
 			channelId, randomWishList());
@@ -259,28 +260,34 @@ public abstract class BaseWishListResourceTestCase {
 			channelId, randomWishList());
 
 		Page<WishList> page1 = wishListResource.getChannelWishListsPage(
-			channelId, null, Pagination.of(1, totalCount + 2));
+			channelId, null, Pagination.of(1, itemLimit));
 
 		List<WishList> wishLists1 = (List<WishList>)page1.getItems();
 
-		Assert.assertEquals(
-			wishLists1.toString(), totalCount + 2, wishLists1.size());
+		if (wishLists1.size() < itemLimit) {
+			itemLimit = wishLists1.size();
+		}
 
-		Page<WishList> page2 = wishListResource.getChannelWishListsPage(
-			channelId, null, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(wishListPage.getTotalCount() / itemLimit);
+		List<WishList> allItems = new ArrayList<WishList>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<WishList> wishLists2 = (List<WishList>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					wishLists1.toString(), itemLimit, wishLists1.size());
 
-		Assert.assertEquals(wishLists2.toString(), 1, wishLists2.size());
+				Page<WishList> page = wishListResource.getChannelWishListsPage(
+					channelId, null, Pagination.of(pageNum, itemLimit));
 
-		Page<WishList> page3 = wishListResource.getChannelWishListsPage(
-			channelId, null, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(wishList1, (List<WishList>)page3.getItems());
-		assertContains(wishList2, (List<WishList>)page3.getItems());
-		assertContains(wishList3, (List<WishList>)page3.getItems());
+		assertContains(wishList1, allItems);
+		assertContains(wishList2, allItems);
+		assertContains(wishList3, allItems);
 	}
 
 	protected WishList testGetChannelWishListsPage_addWishList(

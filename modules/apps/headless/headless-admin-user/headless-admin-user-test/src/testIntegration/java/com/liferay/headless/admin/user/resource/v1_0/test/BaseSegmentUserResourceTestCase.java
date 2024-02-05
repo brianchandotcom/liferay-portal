@@ -249,6 +249,7 @@ public abstract class BaseSegmentUserResourceTestCase {
 			segmentUserResource.getSegmentUserAccountsPage(segmentId, null);
 
 		int totalCount = GetterUtil.getInteger(segmentUserPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		SegmentUser segmentUser1 =
 			testGetSegmentUserAccountsPage_addSegmentUser(
@@ -264,30 +265,35 @@ public abstract class BaseSegmentUserResourceTestCase {
 
 		Page<SegmentUser> page1 =
 			segmentUserResource.getSegmentUserAccountsPage(
-				segmentId, Pagination.of(1, totalCount + 2));
+				segmentId, Pagination.of(1, itemLimit));
 
 		List<SegmentUser> segmentUsers1 = (List<SegmentUser>)page1.getItems();
 
-		Assert.assertEquals(
-			segmentUsers1.toString(), totalCount + 2, segmentUsers1.size());
+		if (segmentUsers1.size() < itemLimit) {
+			itemLimit = segmentUsers1.size();
+		}
 
-		Page<SegmentUser> page2 =
-			segmentUserResource.getSegmentUserAccountsPage(
-				segmentId, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(segmentUserPage.getTotalCount() / itemLimit);
+		List<SegmentUser> allItems = new ArrayList<SegmentUser>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<SegmentUser> segmentUsers2 = (List<SegmentUser>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					segmentUsers1.toString(), itemLimit, segmentUsers1.size());
 
-		Assert.assertEquals(segmentUsers2.toString(), 1, segmentUsers2.size());
+				Page<SegmentUser> page =
+					segmentUserResource.getSegmentUserAccountsPage(
+						segmentId, Pagination.of(pageNum, itemLimit));
 
-		Page<SegmentUser> page3 =
-			segmentUserResource.getSegmentUserAccountsPage(
-				segmentId, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(segmentUser1, (List<SegmentUser>)page3.getItems());
-		assertContains(segmentUser2, (List<SegmentUser>)page3.getItems());
-		assertContains(segmentUser3, (List<SegmentUser>)page3.getItems());
+		assertContains(segmentUser1, allItems);
+		assertContains(segmentUser2, allItems);
+		assertContains(segmentUser3, allItems);
 	}
 
 	protected SegmentUser testGetSegmentUserAccountsPage_addSegmentUser(

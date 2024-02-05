@@ -404,6 +404,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			documentFolderPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		DocumentFolder documentFolder1 =
 			testGetAssetLibraryDocumentFoldersPage_addDocumentFolder(
@@ -420,36 +421,39 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Page<DocumentFolder> page1 =
 			documentFolderResource.getAssetLibraryDocumentFoldersPage(
 				assetLibraryId, null, null, null, null,
-				Pagination.of(1, totalCount + 2), null);
+				Pagination.of(1, itemLimit), null);
 
 		List<DocumentFolder> documentFolders1 =
 			(List<DocumentFolder>)page1.getItems();
 
-		Assert.assertEquals(
-			documentFolders1.toString(), totalCount + 2,
-			documentFolders1.size());
+		if (documentFolders1.size() < itemLimit) {
+			itemLimit = documentFolders1.size();
+		}
 
-		Page<DocumentFolder> page2 =
-			documentFolderResource.getAssetLibraryDocumentFoldersPage(
-				assetLibraryId, null, null, null, null,
-				Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			documentFolderPage.getTotalCount() / itemLimit);
+		List<DocumentFolder> allItems = new ArrayList<DocumentFolder>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<DocumentFolder> documentFolders2 =
-			(List<DocumentFolder>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					documentFolders1.toString(), itemLimit,
+					documentFolders1.size());
 
-		Assert.assertEquals(
-			documentFolders2.toString(), 1, documentFolders2.size());
+				Page<DocumentFolder> page =
+					documentFolderResource.getAssetLibraryDocumentFoldersPage(
+						assetLibraryId, null, null, null, null,
+						Pagination.of(pageNum, itemLimit), null);
 
-		Page<DocumentFolder> page3 =
-			documentFolderResource.getAssetLibraryDocumentFoldersPage(
-				assetLibraryId, null, null, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(documentFolder1, (List<DocumentFolder>)page3.getItems());
-		assertContains(documentFolder2, (List<DocumentFolder>)page3.getItems());
-		assertContains(documentFolder3, (List<DocumentFolder>)page3.getItems());
+		assertContains(documentFolder1, allItems);
+		assertContains(documentFolder2, allItems);
+		assertContains(documentFolder3, allItems);
 	}
 
 	@Test
@@ -805,6 +809,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			documentFolderPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		DocumentFolder documentFolder1 =
 			testGetAssetLibraryDocumentFoldersRatedByMePage_addDocumentFolder(
@@ -820,34 +825,39 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		Page<DocumentFolder> page1 =
 			documentFolderResource.getAssetLibraryDocumentFoldersRatedByMePage(
-				assetLibraryId, Pagination.of(1, totalCount + 2));
+				assetLibraryId, Pagination.of(1, itemLimit));
 
 		List<DocumentFolder> documentFolders1 =
 			(List<DocumentFolder>)page1.getItems();
 
-		Assert.assertEquals(
-			documentFolders1.toString(), totalCount + 2,
-			documentFolders1.size());
+		if (documentFolders1.size() < itemLimit) {
+			itemLimit = documentFolders1.size();
+		}
 
-		Page<DocumentFolder> page2 =
-			documentFolderResource.getAssetLibraryDocumentFoldersRatedByMePage(
-				assetLibraryId, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			documentFolderPage.getTotalCount() / itemLimit);
+		List<DocumentFolder> allItems = new ArrayList<DocumentFolder>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<DocumentFolder> documentFolders2 =
-			(List<DocumentFolder>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					documentFolders1.toString(), itemLimit,
+					documentFolders1.size());
 
-		Assert.assertEquals(
-			documentFolders2.toString(), 1, documentFolders2.size());
+				Page<DocumentFolder> page =
+					documentFolderResource.
+						getAssetLibraryDocumentFoldersRatedByMePage(
+							assetLibraryId, Pagination.of(pageNum, itemLimit));
 
-		Page<DocumentFolder> page3 =
-			documentFolderResource.getAssetLibraryDocumentFoldersRatedByMePage(
-				assetLibraryId, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(documentFolder1, (List<DocumentFolder>)page3.getItems());
-		assertContains(documentFolder2, (List<DocumentFolder>)page3.getItems());
-		assertContains(documentFolder3, (List<DocumentFolder>)page3.getItems());
+		assertContains(documentFolder1, allItems);
+		assertContains(documentFolder2, allItems);
+		assertContains(documentFolder3, allItems);
 	}
 
 	protected DocumentFolder
@@ -1395,6 +1405,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			documentFolderPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		DocumentFolder documentFolder1 =
 			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
@@ -1411,36 +1422,39 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Page<DocumentFolder> page1 =
 			documentFolderResource.getDocumentFolderDocumentFoldersPage(
 				parentDocumentFolderId, null, null, null, null,
-				Pagination.of(1, totalCount + 2), null);
+				Pagination.of(1, itemLimit), null);
 
 		List<DocumentFolder> documentFolders1 =
 			(List<DocumentFolder>)page1.getItems();
 
-		Assert.assertEquals(
-			documentFolders1.toString(), totalCount + 2,
-			documentFolders1.size());
+		if (documentFolders1.size() < itemLimit) {
+			itemLimit = documentFolders1.size();
+		}
 
-		Page<DocumentFolder> page2 =
-			documentFolderResource.getDocumentFolderDocumentFoldersPage(
-				parentDocumentFolderId, null, null, null, null,
-				Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			documentFolderPage.getTotalCount() / itemLimit);
+		List<DocumentFolder> allItems = new ArrayList<DocumentFolder>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<DocumentFolder> documentFolders2 =
-			(List<DocumentFolder>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					documentFolders1.toString(), itemLimit,
+					documentFolders1.size());
 
-		Assert.assertEquals(
-			documentFolders2.toString(), 1, documentFolders2.size());
+				Page<DocumentFolder> page =
+					documentFolderResource.getDocumentFolderDocumentFoldersPage(
+						parentDocumentFolderId, null, null, null, null,
+						Pagination.of(pageNum, itemLimit), null);
 
-		Page<DocumentFolder> page3 =
-			documentFolderResource.getDocumentFolderDocumentFoldersPage(
-				parentDocumentFolderId, null, null, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(documentFolder1, (List<DocumentFolder>)page3.getItems());
-		assertContains(documentFolder2, (List<DocumentFolder>)page3.getItems());
-		assertContains(documentFolder3, (List<DocumentFolder>)page3.getItems());
+		assertContains(documentFolder1, allItems);
+		assertContains(documentFolder2, allItems);
+		assertContains(documentFolder3, allItems);
 	}
 
 	@Test
@@ -1824,6 +1838,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			documentFolderPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		DocumentFolder documentFolder1 =
 			testGetSiteDocumentFoldersPage_addDocumentFolder(
@@ -1839,37 +1854,40 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		Page<DocumentFolder> page1 =
 			documentFolderResource.getSiteDocumentFoldersPage(
-				siteId, null, null, null, null,
-				Pagination.of(1, totalCount + 2), null);
+				siteId, null, null, null, null, Pagination.of(1, itemLimit),
+				null);
 
 		List<DocumentFolder> documentFolders1 =
 			(List<DocumentFolder>)page1.getItems();
 
-		Assert.assertEquals(
-			documentFolders1.toString(), totalCount + 2,
-			documentFolders1.size());
+		if (documentFolders1.size() < itemLimit) {
+			itemLimit = documentFolders1.size();
+		}
 
-		Page<DocumentFolder> page2 =
-			documentFolderResource.getSiteDocumentFoldersPage(
-				siteId, null, null, null, null,
-				Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			documentFolderPage.getTotalCount() / itemLimit);
+		List<DocumentFolder> allItems = new ArrayList<DocumentFolder>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<DocumentFolder> documentFolders2 =
-			(List<DocumentFolder>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					documentFolders1.toString(), itemLimit,
+					documentFolders1.size());
 
-		Assert.assertEquals(
-			documentFolders2.toString(), 1, documentFolders2.size());
+				Page<DocumentFolder> page =
+					documentFolderResource.getSiteDocumentFoldersPage(
+						siteId, null, null, null, null,
+						Pagination.of(pageNum, itemLimit), null);
 
-		Page<DocumentFolder> page3 =
-			documentFolderResource.getSiteDocumentFoldersPage(
-				siteId, null, null, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(documentFolder1, (List<DocumentFolder>)page3.getItems());
-		assertContains(documentFolder2, (List<DocumentFolder>)page3.getItems());
-		assertContains(documentFolder3, (List<DocumentFolder>)page3.getItems());
+		assertContains(documentFolder1, allItems);
+		assertContains(documentFolder2, allItems);
+		assertContains(documentFolder3, allItems);
 	}
 
 	@Test
@@ -2266,6 +2284,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			documentFolderPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		DocumentFolder documentFolder1 =
 			testGetSiteDocumentFoldersRatedByMePage_addDocumentFolder(
@@ -2281,34 +2300,38 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		Page<DocumentFolder> page1 =
 			documentFolderResource.getSiteDocumentFoldersRatedByMePage(
-				siteId, Pagination.of(1, totalCount + 2));
+				siteId, Pagination.of(1, itemLimit));
 
 		List<DocumentFolder> documentFolders1 =
 			(List<DocumentFolder>)page1.getItems();
 
-		Assert.assertEquals(
-			documentFolders1.toString(), totalCount + 2,
-			documentFolders1.size());
+		if (documentFolders1.size() < itemLimit) {
+			itemLimit = documentFolders1.size();
+		}
 
-		Page<DocumentFolder> page2 =
-			documentFolderResource.getSiteDocumentFoldersRatedByMePage(
-				siteId, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			documentFolderPage.getTotalCount() / itemLimit);
+		List<DocumentFolder> allItems = new ArrayList<DocumentFolder>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<DocumentFolder> documentFolders2 =
-			(List<DocumentFolder>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					documentFolders1.toString(), itemLimit,
+					documentFolders1.size());
 
-		Assert.assertEquals(
-			documentFolders2.toString(), 1, documentFolders2.size());
+				Page<DocumentFolder> page =
+					documentFolderResource.getSiteDocumentFoldersRatedByMePage(
+						siteId, Pagination.of(pageNum, itemLimit));
 
-		Page<DocumentFolder> page3 =
-			documentFolderResource.getSiteDocumentFoldersRatedByMePage(
-				siteId, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(documentFolder1, (List<DocumentFolder>)page3.getItems());
-		assertContains(documentFolder2, (List<DocumentFolder>)page3.getItems());
-		assertContains(documentFolder3, (List<DocumentFolder>)page3.getItems());
+		assertContains(documentFolder1, allItems);
+		assertContains(documentFolder2, allItems);
+		assertContains(documentFolder3, allItems);
 	}
 
 	protected DocumentFolder

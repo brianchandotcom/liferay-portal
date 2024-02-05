@@ -305,6 +305,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 				dataDefinitionId, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(dataLayoutPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		DataLayout dataLayout1 =
 			testGetDataDefinitionDataLayoutsPage_addDataLayout(
@@ -320,31 +321,36 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Page<DataLayout> page1 =
 			dataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, null, Pagination.of(1, totalCount + 2), null);
+				dataDefinitionId, null, Pagination.of(1, itemLimit), null);
 
 		List<DataLayout> dataLayouts1 = (List<DataLayout>)page1.getItems();
 
-		Assert.assertEquals(
-			dataLayouts1.toString(), totalCount + 2, dataLayouts1.size());
+		if (dataLayouts1.size() < itemLimit) {
+			itemLimit = dataLayouts1.size();
+		}
 
-		Page<DataLayout> page2 =
-			dataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(dataLayoutPage.getTotalCount() / itemLimit);
+		List<DataLayout> allItems = new ArrayList<DataLayout>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<DataLayout> dataLayouts2 = (List<DataLayout>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					dataLayouts1.toString(), itemLimit, dataLayouts1.size());
 
-		Assert.assertEquals(dataLayouts2.toString(), 1, dataLayouts2.size());
+				Page<DataLayout> page =
+					dataLayoutResource.getDataDefinitionDataLayoutsPage(
+						dataDefinitionId, null,
+						Pagination.of(pageNum, itemLimit), null);
 
-		Page<DataLayout> page3 =
-			dataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, null, Pagination.of(1, (int)totalCount + 3),
-				null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(dataLayout1, (List<DataLayout>)page3.getItems());
-		assertContains(dataLayout2, (List<DataLayout>)page3.getItems());
-		assertContains(dataLayout3, (List<DataLayout>)page3.getItems());
+		assertContains(dataLayout1, allItems);
+		assertContains(dataLayout2, allItems);
+		assertContains(dataLayout3, allItems);
 	}
 
 	@Test

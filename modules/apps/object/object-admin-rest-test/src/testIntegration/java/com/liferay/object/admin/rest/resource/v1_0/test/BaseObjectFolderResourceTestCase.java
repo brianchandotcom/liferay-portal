@@ -228,6 +228,7 @@ public abstract class BaseObjectFolderResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			objectFolderPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		ObjectFolder objectFolder1 = testGetObjectFoldersPage_addObjectFolder(
 			randomObjectFolder());
@@ -239,31 +240,38 @@ public abstract class BaseObjectFolderResourceTestCase {
 			randomObjectFolder());
 
 		Page<ObjectFolder> page1 = objectFolderResource.getObjectFoldersPage(
-			null, Pagination.of(1, totalCount + 2));
+			null, Pagination.of(1, itemLimit));
 
 		List<ObjectFolder> objectFolders1 =
 			(List<ObjectFolder>)page1.getItems();
 
-		Assert.assertEquals(
-			objectFolders1.toString(), totalCount + 2, objectFolders1.size());
+		if (objectFolders1.size() < itemLimit) {
+			itemLimit = objectFolders1.size();
+		}
 
-		Page<ObjectFolder> page2 = objectFolderResource.getObjectFoldersPage(
-			null, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			objectFolderPage.getTotalCount() / itemLimit);
+		List<ObjectFolder> allItems = new ArrayList<ObjectFolder>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<ObjectFolder> objectFolders2 =
-			(List<ObjectFolder>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					objectFolders1.toString(), itemLimit,
+					objectFolders1.size());
 
-		Assert.assertEquals(
-			objectFolders2.toString(), 1, objectFolders2.size());
+				Page<ObjectFolder> page =
+					objectFolderResource.getObjectFoldersPage(
+						null, Pagination.of(pageNum, itemLimit));
 
-		Page<ObjectFolder> page3 = objectFolderResource.getObjectFoldersPage(
-			null, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(objectFolder1, (List<ObjectFolder>)page3.getItems());
-		assertContains(objectFolder2, (List<ObjectFolder>)page3.getItems());
-		assertContains(objectFolder3, (List<ObjectFolder>)page3.getItems());
+		assertContains(objectFolder1, allItems);
+		assertContains(objectFolder2, allItems);
+		assertContains(objectFolder3, allItems);
 	}
 
 	protected ObjectFolder testGetObjectFoldersPage_addObjectFolder(

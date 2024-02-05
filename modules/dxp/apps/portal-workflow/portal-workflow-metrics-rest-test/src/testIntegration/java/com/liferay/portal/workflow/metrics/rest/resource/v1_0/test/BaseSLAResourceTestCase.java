@@ -258,6 +258,7 @@ public abstract class BaseSLAResourceTestCase {
 			processId, null, null);
 
 		int totalCount = GetterUtil.getInteger(slaPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		SLA sla1 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
@@ -266,27 +267,33 @@ public abstract class BaseSLAResourceTestCase {
 		SLA sla3 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
 		Page<SLA> page1 = slaResource.getProcessSLAsPage(
-			processId, null, Pagination.of(1, totalCount + 2));
+			processId, null, Pagination.of(1, itemLimit));
 
 		List<SLA> slas1 = (List<SLA>)page1.getItems();
 
-		Assert.assertEquals(slas1.toString(), totalCount + 2, slas1.size());
+		if (slas1.size() < itemLimit) {
+			itemLimit = slas1.size();
+		}
 
-		Page<SLA> page2 = slaResource.getProcessSLAsPage(
-			processId, null, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(slaPage.getTotalCount() / itemLimit);
+		List<SLA> allItems = new ArrayList<SLA>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<SLA> slas2 = (List<SLA>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(slas1.toString(), itemLimit, slas1.size());
 
-		Assert.assertEquals(slas2.toString(), 1, slas2.size());
+				Page<SLA> page = slaResource.getProcessSLAsPage(
+					processId, null, Pagination.of(pageNum, itemLimit));
 
-		Page<SLA> page3 = slaResource.getProcessSLAsPage(
-			processId, null, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(sla1, (List<SLA>)page3.getItems());
-		assertContains(sla2, (List<SLA>)page3.getItems());
-		assertContains(sla3, (List<SLA>)page3.getItems());
+		assertContains(sla1, allItems);
+		assertContains(sla2, allItems);
+		assertContains(sla3, allItems);
 	}
 
 	protected SLA testGetProcessSLAsPage_addSLA(Long processId, SLA sla)

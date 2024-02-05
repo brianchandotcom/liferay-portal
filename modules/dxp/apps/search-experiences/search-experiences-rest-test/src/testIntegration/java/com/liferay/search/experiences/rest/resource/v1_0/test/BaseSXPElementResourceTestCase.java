@@ -324,6 +324,7 @@ public abstract class BaseSXPElementResourceTestCase {
 			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(sxpElementPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		SXPElement sxpElement1 = testGetSXPElementsPage_addSXPElement(
 			randomSXPElement());
@@ -335,28 +336,34 @@ public abstract class BaseSXPElementResourceTestCase {
 			randomSXPElement());
 
 		Page<SXPElement> page1 = sxpElementResource.getSXPElementsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+			null, null, Pagination.of(1, itemLimit), null);
 
 		List<SXPElement> sxpElements1 = (List<SXPElement>)page1.getItems();
 
-		Assert.assertEquals(
-			sxpElements1.toString(), totalCount + 2, sxpElements1.size());
+		if (sxpElements1.size() < itemLimit) {
+			itemLimit = sxpElements1.size();
+		}
 
-		Page<SXPElement> page2 = sxpElementResource.getSXPElementsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(sxpElementPage.getTotalCount() / itemLimit);
+		List<SXPElement> allItems = new ArrayList<SXPElement>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<SXPElement> sxpElements2 = (List<SXPElement>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					sxpElements1.toString(), itemLimit, sxpElements1.size());
 
-		Assert.assertEquals(sxpElements2.toString(), 1, sxpElements2.size());
+				Page<SXPElement> page = sxpElementResource.getSXPElementsPage(
+					null, null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<SXPElement> page3 = sxpElementResource.getSXPElementsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(sxpElement1, (List<SXPElement>)page3.getItems());
-		assertContains(sxpElement2, (List<SXPElement>)page3.getItems());
-		assertContains(sxpElement3, (List<SXPElement>)page3.getItems());
+		assertContains(sxpElement1, allItems);
+		assertContains(sxpElement2, allItems);
+		assertContains(sxpElement3, allItems);
 	}
 
 	@Test

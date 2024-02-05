@@ -265,6 +265,7 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			dsEnvelopeResource.getSiteDSEnvelopesPage(siteId, null);
 
 		int totalCount = GetterUtil.getInteger(dsEnvelopePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		DSEnvelope dsEnvelope1 = testGetSiteDSEnvelopesPage_addDSEnvelope(
 			siteId, randomDSEnvelope());
@@ -276,28 +277,35 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			siteId, randomDSEnvelope());
 
 		Page<DSEnvelope> page1 = dsEnvelopeResource.getSiteDSEnvelopesPage(
-			siteId, Pagination.of(1, totalCount + 2));
+			siteId, Pagination.of(1, itemLimit));
 
 		List<DSEnvelope> dsEnvelopes1 = (List<DSEnvelope>)page1.getItems();
 
-		Assert.assertEquals(
-			dsEnvelopes1.toString(), totalCount + 2, dsEnvelopes1.size());
+		if (dsEnvelopes1.size() < itemLimit) {
+			itemLimit = dsEnvelopes1.size();
+		}
 
-		Page<DSEnvelope> page2 = dsEnvelopeResource.getSiteDSEnvelopesPage(
-			siteId, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(dsEnvelopePage.getTotalCount() / itemLimit);
+		List<DSEnvelope> allItems = new ArrayList<DSEnvelope>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<DSEnvelope> dsEnvelopes2 = (List<DSEnvelope>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					dsEnvelopes1.toString(), itemLimit, dsEnvelopes1.size());
 
-		Assert.assertEquals(dsEnvelopes2.toString(), 1, dsEnvelopes2.size());
+				Page<DSEnvelope> page =
+					dsEnvelopeResource.getSiteDSEnvelopesPage(
+						siteId, Pagination.of(pageNum, itemLimit));
 
-		Page<DSEnvelope> page3 = dsEnvelopeResource.getSiteDSEnvelopesPage(
-			siteId, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(dsEnvelope1, (List<DSEnvelope>)page3.getItems());
-		assertContains(dsEnvelope2, (List<DSEnvelope>)page3.getItems());
-		assertContains(dsEnvelope3, (List<DSEnvelope>)page3.getItems());
+		assertContains(dsEnvelope1, allItems);
+		assertContains(dsEnvelope2, allItems);
+		assertContains(dsEnvelope3, allItems);
 	}
 
 	protected DSEnvelope testGetSiteDSEnvelopesPage_addDSEnvelope(

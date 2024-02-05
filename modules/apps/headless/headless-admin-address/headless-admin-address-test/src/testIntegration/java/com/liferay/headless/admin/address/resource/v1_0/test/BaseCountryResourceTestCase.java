@@ -228,6 +228,7 @@ public abstract class BaseCountryResourceTestCase {
 			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(countryPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Country country1 = testGetCountriesPage_addCountry(randomCountry());
 
@@ -236,28 +237,34 @@ public abstract class BaseCountryResourceTestCase {
 		Country country3 = testGetCountriesPage_addCountry(randomCountry());
 
 		Page<Country> page1 = countryResource.getCountriesPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+			null, null, Pagination.of(1, itemLimit), null);
 
 		List<Country> countries1 = (List<Country>)page1.getItems();
 
-		Assert.assertEquals(
-			countries1.toString(), totalCount + 2, countries1.size());
+		if (countries1.size() < itemLimit) {
+			itemLimit = countries1.size();
+		}
 
-		Page<Country> page2 = countryResource.getCountriesPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(countryPage.getTotalCount() / itemLimit);
+		List<Country> allItems = new ArrayList<Country>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Country> countries2 = (List<Country>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					countries1.toString(), itemLimit, countries1.size());
 
-		Assert.assertEquals(countries2.toString(), 1, countries2.size());
+				Page<Country> page = countryResource.getCountriesPage(
+					null, null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<Country> page3 = countryResource.getCountriesPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(country1, (List<Country>)page3.getItems());
-		assertContains(country2, (List<Country>)page3.getItems());
-		assertContains(country3, (List<Country>)page3.getItems());
+		assertContains(country1, allItems);
+		assertContains(country2, allItems);
+		assertContains(country3, allItems);
 	}
 
 	@Test

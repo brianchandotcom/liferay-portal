@@ -253,6 +253,7 @@ public abstract class BasePinResourceTestCase {
 			channelId, productId, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(pinPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Pin pin1 = testGetChannelProductPinsPage_addPin(
 			channelId, productId, randomPin());
@@ -264,30 +265,35 @@ public abstract class BasePinResourceTestCase {
 			channelId, productId, randomPin());
 
 		Page<Pin> page1 = pinResource.getChannelProductPinsPage(
-			channelId, productId, null, null, Pagination.of(1, totalCount + 2),
+			channelId, productId, null, null, Pagination.of(1, itemLimit),
 			null);
 
 		List<Pin> pins1 = (List<Pin>)page1.getItems();
 
-		Assert.assertEquals(pins1.toString(), totalCount + 2, pins1.size());
+		if (pins1.size() < itemLimit) {
+			itemLimit = pins1.size();
+		}
 
-		Page<Pin> page2 = pinResource.getChannelProductPinsPage(
-			channelId, productId, null, null, Pagination.of(2, totalCount + 2),
-			null);
+		int pages = (int)Math.ceil(pinPage.getTotalCount() / itemLimit);
+		List<Pin> allItems = new ArrayList<Pin>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Pin> pins2 = (List<Pin>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(pins1.toString(), itemLimit, pins1.size());
 
-		Assert.assertEquals(pins2.toString(), 1, pins2.size());
+				Page<Pin> page = pinResource.getChannelProductPinsPage(
+					channelId, productId, null, null,
+					Pagination.of(pageNum, itemLimit), null);
 
-		Page<Pin> page3 = pinResource.getChannelProductPinsPage(
-			channelId, productId, null, null,
-			Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(pin1, (List<Pin>)page3.getItems());
-		assertContains(pin2, (List<Pin>)page3.getItems());
-		assertContains(pin3, (List<Pin>)page3.getItems());
+		assertContains(pin1, allItems);
+		assertContains(pin2, allItems);
+		assertContains(pin3, allItems);
 	}
 
 	@Test

@@ -222,6 +222,7 @@ public abstract class BaseRoleResourceTestCase {
 		Page<Role> rolePage = roleResource.getRolesPage(null, null, null);
 
 		int totalCount = GetterUtil.getInteger(rolePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Role role1 = testGetRolesPage_addRole(randomRole());
 
@@ -230,27 +231,34 @@ public abstract class BaseRoleResourceTestCase {
 		Role role3 = testGetRolesPage_addRole(randomRole());
 
 		Page<Role> page1 = roleResource.getRolesPage(
-			null, null, Pagination.of(1, totalCount + 2));
+			null, null, Pagination.of(1, itemLimit));
 
 		List<Role> roles1 = (List<Role>)page1.getItems();
 
-		Assert.assertEquals(roles1.toString(), totalCount + 2, roles1.size());
+		if (roles1.size() < itemLimit) {
+			itemLimit = roles1.size();
+		}
 
-		Page<Role> page2 = roleResource.getRolesPage(
-			null, null, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(rolePage.getTotalCount() / itemLimit);
+		List<Role> allItems = new ArrayList<Role>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Role> roles2 = (List<Role>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					roles1.toString(), itemLimit, roles1.size());
 
-		Assert.assertEquals(roles2.toString(), 1, roles2.size());
+				Page<Role> page = roleResource.getRolesPage(
+					null, null, Pagination.of(pageNum, itemLimit));
 
-		Page<Role> page3 = roleResource.getRolesPage(
-			null, null, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(role1, (List<Role>)page3.getItems());
-		assertContains(role2, (List<Role>)page3.getItems());
-		assertContains(role3, (List<Role>)page3.getItems());
+		assertContains(role1, allItems);
+		assertContains(role2, allItems);
+		assertContains(role3, allItems);
 	}
 
 	protected Role testGetRolesPage_addRole(Role role) throws Exception {

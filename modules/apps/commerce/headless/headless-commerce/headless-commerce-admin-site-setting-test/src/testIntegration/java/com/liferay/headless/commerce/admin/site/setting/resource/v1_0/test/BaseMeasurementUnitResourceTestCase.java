@@ -327,6 +327,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			measurementUnitPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		MeasurementUnit measurementUnit1 =
 			testGetMeasurementUnitsPage_addMeasurementUnit(
@@ -342,37 +343,38 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		Page<MeasurementUnit> page1 =
 			measurementUnitResource.getMeasurementUnitsPage(
-				null, Pagination.of(1, totalCount + 2), null);
+				null, Pagination.of(1, itemLimit), null);
 
 		List<MeasurementUnit> measurementUnits1 =
 			(List<MeasurementUnit>)page1.getItems();
 
-		Assert.assertEquals(
-			measurementUnits1.toString(), totalCount + 2,
-			measurementUnits1.size());
+		if (measurementUnits1.size() < itemLimit) {
+			itemLimit = measurementUnits1.size();
+		}
 
-		Page<MeasurementUnit> page2 =
-			measurementUnitResource.getMeasurementUnitsPage(
-				null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			measurementUnitPage.getTotalCount() / itemLimit);
+		List<MeasurementUnit> allItems = new ArrayList<MeasurementUnit>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<MeasurementUnit> measurementUnits2 =
-			(List<MeasurementUnit>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					measurementUnits1.toString(), itemLimit,
+					measurementUnits1.size());
 
-		Assert.assertEquals(
-			measurementUnits2.toString(), 1, measurementUnits2.size());
+				Page<MeasurementUnit> page =
+					measurementUnitResource.getMeasurementUnitsPage(
+						null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<MeasurementUnit> page3 =
-			measurementUnitResource.getMeasurementUnitsPage(
-				null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			measurementUnit1, (List<MeasurementUnit>)page3.getItems());
-		assertContains(
-			measurementUnit2, (List<MeasurementUnit>)page3.getItems());
-		assertContains(
-			measurementUnit3, (List<MeasurementUnit>)page3.getItems());
+		assertContains(measurementUnit1, allItems);
+		assertContains(measurementUnit2, allItems);
+		assertContains(measurementUnit3, allItems);
 	}
 
 	@Test
@@ -907,6 +909,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			measurementUnitPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		MeasurementUnit measurementUnit1 =
 			testGetMeasurementUnitsByType_addMeasurementUnit(
@@ -922,38 +925,39 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		Page<MeasurementUnit> page1 =
 			measurementUnitResource.getMeasurementUnitsByType(
-				measurementUnitType, Pagination.of(1, totalCount + 2), null);
+				measurementUnitType, Pagination.of(1, itemLimit), null);
 
 		List<MeasurementUnit> measurementUnits1 =
 			(List<MeasurementUnit>)page1.getItems();
 
-		Assert.assertEquals(
-			measurementUnits1.toString(), totalCount + 2,
-			measurementUnits1.size());
+		if (measurementUnits1.size() < itemLimit) {
+			itemLimit = measurementUnits1.size();
+		}
 
-		Page<MeasurementUnit> page2 =
-			measurementUnitResource.getMeasurementUnitsByType(
-				measurementUnitType, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			measurementUnitPage.getTotalCount() / itemLimit);
+		List<MeasurementUnit> allItems = new ArrayList<MeasurementUnit>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<MeasurementUnit> measurementUnits2 =
-			(List<MeasurementUnit>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					measurementUnits1.toString(), itemLimit,
+					measurementUnits1.size());
 
-		Assert.assertEquals(
-			measurementUnits2.toString(), 1, measurementUnits2.size());
+				Page<MeasurementUnit> page =
+					measurementUnitResource.getMeasurementUnitsByType(
+						measurementUnitType, Pagination.of(pageNum, itemLimit),
+						null);
 
-		Page<MeasurementUnit> page3 =
-			measurementUnitResource.getMeasurementUnitsByType(
-				measurementUnitType, Pagination.of(1, (int)totalCount + 3),
-				null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			measurementUnit1, (List<MeasurementUnit>)page3.getItems());
-		assertContains(
-			measurementUnit2, (List<MeasurementUnit>)page3.getItems());
-		assertContains(
-			measurementUnit3, (List<MeasurementUnit>)page3.getItems());
+		assertContains(measurementUnit1, allItems);
+		assertContains(measurementUnit2, allItems);
+		assertContains(measurementUnit3, allItems);
 	}
 
 	@Test

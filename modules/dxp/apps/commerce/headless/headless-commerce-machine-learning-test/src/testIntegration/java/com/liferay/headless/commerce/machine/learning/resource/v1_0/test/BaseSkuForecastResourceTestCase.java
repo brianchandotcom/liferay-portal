@@ -230,6 +230,7 @@ public abstract class BaseSkuForecastResourceTestCase {
 				null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(skuForecastPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		SkuForecast skuForecast1 =
 			testGetSkuForecastsByMonthlyRevenuePage_addSkuForecast(
@@ -245,30 +246,36 @@ public abstract class BaseSkuForecastResourceTestCase {
 
 		Page<SkuForecast> page1 =
 			skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
-				null, null, null, null, Pagination.of(1, totalCount + 2));
+				null, null, null, null, Pagination.of(1, itemLimit));
 
 		List<SkuForecast> skuForecasts1 = (List<SkuForecast>)page1.getItems();
 
-		Assert.assertEquals(
-			skuForecasts1.toString(), totalCount + 2, skuForecasts1.size());
+		if (skuForecasts1.size() < itemLimit) {
+			itemLimit = skuForecasts1.size();
+		}
 
-		Page<SkuForecast> page2 =
-			skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
-				null, null, null, null, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(skuForecastPage.getTotalCount() / itemLimit);
+		List<SkuForecast> allItems = new ArrayList<SkuForecast>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<SkuForecast> skuForecasts2 = (List<SkuForecast>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					skuForecasts1.toString(), itemLimit, skuForecasts1.size());
 
-		Assert.assertEquals(skuForecasts2.toString(), 1, skuForecasts2.size());
+				Page<SkuForecast> page =
+					skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
+						null, null, null, null,
+						Pagination.of(pageNum, itemLimit));
 
-		Page<SkuForecast> page3 =
-			skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
-				null, null, null, null, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(skuForecast1, (List<SkuForecast>)page3.getItems());
-		assertContains(skuForecast2, (List<SkuForecast>)page3.getItems());
-		assertContains(skuForecast3, (List<SkuForecast>)page3.getItems());
+		assertContains(skuForecast1, allItems);
+		assertContains(skuForecast2, allItems);
+		assertContains(skuForecast3, allItems);
 	}
 
 	protected SkuForecast

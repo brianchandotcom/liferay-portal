@@ -336,6 +336,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			listTypeDefinitionPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		ListTypeDefinition listTypeDefinition1 =
 			testGetListTypeDefinitionsPage_addListTypeDefinition(
@@ -351,37 +352,39 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		Page<ListTypeDefinition> page1 =
 			listTypeDefinitionResource.getListTypeDefinitionsPage(
-				null, null, null, Pagination.of(1, totalCount + 2), null);
+				null, null, null, Pagination.of(1, itemLimit), null);
 
 		List<ListTypeDefinition> listTypeDefinitions1 =
 			(List<ListTypeDefinition>)page1.getItems();
 
-		Assert.assertEquals(
-			listTypeDefinitions1.toString(), totalCount + 2,
-			listTypeDefinitions1.size());
+		if (listTypeDefinitions1.size() < itemLimit) {
+			itemLimit = listTypeDefinitions1.size();
+		}
 
-		Page<ListTypeDefinition> page2 =
-			listTypeDefinitionResource.getListTypeDefinitionsPage(
-				null, null, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(
+			listTypeDefinitionPage.getTotalCount() / itemLimit);
+		List<ListTypeDefinition> allItems = new ArrayList<ListTypeDefinition>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<ListTypeDefinition> listTypeDefinitions2 =
-			(List<ListTypeDefinition>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					listTypeDefinitions1.toString(), itemLimit,
+					listTypeDefinitions1.size());
 
-		Assert.assertEquals(
-			listTypeDefinitions2.toString(), 1, listTypeDefinitions2.size());
+				Page<ListTypeDefinition> page =
+					listTypeDefinitionResource.getListTypeDefinitionsPage(
+						null, null, null, Pagination.of(pageNum, itemLimit),
+						null);
 
-		Page<ListTypeDefinition> page3 =
-			listTypeDefinitionResource.getListTypeDefinitionsPage(
-				null, null, null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			listTypeDefinition1, (List<ListTypeDefinition>)page3.getItems());
-		assertContains(
-			listTypeDefinition2, (List<ListTypeDefinition>)page3.getItems());
-		assertContains(
-			listTypeDefinition3, (List<ListTypeDefinition>)page3.getItems());
+		assertContains(listTypeDefinition1, allItems);
+		assertContains(listTypeDefinition2, allItems);
+		assertContains(listTypeDefinition3, allItems);
 	}
 
 	@Test

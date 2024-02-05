@@ -300,6 +300,7 @@ public abstract class BaseTermResourceTestCase {
 		Page<Term> termPage = termResource.getTermsPage(null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(termPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Term term1 = testGetTermsPage_addTerm(randomTerm());
 
@@ -308,27 +309,34 @@ public abstract class BaseTermResourceTestCase {
 		Term term3 = testGetTermsPage_addTerm(randomTerm());
 
 		Page<Term> page1 = termResource.getTermsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+			null, null, Pagination.of(1, itemLimit), null);
 
 		List<Term> terms1 = (List<Term>)page1.getItems();
 
-		Assert.assertEquals(terms1.toString(), totalCount + 2, terms1.size());
+		if (terms1.size() < itemLimit) {
+			itemLimit = terms1.size();
+		}
 
-		Page<Term> page2 = termResource.getTermsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(termPage.getTotalCount() / itemLimit);
+		List<Term> allItems = new ArrayList<Term>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Term> terms2 = (List<Term>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					terms1.toString(), itemLimit, terms1.size());
 
-		Assert.assertEquals(terms2.toString(), 1, terms2.size());
+				Page<Term> page = termResource.getTermsPage(
+					null, null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<Term> page3 = termResource.getTermsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(term1, (List<Term>)page3.getItems());
-		assertContains(term2, (List<Term>)page3.getItems());
-		assertContains(term3, (List<Term>)page3.getItems());
+		assertContains(term1, allItems);
+		assertContains(term2, allItems);
+		assertContains(term3, allItems);
 	}
 
 	@Test

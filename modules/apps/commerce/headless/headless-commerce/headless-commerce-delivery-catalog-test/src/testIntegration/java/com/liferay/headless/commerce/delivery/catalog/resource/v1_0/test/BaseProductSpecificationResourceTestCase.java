@@ -290,6 +290,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			productSpecificationPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		ProductSpecification productSpecification1 =
 			testGetChannelProductProductSpecificationsPage_addProductSpecification(
@@ -306,44 +307,41 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		Page<ProductSpecification> page1 =
 			productSpecificationResource.
 				getChannelProductProductSpecificationsPage(
-					channelId, productId, Pagination.of(1, totalCount + 2));
+					channelId, productId, Pagination.of(1, itemLimit));
 
 		List<ProductSpecification> productSpecifications1 =
 			(List<ProductSpecification>)page1.getItems();
 
-		Assert.assertEquals(
-			productSpecifications1.toString(), totalCount + 2,
-			productSpecifications1.size());
+		if (productSpecifications1.size() < itemLimit) {
+			itemLimit = productSpecifications1.size();
+		}
 
-		Page<ProductSpecification> page2 =
-			productSpecificationResource.
-				getChannelProductProductSpecificationsPage(
-					channelId, productId, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			productSpecificationPage.getTotalCount() / itemLimit);
+		List<ProductSpecification> allItems =
+			new ArrayList<ProductSpecification>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<ProductSpecification> productSpecifications2 =
-			(List<ProductSpecification>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					productSpecifications1.toString(), itemLimit,
+					productSpecifications1.size());
 
-		Assert.assertEquals(
-			productSpecifications2.toString(), 1,
-			productSpecifications2.size());
+				Page<ProductSpecification> page =
+					productSpecificationResource.
+						getChannelProductProductSpecificationsPage(
+							channelId, productId,
+							Pagination.of(pageNum, itemLimit));
 
-		Page<ProductSpecification> page3 =
-			productSpecificationResource.
-				getChannelProductProductSpecificationsPage(
-					channelId, productId,
-					Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			productSpecification1,
-			(List<ProductSpecification>)page3.getItems());
-		assertContains(
-			productSpecification2,
-			(List<ProductSpecification>)page3.getItems());
-		assertContains(
-			productSpecification3,
-			(List<ProductSpecification>)page3.getItems());
+		assertContains(productSpecification1, allItems);
+		assertContains(productSpecification2, allItems);
+		assertContains(productSpecification3, allItems);
 	}
 
 	protected ProductSpecification

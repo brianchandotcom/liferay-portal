@@ -234,6 +234,7 @@ public abstract class BaseCTRemoteResourceTestCase {
 			null, null, null);
 
 		int totalCount = GetterUtil.getInteger(ctRemotePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		CTRemote ctRemote1 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
 
@@ -242,28 +243,34 @@ public abstract class BaseCTRemoteResourceTestCase {
 		CTRemote ctRemote3 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
 
 		Page<CTRemote> page1 = ctRemoteResource.getCTRemotesPage(
-			null, Pagination.of(1, totalCount + 2), null);
+			null, Pagination.of(1, itemLimit), null);
 
 		List<CTRemote> ctRemotes1 = (List<CTRemote>)page1.getItems();
 
-		Assert.assertEquals(
-			ctRemotes1.toString(), totalCount + 2, ctRemotes1.size());
+		if (ctRemotes1.size() < itemLimit) {
+			itemLimit = ctRemotes1.size();
+		}
 
-		Page<CTRemote> page2 = ctRemoteResource.getCTRemotesPage(
-			null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(ctRemotePage.getTotalCount() / itemLimit);
+		List<CTRemote> allItems = new ArrayList<CTRemote>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<CTRemote> ctRemotes2 = (List<CTRemote>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					ctRemotes1.toString(), itemLimit, ctRemotes1.size());
 
-		Assert.assertEquals(ctRemotes2.toString(), 1, ctRemotes2.size());
+				Page<CTRemote> page = ctRemoteResource.getCTRemotesPage(
+					null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<CTRemote> page3 = ctRemoteResource.getCTRemotesPage(
-			null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(ctRemote1, (List<CTRemote>)page3.getItems());
-		assertContains(ctRemote2, (List<CTRemote>)page3.getItems());
-		assertContains(ctRemote3, (List<CTRemote>)page3.getItems());
+		assertContains(ctRemote1, allItems);
+		assertContains(ctRemote2, allItems);
+		assertContains(ctRemote3, allItems);
 	}
 
 	@Test

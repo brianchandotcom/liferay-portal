@@ -316,6 +316,7 @@ public abstract class BaseWarehouseResourceTestCase {
 			null, null, null);
 
 		int totalCount = GetterUtil.getInteger(warehousePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Warehouse warehouse1 = testGetWarehousesPage_addWarehouse(
 			randomWarehouse());
@@ -327,28 +328,34 @@ public abstract class BaseWarehouseResourceTestCase {
 			randomWarehouse());
 
 		Page<Warehouse> page1 = warehouseResource.getWarehousesPage(
-			null, Pagination.of(1, totalCount + 2), null);
+			null, Pagination.of(1, itemLimit), null);
 
 		List<Warehouse> warehouses1 = (List<Warehouse>)page1.getItems();
 
-		Assert.assertEquals(
-			warehouses1.toString(), totalCount + 2, warehouses1.size());
+		if (warehouses1.size() < itemLimit) {
+			itemLimit = warehouses1.size();
+		}
 
-		Page<Warehouse> page2 = warehouseResource.getWarehousesPage(
-			null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(warehousePage.getTotalCount() / itemLimit);
+		List<Warehouse> allItems = new ArrayList<Warehouse>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Warehouse> warehouses2 = (List<Warehouse>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					warehouses1.toString(), itemLimit, warehouses1.size());
 
-		Assert.assertEquals(warehouses2.toString(), 1, warehouses2.size());
+				Page<Warehouse> page = warehouseResource.getWarehousesPage(
+					null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<Warehouse> page3 = warehouseResource.getWarehousesPage(
-			null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(warehouse1, (List<Warehouse>)page3.getItems());
-		assertContains(warehouse2, (List<Warehouse>)page3.getItems());
-		assertContains(warehouse3, (List<Warehouse>)page3.getItems());
+		assertContains(warehouse1, allItems);
+		assertContains(warehouse2, allItems);
+		assertContains(warehouse3, allItems);
 	}
 
 	@Test

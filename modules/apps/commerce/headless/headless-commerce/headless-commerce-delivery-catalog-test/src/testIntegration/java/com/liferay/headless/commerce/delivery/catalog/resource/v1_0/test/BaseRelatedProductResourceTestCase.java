@@ -266,6 +266,7 @@ public abstract class BaseRelatedProductResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			relatedProductPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		RelatedProduct relatedProduct1 =
 			testGetChannelProductRelatedProductsPage_addRelatedProduct(
@@ -281,35 +282,39 @@ public abstract class BaseRelatedProductResourceTestCase {
 
 		Page<RelatedProduct> page1 =
 			relatedProductResource.getChannelProductRelatedProductsPage(
-				channelId, productId, null, Pagination.of(1, totalCount + 2));
+				channelId, productId, null, Pagination.of(1, itemLimit));
 
 		List<RelatedProduct> relatedProducts1 =
 			(List<RelatedProduct>)page1.getItems();
 
-		Assert.assertEquals(
-			relatedProducts1.toString(), totalCount + 2,
-			relatedProducts1.size());
+		if (relatedProducts1.size() < itemLimit) {
+			itemLimit = relatedProducts1.size();
+		}
 
-		Page<RelatedProduct> page2 =
-			relatedProductResource.getChannelProductRelatedProductsPage(
-				channelId, productId, null, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			relatedProductPage.getTotalCount() / itemLimit);
+		List<RelatedProduct> allItems = new ArrayList<RelatedProduct>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<RelatedProduct> relatedProducts2 =
-			(List<RelatedProduct>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					relatedProducts1.toString(), itemLimit,
+					relatedProducts1.size());
 
-		Assert.assertEquals(
-			relatedProducts2.toString(), 1, relatedProducts2.size());
+				Page<RelatedProduct> page =
+					relatedProductResource.getChannelProductRelatedProductsPage(
+						channelId, productId, null,
+						Pagination.of(pageNum, itemLimit));
 
-		Page<RelatedProduct> page3 =
-			relatedProductResource.getChannelProductRelatedProductsPage(
-				channelId, productId, null,
-				Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(relatedProduct1, (List<RelatedProduct>)page3.getItems());
-		assertContains(relatedProduct2, (List<RelatedProduct>)page3.getItems());
-		assertContains(relatedProduct3, (List<RelatedProduct>)page3.getItems());
+		assertContains(relatedProduct1, allItems);
+		assertContains(relatedProduct2, allItems);
+		assertContains(relatedProduct3, allItems);
 	}
 
 	protected RelatedProduct

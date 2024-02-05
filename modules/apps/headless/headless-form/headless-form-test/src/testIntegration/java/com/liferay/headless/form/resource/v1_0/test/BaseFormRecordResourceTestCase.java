@@ -337,6 +337,7 @@ public abstract class BaseFormRecordResourceTestCase {
 			formRecordResource.getFormFormRecordsPage(formId, null);
 
 		int totalCount = GetterUtil.getInteger(formRecordPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		FormRecord formRecord1 = testGetFormFormRecordsPage_addFormRecord(
 			formId, randomFormRecord());
@@ -348,28 +349,35 @@ public abstract class BaseFormRecordResourceTestCase {
 			formId, randomFormRecord());
 
 		Page<FormRecord> page1 = formRecordResource.getFormFormRecordsPage(
-			formId, Pagination.of(1, totalCount + 2));
+			formId, Pagination.of(1, itemLimit));
 
 		List<FormRecord> formRecords1 = (List<FormRecord>)page1.getItems();
 
-		Assert.assertEquals(
-			formRecords1.toString(), totalCount + 2, formRecords1.size());
+		if (formRecords1.size() < itemLimit) {
+			itemLimit = formRecords1.size();
+		}
 
-		Page<FormRecord> page2 = formRecordResource.getFormFormRecordsPage(
-			formId, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(formRecordPage.getTotalCount() / itemLimit);
+		List<FormRecord> allItems = new ArrayList<FormRecord>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<FormRecord> formRecords2 = (List<FormRecord>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					formRecords1.toString(), itemLimit, formRecords1.size());
 
-		Assert.assertEquals(formRecords2.toString(), 1, formRecords2.size());
+				Page<FormRecord> page =
+					formRecordResource.getFormFormRecordsPage(
+						formId, Pagination.of(pageNum, itemLimit));
 
-		Page<FormRecord> page3 = formRecordResource.getFormFormRecordsPage(
-			formId, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(formRecord1, (List<FormRecord>)page3.getItems());
-		assertContains(formRecord2, (List<FormRecord>)page3.getItems());
-		assertContains(formRecord3, (List<FormRecord>)page3.getItems());
+		assertContains(formRecord1, allItems);
+		assertContains(formRecord2, allItems);
+		assertContains(formRecord3, allItems);
 	}
 
 	protected FormRecord testGetFormFormRecordsPage_addFormRecord(

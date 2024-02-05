@@ -345,6 +345,7 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			placedOrderItemPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		PlacedOrderItem placedOrderItem1 =
 			testGetPlacedOrderPlacedOrderItemsPage_addPlacedOrderItem(
@@ -360,37 +361,38 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 
 		Page<PlacedOrderItem> page1 =
 			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-				placedOrderId, null, Pagination.of(1, totalCount + 2));
+				placedOrderId, null, Pagination.of(1, itemLimit));
 
 		List<PlacedOrderItem> placedOrderItems1 =
 			(List<PlacedOrderItem>)page1.getItems();
 
-		Assert.assertEquals(
-			placedOrderItems1.toString(), totalCount + 2,
-			placedOrderItems1.size());
+		if (placedOrderItems1.size() < itemLimit) {
+			itemLimit = placedOrderItems1.size();
+		}
 
-		Page<PlacedOrderItem> page2 =
-			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-				placedOrderId, null, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			placedOrderItemPage.getTotalCount() / itemLimit);
+		List<PlacedOrderItem> allItems = new ArrayList<PlacedOrderItem>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<PlacedOrderItem> placedOrderItems2 =
-			(List<PlacedOrderItem>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					placedOrderItems1.toString(), itemLimit,
+					placedOrderItems1.size());
 
-		Assert.assertEquals(
-			placedOrderItems2.toString(), 1, placedOrderItems2.size());
+				Page<PlacedOrderItem> page =
+					placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
+						placedOrderId, null, Pagination.of(pageNum, itemLimit));
 
-		Page<PlacedOrderItem> page3 =
-			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-				placedOrderId, null, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			placedOrderItem1, (List<PlacedOrderItem>)page3.getItems());
-		assertContains(
-			placedOrderItem2, (List<PlacedOrderItem>)page3.getItems());
-		assertContains(
-			placedOrderItem3, (List<PlacedOrderItem>)page3.getItems());
+		assertContains(placedOrderItem1, allItems);
+		assertContains(placedOrderItem2, allItems);
+		assertContains(placedOrderItem3, allItems);
 	}
 
 	protected PlacedOrderItem

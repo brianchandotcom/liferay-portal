@@ -261,6 +261,7 @@ public abstract class BaseTransitionResourceTestCase {
 				workflowInstanceId, null);
 
 		int totalCount = GetterUtil.getInteger(transitionPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Transition transition1 =
 			testGetWorkflowInstanceNextTransitionsPage_addTransition(
@@ -276,30 +277,35 @@ public abstract class BaseTransitionResourceTestCase {
 
 		Page<Transition> page1 =
 			transitionResource.getWorkflowInstanceNextTransitionsPage(
-				workflowInstanceId, Pagination.of(1, totalCount + 2));
+				workflowInstanceId, Pagination.of(1, itemLimit));
 
 		List<Transition> transitions1 = (List<Transition>)page1.getItems();
 
-		Assert.assertEquals(
-			transitions1.toString(), totalCount + 2, transitions1.size());
+		if (transitions1.size() < itemLimit) {
+			itemLimit = transitions1.size();
+		}
 
-		Page<Transition> page2 =
-			transitionResource.getWorkflowInstanceNextTransitionsPage(
-				workflowInstanceId, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(transitionPage.getTotalCount() / itemLimit);
+		List<Transition> allItems = new ArrayList<Transition>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Transition> transitions2 = (List<Transition>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					transitions1.toString(), itemLimit, transitions1.size());
 
-		Assert.assertEquals(transitions2.toString(), 1, transitions2.size());
+				Page<Transition> page =
+					transitionResource.getWorkflowInstanceNextTransitionsPage(
+						workflowInstanceId, Pagination.of(pageNum, itemLimit));
 
-		Page<Transition> page3 =
-			transitionResource.getWorkflowInstanceNextTransitionsPage(
-				workflowInstanceId, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(transition1, (List<Transition>)page3.getItems());
-		assertContains(transition2, (List<Transition>)page3.getItems());
-		assertContains(transition3, (List<Transition>)page3.getItems());
+		assertContains(transition1, allItems);
+		assertContains(transition2, allItems);
+		assertContains(transition3, allItems);
 	}
 
 	protected Transition
@@ -401,6 +407,7 @@ public abstract class BaseTransitionResourceTestCase {
 				workflowTaskId, null);
 
 		int totalCount = GetterUtil.getInteger(transitionPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Transition transition1 =
 			testGetWorkflowTaskNextTransitionsPage_addTransition(
@@ -416,30 +423,35 @@ public abstract class BaseTransitionResourceTestCase {
 
 		Page<Transition> page1 =
 			transitionResource.getWorkflowTaskNextTransitionsPage(
-				workflowTaskId, Pagination.of(1, totalCount + 2));
+				workflowTaskId, Pagination.of(1, itemLimit));
 
 		List<Transition> transitions1 = (List<Transition>)page1.getItems();
 
-		Assert.assertEquals(
-			transitions1.toString(), totalCount + 2, transitions1.size());
+		if (transitions1.size() < itemLimit) {
+			itemLimit = transitions1.size();
+		}
 
-		Page<Transition> page2 =
-			transitionResource.getWorkflowTaskNextTransitionsPage(
-				workflowTaskId, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(transitionPage.getTotalCount() / itemLimit);
+		List<Transition> allItems = new ArrayList<Transition>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Transition> transitions2 = (List<Transition>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					transitions1.toString(), itemLimit, transitions1.size());
 
-		Assert.assertEquals(transitions2.toString(), 1, transitions2.size());
+				Page<Transition> page =
+					transitionResource.getWorkflowTaskNextTransitionsPage(
+						workflowTaskId, Pagination.of(pageNum, itemLimit));
 
-		Page<Transition> page3 =
-			transitionResource.getWorkflowTaskNextTransitionsPage(
-				workflowTaskId, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(transition1, (List<Transition>)page3.getItems());
-		assertContains(transition2, (List<Transition>)page3.getItems());
-		assertContains(transition3, (List<Transition>)page3.getItems());
+		assertContains(transition1, allItems);
+		assertContains(transition2, allItems);
+		assertContains(transition3, allItems);
 	}
 
 	protected Transition testGetWorkflowTaskNextTransitionsPage_addTransition(

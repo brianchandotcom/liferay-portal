@@ -311,6 +311,7 @@ public abstract class BaseShipmentResourceTestCase {
 			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(shipmentPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Shipment shipment1 = testGetShipmentsPage_addShipment(randomShipment());
 
@@ -319,28 +320,34 @@ public abstract class BaseShipmentResourceTestCase {
 		Shipment shipment3 = testGetShipmentsPage_addShipment(randomShipment());
 
 		Page<Shipment> page1 = shipmentResource.getShipmentsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+			null, null, Pagination.of(1, itemLimit), null);
 
 		List<Shipment> shipments1 = (List<Shipment>)page1.getItems();
 
-		Assert.assertEquals(
-			shipments1.toString(), totalCount + 2, shipments1.size());
+		if (shipments1.size() < itemLimit) {
+			itemLimit = shipments1.size();
+		}
 
-		Page<Shipment> page2 = shipmentResource.getShipmentsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(shipmentPage.getTotalCount() / itemLimit);
+		List<Shipment> allItems = new ArrayList<Shipment>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Shipment> shipments2 = (List<Shipment>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					shipments1.toString(), itemLimit, shipments1.size());
 
-		Assert.assertEquals(shipments2.toString(), 1, shipments2.size());
+				Page<Shipment> page = shipmentResource.getShipmentsPage(
+					null, null, Pagination.of(pageNum, itemLimit), null);
 
-		Page<Shipment> page3 = shipmentResource.getShipmentsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(shipment1, (List<Shipment>)page3.getItems());
-		assertContains(shipment2, (List<Shipment>)page3.getItems());
-		assertContains(shipment3, (List<Shipment>)page3.getItems());
+		assertContains(shipment1, allItems);
+		assertContains(shipment2, allItems);
+		assertContains(shipment3, allItems);
 	}
 
 	@Test

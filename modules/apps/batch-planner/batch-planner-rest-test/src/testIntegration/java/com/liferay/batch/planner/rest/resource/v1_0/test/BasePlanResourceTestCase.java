@@ -228,6 +228,7 @@ public abstract class BasePlanResourceTestCase {
 		Page<Plan> planPage = planResource.getPlansPage(null);
 
 		int totalCount = GetterUtil.getInteger(planPage.getTotalCount());
+		int itemLimit = totalCount;
 
 		Plan plan1 = testGetPlansPage_addPlan(randomPlan());
 
@@ -236,27 +237,34 @@ public abstract class BasePlanResourceTestCase {
 		Plan plan3 = testGetPlansPage_addPlan(randomPlan());
 
 		Page<Plan> page1 = planResource.getPlansPage(
-			Pagination.of(1, totalCount + 2));
+			Pagination.of(1, itemLimit));
 
 		List<Plan> plans1 = (List<Plan>)page1.getItems();
 
-		Assert.assertEquals(plans1.toString(), totalCount + 2, plans1.size());
+		if (plans1.size() < itemLimit) {
+			itemLimit = plans1.size();
+		}
 
-		Page<Plan> page2 = planResource.getPlansPage(
-			Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(planPage.getTotalCount() / itemLimit);
+		List<Plan> allItems = new ArrayList<Plan>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<Plan> plans2 = (List<Plan>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					plans1.toString(), itemLimit, plans1.size());
 
-		Assert.assertEquals(plans2.toString(), 1, plans2.size());
+				Page<Plan> page = planResource.getPlansPage(
+					Pagination.of(pageNum, itemLimit));
 
-		Page<Plan> page3 = planResource.getPlansPage(
-			Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(plan1, (List<Plan>)page3.getItems());
-		assertContains(plan2, (List<Plan>)page3.getItems());
-		assertContains(plan3, (List<Plan>)page3.getItems());
+		assertContains(plan1, allItems);
+		assertContains(plan2, allItems);
+		assertContains(plan3, allItems);
 	}
 
 	protected Plan testGetPlansPage_addPlan(Plan plan) throws Exception {

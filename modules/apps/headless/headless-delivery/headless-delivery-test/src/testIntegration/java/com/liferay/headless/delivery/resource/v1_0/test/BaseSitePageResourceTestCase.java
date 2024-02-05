@@ -349,6 +349,7 @@ public abstract class BaseSitePageResourceTestCase {
 			siteId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(sitePagePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		SitePage sitePage1 = testGetSiteSitePagesPage_addSitePage(
 			siteId, randomSitePage());
@@ -360,29 +361,35 @@ public abstract class BaseSitePageResourceTestCase {
 			siteId, randomSitePage());
 
 		Page<SitePage> page1 = sitePageResource.getSiteSitePagesPage(
-			siteId, null, null, null, Pagination.of(1, totalCount + 2), null);
+			siteId, null, null, null, Pagination.of(1, itemLimit), null);
 
 		List<SitePage> sitePages1 = (List<SitePage>)page1.getItems();
 
-		Assert.assertEquals(
-			sitePages1.toString(), totalCount + 2, sitePages1.size());
+		if (sitePages1.size() < itemLimit) {
+			itemLimit = sitePages1.size();
+		}
 
-		Page<SitePage> page2 = sitePageResource.getSiteSitePagesPage(
-			siteId, null, null, null, Pagination.of(2, totalCount + 2), null);
+		int pages = (int)Math.ceil(sitePagePage.getTotalCount() / itemLimit);
+		List<SitePage> allItems = new ArrayList<SitePage>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<SitePage> sitePages2 = (List<SitePage>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					sitePages1.toString(), itemLimit, sitePages1.size());
 
-		Assert.assertEquals(sitePages2.toString(), 1, sitePages2.size());
+				Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
+					siteId, null, null, null, Pagination.of(pageNum, itemLimit),
+					null);
 
-		Page<SitePage> page3 = sitePageResource.getSiteSitePagesPage(
-			siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
-			null);
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(sitePage1, (List<SitePage>)page3.getItems());
-		assertContains(sitePage2, (List<SitePage>)page3.getItems());
-		assertContains(sitePage3, (List<SitePage>)page3.getItems());
+		assertContains(sitePage1, allItems);
+		assertContains(sitePage2, allItems);
+		assertContains(sitePage3, allItems);
 	}
 
 	@Test

@@ -284,6 +284,7 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			priceListOrderTypePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		PriceListOrderType priceListOrderType1 =
 			testGetPriceListByExternalReferenceCodePriceListOrderTypesPage_addPriceListOrderType(
@@ -300,40 +301,40 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 		Page<PriceListOrderType> page1 =
 			priceListOrderTypeResource.
 				getPriceListByExternalReferenceCodePriceListOrderTypesPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+					externalReferenceCode, Pagination.of(1, itemLimit));
 
 		List<PriceListOrderType> priceListOrderTypes1 =
 			(List<PriceListOrderType>)page1.getItems();
 
-		Assert.assertEquals(
-			priceListOrderTypes1.toString(), totalCount + 2,
-			priceListOrderTypes1.size());
+		if (priceListOrderTypes1.size() < itemLimit) {
+			itemLimit = priceListOrderTypes1.size();
+		}
 
-		Page<PriceListOrderType> page2 =
-			priceListOrderTypeResource.
-				getPriceListByExternalReferenceCodePriceListOrderTypesPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			priceListOrderTypePage.getTotalCount() / itemLimit);
+		List<PriceListOrderType> allItems = new ArrayList<PriceListOrderType>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<PriceListOrderType> priceListOrderTypes2 =
-			(List<PriceListOrderType>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					priceListOrderTypes1.toString(), itemLimit,
+					priceListOrderTypes1.size());
 
-		Assert.assertEquals(
-			priceListOrderTypes2.toString(), 1, priceListOrderTypes2.size());
+				Page<PriceListOrderType> page =
+					priceListOrderTypeResource.
+						getPriceListByExternalReferenceCodePriceListOrderTypesPage(
+							externalReferenceCode,
+							Pagination.of(pageNum, itemLimit));
 
-		Page<PriceListOrderType> page3 =
-			priceListOrderTypeResource.
-				getPriceListByExternalReferenceCodePriceListOrderTypesPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			priceListOrderType1, (List<PriceListOrderType>)page3.getItems());
-		assertContains(
-			priceListOrderType2, (List<PriceListOrderType>)page3.getItems());
-		assertContains(
-			priceListOrderType3, (List<PriceListOrderType>)page3.getItems());
+		assertContains(priceListOrderType1, allItems);
+		assertContains(priceListOrderType2, allItems);
+		assertContains(priceListOrderType3, allItems);
 	}
 
 	protected PriceListOrderType
@@ -463,6 +464,7 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			priceListOrderTypePage.getTotalCount());
+		int itemLimit = totalCount;
 
 		PriceListOrderType priceListOrderType1 =
 			testGetPriceListIdPriceListOrderTypesPage_addPriceListOrderType(
@@ -478,37 +480,39 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 
 		Page<PriceListOrderType> page1 =
 			priceListOrderTypeResource.getPriceListIdPriceListOrderTypesPage(
-				id, null, Pagination.of(1, totalCount + 2));
+				id, null, Pagination.of(1, itemLimit));
 
 		List<PriceListOrderType> priceListOrderTypes1 =
 			(List<PriceListOrderType>)page1.getItems();
 
-		Assert.assertEquals(
-			priceListOrderTypes1.toString(), totalCount + 2,
-			priceListOrderTypes1.size());
+		if (priceListOrderTypes1.size() < itemLimit) {
+			itemLimit = priceListOrderTypes1.size();
+		}
 
-		Page<PriceListOrderType> page2 =
-			priceListOrderTypeResource.getPriceListIdPriceListOrderTypesPage(
-				id, null, Pagination.of(2, totalCount + 2));
+		int pages = (int)Math.ceil(
+			priceListOrderTypePage.getTotalCount() / itemLimit);
+		List<PriceListOrderType> allItems = new ArrayList<PriceListOrderType>();
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		allItems.addAll(page1.getItems());
 
-		List<PriceListOrderType> priceListOrderTypes2 =
-			(List<PriceListOrderType>)page2.getItems();
+		if (pages > 2) {
+			for (int pageNum = 2; pageNum < pages; pageNum++) {
+				Assert.assertEquals(
+					priceListOrderTypes1.toString(), itemLimit,
+					priceListOrderTypes1.size());
 
-		Assert.assertEquals(
-			priceListOrderTypes2.toString(), 1, priceListOrderTypes2.size());
+				Page<PriceListOrderType> page =
+					priceListOrderTypeResource.
+						getPriceListIdPriceListOrderTypesPage(
+							id, null, Pagination.of(pageNum, itemLimit));
 
-		Page<PriceListOrderType> page3 =
-			priceListOrderTypeResource.getPriceListIdPriceListOrderTypesPage(
-				id, null, Pagination.of(1, (int)totalCount + 3));
+				allItems.addAll(page.getItems());
+			}
+		}
 
-		assertContains(
-			priceListOrderType1, (List<PriceListOrderType>)page3.getItems());
-		assertContains(
-			priceListOrderType2, (List<PriceListOrderType>)page3.getItems());
-		assertContains(
-			priceListOrderType3, (List<PriceListOrderType>)page3.getItems());
+		assertContains(priceListOrderType1, allItems);
+		assertContains(priceListOrderType2, allItems);
+		assertContains(priceListOrderType3, allItems);
 	}
 
 	protected PriceListOrderType

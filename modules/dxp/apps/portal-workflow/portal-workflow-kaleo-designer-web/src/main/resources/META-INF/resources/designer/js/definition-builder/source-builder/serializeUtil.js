@@ -161,8 +161,10 @@ function appendXMLAssignments(
 	wrapperNodeAttrs
 ) {
 	if (dataAssignments) {
-		const assignmentType = Array.from(dataAssignments.assignmentType)[0];
-
+		const assignmentType = dataAssignments[0] === undefined ? Array.from(dataAssignments.assignmentType)[0]
+					: Array.from(dataAssignments[0].assignmentType)[0];
+		
+	
 		const xmlAssignments = XMLUtil.createObj(
 			wrapperNodeName || 'assignments',
 			wrapperNodeAttrs
@@ -196,7 +198,7 @@ function appendXMLAssignments(
 
 			const xmlRole = XMLUtil.createObj('role');
 
-			const roleId = dataAssignments.roleId;
+			const roleId = dataAssignments[0] === undefined ? dataAssignments.roleId : dataAssignments[0].roleId;
 
 			buffer.push(
 				xmlRole.open,

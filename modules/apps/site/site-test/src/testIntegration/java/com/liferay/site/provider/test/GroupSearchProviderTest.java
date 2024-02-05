@@ -6,8 +6,10 @@
 package com.liferay.site.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -34,6 +36,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.site.provider.GroupSearchProvider;
 import com.liferay.site.search.GroupSearch;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -125,6 +128,9 @@ public class GroupSearchProviderTest {
 			mockLiferayPortletActionRequest, new MockLiferayPortletURL());
 
 		GroupSearchProvider.setResultsAndTotal(
+			Arrays.asList(
+				Company.class.getName(), Group.class.getName(),
+				Organization.class.getName()),
 			groupSearch, mockLiferayPortletActionRequest);
 
 		_assertGroupSearch(childGroup1, groupSearch);
@@ -142,6 +148,9 @@ public class GroupSearchProviderTest {
 			mockLiferayPortletActionRequest, new MockLiferayPortletURL());
 
 		GroupSearchProvider.setResultsAndTotal(
+			Arrays.asList(
+				Company.class.getName(), Group.class.getName(),
+				Organization.class.getName()),
 			complexSQLGroupSearch, mockLiferayPortletActionRequest);
 
 		_assertGroupSearch(childGroup1, complexSQLGroupSearch);

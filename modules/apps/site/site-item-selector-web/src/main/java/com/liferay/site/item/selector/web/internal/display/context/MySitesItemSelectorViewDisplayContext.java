@@ -9,8 +9,10 @@ import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCrite
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -64,7 +66,11 @@ public class MySitesItemSelectorViewDisplayContext
 
 		GroupSearch groupSearch = new GroupSearch(_portletRequest, portletURL);
 
-		GroupSearchProvider.setResultsAndTotal(groupSearch, _portletRequest);
+		GroupSearchProvider.setResultsAndTotal(
+			Arrays.asList(
+				Company.class.getName(), Group.class.getName(),
+				Organization.class.getName()),
+			groupSearch, _portletRequest);
 
 		if (groupSearch.getStart() == 0) {
 			GroupItemSelectorCriterion groupItemSelectorCriterion =

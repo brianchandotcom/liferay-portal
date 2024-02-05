@@ -60,7 +60,9 @@ public class SaveCompanyConfigurationMVCActionCommand
 			themeDisplay.getCompanyId(),
 			ParamUtil.getBoolean(actionRequest, "includeCategories"),
 			ParamUtil.getBoolean(actionRequest, "includePages"),
-			ParamUtil.getBoolean(actionRequest, "includeWebContent"));
+			ParamUtil.getBoolean(actionRequest, "includeWebContent"),
+			ParamUtil.getLongValues(
+				actionRequest, "groupsSearchContainerPrimaryKeys"));
 
 		SessionMessages.add(
 			actionRequest, "requestProcessed",

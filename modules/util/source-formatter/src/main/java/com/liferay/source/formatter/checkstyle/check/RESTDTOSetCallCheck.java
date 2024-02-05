@@ -15,6 +15,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.io.File;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,7 +25,7 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.METHOD_DEF};
+		return new int[] {TokenTypes.CLASS_DEF};
 	}
 
 	@Override
@@ -37,10 +38,27 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 			return;
 		}
 
-		for (DetailAST childDetailAST :
-				getAllChildTokens(detailAST, true, TokenTypes.METHOD_CALL)) {
+		DetailAST parentDetailAST = detailAST.getParent();
 
-			_checkSetCall(absolutePath, childDetailAST);
+		if (parentDetailAST != null) {
+			return;
+		}
+
+		DetailAST objBlockDetailAST = detailAST.findFirstToken(
+			TokenTypes.OBJBLOCK);
+
+		List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
+			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
+
+		for (DetailAST methodDefinitionDetailAST :
+				methodDefinitionDetailASTList) {
+
+			List<DetailAST> methodCallDetailASTList = getAllChildTokens(
+				methodDefinitionDetailAST, true, TokenTypes.METHOD_CALL);
+
+			for (DetailAST childDetailAST : methodCallDetailASTList) {
+				_checkSetCall(absolutePath, childDetailAST);
+			}
 		}
 	}
 

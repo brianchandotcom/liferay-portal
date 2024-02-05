@@ -2619,6 +2619,11 @@
 				"themeSettings": {
 					"title": "The themeSettings Schema",
 					"type": "object"
+				},
+				"themeSpritemapClientExtension": {
+					"$ref": "#/definitions/ClientExtension",
+					"title": "The themeSpritemapClientExtension Schema",
+					"type": "object"
 				}
 			},
 			"title": "The settings Schema",

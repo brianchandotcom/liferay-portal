@@ -134,22 +134,20 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		});
 
 		const filters = Object.keys(filterCleaned).map((key) => {
-			const isArray = Array.isArray(filterCleaned[key]);
-
-			let value;
-			if (isArray) {
-				value = (filterCleaned as any)[key].map(
-					(options: Option) => options.value || options
-				);
+			if (Array.isArray(filterCleaned[key])) {
+				return {
+					name: key,
+					value: (filterCleaned as any)[key].map(
+						(options: Option) => options.value || options
+					)
+				};
 			}
 			else {
-				value = filterCleaned[key];
+				return {
+					name: key,
+					value: filterCleaned[key]
+				};
 			}
-
-			return {
-				name: key,
-				value,
-			};
 		});
 
 		const formattedFilter = filters.reduce(

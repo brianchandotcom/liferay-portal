@@ -9,6 +9,7 @@ import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PortalInstances;
 
 import java.util.Map;
@@ -54,7 +55,7 @@ public class ObjectDefinitionUtil {
 
 	public static boolean isInvokerBundleAllowed() {
 		if (PortalInstances.isCurrentCompanyInDeletionProcess() ||
-			PortalRunMode.isTestMode()) {
+			PortalRunMode.isTestMode() || DBUpgrader.isUpgradeClient()) {
 
 			return true;
 		}

@@ -356,8 +356,8 @@ public class EditFileEntryImageEditorMVCActionCommand
 				fileEntry.getTitle(), fileEntry.getTitle(),
 				fileEntry.getDescription(), changeLog,
 				DLVersionNumberIncrease.AUTOMATIC, inputStream, size,
-				fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-				serviceContext);
+				fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
+				fileEntry.getReviewDate(), serviceContext);
 
 			_assetDisplayPageEntryFormProcessor.process(
 				FileEntry.class.getName(), fileEntry.getFileEntryId(),

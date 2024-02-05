@@ -279,7 +279,7 @@ public class DefaultExportImportContentProcessorTest {
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			_fileEntry.getTitle(), _fileEntry.getTitle(), StringPool.BLANK,
 			StringPool.BLANK, DLVersionNumberIncrease.AUTOMATIC,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
@@ -338,7 +338,7 @@ public class DefaultExportImportContentProcessorTest {
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			_fileEntry.getTitle(), _fileEntry.getTitle(), StringPool.BLANK,
 			StringPool.BLANK, DLVersionNumberIncrease.AUTOMATIC,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
@@ -1309,7 +1309,7 @@ public class DefaultExportImportContentProcessorTest {
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			_fileEntry.getTitle(), _fileEntry.getTitle(), StringPool.BLANK,
 			StringPool.BLANK, DLVersionNumberIncrease.AUTOMATIC,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 

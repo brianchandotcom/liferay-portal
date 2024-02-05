@@ -144,7 +144,8 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_1_1,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, (byte[])null,
-				_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
+				_fileEntry.getDisplayDate(), _fileEntry.getExpirationDate(),
+				_fileEntry.getReviewDate(),
 				ServiceContextTestUtil.getServiceContext(
 					group.getGroupId(), TestPropsValues.getUserId()));
 		}
@@ -156,7 +157,8 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_PWC,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, (byte[])null,
-				_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
+				_fileEntry.getDisplayDate(), _fileEntry.getExpirationDate(),
+				_fileEntry.getReviewDate(),
 				ServiceContextTestUtil.getServiceContext(
 					group.getGroupId(), TestPropsValues.getUserId()));
 		}
@@ -255,7 +257,8 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_1_1,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, (byte[])null,
-				_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
+				_fileEntry.getDisplayDate(), _fileEntry.getExpirationDate(),
+				_fileEntry.getReviewDate(),
 				ServiceContextTestUtil.getServiceContext(
 					group.getGroupId(), TestPropsValues.getUserId()));
 		}
@@ -267,7 +270,8 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_PWC,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, (byte[])null,
-				_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
+				_fileEntry.getDisplayDate(), _fileEntry.getExpirationDate(),
+				_fileEntry.getReviewDate(),
 				ServiceContextTestUtil.getServiceContext(
 					group.getGroupId(), TestPropsValues.getUserId()));
 		}

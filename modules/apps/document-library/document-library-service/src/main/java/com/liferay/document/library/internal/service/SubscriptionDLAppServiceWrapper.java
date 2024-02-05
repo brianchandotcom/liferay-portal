@@ -88,7 +88,8 @@ public class SubscriptionDLAppServiceWrapper extends DLAppServiceWrapper {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease, byte[] bytes,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		serviceContext.setAttribute(
@@ -97,8 +98,8 @@ public class SubscriptionDLAppServiceWrapper extends DLAppServiceWrapper {
 
 		return super.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, urlTitle, description,
-			changeLog, dlVersionNumberIncrease, bytes, expirationDate,
-			reviewDate, serviceContext);
+			changeLog, dlVersionNumberIncrease, bytes, displayDate,
+			expirationDate, reviewDate, serviceContext);
 	}
 
 	@Override
@@ -106,6 +107,26 @@ public class SubscriptionDLAppServiceWrapper extends DLAppServiceWrapper {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		serviceContext.setAttribute(
+			"hasAssetDisplayPage",
+			DLAssetDisplayPageUtil.hasAssetDisplayPage(serviceContext));
+
+		return super.updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, urlTitle, description,
+			changeLog, dlVersionNumberIncrease, file, displayDate,
+			expirationDate, reviewDate, serviceContext);
+	}
+
+	@Override
+	public FileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String urlTitle, String description, String changeLog,
+			DLVersionNumberIncrease dlVersionNumberIncrease,
+			InputStream inputStream, long size, Date displayDate,
 			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -115,26 +136,7 @@ public class SubscriptionDLAppServiceWrapper extends DLAppServiceWrapper {
 
 		return super.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, urlTitle, description,
-			changeLog, dlVersionNumberIncrease, file, expirationDate,
-			reviewDate, serviceContext);
-	}
-
-	@Override
-	public FileEntry updateFileEntry(
-			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String urlTitle, String description, String changeLog,
-			DLVersionNumberIncrease dlVersionNumberIncrease,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
-		throws PortalException {
-
-		serviceContext.setAttribute(
-			"hasAssetDisplayPage",
-			DLAssetDisplayPageUtil.hasAssetDisplayPage(serviceContext));
-
-		return super.updateFileEntry(
-			fileEntryId, sourceFileName, mimeType, title, urlTitle, description,
-			changeLog, dlVersionNumberIncrease, inputStream, size,
+			changeLog, dlVersionNumberIncrease, inputStream, size, displayDate,
 			expirationDate, reviewDate, serviceContext);
 	}
 

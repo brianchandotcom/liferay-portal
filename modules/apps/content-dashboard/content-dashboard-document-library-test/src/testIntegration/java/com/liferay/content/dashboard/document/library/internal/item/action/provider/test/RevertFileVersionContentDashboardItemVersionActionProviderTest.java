@@ -237,8 +237,9 @@ public class RevertFileVersionContentDashboardItemVersionActionProviderTest {
 					fileEntry.getTitle(), StringUtil.randomString(),
 					fileEntry.getDescription(), RandomTestUtil.randomString(),
 					DLVersionNumberIncrease.MINOR, fileEntry.getContentStream(),
-					fileEntry.getSize(), fileEntry.getExpirationDate(),
-					fileEntry.getReviewDate(), serviceContext);
+					fileEntry.getSize(), fileEntry.getDisplayDate(),
+					fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+					serviceContext);
 			}
 		}
 

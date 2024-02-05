@@ -120,7 +120,7 @@ public class FileEntryStagedModelDataHandlerTest
 			fileEntry.getFileEntryId(), StringPool.BLANK,
 			ContentTypes.TEXT_PLAIN, fileEntry.getTitle(), "urltitle",
 			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
@@ -244,7 +244,7 @@ public class FileEntryStagedModelDataHandlerTest
 			fileEntry.getFileEntryId(), StringPool.BLANK,
 			ContentTypes.TEXT_PLAIN, fileEntry.getTitle(), "urltitle",
 			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 
 		FriendlyURLEntry mainFriendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
@@ -329,7 +329,7 @@ public class FileEntryStagedModelDataHandlerTest
 			fileEntry.getFileEntryId(), StringPool.BLANK,
 			ContentTypes.TEXT_PLAIN, fileEntry.getTitle(), "urltitle",
 			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 
 		exportImportStagedModel(fileEntry);
 
@@ -373,7 +373,7 @@ public class FileEntryStagedModelDataHandlerTest
 			fileEntry.getFileEntryId(), StringPool.BLANK,
 			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, DLVersionNumberIncrease.MINOR, (byte[])null, null,
-			null, serviceContext);
+			null, null, serviceContext);
 
 		exportImportStagedModel(fileEntry);
 
@@ -701,7 +701,7 @@ public class FileEntryStagedModelDataHandlerTest
 			fileEntry.getFileEntryId(), StringPool.BLANK,
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			DLVersionNumberIncrease.MINOR, (byte[])null, null, null,
+			DLVersionNumberIncrease.MINOR, (byte[])null, null, null, null,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

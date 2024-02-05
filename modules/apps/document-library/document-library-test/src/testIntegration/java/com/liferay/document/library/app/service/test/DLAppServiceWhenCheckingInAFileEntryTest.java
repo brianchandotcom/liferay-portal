@@ -78,7 +78,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 
 			DLAppServiceTestUtil.updateFileEntry(
 				group.getGroupId(), fileEntry.getFileEntryId(),
-				RandomTestUtil.randomString(), null, null, true);
+				RandomTestUtil.randomString(), null, null, null, true);
 
 			Assert.assertEquals(
 				1,
@@ -138,7 +138,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			checkedOutFileEntry.getMimeType(), checkedOutFileEntry.getTitle(),
 			StringPool.BLANK, checkedOutFileEntry.getDescription(),
 			StringUtil.randomString(), DLVersionNumberIncrease.NONE, null, 0,
-			null, null, serviceContext);
+			null, null, null, serviceContext);
 
 		dlAppService.checkInFileEntry(
 			updatedFileEntry.getFileEntryId(), DLVersionNumberIncrease.NONE,
@@ -195,7 +195,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			checkedOutFileEntry.getMimeType(), checkedOutFileEntry.getTitle(),
 			StringPool.BLANK, checkedOutFileEntry.getDescription(),
 			StringUtil.randomString(), DLVersionNumberIncrease.NONE, null, 0,
-			null, null, serviceContext);
+			null, null, null, serviceContext);
 
 		dlAppService.checkInFileEntry(
 			updatedFileEntry.getFileEntryId(), DLVersionNumberIncrease.NONE,

@@ -153,7 +153,7 @@ public abstract class BaseAssetAutoTaggerTestCase {
 			fileEntry.getFileEntryId(), fileEntry.getFileName(), null,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			DLVersionNumberIncrease.AUTOMATIC, new byte[0], null, null,
+			DLVersionNumberIncrease.AUTOMATIC, new byte[0], null, null, null,
 			serviceContext);
 
 		return AssetEntryLocalServiceUtil.getEntry(

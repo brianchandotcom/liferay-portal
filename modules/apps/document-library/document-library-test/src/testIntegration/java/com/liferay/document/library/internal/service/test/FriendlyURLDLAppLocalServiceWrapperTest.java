@@ -140,7 +140,7 @@ public class FriendlyURLDLAppLocalServiceWrapperTest extends BaseDLAppTestCase {
 			serviceContext.getUserId(), fileEntry.getFileEntryId(),
 			StringPool.BLANK, ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), "urltitle", StringPool.BLANK, null,
-			DLVersionNumberIncrease.AUTOMATIC, bytes, null, null,
+			DLVersionNumberIncrease.AUTOMATIC, bytes, null, null, null,
 			serviceContext);
 
 		FriendlyURLEntry friendlyURLEntry =
@@ -173,7 +173,7 @@ public class FriendlyURLDLAppLocalServiceWrapperTest extends BaseDLAppTestCase {
 			serviceContext.getUserId(), fileEntry.getFileEntryId(),
 			StringPool.BLANK, ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), "urltitle", StringPool.BLANK, null,
-			DLVersionNumberIncrease.AUTOMATIC, file, null, null,
+			DLVersionNumberIncrease.AUTOMATIC, file, null, null, null,
 			serviceContext);
 
 		FriendlyURLEntry friendlyURLEntry =
@@ -208,7 +208,7 @@ public class FriendlyURLDLAppLocalServiceWrapperTest extends BaseDLAppTestCase {
 			StringPool.BLANK, ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), "urltitle", StringPool.BLANK, null,
 			DLVersionNumberIncrease.AUTOMATIC, inputStream, size, null, null,
-			serviceContext);
+			null, serviceContext);
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(

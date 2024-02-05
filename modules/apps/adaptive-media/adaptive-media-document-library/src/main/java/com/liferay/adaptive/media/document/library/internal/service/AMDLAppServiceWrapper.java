@@ -33,14 +33,15 @@ public class AMDLAppServiceWrapper extends DLAppServiceWrapper {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return AMCleanUpOnUpdateAndCheckInThreadLocal.enable(
 			() -> super.updateFileEntryAndCheckIn(
 				fileEntryId, sourceFileName, mimeType, title, urlTitle,
 				description, changeLog, dlVersionNumberIncrease, file,
-				expirationDate, reviewDate, serviceContext));
+				displayDate, expirationDate, reviewDate, serviceContext));
 	}
 
 	@Override
@@ -48,15 +49,15 @@ public class AMDLAppServiceWrapper extends DLAppServiceWrapper {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date displayDate,
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		return AMCleanUpOnUpdateAndCheckInThreadLocal.enable(
 			() -> super.updateFileEntryAndCheckIn(
 				fileEntryId, sourceFileName, mimeType, title, urlTitle,
 				description, changeLog, dlVersionNumberIncrease, inputStream,
-				size, expirationDate, reviewDate, serviceContext));
+				size, displayDate, expirationDate, reviewDate, serviceContext));
 	}
 
 	@Reference

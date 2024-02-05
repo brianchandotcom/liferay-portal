@@ -439,7 +439,7 @@ public class EditCommerceChannelMVCActionCommand
 				existingFileEntry.getTitle(), StringPool.BLANK,
 				existingFileEntry.getDescription(), StringPool.BLANK,
 				DLVersionNumberIncrease.NONE, newFileEntry.getContentStream(),
-				newFileEntry.getSize(), null, null, new ServiceContext());
+				newFileEntry.getSize(), null, null, null, new ServiceContext());
 		}
 	}
 

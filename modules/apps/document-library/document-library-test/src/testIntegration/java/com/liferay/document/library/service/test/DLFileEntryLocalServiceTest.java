@@ -482,8 +482,8 @@ public class DLFileEntryLocalServiceTest {
 			dlFileEntry.getFileEntryId(), "file.pdf", null, "file.txt",
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.fromMajorVersion(false), null, 0,
-			dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
-			serviceContext);
+			dlFileEntry.getDisplayDate(), dlFileEntry.getExpirationDate(),
+			dlFileEntry.getReviewDate(), serviceContext);
 
 		Assert.assertEquals(
 			content, StringUtil.read(fileEntry.getContentStream()));
@@ -955,8 +955,8 @@ public class DLFileEntryLocalServiceTest {
 			ContentTypes.TEXT_PLAIN, "FE1.exe", StringPool.BLANK,
 			fileEntry.getDescription(), RandomTestUtil.randomString(),
 			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
-			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-			serviceContext);
+			fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(), serviceContext);
 
 		Assert.assertEquals("FE2.txt", fileEntry.getFileName());
 
@@ -1028,8 +1028,8 @@ public class DLFileEntryLocalServiceTest {
 			dlFileEntry.getFileEntryId(), "file.txt", null, "file.pdf",
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.fromMajorVersion(false), null, 0,
-			dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
-			serviceContext);
+			dlFileEntry.getDisplayDate(), dlFileEntry.getExpirationDate(),
+			dlFileEntry.getReviewDate(), serviceContext);
 
 		Assert.assertEquals(
 			content, StringUtil.read(fileEntry.getContentStream()));

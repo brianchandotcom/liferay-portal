@@ -157,7 +157,8 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 				fileEntry.getFileEntryId(), sourceFileName,
 				fileEntry.getMimeType(), title, StringPool.BLANK,
 				fileEntry.getDescription(), StringPool.BLANK,
-				DLVersionNumberIncrease.NONE, file, null, null, serviceContext);
+				DLVersionNumberIncrease.NONE, file, null, null, null,
+				serviceContext);
 		}
 		finally {
 			if ((file != null) && !file.delete()) {

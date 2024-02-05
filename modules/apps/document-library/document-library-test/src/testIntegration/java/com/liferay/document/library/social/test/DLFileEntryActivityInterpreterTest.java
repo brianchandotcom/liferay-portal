@@ -91,7 +91,8 @@ public class DLFileEntryActivityInterpreterTest
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
-			_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
+			_fileEntry.getDisplayDate(), _fileEntry.getExpirationDate(),
+			_fileEntry.getReviewDate(),
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 	}

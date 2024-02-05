@@ -1404,7 +1404,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					fileEntry = _dlAppService.updateFileEntryAndCheckIn(
 						fileEntryId, sourceFileName, contentType, title,
 						urlTitle, description, changeLog,
-						dlVersionNumberIncrease, inputStream, size,
+						dlVersionNumberIncrease, inputStream, size, displayDate,
 						expirationDate, reviewDate, serviceContext);
 				}
 				else {
@@ -1414,7 +1414,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					fileEntry = _dlAppService.updateFileEntry(
 						fileEntryId, sourceFileName, contentType, title,
 						urlTitle, description, changeLog,
-						dlVersionNumberIncrease, inputStream, size,
+						dlVersionNumberIncrease, inputStream, size, displayDate,
 						expirationDate, reviewDate, serviceContext);
 				}
 			}

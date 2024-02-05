@@ -54,7 +54,7 @@ public class DLAppServiceWhenRevertingAFileEntryTest extends BaseDLAppTestCase {
 
 			DLAppServiceTestUtil.updateFileEntry(
 				group.getGroupId(), fileEntry.getFileEntryId(),
-				RandomTestUtil.randomString(), null, null, true);
+				RandomTestUtil.randomString(), null, null, null, true);
 
 			Assert.assertEquals(
 				2,

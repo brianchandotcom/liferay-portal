@@ -136,8 +136,9 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease,
-			InputStream inputStream, long size, Date expirationDate,
-			Date revisionDate, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date displayDate,
+			Date expirationDate, Date revisionDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
@@ -148,7 +149,8 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 			return super.updateFileEntryAndCheckIn(
 				fileEntryId, sourceFileName, mimeType, title, urlTitle,
 				description, changeLog, dlVersionNumberIncrease, inputStream,
-				size, expirationDate, revisionDate, serviceContext);
+				size, displayDate, expirationDate, revisionDate,
+				serviceContext);
 		}
 
 		checkInFileEntry(
@@ -156,7 +158,7 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 
 		return super.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, urlTitle, description,
-			changeLog, dlVersionNumberIncrease, inputStream, size,
+			changeLog, dlVersionNumberIncrease, inputStream, size, displayDate,
 			expirationDate, revisionDate, serviceContext);
 	}
 
@@ -200,7 +202,8 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 				fileEntry.getFileEntryId(), sourceFileName,
 				fileEntry.getMimeType(), title, StringPool.BLANK,
 				fileEntry.getDescription(), StringPool.BLANK,
-				DLVersionNumberIncrease.NONE, file, null, null, serviceContext);
+				DLVersionNumberIncrease.NONE, file, null, null, null,
+				serviceContext);
 		}
 		finally {
 			if ((file != null) && !file.delete()) {

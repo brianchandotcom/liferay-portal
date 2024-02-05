@@ -317,7 +317,7 @@ public class DLURLHelperTest {
 			_user.getUserId(), fileEntry.getFileEntryId(), StringPool.BLANK,
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), StringPool.BLANK, null,
-			DLVersionNumberIncrease.MAJOR, (byte[])null, null, null,
+			DLVersionNumberIncrease.MAJOR, (byte[])null, null, null, null,
 			serviceContext);
 
 		String previewURL = _dlURLHelper.getPreviewURL(

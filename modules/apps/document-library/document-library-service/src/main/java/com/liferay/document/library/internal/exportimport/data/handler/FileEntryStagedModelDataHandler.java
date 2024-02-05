@@ -571,6 +571,7 @@ public class FileEntryStagedModelDataHandler
 									fileEntry.getDescription(), null,
 									DLVersionNumberIncrease.MINOR, inputStream,
 									fileEntry.getSize(),
+									fileEntry.getDisplayDate(),
 									fileEntry.getExpirationDate(),
 									fileEntry.getReviewDate(), serviceContext);
 						}

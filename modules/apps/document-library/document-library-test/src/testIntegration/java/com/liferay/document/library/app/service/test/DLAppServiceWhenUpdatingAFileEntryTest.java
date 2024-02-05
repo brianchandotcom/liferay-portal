@@ -75,7 +75,8 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		fileEntry = dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
 			fileName, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			DLVersionNumberIncrease.MINOR, bytes, null, null, serviceContext);
+			DLVersionNumberIncrease.MINOR, bytes, null, null, null,
+			serviceContext);
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
@@ -122,7 +123,8 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		fileEntry = dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
 			fileName, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			DLVersionNumberIncrease.MINOR, null, 0, null, null, serviceContext);
+			DLVersionNumberIncrease.MINOR, null, 0, null, null, null,
+			serviceContext);
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
@@ -164,7 +166,8 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		fileEntry = dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
 			fileName, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			DLVersionNumberIncrease.MINOR, bytes, null, null, serviceContext);
+			DLVersionNumberIncrease.MINOR, bytes, null, null, null,
+			serviceContext);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
@@ -189,7 +192,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 
 			DLAppServiceTestUtil.updateFileEntry(
 				group.getGroupId(), fileEntry.getFileEntryId(),
-				RandomTestUtil.randomString(), null, null, true);
+				RandomTestUtil.randomString(), null, null, null, true);
 
 			Assert.assertEquals(
 				2,
@@ -225,7 +228,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 				fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, DLVersionNumberIncrease.MAJOR, bytes, null,
-				null, serviceContext);
+				null, null, serviceContext);
 		}
 	}
 
@@ -238,11 +241,11 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 
 		fileEntry = DLAppServiceTestUtil.updateFileEntry(
 			group.getGroupId(), fileEntry.getFileEntryId(), fileName, null,
-			null, true);
+			null, null, true);
 
 		fileEntry = DLAppServiceTestUtil.updateFileEntry(
 			group.getGroupId(), fileEntry.getFileEntryId(), fileName, null,
-			null, true);
+			null, null, true);
 
 		Assert.assertEquals(
 			"Version label incorrect after major update", "3.0",
@@ -258,13 +261,13 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 
 		fileEntry = DLAppServiceTestUtil.updateFileEntry(
 			group.getGroupId(), fileEntry.getFileEntryId(), fileName, null,
-			null, false);
+			null, null, false);
 
 		fileEntry = dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
 			fileName, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MINOR, TestDataConstants.repeatByteArray(2),
-			null, null,
+			null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		Assert.assertEquals(
@@ -283,7 +286,8 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 			fileEntry.getFileEntryId(), fileName, null, fileName,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MAJOR, CONTENT.getBytes(),
-			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+			fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		Assert.assertEquals(ContentTypes.TEXT_PLAIN, fileEntry.getMimeType());
@@ -310,7 +314,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
 			fileName, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			DLVersionNumberIncrease.MAJOR, (byte[])null, null, null,
+			DLVersionNumberIncrease.MAJOR, (byte[])null, null, null, null,
 			serviceContext);
 	}
 
@@ -327,7 +331,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
 			fileName, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			DLVersionNumberIncrease.MAJOR, (File)null, null, null,
+			DLVersionNumberIncrease.MAJOR, (File)null, null, null, null,
 			serviceContext);
 	}
 
@@ -344,7 +348,8 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
 			fileName, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			DLVersionNumberIncrease.MAJOR, null, 0, null, null, serviceContext);
+			DLVersionNumberIncrease.MAJOR, null, 0, null, null, null,
+			serviceContext);
 	}
 
 }

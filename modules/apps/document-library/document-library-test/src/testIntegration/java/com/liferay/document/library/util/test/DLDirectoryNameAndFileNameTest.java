@@ -259,7 +259,8 @@ public class DLDirectoryNameAndFileNameTest {
 			fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
-			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+			fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}

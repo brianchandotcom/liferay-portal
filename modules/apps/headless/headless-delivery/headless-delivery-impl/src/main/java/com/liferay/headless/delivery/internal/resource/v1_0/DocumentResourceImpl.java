@@ -396,6 +396,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 				documentId, fileName, binaryFile.getContentType(), title, null,
 				description, null, DLVersionNumberIncrease.AUTOMATIC,
 				binaryFile.getInputStream(), binaryFile.getSize(),
+				existingFileEntry.getDisplayDate(),
 				existingFileEntry.getExpirationDate(),
 				existingFileEntry.getReviewDate(),
 				_createServiceContext(
@@ -979,8 +980,8 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 				fileEntry.getFileEntryId(), fileName,
 				binaryFile.getContentType(), title, null, description, null,
 				DLVersionNumberIncrease.AUTOMATIC, binaryFile.getInputStream(),
-				binaryFile.getSize(), fileEntry.getExpirationDate(),
-				fileEntry.getReviewDate(),
+				binaryFile.getSize(), fileEntry.getDisplayDate(),
+				fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 				_createServiceContext(
 					Constants.UPDATE, () -> new Long[0], () -> new String[0],
 					fileEntry.getFolderId(), document,

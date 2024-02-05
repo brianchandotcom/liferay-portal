@@ -155,8 +155,8 @@ public class LiferayVersioningCapabilityTest {
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, null, 0,
-				fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-				serviceContext);
+				fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
+				fileEntry.getReviewDate(), serviceContext);
 
 			expectedDLFileVersions.add(fileEntry.getFileVersion());
 		}
@@ -165,8 +165,8 @@ public class LiferayVersioningCapabilityTest {
 			fileEntry.getFileEntryId(), RandomTestUtil.randomString(), null,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, DLVersionNumberIncrease.MINOR, null, 0,
-			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-			serviceContext);
+			fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(), serviceContext);
 
 		fileEntry = _updateStatus(
 			fileEntry, WorkflowConstants.STATUS_DRAFT, serviceContext);
@@ -348,8 +348,8 @@ public class LiferayVersioningCapabilityTest {
 			fileEntry.getMimeType(), fileEntry.getTitle(), StringPool.BLANK,
 			fileEntry.getDescription(), RandomTestUtil.randomString(),
 			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
-			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-			serviceContext);
+			fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(), serviceContext);
 	}
 
 	private FileEntry _updateStatus(

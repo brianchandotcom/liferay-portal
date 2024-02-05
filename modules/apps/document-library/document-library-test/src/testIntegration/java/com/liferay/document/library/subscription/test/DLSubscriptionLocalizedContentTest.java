@@ -108,7 +108,7 @@ public class DLSubscriptionLocalizedContentTest
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
-			null, null, serviceContext);
+			null, null, null, serviceContext);
 	}
 
 }

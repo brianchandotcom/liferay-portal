@@ -131,6 +131,7 @@ public class RepositoryBrowserServlet extends HttpServlet {
 				_dlAppService.updateFileEntry(
 					fileEntryId, null, null, name, null, null, null,
 					DLVersionNumberIncrease.NONE, (byte[])null, null, null,
+					null,
 					ServiceContextFactory.getInstance(
 						FileEntry.class.getName(), httpServletRequest));
 			}

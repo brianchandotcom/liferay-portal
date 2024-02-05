@@ -528,8 +528,8 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			dlFileEntry.getFileEntryId(), null, dlFileEntry.getMimeType(),
 			keywords, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MAJOR, (byte[])null,
-			dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
-			serviceContext);
+			dlFileEntry.getDisplayDate(), dlFileEntry.getExpirationDate(),
+			dlFileEntry.getReviewDate(), serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
 	}

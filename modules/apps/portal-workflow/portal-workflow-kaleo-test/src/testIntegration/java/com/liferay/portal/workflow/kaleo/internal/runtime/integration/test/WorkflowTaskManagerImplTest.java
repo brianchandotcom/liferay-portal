@@ -1994,7 +1994,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			fileEntryId, StringPool.BLANK, ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			StringPool.BLANK, null, DLVersionNumberIncrease.AUTOMATIC, null, 0,
-			null, null, _serviceContext);
+			null, null, null, _serviceContext);
 
 		return fileEntry.getLatestFileVersion();
 	}

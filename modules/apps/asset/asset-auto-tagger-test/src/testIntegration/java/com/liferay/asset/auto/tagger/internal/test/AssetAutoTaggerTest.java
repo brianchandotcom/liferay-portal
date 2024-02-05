@@ -84,8 +84,8 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 			StringUtil.randomString(), fileEntry.getDescription(),
 			RandomTestUtil.randomString(), DLVersionNumberIncrease.MAJOR,
 			fileEntry.getContentStream(), fileEntry.getSize(),
-			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-			serviceContext);
+			fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(), serviceContext);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());

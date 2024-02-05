@@ -242,7 +242,9 @@ public class DLFileEntryUADAnonymizerTest
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			DLVersionNumberIncrease.fromMajorVersion(true),
-			dlFileEntry.getContentStream(), dlFileEntry.getSize(), null, null,
+			dlFileEntry.getContentStream(), dlFileEntry.getSize(),
+			dlFileEntry.getDisplayDate(), dlFileEntry.getExpirationDate(),
+			dlFileEntry.getReviewDate(),
 			ServiceContextTestUtil.getServiceContext());
 	}
 

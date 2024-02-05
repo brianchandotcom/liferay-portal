@@ -124,7 +124,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				TestPropsValues.getUserId(), fileEntryId, _TEST_FILE_NAME_2,
 				ContentTypes.APPLICATION_TEXT, _TEST_FILE_TITLE,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				DLVersionNumberIncrease.MAJOR, _testFileBytes, null, null,
+				DLVersionNumberIncrease.MAJOR, _testFileBytes, null, null, null,
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId()));
 
@@ -245,7 +245,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				TestPropsValues.getUserId(), fileEntryId, _TEST_FILE_NAME_2,
 				ContentTypes.APPLICATION_TEXT, _TEST_FILE_TITLE_2_MOD,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				DLVersionNumberIncrease.MAJOR, _testFileBytes, null, null,
+				DLVersionNumberIncrease.MAJOR, _testFileBytes, null, null, null,
 				serviceContext);
 
 			fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
@@ -295,7 +295,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				TestPropsValues.getUserId(), fileEntryId, _TEST_FILE_NAME_2,
 				ContentTypes.APPLICATION_TEXT, _TEST_FILE_TITLE_2_MOD,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				DLVersionNumberIncrease.MAJOR, _testFileBytes, null, null,
+				DLVersionNumberIncrease.MAJOR, _testFileBytes, null, null, null,
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId()));
 

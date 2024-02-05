@@ -229,7 +229,7 @@ public class DepotEntryFileEntryFriendlyURLTest {
 			fileEntry.getFileEntryId(), StringPool.BLANK,
 			ContentTypes.TEXT_PLAIN, fileEntry.getTitle(), "modifiedurltitle",
 			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
-			(byte[])null, null, null, serviceContext);
+			(byte[])null, null, null, null, serviceContext);
 
 		friendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(

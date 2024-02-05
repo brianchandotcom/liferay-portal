@@ -1,0 +1,9 @@
+[#if themeDisplay.isSignedIn()]
+	<div class="lfr-layout-structure-item-text"><span class="f-text paragraphBase" style="color: var(--color-neutral-10); font-weight: var(--font-weight-semi-bold); margin: 0;">
+		<a class="footer-sign-in" href="${htmlUtil.escape(themeDisplay.getURLSignOut())}">${languageUtil.get(locale, "sign-out")}</a>
+	</span></div>
+[#else]
+	<div class="lfr-layout-structure-item-text"><span class="f-text paragraphBase" style="color: var(--color-neutral-10); font-weight: var(--font-weight-semi-bold); margin: 0;">
+		<a class="footer-sign-in" href="${htmlUtil.escape(themeDisplay.getURLSignIn())}">${languageUtil.get(locale, "sign-in-create-account")}</a>
+	</span></div>
+[/#if]

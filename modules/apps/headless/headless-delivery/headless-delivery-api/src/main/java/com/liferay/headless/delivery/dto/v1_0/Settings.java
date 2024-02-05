@@ -315,7 +315,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _javascriptSupplier;
 
-	@Schema(description = "The page's master page.")
+	@Schema(description = "The page's master page..")
 	@Valid
 	public MasterPage getMasterPage() {
 		if (_masterPageSupplier != null) {
@@ -350,7 +350,7 @@ public class Settings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The page's master page.")
+	@GraphQLField(description = "The page's master page..")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MasterPage masterPage;
 
@@ -528,6 +528,56 @@ public class Settings implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Object> _themeSettingsSupplier;
+
+	@Schema(
+		description = "The Client Extension for the theme spritemap of a page"
+	)
+	@Valid
+	public ClientExtension getThemeSpritemapClientExtension() {
+		if (_themeSpritemapClientExtensionSupplier != null) {
+			themeSpritemapClientExtension =
+				_themeSpritemapClientExtensionSupplier.get();
+
+			_themeSpritemapClientExtensionSupplier = null;
+		}
+
+		return themeSpritemapClientExtension;
+	}
+
+	public void setThemeSpritemapClientExtension(
+		ClientExtension themeSpritemapClientExtension) {
+
+		this.themeSpritemapClientExtension = themeSpritemapClientExtension;
+
+		_themeSpritemapClientExtensionSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setThemeSpritemapClientExtension(
+		UnsafeSupplier<ClientExtension, Exception>
+			themeSpritemapClientExtensionUnsafeSupplier) {
+
+		_themeSpritemapClientExtensionSupplier = () -> {
+			try {
+				return themeSpritemapClientExtensionUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The Client Extension for the theme spritemap of a page"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ClientExtension themeSpritemapClientExtension;
+
+	@JsonIgnore
+	private Supplier<ClientExtension> _themeSpritemapClientExtensionSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -745,6 +795,19 @@ public class Settings implements Serializable {
 			else {
 				sb.append(themeSettings);
 			}
+		}
+
+		ClientExtension themeSpritemapClientExtension =
+			getThemeSpritemapClientExtension();
+
+		if (themeSpritemapClientExtension != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"themeSpritemapClientExtension\": ");
+
+			sb.append(String.valueOf(themeSpritemapClientExtension));
 		}
 
 		sb.append("}");

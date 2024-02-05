@@ -281,6 +281,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 				Assert.assertEquals(
 					_JOB_COUNT, _getJobsCount(_defaultCompanyId));
+				Assert.assertEquals(1, _getJobsCount(company.getCompanyId()));
 
 				_checkStandaloneDBPartitionTables(
 					company.getCompanyId(), "Company", "VirtualHost");
@@ -350,6 +351,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 				Assert.assertEquals(
 					_JOB_COUNT, _getJobsCount(_defaultCompanyId));
+				Assert.assertEquals(1, _getJobsCount(company.getCompanyId()));
 
 				_checkStandaloneDBPartitionTables(
 					company.getCompanyId(), "Company", "VirtualHost");

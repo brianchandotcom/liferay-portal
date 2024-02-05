@@ -129,8 +129,7 @@ public interface APIApplication {
 
 		public enum PropertyType {
 
-			ARRAY_CONTAINER("arrayContainer"), NORMAL("normal"),
-			SINGLE_CONTAINER("singleContainer");
+			NORMAL("normal"), SINGLE_CONTAINER("singleContainer");
 
 			public static PropertyType parse(String value) {
 				for (PropertyType propertyType :
@@ -158,9 +157,9 @@ public interface APIApplication {
 
 		public enum Type {
 
-			AGGREGATION, ARRAY_CONTAINER, ATTACHMENT, BOOLEAN, DATE, DATE_TIME,
-			DECIMAL, INTEGER, LONG_INTEGER, LONG_TEXT, MULTISELECT_PICKLIST,
-			PICKLIST, PRECISION_DECIMAL, RICH_TEXT, SINGLE_CONTAINER, TEXT
+			AGGREGATION, ATTACHMENT, BOOLEAN, DATE, DATE_TIME, DECIMAL, INTEGER,
+			LONG_INTEGER, LONG_TEXT, MULTISELECT_PICKLIST, PICKLIST,
+			PRECISION_DECIMAL, RICH_TEXT, SINGLE_CONTAINER, TEXT
 
 		}
 

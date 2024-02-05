@@ -247,6 +247,23 @@ public class FriendlyURLEntryLocalServiceImpl
 		friendlyURLEntryLocalizationPersistence.
 			removeByFriendlyURLEntryId_LanguageId(
 				friendlyURLEntryId, languageId);
+
+		int count =
+			friendlyURLEntryLocalizationPersistence.countByFriendlyURLEntryId(
+				friendlyURLEntryId);
+
+		if (count == 0) {
+			FriendlyURLEntry friendlyURLEntry =
+				friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+					friendlyURLEntryId);
+
+			if (friendlyURLEntry == null) {
+				return;
+			}
+
+			friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+				friendlyURLEntryId);
+		}
 	}
 
 	@Override

@@ -18,7 +18,6 @@ import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedExcept
 import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -731,7 +730,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
 
 			if (count >=
-				maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
+					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
 
 				_sendUserNotificationEvents(objectDefinition);
 
@@ -745,7 +744,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 							objectDefinition.getDefaultLanguageId()),
 						" has been reached and will no longer be accepted"),
 					"the-limit-of-guest-entries-for-object-definition-has-" +
-					"been-reached-and-will-no-longer-be-accepted",
+						"been-reached-and-will-no-longer-be-accepted",
 					objectDefinition.getLabel(
 						objectDefinition.getDefaultLanguageId()));
 			}
@@ -758,7 +757,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
 
 			if (count >=
-				maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
+					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
 
 				throw new ObjectEntryCountException(
 					StringBundler.concat(

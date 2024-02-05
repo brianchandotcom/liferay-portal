@@ -11,6 +11,7 @@ import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.internal.document.DocumentBuilderImpl;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
+import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.test.util.RequestExecutorFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -29,6 +30,10 @@ public class IndexDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@ClassRule
+	public static OpenSearchTestRule openSearchTestRule =
+		OpenSearchTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

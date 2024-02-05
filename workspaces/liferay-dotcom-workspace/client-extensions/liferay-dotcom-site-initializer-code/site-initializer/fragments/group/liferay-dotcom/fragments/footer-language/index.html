@@ -1,0 +1,58 @@
+<div class="language-selector-container">
+	<button class="d-flex language language-selector language-selector-${fragmentEntryLinkNamespace} utility-nav-link" data-toggle="liferay-dropdown" id="language-selector-id" tabindex="${fragmentEntryLinkNamespace}">
+		<div class="language-selector-globe-icon">
+			<@clay["icon"] symbol="globe-lines" />
+		</div>
+
+		<div class="language-selector-text">
+			[#assign current_locale = locale /]
+			[#if current_locale?has_content]
+				[#assign current_locale = locale[0..1]
+					+ " (" + locale[3..4]
+					+ ")" /]
+			[/#if]
+			${current_locale?upper_case}
+		</div>
+
+		<span class="language-caret-icon">
+			<@clay["icon"] symbol="caret-bottom-l" />
+		</span>
+	</button>
+
+	<div aria-labelledby="language-selector-id" class="dropdown-menu dropdown-menu-content">
+		<div class="language-dropdown-list-container">
+			<div class="language-dropdown-list">
+				<ul>
+					[#if entries?has_content]
+						[#list entries as curLanguage]
+							<li class="${(curLanguage.isSelected())?then('selected', '')} language-nav-item mx-2">
+								[#if curLanguage.isSelected()]
+									<div class="d-inline-block selected-icon">
+										<@clay["icon"] symbol="check" />
+									</div>
+								[/#if]
+								[#assign curLanguageLabel = curLanguage.longDisplayName?
+									replace(" [beta]", "")?
+									replace("(australia)", "(Australia)")?
+									replace("(united states)", "(United States)")?
+									cap_first /]
+								[#if curLanguage.shortDisplayName="en" | curLanguage.shortDisplayName="pt"]
+									[#assign
+										curLanguageLocale=curLanguage.getLocale()
+										curLanguageLabel=curLanguageLabel + " (" + curLanguageLocale.getDisplayCountry(curLanguageLocale) + ")" /]
+								[/#if]
+								<@clay["link"]
+									cssClass="language-entry-long-text"
+									href=curLanguage.getURL()
+									label=curLanguageLabel
+									lang=curLanguage.getW3cLanguageId()
+									localizeLabel=false
+								/>
+							</li>
+						[/#list]
+					[/#if]
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

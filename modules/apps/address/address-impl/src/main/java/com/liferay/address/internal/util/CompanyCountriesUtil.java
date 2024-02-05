@@ -229,8 +229,6 @@ public class CompanyCountriesUtil {
 			String name, String regionCode, long regionId, long userId)
 		throws SQLException {
 
-		preparedStatement.clearParameters();
-
 		preparedStatement.setString(1, PortalUUIDUtil.generate());
 		preparedStatement.setLong(2, regionId);
 		preparedStatement.setLong(3, companyId);
@@ -249,8 +247,6 @@ public class CompanyCountriesUtil {
 			PreparedStatement preparedStatement, long countryId,
 			String languageId, long regionId, String title)
 		throws SQLException {
-
-		preparedStatement.clearParameters();
 
 		preparedStatement.setLong(
 			1,

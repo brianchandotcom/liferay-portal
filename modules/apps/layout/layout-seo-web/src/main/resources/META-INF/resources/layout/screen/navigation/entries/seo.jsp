@@ -210,6 +210,12 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 							name="TypeSettingsProperties--sitemap-changefreq--"
 							options="<%= layoutsSEODisplayContext.getSitemapChangeFrequencySelectOptions() %>"
 						/>
+
+						<c:if test="<%= layoutsSEODisplayContext.showIncludeChildLayoutsInSitemap() %>">
+							<aui:input checked="<%= layoutsSEODisplayContext.isIncludeChildLayoutsInSitemap() %>" label="include-child-page-urls-in-the-xml-sitemap" labelCssClass="font-weight-normal" name="TypeSettingsProperties--sitemap-include-child-layouts--" type="checkbox" wrapperCssClass="mb-2" />
+
+							<p class="c-mb-0 c-mt-2 small text-secondary"><liferay-ui:message key="when-this-configuration-is-enabled,-search-engines-will-be-notified-that-child-page-urls-are-available-for-crawling" /></p>
+						</c:if>
 					</div>
 				</clay:sheet-section>
 			</clay:sheet>

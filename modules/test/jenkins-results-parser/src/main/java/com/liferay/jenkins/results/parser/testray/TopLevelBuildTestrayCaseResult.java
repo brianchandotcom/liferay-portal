@@ -274,8 +274,8 @@ public class TopLevelBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 				rootElement.add(testcaseElement);
 			}
-			catch (IOException ioException) {
-				System.out.println(ioException);
+			catch (RuntimeException runtimeException) {
+				System.out.println(runtimeException);
 			}
 		}
 

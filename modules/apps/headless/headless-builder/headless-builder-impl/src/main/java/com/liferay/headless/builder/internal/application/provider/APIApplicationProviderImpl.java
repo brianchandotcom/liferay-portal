@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import org.osgi.service.component.annotations.Component;
@@ -253,14 +254,6 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					}
 
 					@Override
-					public PropertyType getPropertyType() {
-						ListEntry listEntry = (ListEntry)properties.get(
-							"apiPropertyType");
-
-						return PropertyType.parse(listEntry.getKey());
-					}
-
-					@Override
 					public String getSourceFieldName() {
 						if (objectField == null) {
 							return null;
@@ -271,15 +264,15 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 
 					@Override
 					public Type getType() {
+						ListEntry listEntry = (ListEntry)properties.get("type");
+
+						if (Objects.equals(listEntry.getKey(), "container")) {
+							return Type.CONTAINER;
+						}
+
 						Type type = null;
 
-						if (objectField == null) {
-							ListEntry listEntry = (ListEntry)properties.get(
-								"apiPropertyType");
-
-							type = _propertyTypes.get(listEntry.getKey());
-						}
-						else {
+						if (objectField != null) {
 							type = _propertyTypes.get(
 								objectField.getBusinessType());
 						}
@@ -451,9 +444,6 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 
 	private static final Map<String, APIApplication.Property.Type>
 		_propertyTypes = HashMapBuilder.put(
-			APIApplication.Property.PropertyType.CONTAINER.getValue(),
-			APIApplication.Property.Type.CONTAINER
-		).put(
 			ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION,
 			APIApplication.Property.Type.AGGREGATION
 		).put(

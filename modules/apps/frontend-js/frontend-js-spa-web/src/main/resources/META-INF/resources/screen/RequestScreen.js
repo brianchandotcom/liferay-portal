@@ -257,7 +257,7 @@ class RequestScreen extends Screen {
 				method: httpMethod,
 				mode: 'cors',
 				redirect: 'follow',
-				referrer: 'client',
+				referrer: 'about:client',
 			})
 				.then((resp) => {
 					this.assertValidResponseStatusCode(resp.status);

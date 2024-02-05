@@ -121,39 +121,9 @@ public interface APIApplication {
 
 		public List<Property> getProperties();
 
-		public PropertyType getPropertyType();
-
 		public String getSourceFieldName();
 
 		public Type getType();
-
-		public enum PropertyType {
-
-			CONTAINER("container"), VALUE("value");
-
-			public static PropertyType parse(String value) {
-				for (PropertyType propertyType :
-						Property.PropertyType.values()) {
-
-					if (Objects.equals(propertyType.getValue(), value)) {
-						return propertyType;
-					}
-				}
-
-				throw new IllegalArgumentException("Invalid value " + value);
-			}
-
-			public String getValue() {
-				return _value;
-			}
-
-			private PropertyType(String value) {
-				_value = value;
-			}
-
-			private final String _value;
-
-		}
 
 		public enum Type {
 

@@ -65,8 +65,9 @@ public class SaveCompanyConfigurationMVCActionCommand
 			ParamUtil.getBoolean(actionRequest, "includePages"),
 			ParamUtil.getBoolean(actionRequest, "includeWebContent"),
 			ArrayUtil.filter(
-				ParamUtil.getLongValues(
-					actionRequest, "groupsSearchContainerPrimaryKeys"),
+				ArrayUtil.unique(
+					ParamUtil.getLongValues(
+						actionRequest, "groupsSearchContainerPrimaryKeys")),
 				groupId -> {
 					Group group = _groupLocalService.fetchGroup(groupId);
 

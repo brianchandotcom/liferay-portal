@@ -115,7 +115,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 													<div class="hide" id="<portlet:namespace />configuration_<%= selPortlet.getRootPortletId() %>">
 														<ul class="lfr-tree list-unstyled">
 															<li class="tree-item">
-																<aui:fieldset cssClass="portlet-type-data-section" label="configuration">
+																<aui:fieldset cssClass="portlet-type-data-section" id="configuration">
 																	<ul class="lfr-tree list-unstyled">
 
 																		<%

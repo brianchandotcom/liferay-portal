@@ -78,12 +78,10 @@ AUI.add(
 									);
 								}
 
-								const configurationDialog = instance._getConfigurationDialog(
+								instance._getConfigurationDialog(
 									portletId,
 									portletTitle
 								);
-
-								configurationDialog.show();
 							},
 							'.configuration-link'
 						);
@@ -299,63 +297,29 @@ AUI.add(
 						'configuration_' + portletId
 					);
 
-					let configurationDialog = configurationNode.getData(
-						'configurationDialog'
-					);
+					Liferay.Util.openModal({
+						bodyHTML: configurationNode.getHTML(),
+						buttons: [
+							{
+								displayType: 'unstyled',
+								label: Liferay.Language.get('ok'),
+								onClick({processClose}) {
+									instance._setConfigurationLabels(
+										portletId
+									);
 
-					if (!configurationDialog) {
-						configurationNode.show();
-
-						configurationDialog = Liferay.Util.Window.getWindow({
-							dialog: {
-								bodyContent: configurationNode,
-								centered: true,
-								height: 300,
-								modal: true,
-								render: instance.get('form'),
-								toolbars: {
-									footer: [
-										{
-											label: Liferay.Language.get('ok'),
-											on: {
-												click(event) {
-													event.domEvent.preventDefault();
-
-													instance._setConfigurationLabels(
-														portletId
-													);
-
-													configurationDialog.hide();
-												},
-											},
-											primary: true,
-										},
-										{
-											label: Liferay.Language.get(
-												'cancel'
-											),
-											on: {
-												click(event) {
-													event.domEvent.preventDefault();
-
-													configurationDialog.hide();
-												},
-											},
-										},
-									],
+									processClose();
 								},
-								width: 400,
 							},
-							title: portletTitle,
-						});
-
-						configurationNode.setData(
-							'configurationDialog',
-							configurationDialog
-						);
-					}
-
-					return configurationDialog;
+							{
+								displayType: 'unstyled',
+								label: Liferay.Language.get('cancel'),
+								type: 'cancel',
+							},
+						],
+						size: 'md',
+						title: portletTitle
+					});
 				},
 
 				_getContentDialog(portletId, portletTitle) {

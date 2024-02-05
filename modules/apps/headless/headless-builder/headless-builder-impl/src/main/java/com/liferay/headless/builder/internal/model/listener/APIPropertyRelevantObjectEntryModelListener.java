@@ -132,15 +132,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 			if (Objects.equals(
 					apiPropertyType,
-					APIApplication.Property.PropertyType.ARRAY_CONTAINER)) {
-
-				throw new UnsupportedOperationException(
-					"Array container is not supported");
-			}
-			else if (Objects.equals(
-						apiPropertyType,
-						APIApplication.Property.PropertyType.
-							SINGLE_CONTAINER)) {
+					APIApplication.Property.PropertyType.SINGLE_CONTAINER)) {
 
 				if (!FeatureFlagManagerUtil.isEnabled("LPD-10964")) {
 					throw new UnsupportedOperationException(

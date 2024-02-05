@@ -61,6 +61,8 @@ export class ApiApplicationPage {
 		await this.page.getByRole('menuitem', {name: schemaName}).click();
 	}
 
+	// TODO Change when LPD-16654 is fixed
+
 	async selectEndpointResponseSchema(schemaName: string) {
 		await this.page.getByRole('button', {name: 'Select a Schema'}).click();
 		await this.page.getByRole('menuitem', {name: schemaName}).click();

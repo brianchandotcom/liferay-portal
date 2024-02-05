@@ -660,8 +660,6 @@ public class ObjectEntryServiceTest {
 	public void testValidateMaximumNumberOfGuestUserObjectEntriesPerObjectDefinitionPerDay()
 		throws Exception {
 
-		_setUser(_guestUser);
-
 		_configurationProvider.saveCompanyConfiguration(
 			ObjectConfiguration.class, TestPropsValues.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -685,6 +683,16 @@ public class ObjectEntryServiceTest {
 			).put(
 				"timeScale", "days"
 			).build());
+
+		_setUser(_adminUser);
+
+		_objectEntryService.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), _adminUser.getUserId()));
+
+		_setUser(_guestUser);
 
 		_addResourcePermissionToGuestUser();
 

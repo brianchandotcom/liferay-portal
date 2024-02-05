@@ -149,7 +149,7 @@ definition {
 		}
 		else {
 			AssertTextEquals(
-				locator1 = "WC#ENTRY_LIST_WORKFLOW_TRANSLATIONE_STATUS",
+				locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
 				value1 = ${webContentStatus});
 		}
 

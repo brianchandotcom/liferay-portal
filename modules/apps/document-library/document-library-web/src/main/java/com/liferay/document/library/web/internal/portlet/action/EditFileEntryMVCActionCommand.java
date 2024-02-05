@@ -14,6 +14,7 @@ import com.liferay.document.library.exception.DLStorageQuotaExceededException;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
+import com.liferay.document.library.kernel.exception.FileEntryDisplayDateException;
 import com.liferay.document.library.kernel.exception.FileEntryLockException;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileMimeTypeException;
@@ -48,6 +49,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -392,6 +394,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		User user = _userLocalService.getUser(themeDisplay.getUserId());
 
+		Date displayDate = _getDisplayDate(
+			uploadPortletRequest, user.getTimeZone());
 		Date expirationDate = _getExpirationDate(
 			uploadPortletRequest, neverExpireDefaultValue, user.getTimeZone());
 		Date reviewDate = _getReviewDate(
@@ -400,8 +404,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		for (String selectedFileName : selectedFileNames) {
 			_addMultipleFileEntries(
 				portletConfig, actionRequest, selectedFileName,
-				validFileNameKVPs, invalidFileNameKVPs, null, expirationDate,
-				reviewDate, serviceContext);
+				validFileNameKVPs, invalidFileNameKVPs, displayDate,
+				expirationDate, reviewDate, serviceContext);
 		}
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -924,6 +928,38 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		return dynamicServletRequest;
 	}
 
+	private Date _getDisplayDate(
+			UploadPortletRequest uploadPortletRequest, TimeZone timeZone)
+		throws PortalException {
+
+		if (!PropsValues.SCHEDULER_ENABLED ||
+			!_featureFlagManager.isEnabled("LPD-10701")) {
+
+			return null;
+		}
+
+		int displayDateMonth = ParamUtil.getInteger(
+			uploadPortletRequest, "displayDateMonth");
+		int displayDateDay = ParamUtil.getInteger(
+			uploadPortletRequest, "displayDateDay");
+		int displayDateYear = ParamUtil.getInteger(
+			uploadPortletRequest, "displayDateYear");
+		int displayDateHour = ParamUtil.getInteger(
+			uploadPortletRequest, "displayDateHour");
+		int displayDateMinute = ParamUtil.getInteger(
+			uploadPortletRequest, "displayDateMinute");
+		int displayDateAmPm = ParamUtil.getInteger(
+			uploadPortletRequest, "displayDateAmPm");
+
+		if (displayDateAmPm == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		return _portal.getDate(
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, timeZone, FileEntryDisplayDateException.class);
+	}
+
 	private Date _getExpirationDate(
 			UploadPortletRequest uploadPortletRequest,
 			boolean neverExpireDefaultValue, TimeZone timeZone)
@@ -1308,6 +1344,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				addDynamic = true;
 			}
 
+			Date displayDate = _getDisplayDate(
+				uploadPortletRequest, user.getTimeZone());
 			Date expirationDate = _getExpirationDate(
 				uploadPortletRequest, addDynamic, user.getTimeZone());
 			Date reviewDate = _getReviewDate(
@@ -1327,7 +1365,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				fileEntry = _dlAppService.addFileEntry(
 					null, repositoryId, folderId, sourceFileName, contentType,
 					title, urlTitle, description, changeLog, inputStream, size,
-					null, expirationDate, reviewDate, serviceContext);
+					displayDate, expirationDate, reviewDate, serviceContext);
 			}
 			else if (cmd.equals(Constants.ADD_DYNAMIC)) {
 
@@ -1344,7 +1382,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				fileEntry = _dlAppService.addFileEntry(
 					null, repositoryId, folderId, uniqueFileName, contentType,
 					uniqueFileTitle, StringPool.BLANK, description, changeLog,
-					inputStream, size, null, expirationDate, reviewDate,
+					inputStream, size, displayDate, expirationDate, reviewDate,
 					serviceContext);
 
 				JSONObject jsonObject = JSONUtil.put(
@@ -1433,6 +1471,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLTrashService _dlTrashService;
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

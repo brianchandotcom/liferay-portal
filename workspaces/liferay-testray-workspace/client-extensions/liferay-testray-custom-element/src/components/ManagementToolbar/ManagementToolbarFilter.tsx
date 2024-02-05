@@ -139,13 +139,13 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 					name: key,
 					value: (filterCleaned as any)[key].map(
 						(options: Option) => options.value || options
-					)
+					),
 				};
 			}
 			else {
 				return {
 					name: key,
-					value: filterCleaned[key]
+					value: filterCleaned[key],
 				};
 			}
 		});

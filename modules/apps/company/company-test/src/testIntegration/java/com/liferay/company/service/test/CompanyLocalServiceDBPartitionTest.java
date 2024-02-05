@@ -264,7 +264,7 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertEquals(1, _getJobsCount(company.getCompanyId()));
 
 			Company defaultCompany = _companyLocalService.getCompany(
-				PortalInstances.getDefaultCompanyId());
+				_defaultCompanyId);
 
 			try {
 				_companyLocalService.addDBPartitionCompany(

@@ -31,7 +31,7 @@ public class ReflectionTestUtil {
 		try {
 			T t = (T)field.get(null);
 
-			_setFieldValue(field, null, newValue);
+			setFieldValue(field, (Object)null, newValue);
 
 			return t;
 		}
@@ -48,7 +48,7 @@ public class ReflectionTestUtil {
 		try {
 			T t = (T)field.get(instance);
 
-			_setFieldValue(field, instance, newValue);
+			setFieldValue(field, instance, newValue);
 
 			return t;
 		}
@@ -327,7 +327,7 @@ public class ReflectionTestUtil {
 		Field field = getField(clazz, fieldName);
 
 		try {
-			_setFieldValue(field, null, value);
+			setFieldValue(field, (Object)null, value);
 		}
 		catch (Throwable throwable) {
 			ReflectionUtil.throwException(throwable);
@@ -340,7 +340,7 @@ public class ReflectionTestUtil {
 		Field field = getField(instance.getClass(), fieldName);
 
 		try {
-			_setFieldValue(field, instance, value);
+			setFieldValue(field, instance, value);
 		}
 		catch (Throwable throwable) {
 			ReflectionUtil.throwException(throwable);
@@ -355,11 +355,11 @@ public class ReflectionTestUtil {
 		try {
 			Object value = field.get(null);
 
-			_setFieldValue(field, null, newValue);
+			setFieldValue(field, (Object)null, newValue);
 
 			return () -> {
 				try {
-					_setFieldValue(field, null, value);
+					setFieldValue(field, (Object)null, value);
 				}
 				catch (Throwable throwable) {
 					ReflectionUtil.throwException(throwable);
@@ -379,11 +379,11 @@ public class ReflectionTestUtil {
 		try {
 			Object value = field.get(instance);
 
-			_setFieldValue(field, instance, newValue);
+			setFieldValue(field, instance, newValue);
 
 			return () -> {
 				try {
-					_setFieldValue(field, instance, value);
+					setFieldValue(field, instance, value);
 				}
 				catch (Throwable throwable) {
 					ReflectionUtil.throwException(throwable);
@@ -430,7 +430,7 @@ public class ReflectionTestUtil {
 		return null;
 	}
 
-	private static void _setFieldValue(
+	public static void setFieldValue(
 			Field field, Object instance, Object value)
 		throws Throwable {
 

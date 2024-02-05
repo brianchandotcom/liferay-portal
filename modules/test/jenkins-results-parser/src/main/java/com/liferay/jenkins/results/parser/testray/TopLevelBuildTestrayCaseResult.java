@@ -186,9 +186,9 @@ public class TopLevelBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		testrayCaseResults.add(this);
 
 		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
-			Element testcaseElement = rootElement.addElement("testcase");
-
 			try {
+				Element testcaseElement = Dom4JUtil.getNewElement("testcase");
+
 				Map<String, String> testcasePropertiesMap = new HashMap<>();
 
 				testcasePropertiesMap.put(
@@ -271,6 +271,8 @@ public class TopLevelBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 					failureElement.addAttribute("message", errors);
 				}
+
+				rootElement.add(testcaseElement);
 			}
 			catch (IOException ioException) {
 				System.out.println(ioException);

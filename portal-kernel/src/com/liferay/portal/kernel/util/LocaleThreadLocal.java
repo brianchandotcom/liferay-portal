@@ -17,10 +17,6 @@ import java.util.Locale;
  */
 public class LocaleThreadLocal {
 
-	public static SafeCloseable clearDefaultLocaleWithSafeCloseable() {
-		return _defaultLocale.setWithSafeCloseable(null);
-	}
-
 	public static Locale getDefaultLocale() {
 		return _defaultLocale.get();
 	}
@@ -47,6 +43,10 @@ public class LocaleThreadLocal {
 
 	public static void setThemeDisplayLocale(Locale locale) {
 		_themeDisplayLocale.set(locale);
+	}
+
+	public static SafeCloseable setWithSafeCloseable(Locale locale) {
+		return _defaultLocale.setWithSafeCloseable(locale);
 	}
 
 	private static final CentralizedThreadLocal<Locale> _defaultLocale =

@@ -17,10 +17,6 @@ import java.util.TimeZone;
  */
 public class TimeZoneThreadLocal {
 
-	public static SafeCloseable clearDefaultTimeZoneWithSafeCloseable() {
-		return _defaultTimeZone.setWithSafeCloseable(null);
-	}
-
 	public static TimeZone getDefaultTimeZone() {
 		return _defaultTimeZone.get();
 	}
@@ -39,6 +35,10 @@ public class TimeZoneThreadLocal {
 
 	public static void setThemeDisplayTimeZone(TimeZone timeZone) {
 		_themeDisplayTimeZone.set(timeZone);
+	}
+
+	public static SafeCloseable setWithSafeCloseable(TimeZone timeZone) {
+		return _defaultTimeZone.setWithSafeCloseable(timeZone);
 	}
 
 	private static final CentralizedThreadLocal<TimeZone> _defaultTimeZone =

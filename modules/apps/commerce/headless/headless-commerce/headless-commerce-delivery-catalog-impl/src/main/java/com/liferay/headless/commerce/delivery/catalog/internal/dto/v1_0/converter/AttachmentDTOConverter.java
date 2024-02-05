@@ -65,6 +65,8 @@ public class AttachmentDTOConverter
 
 		return new Attachment() {
 			{
+				setCdnEnabled(cpAttachmentFileEntry::isCDNEnabled);
+				setCdnURL(cpAttachmentFileEntry::getCDNURL);
 				setCustomFields(
 					() -> CustomFieldsUtil.toCustomFields(
 						dtoConverterContext.isAcceptAllLanguages(),
@@ -74,6 +76,8 @@ public class AttachmentDTOConverter
 						dtoConverterContext.getLocale()));
 				setDisplayDate(cpAttachmentFileEntry::getDisplayDate);
 				setExpirationDate(cpAttachmentFileEntry::getExpirationDate);
+				setExternalReferenceCode(
+					cpAttachmentFileEntry::getExternalReferenceCode);
 				setFileEntryId(cpAttachmentFileEntry::getFileEntryId);
 				setGalleryEnabled(cpAttachmentFileEntry::isGalleryEnabled);
 				setId(cpAttachmentFileEntry::getCPAttachmentFileEntryId);

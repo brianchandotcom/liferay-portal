@@ -278,7 +278,7 @@ public class OpenSearchSearchEngine
 		}
 	}
 
-	protected void createBackupRepository() {
+	public void createBackupRepository() {
 		if (_hasBackupRepository()) {
 			return;
 		}

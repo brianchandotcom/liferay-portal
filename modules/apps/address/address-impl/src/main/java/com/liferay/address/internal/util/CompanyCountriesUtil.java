@@ -214,10 +214,10 @@ public class CompanyCountriesUtil {
 							localizationsJSONObject.getString(key));
 					}
 				}
-
-				regionPreparedStatement.executeBatch();
-				regionLocalizationPreparedStatement.executeBatch();
 			}
+
+			regionPreparedStatement.executeBatch();
+			regionLocalizationPreparedStatement.executeBatch();
 		}
 		catch (Exception exception) {
 			_log.error(exception);

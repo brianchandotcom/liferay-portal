@@ -579,10 +579,6 @@ public class CompanyLocalServiceDBPartitionTest
 	private int _getJobsCount(long companyId) throws Exception {
 		String partitionName = getPartitionName(companyId);
 
-		if (companyId == _defaultCompanyId) {
-			partitionName = dbPartitionDB.getDefaultPartitionName(connection);
-		}
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select count(1) from ", partitionName,

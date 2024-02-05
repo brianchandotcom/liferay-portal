@@ -207,8 +207,13 @@ public abstract class BaseDBPartitionTestCase {
 			_currentDataSource =
 				_lazyConnectionDataSourceProxy.getTargetDataSource();
 
-			DataSource dbPartitionDataSource = _wrapDataSource(
-				DBPartitionUtil.wrapDataSource(_currentDataSource));
+			DataSource dataSource = DBPartitionUtil.wrapDataSource(
+				_currentDataSource);
+
+			defaultPartitionName = ReflectionTestUtil.getFieldValue(
+				DBPartitionUtil.class, "_defaultPartitionName");
+
+			DataSource dbPartitionDataSource = _wrapDataSource(dataSource);
 
 			_lazyConnectionDataSourceProxy.setTargetDataSource(
 				dbPartitionDataSource);
@@ -249,6 +254,10 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected static String getPartitionName(long companyId) {
+		if (companyId == PortalInstances.getDefaultCompanyId()) {
+			return defaultPartitionName;
+		}
+
 		if (_dbPartitionEnabled) {
 			String databasePartitionSchemaNamePrefix =
 				ReflectionTestUtil.getFieldValue(
@@ -438,6 +447,7 @@ public abstract class BaseDBPartitionTestCase {
 	protected static DB db;
 	protected static DBInspector dbInspector;
 	protected static DBPartitionDB dbPartitionDB;
+	protected static String defaultPartitionName;
 
 	@Inject
 	protected static Portal portal;
@@ -524,10 +534,6 @@ public abstract class BaseDBPartitionTestCase {
 
 					@Override
 					public void close() throws SQLException {
-						String defaultPartitionName =
-							ReflectionTestUtil.getFieldValue(
-								DBPartitionUtil.class, "_defaultPartitionName");
-
 						dbPartitionDB.setPartition(
 							connection, defaultPartitionName);
 

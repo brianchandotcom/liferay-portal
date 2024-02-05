@@ -133,7 +133,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoViewStatus(webContentTitle = null, translationStatus = null, webContentStatus = null) {
+	macro gotoViewStatus(webContentTitle = null, webContentStatus = null) {
 		var key_webContentTitle = ${webContentTitle};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -142,16 +142,9 @@ definition {
 
 		AssertElementPresent(locator1 = "WC#ENTRY_LIST_THUMBNAIL");
 
-		if (${translationStatus} == "true") {
-			AssertTextEquals(
-				locator1 = "WC#ENTRY_LIST_WORKFLOW_TRANSLATIONE_STATUS",
-				value1 = ${webContentStatus});
-		}
-		else {
-			AssertTextEquals(
-				locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
-				value1 = ${webContentStatus});
-		}
+		AssertTextEquals(
+			locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
+			value1 = ${webContentStatus});
 
 		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 	}

@@ -825,6 +825,15 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public long getObjectEntriesCount(
+			long userId, long objectDefinitionId, Date startDate)
+		throws PortalException {
+
+		return objectEntryPersistence.countByU_GtC_ODI(
+			userId, startDate, objectDefinitionId);
+	}
+
+	@Override
+	public long getObjectEntriesCount(
 			long groupId, ObjectDefinition objectDefinition,
 			Predicate predicate)
 		throws PortalException {
@@ -863,16 +872,6 @@ public class ObjectEntryLocalServiceImpl
 		return dslQueryCount(
 			joinStep.where(
 				predicate.and(ObjectEntryTable.INSTANCE.groupId.eq(groupId))));
-	}
-
-	@Override
-	public long getObjectEntriesCount(
-		long userId, long objectDefinitionId,
-		Date startDate)
-		throws PortalException {
-
-		return objectEntryPersistence.countByU_GtC_ODI(userId,
-			startDate, objectDefinitionId);
 	}
 
 	@Override

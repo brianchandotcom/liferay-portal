@@ -1,0 +1,102 @@
+.language-selector-container .dropdown-menu-content.dropdown-menu {
+	max-height: fit-content;
+	min-width: 288px;
+}
+
+.language-selector-container .language-dropdown-list-container .language-dropdown-list ul {
+	padding-inline-start: 0;
+}
+
+.language-selector-container .language-dropdown-list-container .language-dropdown-list .language-nav-item {
+	align-items: center;
+	border-radius: 6px;
+	display: flex;
+	font-weight: var(--font-weight-semi-bold);
+	text-align: left;
+}
+
+.language-selector-container .language-dropdown-list-container .language-dropdown-list .language-nav-item .language-entry-long-text {
+	border-radius: 6px;
+	color: var(--color-neutral-10);
+	padding: 0.75rem 0.75rem 0.75rem 3.5rem;
+	width: 100%;
+}
+
+.language-selector-container .language-dropdown-list-container .language-dropdown-list .language-nav-item .selected-icon {
+	height: 16px;
+	width: 16px;
+}
+
+.language-selector-container .language-dropdown-list-container .language-dropdown-list .language-nav-item .selected-icon svg {
+	height: 100%;
+	width: 100%;
+}
+
+.language-selector-container .language-dropdown-list-container .language-dropdown-list .language-nav-item .language-entry-long-text:active,
+.language-selector-container .language-dropdown-list-container .language-dropdown-list .language-nav-item .language-entry-long-text:focus,
+.language-selector-container .language-dropdown-list-container .language-dropdown-list .language-nav-item .language-entry-long-text:hover {
+	background-color: #EDF3FE;
+	color: #0053F0;
+	text-decoration: none;
+}
+	
+	.language-selector-container .language-dropdown-list-container .language-dropdown-list .selected.language-nav-item .language-entry-long-text {
+	background-color: var(--white);
+	color: var(--color-neutral-10);
+	text-decoration: none;
+}
+
+.language-selector-container .language-dropdown-list-container .language-dropdown-list .language-nav-item.selected {
+	padding-left: 1.5rem;
+}
+
+.language-selector-container .language-dropdown-list-container .language-dropdown-list .language-nav-item.selected:before {
+	margin: 0 1rem;
+}
+
+.language-selector-container .language-dropdown-list-container .language-dropdown-list .language-nav-item.selected .language-entry-long-text {
+	padding-left: 1rem;
+}
+
+.language-selector-container .language-selector {
+	background: inherit;
+	border: none;
+	border-radius: var(--border-radius-sm);
+	color: var(--color-neutral-10);
+	cursor: pointer;
+	display: inline-block;
+	font-weight: bolder;
+	padding-left: 0;
+	padding-right: 0;
+}
+	
+	.language-selector-container .language-selector-text {
+font-family: Source Sans 3;
+font-size: 18px;
+font-weight: 600;
+line-height: 24px;
+letter-spacing: 0em;
+text-align: left;
+
+	}
+
+.language-selector-container .language-selector svg {
+	height: 1.5rem;
+	padding-bottom: 0.1rem;
+	width: 1.5rem;
+	margin-right: 0.25rem;
+}
+
+.language-selector-container .language-selector[aria-expanded=true] .language-caret-icon svg {
+	transition: transform 0.5s;
+	transform: rotate(180deg);
+}
+
+.language-selector-container .language-selector[aria-expanded=false] .language-caret-icon svg {
+	transition: transform 0.5s;
+	transform: rotate(360deg);
+}
+
+.language-selector-container .language-selector:hover {
+	color: var(--color-action-primary-hover) !important;
+}

@@ -219,9 +219,6 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 		if (type == APIApplication.Property.Type.AGGREGATION) {
 			schema = new StringSchema();
 		}
-		else if (type == APIApplication.Property.Type.ARRAY_CONTAINER) {
-			schema = new ArraySchema();
-		}
 		else if (type == APIApplication.Property.Type.ATTACHMENT) {
 			_addSchemas(FileEntry.class, schemas);
 

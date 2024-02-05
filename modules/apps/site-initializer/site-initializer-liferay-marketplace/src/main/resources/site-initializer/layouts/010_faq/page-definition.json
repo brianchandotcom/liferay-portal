@@ -1,0 +1,212 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0",
+								"marginTop": "7"
+							},
+							"indexed": true,
+							"layout": {
+								"marginTop": 8
+							}
+						},
+						"id": "bbf4575e-70bc-5878-beae-ab58433de296",
+						"pageElements": [
+							{
+								"definition": {
+									"indexed": true,
+									"layout": {
+									}
+								},
+								"id": "ea4a667b-1ee7-696f-cf83-30e84c32c1da",
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0",
+										"marginBottom": "6"
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "5",
+												"paddingRight": "5"
+											},
+											"id": "tablet"
+										}
+									],
+									"indexed": true,
+									"layout": {
+										"marginBottom": 6,
+										"widthType": "Fixed"
+									}
+								},
+								"id": "1da4af28-4252-f54c-5f7e-46734b618298",
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "faq-headline",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "sub-content",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "main-content",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "6"
+											},
+											"indexed": true
+										},
+										"id": "e1ed6610-7bbb-8e0a-5609-87cb1307a23b",
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "faq",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "main-image",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "main-text",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"id": "d2d3b88e-cd16-ca6a-37b0-82624ca3b7f9",
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "faq",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "main-image",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "main-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Purus pretium dui neque, scelerisque vulputate."
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"id": "ecbee052-c97a-1187-0173-a6d9843aeed3",
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "faq",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "main-image",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "main-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Facilisis mi enim, a vitae ut neque, quisque arcu."
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"id": "73bdc986-6512-a2ce-d1bf-b748a9156eea",
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "marketplace-master"
+		}
+	}
+}

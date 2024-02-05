@@ -371,6 +371,11 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeModulesFactory.create(
 				new String[] {"com.liferay.portal.search.tuning.rankings.web"},
 				null));
+
+		upgradeVersionTreeMap.put(
+			new Version(29, 2, 2),
+			UpgradeModulesFactory.create(
+				new String[] {"com.liferay.headless.builder.impl"}, null));
 	}
 
 }

@@ -141,7 +141,7 @@ public abstract class BaseGitHubIssueEventHandler
 			"Closing pull request because pulls for reference ",
 			upstreamGitBranchEntity.getBranchName(),
 			" should not be sent to repository ",
-			upstreamGitBranchEntity.getRepositoryName());
+			upstreamGitBranchEntity.getRepositoryName(), ".");
 
 		closeGitHubPullRequest(body);
 

@@ -56,7 +56,7 @@ public class MergeGitHubCommentEventHandler
 			gitHubPullRequest.comment(
 				StringUtil.combine(
 					"Skip merge subrepo because the receiving user is not ",
-					subrepoMergeReceiverName));
+					subrepoMergeReceiverName, "."));
 
 			gitHubPullRequest.close();
 
@@ -67,7 +67,8 @@ public class MergeGitHubCommentEventHandler
 			gitHubPullRequest.comment(
 				StringUtil.combine(
 					"Closing pull request because a subrepo merge request must",
-					" only contain a single change to a single ci-merge file"));
+					" only contain a single change to a single ci-merge ",
+					"file."));
 
 			gitHubPullRequest.close();
 
@@ -78,7 +79,7 @@ public class MergeGitHubCommentEventHandler
 			gitHubPullRequest.comment(
 				StringUtil.combine(
 					"Closing pull request because the ci-merge file ",
-					"modification is missing or incorrectly formatted"));
+					"modification is missing or incorrectly formatted."));
 
 			gitHubPullRequest.close();
 

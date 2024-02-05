@@ -8,9 +8,10 @@ package com.liferay.address.internal.portal.instance.lifecycle;
 import com.liferay.address.internal.util.CompanyCountriesUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CountryLocalService;
-import com.liferay.portal.kernel.service.RegionLocalService;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,13 +33,15 @@ public class PortalInstanceLifecycleListenerImpl
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		CompanyCountriesUtil.populateCompanyCountries(
-			company, _countryLocalService, _regionLocalService);
+			company, _countryLocalService,
+			_currentConnection.getConnection(
+				InfrastructureUtil.getDataSource()));
 	}
 
 	@Reference
 	private CountryLocalService _countryLocalService;
 
 	@Reference
-	private RegionLocalService _regionLocalService;
+	private CurrentConnection _currentConnection;
 
 }

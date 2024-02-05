@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.RegionLocalization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CountryLocalService;
-import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -36,8 +34,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.sql.DataSource;
-
 /**
  * @author Joao Victor Alves
  */
@@ -45,8 +41,7 @@ public class CompanyCountriesUtil {
 
 	public static void addCountry(
 		Company company, JSONObject countryJSONObject,
-		CountryLocalService countryLocalService,
-		RegionLocalService regionLocalService) {
+		CountryLocalService countryLocalService, Connection connection) {
 
 		try {
 			ServiceContext serviceContext = new ServiceContext();
@@ -78,7 +73,7 @@ public class CompanyCountriesUtil {
 
 			countryLocalService.updateCountryLocalizations(country, titleMap);
 
-			processCountryRegions(country, regionLocalService);
+			processCountryRegions(country, connection);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -93,7 +88,7 @@ public class CompanyCountriesUtil {
 
 	public static void populateCompanyCountries(
 			Company company, CountryLocalService countryLocalService,
-			RegionLocalService regionLocalService)
+			Connection connection)
 		throws Exception {
 
 		int count = countryLocalService.getCompanyCountriesCount(
@@ -125,7 +120,7 @@ public class CompanyCountriesUtil {
 			try {
 				addCountry(
 					company, countryJSONObject, countryLocalService,
-					regionLocalService);
+					connection);
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -134,7 +129,7 @@ public class CompanyCountriesUtil {
 	}
 
 	public static void processCountryRegions(
-		Country country, RegionLocalService regionLocalService) {
+		Country country, Connection connection) {
 
 		String a2 = country.getA2();
 
@@ -159,13 +154,7 @@ public class CompanyCountriesUtil {
 				return;
 			}
 
-			CTPersistence<Region> ctPersistence =
-				regionLocalService.getCTPersistence();
-
-			DataSource dataSource = ctPersistence.getDataSource();
-
-			try (Connection connection = dataSource.getConnection();
-				PreparedStatement regionPreparedStatement =
+			try (PreparedStatement regionPreparedStatement =
 					AutoBatchPreparedStatementUtil.autoBatch(
 						connection,
 						StringBundler.concat(

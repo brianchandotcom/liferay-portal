@@ -166,7 +166,7 @@ public class GroupSearchProvider {
 
 				User user = themeDisplay.getUser();
 
-				groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
+				groupParams.put("usersGroups", user.getUserId());
 			}
 		}
 

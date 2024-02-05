@@ -37,7 +37,7 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 		String itemSelectedEventName, PortletURL portletURL) {
 
 		this.httpServletRequest = httpServletRequest;
-		_groupItemSelectorCriterion = groupItemSelectorCriterion;
+		this.groupItemSelectorCriterion = groupItemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
 		this.portletURL = portletURL;
 	}
@@ -57,7 +57,7 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 
 	@Override
 	public GroupItemSelectorCriterion getGroupItemSelectorCriterion() {
-		return _groupItemSelectorCriterion;
+		return groupItemSelectorCriterion;
 	}
 
 	@Override
@@ -108,11 +108,11 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 		return false;
 	}
 
+	protected final GroupItemSelectorCriterion groupItemSelectorCriterion;
 	protected final HttpServletRequest httpServletRequest;
 	protected final PortletURL portletURL;
 
 	private String _displayStyle;
-	private final GroupItemSelectorCriterion _groupItemSelectorCriterion;
 	private final String _itemSelectedEventName;
 
 }

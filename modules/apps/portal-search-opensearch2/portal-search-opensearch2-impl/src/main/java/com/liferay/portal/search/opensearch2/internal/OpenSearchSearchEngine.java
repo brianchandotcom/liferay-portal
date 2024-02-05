@@ -123,6 +123,18 @@ public class OpenSearchSearchEngine
 			this, elasticsearchConfigurationObserver);
 	}
 
+	public void createBackupRepository() {
+		if (_hasBackupRepository()) {
+			return;
+		}
+
+		CreateSnapshotRepositoryRequest createSnapshotRepositoryRequest =
+			new CreateSnapshotRepositoryRequest(
+				_BACKUP_REPOSITORY_NAME, "opensearch_backup");
+
+		_searchEngineAdapter.execute(createSnapshotRepositoryRequest);
+	}
+
 	@Override
 	public IndexSearcher getIndexSearcher() {
 		return _indexSearcher;
@@ -276,18 +288,6 @@ public class OpenSearchSearchEngine
 
 			initialize(CompanyConstants.SYSTEM);
 		}
-	}
-
-	protected void createBackupRepository() {
-		if (_hasBackupRepository()) {
-			return;
-		}
-
-		CreateSnapshotRepositoryRequest createSnapshotRepositoryRequest =
-			new CreateSnapshotRepositoryRequest(
-				_BACKUP_REPOSITORY_NAME, "opensearch_backup");
-
-		_searchEngineAdapter.execute(createSnapshotRepositoryRequest);
 	}
 
 	private void _checkNodeVersions() {

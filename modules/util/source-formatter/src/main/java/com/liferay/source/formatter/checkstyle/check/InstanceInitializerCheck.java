@@ -307,7 +307,10 @@ public class InstanceInitializerCheck extends BaseCheck {
 			fullyQualifiedTypeName = fullIdent.getText();
 		}
 
-		if (fullyQualifiedTypeName == null) {
+		if ((fullyQualifiedTypeName == null) ||
+			!fullyQualifiedTypeName.startsWith("com.liferay.") ||
+			!fullyQualifiedTypeName.contains(".dto.v")) {
+
 			return null;
 		}
 

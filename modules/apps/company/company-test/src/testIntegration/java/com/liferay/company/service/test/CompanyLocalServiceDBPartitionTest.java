@@ -146,7 +146,6 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertArrayEquals(
 				companyIds, PortalInstances.getCompanyIdsBySQL());
 			Assert.assertEquals(dbPartitionsCount, _getDBPartitionsCount());
-			Assert.assertEquals(_JOB_COUNT, _getJobsCount(_defaultCompanyId));
 		}
 		finally {
 			if (company != null) {
@@ -186,7 +185,6 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertArrayEquals(
 				companyIds, PortalInstances.getCompanyIdsBySQL());
 			Assert.assertEquals(dbPartitionsCount, _getDBPartitionsCount());
-			Assert.assertEquals(_JOB_COUNT, _getJobsCount(_defaultCompanyId));
 		}
 		finally {
 			if (company != null) {

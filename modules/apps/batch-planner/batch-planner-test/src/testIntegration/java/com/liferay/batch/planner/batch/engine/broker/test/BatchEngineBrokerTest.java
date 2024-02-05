@@ -43,11 +43,14 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
+import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.DecimalObjectFieldBuilder;
+import com.liferay.object.field.builder.EncryptedObjectFieldBuilder;
+import com.liferay.object.field.builder.FormulaObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
@@ -58,8 +61,10 @@ import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectViewColumn;
 import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.object.model.ObjectViewSortColumn;
@@ -71,6 +76,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFolderItemLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
@@ -81,6 +87,7 @@ import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewFilterColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
@@ -101,10 +108,12 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -134,6 +143,8 @@ import java.net.URI;
 
 import java.nio.file.Files;
 
+import java.security.Key;
+
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
@@ -144,6 +155,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipInputStream;
+
+import javax.crypto.KeyGenerator;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -160,7 +173,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Matija Petanjek
  */
-@FeatureFlags({"LPS-135430", "LPS-187142"})
+@FeatureFlags({"LPS-135430", "LPS-164948", "LPS-187142"})
 @RunWith(Arquillian.class)
 public class BatchEngineBrokerTest {
 
@@ -229,7 +242,7 @@ public class BatchEngineBrokerTest {
 
 			_executeImportTask(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				_objectEntryExportCSVFieldNames, null,
+				_objectEntryImportCSVFieldNames, null,
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 				"C_TestObjectCSV", _getURIString("csv", fileInputStream));
 		}
@@ -413,6 +426,23 @@ public class BatchEngineBrokerTest {
 			_group.getGroupId(), _OBJECT_ENTRY_ERC_2);
 	}
 
+	private ObjectField _addCustomObjectField(ObjectField objectField)
+		throws Exception {
+
+		return _objectFieldLocalService.addCustomObjectField(
+			objectField.getExternalReferenceCode(), TestPropsValues.getUserId(),
+			objectField.getListTypeDefinitionId(),
+			objectField.getObjectDefinitionId(), objectField.getBusinessType(),
+			objectField.getDBType(), objectField.isIndexed(),
+			objectField.isIndexedAsKeyword(),
+			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
+			objectField.isLocalized(), objectField.getName(),
+			objectField.getReadOnly(),
+			objectField.getReadOnlyConditionExpression(),
+			objectField.isRequired(), objectField.isState(),
+			objectField.getObjectFieldSettings());
+	}
+
 	private DLFileEntry _addDLFileEntry(long groupId, long userId)
 		throws Exception {
 
@@ -523,6 +553,21 @@ public class BatchEngineBrokerTest {
 		_addObjectEntry(
 			_company2.getCompanyId(), RandomTestUtil.randomString(),
 			_company2.getGroupId(), _objectDefinition2, user.getUserId());
+	}
+
+	private ObjectRelationship _addObjectRelationship(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2)
+		throws Exception {
+
+		return _objectRelationshipLocalService.addObjectRelationship(
+			null, TestPropsValues.getUserId(),
+			objectDefinition1.getObjectDefinitionId(),
+			objectDefinition2.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"a" + RandomTestUtil.randomString(), false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
 	private void _assertActions(JsonNode fieldJsonNode, String fieldName) {
@@ -1067,6 +1112,17 @@ public class BatchEngineBrokerTest {
 						).name(
 							"testDecimalField"
 						).build(),
+						new FormulaObjectFieldBuilder(
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).name(
+							"testFormulaField"
+						).objectFieldSettings(
+							Arrays.asList(
+								_createObjectFieldSetting("output", "Integer"),
+								_createObjectFieldSetting("script", "id / id"))
+						).build(),
 						new IntegerObjectFieldBuilder(
 						).labelMap(
 							LocalizedMapUtil.getLocalizedMap(
@@ -1127,6 +1183,39 @@ public class BatchEngineBrokerTest {
 						).name(
 							"testTextField"
 						).build()));
+
+			ObjectRelationship objectRelationship = _addObjectRelationship(
+				objectDefinition, objectDefinition);
+
+			_addCustomObjectField(
+				new AggregationObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"testAggregationField"
+				).objectDefinitionId(
+					objectDefinition.getObjectDefinitionId()
+				).objectFieldSettings(
+					Arrays.asList(
+						_createObjectFieldSetting("function", "COUNT"),
+						_createObjectFieldSetting(
+							"objectRelationshipName",
+							objectRelationship.getName()))
+				).build());
+
+			_withAddEncryptedObjectField(
+				"AES",
+				() -> _addCustomObjectField(
+					new EncryptedObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"testEncryptedField"
+					).objectDefinitionId(
+						objectDefinition.getObjectDefinitionId()
+					).build()));
 
 			return _objectDefinitionLocalService.publishCustomObjectDefinition(
 				user.getUserId(), objectDefinition.getObjectDefinitionId());
@@ -1219,7 +1308,7 @@ public class BatchEngineBrokerTest {
 
 			_executeImportTask(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
-				_objectEntryExportCSVFieldNames, groupId,
+				_objectEntryImportCSVFieldNames, groupId,
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 				"C_TestObjectCSV", _getURIString("csv", fileInputStream));
 		}
@@ -1300,6 +1389,30 @@ public class BatchEngineBrokerTest {
 		return csvRecord.toList();
 	}
 
+	private void _withAddEncryptedObjectField(
+			String algorithm, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
+
+		keyGenerator.init(128);
+
+		Key key = keyGenerator.generateKey();
+
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"OBJECT_ENCRYPTION_ALGORITHM", algorithm);
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"OBJECT_ENCRYPTION_ENABLED", true);
+			SafeCloseable safeCloseable3 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"OBJECT_ENCRYPTION_KEY", Base64.encode(key.getEncoded()))) {
+
+			unsafeRunnable.run();
+		}
+	}
+
 	private static final String _DELIMITER_VALUE = StringPool.COMMA;
 
 	private static final String _ENCLOSING_CHARACTER_VALUE = StringPool.QUOTE;
@@ -1353,9 +1466,10 @@ public class BatchEngineBrokerTest {
 	private static final List<String> _objectEntryExportCSVFieldNames =
 		Arrays.asList(
 			"dateCreated", "dateModified", "externalReferenceCode", "id",
-			"keywords", "scopeKey", "testDateField", "testDateTimeField",
-			"testDecimalField", "testIntegerField", "testLongIntegerField",
-			"testLongTextField", "testPicklistField",
+			"keywords", "scopeKey", "testAggregationField", "testBooleanField",
+			"testDateField", "testDateTimeField", "testDecimalField",
+			"testEncryptedField", "testFormulaField", "testIntegerField",
+			"testLongIntegerField", "testLongTextField", "testPicklistField",
 			"testPrecisionDecimalField", "testRichTextField", "testTextField");
 	private static final List<String> _objectEntryExportFieldNames =
 		Arrays.asList(
@@ -1365,6 +1479,14 @@ public class BatchEngineBrokerTest {
 			"testLongIntegerField", "testLongTextField",
 			"testMultiselectPicklistField", "testPicklistField",
 			"testPrecisionDecimalField", "testRichTextField", "testTextField");
+	private static final List<String> _objectEntryImportCSVFieldNames =
+		Arrays.asList(
+			"dateCreated", "dateModified", "externalReferenceCode", "id",
+			"keywords", "scopeKey", "testBooleanField", "testDateField",
+			"testDateTimeField", "testDecimalField", "testEncryptedField",
+			"testIntegerField", "testLongIntegerField", "testLongTextField",
+			"testPicklistField", "testPrecisionDecimalField",
+			"testRichTextField", "testTextField");
 	private static final List<String> _objectEntryImportFieldNames =
 		Arrays.asList(
 			"externalReferenceCode", "keywords", "testAttachmentField",
@@ -1450,6 +1572,9 @@ public class BatchEngineBrokerTest {
 
 	@Inject
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;

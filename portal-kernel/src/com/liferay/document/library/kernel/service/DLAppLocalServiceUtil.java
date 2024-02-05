@@ -741,6 +741,8 @@ public class DLAppLocalServiceUtil {
 	 * @param dlVersionNumberIncrease the kind of version number increase to
 	 apply for these changes.
 	 * @param bytes the file's data (optionally <code>null</code>)
+	 * @param displayDate the file's display date (optionally <code>null
+	 </code>)
 	 * @param expirationDate the file's expiration date (optionally <code>null
 	 </code>)
 	 * @param reviewDate the file's review date (optionally <code>null</code>)
@@ -760,14 +762,14 @@ public class DLAppLocalServiceUtil {
 				String description, String changeLog,
 				com.liferay.document.library.kernel.model.
 					DLVersionNumberIncrease dlVersionNumberIncrease,
-				byte[] bytes, java.util.Date expirationDate,
-				java.util.Date reviewDate,
+				byte[] bytes, java.util.Date displayDate,
+				java.util.Date expirationDate, java.util.Date reviewDate,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
-			description, changeLog, dlVersionNumberIncrease, bytes,
+			description, changeLog, dlVersionNumberIncrease, bytes, displayDate,
 			expirationDate, reviewDate, serviceContext);
 	}
 
@@ -798,6 +800,8 @@ public class DLAppLocalServiceUtil {
 	 * @param dlVersionNumberIncrease the kind of version number increase to
 	 apply for these changes.
 	 * @param file the file's data (optionally <code>null</code>)
+	 * @param displayDate the file's display date (optionally <code>null
+	 </code>)
 	 * @param expirationDate the file's expiration date (optionally <code>null
 	 </code>)
 	 * @param reviewDate the file's review date (optionally <code>null</code>)
@@ -817,14 +821,14 @@ public class DLAppLocalServiceUtil {
 				String description, String changeLog,
 				com.liferay.document.library.kernel.model.
 					DLVersionNumberIncrease dlVersionNumberIncrease,
-				java.io.File file, java.util.Date expirationDate,
-				java.util.Date reviewDate,
+				java.io.File file, java.util.Date displayDate,
+				java.util.Date expirationDate, java.util.Date reviewDate,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
-			description, changeLog, dlVersionNumberIncrease, file,
+			description, changeLog, dlVersionNumberIncrease, file, displayDate,
 			expirationDate, reviewDate, serviceContext);
 	}
 
@@ -856,6 +860,8 @@ public class DLAppLocalServiceUtil {
 	 apply for these changes.
 	 * @param inputStream the file's data (optionally <code>null</code>)
 	 * @param size the file's size (optionally <code>0</code>)
+	 * @param displayDate the file's displaydate (optionally <code>null
+	 </code>)
 	 * @param expirationDate the file's expiration date (optionally <code>null
 	 </code>)
 	 * @param reviewDate the file's review date (optionally <code>null</code>)
@@ -875,7 +881,7 @@ public class DLAppLocalServiceUtil {
 				String description, String changeLog,
 				com.liferay.document.library.kernel.model.
 					DLVersionNumberIncrease dlVersionNumberIncrease,
-				InputStream inputStream, long size,
+				InputStream inputStream, long size, java.util.Date displayDate,
 				java.util.Date expirationDate, java.util.Date reviewDate,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
@@ -883,7 +889,7 @@ public class DLAppLocalServiceUtil {
 		return getService().updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
 			description, changeLog, dlVersionNumberIncrease, inputStream, size,
-			expirationDate, reviewDate, serviceContext);
+			displayDate, expirationDate, reviewDate, serviceContext);
 	}
 
 	/**

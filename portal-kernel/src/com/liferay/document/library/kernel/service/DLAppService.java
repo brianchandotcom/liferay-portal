@@ -1797,6 +1797,8 @@ public interface DLAppService extends BaseService {
 	 * @param dlVersionNumberIncrease the kind of version number increase to
 	 apply for these changes.
 	 * @param bytes the file's data (optionally <code>null</code>)
+	 * @param displayDate the file's display date (optionally <code>null
+	 </code>)
 	 * @param expirationDate the file's expiration date (optionally <code>null
 	 </code>)
 	 * @param reviewDate the file's review date (optionally <code>null</code>)
@@ -1813,7 +1815,8 @@ public interface DLAppService extends BaseService {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease, byte[] bytes,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -1842,6 +1845,8 @@ public interface DLAppService extends BaseService {
 	 * @param dlVersionNumberIncrease the kind of version number increase to
 	 apply for these changes.
 	 * @param file the file's data (optionally <code>null</code>)
+	 * @param displayDate the file's display date (optionally <code>null
+	 </code>)
 	 * @param expirationDate the file's expiration date (optionally <code>null
 	 </code>)
 	 * @param reviewDate the file's review date (optionally <code>null</code>)
@@ -1858,7 +1863,8 @@ public interface DLAppService extends BaseService {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -1888,6 +1894,8 @@ public interface DLAppService extends BaseService {
 	 apply for these changes.
 	 * @param inputStream the file's data (optionally <code>null</code>)
 	 * @param size the file's size (optionally <code>0</code>)
+	 * @param displayDate the file's display date (optionally <code>null
+	 </code>)
 	 * @param expirationDate the file's expiration date (optionally <code>null
 	 </code>)
 	 * @param reviewDate the file's review date (optionally <code>null</code>)
@@ -1904,23 +1912,24 @@ public interface DLAppService extends BaseService {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
-		throws PortalException;
-
-	public FileEntry updateFileEntryAndCheckIn(
-			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String urlTitle, String description, String changeLog,
-			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
+			InputStream inputStream, long size, Date displayDate,
 			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException;
 
 	public FileEntry updateFileEntryAndCheckIn(
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String urlTitle, String description, String changeLog,
+			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
+			Date displayDate, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public FileEntry updateFileEntryAndCheckIn(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease,
-			InputStream inputStream, long size, Date expirationDate,
-			Date reviewDate, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date displayDate,
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

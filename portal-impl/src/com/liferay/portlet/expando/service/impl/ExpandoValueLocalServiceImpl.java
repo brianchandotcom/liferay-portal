@@ -918,6 +918,8 @@ public class ExpandoValueLocalServiceImpl
 	public void deleteValue(ExpandoValue value) {
 		expandoValuePersistence.remove(value);
 
+		expandoValuePersistence.flush();
+
 		// Notify delete handlers
 
 		List<ExpandoValueDeleteHandler> expandoValueDeleteHandlers =

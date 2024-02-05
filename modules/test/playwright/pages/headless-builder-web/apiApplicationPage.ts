@@ -8,16 +8,22 @@ import {Locator, Page} from '@playwright/test';
 export class ApiApplicationPage {
 	readonly page: Page;
 	readonly addAPIEndpointButton: Locator;
+	readonly addAPISchemaButton: Locator;
+	readonly createButton: Locator;
 	readonly endpointPathTextBox: Locator;
-	readonly endpointCreateButton: Locator;
+	readonly pathParameterTextBox: Locator;
 	readonly publishButton: Locator;
+	readonly schemaNameTextBox: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 		this.addAPIEndpointButton = page.getByLabel('Add API Endpoint');
+		this.addAPISchemaButton = page.getByLabel('Add New Schema');
+		this.createButton = page.getByRole('button', {name: 'Create'});
 		this.endpointPathTextBox = page.getByPlaceholder('Enter Path');
-		this.endpointCreateButton = page.getByRole('button', {name: 'Create'});
+		this.pathParameterTextBox = page.getByPlaceholder('{Enter Parameter}');
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
+		this.schemaNameTextBox = page.getByPlaceholder('Enter name.');
 	}
 
 	async goToDetailsTab() {
@@ -70,6 +76,18 @@ export class ApiApplicationPage {
 		await this.page.getByRole('menuitem', {name: scopeValue}).click();
 	}
 
+	async setEndpointType(typeValue: 'Collection' | 'Single Element') {
+		await this.page.getByLabel('Select Type').click();
+		await this.page.getByRole('menuitem', {name: typeValue}).click();
+	}
+
+	async setSchemaMainObjectDefinition(objectName: string) {
+		await this.page
+			.getByLabel('Select an Object Definition', {exact: true})
+			.click();
+		await this.page.getByRole('menuitem', {name: objectName}).click();
+	}
+
 	async createApiEndpoint(
 		httpMethod: 'GET' | 'POST',
 		scope: 'Company' | 'Site',
@@ -80,6 +98,21 @@ export class ApiApplicationPage {
 		await this.setEndpointMethod(httpMethod);
 		await this.setEndpointScope(scope);
 		await this.endpointPathTextBox.fill(path);
-		await this.endpointCreateButton.click();
+		await this.createButton.click();
+	}
+
+	async createSingleElementApiEndpoint(
+		scope: 'Company' | 'Site',
+		path: string,
+		pathParameter: string
+	) {
+		await this.goToEndpointsTab();
+		await this.addAPIEndpointButton.click();
+		await this.setEndpointMethod('GET');
+		await this.setEndpointType('Single Element');
+		await this.setEndpointScope(scope);
+		await this.endpointPathTextBox.fill(path);
+		await this.pathParameterTextBox.fill(pathParameter);
+		await this.createButton.click();
 	}
 }

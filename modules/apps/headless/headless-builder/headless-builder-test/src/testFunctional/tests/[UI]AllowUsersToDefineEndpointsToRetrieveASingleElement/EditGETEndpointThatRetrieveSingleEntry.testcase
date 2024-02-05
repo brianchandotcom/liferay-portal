@@ -39,37 +39,6 @@ definition {
 	}
 
 	@priority = 4
-	test CanSeeAvailablePathParameterPropertiesInRelatedSchema {
-		property portal.acceptance = "true";
-
-		task ("When I select Path Parameter Property in edit API application > Endpoint > Configuration > related schema") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "My-app");
-
-			APIBuilderUI.addAndPublishEndpointConfiguration(
-				entity = "Endpoints",
-				name = "/gettest/{entryId}",
-				schemaName = "testSchema",
-				title = "My-app");
-
-			Click(
-				locator1 = "Button#BUTTON_WITH_VALUE",
-				value = "ID");
-		}
-
-		task ("Then I can see available options are ID and External Reference Code") {
-			AssertElementPresent(
-				key_optionName = "External Reference Code",
-				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
-
-			AssertElementPresent(
-				key_optionName = "ID",
-				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
-		}
-	}
-
-	@priority = 4
 	test CanSeePathParameterPropertyWithMapDetails {
 		property portal.acceptance = "true";
 

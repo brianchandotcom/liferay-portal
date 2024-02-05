@@ -9,15 +9,21 @@ import {ApplicationsMenuPage} from '../product-navigation-applications-menu/Appl
 
 export class HeadlessBuilderPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly createApplicationButton: Locator;
 	readonly page: Page;
 	readonly addNewAPIApplicationButton: Locator;
+	readonly newAPIApplicationTitleBox: Locator;
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.createApplicationButton = page.getByRole('button', {
+			name: 'Create',
+		});
 		this.page = page;
 		this.addNewAPIApplicationButton = page.getByRole('button', {
 			name: 'New',
 		});
+		this.newAPIApplicationTitleBox = page.getByPlaceholder('Enter title.');
 	}
 
 	async goto() {

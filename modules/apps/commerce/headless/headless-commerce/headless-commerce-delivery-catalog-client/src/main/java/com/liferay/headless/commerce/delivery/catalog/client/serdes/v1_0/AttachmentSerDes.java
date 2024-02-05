@@ -65,6 +65,30 @@ public class AttachmentSerDes {
 			sb.append("\"");
 		}
 
+		if (attachment.getCdnEnabled() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cdnEnabled\": ");
+
+			sb.append(attachment.getCdnEnabled());
+		}
+
+		if (attachment.getCdnURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cdnURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(attachment.getCdnURL()));
+
+			sb.append("\"");
+		}
+
 		if (attachment.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -111,6 +135,20 @@ public class AttachmentSerDes {
 
 			sb.append(
 				liferayToJSONDateFormat.format(attachment.getExpirationDate()));
+
+			sb.append("\"");
+		}
+
+		if (attachment.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(attachment.getExternalReferenceCode()));
 
 			sb.append("\"");
 		}
@@ -265,6 +303,20 @@ public class AttachmentSerDes {
 			map.put("attachment", String.valueOf(attachment.getAttachment()));
 		}
 
+		if (attachment.getCdnEnabled() == null) {
+			map.put("cdnEnabled", null);
+		}
+		else {
+			map.put("cdnEnabled", String.valueOf(attachment.getCdnEnabled()));
+		}
+
+		if (attachment.getCdnURL() == null) {
+			map.put("cdnURL", null);
+		}
+		else {
+			map.put("cdnURL", String.valueOf(attachment.getCdnURL()));
+		}
+
 		if (attachment.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
@@ -289,6 +341,15 @@ public class AttachmentSerDes {
 			map.put(
 				"expirationDate",
 				liferayToJSONDateFormat.format(attachment.getExpirationDate()));
+		}
+
+		if (attachment.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(attachment.getExternalReferenceCode()));
 		}
 
 		if (attachment.getFileEntryId() == null) {
@@ -389,6 +450,16 @@ public class AttachmentSerDes {
 					attachment.setAttachment((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "cdnEnabled")) {
+				if (jsonParserFieldValue != null) {
+					attachment.setCdnEnabled((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "cdnURL")) {
+				if (jsonParserFieldValue != null) {
+					attachment.setCdnURL((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
@@ -415,6 +486,14 @@ public class AttachmentSerDes {
 				if (jsonParserFieldValue != null) {
 					attachment.setExpirationDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					attachment.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fileEntryId")) {

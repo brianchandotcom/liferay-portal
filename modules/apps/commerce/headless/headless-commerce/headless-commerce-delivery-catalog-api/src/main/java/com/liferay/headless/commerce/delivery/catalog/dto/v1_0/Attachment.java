@@ -98,6 +98,88 @@ public class Attachment implements Serializable {
 	private Supplier<String> _attachmentSupplier;
 
 	@Schema
+	public Boolean getCdnEnabled() {
+		if (_cdnEnabledSupplier != null) {
+			cdnEnabled = _cdnEnabledSupplier.get();
+
+			_cdnEnabledSupplier = null;
+		}
+
+		return cdnEnabled;
+	}
+
+	public void setCdnEnabled(Boolean cdnEnabled) {
+		this.cdnEnabled = cdnEnabled;
+
+		_cdnEnabledSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCdnEnabled(
+		UnsafeSupplier<Boolean, Exception> cdnEnabledUnsafeSupplier) {
+
+		_cdnEnabledSupplier = () -> {
+			try {
+				return cdnEnabledUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean cdnEnabled;
+
+	@JsonIgnore
+	private Supplier<Boolean> _cdnEnabledSupplier;
+
+	@Schema(example = "AB-34098-789-N")
+	public String getCdnURL() {
+		if (_cdnURLSupplier != null) {
+			cdnURL = _cdnURLSupplier.get();
+
+			_cdnURLSupplier = null;
+		}
+
+		return cdnURL;
+	}
+
+	public void setCdnURL(String cdnURL) {
+		this.cdnURL = cdnURL;
+
+		_cdnURLSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCdnURL(
+		UnsafeSupplier<String, Exception> cdnURLUnsafeSupplier) {
+
+		_cdnURLSupplier = () -> {
+			try {
+				return cdnURLUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String cdnURL;
+
+	@JsonIgnore
+	private Supplier<String> _cdnURLSupplier;
+
+	@Schema
 	@Valid
 	public CustomField[] getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -220,6 +302,47 @@ public class Attachment implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
+
+	@Schema(example = "AB-34098-789-N")
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
+
+			_externalReferenceCodeSupplier = null;
+		}
+
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+
+		_externalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		_externalReferenceCodeSupplier = () -> {
+			try {
+				return externalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String externalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
 	@Schema(example = "30130")
@@ -674,6 +797,34 @@ public class Attachment implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean cdnEnabled = getCdnEnabled();
+
+		if (cdnEnabled != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cdnEnabled\": ");
+
+			sb.append(cdnEnabled);
+		}
+
+		String cdnURL = getCdnURL();
+
+		if (cdnURL != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cdnURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cdnURL));
+
+			sb.append("\"");
+		}
+
 		CustomField[] customFields = getCustomFields();
 
 		if (customFields != null) {
@@ -724,6 +875,22 @@ public class Attachment implements Serializable {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(expirationDate));
+
+			sb.append("\"");
+		}
+
+		String externalReferenceCode = getExternalReferenceCode();
+
+		if (externalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
 
 			sb.append("\"");
 		}

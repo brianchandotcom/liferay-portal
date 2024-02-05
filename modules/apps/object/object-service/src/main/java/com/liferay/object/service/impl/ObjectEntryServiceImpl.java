@@ -119,7 +119,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				groupId, objectDefinitionId, values);
 		}
 
-		_validateSubmissionLimit(objectDefinitionId, getUser());
+		_validateSubmissionLimit(groupId, objectDefinitionId, getUser());
 
 		return objectEntryLocalService.addObjectEntry(
 			getUserId(), groupId, objectDefinitionId, values, serviceContext);
@@ -694,7 +694,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 	}
 
-	private void _validateSubmissionLimit(long objectDefinitionId, User user)
+	private void _validateSubmissionLimit(
+		long groupId, long objectDefinitionId, User user)
 		throws PortalException {
 
 		if (!user.isGuestUser()) {
@@ -723,15 +724,15 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			}
 
 			long count = objectEntryLocalService.getObjectEntriesCount(
-				user.getUserId(), objectDefinition,
-				ObjectEntryTable.INSTANCE.createDate.gte(_getStartDate()));
+				user.getUserId(), groupId,
+				objectDefinition.getObjectDefinitionId(), _getStartDate());
 
 			long maximumNumberOfGuestUserObjectEntriesPerObjectDefinition =
 				_objectConfiguration.
 					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
 
 			if (count >=
-					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
+				maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
 
 				_sendUserNotificationEvents(objectDefinition);
 
@@ -745,7 +746,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 							objectDefinition.getDefaultLanguageId()),
 						" has been reached and will no longer be accepted"),
 					"the-limit-of-guest-entries-for-object-definition-has-" +
-						"been-reached-and-will-no-longer-be-accepted",
+					"been-reached-and-will-no-longer-be-accepted",
 					objectDefinition.getLabel(
 						objectDefinition.getDefaultLanguageId()));
 			}
@@ -758,7 +759,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
 
 			if (count >=
-					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
+				maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
 
 				throw new ObjectEntryCountException(
 					StringBundler.concat(

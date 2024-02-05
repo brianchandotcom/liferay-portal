@@ -866,6 +866,16 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public long getObjectEntriesCount(
+		long userId, long groupId, long objectDefinitionId,
+		Date startDate)
+		throws PortalException {
+
+		return objectEntryPersistence.countByG_U_GtC_ODI(
+			groupId, userId, startDate, objectDefinitionId);
+	}
+
+	@Override
 	public ObjectEntry getObjectEntry(
 			String externalReferenceCode, long objectDefinitionId)
 		throws PortalException {

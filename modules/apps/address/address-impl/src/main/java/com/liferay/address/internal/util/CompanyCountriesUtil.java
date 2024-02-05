@@ -183,7 +183,7 @@ public class CompanyCountriesUtil {
 				JSONObject regionJSONObject = regionsJSONArray.getJSONObject(i);
 
 				long regionId = CounterLocalServiceUtil.increment(
-					Region.class.getName(), 1);
+					Region.class.getName());
 
 				_addRegionBatch(
 					regionPreparedStatement, country.getCompanyId(),
@@ -255,7 +255,7 @@ public class CompanyCountriesUtil {
 		preparedStatement.setLong(
 			1,
 			CounterLocalServiceUtil.increment(
-				RegionLocalization.class.getName(), 1));
+				RegionLocalization.class.getName()));
 		preparedStatement.setLong(2, countryId);
 		preparedStatement.setLong(3, regionId);
 		preparedStatement.setString(4, languageId);

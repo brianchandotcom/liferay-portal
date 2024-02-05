@@ -23,6 +23,8 @@ Import-Package:\
 	!io.netty.handler.codec.haproxy,\
 	!io.netty.incubator.channel.uring,\
 	\
+	!jakarta.servlet.*,\
+	\
 	!javax.annotation.meta,\
 	\
 	!kotlin,\

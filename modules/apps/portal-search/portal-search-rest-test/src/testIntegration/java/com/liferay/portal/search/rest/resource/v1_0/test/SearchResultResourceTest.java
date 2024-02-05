@@ -235,6 +235,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		else {
 			Assert.assertTrue(Objects.deepEquals(expectedValues, termValues));
 		}
+
+		return page;
 	}
 
 	private void _assertFacetConfiguration(
@@ -412,7 +414,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 				"range", range
 			));
 
-		_assertFacetConfiguration(
+		SearchPage<SearchResult> page = _assertFacetConfiguration(
 			false,
 			HashMapBuilder.<String, Object>put(
 				"field", "modified"
@@ -422,6 +424,16 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 				"ranges", rangesJSONArray
 			).build(),
 			"date-range", range, range);
+
+		Map<String, Object> facetsMap =
+			(Map<String, Object>)page.getSearchFacets();
+
+		JSONArray termJSONArray = (JSONArray)facetsMap.get("date-range");
+
+		JSONObject termJSONObject = _jsonFactory.createJSONObject(
+			termJSONArray.getString(0));
+
+		Assert.assertEquals("1", termJSONObject.getString("displayName"));
 	}
 
 	private void _testPostSearchPageWithFolderFacetConfiguration(

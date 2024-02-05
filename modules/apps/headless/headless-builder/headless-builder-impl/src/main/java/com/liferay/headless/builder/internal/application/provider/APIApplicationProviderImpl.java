@@ -28,7 +28,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Predicate;
 
 import org.osgi.service.component.annotations.Component;
@@ -285,11 +284,6 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 								objectField.getBusinessType());
 						}
 
-						if (Objects.equals(type, Type.ARRAY_CONTAINER)) {
-							throw new UnsupportedOperationException(
-								"Array type is not supported");
-						}
-
 						if (type == null) {
 							throw new IllegalStateException(
 								"Property type is not supported");
@@ -457,9 +451,6 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 
 	private static final Map<String, APIApplication.Property.Type>
 		_propertyTypes = HashMapBuilder.put(
-			APIApplication.Property.PropertyType.ARRAY_CONTAINER.getValue(),
-			APIApplication.Property.Type.ARRAY_CONTAINER
-		).put(
 			APIApplication.Property.PropertyType.SINGLE_CONTAINER.getValue(),
 			APIApplication.Property.Type.SINGLE_CONTAINER
 		).put(

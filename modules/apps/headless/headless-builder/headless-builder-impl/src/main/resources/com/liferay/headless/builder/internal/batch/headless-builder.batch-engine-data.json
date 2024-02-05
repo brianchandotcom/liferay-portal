@@ -389,22 +389,8 @@
 							"value": {
 								"objectStates": [
 									{
-										"key": "arrayContainer",
-										"objectStateTransitions": [
-											{
-												"key": "normal"
-											},
-											{
-												"key": "singleContainer"
-											}
-										]
-									},
-									{
 										"key": "normal",
 										"objectStateTransitions": [
-											{
-												"key": "arrayContainer"
-											},
 											{
 												"key": "singleContainer"
 											}
@@ -413,9 +399,6 @@
 									{
 										"key": "singleContainer",
 										"objectStateTransitions": [
-											{
-												"key": "arrayContainer"
-											},
 											{
 												"key": "normal"
 											}

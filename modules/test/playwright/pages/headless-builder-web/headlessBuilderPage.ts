@@ -26,6 +26,25 @@ export class HeadlessBuilderPage {
 		this.newAPIApplicationTitleBox = page.getByPlaceholder('Enter title.');
 	}
 
+	async accessApplicationActions(applicationTitle: string) {
+		await this.page
+			.locator(
+				`[class="dropdown-toggle component-action dropdown-toggle ml-1 btn btn-unstyled"]:right-of(:text("${applicationTitle}"))`
+			)
+			.first()
+			.click();
+	}
+
+	async deleteApplicationThroughUI(applicationTitle: string) {
+		await this.accessApplicationActions(applicationTitle);
+		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
+		await this.page
+			.getByLabel('Delete API Application')
+			.getByRole('textbox')
+			.fill('My-app');
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+	}
+
 	async goto() {
 		await this.applicationsMenuPage.goToApiBuilder();
 	}

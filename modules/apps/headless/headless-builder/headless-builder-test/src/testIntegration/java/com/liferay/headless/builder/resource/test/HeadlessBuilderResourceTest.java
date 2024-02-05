@@ -342,19 +342,15 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_testGetPropertiesWithContainer(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
 				).put(
 					"name", "container1"
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.VALUE.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
@@ -362,35 +358,32 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"name", "integerProperty"
 				).put(
 					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
+				).put(
+					"type", "value"
 				)),
 			JSONUtil.put("integerProperty", 1), objectEntry1);
 
 		_testGetPropertiesWithContainer(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
 				).put(
 					"name", "container1"
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_2
 				).put(
 					"name", "container2"
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_3
@@ -399,21 +392,19 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_2
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_4
 				).put(
 					"name", "container4"
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_5
@@ -422,11 +413,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_4
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.VALUE.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
@@ -437,11 +427,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_2
+				).put(
+					"type", "value"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.VALUE.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_2
@@ -455,6 +444,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_5
+				).put(
+					"type", "value"
 				)),
 			JSONUtil.put(
 				"container2", JSONUtil.put("integerProperty", 1)
@@ -473,19 +464,15 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_testGetPropertiesWithContainer(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
 				).put(
 					"name", "container1"
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_2
@@ -494,11 +481,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_1
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_3
@@ -507,11 +493,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_2
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.VALUE.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
@@ -522,11 +507,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_2
+				).put(
+					"type", "value"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.VALUE.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_2
@@ -540,6 +524,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_3
+				).put(
+					"type", "value"
 				)),
 			JSONUtil.put(
 				"container1",
@@ -2433,19 +2419,15 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_testPostPropertiesWithContainer(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
 				).put(
 					"name", "container1"
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.VALUE.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
@@ -2453,6 +2435,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"name", "integerProperty"
 				).put(
 					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
+				).put(
+					"type", "value"
 				)),
 			JSONUtil.put(
 				"container1", Collections.emptyMap()
@@ -2464,29 +2448,24 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_testPostPropertiesWithContainer(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
 				).put(
 					"name", "container1"
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_2
 				).put(
 					"name", "container2"
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_3
@@ -2495,21 +2474,19 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_2
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_4
 				).put(
 					"name", "container4"
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_5
@@ -2518,11 +2495,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_4
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.VALUE.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
@@ -2533,11 +2509,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_2
+				).put(
+					"type", "value"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.VALUE.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_2
@@ -2551,6 +2526,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_5
+				).put(
+					"type", "value"
 				)),
 			JSONUtil.put(
 				"container1", Collections.emptyMap()
@@ -2585,19 +2562,15 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_testPostPropertiesWithContainer(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
 				).put(
 					"name", "container1"
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_2
@@ -2606,11 +2579,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_1
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.CONTAINER.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_3
@@ -2619,11 +2591,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_2
+				).put(
+					"type", "container"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.VALUE.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
@@ -2634,11 +2605,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_2
+				).put(
+					"type", "value"
 				),
 				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.VALUE.getValue()
-				).put(
 					"description", "description"
 				).put(
 					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_2
@@ -2652,6 +2622,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_CONTAINER_ERC_3
+				).put(
+					"type", "value"
 				)),
 			JSONUtil.put(
 				"container1",
@@ -3724,10 +3696,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"apiSchemaToAPIProperties",
 				JSONUtil.putAll(
 					JSONUtil.put(
-						"apiPropertyType",
-						APIApplication.Property.PropertyType.CONTAINER.
-							getValue()
-					).put(
 						"description", "description"
 					).put(
 						"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
@@ -3736,12 +3704,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
+					).put(
+						"type", "container"
 					),
 					JSONUtil.put(
-						"apiPropertyType",
-						APIApplication.Property.PropertyType.CONTAINER.
-							getValue()
-					).put(
 						"description", "description"
 					).put(
 						"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_2
@@ -3750,12 +3716,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
+					).put(
+						"type", "container"
 					),
 					JSONUtil.put(
-						"apiPropertyType",
-						APIApplication.Property.PropertyType.CONTAINER.
-							getValue()
-					).put(
 						"description", "description"
 					).put(
 						"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_3
@@ -3764,12 +3728,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
+					).put(
+						"type", "container"
 					),
 					JSONUtil.put(
-						"apiPropertyType",
-						APIApplication.Property.PropertyType.CONTAINER.
-							getValue()
-					).put(
 						"description", "description"
 					).put(
 						"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_4
@@ -3778,12 +3740,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
+					).put(
+						"type", "container"
 					),
 					JSONUtil.put(
-						"apiPropertyType",
-						APIApplication.Property.PropertyType.CONTAINER.
-							getValue()
-					).put(
 						"description", "description"
 					).put(
 						"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_5
@@ -3792,11 +3752,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
+					).put(
+						"type", "container"
 					),
 					JSONUtil.put(
-						"apiPropertyType",
-						APIApplication.Property.PropertyType.VALUE.getValue()
-					).put(
 						"description", "description"
 					).put(
 						"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
@@ -3807,11 +3766,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
+					).put(
+						"type", "value"
 					),
 					JSONUtil.put(
-						"apiPropertyType",
-						APIApplication.Property.PropertyType.VALUE.getValue()
-					).put(
 						"description", "description"
 					).put(
 						"externalReferenceCode", _API_PROPERTY_VALUE_ERC_2
@@ -3826,6 +3784,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
+					).put(
+						"type", "value"
 					))
 			).put(
 				"description", "description"

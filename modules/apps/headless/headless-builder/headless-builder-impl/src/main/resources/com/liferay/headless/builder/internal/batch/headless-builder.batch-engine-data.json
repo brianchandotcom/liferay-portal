@@ -375,14 +375,14 @@
 					"DBType": "String",
 					"businessType": "Picklist",
 					"defaultValue": "value",
-					"externalReferenceCode": "API_PROPERTY_TYPE",
+					"externalReferenceCode": "TYPE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "API Property Type"
+						"en_US": "Type"
 					},
 					"listTypeDefinitionExternalReferenceCode": "API_PROPERTY_TYPE_PICKLIST",
-					"name": "apiPropertyType",
+					"name": "type",
 					"objectFieldSettings": [
 						{
 							"name": "stateFlow",

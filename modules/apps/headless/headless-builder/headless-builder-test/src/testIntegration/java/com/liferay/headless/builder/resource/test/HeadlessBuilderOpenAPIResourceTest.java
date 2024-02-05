@@ -562,34 +562,26 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"apiSchemaToAPIProperties",
 						JSONUtil.putAll(
 							JSONUtil.put(
-								"apiPropertyType",
-								APIApplication.Property.PropertyType.CONTAINER.
-									getValue()
-							).put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
 								_API_CONTAINER_SCHEMA_CONTAINER_ERC_1
 							).put(
 								"name", "container1"
+							).put(
+								"type", "container"
 							),
 							JSONUtil.put(
-								"apiPropertyType",
-								APIApplication.Property.PropertyType.CONTAINER.
-									getValue()
-							).put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
 								_API_CONTAINER_SCHEMA_CONTAINER_ERC_2
 							).put(
 								"name", "container2"
+							).put(
+								"type", "container"
 							),
 							JSONUtil.put(
-								"apiPropertyType",
-								APIApplication.Property.PropertyType.CONTAINER.
-									getValue()
-							).put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
@@ -599,24 +591,20 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 								_API_CONTAINER_SCHEMA_CONTAINER_ERC_2
+							).put(
+								"type", "container"
 							),
 							JSONUtil.put(
-								"apiPropertyType",
-								APIApplication.Property.PropertyType.CONTAINER.
-									getValue()
-							).put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
 								_API_CONTAINER_SCHEMA_CONTAINER_ERC_4
 							).put(
 								"name", "container4"
+							).put(
+								"type", "container"
 							),
 							JSONUtil.put(
-								"apiPropertyType",
-								APIApplication.Property.PropertyType.CONTAINER.
-									getValue()
-							).put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
@@ -626,12 +614,10 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 								_API_CONTAINER_SCHEMA_CONTAINER_ERC_4
+							).put(
+								"type", "container"
 							),
 							JSONUtil.put(
-								"apiPropertyType",
-								APIApplication.Property.PropertyType.VALUE.
-									getValue()
-							).put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
@@ -644,12 +630,10 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 								_API_CONTAINER_SCHEMA_CONTAINER_ERC_2
+							).put(
+								"type", "value"
 							),
 							JSONUtil.put(
-								"apiPropertyType",
-								APIApplication.Property.PropertyType.VALUE.
-									getValue()
-							).put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
@@ -662,6 +646,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 								_API_CONTAINER_SCHEMA_CONTAINER_ERC_5
+							).put(
+								"type", "value"
 							))
 					).put(
 						"description", "description"

@@ -5,7 +5,6 @@
 
 package com.liferay.headless.builder.internal.object.deployer;
 
-import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.internal.object.related.models.DeleteOnDisassociateObjectRelatedModelsProvider;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -118,7 +117,7 @@ public class APIPropertyObjectDefinitionDeployerImpl
 
 		try {
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				objectDefinition.getObjectDefinitionId(), "apiPropertyType");
+				objectDefinition.getObjectDefinitionId(), "type");
 
 			if (objectField == null) {
 				return;
@@ -130,8 +129,7 @@ public class APIPropertyObjectDefinitionDeployerImpl
 					objectDefinition.getCompanyId(),
 					objectDefinition.getUserId(),
 					objectDefinition.getObjectDefinitionId(),
-					_filterFactory.create(
-						"apiPropertyType eq null", objectDefinition),
+					_filterFactory.create("type eq null", objectDefinition),
 					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			if (!valuesList.isEmpty()) {
@@ -140,9 +138,7 @@ public class APIPropertyObjectDefinitionDeployerImpl
 
 					values.removeAll(Collections.singleton(null));
 
-					item.put(
-						"apiPropertyType",
-						APIApplication.Property.PropertyType.VALUE.getValue());
+					item.put("type", "value");
 
 					_objectEntryLocalService.addOrUpdateObjectEntry(
 						(String)item.get("externalReferenceCode"),

@@ -266,36 +266,23 @@ public class CountryRegionUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _updateRegions(Country country) {
-		try {
-			String path =
-				"com/liferay/address/dependencies/regions/" + country.getA2() +
-					".json";
+	private void _updateRegions(Country country) throws Exception {
+		String path =
+			"com/liferay/address/dependencies/regions/" + country.getA2() +
+				".json";
 
-			ClassLoader classLoader =
-				CompanyCountriesUtil.class.getClassLoader();
+		JSONArray regionsJSONArray = CompanyCountriesUtil.getJSONArray(path);
 
-			if (classLoader.getResource(path) == null) {
-				return;
-			}
-
-			JSONArray regionsJSONArray = CompanyCountriesUtil.getJSONArray(
-				path);
-
-			for (int i = 0; i < regionsJSONArray.length(); i++) {
-				try {
-					_updateRegion(country, regionsJSONArray.getJSONObject(i));
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
-				}
-			}
+		if (regionsJSONArray == null) {
+			return;
 		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"No regions found for country " + country.getA2(),
-					exception);
+
+		for (int i = 0; i < regionsJSONArray.length(); i++) {
+			try {
+				_updateRegion(country, regionsJSONArray.getJSONObject(i));
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
 			}
 		}
 	}

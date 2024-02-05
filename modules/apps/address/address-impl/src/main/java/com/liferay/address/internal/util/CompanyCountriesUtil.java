@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
+import java.io.InputStream;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -40,8 +42,9 @@ import java.util.Map;
 public class CompanyCountriesUtil {
 
 	public static void addCountry(
-		Company company, JSONObject countryJSONObject,
-		CountryLocalService countryLocalService, Connection connection) {
+			Company company, JSONObject countryJSONObject,
+			CountryLocalService countryLocalService, Connection connection)
+		throws Exception {
 
 		try {
 			ServiceContext serviceContext = new ServiceContext();
@@ -81,9 +84,16 @@ public class CompanyCountriesUtil {
 	}
 
 	public static JSONArray getJSONArray(String path) throws Exception {
-		return JSONFactoryUtil.createJSONArray(
-			StringUtil.read(
-				CompanyCountriesUtil.class.getClassLoader(), path, false));
+		ClassLoader classLoader = CompanyCountriesUtil.class.getClassLoader();
+
+		try (InputStream inputStream = classLoader.getResourceAsStream(path)) {
+			if (inputStream == null) {
+				return null;
+			}
+
+			return JSONFactoryUtil.createJSONArray(
+				StringUtil.read(inputStream));
+		}
 	}
 
 	public static void populateCompanyCountries(
@@ -129,99 +139,88 @@ public class CompanyCountriesUtil {
 	}
 
 	public static void processCountryRegions(
-		Country country, Connection connection) {
+			Country country, Connection connection)
+		throws Exception {
 
 		String a2 = country.getA2();
 
-		try {
-			String path =
-				"com/liferay/address/dependencies/regions/" + a2 + ".json";
+		String path =
+			"com/liferay/address/dependencies/regions/" + a2 + ".json";
 
-			ClassLoader classLoader =
-				CompanyCountriesUtil.class.getClassLoader();
+		JSONArray regionsJSONArray = getJSONArray(path);
 
-			if (classLoader.getResource(path) == null) {
-				return;
-			}
+		if (regionsJSONArray == null) {
+			return;
+		}
 
-			JSONArray regionsJSONArray = getJSONArray(path);
+		if (_log.isDebugEnabled()) {
+			_log.debug("Regions found for country " + a2);
+		}
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Regions found for country " + a2);
-			}
+		if (regionsJSONArray.length() == 0) {
+			return;
+		}
 
-			if (regionsJSONArray.length() == 0) {
-				return;
-			}
+		try (PreparedStatement regionPreparedStatement =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					StringBundler.concat(
+						"INSERT INTO Region (mvccVersion, ctCollectionId",
+						", uuid_, regionId, companyId, userId, createDate",
+						", modifiedDate, countryId, active_, name",
+						", position, regionCode) VALUES (0, 0, ?, ?, ?, ?, ?, ",
+						"?, ?, ?, ?, 0, ?)"));
+			PreparedStatement regionLocalizationPreparedStatement =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					StringBundler.concat(
+						"INSERT INTO RegionLocalization (mvccVersion, ",
+						"ctCollectionId, regionLocalizationId, companyId",
+						", regionId, languageId, title) VALUES (0, 0, ?, ?, ",
+						"?, ?, ?)"))) {
 
-			try (PreparedStatement regionPreparedStatement =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						connection,
-						StringBundler.concat(
-							"INSERT INTO Region (mvccVersion, ctCollectionId",
-							", uuid_, regionId, companyId, userId, createDate",
-							", modifiedDate, countryId, active_, name",
-							", position, regionCode) VALUES (0, 0, ?, ?, ?, ",
-							"?, ?, ?, ?, ?, ?, 0, ?)"));
-				PreparedStatement regionLocalizationPreparedStatement =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						connection,
-						StringBundler.concat(
-							"INSERT INTO RegionLocalization (mvccVersion, ",
-							"ctCollectionId, regionLocalizationId, companyId",
-							", regionId, languageId, title) VALUES (0, 0, ?, ",
-							"?, ?, ?, ?)"))) {
+			for (int i = 0; i < regionsJSONArray.length(); i++) {
+				JSONObject regionJSONObject = regionsJSONArray.getJSONObject(i);
 
-				for (int i = 0; i < regionsJSONArray.length(); i++) {
-					JSONObject regionJSONObject =
-						regionsJSONArray.getJSONObject(i);
+				long regionId = CounterLocalServiceUtil.increment(
+					Region.class.getName(), 1);
 
-					long regionId = CounterLocalServiceUtil.increment(
-						Region.class.getName(), 1);
+				_addRegionBatch(
+					regionPreparedStatement, country.getCompanyId(),
+					country.getCountryId(), regionJSONObject.getString("name"),
+					regionJSONObject.getString("regionCode"), regionId,
+					country.getUserId());
 
-					_addRegionBatch(
-						regionPreparedStatement, country.getCompanyId(),
-						country.getCountryId(),
-						regionJSONObject.getString("name"),
-						regionJSONObject.getString("regionCode"), regionId,
-						country.getUserId());
+				JSONObject localizationsJSONObject =
+					regionJSONObject.getJSONObject("localizations");
 
-					JSONObject localizationsJSONObject =
-						regionJSONObject.getJSONObject("localizations");
+				if (localizationsJSONObject == null) {
+					for (Locale locale :
+							LanguageUtil.getCompanyAvailableLocales(
+								country.getCompanyId())) {
 
-					if (localizationsJSONObject == null) {
-						for (Locale locale :
-								LanguageUtil.getCompanyAvailableLocales(
-									country.getCompanyId())) {
-
-							_addRegionLocalizationBatch(
-								regionLocalizationPreparedStatement,
-								country.getCountryId(),
-								LanguageUtil.getLanguageId(locale), regionId,
-								regionJSONObject.getString("name"));
-						}
+						_addRegionLocalizationBatch(
+							regionLocalizationPreparedStatement,
+							country.getCountryId(),
+							LanguageUtil.getLanguageId(locale), regionId,
+							regionJSONObject.getString("name"));
 					}
-					else {
-						for (String key : localizationsJSONObject.keySet()) {
-							_addRegionLocalizationBatch(
-								regionLocalizationPreparedStatement,
-								country.getCountryId(), key, regionId,
-								localizationsJSONObject.getString(key));
-						}
-					}
-
-					regionPreparedStatement.executeBatch();
-					regionLocalizationPreparedStatement.executeBatch();
 				}
-			}
-			catch (Exception exception) {
-				_log.error(exception);
+				else {
+					for (String key : localizationsJSONObject.keySet()) {
+						_addRegionLocalizationBatch(
+							regionLocalizationPreparedStatement,
+							country.getCountryId(), key, regionId,
+							localizationsJSONObject.getString(key));
+					}
+				}
+
+				regionPreparedStatement.executeBatch();
+				regionLocalizationPreparedStatement.executeBatch();
 			}
 		}
 		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("No regions found for country " + a2, exception);
-			}
+			_log.error(exception);
 		}
 	}
 

@@ -7,6 +7,7 @@ package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenFactory;
@@ -14,6 +15,8 @@ import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigu
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,6 +33,9 @@ public class DetailsSiteSettingsConfigurationScreenWrapper
 		return _siteSettingsConfigurationScreenFactory.create(
 			new DetailsSiteSettingsConfigurationScreenContributor());
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Language _language;
@@ -72,6 +78,15 @@ public class DetailsSiteSettingsConfigurationScreenWrapper
 		@Override
 		public ServletContext getServletContext() {
 			return _servletContext;
+		}
+
+		@Override
+		public void setAttributes(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse) {
+
+			httpServletRequest.setAttribute(
+				ItemSelector.class.getName(), _itemSelector);
 		}
 
 	}

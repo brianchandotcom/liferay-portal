@@ -8,9 +8,12 @@ package com.liferay.calendar.internal.search;
 import com.liferay.calendar.internal.search.spi.model.index.contributor.CalendarModelIndexerWriterContributor;
 import com.liferay.calendar.internal.search.spi.model.result.contributor.CalendarModelSummaryContributor;
 import com.liferay.calendar.model.Calendar;
+import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
+import com.liferay.portal.search.indexer.IndexerWriter;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -67,12 +70,11 @@ public class CalendarModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new CalendarModelIndexerWriterContributor(
-				_calendarBookingBatchReindexer, _calendarLocalService,
+				new CalendarBookingBatchReindexer(
+					_indexerDocumentBuilder, _indexerWriter),
+				_calendarLocalService,
 				_dynamicQueryBatchIndexingActionableFactory);
 	}
-
-	@Reference
-	private CalendarBookingBatchReindexer _calendarBookingBatchReindexer;
 
 	@Reference
 	private CalendarLocalService _calendarLocalService;
@@ -80,6 +82,16 @@ public class CalendarModelSearchConfigurator
 	@Reference
 	private DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.calendar.model.CalendarBooking)"
+	)
+	private IndexerDocumentBuilder _indexerDocumentBuilder;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.calendar.model.CalendarBooking)"
+	)
+	private IndexerWriter<CalendarBooking> _indexerWriter;
 
 	private ModelIndexerWriterContributor<Calendar>
 		_modelIndexWriterContributor;

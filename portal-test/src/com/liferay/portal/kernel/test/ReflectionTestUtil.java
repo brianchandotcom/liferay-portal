@@ -324,62 +324,54 @@ public class ReflectionTestUtil {
 	public static void setFieldValue(
 		Class<?> clazz, String fieldName, Object value) {
 
-		Field field = getField(clazz, fieldName);
+		setFieldValue(getField(clazz, fieldName), (Object)null, value);
+	}
+
+	public static void setFieldValue(
+		Field field, Object instance, Object value) {
 
 		try {
-			setFieldValue(field, (Object)null, value);
+			int modifiers = field.getModifiers();
+
+			if (!Modifier.isFinal(modifiers)) {
+				field.set(instance, value);
+
+				return;
+			}
+
+			Object memberName = _memberNameConstructor.newInstance(field, true);
+
+			_memberNameFlagsField.setInt(
+				memberName,
+				_memberNameFlagsField.getInt(memberName) - Modifier.FINAL);
+
+			byte getReferenceKind =
+				(byte)_memberNameGetReferenceKindMethod.invoke(memberName);
+
+			Class<?> declaringClass = field.getDeclaringClass();
+
+			MethodHandle methodHandle =
+				(MethodHandle)_lookupGetDirectFieldCommonMethod.invoke(
+					_lookupConstructor.newInstance(declaringClass),
+					getReferenceKind, declaringClass, memberName, false);
+
+			if (Modifier.isStatic(modifiers)) {
+				methodHandle.invoke(value);
+			}
+			else {
+				methodHandle.invoke(instance, value);
+			}
 		}
 		catch (Throwable throwable) {
 			ReflectionUtil.throwException(throwable);
-		}
-	}
-
-	public static void setFieldValue(Field field, Object instance, Object value)
-		throws Throwable {
-
-		int modifiers = field.getModifiers();
-
-		if (!Modifier.isFinal(modifiers)) {
-			field.set(instance, value);
-
-			return;
-		}
-
-		Object memberName = _memberNameConstructor.newInstance(field, true);
-
-		_memberNameFlagsField.setInt(
-			memberName,
-			_memberNameFlagsField.getInt(memberName) - Modifier.FINAL);
-
-		byte getReferenceKind = (byte)_memberNameGetReferenceKindMethod.invoke(
-			memberName);
-
-		Class<?> declaringClass = field.getDeclaringClass();
-
-		MethodHandle methodHandle =
-			(MethodHandle)_lookupGetDirectFieldCommonMethod.invoke(
-				_lookupConstructor.newInstance(declaringClass),
-				getReferenceKind, declaringClass, memberName, false);
-
-		if (Modifier.isStatic(modifiers)) {
-			methodHandle.invoke(value);
-		}
-		else {
-			methodHandle.invoke(instance, value);
 		}
 	}
 
 	public static void setFieldValue(
 		Object instance, String fieldName, Object value) {
 
-		Field field = getField(instance.getClass(), fieldName);
-
-		try {
-			setFieldValue(field, instance, value);
-		}
-		catch (Throwable throwable) {
-			ReflectionUtil.throwException(throwable);
-		}
+		setFieldValue(
+			getField(instance.getClass(), fieldName), instance, value);
 	}
 
 	public static AutoCloseable setFieldValueWithAutoCloseable(
@@ -392,14 +384,7 @@ public class ReflectionTestUtil {
 
 			setFieldValue(field, (Object)null, newValue);
 
-			return () -> {
-				try {
-					setFieldValue(field, (Object)null, value);
-				}
-				catch (Throwable throwable) {
-					ReflectionUtil.throwException(throwable);
-				}
-			};
+			return () -> setFieldValue(field, (Object)null, value);
 		}
 		catch (Throwable throwable) {
 			return ReflectionUtil.throwException(throwable);
@@ -416,14 +401,7 @@ public class ReflectionTestUtil {
 
 			setFieldValue(field, instance, newValue);
 
-			return () -> {
-				try {
-					setFieldValue(field, instance, value);
-				}
-				catch (Throwable throwable) {
-					ReflectionUtil.throwException(throwable);
-				}
-			};
+			return () -> setFieldValue(field, instance, value);
 		}
 		catch (Throwable throwable) {
 			return ReflectionUtil.throwException(throwable);

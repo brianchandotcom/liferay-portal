@@ -582,7 +582,8 @@ public class CompanyLocalServiceDBPartitionTest
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select count(1) from ", partitionName,
-					".QUARTZ_JOB_DETAILS"));
+					".QUARTZ_JOB_DETAILS where JOB_GROUP = '", _JOB_GROUP_NAME,
+					"'"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {

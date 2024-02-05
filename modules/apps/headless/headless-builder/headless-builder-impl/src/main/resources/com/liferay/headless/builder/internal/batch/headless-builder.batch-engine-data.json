@@ -374,7 +374,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Picklist",
-					"defaultValue": "normal",
+					"defaultValue": "value",
 					"externalReferenceCode": "API_PROPERTY_TYPE",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -389,18 +389,18 @@
 							"value": {
 								"objectStates": [
 									{
-										"key": "normal",
+										"key": "value",
 										"objectStateTransitions": [
 											{
-												"key": "singleContainer"
+												"key": "container"
 											}
 										]
 									},
 									{
-										"key": "singleContainer",
+										"key": "container",
 										"objectStateTransitions": [
 											{
-												"key": "normal"
+												"key": "value"
 											}
 										]
 									}

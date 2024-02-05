@@ -1,0 +1,9 @@
+.faq .content-area {
+	max-width: 860px;
+}
+
+.faq .custom-icon {
+	cursor: pointer;
+	height: 24px !important;
+	width: 24px !important;
+}

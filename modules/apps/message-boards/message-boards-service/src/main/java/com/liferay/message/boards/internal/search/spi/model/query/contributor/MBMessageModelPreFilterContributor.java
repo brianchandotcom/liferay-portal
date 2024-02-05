@@ -67,34 +67,40 @@ public class MBMessageModelPreFilterContributor
 						},
 						BooleanClauseOccur.SHOULD);
 
+					User user = null;
+
 					PermissionChecker permissionChecker =
 						PermissionThreadLocal.getPermissionChecker();
 
-					User user = permissionChecker.getUser();
+					if (permissionChecker != null) {
+						user = permissionChecker.getUser();
 
-					long groupId = GroupConstants.DEFAULT_LIVE_GROUP_ID;
+						long groupId = GroupConstants.DEFAULT_LIVE_GROUP_ID;
 
-					if (user.getGroup() != null) {
-						groupId = user.getGroupId();
+						if (user.getGroup() != null) {
+							groupId = user.getGroupId();
+						}
+
+						if (permissionChecker.isContentReviewer(
+								CompanyThreadLocal.getCompanyId(), groupId)) {
+
+							add(
+								new BooleanFilter() {
+									{
+										add(
+											new TermFilter(
+												"status",
+												String.valueOf(
+													WorkflowConstants.
+														STATUS_PENDING)),
+											BooleanClauseOccur.MUST);
+									}
+								},
+								BooleanClauseOccur.SHOULD);
+						}
 					}
 
-					if (permissionChecker.isContentReviewer(
-							CompanyThreadLocal.getCompanyId(), groupId)) {
-
-						add(
-							new BooleanFilter() {
-								{
-									add(
-										new TermFilter(
-											"status",
-											String.valueOf(
-												WorkflowConstants.
-													STATUS_PENDING)),
-										BooleanClauseOccur.MUST);
-								}
-							},
-							BooleanClauseOccur.SHOULD);
-					}
+					User curUser = user;
 
 					add(
 						new BooleanFilter() {
@@ -105,11 +111,15 @@ public class MBMessageModelPreFilterContributor
 										String.valueOf(
 											WorkflowConstants.STATUS_PENDING)),
 									BooleanClauseOccur.MUST);
-								add(
-									new TermFilter(
-										"userId",
-										String.valueOf(user.getUserId())),
-									BooleanClauseOccur.MUST);
+
+								if (curUser != null) {
+									add(
+										new TermFilter(
+											"userId",
+											String.valueOf(
+												curUser.getUserId())),
+										BooleanClauseOccur.MUST);
+								}
 							}
 						},
 						BooleanClauseOccur.SHOULD);

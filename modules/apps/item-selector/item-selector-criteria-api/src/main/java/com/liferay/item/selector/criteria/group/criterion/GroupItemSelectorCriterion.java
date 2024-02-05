@@ -39,6 +39,10 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _includeChildSites;
 	}
 
+	public boolean isIncludeCompany() {
+		return _includeCompany;
+	}
+
 	public boolean isIncludeFormsSite() {
 		return _includeFormsSite;
 	}
@@ -81,6 +85,10 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public void setIncludeChildSites(boolean includeChildSites) {
 		_includeChildSites = includeChildSites;
+	}
+
+	public void setIncludeCompany(boolean includeCompany) {
+		_includeCompany = includeCompany;
 	}
 
 	public void setIncludeFormsSite(boolean includeFormsSite) {
@@ -128,6 +136,7 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private boolean _allowNavigation = true;
 	private boolean _includeAllVisibleGroups;
 	private boolean _includeChildSites;
+	private boolean _includeCompany = true;
 	private boolean _includeFormsSite;
 	private boolean _includeLayoutScopes;
 	private boolean _includeMySites = true;

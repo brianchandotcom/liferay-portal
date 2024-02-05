@@ -35,11 +35,6 @@ public class PortalInstanceLifecycleListenerImpl
 			company, _countryLocalService, _regionLocalService);
 	}
 
-	@Override
-	public void portalInstanceUnregistered(Company company) throws Exception {
-		super.portalInstanceUnregistered(company);
-	}
-
 	@Reference
 	private CountryLocalService _countryLocalService;
 

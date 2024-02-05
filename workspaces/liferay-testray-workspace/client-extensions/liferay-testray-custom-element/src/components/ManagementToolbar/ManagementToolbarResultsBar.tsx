@@ -17,9 +17,9 @@ type ManagementToolbarResultsBarProps = {
 	totalItems: number;
 };
 
-const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = ({
-	totalItems,
-}) => {
+const ManagementToolbarResultsBar: React.FC<
+	ManagementToolbarResultsBarProps
+> = ({totalItems}) => {
 	const location = useLocation();
 	const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 		dispatch({payload: null, type: ListViewTypes.SET_CLEAR});
 	};
 
-	const handleRemoveItemDoFilter = (itemToRemove: string) => {
+	const handleRemoveItemFromFilter = (itemToRemove: string) => {
 		const searchParams = new URLSearchParams(location.search);
 
 		const filtroAtual = searchParams.get('filter');
@@ -47,8 +47,7 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 			if (!Object.keys(filtroObj).length) {
 				searchParams.delete('filter');
 				searchParams.delete('filterSchema');
-			}
-			else {
+			} else {
 				searchParams.set('filter', JSON.stringify(filtroObj));
 			}
 
@@ -60,7 +59,7 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 
 	const onRemoveFilter = (filterName: string) => {
 		dispatch({payload: filterName, type: ListViewTypes.SET_REMOVE_FILTER});
-		handleRemoveItemDoFilter(filterName);
+		handleRemoveItemFromFilter(filterName);
 	};
 
 	return (

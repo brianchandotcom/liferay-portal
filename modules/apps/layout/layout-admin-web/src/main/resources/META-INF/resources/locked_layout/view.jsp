@@ -38,7 +38,7 @@
 			<clay:content-col
 				expand="<%= true %>"
 			>
-				<liferay-ui:message key="this-page-is-currently-being-edited-by-another-user.-if-you-need-to-take-control-over-this-page,-you-can-contact-your-administrator-to-unlock-it" />
+				<liferay-ui:message key="this-page-is-currently-being-edited-by-another-user" />
 			</clay:content-col>
 		</clay:content-row>
 

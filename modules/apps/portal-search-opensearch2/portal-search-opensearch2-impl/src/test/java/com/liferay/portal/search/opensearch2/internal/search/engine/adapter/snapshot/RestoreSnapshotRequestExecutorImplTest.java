@@ -38,10 +38,10 @@ public class RestoreSnapshotRequestExecutorImplTest
 			new RestoreSnapshotRequest("repositoryName", "snapshotName");
 
 		restoreSnapshotRequest.setIncludeAliases(true);
+		restoreSnapshotRequest.setIndexNames("index1", "index2");
 		restoreSnapshotRequest.setPartialRestore(true);
 		restoreSnapshotRequest.setRestoreGlobalState(true);
 		restoreSnapshotRequest.setWaitForCompletion(true);
-		restoreSnapshotRequest.setIndexNames("index1", "index2");
 
 		RestoreSnapshotRequestExecutorImpl restoreSnapshotRequestExecutorImpl =
 			new RestoreSnapshotRequestExecutorImpl();

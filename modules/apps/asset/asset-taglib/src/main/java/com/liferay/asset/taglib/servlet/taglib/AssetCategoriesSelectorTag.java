@@ -27,8 +27,6 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -260,13 +258,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		return categoryIdsTitles;
 	}
 
-	protected String getEventName() {
-		String portletId = PortletProviderUtil.getPortletId(
-			AssetCategory.class.getName(), PortletProvider.Action.BROWSE);
-
-		return PortalUtil.getPortletNamespace(portletId) + "selectCategory";
-	}
-
 	protected long[] getGroupIds() {
 		HttpServletRequest httpServletRequest = getRequest();
 
@@ -321,7 +312,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		return PortletURLBuilder.create(
 			itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, themeDisplay.getScopeGroup(),
-				themeDisplay.getScopeGroupId(), getEventName(),
+				themeDisplay.getScopeGroupId(), "selectCategory",
 				itemSelectorCriterion)
 		).setParameter(
 			"showAddCategoryButton", true
@@ -412,7 +403,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-asset:asset-categories-selector:data",
 				HashMapBuilder.<String, Object>put(
-					"eventName", getEventName()
+					"eventName", "selectCategory"
 				).put(
 					"groupIds", ListUtil.fromArray(getGroupIds())
 				).put(

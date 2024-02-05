@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {TestrayBuildsCases} from '.';
 import TestrayError from '../../TestrayError';
 import Rest from '../../core/Rest';
 import SearchBuilder from '../../core/SearchBuilder';
@@ -10,16 +11,12 @@ import i18n from '../../i18n';
 import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/Stack/StackList';
 import yupSchema from '../../schema/yup';
 import {CaseResultStatuses} from '../../util/statuses';
+import fetcher from '../fetcher';
 import {testrayCaseResultImpl} from './TestrayCaseResult';
 import {testrayFactorRest} from './TestrayFactor';
 import {testrayRunImpl} from './TestrayRun';
 
-import type {
-	APIResponse,
-	TestrayBuild,
-	TestrayCaseResult,
-	TestrayRoutine,
-} from './types';
+import type {APIResponse, TestrayBuild, TestrayRoutine} from './types';
 
 type Build = typeof yupSchema.build.__outputType & {projectId: number};
 
@@ -111,6 +108,14 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 				}
 			}
 
+			await fetcher.post(
+				'/buildscaseses/batch',
+				caseIds.map((caseId) => ({
+					r_buildToBuildsCases_c_buildId: build.id,
+					r_caseToBuildsCases_c_caseId: caseId,
+				}))
+			);
+
 			await testrayCaseResultImpl.createBatch(
 				caseIds.map((caseId) => ({
 					buildId: build.id,
@@ -198,15 +203,15 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 
 	public async getCurrentCaseIds(buildId: string | number) {
 		const response = await this.fetcher(
-			`/caseresults?filter=${SearchBuilder.eq(
+			`/buildscaseses?filter=${SearchBuilder.eq(
 				'buildId',
 				buildId
-			)}&pageSize=1000&fields=r_caseToCaseResult_c_caseId`
+			)}&pageSize=1000&fields=r_caseToBuildsCases_c_caseId`
 		);
 
 		const caseIds: number[] =
 			response?.items.map(
-				(item: TestrayCaseResult) => item.r_caseToCaseResult_c_caseId
+				(item: TestrayBuildsCases) => item.r_caseToBuildsCases_c_caseId
 			) || [];
 
 		return caseIds;

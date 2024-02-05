@@ -35,7 +35,7 @@ definition {
 		}
 
 		var body = '''
-			"apiPropertyType": "normal",
+			"apiPropertyType": "value",
 			"name": "${name}",
 			"objectFieldERC": "${objectFieldERC}",
 			"objectRelationshipNames": "${relationshipName}",

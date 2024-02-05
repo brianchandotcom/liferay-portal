@@ -132,11 +132,11 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 			if (Objects.equals(
 					apiPropertyType,
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER)) {
+					APIApplication.Property.PropertyType.CONTAINER)) {
 
 				if (!FeatureFlagManagerUtil.isEnabled("LPD-10964")) {
 					throw new UnsupportedOperationException(
-						"Single container is not supported");
+						"Container is not supported");
 				}
 
 				if (!Validator.isBlank(objectFieldERC) ||
@@ -144,11 +144,11 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
-						"A single container API property can have neither an " +
-							"Object Field ERC nor Object Relationship Names " +
+						"A container API property can have neither an Object " +
+							"Field ERC nor Object Relationship Names " +
 								"properties associated",
-						"a-single-container-api-property-can-have-neither-an-" +
-							"object-field-erc-nor-object-relationship-names-" +
+						"a-container-api-property-can-have-neither-an-object-" +
+							"field-erc-nor-object-relationship-names-" +
 								"properties-associated");
 				}
 
@@ -173,17 +173,17 @@ public class APIPropertyRelevantObjectEntryModelListener
 							null, -1, -1, null))) {
 
 					throw new ObjectEntryValuesException.InvalidObjectField(
-						null, "Single container name must be unique",
-						"single-container-name-must-be-unique");
+						null, "Container name must be unique",
+						"container-name-must-be-unique");
 				}
 			}
 			else {
 				if (Validator.isNull(objectFieldERC)) {
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
-						"A normal type API property cannot have empty Object " +
+						"A value type API property cannot have empty Object " +
 							"Field ERC value",
-						"a-normal-type-api-property-cannot-have-empty-object-" +
+						"a-value-type-api-property-cannot-have-empty-object-" +
 							"field-erc-value");
 				}
 
@@ -244,34 +244,34 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 			if (Objects.equals(
 					apiPropertyType,
-					APIApplication.Property.PropertyType.NORMAL) &&
+					APIApplication.Property.PropertyType.VALUE) &&
 				Objects.equals(
 					APIApplication.Property.PropertyType.parse(
 						(String)apiPropertyValues.get("apiPropertyType")),
-					APIApplication.Property.PropertyType.NORMAL)) {
+					APIApplication.Property.PropertyType.VALUE)) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,
-					"A normal type API property must be related to a " +
+					"A value type API property must be related to a " +
 						"container API property",
-					"a-normal-type-api-property-must-be-related-to-a-" +
+					"a-value-type-api-property-must-be-related-to-a-" +
 						"container-api-property");
 			}
 
 			if (Objects.equals(
 					apiPropertyType,
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER) &&
+					APIApplication.Property.PropertyType.CONTAINER) &&
 				Objects.equals(
 					APIApplication.Property.PropertyType.parse(
 						(String)apiPropertyValues.get("apiPropertyType")),
-					APIApplication.Property.PropertyType.NORMAL)) {
+					APIApplication.Property.PropertyType.VALUE)) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,
-					"A single container API property must be related to " +
-						"another container API property",
-					"a-single-container-api-property-must-be-related-to-" +
-						"another-container-api-property");
+					"A container API property must be related to another " +
+						"container API property",
+					"a-container-api-property-must-be-related-to-another-" +
+						"container-api-property");
 			}
 		}
 	}

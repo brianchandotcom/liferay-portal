@@ -265,9 +265,7 @@ public class EndpointHelper {
 		Map<String, Object> objectEntryProperties,
 		Map<String, Object> properties, APIApplication.Property property) {
 
-		if (Objects.equals(
-				APIApplication.Property.Type.CONTAINER, property.getType())) {
-
+		if (property.getType() == APIApplication.Property.Type.CONTAINER) {
 			for (APIApplication.Property childProperty :
 					property.getProperties()) {
 

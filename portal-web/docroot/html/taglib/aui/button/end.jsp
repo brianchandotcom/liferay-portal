@@ -47,7 +47,8 @@
 					onClick="<%= onClick %>"
 				</c:when>
 				<c:when test="<%= Validator.isNotNull(escapedHREF) %>">
-					onClick="Liferay.Util.navigate('<%= escapedHREF %>')"
+					data-href="<%= escapedHREF %>"
+					onClick="Liferay.Util.navigate(this.dataset.href)"
 				</c:when>
 			</c:choose>
 

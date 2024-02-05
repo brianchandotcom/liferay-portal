@@ -88,7 +88,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.NORMAL.getValue()
+				APIApplication.Property.PropertyType.VALUE.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -106,7 +106,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.NORMAL.getValue()
+				APIApplication.Property.PropertyType.VALUE.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -127,7 +127,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.NORMAL.getValue()
+				APIApplication.Property.PropertyType.VALUE.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -140,7 +140,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"A normal type API property cannot have empty Object Field ERC " +
+			"A value type API property cannot have empty Object Field ERC " +
 				"value.",
 			jsonObject.get("title"));
 
@@ -186,7 +186,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 				JSONUtil.put(
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.NORMAL.getValue()
+						APIApplication.Property.PropertyType.VALUE.getValue()
 					).put(
 						"description", RandomTestUtil.randomString()
 					).put(
@@ -216,7 +216,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 				JSONUtil.putAll(
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.NORMAL.getValue()
+						APIApplication.Property.PropertyType.VALUE.getValue()
 					).put(
 						"description", RandomTestUtil.randomString()
 					).put(
@@ -229,7 +229,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 					),
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.NORMAL.getValue()
+						APIApplication.Property.PropertyType.VALUE.getValue()
 					).put(
 						"description", RandomTestUtil.randomString()
 					).put(
@@ -268,7 +268,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 	@FeatureFlags("LPD-10964")
 	@Test
-	public void testAddAPIPropertyWithSingleContainer() throws Exception {
+	public void testAddAPIPropertyWithContainer() throws Exception {
 		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
@@ -279,7 +279,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		String normalAPIPropertyExternalReferenceCode =
+		String valueAPIPropertyExternalReferenceCode =
 			RandomTestUtil.randomString();
 
 		JSONObject apiSchemaJSONObject1 = HTTPTestUtil.invokeToJSONObject(
@@ -288,12 +288,12 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 				JSONUtil.put(
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.NORMAL.getValue()
+						APIApplication.Property.PropertyType.VALUE.getValue()
 					).put(
 						"description", RandomTestUtil.randomString()
 					).put(
 						"externalReferenceCode",
-						normalAPIPropertyExternalReferenceCode
+						valueAPIPropertyExternalReferenceCode
 					).put(
 						"name", RandomTestUtil.randomString()
 					).put(
@@ -326,7 +326,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		JSONObject apiPropertyJSONObject1 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.NORMAL.getValue()
+				APIApplication.Property.PropertyType.VALUE.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -342,7 +342,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.NORMAL.getValue()
+				APIApplication.Property.PropertyType.VALUE.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -366,7 +366,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.NORMAL.getValue()
+				APIApplication.Property.PropertyType.VALUE.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -384,14 +384,14 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"A normal type API property must be related to a container API " +
+			"A value type API property must be related to a container API " +
 				"property.",
 			jsonObject.get("title"));
 
 		JSONObject apiPropertyJSONObject2 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.NORMAL.getValue()
+				APIApplication.Property.PropertyType.VALUE.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -407,7 +407,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.NORMAL.getValue()
+				APIApplication.Property.PropertyType.VALUE.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -431,7 +431,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.SINGLE_CONTAINER.getValue()
+				APIApplication.Property.PropertyType.CONTAINER.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -446,15 +446,14 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"A single container API property can have neither an Object " +
-				"Field ERC nor Object Relationship Names properties " +
-					"associated.",
+			"A container API property can have neither an Object Field ERC " +
+				"nor Object Relationship Names properties associated.",
 			jsonObject.get("title"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.SINGLE_CONTAINER.getValue()
+				APIApplication.Property.PropertyType.CONTAINER.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -470,20 +469,20 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"A single container API property must be related to another " +
-				"container API property.",
+			"A container API property must be related to another container " +
+				"API property.",
 			jsonObject.get("title"));
 
-		String singleContainerName = RandomTestUtil.randomString();
+		String containerName = RandomTestUtil.randomString();
 
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.SINGLE_CONTAINER.getValue()
+				APIApplication.Property.PropertyType.CONTAINER.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
-				"name", singleContainerName
+				"name", containerName
 			).put(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject1.get("id")
@@ -493,11 +492,11 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.SINGLE_CONTAINER.getValue()
+				APIApplication.Property.PropertyType.CONTAINER.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
-				"name", singleContainerName
+				"name", containerName
 			).put(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject1.get("id")
@@ -506,12 +505,12 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"Single container name must be unique.", jsonObject.get("title"));
+			"Container name must be unique.", jsonObject.get("title"));
 
 		apiPropertyJSONObject1 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.SINGLE_CONTAINER.getValue()
+				APIApplication.Property.PropertyType.CONTAINER.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -525,7 +524,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiPropertyType",
-				APIApplication.Property.PropertyType.NORMAL.getValue()
+				APIApplication.Property.PropertyType.VALUE.getValue()
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -571,7 +570,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 				JSONUtil.putAll(
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.NORMAL.getValue()
+						APIApplication.Property.PropertyType.VALUE.getValue()
 					).put(
 						"description", RandomTestUtil.randomString()
 					).put(
@@ -584,7 +583,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 					),
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.NORMAL.getValue()
+						APIApplication.Property.PropertyType.VALUE.getValue()
 					).put(
 						"description", RandomTestUtil.randomString()
 					).put(
@@ -612,7 +611,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 				JSONUtil.put(
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.NORMAL.getValue()
+						APIApplication.Property.PropertyType.VALUE.getValue()
 					).put(
 						"description", RandomTestUtil.randomString()
 					).put(

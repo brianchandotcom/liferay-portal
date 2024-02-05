@@ -1,6 +1,46 @@
 {
 	"components": {
 		"schemas": {
+			"ContainerSchemaName": {
+				"description": "description",
+				"properties": {
+					"container1": {
+						"description": "description",
+						"type": "object"
+					},
+					"container2": {
+						"description": "description",
+						"properties": {
+							"container3": {
+								"description": "description",
+								"type": "object"
+							},
+							"containerTextProperty": {
+								"description": "description",
+								"type": "string"
+							}
+						},
+						"type": "object"
+					},
+					"container4": {
+						"description": "description",
+						"properties": {
+							"container5": {
+								"description": "description",
+								"properties": {
+									"containerLongTextProperty": {
+										"description": "description",
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						},
+						"type": "object"
+					}
+				},
+				"type": "object"
+			},
 			"Facet": {
 				"properties": {
 					"facetCriteria": {
@@ -274,46 +314,6 @@
 					"textProperty": {
 						"description": "textProperty description",
 						"type": "string"
-					}
-				},
-				"type": "object"
-			},
-			"SingleContainerSchemaName": {
-				"description": "description",
-				"properties": {
-					"singleContainer1": {
-						"description": "description",
-						"type": "object"
-					},
-					"singleContainer2": {
-						"description": "description",
-						"properties": {
-							"singleContainer3": {
-								"description": "description",
-								"type": "object"
-							},
-							"singleContainerTextProperty": {
-								"description": "description",
-								"type": "string"
-							}
-						},
-						"type": "object"
-					},
-					"singleContainer4": {
-						"description": "description",
-						"properties": {
-							"singleContainer5": {
-								"description": "description",
-								"properties": {
-									"singleContainerLongTextProperty": {
-										"description": "description",
-										"type": "string"
-									}
-								},
-								"type": "object"
-							}
-						},
-						"type": "object"
 					}
 				},
 				"type": "object"

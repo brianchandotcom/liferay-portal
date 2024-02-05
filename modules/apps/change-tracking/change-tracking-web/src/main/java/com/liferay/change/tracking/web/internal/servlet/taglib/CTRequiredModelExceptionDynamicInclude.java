@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.change.tracking.web.internal.servlet.taglib;
 
-import com.liferay.portal.kernel.change.tracking.CTTransactionException;
+import com.liferay.portal.kernel.change.tracking.CTRequiredModelException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -21,10 +21,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Samuel Trong Tran
+ * @author Pei-Jung Lan
  */
 @Component(service = DynamicInclude.class)
-public class CTTransactionExceptionDynamicInclude
+public class CTRequiredModelExceptionDynamicInclude
 	extends BaseCTExceptionDynamicInclude {
 
 	@Override
@@ -34,7 +34,7 @@ public class CTTransactionExceptionDynamicInclude
 		throws IOException {
 
 		if (!SessionErrors.contains(
-				httpServletRequest, CTTransactionException.class)) {
+				httpServletRequest, CTRequiredModelException.class)) {
 
 			return;
 		}
@@ -45,7 +45,9 @@ public class CTTransactionExceptionDynamicInclude
 	@Override
 	protected String getMessage(Locale locale) {
 		return _language.get(
-			locale, "this-action-can-only-be-performed-in-production-mode");
+			locale,
+			"item-cannot-be-deleted-because-it-is-being-modified-in-" +
+				"publications");
 	}
 
 	@Override

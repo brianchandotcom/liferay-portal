@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTRequiredModelException;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -23,7 +24,9 @@ import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -54,6 +57,24 @@ public class LayoutExceptionRequestHandlerUtil {
 		else if (exception instanceof PortalException) {
 			_handlePortalException(
 				actionRequest, actionResponse, (PortalException)exception);
+		}
+		else if (exception.getCause() instanceof CTRequiredModelException) {
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+
+			JSONObject jsonObject = JSONUtil.put(
+				"errorMessage",
+				LanguageUtil.get(
+					PortalUtil.getLocale(actionRequest),
+					"item-cannot-be-deleted-because-it-is-being-modified-in-" +
+						"publications"));
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
+
+			return;
 		}
 
 		throw exception;

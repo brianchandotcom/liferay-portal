@@ -41,7 +41,7 @@ const useQueryParams = () => {
 	);
 
 	const routeParams = useParams();
-	const currentPage = searchParams.get('page');
+	const page = searchParams.get('page');
 
 	const pageSize = searchParams.get('pageSize');
 
@@ -81,8 +81,7 @@ const useQueryParams = () => {
 
 				if (Array.isArray(parsedValue)) {
 					_resourceFieldOptions[field.name] = parsedValue;
-				}
-				else {
+				} else {
 					if (
 						filterKeys.every(
 							(key) => parsedValue && key in parsedValue
@@ -101,8 +100,7 @@ const useQueryParams = () => {
 
 						if (filteredObjects.length) {
 							_resourceFieldOptions[field.name] = filteredObjects;
-						}
-						else {
+						} else {
 							_resourceFieldOptions[field.name] = parsedValue;
 						}
 					}
@@ -139,8 +137,7 @@ const useQueryParams = () => {
 				if (filteredOptions.length) {
 					updatedFilterOptions[key] = filteredOptions;
 				}
-			}
-			else {
+			} else {
 				const matchingValues = _resourceFieldOptions[key]?.filter(
 					(options: Options) =>
 						options.value === serializedFilter[key]
@@ -200,8 +197,8 @@ const useQueryParams = () => {
 	);
 
 	return {
-		currentPage,
 		filterInitialContext,
+		page,
 		pageSize,
 		updateUrlParams,
 	};

@@ -42,6 +42,7 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServic
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -600,6 +601,22 @@ public class LayoutsSEODisplayContext {
 				!sitemapInclude));
 	}
 
+	public boolean isIncludeChildPagesInSitemap() {
+		Layout selLayout = getSelLayout();
+
+		UnicodeProperties layoutTypeSettingsUnicodeProperties =
+			selLayout.getTypeSettingsProperties();
+
+		if (GetterUtil.getBoolean(
+				layoutTypeSettingsUnicodeProperties.getProperty(
+					"sitemap-include-child-pages", Boolean.TRUE.toString()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isLayoutUtilityPageEntry() throws PortalException {
 		if (_layoutUtilityPageEntry != null) {
 			return _layoutUtilityPageEntry;
@@ -654,6 +671,18 @@ public class LayoutsSEODisplayContext {
 			_liferayPortletRequest, "privateLayout");
 
 		return _privateLayout;
+	}
+
+	public boolean showIncludeChildPagesInSitemap() {
+		Layout selLayout = getSelLayout();
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-187793") ||
+			selLayout.isTypeAssetDisplay()) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private HashMap<String, Object> _getBaseSEOMappingData()

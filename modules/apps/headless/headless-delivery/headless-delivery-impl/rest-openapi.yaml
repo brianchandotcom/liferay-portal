@@ -4782,6 +4782,11 @@ components:
                     description:
                         The page's theme settings.
                     type: object
+                themeSpritemapClientExtension:
+                    $ref: "#/components/schemas/ClientExtension"
+                    # @review
+                    description:
+                        The Client Extension for the theme spritemap of a page
             type: object
         SitePage:
             # @review

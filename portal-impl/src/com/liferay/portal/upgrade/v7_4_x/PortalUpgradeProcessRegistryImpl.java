@@ -365,6 +365,11 @@ public class PortalUpgradeProcessRegistryImpl
 				"DLFileEntry", "displayDate DATE null"),
 			UpgradeProcessFactory.addColumns(
 				"DLFileVersion", "displayDate DATE null"));
+
+		upgradeVersionTreeMap.put(
+			new Version(29, 2, 1),
+			UpgradeModulesFactory.create(
+				new String[] {"com.liferay.headless.builder.impl"}, null));
 	}
 
 }

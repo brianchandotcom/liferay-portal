@@ -116,12 +116,14 @@ public class SitemapConfigurationManagerImpl
 	@Override
 	public void saveSitemapCompanyConfiguration(
 			long companyId, boolean includeCategories, boolean includePages,
-			boolean includeWebContent)
+			boolean includeWebContent, long[] companySitemapGroupIds)
 		throws ConfigurationException {
 
 		_configurationProvider.saveCompanyConfiguration(
 			SitemapCompanyConfiguration.class, companyId,
 			HashMapDictionaryBuilder.<String, Object>put(
+				"companySitemapGroupIds", companySitemapGroupIds
+			).put(
 				"includeCategories", includeCategories
 			).put(
 				"includePages", includePages

@@ -34,7 +34,7 @@ public interface SitemapConfigurationManager {
 
 	public void saveSitemapCompanyConfiguration(
 			long companyId, boolean includeCategories, boolean includePages,
-			boolean includeWebContent)
+			boolean includeWebContent, long[] companySitemapGroupIds)
 		throws ConfigurationException;
 
 	public void saveSitemapGroupConfiguration(

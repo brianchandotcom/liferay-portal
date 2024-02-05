@@ -451,8 +451,8 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 
 	private static final Map<String, APIApplication.Property.Type>
 		_propertyTypes = HashMapBuilder.put(
-			APIApplication.Property.PropertyType.SINGLE_CONTAINER.getValue(),
-			APIApplication.Property.Type.SINGLE_CONTAINER
+			APIApplication.Property.PropertyType.CONTAINER.getValue(),
+			APIApplication.Property.Type.CONTAINER
 		).put(
 			ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION,
 			APIApplication.Property.Type.AGGREGATION

@@ -315,8 +315,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@FeatureFlags("LPD-10964")
 	@Test
-	public void testGetPropertiesWithSingleContainer() throws Exception {
-		_addAPIApplicationWithSingleContainer(
+	public void testGetPropertiesWithContainer() throws Exception {
+		_addAPIApplicationWithContainer(
 			Http.Method.GET, _objectDefinition1.getExternalReferenceCode());
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
@@ -331,27 +331,25 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		_relateObjectEntries(objectEntry1, objectEntry2, _objectRelationship1);
 
-		_testGetPropertiesWithSingleContainer(
+		_testGetPropertiesWithContainer(
 			JSONUtil.putAll(
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_1
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
 				).put(
-					"name", "singleContainer1"
+					"name", "container1"
 				),
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.NORMAL.getValue()
+					APIApplication.Property.PropertyType.VALUE.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode", _API_PROPERTY_NORMAL_ERC_1
+					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
 				).put(
 					"name", "integerProperty"
 				).put(
@@ -359,96 +357,86 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				)),
 			JSONUtil.put("integerProperty", 1), objectEntry1);
 
-		_testGetPropertiesWithSingleContainer(
+		_testGetPropertiesWithContainer(
 			JSONUtil.putAll(
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_1
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
 				).put(
-					"name", "singleContainer1"
+					"name", "container1"
 				),
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_2
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_2
 				).put(
-					"name", "singleContainer2"
+					"name", "container2"
 				),
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_3
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_3
 				).put(
-					"name", "singleContainer3"
+					"name", "container3"
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_2
+					_API_PROPERTY_CONTAINER_ERC_2
 				),
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_4
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_4
 				).put(
-					"name", "singleContainer4"
+					"name", "container4"
 				),
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_5
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_5
 				).put(
-					"name", "singleContainer5"
+					"name", "container5"
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_4
+					_API_PROPERTY_CONTAINER_ERC_4
 				),
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.NORMAL.getValue()
+					APIApplication.Property.PropertyType.VALUE.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode", _API_PROPERTY_NORMAL_ERC_1
+					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
 				).put(
 					"name", "integerProperty"
 				).put(
 					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_2
+					_API_PROPERTY_CONTAINER_ERC_2
 				),
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.NORMAL.getValue()
+					APIApplication.Property.PropertyType.VALUE.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode", _API_PROPERTY_NORMAL_ERC_2
+					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_2
 				).put(
 					"name", "relatedMultiselectPicklistProperty"
 				).put(
@@ -458,14 +446,14 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"objectRelationshipNames", _objectRelationship1.getName()
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_5
+					_API_PROPERTY_CONTAINER_ERC_5
 				)),
 			JSONUtil.put(
-				"singleContainer2", JSONUtil.put("integerProperty", 1)
+				"container2", JSONUtil.put("integerProperty", 1)
 			).put(
-				"singleContainer4",
+				"container4",
 				JSONUtil.put(
-					"singleContainer5",
+					"container5",
 					JSONUtil.put(
 						"relatedMultiselectPicklistProperty",
 						Collections.emptyList()))
@@ -474,72 +462,66 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		_disassociateAPIProperties();
 
-		_testGetPropertiesWithSingleContainer(
+		_testGetPropertiesWithContainer(
 			JSONUtil.putAll(
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_1
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
 				).put(
-					"name", "singleContainer1"
+					"name", "container1"
 				),
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_2
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_2
 				).put(
-					"name", "singleContainer2"
+					"name", "container2"
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_1
+					_API_PROPERTY_CONTAINER_ERC_1
 				),
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_3
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_3
 				).put(
-					"name", "singleContainer3"
+					"name", "container3"
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_2
+					_API_PROPERTY_CONTAINER_ERC_2
 				),
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.NORMAL.getValue()
+					APIApplication.Property.PropertyType.VALUE.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode", _API_PROPERTY_NORMAL_ERC_1
+					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
 				).put(
 					"name", "integerProperty"
 				).put(
 					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_2
+					_API_PROPERTY_CONTAINER_ERC_2
 				),
 				JSONUtil.put(
 					"apiPropertyType",
-					APIApplication.Property.PropertyType.NORMAL.getValue()
+					APIApplication.Property.PropertyType.VALUE.getValue()
 				).put(
 					"description", "description"
 				).put(
-					"externalReferenceCode", _API_PROPERTY_NORMAL_ERC_2
+					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_2
 				).put(
 					"name", "relatedMultiselectPicklistProperty"
 				).put(
@@ -549,19 +531,19 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"objectRelationshipNames", _objectRelationship1.getName()
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_3
+					_API_PROPERTY_CONTAINER_ERC_3
 				)),
 			JSONUtil.put(
-				"singleContainer1",
+				"container1",
 				JSONUtil.put(
-					"singleContainer2",
+					"container2",
 					JSONUtil.put(
-						"integerProperty", 1
-					).put(
-						"singleContainer3",
+						"container3",
 						JSONUtil.put(
 							"relatedMultiselectPicklistProperty",
 							Collections.emptyList())
+					).put(
+						"integerProperty", 1
 					))),
 			objectEntry1);
 	}
@@ -2382,6 +2364,264 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 	}
 
+	@FeatureFlags("LPD-10964")
+	@Test
+	public void testPostWithContainer() throws Exception {
+		_addAPIApplicationWithContainer(
+			Http.Method.POST, _objectDefinition1.getExternalReferenceCode());
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		_testPostPropertiesWithContainer(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
+				).put(
+					"name", "container1"
+				),
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.VALUE.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
+				).put(
+					"name", "integerProperty"
+				).put(
+					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
+				)),
+			JSONUtil.put(
+				"container1", Collections.emptyMap()
+			).put(
+				"integerProperty", 1
+			).toString(),
+			JSONUtil.put("integerProperty", 1));
+
+		_testPostPropertiesWithContainer(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
+				).put(
+					"name", "container1"
+				),
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_2
+				).put(
+					"name", "container2"
+				),
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_3
+				).put(
+					"name", "container3"
+				).put(
+					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					_API_PROPERTY_CONTAINER_ERC_2
+				),
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_4
+				).put(
+					"name", "container4"
+				),
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_5
+				).put(
+					"name", "container5"
+				).put(
+					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					_API_PROPERTY_CONTAINER_ERC_4
+				),
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.VALUE.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
+				).put(
+					"name", "integerProperty"
+				).put(
+					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
+				).put(
+					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					_API_PROPERTY_CONTAINER_ERC_2
+				),
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.VALUE.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_2
+				).put(
+					"name", "relatedMultiselectPicklistProperty"
+				).put(
+					"objectFieldERC",
+					_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC + 2
+				).put(
+					"objectRelationshipNames", _objectRelationship1.getName()
+				).put(
+					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					_API_PROPERTY_CONTAINER_ERC_5
+				)),
+			JSONUtil.put(
+				"container1", Collections.emptyMap()
+			).put(
+				"container2",
+				JSONUtil.put(
+					"container3", Collections.emptyMap()
+				).put(
+					"integerProperty", 1
+				)
+			).put(
+				"container4",
+				JSONUtil.put(
+					"container5",
+					JSONUtil.put(
+						"relatedMultiselectPicklistProperty",
+						Collections.emptyList()))
+			).toString(),
+			JSONUtil.put(
+				"container2", JSONUtil.put("integerProperty", 1)
+			).put(
+				"container4",
+				JSONUtil.put(
+					"container5",
+					JSONUtil.put(
+						"relatedMultiselectPicklistProperty",
+						Collections.emptyList()))
+			));
+
+		_disassociateAPIProperties();
+
+		_testPostPropertiesWithContainer(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
+				).put(
+					"name", "container1"
+				),
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_2
+				).put(
+					"name", "container2"
+				).put(
+					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					_API_PROPERTY_CONTAINER_ERC_1
+				),
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.CONTAINER.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_3
+				).put(
+					"name", "container3"
+				).put(
+					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					_API_PROPERTY_CONTAINER_ERC_2
+				),
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.VALUE.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
+				).put(
+					"name", "integerProperty"
+				).put(
+					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
+				).put(
+					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					_API_PROPERTY_CONTAINER_ERC_2
+				),
+				JSONUtil.put(
+					"apiPropertyType",
+					APIApplication.Property.PropertyType.VALUE.getValue()
+				).put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", _API_PROPERTY_VALUE_ERC_2
+				).put(
+					"name", "relatedMultiselectPicklistProperty"
+				).put(
+					"objectFieldERC",
+					_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC + 2
+				).put(
+					"objectRelationshipNames", _objectRelationship1.getName()
+				).put(
+					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
+					_API_PROPERTY_CONTAINER_ERC_3
+				)),
+			JSONUtil.put(
+				"container1",
+				JSONUtil.put(
+					"container2",
+					JSONUtil.put(
+						"container3",
+						JSONUtil.put(
+							"relatedMultiselectPicklistProperty",
+							Collections.emptyList())
+					).put(
+						"integerProperty", 1
+					))
+			).toString(),
+			JSONUtil.put(
+				"container1",
+				JSONUtil.put(
+					"container2",
+					JSONUtil.put(
+						"container3",
+						JSONUtil.put(
+							"relatedMultiselectPicklistProperty",
+							Collections.emptyList())
+					).put(
+						"integerProperty", 1
+					))));
+	}
+
 	@Test
 	public void testPostWithDuplicateUniqueField() throws Exception {
 		String title = RandomTestUtil.randomString();
@@ -2552,282 +2792,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		Map<String, Serializable> values = objectEntry.getValues();
 
 		Assert.assertEquals(textPropertyValue, values.get("textField"));
-	}
-
-	@FeatureFlags("LPD-10964")
-	@Test
-	public void testPostWithSingleContainer() throws Exception {
-		_addAPIApplicationWithSingleContainer(
-			Http.Method.POST, _objectDefinition1.getExternalReferenceCode());
-
-		_publishAPIApplication(_API_APPLICATION_ERC_1);
-
-		_testPostPropertiesWithSingleContainer(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_1
-				).put(
-					"name", "singleContainer1"
-				),
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.NORMAL.getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode", _API_PROPERTY_NORMAL_ERC_1
-				).put(
-					"name", "integerProperty"
-				).put(
-					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
-				)),
-			JSONUtil.put(
-				"integerProperty", 1
-			).put(
-				"singleContainer1", Collections.emptyMap()
-			).toString(),
-			JSONUtil.put("integerProperty", 1));
-
-		_testPostPropertiesWithSingleContainer(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_1
-				).put(
-					"name", "singleContainer1"
-				),
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_2
-				).put(
-					"name", "singleContainer2"
-				),
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_3
-				).put(
-					"name", "singleContainer3"
-				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_2
-				),
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_4
-				).put(
-					"name", "singleContainer4"
-				),
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_5
-				).put(
-					"name", "singleContainer5"
-				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_4
-				),
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.NORMAL.getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode", _API_PROPERTY_NORMAL_ERC_1
-				).put(
-					"name", "integerProperty"
-				).put(
-					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
-				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_2
-				),
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.NORMAL.getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode", _API_PROPERTY_NORMAL_ERC_2
-				).put(
-					"name", "relatedMultiselectPicklistProperty"
-				).put(
-					"objectFieldERC",
-					_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC + 2
-				).put(
-					"objectRelationshipNames", _objectRelationship1.getName()
-				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_5
-				)),
-			JSONUtil.put(
-				"singleContainer1", Collections.emptyMap()
-			).put(
-				"singleContainer2",
-				JSONUtil.put(
-					"integerProperty", 1
-				).put(
-					"singleContainer3", Collections.emptyMap()
-				)
-			).put(
-				"singleContainer4",
-				JSONUtil.put(
-					"singleContainer5",
-					JSONUtil.put(
-						"relatedMultiselectPicklistProperty",
-						Collections.emptyList()))
-			).toString(),
-			JSONUtil.put(
-				"singleContainer2", JSONUtil.put("integerProperty", 1)
-			).put(
-				"singleContainer4",
-				JSONUtil.put(
-					"singleContainer5",
-					JSONUtil.put(
-						"relatedMultiselectPicklistProperty",
-						Collections.emptyList()))
-			));
-
-		_disassociateAPIProperties();
-
-		_testPostPropertiesWithSingleContainer(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_1
-				).put(
-					"name", "singleContainer1"
-				),
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_2
-				).put(
-					"name", "singleContainer2"
-				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_1
-				),
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.SINGLE_CONTAINER.
-						getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_3
-				).put(
-					"name", "singleContainer3"
-				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_2
-				),
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.NORMAL.getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode", _API_PROPERTY_NORMAL_ERC_1
-				).put(
-					"name", "integerProperty"
-				).put(
-					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
-				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_2
-				),
-				JSONUtil.put(
-					"apiPropertyType",
-					APIApplication.Property.PropertyType.NORMAL.getValue()
-				).put(
-					"description", "description"
-				).put(
-					"externalReferenceCode", _API_PROPERTY_NORMAL_ERC_2
-				).put(
-					"name", "relatedMultiselectPicklistProperty"
-				).put(
-					"objectFieldERC",
-					_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC + 2
-				).put(
-					"objectRelationshipNames", _objectRelationship1.getName()
-				).put(
-					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-					_API_PROPERTY_SINGLE_CONTAINER_ERC_3
-				)),
-			JSONUtil.put(
-				"singleContainer1",
-				JSONUtil.put(
-					"singleContainer2",
-					JSONUtil.put(
-						"integerProperty", 1
-					).put(
-						"singleContainer3",
-						JSONUtil.put(
-							"relatedMultiselectPicklistProperty",
-							Collections.emptyList())
-					))
-			).toString(),
-			JSONUtil.put(
-				"singleContainer1",
-				JSONUtil.put(
-					"singleContainer2",
-					JSONUtil.put(
-						"integerProperty", 1
-					).put(
-						"singleContainer3",
-						JSONUtil.put(
-							"relatedMultiselectPicklistProperty",
-							Collections.emptyList())
-					))));
 	}
 
 	@Test
@@ -3101,6 +3065,76 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			"headless-builder/endpoints", Http.Method.POST);
 	}
 
+	private void _addAPIApplicationWithContainer(
+			Http.Method httpMethod,
+			String objectDefinitionExternalReferenceCode)
+		throws Exception {
+
+		assertSuccessfulJSONObject(
+			JSONUtil.put(
+				"apiApplicationToAPISchemas",
+				JSONUtil.put(
+					JSONUtil.put(
+						"description", "description"
+					).put(
+						"externalReferenceCode", _API_CONTAINER_SCHEMA_ERC
+					).put(
+						"mainObjectDefinitionERC",
+						objectDefinitionExternalReferenceCode
+					).put(
+						"name", "name"
+					))
+			).put(
+				"applicationStatus", "unpublished"
+			).put(
+				"baseURL", _BASE_URL_1
+			).put(
+				"externalReferenceCode", _API_APPLICATION_ERC_1
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			"headless-builder/applications", Http.Method.POST);
+
+		if (Objects.equals(Http.Method.GET, httpMethod)) {
+			assertSuccessfulJSONObject(
+				_createAPIEndpoint(
+					_API_ENDPOINT_ERC_1, Http.Method.GET,
+					_API_APPLICATION_PATH_1,
+					HeadlessBuilderConstants.PATH_PARAMETER_ID,
+					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
+						getValue(),
+					APIApplication.Endpoint.Scope.COMPANY
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationERC",
+					_API_APPLICATION_ERC_1
+				).put(
+					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+					_API_CONTAINER_SCHEMA_ERC
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST);
+		}
+		else {
+			assertSuccessfulJSONObject(
+				_createAPIEndpoint(
+					_API_ENDPOINT_ERC_1, Http.Method.POST,
+					_API_APPLICATION_PATH_1, null,
+					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
+						getValue(),
+					APIApplication.Endpoint.Scope.COMPANY
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationERC",
+					_API_APPLICATION_ERC_1
+				).put(
+					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+					_API_CONTAINER_SCHEMA_ERC
+				).put(
+					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaERC",
+					_API_CONTAINER_SCHEMA_ERC
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST);
+		}
+	}
+
 	private void _addAPIApplicationWithPostEndpoint(
 			boolean addResponseSchema,
 			String objectDefinitionExternalReferenceCode,
@@ -3271,77 +3305,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					apiSchemaExternalReferenceCode,
 					"/responseAPISchemaToAPIEndpoints/", _API_ENDPOINT_ERC_1),
 				Http.Method.PUT);
-		}
-	}
-
-	private void _addAPIApplicationWithSingleContainer(
-			Http.Method httpMethod,
-			String objectDefinitionExternalReferenceCode)
-		throws Exception {
-
-		assertSuccessfulJSONObject(
-			JSONUtil.put(
-				"apiApplicationToAPISchemas",
-				JSONUtil.put(
-					JSONUtil.put(
-						"description", "description"
-					).put(
-						"externalReferenceCode",
-						_API_SINGLE_CONTAINER_SCHEMA_ERC
-					).put(
-						"mainObjectDefinitionERC",
-						objectDefinitionExternalReferenceCode
-					).put(
-						"name", "name"
-					))
-			).put(
-				"applicationStatus", "unpublished"
-			).put(
-				"baseURL", _BASE_URL_1
-			).put(
-				"externalReferenceCode", _API_APPLICATION_ERC_1
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
-			"headless-builder/applications", Http.Method.POST);
-
-		if (Objects.equals(Http.Method.GET, httpMethod)) {
-			assertSuccessfulJSONObject(
-				_createAPIEndpoint(
-					_API_ENDPOINT_ERC_1, Http.Method.GET,
-					_API_APPLICATION_PATH_1,
-					HeadlessBuilderConstants.PATH_PARAMETER_ID,
-					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
-						getValue(),
-					APIApplication.Endpoint.Scope.COMPANY
-				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationERC",
-					_API_APPLICATION_ERC_1
-				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
-					_API_SINGLE_CONTAINER_SCHEMA_ERC
-				).toString(),
-				"headless-builder/endpoints", Http.Method.POST);
-		}
-		else {
-			assertSuccessfulJSONObject(
-				_createAPIEndpoint(
-					_API_ENDPOINT_ERC_1, Http.Method.POST,
-					_API_APPLICATION_PATH_1, null,
-					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
-						getValue(),
-					APIApplication.Endpoint.Scope.COMPANY
-				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationERC",
-					_API_APPLICATION_ERC_1
-				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
-					_API_SINGLE_CONTAINER_SCHEMA_ERC
-				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaERC",
-					_API_SINGLE_CONTAINER_SCHEMA_ERC
-				).toString(),
-				"headless-builder/endpoints", Http.Method.POST);
 		}
 	}
 
@@ -3689,86 +3652,81 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				JSONUtil.putAll(
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.SINGLE_CONTAINER.
+						APIApplication.Property.PropertyType.CONTAINER.
 							getValue()
 					).put(
 						"description", "description"
 					).put(
-						"externalReferenceCode",
-						_API_PROPERTY_SINGLE_CONTAINER_ERC_1
+						"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_1
 					).put(
-						"name", "singleContainer1"
+						"name", "container1"
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
 					),
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.SINGLE_CONTAINER.
+						APIApplication.Property.PropertyType.CONTAINER.
 							getValue()
 					).put(
 						"description", "description"
 					).put(
-						"externalReferenceCode",
-						_API_PROPERTY_SINGLE_CONTAINER_ERC_2
+						"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_2
 					).put(
-						"name", "singleContainer2"
+						"name", "container2"
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
 					),
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.SINGLE_CONTAINER.
+						APIApplication.Property.PropertyType.CONTAINER.
 							getValue()
 					).put(
 						"description", "description"
 					).put(
-						"externalReferenceCode",
-						_API_PROPERTY_SINGLE_CONTAINER_ERC_3
+						"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_3
 					).put(
-						"name", "singleContainer3"
+						"name", "container3"
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
 					),
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.SINGLE_CONTAINER.
+						APIApplication.Property.PropertyType.CONTAINER.
 							getValue()
 					).put(
 						"description", "description"
 					).put(
-						"externalReferenceCode",
-						_API_PROPERTY_SINGLE_CONTAINER_ERC_4
+						"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_4
 					).put(
-						"name", "singleContainer4"
+						"name", "container4"
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
 					),
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.SINGLE_CONTAINER.
+						APIApplication.Property.PropertyType.CONTAINER.
 							getValue()
 					).put(
 						"description", "description"
 					).put(
-						"externalReferenceCode",
-						_API_PROPERTY_SINGLE_CONTAINER_ERC_5
+						"externalReferenceCode", _API_PROPERTY_CONTAINER_ERC_5
 					).put(
-						"name", "singleContainer5"
+						"name", "container5"
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
 					),
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.NORMAL.getValue()
+						APIApplication.Property.PropertyType.VALUE.getValue()
 					).put(
 						"description", "description"
 					).put(
-						"externalReferenceCode", _API_PROPERTY_NORMAL_ERC_1
+						"externalReferenceCode", _API_PROPERTY_VALUE_ERC_1
 					).put(
 						"name", "integerProperty"
 					).put(
@@ -3779,11 +3737,11 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					),
 					JSONUtil.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.NORMAL.getValue()
+						APIApplication.Property.PropertyType.VALUE.getValue()
 					).put(
 						"description", "description"
 					).put(
-						"externalReferenceCode", _API_PROPERTY_NORMAL_ERC_2
+						"externalReferenceCode", _API_PROPERTY_VALUE_ERC_2
 					).put(
 						"name", "relatedMultiselectPicklistProperty"
 					).put(
@@ -3799,7 +3757,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).put(
 				"description", "description"
 			).put(
-				"externalReferenceCode", _API_SINGLE_CONTAINER_SCHEMA_ERC
+				"externalReferenceCode", _API_CONTAINER_SCHEMA_ERC
 			).put(
 				"mainObjectDefinitionERC",
 				_objectDefinition1.getExternalReferenceCode()
@@ -3807,7 +3765,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"name", "name"
 			).toString(),
 			"headless-builder/schemas/by-external-reference-code/" +
-				_API_SINGLE_CONTAINER_SCHEMA_ERC,
+				_API_CONTAINER_SCHEMA_ERC,
 			Http.Method.PATCH);
 	}
 
@@ -3857,7 +3815,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			objectRelationship, TestPropsValues.getUserId());
 	}
 
-	private void _testGetPropertiesWithSingleContainer(
+	private void _testGetPropertiesWithContainer(
 			JSONArray apiSchemasToAPIPropertiesJSONArray,
 			JSONObject expectedJSONObject, ObjectEntry objectEntry)
 		throws Exception {
@@ -3879,7 +3837,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			JSONCompareMode.LENIENT);
 	}
 
-	private void _testPostPropertiesWithSingleContainer(
+	private void _testPostPropertiesWithContainer(
 			JSONArray apiSchemasToAPIPropertiesJSONArray, String body,
 			JSONObject expectedJSONObject)
 		throws Exception {
@@ -3910,7 +3868,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).put(
 				"description", "description"
 			).put(
-				"externalReferenceCode", _API_SINGLE_CONTAINER_SCHEMA_ERC
+				"externalReferenceCode", _API_CONTAINER_SCHEMA_ERC
 			).put(
 				"mainObjectDefinitionERC",
 				_objectDefinition1.getExternalReferenceCode()
@@ -3918,7 +3876,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"name", "name"
 			).toString(),
 			"headless-builder/schemas/by-external-reference-code/" +
-				_API_SINGLE_CONTAINER_SCHEMA_ERC,
+				_API_CONTAINER_SCHEMA_ERC,
 			Http.Method.PATCH);
 	}
 
@@ -3936,31 +3894,34 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		StringPool.SLASH +
 			StringUtil.toLowerCase(RandomTestUtil.randomString());
 
+	private static final String _API_CONTAINER_SCHEMA_ERC =
+		RandomTestUtil.randomString();
+
 	private static final String _API_ENDPOINT_ERC_1 =
 		RandomTestUtil.randomString();
 
 	private static final String _API_ENDPOINT_ERC_2 =
 		RandomTestUtil.randomString();
 
-	private static final String _API_PROPERTY_NORMAL_ERC_1 =
+	private static final String _API_PROPERTY_CONTAINER_ERC_1 =
 		RandomTestUtil.randomString();
 
-	private static final String _API_PROPERTY_NORMAL_ERC_2 =
+	private static final String _API_PROPERTY_CONTAINER_ERC_2 =
 		RandomTestUtil.randomString();
 
-	private static final String _API_PROPERTY_SINGLE_CONTAINER_ERC_1 =
+	private static final String _API_PROPERTY_CONTAINER_ERC_3 =
 		RandomTestUtil.randomString();
 
-	private static final String _API_PROPERTY_SINGLE_CONTAINER_ERC_2 =
+	private static final String _API_PROPERTY_CONTAINER_ERC_4 =
 		RandomTestUtil.randomString();
 
-	private static final String _API_PROPERTY_SINGLE_CONTAINER_ERC_3 =
+	private static final String _API_PROPERTY_CONTAINER_ERC_5 =
 		RandomTestUtil.randomString();
 
-	private static final String _API_PROPERTY_SINGLE_CONTAINER_ERC_4 =
+	private static final String _API_PROPERTY_VALUE_ERC_1 =
 		RandomTestUtil.randomString();
 
-	private static final String _API_PROPERTY_SINGLE_CONTAINER_ERC_5 =
+	private static final String _API_PROPERTY_VALUE_ERC_2 =
 		RandomTestUtil.randomString();
 
 	private static final String _API_SCHEMA_AGGREGATION_FIELD_ERC =
@@ -4006,9 +3967,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		RandomTestUtil.randomString();
 
 	private static final String _API_SCHEMA_UNIQUE_TEXT_FIELD_ERC =
-		RandomTestUtil.randomString();
-
-	private static final String _API_SINGLE_CONTAINER_SCHEMA_ERC =
 		RandomTestUtil.randomString();
 
 	private static final String _BASE_URL_1 = StringUtil.toLowerCase(

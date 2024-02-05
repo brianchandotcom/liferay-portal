@@ -142,7 +142,7 @@ public class APIPropertyObjectDefinitionDeployerImpl
 
 					item.put(
 						"apiPropertyType",
-						APIApplication.Property.PropertyType.NORMAL.getValue());
+						APIApplication.Property.PropertyType.VALUE.getValue());
 
 					_objectEntryLocalService.addOrUpdateObjectEntry(
 						(String)item.get("externalReferenceCode"),

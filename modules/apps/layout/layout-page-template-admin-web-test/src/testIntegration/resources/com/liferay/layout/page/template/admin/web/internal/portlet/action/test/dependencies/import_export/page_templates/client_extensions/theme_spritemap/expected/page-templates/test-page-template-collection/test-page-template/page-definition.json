@@ -1,0 +1,15 @@
+{
+	"pageElement": {
+		"id": "root",
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic",
+		"themeSpritemapClientExtension": {
+			"externalReferenceCode": "£{EXTERNAL_REFERENCE_CODE}",
+			"name": "£{NAME}"
+		}
+	},
+	"version": 1.1
+}

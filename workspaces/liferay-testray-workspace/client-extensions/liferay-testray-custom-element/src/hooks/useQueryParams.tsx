@@ -81,7 +81,8 @@ const useQueryParams = () => {
 
 				if (Array.isArray(parsedValue)) {
 					_resourceFieldOptions[field.name] = parsedValue;
-				} else {
+				}
+				else {
 					if (
 						filterKeys.every(
 							(key) => parsedValue && key in parsedValue
@@ -137,7 +138,8 @@ const useQueryParams = () => {
 				if (filteredOptions.length) {
 					updatedFilterOptions[key] = filteredOptions;
 				}
-			} else {
+			}
+			else {
 				const matchingValues = _resourceFieldOptions[key]?.filter(
 					(options: Options) =>
 						options.value === serializedFilter[key]

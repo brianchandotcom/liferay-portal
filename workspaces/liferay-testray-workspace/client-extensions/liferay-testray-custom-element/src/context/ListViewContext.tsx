@@ -128,7 +128,8 @@ const reducer = (state: InitialState, action: AppActions) => {
 				selectedRows = state.checkAll ? [] : rowIds;
 
 				state.checkAll = !state.checkAll;
-			} else {
+			}
+			else {
 				const rowAlreadyInserted = state.selectedRows.includes(
 					rowIds as number
 				);
@@ -209,7 +210,8 @@ const reducer = (state: InitialState, action: AppActions) => {
 					JSON.stringify(action.payload),
 					CONSENT_TYPE.NECESSARY
 				);
-			} else {
+			}
+			else {
 				testrayStorage.removeItem(storageName);
 				testrayStorage.removeItem(schemaName);
 			}

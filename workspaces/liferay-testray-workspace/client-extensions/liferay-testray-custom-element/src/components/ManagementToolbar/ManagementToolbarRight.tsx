@@ -9,9 +9,7 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayPopover from '@clayui/popover';
 import {ReactNode, useCallback, useContext, useState} from 'react';
 import {ListViewContext, ListViewTypes} from '~/context/ListViewContext';
-import TestrayStorage, {STORAGE_KEYS} from '~/core/Storage';
 import {Liferay} from '~/services/liferay';
-import {CONSENT_TYPE} from '~/util/enum';
 
 import i18n from '../../i18n';
 import {FilterSchema} from '../../schema/filter';
@@ -55,8 +53,6 @@ type ManagementToolbarRightProps = {
 	isModal?: boolean;
 };
 
-const testrayStorage = TestrayStorage.getInstance().getStorage('persisted');
-
 const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	actions,
 	addButton,
@@ -66,7 +62,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	filterSchema,
 	isModal = false,
 }) => {
-	const [{filters, id, pin}, dispatch] = useContext(ListViewContext);
+	const [{filters, pin}, dispatch] = useContext(ListViewContext);
 	const [columnsDropdownVisible, setColumnsDropdownVisible] = useState(false);
 
 	const hasAppliedFilters = !!filters.entries.length;
@@ -94,7 +90,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 			),
 			type: 'danger',
 		});
-	}, [dispatch, filterSchema?.name, hasAppliedFilters, id, pin]);
+	}, [dispatch, filterSchema?.name, hasAppliedFilters, pin]);
 
 	return (
 		<ClayManagementToolbar.ItemList>

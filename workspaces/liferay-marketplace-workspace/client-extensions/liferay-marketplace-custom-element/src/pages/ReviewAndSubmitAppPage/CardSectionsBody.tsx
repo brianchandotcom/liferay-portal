@@ -14,11 +14,14 @@ import {CardLink} from '../../components/Card/CardLink';
 import {CardView} from '../../components/Card/CardView';
 import {LicensePriceChildren} from '../../components/LicensePriceCard/LicensePriceChildren';
 import {Tag} from '../../components/Tag/Tag';
-import {extractHTMLText, removeUnnecessaryURLString} from '../../utils/string';
+import {removeUnnecessaryURLString} from '../../utils/string';
 import {CardSection} from './CardSection';
 import {App} from './ReviewAndSubmitAppPageUtil';
 
 import './CardSectionsBody.scss';
+
+import DOMPurify from 'dompurify';
+
 import i18n from '../../i18n';
 
 interface CardSectionsBodyProps {
@@ -31,10 +34,18 @@ export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
 
 	return (
 		<>
-			<CardSection required sectionName="Description">
-				<p className="card-section-body-section-paragraph">
-					{extractHTMLText(app?.description)}
-				</p>
+			<CardSection
+				enableEdit={!readonly}
+				localized
+				required
+				sectionName="Description"
+			>
+				<p
+					className="card-section-body-section-paragraph"
+					dangerouslySetInnerHTML={{
+						__html: DOMPurify.sanitize(app?.description),
+					}}
+				></p>
 			</CardSection>
 
 			<CardSection required sectionName="Categories">

@@ -98,8 +98,9 @@ type ListViewPayload = {
 	[ListViewTypes.SET_SORT]: Sort;
 };
 
-export type AppActions =
-	ActionMap<ListViewPayload>[keyof ActionMap<ListViewPayload>];
+export type AppActions = ActionMap<ListViewPayload>[keyof ActionMap<
+	ListViewPayload
+>];
 
 export const ListViewContext = createContext<
 	[InitialState, (param: AppActions) => void]
@@ -273,7 +274,7 @@ export type ListViewContextProviderProps = Partial<InitialState>;
 const ListViewContextProvider: React.FC<
 	ListViewContextProviderProps & {children: ReactNode; id: string}
 > = ({children, id, ...initialStateProps}) => {
-	const {currentPage, filterInitialContext, pageSize} = useQueryParams();
+	const {filterInitialContext, page, pageSize} = useQueryParams();
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const filter = searchParams.get('filter');
@@ -314,7 +315,7 @@ const ListViewContextProvider: React.FC<
 			pin: !!filterPinnedStorage.entries.length,
 		}),
 		...(columnsStorage && {columns: columnsStorage}),
-		...(currentPage && {page: Number(currentPage)}),
+		...(page && {page: Number(page)}),
 		...(pageSize && {pageSize: Number(pageSize)}),
 		id,
 	});

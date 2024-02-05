@@ -92,15 +92,14 @@ type ListViewPayload = {
 	[ListViewTypes.SET_FILTERS]: {filters?: any; pin?: any};
 	[ListViewTypes.SET_PAGE]: number;
 	[ListViewTypes.SET_PAGE_SIZE]: number;
-	[ListViewTypes.SET_PIN]: undefined;
+	[ListViewTypes.SET_PIN]: string;
 	[ListViewTypes.SET_REMOVE_FILTER]: string;
 	[ListViewTypes.SET_SEARCH]: string;
 	[ListViewTypes.SET_SORT]: Sort;
 };
 
-export type AppActions = ActionMap<ListViewPayload>[keyof ActionMap<
-	ListViewPayload
->];
+export type AppActions =
+	ActionMap<ListViewPayload>[keyof ActionMap<ListViewPayload>];
 
 export const ListViewContext = createContext<
 	[InitialState, (param: AppActions) => void]
@@ -128,8 +127,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 				selectedRows = state.checkAll ? [] : rowIds;
 
 				state.checkAll = !state.checkAll;
-			}
-			else {
+			} else {
 				const rowAlreadyInserted = state.selectedRows.includes(
 					rowIds as number
 				);
@@ -205,8 +203,12 @@ const reducer = (state: InitialState, action: AppActions) => {
 					JSON.stringify(state.filters),
 					CONSENT_TYPE.NECESSARY
 				);
-			}
-			else {
+				testrayStorage.setItem(
+					STORAGE_KEYS.FILTER_SCHEMA + state.id,
+					JSON.stringify(action.payload),
+					CONSENT_TYPE.NECESSARY
+				);
+			} else {
 				testrayStorage.removeItem(storageName);
 				testrayStorage.removeItem(schemaName);
 			}

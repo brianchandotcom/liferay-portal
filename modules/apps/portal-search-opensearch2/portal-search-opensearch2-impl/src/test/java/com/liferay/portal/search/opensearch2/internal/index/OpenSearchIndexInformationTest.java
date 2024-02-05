@@ -1,0 +1,136 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.search.opensearch2.internal.index;
+
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
+import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
+import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
+import com.liferay.portal.search.opensearch2.internal.util.ResourceUtil;
+import com.liferay.portal.search.test.util.AssertUtils;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TestName;
+
+/**
+ * @author Adam Brandizzi
+ * @author Petteri Karttunen
+ */
+public class OpenSearchIndexInformationTest extends BaseOpenSearchTestCase {
+
+	@ClassRule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@ClassRule
+	public static OpenSearchTestRule openSearchTestRule =
+		OpenSearchTestRule.INSTANCE;
+
+	@Before
+	public void setUp() throws Exception {
+		_companyIndexFactoryFixture = _createCompanyIndexFactoryFixture(
+			openSearchConnectionManager);
+
+		_openSearchIndexInformation = _createOpenSearchIndexInformation(
+			openSearchConnectionManager);
+	}
+
+	@After
+	public void tearDown() {
+		_companyIndexFactoryFixture.deleteIndices();
+		_companyIndexFactoryFixture.tearDown();
+	}
+
+	@Test
+	public void testGetCompanyIndexName() throws Exception {
+		_companyIndexFactoryFixture.createIndices();
+
+		long companyId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			_getIndexNameBuilder(companyId),
+			_openSearchIndexInformation.getCompanyIndexName(companyId));
+	}
+
+	@Test
+	public void testGetFieldMappings() throws Exception {
+		_companyIndexFactoryFixture.createIndices();
+
+		JSONObject fieldMappingsJSONObject = _jsonFactory.createJSONObject(
+			_openSearchIndexInformation.getFieldMappings(
+				_companyIndexFactoryFixture.getIndexName()));
+
+		AssertUtils.assertEquals(
+			"", _loadJSONObject(testName.getMethodName()),
+			fieldMappingsJSONObject);
+	}
+
+	@Test
+	public void testGetIndexName() throws Exception {
+		_companyIndexFactoryFixture.createIndices();
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				_openSearchIndexInformation.getIndexNames(),
+				_companyIndexFactoryFixture.getIndexName()));
+	}
+
+	@Rule
+	public TestName testName = new TestName();
+
+	private CompanyIndexFactoryFixture _createCompanyIndexFactoryFixture(
+		OpenSearchConnectionManager openSearchConnectionManager) {
+
+		return new CompanyIndexFactoryFixture(
+			testName.getMethodName(), openSearchConnectionManager);
+	}
+
+	private OpenSearchIndexInformation _createOpenSearchIndexInformation(
+		OpenSearchConnectionManager openSearchConnectionManager) {
+
+		OpenSearchIndexInformation openSearchIndexInformation =
+			new OpenSearchIndexInformation();
+
+		ReflectionTestUtil.setFieldValue(
+			openSearchIndexInformation, "_indexNameBuilder",
+			(IndexNameBuilder)companyId -> _getIndexNameBuilder(companyId));
+		ReflectionTestUtil.setFieldValue(
+			openSearchIndexInformation, "_jsonFactory", new JSONFactoryImpl());
+		ReflectionTestUtil.setFieldValue(
+			openSearchIndexInformation, "_openSearchConnectionManager",
+			openSearchConnectionManager);
+
+		return openSearchIndexInformation;
+	}
+
+	private String _getIndexNameBuilder(long companyId) {
+		return "test-" + companyId;
+	}
+
+	private JSONObject _loadJSONObject(String suffix) throws Exception {
+		String json = ResourceUtil.getResourceAsString(
+			getClass(), "OpenSearchIndexInformationTest-" + suffix + ".json");
+
+		return _jsonFactory.createJSONObject(json);
+	}
+
+	private CompanyIndexFactoryFixture _companyIndexFactoryFixture;
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
+	private OpenSearchIndexInformation _openSearchIndexInformation;
+
+}

@@ -112,27 +112,6 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 
 													<aui:input label="configuration" name="<%= rootControlId %>" type="checkbox" value="<%= true %>" />
 
-													<div class="hide" id="<portlet:namespace />configuration_<%= selPortlet.getRootPortletId() %>">
-														<ul class="lfr-tree list-unstyled">
-															<li class="tree-item">
-																<aui:fieldset cssClass="portlet-type-data-section" id="configuration">
-																	<ul class="lfr-tree list-unstyled">
-
-																		<%
-																		request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
-																		request.setAttribute("render_controls.jsp-childControl", false);
-																		request.setAttribute("render_controls.jsp-controls", configurationControls);
-																		request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
-																		request.setAttribute("render_controls.jsp-rootControlId", rootControlId);
-																		%>
-
-																		<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
-																	</ul>
-																</aui:fieldset>
-															</li>
-														</ul>
-													</div>
-
 													<ul class="hide" id="<portlet:namespace />showChangeConfiguration_<%= selPortlet.getRootPortletId() %>">
 														<li>
 															<span class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= selPortlet.getRootPortletId() %>"></span>
@@ -151,6 +130,25 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 															/>
 														</li>
 													</ul>
+
+													<div class="hide" id="<portlet:namespace />configuration_<%= selPortlet.getRootPortletId() %>">
+														<ul class="lfr-tree list-unstyled">
+															<li class="tree-item">
+																<aui:fieldset cssClass="portlet-type-data-section" id="configuration">
+																	<ul class="lfr-tree list-unstyled">
+													
+																		<% request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
+																			request.setAttribute("render_controls.jsp-childControl", false);
+																			request.setAttribute("render_controls.jsp-controls", configurationControls);
+																			request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
+																			request.setAttribute("render_controls.jsp-rootControlId", rootControlId); %>
+													
+																			<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
+																	</ul>
+																</aui:fieldset>
+															</li>
+														</ul>
+													</div>
 
 													<aui:script>
 														Liferay.Util.toggleBoxes(

@@ -817,6 +817,10 @@ AUI.add(
 						instance
 							.byId('showChangeConfiguration_' + portletId)
 							.hide();
+
+						instance
+							.byId('configuration_' + portletId)
+							.hide();
 					}
 					else {
 						instance

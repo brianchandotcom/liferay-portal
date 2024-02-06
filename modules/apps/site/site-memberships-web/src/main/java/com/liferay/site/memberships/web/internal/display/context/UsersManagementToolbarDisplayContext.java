@@ -241,6 +241,8 @@ public class UsersManagementToolbarDisplayContext
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
 							currentURLObj, liferayPortletResponse)
+					).setNavigation(
+						"all"
 					).setParameter(
 						"roleId", "0"
 					).buildString());
@@ -256,6 +258,8 @@ public class UsersManagementToolbarDisplayContext
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
 							currentURLObj, liferayPortletResponse)
+					).setNavigation(
+						"all"
 					).setParameter(
 						"teamId", "0"
 					).buildString());

@@ -32,7 +32,6 @@ import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.helper.RelayStateHelper;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
-import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributePublisherImpl;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributeResolverSAMLContextImpl;
 import com.liferay.saml.opensaml.integration.internal.resolver.DecrypterContext;
@@ -1339,6 +1338,24 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		return samlProviderConfiguration.clockSkew();
 	}
 
+	private Credential _getEncryptionCredential() throws SamlException {
+		try {
+			String entityId = localEntityManager.getLocalEntityId();
+
+			if (Validator.isNull(entityId)) {
+				return null;
+			}
+
+			return credentialResolver.resolveSingle(
+				new CriteriaSet(
+					new EntityIdCriterion(entityId),
+					new UsageCriterion(UsageType.ENCRYPTION)));
+		}
+		catch (ResolverException resolverException) {
+			throw new SamlException(resolverException);
+		}
+	}
+
 	private String _getNameIdFormat(String entityId) {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -2260,9 +2277,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private NameIdResolver _defaultNameIdResolver;
 
 	@Reference
-	private MetadataManager _metadataManager;
-
-	@Reference
 	private RelayStateHelper _relayStateHelper;
 
 	private SamlConfiguration _samlConfiguration;
@@ -2330,7 +2344,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			throws ResolverException {
 
 			try {
-				return _metadataManager.getEncryptionCredential();
+				return _getEncryptionCredential();
 			}
 			catch (SamlException samlException) {
 				throw new ResolverException(samlException);

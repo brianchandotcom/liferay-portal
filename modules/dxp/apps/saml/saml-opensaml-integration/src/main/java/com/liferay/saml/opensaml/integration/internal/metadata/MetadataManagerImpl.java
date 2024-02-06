@@ -58,25 +58,6 @@ import org.osgi.service.component.annotations.Reference;
 public class MetadataManagerImpl implements MetadataManager {
 
 	@Override
-	public Credential getEncryptionCredential() throws SamlException {
-		try {
-			String entityId = _localEntityManager.getLocalEntityId();
-
-			if (Validator.isNull(entityId)) {
-				return null;
-			}
-
-			return _credentialResolver.resolveSingle(
-				new CriteriaSet(
-					new EntityIdCriterion(entityId),
-					new UsageCriterion(UsageType.ENCRYPTION)));
-		}
-		catch (ResolverException resolverException) {
-			throw new SamlException(resolverException);
-		}
-	}
-
-	@Override
 	public EntityDescriptor getEntityDescriptor(
 			HttpServletRequest httpServletRequest)
 		throws SamlException {
@@ -84,7 +65,7 @@ public class MetadataManagerImpl implements MetadataManager {
 		Credential encryptionCredential = null;
 
 		try {
-			encryptionCredential = getEncryptionCredential();
+			encryptionCredential = _getEncryptionCredential();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -248,6 +229,24 @@ public class MetadataManagerImpl implements MetadataManager {
 		}
 
 		return predicateRoleDescriptorResolver;
+	}
+
+	private Credential _getEncryptionCredential() throws SamlException {
+		try {
+			String entityId = _localEntityManager.getLocalEntityId();
+
+			if (Validator.isNull(entityId)) {
+				return null;
+			}
+
+			return _credentialResolver.resolveSingle(
+				new CriteriaSet(
+					new EntityIdCriterion(entityId),
+					new UsageCriterion(UsageType.ENCRYPTION)));
+		}
+		catch (ResolverException resolverException) {
+			throw new SamlException(resolverException);
+		}
 	}
 
 	private SamlProviderConfiguration _getSamlProviderConfiguration() {

@@ -60,6 +60,9 @@ public class PropsValues {
 	public static final String ADMIN_EMAIL_PASSWORD_LOCKOUT_SUBJECT =
 		PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_LOCKOUT_SUBJECT);
 
+	public static final String ADMIN_EMAIL_PASSWORD_LOCKOUT_UNTIL_BODY =
+		PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_LOCKOUT_UNTIL_BODY);
+
 	public static final String ADMIN_EMAIL_PASSWORD_RESET_BODY = PropsUtil.get(
 		PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY);
 

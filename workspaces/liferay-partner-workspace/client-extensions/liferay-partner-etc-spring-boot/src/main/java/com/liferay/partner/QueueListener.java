@@ -42,6 +42,7 @@ import org.springframework.web.util.UriBuilder;
 
 /**
  * @author Jair Medeiros
+ * @author Thaynam Lazaro
  */
 @Component
 public class QueueListener {
@@ -92,7 +93,7 @@ public class QueueListener {
 				JSONObject accountJSONObject = jsonObject.getJSONObject(
 					"account");
 
-				String salesforceAccountKey = _fetchSalesforceAccountKey(
+				String salesforceAccountKey = _getSalesforceAccountKey(
 					accountJSONObject);
 
 				String accountName = accountJSONObject.getString("name");
@@ -110,7 +111,7 @@ public class QueueListener {
 					return;
 				}
 
-				String partnerCountry = _fetchAccountCountryISOCode(
+				String partnerCountry = _getAccountCountryISOCode(
 					accountJSONObject);
 
 				JSONObject partnerAccountJSONObject = new JSONObject();
@@ -144,7 +145,7 @@ public class QueueListener {
 							partnerLevelTypeJSONObject.getString("key");
 
 						Map<String, String> partnerLevelERCs =
-							_fetchPartnerLevelERCs();
+							_getPartnerLevelERCs();
 
 						partnerAccountJSONObject.put(
 							"r_prtLvlToAcc_c_partnerLevelERC",
@@ -219,7 +220,7 @@ public class QueueListener {
 				JSONObject accountJSONObject = jsonObject.getJSONObject(
 					"account");
 
-				String salesforceAccountKey = _fetchSalesforceAccountKey(
+				String salesforceAccountKey = _getSalesforceAccountKey(
 					accountJSONObject);
 
 				if (salesforceAccountKey == null) {
@@ -264,7 +265,7 @@ public class QueueListener {
 	private void _assignAccountToRegion(
 		JSONObject accountJSONObject, String accountRegion) {
 
-		Map<String, Long> regionsIDs = _fetchRegionsIDs();
+		Map<String, Long> regionsIDs = _getRegionsIDs();
 
 		Long regionID = regionsIDs.get(accountRegion);
 
@@ -356,7 +357,7 @@ public class QueueListener {
 		).block();
 	}
 
-	private String _fetchAccountCountryISOCode(JSONObject accountJSONObject) {
+	private String _getAccountCountryISOCode(JSONObject accountJSONObject) {
 		Map<String, String> countriesISOcodes = new HashMap<>();
 
 		for (String iso : Locale.getISOCountries()) {
@@ -395,7 +396,7 @@ public class QueueListener {
 		return countryISOcode;
 	}
 
-	private Map<String, String> _fetchPartnerLevelERCs() {
+	private Map<String, String> _getPartnerLevelERCs() {
 		JSONObject partnerLevelResponseJSONObject = _get(
 			uriBuilder -> uriBuilder.path(
 				"/o/c/partnerlevels/"
@@ -429,7 +430,7 @@ public class QueueListener {
 		return partnerLevelERCs;
 	}
 
-	private Map<String, Long> _fetchRegionsIDs() {
+	private Map<String, Long> _getRegionsIDs() {
 		Map<String, Long> regionsIDs = new HashMap<>();
 
 		JSONObject globalOrganizationResponseJSONObject = _get(
@@ -470,7 +471,7 @@ public class QueueListener {
 		return regionsIDs;
 	}
 
-	private String _fetchSalesforceAccountKey(JSONObject accountJSONObject) {
+	private String _getSalesforceAccountKey(JSONObject accountJSONObject) {
 		JSONArray entitlementsJSONArray = accountJSONObject.getJSONArray(
 			"entitlements");
 

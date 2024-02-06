@@ -19,7 +19,8 @@ for (let i = 0; i < customIcons.length; i++) {
 			faqList.classList.remove('collapse');
 			minusIcon.classList.remove('d-none');
 			plusIcon.classList.add('d-none');
-		} else {
+		}
+		else {
 			faqList.classList.add('collapse');
 			minusIcon.classList.add('d-none');
 			plusIcon.classList.remove('d-none');

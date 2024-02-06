@@ -9,6 +9,33 @@ import {
 } from '@liferay/js-api/editor';
 
 const editorConfigTransformer: EditorConfigTransformer<any> = (config) => {
+
+	// Alloy Editor
+
+	const toolbars: any = config.toolbars;
+
+	if (typeof toolbars === 'object') {
+		interface ISelection {
+			buttons: Array<string>;
+			name: string;
+		}
+
+		const textSelection: ISelection = toolbars.styles?.selections?.find(
+			(selection: ISelection) => selection.name === 'text'
+		);
+
+		if (textSelection.buttons) {
+			textSelection.buttons.push('video');
+
+			return {
+				...config,
+				toolbars,
+			};
+		}
+	}
+
+	// CKEditor
+
 	const toolbar: string | [string[]] = config.toolbar;
 
 	const buttonName = 'AICreator';
@@ -24,7 +51,7 @@ const editorConfigTransformer: EditorConfigTransformer<any> = (config) => {
 			[`toolbar_${toolbar}`]: activeToolbar,
 		};
 	}
-	else {
+	else if (Array.isArray(toolbar)) {
 		toolbar.push([buttonName]);
 
 		transformedConfig = {

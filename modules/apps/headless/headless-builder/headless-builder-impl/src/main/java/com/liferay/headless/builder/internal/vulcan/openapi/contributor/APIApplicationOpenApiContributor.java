@@ -271,7 +271,7 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 				}
 			};
 		}
-		else if (type == APIApplication.Property.Type.CONTAINER) {
+		else if (type == APIApplication.Property.Type.OBJECT) {
 			schema = new ObjectSchema();
 		}
 		else if (type == APIApplication.Property.Type.PICKLIST) {

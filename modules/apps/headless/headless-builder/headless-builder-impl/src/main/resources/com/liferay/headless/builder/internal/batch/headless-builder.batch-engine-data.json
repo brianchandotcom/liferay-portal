@@ -374,7 +374,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Picklist",
-					"defaultValue": "value",
+					"defaultValue": "field",
 					"externalReferenceCode": "TYPE",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -389,18 +389,18 @@
 							"value": {
 								"objectStates": [
 									{
-										"key": "value",
+										"key": "field",
 										"objectStateTransitions": [
 											{
-												"key": "container"
+												"key": "object"
 											}
 										]
 									},
 									{
-										"key": "container",
+										"key": "object",
 										"objectStateTransitions": [
 											{
-												"key": "value"
+												"key": "field"
 											}
 										]
 									}

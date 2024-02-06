@@ -86,11 +86,11 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
 
-		_containerObjectDefinition = _publishObjectDefinition(
+		_objectDefinition3 = _publishObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).externalReferenceCode(
-					_API_CONTAINER_SCHEMA_TEXT_FIELD_ERC
+					_API_SCHEMA_OBJECT_PROPERTY_TEXT_FIELD_ERC
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString())
@@ -99,7 +99,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				).build(),
 				new LongTextObjectFieldBuilder(
 				).externalReferenceCode(
-					_API_CONTAINER_SCHEMA_LONG_TEXT_FIELD_ERC
+					_API_SCHEMA_OBJECT_PROPERTY_LONG_TEXT_FIELD_ERC
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString())
@@ -565,89 +565,89 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 								"description", "description"
 							).put(
 								"externalReferenceCode",
-								_API_CONTAINER_SCHEMA_CONTAINER_ERC_1
+								RandomTestUtil.randomString()
 							).put(
-								"name", "container1"
+								"name", "objectProperty1"
 							).put(
-								"type", "container"
+								"type", "object"
 							),
 							JSONUtil.put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
-								_API_CONTAINER_SCHEMA_CONTAINER_ERC_2
+								_API_PROPERTY_OBJECT_ERC_1
 							).put(
-								"name", "container2"
+								"name", "objectProperty2"
 							).put(
-								"type", "container"
+								"type", "object"
 							),
 							JSONUtil.put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
-								_API_CONTAINER_SCHEMA_CONTAINER_ERC_3
+								RandomTestUtil.randomString()
 							).put(
-								"name", "container3"
+								"name", "objectProperty3"
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-								_API_CONTAINER_SCHEMA_CONTAINER_ERC_2
+								_API_PROPERTY_OBJECT_ERC_1
 							).put(
-								"type", "container"
+								"type", "object"
 							),
 							JSONUtil.put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
-								_API_CONTAINER_SCHEMA_CONTAINER_ERC_4
+								_API_PROPERTY_OBJECT_ERC_2
 							).put(
-								"name", "container4"
+								"name", "objectProperty4"
 							).put(
-								"type", "container"
+								"type", "object"
 							),
 							JSONUtil.put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
-								_API_CONTAINER_SCHEMA_CONTAINER_ERC_5
+								_API_PROPERTY_OBJECT_ERC_3
 							).put(
-								"name", "container5"
+								"name", "objectProperty5"
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-								_API_CONTAINER_SCHEMA_CONTAINER_ERC_4
+								_API_PROPERTY_OBJECT_ERC_2
 							).put(
-								"type", "container"
+								"type", "object"
 							),
 							JSONUtil.put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
-								_API_CONTAINER_SCHEMA_TEXT_PROPERTY_ERC
+								RandomTestUtil.randomString()
 							).put(
-								"name", "containerTextProperty"
+								"name", "textProperty"
 							).put(
 								"objectFieldERC",
-								_API_CONTAINER_SCHEMA_TEXT_FIELD_ERC
+								_API_SCHEMA_OBJECT_PROPERTY_TEXT_FIELD_ERC
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-								_API_CONTAINER_SCHEMA_CONTAINER_ERC_2
+								_API_PROPERTY_OBJECT_ERC_1
 							).put(
-								"type", "value"
+								"type", "field"
 							),
 							JSONUtil.put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
-								_API_CONTAINER_SCHEMA_LONG_TEXT_PROPERTY_ERC
+								RandomTestUtil.randomString()
 							).put(
-								"name", "containerLongTextProperty"
+								"name", "longTextProperty"
 							).put(
 								"objectFieldERC",
-								_API_CONTAINER_SCHEMA_LONG_TEXT_FIELD_ERC
+								_API_SCHEMA_OBJECT_PROPERTY_LONG_TEXT_FIELD_ERC
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-								_API_CONTAINER_SCHEMA_CONTAINER_ERC_5
+								_API_PROPERTY_OBJECT_ERC_3
 							).put(
-								"type", "value"
+								"type", "field"
 							))
 					).put(
 						"description", "description"
@@ -655,9 +655,9 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"externalReferenceCode", RandomTestUtil.randomString()
 					).put(
 						"mainObjectDefinitionERC",
-						_containerObjectDefinition.getExternalReferenceCode()
+						_objectDefinition3.getExternalReferenceCode()
 					).put(
-						"name", "ContainerSchemaName"
+						"name", "ObjectSchemaName"
 					),
 					JSONUtil.put(
 						"apiSchemaToAPIProperties",
@@ -959,33 +959,6 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	private static final String _API_BASE_URL = StringUtil.toLowerCase(
 		RandomTestUtil.randomString());
 
-	private static final String _API_CONTAINER_SCHEMA_CONTAINER_ERC_1 =
-		RandomTestUtil.randomString();
-
-	private static final String _API_CONTAINER_SCHEMA_CONTAINER_ERC_2 =
-		RandomTestUtil.randomString();
-
-	private static final String _API_CONTAINER_SCHEMA_CONTAINER_ERC_3 =
-		RandomTestUtil.randomString();
-
-	private static final String _API_CONTAINER_SCHEMA_CONTAINER_ERC_4 =
-		RandomTestUtil.randomString();
-
-	private static final String _API_CONTAINER_SCHEMA_CONTAINER_ERC_5 =
-		RandomTestUtil.randomString();
-
-	private static final String _API_CONTAINER_SCHEMA_LONG_TEXT_FIELD_ERC =
-		RandomTestUtil.randomString();
-
-	private static final String _API_CONTAINER_SCHEMA_LONG_TEXT_PROPERTY_ERC =
-		RandomTestUtil.randomString();
-
-	private static final String _API_CONTAINER_SCHEMA_TEXT_FIELD_ERC =
-		RandomTestUtil.randomString();
-
-	private static final String _API_CONTAINER_SCHEMA_TEXT_PROPERTY_ERC =
-		RandomTestUtil.randomString();
-
 	private static final String _API_GET_ENDPOINT_ERC =
 		RandomTestUtil.randomString();
 
@@ -994,6 +967,15 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			RandomTestUtil.randomString();
 
 	private static final String _API_POST_ENDPOINT_ERC =
+		RandomTestUtil.randomString();
+
+	private static final String _API_PROPERTY_OBJECT_ERC_1 =
+		RandomTestUtil.randomString();
+
+	private static final String _API_PROPERTY_OBJECT_ERC_2 =
+		RandomTestUtil.randomString();
+
+	private static final String _API_PROPERTY_OBJECT_ERC_3 =
 		RandomTestUtil.randomString();
 
 	private static final String _API_SCHEMA_AGGREGATION_FIELD_ERC =
@@ -1026,6 +1008,13 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 		RandomTestUtil.randomString();
 
 	private static final String _API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC =
+		RandomTestUtil.randomString();
+
+	private static final String
+		_API_SCHEMA_OBJECT_PROPERTY_LONG_TEXT_FIELD_ERC =
+			RandomTestUtil.randomString();
+
+	private static final String _API_SCHEMA_OBJECT_PROPERTY_TEXT_FIELD_ERC =
 		RandomTestUtil.randomString();
 
 	private static final String _API_SCHEMA_PICKLIST_FIELD_ERC =
@@ -1074,9 +1063,6 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	private static final String _API_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC =
 		RandomTestUtil.randomString();
 
-	@DeleteAfterTestRun
-	private ObjectDefinition _containerObjectDefinition;
-
 	private ListTypeDefinition _listTypeDefinition;
 
 	@Inject
@@ -1087,6 +1073,9 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition3;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

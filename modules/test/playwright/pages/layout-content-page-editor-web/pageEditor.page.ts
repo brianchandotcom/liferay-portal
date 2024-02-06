@@ -23,6 +23,32 @@ export class PageEditorPage {
 		this.undoHistory = page.locator('.page-editor__undo-history');
 	}
 
+	async changeFragmentConfiguration(
+		fragmentId: string,
+		tab: ConfigurationTab,
+		fieldLabel: string,
+		value: string
+	) {
+		await this.selectFragment(fragmentId);
+		await this.goToConfigurationTab(tab);
+
+		// Change value in different way depending on field type
+
+		const field = await this.page.getByLabel(fieldLabel, {exact: true});
+		const type = await field.evaluate((element) => element.tagName);
+
+		if (type === 'INPUT' || type === 'TEXTAREA') {
+			await field.fill(value);
+		}
+		else if (type === 'SELECT') {
+			await field.selectOption(value);
+		}
+
+		// The change is applied on blur
+
+		await field.blur();
+	}
+
 	async goToConfigurationTab(tab: ConfigurationTab) {
 		await this.page.getByRole('tab', {name: tab}).click();
 	}

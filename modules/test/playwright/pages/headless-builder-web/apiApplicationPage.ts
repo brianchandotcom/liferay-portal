@@ -52,7 +52,7 @@ export class ApiApplicationPage {
 	}
 
 	async goToEditEndpoint(endpointPath: string) {
-		await this.page.getByLabel(endpointPath).click();
+		await this.page.getByRole('button', {name: endpointPath}).click();
 		await this.page.waitForLoadState();
 	}
 

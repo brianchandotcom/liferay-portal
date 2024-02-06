@@ -11,6 +11,12 @@
 
 <portlet:renderURL var="redirectURL" />
 
+<%
+long preferencesCompanyId = company.getCompanyId();
+
+Function<String, String> defaultValueFunction = key -> StringPool.BLANK;
+%>
+
 <aui:form action="<%= actionURL %>" cssClass="sheet-lg" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateMail" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -21,9 +27,7 @@
 				<liferay-ui:message key="mail-settings" />
 			</h2>
 
-			<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="preferencesCompanyId" value="<%= String.valueOf(company.getCompanyId()) %>" />
-			</liferay-util:include>
+			<%@ include file="/mail_fields.jspf" %>
 
 			<clay:sheet-footer>
 				<div class="btn-group">

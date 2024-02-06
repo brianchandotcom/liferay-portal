@@ -377,7 +377,7 @@ public class UnsyncPrintWriter extends PrintWriter {
 		}
 		else {
 			try {
-				_writer.write(string, offset, length);
+				_writer.write(string.substring(offset, offset + length));
 			}
 			catch (InterruptedIOException interruptedIOException) {
 				Thread currentThread = Thread.currentThread();

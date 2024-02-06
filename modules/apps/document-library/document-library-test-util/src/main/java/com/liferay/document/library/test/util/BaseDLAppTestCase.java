@@ -81,6 +81,9 @@ public abstract class BaseDLAppTestCase {
 		PrincipalThreadLocal.setName(_name);
 	}
 
+	@Inject
+	protected DLAppService dlAppService;
+
 	@DeleteAfterTestRun
 	protected Group group;
 
@@ -91,9 +94,6 @@ public abstract class BaseDLAppTestCase {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseDLAppTestCase.class);
-
-	@Inject
-	protected DLAppService dlAppService;
 
 	private String _name;
 

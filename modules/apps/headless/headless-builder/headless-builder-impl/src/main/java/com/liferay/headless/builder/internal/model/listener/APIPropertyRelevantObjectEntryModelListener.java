@@ -148,7 +148,9 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 				String filterString = StringBundler.concat(
 					"id ne '", objectEntry.getObjectEntryId(),
-					"' and type eq 'object' and name eq '", values.get("name"),
+					"' and name eq '", values.get("name"),
+					"' and r_apiPropertyToAPIProperties_c_apiPropertyId eq '",
+					values.get("r_apiPropertyToAPIProperties_c_apiPropertyId"),
 					"' and r_apiSchemaToAPIProperties_c_apiSchemaId eq '",
 					apiSchemaId, "'");
 

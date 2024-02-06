@@ -45,7 +45,6 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		if (((isPortalSource() || isSubrepository()) &&
 			 shortFileName.startsWith("portal") &&
 			 !shortFileName.contains("-legacy-") &&
-			 !shortFileName.equals("portal-all.properties") &&
 			 !(shortFileName.equals("portal-ext.properties") &&
 			   absolutePath.contains("/workspaces/")) &&
 			 !shortFileName.equals("portal-osgi-configuration.properties") &&

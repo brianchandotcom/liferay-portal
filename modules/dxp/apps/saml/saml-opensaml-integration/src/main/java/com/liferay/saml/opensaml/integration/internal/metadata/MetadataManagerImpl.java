@@ -15,7 +15,6 @@ import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.provider.DBMetadataResolver;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
-import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.SamlException;
@@ -159,26 +158,6 @@ public class MetadataManagerImpl implements MetadataManager {
 		catch (ResolverException resolverException) {
 			throw new SamlException(resolverException);
 		}
-	}
-
-	@Override
-	public String getUserAttributeMappings(String entityId) {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		try {
-			SamlSpIdpConnection samlSpIdpConnection =
-				_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-					companyId, entityId);
-
-			return samlSpIdpConnection.getUserAttributeMappings();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return null;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ assemble:
       into: static
 liferay-sample-editor-config-contributor:
     editorConfigKeys:
+        - contentEditor
         - description
         - sampleClassicEditor
         - sampleLegacyEditor

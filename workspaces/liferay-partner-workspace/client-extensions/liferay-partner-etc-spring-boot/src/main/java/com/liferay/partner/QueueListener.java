@@ -107,25 +107,23 @@ public class QueueListener {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Received Account: ", accountName,
-							", from message"));
+							"Received Account: ", accountName, ", from message",
+							deliveryTag));
 				}
 
 				String accountCountryISOCode = _getAccountcountryISOCode(
 					accountJSONObject);
 
-				JSONObject partnerAccountJSONObject = new JSONObject();
+				JSONObject partnerAccountJSONObject = new JSONObject() {
+					{
+						put("externalReferenceCode", salesforceAccountKey);
+						put("name", accountName);
 
-				partnerAccountJSONObject.put(
-					"externalReferenceCode", salesforceAccountKey
-				).put(
-					"name", accountName
-				);
-
-				if (accountCountryISOCode != null) {
-					partnerAccountJSONObject.put(
-						"partnerCountry", accountCountryISOCode);
-				}
+						if (accountCountryISOCode != null) {
+							put("partnerCountry", accountCountryISOCode);
+						}
+					}
+				};
 
 				String accountRegion = null;
 

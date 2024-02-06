@@ -19,7 +19,7 @@ import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBindingProvider;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
-import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
+import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerUtil;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.provider.DBMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.util.ConfigurationServiceBootstrapUtil;
@@ -263,8 +263,10 @@ public abstract class BaseProfile {
 
 		RoleDescriptor roleDescriptor = null;
 
-		EntityDescriptor entityDescriptor = metadataManager.getEntityDescriptor(
-			httpServletRequest);
+		EntityDescriptor entityDescriptor =
+			MetadataManagerUtil.getEntityDescriptor(
+				httpServletRequest, samlProviderConfigurationHelper,
+				credentialResolver, localEntityManager);
 
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);
@@ -580,9 +582,6 @@ public abstract class BaseProfile {
 
 	@Reference
 	protected LocalEntityManager localEntityManager;
-
-	@Reference
-	protected MetadataManager metadataManager;
 
 	@Reference
 	protected Portal portal;

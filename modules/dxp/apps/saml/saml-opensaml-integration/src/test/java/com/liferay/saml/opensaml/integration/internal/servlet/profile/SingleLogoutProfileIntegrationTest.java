@@ -113,8 +113,6 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 			_singleLogoutProfileImpl, "localEntityManager",
 			keyStoreLocalEntityManager);
 		ReflectionTestUtil.setFieldValue(
-			_singleLogoutProfileImpl, "metadataManager", metadataManagerImpl);
-		ReflectionTestUtil.setFieldValue(
 			_singleLogoutProfileImpl, "portal", portal);
 		ReflectionTestUtil.setFieldValue(
 			_singleLogoutProfileImpl, "samlBindingProvider",

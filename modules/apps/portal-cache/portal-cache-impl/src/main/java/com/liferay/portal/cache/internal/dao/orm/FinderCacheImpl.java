@@ -707,7 +707,7 @@ public class FinderCacheImpl
 	}
 
 	private boolean _isLocalCacheEnabled() {
-		if ((_localCache == null) &&
+		if ((_localCache == null) ||
 			!CTCollectionThreadLocal.isProductionMode()) {
 
 			return false;

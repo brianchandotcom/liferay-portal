@@ -83,7 +83,7 @@ public class EntityCacheImpl
 
 	@Override
 	public void clearLocalCache() {
-		if (_isLocalCacheEnabled(null)) {
+		if (_isLocalCacheEnabled()) {
 			_localCache.remove();
 		}
 	}
@@ -97,7 +97,7 @@ public class EntityCacheImpl
 	public Serializable getLocalCacheResult(
 		Class<?> clazz, Serializable primaryKey) {
 
-		if (_isLocalCacheEnabled(clazz)) {
+		if (_isLocalCacheEnabled()) {
 			Map<Serializable, Serializable> localCache = _localCache.get();
 
 			Serializable localCacheKey = new LocalCacheKey(
@@ -166,7 +166,7 @@ public class EntityCacheImpl
 
 		Serializable localCacheKey = null;
 
-		if (_isLocalCacheEnabled(clazz)) {
+		if (_isLocalCacheEnabled()) {
 			localCache = _localCache.get();
 
 			localCacheKey = new LocalCacheKey(clazz.getName(), primaryKey);
@@ -316,10 +316,9 @@ public class EntityCacheImpl
 		}
 	}
 
-	private boolean _isLocalCacheEnabled(Class<?> clazz) {
+	private boolean _isLocalCacheEnabled() {
 		if ((_localCache == null) ||
-			((clazz != null) && CTModel.class.isAssignableFrom(clazz) &&
-			 !CTCollectionThreadLocal.isProductionMode())) {
+			!CTCollectionThreadLocal.isProductionMode()) {
 
 			return false;
 		}
@@ -408,7 +407,7 @@ public class EntityCacheImpl
 
 		CacheModel<?> result = baseModel.toCacheModel();
 
-		if (_isLocalCacheEnabled(clazz)) {
+		if (_isLocalCacheEnabled()) {
 			Map<Serializable, Serializable> localCache = _localCache.get();
 
 			Serializable localCacheKey = new LocalCacheKey(
@@ -440,7 +439,7 @@ public class EntityCacheImpl
 			_notifyFinderCache(clazz.getName(), baseModel, false);
 		}
 
-		if (_isLocalCacheEnabled(clazz)) {
+		if (_isLocalCacheEnabled()) {
 			Map<Serializable, Serializable> localCache = _localCache.get();
 
 			Serializable localCacheKey = new LocalCacheKey(

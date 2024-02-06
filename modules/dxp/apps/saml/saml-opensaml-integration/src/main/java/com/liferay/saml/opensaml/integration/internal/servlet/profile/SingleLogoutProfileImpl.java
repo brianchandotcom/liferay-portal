@@ -34,7 +34,6 @@ import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.model.SamlSpSession;
-import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSpSessionLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalService;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
@@ -741,7 +740,7 @@ public class SingleLogoutProfileImpl
 			if (samlIdpSsoSession != null) {
 				samlSloContext = new SamlSloContext(
 					samlIdpSsoSession, messageContext,
-					_samlIdpSpConnectionLocalService,
+					samlIdpSpConnectionLocalService,
 					_samlIdpSpSessionLocalService, _samlPeerBindingLocalService,
 					_userLocalService);
 
@@ -862,7 +861,7 @@ public class SingleLogoutProfileImpl
 				httpServletRequest, httpServletResponse,
 				StatusCode.UNKNOWN_PRINCIPAL,
 				new SamlSloContext(
-					null, messageContext, _samlIdpSpConnectionLocalService,
+					null, messageContext, samlIdpSpConnectionLocalService,
 					_samlIdpSpSessionLocalService, _samlPeerBindingLocalService,
 					_userLocalService));
 
@@ -1461,9 +1460,6 @@ public class SingleLogoutProfileImpl
 
 	@Reference
 	private SamlHttpRequestHelper _samlHttpRequestHelper;
-
-	@Reference
-	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
 
 	@Reference
 	private SamlIdpSpSessionLocalService _samlIdpSpSessionLocalService;

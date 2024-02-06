@@ -4609,6 +4609,43 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPatchCustomObjectEntryExternalReferenceCode()
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", _ERC_VALUE_1
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		_testPatchCustomObjectEntryExternalReferenceCode(
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+				jsonObject.getLong("id")),
+			_ERC_VALUE_2);
+
+		_testPatchCustomObjectEntryExternalReferenceCode(
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/", _ERC_VALUE_2),
+			_ERC_VALUE_3);
+	}
+
+	@Test
+	public void testPatchCustomObjectEntryWithDuplicateExternalReferenceCode()
+		throws Exception {
+
+		_testPatchCustomObjectEntryWithDuplicateExternalReferenceCode(
+			_objectDefinition1.getRESTContextPath());
+
+		_testPatchCustomObjectEntryWithDuplicateExternalReferenceCode(
+			_getEndpoint(
+				TestPropsValues.getGroupId(), _siteScopedObjectDefinition1));
+	}
+
+	@Test
 	public void testPatchObjectEntryWithKeywords() throws Exception {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -6781,6 +6818,57 @@ public class ObjectEntryResourceTest {
 		_assertNestedFieldsInRelationships(
 			0, GetterUtil.getInteger(nestedFieldDepth, 1), itemJSONObject,
 			expectedFieldName, objectFieldNamesAndObjectFieldValues, type);
+	}
+
+	private void _testPatchCustomObjectEntryExternalReferenceCode(
+			String endpoint, String externalReferenceCode)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"externalReferenceCode", externalReferenceCode
+			).toString(),
+			endpoint, Http.Method.PATCH);
+
+		Assert.assertEquals(
+			externalReferenceCode,
+			jsonObject.getString("externalReferenceCode"));
+	}
+
+	private void _testPatchCustomObjectEntryWithDuplicateExternalReferenceCode(
+			String objectDefinitionRESTContextPath)
+		throws Exception {
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"externalReferenceCode", _ERC_VALUE_1
+				).toString(),
+				objectDefinitionRESTContextPath, Http.Method.POST));
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"externalReferenceCode", _ERC_VALUE_2
+				).toString(),
+				objectDefinitionRESTContextPath, Http.Method.POST));
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"externalReferenceCode", _ERC_VALUE_2
+				).toString(),
+				StringBundler.concat(
+					objectDefinitionRESTContextPath,
+					"/by-external-reference-code/", _ERC_VALUE_1),
+				Http.Method.PATCH));
 	}
 
 	private void _testPatchPutCustomObjectEntryWithAttachmentField(

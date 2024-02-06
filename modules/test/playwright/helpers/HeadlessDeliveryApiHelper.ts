@@ -14,13 +14,22 @@ export class HeadlessDeliveryApiHelper {
 		this.basePath = 'headless-delivery/v1.0';
 	}
 
+	/**
+	 * This method requires the feature flag LPS-178052 to be enabled,
+	 * please enable it in your test if using it.
+	 *
+	 * It allows creating a page inside a site.
+	 *
+	 * @param siteId the id of the site in which the page will be created
+	 * @param title the title of the page
+	 * @param pageDefinition the definition of the page in case that we want
+	 * to specify some content for it, for example some fragments+
+	 */
 	async createSitePage(
 		siteId: string,
 		title: string,
 		pageDefinition?: PageDefinition
 	): Promise<Layout> {
-		await this.apiHelpers.featureFlag.updateFeatureFlag('LPS-178052', true);
-
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/site-pages`,
 			{pageDefinition, title}

@@ -11,7 +11,7 @@ export class ApplicationsMenuPage {
 	private readonly apiBuilderMenuItem: Locator;
 	private readonly applicationsMenuTabButton: Locator;
 	private readonly clientExtensionsLink: Locator;
-	private readonly commerceOrdersItem: Locator;
+	private readonly commerceOrdersMenuItem: Locator;
 	private readonly commercePanelButton: Locator;
 	private readonly controlPanelButton: Locator;
 	private readonly dataMigrationCenterMenuItem: Locator;
@@ -20,6 +20,7 @@ export class ApplicationsMenuPage {
 	private readonly instanceSettingsLink: Locator;
 	private readonly objectsMenuItem: Locator;
 	readonly page: Page;
+	private readonly productsMenuItem: Locator;
 	private readonly usersAndOrganizationsItem: Locator;
 
 	constructor(page: Page) {
@@ -33,7 +34,7 @@ export class ApplicationsMenuPage {
 		this.clientExtensionsLink = page.getByRole('menuitem', {
 			name: 'Client Extensions',
 		});
-		this.commerceOrdersItem = page.getByRole('menuitem', {
+		this.commerceOrdersMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Orders',
 		});
@@ -60,6 +61,10 @@ export class ApplicationsMenuPage {
 			name: 'Objects',
 		});
 		this.page = page;
+		this.productsMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Products',
+		});
 		this.usersAndOrganizationsItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Users and Organizations',
@@ -115,7 +120,17 @@ export class ApplicationsMenuPage {
 
 	async goToCommerceOrders() {
 		await this.goToCommercePanel();
-		await this.commerceOrdersItem.click();
+		await this.commerceOrdersMenuItem.click();
+	}
+
+	async goToProducts() {
+		await this.goToCommercePanel();
+		await this.productsMenuItem.click();
+	}
+
+	async goToSite(name: string = 'Liferay DXP') {
+		await this.goto();
+		await this.page.getByRole('link', {exact: true, name}).click();
 	}
 
 	async goToControlPanel() {

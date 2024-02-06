@@ -12,12 +12,16 @@ import {AttachmentsPage} from '../pages/commerce/commerce-product-definitions-we
 import {CommerceAdminOrderDetailsPage} from '../pages/commerce/commerceAdminOrderDetailsPage';
 import {CommerceAdminOrdersPage} from '../pages/commerce/commerceAdminOrdersPage';
 import {CommerceLayoutsPage} from '../pages/commerce/commerceLayoutsPage';
+import {CommerceMiniCartPage} from '../pages/commerce/commerceMiniCartPage';
+import {CommerceProductAdminPage} from '../pages/commerce/commerceProductAdminPage';
 
 const commercePagesTest = test.extend<{
 	attachmentsPage: AttachmentsPage;
 	commerceAdminOrderDetailsPage: CommerceAdminOrderDetailsPage;
 	commerceAdminOrdersPage: CommerceAdminOrdersPage;
 	commerceLayoutsPage: CommerceLayoutsPage;
+	commerceMiniCartPage: CommerceMiniCartPage;
+	commerceProductAdminPage: CommerceProductAdminPage;
 	specificationFacetsPage: SpecificationFacetsPage;
 }>({
 	attachmentsPage: async ({page}, use) => {
@@ -31,6 +35,12 @@ const commercePagesTest = test.extend<{
 	},
 	commerceLayoutsPage: async ({page}, use) => {
 		await use(new CommerceLayoutsPage(page));
+	},
+	commerceMiniCartPage: async ({page}, use) => {
+		await use(new CommerceMiniCartPage(page));
+	},
+	commerceProductAdminPage: async ({page}, use) => {
+		await use(new CommerceProductAdminPage(page));
 	},
 	specificationFacetsPage: async ({page}, use) => {
 		await use(new SpecificationFacetsPage(page));

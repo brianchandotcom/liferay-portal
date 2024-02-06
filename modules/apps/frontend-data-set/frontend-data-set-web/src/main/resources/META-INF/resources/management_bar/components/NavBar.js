@@ -22,7 +22,10 @@ function NavBar({creationMenu, showSearch}) {
 	const [showMobile, setShowMobile] = useState(false);
 
 	return (
-		<ManagementToolbar.Container className="justify-content-space-between">
+		<ManagementToolbar.Container
+			className="justify-content-space-between"
+			data-qa-id="management-toolbar"
+		>
 			<ManagementToolbar.ItemList>
 				{!!filters.length && (
 					<ManagementToolbar.Item>

@@ -559,6 +559,17 @@ public class JobFactory {
 			}
 		}
 
+		if (jobName.equals("test-portal-upstream")) {
+			if (jsonObject != null) {
+				job = new PortalUpstreamJob(jsonObject);
+			}
+			else {
+				job = new PortalUpstreamJob(
+					buildProfile, jobName, portalGitWorkingDirectory,
+					testSuiteName, upstreamBranchName);
+			}
+		}
+
 		if (jobName.startsWith("generate-reports") ||
 			jobName.startsWith("test-portal-testsuite-upstream-controller(") ||
 			jobName.startsWith("test-portal-upstream-controller(") ||

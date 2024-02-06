@@ -49,9 +49,9 @@ export class ActionsPage {
 
 	async goto() {
 		await this.viewsPage.goto();
-		await this.viewsPage.gotoSampleDataSetView();
-
-		await this.page.getByRole('button', {name: 'Actions'}).first().click();
+		await this.viewsPage.gotoSampleDataSetView().then(() => {
+			this.page.getByRole('button', {name: 'Actions'}).first().click();
+		});
 	}
 
 	async createCreationAction({

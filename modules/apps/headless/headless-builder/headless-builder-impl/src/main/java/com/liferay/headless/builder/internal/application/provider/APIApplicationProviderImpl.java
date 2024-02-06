@@ -266,8 +266,8 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					public Type getType() {
 						ListEntry listEntry = (ListEntry)properties.get("type");
 
-						if (Objects.equals(listEntry.getKey(), "container")) {
-							return Type.CONTAINER;
+						if (Objects.equals(listEntry.getKey(), "object")) {
+							return Type.OBJECT;
 						}
 
 						Type type = null;

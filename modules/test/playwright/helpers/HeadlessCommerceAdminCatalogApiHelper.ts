@@ -20,6 +20,7 @@ type TProduct = {
 		[key: string]: string;
 	};
 	productId?: number;
+	productOptions?: any[];
 	productSpecifications?: any[];
 	productStatus?: number;
 	productType?: string;
@@ -35,13 +36,26 @@ type TSku = {
 	sku: string;
 };
 
+type TSkuUnitOfMeasure = {
+	active?: boolean;
+	basePrice?: number;
+	incrementalOrderQuantity?: number;
+	key?: string;
+	name?: {
+		[key: string]: string;
+	};
+	primary?: boolean;
+	priority?: number;
+	rate?: number;
+};
+
 export class HeadlessCommerceAdminCatalogApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
 
 	constructor(apiHelpers: ApiHelpers) {
 		this.apiHelpers = apiHelpers;
-		this.basePath = 'headless-commerce-admin-catalog/v1.0/';
+		this.basePath = 'headless-commerce-admin-catalog/v1.0';
 	}
 
 	async deleteAttachment(attachmentId: string) {
@@ -56,6 +70,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async deleteOption(optionId: string) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/options/${optionId}`
+		);
+	}
+
 	async deleteOptionCategory(optionCategoryId: string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/optionCategories/${optionCategoryId}`
@@ -65,6 +85,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 	async deleteProduct(productId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}`
+		);
+	}
+
+	async deleteSkuUnitOfMeasure(skuUnitOfMeasureId: string) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sku-unit-of-measures/${skuUnitOfMeasureId}`
 		);
 	}
 
@@ -86,9 +112,9 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
-	async getProduct(productId: string) {
+	async getProduct(productId: number) {
 		return this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}`
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}?nestedFields=skus`
 		);
 	}
 
@@ -139,6 +165,27 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async postOption(
+		fieldType: string = 'select',
+		key: string = 'key-' + getRandomInt(),
+		name: string = 'Option' + getRandomInt(),
+		priority: number = getRandomInt()
+	) {
+		const postOption = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/options`,
+			{
+				fieldType,
+				key,
+				name: {
+					en_US: name,
+				},
+				priority,
+			}
+		);
+
+		return postOption;
+	}
+
 	async postOptionCategory(
 		optionCategoryName: string = 'OptionCategory' + getRandomInt(),
 		priority: number = getRandomInt()
@@ -180,6 +227,30 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 				...product,
 			}
 		);
+	}
+
+	async postSkuUnitOfMeasure(
+		skuId: number,
+		skuUnitOfMeasure: TSkuUnitOfMeasure
+	) {
+		const postSkuUnitOfMeasure = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/skus/${skuId}/sku-unit-of-measures`,
+			{
+				active: true,
+				basePrice: 0,
+				incrementalOrderQuantity: 1,
+				key: 'key-' + getRandomInt(),
+				name: {
+					en_US: 'UOM' + getRandomInt(),
+				},
+				primary: false,
+				priority: getRandomInt(),
+				rate: getRandomInt(),
+				...skuUnitOfMeasure,
+			}
+		);
+
+		return postSkuUnitOfMeasure;
 	}
 
 	async postSpecification(

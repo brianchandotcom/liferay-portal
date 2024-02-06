@@ -9,7 +9,7 @@ import {ApiHelpers} from './ApiHelpers';
 type TChannel = {
 	currencyCode?: string;
 	name?: string;
-	siteGroupId: number;
+	siteGroupId: number | string;
 	type?: string;
 };
 

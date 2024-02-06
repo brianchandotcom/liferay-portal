@@ -1,5 +1,5 @@
 {
-	"@generated": "61ce7dc66975d5500d4cffd7ccb9d9fd06f585e3",
+	"@generated": "7b5ad561eb2296ea52abbad1b33a3e728b44ffd4",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -14,7 +14,7 @@
 		"outDir": "./types",
 		"paths": {
 			"@liferay/frontend-data-set-web": [
-				"../frontend-data-set-web/src/main/resources/META-INF/resources/index.d.ts"
+				"../frontend-data-set-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"frontend-js-components-web": [
 				"../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"

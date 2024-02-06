@@ -5,6 +5,7 @@
 
 import {fetch} from 'frontend-js-web';
 
+import {getValueFromItem} from './getValueFromItem';
 import createOdataFilter from './odata';
 
 export function getData(apiURL, query) {
@@ -49,29 +50,6 @@ export function isValuesArrayChanged(prevValue = [], newValue = []) {
 	});
 
 	return changed;
-}
-
-export function getValueFromItem(item, fieldName) {
-	if (!fieldName) {
-		return null;
-	}
-	if (Array.isArray(fieldName)) {
-		return fieldName.reduce((acc, key) => {
-			if (key === 'LANG') {
-				return (
-					acc[Liferay.ThemeDisplay.getLanguageId()] ||
-					acc[
-						Liferay.ThemeDisplay.getDefaultLanguageId() ||
-							acc[Liferay.ThemeDisplay.getBCP47LanguageId()]
-					]
-				);
-			}
-
-			return acc[key];
-		}, item);
-	}
-
-	return item[fieldName];
 }
 
 export function formatItemChanges(itemChanges) {

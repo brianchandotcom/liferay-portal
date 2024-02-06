@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
@@ -74,27 +73,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MetadataManager.class)
 public class MetadataManagerImpl implements MetadataManager {
-
-	@Override
-	public String[] getAttributeNames(String entityId) {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		try {
-			SamlIdpSpConnection samlIdpSpConnection =
-				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
-					companyId, entityId);
-
-			return StringUtil.splitLines(
-				samlIdpSpConnection.getAttributeNames());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return null;
-	}
 
 	@Override
 	public long getClockSkew() {

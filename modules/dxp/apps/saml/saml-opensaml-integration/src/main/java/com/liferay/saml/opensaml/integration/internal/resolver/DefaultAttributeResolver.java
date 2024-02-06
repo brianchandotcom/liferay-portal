@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.resolver.AttributeResolver;
+import com.liferay.saml.persistence.model.SamlIdpSpConnection;
+import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.util.PortletPropsKeys;
 
 import java.io.Serializable;
@@ -124,7 +127,23 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	}
 
 	protected String[] getAttributeNames(String entityId) {
-		return _metadataManager.getAttributeNames(entityId);
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		try {
+			SamlIdpSpConnection samlIdpSpConnection =
+				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
+					companyId, entityId);
+
+			return StringUtil.splitLines(
+				samlIdpSpConnection.getAttributeNames());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return null;
 	}
 
 	private void _addExpandoAttribute(
@@ -647,6 +666,9 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
 
 	@Reference
 	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;

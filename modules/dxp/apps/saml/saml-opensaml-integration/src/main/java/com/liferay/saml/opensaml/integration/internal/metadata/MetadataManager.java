@@ -21,8 +21,6 @@ import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
  */
 public interface MetadataManager {
 
-	public String[] getAttributeNames(String entityId);
-
 	public long getClockSkew();
 
 	public Credential getEncryptionCredential() throws SamlException;

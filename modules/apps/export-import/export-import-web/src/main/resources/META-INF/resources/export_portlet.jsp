@@ -335,60 +335,6 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 															%>
 
 															<c:if test="<%= ArrayUtil.isNotEmpty(exportControls) || ArrayUtil.isNotEmpty(metadataControls) %>">
-																<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
-																	<ul class="lfr-tree list-unstyled">
-																		<li class="tree-item">
-																			<aui:fieldset cssClass="portlet-type-data-section" id="content">
-																				<c:if test="<%= exportControls != null %>">
-
-																					<%
-																					request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
-																					request.setAttribute("render_controls.jsp-childControl", false);
-																					request.setAttribute("render_controls.jsp-controls", exportControls);
-																					request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
-																					request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
-																					request.setAttribute("render_controls.jsp-rootControlId", rootControlId);
-																					%>
-
-																					<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
-																						<ul class="lfr-tree list-unstyled">
-																							<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
-																						</ul>
-																					</aui:field-wrapper>
-																				</c:if>
-
-																				<c:if test="<%= metadataControls != null %>">
-
-																					<%
-																					for (PortletDataHandlerControl metadataControl : metadataControls) {
-																						PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControl;
-
-																						PortletDataHandlerControl[] childrenControls = control.getChildren();
-																					%>
-
-																						<c:if test="<%= ArrayUtil.isNotEmpty(childrenControls) %>">
-
-																							<%
-																							request.setAttribute("render_controls.jsp-controls", childrenControls);
-																							%>
-
-																							<aui:field-wrapper label="content-metadata">
-																								<ul class="lfr-tree list-unstyled">
-																									<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
-																								</ul>
-																							</aui:field-wrapper>
-																						</c:if>
-
-																					<%
-																					}
-																					%>
-
-																				</c:if>
-																			</aui:fieldset>
-																		</li>
-																	</ul>
-																</div>
-
 																<ul id="<portlet:namespace />showChangeContent_<%= selPortlet.getRootPortletId() %>">
 																	<li>
 																		<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>"></span>
@@ -408,6 +354,54 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 																		/>
 																	</li>
 																</ul>
+
+																<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
+																	<ul class="lfr-tree list-unstyled">
+																		<li class="tree-item">
+																			<aui:fieldset cssClass="portlet-type-data-section" id="content">
+																				<c:if test="<%= exportControls != null %>">
+
+																					<% request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
+																						request.setAttribute("render_controls.jsp-childControl", false);
+																						request.setAttribute("render_controls.jsp-controls", exportControls);
+																						request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
+																						request.setAttribute("render_controls.jsp-portletDisabled",
+																						!portletDataHandler.isPublishToLiveByDefault());
+																						request.setAttribute("render_controls.jsp-rootControlId", rootControlId); %>
+
+																						<aui:field-wrapper
+																							label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
+																							<ul class="lfr-tree list-unstyled">
+																								<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
+																							</ul>
+																						</aui:field-wrapper>
+																				</c:if>
+
+																				<c:if test="<%= metadataControls != null %>">
+
+																					<% for (PortletDataHandlerControl metadataControl : metadataControls) { PortletDataHandlerBoolean
+																						control=(PortletDataHandlerBoolean)metadataControl; PortletDataHandlerControl[]
+																						childrenControls=control.getChildren(); %>
+
+																						<c:if test="<%= ArrayUtil.isNotEmpty(childrenControls) %>">
+
+																							<% request.setAttribute("render_controls.jsp-controls", childrenControls); %>
+
+																								<aui:field-wrapper label="content-metadata">
+																									<ul class="lfr-tree list-unstyled">
+																										<liferay-util:include page="/render_controls.jsp"
+																											servletContext="<%= application %>" />
+																									</ul>
+																								</aui:field-wrapper>
+																						</c:if>
+
+																						<% } %>
+
+																				</c:if>
+																			</aui:fieldset>
+																		</li>
+																	</ul>
+																</div>
 
 																<aui:script>
 																	Liferay.Util.toggleBoxes(

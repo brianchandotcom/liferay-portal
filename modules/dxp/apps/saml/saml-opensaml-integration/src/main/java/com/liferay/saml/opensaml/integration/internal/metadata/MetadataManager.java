@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.opensaml.saml.metadata.resolver.MetadataResolver;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml.security.impl.MetadataCredentialResolver;
-import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
 
 /**
  * @author Mika Koivisto
@@ -26,7 +25,5 @@ public interface MetadataManager {
 	public MetadataCredentialResolver getMetadataCredentialResolver();
 
 	public MetadataResolver getMetadataResolver();
-
-	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException;
 
 }

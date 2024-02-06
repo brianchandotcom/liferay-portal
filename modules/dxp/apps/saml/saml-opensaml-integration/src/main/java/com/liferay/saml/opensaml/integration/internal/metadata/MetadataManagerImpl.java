@@ -20,9 +20,6 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import net.shibboleth.utilities.java.support.component.ComponentInitializationException;
@@ -40,10 +37,6 @@ import org.opensaml.security.credential.CredentialResolver;
 import org.opensaml.security.credential.UsageType;
 import org.opensaml.security.criteria.UsageCriterion;
 import org.opensaml.xmlsec.config.DefaultSecurityConfigurationBootstrap;
-import org.opensaml.xmlsec.keyinfo.KeyInfoCredentialResolver;
-import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
-import org.opensaml.xmlsec.signature.support.impl.ChainingSignatureTrustEngine;
-import org.opensaml.xmlsec.signature.support.impl.ExplicitKeySignatureTrustEngine;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -114,12 +107,6 @@ public class MetadataManagerImpl implements MetadataManager {
 			this::_createCachingChainingMetadataResolver);
 	}
 
-	@Override
-	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException {
-		return _chainingSignatureTrustEngineDCLSingleton.getSingleton(
-			this::_createChainingSignatureTrustEngine);
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -162,30 +149,6 @@ public class MetadataManagerImpl implements MetadataManager {
 		}
 
 		return cachingChainingMetadataResolver;
-	}
-
-	private ChainingSignatureTrustEngine _createChainingSignatureTrustEngine() {
-		List<SignatureTrustEngine> signatureTrustEngines = new ArrayList<>();
-
-		MetadataCredentialResolver metadataCredentialResolver =
-			_metadataCredentialResolverDCLSingleton.getSingleton(
-				this::_createMetadataCredentialResolver);
-
-		KeyInfoCredentialResolver keyInfoCredentialResolver =
-			metadataCredentialResolver.getKeyInfoCredentialResolver();
-
-		SignatureTrustEngine signatureTrustEngine =
-			new ExplicitKeySignatureTrustEngine(
-				metadataCredentialResolver, keyInfoCredentialResolver);
-
-		signatureTrustEngines.add(signatureTrustEngine);
-
-		signatureTrustEngine = new ExplicitKeySignatureTrustEngine(
-			_credentialResolver, keyInfoCredentialResolver);
-
-		signatureTrustEngines.add(signatureTrustEngine);
-
-		return new ChainingSignatureTrustEngine(signatureTrustEngines);
 	}
 
 	private MetadataCredentialResolver _createMetadataCredentialResolver() {
@@ -297,8 +260,6 @@ public class MetadataManagerImpl implements MetadataManager {
 	private BundleContext _bundleContext;
 	private final DCLSingleton<CachingChainingMetadataResolver>
 		_cachingChainingMetadataResolverDCLSingleton = new DCLSingleton<>();
-	private final DCLSingleton<ChainingSignatureTrustEngine>
-		_chainingSignatureTrustEngineDCLSingleton = new DCLSingleton<>();
 
 	@Reference
 	private CredentialResolver _credentialResolver;

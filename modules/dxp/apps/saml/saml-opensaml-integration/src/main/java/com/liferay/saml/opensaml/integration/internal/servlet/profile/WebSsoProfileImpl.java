@@ -1202,8 +1202,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				new DecrypterContext(decrypter));
 		}
 
-		SignatureTrustEngine signatureTrustEngine =
-			metadataManager.getSignatureTrustEngine();
+		SignatureTrustEngine signatureTrustEngine = getSignatureTrustEngine();
 
 		Assertion assertion = null;
 

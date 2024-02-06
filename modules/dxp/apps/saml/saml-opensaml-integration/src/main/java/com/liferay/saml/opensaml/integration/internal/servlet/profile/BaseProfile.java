@@ -5,6 +5,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
@@ -74,6 +75,7 @@ import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
 import org.opensaml.saml.saml2.metadata.RoleDescriptor;
 import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
+import org.opensaml.saml.security.impl.MetadataCredentialResolver;
 import org.opensaml.security.credential.Credential;
 import org.opensaml.security.credential.CredentialResolver;
 import org.opensaml.security.credential.UsageType;
@@ -86,6 +88,9 @@ import org.opensaml.xmlsec.context.SecurityParametersContext;
 import org.opensaml.xmlsec.criterion.SignatureValidationConfigurationCriterion;
 import org.opensaml.xmlsec.impl.BasicSignatureValidationParametersResolver;
 import org.opensaml.xmlsec.keyinfo.KeyInfoCredentialResolver;
+import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
+import org.opensaml.xmlsec.signature.support.impl.ChainingSignatureTrustEngine;
+import org.opensaml.xmlsec.signature.support.impl.ExplicitKeySignatureTrustEngine;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -205,7 +210,7 @@ public abstract class BaseProfile {
 							SignatureValidationConfiguration.class))));
 
 		signatureValidationParameters.setSignatureTrustEngine(
-			metadataManager.getSignatureTrustEngine());
+			getSignatureTrustEngine());
 
 		securityParametersContext.setSignatureValidationParameters(
 			signatureValidationParameters);
@@ -512,6 +517,13 @@ public abstract class BaseProfile {
 			httpServletRequest.isSecure());
 	}
 
+	protected SignatureTrustEngine getSignatureTrustEngine()
+		throws SamlException {
+
+		return _chainingSignatureTrustEngineDCLSingleton.getSingleton(
+			this::_createChainingSignatureTrustEngine);
+	}
+
 	protected Credential getSigningCredential() throws SamlException {
 		try {
 			String entityId = localEntityManager.getLocalEntityId();
@@ -554,6 +566,29 @@ public abstract class BaseProfile {
 
 	@Reference
 	protected SamlSpSessionLocalService samlSpSessionLocalService;
+
+	private ChainingSignatureTrustEngine _createChainingSignatureTrustEngine() {
+		List<SignatureTrustEngine> signatureTrustEngines = new ArrayList<>();
+
+		MetadataCredentialResolver metadataCredentialResolver =
+			metadataManager.getMetadataCredentialResolver();
+
+		KeyInfoCredentialResolver keyInfoCredentialResolver =
+			metadataCredentialResolver.getKeyInfoCredentialResolver();
+
+		SignatureTrustEngine signatureTrustEngine =
+			new ExplicitKeySignatureTrustEngine(
+				metadataCredentialResolver, keyInfoCredentialResolver);
+
+		signatureTrustEngines.add(signatureTrustEngine);
+
+		signatureTrustEngine = new ExplicitKeySignatureTrustEngine(
+			credentialResolver, keyInfoCredentialResolver);
+
+		signatureTrustEngines.add(signatureTrustEngine);
+
+		return new ChainingSignatureTrustEngine(signatureTrustEngines);
+	}
 
 	private MessageHandler<?> _getSecurityMessageHandler(
 		HttpServletRequest httpServletRequest, String communicationProfileId,
@@ -641,5 +676,8 @@ public abstract class BaseProfile {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseProfile.class);
+
+	private final DCLSingleton<ChainingSignatureTrustEngine>
+		_chainingSignatureTrustEngineDCLSingleton = new DCLSingleton<>();
 
 }

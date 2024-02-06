@@ -793,8 +793,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		samlPeerEntityContext.setEntityId(IDP_ENTITY_ID);
 
 		_webSsoProfileImpl.verifyAssertionSignature(
-			null, messageContext,
-			metadataManagerImpl.getSignatureTrustEngine());
+			null, messageContext, _webSsoProfileImpl.getSignatureTrustEngine());
 	}
 
 	@Test(expected = SignatureException.class)
@@ -826,8 +825,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		samlPeerEntityContext.setEntityId(IDP_ENTITY_ID);
 
 		_webSsoProfileImpl.verifyAssertionSignature(
-			null, messageContext,
-			metadataManagerImpl.getSignatureTrustEngine());
+			null, messageContext, _webSsoProfileImpl.getSignatureTrustEngine());
 	}
 
 	@Test
@@ -1284,7 +1282,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		_webSsoProfileImpl.verifyAssertionSignature(
 			assertion.getSignature(), messageContext,
-			metadataManagerImpl.getSignatureTrustEngine());
+			_webSsoProfileImpl.getSignatureTrustEngine());
 	}
 
 	private static final BundleContext _bundleContext =

@@ -102,8 +102,6 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 
 													<%= rowChecker.getRowCheckBox(request, row) %>
 
-													<span class="custom-control-label"></span>
-
 													<c:choose>
 														<c:when test="<%= dlViewFileVersionDisplayContext.hasCustomThumbnail() %>">
 

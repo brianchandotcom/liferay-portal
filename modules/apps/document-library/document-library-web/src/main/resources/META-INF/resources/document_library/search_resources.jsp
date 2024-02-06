@@ -157,8 +157,6 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 															%>
 
 															<%= rowChecker.getRowCheckBox(request, row) %>
-
-															<span class="custom-control-label"></span>
 														</c:if>
 
 														<c:choose>

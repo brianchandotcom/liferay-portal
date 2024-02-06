@@ -91,8 +91,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 				"name", RandomTestUtil.randomString()
 			).put(
 				"objectFieldERC", "APPLICATION_STATUS"
-			).put(
-				"type", "field"
 			).toString(),
 			"headless-builder/properties", Http.Method.POST);
 
@@ -111,8 +109,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			).put(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject.get("id")
-			).put(
-				"type", "field"
 			).toString(),
 			"headless-builder/properties", Http.Method.POST);
 
@@ -129,8 +125,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			).put(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject.get("id")
-			).put(
-				"type", "field"
 			).toString(),
 			"headless-builder/properties", Http.Method.POST);
 
@@ -188,8 +182,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 					).put(
 						"objectFieldERC",
 						_objectField1.getExternalReferenceCode()
-					).put(
-						"type", "field"
 					))
 			).put(
 				"mainObjectDefinitionERC",
@@ -217,8 +209,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 					).put(
 						"objectFieldERC",
 						_objectField1.getExternalReferenceCode()
-					).put(
-						"type", "field"
 					),
 					JSONUtil.put(
 						"description", RandomTestUtil.randomString()
@@ -229,8 +219,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 					).put(
 						"objectFieldERC",
 						_objectField2.getExternalReferenceCode()
-					).put(
-						"type", "field"
 					))
 			).put(
 				"mainObjectDefinitionERC",
@@ -288,8 +276,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 					).put(
 						"objectFieldERC",
 						_objectField1.getExternalReferenceCode()
-					).put(
-						"type", "field"
 					))
 			).put(
 				"mainObjectDefinitionERC",
@@ -324,8 +310,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			).put(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject1.get("id")
-			).put(
-				"type", "field"
 			).toString(),
 			"headless-builder/properties", Http.Method.POST);
 
@@ -342,8 +326,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			).put(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject1.get("id")
-			).put(
-				"type", "field"
 			).toString(),
 			"headless-builder/properties", Http.Method.POST);
 
@@ -365,8 +347,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			).put(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject1.get("id")
-			).put(
-				"type", "field"
 			).toString(),
 			"headless-builder/properties", Http.Method.POST);
 
@@ -385,8 +365,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			).put(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject2.get("id")
-			).put(
-				"type", "field"
 			).toString(),
 			"headless-builder/properties", Http.Method.POST);
 
@@ -403,8 +381,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			).put(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject1.get("id")
-			).put(
-				"type", "field"
 			).toString(),
 			"headless-builder/properties", Http.Method.POST);
 
@@ -514,8 +490,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			).put(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject1.get("id")
-			).put(
-				"type", "field"
 			).toString(),
 			"headless-builder/properties", Http.Method.POST);
 
@@ -556,8 +530,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 					).put(
 						"objectFieldERC",
 						_objectField1.getExternalReferenceCode()
-					).put(
-						"type", "field"
 					),
 					JSONUtil.put(
 						"description", RandomTestUtil.randomString()
@@ -568,8 +540,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 					).put(
 						"objectFieldERC",
 						_objectField2.getExternalReferenceCode()
-					).put(
-						"type", "field"
 					))
 			).put(
 				"mainObjectDefinitionERC",
@@ -595,8 +565,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 					).put(
 						"objectFieldERC",
 						_objectField1.getExternalReferenceCode()
-					).put(
-						"type", "field"
 					))
 			).put(
 				"mainObjectDefinitionERC",

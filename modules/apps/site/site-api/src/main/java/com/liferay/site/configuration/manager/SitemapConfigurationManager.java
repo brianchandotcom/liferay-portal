@@ -7,9 +7,12 @@ package com.liferay.site.configuration.manager;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Lourdes Fernández Besada
  */
+@ProviderType
 public interface SitemapConfigurationManager {
 
 	public Long[] getCompanySitemapGroupIds(long companyId) throws Exception;

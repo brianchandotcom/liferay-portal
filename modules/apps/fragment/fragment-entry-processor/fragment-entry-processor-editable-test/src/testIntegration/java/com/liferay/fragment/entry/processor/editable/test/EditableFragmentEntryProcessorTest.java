@@ -6,19 +6,24 @@
 package com.liferay.fragment.entry.processor.editable.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -34,6 +39,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
@@ -1100,6 +1106,40 @@ public class EditableFragmentEntryProcessorTest {
 					LocaleUtil.CHINESE, FragmentEntryLinkConstants.EDIT)));
 	}
 
+	@Test
+	public void testGetEmptyStringFromEmptyFieldValue() throws Exception {
+		DDMFormField ddmFormField = new DDMFormField(
+			"name", DDMFormFieldTypeConstants.TEXT);
+
+		ddmFormField.setDataType("text");
+
+		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter, StringPool.BLANK,
+			_group.getGroupId(), _journalConverter);
+
+		String editableValues = _readJSONFileToString(
+			"fragment_entry_link_mapped_empty_field_value.json");
+
+		editableValues = StringUtil.replace(
+			editableValues,
+			new String[] {"CLASS_NAME_ID", "CLASS_PK", "FIELD_ID"},
+			new String[] {
+				String.valueOf(_portal.getClassNameId(JournalArticle.class)),
+				String.valueOf(journalArticle.getResourcePrimKey()),
+				"DDMStructure_" + ddmFormField.getName()
+			});
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			editableValues, "fragment_entry_editable_text.html");
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "editable_text", fragmentEntryLink,
+			LocaleUtil.US, FragmentEntryLinkConstants.VIEW);
+
+		Assert.assertEquals(StringPool.BLANK, element.text());
+	}
+
 	private DDMStructure _addDDMStructure(Group group, String content)
 		throws Exception {
 
@@ -1493,10 +1533,19 @@ public class EditableFragmentEntryProcessorTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
+
+	@Inject
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+
+	@Inject
 	private FragmentCollectionService _fragmentCollectionService;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
 
 	@Inject
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
@@ -1506,6 +1555,9 @@ public class EditableFragmentEntryProcessorTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalConverter _journalConverter;
 
 	private Layout _layout;
 

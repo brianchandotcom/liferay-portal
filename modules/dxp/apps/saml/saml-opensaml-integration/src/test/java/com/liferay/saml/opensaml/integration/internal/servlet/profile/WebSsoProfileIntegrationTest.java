@@ -167,7 +167,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 				SamlSpMessageLocalServiceUtil.class,
 				SamlSpMessageLocalService.class));
 		ReflectionTestUtil.setFieldValue(
-			_webSsoProfileImpl, "_samlSpIdpConnectionLocalService",
+			_webSsoProfileImpl, "samlSpIdpConnectionLocalService",
 			getMockPortletService(
 				SamlSpIdpConnectionLocalServiceUtil.class,
 				SamlSpIdpConnectionLocalService.class));
@@ -423,7 +423,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_webSsoProfileImpl, "_samlSpIdpConnectionLocalService",
+			_webSsoProfileImpl, "samlSpIdpConnectionLocalService",
 			samlSpIdpConnectionLocalService);
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -540,7 +540,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_webSsoProfileImpl, "_samlSpIdpConnectionLocalService",
+			_webSsoProfileImpl, "samlSpIdpConnectionLocalService",
 			samlSpIdpConnectionLocalService);
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -668,7 +668,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_webSsoProfileImpl, "_samlSpIdpConnectionLocalService",
+			_webSsoProfileImpl, "samlSpIdpConnectionLocalService",
 			samlSpIdpConnectionLocalService);
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -722,7 +722,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_webSsoProfileImpl, "_samlSpIdpConnectionLocalService",
+			_webSsoProfileImpl, "samlSpIdpConnectionLocalService",
 			samlSpIdpConnectionLocalService);
 
 		MockHttpServletRequest mockHttpServletRequest =

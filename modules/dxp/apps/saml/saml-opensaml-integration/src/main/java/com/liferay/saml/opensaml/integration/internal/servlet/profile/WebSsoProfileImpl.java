@@ -52,11 +52,9 @@ import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.model.SamlSpMessage;
 import com.liferay.saml.persistence.model.SamlSpSession;
-import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSpSessionLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalService;
 import com.liferay.saml.persistence.service.SamlSpAuthRequestLocalService;
-import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlSpMessageLocalService;
 import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlConfiguration;
@@ -1266,7 +1264,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		try {
 			SamlIdpSpConnection samlIdpSpConnection =
-				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
+				samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 					companyId, entityId);
 
 			return samlIdpSpConnection.getAssertionLifetime();
@@ -1366,7 +1364,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		if (samlProviderConfigurationHelper.isRoleIdp()) {
 			try {
 				SamlIdpSpConnection samlIdpSpConnection =
-					_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
+					samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 						companyId, entityId);
 
 				return samlIdpSpConnection.getNameIdFormat();
@@ -1380,7 +1378,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		else if (samlProviderConfigurationHelper.isRoleSp()) {
 			try {
 				SamlSpIdpConnection samlSpIdpConnection =
-					_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+					samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 						companyId, entityId);
 
 				return samlSpIdpConnection.getNameIdFormat();
@@ -1625,7 +1623,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		try {
 			SamlIdpSpConnection samlIdpSpConnection =
-				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
+				samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 					companyId, entityId);
 
 			return samlIdpSpConnection.isAttributesEnabled();
@@ -1801,7 +1799,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
 		SamlSpIdpConnection samlSpIdpConnection =
-			_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 				CompanyThreadLocal.getCompanyId(),
 				samlPeerEntityContext.getEntityId());
 
@@ -2075,7 +2073,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			assertion.getIssueInstant());
 
 		SamlIdpSpConnection samlIdpSpConnection =
-			_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
+			samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 				CompanyThreadLocal.getCompanyId(),
 				samlPeerEntityContext.getEntityId());
 
@@ -2286,9 +2284,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private SamlConfiguration _samlConfiguration;
 
 	@Reference
-	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
-
-	@Reference
 	private SamlIdpSpSessionLocalService _samlIdpSpSessionLocalService;
 
 	@Reference
@@ -2300,9 +2295,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Reference
 	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;
-
-	@Reference
-	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
 
 	@Reference
 	private SamlSpMessageLocalService _samlSpMessageLocalService;

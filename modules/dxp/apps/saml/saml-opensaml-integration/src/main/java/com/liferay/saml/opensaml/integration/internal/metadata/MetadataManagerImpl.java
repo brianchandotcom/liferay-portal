@@ -150,42 +150,6 @@ public class MetadataManagerImpl implements MetadataManager {
 	}
 
 	@Override
-	public String getNameIdFormat(String entityId) {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		if (_samlProviderConfigurationHelper.isRoleIdp()) {
-			try {
-				SamlIdpSpConnection samlIdpSpConnection =
-					_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
-						companyId, entityId);
-
-				return samlIdpSpConnection.getNameIdFormat();
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-		}
-		else if (_samlProviderConfigurationHelper.isRoleSp()) {
-			try {
-				SamlSpIdpConnection samlSpIdpConnection =
-					_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-						companyId, entityId);
-
-				return samlSpIdpConnection.getNameIdFormat();
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-		}
-
-		return null;
-	}
-
-	@Override
 	public MessageHandler<?> getSecurityMessageHandler(
 		HttpServletRequest httpServletRequest, String communicationProfileId,
 		boolean requireSignature) {

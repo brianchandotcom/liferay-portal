@@ -542,7 +542,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		NameIDPolicy nameIDPolicy = OpenSamlUtil.buildNameIdPolicy();
 
 		nameIDPolicy.setAllowCreate(true);
-		nameIDPolicy.setFormat(metadataManager.getNameIdFormat(entityId));
+		nameIDPolicy.setFormat(_getNameIdFormat(entityId));
 
 		AuthnRequest authnRequest = OpenSamlUtil.buildAuthnRequest(
 			samlSelfEntityContext.getEntityId(),
@@ -1339,6 +1339,41 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		return samlProviderConfiguration.clockSkew();
 	}
 
+	private String _getNameIdFormat(String entityId) {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		if (samlProviderConfigurationHelper.isRoleIdp()) {
+			try {
+				SamlIdpSpConnection samlIdpSpConnection =
+					_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
+						companyId, entityId);
+
+				return samlIdpSpConnection.getNameIdFormat();
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
+		}
+		else if (samlProviderConfigurationHelper.isRoleSp()) {
+			try {
+				SamlSpIdpConnection samlSpIdpConnection =
+					_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+						companyId, entityId);
+
+				return samlSpIdpConnection.getNameIdFormat();
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
+		}
+
+		return null;
+	}
+
 	private NameIdResolver _getNameIdResolver(String entityId) {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -1504,7 +1539,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 
 		if (nameIdFormat == null) {
-			nameIdFormat = metadataManager.getNameIdFormat(
+			nameIdFormat = _getNameIdFormat(
 				samlPeerEntityContext.getEntityId());
 		}
 

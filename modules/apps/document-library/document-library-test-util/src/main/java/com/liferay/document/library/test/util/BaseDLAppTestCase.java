@@ -93,7 +93,7 @@ public abstract class BaseDLAppTestCase {
 		BaseDLAppTestCase.class);
 
 	@Inject
-	private DLAppService _dlAppService;
+	protected DLAppService _dlAppService;
 
 	private String _name;
 

@@ -82,7 +82,7 @@ public class SXPBlueprintLocalServiceTest {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.getAdminUser(company.getCompanyId());
 
 		SXPBlueprint differentCompanySXPBlueprint = _addSXPBlueprint(
 			sxpBlueprint.getExternalReferenceCode(), user.getUserId(),

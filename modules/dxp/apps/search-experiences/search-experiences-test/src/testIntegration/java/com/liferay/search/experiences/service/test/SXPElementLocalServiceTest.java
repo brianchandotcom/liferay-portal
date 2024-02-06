@@ -83,7 +83,7 @@ public class SXPElementLocalServiceTest {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.getAdminUser(company.getCompanyId());
 
 		SXPElement differentCompanySXPElement = _addSXPElement(
 			sxpElement.getExternalReferenceCode(), user.getUserId());

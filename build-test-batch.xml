@@ -8782,9 +8782,9 @@ ${output.content}</echo>
 							<available file="${workspace.dir}" />
 							<then>
 								<echo></echo>
-								<echo>#</echo>
-								<echo># @{workspace.name}</echo>
-								<echo>#</echo>
+								<echo>##</echo>
+								<echo>## @{workspace.name}</echo>
+								<echo>##</echo>
 								<echo></echo>
 
 								<execute dir="${workspace.dir}">

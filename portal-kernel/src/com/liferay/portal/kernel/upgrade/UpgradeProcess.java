@@ -188,9 +188,7 @@ public abstract class UpgradeProcess
 
 		return () -> {
 			try {
-				runSQL(
-					StringBundler.concat(
-						"drop index ", indexName, " on ", tableName));
+				runSQL(indexMetadata.getDropSQL());
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

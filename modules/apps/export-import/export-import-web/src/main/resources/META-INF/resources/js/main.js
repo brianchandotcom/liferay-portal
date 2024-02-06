@@ -86,6 +86,8 @@ AUI.add(
 							'.configuration-link'
 						);
 
+						let contentNode;
+
 						form.delegate(
 							STR_CLICK,
 							(event) => {
@@ -93,20 +95,21 @@ AUI.add(
 									'data-portletid'
 								);
 
-								let portletTitle = event.currentTarget.attr(
-									'data-portlettitle'
-								);
+								if (!contentNode) {
+									contentNode = instance.byId('content_' + portletId);
 
-								if (!portletTitle) {
-									portletTitle = Liferay.Language.get(
-										'content'
+									contentNode.delegate(
+										'change',
+										() => {
+											instance._setContentLabels(portletId);
+
+											instance._storeNodeInputStates(contentNode);
+										},
+										'input[type="checkbox]'
 									);
 								}
 
-								instance._showContentDialog(
-									portletId,
-									portletTitle
-								);
+								contentNode.toggle('hide');
 							},
 							'.content-link'
 						);
@@ -319,41 +322,6 @@ AUI.add(
 							{
 								displayType: 'unstyled',
 								label: Liferay.Language.get('cancel'),
-								type: 'cancel',
-							},
-						],
-						size: 'md',
-						title: portletTitle,
-					});
-				},
-
-				_showContentDialog(portletId, portletTitle) {
-					const instance = this;
-
-					const contentNode = instance.byId('content_' + portletId);
-
-					Liferay.Util.openModal({
-						bodyHTML: contentNode.getHTML(),
-						buttons: [
-							{
-								displayType: 'unstyled',
-								label: Liferay.Language.get('ok'),
-								onClick({processClose}) {
-									instance._setContentLabels(portletId);
-
-									instance._storeNodeInputStates(contentNode);
-
-									processClose();
-								},
-							},
-							{
-								displayType: 'unstyled',
-								label: Liferay.Language.get('cancel'),
-								onClick() {
-									instance._restoreNodeInputStates(
-										contentNode
-									);
-								},
 								type: 'cancel',
 							},
 						],

@@ -722,8 +722,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			}
 
 			long count = objectEntryLocalService.getObjectEntriesCount(
-				user.getUserId(), objectDefinition.getObjectDefinitionId(),
-				_getStartDate());
+				user.getUserId(), _getStartDate(),
+				objectDefinition.getObjectDefinitionId());
 
 			long maximumNumberOfGuestUserObjectEntriesPerObjectDefinition =
 				_objectConfiguration.

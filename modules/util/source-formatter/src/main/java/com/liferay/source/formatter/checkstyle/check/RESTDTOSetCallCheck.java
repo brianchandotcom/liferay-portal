@@ -11,6 +11,7 @@ import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.io.File;
@@ -25,7 +26,7 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.CLASS_DEF};
+		return new int[] {TokenTypes.CLASS_DEF, TokenTypes.INSTANCE_INIT};
 	}
 
 	@Override
@@ -37,6 +38,17 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 			return;
 		}
+
+		if (detailAST.getType() == TokenTypes.CLASS_DEF) {
+			_checkClassDeclaration(detailAST, absolutePath);
+		}
+		else if (detailAST.getType() == TokenTypes.INSTANCE_INIT) {
+			_checkInstanceInitializer(detailAST, absolutePath);
+		}
+	}
+
+	private void _checkClassDeclaration(
+		DetailAST detailAST, String absolutePath) {
 
 		DetailAST parentDetailAST = detailAST.getParent();
 
@@ -51,36 +63,137 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 			objBlockDetailAST, true, TokenTypes.METHOD_CALL);
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
-			_checkSetCall(absolutePath, methodCallDetailAST);
+			DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
+				TokenTypes.DOT);
+
+			if (dotDetailAST == null) {
+				continue;
+			}
+
+			String methodName = getMethodName(methodCallDetailAST);
+
+			if (!methodName.startsWith("set")) {
+				continue;
+			}
+
+			String variableName = getVariableName(methodCallDetailAST);
+
+			String fullyQualifiedTypeName = getVariableTypeName(
+				methodCallDetailAST, variableName, false, false, true);
+
+			if (fullyQualifiedTypeName == null) {
+				continue;
+			}
+
+			_checkSetCall(
+				absolutePath, methodCallDetailAST, methodName,
+				fullyQualifiedTypeName);
 		}
 	}
 
-	private void _checkSetCall(String absolutePath, DetailAST detailAST) {
-		DetailAST dotDetailAST = detailAST.findFirstToken(TokenTypes.DOT);
+	private void _checkInstanceInitializer(
+		DetailAST detailAST, String absolutePath) {
 
-		if (dotDetailAST == null) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if (parentDetailAST.getType() != TokenTypes.OBJBLOCK) {
 			return;
 		}
 
-		String methodName = getMethodName(detailAST);
+		parentDetailAST = parentDetailAST.getParent();
 
-		if (!methodName.startsWith("set")) {
+		if (parentDetailAST.getType() != TokenTypes.LITERAL_NEW) {
 			return;
 		}
 
-		String variableName = getVariableName(detailAST);
+		List<DetailAST> childDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.ASSIGN, TokenTypes.METHOD_CALL);
 
-		if (variableName == null) {
-			return;
+		for (DetailAST childDetailAST : childDetailASTList) {
+			if (childDetailAST.getType() == TokenTypes.ASSIGN) {
+				DetailAST firstChildDetailAST = childDetailAST.getFirstChild();
+
+				if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
+					continue;
+				}
+
+				String variableName = firstChildDetailAST.getText();
+
+				String methodName =
+					"set" + StringUtil.upperCaseFirstLetter(variableName);
+
+				log(childDetailAST, _MSG_USE_SET_METHOD_INSTEAD, methodName);
+			}
+			else {
+				DetailAST dotDetailAST = childDetailAST.findFirstToken(
+					TokenTypes.DOT);
+
+				if (dotDetailAST != null) {
+					continue;
+				}
+
+				String methodName = getMethodName(childDetailAST);
+
+				if (!methodName.startsWith("set")) {
+					continue;
+				}
+
+				parentDetailAST = getParentWithTokenType(
+					childDetailAST, TokenTypes.INSTANCE_INIT);
+
+				if (parentDetailAST == null) {
+					continue;
+				}
+
+				parentDetailAST = parentDetailAST.getParent();
+
+				if ((parentDetailAST == null) ||
+					(parentDetailAST.getType() != TokenTypes.OBJBLOCK)) {
+
+					continue;
+				}
+
+				parentDetailAST = parentDetailAST.getParent();
+
+				if ((parentDetailAST == null) ||
+					(parentDetailAST.getType() != TokenTypes.LITERAL_NEW)) {
+
+					continue;
+				}
+
+				String fullyQualifiedTypeName = null;
+
+				DetailAST firstChildDetailAST = parentDetailAST.getFirstChild();
+
+				if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+					fullyQualifiedTypeName = getFullyQualifiedTypeName(
+						firstChildDetailAST.getText(), parentDetailAST, false);
+				}
+				else if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+					FullIdent fullIdent = FullIdent.createFullIdent(
+						firstChildDetailAST);
+
+					fullyQualifiedTypeName = fullIdent.getText();
+				}
+
+				if (fullyQualifiedTypeName == null) {
+					continue;
+				}
+
+				_checkSetCall(
+					absolutePath, childDetailAST, methodName,
+					fullyQualifiedTypeName);
+			}
 		}
+	}
 
-		String variableTypeName = getVariableTypeName(
-			detailAST, variableName, false, false, true);
+	private void _checkSetCall(
+		String absolutePath, DetailAST detailAST, String methodName,
+		String fullyQualifiedTypeName) {
 
-		if ((variableTypeName == null) ||
-			!variableTypeName.startsWith("com.liferay.") ||
-			!variableTypeName.contains(".dto.v") ||
-			!_isRESTDTO(absolutePath, variableTypeName)) {
+		if (!fullyQualifiedTypeName.startsWith("com.liferay.") ||
+			!fullyQualifiedTypeName.contains(".dto.v") ||
+			!_isRESTDTOType(absolutePath, fullyQualifiedTypeName)) {
 
 			return;
 		}
@@ -141,23 +254,21 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		return _rootDirName;
 	}
 
-	private boolean _isRESTDTO(String absolutePath, String variableTypeName) {
-		if (variableTypeName == null) {
-			return false;
-		}
+	private boolean _isRESTDTOType(
+		String absolutePath, String fullyQualifiedTypeName) {
 
-		File javaFile = JavaSourceUtil.getJavaFile(
-			variableTypeName, _getRootDirName(absolutePath),
+		File file = JavaSourceUtil.getJavaFile(
+			fullyQualifiedTypeName, _getRootDirName(absolutePath),
 			_getBundleSymbolicNamesMap(absolutePath));
 
-		if (javaFile == null) {
+		if (file == null) {
 			return false;
 		}
 
-		String javaFileAbsolutePath = SourceUtil.getAbsolutePath(javaFile);
+		String dtoFileAbsolutePath = SourceUtil.getAbsolutePath(file);
 
 		int x = StringUtil.lastIndexOfAny(
-			javaFileAbsolutePath,
+			dtoFileAbsolutePath,
 			new String[] {"-api/src/main/", "-client/src/main/"});
 
 		if (x == -1) {
@@ -165,9 +276,9 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		}
 
 		String restOpenAPIFilePath =
-			javaFileAbsolutePath.substring(0, x) + "-impl/rest-openapi.yaml";
+			dtoFileAbsolutePath.substring(0, x) + "-impl/rest-openapi.yaml";
 
-		File file = new File(restOpenAPIFilePath);
+		file = new File(restOpenAPIFilePath);
 
 		if (!file.exists()) {
 			return false;

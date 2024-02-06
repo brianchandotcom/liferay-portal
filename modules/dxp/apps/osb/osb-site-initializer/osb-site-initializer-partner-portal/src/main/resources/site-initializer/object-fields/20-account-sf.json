@@ -1,0 +1,59 @@
+{
+	"object-fields": [
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "Partner_Level__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Level Type"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Partner Level Types$]",
+			"name": "partnerLevelType",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "CurrencyIsoCode",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Currency"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Currencies$]",
+			"name": "currency",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Region__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Region"
+			},
+			"name": "region",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "id",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Salesforce ID"
+			},
+			"name": "salesforceID",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:AccountSF$]"
+}

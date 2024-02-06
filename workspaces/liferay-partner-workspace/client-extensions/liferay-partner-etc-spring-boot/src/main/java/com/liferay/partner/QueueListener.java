@@ -96,6 +96,12 @@ public class QueueListener {
 				String salesforceAccountKey = _getSalesforceAccountKey(
 					accountJSONObject);
 
+				if (salesforceAccountKey == null) {
+					channel.basicAck(deliveryTag, false);
+
+					return;
+				}
+
 				String accountName = accountJSONObject.getString("name");
 
 				if (_log.isInfoEnabled()) {
@@ -105,11 +111,7 @@ public class QueueListener {
 							", from message"));
 				}
 
-				if (salesforceAccountKey == null) {
-					return;
-				}
-
-				String partnerCountry = _getAccountCountryISOCode(
+				String accountCountryISOCode = _getAccountcountryISOCode(
 					accountJSONObject);
 
 				JSONObject partnerAccountJSONObject = new JSONObject();
@@ -120,12 +122,12 @@ public class QueueListener {
 					"name", accountName
 				);
 
-				if (partnerCountry != null) {
+				if (accountCountryISOCode != null) {
 					partnerAccountJSONObject.put(
-						"partnerCountry", partnerCountry);
+						"partnerCountry", accountCountryISOCode);
 				}
 
-				String accountRegion = "";
+				String accountRegion = null;
 
 				try {
 					JSONObject proxyAccountJSONObject = _get(
@@ -169,6 +171,10 @@ public class QueueListener {
 				catch (Exception exception) {
 					_log.error(
 						"Could not get Account from SALESFORCE: " + exception);
+
+					channel.basicReject(deliveryTag, false);
+
+					return;
 				}
 
 				try {
@@ -218,6 +224,8 @@ public class QueueListener {
 					accountJSONObject);
 
 				if (salesforceAccountKey == null) {
+					channel.basicAck(deliveryTag, false);
+
 					return;
 				}
 
@@ -350,13 +358,13 @@ public class QueueListener {
 			).block());
 	}
 
-	private String _getAccountCountryISOCode(JSONObject accountJSONObject) {
-		Map<String, String> countriesISOcodes = new HashMap<>();
+	private String _getAccountcountryISOCode(JSONObject accountJSONObject) {
+		Map<String, String> countriesISOCodes = new HashMap<>();
 
 		for (String iso : Locale.getISOCountries()) {
 			Locale locale = new Locale("", iso);
 
-			countriesISOcodes.put(locale.getDisplayCountry(), iso);
+			countriesISOCodes.put(locale.getDisplayCountry(), iso);
 		}
 
 		JSONArray postalAddressesJSONArray = accountJSONObject.getJSONArray(
@@ -366,27 +374,23 @@ public class QueueListener {
 			return null;
 		}
 
-		String countryISOcode = "";
+		String countryISOCode = null;
 
-		for (int k = 0; k < postalAddressesJSONArray.length(); k++) {
+		for (int i = 0; i < postalAddressesJSONArray.length(); i++) {
 			JSONObject postalAddressesJSONObject =
-				postalAddressesJSONArray.getJSONObject(k);
+				postalAddressesJSONArray.getJSONObject(i);
 
-			Boolean primary = postalAddressesJSONObject.getBoolean("primary");
+			if (postalAddressesJSONObject.getBoolean("primary") &&
+				postalAddressesJSONObject.has("addressCountry")) {
 
-			if (primary && postalAddressesJSONObject.has("addressCountry")) {
 				String addressCountry = postalAddressesJSONObject.getString(
 					"addressCountry");
 
-				countryISOcode = countriesISOcodes.get(addressCountry);
+				countryISOCode = countriesISOCodes.get(addressCountry);
 			}
 		}
 
-		if (countryISOcode.isEmpty()) {
-			return null;
-		}
-
-		return countryISOcode;
+		return countryISOCode;
 	}
 
 	private Map<String, String> _getPartnerLevelERCs() {

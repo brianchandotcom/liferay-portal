@@ -193,7 +193,8 @@ public class FragmentEntryStagedModelDataHandlerTest
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
 			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
 			"css", "html", "js", false, "{fieldSets: []}", StringPool.BLANK,
-			fragmentEntry.getPreviewFileEntryId(), 0);
+			fragmentEntry.getPreviewFileEntryId(), false,
+			fragmentEntry.getTypeOptions(), WorkflowConstants.STATUS_APPROVED);
 
 		try {
 			exportImportStagedModel(stagedModel);

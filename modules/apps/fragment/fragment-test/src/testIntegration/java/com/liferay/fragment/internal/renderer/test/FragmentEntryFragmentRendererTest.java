@@ -176,8 +176,8 @@ public class FragmentEntryFragmentRendererTest {
 			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
 			fragmentEntry.getCss(), "Updated Fragment Entry HTML",
 			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
-			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
-			fragmentEntry.getStatus(), WorkflowConstants.STATUS_APPROVED);
+			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(), 0, false,
+			fragmentEntry.getTypeOptions(), WorkflowConstants.STATUS_APPROVED);
 
 		_fragmentEntryLinkLocalService.updateLatestChanges(
 			fragmentEntryLink.getFragmentEntryLinkId());

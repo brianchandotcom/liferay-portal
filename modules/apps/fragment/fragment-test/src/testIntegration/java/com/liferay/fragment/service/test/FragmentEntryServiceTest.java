@@ -1692,8 +1692,8 @@ public class FragmentEntryServiceTest {
 			_updatedFragmentCollection.getFragmentCollectionId(),
 			"Fragment Entry Updated", "div {\ncolor: red;\n}",
 			"<div>Updated</div>", "alert(\"test\");", false,
-			"{\n\t\"fieldSets\": [\n\t]\n}", fragmentEntry.getIcon(), 1,
-			WorkflowConstants.STATUS_APPROVED);
+			"{\n\t\"fieldSets\": [\n\t]\n}", fragmentEntry.getIcon(), 1, false,
+			fragmentEntry.getTypeOptions(), WorkflowConstants.STATUS_APPROVED);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -1750,6 +1750,7 @@ public class FragmentEntryServiceTest {
 			"div {\ncolor: red;\n}", "<div>Updated</div>", "alert(\"test\");",
 			fragmentEntry.isCacheable(), "{\n\t\"fieldSets\": [\n\t]\n}",
 			fragmentEntry.getIcon(), fragmentEntry.getPreviewFileEntryId(),
+			false, fragmentEntry.getTypeOptions(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		FragmentEntry persistedFragmentEntry =
@@ -1789,7 +1790,8 @@ public class FragmentEntryServiceTest {
 			fragmentEntry.getFragmentCollectionId(), "Fragment Entry Updated",
 			"div {\ncolor: red;\n}", "<div>Updated</div>", "alert(\"test\");",
 			fragmentEntry.isCacheable(), "{\n\t\"fieldSets\": [\n\t]\n}",
-			fragmentEntry.getIcon(), 1, WorkflowConstants.STATUS_APPROVED);
+			fragmentEntry.getIcon(), 1, false, fragmentEntry.getTypeOptions(),
+			WorkflowConstants.STATUS_APPROVED);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(

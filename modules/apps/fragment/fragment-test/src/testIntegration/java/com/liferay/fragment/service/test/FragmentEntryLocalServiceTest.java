@@ -951,6 +951,7 @@ public class FragmentEntryLocalServiceTest {
 			fragmentEntry.getName(), fragmentEntry.getCss(),
 			fragmentEntry.getHtml(), fragmentEntry.getJs(), false, null,
 			fragmentEntry.getIcon(), fragmentEntry.getPreviewFileEntryId(),
+			false, fragmentEntry.getTypeOptions(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		FragmentEntry persistedFragmentEntry =
@@ -997,7 +998,7 @@ public class FragmentEntryLocalServiceTest {
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
 			fragmentEntry.getFragmentCollectionId(), name, css, html, js,
 			fragmentEntry.isCacheable(), configuration, fragmentEntry.getIcon(),
-			fragmentEntry.getFragmentEntryId(), status);
+			0, false, fragmentEntry.getTypeOptions(), status);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -1031,7 +1032,7 @@ public class FragmentEntryLocalServiceTest {
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
 			fragmentEntry.getFragmentCollectionId(), name, css, html, js,
 			fragmentEntry.isCacheable(), configuration, fragmentEntry.getIcon(),
-			previewFileEntryId, status);
+			previewFileEntryId, false, fragmentEntry.getTypeOptions(), status);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -1091,8 +1092,8 @@ public class FragmentEntryLocalServiceTest {
 			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
 			fragmentEntry.getCss(), html, fragmentEntry.getJs(),
 			fragmentEntry.isCacheable(), null, fragmentEntry.getIcon(),
-			fragmentEntry.getPreviewFileEntryId(),
-			WorkflowConstants.STATUS_APPROVED);
+			fragmentEntry.getPreviewFileEntryId(), false,
+			fragmentEntry.getTypeOptions(), WorkflowConstants.STATUS_APPROVED);
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(

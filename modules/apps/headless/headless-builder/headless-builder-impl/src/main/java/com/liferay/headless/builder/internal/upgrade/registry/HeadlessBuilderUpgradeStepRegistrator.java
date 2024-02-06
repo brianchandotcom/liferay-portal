@@ -5,7 +5,7 @@
 
 package com.liferay.headless.builder.internal.upgrade.registry;
 
-import com.liferay.headless.builder.internal.upgrade.v0_1_0.ContainerUpgradeProcess;
+import com.liferay.headless.builder.internal.upgrade.v0_1_0.DeleteAPIPropertiesToAPIPropertiesUpgradeProcess;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -27,7 +27,7 @@ public class HeadlessBuilderUpgradeStepRegistrator
 
 		registry.register(
 			"0.0.1", "0.1.0",
-			new ContainerUpgradeProcess(
+			new DeleteAPIPropertiesToAPIPropertiesUpgradeProcess(
 				_companyLocalService, _objectDefinitionLocalService,
 				_objectRelationshipLocalService));
 	}

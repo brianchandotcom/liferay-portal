@@ -15,9 +15,10 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Alejandro Tardín
  */
-public class ContainerUpgradeProcess extends UpgradeProcess {
+public class DeleteAPIPropertiesToAPIPropertiesUpgradeProcess
+	extends UpgradeProcess {
 
-	public ContainerUpgradeProcess(
+	public DeleteAPIPropertiesToAPIPropertiesUpgradeProcess(
 		CompanyLocalService companyLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService) {

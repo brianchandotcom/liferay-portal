@@ -138,7 +138,7 @@ public class APIPropertyObjectDefinitionDeployerImpl
 
 					values.removeAll(Collections.singleton(null));
 
-					item.put("type", "value");
+					item.put("type", "field");
 
 					_objectEntryLocalService.addOrUpdateObjectEntry(
 						(String)item.get("externalReferenceCode"),

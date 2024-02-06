@@ -127,10 +127,10 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 			String type = (String)values.get("type");
 
-			if (Objects.equals(type, "container")) {
+			if (Objects.equals(type, "object")) {
 				if (!FeatureFlagManagerUtil.isEnabled("LPD-10964")) {
 					throw new UnsupportedOperationException(
-						"Container is not supported");
+						"Object is not supported");
 				}
 
 				if (!Validator.isBlank(objectFieldERC) ||
@@ -138,18 +138,17 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
-						"A container API property can have neither an Object " +
+						"An object API property can have neither an Object " +
 							"Field ERC nor Object Relationship Names " +
 								"properties associated",
-						"a-container-api-property-can-have-neither-an-object-" +
+						"an-object-api-property-can-have-neither-an-object-" +
 							"field-erc-nor-object-relationship-names-" +
 								"properties-associated");
 				}
 
 				String filterString = StringBundler.concat(
 					"id ne '", objectEntry.getObjectEntryId(),
-					"' and type eq 'container' and name eq '",
-					values.get("name"),
+					"' and type eq 'object' and name eq '", values.get("name"),
 					"' and r_apiSchemaToAPIProperties_c_apiSchemaId eq '",
 					apiSchemaId, "'");
 
@@ -167,18 +166,18 @@ public class APIPropertyRelevantObjectEntryModelListener
 							null, -1, -1, null))) {
 
 					throw new ObjectEntryValuesException.InvalidObjectField(
-						null, "Container name must be unique",
-						"container-name-must-be-unique");
+						null, "API property name must be unique",
+						"api-property-name-must-be-unique");
 				}
 			}
 			else {
 				if (Validator.isNull(objectFieldERC)) {
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
-						"A value type API property cannot have empty Object " +
-							"Field ERC value",
-						"a-value-type-api-property-cannot-have-empty-object-" +
-							"field-erc-value");
+						"A field API property cannot have empty Object Field " +
+							"ERC value",
+						"a-field-api-property-cannot-have-empty-object-field-" +
+							"erc-value");
 				}
 
 				if (!_isValidAPIProperty(
@@ -234,26 +233,26 @@ public class APIPropertyRelevantObjectEntryModelListener
 						"schema");
 			}
 
-			if (Objects.equals(type, "value") &&
-				Objects.equals(apiPropertyValues.get("type"), "value")) {
+			if (Objects.equals(type, "field") &&
+				Objects.equals(apiPropertyValues.get("type"), "field")) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,
-					"A value type API property must be related to a " +
-						"container API property",
-					"a-value-type-api-property-must-be-related-to-a-" +
-						"container-api-property");
+					"A field API property must be related to an object API " +
+						"property",
+					"a-field-api-property-must-be-related-to-an-object-api-" +
+						"property");
 			}
 
-			if (Objects.equals(type, "container") &&
-				Objects.equals(apiPropertyValues.get("type"), "value")) {
+			if (Objects.equals(type, "object") &&
+				Objects.equals(apiPropertyValues.get("type"), "field")) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,
-					"A container API property must be related to another " +
-						"container API property",
-					"a-container-api-property-must-be-related-to-another-" +
-						"container-api-property");
+					"An object API property must be related to another " +
+						"object API property",
+					"an-object-api-property-must-be-related-to-another-" +
+						"object-api-property");
 			}
 		}
 	}

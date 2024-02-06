@@ -15,6 +15,7 @@ export const test = mergeTests(
 	actionsPageTest,
 	dataSetsPageTest,
 	featureFlagsTest({
+		'LPS-164563': true,
 		'LPS-194395': true,
 	}),
 	loginTest,

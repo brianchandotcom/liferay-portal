@@ -26,6 +26,7 @@ import com.liferay.saml.persistence.service.SamlSpSessionLocalService;
 import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
+import com.liferay.saml.runtime.metadata.LocalEntityManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
+import net.shibboleth.utilities.java.support.resolver.ResolverException;
 import net.shibboleth.utilities.java.support.security.IdentifierGenerationStrategy;
 
 import org.opensaml.core.criterion.EntityIdCriterion;
@@ -72,6 +74,10 @@ import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
 import org.opensaml.saml.saml2.metadata.RoleDescriptor;
 import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
+import org.opensaml.security.credential.Credential;
+import org.opensaml.security.credential.CredentialResolver;
+import org.opensaml.security.credential.UsageType;
+import org.opensaml.security.criteria.UsageCriterion;
 import org.opensaml.xmlsec.DecryptionConfiguration;
 import org.opensaml.xmlsec.SecurityConfigurationSupport;
 import org.opensaml.xmlsec.SignatureValidationConfiguration;
@@ -506,9 +512,33 @@ public abstract class BaseProfile {
 			httpServletRequest.isSecure());
 	}
 
+	protected Credential getSigningCredential() throws SamlException {
+		try {
+			String entityId = localEntityManager.getLocalEntityId();
+
+			if (Validator.isNull(entityId)) {
+				return null;
+			}
+
+			return credentialResolver.resolveSingle(
+				new CriteriaSet(
+					new EntityIdCriterion(entityId),
+					new UsageCriterion(UsageType.SIGNING)));
+		}
+		catch (ResolverException resolverException) {
+			throw new SamlException(resolverException);
+		}
+	}
+
+	@Reference
+	protected CredentialResolver credentialResolver;
+
 	@Reference
 	protected IdentifierGenerationStrategyFactory
 		identifierGenerationStrategyFactory;
+
+	@Reference
+	protected LocalEntityManager localEntityManager;
 
 	@Reference
 	protected MetadataManager metadataManager;

@@ -32,6 +32,4 @@ public interface MetadataManager {
 
 	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException;
 
-	public Credential getSigningCredential() throws SamlException;
-
 }

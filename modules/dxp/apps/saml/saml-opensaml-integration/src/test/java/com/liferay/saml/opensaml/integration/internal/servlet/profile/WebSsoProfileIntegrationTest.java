@@ -138,8 +138,13 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SamlSpSessionLocalService.class);
 
 		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "credentialResolver", credentialResolver);
+		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "identifierGenerationStrategyFactory",
 			identifierGenerationStrategyFactory);
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "localEntityManager",
+			keyStoreLocalEntityManager);
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "metadataManager", metadataManagerImpl);
 		ReflectionTestUtil.setFieldValue(_webSsoProfileImpl, "portal", portal);

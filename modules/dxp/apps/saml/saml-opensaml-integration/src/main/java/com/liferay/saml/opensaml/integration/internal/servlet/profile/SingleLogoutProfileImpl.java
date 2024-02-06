@@ -650,7 +650,7 @@ public class SingleLogoutProfileImpl
 				SecurityParametersContext.class, true);
 
 		OpenSamlUtil.prepareSecurityParametersContext(
-			metadataManager.getSigningCredential(), securityParametersContext,
+			getSigningCredential(), securityParametersContext,
 			idpSSODescriptor);
 
 		logoutRequest.setIssuer(issuer);
@@ -1005,8 +1005,7 @@ public class SingleLogoutProfileImpl
 			(SSODescriptor)samlPeerMetadataContext.getRoleDescriptor();
 
 		OpenSamlUtil.prepareSecurityParametersContext(
-			metadataManager.getSigningCredential(), securityParametersContext,
-			ssoDescriptor);
+			getSigningCredential(), securityParametersContext, ssoDescriptor);
 
 		outboundMessageContext.setMessage(logoutResponse);
 
@@ -1122,7 +1121,7 @@ public class SingleLogoutProfileImpl
 
 		messageContext.setMessage(logoutRequest);
 
-		Credential credential = metadataManager.getSigningCredential();
+		Credential credential = getSigningCredential();
 
 		SAMLProtocolContext samlProtocolContext = messageContext.getSubcontext(
 			SAMLProtocolContext.class, true);
@@ -1233,8 +1232,7 @@ public class SingleLogoutProfileImpl
 				SecurityParametersContext.class, true);
 
 		OpenSamlUtil.prepareSecurityParametersContext(
-			metadataManager.getSigningCredential(), securityParametersContext,
-			ssoDescriptor);
+			getSigningCredential(), securityParametersContext, ssoDescriptor);
 
 		SAMLProtocolContext samlProtocolContext =
 			outboundMessageContext.getSubcontext(
@@ -1304,7 +1302,7 @@ public class SingleLogoutProfileImpl
 
 		outboundMessageContext.setMessage(logoutRequest);
 
-		Credential credential = metadataManager.getSigningCredential();
+		Credential credential = getSigningCredential();
 
 		SecurityParametersContext securityParametersContext =
 			outboundMessageContext.getSubcontext(

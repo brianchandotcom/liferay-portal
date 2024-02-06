@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import {actionsPageTest} from './fixtures/actionsPageTest';
@@ -14,6 +15,9 @@ import {viewsPageTest} from './fixtures/viewsPageTest';
 export const test = mergeTests(
 	actionsPageTest,
 	dataSetsPageTest,
+	featureFlagsTest({
+		'LPS-194395': true,
+	}),
 	loginTest,
 	viewsPageTest
 );

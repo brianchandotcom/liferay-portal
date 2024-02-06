@@ -74,14 +74,14 @@ public class NoticeableThreadPoolExecutorTest {
 				illegalArgumentException.getMessage());
 		}
 
-		noticeableThreadPoolExecutor.setCorePoolSize(2);
-
-		Assert.assertEquals(2, noticeableThreadPoolExecutor.getCorePoolSize());
-
 		noticeableThreadPoolExecutor.setMaximumPoolSize(3);
 
 		Assert.assertEquals(
 			3, noticeableThreadPoolExecutor.getMaximumPoolSize());
+
+		noticeableThreadPoolExecutor.setCorePoolSize(2);
+
+		Assert.assertEquals(2, noticeableThreadPoolExecutor.getCorePoolSize());
 
 		noticeableThreadPoolExecutor.shutdown();
 

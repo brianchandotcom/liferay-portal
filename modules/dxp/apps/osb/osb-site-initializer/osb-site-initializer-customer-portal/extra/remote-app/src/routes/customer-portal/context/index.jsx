@@ -64,15 +64,29 @@ const AppContextProvider = ({children}) => {
 					)
 					?.roleBriefs?.find(({name}) => name === 'Provisioning');
 
+				const isOmniAdmin = !!data.userAccount?.roleBriefs?.find(
+					({name}) => name === 'Administrator'
+				);
+
+				const isPartner = data.userAccount?.organizationBriefs?.filter(
+					({name}) => (
+						name !== 'Account Access EU' &&
+						name !== 'Account Access US' && 
+						name !== 'Liferay Staff' && 
+						name !== 'Systems - Provisioning')
+				).length > 0;
+
 				const isStaff = data.userAccount?.organizationBriefs?.some(
 					(organization) => organization.name === 'Liferay Staff'
 				);
 
 				const userAccount = {
 					...data.userAccount,
-					isAdmin: isAccountAdministrator,
+					isAccountAdmin: isAccountAdministrator,
+					isOmniAdmin,
+					isPartner,
 					isProvisioning: isAccountProvisioning,
-					isStaff,
+					isStaff
 				};
 
 				dispatch({
@@ -179,12 +193,15 @@ const AppContextProvider = ({children}) => {
 							projectExternalReferenceCode
 					);
 
-					if (!accountBrief) {
+					const apiPermission = 
+						user.isOmniAdmin || user.isPartner || user.isStaff;
+
+					if (!accountBrief && apiPermission) {
 						const {data: dataAccount} = await client.query({
 							query: getAccountByExternalReferenceCode,
 							variables: {
 								externalReferenceCode: projectExternalReferenceCode,
-							},
+							}
 						});
 
 						if (dataAccount) {
@@ -193,8 +210,11 @@ const AppContextProvider = ({children}) => {
 						}
 					}
 
-					getProject(projectExternalReferenceCode, accountBrief);
-					getSubscriptionGroups(projectExternalReferenceCode);
+					if (accountBrief) {
+						getProject(projectExternalReferenceCode, accountBrief);
+						getSubscriptionGroups(projectExternalReferenceCode);
+					}
+
 					getStructuredContents();
 					getSessionId();
 				}

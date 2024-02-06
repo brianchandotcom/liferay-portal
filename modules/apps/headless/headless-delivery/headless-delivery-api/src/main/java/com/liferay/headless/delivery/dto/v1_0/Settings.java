@@ -315,7 +315,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _javascriptSupplier;
 
-	@Schema(description = "The page's master page..")
+	@Schema(description = "The page's master page.")
 	@Valid
 	public MasterPage getMasterPage() {
 		if (_masterPageSupplier != null) {
@@ -350,7 +350,7 @@ public class Settings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The page's master page..")
+	@GraphQLField(description = "The page's master page.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MasterPage masterPage;
 

@@ -209,6 +209,16 @@ public class SettingsSerDes {
 			}
 		}
 
+		if (settings.getThemeSpritemapClientExtension() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"themeSpritemapClientExtension\": ");
+
+			sb.append(settings.getThemeSpritemapClientExtension());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -311,6 +321,15 @@ public class SettingsSerDes {
 		else {
 			map.put(
 				"themeSettings", String.valueOf(settings.getThemeSettings()));
+		}
+
+		if (settings.getThemeSpritemapClientExtension() == null) {
+			map.put("themeSpritemapClientExtension", null);
+		}
+		else {
+			map.put(
+				"themeSpritemapClientExtension",
+				String.valueOf(settings.getThemeSpritemapClientExtension()));
 		}
 
 		return map;
@@ -426,6 +445,15 @@ public class SettingsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "themeSettings")) {
 				if (jsonParserFieldValue != null) {
 					settings.setThemeSettings((Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "themeSpritemapClientExtension")) {
+
+				if (jsonParserFieldValue != null) {
+					settings.setThemeSpritemapClientExtension(
+						ClientExtensionSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

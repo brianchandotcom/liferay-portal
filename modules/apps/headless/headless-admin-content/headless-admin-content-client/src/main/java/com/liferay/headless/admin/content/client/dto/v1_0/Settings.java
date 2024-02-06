@@ -266,6 +266,31 @@ public class Settings implements Cloneable, Serializable {
 
 	protected Object themeSettings;
 
+	public ClientExtension getThemeSpritemapClientExtension() {
+		return themeSpritemapClientExtension;
+	}
+
+	public void setThemeSpritemapClientExtension(
+		ClientExtension themeSpritemapClientExtension) {
+
+		this.themeSpritemapClientExtension = themeSpritemapClientExtension;
+	}
+
+	public void setThemeSpritemapClientExtension(
+		UnsafeSupplier<ClientExtension, Exception>
+			themeSpritemapClientExtensionUnsafeSupplier) {
+
+		try {
+			themeSpritemapClientExtension =
+				themeSpritemapClientExtensionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ClientExtension themeSpritemapClientExtension;
+
 	@Override
 	public Settings clone() throws CloneNotSupportedException {
 		return (Settings)super.clone();

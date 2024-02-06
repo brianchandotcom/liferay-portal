@@ -20,9 +20,9 @@ export class HeadlessBuilderPage {
 			name: 'Create',
 		});
 		this.page = page;
-		this.addNewAPIApplicationButton = page.getByRole('button', {
-			name: 'New',
-		});
+		this.addNewAPIApplicationButton = page.getByLabel(
+			'Add New API Application'
+		);
 		this.newAPIApplicationTitleBox = page.getByPlaceholder('Enter title.');
 	}
 

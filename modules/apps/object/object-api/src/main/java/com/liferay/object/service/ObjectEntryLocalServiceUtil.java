@@ -428,18 +428,18 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().getObjectEntriesCount();
 	}
 
+	public static long getObjectEntriesCount(
+			long userId, java.util.Date createDate, long objectDefinitionId)
+		throws PortalException {
+
+		return getService().getObjectEntriesCount(
+			userId, createDate, objectDefinitionId);
+	}
+
 	public static int getObjectEntriesCount(
 		long groupId, long objectDefinitionId) {
 
 		return getService().getObjectEntriesCount(groupId, objectDefinitionId);
-	}
-
-	public static long getObjectEntriesCount(
-			long userId, long objectDefinitionId, java.util.Date startDate)
-		throws PortalException {
-
-		return getService().getObjectEntriesCount(
-			userId, objectDefinitionId, startDate);
 	}
 
 	public static long getObjectEntriesCount(

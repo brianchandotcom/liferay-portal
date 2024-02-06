@@ -338,7 +338,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 																<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
 																	<ul class="lfr-tree list-unstyled">
 																		<li class="tree-item">
-																			<aui:fieldset cssClass="portlet-type-data-section" label="content">
+																			<aui:fieldset cssClass="portlet-type-data-section" id="content">
 																				<c:if test="<%= exportControls != null %>">
 
 																					<%
@@ -430,7 +430,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 																	<li class="tree-item">
 																		<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
 
-																		<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
+																		<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" 	/>
 																	</li>
 																</ul>
 															</div>

@@ -103,12 +103,10 @@ AUI.add(
 									);
 								}
 
-								const contentDialog = instance._getContentDialog(
+								instance._showContentDialog(
 									portletId,
 									portletTitle
 								);
-
-								contentDialog.show();
 							},
 							'.content-link'
 						);
@@ -229,9 +227,7 @@ AUI.add(
 
 					if (contentOptionsLink) {
 						contentOptionsLink.on(STR_CLICK, () => {
-							const contentOptionsDialog = instance._getContentOptionsDialog();
-
-							contentOptionsDialog.show();
+							instance._getContentOptionsDialog();
 						});
 					}
 
@@ -304,9 +300,7 @@ AUI.add(
 								displayType: 'unstyled',
 								label: Liferay.Language.get('ok'),
 								onClick({processClose}) {
-									instance._setConfigurationLabels(
-										portletId
-									);
+									instance._setConfigurationLabels(portletId);
 
 									processClose();
 								},
@@ -318,143 +312,82 @@ AUI.add(
 							},
 						],
 						size: 'md',
-						title: portletTitle
+						title: portletTitle,
 					});
 				},
 
-				_getContentDialog(portletId, portletTitle) {
+				_showContentDialog(portletId, portletTitle) {
 					const instance = this;
 
 					const contentNode = instance.byId('content_' + portletId);
 
-					let contentDialog = contentNode.getData('contentDialog');
+					Liferay.Util.openModal({
+						bodyHTML: contentNode.getHTML(),
+						buttons: [
+							{
+								displayType: 'unstyled',
+								label: Liferay.Language.get('ok'),
+								onClick({processClose}) {
+									instance._setContentLabels(portletId);
 
-					if (!contentDialog) {
-						contentNode.show();
+									instance._storeNodeInputStates(contentNode);
 
-						contentDialog = Liferay.Util.Window.getWindow({
-							dialog: {
-								bodyContent: contentNode,
-								centered: true,
-								modal: true,
-								render: instance.get('form'),
-								toolbars: {
-									footer: [
-										{
-											label: Liferay.Language.get('ok'),
-											on: {
-												click(event) {
-													event.domEvent.preventDefault();
-
-													instance._setContentLabels(
-														portletId
-													);
-
-													instance._storeNodeInputStates(
-														contentNode
-													);
-
-													contentDialog.hide();
-												},
-											},
-											primary: true,
-										},
-										{
-											label: Liferay.Language.get(
-												'cancel'
-											),
-											on: {
-												click(event) {
-													event.domEvent.preventDefault();
-
-													instance._restoreNodeInputStates(
-														contentNode
-													);
-
-													contentDialog.hide();
-												},
-											},
-										},
-									],
+									processClose();
 								},
-								width: 400,
 							},
-							title: portletTitle,
-						});
-
-						instance._storeNodeInputStates(contentNode);
-
-						contentNode.setData('contentDialog', contentDialog);
-					}
-
-					return contentDialog;
+							{
+								displayType: 'unstyled',
+								label: Liferay.Language.get('cancel'),
+								onClick() {
+									instance._restoreNodeInputStates(
+										contentNode
+									);
+								},
+								type: 'cancel',
+							},
+						],
+						size: 'md',
+						title: portletTitle,
+					});
 				},
 
 				_getContentOptionsDialog() {
 					const instance = this;
 
-					let contentOptionsDialog = instance._contentOptionsDialog;
-
 					const contentOptionsNode = instance.byId('contentOptions');
 
-					if (!contentOptionsDialog) {
-						contentOptionsNode.show();
+					instance._storeNodeInputStates(contentOptionsNode);
 
-						contentOptionsDialog = Liferay.Util.Window.getWindow({
-							dialog: {
-								bodyContent: contentOptionsNode,
-								centered: true,
-								height: 300,
-								modal: true,
-								render: instance.get('form'),
-								toolbars: {
-									footer: [
-										{
-											label: Liferay.Language.get('ok'),
-											on: {
-												click(event) {
-													event.domEvent.preventDefault();
+					Liferay.Util.openModal({
+						bodyHTML: contentOptionsNode.getHTML(),
+						buttons: [
+							{
+								displayType: 'unstyled',
+								label: Liferay.Language.get('ok'),
+								onClick({processClose}) {
+									instance._setContentOptionsLabels();
 
-													instance._setContentOptionsLabels();
+									instance._storeNodeInputStates(
+										contentOptionsNode
+									);
 
-													instance._storeNodeInputStates(
-														contentOptionsNode
-													);
-
-													contentOptionsDialog.hide();
-												},
-											},
-											primary: true,
-										},
-										{
-											label: Liferay.Language.get(
-												'cancel'
-											),
-											on: {
-												click(event) {
-													event.domEvent.preventDefault();
-
-													instance._restoreNodeInputStates(
-														contentOptionsNode
-													);
-
-													contentOptionsDialog.hide();
-												},
-											},
-										},
-									],
+									processClose();
 								},
-								width: 400,
 							},
-							title: Liferay.Language.get('comments-and-ratings'),
-						});
-
-						instance._storeNodeInputStates(contentOptionsNode);
-
-						instance._contentOptionsDialog = contentOptionsDialog;
-					}
-
-					return contentOptionsDialog;
+							{
+								displayType: 'unstyled',
+								label: Liferay.Language.get('cancel'),
+								onClick() {
+									instance._restoreNodeInputStates(
+										contentOptionsNode
+									);
+								},
+								type: 'cancel',
+							},
+						],
+						size: 'md',
+						title: Liferay.Language.get('comments-and-ratings'),
+					});
 				},
 
 				_getGlobalConfigurationDialog() {
@@ -1169,12 +1102,15 @@ AUI.add(
 						inputNodes = node.getElementsByTagName('input');
 					}
 
-					inputNodes.each((node) => {
-						let hiddenList = node.ancestorsByClassName(STR_HIDE);
+					console.log(instance._isChecked('commentsNode'))
+					console.log(instance._isChecked('ratingsNode'))
 
-						const id = node.get('id');
+					inputNodes.each((inputNode) => {
+						let hiddenList = inputNode.ancestorsByClassName(STR_HIDE);
 
-						const val = node.get('checked');
+						const id = inputNode.get('id');
+
+						const val = inputNode.get('checked');
 
 						if (hiddenList.size() === 0) {
 							hiddenList = null;

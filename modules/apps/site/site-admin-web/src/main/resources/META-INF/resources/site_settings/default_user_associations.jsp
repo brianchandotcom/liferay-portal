@@ -249,15 +249,6 @@ DefaultUserAssociationsDisplayContext defaultUserAssociationsDisplayContext = (D
 			'<portlet:namespace />teamsSearchContainerPrimaryKeys'
 		).value;
 
-		const uri = new URL(
-			'<%= defaultUserAssociationsDisplayContext.getSelectTeamURL() %>'
-		);
-
-		uri.searchParams.set(
-			'<%= defaultUserAssociationsDisplayContext.getSelectTeamPortletNamespace() %>teamIds',
-			ids
-		);
-
 		Liferay.Util.openSelectionModal({
 			id: '<portlet:namespace />selectTeam',
 			onSelect: function (event) {
@@ -277,7 +268,7 @@ DefaultUserAssociationsDisplayContext defaultUserAssociationsDisplayContext = (D
 			selectEventName: '<portlet:namespace />selectTeam',
 			selectedData: searchContainerData,
 			title: '<liferay-ui:message arguments="team" key="select-x" />',
-			url: uri.toString(),
+			url: '<%= defaultUserAssociationsDisplayContext.getSelectTeamURL() %>',
 		});
 	});
 </aui:script>

@@ -78,13 +78,6 @@ public class DefaultUserAssociationsDisplayContext {
 		).buildString();
 	}
 
-	public String getSelectTeamPortletNamespace() {
-		String selectTeamPortletId = PortletProviderUtil.getPortletId(
-			Team.class.getName(), PortletProvider.Action.BROWSE);
-
-		return PortalUtil.getPortletNamespace(selectTeamPortletId);
-	}
-
 	public String getSelectTeamURL() {
 		SiteTeamsItemSelectorCriterion siteTeamsItemSelectorCriterion =
 			new SiteTeamsItemSelectorCriterion();

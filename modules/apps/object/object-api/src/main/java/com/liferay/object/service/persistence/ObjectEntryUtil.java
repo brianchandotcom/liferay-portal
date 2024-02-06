@@ -1639,10 +1639,10 @@ public class ObjectEntryUtil {
 	 * @param objectDefinitionId the object definition ID
 	 * @return the matching object entries
 	 */
-	public static List<ObjectEntry> findByU_GtC_ODI(
+	public static List<ObjectEntry> findByU_GtCD_ODI(
 		long userId, Date createDate, long objectDefinitionId) {
 
-		return getPersistence().findByU_GtC_ODI(
+		return getPersistence().findByU_GtCD_ODI(
 			userId, createDate, objectDefinitionId);
 	}
 
@@ -1660,11 +1660,11 @@ public class ObjectEntryUtil {
 	 * @param end the upper bound of the range of object entries (not inclusive)
 	 * @return the range of matching object entries
 	 */
-	public static List<ObjectEntry> findByU_GtC_ODI(
+	public static List<ObjectEntry> findByU_GtCD_ODI(
 		long userId, Date createDate, long objectDefinitionId, int start,
 		int end) {
 
-		return getPersistence().findByU_GtC_ODI(
+		return getPersistence().findByU_GtCD_ODI(
 			userId, createDate, objectDefinitionId, start, end);
 	}
 
@@ -1683,11 +1683,11 @@ public class ObjectEntryUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching object entries
 	 */
-	public static List<ObjectEntry> findByU_GtC_ODI(
+	public static List<ObjectEntry> findByU_GtCD_ODI(
 		long userId, Date createDate, long objectDefinitionId, int start,
 		int end, OrderByComparator<ObjectEntry> orderByComparator) {
 
-		return getPersistence().findByU_GtC_ODI(
+		return getPersistence().findByU_GtCD_ODI(
 			userId, createDate, objectDefinitionId, start, end,
 			orderByComparator);
 	}
@@ -1708,12 +1708,12 @@ public class ObjectEntryUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching object entries
 	 */
-	public static List<ObjectEntry> findByU_GtC_ODI(
+	public static List<ObjectEntry> findByU_GtCD_ODI(
 		long userId, Date createDate, long objectDefinitionId, int start,
 		int end, OrderByComparator<ObjectEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByU_GtC_ODI(
+		return getPersistence().findByU_GtCD_ODI(
 			userId, createDate, objectDefinitionId, start, end,
 			orderByComparator, useFinderCache);
 	}
@@ -1728,12 +1728,12 @@ public class ObjectEntryUtil {
 	 * @return the first matching object entry
 	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
 	 */
-	public static ObjectEntry findByU_GtC_ODI_First(
+	public static ObjectEntry findByU_GtCD_ODI_First(
 			long userId, Date createDate, long objectDefinitionId,
 			OrderByComparator<ObjectEntry> orderByComparator)
 		throws com.liferay.object.exception.NoSuchObjectEntryException {
 
-		return getPersistence().findByU_GtC_ODI_First(
+		return getPersistence().findByU_GtCD_ODI_First(
 			userId, createDate, objectDefinitionId, orderByComparator);
 	}
 
@@ -1746,11 +1746,11 @@ public class ObjectEntryUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object entry, or <code>null</code> if a matching object entry could not be found
 	 */
-	public static ObjectEntry fetchByU_GtC_ODI_First(
+	public static ObjectEntry fetchByU_GtCD_ODI_First(
 		long userId, Date createDate, long objectDefinitionId,
 		OrderByComparator<ObjectEntry> orderByComparator) {
 
-		return getPersistence().fetchByU_GtC_ODI_First(
+		return getPersistence().fetchByU_GtCD_ODI_First(
 			userId, createDate, objectDefinitionId, orderByComparator);
 	}
 
@@ -1764,12 +1764,12 @@ public class ObjectEntryUtil {
 	 * @return the last matching object entry
 	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
 	 */
-	public static ObjectEntry findByU_GtC_ODI_Last(
+	public static ObjectEntry findByU_GtCD_ODI_Last(
 			long userId, Date createDate, long objectDefinitionId,
 			OrderByComparator<ObjectEntry> orderByComparator)
 		throws com.liferay.object.exception.NoSuchObjectEntryException {
 
-		return getPersistence().findByU_GtC_ODI_Last(
+		return getPersistence().findByU_GtCD_ODI_Last(
 			userId, createDate, objectDefinitionId, orderByComparator);
 	}
 
@@ -1782,11 +1782,11 @@ public class ObjectEntryUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
 	 */
-	public static ObjectEntry fetchByU_GtC_ODI_Last(
+	public static ObjectEntry fetchByU_GtCD_ODI_Last(
 		long userId, Date createDate, long objectDefinitionId,
 		OrderByComparator<ObjectEntry> orderByComparator) {
 
-		return getPersistence().fetchByU_GtC_ODI_Last(
+		return getPersistence().fetchByU_GtCD_ODI_Last(
 			userId, createDate, objectDefinitionId, orderByComparator);
 	}
 
@@ -1801,13 +1801,13 @@ public class ObjectEntryUtil {
 	 * @return the previous, current, and next object entry
 	 * @throws NoSuchObjectEntryException if a object entry with the primary key could not be found
 	 */
-	public static ObjectEntry[] findByU_GtC_ODI_PrevAndNext(
+	public static ObjectEntry[] findByU_GtCD_ODI_PrevAndNext(
 			long objectEntryId, long userId, Date createDate,
 			long objectDefinitionId,
 			OrderByComparator<ObjectEntry> orderByComparator)
 		throws com.liferay.object.exception.NoSuchObjectEntryException {
 
-		return getPersistence().findByU_GtC_ODI_PrevAndNext(
+		return getPersistence().findByU_GtCD_ODI_PrevAndNext(
 			objectEntryId, userId, createDate, objectDefinitionId,
 			orderByComparator);
 	}
@@ -1819,10 +1819,10 @@ public class ObjectEntryUtil {
 	 * @param createDate the create date
 	 * @param objectDefinitionId the object definition ID
 	 */
-	public static void removeByU_GtC_ODI(
+	public static void removeByU_GtCD_ODI(
 		long userId, Date createDate, long objectDefinitionId) {
 
-		getPersistence().removeByU_GtC_ODI(
+		getPersistence().removeByU_GtCD_ODI(
 			userId, createDate, objectDefinitionId);
 	}
 
@@ -1834,10 +1834,10 @@ public class ObjectEntryUtil {
 	 * @param objectDefinitionId the object definition ID
 	 * @return the number of matching object entries
 	 */
-	public static int countByU_GtC_ODI(
+	public static int countByU_GtCD_ODI(
 		long userId, Date createDate, long objectDefinitionId) {
 
-		return getPersistence().countByU_GtC_ODI(
+		return getPersistence().countByU_GtCD_ODI(
 			userId, createDate, objectDefinitionId);
 	}
 

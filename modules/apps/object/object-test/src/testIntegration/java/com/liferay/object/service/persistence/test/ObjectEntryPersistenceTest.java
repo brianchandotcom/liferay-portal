@@ -287,12 +287,12 @@ public class ObjectEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByU_GtC_ODI() throws Exception {
-		_persistence.countByU_GtC_ODI(
+	public void testCountByU_GtCD_ODI() throws Exception {
+		_persistence.countByU_GtCD_ODI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextDate(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByU_GtC_ODI(0L, RandomTestUtil.nextDate(), 0L);
+		_persistence.countByU_GtCD_ODI(0L, RandomTestUtil.nextDate(), 0L);
 	}
 
 	@Test

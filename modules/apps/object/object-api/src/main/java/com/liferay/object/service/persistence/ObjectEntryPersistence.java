@@ -1289,7 +1289,7 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @param objectDefinitionId the object definition ID
 	 * @return the matching object entries
 	 */
-	public java.util.List<ObjectEntry> findByU_GtC_ODI(
+	public java.util.List<ObjectEntry> findByU_GtCD_ODI(
 		long userId, Date createDate, long objectDefinitionId);
 
 	/**
@@ -1306,7 +1306,7 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @param end the upper bound of the range of object entries (not inclusive)
 	 * @return the range of matching object entries
 	 */
-	public java.util.List<ObjectEntry> findByU_GtC_ODI(
+	public java.util.List<ObjectEntry> findByU_GtCD_ODI(
 		long userId, Date createDate, long objectDefinitionId, int start,
 		int end);
 
@@ -1325,7 +1325,7 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching object entries
 	 */
-	public java.util.List<ObjectEntry> findByU_GtC_ODI(
+	public java.util.List<ObjectEntry> findByU_GtCD_ODI(
 		long userId, Date createDate, long objectDefinitionId, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
@@ -1347,7 +1347,7 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching object entries
 	 */
-	public java.util.List<ObjectEntry> findByU_GtC_ODI(
+	public java.util.List<ObjectEntry> findByU_GtCD_ODI(
 		long userId, Date createDate, long objectDefinitionId, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
@@ -1364,7 +1364,7 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @return the first matching object entry
 	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
 	 */
-	public ObjectEntry findByU_GtC_ODI_First(
+	public ObjectEntry findByU_GtCD_ODI_First(
 			long userId, Date createDate, long objectDefinitionId,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
 				orderByComparator)
@@ -1379,7 +1379,7 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object entry, or <code>null</code> if a matching object entry could not be found
 	 */
-	public ObjectEntry fetchByU_GtC_ODI_First(
+	public ObjectEntry fetchByU_GtCD_ODI_First(
 		long userId, Date createDate, long objectDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
 			orderByComparator);
@@ -1394,7 +1394,7 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @return the last matching object entry
 	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
 	 */
-	public ObjectEntry findByU_GtC_ODI_Last(
+	public ObjectEntry findByU_GtCD_ODI_Last(
 			long userId, Date createDate, long objectDefinitionId,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
 				orderByComparator)
@@ -1409,7 +1409,7 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
 	 */
-	public ObjectEntry fetchByU_GtC_ODI_Last(
+	public ObjectEntry fetchByU_GtCD_ODI_Last(
 		long userId, Date createDate, long objectDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
 			orderByComparator);
@@ -1425,7 +1425,7 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @return the previous, current, and next object entry
 	 * @throws NoSuchObjectEntryException if a object entry with the primary key could not be found
 	 */
-	public ObjectEntry[] findByU_GtC_ODI_PrevAndNext(
+	public ObjectEntry[] findByU_GtCD_ODI_PrevAndNext(
 			long objectEntryId, long userId, Date createDate,
 			long objectDefinitionId,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
@@ -1439,7 +1439,7 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @param createDate the create date
 	 * @param objectDefinitionId the object definition ID
 	 */
-	public void removeByU_GtC_ODI(
+	public void removeByU_GtCD_ODI(
 		long userId, Date createDate, long objectDefinitionId);
 
 	/**
@@ -1450,7 +1450,7 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @param objectDefinitionId the object definition ID
 	 * @return the number of matching object entries
 	 */
-	public int countByU_GtC_ODI(
+	public int countByU_GtCD_ODI(
 		long userId, Date createDate, long objectDefinitionId);
 
 	/**

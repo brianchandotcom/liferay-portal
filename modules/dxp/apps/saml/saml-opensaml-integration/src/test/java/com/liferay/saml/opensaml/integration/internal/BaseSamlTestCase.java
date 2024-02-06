@@ -32,10 +32,9 @@ import com.liferay.saml.constants.SamlProviderConfigurationKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBindingProvider;
 import com.liferay.saml.opensaml.integration.internal.credential.FileSystemKeyStoreManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.credential.KeyStoreCredentialResolver;
-import com.liferay.saml.opensaml.integration.internal.identifier.SamlIdentifierGeneratorStrategyFactory;
+import com.liferay.saml.opensaml.integration.internal.identifier.IdentifierGeneratorStrategyFactory;
 import com.liferay.saml.opensaml.integration.internal.metadata.KeyStoreLocalEntityManager;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataGeneratorUtil;
-import com.liferay.saml.opensaml.integration.internal.servlet.profile.IdentifierGenerationStrategyFactory;
 import com.liferay.saml.opensaml.integration.internal.transport.HttpClientFactory;
 import com.liferay.saml.opensaml.integration.internal.util.ConfigurationServiceBootstrapUtil;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
@@ -312,8 +311,7 @@ public abstract class BaseSamlTestCase {
 	protected FileSystemKeyStoreManagerImpl fileSystemKeyStoreManagerImpl;
 	protected GroupLocalService groupLocalService;
 	protected HttpClient httpClient;
-	protected IdentifierGenerationStrategyFactory
-		identifierGenerationStrategyFactory;
+	protected IdentifierGenerationStrategy identifierGenerationStrategy;
 	protected List<String> identifiers = new ArrayList<>();
 	protected KeyStoreLocalEntityManager keyStoreLocalEntityManager;
 	protected ParserPool parserPool;
@@ -549,24 +547,10 @@ public abstract class BaseSamlTestCase {
 	}
 
 	private void _setupIdentifiers() {
-		SamlIdentifierGeneratorStrategyFactory
-			samlIdentifierGeneratorStrategyFactory =
-				new SamlIdentifierGeneratorStrategyFactory();
+		samlIdentifierGenerator = IdentifierGeneratorStrategyFactory.create(16);
 
-		samlIdentifierGenerator = samlIdentifierGeneratorStrategyFactory.create(
-			16);
-
-		IdentifierGenerationStrategy identifierGenerationStrategy =
-			Mockito.mock(IdentifierGenerationStrategy.class);
-
-		identifierGenerationStrategyFactory = Mockito.mock(
-			IdentifierGenerationStrategyFactory.class);
-
-		Mockito.when(
-			identifierGenerationStrategyFactory.create(Mockito.anyInt())
-		).thenReturn(
-			identifierGenerationStrategy
-		);
+		identifierGenerationStrategy = Mockito.mock(
+			IdentifierGenerationStrategy.class);
 
 		Mockito.when(
 			identifierGenerationStrategy.generateIdentifier()

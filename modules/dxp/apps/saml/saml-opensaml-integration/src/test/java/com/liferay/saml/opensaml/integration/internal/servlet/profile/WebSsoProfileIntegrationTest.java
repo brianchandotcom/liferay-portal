@@ -14,6 +14,7 @@ import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
 import com.liferay.saml.opensaml.integration.internal.helper.RelayStateHelperImpl;
+import com.liferay.saml.opensaml.integration.internal.identifier.IdentifierGeneratorStrategyFactory;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
@@ -138,9 +139,6 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "credentialResolver", credentialResolver);
-		ReflectionTestUtil.setFieldValue(
-			_webSsoProfileImpl, "identifierGenerationStrategyFactory",
-			identifierGenerationStrategyFactory);
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "localEntityManager",
 			keyStoreLocalEntityManager);
@@ -1004,7 +1002,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		samlSpAuthRequest.setSamlIdpEntityId(IDP_ENTITY_ID);
 
 		IdentifierGenerationStrategy identifierGenerationStrategy =
-			identifierGenerationStrategyFactory.create(30);
+			IdentifierGeneratorStrategyFactory.create(30);
 
 		String samlSpAuthRequestKey =
 			identifierGenerationStrategy.generateIdentifier();
@@ -1281,7 +1279,15 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		new RelayStateHelperImpl();
 	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;
 	private SamlSpSessionLocalService _samlSpSessionLocalService;
+
 	private final WebSsoProfileImpl _webSsoProfileImpl =
-		new WebSsoProfileImpl();
+		new WebSsoProfileImpl() {
+
+			@Override
+			public String generateIdentifier(int length) {
+				return identifierGenerationStrategy.generateIdentifier();
+			}
+
+		};
 
 }

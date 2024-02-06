@@ -107,9 +107,6 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_singleLogoutProfileImpl, "credentialResolver", credentialResolver);
 		ReflectionTestUtil.setFieldValue(
-			_singleLogoutProfileImpl, "identifierGenerationStrategyFactory",
-			identifierGenerationStrategyFactory);
-		ReflectionTestUtil.setFieldValue(
 			_singleLogoutProfileImpl, "localEntityManager",
 			keyStoreLocalEntityManager);
 		ReflectionTestUtil.setFieldValue(

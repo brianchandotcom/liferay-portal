@@ -19,6 +19,7 @@ import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBindingProvider;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
+import com.liferay.saml.opensaml.integration.internal.identifier.IdentifierGeneratorStrategyFactory;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerUtil;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.provider.DBMetadataResolver;
@@ -236,20 +237,10 @@ public abstract class BaseProfile {
 	}
 
 	public String generateIdentifier(int length) {
-		IdentifierGenerationStrategyFactory
-			identifierGenerationStrategyFactory =
-				getIdentifierGenerationStrategyFactory();
-
 		IdentifierGenerationStrategy identifierGenerationStrategy =
-			identifierGenerationStrategyFactory.create(length);
+			IdentifierGeneratorStrategyFactory.create(length);
 
 		return identifierGenerationStrategy.generateIdentifier();
-	}
-
-	public IdentifierGenerationStrategyFactory
-		getIdentifierGenerationStrategyFactory() {
-
-		return identifierGenerationStrategyFactory;
 	}
 
 	public MessageContext<SAMLObject> getMessageContext(
@@ -575,10 +566,6 @@ public abstract class BaseProfile {
 
 	@Reference
 	protected CredentialResolver credentialResolver;
-
-	@Reference
-	protected IdentifierGenerationStrategyFactory
-		identifierGenerationStrategyFactory;
 
 	@Reference
 	protected LocalEntityManager localEntityManager;

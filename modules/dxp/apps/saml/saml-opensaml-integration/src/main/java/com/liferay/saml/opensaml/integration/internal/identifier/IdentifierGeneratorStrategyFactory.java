@@ -11,23 +11,17 @@ import com.google.common.xml.XmlEscapers;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
-import com.liferay.saml.opensaml.integration.internal.servlet.profile.IdentifierGenerationStrategyFactory;
 
 import javax.annotation.Nonnull;
 
 import net.shibboleth.utilities.java.support.security.IdentifierGenerationStrategy;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Mika Koivisto
  */
-@Component(service = IdentifierGenerationStrategyFactory.class)
-public class SamlIdentifierGeneratorStrategyFactory
-	implements IdentifierGenerationStrategyFactory {
+public class IdentifierGeneratorStrategyFactory {
 
-	@Override
-	public IdentifierGenerationStrategy create(int length) {
+	public static IdentifierGenerationStrategy create(int length) {
 		return new IdentifierGenerationStrategy() {
 
 			@Nonnull

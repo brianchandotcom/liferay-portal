@@ -26,6 +26,14 @@ const INITIAL_EDITING_LOCALE = {
 	localeId: themeDisplay.getDefaultLanguageId(),
 };
 
+const ALERT_REGEX = /alert\((.*?)\)/;
+const INNER_HTML_REGEX = /innerHTML\s*=\s*.*?/;
+const PHP_CODE_REGEX = /<\?[\s\S]*?\?>/g;
+const ASP_CODE_REGEX = /<%[\s\S]*?%>/g;
+const ASP_NET_CODE_REGEX = /(<asp:[^]+>[\s|\S]*?<\/asp:[^]+>)|(<asp:[^]+\/>)/gi;
+const HTML_TAG_WITH_ON_ATTRIBUTE_REGEX = /<[^>]+?(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))*\s*\/?>/gi;
+const ON_ATTRIBUTE_REGEX = /(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))/gi;
+
 const RichText = ({
 	availableLocales,
 	defaultLocale = INITIAL_DEFAULT_LOCALE,
@@ -159,6 +167,20 @@ const RichText = ({
 		}
 	};
 
+	function sanitezeHTML(html) {
+		const sanitizedHtml = html
+			.replace(HTML_TAG_WITH_ON_ATTRIBUTE_REGEX, (match) => {
+				return match.replace(ON_ATTRIBUTE_REGEX, '');
+			})
+			.replace(ALERT_REGEX, '')
+			.replace(INNER_HTML_REGEX, '')
+			.replace(PHP_CODE_REGEX, '')
+			.replace(ASP_CODE_REGEX, '')
+			.replace(ASP_NET_CODE_REGEX, '');
+
+		return sanitizedHtml;
+	}
+
 	return (
 		<FieldBase
 			{...otherProps}
@@ -189,10 +211,7 @@ const RichText = ({
 							if (editor.mode === 'source') {
 								const value = event.data.dataValue;
 
-								const sanitizedValue = value.replace(
-									/onerror="[^"]+"/gi,
-									''
-								);
+								const sanitizedValue = sanitezeHTML(value);
 
 								handleContentChange(sanitizedValue);
 

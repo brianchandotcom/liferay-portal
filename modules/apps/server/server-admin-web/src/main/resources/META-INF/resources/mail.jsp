@@ -9,9 +9,7 @@
 
 <div class="sheet">
 	<div class="panel-group panel-group-flush">
-		<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="companyId" value="<%= String.valueOf(CompanyConstants.SYSTEM) %>" />
-		</liferay-util:include>
+		<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>" />
 
 		<aui:button-row>
 			<aui:button cssClass="save-server-button" data-cmd="updateMail" primary="<%= true %>" value="save" />

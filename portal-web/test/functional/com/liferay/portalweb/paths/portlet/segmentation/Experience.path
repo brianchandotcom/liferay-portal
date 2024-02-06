@@ -16,8 +16,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_SELECTOR_MENU_ITEM</td>
+	<td>xpath=//div[contains(@class,'show')][contains(@class,'dropdown-menu')][not(contains(@class,'product-menu'))]//*[normalize-space(text())="${key_menuItem}"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_SELECTED_VIEW_MODE</td>
-	<td>//button[contains(@class, 'experience-selector')]//*[contains(text(),'${experienceName}')]</td>
+	<td>//button[contains(@class, 'layout__experience-selector')]//*[contains(text(),'${experienceName}')]</td>
 	<td></td>
 </tr>
 <tr>

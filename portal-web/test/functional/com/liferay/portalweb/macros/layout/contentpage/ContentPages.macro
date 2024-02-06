@@ -339,7 +339,9 @@ definition {
 	macro changeExperience(experienceName = null, locale = null) {
 		ContentPages.openExperienceMenu(locale = ${locale});
 
-		MenuItem.click(menuItem = ${experienceName});
+		Click(
+			key_menuItem = ${experienceName},
+			locator1 = "Experience#EXPERIENCE_SELECTOR_MENU_ITEM");
 
 		WaitForPageLoad();
 

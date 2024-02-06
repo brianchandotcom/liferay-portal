@@ -44,6 +44,8 @@ public interface PropsKeys {
 	public static final String ADMIN_EMAIL_PASSWORD_LOCKOUT_SUBJECT =
 		"admin.email.password.lockout.subject";
 
+	public static final String ADMIN_EMAIL_PASSWORD_LOCKOUT_UNTIL_BODY =
+		"admin.email.password.lockout.until.body";
 
 	public static final String ADMIN_EMAIL_PASSWORD_RESET_BODY =
 		"admin.email.password.reset.body";

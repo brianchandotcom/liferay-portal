@@ -19,6 +19,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -194,8 +195,14 @@ public class NewEnvTestRule implements TestRule {
 
 	protected ClassLoader createClassLoader(Description description) {
 		try {
+			ClassLoader parentClassLoader = null;
+
+			if (!JavaDetector.isJDK8()) {
+				parentClassLoader = ClassLoader.getSystemClassLoader();
+			}
+
 			return new URLClassLoader(
-				ClassPathUtil.getClassPathURLs(CLASS_PATH), null);
+				ClassPathUtil.getClassPathURLs(CLASS_PATH), parentClassLoader);
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);

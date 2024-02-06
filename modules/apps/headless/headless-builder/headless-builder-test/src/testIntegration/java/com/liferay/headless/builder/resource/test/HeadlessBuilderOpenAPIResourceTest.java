@@ -630,8 +630,6 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 								_API_PROPERTY_OBJECT_ERC_1
-							).put(
-								"type", "field"
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -646,8 +644,6 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 								_API_PROPERTY_OBJECT_ERC_3
-							).put(
-								"type", "field"
 							))
 					).put(
 						"description", "description"

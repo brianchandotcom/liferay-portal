@@ -17,6 +17,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
@@ -55,12 +56,19 @@ public abstract class BaseTestCase {
 					bundle.getSymbolicName(),
 					"com.liferay.headless.builder.impl")) {
 
-				File processedFile = bundle.getDataFile(
-					".com.liferay.headless.builder.internal.batch.headless." +
-						"builder.batch.engine.data.json.0.processed");
+				for (String processedFileName :
+						Arrays.asList(
+							"00.headless.builder.picklists",
+							"01.headless.builder")) {
 
-				if ((processedFile != null) && processedFile.exists()) {
-					processedFile.delete();
+					File processedFile = bundle.getDataFile(
+						".com.liferay.headless.builder.internal.batch." +
+							processedFileName +
+								".batch.engine.data.json.0.processed");
+
+					if ((processedFile != null) && processedFile.exists()) {
+						processedFile.delete();
+					}
 				}
 
 				CompletableFuture<Void> completableFuture =

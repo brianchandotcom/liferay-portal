@@ -1,0 +1,44 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPS-178642",
+			"importStrategy": "ON_ERROR_FAIL",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "API_PROPERTY_TYPE_PICKLIST",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "API_PROPERTY_TYPE_PICKLIST_FIELD",
+					"key": "field",
+					"name": "field",
+					"name_i18n": {
+						"en-US": "Field"
+					}
+				},
+				{
+					"externalReferenceCode": "API_PROPERTY_TYPE_PICKLIST_OBJECT",
+					"key": "object",
+					"name": "object",
+					"name_i18n": {
+						"en-US": "Object"
+					}
+				}
+			],
+			"name": "API_PROPERTY_TYPE_PICKLIST",
+			"name_i18n": {
+				"en-US": "API_PROPERTY_TYPE_PICKLIST"
+			},
+			"system": true
+		}
+	]
+}

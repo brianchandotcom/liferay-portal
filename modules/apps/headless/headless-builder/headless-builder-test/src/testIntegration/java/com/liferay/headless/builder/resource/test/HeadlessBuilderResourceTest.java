@@ -1200,8 +1200,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"name", "integerProperty"
 				).put(
 					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
-				).put(
-					"type", "field"
 				)),
 			JSONUtil.put("integerProperty", 1), objectEntry1);
 
@@ -1269,8 +1267,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_OBJECT_ERC_2
-				).put(
-					"type", "field"
 				),
 				JSONUtil.put(
 					"description", "description"
@@ -1286,8 +1282,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_OBJECT_ERC_5
-				).put(
-					"type", "field"
 				)),
 			JSONUtil.put(
 				"object2", JSONUtil.put("integerProperty", 1)
@@ -1349,8 +1343,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_OBJECT_ERC_2
-				).put(
-					"type", "field"
 				),
 				JSONUtil.put(
 					"description", "description"
@@ -1366,8 +1358,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_OBJECT_ERC_3
-				).put(
-					"type", "field"
 				)),
 			JSONUtil.put(
 				"object1",
@@ -2574,8 +2564,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"name", "integerProperty"
 				).put(
 					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
-				).put(
-					"type", "field"
 				)),
 			JSONUtil.put(
 				"integerProperty", 1
@@ -2648,8 +2636,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_OBJECT_ERC_2
-				).put(
-					"type", "field"
 				),
 				JSONUtil.put(
 					"description", "description"
@@ -2665,8 +2651,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_OBJECT_ERC_5
-				).put(
-					"type", "field"
 				)),
 			JSONUtil.put(
 				"object1", Collections.emptyMap()
@@ -2744,8 +2728,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_OBJECT_ERC_2
-				).put(
-					"type", "field"
 				),
 				JSONUtil.put(
 					"description", "description"
@@ -2761,8 +2743,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"r_apiPropertyToAPIProperties_c_apiPropertyERC",
 					_API_PROPERTY_OBJECT_ERC_3
-				).put(
-					"type", "field"
 				)),
 			JSONUtil.put(
 				"object1",
@@ -3766,8 +3746,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
-					).put(
-						"type", "field"
 					),
 					JSONUtil.put(
 						"description", "description"
@@ -3784,8 +3762,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"r_apiPropertyToAPIProperties_c_apiPropertyId",
 						StringPool.BLANK
-					).put(
-						"type", "field"
 					))
 			).put(
 				"description", "description"

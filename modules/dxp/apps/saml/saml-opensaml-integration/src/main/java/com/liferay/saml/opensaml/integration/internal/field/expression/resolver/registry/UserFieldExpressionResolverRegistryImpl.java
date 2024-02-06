@@ -17,7 +17,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Stian Sigvartsen
@@ -47,7 +46,7 @@ public class UserFieldExpressionResolverRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_orderedServiceTrackerMap = _orderedServiceTrackerMapFactory.create(
+		_orderedServiceTrackerMap = OrderedServiceTrackerMapFactory.create(
 			bundleContext, UserFieldExpressionResolver.class, "key");
 	}
 
@@ -58,8 +57,5 @@ public class UserFieldExpressionResolverRegistryImpl
 
 	private OrderedServiceTrackerMap<UserFieldExpressionResolver>
 		_orderedServiceTrackerMap;
-
-	@Reference
-	private OrderedServiceTrackerMapFactory _orderedServiceTrackerMapFactory;
 
 }

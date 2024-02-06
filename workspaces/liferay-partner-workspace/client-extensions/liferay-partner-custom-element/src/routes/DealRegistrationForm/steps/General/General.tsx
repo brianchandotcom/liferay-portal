@@ -333,9 +333,11 @@ const General = ({
 				<div className="d-flex justify-content-between px-2 px-md-0">
 					<Button
 						disabled={!isValid || !dirty}
-						onClick={() =>
-							onContinue?.(formikHelpers, StepType.REVIEW)
-						}
+						onClick={() => {
+							onContinue?.(formikHelpers, StepType.REVIEW);
+
+							window.scrollTo(0, 0);
+						}}
 					>
 						Proceed
 					</Button>

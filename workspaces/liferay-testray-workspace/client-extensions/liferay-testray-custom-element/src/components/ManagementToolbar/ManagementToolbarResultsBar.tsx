@@ -37,19 +37,18 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 	const handleRemoveItemFromFilter = (itemToRemove: string) => {
 		const searchParams = new URLSearchParams(location.search);
 
-		const filtro = searchParams.get('filter');
+		const filter = searchParams.get('filter');
 
-		if (filtro) {
-			const filtroJSON = JSON.parse(decodeURIComponent(filtro));
+		if (filter) {
+			const filterJSON = JSON.parse(decodeURIComponent(filter));
 
-			delete filtroJSON[itemToRemove];
+			delete filterJSON[itemToRemove];
 
-			if (!Object.keys(filtroJSON).length) {
+			if (!Object.keys(filterJSON).length) {
 				searchParams.delete('filter');
 				searchParams.delete('filterSchema');
-			}
-			else {
-				searchParams.set('filter', JSON.stringify(filtroJSON));
+			} else {
+				searchParams.set('filter', JSON.stringify(filterJSON));
 			}
 
 			navigate({

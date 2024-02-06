@@ -28,8 +28,8 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 			listViewProps={{
 				initialContext: {selectedRows: selectedCaseIds},
 				managementToolbarProps: {
+					applyFilters: false,
 					filterSchema: 'cases',
-					isModal: true,
 					title: displayTitle ? i18n.translate('cases') : '',
 				},
 

@@ -50,7 +50,7 @@ const CaseRequirementLinkModal: React.FC<CaseRequirementLinkModalProps> = ({
 						),
 					},
 					managementToolbarProps: {
-						isModal: true,
+						applyFilters: false,
 						title: i18n.translate('requirements'),
 					},
 					onContextChange: ({selectedRows}) => {

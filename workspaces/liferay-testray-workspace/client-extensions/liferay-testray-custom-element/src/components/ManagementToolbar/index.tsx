@@ -19,6 +19,7 @@ import ManagementToolbarRight from './ManagementToolbarRight';
 export type ManagementToolbarProps = {
 	actions: any;
 	addButton?: () => void;
+	applyFilters?: boolean;
 	buttons?: ReactNode | ((actions: any) => ReactNode);
 	display?: {
 		columns?: boolean;
@@ -28,7 +29,6 @@ export type ManagementToolbarProps = {
 	 * Check out the file {src/schema/filter.ts}
 	 */
 	filterSchema?: FilterSchemaOption;
-	isModal?: boolean;
 	tableProps: Pick<TableProps, 'columns'>;
 	title?: string;
 	totalItems: number;
@@ -37,10 +37,10 @@ export type ManagementToolbarProps = {
 const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 	actions,
 	addButton,
+	applyFilters = true,
 	buttons,
 	display,
 	filterSchema,
-	isModal = false,
 	tableProps,
 	title,
 	totalItems,
@@ -57,6 +57,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 				<ManagementToolbarRight
 					actions={actions}
 					addButton={addButton}
+					applyFilters={applyFilters}
 					buttons={
 						typeof buttons === 'function'
 							? buttons(actions)
@@ -66,7 +67,6 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 					disabled={disabled}
 					display={display}
 					filterSchema={(filterSchemas as any)[filterSchema ?? '']}
-					isModal={isModal}
 				/>
 			</ClayManagementToolbar>
 

@@ -26,25 +26,25 @@ import Form from '../Form';
 import {RendererFields} from '../Form/Renderer';
 import {FieldOptions} from '../Form/Renderer/Renderer';
 type ManagementToolbarFilterProps = {
+	applyFilters?: boolean;
 	filterSchema?: FilterSchema;
-	isModal?: boolean;
 };
 
 type Option = {label: string; value: string};
 
 type FilterBodyProps = {
+	applyFilters?: boolean;
 	buttonRef: React.RefObject<HTMLButtonElement>;
 	filterSchema: FilterSchema | undefined;
-	isModal?: boolean;
 	setPosition: React.Dispatch<React.SetStateAction<number>>;
 	setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 	visible: boolean;
 };
 
 const FilterBody: React.FC<FilterBodyProps> = ({
+	applyFilters = true,
 	buttonRef,
 	filterSchema,
-	isModal = false,
 	setPosition,
 	setVisible,
 	visible,
@@ -160,7 +160,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 			{}
 		);
 
-		if (!isModal && filterSchema) {
+		if (applyFilters && filterSchema) {
 			updateUrlParams({
 				filter: JSON.stringify(formattedFilter),
 				filterSchema: filterSchema?.name as string,
@@ -174,11 +174,11 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 
 		setVisible(false);
 	}, [
+		applyFilters,
 		dispatch,
 		fields,
 		filterSchema,
 		form,
-		isModal,
 		setVisible,
 		updateUrlParams,
 	]);
@@ -248,8 +248,8 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 const MENU_POPOVER_HEIGHT = 580;
 
 const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
+	applyFilters = true,
 	filterSchema,
-	isModal = false,
 }) => {
 	const [visible, setVisible] = useState(false);
 	const ref = useRef<HTMLButtonElement>(null);
@@ -290,9 +290,9 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 			}
 		>
 			<FilterBody
+				applyFilters={applyFilters}
 				buttonRef={ref}
 				filterSchema={filterSchema}
-				isModal={isModal}
 				setPosition={setPosition}
 				setVisible={setVisible}
 				visible={visible}

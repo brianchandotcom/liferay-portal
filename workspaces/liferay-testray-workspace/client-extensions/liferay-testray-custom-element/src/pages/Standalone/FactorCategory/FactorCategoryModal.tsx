@@ -22,7 +22,7 @@ const FactorCategoryModal = () => {
 				}}
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
-					isModal: true,
+					applyFilters: false,
 				}}
 				resource="/factorcategories?fields=actions,id,name"
 				tableProps={{

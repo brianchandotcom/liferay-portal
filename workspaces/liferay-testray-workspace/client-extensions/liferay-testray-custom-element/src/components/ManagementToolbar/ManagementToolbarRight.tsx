@@ -43,6 +43,7 @@ export type IItem = {
 type ManagementToolbarRightProps = {
 	actions: any;
 	addButton?: () => void;
+	applyFilters?: boolean;
 	buttons?: ReactNode | ((actions: any) => ReactNode);
 	columns: Column[];
 	disabled: boolean;
@@ -50,17 +51,16 @@ type ManagementToolbarRightProps = {
 		columns?: boolean;
 	};
 	filterSchema?: FilterSchema;
-	isModal?: boolean;
 };
 
 const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	actions,
 	addButton,
+	applyFilters = true,
 	buttons,
 	columns,
 	display = {columns: true},
 	filterSchema,
-	isModal = false,
 }) => {
 	const [{filters, pin}, dispatch] = useContext(ListViewContext);
 	const [columnsDropdownVisible, setColumnsDropdownVisible] = useState(false);
@@ -108,8 +108,8 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 					</ClayManagementToolbar.Item>
 
 					<ManagementToolbarFilter
+						applyFilters={applyFilters}
 						filterSchema={filterSchema}
-						isModal={isModal}
 					/>
 				</>
 			)}

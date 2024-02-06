@@ -23,9 +23,9 @@ const ComponentsModal: React.FC<ComponentsModalProps> = ({projectId}) => {
 				forceRefetch={formModal.forceRefetch}
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
+					applyFilters: false,
 					display: {columns: false},
 					filterSchema: 'components',
-					isModal: true,
 				}}
 				resource={testrayComponentImpl.resource}
 				tableProps={{

@@ -8,7 +8,7 @@ import {LinkOrButton} from '@clayui/shared';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {formatActionURL} from '../utils/index';
+import {formatActionURL} from '../utils/actionItems/formatActionURL';
 import {actionsBasePropTypes} from './Actions';
 
 function QuickActions({actions, itemData, itemId, onClick}) {

@@ -70,26 +70,6 @@ export function formatItemChanges(itemChanges) {
 	return formattedChanges;
 }
 
-export function formatActionURL(url, item) {
-	if (!url) {
-		return '';
-	}
-
-	const replacedURL = url.replace(new RegExp('{(.*?)}', 'mg'), (matched) =>
-		getValueFromItem(
-			item,
-			matched.substring(1, matched.length - 1).split('.')
-		)
-	);
-
-	return replacedURL.replace(new RegExp('(%7B.*?%7D)', 'mg'), (matched) =>
-		getValueFromItem(
-			item,
-			matched.substring(3, matched.length - 3).split('.')
-		)
-	);
-}
-
 export function getRandomId() {
 	return Math.random().toString(36).substr(2, 9);
 }

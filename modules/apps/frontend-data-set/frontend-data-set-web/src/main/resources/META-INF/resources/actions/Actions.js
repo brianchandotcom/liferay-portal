@@ -9,7 +9,7 @@ import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../FrontendDataSetContext';
 import {ACTION_ITEM_TARGETS} from '../utils/actionItems/constants';
-import {formatActionURL} from '../utils/index';
+import {formatActionURL} from '../utils/actionItems/formatActionURL';
 import {openPermissionsModal} from '../utils/modals/openPermissionsModal';
 import {resolveModalSize} from '../utils/modals/resolveModalSize';
 import ViewsContext from '../views/ViewsContext';

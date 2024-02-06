@@ -31,8 +31,6 @@ public interface MetadataManager {
 
 	public MetadataResolver getMetadataResolver();
 
-	public String getNameIdAttribute(String entityId);
-
 	public String getNameIdFormat(String entityId);
 
 	public MessageHandler<?> getSecurityMessageHandler(

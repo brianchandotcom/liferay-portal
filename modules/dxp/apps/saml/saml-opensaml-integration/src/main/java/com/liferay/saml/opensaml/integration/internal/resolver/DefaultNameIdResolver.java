@@ -8,10 +8,14 @@ package com.liferay.saml.opensaml.integration.internal.resolver;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanProperties;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.resolver.NameIdResolver;
+import com.liferay.saml.persistence.model.SamlIdpSpConnection;
+import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,12 +38,33 @@ public class DefaultNameIdResolver implements NameIdResolver {
 		return _getNameIdValue(user, entityId);
 	}
 
-	private String _getNameIdAttributeName(String entityId) {
-		return _metadataManager.getNameIdAttribute(entityId);
+	protected String getNameIdAttributeName(String entityId) {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		String nameIdAttributeName = StringPool.BLANK;
+
+		try {
+			SamlIdpSpConnection samlIdpSpConnection =
+				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
+					companyId, entityId);
+
+			nameIdAttributeName = samlIdpSpConnection.getNameIdAttribute();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		if (Validator.isNotNull(nameIdAttributeName)) {
+			return nameIdAttributeName;
+		}
+
+		return "emailAddress";
 	}
 
 	private String _getNameIdValue(User user, String entityId) {
-		String nameIdAttributeName = _getNameIdAttributeName(entityId);
+		String nameIdAttributeName = getNameIdAttributeName(entityId);
 
 		if (Validator.isNull(nameIdAttributeName)) {
 			return user.getEmailAddress();
@@ -68,10 +93,13 @@ public class DefaultNameIdResolver implements NameIdResolver {
 		return object.toString();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultNameIdResolver.class);
+
 	@Reference
 	private BeanProperties _beanProperties;
 
 	@Reference
-	private MetadataManager _metadataManager;
+	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
 
 }

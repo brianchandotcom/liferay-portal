@@ -6,7 +6,6 @@
 package com.liferay.saml.opensaml.integration.internal.metadata;
 
 import com.liferay.petra.concurrent.DCLSingleton;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -148,32 +147,6 @@ public class MetadataManagerImpl implements MetadataManager {
 	public MetadataResolver getMetadataResolver() {
 		return _cachingChainingMetadataResolverDCLSingleton.getSingleton(
 			this::_createCachingChainingMetadataResolver);
-	}
-
-	@Override
-	public String getNameIdAttribute(String entityId) {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		String nameIdAttributeName = StringPool.BLANK;
-
-		try {
-			SamlIdpSpConnection samlIdpSpConnection =
-				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
-					companyId, entityId);
-
-			nameIdAttributeName = samlIdpSpConnection.getNameIdAttribute();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		if (Validator.isNotNull(nameIdAttributeName)) {
-			return nameIdAttributeName;
-		}
-
-		return "emailAddress";
 	}
 
 	@Override

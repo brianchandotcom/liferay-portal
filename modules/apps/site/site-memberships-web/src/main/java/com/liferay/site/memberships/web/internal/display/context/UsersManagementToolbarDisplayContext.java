@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.site.memberships.web.internal.util.GroupUtil;
+import com.liferay.site.teams.item.selector.criterion.SiteTeamsItemSelectorCriterion;
 import com.liferay.users.admin.item.selector.UserSiteMembershipItemSelectorCriterion;
 
 import java.util.ArrayList;
@@ -355,8 +356,7 @@ public class UsersManagementToolbarDisplayContext
 		).add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "selectTeams");
-				dropdownItem.putData(
-					"selectTeamsURL", _getSelectorURL("/select_team.jsp"));
+				dropdownItem.putData("selectTeamsURL", _getSelectTeamsURL());
 				dropdownItem.putData(
 					"viewTeamURL",
 					PortletURLBuilder.createRenderURL(
@@ -407,6 +407,24 @@ public class UsersManagementToolbarDisplayContext
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
+	}
+
+	private String _getSelectTeamsURL() {
+		ItemSelector itemSelector =
+			(ItemSelector)httpServletRequest.getAttribute(
+				ItemSelector.class.getName());
+
+		SiteTeamsItemSelectorCriterion siteTeamsItemSelectorCriterion =
+			new SiteTeamsItemSelectorCriterion();
+
+		siteTeamsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new UUIDItemSelectorReturnType());
+
+		return String.valueOf(
+			itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				liferayPortletResponse.getNamespace() + "selectTeams",
+				siteTeamsItemSelectorCriterion));
 	}
 
 	private String _getSelectUsersURL() {

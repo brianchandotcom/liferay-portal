@@ -50,9 +50,11 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 		prepareServiceProvider(SP_ENTITY_ID);
 
 		Assert.assertNotNull(
-			metadataManagerImpl.getEntityDescriptor(
+			MetadataManagerUtil.getEntityDescriptor(
 				getMockHttpServletRequest(
-					"http://localhost:8080/c/portal/saml/metadata")));
+					"http://localhost:8080/c/portal/saml/metadata"),
+				samlProviderConfigurationHelper, credentialResolver,
+				keyStoreLocalEntityManager));
 	}
 
 	@Test
@@ -67,9 +69,11 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 
 		Assert.assertTrue(
 			_checkMatch(
-				metadataManagerImpl.getEntityDescriptor(
+				MetadataManagerUtil.getEntityDescriptor(
 					getMockHttpServletRequest(
-						"http://localhost:8080/c/portal/saml/metadata"))));
+						"http://localhost:8080/c/portal/saml/metadata"),
+					samlProviderConfigurationHelper, credentialResolver,
+					keyStoreLocalEntityManager)));
 	}
 
 	@Test
@@ -90,9 +94,11 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 
 		Assert.assertFalse(
 			_checkMatch(
-				metadataManagerImpl.getEntityDescriptor(
+				MetadataManagerUtil.getEntityDescriptor(
 					getMockHttpServletRequest(
-						"http://localhost:8080/c/portal/saml/metadata"))));
+						"http://localhost:8080/c/portal/saml/metadata"),
+					samlProviderConfigurationHelper, credentialResolver,
+					keyStoreLocalEntityManager)));
 	}
 
 	private boolean _checkMatch(EntityDescriptor entityDescriptor) {

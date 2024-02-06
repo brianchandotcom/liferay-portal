@@ -14,7 +14,6 @@ import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
 import com.liferay.saml.opensaml.integration.internal.helper.RelayStateHelperImpl;
-import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
@@ -145,8 +144,6 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "localEntityManager",
 			keyStoreLocalEntityManager);
-		ReflectionTestUtil.setFieldValue(
-			_webSsoProfileImpl, "metadataManager", metadataManagerImpl);
 		ReflectionTestUtil.setFieldValue(_webSsoProfileImpl, "portal", portal);
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "_relayStateHelper", _relayStateHelperImpl);
@@ -633,19 +630,6 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		samlSpIdpConnection.setSamlIdpEntityId(IDP_ENTITY_ID);
 
-		metadataManagerImpl = new MetadataManagerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			metadataManagerImpl, "_credentialResolver", credentialResolver);
-		ReflectionTestUtil.setFieldValue(
-			metadataManagerImpl, "_localEntityManager",
-			keyStoreLocalEntityManager);
-		ReflectionTestUtil.setFieldValue(
-			metadataManagerImpl, "_portal", portal);
-		ReflectionTestUtil.setFieldValue(
-			metadataManagerImpl, "_samlProviderConfigurationHelper",
-			samlProviderConfigurationHelper);
-
 		ReflectionTestUtil.invoke(
 			_webSsoProfileImpl.getMetadataResolver(), "doDestroy",
 			new Class<?>[0]);
@@ -656,9 +640,6 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		cachingChainingMetadataResolver.addMetadataResolver(
 			new MockMetadataResolver(false));
-
-		ReflectionTestUtil.setFieldValue(
-			_webSsoProfileImpl, "metadataManager", metadataManagerImpl);
 
 		Mockito.when(
 			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(

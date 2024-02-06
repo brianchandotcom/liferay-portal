@@ -35,7 +35,6 @@ import com.liferay.saml.opensaml.integration.internal.credential.KeyStoreCredent
 import com.liferay.saml.opensaml.integration.internal.identifier.SamlIdentifierGeneratorStrategyFactory;
 import com.liferay.saml.opensaml.integration.internal.metadata.KeyStoreLocalEntityManager;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataGeneratorUtil;
-import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.servlet.profile.IdentifierGenerationStrategyFactory;
 import com.liferay.saml.opensaml.integration.internal.transport.HttpClientFactory;
 import com.liferay.saml.opensaml.integration.internal.util.ConfigurationServiceBootstrapUtil;
@@ -317,7 +316,6 @@ public abstract class BaseSamlTestCase {
 		identifierGenerationStrategyFactory;
 	protected List<String> identifiers = new ArrayList<>();
 	protected KeyStoreLocalEntityManager keyStoreLocalEntityManager;
-	protected MetadataManagerImpl metadataManagerImpl;
 	protected ParserPool parserPool;
 	protected Portal portal;
 	protected SamlBindingProvider samlBindingProvider;
@@ -638,21 +636,6 @@ public abstract class BaseSamlTestCase {
 			getMockPortletService(
 				SamlSpIdpConnectionLocalServiceUtil.class,
 				SamlSpIdpConnectionLocalService.class));
-
-		metadataManagerImpl = new MetadataManagerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			metadataManagerImpl, "_credentialResolver", credentialResolver);
-
-		ReflectionTestUtil.setFieldValue(
-			metadataManagerImpl, "_localEntityManager",
-			keyStoreLocalEntityManager);
-
-		ReflectionTestUtil.setFieldValue(
-			metadataManagerImpl, "_portal", portal);
-		ReflectionTestUtil.setFieldValue(
-			metadataManagerImpl, "_samlProviderConfigurationHelper",
-			samlProviderConfigurationHelper);
 	}
 
 	private void _setupParserPool() {

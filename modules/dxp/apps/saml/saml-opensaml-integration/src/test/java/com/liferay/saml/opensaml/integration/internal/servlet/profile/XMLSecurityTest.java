@@ -112,8 +112,6 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "localEntityManager",
 			keyStoreLocalEntityManager);
-		ReflectionTestUtil.setFieldValue(
-			_webSsoProfileImpl, "metadataManager", metadataManagerImpl);
 		ReflectionTestUtil.setFieldValue(_webSsoProfileImpl, "portal", portal);
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "_relayStateHelper", _relayStateHelperImpl);

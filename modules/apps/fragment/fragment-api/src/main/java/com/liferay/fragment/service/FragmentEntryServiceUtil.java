@@ -319,18 +319,6 @@ public class FragmentEntryServiceUtil {
 	}
 
 	public static FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, long fragmentCollectionId, String name,
-			String css, String html, String js, boolean cacheable,
-			String configuration, String icon, long previewFileEntryId,
-			int status)
-		throws PortalException {
-
-		return getService().updateFragmentEntry(
-			fragmentEntryId, fragmentCollectionId, name, css, html, js,
-			cacheable, configuration, icon, previewFileEntryId, status);
-	}
-
-	public static FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name)
 		throws PortalException {
 

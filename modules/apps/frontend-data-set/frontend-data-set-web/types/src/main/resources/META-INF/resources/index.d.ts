@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {TRenderer} from './FrontendDataSetContext';
+/// <reference types="react" />
 
-export function FrontendDataSet({
+import {TRenderer} from './FrontendDataSetContext';
+export declare function FrontendDataSet({
 	actionParameterName,
 	activeViewSettings,
 	apiURL,
@@ -46,13 +47,11 @@ export function FrontendDataSet({
 	style,
 	views,
 }: IFrontendDataSetProps): JSX.Element;
-
-export function DateTimeRenderer({
+export declare function DateTimeRenderer({
 	options,
 	value,
 }: DateTimeRendererProps): string;
-
-type DateTimeRendererProps = {
+declare type DateTimeRendererProps = {
 	options?: {
 		format: {
 			day?: string;
@@ -66,17 +65,14 @@ type DateTimeRendererProps = {
 	};
 	value: string;
 };
-
-type TDelta = {
+declare type TDelta = {
 	href?: string;
 	label: number;
 };
-
 export interface IInlineEditingSettings {
 	alwaysOn: boolean;
 	defaultBodyContent: object;
 }
-
 export interface IItemsActions {
 	data?: {
 		confirmationMessage?: string;
@@ -103,13 +99,11 @@ export interface IItemsActions {
 		| 'event';
 	type?: string;
 }
-
-type TSorting = {
+declare type TSorting = {
 	direction?: 'asc' | 'desc';
 	key?: string;
 };
-
-type TViews = {
+declare type TViews = {
 	component?: any;
 	contentRenderer?: string;
 	contentRendererClientExtension?: boolean;
@@ -119,7 +113,6 @@ type TViews = {
 	schema?: object;
 	thumbnail?: string;
 };
-
 export interface IFrontendDataSetProps {
 	actionParameterName?: string;
 	activeViewSettings?: string;
@@ -132,7 +125,9 @@ export interface IFrontendDataSetProps {
 	};
 	currentURL?: string;
 	customDataRenderers?: any;
-	customRenderers?: {tableCell: Array<TRenderer>};
+	customRenderers?: {
+		tableCell: Array<TRenderer>;
+	};
 	customViews?: string;
 	customViewsEnabled?: boolean;
 	emptyState?: {
@@ -182,7 +177,6 @@ export interface IFrontendDataSetProps {
 	views: TViews[];
 	viewsTitle?: string;
 }
-
 export {
 	IClientExtensionRenderer,
 	IInternalRenderer,

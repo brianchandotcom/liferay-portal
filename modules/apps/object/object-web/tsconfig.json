@@ -14,7 +14,7 @@
 		"outDir": "./types",
 		"paths": {
 			"@liferay/frontend-data-set-web": [
-				"../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/index.d.ts"
+				"../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"@liferay/frontend-js-codemirror-web": [
 				"../../frontend-js/frontend-js-codemirror-web/src/main/resources/META-INF/resources/js/index.ts"

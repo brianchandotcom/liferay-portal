@@ -99,12 +99,10 @@ public class QueueListener {
 				String accountName = accountJSONObject.getString("name");
 
 				if (_log.isInfoEnabled()) {
-					StringBundler sb = new StringBundler(2);
-
-					sb.append("Account: ");
-					sb.append(accountName);
-
-					_log.info(sb.toString());
+					_log.info(
+						StringBundler.concat(
+							"Received Account: ", accountName,
+							", from message"));
 				}
 
 				if (salesforceAccountKey == null) {
@@ -164,7 +162,8 @@ public class QueueListener {
 					}
 
 					if (proxyAccountJSONObject.has("region")) {
-						accountRegion = proxyAccountJSONObject.getString("region");
+						accountRegion = proxyAccountJSONObject.getString(
+							"region");
 					}
 				}
 				catch (Exception exception) {
@@ -181,16 +180,11 @@ public class QueueListener {
 							salesforceAccountKey));
 
 					if (_log.isInfoEnabled()) {
-						StringBundler sb = new StringBundler(6);
-
-						sb.append("Account: ");
-						sb.append(accountName);
-						sb.append(" (");
-						sb.append(salesforceAccountKey);
-						sb.append(") was UPDATED: ");
-						sb.append(partnerAccountJSONObject);
-
-						_log.info(sb.toString());
+						_log.info(
+							StringBundler.concat(
+								"Account: ", accountName, " (",
+								salesforceAccountKey, ") was UPDATED: ",
+								partnerAccountJSONObject));
 					}
 
 					if (!accountRegion.isEmpty()) {
@@ -236,15 +230,9 @@ public class QueueListener {
 								salesforceAccountKey);
 
 					if (_log.isInfoEnabled()) {
-						StringBundler sb = new StringBundler(5);
-
-						sb.append("Account: ");
-						sb.append(accountName);
-						sb.append(" (");
-						sb.append(salesforceAccountKey);
-						sb.append(") was DELETED");
-
-						_log.info(sb.toString());
+						StringBundler.concat(
+							"Account: ", accountName, " (",
+							salesforceAccountKey, ") was DELETED");
 					}
 				}
 				catch (Exception exception) {
@@ -290,16 +278,10 @@ public class QueueListener {
 						regionID));
 
 				if (_log.isInfoEnabled()) {
-					StringBundler sb = new StringBundler(6);
-
-					sb.append("Account: ");
-					sb.append(accountName);
-					sb.append(" (");
-					sb.append(accountExternalReferenceCode);
-					sb.append(") was assigned to: ");
-					sb.append(accountRegion);
-
-					_log.info(sb.toString());
+					StringBundler.concat(
+						"Account: ", accountName, " (",
+						accountExternalReferenceCode, ") was assigned to: ",
+						accountRegion);
 				}
 			}
 			catch (Exception exception) {
@@ -321,16 +303,10 @@ public class QueueListener {
 						"/", regionID, "/by-external-reference-code"));
 
 				if (_log.isInfoEnabled()) {
-					StringBundler sb = new StringBundler(6);
-
-					sb.append("Account: ");
-					sb.append(accountName);
-					sb.append(" (");
-					sb.append(accountExternalReferenceCode);
-					sb.append(") moved to: ");
-					sb.append(accountRegion);
-
-					_log.info(sb.toString());
+					StringBundler.concat(
+						"Account: ", accountName, " (",
+						accountExternalReferenceCode, ") moved to: ",
+						accountRegion);
 				}
 			}
 			catch (Exception exception) {
@@ -355,6 +331,23 @@ public class QueueListener {
 		).bodyToMono(
 			Void.class
 		).block();
+	}
+
+	private JSONObject _get(Function<UriBuilder, URI> uriFunction) {
+		return new JSONObject(
+			_getWebClient(
+			).get(
+			).uri(
+				uriBuilder -> uriFunction.apply(uriBuilder)
+			).accept(
+				MediaType.APPLICATION_JSON
+			).header(
+				HttpHeaders.AUTHORIZATION,
+				"Bearer " + _oAuth2AccessToken.getTokenValue()
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
 	}
 
 	private String _getAccountCountryISOCode(JSONObject accountJSONObject) {
@@ -479,7 +472,7 @@ public class QueueListener {
 			return null;
 		}
 
-		boolean isPartner = false;
+		boolean partner = false;
 
 		for (int i = 0; i < entitlementsJSONArray.length(); i++) {
 			JSONObject entitlementJSONObject =
@@ -488,13 +481,13 @@ public class QueueListener {
 			if (StringUtil.equalsIgnoreCase(
 					entitlementJSONObject.getString("name"), "Partner")) {
 
-						isPartner = true;
+				partner = true;
 
 				break;
 			}
 		}
 
-		if (!isPartner) {
+		if (!partner) {
 			return null;
 		}
 
@@ -511,32 +504,15 @@ public class QueueListener {
 
 			if (StringUtil.equalsIgnoreCase(
 					externalLinkJSONObject.getString("entityName"),
-					"account") && StringUtil.equalsIgnoreCase(
-						externalLinkJSONObject.getString("domain"),
-						"salesforce")) {
+					"account") &&
+				StringUtil.equalsIgnoreCase(
+					externalLinkJSONObject.getString("domain"), "salesforce")) {
 
 				return externalLinkJSONObject.getString("entityId");
 			}
 		}
 
 		return null;
-	}
-
-	private JSONObject _get(Function<UriBuilder, URI> uriFunction) {
-		return new JSONObject(
-			_getWebClient(
-			).get(
-			).uri(
-				uriBuilder -> uriFunction.apply(uriBuilder)
-			).accept(
-				MediaType.APPLICATION_JSON
-			).header(
-				HttpHeaders.AUTHORIZATION,
-				"Bearer " + _oAuth2AccessToken.getTokenValue()
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block());
 	}
 
 	private WebClient _getWebClient() {

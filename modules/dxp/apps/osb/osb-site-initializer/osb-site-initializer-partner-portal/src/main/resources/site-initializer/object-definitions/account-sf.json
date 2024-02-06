@@ -1,0 +1,28 @@
+{
+	"externalReferenceCode": "Account",
+	"label": {
+		"en_US": "Account SF"
+	},
+	"name": "AccountSF",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Name",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Accounts SF"
+	},
+	"scope": "company",
+	"storageType": "salesforce"
+}

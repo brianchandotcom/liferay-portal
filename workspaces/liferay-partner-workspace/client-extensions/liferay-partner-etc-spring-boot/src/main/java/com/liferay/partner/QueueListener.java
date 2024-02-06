@@ -107,8 +107,8 @@ public class QueueListener {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Received Account: ", accountName, ", from message",
-							deliveryTag));
+							"Received Account: ", accountName,
+							", from message ", deliveryTag));
 				}
 
 				String accountCountryISOCode = _getAccountcountryISOCode(
@@ -142,12 +142,13 @@ public class QueueListener {
 						String partnerLevelType =
 							partnerLevelTypeJSONObject.getString("key");
 
-						Map<String, String> partnerLevelERCs =
-							_getPartnerLevelERCs();
+						Map<String, String> partnerLevelExternalReferenceCodes =
+							_getPartnerLevelExternalReferenceCodes();
 
 						partnerAccountJSONObject.put(
 							"r_prtLvlToAcc_c_partnerLevelERC",
-							partnerLevelERCs.get(partnerLevelType));
+							partnerLevelExternalReferenceCodes.get(
+								partnerLevelType));
 					}
 
 					if (proxyAccountJSONObject.has("currency")) {
@@ -176,7 +177,7 @@ public class QueueListener {
 				}
 
 				try {
-					_put(
+					String updatedAccount = _put(
 						partnerAccountJSONObject.toString(),
 						StringBundler.concat(
 							"/o/headless-admin-user/v1.0/accounts",
@@ -191,14 +192,9 @@ public class QueueListener {
 								partnerAccountJSONObject));
 					}
 
-					if (!accountRegion.isEmpty()) {
-						JSONObject updatedAccountJSONObject = _get(
-							uriBuilder -> uriBuilder.path(
-								StringBundler.concat(
-									"/o/headless-admin-user/v1.0/accounts",
-									"/by-external-reference-code/",
-									salesforceAccountKey)
-							).build());
+					if (accountRegion != null) {
+						JSONObject updatedAccountJSONObject = new JSONObject(
+							updatedAccount);
 
 						_assignAccountToRegion(
 							updatedAccountJSONObject, accountRegion);
@@ -391,7 +387,7 @@ public class QueueListener {
 		return countryISOCode;
 	}
 
-	private Map<String, String> _getPartnerLevelERCs() {
+	private Map<String, String> _getPartnerLevelExternalReferenceCodes() {
 		JSONObject partnerLevelResponseJSONObject = _get(
 			uriBuilder -> uriBuilder.path(
 				"/o/c/partnerlevels/"
@@ -399,15 +395,16 @@ public class QueueListener {
 				"pageSize", "-1"
 			).build());
 
-		Map<String, String> partnerLevelERCs = new HashMap<>();
+		Map<String, String> partnerLevelExternalReferenceCodes =
+			new HashMap<>();
 
 		if (partnerLevelResponseJSONObject.getInt("totalCount") > 0) {
 			JSONArray partnerLevelJSONArray =
 				partnerLevelResponseJSONObject.getJSONArray("items");
 
-			for (int r = 0; r < partnerLevelJSONArray.length(); r++) {
+			for (int i = 0; i < partnerLevelJSONArray.length(); i++) {
 				JSONObject partnerLevelJSONObject =
-					partnerLevelJSONArray.getJSONObject(r);
+					partnerLevelJSONArray.getJSONObject(i);
 
 				JSONObject partnerLevelTypeJSONObject =
 					partnerLevelJSONObject.getJSONObject("partnerLevelType");
@@ -415,14 +412,15 @@ public class QueueListener {
 				String partnerLevelType = partnerLevelTypeJSONObject.optString(
 					"key");
 
-				String partnerLevelERC = partnerLevelJSONObject.getString(
-					"externalReferenceCode");
+				String partnerLevelExternalReferenceCode =
+					partnerLevelJSONObject.getString("externalReferenceCode");
 
-				partnerLevelERCs.put(partnerLevelType, partnerLevelERC);
+				partnerLevelExternalReferenceCodes.put(
+					partnerLevelType, partnerLevelExternalReferenceCode);
 			}
 		}
 
-		return partnerLevelERCs;
+		return partnerLevelExternalReferenceCodes;
 	}
 
 	private Map<String, Long> _getRegionsIDs() {
@@ -432,8 +430,6 @@ public class QueueListener {
 			uriBuilder -> uriBuilder.path(
 				"/o/headless-admin-user/v1.0/organizations" +
 					"/by-external-reference-code/PRM-ORG-GLOBAL"
-			).queryParam(
-				"pageSize", "-1"
 			).build());
 
 		Long globalOrganizationId =
@@ -451,9 +447,9 @@ public class QueueListener {
 			JSONArray organizationsJSONArray =
 				organizationsResponseJSONObject.getJSONArray("items");
 
-			for (int o = 0; o < organizationsJSONArray.length(); o++) {
+			for (int i = 0; i < organizationsJSONArray.length(); i++) {
 				JSONObject organizationJSONObject =
-					organizationsJSONArray.getJSONObject(o);
+					organizationsJSONArray.getJSONObject(i);
 
 				String organizationName = organizationJSONObject.getString(
 					"name");
@@ -504,11 +500,13 @@ public class QueueListener {
 			JSONObject externalLinkJSONObject =
 				externalLinksJSONArray.getJSONObject(i);
 
-			if (StringUtil.equalsIgnoreCase(
-					externalLinkJSONObject.getString("entityName"),
-					"account") &&
+			if ((StringUtil.equalsIgnoreCase(
+					externalLinkJSONObject.getString("domain"), "salesforce") ||
+				 StringUtil.equalsIgnoreCase(
+					 externalLinkJSONObject.getString("domain"), "dossiera")) &&
 				StringUtil.equalsIgnoreCase(
-					externalLinkJSONObject.getString("domain"), "salesforce")) {
+					externalLinkJSONObject.getString("entityName"),
+					"account")) {
 
 				return externalLinkJSONObject.getString("entityId");
 			}
@@ -532,8 +530,8 @@ public class QueueListener {
 		).build();
 	}
 
-	private void _patch(String bodyValue, String path) {
-		_getWebClient(
+	private String _patch(String bodyValue, String path) {
+		return _getWebClient(
 		).patch(
 		).uri(
 			uriBuilder -> uriBuilder.path(
@@ -550,12 +548,12 @@ public class QueueListener {
 			bodyValue
 		).retrieve(
 		).bodyToMono(
-			Void.class
+			String.class
 		).block();
 	}
 
-	private void _post(String bodyValue, String path) {
-		_getWebClient(
+	private String _post(String bodyValue, String path) {
+		return _getWebClient(
 		).post(
 		).uri(
 			uriBuilder -> uriBuilder.path(
@@ -572,12 +570,12 @@ public class QueueListener {
 			bodyValue
 		).retrieve(
 		).bodyToMono(
-			Void.class
+			String.class
 		).block();
 	}
 
-	private void _put(String bodyValue, String path) {
-		_getWebClient(
+	private String _put(String bodyValue, String path) {
+		return _getWebClient(
 		).put(
 		).uri(
 			uriBuilder -> uriBuilder.path(
@@ -594,7 +592,7 @@ public class QueueListener {
 			bodyValue
 		).retrieve(
 		).bodyToMono(
-			Void.class
+			String.class
 		).block();
 	}
 

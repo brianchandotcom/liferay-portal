@@ -25,6 +25,18 @@ public class UpstreamPortalTopLevelBuild
 	}
 
 	@Override
+	public String getBranchName() {
+		String portalUpstreamBranchName = getParameterValue(
+			"PORTAL_UPSTREAM_BRANCH_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
+			return portalUpstreamBranchName;
+		}
+
+		return super.getBranchName();
+	}
+
+	@Override
 	public PortalWorkspace getPortalWorkspace() {
 		Workspace workspace = getWorkspace();
 
@@ -182,7 +194,9 @@ public class UpstreamPortalTopLevelBuild
 	private String _getPortalPrivateGitHubURL() {
 		String branchName = getBranchName();
 
-		if (branchName.startsWith("ee-") || branchName.endsWith("-private")) {
+		if (branchName.startsWith("ee-") || branchName.endsWith("-private") ||
+			branchName.startsWith("release-")) {
+
 			return null;
 		}
 

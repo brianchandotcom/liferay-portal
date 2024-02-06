@@ -1,46 +1,6 @@
 {
 	"components": {
 		"schemas": {
-			"ContainerSchemaName": {
-				"description": "description",
-				"properties": {
-					"container1": {
-						"description": "description",
-						"type": "object"
-					},
-					"container2": {
-						"description": "description",
-						"properties": {
-							"container3": {
-								"description": "description",
-								"type": "object"
-							},
-							"containerTextProperty": {
-								"description": "description",
-								"type": "string"
-							}
-						},
-						"type": "object"
-					},
-					"container4": {
-						"description": "description",
-						"properties": {
-							"container5": {
-								"description": "description",
-								"properties": {
-									"containerLongTextProperty": {
-										"description": "description",
-										"type": "string"
-									}
-								},
-								"type": "object"
-							}
-						},
-						"type": "object"
-					}
-				},
-				"type": "object"
-			},
 			"Facet": {
 				"properties": {
 					"facetCriteria": {
@@ -162,6 +122,46 @@
 				"xml": {
 					"name": "ListEntry"
 				}
+			},
+			"ObjectSchemaName": {
+				"description": "description",
+				"properties": {
+					"objectProperty1": {
+						"description": "description",
+						"type": "object"
+					},
+					"objectProperty2": {
+						"description": "description",
+						"properties": {
+							"objectProperty3": {
+								"description": "description",
+								"type": "object"
+							},
+							"textProperty": {
+								"description": "description",
+								"type": "string"
+							}
+						},
+						"type": "object"
+					},
+					"objectProperty4": {
+						"description": "description",
+						"properties": {
+							"objectProperty5": {
+								"description": "description",
+								"properties": {
+									"longTextProperty": {
+										"description": "description",
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						},
+						"type": "object"
+					}
+				},
+				"type": "object"
 			},
 			"PageSchemaName": {
 				"properties": {

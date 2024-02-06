@@ -479,7 +479,7 @@ public class QueueListener {
 			return null;
 		}
 
-		boolean partner = false;
+		boolean isPartner = false;
 
 		for (int i = 0; i < entitlementsJSONArray.length(); i++) {
 			JSONObject entitlementJSONObject =
@@ -488,13 +488,13 @@ public class QueueListener {
 			if (StringUtil.equalsIgnoreCase(
 					entitlementJSONObject.getString("name"), "Partner")) {
 
-				partner = true;
+						isPartner = true;
 
 				break;
 			}
 		}
 
-		if (!partner) {
+		if (!isPartner) {
 			return null;
 		}
 
@@ -511,7 +511,9 @@ public class QueueListener {
 
 			if (StringUtil.equalsIgnoreCase(
 					externalLinkJSONObject.getString("entityName"),
-					"account")) {
+					"account") && StringUtil.equalsIgnoreCase(
+						externalLinkJSONObject.getString("domain"),
+						"salesforce")) {
 
 				return externalLinkJSONObject.getString("entityId");
 			}

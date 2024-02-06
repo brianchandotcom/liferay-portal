@@ -7,6 +7,7 @@ package com.liferay.petra.io;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -111,6 +112,25 @@ public class StreamUtilTest {
 
 		Assert.assertArrayEquals(
 			bytes, StreamUtil.toByteArray(unsyncByteArrayInputStream));
+
+		IOException ioException1 = new IOException();
+
+		try {
+			StreamUtil.toByteArray(
+				new UnsyncByteArrayInputStream(bytes) {
+
+					@Override
+					public int read(byte[] bytes) {
+						return ReflectionUtil.throwException(ioException1);
+					}
+
+				});
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
+		}
 	}
 
 	@Test
@@ -308,6 +328,29 @@ public class StreamUtilTest {
 		}
 		finally {
 			System.clearProperty(StreamUtil.class.getName() + ".force.tio");
+		}
+	}
+
+	@Test
+	public void testTransferIOException() throws IOException {
+		IOException ioException1 = new IOException();
+
+		try {
+			StreamUtil.transfer(
+				new UnsyncByteArrayInputStream(new byte[0]) {
+
+					@Override
+					public int read(byte[] bytes) {
+						return ReflectionUtil.throwException(ioException1);
+					}
+
+				},
+				new UnsyncByteArrayOutputStream());
+
+			Assert.fail();
+		}
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
 		}
 	}
 

@@ -49,6 +49,11 @@ export class PageEditorPage {
 		await field.blur();
 	}
 
+	async deleteFragment(fragmentId: string) {
+		await this.selectFragment(fragmentId);
+		await this.page.keyboard.press('Backspace');
+	}
+
 	async goToConfigurationTab(tab: ConfigurationTab) {
 		await this.page.getByRole('tab', {name: tab}).click();
 	}

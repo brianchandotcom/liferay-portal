@@ -269,6 +269,28 @@ public class LoginUtil {
 			body, serviceContext);
 	}
 
+	public static void sendPasswordLockout(
+			ActionRequest actionRequest, String fromName, String fromAddress,
+			String toAddress, String subject, String body)
+		throws Exception {
+
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(actionRequest);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Company company = themeDisplay.getCompany();
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			User.class.getName(), actionRequest);
+
+		UserLocalServiceUtil.sendPasswordLockout(
+			company.getCompanyId(), toAddress, fromName, fromAddress, subject,
+			body, serviceContext);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(LoginUtil.class);
 
 }

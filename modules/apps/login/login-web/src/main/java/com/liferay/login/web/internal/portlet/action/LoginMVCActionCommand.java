@@ -8,11 +8,13 @@ package com.liferay.login.web.internal.portlet.action;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.login.web.internal.portlet.util.LoginUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.CookieNotSupportedException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
+import com.liferay.portal.kernel.exception.UserActiveException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserIdException;
 import com.liferay.portal.kernel.exception.UserLockoutException;
@@ -20,7 +22,10 @@ import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -28,8 +33,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.AuthException;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -44,6 +51,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
@@ -124,6 +132,32 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 					SessionErrors.add(actionRequest, exception.getClass());
 				}
+			}
+			else if (exception instanceof
+						UserLockoutException.PasswordPolicyLockout) {
+
+				Company company = themeDisplay.getCompany();
+
+				if (!company.isSendPasswordResetLink()) {
+					User user = _getUser(actionRequest);
+
+					PortletPreferences portletPreferences =
+						actionRequest.getPreferences();
+
+					String emailFromName = portletPreferences.getValue(
+						"emailFromName", null);
+					String emailFromAddress = portletPreferences.getValue(
+						"emailFromAddress", null);
+
+					String emailToAddress = user.getEmailAddress();
+
+					LoginUtil.sendPasswordLockout(
+						actionRequest, emailFromName, emailFromAddress,
+						emailToAddress, null, null);
+				}
+
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 			}
 			else if (exception instanceof CompanyMaxUsersException ||
 					 exception instanceof CookieNotSupportedException ||
@@ -243,6 +277,53 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private User _getUser(ActionRequest actionRequest) throws Exception {
+		User user = null;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletPreferences portletPreferences = actionRequest.getPreferences();
+
+		String authType = portletPreferences.getValue("authType", null);
+
+		if (Validator.isNull(authType)) {
+			Company company = themeDisplay.getCompany();
+
+			authType = company.getAuthType();
+		}
+
+		PortletSession portletSession = actionRequest.getPortletSession();
+
+		String login = (String)portletSession.getAttribute(
+			WebKeys.FORGOT_PASSWORD_REMINDER_USER_EMAIL_ADDRESS);
+
+		if (Validator.isNull(login)) {
+			login = ParamUtil.getString(actionRequest, "login");
+		}
+
+		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+			user = _userLocalService.getUserByEmailAddress(
+				themeDisplay.getCompanyId(), login);
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+			user = _userLocalService.getUserByScreenName(
+				themeDisplay.getCompanyId(), login);
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+			user = _userLocalService.getUserById(GetterUtil.getLong(login));
+		}
+		else {
+			throw new NoSuchUserException("User does not exist");
+		}
+
+		if (!user.isActive()) {
+			throw new UserActiveException("Inactive user " + user.getUuid());
+		}
+
+		return user;
+	}
+
 	private void _postProcessAuthFailure(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -309,5 +390,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

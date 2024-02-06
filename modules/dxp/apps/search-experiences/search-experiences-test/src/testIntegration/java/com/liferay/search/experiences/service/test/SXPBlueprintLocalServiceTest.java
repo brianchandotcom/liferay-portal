@@ -80,7 +80,7 @@ public class SXPBlueprintLocalServiceTest {
 
 		// Duplicate external reference code in a different company
 
-		Company company = CompanyTestUtil.addCompany(true);
+		Company company = CompanyTestUtil.addCompany();
 
 		User user = UserTestUtil.addUser(company);
 

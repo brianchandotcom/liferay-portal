@@ -7,9 +7,15 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+long preferencesCompanyId = CompanyConstants.SYSTEM;
+
+Function<String, String> defaultValueFunction = key -> PropsUtil.get(key);
+%>
+
 <div class="sheet">
 	<div class="panel-group panel-group-flush">
-		<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>" />
+		<%@ include file="/mail_fields.jspf" %>
 
 		<aui:button-row>
 			<aui:button cssClass="save-server-button" data-cmd="updateMail" primary="<%= true %>" value="save" />

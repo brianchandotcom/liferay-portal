@@ -1,29 +1,18 @@
 <%--
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
-<%@ include file="/init.jsp" %>
-
 <%
-long companyId = ParamUtil.getLong(request, "preferencesCompanyId");
+PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(preferencesCompanyId);
 
-PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(companyId);
-
-Function<String, String> preferenceFunction = null;
-
-if (companyId > 0) {
-	preferenceFunction = key -> companyPortletPreferences.getValue(key, StringPool.BLANK);
-}
-else {
-	preferenceFunction = key -> companyPortletPreferences.getValue(key, PropsUtil.get(key));
-}
+Function<String, String> preferenceFunction = key -> companyPortletPreferences.getValue(key, defaultValueFunction.apply(key));
 %>
 
 <aui:fieldset>
-	<aui:input name="preferencesCompanyId" type="hidden" value="<%= companyId %>" />
+	<aui:input name="preferencesCompanyId" type="hidden" value="<%= preferencesCompanyId %>" />
 
 	<aui:input label="enable-pop-server-notifications" name="popServerNotificationsEnabled" type="checkbox" value="<%= preferenceFunction.apply(PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED) %>" />
 

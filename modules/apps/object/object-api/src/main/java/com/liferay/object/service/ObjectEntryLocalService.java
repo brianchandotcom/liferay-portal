@@ -348,12 +348,12 @@ public interface ObjectEntryLocalService
 	public int getObjectEntriesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getObjectEntriesCount(long groupId, long objectDefinitionId);
+	public long getObjectEntriesCount(
+			long userId, Date createDate, long objectDefinitionId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getObjectEntriesCount(
-			long userId, long objectDefinitionId, Date startDate)
-		throws PortalException;
+	public int getObjectEntriesCount(long groupId, long objectDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getObjectEntriesCount(

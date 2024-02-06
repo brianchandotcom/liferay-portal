@@ -37,7 +37,7 @@ export class ActionsPage {
 			nameInput: page.getByPlaceholder('Action Name'),
 			saveButton: page.getByRole('button', {name: 'Save'}),
 			selectIconModal: {
-				iconsList: page.locator('li'),
+				iconsList: page.getByRole('listitem'),
 				searchInput: page.getByPlaceholder('Search'),
 			},
 			typeSelect: page.getByLabel('TypeRequired', {exact: true}),
@@ -51,7 +51,7 @@ export class ActionsPage {
 		await this.viewsPage.goto();
 		await this.viewsPage.gotoSampleDataSetView();
 
-		this.page.getByRole('button', {name: 'Actions'}).first().click();
+		await this.page.getByRole('button', {name: 'Actions'}).first().click();
 	}
 
 	async createCreationAction({
@@ -69,25 +69,7 @@ export class ActionsPage {
 
 		await this.newActionButton.click();
 
-		await this.newActionForm.nameInput.fill(name);
-		await this.newActionForm.addIconButton.click();
-
-		await this.newActionForm.selectIconModal.searchInput.fill(icon);
-		await this.newActionForm.selectIconModal.iconsList
-			.filter({hasText: icon})
-			.click();
-
-		await this.newActionForm.typeSelect.selectOption(type);
-
-		if (type === 'modal' || type === 'sidePanel') {
-			await this.page.getByPlaceholder('add-here-the-title').click();
-			await this.page
-				.getByPlaceholder('add-here-the-title')
-				.fill(`${name} Title`);
-		}
-
-		await this.newActionForm.urlText.fill(url);
-		await this.newActionForm.saveButton.click();
+		await this.createAction({icon, name, type, url});
 	}
 
 	async createItemAction({
@@ -99,18 +81,32 @@ export class ActionsPage {
 		icon: string;
 		name: string;
 		type: ItemActionTypes;
-		url: string;
+		url?: string;
 	}) {
 		await this.itemActionsTab.click();
 
 		await this.newActionButton.click();
 
+		await this.createAction({icon, name, type, url});
+	}
+
+	private async createAction({
+		icon,
+		name,
+		type,
+		url,
+	}: {
+		icon: string;
+		name: string;
+		type: ItemActionTypes;
+		url?: string;
+	}) {
 		await this.newActionForm.nameInput.fill(name);
 		await this.newActionForm.addIconButton.click();
 
 		await this.newActionForm.selectIconModal.searchInput.fill(icon);
 		await this.newActionForm.selectIconModal.iconsList
-			.filter({hasText: icon})
+			.getByText(icon, {exact: true})
 			.click();
 
 		await this.newActionForm.typeSelect.selectOption(type);

@@ -33,21 +33,42 @@ export class PageEditorPage {
 		);
 	}
 
+	async isActive(fragmentId: string, isDesktop = true) {
+		const topper = isDesktop
+			? this.page.locator(
+					`.lfr-layout-structure-item-topper-${fragmentId}`
+			  )
+			: this.page
+					.frameLocator('.page-editor__global-context-iframe')
+					.locator(`.lfr-layout-structure-item-topper-${fragmentId}`);
+
+		return await topper.evaluate((element) =>
+			element.classList.contains('active')
+		);
+	}
+
 	async selectFragment(fragmentId: string, isDesktop = true) {
-		if (isDesktop) {
-			await this.page
-				.locator(`.lfr-layout-structure-item-${fragmentId}`)
-				.click();
+		if (await this.isActive(fragmentId, isDesktop)) {
+			return;
 		}
-		else {
-			await this.page
-				.frameLocator('.page-editor__global-context-iframe')
-				.locator(`.lfr-layout-structure-item-${fragmentId}`)
-				.click();
-		}
+
+		await this.getFragment(fragmentId, isDesktop).click();
 	}
 
 	async switchViewport(viewport: Viewport) {
 		await this.page.getByLabel(viewport).click();
+	}
+
+	getFragment(fragmentId: string, isDesktop = true) {
+		if (isDesktop) {
+			return this.page.locator(
+				`.lfr-layout-structure-item-${fragmentId}`
+			);
+		}
+		else {
+			return this.page
+				.frameLocator('.page-editor__global-context-iframe')
+				.locator(`.lfr-layout-structure-item-${fragmentId}`);
+		}
 	}
 }

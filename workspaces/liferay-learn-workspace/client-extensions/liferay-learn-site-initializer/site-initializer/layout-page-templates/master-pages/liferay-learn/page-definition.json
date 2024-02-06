@@ -110,7 +110,7 @@
 										"siteKey": "Guest"
 									},
 									"fragmentConfig": {
-										"iconBackgroundColor": "var(--color-state-success-darken-1, #3B892F)",
+										"iconBackgroundColor": "var(--color-accent-4, #19AB4F)",
 										"iconColor": "var(--color-neutral-0, #FFFFFF)",
 										"menuItemUrl": "https://help.liferay.com/hc/"
 									},
@@ -139,7 +139,7 @@
 										"siteKey": "Guest"
 									},
 									"fragmentConfig": {
-										"iconBackgroundColor": "var(--color-brand-primary-lighten-1, #377CFF)",
+										"iconBackgroundColor": "var(--color-accent-5, #503690)",
 										"iconColor": "var(--color-neutral-0, #FFFFFF)",
 										"menuItemUrl": "https://liferay.dev/"
 									},
@@ -168,7 +168,7 @@
 										"siteKey": "Guest"
 									},
 									"fragmentConfig": {
-										"iconBackgroundColor": "var(--color-state-info-lighten-2, #E6EBF5)",
+										"iconBackgroundColor": "var(--color-accent-1, #1AA0E8)",
 										"iconColor": "var(--color-neutral-0, #FFFFFF)",
 										"menuItemUrl": "https://marketplace.liferay.com/"
 									},

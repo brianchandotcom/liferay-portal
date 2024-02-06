@@ -20,9 +20,13 @@ import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBindingProvider;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
+import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
+import com.liferay.saml.opensaml.integration.internal.provider.DBMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.util.ConfigurationServiceBootstrapUtil;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.persistence.model.SamlSpSession;
+import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
+import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlSpSessionLocalService;
 import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
@@ -42,6 +46,7 @@ import net.shibboleth.utilities.java.support.component.ComponentInitializationEx
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 import net.shibboleth.utilities.java.support.resolver.ResolverException;
 import net.shibboleth.utilities.java.support.security.IdentifierGenerationStrategy;
+import net.shibboleth.utilities.java.support.xml.ParserPool;
 
 import org.opensaml.core.criterion.EntityIdCriterion;
 import org.opensaml.core.xml.XMLObject;
@@ -95,6 +100,7 @@ import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
 import org.opensaml.xmlsec.signature.support.impl.ChainingSignatureTrustEngine;
 import org.opensaml.xmlsec.signature.support.impl.ExplicitKeySignatureTrustEngine;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -152,8 +158,7 @@ public abstract class BaseProfile {
 			inboundMessageContext.getSubcontext(
 				SAMLPeerEntityContext.class, true);
 
-		MetadataResolver metadataResolver =
-			metadataManager.getMetadataResolver();
+		MetadataResolver metadataResolver = getMetadataResolver();
 
 		EntityDescriptor entityDescriptor = metadataResolver.resolveSingle(
 			new CriteriaSet(
@@ -315,8 +320,7 @@ public abstract class BaseProfile {
 
 		samlPeerEntityContext.setEntityId(peerEntityId);
 
-		MetadataResolver metadataResolver =
-			metadataManager.getMetadataResolver();
+		MetadataResolver metadataResolver = getMetadataResolver();
 
 		EntityDescriptor entityDescriptor = metadataResolver.resolveSingle(
 			new CriteriaSet(new EntityIdCriterion(peerEntityId)));
@@ -345,6 +349,11 @@ public abstract class BaseProfile {
 		samlPeerMetadataContext.setRoleDescriptor(roleDescriptor);
 
 		return messageContext;
+	}
+
+	public MetadataResolver getMetadataResolver() {
+		return _cachingChainingMetadataResolverDCLSingleton.getSingleton(
+			this::_createCachingChainingMetadataResolver);
 	}
 
 	public SamlSpSession getSamlSpSession(
@@ -505,6 +514,10 @@ public abstract class BaseProfile {
 		}
 	}
 
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
 	protected void addNonpersistentCookie(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String cookieName,
@@ -521,6 +534,9 @@ public abstract class BaseProfile {
 	}
 
 	protected void deactivate() {
+		_cachingChainingMetadataResolverDCLSingleton.destroy(
+			CachingChainingMetadataResolver::destroy);
+
 		_predicateRoleDescriptorResolverDCLSingleton.destroy(
 			PredicateRoleDescriptorResolver::destroy);
 	}
@@ -575,10 +591,46 @@ public abstract class BaseProfile {
 	protected SamlBindingProvider samlBindingProvider;
 
 	@Reference
+	protected SamlIdpSpConnectionLocalService samlIdpSpConnectionLocalService;
+
+	@Reference
 	protected SamlProviderConfigurationHelper samlProviderConfigurationHelper;
 
 	@Reference
+	protected SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService;
+
+	@Reference
 	protected SamlSpSessionLocalService samlSpSessionLocalService;
+
+	private CachingChainingMetadataResolver
+		_createCachingChainingMetadataResolver() {
+
+		CachingChainingMetadataResolver cachingChainingMetadataResolver =
+			new CachingChainingMetadataResolver(_bundleContext);
+
+		ParserPool parserPool = ParserPoolUtil.getParserPool();
+
+		cachingChainingMetadataResolver.addMetadataResolver(
+			new DBMetadataResolver(
+				parserPool, samlIdpSpConnectionLocalService,
+				samlProviderConfigurationHelper,
+				samlSpIdpConnectionLocalService));
+
+		cachingChainingMetadataResolver.setId(
+			CachingChainingMetadataResolver.class.getName());
+		cachingChainingMetadataResolver.setParserPool(parserPool);
+
+		try {
+			cachingChainingMetadataResolver.initialize();
+		}
+		catch (ComponentInitializationException
+					componentInitializationException) {
+
+			throw new RuntimeException(componentInitializationException);
+		}
+
+		return cachingChainingMetadataResolver;
+	}
 
 	private ChainingSignatureTrustEngine _createChainingSignatureTrustEngine() {
 		List<SignatureTrustEngine> signatureTrustEngines = new ArrayList<>();
@@ -630,8 +682,7 @@ public abstract class BaseProfile {
 		_createPredicateRoleDescriptorResolver() {
 
 		PredicateRoleDescriptorResolver predicateRoleDescriptorResolver =
-			new PredicateRoleDescriptorResolver(
-				metadataManager.getMetadataResolver());
+			new PredicateRoleDescriptorResolver(getMetadataResolver());
 
 		try {
 			predicateRoleDescriptorResolver.initialize();
@@ -732,6 +783,9 @@ public abstract class BaseProfile {
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseProfile.class);
 
+	private BundleContext _bundleContext;
+	private final DCLSingleton<CachingChainingMetadataResolver>
+		_cachingChainingMetadataResolverDCLSingleton = new DCLSingleton<>();
 	private final DCLSingleton<ChainingSignatureTrustEngine>
 		_chainingSignatureTrustEngineDCLSingleton = new DCLSingleton<>();
 	private final DCLSingleton<MetadataCredentialResolver>

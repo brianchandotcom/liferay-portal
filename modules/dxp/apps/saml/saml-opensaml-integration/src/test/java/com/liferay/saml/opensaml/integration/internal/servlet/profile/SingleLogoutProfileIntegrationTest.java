@@ -17,6 +17,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.helper.RelayStateHelperImpl;
+import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.persistence.model.impl.SamlIdpSpConnectionImpl;
@@ -130,6 +131,19 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 
 		ReflectionTestUtil.invoke(
 			_relayStateHelperImpl, "activate", new Class<?>[0]);
+
+		_singleLogoutProfileImpl.activate(SystemBundleUtil.getBundleContext());
+
+		ReflectionTestUtil.invoke(
+			_singleLogoutProfileImpl.getMetadataResolver(), "doDestroy",
+			new Class<?>[0]);
+
+		CachingChainingMetadataResolver cachingChainingMetadataResolver =
+			(CachingChainingMetadataResolver)
+				_singleLogoutProfileImpl.getMetadataResolver();
+
+		cachingChainingMetadataResolver.addMetadataResolver(
+			new MockMetadataResolver());
 
 		prepareServiceProvider(SP_ENTITY_ID);
 	}

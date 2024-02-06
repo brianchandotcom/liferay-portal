@@ -9,7 +9,6 @@ import com.liferay.saml.runtime.SamlException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.opensaml.saml.metadata.resolver.MetadataResolver;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 
 /**
@@ -20,7 +19,5 @@ public interface MetadataManager {
 	public EntityDescriptor getEntityDescriptor(
 			HttpServletRequest httpServletRequest)
 		throws SamlException;
-
-	public MetadataResolver getMetadataResolver();
 
 }

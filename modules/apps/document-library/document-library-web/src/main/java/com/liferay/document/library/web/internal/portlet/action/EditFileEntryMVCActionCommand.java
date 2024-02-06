@@ -395,7 +395,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		User user = _userLocalService.getUser(themeDisplay.getUserId());
 
 		Date displayDate = _getDisplayDate(
-			uploadPortletRequest, user.getTimeZone());
+			uploadPortletRequest, neverExpireDefaultValue, user.getTimeZone());
 		Date expirationDate = _getExpirationDate(
 			uploadPortletRequest, neverExpireDefaultValue, user.getTimeZone());
 		Date reviewDate = _getReviewDate(
@@ -929,10 +929,11 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private Date _getDisplayDate(
-			UploadPortletRequest uploadPortletRequest, TimeZone timeZone)
+			UploadPortletRequest uploadPortletRequest, boolean addDynamic,
+			TimeZone timeZone)
 		throws PortalException {
 
-		if (!PropsValues.SCHEDULER_ENABLED ||
+		if (addDynamic || !PropsValues.SCHEDULER_ENABLED ||
 			!_featureFlagManager.isEnabled("LPD-10701")) {
 
 			return null;
@@ -1345,7 +1346,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			Date displayDate = _getDisplayDate(
-				uploadPortletRequest, user.getTimeZone());
+				uploadPortletRequest, addDynamic, user.getTimeZone());
 			Date expirationDate = _getExpirationDate(
 				uploadPortletRequest, addDynamic, user.getTimeZone());
 			Date reviewDate = _getReviewDate(

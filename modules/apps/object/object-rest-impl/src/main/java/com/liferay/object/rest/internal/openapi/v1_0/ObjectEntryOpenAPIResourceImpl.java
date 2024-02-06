@@ -225,7 +225,8 @@ public class ObjectEntryOpenAPIResourceImpl
 					() -> {
 						if (Objects.equals(
 								objectField.getBusinessType(),
-								ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
+								ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED) &&
+							!FeatureFlagManagerUtil.isEnabled("LPD-6683")) {
 
 							return "CSV";
 						}
@@ -306,16 +307,18 @@ public class ObjectEntryOpenAPIResourceImpl
 
 						return "CSV";
 					}
-					else if (Objects.equals(
+					else if ((Objects.equals(
 								objectField.getBusinessType(),
 								ObjectFieldConstants.
 									BUSINESS_TYPE_AGGREGATION) ||
-							 Objects.equals(
-								 objectField.getBusinessType(),
-								 ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN) ||
-							 Objects.equals(
-								 objectField.getBusinessType(),
-								 ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
+							  Objects.equals(
+								  objectField.getBusinessType(),
+								  ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN) ||
+							  Objects.equals(
+								  objectField.getBusinessType(),
+								  ObjectFieldConstants.
+									  BUSINESS_TYPE_FORMULA)) &&
+							 !FeatureFlagManagerUtil.isEnabled("LPD-6683")) {
 
 						return "CSV";
 					}

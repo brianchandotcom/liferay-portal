@@ -39,7 +39,7 @@ definition {
 			"objectFieldERC": "${objectFieldERC}",
 			"objectRelationshipNames": "${relationshipName}",
 			"r_apiSchemaToAPIProperties_c_apiSchemaERC": "${schemaERC}",
-			"type": "value"
+			"type": "field"
 		''';
 
 		var curl = StringUtil.add(${curl}, " -d { ${body} }", "");

@@ -5846,7 +5846,6 @@ public class ObjectEntryResourceTest {
 		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectDefinition2, _objectDefinition1, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		_objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectDefinition2, _objectDefinition1, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);

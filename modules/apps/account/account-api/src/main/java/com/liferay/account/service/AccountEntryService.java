@@ -120,6 +120,14 @@ public interface AccountEntryService extends BaseService {
 			int status, ServiceContext serviceContext)
 		throws PortalException;
 
+	public AccountEntry updateDefaultBillingAddressId(
+			long accountEntryId, long addressId)
+		throws PortalException;
+
+	public AccountEntry updateDefaultShippingAddressId(
+			long accountEntryId, long addressId)
+		throws PortalException;
+
 	public AccountEntry updateDomains(long accountEntryId, String[] domains)
 		throws PortalException;
 

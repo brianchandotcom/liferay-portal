@@ -160,6 +160,22 @@ public class AccountEntryServiceUtil {
 			serviceContext);
 	}
 
+	public static AccountEntry updateDefaultBillingAddressId(
+			long accountEntryId, long addressId)
+		throws PortalException {
+
+		return getService().updateDefaultBillingAddressId(
+			accountEntryId, addressId);
+	}
+
+	public static AccountEntry updateDefaultShippingAddressId(
+			long accountEntryId, long addressId)
+		throws PortalException {
+
+		return getService().updateDefaultShippingAddressId(
+			accountEntryId, addressId);
+	}
+
 	public static AccountEntry updateDomains(
 			long accountEntryId, String[] domains)
 		throws PortalException {

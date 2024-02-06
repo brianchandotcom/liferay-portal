@@ -180,6 +180,24 @@ public class AccountEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry updateDefaultBillingAddressId(
+			long accountEntryId, long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryService.updateDefaultBillingAddressId(
+			accountEntryId, addressId);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry
+			updateDefaultShippingAddressId(long accountEntryId, long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryService.updateDefaultShippingAddressId(
+			accountEntryId, addressId);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountEntry updateDomains(
 			long accountEntryId, String[] domains)
 		throws com.liferay.portal.kernel.exception.PortalException {

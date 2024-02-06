@@ -656,6 +656,90 @@ public class AccountEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.account.model.AccountEntry
+			updateDefaultBillingAddressId(
+				HttpPrincipal httpPrincipal, long accountEntryId,
+				long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryServiceUtil.class, "updateDefaultBillingAddressId",
+				_updateDefaultBillingAddressIdParameterTypes15);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountEntryId, addressId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.account.model.AccountEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.account.model.AccountEntry
+			updateDefaultShippingAddressId(
+				HttpPrincipal httpPrincipal, long accountEntryId,
+				long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryServiceUtil.class, "updateDefaultShippingAddressId",
+				_updateDefaultShippingAddressIdParameterTypes16);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountEntryId, addressId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.account.model.AccountEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.account.model.AccountEntry updateDomains(
 			HttpPrincipal httpPrincipal, long accountEntryId, String[] domains)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -663,7 +747,7 @@ public class AccountEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryServiceUtil.class, "updateDomains",
-				_updateDomainsParameterTypes15);
+				_updateDomainsParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, domains);
@@ -705,7 +789,7 @@ public class AccountEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryServiceUtil.class, "updateExternalReferenceCode",
-				_updateExternalReferenceCodeParameterTypes16);
+				_updateExternalReferenceCodeParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, externalReferenceCode);
@@ -747,7 +831,7 @@ public class AccountEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryServiceUtil.class, "updateRestrictMembership",
-				_updateRestrictMembershipParameterTypes17);
+				_updateRestrictMembershipParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, restrictMembership);
@@ -834,13 +918,21 @@ public class AccountEntryServiceHttp {
 			String[].class, String.class, byte[].class, String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateDomainsParameterTypes15 =
+	private static final Class<?>[]
+		_updateDefaultBillingAddressIdParameterTypes15 = new Class[] {
+			long.class, long.class
+		};
+	private static final Class<?>[]
+		_updateDefaultShippingAddressIdParameterTypes16 = new Class[] {
+			long.class, long.class
+		};
+	private static final Class<?>[] _updateDomainsParameterTypes17 =
 		new Class[] {long.class, String[].class};
 	private static final Class<?>[]
-		_updateExternalReferenceCodeParameterTypes16 = new Class[] {
+		_updateExternalReferenceCodeParameterTypes18 = new Class[] {
 			long.class, String.class
 		};
-	private static final Class<?>[] _updateRestrictMembershipParameterTypes17 =
+	private static final Class<?>[] _updateRestrictMembershipParameterTypes19 =
 		new Class[] {long.class, boolean.class};
 
 }

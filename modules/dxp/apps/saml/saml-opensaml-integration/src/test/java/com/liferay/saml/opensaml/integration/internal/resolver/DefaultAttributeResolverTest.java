@@ -72,12 +72,6 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_defaultAttributeResolver, "_metadataManager", _metadataManager);
 
-		Mockito.when(
-			_metadataManager.isAttributesEnabled(Mockito.eq(SP_ENTITY_ID))
-		).thenReturn(
-			true
-		);
-
 		_user = Mockito.mock(User.class);
 
 		_expandoBridge = Mockito.mock(ExpandoBridge.class);

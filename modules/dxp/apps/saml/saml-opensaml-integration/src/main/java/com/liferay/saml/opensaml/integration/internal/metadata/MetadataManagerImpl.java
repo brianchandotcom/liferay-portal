@@ -161,26 +161,6 @@ public class MetadataManagerImpl implements MetadataManager {
 	}
 
 	@Override
-	public boolean isAttributesEnabled(String entityId) {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		try {
-			SamlIdpSpConnection samlIdpSpConnection =
-				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
-					companyId, entityId);
-
-			return samlIdpSpConnection.isAttributesEnabled();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isAttributesNamespaceEnabled(String entityId) {
 		long companyId = CompanyThreadLocal.getCompanyId();
 

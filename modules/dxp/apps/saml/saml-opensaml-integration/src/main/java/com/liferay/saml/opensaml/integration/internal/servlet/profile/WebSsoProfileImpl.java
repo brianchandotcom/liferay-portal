@@ -1438,7 +1438,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
-		boolean attributesEnabled = metadataManager.isAttributesEnabled(
+		boolean attributesEnabled = _isAttributesEnabled(
 			samlPeerEntityContext.getEntityId());
 
 		if (!attributesEnabled) {
@@ -1597,6 +1597,25 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		response.setVersion(SAMLVersion.VERSION_20);
 
 		return response;
+	}
+
+	private boolean _isAttributesEnabled(String entityId) {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		try {
+			SamlIdpSpConnection samlIdpSpConnection =
+				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
+					companyId, entityId);
+
+			return samlIdpSpConnection.isAttributesEnabled();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return false;
 	}
 
 	private void _processAuthnRequest(

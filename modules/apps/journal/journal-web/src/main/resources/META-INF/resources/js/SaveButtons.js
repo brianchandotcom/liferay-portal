@@ -135,6 +135,10 @@ export default function SaveButtons({
 
 		[titleInputComponent, descriptionInputComponent].forEach(
 			(inputComponent) => {
+				if (!inputComponent) {
+					return;
+				}
+
 				const translatedLanguages = inputComponent.get(
 					'translatedLanguages'
 				);

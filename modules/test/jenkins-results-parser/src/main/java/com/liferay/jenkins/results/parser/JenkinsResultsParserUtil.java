@@ -6166,11 +6166,9 @@ public class JenkinsResultsParserUtil {
 				gitDirectoriesJSONArray.getJSONObject(i);
 
 			if ((gitDirectoryJSONObject == JSONObject.NULL) ||
-				!Objects.equals(
-					repositoryName,
+				!repositoryName.matches(
 					gitDirectoryJSONObject.getString("repository")) ||
-				!Objects.equals(
-					upstreamBranchName,
+				!upstreamBranchName.matches(
 					gitDirectoryJSONObject.getString("branch"))) {
 
 				continue;

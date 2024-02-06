@@ -305,6 +305,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
+		super.activate(bundleContext);
+
 		_samlConfiguration = ConfigurableUtil.createConfigurable(
 			SamlConfiguration.class, properties);
 		_stringAttributeResolverServiceTrackerMap =

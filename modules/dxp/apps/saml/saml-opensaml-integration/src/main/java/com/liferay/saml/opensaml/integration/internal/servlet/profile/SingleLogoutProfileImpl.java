@@ -99,6 +99,8 @@ import org.opensaml.security.credential.Credential;
 import org.opensaml.soap.client.http.PipelineFactoryHttpSOAPClient;
 import org.opensaml.xmlsec.context.SecurityParametersContext;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
@@ -127,8 +129,7 @@ public class SingleLogoutProfileImpl
 				return false;
 			}
 
-			MetadataResolver metadataResolver =
-				metadataManager.getMetadataResolver();
+			MetadataResolver metadataResolver = getMetadataResolver();
 
 			SamlPeerBinding samlPeerBinding =
 				_samlPeerBindingLocalService.getSamlPeerBinding(
@@ -382,6 +383,12 @@ public class SingleLogoutProfileImpl
 			CookiesManagerUtil.getDomain(httpServletRequest),
 			httpServletRequest, httpServletResponse,
 			SamlWebKeys.SAML_SSO_SESSION_ID);
+	}
+
+	@Activate
+	@Override
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
 	}
 
 	@Deactivate

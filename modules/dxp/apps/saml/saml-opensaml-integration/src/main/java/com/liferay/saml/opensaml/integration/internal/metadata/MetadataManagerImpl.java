@@ -5,16 +5,10 @@
 
 package com.liferay.saml.opensaml.integration.internal.metadata;
 
-import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
-import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
-import com.liferay.saml.opensaml.integration.internal.provider.DBMetadataResolver;
-import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
-import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
@@ -22,23 +16,17 @@ import com.liferay.saml.runtime.metadata.LocalEntityManager;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.shibboleth.utilities.java.support.component.ComponentInitializationException;
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 import net.shibboleth.utilities.java.support.resolver.ResolverException;
-import net.shibboleth.utilities.java.support.xml.ParserPool;
 
 import org.opensaml.core.criterion.EntityIdCriterion;
-import org.opensaml.saml.metadata.resolver.MetadataResolver;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.security.credential.Credential;
 import org.opensaml.security.credential.CredentialResolver;
 import org.opensaml.security.credential.UsageType;
 import org.opensaml.security.criteria.UsageCriterion;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -90,53 +78,6 @@ public class MetadataManagerImpl implements MetadataManager {
 		catch (Exception exception) {
 			throw new SamlException(exception);
 		}
-	}
-
-	@Override
-	public MetadataResolver getMetadataResolver() {
-		return _cachingChainingMetadataResolverDCLSingleton.getSingleton(
-			this::_createCachingChainingMetadataResolver);
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_cachingChainingMetadataResolverDCLSingleton.destroy(
-			CachingChainingMetadataResolver::destroy);
-	}
-
-	private CachingChainingMetadataResolver
-		_createCachingChainingMetadataResolver() {
-
-		CachingChainingMetadataResolver cachingChainingMetadataResolver =
-			new CachingChainingMetadataResolver(_bundleContext);
-
-		ParserPool parserPool = ParserPoolUtil.getParserPool();
-
-		cachingChainingMetadataResolver.addMetadataResolver(
-			new DBMetadataResolver(
-				parserPool, _samlIdpSpConnectionLocalService,
-				_samlProviderConfigurationHelper,
-				_samlSpIdpConnectionLocalService));
-
-		cachingChainingMetadataResolver.setId(
-			CachingChainingMetadataResolver.class.getName());
-		cachingChainingMetadataResolver.setParserPool(parserPool);
-
-		try {
-			cachingChainingMetadataResolver.initialize();
-		}
-		catch (ComponentInitializationException
-					componentInitializationException) {
-
-			throw new RuntimeException(componentInitializationException);
-		}
-
-		return cachingChainingMetadataResolver;
 	}
 
 	private Credential _getEncryptionCredential() throws SamlException {
@@ -202,10 +143,6 @@ public class MetadataManagerImpl implements MetadataManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MetadataManagerImpl.class);
 
-	private BundleContext _bundleContext;
-	private final DCLSingleton<CachingChainingMetadataResolver>
-		_cachingChainingMetadataResolverDCLSingleton = new DCLSingleton<>();
-
 	@Reference
 	private CredentialResolver _credentialResolver;
 
@@ -216,12 +153,6 @@ public class MetadataManagerImpl implements MetadataManager {
 	private Portal _portal;
 
 	@Reference
-	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
-
-	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
-
-	@Reference
-	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
 
 }

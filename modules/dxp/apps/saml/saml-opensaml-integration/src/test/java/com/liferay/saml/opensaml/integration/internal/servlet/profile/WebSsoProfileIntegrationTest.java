@@ -178,6 +178,17 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		_webSsoProfileImpl.activate(
 			SystemBundleUtil.getBundleContext(), new HashMap<String, Object>());
 
+		ReflectionTestUtil.invoke(
+			_webSsoProfileImpl.getMetadataResolver(), "doDestroy",
+			new Class<?>[0]);
+
+		CachingChainingMetadataResolver cachingChainingMetadataResolver =
+			(CachingChainingMetadataResolver)
+				_webSsoProfileImpl.getMetadataResolver();
+
+		cachingChainingMetadataResolver.addMetadataResolver(
+			new MockMetadataResolver());
+
 		prepareServiceProvider(SP_ENTITY_ID);
 	}
 
@@ -188,7 +199,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		Credential credential = getCredential(IDP_ENTITY_ID);
 
 		MetadataResolver metadataResolver =
-			metadataManagerImpl.getMetadataResolver();
+			_webSsoProfileImpl.getMetadataResolver();
 
 		EntityDescriptor entityDescriptor = metadataResolver.resolveSingle(
 			new CriteriaSet(new EntityIdCriterion(SP_ENTITY_ID)));
@@ -636,17 +647,12 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			samlProviderConfigurationHelper);
 
 		ReflectionTestUtil.invoke(
-			metadataManagerImpl, "activate",
-			new Class<?>[] {BundleContext.class},
-			SystemBundleUtil.getBundleContext());
-
-		ReflectionTestUtil.invoke(
-			metadataManagerImpl.getMetadataResolver(), "doDestroy",
+			_webSsoProfileImpl.getMetadataResolver(), "doDestroy",
 			new Class<?>[0]);
 
 		CachingChainingMetadataResolver cachingChainingMetadataResolver =
 			(CachingChainingMetadataResolver)
-				metadataManagerImpl.getMetadataResolver();
+				_webSsoProfileImpl.getMetadataResolver();
 
 		cachingChainingMetadataResolver.addMetadataResolver(
 			new MockMetadataResolver(false));

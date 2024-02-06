@@ -134,9 +134,6 @@ public class SelectLayoutTag extends IncludeTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String[] selectedLayoutIds = ParamUtil.getStringValues(
-			httpServletRequest, "layoutUuid");
-
 		long selPlid = ParamUtil.getLong(
 			httpServletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 
@@ -146,6 +143,9 @@ public class SelectLayoutTag extends IncludeTag {
 
 		findLayoutsURL = HttpComponentsUtil.addParameter(
 			findLayoutsURL, "privateLayout", _privateLayout);
+
+		String[] selectedLayoutIds = ParamUtil.getStringValues(
+			httpServletRequest, "layoutUuid");
 
 		return HashMapBuilder.<String, Object>put(
 			"checkDisplayPage", _checkDisplayPage

@@ -44,7 +44,7 @@ public class DLAppServiceWhenUpdatingAndCheckingInAFileEntryTest
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 
-		fileEntry = _dlAppService.updateFileEntryAndCheckIn(
+		fileEntry = dlAppService.updateFileEntryAndCheckIn(
 			fileEntry.getFileEntryId(), fileEntry.getFileName(),
 			fileEntry.getMimeType(), fileEntry.getTitle(),
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,

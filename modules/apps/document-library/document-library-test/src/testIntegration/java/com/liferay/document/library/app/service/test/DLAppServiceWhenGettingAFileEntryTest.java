@@ -34,7 +34,7 @@ public class DLAppServiceWhenGettingAFileEntryTest extends BaseDLAppTestCase {
 
 	@Test(expected = NoSuchFileEntryException.class)
 	public void testShouldFailIfNotPresentInRootFolder() throws Exception {
-		_dlAppService.getFileEntry(
+		dlAppService.getFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString());
 	}
@@ -44,7 +44,7 @@ public class DLAppServiceWhenGettingAFileEntryTest extends BaseDLAppTestCase {
 		FileEntry fileEntry1 = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		FileEntry fileEntry2 = _dlAppService.getFileEntry(
+		FileEntry fileEntry2 = dlAppService.getFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			fileEntry1.getTitle());
 

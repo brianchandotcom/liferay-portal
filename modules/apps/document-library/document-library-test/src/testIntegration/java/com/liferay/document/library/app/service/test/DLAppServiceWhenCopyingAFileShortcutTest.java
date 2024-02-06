@@ -44,14 +44,14 @@ public class DLAppServiceWhenCopyingAFileShortcutTest
 		fileEntry = DLAppServiceTestUtil.addFileEntry(
 			parentFolder.getGroupId(), parentFolder.getFolderId());
 
-		newParentFolder = _dlAppService.addFolder(
+		newParentFolder = dlAppService.addFolder(
 			null, group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "New Test Folder",
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 
-		targetParentFolder = _dlAppService.addFolder(
+		targetParentFolder = dlAppService.addFolder(
 			null, targetGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Target Test Folder",
 			RandomTestUtil.randomString(),
@@ -159,11 +159,11 @@ public class DLAppServiceWhenCopyingAFileShortcutTest
 			long targetFolderId)
 		throws Exception {
 
-		FileShortcut fileShortcut = _dlAppService.addFileShortcut(
+		FileShortcut fileShortcut = dlAppService.addFileShortcut(
 			sourceGroupId, sourceFolderId, fileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(sourceGroupId));
 
-		_dlAppService.copyFileShortcut(
+		dlAppService.copyFileShortcut(
 			fileShortcut.getFileShortcutId(), targetFolderId, targetGroupId,
 			ServiceContextTestUtil.getServiceContext(targetGroupId));
 	}

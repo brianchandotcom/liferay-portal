@@ -49,14 +49,14 @@ public class DLAppServiceWhenMovingAFileEntryToTrashTest
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		_dlAppService.deleteFileEntry(_fileEntry.getFileEntryId());
+		dlAppService.deleteFileEntry(_fileEntry.getFileEntryId());
 
 		super.tearDown();
 	}
 
 	@Test
 	public void testShouldCancelCheckout() throws Exception {
-		_dlAppService.checkOutFileEntry(
+		dlAppService.checkOutFileEntry(
 			_fileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
@@ -64,14 +64,14 @@ public class DLAppServiceWhenMovingAFileEntryToTrashTest
 
 		DLTrashServiceUtil.moveFileEntryToTrash(_fileEntry.getFileEntryId());
 
-		_fileEntry = _dlAppService.getFileEntry(_fileEntry.getFileEntryId());
+		_fileEntry = dlAppService.getFileEntry(_fileEntry.getFileEntryId());
 
 		Assert.assertFalse(_fileEntry.isCheckedOut());
 	}
 
 	@Test
 	public void testShouldDeletePWCAssetEntry() throws Exception {
-		_dlAppService.checkOutFileEntry(
+		dlAppService.checkOutFileEntry(
 			_fileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 

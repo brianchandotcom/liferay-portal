@@ -36,7 +36,7 @@ public class DLAppServiceWhenDeletingAFileEntryTest extends BaseDLAppTestCase {
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 
-		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
+		dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
 
 		Assert.assertFalse(
 			CommentManagerUtil.hasDiscussion(

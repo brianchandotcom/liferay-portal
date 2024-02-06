@@ -37,7 +37,7 @@ public class DLAppServiceWhenAddingAFolderTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testShouldAddAssetEntry() throws PortalException {
-		Folder folder = _dlAppService.addFolder(
+		Folder folder = dlAppService.addFolder(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));

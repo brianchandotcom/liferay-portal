@@ -39,7 +39,7 @@ public class DLAppServiceWhenMovingAFileEntryTest extends BaseDLAppTestCase {
 			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
 			DLAppServiceTestUtil.STRIPPED_FILE_NAME, null, null, null);
 
-		FileEntry copiedFileEntry = _dlAppService.moveFileEntry(
+		FileEntry copiedFileEntry = dlAppService.moveFileEntry(
 			fileEntry.getFileEntryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceContextTestUtil.getServiceContext(targetGroup.getGroupId()));

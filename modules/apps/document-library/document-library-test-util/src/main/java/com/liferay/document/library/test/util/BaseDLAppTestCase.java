@@ -53,7 +53,7 @@ public abstract class BaseDLAppTestCase {
 		targetGroup = GroupTestUtil.addGroup();
 
 		try {
-			_dlAppService.deleteFolder(
+			dlAppService.deleteFolder(
 				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				"Test Folder");
 		}
@@ -63,7 +63,7 @@ public abstract class BaseDLAppTestCase {
 			}
 		}
 
-		parentFolder = _dlAppService.addFolder(
+		parentFolder = dlAppService.addFolder(
 			null, group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test Folder",
 			RandomTestUtil.randomString(),
@@ -93,7 +93,7 @@ public abstract class BaseDLAppTestCase {
 		BaseDLAppTestCase.class);
 
 	@Inject
-	protected DLAppService _dlAppService;
+	protected DLAppService dlAppService;
 
 	private String _name;
 

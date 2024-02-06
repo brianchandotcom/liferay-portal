@@ -34,27 +34,14 @@ import net.shibboleth.utilities.java.support.resolver.ResolverException;
 import net.shibboleth.utilities.java.support.xml.ParserPool;
 
 import org.opensaml.core.criterion.EntityIdCriterion;
-import org.opensaml.messaging.handler.MessageHandler;
-import org.opensaml.messaging.handler.impl.BasicMessageHandlerChain;
-import org.opensaml.messaging.handler.impl.CheckMandatoryAuthentication;
-import org.opensaml.messaging.handler.impl.CheckMandatoryIssuer;
-import org.opensaml.messaging.handler.impl.HTTPRequestValidationHandler;
-import org.opensaml.saml.common.binding.security.impl.SAMLProtocolMessageXMLSignatureSecurityHandler;
-import org.opensaml.saml.common.messaging.context.navigate.SAMLMessageContextAuthenticationFunction;
-import org.opensaml.saml.common.messaging.context.navigate.SAMLMessageContextIssuerFunction;
-import org.opensaml.saml.common.xml.SAMLConstants;
 import org.opensaml.saml.metadata.resolver.MetadataResolver;
 import org.opensaml.saml.metadata.resolver.impl.PredicateRoleDescriptorResolver;
-import org.opensaml.saml.saml2.binding.security.impl.SAML2HTTPPostSimpleSignSecurityHandler;
-import org.opensaml.saml.saml2.binding.security.impl.SAML2HTTPRedirectDeflateSignatureSecurityHandler;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml.security.impl.MetadataCredentialResolver;
 import org.opensaml.security.credential.Credential;
 import org.opensaml.security.credential.CredentialResolver;
 import org.opensaml.security.credential.UsageType;
 import org.opensaml.security.criteria.UsageCriterion;
-import org.opensaml.xmlsec.DecryptionConfiguration;
-import org.opensaml.xmlsec.SecurityConfigurationSupport;
 import org.opensaml.xmlsec.config.DefaultSecurityConfigurationBootstrap;
 import org.opensaml.xmlsec.keyinfo.KeyInfoCredentialResolver;
 import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
@@ -147,85 +134,6 @@ public class MetadataManagerImpl implements MetadataManager {
 	public MetadataResolver getMetadataResolver() {
 		return _cachingChainingMetadataResolverDCLSingleton.getSingleton(
 			this::_createCachingChainingMetadataResolver);
-	}
-
-	@Override
-	public MessageHandler<?> getSecurityMessageHandler(
-		HttpServletRequest httpServletRequest, String communicationProfileId,
-		boolean requireSignature) {
-
-		BasicMessageHandlerChain<Object> basicMessageHandlerChain =
-			new BasicMessageHandlerChain<>();
-
-		List<MessageHandler<Object>> messageHandlers = new ArrayList<>();
-
-		if (requireSignature) {
-			if (communicationProfileId.equals(
-					SAMLConstants.SAML2_REDIRECT_BINDING_URI)) {
-
-				SAML2HTTPRedirectDeflateSignatureSecurityHandler
-					saml2HTTPRedirectDeflateSignatureSecurityHandler =
-						new SAML2HTTPRedirectDeflateSignatureSecurityHandler();
-
-				saml2HTTPRedirectDeflateSignatureSecurityHandler.
-					setHttpServletRequest(httpServletRequest);
-
-				messageHandlers.add(
-					saml2HTTPRedirectDeflateSignatureSecurityHandler);
-			}
-			else if (communicationProfileId.equals(
-						SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI)) {
-
-				DecryptionConfiguration decryptionConfiguration =
-					SecurityConfigurationSupport.
-						getGlobalDecryptionConfiguration();
-
-				KeyInfoCredentialResolver keyInfoCredentialResolver =
-					decryptionConfiguration.getDataKeyInfoCredentialResolver();
-
-				SAML2HTTPPostSimpleSignSecurityHandler
-					saml2HTTPPostSimpleSignSecurityHandler =
-						new SAML2HTTPPostSimpleSignSecurityHandler();
-
-				saml2HTTPPostSimpleSignSecurityHandler.setKeyInfoResolver(
-					keyInfoCredentialResolver);
-				saml2HTTPPostSimpleSignSecurityHandler.setParser(
-					ParserPoolUtil.getParserPool());
-
-				messageHandlers.add(saml2HTTPPostSimpleSignSecurityHandler);
-			}
-			else {
-				messageHandlers.add(
-					new SAMLProtocolMessageXMLSignatureSecurityHandler());
-			}
-
-			CheckMandatoryAuthentication checkMandatoryAuthentication =
-				new CheckMandatoryAuthentication();
-
-			checkMandatoryAuthentication.setAuthenticationLookupStrategy(
-				new SAMLMessageContextAuthenticationFunction());
-
-			messageHandlers.add(checkMandatoryAuthentication);
-		}
-
-		CheckMandatoryIssuer checkMandatoryIssuer = new CheckMandatoryIssuer();
-
-		checkMandatoryIssuer.setIssuerLookupStrategy(
-			new SAMLMessageContextIssuerFunction());
-
-		messageHandlers.add(checkMandatoryIssuer);
-
-		HTTPRequestValidationHandler httpRequestValidationHandler =
-			new HTTPRequestValidationHandler();
-
-		httpRequestValidationHandler.setHttpServletRequest(httpServletRequest);
-		httpRequestValidationHandler.setRequireSecured(_isSSLRequired());
-
-		messageHandlers.add(httpRequestValidationHandler);
-
-		basicMessageHandlerChain.setHandlers(messageHandlers);
-
-		return basicMessageHandlerChain;
 	}
 
 	@Override

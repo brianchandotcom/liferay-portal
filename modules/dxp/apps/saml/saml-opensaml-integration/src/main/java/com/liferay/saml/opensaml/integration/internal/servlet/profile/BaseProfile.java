@@ -17,14 +17,18 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBindingProvider;
+import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.internal.util.ConfigurationServiceBootstrapUtil;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.persistence.service.SamlSpSessionLocalService;
 import com.liferay.saml.runtime.SamlException;
+import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 import javax.servlet.http.Cookie;
@@ -43,27 +47,39 @@ import org.opensaml.messaging.context.MessageContext;
 import org.opensaml.messaging.decoder.servlet.HttpServletRequestMessageDecoder;
 import org.opensaml.messaging.encoder.servlet.HttpServletResponseMessageEncoder;
 import org.opensaml.messaging.handler.MessageHandler;
+import org.opensaml.messaging.handler.impl.BasicMessageHandlerChain;
+import org.opensaml.messaging.handler.impl.CheckMandatoryAuthentication;
+import org.opensaml.messaging.handler.impl.CheckMandatoryIssuer;
+import org.opensaml.messaging.handler.impl.HTTPRequestValidationHandler;
 import org.opensaml.saml.common.SAMLObject;
 import org.opensaml.saml.common.binding.security.impl.SAMLOutboundProtocolMessageSigningHandler;
+import org.opensaml.saml.common.binding.security.impl.SAMLProtocolMessageXMLSignatureSecurityHandler;
 import org.opensaml.saml.common.messaging.context.SAMLBindingContext;
 import org.opensaml.saml.common.messaging.context.SAMLEndpointContext;
 import org.opensaml.saml.common.messaging.context.SAMLMetadataContext;
 import org.opensaml.saml.common.messaging.context.SAMLPeerEntityContext;
 import org.opensaml.saml.common.messaging.context.SAMLProtocolContext;
 import org.opensaml.saml.common.messaging.context.SAMLSelfEntityContext;
+import org.opensaml.saml.common.messaging.context.navigate.SAMLMessageContextAuthenticationFunction;
+import org.opensaml.saml.common.messaging.context.navigate.SAMLMessageContextIssuerFunction;
 import org.opensaml.saml.common.xml.SAMLConstants;
 import org.opensaml.saml.metadata.resolver.MetadataResolver;
+import org.opensaml.saml.saml2.binding.security.impl.SAML2HTTPPostSimpleSignSecurityHandler;
+import org.opensaml.saml.saml2.binding.security.impl.SAML2HTTPRedirectDeflateSignatureSecurityHandler;
 import org.opensaml.saml.saml2.core.RequestAbstractType;
 import org.opensaml.saml.saml2.metadata.Endpoint;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
 import org.opensaml.saml.saml2.metadata.RoleDescriptor;
 import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
+import org.opensaml.xmlsec.DecryptionConfiguration;
+import org.opensaml.xmlsec.SecurityConfigurationSupport;
 import org.opensaml.xmlsec.SignatureValidationConfiguration;
 import org.opensaml.xmlsec.SignatureValidationParameters;
 import org.opensaml.xmlsec.context.SecurityParametersContext;
 import org.opensaml.xmlsec.criterion.SignatureValidationConfigurationCriterion;
 import org.opensaml.xmlsec.impl.BasicSignatureValidationParametersResolver;
+import org.opensaml.xmlsec.keyinfo.KeyInfoCredentialResolver;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -163,10 +179,9 @@ public abstract class BaseProfile {
 		samlMetadataContext.setRoleDescriptor(roleDescriptor);
 
 		MessageHandler<SAMLObject> messageHandler =
-			(MessageHandler<SAMLObject>)
-				metadataManager.getSecurityMessageHandler(
-					httpServletRequest, samlBindingContext.getBindingUri(),
-					requireSignature);
+			(MessageHandler<SAMLObject>)_getSecurityMessageHandler(
+				httpServletRequest, samlBindingContext.getBindingUri(),
+				requireSignature);
 
 		SecurityParametersContext securityParametersContext =
 			inboundMessageContext.getSubcontext(
@@ -509,6 +524,91 @@ public abstract class BaseProfile {
 
 	@Reference
 	protected SamlSpSessionLocalService samlSpSessionLocalService;
+
+	private MessageHandler<?> _getSecurityMessageHandler(
+		HttpServletRequest httpServletRequest, String communicationProfileId,
+		boolean requireSignature) {
+
+		BasicMessageHandlerChain<Object> basicMessageHandlerChain =
+			new BasicMessageHandlerChain<>();
+
+		List<MessageHandler<Object>> messageHandlers = new ArrayList<>();
+
+		if (requireSignature) {
+			if (communicationProfileId.equals(
+					SAMLConstants.SAML2_REDIRECT_BINDING_URI)) {
+
+				SAML2HTTPRedirectDeflateSignatureSecurityHandler
+					saml2HTTPRedirectDeflateSignatureSecurityHandler =
+						new SAML2HTTPRedirectDeflateSignatureSecurityHandler();
+
+				saml2HTTPRedirectDeflateSignatureSecurityHandler.
+					setHttpServletRequest(httpServletRequest);
+
+				messageHandlers.add(
+					saml2HTTPRedirectDeflateSignatureSecurityHandler);
+			}
+			else if (communicationProfileId.equals(
+						SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI)) {
+
+				DecryptionConfiguration decryptionConfiguration =
+					SecurityConfigurationSupport.
+						getGlobalDecryptionConfiguration();
+
+				KeyInfoCredentialResolver keyInfoCredentialResolver =
+					decryptionConfiguration.getDataKeyInfoCredentialResolver();
+
+				SAML2HTTPPostSimpleSignSecurityHandler
+					saml2HTTPPostSimpleSignSecurityHandler =
+						new SAML2HTTPPostSimpleSignSecurityHandler();
+
+				saml2HTTPPostSimpleSignSecurityHandler.setKeyInfoResolver(
+					keyInfoCredentialResolver);
+				saml2HTTPPostSimpleSignSecurityHandler.setParser(
+					ParserPoolUtil.getParserPool());
+
+				messageHandlers.add(saml2HTTPPostSimpleSignSecurityHandler);
+			}
+			else {
+				messageHandlers.add(
+					new SAMLProtocolMessageXMLSignatureSecurityHandler());
+			}
+
+			CheckMandatoryAuthentication checkMandatoryAuthentication =
+				new CheckMandatoryAuthentication();
+
+			checkMandatoryAuthentication.setAuthenticationLookupStrategy(
+				new SAMLMessageContextAuthenticationFunction());
+
+			messageHandlers.add(checkMandatoryAuthentication);
+		}
+
+		CheckMandatoryIssuer checkMandatoryIssuer = new CheckMandatoryIssuer();
+
+		checkMandatoryIssuer.setIssuerLookupStrategy(
+			new SAMLMessageContextIssuerFunction());
+
+		messageHandlers.add(checkMandatoryIssuer);
+
+		HTTPRequestValidationHandler httpRequestValidationHandler =
+			new HTTPRequestValidationHandler();
+
+		httpRequestValidationHandler.setHttpServletRequest(httpServletRequest);
+		httpRequestValidationHandler.setRequireSecured(_isSSLRequired());
+
+		messageHandlers.add(httpRequestValidationHandler);
+
+		basicMessageHandlerChain.setHandlers(messageHandlers);
+
+		return basicMessageHandlerChain;
+	}
+
+	private boolean _isSSLRequired() {
+		SamlProviderConfiguration samlProviderConfiguration =
+			samlProviderConfigurationHelper.getSamlProviderConfiguration();
+
+		return samlProviderConfiguration.sslRequired();
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseProfile.class);
 

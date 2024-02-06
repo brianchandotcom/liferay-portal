@@ -9,7 +9,6 @@ import com.liferay.saml.runtime.SamlException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.opensaml.messaging.handler.MessageHandler;
 import org.opensaml.saml.metadata.resolver.MetadataResolver;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml.security.impl.MetadataCredentialResolver;
@@ -30,11 +29,6 @@ public interface MetadataManager {
 	public MetadataCredentialResolver getMetadataCredentialResolver();
 
 	public MetadataResolver getMetadataResolver();
-
-	public MessageHandler<?> getSecurityMessageHandler(
-			HttpServletRequest httpServletRequest,
-			String communicationProfileId, boolean requireSignature)
-		throws SamlException;
 
 	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException;
 

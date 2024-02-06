@@ -73,14 +73,14 @@ public class QuartzUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeWithCTJobs() throws Exception {
+		Message message = new Message();
+
 		long companyId = TestPropsValues.getCompanyId();
 
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			null, companyId, TestPropsValues.getUserId(), 0, "test", null);
 
 		long ctCollectionId = _ctCollection.getCtCollectionId();
-
-		Message message = new Message();
 
 		message.put("ctCollectionId", ctCollectionId);
 
@@ -97,6 +97,8 @@ public class QuartzUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeWithDispatchJobs() throws Exception {
+		Message message = new Message();
+
 		long companyId = TestPropsValues.getCompanyId();
 
 		_dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
@@ -106,8 +108,6 @@ public class QuartzUpgradeProcessTest {
 			null, "test", false);
 
 		long dispatchTriggerId = _dispatchTrigger.getDispatchTriggerId();
-
-		Message message = new Message();
 
 		message.setPayload(
 			StringBundler.concat(
@@ -128,6 +128,8 @@ public class QuartzUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeWithExportImportJobs() throws Exception {
+		Message message1 = new Message();
+
 		Map<String, Serializable> exportLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildExportLayoutSettingsMap(
@@ -142,6 +144,17 @@ public class QuartzUpgradeProcessTest {
 						TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL,
 					exportLayoutSettingsMap);
 
+		message1.setPayload(
+			_exportImportConfiguration1.getExportImportConfigurationId());
+
+		String jobName1 = PortalUUIDUtil.generate();
+
+		_scheduleJob(jobName1, _LAYOUTS_LOCAL_DESTINATION_NAME, message1);
+
+		String jobName2 = PortalUUIDUtil.generate();
+
+		Message message2 = new Message();
+
 		_exportImportConfiguration2 =
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
@@ -150,18 +163,9 @@ public class QuartzUpgradeProcessTest {
 						TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE,
 					exportLayoutSettingsMap);
 
-		String jobName1 = PortalUUIDUtil.generate();
-		String jobName2 = PortalUUIDUtil.generate();
-
-		Message message1 = new Message();
-		Message message2 = new Message();
-
-		message1.setPayload(
-			_exportImportConfiguration1.getExportImportConfigurationId());
 		message2.setPayload(
 			_exportImportConfiguration2.getExportImportConfigurationId());
 
-		_scheduleJob(jobName1, _LAYOUTS_LOCAL_DESTINATION_NAME, message1);
 		_scheduleJob(jobName2, _LAYOUTS_REMOTE_DESTINATION_NAME, message2);
 
 		_runUpgrade();
@@ -187,23 +191,29 @@ public class QuartzUpgradeProcessTest {
 	public void testUpgradeWithJobsFromDifferentCompany() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		long companyId1 = TestPropsValues.getCompanyId();
-
 		long companyId2 = _company.getCompanyId();
 
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			null, companyId2, TestPropsValues.getUserId(), 0, "test", null);
 
 		Message message1 = new Message();
-		Message message2 = new Message();
-		Message message3 = new Message();
+
+		long companyId1 = TestPropsValues.getCompanyId();
 
 		message1.put("companyId", companyId1);
-		message2.put("companyId", companyId2);
-		message3.put("ctCollectionId", _ctCollection.getCtCollectionId());
 
 		_scheduleJob("test1", _GROUP_NAME, message1);
+
+		Message message2 = new Message();
+
+		message2.put("companyId", companyId2);
+
 		_scheduleJob("test2", _GROUP_NAME, message2);
+
+		Message message3 = new Message();
+
+		message3.put("ctCollectionId", _ctCollection.getCtCollectionId());
+
 		_scheduleJob("test3", _CT_DESTINATION_NAME, message3);
 
 		_runUpgrade();
@@ -225,17 +235,21 @@ public class QuartzUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeWithJobsWithCompanyIds() throws Exception {
-		long companyId1 = RandomTestUtil.randomLong();
-		long companyId2 = RandomTestUtil.randomLong();
-
 		Message message1 = new Message();
-		Message message2 = new Message();
+
+		long companyId1 = RandomTestUtil.randomLong();
 
 		message1.put("companyId", companyId1);
-		message2.put("companyId", companyId2);
 
 		_scheduleJob("test1", _GROUP_NAME, message1);
 		_scheduleJob("test2", _GROUP_NAME, message1);
+
+		long companyId2 = RandomTestUtil.randomLong();
+
+		Message message2 = new Message();
+
+		message2.put("companyId", companyId2);
+
 		_scheduleJob("test3", _GROUP_NAME, message2);
 		_scheduleJob("test4@" + companyId2, _GROUP_NAME, message2);
 

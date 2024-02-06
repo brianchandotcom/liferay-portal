@@ -199,11 +199,11 @@ public class CompanyLocalServiceDBPartitionTest
 
 		_scheduleJob(company.getCompanyId(), _JOB_NAME);
 
-		Assert.assertEquals(_JOB_COUNT + 1, _getJobsCount(_defaultCompanyId));
+		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 
 		_companyLocalService.extractDBPartitionCompany(company.getCompanyId());
 
-		Assert.assertEquals(_JOB_COUNT, _getJobsCount(_defaultCompanyId));
+		Assert.assertEquals(_JOBS_COUNT, _getJobsCount(_defaultCompanyId));
 		Assert.assertEquals(1, _getJobsCount(company.getCompanyId()));
 
 		String name = "new" + company.getName();
@@ -228,7 +228,7 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertEquals(webId, company.getWebId());
 
 			Assert.assertEquals(
-				_JOB_COUNT + 1, _getJobsCount(_defaultCompanyId));
+				_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 		}
 		finally {
 			if (standaloneDBPartition) {
@@ -248,7 +248,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		_scheduleJob(company.getCompanyId(), _JOB_NAME);
 
-		Assert.assertEquals(_JOB_COUNT + 1, _getJobsCount(_defaultCompanyId));
+		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 
 		boolean standaloneDBPartition = false;
 
@@ -258,7 +258,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 			standaloneDBPartition = true;
 
-			Assert.assertEquals(_JOB_COUNT, _getJobsCount(_defaultCompanyId));
+			Assert.assertEquals(_JOBS_COUNT, _getJobsCount(_defaultCompanyId));
 			Assert.assertEquals(1, _getJobsCount(company.getCompanyId()));
 
 			Company defaultCompany = _companyLocalService.getCompany(
@@ -280,7 +280,7 @@ public class CompanyLocalServiceDBPartitionTest
 					ArrayUtil.contains(companyIds, company.getCompanyId()));
 
 				Assert.assertEquals(
-					_JOB_COUNT, _getJobsCount(_defaultCompanyId));
+					_JOBS_COUNT, _getJobsCount(_defaultCompanyId));
 				Assert.assertEquals(1, _getJobsCount(company.getCompanyId()));
 
 				_checkStandaloneDBPartitionTables(
@@ -305,7 +305,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		_scheduleJob(company.getCompanyId(), _JOB_NAME);
 
-		Assert.assertEquals(_JOB_COUNT + 1, _getJobsCount(_defaultCompanyId));
+		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 
 		boolean standaloneDBPartition = false;
 
@@ -315,7 +315,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 			standaloneDBPartition = true;
 
-			Assert.assertEquals(_JOB_COUNT, _getJobsCount(_defaultCompanyId));
+			Assert.assertEquals(_JOBS_COUNT, _getJobsCount(_defaultCompanyId));
 			Assert.assertEquals(1, _getJobsCount(company.getCompanyId()));
 
 			try (AutoCloseable autoCloseable =
@@ -350,7 +350,7 @@ public class CompanyLocalServiceDBPartitionTest
 					ArrayUtil.contains(companyIds, company.getCompanyId()));
 
 				Assert.assertEquals(
-					_JOB_COUNT, _getJobsCount(_defaultCompanyId));
+					_JOBS_COUNT, _getJobsCount(_defaultCompanyId));
 				Assert.assertEquals(1, _getJobsCount(company.getCompanyId()));
 
 				_checkStandaloneDBPartitionTables(
@@ -373,7 +373,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		_scheduleJob(company.getCompanyId(), _JOB_NAME);
 
-		Assert.assertEquals(_JOB_COUNT + 1, _getJobsCount(_defaultCompanyId));
+		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 
 		int dbPartitionsCount = _getDBPartitionsCount();
 
@@ -383,7 +383,7 @@ public class CompanyLocalServiceDBPartitionTest
 			ArrayUtil.contains(
 				PortalInstances.getCompanyIdsBySQL(), company.getCompanyId()));
 		Assert.assertEquals(dbPartitionsCount - 1, _getDBPartitionsCount());
-		Assert.assertEquals(_JOB_COUNT, _getJobsCount(_defaultCompanyId));
+		Assert.assertEquals(_JOBS_COUNT, _getJobsCount(_defaultCompanyId));
 	}
 
 	@Test
@@ -392,7 +392,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		_scheduleJob(_company.getCompanyId(), _JOB_NAME);
 
-		Assert.assertEquals(_JOB_COUNT + 1, _getJobsCount(_defaultCompanyId));
+		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
@@ -419,9 +419,8 @@ public class CompanyLocalServiceDBPartitionTest
 				ArrayUtil.contains(
 					PortalInstances.getCompanyIdsBySQL(),
 					_company.getCompanyId()));
-
 			Assert.assertEquals(
-				_JOB_COUNT + 1, _getJobsCount(_defaultCompanyId));
+				_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 		}
 	}
 
@@ -431,7 +430,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		_scheduleJob(company.getCompanyId(), _JOB_NAME);
 
-		Assert.assertEquals(_JOB_COUNT + 1, _getJobsCount(_defaultCompanyId));
+		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 
 		boolean standaloneDBPartition = false;
 
@@ -446,7 +445,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 			standaloneDBPartition = true;
 
-			Assert.assertEquals(_JOB_COUNT, _getJobsCount(_defaultCompanyId));
+			Assert.assertEquals(_JOBS_COUNT, _getJobsCount(_defaultCompanyId));
 			Assert.assertEquals(1, _getJobsCount(company.getCompanyId()));
 
 			_checkStandaloneDBPartitionTables(
@@ -470,7 +469,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		_scheduleJob(company.getCompanyId(), _JOB_NAME);
 
-		Assert.assertEquals(_JOB_COUNT + 1, _getJobsCount(_defaultCompanyId));
+		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 
 		int tablesCount = _getTablesCount(company.getCompanyId());
 		int viewsCount = _getViewsCount(company.getCompanyId());
@@ -512,7 +511,7 @@ public class CompanyLocalServiceDBPartitionTest
 					PortalInstances.getCompanyIdsBySQL(),
 					company.getCompanyId()));
 			Assert.assertEquals(
-				_JOB_COUNT + 1, _getJobsCount(_defaultCompanyId));
+				_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 		}
 		finally {
 			if (standaloneDBPartition) {
@@ -638,11 +637,11 @@ public class CompanyLocalServiceDBPartitionTest
 			StorageType.PERSISTED);
 	}
 
-	private static final int _JOB_COUNT = 2;
-
 	private static final String _JOB_GROUP_NAME = "liferay/test";
 
 	private static final String _JOB_NAME = "test";
+
+	private static final int _JOBS_COUNT = 2;
 
 	@Inject
 	private static CompanyLocalService _companyLocalService;

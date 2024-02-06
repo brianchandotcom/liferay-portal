@@ -11,7 +11,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.app.service.test.util.DLAppServiceTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -45,7 +44,7 @@ public class DLAppServiceWhenUpdatingAndCheckingInAFileEntryTest
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 
-		fileEntry = DLAppServiceUtil.updateFileEntryAndCheckIn(
+		fileEntry = _dlAppService.updateFileEntryAndCheckIn(
 			fileEntry.getFileEntryId(), fileEntry.getFileName(),
 			fileEntry.getMimeType(), fileEntry.getTitle(),
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,

@@ -7,7 +7,6 @@ package com.liferay.document.library.internal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
@@ -313,9 +312,6 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 
 		Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 	}
-
-	@Inject
-	private static DLAppService _dlAppService;
 
 	@Inject
 	private static FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

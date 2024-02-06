@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.app.service.test.util.DLAppServiceTestUtil;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -75,7 +74,7 @@ public class DLAppServiceWhenSearchingFileEntriesTest
 
 		serviceContext.setAssetTagNames(assetTagNames);
 
-		fileEntry = DLAppServiceUtil.updateFileEntry(
+		fileEntry = _dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
 			fileName, StringPool.BLANK, description, changeLog,
 			DLVersionNumberIncrease.MINOR, bytes, null, null, serviceContext);

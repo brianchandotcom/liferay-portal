@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.app.service.test.util.DLAppServiceTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -50,14 +49,14 @@ public class DLAppServiceWhenMovingAFileEntryToTrashTest
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
+		_dlAppService.deleteFileEntry(_fileEntry.getFileEntryId());
 
 		super.tearDown();
 	}
 
 	@Test
 	public void testShouldCancelCheckout() throws Exception {
-		DLAppServiceUtil.checkOutFileEntry(
+		_dlAppService.checkOutFileEntry(
 			_fileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
@@ -65,14 +64,14 @@ public class DLAppServiceWhenMovingAFileEntryToTrashTest
 
 		DLTrashServiceUtil.moveFileEntryToTrash(_fileEntry.getFileEntryId());
 
-		_fileEntry = DLAppServiceUtil.getFileEntry(_fileEntry.getFileEntryId());
+		_fileEntry = _dlAppService.getFileEntry(_fileEntry.getFileEntryId());
 
 		Assert.assertFalse(_fileEntry.isCheckedOut());
 	}
 
 	@Test
 	public void testShouldDeletePWCAssetEntry() throws Exception {
-		DLAppServiceUtil.checkOutFileEntry(
+		_dlAppService.checkOutFileEntry(
 			_fileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 

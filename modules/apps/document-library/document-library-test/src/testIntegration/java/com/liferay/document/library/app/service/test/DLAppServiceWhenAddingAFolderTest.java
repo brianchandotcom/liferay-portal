@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,7 +37,7 @@ public class DLAppServiceWhenAddingAFolderTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testShouldAddAssetEntry() throws PortalException {
-		Folder folder = DLAppServiceUtil.addFolder(
+		Folder folder = _dlAppService.addFolder(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));

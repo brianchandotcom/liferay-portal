@@ -7,7 +7,6 @@ package com.liferay.document.library.app.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -33,7 +32,7 @@ public class DLAppServiceWhenUpdatingAFolderTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testShouldSucceedForDefaultParentFolder() throws Exception {
-		DLAppServiceUtil.updateFolder(
+		_dlAppService.updateFolder(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));

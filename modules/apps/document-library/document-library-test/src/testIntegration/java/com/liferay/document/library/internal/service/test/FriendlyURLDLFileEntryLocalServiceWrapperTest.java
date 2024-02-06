@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
@@ -643,9 +642,6 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 
 		Assert.assertEquals("url-title", mainFriendlyURLEntry.getUrlTitle());
 	}
-
-	@Inject
-	private static DLAppService _dlAppService;
 
 	@Inject
 	private static DLFileEntryLocalService _dlFileEntryLocalService;

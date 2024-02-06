@@ -8,7 +8,6 @@ package com.liferay.document.library.app.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
@@ -367,9 +366,6 @@ public class DLAppServiceWhenViewingFolderContentsTest
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private static DLAppService _dlAppService;
 
 	@Inject
 	private static UserLocalService _userLocalService;

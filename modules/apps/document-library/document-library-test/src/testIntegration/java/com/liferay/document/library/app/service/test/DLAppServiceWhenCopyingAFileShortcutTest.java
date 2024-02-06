@@ -8,7 +8,6 @@ package com.liferay.document.library.app.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.app.service.test.util.DLAppServiceTestUtil;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -45,14 +44,14 @@ public class DLAppServiceWhenCopyingAFileShortcutTest
 		fileEntry = DLAppServiceTestUtil.addFileEntry(
 			parentFolder.getGroupId(), parentFolder.getFolderId());
 
-		newParentFolder = DLAppServiceUtil.addFolder(
+		newParentFolder = _dlAppService.addFolder(
 			null, group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "New Test Folder",
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 
-		targetParentFolder = DLAppServiceUtil.addFolder(
+		targetParentFolder = _dlAppService.addFolder(
 			null, targetGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Target Test Folder",
 			RandomTestUtil.randomString(),
@@ -160,11 +159,11 @@ public class DLAppServiceWhenCopyingAFileShortcutTest
 			long targetFolderId)
 		throws Exception {
 
-		FileShortcut fileShortcut = DLAppServiceUtil.addFileShortcut(
+		FileShortcut fileShortcut = _dlAppService.addFileShortcut(
 			sourceGroupId, sourceFolderId, fileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(sourceGroupId));
 
-		DLAppServiceUtil.copyFileShortcut(
+		_dlAppService.copyFileShortcut(
 			fileShortcut.getFileShortcutId(), targetFolderId, targetGroupId,
 			ServiceContextTestUtil.getServiceContext(targetGroupId));
 	}

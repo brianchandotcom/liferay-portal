@@ -16,7 +16,6 @@ import com.liferay.document.library.app.service.test.util.DLAppServiceTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -679,9 +678,6 @@ public class
 				_assetTagLocalService.getTagNames(
 					className, fileEntry2.getFileEntryId())));
 	}
-
-	@Inject
-	private static DLAppService _dlAppService;
 
 	private AssetCategory _assetCategory;
 

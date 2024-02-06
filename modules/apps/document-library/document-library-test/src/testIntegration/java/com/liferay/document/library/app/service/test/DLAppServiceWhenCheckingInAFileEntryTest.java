@@ -14,7 +14,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.document.library.workflow.WorkflowHandlerInvocationCounter;
@@ -69,7 +68,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-			DLAppServiceUtil.checkOutFileEntry(
+			_dlAppService.checkOutFileEntry(
 				fileEntry.getFileEntryId(), serviceContext);
 
 			Assert.assertEquals(
@@ -86,7 +85,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 				workflowHandlerInvocationCounter.getCount(
 					"updateStatus", Object.class, int.class, Map.class));
 
-			DLAppServiceUtil.checkInFileEntry(
+			_dlAppService.checkInFileEntry(
 				fileEntry.getFileEntryId(), DLVersionNumberIncrease.MINOR,
 				RandomTestUtil.randomString(), serviceContext);
 
@@ -105,7 +104,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry = _dlAppService.addFileEntry(
 			null, group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
@@ -117,10 +116,10 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 
 		Assert.assertEquals(0, dlFileEntry.getFileEntryTypeId());
 
-		DLAppServiceUtil.checkOutFileEntry(
+		_dlAppService.checkOutFileEntry(
 			fileEntry.getFileEntryId(), serviceContext);
 
-		FileEntry checkedOutFileEntry = DLAppServiceUtil.getFileEntry(
+		FileEntry checkedOutFileEntry = _dlAppService.getFileEntry(
 			fileEntry.getFileEntryId());
 
 		serviceContext.setAttribute(
@@ -133,7 +132,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			"fileEntryTypeId",
 			basicDocumentDLFileEntryType.getFileEntryTypeId());
 
-		FileEntry updatedFileEntry = DLAppServiceUtil.updateFileEntry(
+		FileEntry updatedFileEntry = _dlAppService.updateFileEntry(
 			checkedOutFileEntry.getFileEntryId(),
 			checkedOutFileEntry.getFileName(),
 			checkedOutFileEntry.getMimeType(), checkedOutFileEntry.getTitle(),
@@ -141,11 +140,11 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			StringUtil.randomString(), DLVersionNumberIncrease.NONE, null, 0,
 			null, null, serviceContext);
 
-		DLAppServiceUtil.checkInFileEntry(
+		_dlAppService.checkInFileEntry(
 			updatedFileEntry.getFileEntryId(), DLVersionNumberIncrease.NONE,
 			StringUtil.randomString(), serviceContext);
 
-		FileEntry checkedInFileEntry = DLAppServiceUtil.getFileEntry(
+		FileEntry checkedInFileEntry = _dlAppService.getFileEntry(
 			updatedFileEntry.getFileEntryId());
 
 		DLFileEntry checkedInDLFileEntry =
@@ -170,10 +169,10 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		DLAppServiceUtil.checkOutFileEntry(
+		_dlAppService.checkOutFileEntry(
 			fileEntry.getFileEntryId(), serviceContext);
 
-		FileEntry checkedOutFileEntry = DLAppServiceUtil.getFileEntry(
+		FileEntry checkedOutFileEntry = _dlAppService.getFileEntry(
 			fileEntry.getFileEntryId());
 
 		FileVersion latestFileVersion =
@@ -190,7 +189,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 
 		serviceContext.setAssetTagNames(new String[] {"tag3", "tag4"});
 
-		FileEntry updatedFileEntry = DLAppServiceUtil.updateFileEntry(
+		FileEntry updatedFileEntry = _dlAppService.updateFileEntry(
 			checkedOutFileEntry.getFileEntryId(),
 			checkedOutFileEntry.getFileName(),
 			checkedOutFileEntry.getMimeType(), checkedOutFileEntry.getTitle(),
@@ -198,11 +197,11 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			StringUtil.randomString(), DLVersionNumberIncrease.NONE, null, 0,
 			null, null, serviceContext);
 
-		DLAppServiceUtil.checkInFileEntry(
+		_dlAppService.checkInFileEntry(
 			updatedFileEntry.getFileEntryId(), DLVersionNumberIncrease.NONE,
 			StringUtil.randomString(), serviceContext);
 
-		FileEntry checkedInFileEntry = DLAppServiceUtil.getFileEntry(
+		FileEntry checkedInFileEntry = _dlAppService.getFileEntry(
 			updatedFileEntry.getFileEntryId());
 
 		FileVersion lastFileVersion = checkedInFileEntry.getFileVersion();

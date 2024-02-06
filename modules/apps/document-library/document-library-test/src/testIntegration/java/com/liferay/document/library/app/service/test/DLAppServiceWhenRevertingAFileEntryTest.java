@@ -8,7 +8,6 @@ package com.liferay.document.library.app.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.app.service.test.util.DLAppServiceTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.document.library.workflow.WorkflowHandlerInvocationCounter;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -62,7 +61,7 @@ public class DLAppServiceWhenRevertingAFileEntryTest extends BaseDLAppTestCase {
 				workflowHandlerInvocationCounter.getCount(
 					"updateStatus", Object.class, int.class, Map.class));
 
-			DLAppServiceUtil.revertFileEntry(
+			_dlAppService.revertFileEntry(
 				fileEntry.getFileEntryId(), version,
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 

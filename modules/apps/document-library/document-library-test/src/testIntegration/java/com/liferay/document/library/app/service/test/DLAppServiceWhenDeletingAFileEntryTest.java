@@ -8,7 +8,6 @@ package com.liferay.document.library.app.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.app.service.test.util.DLAppServiceTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -37,7 +36,7 @@ public class DLAppServiceWhenDeletingAFileEntryTest extends BaseDLAppTestCase {
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 
-		DLAppServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
+		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
 
 		Assert.assertFalse(
 			CommentManagerUtil.hasDiscussion(

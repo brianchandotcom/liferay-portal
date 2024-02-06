@@ -16,7 +16,6 @@ import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.document.library.workflow.WorkflowHandlerInvocationCounter;
 import com.liferay.petra.lang.SafeCloseable;
@@ -94,7 +93,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		Assert.assertEquals(
 			externalReferenceCode, fileEntry.getExternalReferenceCode());
 
-		fileEntry = DLAppServiceUtil.getFileEntryByExternalReferenceCode(
+		fileEntry = _dlAppService.getFileEntryByExternalReferenceCode(
 			group.getGroupId(), externalReferenceCode);
 
 		Assert.assertEquals(
@@ -116,7 +115,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		Assert.assertEquals(
 			externalReferenceCode, fileEntry.getExternalReferenceCode());
 
-		fileEntry = DLAppServiceUtil.getFileEntryByExternalReferenceCode(
+		fileEntry = _dlAppService.getFileEntryByExternalReferenceCode(
 			group.getGroupId(), externalReferenceCode);
 
 		Assert.assertEquals(
@@ -327,7 +326,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	public void testShouldInferValidMimeType() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
-		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry = _dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.APPLICATION_OCTET_STREAM, fileName, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, CONTENT.getBytes(), null, null,
@@ -393,7 +392,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	public void testShouldSucceedWithNullBytes() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
-		DLAppServiceUtil.addFileEntry(
+		_dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, (byte[])null, null, null,
@@ -404,7 +403,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	public void testShouldSucceedWithNullFile() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
-		DLAppServiceUtil.addFileEntry(
+		_dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, (File)null, null, null,
@@ -415,7 +414,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	public void testShouldSucceedWithNullInputStream() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
-		DLAppServiceUtil.addFileEntry(
+		_dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, null, 0, null, null,
@@ -486,7 +485,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		@Override
 		protected void doRun() throws Exception {
 			try {
-				FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
+				FileEntry fileEntry = _dlAppService.getFileEntry(
 					_fileEntryIds[_index]);
 
 				InputStream inputStream = fileEntry.getContentStream();

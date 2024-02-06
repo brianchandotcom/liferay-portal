@@ -155,7 +155,7 @@ public class DLAppServiceWhenCopyingAFileEntryTest extends BaseDLAppTestCase {
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			sourceGroupId, sourceFolderId);
 
-		DLAppServiceUtil.copyFileEntry(
+		_dlAppService.copyFileEntry(
 			fileEntry.getFileEntryId(), targetFolderId, targetGroupId,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
 			ServiceContextTestUtil.getServiceContext(

@@ -6,7 +6,6 @@
 package com.liferay.document.library.app.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -37,29 +36,29 @@ public class DLAppServiceWhenDeletingAFolderTest extends BaseDLAppTestCase {
 	public void testShouldDeleteImplicitlyTrashedChildFolder()
 		throws Exception {
 
-		int initialFoldersCount = DLAppServiceUtil.getFoldersCount(
+		int initialFoldersCount = _dlAppService.getFoldersCount(
 			group.getGroupId(), parentFolder.getFolderId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		Folder folder = DLAppServiceUtil.addFolder(
+		Folder folder = _dlAppService.addFolder(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
-		DLAppServiceUtil.addFolder(
+		_dlAppService.addFolder(
 			null, group.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
-		DLAppServiceUtil.deleteFolder(folder.getFolderId());
+		_dlAppService.deleteFolder(folder.getFolderId());
 
 		Assert.assertEquals(
 			initialFoldersCount,
-			DLAppServiceUtil.getFoldersCount(
+			_dlAppService.getFoldersCount(
 				group.getGroupId(), parentFolder.getFolderId()));
 	}
 
@@ -68,12 +67,12 @@ public class DLAppServiceWhenDeletingAFolderTest extends BaseDLAppTestCase {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		Folder folder = DLAppServiceUtil.addFolder(
+		Folder folder = _dlAppService.addFolder(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
-		Folder subfolder = DLAppServiceUtil.addFolder(
+		Folder subfolder = _dlAppService.addFolder(
 			null, group.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
@@ -82,9 +81,9 @@ public class DLAppServiceWhenDeletingAFolderTest extends BaseDLAppTestCase {
 
 		DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
-		DLAppServiceUtil.deleteFolder(folder.getFolderId());
+		_dlAppService.deleteFolder(folder.getFolderId());
 
-		DLAppServiceUtil.getFolder(subfolder.getFolderId());
+		_dlAppService.getFolder(subfolder.getFolderId());
 	}
 
 }

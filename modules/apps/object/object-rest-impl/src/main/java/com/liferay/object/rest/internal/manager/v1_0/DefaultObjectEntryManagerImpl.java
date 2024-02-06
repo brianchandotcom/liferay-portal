@@ -739,6 +739,11 @@ public class DefaultObjectEntryManagerImpl
 			existingObjectEntry.setDateModified(objectEntry.getDateModified());
 		}
 
+		if (objectEntry.getExternalReferenceCode() != null) {
+			existingObjectEntry.setExternalReferenceCode(
+				objectEntry.getExternalReferenceCode());
+		}
+
 		if (objectEntry.getKeywords() != null) {
 			existingObjectEntry.setKeywords(objectEntry.getKeywords());
 		}

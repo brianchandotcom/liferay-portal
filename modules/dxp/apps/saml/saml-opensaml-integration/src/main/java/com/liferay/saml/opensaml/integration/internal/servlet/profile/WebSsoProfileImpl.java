@@ -62,7 +62,6 @@ import com.liferay.saml.persistence.service.SamlSpMessageLocalService;
 import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
-import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.exception.AssertionException;
 import com.liferay.saml.runtime.exception.AudienceException;
 import com.liferay.saml.runtime.exception.AuthnAgeException;
@@ -761,15 +760,14 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		if (notBeforeDateTime != null) {
 			verifyNotBeforeDateTime(
-				nowDateTime, metadataManager.getClockSkew(), notBeforeDateTime);
+				nowDateTime, _getClockSkew(), notBeforeDateTime);
 		}
 
 		DateTime notOnOrAfterDateTime = conditions.getNotOnOrAfter();
 
 		if (notOnOrAfterDateTime != null) {
 			verifyNotOnOrAfterDateTime(
-				nowDateTime, metadataManager.getClockSkew(),
-				notOnOrAfterDateTime);
+				nowDateTime, _getClockSkew(), notOnOrAfterDateTime);
 		}
 	}
 
@@ -908,8 +906,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		DateTime notOnOrAfterDateTime = new DateTime(DateTimeZone.UTC);
 
 		notOnOrAfterDateTime = notOnOrAfterDateTime.plus(
-			_samlConfiguration.getReplayChacheDuration() +
-				metadataManager.getClockSkew());
+			_samlConfiguration.getReplayChacheDuration() + _getClockSkew());
 
 		try {
 			SamlSpMessage samlSpMessage =
@@ -962,7 +959,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			}
 
 			DateTime nowDateTime = new DateTime(DateTimeZone.UTC);
-			long clockSkew = metadataManager.getClockSkew();
+			long clockSkew = _getClockSkew();
 
 			DateTime notBeforeDateTime = subjectConfirmationData.getNotBefore();
 
@@ -1278,7 +1275,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 
 		SamlProviderConfiguration samlProviderConfiguration =
-			_samlProviderConfigurationHelper.getSamlProviderConfiguration();
+			samlProviderConfigurationHelper.getSamlProviderConfiguration();
 
 		return samlProviderConfiguration.defaultAssertionLifetime();
 	}
@@ -1333,6 +1330,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		sb.append(URLCodec.encodeURL(relayState));
 
 		return sb.toString();
+	}
+
+	private long _getClockSkew() {
+		SamlProviderConfiguration samlProviderConfiguration =
+			samlProviderConfigurationHelper.getSamlProviderConfiguration();
+
+		return samlProviderConfiguration.clockSkew();
 	}
 
 	private NameIdResolver _getNameIdResolver(String entityId) {
@@ -2221,9 +2225,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private final DCLSingleton<SAMLMetadataEncryptionParametersResolver>
 		_samlMetadataEncryptionParametersResolverDCLSingleton =
 			new DCLSingleton<>();
-
-	@Reference
-	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 	@Reference
 	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;

@@ -75,11 +75,6 @@ import org.osgi.service.component.annotations.Reference;
 public class MetadataManagerImpl implements MetadataManager {
 
 	@Override
-	public long getClockSkew() {
-		return _getSamlProviderConfiguration().clockSkew();
-	}
-
-	@Override
 	public Credential getEncryptionCredential() throws SamlException {
 		try {
 			String entityId = _localEntityManager.getLocalEntityId();

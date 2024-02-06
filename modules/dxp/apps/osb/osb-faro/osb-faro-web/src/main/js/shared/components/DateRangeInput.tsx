@@ -39,6 +39,7 @@ interface IDateInputProps {
 	onBlur?: (event?: FocusEvent) => void;
 	onChange: (range: DateRange) => void;
 	overlayAlignment?: string;
+	showRetentionPeriod?: boolean;
 	usePortal?: boolean;
 	value: DateRange;
 }
@@ -49,6 +50,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 	format = DEFAULT_DATE_FORMAT,
 	onBlur = noop,
 	onChange = noop,
+	showRetentionPeriod = true,
 	value
 }) => {
 	const [active, setActive] = useState(false);
@@ -81,6 +83,8 @@ const DateInput: React.FC<IDateInputProps> = ({
 		end: convertToMoment(value.end, format),
 		start: convertToMoment(value.start, format)
 	};
+
+	const minDate = formatDateWithTimezone(timeZoneId).clone();
 
 	return (
 		<ClayDropDown
@@ -143,17 +147,21 @@ const DateInput: React.FC<IDateInputProps> = ({
 			<DatePicker
 				date={momentDateRange}
 				header={
-					<DatePickerRetentionPeriodHeader
-						retentionPeriod={retentionPeriod}
-					/>
+					showRetentionPeriod ? (
+						<DatePickerRetentionPeriodHeader
+							retentionPeriod={retentionPeriod}
+						/>
+					) : null
 				}
 				maxDate={formatDateWithTimezone(timeZoneId)
 					.clone()
 					.subtract(1, 'days')}
 				maxRange={365}
-				minDate={formatDateWithTimezone(timeZoneId)
-					.clone()
-					.subtract(retentionPeriod, 'month')}
+				minDate={
+					showRetentionPeriod
+						? minDate.subtract(retentionPeriod, 'months')
+						: minDate.subtract(100, 'years')
+				}
 				onSelect={handleDateSelect}
 				timeZoneId={timeZoneId}
 			/>

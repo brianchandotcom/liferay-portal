@@ -67,6 +67,7 @@ const FormDateRangeInput: React.FC<IFormDateRangeInputProps> = ({
 				name={name}
 				onChange={handleChange}
 				overlayAlignment={overlayAlignment}
+				showRetentionPeriod={false}
 				usePortal={usePortal}
 				value={value}
 			/>

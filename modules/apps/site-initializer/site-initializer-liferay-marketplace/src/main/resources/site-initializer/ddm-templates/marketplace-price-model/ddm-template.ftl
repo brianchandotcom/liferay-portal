@@ -1,7 +1,8 @@
 <#assign
 	channelId=""
 	channels=restClient.get("/headless-commerce-delivery-catalog/v1.0/channels")
-	filteredSpecifications=[] />
+	filteredSpecifications=[]
+/>
 
 <#list channels.items as channel>
 	<#if channel.name=="Marketplace Channel">
@@ -18,6 +19,7 @@
 		<#if specification.specificationKey?has_content>
 			<#if stringUtil.equals(specification.specificationKey, "price-model" )>
 				<#assign priceModel = specification.value />
+
 				<#if priceModel?has_content>
 					${priceModel}
 				</#if>

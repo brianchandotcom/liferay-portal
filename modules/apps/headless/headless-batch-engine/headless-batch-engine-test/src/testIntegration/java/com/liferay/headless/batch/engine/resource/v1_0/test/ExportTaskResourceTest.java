@@ -165,6 +165,18 @@ public class ExportTaskResourceTest {
 		}
 	}
 
+	private String _splitClassName(String className) {
+		if (className.contains("#")) {
+			String[] classNameTaskItemDelegateName = className.split("#");
+
+			_taskItemDelegateName = classNameTaskItemDelegateName[1];
+
+			return classNameTaskItemDelegateName[0];
+		}
+
+		return className;
+	}
+
 	private void _testPostExportTask(String className) throws Exception {
 		ExportTaskResource.Builder builder = ExportTaskResource.builder();
 
@@ -175,7 +187,8 @@ public class ExportTaskResourceTest {
 		).build();
 
 		ExportTask exportTask = exportTaskResource.postExportTask(
-			className, "jsont", null, null, null, "");
+			_splitClassName(className), "jsont", null, null, null,
+			_taskItemDelegateName);
 
 		String externalReferenceCode = exportTask.getExternalReferenceCode();
 
@@ -244,7 +257,8 @@ public class ExportTaskResourceTest {
 		).build();
 
 		ImportTask importTask = importTaskResource.postImportTask(
-			className, null, "UPSERT", null, null, null, null, itemsJSONArray);
+			_splitClassName(className), null, "UPSERT", null, null, null,
+			_taskItemDelegateName, itemsJSONArray);
 
 		externalReferenceCode = importTask.getExternalReferenceCode();
 
@@ -548,5 +562,6 @@ public class ExportTaskResourceTest {
 	private JSONFactory _jsonFactory;
 
 	private final List<LogCapture> _logCaptures = new ArrayList<>();
+	private String _taskItemDelegateName;
 
 }

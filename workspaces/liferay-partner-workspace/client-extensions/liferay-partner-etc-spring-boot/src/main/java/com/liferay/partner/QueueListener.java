@@ -129,15 +129,15 @@ public class QueueListener {
 				String accountRegion = "";
 
 				try {
-					JSONObject accountsfJSONObject = _get(
+					JSONObject proxyAccountJSONObject = _get(
 						uriBuilder -> uriBuilder.path(
-							"/o/c/accountsfs/by-external-reference-code/" +
+							"/o/c/proxyaccounts/by-external-reference-code/" +
 								salesforceAccountKey
 						).build());
 
-					if (accountsfJSONObject.has("partnerLevelType")) {
+					if (proxyAccountJSONObject.has("partnerLevelType")) {
 						JSONObject partnerLevelTypeJSONObject =
-							accountsfJSONObject.getJSONObject(
+							proxyAccountJSONObject.getJSONObject(
 								"partnerLevelType");
 
 						String partnerLevelType =
@@ -151,9 +151,9 @@ public class QueueListener {
 							partnerLevelERCs.get(partnerLevelType));
 					}
 
-					if (accountsfJSONObject.has("currency")) {
+					if (proxyAccountJSONObject.has("currency")) {
 						JSONObject accountCurrencyJSONObject =
-							accountsfJSONObject.getJSONObject("currency");
+							proxyAccountJSONObject.getJSONObject("currency");
 
 						String accountCurrency =
 							accountCurrencyJSONObject.getString("key");
@@ -162,8 +162,8 @@ public class QueueListener {
 							"currency", accountCurrency);
 					}
 
-					if (accountsfJSONObject.has("region")) {
-						accountRegion = accountsfJSONObject.getString("region");
+					if (proxyAccountJSONObject.has("region")) {
+						accountRegion = proxyAccountJSONObject.getString("region");
 					}
 				}
 				catch (Exception exception) {

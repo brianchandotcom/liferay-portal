@@ -50,10 +50,10 @@
 			"label": {
 				"en_US": "Salesforce ID"
 			},
-			"name": "salesforceID",
+			"name": "salesforceId",
 			"required": false,
 			"type": "String"
 		}
 	],
-	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:AccountSF$]"
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:ProxyAccount$]"
 }

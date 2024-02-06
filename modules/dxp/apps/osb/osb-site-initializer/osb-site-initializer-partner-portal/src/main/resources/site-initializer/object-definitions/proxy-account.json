@@ -1,9 +1,9 @@
 {
 	"externalReferenceCode": "Account",
 	"label": {
-		"en_US": "Account SF"
+		"en_US": "Proxy Account"
 	},
-	"name": "AccountSF",
+	"name": "ProxyAccount",
 	"objectFields": [
 		{
 			"DBType": "String",
@@ -21,7 +21,7 @@
 	],
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "Accounts SF"
+		"en_US": "Proxy Accounts"
 	},
 	"scope": "company",
 	"storageType": "salesforce"

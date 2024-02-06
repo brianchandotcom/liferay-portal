@@ -38,8 +38,7 @@ definition {
 			"name": "${name}",
 			"objectFieldERC": "${objectFieldERC}",
 			"objectRelationshipNames": "${relationshipName}",
-			"r_apiSchemaToAPIProperties_c_apiSchemaERC": "${schemaERC}",
-			"type": "field"
+			"r_apiSchemaToAPIProperties_c_apiSchemaERC": "${schemaERC}"
 		''';
 
 		var curl = StringUtil.add(${curl}, " -d { ${body} }", "");

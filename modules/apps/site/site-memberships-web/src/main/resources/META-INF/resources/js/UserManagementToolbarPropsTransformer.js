@@ -77,12 +77,14 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const selectTeams = (itemData) => {
 		openSelectionModal({
 			onSelect: (selectedItem) => {
+				const itemValue = JSON.parse(selectedItem.value);
+
 				location.href = addParams(
-					`${`${portletNamespace}teamId`}=${selectedItem.id}`,
+					`${`${portletNamespace}teamId`}=${itemValue.teamId}`,
 					itemData.viewTeamURL
 				);
 			},
-			selectEventName: `${portletNamespace}selectTeam`,
+			selectEventName: `${portletNamespace}selectTeams`,
 			title: Liferay.Language.get('select-team'),
 			url: itemData?.selectTeamsURL,
 		});

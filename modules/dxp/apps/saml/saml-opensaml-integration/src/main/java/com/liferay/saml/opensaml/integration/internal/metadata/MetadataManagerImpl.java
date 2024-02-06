@@ -29,14 +29,11 @@ import net.shibboleth.utilities.java.support.xml.ParserPool;
 
 import org.opensaml.core.criterion.EntityIdCriterion;
 import org.opensaml.saml.metadata.resolver.MetadataResolver;
-import org.opensaml.saml.metadata.resolver.impl.PredicateRoleDescriptorResolver;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
-import org.opensaml.saml.security.impl.MetadataCredentialResolver;
 import org.opensaml.security.credential.Credential;
 import org.opensaml.security.credential.CredentialResolver;
 import org.opensaml.security.credential.UsageType;
 import org.opensaml.security.criteria.UsageCriterion;
-import org.opensaml.xmlsec.config.DefaultSecurityConfigurationBootstrap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -96,12 +93,6 @@ public class MetadataManagerImpl implements MetadataManager {
 	}
 
 	@Override
-	public MetadataCredentialResolver getMetadataCredentialResolver() {
-		return _metadataCredentialResolverDCLSingleton.getSingleton(
-			this::_createMetadataCredentialResolver);
-	}
-
-	@Override
 	public MetadataResolver getMetadataResolver() {
 		return _cachingChainingMetadataResolverDCLSingleton.getSingleton(
 			this::_createCachingChainingMetadataResolver);
@@ -114,9 +105,6 @@ public class MetadataManagerImpl implements MetadataManager {
 
 	@Deactivate
 	protected void deactivate() {
-		_predicateRoleDescriptorResolverDCLSingleton.destroy(
-			PredicateRoleDescriptorResolver::destroy);
-
 		_cachingChainingMetadataResolverDCLSingleton.destroy(
 			CachingChainingMetadataResolver::destroy);
 	}
@@ -149,49 +137,6 @@ public class MetadataManagerImpl implements MetadataManager {
 		}
 
 		return cachingChainingMetadataResolver;
-	}
-
-	private MetadataCredentialResolver _createMetadataCredentialResolver() {
-		MetadataCredentialResolver metadataCredentialResolver =
-			new MetadataCredentialResolver();
-
-		metadataCredentialResolver.setKeyInfoCredentialResolver(
-			DefaultSecurityConfigurationBootstrap.
-				buildBasicInlineKeyInfoCredentialResolver());
-		metadataCredentialResolver.setRoleDescriptorResolver(
-			_predicateRoleDescriptorResolverDCLSingleton.getSingleton(
-				this::_createPredicateRoleDescriptorResolver));
-
-		try {
-			metadataCredentialResolver.initialize();
-		}
-		catch (ComponentInitializationException
-					componentInitializationException) {
-
-			throw new RuntimeException(componentInitializationException);
-		}
-
-		return metadataCredentialResolver;
-	}
-
-	private PredicateRoleDescriptorResolver
-		_createPredicateRoleDescriptorResolver() {
-
-		PredicateRoleDescriptorResolver predicateRoleDescriptorResolver =
-			new PredicateRoleDescriptorResolver(
-				_cachingChainingMetadataResolverDCLSingleton.getSingleton(
-					this::_createCachingChainingMetadataResolver));
-
-		try {
-			predicateRoleDescriptorResolver.initialize();
-		}
-		catch (ComponentInitializationException
-					componentInitializationException) {
-
-			throw new RuntimeException(componentInitializationException);
-		}
-
-		return predicateRoleDescriptorResolver;
 	}
 
 	private Credential _getEncryptionCredential() throws SamlException {
@@ -267,14 +212,8 @@ public class MetadataManagerImpl implements MetadataManager {
 	@Reference
 	private LocalEntityManager _localEntityManager;
 
-	private final DCLSingleton<MetadataCredentialResolver>
-		_metadataCredentialResolverDCLSingleton = new DCLSingleton<>();
-
 	@Reference
 	private Portal _portal;
-
-	private final DCLSingleton<PredicateRoleDescriptorResolver>
-		_predicateRoleDescriptorResolverDCLSingleton = new DCLSingleton<>();
 
 	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;

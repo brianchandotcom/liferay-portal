@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.shibboleth.utilities.java.support.component.ComponentInitializationException;
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 import net.shibboleth.utilities.java.support.resolver.ResolverException;
 import net.shibboleth.utilities.java.support.security.IdentifierGenerationStrategy;
@@ -67,6 +68,7 @@ import org.opensaml.saml.common.messaging.context.navigate.SAMLMessageContextAut
 import org.opensaml.saml.common.messaging.context.navigate.SAMLMessageContextIssuerFunction;
 import org.opensaml.saml.common.xml.SAMLConstants;
 import org.opensaml.saml.metadata.resolver.MetadataResolver;
+import org.opensaml.saml.metadata.resolver.impl.PredicateRoleDescriptorResolver;
 import org.opensaml.saml.saml2.binding.security.impl.SAML2HTTPPostSimpleSignSecurityHandler;
 import org.opensaml.saml.saml2.binding.security.impl.SAML2HTTPRedirectDeflateSignatureSecurityHandler;
 import org.opensaml.saml.saml2.core.RequestAbstractType;
@@ -84,6 +86,7 @@ import org.opensaml.xmlsec.DecryptionConfiguration;
 import org.opensaml.xmlsec.SecurityConfigurationSupport;
 import org.opensaml.xmlsec.SignatureValidationConfiguration;
 import org.opensaml.xmlsec.SignatureValidationParameters;
+import org.opensaml.xmlsec.config.DefaultSecurityConfigurationBootstrap;
 import org.opensaml.xmlsec.context.SecurityParametersContext;
 import org.opensaml.xmlsec.criterion.SignatureValidationConfigurationCriterion;
 import org.opensaml.xmlsec.impl.BasicSignatureValidationParametersResolver;
@@ -517,6 +520,16 @@ public abstract class BaseProfile {
 			httpServletRequest.isSecure());
 	}
 
+	protected void deactivate() {
+		_predicateRoleDescriptorResolverDCLSingleton.destroy(
+			PredicateRoleDescriptorResolver::destroy);
+	}
+
+	protected MetadataCredentialResolver getMetadataCredentialResolver() {
+		return _metadataCredentialResolverDCLSingleton.getSingleton(
+			this::_createMetadataCredentialResolver);
+	}
+
 	protected SignatureTrustEngine getSignatureTrustEngine()
 		throws SamlException {
 
@@ -571,7 +584,7 @@ public abstract class BaseProfile {
 		List<SignatureTrustEngine> signatureTrustEngines = new ArrayList<>();
 
 		MetadataCredentialResolver metadataCredentialResolver =
-			metadataManager.getMetadataCredentialResolver();
+			getMetadataCredentialResolver();
 
 		KeyInfoCredentialResolver keyInfoCredentialResolver =
 			metadataCredentialResolver.getKeyInfoCredentialResolver();
@@ -588,6 +601,48 @@ public abstract class BaseProfile {
 		signatureTrustEngines.add(signatureTrustEngine);
 
 		return new ChainingSignatureTrustEngine(signatureTrustEngines);
+	}
+
+	private MetadataCredentialResolver _createMetadataCredentialResolver() {
+		MetadataCredentialResolver metadataCredentialResolver =
+			new MetadataCredentialResolver();
+
+		metadataCredentialResolver.setKeyInfoCredentialResolver(
+			DefaultSecurityConfigurationBootstrap.
+				buildBasicInlineKeyInfoCredentialResolver());
+		metadataCredentialResolver.setRoleDescriptorResolver(
+			_predicateRoleDescriptorResolverDCLSingleton.getSingleton(
+				this::_createPredicateRoleDescriptorResolver));
+
+		try {
+			metadataCredentialResolver.initialize();
+		}
+		catch (ComponentInitializationException
+					componentInitializationException) {
+
+			throw new RuntimeException(componentInitializationException);
+		}
+
+		return metadataCredentialResolver;
+	}
+
+	private PredicateRoleDescriptorResolver
+		_createPredicateRoleDescriptorResolver() {
+
+		PredicateRoleDescriptorResolver predicateRoleDescriptorResolver =
+			new PredicateRoleDescriptorResolver(
+				metadataManager.getMetadataResolver());
+
+		try {
+			predicateRoleDescriptorResolver.initialize();
+		}
+		catch (ComponentInitializationException
+					componentInitializationException) {
+
+			throw new RuntimeException(componentInitializationException);
+		}
+
+		return predicateRoleDescriptorResolver;
 	}
 
 	private MessageHandler<?> _getSecurityMessageHandler(
@@ -679,5 +734,9 @@ public abstract class BaseProfile {
 
 	private final DCLSingleton<ChainingSignatureTrustEngine>
 		_chainingSignatureTrustEngineDCLSingleton = new DCLSingleton<>();
+	private final DCLSingleton<MetadataCredentialResolver>
+		_metadataCredentialResolverDCLSingleton = new DCLSingleton<>();
+	private final DCLSingleton<PredicateRoleDescriptorResolver>
+		_predicateRoleDescriptorResolverDCLSingleton = new DCLSingleton<>();
 
 }

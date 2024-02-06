@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.opensaml.saml.metadata.resolver.MetadataResolver;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
-import org.opensaml.saml.security.impl.MetadataCredentialResolver;
 
 /**
  * @author Mika Koivisto
@@ -21,8 +20,6 @@ public interface MetadataManager {
 	public EntityDescriptor getEntityDescriptor(
 			HttpServletRequest httpServletRequest)
 		throws SamlException;
-
-	public MetadataCredentialResolver getMetadataCredentialResolver();
 
 	public MetadataResolver getMetadataResolver();
 

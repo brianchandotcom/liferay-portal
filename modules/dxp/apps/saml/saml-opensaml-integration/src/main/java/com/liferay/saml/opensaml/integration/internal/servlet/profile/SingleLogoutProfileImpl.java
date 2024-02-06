@@ -100,6 +100,7 @@ import org.opensaml.soap.client.http.PipelineFactoryHttpSOAPClient;
 import org.opensaml.xmlsec.context.SecurityParametersContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -381,6 +382,12 @@ public class SingleLogoutProfileImpl
 			CookiesManagerUtil.getDomain(httpServletRequest),
 			httpServletRequest, httpServletResponse,
 			SamlWebKeys.SAML_SSO_SESSION_ID);
+	}
+
+	@Deactivate
+	@Override
+	protected void deactivate() {
+		super.deactivate();
 	}
 
 	protected void performIdpSpLogout(

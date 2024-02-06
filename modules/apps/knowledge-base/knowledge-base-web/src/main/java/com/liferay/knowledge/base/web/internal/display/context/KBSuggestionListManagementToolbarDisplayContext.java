@@ -96,8 +96,7 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 				dropdownGroupItem.setDropdownItems(
 					_getFilterNavigationDropdownItems());
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						_httpServletRequest, "filter-by-navigation"));
+					LanguageUtil.get(_httpServletRequest, "filter-by"));
 			}
 		).build();
 	}

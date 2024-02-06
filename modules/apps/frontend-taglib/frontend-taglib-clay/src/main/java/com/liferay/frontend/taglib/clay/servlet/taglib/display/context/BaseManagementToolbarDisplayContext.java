@@ -188,7 +188,7 @@ public class BaseManagementToolbarDisplayContext
 	}
 
 	protected String getFilterNavigationDropdownItemsLabel() {
-		return LanguageUtil.get(httpServletRequest, "filter-by-navigation");
+		return LanguageUtil.get(httpServletRequest, "filter-by");
 	}
 
 	protected String getNavigation() {

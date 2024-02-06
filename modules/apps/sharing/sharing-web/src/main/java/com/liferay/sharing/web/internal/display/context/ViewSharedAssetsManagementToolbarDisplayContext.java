@@ -78,8 +78,7 @@ public class ViewSharedAssetsManagementToolbarDisplayContext
 				dropdownGroupItem.setDropdownItems(
 					_getFilterNavigationDropdownItems());
 				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "filter-by-navigation"));
+					LanguageUtil.get(httpServletRequest, "filter-by"));
 			}
 		).build();
 	}

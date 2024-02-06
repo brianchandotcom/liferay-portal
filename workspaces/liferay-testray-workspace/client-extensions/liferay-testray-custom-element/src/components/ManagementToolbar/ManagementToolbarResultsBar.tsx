@@ -47,7 +47,8 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 			if (!Object.keys(filterJSON).length) {
 				searchParams.delete('filter');
 				searchParams.delete('filterSchema');
-			} else {
+			}
+			else {
 				searchParams.set('filter', JSON.stringify(filterJSON));
 			}
 

@@ -145,6 +145,9 @@ definition {
 		}
 
 		if (!(isSet(displayDate))) {
+			var displayDate = DateUtil.getFormattedCurrentDate("yyyy-MM-dd HH:mm");
+		}
+		else {
 			var displayDate = DateUtil.getDateOffsetByMinutes(${increaseMinutes}, "yyyy-MM-dd HH:mm");
 
 			echo("## * displayDate: ${displayDate}");

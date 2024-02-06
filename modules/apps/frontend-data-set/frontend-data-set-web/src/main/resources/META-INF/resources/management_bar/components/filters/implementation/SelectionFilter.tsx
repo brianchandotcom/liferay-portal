@@ -20,9 +20,11 @@ import React, {
 	useState,
 } from 'react';
 
+import {getValueFromItem} from '../../../../utils/getValueFromItem';
+
 // @ts-ignore
 
-import {getValueFromItem, isValuesArrayChanged} from '../../../../utils/index';
+import {isValuesArrayChanged} from '../../../../utils/index';
 import {FilterImplementation, FilterImplementationArgs} from '../Filter';
 
 export interface SelectionFilterImplementationArgs

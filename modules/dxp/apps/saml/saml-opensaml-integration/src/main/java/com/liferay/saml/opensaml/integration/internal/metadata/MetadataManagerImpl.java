@@ -104,14 +104,14 @@ public class MetadataManagerImpl implements MetadataManager {
 			if (_samlProviderConfigurationHelper.isRoleIdp()) {
 				return MetadataGeneratorUtil.buildIdpEntityDescriptor(
 					portalURL, localEntityId, _isWantAuthnRequestSigned(),
-					_isSignMetadata(), getSigningCredential(),
+					_isSignMetadata(), _getSigningCredential(),
 					encryptionCredential);
 			}
 			else if (_samlProviderConfigurationHelper.isRoleSp()) {
 				return MetadataGeneratorUtil.buildSpEntityDescriptor(
 					portalURL, localEntityId, _isSignAuthnRequest(),
 					_isSignMetadata(), _isWantAssertionsSigned(),
-					getSigningCredential(), encryptionCredential);
+					_getSigningCredential(), encryptionCredential);
 			}
 
 			return null;
@@ -137,25 +137,6 @@ public class MetadataManagerImpl implements MetadataManager {
 	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException {
 		return _chainingSignatureTrustEngineDCLSingleton.getSingleton(
 			this::_createChainingSignatureTrustEngine);
-	}
-
-	@Override
-	public Credential getSigningCredential() throws SamlException {
-		try {
-			String entityId = _localEntityManager.getLocalEntityId();
-
-			if (Validator.isNull(entityId)) {
-				return null;
-			}
-
-			return _credentialResolver.resolveSingle(
-				new CriteriaSet(
-					new EntityIdCriterion(entityId),
-					new UsageCriterion(UsageType.SIGNING)));
-		}
-		catch (ResolverException resolverException) {
-			throw new SamlException(resolverException);
-		}
 	}
 
 	@Activate
@@ -271,6 +252,24 @@ public class MetadataManagerImpl implements MetadataManager {
 
 	private SamlProviderConfiguration _getSamlProviderConfiguration() {
 		return _samlProviderConfigurationHelper.getSamlProviderConfiguration();
+	}
+
+	private Credential _getSigningCredential() throws SamlException {
+		try {
+			String entityId = _localEntityManager.getLocalEntityId();
+
+			if (Validator.isNull(entityId)) {
+				return null;
+			}
+
+			return _credentialResolver.resolveSingle(
+				new CriteriaSet(
+					new EntityIdCriterion(entityId),
+					new UsageCriterion(UsageType.SIGNING)));
+		}
+		catch (ResolverException resolverException) {
+			throw new SamlException(resolverException);
+		}
 	}
 
 	private boolean _isSignAuthnRequest() {

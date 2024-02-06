@@ -569,15 +569,15 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		if (spSSODescriptor.isAuthnRequestsSigned() ||
 			idpSSODescriptor.getWantAuthnRequestsSigned()) {
 
-			Credential credential = metadataManager.getSigningCredential();
+			Credential credential = getSigningCredential();
 
 			SecurityParametersContext securityParametersContext =
 				outboundMessageContext.getSubcontext(
 					SecurityParametersContext.class, true);
 
 			OpenSamlUtil.prepareSecurityParametersContext(
-				metadataManager.getSigningCredential(),
-				securityParametersContext, idpSSODescriptor);
+				getSigningCredential(), securityParametersContext,
+				idpSSODescriptor);
 
 			OpenSamlUtil.signObject(authnRequest, credential, idpSSODescriptor);
 		}
@@ -1962,7 +1962,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		samlPeerEndpointContext.setEndpoint(assertionConsumerService);
 
-		Credential credential = metadataManager.getSigningCredential();
+		Credential credential = getSigningCredential();
 
 		InOutOperationContext<?, Response> inOutOperationContext =
 			messageContext.getSubcontext(InOutOperationContext.class);
@@ -2034,7 +2034,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		Assertion assertion = _getSuccessAssertion(
 			samlSsoRequestContext, assertionConsumerService, nameID);
 
-		Credential credential = metadataManager.getSigningCredential();
+		Credential credential = getSigningCredential();
 
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);

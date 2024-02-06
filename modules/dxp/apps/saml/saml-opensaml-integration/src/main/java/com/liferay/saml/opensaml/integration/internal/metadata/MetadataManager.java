@@ -21,8 +21,6 @@ import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
  */
 public interface MetadataManager {
 
-	public int getAssertionLifetime(String entityId);
-
 	public String[] getAttributeNames(String entityId);
 
 	public long getClockSkew();

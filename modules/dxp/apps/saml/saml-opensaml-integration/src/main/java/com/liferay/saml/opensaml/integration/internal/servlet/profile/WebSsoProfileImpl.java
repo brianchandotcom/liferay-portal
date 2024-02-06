@@ -62,6 +62,7 @@ import com.liferay.saml.persistence.service.SamlSpMessageLocalService;
 import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
+import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.exception.AssertionException;
 import com.liferay.saml.runtime.exception.AudienceException;
 import com.liferay.saml.runtime.exception.AuthnAgeException;
@@ -693,8 +694,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
 		DateTime notOnOrAfterDateTime = issueInstantDateTime.plusSeconds(
-			metadataManager.getAssertionLifetime(
-				samlPeerEntityContext.getEntityId()));
+			_getAssertionLifetime(samlPeerEntityContext.getEntityId()));
 
 		subjectConfirmationData.setNotOnOrAfter(notOnOrAfterDateTime);
 
@@ -1259,6 +1259,28 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			new SubjectAssertionContext(assertion));
 
 		return messageContext;
+	}
+
+	private int _getAssertionLifetime(String entityId) {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		try {
+			SamlIdpSpConnection samlIdpSpConnection =
+				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
+					companyId, entityId);
+
+			return samlIdpSpConnection.getAssertionLifetime();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		SamlProviderConfiguration samlProviderConfiguration =
+			_samlProviderConfigurationHelper.getSamlProviderConfiguration();
+
+		return samlProviderConfiguration.defaultAssertionLifetime();
 	}
 
 	private AttributeResolver _getAttributeResolver(String entityId) {
@@ -2199,6 +2221,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private final DCLSingleton<SAMLMetadataEncryptionParametersResolver>
 		_samlMetadataEncryptionParametersResolverDCLSingleton =
 			new DCLSingleton<>();
+
+	@Reference
+	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 	@Reference
 	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;

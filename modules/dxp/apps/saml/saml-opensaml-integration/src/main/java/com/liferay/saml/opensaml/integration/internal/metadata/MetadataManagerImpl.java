@@ -76,29 +76,6 @@ import org.osgi.service.component.annotations.Reference;
 public class MetadataManagerImpl implements MetadataManager {
 
 	@Override
-	public int getAssertionLifetime(String entityId) {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		try {
-			SamlIdpSpConnection samlIdpSpConnection =
-				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
-					companyId, entityId);
-
-			return samlIdpSpConnection.getAssertionLifetime();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		SamlProviderConfiguration samlProviderConfiguration =
-			_samlProviderConfigurationHelper.getSamlProviderConfiguration();
-
-		return samlProviderConfiguration.defaultAssertionLifetime();
-	}
-
-	@Override
 	public String[] getAttributeNames(String entityId) {
 		long companyId = CompanyThreadLocal.getCompanyId();
 

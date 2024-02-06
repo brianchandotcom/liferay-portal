@@ -14,8 +14,11 @@ import java.util.ResourceBundle;
  */
 public class ModificationDeletionConflictInfo extends BaseConflictInfo {
 
-	public ModificationDeletionConflictInfo(long modelClassPK) {
+	public ModificationDeletionConflictInfo(
+		long modelClassPK, boolean publicationConflict) {
+
 		_modelClassPK = modelClassPK;
+		_publicationConflict = publicationConflict;
 	}
 
 	@Override
@@ -26,8 +29,14 @@ public class ModificationDeletionConflictInfo extends BaseConflictInfo {
 
 	@Override
 	public String getResolutionDescription(ResourceBundle resourceBundle) {
-		return LanguageUtil.get(
-			resourceBundle, "deletion-conflicts-with-a-modification");
+		String message = "deletion-conflicts-with-a-modification";
+
+		if (_publicationConflict) {
+			message =
+				"deletion-conflicts-with-modifications-in-other-publications";
+		}
+
+		return LanguageUtil.get(resourceBundle, message);
 	}
 
 	@Override
@@ -41,5 +50,6 @@ public class ModificationDeletionConflictInfo extends BaseConflictInfo {
 	}
 
 	private final long _modelClassPK;
+	private final boolean _publicationConflict;
 
 }

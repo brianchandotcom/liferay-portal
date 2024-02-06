@@ -136,13 +136,12 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 															<li class="tree-item">
 																<aui:fieldset cssClass="portlet-type-data-section" id="configuration">
 																	<ul class="lfr-tree list-unstyled">
-													
 																		<% request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
 																			request.setAttribute("render_controls.jsp-childControl", false);
 																			request.setAttribute("render_controls.jsp-controls", configurationControls);
 																			request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
 																			request.setAttribute("render_controls.jsp-rootControlId", rootControlId); %>
-													
+
 																			<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 																	</ul>
 																</aui:fieldset>
@@ -358,7 +357,6 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 																		<li class="tree-item">
 																			<aui:fieldset cssClass="portlet-type-data-section" id="content">
 																				<c:if test="<%= exportControls != null %>">
-
 																					<% request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
 																						request.setAttribute("render_controls.jsp-childControl", false);
 																						request.setAttribute("render_controls.jsp-controls", exportControls);
@@ -367,8 +365,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 																						!portletDataHandler.isPublishToLiveByDefault());
 																						request.setAttribute("render_controls.jsp-rootControlId", rootControlId); %>
 
-																						<aui:field-wrapper
-																							label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
+																						<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
 																							<ul class="lfr-tree list-unstyled">
 																								<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 																							</ul>
@@ -376,24 +373,26 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 																				</c:if>
 
 																				<c:if test="<%= metadataControls != null %>">
-
 																					<% for (PortletDataHandlerControl metadataControl : metadataControls) { PortletDataHandlerBoolean
 																						control=(PortletDataHandlerBoolean)metadataControl; PortletDataHandlerControl[]
 																						childrenControls=control.getChildren(); %>
 
 																						<c:if test="<%= ArrayUtil.isNotEmpty(childrenControls) %>">
 
-																							<% request.setAttribute("render_controls.jsp-controls", childrenControls); %>
+																							<%
+																							request.setAttribute("render_controls.jsp-controls", childrenControls);
+																							%>
 
 																								<aui:field-wrapper label="content-metadata">
 																									<ul class="lfr-tree list-unstyled">
-																										<liferay-util:include page="/render_controls.jsp"
-																											servletContext="<%= application %>" />
+																										<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 																									</ul>
 																								</aui:field-wrapper>
 																						</c:if>
 
-																						<% } %>
+																						<%
+																						}
+																						%>
 
 																				</c:if>
 																			</aui:fieldset>
@@ -422,7 +421,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 																	<li class="tree-item">
 																		<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
 
-																		<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" 	/>
+																		<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
 																	</li>
 																</ul>
 															</div>

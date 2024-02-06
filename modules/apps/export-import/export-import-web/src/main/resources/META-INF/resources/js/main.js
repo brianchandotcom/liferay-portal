@@ -71,12 +71,16 @@ AUI.add(
 								);
 
 								if (!configurationNode) {
-									configurationNode = instance.byId('configuration_' + portletId);
+									configurationNode = instance.byId(
+										'configuration_' + portletId
+									);
 
 									configurationNode.delegate(
 										'change',
 										() => {
-											instance._setConfigurationLabels(portletId);
+											instance._setConfigurationLabels(
+												portletId
+											);
 										},
 										'input[type="checkbox]'
 									);
@@ -97,14 +101,20 @@ AUI.add(
 								);
 
 								if (!contentNode) {
-									contentNode = instance.byId('content_' + portletId);
+									contentNode = instance.byId(
+										'content_' + portletId
+									);
 
 									contentNode.delegate(
 										'change',
 										() => {
-											instance._setContentLabels(portletId);
+											instance._setContentLabels(
+												portletId
+											);
 
-											instance._storeNodeInputStates(contentNode);
+											instance._storeNodeInputStates(
+												contentNode
+											);
 										},
 										'input[type="checkbox]'
 									);
@@ -230,7 +240,9 @@ AUI.add(
 					);
 
 					if (contentOptionsLink) {
-						const contentOptionsNode = instance.byId('contentOptions');
+						const contentOptionsNode = instance.byId(
+							'contentOptions'
+						);
 
 						contentOptionsLink.on(STR_CLICK, () => {
 							contentOptionsNode.toggle('hide');
@@ -818,9 +830,7 @@ AUI.add(
 							.byId('showChangeConfiguration_' + portletId)
 							.hide();
 
-						instance
-							.byId('configuration_' + portletId)
-							.hide();
+						instance.byId('configuration_' + portletId).hide();
 					}
 					else {
 						instance
@@ -1017,11 +1027,10 @@ AUI.add(
 						inputNodes = node.getElementsByTagName('input');
 					}
 
-					console.log(instance._isChecked('commentsNode'))
-					console.log(instance._isChecked('ratingsNode'))
-
 					inputNodes.each((inputNode) => {
-						let hiddenList = inputNode.ancestorsByClassName(STR_HIDE);
+						let hiddenList = inputNode.ancestorsByClassName(
+							STR_HIDE
+						);
 
 						const id = inputNode.get('id');
 

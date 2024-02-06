@@ -8,12 +8,10 @@ package com.liferay.document.library.internal.service;
 import com.liferay.document.library.internal.DLAssetDisplayPageUtil;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.io.File;
 import java.io.InputStream;
@@ -21,7 +19,6 @@ import java.io.InputStream;
 import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -138,11 +135,5 @@ public class SubscriptionDLAppServiceWrapper extends DLAppServiceWrapper {
 			changeLog, dlVersionNumberIncrease, inputStream, size,
 			expirationDate, reviewDate, serviceContext);
 	}
-
-	@Reference
-	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
-
-	@Reference
-	private Portal _portal;
 
 }

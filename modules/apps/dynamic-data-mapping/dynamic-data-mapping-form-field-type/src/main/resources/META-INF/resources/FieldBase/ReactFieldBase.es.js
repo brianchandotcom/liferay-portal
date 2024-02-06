@@ -266,7 +266,7 @@ export function FieldBase({
 		editOnlyInDefaultLanguage &&
 		showLabel &&
 		readOnly;
-	const showLegend =
+	const showGroup =
 		type === 'checkbox_multiple' ||
 		type === 'grid' ||
 		type === 'paragraph' ||
@@ -442,7 +442,7 @@ export function FieldBase({
 
 			{renderLabel && (
 				<>
-					{showLegend ? (
+					{showGroup ? (
 						<div aria-labelledby={fieldLabelId} role="group">
 							<label
 								{...accessiblePropsFields}

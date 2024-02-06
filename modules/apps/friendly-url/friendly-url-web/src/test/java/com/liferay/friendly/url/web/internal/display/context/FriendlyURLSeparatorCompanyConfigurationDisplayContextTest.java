@@ -133,11 +133,15 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		Assert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
+					"defaultValue", "b"
+				).put(
 					"name", _NAME_BLOGS_ENTRY
 				).put(
 					"value", "blog-test1"
 				),
 				JSONUtil.put(
+					"defaultValue", "w"
+				).put(
 					"name", _NAME_JOURNAL_ARTICLE
 				).put(
 					"value", "journal-test1"
@@ -192,11 +196,15 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		Assert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
+					"defaultValue", "b"
+				).put(
 					"name", _NAME_BLOGS_ENTRY
 				).put(
 					"value", "blog-test1"
 				),
 				JSONUtil.put(
+					"defaultValue", "w"
+				).put(
 					"name", _NAME_JOURNAL_ARTICLE
 				).put(
 					"value", "web"
@@ -287,11 +295,15 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 		Assert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
+					"defaultValue", "b"
+				).put(
 					"name", _NAME_BLOGS_ENTRY
 				).put(
 					"value", "blog-test1"
 				),
 				JSONUtil.put(
+					"defaultValue", "w"
+				).put(
 					"name", _NAME_JOURNAL_ARTICLE
 				).put(
 					"value", "journal-test1"

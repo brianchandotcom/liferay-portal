@@ -19,7 +19,7 @@ export const test = mergeTests(
 
 const LINK_ITEM_ACTION_NAME = 'Link item action';
 
-test('Create an Item Action', async ({
+test('Create a Link Item Action', async ({
 	actionsPage,
 	dataSetsPage,
 	page,

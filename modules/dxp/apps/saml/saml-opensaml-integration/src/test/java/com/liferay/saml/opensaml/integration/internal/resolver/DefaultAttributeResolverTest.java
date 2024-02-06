@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
-import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
 
 import java.util.ArrayList;
@@ -66,11 +65,6 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 
 		ReflectionTestUtil.setFieldValue(
 			_defaultAttributeResolver, "_groupLocalService", groupLocalService);
-
-		_metadataManager = Mockito.mock(MetadataManager.class);
-
-		ReflectionTestUtil.setFieldValue(
-			_defaultAttributeResolver, "_metadataManager", _metadataManager);
 
 		_user = Mockito.mock(User.class);
 
@@ -827,7 +821,6 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 
 	private ExpandoBridge _expandoBridge;
 	private MessageContext<AuthnRequest> _messageContext;
-	private MetadataManager _metadataManager;
 	private RoleLocalService _roleLocalService;
 	private User _user;
 	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;

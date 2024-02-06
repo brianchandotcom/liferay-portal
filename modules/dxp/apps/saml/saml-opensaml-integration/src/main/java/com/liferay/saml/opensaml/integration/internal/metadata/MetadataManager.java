@@ -34,6 +34,4 @@ public interface MetadataManager {
 
 	public Credential getSigningCredential() throws SamlException;
 
-	public boolean isAttributesNamespaceEnabled(String entityId);
-
 }

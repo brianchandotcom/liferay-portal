@@ -8,13 +8,11 @@ package com.liferay.saml.opensaml.integration.internal.metadata;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.provider.DBMetadataResolver;
-import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.SamlException;
@@ -158,26 +156,6 @@ public class MetadataManagerImpl implements MetadataManager {
 		catch (ResolverException resolverException) {
 			throw new SamlException(resolverException);
 		}
-	}
-
-	@Override
-	public boolean isAttributesNamespaceEnabled(String entityId) {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		try {
-			SamlIdpSpConnection samlIdpSpConnection =
-				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
-					companyId, entityId);
-
-			return samlIdpSpConnection.isAttributesNamespaceEnabled();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return false;
 	}
 
 	@Activate

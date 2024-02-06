@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 /**
- * @author Iván Zaera
+ * @author Anderson Luiz
  */
 public class FrontendTokenDefinitionManagerTest {
 
@@ -41,94 +41,9 @@ public class FrontendTokenDefinitionManagerTest {
 
 	@Before
 	public void setUp() throws JSONException {
-		_initManager();
-	}
-
-	@Test
-	public void testAddFrontendTokenDefinitionFromClientExtension()
-		throws Exception {
-
-		ThemeCSSCET themeCSSCET =
-			FrontendTokenDefinitionTestUtils.newDummyThemeCSSCET();
-
-		_frontendTokenDefinitionManager.addFrontendTokenDefinition(
-			themeCSSCET.getCompanyId(), themeCSSCET.getExternalReferenceCode(),
-			themeCSSCET.getFrontendTokenDefinition());
-
-		Mockito.verify(
-			_jsonFactory
-		).createJSONObject(
-			themeCSSCET.getFrontendTokenDefinition()
-		);
-		Assert.assertTrue(
-			_allFrontendTokenDefinitions.get(
-				themeCSSCET.getCompanyId()
-			).containsKey(
-				themeCSSCET.getExternalReferenceCode()
-			));
-	}
-
-	@Test
-	public void testAddFrontendTokenDefinitionFromWorkspace() throws Exception {
-		_frontendTokenDefinitionManager.addFrontendTokenDefinition(
-			"any-theme-id",
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
-			"any-json");
-
-		Mockito.verify(
-			_jsonFactory
-		).createJSONObject(
-			"any-json"
-		);
-		Assert.assertFalse(
-			_allFrontendTokenDefinitions.containsKey("any-theme-id"));
-		Assert.assertTrue(
-			_themeIdFrontendTokenDefinitions.containsKey("any-theme-id"));
-	}
-
-	@Test
-	public void testRemoveFrontendTokenDefinitionFromClientExtensions()
-		throws Exception {
-
-		ThemeCSSCET themeCSSCET =
-			FrontendTokenDefinitionTestUtils.newDummyThemeCSSCET();
-
-		_allFrontendTokenDefinitions.put(
-			themeCSSCET.getCompanyId(),
-			ConcurrentHashMapBuilder.put(
-				themeCSSCET.getExternalReferenceCode(),
-				Mockito.mock(FrontendTokenDefinition.class)
-			).build());
-
-		_frontendTokenDefinitionManager.removeFrontendTokenDefinition(
-			themeCSSCET.getCompanyId(), themeCSSCET.getExternalReferenceCode());
-
-		Assert.assertNull(
-			_allFrontendTokenDefinitions.get(
-				themeCSSCET.getCompanyId()
-			).get(
-				themeCSSCET.getExternalReferenceCode()
-			));
-
-		Assert.assertTrue(_themeIdFrontendTokenDefinitions.isEmpty());
-	}
-
-	@Test
-	public void testRemoveFrontendTokenDefinitionFromWorkspace()
-		throws Exception {
-
-		_themeIdFrontendTokenDefinitions.put(
-			"any-theme-id", Mockito.mock(FrontendTokenDefinitionImpl.class));
-		_frontendTokenDefinitionManager.removeFrontendTokenDefinition(
-			"any-theme-id");
-
-		Assert.assertTrue(_themeIdFrontendTokenDefinitions.isEmpty());
-	}
-
-	private void _initManager() throws JSONException {
 		_jsonFactory = Mockito.mock(JSONFactory.class);
-		_allFrontendTokenDefinitions = new ConcurrentHashMap<>();
-		_themeIdFrontendTokenDefinitions = new ConcurrentHashMap<>();
+		_companyFrontendTokenDefinitionsMap = new ConcurrentHashMap<>();
+		_themeIdFrontendTokenDefinitionsMap = new ConcurrentHashMap<>();
 		DCLSingleton<Map<String, FrontendTokenDefinitionImpl>> dclSingleton =
 			Mockito.mock(DCLSingleton.class);
 
@@ -147,15 +62,90 @@ public class FrontendTokenDefinitionManagerTest {
 			""
 		);
 		_frontendTokenDefinitionManager = new FrontendTokenDefinitionManager(
-			_jsonFactory, dclSingleton, _allFrontendTokenDefinitions,
-			_themeIdFrontendTokenDefinitions);
+			_companyFrontendTokenDefinitionsMap, _jsonFactory,
+			_themeIdFrontendTokenDefinitionsMap, dclSingleton);
+	}
+
+	@Test
+	public void testAddThemeCSSCETFrontendTokenDefinition() throws Exception {
+		ThemeCSSCET themeCSSCET =
+			FrontendTokenDefinitionTestUtils.getDummyThemeCSSCET();
+
+		_frontendTokenDefinitionManager.addFrontendTokenDefinition(
+			themeCSSCET.getCompanyId(), themeCSSCET.getExternalReferenceCode(),
+			themeCSSCET.getFrontendTokenDefinition());
+
+		Mockito.verify(
+			_jsonFactory
+		).createJSONObject(
+			themeCSSCET.getFrontendTokenDefinition()
+		);
+
+		Map<String, FrontendTokenDefinition> frontendTokenDefinitionMap =
+			_companyFrontendTokenDefinitionsMap.get(themeCSSCET.getCompanyId());
+
+		Assert.assertTrue(
+			frontendTokenDefinitionMap.containsKey(
+				themeCSSCET.getExternalReferenceCode()));
+	}
+
+	@Test
+	public void testAddThemeFrontendTokenDefinition() throws Exception {
+		_frontendTokenDefinitionManager.addFrontendTokenDefinition(
+			"any-json",
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
+			"any-theme-id");
+
+		Mockito.verify(
+			_jsonFactory
+		).createJSONObject(
+			"any-json"
+		);
+
+		Assert.assertTrue(
+			_themeIdFrontendTokenDefinitionsMap.containsKey("any-theme-id"));
+	}
+
+	@Test
+	public void testRemoveThemeCSSCETFrontendTokenDefinition() {
+		ThemeCSSCET themeCSSCET =
+			FrontendTokenDefinitionTestUtils.getDummyThemeCSSCET();
+
+		_companyFrontendTokenDefinitionsMap.put(
+			themeCSSCET.getCompanyId(),
+			ConcurrentHashMapBuilder.put(
+				themeCSSCET.getExternalReferenceCode(),
+				Mockito.mock(FrontendTokenDefinition.class)
+			).build());
+
+		_frontendTokenDefinitionManager.removeFrontendTokenDefinition(
+			themeCSSCET.getCompanyId(), themeCSSCET.getExternalReferenceCode());
+
+		Map<String, FrontendTokenDefinition> frontendTokenDefinitionsMap =
+			_companyFrontendTokenDefinitionsMap.get(themeCSSCET.getCompanyId());
+
+		Assert.assertNull(
+			frontendTokenDefinitionsMap.get(
+				themeCSSCET.getExternalReferenceCode()));
+
+		Assert.assertTrue(_themeIdFrontendTokenDefinitionsMap.isEmpty());
+	}
+
+	@Test
+	public void testRemoveThemeFrontendTokenDefinition() {
+		_themeIdFrontendTokenDefinitionsMap.put(
+			"any-theme-id", Mockito.mock(FrontendTokenDefinitionImpl.class));
+		_frontendTokenDefinitionManager.removeFrontendTokenDefinition(
+			"any-theme-id");
+
+		Assert.assertTrue(_themeIdFrontendTokenDefinitionsMap.isEmpty());
 	}
 
 	private Map<Long, Map<String, FrontendTokenDefinition>>
-		_allFrontendTokenDefinitions;
+		_companyFrontendTokenDefinitionsMap;
 	private FrontendTokenDefinitionManager _frontendTokenDefinitionManager;
 	private JSONFactory _jsonFactory;
 	private Map<String, FrontendTokenDefinitionImpl>
-		_themeIdFrontendTokenDefinitions;
+		_themeIdFrontendTokenDefinitionsMap;
 
 }

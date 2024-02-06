@@ -33,7 +33,7 @@ public class FrontendTokenDefinitionValidatorTest {
 
 		_frontendTokenDefinitionValidator.validateFrontendTokenDefinition(
 			URLUtil.toString(
-					FrontendTokenDefinitionManagerTest.class.getResource(
+				FrontendTokenDefinitionManagerTest.class.getResource(
 					"dependencies/empty-categories-frontend-token-" +
 						"definition.json")));
 
@@ -48,7 +48,7 @@ public class FrontendTokenDefinitionValidatorTest {
 
 		_frontendTokenDefinitionValidator.validateFrontendTokenDefinition(
 			URLUtil.toString(
-					FrontendTokenDefinitionManagerTest.class.getResource(
+				FrontendTokenDefinitionManagerTest.class.getResource(
 					"dependencies/invalid-frontend-token-definition.json")));
 	}
 

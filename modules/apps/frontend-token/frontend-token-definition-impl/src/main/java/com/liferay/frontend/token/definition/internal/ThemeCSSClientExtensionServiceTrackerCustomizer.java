@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -7,6 +7,7 @@ package com.liferay.frontend.token.definition.internal;
 
 import com.liferay.client.extension.type.ThemeCSSCET;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -15,10 +16,10 @@ import org.osgi.framework.ServiceReference;
  * @author Anderson Luiz
  * @author Thiago Buarque
  */
-public class ThemeClientExtensionServiceTracker
+public class ThemeCSSClientExtensionServiceTrackerCustomizer
 	implements EagerServiceTrackerCustomizer<ThemeCSSCET, ThemeCSSCET> {
 
-	public ThemeClientExtensionServiceTracker(
+	public ThemeCSSClientExtensionServiceTrackerCustomizer(
 		BundleContext bundleContext,
 		FrontendTokenDefinitionManager frontendTokenDefinitionManager) {
 
@@ -32,9 +33,15 @@ public class ThemeClientExtensionServiceTracker
 
 		ThemeCSSCET themeCSSCET = _bundleContext.getService(serviceReference);
 
-		_frontendTokenDefinitionManager.addFrontendTokenDefinition(
-			themeCSSCET.getCompanyId(), themeCSSCET.getExternalReferenceCode(),
-			themeCSSCET.getFrontendTokenDefinition());
+		String frontendTokenDefinitionString =
+			themeCSSCET.getFrontendTokenDefinition();
+
+		if (!Validator.isBlank(frontendTokenDefinitionString)) {
+			_frontendTokenDefinitionManager.addFrontendTokenDefinition(
+				themeCSSCET.getCompanyId(),
+				themeCSSCET.getExternalReferenceCode(),
+				frontendTokenDefinitionString);
+		}
 
 		return themeCSSCET;
 	}

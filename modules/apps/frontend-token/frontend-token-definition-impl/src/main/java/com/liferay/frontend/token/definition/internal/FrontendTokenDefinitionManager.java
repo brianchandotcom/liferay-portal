@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -9,16 +9,12 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
-import org.osgi.util.tracker.BundleTracker;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 /**
  * @author Anderson Luiz
@@ -27,122 +23,60 @@ import java.util.function.Supplier;
 public class FrontendTokenDefinitionManager {
 
 	public FrontendTokenDefinitionManager(
-		JSONFactory jsonFactory,
-		DCLSingleton<Map<String, FrontendTokenDefinitionImpl>>
-			themeIdFrontendTokenDefinitionImplsDCLSingleton,
 		Map<Long, Map<String, FrontendTokenDefinition>>
-			allCompaniesFrontendTokenDefinitions,
+			companyFrontendTokenDefinitionsMap,
+		JSONFactory jsonFactory,
 		Map<String, FrontendTokenDefinitionImpl>
-			themeIdFrontendTokenDefinitions) {
+			themeIdFrontendTokenDefinitionsMap,
+		DCLSingleton<Map<String, FrontendTokenDefinitionImpl>>
+			themeIdFrontendTokenDefinitionsDCLSingleton) {
 
+		_companyFrontendTokenDefinitionsMap =
+			companyFrontendTokenDefinitionsMap;
 		_jsonFactory = jsonFactory;
-		_themeIdFrontendTokenDefinitionImplsDCLSingleton =
-			themeIdFrontendTokenDefinitionImplsDCLSingleton;
-		_allCompaniesFrontendTokenDefinitions =
-			allCompaniesFrontendTokenDefinitions;
 
-		_themeIdFrontendTokenDefinitionImpls = themeIdFrontendTokenDefinitions;
+		_themeIdFrontendTokenDefinitionImplsMap =
+			themeIdFrontendTokenDefinitionsMap;
+		_themeIdFrontendTokenDefinitionImplsDCLSingleton =
+			themeIdFrontendTokenDefinitionsDCLSingleton;
 	}
 
 	public void addFrontendTokenDefinition(
 		long companyId, String externalReferenceCode,
-		String frontendTokenDefinitionAsJsonString) {
-
-		_addFrontendTokenDefinitionFromClientExtension(
-			companyId, externalReferenceCode,
-			frontendTokenDefinitionAsJsonString,
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
-	}
-
-	public FrontendTokenDefinitionImpl addFrontendTokenDefinition(
-		String themeId, ResourceBundleLoader resourceBundleLoader,
-		String frontendTokenDefinitionAsJsonString) {
-
-		return _addFrontendTokenDefinitionFromWorkspace(
-			frontendTokenDefinitionAsJsonString, resourceBundleLoader, themeId);
-	}
-
-	public FrontendTokenDefinition getFrontendTokenDefinition(
-		long companyId, String externalReferenceCode) {
-
-		return _getCompanyFrontendTokenDefinitions(
-			companyId
-		).get(
-			externalReferenceCode
-		);
-	}
-
-	public Map<String, FrontendTokenDefinitionImpl>
-		getThemeIdFrontendTokenDefinitionImpls() {
-
-		return _themeIdFrontendTokenDefinitionImpls;
-	}
-
-	public DCLSingleton<Map<String, FrontendTokenDefinitionImpl>>
-		getThemeIdFrontendTokenDefinitionImplsDCLSingleton() {
-
-		return _themeIdFrontendTokenDefinitionImplsDCLSingleton;
-	}
-
-	public void removeFrontendTokenDefinition(Long companyId, String key) {
-		if (Objects.nonNull(companyId)) {
-			_getCompanyFrontendTokenDefinitions(
-				companyId
-			).remove(
-				key
-			);
-		}
-		else {
-			_themeIdFrontendTokenDefinitionImpls.remove(key);
-		}
-	}
-
-	public void removeFrontendTokenDefinition(String key) {
-		removeFrontendTokenDefinition(null, key);
-	}
-
-	private void _addFrontendTokenDefinitionFromClientExtension(
-		Long companyId, String externalReferenceCode,
-		String frontendTokenDefinitionAsJsonString,
-		ResourceBundleLoader resourceBundleLoader) {
+		String frontendTokenDefinitionJSONString) {
 
 		try {
-			Objects.requireNonNull(frontendTokenDefinitionAsJsonString);
-			Objects.requireNonNull(companyId);
-			Objects.requireNonNull(externalReferenceCode);
-
 			FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
-				_newFrontendTokenDefinitionImpl(
-					frontendTokenDefinitionAsJsonString, resourceBundleLoader);
+				_createFrontendTokenDefinitionImpl(
+					frontendTokenDefinitionJSONString,
+					ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
+					externalReferenceCode);
 
-			if (frontendTokenDefinitionImpl != null) {
-				_getCompanyFrontendTokenDefinitions(
-					companyId
-				).put(
-					externalReferenceCode, frontendTokenDefinitionImpl
-				);
-			}
+			Map<String, FrontendTokenDefinition> frontendTokenDefinitionsMap =
+				_getFrontendTokenDefinitionsMap(companyId);
+
+			frontendTokenDefinitionsMap.put(
+				externalReferenceCode, frontendTokenDefinitionImpl);
 		}
 		catch (JSONException jsonException) {
 			throw new RuntimeException(jsonException);
 		}
 	}
 
-	private FrontendTokenDefinitionImpl
-		_addFrontendTokenDefinitionFromWorkspace(
-			String frontendTokenDefinitionAsJsonString,
-			ResourceBundleLoader resourceBundleLoader, String themeId) {
+	public FrontendTokenDefinitionImpl addFrontendTokenDefinition(
+		String frontendTokenDefinitionJSONString,
+		ResourceBundleLoader resourceBundleLoader, String themeId) {
 
 		try {
 			Objects.requireNonNull(themeId);
 
 			FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
-				_newFrontendTokenDefinitionImpl(
-					frontendTokenDefinitionAsJsonString, resourceBundleLoader,
+				_createFrontendTokenDefinitionImpl(
+					frontendTokenDefinitionJSONString, resourceBundleLoader,
 					themeId);
 
-				_themeIdFrontendTokenDefinitionImpls.put(
-					themeId, frontendTokenDefinitionImpl);
+			_themeIdFrontendTokenDefinitionImplsMap.put(
+				themeId, frontendTokenDefinitionImpl);
 
 			return frontendTokenDefinitionImpl;
 		}
@@ -151,54 +85,68 @@ public class FrontendTokenDefinitionManager {
 		}
 	}
 
-	private Map<String, FrontendTokenDefinition>
-		_getCompanyFrontendTokenDefinitions(long companyId) {
+	public FrontendTokenDefinition getFrontendTokenDefinition(
+		long companyId, String externalReferenceCode) {
 
-		_allCompaniesFrontendTokenDefinitions.putIfAbsent(
-			companyId, new ConcurrentHashMap<>());
+		Map<String, FrontendTokenDefinition> frontendTokenDefinitionsMap =
+			_getFrontendTokenDefinitionsMap(companyId);
 
-		return _allCompaniesFrontendTokenDefinitions.get(companyId);
+		return frontendTokenDefinitionsMap.get(externalReferenceCode);
 	}
 
-	private FrontendTokenDefinitionImpl _newFrontendTokenDefinitionImpl(
-			String frontendTokenDefinitionAsJSON,
-			ResourceBundleLoader resourceBundleLoader)
-		throws JSONException {
+	public FrontendTokenDefinition getFrontendTokenDefinition(
+		Runnable runnable, String themeId) {
 
-		return _newFrontendTokenDefinitionImpl(
-			frontendTokenDefinitionAsJSON, resourceBundleLoader, null);
+		Map<String, FrontendTokenDefinitionImpl>
+			themeIdFrontendTokenDefinitionImpls =
+				_themeIdFrontendTokenDefinitionImplsDCLSingleton.getSingleton(
+					() -> {
+						runnable.run();
+
+						return _themeIdFrontendTokenDefinitionImplsMap;
+					});
+
+		return themeIdFrontendTokenDefinitionImpls.get(themeId);
 	}
 
-	private FrontendTokenDefinitionImpl _newFrontendTokenDefinitionImpl(
-			String frontendTokenDefinitionAsJSON,
+	public void removeFrontendTokenDefinition(
+		long companyId, String externalReferenceCode) {
+
+		Map<String, FrontendTokenDefinition> frontendTokenDefinitionsMap =
+			_getFrontendTokenDefinitionsMap(companyId);
+
+		frontendTokenDefinitionsMap.remove(externalReferenceCode);
+	}
+
+	public void removeFrontendTokenDefinition(String themeId) {
+		_themeIdFrontendTokenDefinitionImplsMap.remove(themeId);
+	}
+
+	private FrontendTokenDefinitionImpl _createFrontendTokenDefinitionImpl(
+			String frontendTokenDefinitionJSONString,
 			ResourceBundleLoader resourceBundleLoader, String themeId)
 		throws JSONException {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			frontendTokenDefinitionAsJSON);
-
 		return new FrontendTokenDefinitionImpl(
-			jsonObject, _jsonFactory, resourceBundleLoader, themeId);
+			_jsonFactory.createJSONObject(frontendTokenDefinitionJSONString),
+			_jsonFactory, resourceBundleLoader, themeId);
+	}
+
+	private Map<String, FrontendTokenDefinition>
+		_getFrontendTokenDefinitionsMap(long companyId) {
+
+		_companyFrontendTokenDefinitionsMap.putIfAbsent(
+			companyId, new ConcurrentHashMap<>());
+
+		return _companyFrontendTokenDefinitionsMap.get(companyId);
 	}
 
 	private final Map<Long, Map<String, FrontendTokenDefinition>>
-		_allCompaniesFrontendTokenDefinitions;
+		_companyFrontendTokenDefinitionsMap;
 	private final JSONFactory _jsonFactory;
-	private final Map<String, FrontendTokenDefinitionImpl>
-		_themeIdFrontendTokenDefinitionImpls;
 	private final DCLSingleton<Map<String, FrontendTokenDefinitionImpl>>
 		_themeIdFrontendTokenDefinitionImplsDCLSingleton;
+	private final Map<String, FrontendTokenDefinitionImpl>
+		_themeIdFrontendTokenDefinitionImplsMap;
 
-	public FrontendTokenDefinition getFrontendTokenDefinition(Runnable openBundleTrackerRunnable, String themeId) {
-		Map<String, FrontendTokenDefinitionImpl>
-				themeIdFrontendTokenDefinitionImpls =
-				_themeIdFrontendTokenDefinitionImplsDCLSingleton.getSingleton(
-						() -> {
-							openBundleTrackerRunnable.run();
-							return _themeIdFrontendTokenDefinitionImplsMap;
-						});
-
-		return themeIdFrontendTokenDefinitionImpls.get(themeId);
-
-	}
 }

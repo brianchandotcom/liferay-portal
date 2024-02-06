@@ -64,23 +64,23 @@ public class FrontendTokenDefinitionRegistryImpl
 		}
 
 		return _frontendTokenDefinitionManager.getFrontendTokenDefinition(
-			_openBundleTracker, themeId);
+			_bundleTracker::open, themeId);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_frontendTokenDefinitionManager = new FrontendTokenDefinitionManager(
-			_jsonFactory, new DCLSingleton<>(), new ConcurrentHashMap<>(),
-			new ConcurrentHashMap<>());
+			new ConcurrentHashMap<>(), _jsonFactory, new ConcurrentHashMap<>(),
+			new DCLSingleton<>());
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE,
-			new ThemeBundleTrackerCustomizer(
+			new ThemeTrackerCustomizer(
 				_frontendTokenDefinitionManager, _portal));
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ThemeCSSCET.class, "external.reference.code",
-			new ThemeClientExtensionServiceTracker(
+			new ThemeCSSClientExtensionServiceTrackerCustomizer(
 				bundleContext, _frontendTokenDefinitionManager));
 	}
 
@@ -116,8 +116,6 @@ public class FrontendTokenDefinitionRegistryImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	private final Runnable _openBundleTracker = () -> _bundleTracker.open();
 
 	@Reference
 	private Portal _portal;

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.net.URL;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -23,14 +25,11 @@ import org.mockito.Mockito;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleEvent;
 
-import java.io.IOException;
-import java.net.URL;
-
 /**
  * @author Anderson Luiz
  * @author Thiago Buarque
  */
-public class ThemeBundleTrackerCustomizerTest {
+public class ThemeTrackerCustomizerTest {
 
 	@ClassRule
 	@Rule
@@ -39,23 +38,34 @@ public class ThemeBundleTrackerCustomizerTest {
 
 	@Before
 	public void setUp() {
-		_manager = Mockito.mock(FrontendTokenDefinitionManager.class);
+		_frontendTokenDefinitionManager = Mockito.mock(
+			FrontendTokenDefinitionManager.class);
 
-		Portal portal = Mockito.mock(Portal.class);
-
-		_themeBundleTrackerCustomizer = new ThemeBundleTrackerCustomizer(
-			_manager, portal);
+		_themeTrackerCustomizer = new ThemeTrackerCustomizer(
+			_frontendTokenDefinitionManager, Mockito.mock(Portal.class));
 	}
 
 	@Test
-	public void testAddingBundle() throws IOException {
+	public void testAddingBundle() {
 		Bundle bundle = Mockito.mock(Bundle.class);
-		Mockito.when(bundle.getEntry(Mockito.anyString())).thenReturn(Mockito.mock(URL.class));
-		BundleEvent bundleEvent = Mockito.mock(BundleEvent.class);
-		MockedStatic<URLUtil> urlUtilMockedStatic = Mockito.mockStatic(URLUtil.class);
-		urlUtilMockedStatic.when(() -> URLUtil.toString(Mockito.any())).thenReturn("{}");
 
-		try (MockedStatic<ResourceBundleLoaderUtil>	resourceBundleLoaderUtilMockedStatic = Mockito.mockStatic(
+		Mockito.when(
+			bundle.getEntry(Mockito.anyString())
+		).thenReturn(
+			Mockito.mock(URL.class)
+		);
+
+		MockedStatic<URLUtil> urlUtilMockedStatic = Mockito.mockStatic(
+			URLUtil.class);
+
+		urlUtilMockedStatic.when(
+			() -> URLUtil.toString(Mockito.any())
+		).thenReturn(
+			"{}"
+		);
+
+		try (MockedStatic<ResourceBundleLoaderUtil>
+				resourceBundleLoaderUtilMockedStatic = Mockito.mockStatic(
 					ResourceBundleLoaderUtil.class)) {
 
 			ResourceBundleLoader resourceBundleLoader = Mockito.mock(
@@ -70,10 +80,11 @@ public class ThemeBundleTrackerCustomizerTest {
 				resourceBundleLoader
 			);
 
-			_themeBundleTrackerCustomizer.addingBundle(bundle, bundleEvent);
+			_themeTrackerCustomizer.addingBundle(
+				bundle, Mockito.mock(BundleEvent.class));
 
 			Mockito.verify(
-				_manager
+				_frontendTokenDefinitionManager
 			).addFrontendTokenDefinition(
 				Mockito.any(), Mockito.any(), Mockito.any()
 			);
@@ -87,17 +98,17 @@ public class ThemeBundleTrackerCustomizerTest {
 		FrontendTokenDefinitionImpl frontendTokenDefinitionImpl = Mockito.mock(
 			FrontendTokenDefinitionImpl.class);
 
-		_themeBundleTrackerCustomizer.removedBundle(
+		_themeTrackerCustomizer.removedBundle(
 			bundle, bundleEvent, frontendTokenDefinitionImpl);
 
 		Mockito.verify(
-			_manager
+			_frontendTokenDefinitionManager
 		).removeFrontendTokenDefinition(
 			Mockito.any()
 		);
 	}
 
-	private FrontendTokenDefinitionManager _manager;
-	private ThemeBundleTrackerCustomizer _themeBundleTrackerCustomizer;
+	private FrontendTokenDefinitionManager _frontendTokenDefinitionManager;
+	private ThemeTrackerCustomizer _themeTrackerCustomizer;
 
 }

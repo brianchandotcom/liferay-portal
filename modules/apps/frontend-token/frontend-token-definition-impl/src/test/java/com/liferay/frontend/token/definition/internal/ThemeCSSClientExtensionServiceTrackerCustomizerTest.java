@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -24,7 +24,7 @@ import org.osgi.framework.ServiceReference;
  * @author Anderson Luiz
  * @author Thiago Buarque
  */
-public class ThemeClientExtensionServiceTrackerTest {
+public class ThemeCSSClientExtensionServiceTrackerCustomizerTest {
 
 	@ClassRule
 	@Rule
@@ -32,21 +32,21 @@ public class ThemeClientExtensionServiceTrackerTest {
 		new LiferayUnitTestRule();
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		_bundleContext = Mockito.mock(BundleContext.class);
-		_manager = Mockito.mock(FrontendTokenDefinitionManager.class);
 
-		_tracker = new ThemeClientExtensionServiceTracker(
-			_bundleContext, _manager);
+		_frontendTokenDefinitionManager = Mockito.mock(
+			FrontendTokenDefinitionManager.class);
+
+		_themeCSSClientExtensionServiceTrackerCustomizer =
+			new ThemeCSSClientExtensionServiceTrackerCustomizer(
+				_bundleContext, _frontendTokenDefinitionManager);
 	}
 
 	@Test
 	public void testAddingService() {
-		ServiceReference<ThemeCSSCET> serviceReference = Mockito.mock(
-			ServiceReference.class);
-
 		ThemeCSSCET themeCSSCET =
-			FrontendTokenDefinitionTestUtils.newDummyThemeCSSCET();
+			FrontendTokenDefinitionTestUtils.getDummyThemeCSSCET();
 
 		Mockito.when(
 			_bundleContext.getService(Mockito.any(ServiceReference.class))
@@ -54,10 +54,11 @@ public class ThemeClientExtensionServiceTrackerTest {
 			themeCSSCET
 		);
 
-		_tracker.addingService(serviceReference);
+		_themeCSSClientExtensionServiceTrackerCustomizer.addingService(
+			Mockito.mock(ServiceReference.class));
 
 		Mockito.verify(
-			_manager
+			_frontendTokenDefinitionManager
 		).addFrontendTokenDefinition(
 			themeCSSCET.getCompanyId(), themeCSSCET.getExternalReferenceCode(),
 			themeCSSCET.getFrontendTokenDefinition()
@@ -70,7 +71,7 @@ public class ThemeClientExtensionServiceTrackerTest {
 			ServiceReference.class);
 
 		ThemeCSSCET themeCSSCET =
-			FrontendTokenDefinitionTestUtils.newDummyThemeCSSCET();
+			FrontendTokenDefinitionTestUtils.getDummyThemeCSSCET();
 
 		Mockito.when(
 			_bundleContext.getService(Mockito.any(ServiceReference.class))
@@ -78,10 +79,11 @@ public class ThemeClientExtensionServiceTrackerTest {
 			themeCSSCET
 		);
 
-		_tracker.removedService(serviceReference, themeCSSCET);
+		_themeCSSClientExtensionServiceTrackerCustomizer.removedService(
+			serviceReference, themeCSSCET);
 
 		Mockito.verify(
-			_manager
+			_frontendTokenDefinitionManager
 		).removeFrontendTokenDefinition(
 			themeCSSCET.getCompanyId(), themeCSSCET.getExternalReferenceCode()
 		);
@@ -94,7 +96,8 @@ public class ThemeClientExtensionServiceTrackerTest {
 	}
 
 	private BundleContext _bundleContext;
-	private FrontendTokenDefinitionManager _manager;
-	private ThemeClientExtensionServiceTracker _tracker;
+	private FrontendTokenDefinitionManager _frontendTokenDefinitionManager;
+	private ThemeCSSClientExtensionServiceTrackerCustomizer
+		_themeCSSClientExtensionServiceTrackerCustomizer;
 
 }

@@ -10,8 +10,11 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.frontend.token.definition.FrontendToken;
+import com.liferay.frontend.token.definition.FrontendTokenCategory;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.FrontendTokenMapping;
+import com.liferay.frontend.token.definition.FrontendTokenSet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -25,6 +28,11 @@ import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,10 +40,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * @author Anderson Luiz
@@ -50,12 +54,14 @@ public class FrontendTokenDefinitionRegistryTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	private String _frontendTokenDefinitionJson;
-
 	@Before
 	public void setUp() throws Exception {
-		URL url = getClass().getResource("dependencies/frontend-token-definition.json");
-		_frontendTokenDefinitionJson = JSONFactoryUtil.createJSONObject(URLUtil.toString(url)).toString();
+		_frontendTokenDefinitionJSONString = JSONFactoryUtil.createJSONObject(
+			URLUtil.toString(
+				FrontendTokenDefinitionRegistryTest.class.getResource(
+					"dependencies/frontend-token-definition.json"))
+		).toString();
+
 		_user = UserTestUtil.addUser();
 
 		_clientExtensionEntry =
@@ -64,8 +70,9 @@ public class FrontendTokenDefinitionRegistryTest {
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), "Client Extension Name"
 				).build(),
-
-				"", "", ClientExtensionEntryConstants.TYPE_THEME_CSS, "frontendTokenDefinition="+_frontendTokenDefinitionJson);
+				"", "", ClientExtensionEntryConstants.TYPE_THEME_CSS,
+				"frontendTokenDefinition=" +
+					_frontendTokenDefinitionJSONString);
 	}
 
 	@After
@@ -75,42 +82,103 @@ public class FrontendTokenDefinitionRegistryTest {
 	}
 
 	@Test
-	public void testGetClientExtensionFrontendTokenDefinition() throws JSONException {
-		FrontendTokenDefinition frontendTokenDefinition = _frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-	_user.getCompanyId(), "any-external-reference", "any-theme");
+	public void testGetThemeCSSCETFrontendTokenDefinition()
+		throws JSONException {
 
-		_assertFrontendTokenDefinition(frontendTokenDefinition);
+		_assertFrontendTokenDefinition(
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				_user.getCompanyId(), "any-external-reference", "any-theme"));
 	}
 
 	@Test
-	public void testGetWorkspaceFrontendTokenDefinition() throws JSONException {
-		FrontendTokenDefinition frontendTokenDefinition = _frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				-1, null, "classic");
-
-		_assertFrontendTokenDefinition(frontendTokenDefinition);
+	public void testGetThemeFrontendTokenDefinition() throws JSONException {
+		_assertFrontendTokenDefinition(
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				-1, null, "classic"));
 	}
 
-	private void _assertFrontendTokenDefinition(FrontendTokenDefinition frontendTokenDefinition) throws JSONException {
+	private void _assertFrontendTokenDefinition(
+			FrontendTokenDefinition frontendTokenDefinition)
+		throws JSONException {
 
-		JSONObject expectedFrontendTokenDefinitionAsJson = JSONFactoryUtil.createJSONObject(_frontendTokenDefinitionJson);
-		JSONObject expectedToken = expectedFrontendTokenDefinitionAsJson.getJSONArray("frontendTokenCategories")
-				.getJSONObject(0).getJSONArray("frontendTokenSets").getJSONObject(0)
-				.getJSONArray("frontendTokens").getJSONObject(0);
-		FrontendToken token = new ArrayList<>(frontendTokenDefinition.getFrontendTokens()).get(0);
+		JSONObject expectedFrontendTokenDefinitionJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				_frontendTokenDefinitionJSONString);
 
-		Assert.assertEquals(1, frontendTokenDefinition.getFrontendTokenCategories().size());
-		Assert.assertEquals(1, frontendTokenDefinition.getFrontendTokenSets().size());
-		Assert.assertEquals(1, frontendTokenDefinition.getFrontendTokens().size());
-		Assert.assertEquals(1, frontendTokenDefinition.getFrontendTokenMappings().size());
-		Assert.assertEquals(expectedToken.getString("defaultValue"), token.getDefaultValue().toString());
-		Assert.assertEquals(expectedToken.getString("name"), token.getName());
-		Assert.assertEquals(expectedToken.getString("type"), token.getType().getValue());
-		Assert.assertEquals(expectedToken.getJSONArray("mappings").get(0).toString(), new ArrayList<>(token.getFrontendTokenMappings()).get(0).getJSONObject(Locale.ENGLISH).toString());
+		JSONObject expectedTokenJSONObject =
+			expectedFrontendTokenDefinitionJSONObject.getJSONArray(
+				"frontendTokenCategories"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"frontendTokenSets"
+			).getJSONObject(
+				0
+			).getJSONArray(
+				"frontendTokens"
+			).getJSONObject(
+				0
+			);
+
+		Collection<FrontendTokenCategory> frontendTokenCategories =
+			frontendTokenDefinition.getFrontendTokenCategories();
+
+		Assert.assertEquals(
+			frontendTokenCategories.toString(), 1,
+			frontendTokenCategories.size());
+
+		Collection<FrontendTokenSet> frontendTokenSets =
+			frontendTokenDefinition.getFrontendTokenSets();
+
+		Assert.assertEquals(
+			frontendTokenSets.toString(), 1, frontendTokenSets.size());
+
+		List<FrontendToken> frontendTokens = new ArrayList<>(
+			frontendTokenDefinition.getFrontendTokens());
+
+		Assert.assertEquals(
+			frontendTokens.toString(), 1, frontendTokens.size());
+
+		List<FrontendTokenMapping> frontendTokenMappings = new ArrayList<>(
+			frontendTokenDefinition.getFrontendTokenMappings());
+
+		Assert.assertEquals(
+			frontendTokenMappings.toString(), 1, frontendTokenMappings.size());
+
+		FrontendToken token = frontendTokens.get(0);
+
+		Assert.assertEquals(
+			expectedTokenJSONObject.getString("defaultValue"),
+			token.getDefaultValue());
+
+		Assert.assertEquals(
+			expectedTokenJSONObject.getString("name"), token.getName());
+
+		FrontendToken.Type type = token.getType();
+
+		Assert.assertEquals(
+			expectedTokenJSONObject.getString("type"), type.getValue());
+
+		FrontendTokenMapping frontendTokenMapping = frontendTokenMappings.get(
+			0);
+
+		Assert.assertEquals(
+			String.valueOf(
+				expectedTokenJSONObject.getJSONArray(
+					"mappings"
+				).get(
+					0
+				)),
+			String.valueOf(
+				frontendTokenMapping.getJSONObject(LocaleUtil.ENGLISH)));
 	}
+
 	private ClientExtensionEntry _clientExtensionEntry;
 
 	@Inject
 	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
+
+	private String _frontendTokenDefinitionJSONString;
 
 	@Inject
 	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;

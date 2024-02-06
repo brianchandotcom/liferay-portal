@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -31,30 +31,35 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  * @author Anderson Luiz
  * @author Thiago Buarque
  */
-public class ThemeBundleTrackerCustomizer
+public class ThemeTrackerCustomizer
 	implements BundleTrackerCustomizer<FrontendTokenDefinitionImpl> {
 
-	public ThemeBundleTrackerCustomizer(
-		FrontendTokenDefinitionManager manager, Portal portal) {
+	public ThemeTrackerCustomizer(
+		FrontendTokenDefinitionManager frontendTokenDefinitionManager,
+		Portal portal) {
 
-		_manager = manager;
+		_frontendTokenDefinitionManager = frontendTokenDefinitionManager;
 		_portal = portal;
 	}
 
 	@Override
 	public FrontendTokenDefinitionImpl addingBundle(
-		Bundle bundle, BundleEvent event) {
+		Bundle bundle, BundleEvent bundleEvent) {
 
 		String themeId = null;
+
 		try {
-			String frontendTokenDefinitionAsJsonString =
+			String frontendTokenDefinitionJSONString =
 				_getFrontendTokenDefinitionJSONFromBundle(bundle);
 
-			if (Objects.nonNull(frontendTokenDefinitionAsJsonString)) {
-				themeId = _getThemeId(bundle, _portal);
-				return _manager.addFrontendTokenDefinition(
-						themeId, _getResourceBundleLoader(bundle.getSymbolicName()),
-						frontendTokenDefinitionAsJsonString);
+			if (Objects.nonNull(frontendTokenDefinitionJSONString)) {
+				themeId = _getThemeId(bundle);
+
+				return _frontendTokenDefinitionManager.
+					addFrontendTokenDefinition(
+						frontendTokenDefinitionJSONString,
+						_getResourceBundleLoader(bundle.getSymbolicName()),
+						themeId);
 			}
 		}
 		catch (RuntimeException runtimeException) {
@@ -75,10 +80,10 @@ public class ThemeBundleTrackerCustomizer
 
 	@Override
 	public void removedBundle(
-		Bundle bundle, BundleEvent event,
+		Bundle bundle, BundleEvent bundleEvent,
 		FrontendTokenDefinitionImpl frontendTokenDefinitionImpl) {
 
-		_manager.removeFrontendTokenDefinition(
+		_frontendTokenDefinitionManager.removeFrontendTokenDefinition(
 			frontendTokenDefinitionImpl.getThemeId());
 	}
 
@@ -130,7 +135,7 @@ public class ThemeBundleTrackerCustomizer
 		return webContextPath;
 	}
 
-	private String _getThemeId(Bundle bundle, Portal portal) {
+	private String _getThemeId(Bundle bundle) {
 		URL url = bundle.getEntry("WEB-INF/liferay-look-and-feel.xml");
 
 		if (url == null) {
@@ -158,7 +163,7 @@ public class ThemeBundleTrackerCustomizer
 						servletContextName;
 			}
 
-			return portal.getJsSafePortletId(themeId);
+			return _portal.getJsSafePortletId(themeId);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -168,12 +173,13 @@ public class ThemeBundleTrackerCustomizer
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ThemeBundleTrackerCustomizer.class);
+		ThemeTrackerCustomizer.class);
 
 	private static final Pattern _themeIdPattern = Pattern.compile(
 		".*<theme id=\"([^\"]*)\"[^>]*>.*");
 
-	private final FrontendTokenDefinitionManager _manager;
+	private final FrontendTokenDefinitionManager
+		_frontendTokenDefinitionManager;
 	private final Portal _portal;
 
 }

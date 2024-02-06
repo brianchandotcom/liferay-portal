@@ -2484,6 +2484,34 @@ public class UserLocalServiceUtil {
 		return getService().sendPasswordByUserId(userId);
 	}
 
+	/**
+	 * Sends the password lockout email to the user with the email address.
+	 * The content of this email can be specified in
+	 * <code>portal.properties</code> with the
+	 * <code>admin.email.password.lockout</code> keys.
+	 *
+	 * @param companyId the primary key of the user's company
+	 * @param emailAddress the user's email address
+	 * @param fromName the name of the individual that the email should be from
+	 * @param fromAddress the address of the individual that the email should be
+	 from
+	 * @param subject the email subject. If <code>null</code>, the subject
+	 specified in <code>portal.properties</code> will be used.
+	 * @param body the email body. If <code>null</code>, the body specified in
+	 <code>portal.properties</code> will be used.
+	 * @param serviceContext the service context to be applied
+	 */
+	public static boolean sendPasswordLockout(
+			long companyId, String emailAddress, String fromName,
+			String fromAddress, String subject, String body,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().sendPasswordLockout(
+			companyId, emailAddress, fromName, fromAddress, subject, body,
+			serviceContext);
+	}
+
 	public static void setGroupUsers(long groupId, long[] userIds) {
 		getService().setGroupUsers(groupId, userIds);
 	}

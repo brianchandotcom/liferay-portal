@@ -5,15 +5,22 @@
 
 // @ts-ignore
 
-import {Page} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
 type Viewport = 'Desktop' | 'Landscape Phone' | 'Portrait Phone' | 'Tablet';
 
 export class PageEditorPage {
 	readonly page: Page;
+	readonly redoButton: Locator;
+	readonly undoButton: Locator;
+	readonly undoHistory: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
+
+		this.redoButton = page.getByTitle('Redo');
+		this.undoButton = page.getByTitle('Undo');
+		this.undoHistory = page.locator('.page-editor__undo-history');
 	}
 
 	async goToConfigurationTab(tab: ConfigurationTab) {

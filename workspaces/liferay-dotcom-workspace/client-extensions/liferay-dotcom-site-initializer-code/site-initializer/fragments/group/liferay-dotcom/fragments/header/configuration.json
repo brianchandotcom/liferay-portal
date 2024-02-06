@@ -1,0 +1,88 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Site Menu",
+					"label": "Show Site Menu",
+					"name": "showSiteMenu",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Language Menu",
+					"label": "Show Language Menu",
+					"name": "showLanguageMenu",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Search Menu",
+					"label": "Show Search",
+					"name": "showSearchMenu",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Account Menu",
+					"label": "Show Account Menu",
+					"name": "showAccountMenu",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Site Name",
+					"label": "Show Site Name",
+					"name": "showSiteName",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Call to Action",
+					"label": "Show Call to Action",
+					"name": "showCallToAction",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Dark Mode",
+					"label": "Dark Mode",
+					"name": "darkMode",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"description": "Search Blueprint ID",
+					"label": "Search Blueprint ID",
+					"name": "searchBlueprintId",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "0",
+					"description": "Navigation DDM Template Key",
+					"label": "Navigation DDM Template Key",
+					"name": "navigationDDMTemplateKey",
+					"type": "text"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"description": "Site Navigation Menu ID",
+					"label": "Site Navigation Menu ID",
+					"name": "siteNavigationMenuId",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

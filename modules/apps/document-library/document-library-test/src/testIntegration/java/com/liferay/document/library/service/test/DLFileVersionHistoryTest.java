@@ -100,7 +100,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 	protected void assertFileEntryTitle(String fileName)
 		throws PortalException {
 
-		FileEntry fileEntry = _dlAppService.getFileEntry(
+		FileEntry fileEntry = dlAppService.getFileEntry(
 			_fileEntry.getFileEntryId());
 
 		Assert.assertEquals(fileName, fileEntry.getTitle());
@@ -120,7 +120,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 			String version, String fileName, boolean pwc)
 		throws PortalException {
 
-		_dlAppService.deleteFileVersion(_fileEntry.getFileEntryId(), version);
+		dlAppService.deleteFileVersion(_fileEntry.getFileEntryId(), version);
 
 		if (fileName != null) {
 			if (pwc) {
@@ -140,7 +140,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		long fileEntryId = _fileEntry.getFileEntryId();
 
 		if (versioned) {
-			_dlAppService.updateFileEntry(
+			dlAppService.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_1_1,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, (byte[])null,
@@ -150,9 +150,9 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		}
 
 		if (leaveCheckedOut) {
-			_dlAppService.checkOutFileEntry(fileEntryId, new ServiceContext());
+			dlAppService.checkOutFileEntry(fileEntryId, new ServiceContext());
 
-			_dlAppService.updateFileEntry(
+			dlAppService.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_PWC,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, (byte[])null,
@@ -235,7 +235,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 	protected void revertFileVersion(String version, String fileName)
 		throws PortalException {
 
-		_dlAppService.revertFileEntry(
+		dlAppService.revertFileEntry(
 			_fileEntry.getFileEntryId(), version, new ServiceContext());
 
 		if (fileName != null) {
@@ -251,7 +251,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		long fileEntryId = _fileEntry.getFileEntryId();
 
 		if (versioned) {
-			_dlAppService.updateFileEntry(
+			dlAppService.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_1_1,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, (byte[])null,
@@ -261,9 +261,9 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		}
 
 		if (leaveCheckedOut) {
-			_dlAppService.checkOutFileEntry(fileEntryId, new ServiceContext());
+			dlAppService.checkOutFileEntry(fileEntryId, new ServiceContext());
 
-			_dlAppService.updateFileEntry(
+			dlAppService.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_PWC,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, (byte[])null,

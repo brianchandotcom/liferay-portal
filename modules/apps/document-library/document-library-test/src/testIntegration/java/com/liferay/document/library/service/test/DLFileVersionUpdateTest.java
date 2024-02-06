@@ -77,12 +77,12 @@ public class DLFileVersionUpdateTest extends BaseDLAppTestCase {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		FileEntry fileEntry = _dlAppService.addFileEntry(
+		FileEntry fileEntry = dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(), addFileName,
 			addMimeType, addFileName, null, description, changeLog, addBytes,
 			null, null, serviceContext);
 
-		fileEntry = _dlAppService.updateFileEntry(
+		fileEntry = dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), updateFileName, updateMimeType,
 			updateFileName, null, description, changeLog,
 			DLVersionNumberIncrease.MINOR, updateBytes, new Date(), new Date(),

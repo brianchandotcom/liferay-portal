@@ -36,29 +36,29 @@ public class DLAppServiceWhenDeletingAFolderTest extends BaseDLAppTestCase {
 	public void testShouldDeleteImplicitlyTrashedChildFolder()
 		throws Exception {
 
-		int initialFoldersCount = _dlAppService.getFoldersCount(
+		int initialFoldersCount = dlAppService.getFoldersCount(
 			group.getGroupId(), parentFolder.getFolderId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		Folder folder = _dlAppService.addFolder(
+		Folder folder = dlAppService.addFolder(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
-		_dlAppService.addFolder(
+		dlAppService.addFolder(
 			null, group.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
-		_dlAppService.deleteFolder(folder.getFolderId());
+		dlAppService.deleteFolder(folder.getFolderId());
 
 		Assert.assertEquals(
 			initialFoldersCount,
-			_dlAppService.getFoldersCount(
+			dlAppService.getFoldersCount(
 				group.getGroupId(), parentFolder.getFolderId()));
 	}
 
@@ -67,12 +67,12 @@ public class DLAppServiceWhenDeletingAFolderTest extends BaseDLAppTestCase {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		Folder folder = _dlAppService.addFolder(
+		Folder folder = dlAppService.addFolder(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
-		Folder subfolder = _dlAppService.addFolder(
+		Folder subfolder = dlAppService.addFolder(
 			null, group.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
@@ -81,9 +81,9 @@ public class DLAppServiceWhenDeletingAFolderTest extends BaseDLAppTestCase {
 
 		DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
-		_dlAppService.deleteFolder(folder.getFolderId());
+		dlAppService.deleteFolder(folder.getFolderId());
 
-		_dlAppService.getFolder(subfolder.getFolderId());
+		dlAppService.getFolder(subfolder.getFolderId());
 	}
 
 }

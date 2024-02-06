@@ -59,7 +59,7 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-			Folder folder = _dlAppService.addFolder(
+			Folder folder = dlAppService.addFolder(
 				null, group.getGroupId(), parentFolder.getFolderId(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				serviceContext);
@@ -72,7 +72,7 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 				workflowHandlerInvocationCounter.getCount(
 					"updateStatus", Object.class, int.class, Map.class));
 
-			_dlAppService.copyFolder(
+			dlAppService.copyFolder(
 				folder.getRepositoryId(), folder.getFolderId(),
 				parentFolder.getParentFolderId(), folder.getName(),
 				folder.getDescription(), serviceContext);
@@ -92,7 +92,7 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		try {
-			_dlAppService.copyFolder(
+			dlAppService.copyFolder(
 				group.getGroupId(), parentFolder.getFolderId(),
 				group.getGroupId(), parentFolder.getFolderId(), new HashMap<>(),
 				null, serviceContext);
@@ -121,12 +121,12 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		Folder folder = _dlAppService.addFolder(
+		Folder folder = dlAppService.addFolder(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		try {
-			_dlAppService.copyFolder(
+			dlAppService.copyFolder(
 				group.getGroupId(), parentFolder.getFolderId(),
 				group.getGroupId(), folder.getFolderId(), new HashMap<>(), null,
 				serviceContext);
@@ -152,7 +152,7 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 	public void testShouldFailIfUsingSameNameAndDestinationIsParentFolder()
 		throws PortalException {
 
-		_dlAppService.copyFolder(
+		dlAppService.copyFolder(
 			group.getGroupId(), parentFolder.getFolderId(), group.getGroupId(),
 			parentFolder.getParentFolderId(), new HashMap<>(), null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
@@ -167,7 +167,7 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 
 		_addFoldersAndFileEntries(fileNamesMap, serviceContext);
 
-		Folder folder = _dlAppService.copyFolder(
+		Folder folder = dlAppService.copyFolder(
 			group.getGroupId(), parentFolder.getFolderId(),
 			targetGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, new HashMap<>(), null,
@@ -183,7 +183,7 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 		throws Exception {
 
 		for (Map.Entry<String, List<String>> entry : fileNamesMap.entrySet()) {
-			Folder folder = _dlAppService.addFolder(
+			Folder folder = dlAppService.addFolder(
 				null, group.getGroupId(), parentFolder.getFolderId(),
 				entry.getKey(), StringPool.BLANK, serviceContext);
 
@@ -219,11 +219,11 @@ public class DLAppServiceWhenCopyingAFolderTest extends BaseDLAppTestCase {
 
 		Map<String, List<String>> fileNamesMap = new HashMap<>();
 
-		List<Folder> folders = _dlAppService.getFolders(
+		List<Folder> folders = dlAppService.getFolders(
 			parentFolder.getRepositoryId(), parentFolder.getFolderId());
 
 		for (Folder folder : folders) {
-			List<FileEntry> fileEntries = _dlAppService.getFileEntries(
+			List<FileEntry> fileEntries = dlAppService.getFileEntries(
 				parentFolder.getRepositoryId(), folder.getFolderId());
 
 			List<String> fileNames = new ArrayList<>();

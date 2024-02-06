@@ -61,7 +61,7 @@ public class DLAppServiceWhenRevertingAFileEntryTest extends BaseDLAppTestCase {
 				workflowHandlerInvocationCounter.getCount(
 					"updateStatus", Object.class, int.class, Map.class));
 
-			_dlAppService.revertFileEntry(
+			dlAppService.revertFileEntry(
 				fileEntry.getFileEntryId(), version,
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 

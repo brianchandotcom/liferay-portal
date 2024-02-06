@@ -74,7 +74,7 @@ public class DLAppServiceWhenSearchingFileEntriesTest
 
 		serviceContext.setAssetTagNames(assetTagNames);
 
-		fileEntry = _dlAppService.updateFileEntry(
+		fileEntry = dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
 			fileName, StringPool.BLANK, description, changeLog,
 			DLVersionNumberIncrease.MINOR, bytes, null, null, serviceContext);

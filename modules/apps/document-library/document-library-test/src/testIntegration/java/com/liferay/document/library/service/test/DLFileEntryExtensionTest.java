@@ -355,7 +355,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 			FileEntry fileEntry, String sourceFileName, String title)
 		throws Exception {
 
-		_dlAppService.updateFileEntry(
+		dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), sourceFileName, ContentTypes.TEXT_PLAIN,
 			title, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,

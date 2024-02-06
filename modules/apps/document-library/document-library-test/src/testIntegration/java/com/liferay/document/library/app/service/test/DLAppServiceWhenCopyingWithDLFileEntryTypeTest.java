@@ -87,13 +87,13 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 
 		_childGroup = GroupTestUtil.addGroup(group.getGroupId());
 
-		_newParentFolder = _dlAppService.addFolder(
+		_newParentFolder = dlAppService.addFolder(
 			null, group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "New Test Folder",
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
-		_targetParentFolder = _dlAppService.addFolder(
+		_targetParentFolder = dlAppService.addFolder(
 			null, targetGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Target Test Folder",
 			RandomTestUtil.randomString(),
@@ -114,7 +114,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 			_dlFileEntryType.getFileEntryTypeId(),
 			dlFileEntry1.getFileEntryTypeId());
 
-		_dlAppService.copyFileEntry(
+		dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _targetParentFolder.getFolderId(),
 			_targetParentFolder.getGroupId(),
 			_dlFileEntryType.getFileEntryTypeId(),
@@ -136,7 +136,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 			_dlFileEntryType.getFileEntryTypeId(),
 			dlFileEntry1.getFileEntryTypeId());
 
-		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
+		FileEntry fileEntry2 = dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			_childGroup.getGroupId(), _dlFileEntryType.getFileEntryTypeId(),
@@ -163,7 +163,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 			_dlFileEntryType.getFileEntryTypeId(),
 			dlFileEntry1.getFileEntryTypeId());
 
-		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
+		FileEntry fileEntry2 = dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _newParentFolder.getFolderId(),
 			_newParentFolder.getGroupId(),
 			_dlFileEntryType.getFileEntryTypeId(),
@@ -191,7 +191,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 			_dlFileEntryType.getFileEntryTypeId(),
 			dlFileEntry1.getFileEntryTypeId());
 
-		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
+		FileEntry fileEntry2 = dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _newParentFolder.getFolderId(),
 			_newParentFolder.getGroupId(),
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
@@ -215,7 +215,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		_dlAppService.copyFolder(
+		dlAppService.copyFolder(
 			group.getGroupId(), parentFolder.getFolderId(),
 			targetGroup.getGroupId(), _targetParentFolder.getFolderId(),
 			HashMapBuilder.put(
@@ -234,7 +234,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 
 		DLFileEntry dlFileEntry1 = (DLFileEntry)fileEntry1.getModel();
 
-		Folder folder = _dlAppService.copyFolder(
+		Folder folder = dlAppService.copyFolder(
 			group.getGroupId(), parentFolder.getFolderId(),
 			_childGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -244,7 +244,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 			new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(_childGroup.getGroupId()));
 
-		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
+		List<FileEntry> fileEntries = dlAppService.getFileEntries(
 			_childGroup.getGroupId(), folder.getFolderId());
 
 		Assert.assertEquals(fileEntries.toString(), 1, fileEntries.size());
@@ -271,13 +271,13 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 			_dlFileEntryType.getFileEntryTypeId(),
 			dlFileEntry1.getFileEntryTypeId());
 
-		Folder folder = _dlAppService.copyFolder(
+		Folder folder = dlAppService.copyFolder(
 			group.getGroupId(), parentFolder.getFolderId(),
 			targetGroup.getGroupId(), _targetParentFolder.getFolderId(),
 			new HashMap<>(), new long[] {targetGroup.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
-		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
+		List<FileEntry> fileEntries = dlAppService.getFileEntries(
 			targetGroup.getGroupId(), folder.getFolderId());
 
 		Assert.assertEquals(fileEntries.toString(), 1, fileEntries.size());
@@ -300,7 +300,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 		serviceContext.setAttribute(
 			"fileEntryTypeId", _dlFileEntryType.getFileEntryTypeId());
 
-		return _dlAppService.addFileEntry(
+		return dlAppService.addFileEntry(
 			RandomTestUtil.randomString(), groupId, parentFolder,
 			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
 			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,

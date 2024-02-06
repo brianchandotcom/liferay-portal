@@ -32,7 +32,7 @@ public class DLAppServiceWhenUpdatingAFolderTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testShouldSucceedForDefaultParentFolder() throws Exception {
-		_dlAppService.updateFolder(
+		dlAppService.updateFolder(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));

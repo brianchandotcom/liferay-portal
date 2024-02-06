@@ -93,7 +93,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		Assert.assertEquals(
 			externalReferenceCode, fileEntry.getExternalReferenceCode());
 
-		fileEntry = _dlAppService.getFileEntryByExternalReferenceCode(
+		fileEntry = dlAppService.getFileEntryByExternalReferenceCode(
 			group.getGroupId(), externalReferenceCode);
 
 		Assert.assertEquals(
@@ -115,7 +115,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		Assert.assertEquals(
 			externalReferenceCode, fileEntry.getExternalReferenceCode());
 
-		fileEntry = _dlAppService.getFileEntryByExternalReferenceCode(
+		fileEntry = dlAppService.getFileEntryByExternalReferenceCode(
 			group.getGroupId(), externalReferenceCode);
 
 		Assert.assertEquals(
@@ -326,7 +326,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	public void testShouldInferValidMimeType() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
-		FileEntry fileEntry = _dlAppService.addFileEntry(
+		FileEntry fileEntry = dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.APPLICATION_OCTET_STREAM, fileName, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, CONTENT.getBytes(), null, null,
@@ -392,7 +392,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	public void testShouldSucceedWithNullBytes() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
-		_dlAppService.addFileEntry(
+		dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, (byte[])null, null, null,
@@ -403,7 +403,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	public void testShouldSucceedWithNullFile() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
-		_dlAppService.addFileEntry(
+		dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, (File)null, null, null,
@@ -414,7 +414,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	public void testShouldSucceedWithNullInputStream() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
-		_dlAppService.addFileEntry(
+		dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, null, 0, null, null,
@@ -485,7 +485,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		@Override
 		protected void doRun() throws Exception {
 			try {
-				FileEntry fileEntry = _dlAppService.getFileEntry(
+				FileEntry fileEntry = dlAppService.getFileEntry(
 					_fileEntryIds[_index]);
 
 				InputStream inputStream = fileEntry.getContentStream();

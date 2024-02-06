@@ -130,7 +130,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 		Assert.assertNotNull(friendlyURLEntry1);
 		Assert.assertEquals("urltitle", friendlyURLEntry1.getUrlTitle());
 
-		Folder folder = _dlAppService.addFolder(
+		Folder folder = dlAppService.addFolder(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);

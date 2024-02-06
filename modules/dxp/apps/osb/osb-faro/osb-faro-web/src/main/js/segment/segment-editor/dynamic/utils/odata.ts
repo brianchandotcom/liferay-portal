@@ -86,6 +86,18 @@ const FARO_SPECIAL_CHARS = {
 		encoded: '_FARO_AMPERSAND_',
 		raw: '&'
 	},
+	at: {
+		encoded: '_FARO_AT_',
+		raw: '@'
+	},
+	dash: {
+		encoded: '_FARO_DASH_',
+		raw: '-'
+	},
+	dollar: {
+		encoded: '_FARO_DOLLAR_',
+		raw: '$'
+	},
 	hash: {
 		encoded: '_FARO_HASH_',
 		raw: '#'
@@ -105,6 +117,10 @@ const FARO_SPECIAL_CHARS = {
 	slash: {
 		encoded: '_FARO_SLASH_',
 		raw: '/'
+	},
+	underscore: {
+		encoded: '_FARO_UNDERSCORE_',
+		raw: '_'
 	}
 };
 
@@ -251,11 +267,15 @@ const buildQueryString = (
 const decodeSpecialCharacters = (queryString: string): string => {
 	const {
 		ampersand,
+		at,
+		dash,
+		dollar,
 		hash,
 		percent,
 		plus,
 		question,
-		slash
+		slash,
+		underscore
 	} = FARO_SPECIAL_CHARS;
 
 	const specialCharsEncoded = Object.values(FARO_SPECIAL_CHARS)
@@ -268,6 +288,12 @@ const decodeSpecialCharacters = (queryString: string): string => {
 		switch (match) {
 			case ampersand.encoded:
 				return ampersand.raw;
+			case at.encoded:
+				return at.raw;
+			case dollar.encoded:
+				return dollar.raw;
+			case dash.encoded:
+				return dash.raw;
 			case hash.encoded:
 				return hash.raw;
 			case percent.encoded:
@@ -278,6 +304,8 @@ const decodeSpecialCharacters = (queryString: string): string => {
 				return question.raw;
 			case slash.encoded:
 				return slash.raw;
+			case underscore.encoded:
+				return underscore.raw;
 			default:
 				return match;
 		}
@@ -292,14 +320,18 @@ const encodeQuotes = (text: string): string => text.replace(/'/g, '%27');
 const encodeSpecialCharacters = (queryString: string): string => {
 	const {
 		ampersand,
+		at,
+		dash,
+		dollar,
 		hash,
 		percent,
 		plus,
 		question,
-		slash
+		slash,
+		underscore
 	} = FARO_SPECIAL_CHARS;
 
-	const charsNeedEscaped = ['+', '?'];
+	const charsNeedEscaped = ['+', '?', '$'];
 
 	const specialCharsPattern = Object.values(FARO_SPECIAL_CHARS)
 		.map(({raw}) => (charsNeedEscaped.includes(raw) ? `\\${raw}` : raw))
@@ -311,6 +343,12 @@ const encodeSpecialCharacters = (queryString: string): string => {
 		switch (match) {
 			case ampersand.raw:
 				return ampersand.encoded;
+			case at.raw:
+				return at.encoded;
+			case dash.raw:
+				return dash.encoded;
+			case dollar.raw:
+				return dollar.encoded;
 			case hash.raw:
 				return hash.encoded;
 			case percent.raw:
@@ -321,6 +359,8 @@ const encodeSpecialCharacters = (queryString: string): string => {
 				return question.encoded;
 			case slash.raw:
 				return slash.encoded;
+			case underscore.raw:
+				return underscore.encoded;
 			default:
 				return match;
 		}

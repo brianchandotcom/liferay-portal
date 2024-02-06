@@ -253,7 +253,7 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testGetCompanyUsers() throws Exception {
-		_company = CompanyTestUtil.addCompany(true);
+		_company = CompanyTestUtil.addCompany();
 
 		List<User> companyUsers = _userLocalService.getCompanyUsers(
 			_company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);

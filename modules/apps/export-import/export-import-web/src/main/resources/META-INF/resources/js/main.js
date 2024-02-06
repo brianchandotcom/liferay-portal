@@ -226,8 +226,19 @@ AUI.add(
 					);
 
 					if (contentOptionsLink) {
+						const contentOptionsNode = instance.byId('contentOptions');
+
 						contentOptionsLink.on(STR_CLICK, () => {
-							instance._getContentOptionsDialog();
+							contentOptionsNode.toggle('hide');
+						});
+
+						instance.get('commentsNode').on('change', () => {
+							instance._setContentOptionsLabels();
+							instance._storeNodeInputStates(contentOptionsNode);
+						});
+						instance.get('ratingsNode').on('change', () => {
+							instance._setContentOptionsLabels();
+							instance._storeNodeInputStates(contentOptionsNode);
 						});
 					}
 
@@ -348,45 +359,6 @@ AUI.add(
 						],
 						size: 'md',
 						title: portletTitle,
-					});
-				},
-
-				_getContentOptionsDialog() {
-					const instance = this;
-
-					const contentOptionsNode = instance.byId('contentOptions');
-
-					instance._storeNodeInputStates(contentOptionsNode);
-
-					Liferay.Util.openModal({
-						bodyHTML: contentOptionsNode.getHTML(),
-						buttons: [
-							{
-								displayType: 'unstyled',
-								label: Liferay.Language.get('ok'),
-								onClick({processClose}) {
-									instance._setContentOptionsLabels();
-
-									instance._storeNodeInputStates(
-										contentOptionsNode
-									);
-
-									processClose();
-								},
-							},
-							{
-								displayType: 'unstyled',
-								label: Liferay.Language.get('cancel'),
-								onClick() {
-									instance._restoreNodeInputStates(
-										contentOptionsNode
-									);
-								},
-								type: 'cancel',
-							},
-						],
-						size: 'md',
-						title: Liferay.Language.get('comments-and-ratings'),
 					});
 				},
 

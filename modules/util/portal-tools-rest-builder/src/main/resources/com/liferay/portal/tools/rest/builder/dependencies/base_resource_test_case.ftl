@@ -808,7 +808,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 						);
 
 						int totalCount = GetterUtil.getInteger(${schemaVarName}Page.getTotalCount());
-						int itemLimit = totalCount;
 
 						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 
@@ -842,7 +841,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							</#if>
 
 							<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
-								Pagination.of(1, itemLimit)
+								Pagination.of(1, totalCount + 2)
 							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 								${javaMethodParameter.parameterName}
 							<#else>
@@ -854,44 +853,53 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						List<${schemaName}> ${schemaVarNames}1 = (List<${schemaName}>)page1.getItems();
 
-						if(${schemaVarNames}1.size() < itemLimit) {
-							itemLimit = ${schemaVarNames}1.size();
-						}
+						Assert.assertEquals(${schemaVarNames}1.toString(), totalCount + 2, ${schemaVarNames}1.size());
 
-						int pages = (int) Math.ceil(${schemaVarName}Page.getTotalCount() / itemLimit);
-						List<${schemaName}> allItems = new ArrayList<${schemaName}>();
+						Page<${schemaName}> page2 = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
 
-						allItems.addAll(page1.getItems());
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							<#if !javaMethodParameter?is_first>
+								,
+							</#if>
 
-						if(pages > 2){
-							for(int pageNum = 2; pageNum < pages; pageNum++){
-								Assert.assertEquals(${schemaVarNames}1.toString(), itemLimit, ${schemaVarNames}1.size());
+							<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+								Pagination.of(2, totalCount + 2)
+							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+								${javaMethodParameter.parameterName}
+							<#else>
+								null
+							</#if>
+						</#list>
 
-								Page<${schemaName}> page = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+						);
 
-								<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-									<#if !javaMethodParameter?is_first>
-										,
-									</#if>
+						Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-									<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
-										Pagination.of(pageNum, itemLimit)
-									<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-										${javaMethodParameter.parameterName}
-									<#else>
-										null
-									</#if>
-								</#list>
+						List<${schemaName}> ${schemaVarNames}2 = (List<${schemaName}>)page2.getItems();
 
-								);
+						Assert.assertEquals(${schemaVarNames}2.toString(), 1, ${schemaVarNames}2.size());
 
-								allItems.addAll(page.getItems());
-							}
-						}
+						Page<${schemaName}> page3 = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
 
-						assertContains(${schemaVarName}1, allItems);
-						assertContains(${schemaVarName}2, allItems);
-						assertContains(${schemaVarName}3, allItems);
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							<#if !javaMethodParameter?is_first>
+								,
+							</#if>
+
+							<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+								Pagination.of(1, (int) totalCount + 3)
+							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+								${javaMethodParameter.parameterName}
+							<#else>
+								null
+							</#if>
+						</#list>
+
+						);
+
+						assertContains(${schemaVarName}1, (List<${schemaName}>)page3.getItems());
+						assertContains(${schemaVarName}2, (List<${schemaName}>)page3.getItems());
+						assertContains(${schemaVarName}3, (List<${schemaName}>)page3.getItems());
 					}
 				</#if>
 

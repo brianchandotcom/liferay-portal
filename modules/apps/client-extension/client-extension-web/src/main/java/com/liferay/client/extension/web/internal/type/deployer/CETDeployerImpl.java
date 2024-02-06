@@ -12,6 +12,7 @@ import com.liferay.client.extension.type.CustomElementCET;
 import com.liferay.client.extension.type.EditorConfigContributorCET;
 import com.liferay.client.extension.type.IFrameCET;
 import com.liferay.client.extension.type.JSImportMapsEntryCET;
+import com.liferay.client.extension.type.ThemeCSSCET;
 import com.liferay.client.extension.type.deployer.CETDeployer;
 import com.liferay.client.extension.type.deployer.CommerceCETDeployer;
 import com.liferay.client.extension.util.CETUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
@@ -87,6 +89,13 @@ public class CETDeployerImpl implements CETDeployer {
 					ClientExtensionEntryConstants.TYPE_JS_IMPORT_MAPS_ENTRY)) {
 
 			return _deploy((JSImportMapsEntryCET)cet);
+		}
+		else if (Objects.equals(
+					cet.getType(),
+					ClientExtensionEntryConstants.TYPE_THEME_CSS) &&
+				 FeatureFlagManagerUtil.isEnabled("LPD-10773")) {
+
+			return _deploy((ThemeCSSCET)cet);
 		}
 
 		return Collections.emptyList();
@@ -198,6 +207,16 @@ public class CETDeployerImpl implements CETDeployer {
 				new ClientExtensionJSImportMapsContributor(
 					jsImportMapsEntryCET.getBareSpecifier(), _jsonFactory,
 					jsImportMapsEntryCET.getURL())));
+	}
+
+	private List<ServiceRegistration<?>> _deploy(ThemeCSSCET themeCSSCET) {
+		return Arrays.asList(
+			_bundleContext.registerService(
+				ThemeCSSCET.class, themeCSSCET,
+				HashMapDictionaryBuilder.put(
+					"external.reference.code",
+					themeCSSCET.getExternalReferenceCode()
+				).build()));
 	}
 
 	private String _getPortletId(CET cet) {

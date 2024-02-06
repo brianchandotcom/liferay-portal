@@ -9,6 +9,9 @@ import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsEx
 import com.liferay.client.extension.type.ThemeCSSCET;
 import com.liferay.client.extension.type.internal.ThemeCSSCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -25,8 +28,10 @@ import javax.portlet.PortletRequest;
 public class ThemeCSSCETImplFactoryImpl
 	extends BaseCETImplFactoryImpl<ThemeCSSCET> {
 
-	public ThemeCSSCETImplFactoryImpl() {
+	public ThemeCSSCETImplFactoryImpl(JSONFactory jsonFactory) {
 		super(ThemeCSSCET.class);
+
+		_jsonFactory = jsonFactory;
 	}
 
 	@Override
@@ -50,6 +55,9 @@ public class ThemeCSSCETImplFactoryImpl
 			true
 		).put(
 			"clayURL", ParamUtil.getString(portletRequest, "clayURL")
+		).put(
+			"frontendTokenDefinition",
+			ParamUtil.getString(portletRequest, "frontendTokenDefinition")
 		).put(
 			"mainURL", ParamUtil.getString(portletRequest, "mainURL")
 		).build();
@@ -82,6 +90,30 @@ public class ThemeCSSCETImplFactoryImpl
 				"Invalid Main CSS URL: " + mainURL, "main-css-url-x-is-invalid",
 				mainURL);
 		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-10773")) {
+			return;
+		}
+
+		String frontendTokenDefinitionString =
+			newThemeCSSCET.getFrontendTokenDefinition();
+
+		if (Validator.isBlank(frontendTokenDefinitionString)) {
+			return;
+		}
+
+		try {
+			_jsonFactory.createJSONObject(frontendTokenDefinitionString);
+		}
+		catch (JSONException jsonException) {
+			throw new ClientExtensionEntryTypeSettingsException(
+				"Invalid Frontend Token Definition JSON. " +
+					jsonException.getMessage(),
+				"the-format-is-not-valid-please-upload-a-valid-frontend-" +
+					"token-definition-json-file");
+		}
 	}
+
+	private final JSONFactory _jsonFactory;
 
 }

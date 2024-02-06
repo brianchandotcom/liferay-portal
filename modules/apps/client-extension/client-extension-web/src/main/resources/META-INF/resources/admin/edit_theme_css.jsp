@@ -28,3 +28,20 @@ ThemeCSSCET themeCSSCET = editClientExtensionEntryDisplayContext.getCET();
 		<liferay-ui:message key="this-css-replaces-clay-css" />
 	</div>
 </aui:field-wrapper>
+
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10773") %>'>
+	<aui:field-wrapper cssClass="form-group">
+		<react:component
+			module="{FrontendTokenDefinitionFilePicker} from client-extension-web"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"externalReferenceCode", themeCSSCET.getExternalReferenceCode()
+				).put(
+					"frontendTokenDefinition", themeCSSCET.getFrontendTokenDefinition()
+				).put(
+					"learnResources", LearnMessageUtil.getReactDataJSONObject("client-extension-web")
+				).build()
+			%>'
+		/>
+	</aui:field-wrapper>
+</c:if>

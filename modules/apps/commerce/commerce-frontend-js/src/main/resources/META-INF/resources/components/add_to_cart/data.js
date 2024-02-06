@@ -25,6 +25,7 @@ export function formatCartItem(
 	else if (optionsJSON.length) {
 		optionsJSON = optionsJSON.map((optionJSON) => ({
 			...optionJSON,
+			key: optionJSON.skuOptionKey || optionJSON.key,
 			value: optionJSON.skuOptionValueKey || optionJSON.value,
 		}));
 	}

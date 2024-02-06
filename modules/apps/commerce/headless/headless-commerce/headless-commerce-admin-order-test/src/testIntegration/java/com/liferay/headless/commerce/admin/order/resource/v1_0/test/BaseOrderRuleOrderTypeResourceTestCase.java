@@ -284,7 +284,6 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			orderRuleOrderTypePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		OrderRuleOrderType orderRuleOrderType1 =
 			testGetOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage_addOrderRuleOrderType(
@@ -301,40 +300,40 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 		Page<OrderRuleOrderType> page1 =
 			orderRuleOrderTypeResource.
 				getOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage(
-					externalReferenceCode, Pagination.of(1, itemLimit));
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<OrderRuleOrderType> orderRuleOrderTypes1 =
 			(List<OrderRuleOrderType>)page1.getItems();
 
-		if (orderRuleOrderTypes1.size() < itemLimit) {
-			itemLimit = orderRuleOrderTypes1.size();
-		}
+		Assert.assertEquals(
+			orderRuleOrderTypes1.toString(), totalCount + 2,
+			orderRuleOrderTypes1.size());
 
-		int pages = (int)Math.ceil(
-			orderRuleOrderTypePage.getTotalCount() / itemLimit);
-		List<OrderRuleOrderType> allItems = new ArrayList<OrderRuleOrderType>();
+		Page<OrderRuleOrderType> page2 =
+			orderRuleOrderTypeResource.
+				getOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage(
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					orderRuleOrderTypes1.toString(), itemLimit,
-					orderRuleOrderTypes1.size());
+		List<OrderRuleOrderType> orderRuleOrderTypes2 =
+			(List<OrderRuleOrderType>)page2.getItems();
 
-				Page<OrderRuleOrderType> page =
-					orderRuleOrderTypeResource.
-						getOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage(
-							externalReferenceCode,
-							Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			orderRuleOrderTypes2.toString(), 1, orderRuleOrderTypes2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<OrderRuleOrderType> page3 =
+			orderRuleOrderTypeResource.
+				getOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage(
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(orderRuleOrderType1, allItems);
-		assertContains(orderRuleOrderType2, allItems);
-		assertContains(orderRuleOrderType3, allItems);
+		assertContains(
+			orderRuleOrderType1, (List<OrderRuleOrderType>)page3.getItems());
+		assertContains(
+			orderRuleOrderType2, (List<OrderRuleOrderType>)page3.getItems());
+		assertContains(
+			orderRuleOrderType3, (List<OrderRuleOrderType>)page3.getItems());
 	}
 
 	protected OrderRuleOrderType
@@ -464,7 +463,6 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			orderRuleOrderTypePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		OrderRuleOrderType orderRuleOrderType1 =
 			testGetOrderRuleIdOrderRuleOrderTypesPage_addOrderRuleOrderType(
@@ -480,39 +478,37 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 
 		Page<OrderRuleOrderType> page1 =
 			orderRuleOrderTypeResource.getOrderRuleIdOrderRuleOrderTypesPage(
-				id, null, Pagination.of(1, itemLimit));
+				id, null, Pagination.of(1, totalCount + 2));
 
 		List<OrderRuleOrderType> orderRuleOrderTypes1 =
 			(List<OrderRuleOrderType>)page1.getItems();
 
-		if (orderRuleOrderTypes1.size() < itemLimit) {
-			itemLimit = orderRuleOrderTypes1.size();
-		}
+		Assert.assertEquals(
+			orderRuleOrderTypes1.toString(), totalCount + 2,
+			orderRuleOrderTypes1.size());
 
-		int pages = (int)Math.ceil(
-			orderRuleOrderTypePage.getTotalCount() / itemLimit);
-		List<OrderRuleOrderType> allItems = new ArrayList<OrderRuleOrderType>();
+		Page<OrderRuleOrderType> page2 =
+			orderRuleOrderTypeResource.getOrderRuleIdOrderRuleOrderTypesPage(
+				id, null, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					orderRuleOrderTypes1.toString(), itemLimit,
-					orderRuleOrderTypes1.size());
+		List<OrderRuleOrderType> orderRuleOrderTypes2 =
+			(List<OrderRuleOrderType>)page2.getItems();
 
-				Page<OrderRuleOrderType> page =
-					orderRuleOrderTypeResource.
-						getOrderRuleIdOrderRuleOrderTypesPage(
-							id, null, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			orderRuleOrderTypes2.toString(), 1, orderRuleOrderTypes2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<OrderRuleOrderType> page3 =
+			orderRuleOrderTypeResource.getOrderRuleIdOrderRuleOrderTypesPage(
+				id, null, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(orderRuleOrderType1, allItems);
-		assertContains(orderRuleOrderType2, allItems);
-		assertContains(orderRuleOrderType3, allItems);
+		assertContains(
+			orderRuleOrderType1, (List<OrderRuleOrderType>)page3.getItems());
+		assertContains(
+			orderRuleOrderType2, (List<OrderRuleOrderType>)page3.getItems());
+		assertContains(
+			orderRuleOrderType3, (List<OrderRuleOrderType>)page3.getItems());
 	}
 
 	protected OrderRuleOrderType

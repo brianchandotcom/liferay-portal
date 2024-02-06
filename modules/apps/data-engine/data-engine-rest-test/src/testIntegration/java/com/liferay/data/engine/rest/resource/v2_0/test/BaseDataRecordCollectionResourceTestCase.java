@@ -392,7 +392,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			dataRecordCollectionPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		DataRecordCollection dataRecordCollection1 =
 			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
@@ -409,41 +408,44 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		Page<DataRecordCollection> page1 =
 			dataRecordCollectionResource.
 				getDataDefinitionDataRecordCollectionsPage(
-					dataDefinitionId, null, Pagination.of(1, itemLimit));
+					dataDefinitionId, null, Pagination.of(1, totalCount + 2));
 
 		List<DataRecordCollection> dataRecordCollections1 =
 			(List<DataRecordCollection>)page1.getItems();
 
-		if (dataRecordCollections1.size() < itemLimit) {
-			itemLimit = dataRecordCollections1.size();
-		}
+		Assert.assertEquals(
+			dataRecordCollections1.toString(), totalCount + 2,
+			dataRecordCollections1.size());
 
-		int pages = (int)Math.ceil(
-			dataRecordCollectionPage.getTotalCount() / itemLimit);
-		List<DataRecordCollection> allItems =
-			new ArrayList<DataRecordCollection>();
+		Page<DataRecordCollection> page2 =
+			dataRecordCollectionResource.
+				getDataDefinitionDataRecordCollectionsPage(
+					dataDefinitionId, null, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					dataRecordCollections1.toString(), itemLimit,
-					dataRecordCollections1.size());
+		List<DataRecordCollection> dataRecordCollections2 =
+			(List<DataRecordCollection>)page2.getItems();
 
-				Page<DataRecordCollection> page =
-					dataRecordCollectionResource.
-						getDataDefinitionDataRecordCollectionsPage(
-							dataDefinitionId, null,
-							Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			dataRecordCollections2.toString(), 1,
+			dataRecordCollections2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<DataRecordCollection> page3 =
+			dataRecordCollectionResource.
+				getDataDefinitionDataRecordCollectionsPage(
+					dataDefinitionId, null,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(dataRecordCollection1, allItems);
-		assertContains(dataRecordCollection2, allItems);
-		assertContains(dataRecordCollection3, allItems);
+		assertContains(
+			dataRecordCollection1,
+			(List<DataRecordCollection>)page3.getItems());
+		assertContains(
+			dataRecordCollection2,
+			(List<DataRecordCollection>)page3.getItems());
+		assertContains(
+			dataRecordCollection3,
+			(List<DataRecordCollection>)page3.getItems());
 	}
 
 	protected DataRecordCollection

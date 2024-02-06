@@ -249,7 +249,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			taxonomyCategoryPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		TaxonomyCategory taxonomyCategory1 =
 			testGetTaxonomyCategoriesRankedPage_addTaxonomyCategory(
@@ -265,38 +264,37 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		Page<TaxonomyCategory> page1 =
 			taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
-				null, Pagination.of(1, itemLimit));
+				null, Pagination.of(1, totalCount + 2));
 
 		List<TaxonomyCategory> taxonomyCategories1 =
 			(List<TaxonomyCategory>)page1.getItems();
 
-		if (taxonomyCategories1.size() < itemLimit) {
-			itemLimit = taxonomyCategories1.size();
-		}
+		Assert.assertEquals(
+			taxonomyCategories1.toString(), totalCount + 2,
+			taxonomyCategories1.size());
 
-		int pages = (int)Math.ceil(
-			taxonomyCategoryPage.getTotalCount() / itemLimit);
-		List<TaxonomyCategory> allItems = new ArrayList<TaxonomyCategory>();
+		Page<TaxonomyCategory> page2 =
+			taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
+				null, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					taxonomyCategories1.toString(), itemLimit,
-					taxonomyCategories1.size());
+		List<TaxonomyCategory> taxonomyCategories2 =
+			(List<TaxonomyCategory>)page2.getItems();
 
-				Page<TaxonomyCategory> page =
-					taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
-						null, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			taxonomyCategories2.toString(), 1, taxonomyCategories2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<TaxonomyCategory> page3 =
+			taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
+				null, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(taxonomyCategory1, allItems);
-		assertContains(taxonomyCategory2, allItems);
-		assertContains(taxonomyCategory3, allItems);
+		assertContains(
+			taxonomyCategory1, (List<TaxonomyCategory>)page3.getItems());
+		assertContains(
+			taxonomyCategory2, (List<TaxonomyCategory>)page3.getItems());
+		assertContains(
+			taxonomyCategory3, (List<TaxonomyCategory>)page3.getItems());
 	}
 
 	protected TaxonomyCategory
@@ -505,7 +503,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			taxonomyCategoryPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		TaxonomyCategory taxonomyCategory1 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
@@ -522,40 +519,39 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		Page<TaxonomyCategory> page1 =
 			taxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
 				parentTaxonomyCategoryId, null, null, null,
-				Pagination.of(1, itemLimit), null);
+				Pagination.of(1, totalCount + 2), null);
 
 		List<TaxonomyCategory> taxonomyCategories1 =
 			(List<TaxonomyCategory>)page1.getItems();
 
-		if (taxonomyCategories1.size() < itemLimit) {
-			itemLimit = taxonomyCategories1.size();
-		}
+		Assert.assertEquals(
+			taxonomyCategories1.toString(), totalCount + 2,
+			taxonomyCategories1.size());
 
-		int pages = (int)Math.ceil(
-			taxonomyCategoryPage.getTotalCount() / itemLimit);
-		List<TaxonomyCategory> allItems = new ArrayList<TaxonomyCategory>();
+		Page<TaxonomyCategory> page2 =
+			taxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
+				parentTaxonomyCategoryId, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					taxonomyCategories1.toString(), itemLimit,
-					taxonomyCategories1.size());
+		List<TaxonomyCategory> taxonomyCategories2 =
+			(List<TaxonomyCategory>)page2.getItems();
 
-				Page<TaxonomyCategory> page =
-					taxonomyCategoryResource.
-						getTaxonomyCategoryTaxonomyCategoriesPage(
-							parentTaxonomyCategoryId, null, null, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			taxonomyCategories2.toString(), 1, taxonomyCategories2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<TaxonomyCategory> page3 =
+			taxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
+				parentTaxonomyCategoryId, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(taxonomyCategory1, allItems);
-		assertContains(taxonomyCategory2, allItems);
-		assertContains(taxonomyCategory3, allItems);
+		assertContains(
+			taxonomyCategory1, (List<TaxonomyCategory>)page3.getItems());
+		assertContains(
+			taxonomyCategory2, (List<TaxonomyCategory>)page3.getItems());
+		assertContains(
+			taxonomyCategory3, (List<TaxonomyCategory>)page3.getItems());
 	}
 
 	@Test
@@ -1247,7 +1243,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			taxonomyCategoryPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		TaxonomyCategory taxonomyCategory1 =
 			testGetTaxonomyVocabularyTaxonomyCategoriesPage_addTaxonomyCategory(
@@ -1265,40 +1260,41 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			taxonomyCategoryResource.
 				getTaxonomyVocabularyTaxonomyCategoriesPage(
 					taxonomyVocabularyId, null, null, null, null,
-					Pagination.of(1, itemLimit), null);
+					Pagination.of(1, totalCount + 2), null);
 
 		List<TaxonomyCategory> taxonomyCategories1 =
 			(List<TaxonomyCategory>)page1.getItems();
 
-		if (taxonomyCategories1.size() < itemLimit) {
-			itemLimit = taxonomyCategories1.size();
-		}
+		Assert.assertEquals(
+			taxonomyCategories1.toString(), totalCount + 2,
+			taxonomyCategories1.size());
 
-		int pages = (int)Math.ceil(
-			taxonomyCategoryPage.getTotalCount() / itemLimit);
-		List<TaxonomyCategory> allItems = new ArrayList<TaxonomyCategory>();
+		Page<TaxonomyCategory> page2 =
+			taxonomyCategoryResource.
+				getTaxonomyVocabularyTaxonomyCategoriesPage(
+					taxonomyVocabularyId, null, null, null, null,
+					Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					taxonomyCategories1.toString(), itemLimit,
-					taxonomyCategories1.size());
+		List<TaxonomyCategory> taxonomyCategories2 =
+			(List<TaxonomyCategory>)page2.getItems();
 
-				Page<TaxonomyCategory> page =
-					taxonomyCategoryResource.
-						getTaxonomyVocabularyTaxonomyCategoriesPage(
-							taxonomyVocabularyId, null, null, null, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			taxonomyCategories2.toString(), 1, taxonomyCategories2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<TaxonomyCategory> page3 =
+			taxonomyCategoryResource.
+				getTaxonomyVocabularyTaxonomyCategoriesPage(
+					taxonomyVocabularyId, null, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(taxonomyCategory1, allItems);
-		assertContains(taxonomyCategory2, allItems);
-		assertContains(taxonomyCategory3, allItems);
+		assertContains(
+			taxonomyCategory1, (List<TaxonomyCategory>)page3.getItems());
+		assertContains(
+			taxonomyCategory2, (List<TaxonomyCategory>)page3.getItems());
+		assertContains(
+			taxonomyCategory3, (List<TaxonomyCategory>)page3.getItems());
 	}
 
 	@Test

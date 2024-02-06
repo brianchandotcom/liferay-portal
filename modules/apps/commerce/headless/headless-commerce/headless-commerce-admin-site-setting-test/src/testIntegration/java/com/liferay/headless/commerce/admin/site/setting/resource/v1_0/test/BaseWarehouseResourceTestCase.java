@@ -271,7 +271,6 @@ public abstract class BaseWarehouseResourceTestCase {
 				groupId, null, null);
 
 		int totalCount = GetterUtil.getInteger(warehousePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Warehouse warehouse1 =
 			testGetCommerceAdminSiteSettingGroupWarehousePage_addWarehouse(
@@ -287,36 +286,30 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		Page<Warehouse> page1 =
 			warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
-				groupId, null, Pagination.of(1, itemLimit));
+				groupId, null, Pagination.of(1, totalCount + 2));
 
 		List<Warehouse> warehouses1 = (List<Warehouse>)page1.getItems();
 
-		if (warehouses1.size() < itemLimit) {
-			itemLimit = warehouses1.size();
-		}
+		Assert.assertEquals(
+			warehouses1.toString(), totalCount + 2, warehouses1.size());
 
-		int pages = (int)Math.ceil(warehousePage.getTotalCount() / itemLimit);
-		List<Warehouse> allItems = new ArrayList<Warehouse>();
+		Page<Warehouse> page2 =
+			warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
+				groupId, null, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					warehouses1.toString(), itemLimit, warehouses1.size());
+		List<Warehouse> warehouses2 = (List<Warehouse>)page2.getItems();
 
-				Page<Warehouse> page =
-					warehouseResource.
-						getCommerceAdminSiteSettingGroupWarehousePage(
-							groupId, null, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(warehouses2.toString(), 1, warehouses2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Warehouse> page3 =
+			warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
+				groupId, null, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(warehouse1, allItems);
-		assertContains(warehouse2, allItems);
-		assertContains(warehouse3, allItems);
+		assertContains(warehouse1, (List<Warehouse>)page3.getItems());
+		assertContains(warehouse2, (List<Warehouse>)page3.getItems());
+		assertContains(warehouse3, (List<Warehouse>)page3.getItems());
 	}
 
 	protected Warehouse

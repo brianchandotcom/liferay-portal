@@ -253,7 +253,6 @@ public abstract class BaseShippingMethodResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			shippingMethodPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ShippingMethod shippingMethod1 =
 			testGetChannelShippingMethodsPage_addShippingMethod(
@@ -269,38 +268,34 @@ public abstract class BaseShippingMethodResourceTestCase {
 
 		Page<ShippingMethod> page1 =
 			shippingMethodResource.getChannelShippingMethodsPage(
-				channelId, Pagination.of(1, itemLimit));
+				channelId, Pagination.of(1, totalCount + 2));
 
 		List<ShippingMethod> shippingMethods1 =
 			(List<ShippingMethod>)page1.getItems();
 
-		if (shippingMethods1.size() < itemLimit) {
-			itemLimit = shippingMethods1.size();
-		}
+		Assert.assertEquals(
+			shippingMethods1.toString(), totalCount + 2,
+			shippingMethods1.size());
 
-		int pages = (int)Math.ceil(
-			shippingMethodPage.getTotalCount() / itemLimit);
-		List<ShippingMethod> allItems = new ArrayList<ShippingMethod>();
+		Page<ShippingMethod> page2 =
+			shippingMethodResource.getChannelShippingMethodsPage(
+				channelId, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					shippingMethods1.toString(), itemLimit,
-					shippingMethods1.size());
+		List<ShippingMethod> shippingMethods2 =
+			(List<ShippingMethod>)page2.getItems();
 
-				Page<ShippingMethod> page =
-					shippingMethodResource.getChannelShippingMethodsPage(
-						channelId, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			shippingMethods2.toString(), 1, shippingMethods2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ShippingMethod> page3 =
+			shippingMethodResource.getChannelShippingMethodsPage(
+				channelId, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(shippingMethod1, allItems);
-		assertContains(shippingMethod2, allItems);
-		assertContains(shippingMethod3, allItems);
+		assertContains(shippingMethod1, (List<ShippingMethod>)page3.getItems());
+		assertContains(shippingMethod2, (List<ShippingMethod>)page3.getItems());
+		assertContains(shippingMethod3, (List<ShippingMethod>)page3.getItems());
 	}
 
 	protected ShippingMethod

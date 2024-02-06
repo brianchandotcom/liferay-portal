@@ -277,7 +277,6 @@ public abstract class BaseSkuResourceTestCase {
 				externalReferenceCode, null);
 
 		int totalCount = GetterUtil.getInteger(skuPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Sku sku1 = testGetProductByExternalReferenceCodeSkusPage_addSku(
 			externalReferenceCode, randomSku());
@@ -289,35 +288,27 @@ public abstract class BaseSkuResourceTestCase {
 			externalReferenceCode, randomSku());
 
 		Page<Sku> page1 = skuResource.getProductByExternalReferenceCodeSkusPage(
-			externalReferenceCode, Pagination.of(1, itemLimit));
+			externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<Sku> skus1 = (List<Sku>)page1.getItems();
 
-		if (skus1.size() < itemLimit) {
-			itemLimit = skus1.size();
-		}
+		Assert.assertEquals(skus1.toString(), totalCount + 2, skus1.size());
 
-		int pages = (int)Math.ceil(skuPage.getTotalCount() / itemLimit);
-		List<Sku> allItems = new ArrayList<Sku>();
+		Page<Sku> page2 = skuResource.getProductByExternalReferenceCodeSkusPage(
+			externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(skus1.toString(), itemLimit, skus1.size());
+		List<Sku> skus2 = (List<Sku>)page2.getItems();
 
-				Page<Sku> page =
-					skuResource.getProductByExternalReferenceCodeSkusPage(
-						externalReferenceCode,
-						Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(skus2.toString(), 1, skus2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Sku> page3 = skuResource.getProductByExternalReferenceCodeSkusPage(
+			externalReferenceCode, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(sku1, allItems);
-		assertContains(sku2, allItems);
-		assertContains(sku3, allItems);
+		assertContains(sku1, (List<Sku>)page3.getItems());
+		assertContains(sku2, (List<Sku>)page3.getItems());
+		assertContains(sku3, (List<Sku>)page3.getItems());
 	}
 
 	protected Sku testGetProductByExternalReferenceCodeSkusPage_addSku(
@@ -419,7 +410,6 @@ public abstract class BaseSkuResourceTestCase {
 		Page<Sku> skuPage = skuResource.getProductIdSkusPage(id, null);
 
 		int totalCount = GetterUtil.getInteger(skuPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Sku sku1 = testGetProductIdSkusPage_addSku(id, randomSku());
 
@@ -428,33 +418,27 @@ public abstract class BaseSkuResourceTestCase {
 		Sku sku3 = testGetProductIdSkusPage_addSku(id, randomSku());
 
 		Page<Sku> page1 = skuResource.getProductIdSkusPage(
-			id, Pagination.of(1, itemLimit));
+			id, Pagination.of(1, totalCount + 2));
 
 		List<Sku> skus1 = (List<Sku>)page1.getItems();
 
-		if (skus1.size() < itemLimit) {
-			itemLimit = skus1.size();
-		}
+		Assert.assertEquals(skus1.toString(), totalCount + 2, skus1.size());
 
-		int pages = (int)Math.ceil(skuPage.getTotalCount() / itemLimit);
-		List<Sku> allItems = new ArrayList<Sku>();
+		Page<Sku> page2 = skuResource.getProductIdSkusPage(
+			id, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(skus1.toString(), itemLimit, skus1.size());
+		List<Sku> skus2 = (List<Sku>)page2.getItems();
 
-				Page<Sku> page = skuResource.getProductIdSkusPage(
-					id, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(skus2.toString(), 1, skus2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Sku> page3 = skuResource.getProductIdSkusPage(
+			id, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(sku1, allItems);
-		assertContains(sku2, allItems);
-		assertContains(sku3, allItems);
+		assertContains(sku1, (List<Sku>)page3.getItems());
+		assertContains(sku2, (List<Sku>)page3.getItems());
+		assertContains(sku3, (List<Sku>)page3.getItems());
 	}
 
 	protected Sku testGetProductIdSkusPage_addSku(Long id, Sku sku)
@@ -594,7 +578,6 @@ public abstract class BaseSkuResourceTestCase {
 		Page<Sku> skuPage = skuResource.getSkusPage(null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(skuPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Sku sku1 = testGetSkusPage_addSku(randomSku());
 
@@ -603,33 +586,27 @@ public abstract class BaseSkuResourceTestCase {
 		Sku sku3 = testGetSkusPage_addSku(randomSku());
 
 		Page<Sku> page1 = skuResource.getSkusPage(
-			null, null, Pagination.of(1, itemLimit), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Sku> skus1 = (List<Sku>)page1.getItems();
 
-		if (skus1.size() < itemLimit) {
-			itemLimit = skus1.size();
-		}
+		Assert.assertEquals(skus1.toString(), totalCount + 2, skus1.size());
 
-		int pages = (int)Math.ceil(skuPage.getTotalCount() / itemLimit);
-		List<Sku> allItems = new ArrayList<Sku>();
+		Page<Sku> page2 = skuResource.getSkusPage(
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(skus1.toString(), itemLimit, skus1.size());
+		List<Sku> skus2 = (List<Sku>)page2.getItems();
 
-				Page<Sku> page = skuResource.getSkusPage(
-					null, null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(skus2.toString(), 1, skus2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Sku> page3 = skuResource.getSkusPage(
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(sku1, allItems);
-		assertContains(sku2, allItems);
-		assertContains(sku3, allItems);
+		assertContains(sku1, (List<Sku>)page3.getItems());
+		assertContains(sku2, (List<Sku>)page3.getItems());
+		assertContains(sku3, (List<Sku>)page3.getItems());
 	}
 
 	@Test
@@ -1189,7 +1166,6 @@ public abstract class BaseSkuResourceTestCase {
 			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(skuPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Sku sku1 = testGetUnitOfMeasureSkusPage_addSku(randomSku());
 
@@ -1198,33 +1174,27 @@ public abstract class BaseSkuResourceTestCase {
 		Sku sku3 = testGetUnitOfMeasureSkusPage_addSku(randomSku());
 
 		Page<Sku> page1 = skuResource.getUnitOfMeasureSkusPage(
-			null, null, Pagination.of(1, itemLimit), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Sku> skus1 = (List<Sku>)page1.getItems();
 
-		if (skus1.size() < itemLimit) {
-			itemLimit = skus1.size();
-		}
+		Assert.assertEquals(skus1.toString(), totalCount + 2, skus1.size());
 
-		int pages = (int)Math.ceil(skuPage.getTotalCount() / itemLimit);
-		List<Sku> allItems = new ArrayList<Sku>();
+		Page<Sku> page2 = skuResource.getUnitOfMeasureSkusPage(
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(skus1.toString(), itemLimit, skus1.size());
+		List<Sku> skus2 = (List<Sku>)page2.getItems();
 
-				Page<Sku> page = skuResource.getUnitOfMeasureSkusPage(
-					null, null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(skus2.toString(), 1, skus2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Sku> page3 = skuResource.getUnitOfMeasureSkusPage(
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(sku1, allItems);
-		assertContains(sku2, allItems);
-		assertContains(sku3, allItems);
+		assertContains(sku1, (List<Sku>)page3.getItems());
+		assertContains(sku2, (List<Sku>)page3.getItems());
+		assertContains(sku3, (List<Sku>)page3.getItems());
 	}
 
 	@Test

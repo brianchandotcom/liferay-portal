@@ -405,7 +405,6 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			objectRelationshipPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ObjectRelationship objectRelationship1 =
 			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
@@ -423,40 +422,41 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			objectRelationshipResource.
 				getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
 					externalReferenceCode, null, null,
-					Pagination.of(1, itemLimit), null);
+					Pagination.of(1, totalCount + 2), null);
 
 		List<ObjectRelationship> objectRelationships1 =
 			(List<ObjectRelationship>)page1.getItems();
 
-		if (objectRelationships1.size() < itemLimit) {
-			itemLimit = objectRelationships1.size();
-		}
+		Assert.assertEquals(
+			objectRelationships1.toString(), totalCount + 2,
+			objectRelationships1.size());
 
-		int pages = (int)Math.ceil(
-			objectRelationshipPage.getTotalCount() / itemLimit);
-		List<ObjectRelationship> allItems = new ArrayList<ObjectRelationship>();
+		Page<ObjectRelationship> page2 =
+			objectRelationshipResource.
+				getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+					externalReferenceCode, null, null,
+					Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					objectRelationships1.toString(), itemLimit,
-					objectRelationships1.size());
+		List<ObjectRelationship> objectRelationships2 =
+			(List<ObjectRelationship>)page2.getItems();
 
-				Page<ObjectRelationship> page =
-					objectRelationshipResource.
-						getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
-							externalReferenceCode, null, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			objectRelationships2.toString(), 1, objectRelationships2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ObjectRelationship> page3 =
+			objectRelationshipResource.
+				getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+					externalReferenceCode, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(objectRelationship1, allItems);
-		assertContains(objectRelationship2, allItems);
-		assertContains(objectRelationship3, allItems);
+		assertContains(
+			objectRelationship1, (List<ObjectRelationship>)page3.getItems());
+		assertContains(
+			objectRelationship2, (List<ObjectRelationship>)page3.getItems());
+		assertContains(
+			objectRelationship3, (List<ObjectRelationship>)page3.getItems());
 	}
 
 	@Test
@@ -880,7 +880,6 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			objectRelationshipPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ObjectRelationship objectRelationship1 =
 			testGetObjectDefinitionObjectRelationshipsPage_addObjectRelationship(
@@ -897,41 +896,42 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		Page<ObjectRelationship> page1 =
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
-					objectDefinitionId, null, null, Pagination.of(1, itemLimit),
-					null);
+					objectDefinitionId, null, null,
+					Pagination.of(1, totalCount + 2), null);
 
 		List<ObjectRelationship> objectRelationships1 =
 			(List<ObjectRelationship>)page1.getItems();
 
-		if (objectRelationships1.size() < itemLimit) {
-			itemLimit = objectRelationships1.size();
-		}
+		Assert.assertEquals(
+			objectRelationships1.toString(), totalCount + 2,
+			objectRelationships1.size());
 
-		int pages = (int)Math.ceil(
-			objectRelationshipPage.getTotalCount() / itemLimit);
-		List<ObjectRelationship> allItems = new ArrayList<ObjectRelationship>();
+		Page<ObjectRelationship> page2 =
+			objectRelationshipResource.
+				getObjectDefinitionObjectRelationshipsPage(
+					objectDefinitionId, null, null,
+					Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					objectRelationships1.toString(), itemLimit,
-					objectRelationships1.size());
+		List<ObjectRelationship> objectRelationships2 =
+			(List<ObjectRelationship>)page2.getItems();
 
-				Page<ObjectRelationship> page =
-					objectRelationshipResource.
-						getObjectDefinitionObjectRelationshipsPage(
-							objectDefinitionId, null, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			objectRelationships2.toString(), 1, objectRelationships2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ObjectRelationship> page3 =
+			objectRelationshipResource.
+				getObjectDefinitionObjectRelationshipsPage(
+					objectDefinitionId, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(objectRelationship1, allItems);
-		assertContains(objectRelationship2, allItems);
-		assertContains(objectRelationship3, allItems);
+		assertContains(
+			objectRelationship1, (List<ObjectRelationship>)page3.getItems());
+		assertContains(
+			objectRelationship2, (List<ObjectRelationship>)page3.getItems());
+		assertContains(
+			objectRelationship3, (List<ObjectRelationship>)page3.getItems());
 	}
 
 	@Test

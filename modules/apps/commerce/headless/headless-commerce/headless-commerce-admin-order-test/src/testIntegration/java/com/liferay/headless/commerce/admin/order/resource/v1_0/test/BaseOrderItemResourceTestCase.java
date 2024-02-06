@@ -325,7 +325,6 @@ public abstract class BaseOrderItemResourceTestCase {
 			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(orderItemPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		OrderItem orderItem1 = testGetOrderItemsPage_addOrderItem(
 			randomOrderItem());
@@ -337,34 +336,28 @@ public abstract class BaseOrderItemResourceTestCase {
 			randomOrderItem());
 
 		Page<OrderItem> page1 = orderItemResource.getOrderItemsPage(
-			null, null, Pagination.of(1, itemLimit), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<OrderItem> orderItems1 = (List<OrderItem>)page1.getItems();
 
-		if (orderItems1.size() < itemLimit) {
-			itemLimit = orderItems1.size();
-		}
+		Assert.assertEquals(
+			orderItems1.toString(), totalCount + 2, orderItems1.size());
 
-		int pages = (int)Math.ceil(orderItemPage.getTotalCount() / itemLimit);
-		List<OrderItem> allItems = new ArrayList<OrderItem>();
+		Page<OrderItem> page2 = orderItemResource.getOrderItemsPage(
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					orderItems1.toString(), itemLimit, orderItems1.size());
+		List<OrderItem> orderItems2 = (List<OrderItem>)page2.getItems();
 
-				Page<OrderItem> page = orderItemResource.getOrderItemsPage(
-					null, null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(orderItems2.toString(), 1, orderItems2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<OrderItem> page3 = orderItemResource.getOrderItemsPage(
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(orderItem1, allItems);
-		assertContains(orderItem2, allItems);
-		assertContains(orderItem3, allItems);
+		assertContains(orderItem1, (List<OrderItem>)page3.getItems());
+		assertContains(orderItem2, (List<OrderItem>)page3.getItems());
+		assertContains(orderItem3, (List<OrderItem>)page3.getItems());
 	}
 
 	@Test
@@ -952,7 +945,6 @@ public abstract class BaseOrderItemResourceTestCase {
 				externalReferenceCode, null);
 
 		int totalCount = GetterUtil.getInteger(orderItemPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		OrderItem orderItem1 =
 			testGetOrderByExternalReferenceCodeOrderItemsPage_addOrderItem(
@@ -968,37 +960,30 @@ public abstract class BaseOrderItemResourceTestCase {
 
 		Page<OrderItem> page1 =
 			orderItemResource.getOrderByExternalReferenceCodeOrderItemsPage(
-				externalReferenceCode, Pagination.of(1, itemLimit));
+				externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<OrderItem> orderItems1 = (List<OrderItem>)page1.getItems();
 
-		if (orderItems1.size() < itemLimit) {
-			itemLimit = orderItems1.size();
-		}
+		Assert.assertEquals(
+			orderItems1.toString(), totalCount + 2, orderItems1.size());
 
-		int pages = (int)Math.ceil(orderItemPage.getTotalCount() / itemLimit);
-		List<OrderItem> allItems = new ArrayList<OrderItem>();
+		Page<OrderItem> page2 =
+			orderItemResource.getOrderByExternalReferenceCodeOrderItemsPage(
+				externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					orderItems1.toString(), itemLimit, orderItems1.size());
+		List<OrderItem> orderItems2 = (List<OrderItem>)page2.getItems();
 
-				Page<OrderItem> page =
-					orderItemResource.
-						getOrderByExternalReferenceCodeOrderItemsPage(
-							externalReferenceCode,
-							Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(orderItems2.toString(), 1, orderItems2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<OrderItem> page3 =
+			orderItemResource.getOrderByExternalReferenceCodeOrderItemsPage(
+				externalReferenceCode, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(orderItem1, allItems);
-		assertContains(orderItem2, allItems);
-		assertContains(orderItem3, allItems);
+		assertContains(orderItem1, (List<OrderItem>)page3.getItems());
+		assertContains(orderItem2, (List<OrderItem>)page3.getItems());
+		assertContains(orderItem3, (List<OrderItem>)page3.getItems());
 	}
 
 	protected OrderItem
@@ -1112,7 +1097,6 @@ public abstract class BaseOrderItemResourceTestCase {
 			orderItemResource.getOrderIdOrderItemsPage(id, null);
 
 		int totalCount = GetterUtil.getInteger(orderItemPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		OrderItem orderItem1 = testGetOrderIdOrderItemsPage_addOrderItem(
 			id, randomOrderItem());
@@ -1124,35 +1108,28 @@ public abstract class BaseOrderItemResourceTestCase {
 			id, randomOrderItem());
 
 		Page<OrderItem> page1 = orderItemResource.getOrderIdOrderItemsPage(
-			id, Pagination.of(1, itemLimit));
+			id, Pagination.of(1, totalCount + 2));
 
 		List<OrderItem> orderItems1 = (List<OrderItem>)page1.getItems();
 
-		if (orderItems1.size() < itemLimit) {
-			itemLimit = orderItems1.size();
-		}
+		Assert.assertEquals(
+			orderItems1.toString(), totalCount + 2, orderItems1.size());
 
-		int pages = (int)Math.ceil(orderItemPage.getTotalCount() / itemLimit);
-		List<OrderItem> allItems = new ArrayList<OrderItem>();
+		Page<OrderItem> page2 = orderItemResource.getOrderIdOrderItemsPage(
+			id, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					orderItems1.toString(), itemLimit, orderItems1.size());
+		List<OrderItem> orderItems2 = (List<OrderItem>)page2.getItems();
 
-				Page<OrderItem> page =
-					orderItemResource.getOrderIdOrderItemsPage(
-						id, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(orderItems2.toString(), 1, orderItems2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<OrderItem> page3 = orderItemResource.getOrderIdOrderItemsPage(
+			id, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(orderItem1, allItems);
-		assertContains(orderItem2, allItems);
-		assertContains(orderItem3, allItems);
+		assertContains(orderItem1, (List<OrderItem>)page3.getItems());
+		assertContains(orderItem2, (List<OrderItem>)page3.getItems());
+		assertContains(orderItem3, (List<OrderItem>)page3.getItems());
 	}
 
 	protected OrderItem testGetOrderIdOrderItemsPage_addOrderItem(

@@ -287,7 +287,6 @@ public abstract class BasePlacedOrderResourceTestCase {
 				accountId, channelId, null);
 
 		int totalCount = GetterUtil.getInteger(placedOrderPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		PlacedOrder placedOrder1 =
 			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
@@ -303,36 +302,30 @@ public abstract class BasePlacedOrderResourceTestCase {
 
 		Page<PlacedOrder> page1 =
 			placedOrderResource.getChannelAccountPlacedOrdersPage(
-				accountId, channelId, Pagination.of(1, itemLimit));
+				accountId, channelId, Pagination.of(1, totalCount + 2));
 
 		List<PlacedOrder> placedOrders1 = (List<PlacedOrder>)page1.getItems();
 
-		if (placedOrders1.size() < itemLimit) {
-			itemLimit = placedOrders1.size();
-		}
+		Assert.assertEquals(
+			placedOrders1.toString(), totalCount + 2, placedOrders1.size());
 
-		int pages = (int)Math.ceil(placedOrderPage.getTotalCount() / itemLimit);
-		List<PlacedOrder> allItems = new ArrayList<PlacedOrder>();
+		Page<PlacedOrder> page2 =
+			placedOrderResource.getChannelAccountPlacedOrdersPage(
+				accountId, channelId, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					placedOrders1.toString(), itemLimit, placedOrders1.size());
+		List<PlacedOrder> placedOrders2 = (List<PlacedOrder>)page2.getItems();
 
-				Page<PlacedOrder> page =
-					placedOrderResource.getChannelAccountPlacedOrdersPage(
-						accountId, channelId,
-						Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(placedOrders2.toString(), 1, placedOrders2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<PlacedOrder> page3 =
+			placedOrderResource.getChannelAccountPlacedOrdersPage(
+				accountId, channelId, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(placedOrder1, allItems);
-		assertContains(placedOrder2, allItems);
-		assertContains(placedOrder3, allItems);
+		assertContains(placedOrder1, (List<PlacedOrder>)page3.getItems());
+		assertContains(placedOrder2, (List<PlacedOrder>)page3.getItems());
+		assertContains(placedOrder3, (List<PlacedOrder>)page3.getItems());
 	}
 
 	protected PlacedOrder testGetChannelAccountPlacedOrdersPage_addPlacedOrder(

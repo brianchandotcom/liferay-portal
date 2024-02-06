@@ -427,7 +427,6 @@ public abstract class BaseCartCommentResourceTestCase {
 			cartCommentResource.getCartCommentsPage(cartId, null);
 
 		int totalCount = GetterUtil.getInteger(cartCommentPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		CartComment cartComment1 = testGetCartCommentsPage_addCartComment(
 			cartId, randomCartComment());
@@ -439,35 +438,28 @@ public abstract class BaseCartCommentResourceTestCase {
 			cartId, randomCartComment());
 
 		Page<CartComment> page1 = cartCommentResource.getCartCommentsPage(
-			cartId, Pagination.of(1, itemLimit));
+			cartId, Pagination.of(1, totalCount + 2));
 
 		List<CartComment> cartComments1 = (List<CartComment>)page1.getItems();
 
-		if (cartComments1.size() < itemLimit) {
-			itemLimit = cartComments1.size();
-		}
+		Assert.assertEquals(
+			cartComments1.toString(), totalCount + 2, cartComments1.size());
 
-		int pages = (int)Math.ceil(cartCommentPage.getTotalCount() / itemLimit);
-		List<CartComment> allItems = new ArrayList<CartComment>();
+		Page<CartComment> page2 = cartCommentResource.getCartCommentsPage(
+			cartId, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					cartComments1.toString(), itemLimit, cartComments1.size());
+		List<CartComment> cartComments2 = (List<CartComment>)page2.getItems();
 
-				Page<CartComment> page =
-					cartCommentResource.getCartCommentsPage(
-						cartId, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(cartComments2.toString(), 1, cartComments2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<CartComment> page3 = cartCommentResource.getCartCommentsPage(
+			cartId, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(cartComment1, allItems);
-		assertContains(cartComment2, allItems);
-		assertContains(cartComment3, allItems);
+		assertContains(cartComment1, (List<CartComment>)page3.getItems());
+		assertContains(cartComment2, (List<CartComment>)page3.getItems());
+		assertContains(cartComment3, (List<CartComment>)page3.getItems());
 	}
 
 	protected CartComment testGetCartCommentsPage_addCartComment(

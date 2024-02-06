@@ -294,7 +294,6 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			objectValidationRulePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ObjectValidationRule objectValidationRule1 =
 			testGetObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage_addObjectValidationRule(
@@ -311,42 +310,46 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 		Page<ObjectValidationRule> page1 =
 			objectValidationRuleResource.
 				getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
-					externalReferenceCode, null, Pagination.of(1, itemLimit),
-					null);
+					externalReferenceCode, null,
+					Pagination.of(1, totalCount + 2), null);
 
 		List<ObjectValidationRule> objectValidationRules1 =
 			(List<ObjectValidationRule>)page1.getItems();
 
-		if (objectValidationRules1.size() < itemLimit) {
-			itemLimit = objectValidationRules1.size();
-		}
+		Assert.assertEquals(
+			objectValidationRules1.toString(), totalCount + 2,
+			objectValidationRules1.size());
 
-		int pages = (int)Math.ceil(
-			objectValidationRulePage.getTotalCount() / itemLimit);
-		List<ObjectValidationRule> allItems =
-			new ArrayList<ObjectValidationRule>();
+		Page<ObjectValidationRule> page2 =
+			objectValidationRuleResource.
+				getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
+					externalReferenceCode, null,
+					Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					objectValidationRules1.toString(), itemLimit,
-					objectValidationRules1.size());
+		List<ObjectValidationRule> objectValidationRules2 =
+			(List<ObjectValidationRule>)page2.getItems();
 
-				Page<ObjectValidationRule> page =
-					objectValidationRuleResource.
-						getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
-							externalReferenceCode, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			objectValidationRules2.toString(), 1,
+			objectValidationRules2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ObjectValidationRule> page3 =
+			objectValidationRuleResource.
+				getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
+					externalReferenceCode, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(objectValidationRule1, allItems);
-		assertContains(objectValidationRule2, allItems);
-		assertContains(objectValidationRule3, allItems);
+		assertContains(
+			objectValidationRule1,
+			(List<ObjectValidationRule>)page3.getItems());
+		assertContains(
+			objectValidationRule2,
+			(List<ObjectValidationRule>)page3.getItems());
+		assertContains(
+			objectValidationRule3,
+			(List<ObjectValidationRule>)page3.getItems());
 	}
 
 	@Test
@@ -668,7 +671,6 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			objectValidationRulePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ObjectValidationRule objectValidationRule1 =
 			testGetObjectDefinitionObjectValidationRulesPage_addObjectValidationRule(
@@ -685,42 +687,46 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 		Page<ObjectValidationRule> page1 =
 			objectValidationRuleResource.
 				getObjectDefinitionObjectValidationRulesPage(
-					objectDefinitionId, null, Pagination.of(1, itemLimit),
+					objectDefinitionId, null, Pagination.of(1, totalCount + 2),
 					null);
 
 		List<ObjectValidationRule> objectValidationRules1 =
 			(List<ObjectValidationRule>)page1.getItems();
 
-		if (objectValidationRules1.size() < itemLimit) {
-			itemLimit = objectValidationRules1.size();
-		}
+		Assert.assertEquals(
+			objectValidationRules1.toString(), totalCount + 2,
+			objectValidationRules1.size());
 
-		int pages = (int)Math.ceil(
-			objectValidationRulePage.getTotalCount() / itemLimit);
-		List<ObjectValidationRule> allItems =
-			new ArrayList<ObjectValidationRule>();
+		Page<ObjectValidationRule> page2 =
+			objectValidationRuleResource.
+				getObjectDefinitionObjectValidationRulesPage(
+					objectDefinitionId, null, Pagination.of(2, totalCount + 2),
+					null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					objectValidationRules1.toString(), itemLimit,
-					objectValidationRules1.size());
+		List<ObjectValidationRule> objectValidationRules2 =
+			(List<ObjectValidationRule>)page2.getItems();
 
-				Page<ObjectValidationRule> page =
-					objectValidationRuleResource.
-						getObjectDefinitionObjectValidationRulesPage(
-							objectDefinitionId, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			objectValidationRules2.toString(), 1,
+			objectValidationRules2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ObjectValidationRule> page3 =
+			objectValidationRuleResource.
+				getObjectDefinitionObjectValidationRulesPage(
+					objectDefinitionId, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(objectValidationRule1, allItems);
-		assertContains(objectValidationRule2, allItems);
-		assertContains(objectValidationRule3, allItems);
+		assertContains(
+			objectValidationRule1,
+			(List<ObjectValidationRule>)page3.getItems());
+		assertContains(
+			objectValidationRule2,
+			(List<ObjectValidationRule>)page3.getItems());
+		assertContains(
+			objectValidationRule3,
+			(List<ObjectValidationRule>)page3.getItems());
 	}
 
 	@Test

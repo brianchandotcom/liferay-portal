@@ -395,7 +395,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(orderTypePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		OrderType orderType1 = testGetOrderTypesPage_addOrderType(
 			randomOrderType());
@@ -407,34 +406,28 @@ public abstract class BaseOrderTypeResourceTestCase {
 			randomOrderType());
 
 		Page<OrderType> page1 = orderTypeResource.getOrderTypesPage(
-			null, null, Pagination.of(1, itemLimit), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<OrderType> orderTypes1 = (List<OrderType>)page1.getItems();
 
-		if (orderTypes1.size() < itemLimit) {
-			itemLimit = orderTypes1.size();
-		}
+		Assert.assertEquals(
+			orderTypes1.toString(), totalCount + 2, orderTypes1.size());
 
-		int pages = (int)Math.ceil(orderTypePage.getTotalCount() / itemLimit);
-		List<OrderType> allItems = new ArrayList<OrderType>();
+		Page<OrderType> page2 = orderTypeResource.getOrderTypesPage(
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					orderTypes1.toString(), itemLimit, orderTypes1.size());
+		List<OrderType> orderTypes2 = (List<OrderType>)page2.getItems();
 
-				Page<OrderType> page = orderTypeResource.getOrderTypesPage(
-					null, null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(orderTypes2.toString(), 1, orderTypes2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<OrderType> page3 = orderTypeResource.getOrderTypesPage(
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(orderType1, allItems);
-		assertContains(orderType2, allItems);
-		assertContains(orderType3, allItems);
+		assertContains(orderType1, (List<OrderType>)page3.getItems());
+		assertContains(orderType2, (List<OrderType>)page3.getItems());
+		assertContains(orderType3, (List<OrderType>)page3.getItems());
 	}
 
 	@Test

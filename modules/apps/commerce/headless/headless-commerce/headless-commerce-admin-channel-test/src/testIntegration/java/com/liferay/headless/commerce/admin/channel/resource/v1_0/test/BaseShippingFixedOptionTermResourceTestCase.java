@@ -398,7 +398,6 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			shippingFixedOptionTermPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ShippingFixedOptionTerm shippingFixedOptionTerm1 =
 			testGetShippingFixedOptionIdShippingFixedOptionTermsPage_addShippingFixedOptionTerm(
@@ -415,41 +414,44 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 		Page<ShippingFixedOptionTerm> page1 =
 			shippingFixedOptionTermResource.
 				getShippingFixedOptionIdShippingFixedOptionTermsPage(
-					id, null, null, Pagination.of(1, itemLimit), null);
+					id, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<ShippingFixedOptionTerm> shippingFixedOptionTerms1 =
 			(List<ShippingFixedOptionTerm>)page1.getItems();
 
-		if (shippingFixedOptionTerms1.size() < itemLimit) {
-			itemLimit = shippingFixedOptionTerms1.size();
-		}
+		Assert.assertEquals(
+			shippingFixedOptionTerms1.toString(), totalCount + 2,
+			shippingFixedOptionTerms1.size());
 
-		int pages = (int)Math.ceil(
-			shippingFixedOptionTermPage.getTotalCount() / itemLimit);
-		List<ShippingFixedOptionTerm> allItems =
-			new ArrayList<ShippingFixedOptionTerm>();
+		Page<ShippingFixedOptionTerm> page2 =
+			shippingFixedOptionTermResource.
+				getShippingFixedOptionIdShippingFixedOptionTermsPage(
+					id, null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					shippingFixedOptionTerms1.toString(), itemLimit,
-					shippingFixedOptionTerms1.size());
+		List<ShippingFixedOptionTerm> shippingFixedOptionTerms2 =
+			(List<ShippingFixedOptionTerm>)page2.getItems();
 
-				Page<ShippingFixedOptionTerm> page =
-					shippingFixedOptionTermResource.
-						getShippingFixedOptionIdShippingFixedOptionTermsPage(
-							id, null, null, Pagination.of(pageNum, itemLimit),
-							null);
+		Assert.assertEquals(
+			shippingFixedOptionTerms2.toString(), 1,
+			shippingFixedOptionTerms2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ShippingFixedOptionTerm> page3 =
+			shippingFixedOptionTermResource.
+				getShippingFixedOptionIdShippingFixedOptionTermsPage(
+					id, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
 
-		assertContains(shippingFixedOptionTerm1, allItems);
-		assertContains(shippingFixedOptionTerm2, allItems);
-		assertContains(shippingFixedOptionTerm3, allItems);
+		assertContains(
+			shippingFixedOptionTerm1,
+			(List<ShippingFixedOptionTerm>)page3.getItems());
+		assertContains(
+			shippingFixedOptionTerm2,
+			(List<ShippingFixedOptionTerm>)page3.getItems());
+		assertContains(
+			shippingFixedOptionTerm3,
+			(List<ShippingFixedOptionTerm>)page3.getItems());
 	}
 
 	@Test

@@ -222,7 +222,6 @@ public abstract class BaseChannelResourceTestCase {
 			null, null, null);
 
 		int totalCount = GetterUtil.getInteger(channelPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Channel channel1 = testGetChannelsPage_addChannel(randomChannel());
 
@@ -231,34 +230,28 @@ public abstract class BaseChannelResourceTestCase {
 		Channel channel3 = testGetChannelsPage_addChannel(randomChannel());
 
 		Page<Channel> page1 = channelResource.getChannelsPage(
-			null, Pagination.of(1, itemLimit), null);
+			null, Pagination.of(1, totalCount + 2), null);
 
 		List<Channel> channels1 = (List<Channel>)page1.getItems();
 
-		if (channels1.size() < itemLimit) {
-			itemLimit = channels1.size();
-		}
+		Assert.assertEquals(
+			channels1.toString(), totalCount + 2, channels1.size());
 
-		int pages = (int)Math.ceil(channelPage.getTotalCount() / itemLimit);
-		List<Channel> allItems = new ArrayList<Channel>();
+		Page<Channel> page2 = channelResource.getChannelsPage(
+			null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					channels1.toString(), itemLimit, channels1.size());
+		List<Channel> channels2 = (List<Channel>)page2.getItems();
 
-				Page<Channel> page = channelResource.getChannelsPage(
-					null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(channels2.toString(), 1, channels2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Channel> page3 = channelResource.getChannelsPage(
+			null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(channel1, allItems);
-		assertContains(channel2, allItems);
-		assertContains(channel3, allItems);
+		assertContains(channel1, (List<Channel>)page3.getItems());
+		assertContains(channel2, (List<Channel>)page3.getItems());
+		assertContains(channel3, (List<Channel>)page3.getItems());
 	}
 
 	@Test

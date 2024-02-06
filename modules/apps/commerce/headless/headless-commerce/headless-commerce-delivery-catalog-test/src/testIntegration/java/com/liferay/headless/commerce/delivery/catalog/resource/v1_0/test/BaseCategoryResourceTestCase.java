@@ -256,7 +256,6 @@ public abstract class BaseCategoryResourceTestCase {
 				channelId, productId, null);
 
 		int totalCount = GetterUtil.getInteger(categoryPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Category category1 = testGetChannelProductCategoriesPage_addCategory(
 			channelId, productId, randomCategory());
@@ -268,36 +267,28 @@ public abstract class BaseCategoryResourceTestCase {
 			channelId, productId, randomCategory());
 
 		Page<Category> page1 = categoryResource.getChannelProductCategoriesPage(
-			channelId, productId, Pagination.of(1, itemLimit));
+			channelId, productId, Pagination.of(1, totalCount + 2));
 
 		List<Category> categories1 = (List<Category>)page1.getItems();
 
-		if (categories1.size() < itemLimit) {
-			itemLimit = categories1.size();
-		}
+		Assert.assertEquals(
+			categories1.toString(), totalCount + 2, categories1.size());
 
-		int pages = (int)Math.ceil(categoryPage.getTotalCount() / itemLimit);
-		List<Category> allItems = new ArrayList<Category>();
+		Page<Category> page2 = categoryResource.getChannelProductCategoriesPage(
+			channelId, productId, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					categories1.toString(), itemLimit, categories1.size());
+		List<Category> categories2 = (List<Category>)page2.getItems();
 
-				Page<Category> page =
-					categoryResource.getChannelProductCategoriesPage(
-						channelId, productId,
-						Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(categories2.toString(), 1, categories2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Category> page3 = categoryResource.getChannelProductCategoriesPage(
+			channelId, productId, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(category1, allItems);
-		assertContains(category2, allItems);
-		assertContains(category3, allItems);
+		assertContains(category1, (List<Category>)page3.getItems());
+		assertContains(category2, (List<Category>)page3.getItems());
+		assertContains(category3, (List<Category>)page3.getItems());
 	}
 
 	protected Category testGetChannelProductCategoriesPage_addCategory(

@@ -445,7 +445,6 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			productSpecificationPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ProductSpecification productSpecification1 =
 			testGetProductIdProductSpecificationsPage_addProductSpecification(
@@ -461,40 +460,41 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		Page<ProductSpecification> page1 =
 			productSpecificationResource.getProductIdProductSpecificationsPage(
-				id, Pagination.of(1, itemLimit));
+				id, Pagination.of(1, totalCount + 2));
 
 		List<ProductSpecification> productSpecifications1 =
 			(List<ProductSpecification>)page1.getItems();
 
-		if (productSpecifications1.size() < itemLimit) {
-			itemLimit = productSpecifications1.size();
-		}
+		Assert.assertEquals(
+			productSpecifications1.toString(), totalCount + 2,
+			productSpecifications1.size());
 
-		int pages = (int)Math.ceil(
-			productSpecificationPage.getTotalCount() / itemLimit);
-		List<ProductSpecification> allItems =
-			new ArrayList<ProductSpecification>();
+		Page<ProductSpecification> page2 =
+			productSpecificationResource.getProductIdProductSpecificationsPage(
+				id, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					productSpecifications1.toString(), itemLimit,
-					productSpecifications1.size());
+		List<ProductSpecification> productSpecifications2 =
+			(List<ProductSpecification>)page2.getItems();
 
-				Page<ProductSpecification> page =
-					productSpecificationResource.
-						getProductIdProductSpecificationsPage(
-							id, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			productSpecifications2.toString(), 1,
+			productSpecifications2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ProductSpecification> page3 =
+			productSpecificationResource.getProductIdProductSpecificationsPage(
+				id, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(productSpecification1, allItems);
-		assertContains(productSpecification2, allItems);
-		assertContains(productSpecification3, allItems);
+		assertContains(
+			productSpecification1,
+			(List<ProductSpecification>)page3.getItems());
+		assertContains(
+			productSpecification2,
+			(List<ProductSpecification>)page3.getItems());
+		assertContains(
+			productSpecification3,
+			(List<ProductSpecification>)page3.getItems());
 	}
 
 	protected ProductSpecification

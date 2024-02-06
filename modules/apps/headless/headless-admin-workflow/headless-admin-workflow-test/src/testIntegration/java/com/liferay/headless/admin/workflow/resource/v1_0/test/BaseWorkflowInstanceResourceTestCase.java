@@ -240,7 +240,6 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			workflowInstancePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		WorkflowInstance workflowInstance1 =
 			testGetWorkflowInstancesPage_addWorkflowInstance(
@@ -256,38 +255,37 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 
 		Page<WorkflowInstance> page1 =
 			workflowInstanceResource.getWorkflowInstancesPage(
-				null, null, null, Pagination.of(1, itemLimit));
+				null, null, null, Pagination.of(1, totalCount + 2));
 
 		List<WorkflowInstance> workflowInstances1 =
 			(List<WorkflowInstance>)page1.getItems();
 
-		if (workflowInstances1.size() < itemLimit) {
-			itemLimit = workflowInstances1.size();
-		}
+		Assert.assertEquals(
+			workflowInstances1.toString(), totalCount + 2,
+			workflowInstances1.size());
 
-		int pages = (int)Math.ceil(
-			workflowInstancePage.getTotalCount() / itemLimit);
-		List<WorkflowInstance> allItems = new ArrayList<WorkflowInstance>();
+		Page<WorkflowInstance> page2 =
+			workflowInstanceResource.getWorkflowInstancesPage(
+				null, null, null, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					workflowInstances1.toString(), itemLimit,
-					workflowInstances1.size());
+		List<WorkflowInstance> workflowInstances2 =
+			(List<WorkflowInstance>)page2.getItems();
 
-				Page<WorkflowInstance> page =
-					workflowInstanceResource.getWorkflowInstancesPage(
-						null, null, null, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			workflowInstances2.toString(), 1, workflowInstances2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<WorkflowInstance> page3 =
+			workflowInstanceResource.getWorkflowInstancesPage(
+				null, null, null, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(workflowInstance1, allItems);
-		assertContains(workflowInstance2, allItems);
-		assertContains(workflowInstance3, allItems);
+		assertContains(
+			workflowInstance1, (List<WorkflowInstance>)page3.getItems());
+		assertContains(
+			workflowInstance2, (List<WorkflowInstance>)page3.getItems());
+		assertContains(
+			workflowInstance3, (List<WorkflowInstance>)page3.getItems());
 	}
 
 	protected WorkflowInstance testGetWorkflowInstancesPage_addWorkflowInstance(

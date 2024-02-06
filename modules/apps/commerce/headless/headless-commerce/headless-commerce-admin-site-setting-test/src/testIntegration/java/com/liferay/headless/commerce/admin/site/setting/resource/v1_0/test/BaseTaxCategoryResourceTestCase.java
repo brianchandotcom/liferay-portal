@@ -261,7 +261,6 @@ public abstract class BaseTaxCategoryResourceTestCase {
 				groupId, null);
 
 		int totalCount = GetterUtil.getInteger(taxCategoryPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		TaxCategory taxCategory1 =
 			testGetCommerceAdminSiteSettingGroupTaxCategoryPage_addTaxCategory(
@@ -277,37 +276,31 @@ public abstract class BaseTaxCategoryResourceTestCase {
 
 		Page<TaxCategory> page1 =
 			taxCategoryResource.getCommerceAdminSiteSettingGroupTaxCategoryPage(
-				groupId, Pagination.of(1, itemLimit));
+				groupId, Pagination.of(1, totalCount + 2));
 
 		List<TaxCategory> taxCategories1 = (List<TaxCategory>)page1.getItems();
 
-		if (taxCategories1.size() < itemLimit) {
-			itemLimit = taxCategories1.size();
-		}
+		Assert.assertEquals(
+			taxCategories1.toString(), totalCount + 2, taxCategories1.size());
 
-		int pages = (int)Math.ceil(taxCategoryPage.getTotalCount() / itemLimit);
-		List<TaxCategory> allItems = new ArrayList<TaxCategory>();
+		Page<TaxCategory> page2 =
+			taxCategoryResource.getCommerceAdminSiteSettingGroupTaxCategoryPage(
+				groupId, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					taxCategories1.toString(), itemLimit,
-					taxCategories1.size());
+		List<TaxCategory> taxCategories2 = (List<TaxCategory>)page2.getItems();
 
-				Page<TaxCategory> page =
-					taxCategoryResource.
-						getCommerceAdminSiteSettingGroupTaxCategoryPage(
-							groupId, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			taxCategories2.toString(), 1, taxCategories2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<TaxCategory> page3 =
+			taxCategoryResource.getCommerceAdminSiteSettingGroupTaxCategoryPage(
+				groupId, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(taxCategory1, allItems);
-		assertContains(taxCategory2, allItems);
-		assertContains(taxCategory3, allItems);
+		assertContains(taxCategory1, (List<TaxCategory>)page3.getItems());
+		assertContains(taxCategory2, (List<TaxCategory>)page3.getItems());
+		assertContains(taxCategory3, (List<TaxCategory>)page3.getItems());
 	}
 
 	protected TaxCategory

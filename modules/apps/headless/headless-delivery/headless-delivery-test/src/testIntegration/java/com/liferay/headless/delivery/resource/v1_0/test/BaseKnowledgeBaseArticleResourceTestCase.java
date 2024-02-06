@@ -776,7 +776,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			knowledgeBaseArticlePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
@@ -794,41 +793,45 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			knowledgeBaseArticleResource.
 				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 					parentKnowledgeBaseArticleId, null, null, null, null,
-					Pagination.of(1, itemLimit), null);
+					Pagination.of(1, totalCount + 2), null);
 
 		List<KnowledgeBaseArticle> knowledgeBaseArticles1 =
 			(List<KnowledgeBaseArticle>)page1.getItems();
 
-		if (knowledgeBaseArticles1.size() < itemLimit) {
-			itemLimit = knowledgeBaseArticles1.size();
-		}
+		Assert.assertEquals(
+			knowledgeBaseArticles1.toString(), totalCount + 2,
+			knowledgeBaseArticles1.size());
 
-		int pages = (int)Math.ceil(
-			knowledgeBaseArticlePage.getTotalCount() / itemLimit);
-		List<KnowledgeBaseArticle> allItems =
-			new ArrayList<KnowledgeBaseArticle>();
+		Page<KnowledgeBaseArticle> page2 =
+			knowledgeBaseArticleResource.
+				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+					parentKnowledgeBaseArticleId, null, null, null, null,
+					Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					knowledgeBaseArticles1.toString(), itemLimit,
-					knowledgeBaseArticles1.size());
+		List<KnowledgeBaseArticle> knowledgeBaseArticles2 =
+			(List<KnowledgeBaseArticle>)page2.getItems();
 
-				Page<KnowledgeBaseArticle> page =
-					knowledgeBaseArticleResource.
-						getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-							parentKnowledgeBaseArticleId, null, null, null,
-							null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			knowledgeBaseArticles2.toString(), 1,
+			knowledgeBaseArticles2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<KnowledgeBaseArticle> page3 =
+			knowledgeBaseArticleResource.
+				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+					parentKnowledgeBaseArticleId, null, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(knowledgeBaseArticle1, allItems);
-		assertContains(knowledgeBaseArticle2, allItems);
-		assertContains(knowledgeBaseArticle3, allItems);
+		assertContains(
+			knowledgeBaseArticle1,
+			(List<KnowledgeBaseArticle>)page3.getItems());
+		assertContains(
+			knowledgeBaseArticle2,
+			(List<KnowledgeBaseArticle>)page3.getItems());
+		assertContains(
+			knowledgeBaseArticle3,
+			(List<KnowledgeBaseArticle>)page3.getItems());
 	}
 
 	@Test
@@ -1261,7 +1264,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			knowledgeBaseArticlePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
@@ -1279,41 +1281,45 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			knowledgeBaseArticleResource.
 				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 					knowledgeBaseFolderId, null, null, null, null,
-					Pagination.of(1, itemLimit), null);
+					Pagination.of(1, totalCount + 2), null);
 
 		List<KnowledgeBaseArticle> knowledgeBaseArticles1 =
 			(List<KnowledgeBaseArticle>)page1.getItems();
 
-		if (knowledgeBaseArticles1.size() < itemLimit) {
-			itemLimit = knowledgeBaseArticles1.size();
-		}
+		Assert.assertEquals(
+			knowledgeBaseArticles1.toString(), totalCount + 2,
+			knowledgeBaseArticles1.size());
 
-		int pages = (int)Math.ceil(
-			knowledgeBaseArticlePage.getTotalCount() / itemLimit);
-		List<KnowledgeBaseArticle> allItems =
-			new ArrayList<KnowledgeBaseArticle>();
+		Page<KnowledgeBaseArticle> page2 =
+			knowledgeBaseArticleResource.
+				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+					knowledgeBaseFolderId, null, null, null, null,
+					Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					knowledgeBaseArticles1.toString(), itemLimit,
-					knowledgeBaseArticles1.size());
+		List<KnowledgeBaseArticle> knowledgeBaseArticles2 =
+			(List<KnowledgeBaseArticle>)page2.getItems();
 
-				Page<KnowledgeBaseArticle> page =
-					knowledgeBaseArticleResource.
-						getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-							knowledgeBaseFolderId, null, null, null, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			knowledgeBaseArticles2.toString(), 1,
+			knowledgeBaseArticles2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<KnowledgeBaseArticle> page3 =
+			knowledgeBaseArticleResource.
+				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+					knowledgeBaseFolderId, null, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(knowledgeBaseArticle1, allItems);
-		assertContains(knowledgeBaseArticle2, allItems);
-		assertContains(knowledgeBaseArticle3, allItems);
+		assertContains(
+			knowledgeBaseArticle1,
+			(List<KnowledgeBaseArticle>)page3.getItems());
+		assertContains(
+			knowledgeBaseArticle2,
+			(List<KnowledgeBaseArticle>)page3.getItems());
+		assertContains(
+			knowledgeBaseArticle3,
+			(List<KnowledgeBaseArticle>)page3.getItems());
 	}
 
 	@Test
@@ -1724,7 +1730,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			knowledgeBaseArticlePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
@@ -1740,42 +1745,44 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		Page<KnowledgeBaseArticle> page1 =
 			knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
-				siteId, null, null, null, null, Pagination.of(1, itemLimit),
-				null);
+				siteId, null, null, null, null,
+				Pagination.of(1, totalCount + 2), null);
 
 		List<KnowledgeBaseArticle> knowledgeBaseArticles1 =
 			(List<KnowledgeBaseArticle>)page1.getItems();
 
-		if (knowledgeBaseArticles1.size() < itemLimit) {
-			itemLimit = knowledgeBaseArticles1.size();
-		}
+		Assert.assertEquals(
+			knowledgeBaseArticles1.toString(), totalCount + 2,
+			knowledgeBaseArticles1.size());
 
-		int pages = (int)Math.ceil(
-			knowledgeBaseArticlePage.getTotalCount() / itemLimit);
-		List<KnowledgeBaseArticle> allItems =
-			new ArrayList<KnowledgeBaseArticle>();
+		Page<KnowledgeBaseArticle> page2 =
+			knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
+				siteId, null, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					knowledgeBaseArticles1.toString(), itemLimit,
-					knowledgeBaseArticles1.size());
+		List<KnowledgeBaseArticle> knowledgeBaseArticles2 =
+			(List<KnowledgeBaseArticle>)page2.getItems();
 
-				Page<KnowledgeBaseArticle> page =
-					knowledgeBaseArticleResource.
-						getSiteKnowledgeBaseArticlesPage(
-							siteId, null, null, null, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			knowledgeBaseArticles2.toString(), 1,
+			knowledgeBaseArticles2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<KnowledgeBaseArticle> page3 =
+			knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
+				siteId, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(knowledgeBaseArticle1, allItems);
-		assertContains(knowledgeBaseArticle2, allItems);
-		assertContains(knowledgeBaseArticle3, allItems);
+		assertContains(
+			knowledgeBaseArticle1,
+			(List<KnowledgeBaseArticle>)page3.getItems());
+		assertContains(
+			knowledgeBaseArticle2,
+			(List<KnowledgeBaseArticle>)page3.getItems());
+		assertContains(
+			knowledgeBaseArticle3,
+			(List<KnowledgeBaseArticle>)page3.getItems());
 	}
 
 	@Test

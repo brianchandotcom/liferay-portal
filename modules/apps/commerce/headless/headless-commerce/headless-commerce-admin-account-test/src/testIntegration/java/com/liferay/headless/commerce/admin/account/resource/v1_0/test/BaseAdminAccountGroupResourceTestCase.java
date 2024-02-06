@@ -326,7 +326,6 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			adminAccountGroupPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		AdminAccountGroup adminAccountGroup1 =
 			testGetAccountGroupsPage_addAdminAccountGroup(
@@ -342,38 +341,37 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 
 		Page<AdminAccountGroup> page1 =
 			adminAccountGroupResource.getAccountGroupsPage(
-				null, null, Pagination.of(1, itemLimit), null);
+				null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<AdminAccountGroup> adminAccountGroups1 =
 			(List<AdminAccountGroup>)page1.getItems();
 
-		if (adminAccountGroups1.size() < itemLimit) {
-			itemLimit = adminAccountGroups1.size();
-		}
+		Assert.assertEquals(
+			adminAccountGroups1.toString(), totalCount + 2,
+			adminAccountGroups1.size());
 
-		int pages = (int)Math.ceil(
-			adminAccountGroupPage.getTotalCount() / itemLimit);
-		List<AdminAccountGroup> allItems = new ArrayList<AdminAccountGroup>();
+		Page<AdminAccountGroup> page2 =
+			adminAccountGroupResource.getAccountGroupsPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					adminAccountGroups1.toString(), itemLimit,
-					adminAccountGroups1.size());
+		List<AdminAccountGroup> adminAccountGroups2 =
+			(List<AdminAccountGroup>)page2.getItems();
 
-				Page<AdminAccountGroup> page =
-					adminAccountGroupResource.getAccountGroupsPage(
-						null, null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			adminAccountGroups2.toString(), 1, adminAccountGroups2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<AdminAccountGroup> page3 =
+			adminAccountGroupResource.getAccountGroupsPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(adminAccountGroup1, allItems);
-		assertContains(adminAccountGroup2, allItems);
-		assertContains(adminAccountGroup3, allItems);
+		assertContains(
+			adminAccountGroup1, (List<AdminAccountGroup>)page3.getItems());
+		assertContains(
+			adminAccountGroup2, (List<AdminAccountGroup>)page3.getItems());
+		assertContains(
+			adminAccountGroup3, (List<AdminAccountGroup>)page3.getItems());
 	}
 
 	@Test
@@ -863,7 +861,6 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			adminAccountGroupPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		AdminAccountGroup adminAccountGroup1 =
 			testGetAccountByExternalReferenceCodeAccountGroupsPage_addAdminAccountGroup(
@@ -880,40 +877,40 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 		Page<AdminAccountGroup> page1 =
 			adminAccountGroupResource.
 				getAccountByExternalReferenceCodeAccountGroupsPage(
-					externalReferenceCode, Pagination.of(1, itemLimit));
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<AdminAccountGroup> adminAccountGroups1 =
 			(List<AdminAccountGroup>)page1.getItems();
 
-		if (adminAccountGroups1.size() < itemLimit) {
-			itemLimit = adminAccountGroups1.size();
-		}
+		Assert.assertEquals(
+			adminAccountGroups1.toString(), totalCount + 2,
+			adminAccountGroups1.size());
 
-		int pages = (int)Math.ceil(
-			adminAccountGroupPage.getTotalCount() / itemLimit);
-		List<AdminAccountGroup> allItems = new ArrayList<AdminAccountGroup>();
+		Page<AdminAccountGroup> page2 =
+			adminAccountGroupResource.
+				getAccountByExternalReferenceCodeAccountGroupsPage(
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					adminAccountGroups1.toString(), itemLimit,
-					adminAccountGroups1.size());
+		List<AdminAccountGroup> adminAccountGroups2 =
+			(List<AdminAccountGroup>)page2.getItems();
 
-				Page<AdminAccountGroup> page =
-					adminAccountGroupResource.
-						getAccountByExternalReferenceCodeAccountGroupsPage(
-							externalReferenceCode,
-							Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			adminAccountGroups2.toString(), 1, adminAccountGroups2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<AdminAccountGroup> page3 =
+			adminAccountGroupResource.
+				getAccountByExternalReferenceCodeAccountGroupsPage(
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(adminAccountGroup1, allItems);
-		assertContains(adminAccountGroup2, allItems);
-		assertContains(adminAccountGroup3, allItems);
+		assertContains(
+			adminAccountGroup1, (List<AdminAccountGroup>)page3.getItems());
+		assertContains(
+			adminAccountGroup2, (List<AdminAccountGroup>)page3.getItems());
+		assertContains(
+			adminAccountGroup3, (List<AdminAccountGroup>)page3.getItems());
 	}
 
 	protected AdminAccountGroup
@@ -1012,7 +1009,6 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			adminAccountGroupPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		AdminAccountGroup adminAccountGroup1 =
 			testGetAccountIdAccountGroupsPage_addAdminAccountGroup(
@@ -1028,38 +1024,37 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 
 		Page<AdminAccountGroup> page1 =
 			adminAccountGroupResource.getAccountIdAccountGroupsPage(
-				id, Pagination.of(1, itemLimit));
+				id, Pagination.of(1, totalCount + 2));
 
 		List<AdminAccountGroup> adminAccountGroups1 =
 			(List<AdminAccountGroup>)page1.getItems();
 
-		if (adminAccountGroups1.size() < itemLimit) {
-			itemLimit = adminAccountGroups1.size();
-		}
+		Assert.assertEquals(
+			adminAccountGroups1.toString(), totalCount + 2,
+			adminAccountGroups1.size());
 
-		int pages = (int)Math.ceil(
-			adminAccountGroupPage.getTotalCount() / itemLimit);
-		List<AdminAccountGroup> allItems = new ArrayList<AdminAccountGroup>();
+		Page<AdminAccountGroup> page2 =
+			adminAccountGroupResource.getAccountIdAccountGroupsPage(
+				id, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					adminAccountGroups1.toString(), itemLimit,
-					adminAccountGroups1.size());
+		List<AdminAccountGroup> adminAccountGroups2 =
+			(List<AdminAccountGroup>)page2.getItems();
 
-				Page<AdminAccountGroup> page =
-					adminAccountGroupResource.getAccountIdAccountGroupsPage(
-						id, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			adminAccountGroups2.toString(), 1, adminAccountGroups2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<AdminAccountGroup> page3 =
+			adminAccountGroupResource.getAccountIdAccountGroupsPage(
+				id, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(adminAccountGroup1, allItems);
-		assertContains(adminAccountGroup2, allItems);
-		assertContains(adminAccountGroup3, allItems);
+		assertContains(
+			adminAccountGroup1, (List<AdminAccountGroup>)page3.getItems());
+		assertContains(
+			adminAccountGroup2, (List<AdminAccountGroup>)page3.getItems());
+		assertContains(
+			adminAccountGroup3, (List<AdminAccountGroup>)page3.getItems());
 	}
 
 	protected AdminAccountGroup

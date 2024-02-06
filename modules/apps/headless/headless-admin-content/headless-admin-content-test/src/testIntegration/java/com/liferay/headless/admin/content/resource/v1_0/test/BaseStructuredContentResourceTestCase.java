@@ -371,7 +371,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			structuredContentPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		StructuredContent structuredContent1 =
 			testGetSiteStructuredContentsPage_addStructuredContent(
@@ -387,40 +386,40 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		Page<StructuredContent> page1 =
 			structuredContentResource.getSiteStructuredContentsPage(
-				siteId, null, null, null, null, Pagination.of(1, itemLimit),
-				null);
+				siteId, null, null, null, null,
+				Pagination.of(1, totalCount + 2), null);
 
 		List<StructuredContent> structuredContents1 =
 			(List<StructuredContent>)page1.getItems();
 
-		if (structuredContents1.size() < itemLimit) {
-			itemLimit = structuredContents1.size();
-		}
+		Assert.assertEquals(
+			structuredContents1.toString(), totalCount + 2,
+			structuredContents1.size());
 
-		int pages = (int)Math.ceil(
-			structuredContentPage.getTotalCount() / itemLimit);
-		List<StructuredContent> allItems = new ArrayList<StructuredContent>();
+		Page<StructuredContent> page2 =
+			structuredContentResource.getSiteStructuredContentsPage(
+				siteId, null, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					structuredContents1.toString(), itemLimit,
-					structuredContents1.size());
+		List<StructuredContent> structuredContents2 =
+			(List<StructuredContent>)page2.getItems();
 
-				Page<StructuredContent> page =
-					structuredContentResource.getSiteStructuredContentsPage(
-						siteId, null, null, null, null,
-						Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			structuredContents2.toString(), 1, structuredContents2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<StructuredContent> page3 =
+			structuredContentResource.getSiteStructuredContentsPage(
+				siteId, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(structuredContent1, allItems);
-		assertContains(structuredContent2, allItems);
-		assertContains(structuredContent3, allItems);
+		assertContains(
+			structuredContent1, (List<StructuredContent>)page3.getItems());
+		assertContains(
+			structuredContent2, (List<StructuredContent>)page3.getItems());
+		assertContains(
+			structuredContent3, (List<StructuredContent>)page3.getItems());
 	}
 
 	@Test

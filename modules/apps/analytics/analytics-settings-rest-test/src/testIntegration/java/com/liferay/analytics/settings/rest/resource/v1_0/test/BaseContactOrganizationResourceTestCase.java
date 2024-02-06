@@ -233,7 +233,6 @@ public abstract class BaseContactOrganizationResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			contactOrganizationPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ContactOrganization contactOrganization1 =
 			testGetContactOrganizationsPage_addContactOrganization(
@@ -249,39 +248,37 @@ public abstract class BaseContactOrganizationResourceTestCase {
 
 		Page<ContactOrganization> page1 =
 			contactOrganizationResource.getContactOrganizationsPage(
-				null, Pagination.of(1, itemLimit), null);
+				null, Pagination.of(1, totalCount + 2), null);
 
 		List<ContactOrganization> contactOrganizations1 =
 			(List<ContactOrganization>)page1.getItems();
 
-		if (contactOrganizations1.size() < itemLimit) {
-			itemLimit = contactOrganizations1.size();
-		}
+		Assert.assertEquals(
+			contactOrganizations1.toString(), totalCount + 2,
+			contactOrganizations1.size());
 
-		int pages = (int)Math.ceil(
-			contactOrganizationPage.getTotalCount() / itemLimit);
-		List<ContactOrganization> allItems =
-			new ArrayList<ContactOrganization>();
+		Page<ContactOrganization> page2 =
+			contactOrganizationResource.getContactOrganizationsPage(
+				null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					contactOrganizations1.toString(), itemLimit,
-					contactOrganizations1.size());
+		List<ContactOrganization> contactOrganizations2 =
+			(List<ContactOrganization>)page2.getItems();
 
-				Page<ContactOrganization> page =
-					contactOrganizationResource.getContactOrganizationsPage(
-						null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			contactOrganizations2.toString(), 1, contactOrganizations2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ContactOrganization> page3 =
+			contactOrganizationResource.getContactOrganizationsPage(
+				null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(contactOrganization1, allItems);
-		assertContains(contactOrganization2, allItems);
-		assertContains(contactOrganization3, allItems);
+		assertContains(
+			contactOrganization1, (List<ContactOrganization>)page3.getItems());
+		assertContains(
+			contactOrganization2, (List<ContactOrganization>)page3.getItems());
+		assertContains(
+			contactOrganization3, (List<ContactOrganization>)page3.getItems());
 	}
 
 	@Test

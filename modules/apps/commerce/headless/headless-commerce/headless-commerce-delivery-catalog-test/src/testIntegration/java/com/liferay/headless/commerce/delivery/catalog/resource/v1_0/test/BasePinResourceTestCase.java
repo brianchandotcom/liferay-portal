@@ -253,7 +253,6 @@ public abstract class BasePinResourceTestCase {
 			channelId, productId, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(pinPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Pin pin1 = testGetChannelProductPinsPage_addPin(
 			channelId, productId, randomPin());
@@ -265,35 +264,30 @@ public abstract class BasePinResourceTestCase {
 			channelId, productId, randomPin());
 
 		Page<Pin> page1 = pinResource.getChannelProductPinsPage(
-			channelId, productId, null, null, Pagination.of(1, itemLimit),
+			channelId, productId, null, null, Pagination.of(1, totalCount + 2),
 			null);
 
 		List<Pin> pins1 = (List<Pin>)page1.getItems();
 
-		if (pins1.size() < itemLimit) {
-			itemLimit = pins1.size();
-		}
+		Assert.assertEquals(pins1.toString(), totalCount + 2, pins1.size());
 
-		int pages = (int)Math.ceil(pinPage.getTotalCount() / itemLimit);
-		List<Pin> allItems = new ArrayList<Pin>();
+		Page<Pin> page2 = pinResource.getChannelProductPinsPage(
+			channelId, productId, null, null, Pagination.of(2, totalCount + 2),
+			null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(pins1.toString(), itemLimit, pins1.size());
+		List<Pin> pins2 = (List<Pin>)page2.getItems();
 
-				Page<Pin> page = pinResource.getChannelProductPinsPage(
-					channelId, productId, null, null,
-					Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(pins2.toString(), 1, pins2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Pin> page3 = pinResource.getChannelProductPinsPage(
+			channelId, productId, null, null,
+			Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(pin1, allItems);
-		assertContains(pin2, allItems);
-		assertContains(pin3, allItems);
+		assertContains(pin1, (List<Pin>)page3.getItems());
+		assertContains(pin2, (List<Pin>)page3.getItems());
+		assertContains(pin3, (List<Pin>)page3.getItems());
 	}
 
 	@Test

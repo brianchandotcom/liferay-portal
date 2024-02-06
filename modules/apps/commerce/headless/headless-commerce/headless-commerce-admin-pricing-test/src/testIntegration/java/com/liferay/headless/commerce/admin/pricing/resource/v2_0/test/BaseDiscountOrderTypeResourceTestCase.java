@@ -288,7 +288,6 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			discountOrderTypePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		DiscountOrderType discountOrderType1 =
 			testGetDiscountByExternalReferenceCodeDiscountOrderTypesPage_addDiscountOrderType(
@@ -305,40 +304,40 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 		Page<DiscountOrderType> page1 =
 			discountOrderTypeResource.
 				getDiscountByExternalReferenceCodeDiscountOrderTypesPage(
-					externalReferenceCode, Pagination.of(1, itemLimit));
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<DiscountOrderType> discountOrderTypes1 =
 			(List<DiscountOrderType>)page1.getItems();
 
-		if (discountOrderTypes1.size() < itemLimit) {
-			itemLimit = discountOrderTypes1.size();
-		}
+		Assert.assertEquals(
+			discountOrderTypes1.toString(), totalCount + 2,
+			discountOrderTypes1.size());
 
-		int pages = (int)Math.ceil(
-			discountOrderTypePage.getTotalCount() / itemLimit);
-		List<DiscountOrderType> allItems = new ArrayList<DiscountOrderType>();
+		Page<DiscountOrderType> page2 =
+			discountOrderTypeResource.
+				getDiscountByExternalReferenceCodeDiscountOrderTypesPage(
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					discountOrderTypes1.toString(), itemLimit,
-					discountOrderTypes1.size());
+		List<DiscountOrderType> discountOrderTypes2 =
+			(List<DiscountOrderType>)page2.getItems();
 
-				Page<DiscountOrderType> page =
-					discountOrderTypeResource.
-						getDiscountByExternalReferenceCodeDiscountOrderTypesPage(
-							externalReferenceCode,
-							Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			discountOrderTypes2.toString(), 1, discountOrderTypes2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<DiscountOrderType> page3 =
+			discountOrderTypeResource.
+				getDiscountByExternalReferenceCodeDiscountOrderTypesPage(
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(discountOrderType1, allItems);
-		assertContains(discountOrderType2, allItems);
-		assertContains(discountOrderType3, allItems);
+		assertContains(
+			discountOrderType1, (List<DiscountOrderType>)page3.getItems());
+		assertContains(
+			discountOrderType2, (List<DiscountOrderType>)page3.getItems());
+		assertContains(
+			discountOrderType3, (List<DiscountOrderType>)page3.getItems());
 	}
 
 	protected DiscountOrderType
@@ -563,7 +562,6 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			discountOrderTypePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		DiscountOrderType discountOrderType1 =
 			testGetDiscountIdDiscountOrderTypesPage_addDiscountOrderType(
@@ -579,40 +577,37 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 
 		Page<DiscountOrderType> page1 =
 			discountOrderTypeResource.getDiscountIdDiscountOrderTypesPage(
-				id, null, null, Pagination.of(1, itemLimit), null);
+				id, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<DiscountOrderType> discountOrderTypes1 =
 			(List<DiscountOrderType>)page1.getItems();
 
-		if (discountOrderTypes1.size() < itemLimit) {
-			itemLimit = discountOrderTypes1.size();
-		}
+		Assert.assertEquals(
+			discountOrderTypes1.toString(), totalCount + 2,
+			discountOrderTypes1.size());
 
-		int pages = (int)Math.ceil(
-			discountOrderTypePage.getTotalCount() / itemLimit);
-		List<DiscountOrderType> allItems = new ArrayList<DiscountOrderType>();
+		Page<DiscountOrderType> page2 =
+			discountOrderTypeResource.getDiscountIdDiscountOrderTypesPage(
+				id, null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					discountOrderTypes1.toString(), itemLimit,
-					discountOrderTypes1.size());
+		List<DiscountOrderType> discountOrderTypes2 =
+			(List<DiscountOrderType>)page2.getItems();
 
-				Page<DiscountOrderType> page =
-					discountOrderTypeResource.
-						getDiscountIdDiscountOrderTypesPage(
-							id, null, null, Pagination.of(pageNum, itemLimit),
-							null);
+		Assert.assertEquals(
+			discountOrderTypes2.toString(), 1, discountOrderTypes2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<DiscountOrderType> page3 =
+			discountOrderTypeResource.getDiscountIdDiscountOrderTypesPage(
+				id, null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(discountOrderType1, allItems);
-		assertContains(discountOrderType2, allItems);
-		assertContains(discountOrderType3, allItems);
+		assertContains(
+			discountOrderType1, (List<DiscountOrderType>)page3.getItems());
+		assertContains(
+			discountOrderType2, (List<DiscountOrderType>)page3.getItems());
+		assertContains(
+			discountOrderType3, (List<DiscountOrderType>)page3.getItems());
 	}
 
 	@Test

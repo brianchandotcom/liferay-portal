@@ -252,7 +252,6 @@ public abstract class BaseAssigneeResourceTestCase {
 				workflowTaskId, null);
 
 		int totalCount = GetterUtil.getInteger(assigneePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Assignee assignee1 = testGetWorkflowTaskAssignableUsersPage_addAssignee(
 			workflowTaskId, randomAssignee());
@@ -265,35 +264,30 @@ public abstract class BaseAssigneeResourceTestCase {
 
 		Page<Assignee> page1 =
 			assigneeResource.getWorkflowTaskAssignableUsersPage(
-				workflowTaskId, Pagination.of(1, itemLimit));
+				workflowTaskId, Pagination.of(1, totalCount + 2));
 
 		List<Assignee> assignees1 = (List<Assignee>)page1.getItems();
 
-		if (assignees1.size() < itemLimit) {
-			itemLimit = assignees1.size();
-		}
+		Assert.assertEquals(
+			assignees1.toString(), totalCount + 2, assignees1.size());
 
-		int pages = (int)Math.ceil(assigneePage.getTotalCount() / itemLimit);
-		List<Assignee> allItems = new ArrayList<Assignee>();
+		Page<Assignee> page2 =
+			assigneeResource.getWorkflowTaskAssignableUsersPage(
+				workflowTaskId, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					assignees1.toString(), itemLimit, assignees1.size());
+		List<Assignee> assignees2 = (List<Assignee>)page2.getItems();
 
-				Page<Assignee> page =
-					assigneeResource.getWorkflowTaskAssignableUsersPage(
-						workflowTaskId, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(assignees2.toString(), 1, assignees2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Assignee> page3 =
+			assigneeResource.getWorkflowTaskAssignableUsersPage(
+				workflowTaskId, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(assignee1, allItems);
-		assertContains(assignee2, allItems);
-		assertContains(assignee3, allItems);
+		assertContains(assignee1, (List<Assignee>)page3.getItems());
+		assertContains(assignee2, (List<Assignee>)page3.getItems());
+		assertContains(assignee3, (List<Assignee>)page3.getItems());
 	}
 
 	protected Assignee testGetWorkflowTaskAssignableUsersPage_addAssignee(

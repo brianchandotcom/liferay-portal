@@ -584,7 +584,6 @@ public abstract class BaseWikiPageResourceTestCase {
 			wikiNodeId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(wikiPagePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		WikiPage wikiPage1 = testGetWikiNodeWikiPagesPage_addWikiPage(
 			wikiNodeId, randomWikiPage());
@@ -596,35 +595,31 @@ public abstract class BaseWikiPageResourceTestCase {
 			wikiNodeId, randomWikiPage());
 
 		Page<WikiPage> page1 = wikiPageResource.getWikiNodeWikiPagesPage(
-			wikiNodeId, null, null, null, Pagination.of(1, itemLimit), null);
+			wikiNodeId, null, null, null, Pagination.of(1, totalCount + 2),
+			null);
 
 		List<WikiPage> wikiPages1 = (List<WikiPage>)page1.getItems();
 
-		if (wikiPages1.size() < itemLimit) {
-			itemLimit = wikiPages1.size();
-		}
+		Assert.assertEquals(
+			wikiPages1.toString(), totalCount + 2, wikiPages1.size());
 
-		int pages = (int)Math.ceil(wikiPagePage.getTotalCount() / itemLimit);
-		List<WikiPage> allItems = new ArrayList<WikiPage>();
+		Page<WikiPage> page2 = wikiPageResource.getWikiNodeWikiPagesPage(
+			wikiNodeId, null, null, null, Pagination.of(2, totalCount + 2),
+			null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					wikiPages1.toString(), itemLimit, wikiPages1.size());
+		List<WikiPage> wikiPages2 = (List<WikiPage>)page2.getItems();
 
-				Page<WikiPage> page = wikiPageResource.getWikiNodeWikiPagesPage(
-					wikiNodeId, null, null, null,
-					Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(wikiPages2.toString(), 1, wikiPages2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<WikiPage> page3 = wikiPageResource.getWikiNodeWikiPagesPage(
+			wikiNodeId, null, null, null, Pagination.of(1, (int)totalCount + 3),
+			null);
 
-		assertContains(wikiPage1, allItems);
-		assertContains(wikiPage2, allItems);
-		assertContains(wikiPage3, allItems);
+		assertContains(wikiPage1, (List<WikiPage>)page3.getItems());
+		assertContains(wikiPage2, (List<WikiPage>)page3.getItems());
+		assertContains(wikiPage3, (List<WikiPage>)page3.getItems());
 	}
 
 	@Test

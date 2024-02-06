@@ -307,7 +307,6 @@ public abstract class BaseCurrencyResourceTestCase {
 			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(currencyPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Currency currency1 = testGetCurrenciesPage_addCurrency(
 			randomCurrency());
@@ -319,34 +318,28 @@ public abstract class BaseCurrencyResourceTestCase {
 			randomCurrency());
 
 		Page<Currency> page1 = currencyResource.getCurrenciesPage(
-			null, null, Pagination.of(1, itemLimit), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Currency> currencies1 = (List<Currency>)page1.getItems();
 
-		if (currencies1.size() < itemLimit) {
-			itemLimit = currencies1.size();
-		}
+		Assert.assertEquals(
+			currencies1.toString(), totalCount + 2, currencies1.size());
 
-		int pages = (int)Math.ceil(currencyPage.getTotalCount() / itemLimit);
-		List<Currency> allItems = new ArrayList<Currency>();
+		Page<Currency> page2 = currencyResource.getCurrenciesPage(
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					currencies1.toString(), itemLimit, currencies1.size());
+		List<Currency> currencies2 = (List<Currency>)page2.getItems();
 
-				Page<Currency> page = currencyResource.getCurrenciesPage(
-					null, null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(currencies2.toString(), 1, currencies2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Currency> page3 = currencyResource.getCurrenciesPage(
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(currency1, allItems);
-		assertContains(currency2, allItems);
-		assertContains(currency3, allItems);
+		assertContains(currency1, (List<Currency>)page3.getItems());
+		assertContains(currency2, (List<Currency>)page3.getItems());
+		assertContains(currency3, (List<Currency>)page3.getItems());
 	}
 
 	@Test

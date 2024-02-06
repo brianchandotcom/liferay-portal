@@ -279,7 +279,6 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			termOrderTypePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		TermOrderType termOrderType1 =
 			testGetTermByExternalReferenceCodeTermOrderTypesPage_addTermOrderType(
@@ -296,40 +295,36 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 		Page<TermOrderType> page1 =
 			termOrderTypeResource.
 				getTermByExternalReferenceCodeTermOrderTypesPage(
-					externalReferenceCode, Pagination.of(1, itemLimit));
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<TermOrderType> termOrderTypes1 =
 			(List<TermOrderType>)page1.getItems();
 
-		if (termOrderTypes1.size() < itemLimit) {
-			itemLimit = termOrderTypes1.size();
-		}
+		Assert.assertEquals(
+			termOrderTypes1.toString(), totalCount + 2, termOrderTypes1.size());
 
-		int pages = (int)Math.ceil(
-			termOrderTypePage.getTotalCount() / itemLimit);
-		List<TermOrderType> allItems = new ArrayList<TermOrderType>();
+		Page<TermOrderType> page2 =
+			termOrderTypeResource.
+				getTermByExternalReferenceCodeTermOrderTypesPage(
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					termOrderTypes1.toString(), itemLimit,
-					termOrderTypes1.size());
+		List<TermOrderType> termOrderTypes2 =
+			(List<TermOrderType>)page2.getItems();
 
-				Page<TermOrderType> page =
-					termOrderTypeResource.
-						getTermByExternalReferenceCodeTermOrderTypesPage(
-							externalReferenceCode,
-							Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			termOrderTypes2.toString(), 1, termOrderTypes2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<TermOrderType> page3 =
+			termOrderTypeResource.
+				getTermByExternalReferenceCodeTermOrderTypesPage(
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(termOrderType1, allItems);
-		assertContains(termOrderType2, allItems);
-		assertContains(termOrderType3, allItems);
+		assertContains(termOrderType1, (List<TermOrderType>)page3.getItems());
+		assertContains(termOrderType2, (List<TermOrderType>)page3.getItems());
+		assertContains(termOrderType3, (List<TermOrderType>)page3.getItems());
 	}
 
 	protected TermOrderType
@@ -447,7 +442,6 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			termOrderTypePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		TermOrderType termOrderType1 =
 			testGetTermIdTermOrderTypesPage_addTermOrderType(
@@ -463,38 +457,33 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 
 		Page<TermOrderType> page1 =
 			termOrderTypeResource.getTermIdTermOrderTypesPage(
-				id, null, Pagination.of(1, itemLimit));
+				id, null, Pagination.of(1, totalCount + 2));
 
 		List<TermOrderType> termOrderTypes1 =
 			(List<TermOrderType>)page1.getItems();
 
-		if (termOrderTypes1.size() < itemLimit) {
-			itemLimit = termOrderTypes1.size();
-		}
+		Assert.assertEquals(
+			termOrderTypes1.toString(), totalCount + 2, termOrderTypes1.size());
 
-		int pages = (int)Math.ceil(
-			termOrderTypePage.getTotalCount() / itemLimit);
-		List<TermOrderType> allItems = new ArrayList<TermOrderType>();
+		Page<TermOrderType> page2 =
+			termOrderTypeResource.getTermIdTermOrderTypesPage(
+				id, null, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					termOrderTypes1.toString(), itemLimit,
-					termOrderTypes1.size());
+		List<TermOrderType> termOrderTypes2 =
+			(List<TermOrderType>)page2.getItems();
 
-				Page<TermOrderType> page =
-					termOrderTypeResource.getTermIdTermOrderTypesPage(
-						id, null, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			termOrderTypes2.toString(), 1, termOrderTypes2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<TermOrderType> page3 =
+			termOrderTypeResource.getTermIdTermOrderTypesPage(
+				id, null, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(termOrderType1, allItems);
-		assertContains(termOrderType2, allItems);
-		assertContains(termOrderType3, allItems);
+		assertContains(termOrderType1, (List<TermOrderType>)page3.getItems());
+		assertContains(termOrderType2, (List<TermOrderType>)page3.getItems());
+		assertContains(termOrderType3, (List<TermOrderType>)page3.getItems());
 	}
 
 	protected TermOrderType testGetTermIdTermOrderTypesPage_addTermOrderType(

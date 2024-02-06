@@ -274,7 +274,6 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			objectLayoutPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ObjectLayout objectLayout1 =
 			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_addObjectLayout(
@@ -291,41 +290,38 @@ public abstract class BaseObjectLayoutResourceTestCase {
 		Page<ObjectLayout> page1 =
 			objectLayoutResource.
 				getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
-					externalReferenceCode, null, Pagination.of(1, itemLimit),
-					null);
+					externalReferenceCode, null,
+					Pagination.of(1, totalCount + 2), null);
 
 		List<ObjectLayout> objectLayouts1 =
 			(List<ObjectLayout>)page1.getItems();
 
-		if (objectLayouts1.size() < itemLimit) {
-			itemLimit = objectLayouts1.size();
-		}
+		Assert.assertEquals(
+			objectLayouts1.toString(), totalCount + 2, objectLayouts1.size());
 
-		int pages = (int)Math.ceil(
-			objectLayoutPage.getTotalCount() / itemLimit);
-		List<ObjectLayout> allItems = new ArrayList<ObjectLayout>();
+		Page<ObjectLayout> page2 =
+			objectLayoutResource.
+				getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
+					externalReferenceCode, null,
+					Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					objectLayouts1.toString(), itemLimit,
-					objectLayouts1.size());
+		List<ObjectLayout> objectLayouts2 =
+			(List<ObjectLayout>)page2.getItems();
 
-				Page<ObjectLayout> page =
-					objectLayoutResource.
-						getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
-							externalReferenceCode, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			objectLayouts2.toString(), 1, objectLayouts2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ObjectLayout> page3 =
+			objectLayoutResource.
+				getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
+					externalReferenceCode, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(objectLayout1, allItems);
-		assertContains(objectLayout2, allItems);
-		assertContains(objectLayout3, allItems);
+		assertContains(objectLayout1, (List<ObjectLayout>)page3.getItems());
+		assertContains(objectLayout2, (List<ObjectLayout>)page3.getItems());
+		assertContains(objectLayout3, (List<ObjectLayout>)page3.getItems());
 	}
 
 	@Test
@@ -625,7 +621,6 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			objectLayoutPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ObjectLayout objectLayout1 =
 			testGetObjectDefinitionObjectLayoutsPage_addObjectLayout(
@@ -641,39 +636,36 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 		Page<ObjectLayout> page1 =
 			objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
-				objectDefinitionId, null, Pagination.of(1, itemLimit), null);
+				objectDefinitionId, null, Pagination.of(1, totalCount + 2),
+				null);
 
 		List<ObjectLayout> objectLayouts1 =
 			(List<ObjectLayout>)page1.getItems();
 
-		if (objectLayouts1.size() < itemLimit) {
-			itemLimit = objectLayouts1.size();
-		}
+		Assert.assertEquals(
+			objectLayouts1.toString(), totalCount + 2, objectLayouts1.size());
 
-		int pages = (int)Math.ceil(
-			objectLayoutPage.getTotalCount() / itemLimit);
-		List<ObjectLayout> allItems = new ArrayList<ObjectLayout>();
+		Page<ObjectLayout> page2 =
+			objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
+				objectDefinitionId, null, Pagination.of(2, totalCount + 2),
+				null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					objectLayouts1.toString(), itemLimit,
-					objectLayouts1.size());
+		List<ObjectLayout> objectLayouts2 =
+			(List<ObjectLayout>)page2.getItems();
 
-				Page<ObjectLayout> page =
-					objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
-						objectDefinitionId, null,
-						Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			objectLayouts2.toString(), 1, objectLayouts2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ObjectLayout> page3 =
+			objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
+				objectDefinitionId, null, Pagination.of(1, (int)totalCount + 3),
+				null);
 
-		assertContains(objectLayout1, allItems);
-		assertContains(objectLayout2, allItems);
-		assertContains(objectLayout3, allItems);
+		assertContains(objectLayout1, (List<ObjectLayout>)page3.getItems());
+		assertContains(objectLayout2, (List<ObjectLayout>)page3.getItems());
+		assertContains(objectLayout3, (List<ObjectLayout>)page3.getItems());
 	}
 
 	@Test

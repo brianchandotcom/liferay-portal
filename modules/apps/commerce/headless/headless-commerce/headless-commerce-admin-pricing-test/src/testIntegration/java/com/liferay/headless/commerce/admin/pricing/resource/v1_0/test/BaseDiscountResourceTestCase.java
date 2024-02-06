@@ -229,7 +229,6 @@ public abstract class BaseDiscountResourceTestCase {
 		Page<Discount> discountPage = discountResource.getDiscountsPage(null);
 
 		int totalCount = GetterUtil.getInteger(discountPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Discount discount1 = testGetDiscountsPage_addDiscount(randomDiscount());
 
@@ -238,34 +237,28 @@ public abstract class BaseDiscountResourceTestCase {
 		Discount discount3 = testGetDiscountsPage_addDiscount(randomDiscount());
 
 		Page<Discount> page1 = discountResource.getDiscountsPage(
-			Pagination.of(1, itemLimit));
+			Pagination.of(1, totalCount + 2));
 
 		List<Discount> discounts1 = (List<Discount>)page1.getItems();
 
-		if (discounts1.size() < itemLimit) {
-			itemLimit = discounts1.size();
-		}
+		Assert.assertEquals(
+			discounts1.toString(), totalCount + 2, discounts1.size());
 
-		int pages = (int)Math.ceil(discountPage.getTotalCount() / itemLimit);
-		List<Discount> allItems = new ArrayList<Discount>();
+		Page<Discount> page2 = discountResource.getDiscountsPage(
+			Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					discounts1.toString(), itemLimit, discounts1.size());
+		List<Discount> discounts2 = (List<Discount>)page2.getItems();
 
-				Page<Discount> page = discountResource.getDiscountsPage(
-					Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(discounts2.toString(), 1, discounts2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Discount> page3 = discountResource.getDiscountsPage(
+			Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(discount1, allItems);
-		assertContains(discount2, allItems);
-		assertContains(discount3, allItems);
+		assertContains(discount1, (List<Discount>)page3.getItems());
+		assertContains(discount2, (List<Discount>)page3.getItems());
+		assertContains(discount3, (List<Discount>)page3.getItems());
 	}
 
 	protected Discount testGetDiscountsPage_addDiscount(Discount discount)

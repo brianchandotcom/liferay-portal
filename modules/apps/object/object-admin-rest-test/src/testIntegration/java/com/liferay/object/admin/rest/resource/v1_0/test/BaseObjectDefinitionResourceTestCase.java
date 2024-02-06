@@ -354,7 +354,6 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			objectDefinitionPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ObjectDefinition objectDefinition1 =
 			testGetObjectDefinitionsPage_addObjectDefinition(
@@ -370,39 +369,37 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		Page<ObjectDefinition> page1 =
 			objectDefinitionResource.getObjectDefinitionsPage(
-				null, null, null, Pagination.of(1, itemLimit), null);
+				null, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<ObjectDefinition> objectDefinitions1 =
 			(List<ObjectDefinition>)page1.getItems();
 
-		if (objectDefinitions1.size() < itemLimit) {
-			itemLimit = objectDefinitions1.size();
-		}
+		Assert.assertEquals(
+			objectDefinitions1.toString(), totalCount + 2,
+			objectDefinitions1.size());
 
-		int pages = (int)Math.ceil(
-			objectDefinitionPage.getTotalCount() / itemLimit);
-		List<ObjectDefinition> allItems = new ArrayList<ObjectDefinition>();
+		Page<ObjectDefinition> page2 =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				null, null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					objectDefinitions1.toString(), itemLimit,
-					objectDefinitions1.size());
+		List<ObjectDefinition> objectDefinitions2 =
+			(List<ObjectDefinition>)page2.getItems();
 
-				Page<ObjectDefinition> page =
-					objectDefinitionResource.getObjectDefinitionsPage(
-						null, null, null, Pagination.of(pageNum, itemLimit),
-						null);
+		Assert.assertEquals(
+			objectDefinitions2.toString(), 1, objectDefinitions2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ObjectDefinition> page3 =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				null, null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(objectDefinition1, allItems);
-		assertContains(objectDefinition2, allItems);
-		assertContains(objectDefinition3, allItems);
+		assertContains(
+			objectDefinition1, (List<ObjectDefinition>)page3.getItems());
+		assertContains(
+			objectDefinition2, (List<ObjectDefinition>)page3.getItems());
+		assertContains(
+			objectDefinition3, (List<ObjectDefinition>)page3.getItems());
 	}
 
 	@Test

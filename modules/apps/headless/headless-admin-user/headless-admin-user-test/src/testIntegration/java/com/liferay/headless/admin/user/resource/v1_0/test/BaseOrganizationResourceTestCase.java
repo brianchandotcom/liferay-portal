@@ -390,7 +390,6 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			organizationPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Organization organization1 =
 			testGetAccountByExternalReferenceCodeOrganizationsPage_addOrganization(
@@ -408,40 +407,37 @@ public abstract class BaseOrganizationResourceTestCase {
 			organizationResource.
 				getAccountByExternalReferenceCodeOrganizationsPage(
 					externalReferenceCode, null, null,
-					Pagination.of(1, itemLimit), null);
+					Pagination.of(1, totalCount + 2), null);
 
 		List<Organization> organizations1 =
 			(List<Organization>)page1.getItems();
 
-		if (organizations1.size() < itemLimit) {
-			itemLimit = organizations1.size();
-		}
+		Assert.assertEquals(
+			organizations1.toString(), totalCount + 2, organizations1.size());
 
-		int pages = (int)Math.ceil(
-			organizationPage.getTotalCount() / itemLimit);
-		List<Organization> allItems = new ArrayList<Organization>();
+		Page<Organization> page2 =
+			organizationResource.
+				getAccountByExternalReferenceCodeOrganizationsPage(
+					externalReferenceCode, null, null,
+					Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					organizations1.toString(), itemLimit,
-					organizations1.size());
+		List<Organization> organizations2 =
+			(List<Organization>)page2.getItems();
 
-				Page<Organization> page =
-					organizationResource.
-						getAccountByExternalReferenceCodeOrganizationsPage(
-							externalReferenceCode, null, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			organizations2.toString(), 1, organizations2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Organization> page3 =
+			organizationResource.
+				getAccountByExternalReferenceCodeOrganizationsPage(
+					externalReferenceCode, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(organization1, allItems);
-		assertContains(organization2, allItems);
-		assertContains(organization3, allItems);
+		assertContains(organization1, (List<Organization>)page3.getItems());
+		assertContains(organization2, (List<Organization>)page3.getItems());
+		assertContains(organization3, (List<Organization>)page3.getItems());
 	}
 
 	@Test
@@ -987,7 +983,6 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			organizationPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Organization organization1 =
 			testGetAccountOrganizationsPage_addOrganization(
@@ -1003,39 +998,34 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		Page<Organization> page1 =
 			organizationResource.getAccountOrganizationsPage(
-				accountId, null, null, Pagination.of(1, itemLimit), null);
+				accountId, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Organization> organizations1 =
 			(List<Organization>)page1.getItems();
 
-		if (organizations1.size() < itemLimit) {
-			itemLimit = organizations1.size();
-		}
+		Assert.assertEquals(
+			organizations1.toString(), totalCount + 2, organizations1.size());
 
-		int pages = (int)Math.ceil(
-			organizationPage.getTotalCount() / itemLimit);
-		List<Organization> allItems = new ArrayList<Organization>();
+		Page<Organization> page2 =
+			organizationResource.getAccountOrganizationsPage(
+				accountId, null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					organizations1.toString(), itemLimit,
-					organizations1.size());
+		List<Organization> organizations2 =
+			(List<Organization>)page2.getItems();
 
-				Page<Organization> page =
-					organizationResource.getAccountOrganizationsPage(
-						accountId, null, null,
-						Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			organizations2.toString(), 1, organizations2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Organization> page3 =
+			organizationResource.getAccountOrganizationsPage(
+				accountId, null, null, Pagination.of(1, (int)totalCount + 3),
+				null);
 
-		assertContains(organization1, allItems);
-		assertContains(organization2, allItems);
-		assertContains(organization3, allItems);
+		assertContains(organization1, (List<Organization>)page3.getItems());
+		assertContains(organization2, (List<Organization>)page3.getItems());
+		assertContains(organization3, (List<Organization>)page3.getItems());
 	}
 
 	@Test
@@ -1491,7 +1481,6 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			organizationPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Organization organization1 = testGetOrganizationsPage_addOrganization(
 			randomOrganization());
@@ -1503,39 +1492,31 @@ public abstract class BaseOrganizationResourceTestCase {
 			randomOrganization());
 
 		Page<Organization> page1 = organizationResource.getOrganizationsPage(
-			null, null, null, Pagination.of(1, itemLimit), null);
+			null, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Organization> organizations1 =
 			(List<Organization>)page1.getItems();
 
-		if (organizations1.size() < itemLimit) {
-			itemLimit = organizations1.size();
-		}
+		Assert.assertEquals(
+			organizations1.toString(), totalCount + 2, organizations1.size());
 
-		int pages = (int)Math.ceil(
-			organizationPage.getTotalCount() / itemLimit);
-		List<Organization> allItems = new ArrayList<Organization>();
+		Page<Organization> page2 = organizationResource.getOrganizationsPage(
+			null, null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					organizations1.toString(), itemLimit,
-					organizations1.size());
+		List<Organization> organizations2 =
+			(List<Organization>)page2.getItems();
 
-				Page<Organization> page =
-					organizationResource.getOrganizationsPage(
-						null, null, null, Pagination.of(pageNum, itemLimit),
-						null);
+		Assert.assertEquals(
+			organizations2.toString(), 1, organizations2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Organization> page3 = organizationResource.getOrganizationsPage(
+			null, null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(organization1, allItems);
-		assertContains(organization2, allItems);
-		assertContains(organization3, allItems);
+		assertContains(organization1, (List<Organization>)page3.getItems());
+		assertContains(organization2, (List<Organization>)page3.getItems());
+		assertContains(organization3, (List<Organization>)page3.getItems());
 	}
 
 	@Test
@@ -2335,7 +2316,6 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			organizationPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Organization organization1 =
 			testGetOrganizationChildOrganizationsPage_addOrganization(
@@ -2351,40 +2331,36 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		Page<Organization> page1 =
 			organizationResource.getOrganizationChildOrganizationsPage(
-				organizationId, null, null, null, Pagination.of(1, itemLimit),
-				null);
+				organizationId, null, null, null,
+				Pagination.of(1, totalCount + 2), null);
 
 		List<Organization> organizations1 =
 			(List<Organization>)page1.getItems();
 
-		if (organizations1.size() < itemLimit) {
-			itemLimit = organizations1.size();
-		}
+		Assert.assertEquals(
+			organizations1.toString(), totalCount + 2, organizations1.size());
 
-		int pages = (int)Math.ceil(
-			organizationPage.getTotalCount() / itemLimit);
-		List<Organization> allItems = new ArrayList<Organization>();
+		Page<Organization> page2 =
+			organizationResource.getOrganizationChildOrganizationsPage(
+				organizationId, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					organizations1.toString(), itemLimit,
-					organizations1.size());
+		List<Organization> organizations2 =
+			(List<Organization>)page2.getItems();
 
-				Page<Organization> page =
-					organizationResource.getOrganizationChildOrganizationsPage(
-						organizationId, null, null, null,
-						Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			organizations2.toString(), 1, organizations2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Organization> page3 =
+			organizationResource.getOrganizationChildOrganizationsPage(
+				organizationId, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(organization1, allItems);
-		assertContains(organization2, allItems);
-		assertContains(organization3, allItems);
+		assertContains(organization1, (List<Organization>)page3.getItems());
+		assertContains(organization2, (List<Organization>)page3.getItems());
+		assertContains(organization3, (List<Organization>)page3.getItems());
 	}
 
 	@Test
@@ -2798,7 +2774,6 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			organizationPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Organization organization1 =
 			testGetOrganizationOrganizationsPage_addOrganization(
@@ -2815,39 +2790,35 @@ public abstract class BaseOrganizationResourceTestCase {
 		Page<Organization> page1 =
 			organizationResource.getOrganizationOrganizationsPage(
 				parentOrganizationId, null, null, null,
-				Pagination.of(1, itemLimit), null);
+				Pagination.of(1, totalCount + 2), null);
 
 		List<Organization> organizations1 =
 			(List<Organization>)page1.getItems();
 
-		if (organizations1.size() < itemLimit) {
-			itemLimit = organizations1.size();
-		}
+		Assert.assertEquals(
+			organizations1.toString(), totalCount + 2, organizations1.size());
 
-		int pages = (int)Math.ceil(
-			organizationPage.getTotalCount() / itemLimit);
-		List<Organization> allItems = new ArrayList<Organization>();
+		Page<Organization> page2 =
+			organizationResource.getOrganizationOrganizationsPage(
+				parentOrganizationId, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					organizations1.toString(), itemLimit,
-					organizations1.size());
+		List<Organization> organizations2 =
+			(List<Organization>)page2.getItems();
 
-				Page<Organization> page =
-					organizationResource.getOrganizationOrganizationsPage(
-						parentOrganizationId, null, null, null,
-						Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			organizations2.toString(), 1, organizations2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Organization> page3 =
+			organizationResource.getOrganizationOrganizationsPage(
+				parentOrganizationId, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(organization1, allItems);
-		assertContains(organization2, allItems);
-		assertContains(organization3, allItems);
+		assertContains(organization1, (List<Organization>)page3.getItems());
+		assertContains(organization2, (List<Organization>)page3.getItems());
+		assertContains(organization3, (List<Organization>)page3.getItems());
 	}
 
 	@Test

@@ -650,7 +650,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 				siteId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(blogPostingPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		BlogPosting blogPosting1 = testGetSiteBlogPostingsPage_addBlogPosting(
 			siteId, randomBlogPosting());
@@ -662,36 +661,29 @@ public abstract class BaseBlogPostingResourceTestCase {
 			siteId, randomBlogPosting());
 
 		Page<BlogPosting> page1 = blogPostingResource.getSiteBlogPostingsPage(
-			siteId, null, null, null, Pagination.of(1, itemLimit), null);
+			siteId, null, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<BlogPosting> blogPostings1 = (List<BlogPosting>)page1.getItems();
 
-		if (blogPostings1.size() < itemLimit) {
-			itemLimit = blogPostings1.size();
-		}
+		Assert.assertEquals(
+			blogPostings1.toString(), totalCount + 2, blogPostings1.size());
 
-		int pages = (int)Math.ceil(blogPostingPage.getTotalCount() / itemLimit);
-		List<BlogPosting> allItems = new ArrayList<BlogPosting>();
+		Page<BlogPosting> page2 = blogPostingResource.getSiteBlogPostingsPage(
+			siteId, null, null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					blogPostings1.toString(), itemLimit, blogPostings1.size());
+		List<BlogPosting> blogPostings2 = (List<BlogPosting>)page2.getItems();
 
-				Page<BlogPosting> page =
-					blogPostingResource.getSiteBlogPostingsPage(
-						siteId, null, null, null,
-						Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(blogPostings2.toString(), 1, blogPostings2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<BlogPosting> page3 = blogPostingResource.getSiteBlogPostingsPage(
+			siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
+			null);
 
-		assertContains(blogPosting1, allItems);
-		assertContains(blogPosting2, allItems);
-		assertContains(blogPosting3, allItems);
+		assertContains(blogPosting1, (List<BlogPosting>)page3.getItems());
+		assertContains(blogPosting2, (List<BlogPosting>)page3.getItems());
+		assertContains(blogPosting3, (List<BlogPosting>)page3.getItems());
 	}
 
 	@Test

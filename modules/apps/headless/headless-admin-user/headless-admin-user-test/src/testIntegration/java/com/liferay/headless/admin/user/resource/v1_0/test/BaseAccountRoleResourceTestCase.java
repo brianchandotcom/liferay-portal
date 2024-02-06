@@ -569,7 +569,6 @@ public abstract class BaseAccountRoleResourceTestCase {
 					externalReferenceCode, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(accountRolePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		AccountRole accountRole1 =
 			testGetAccountAccountRolesByExternalReferenceCodePage_addAccountRole(
@@ -587,37 +586,34 @@ public abstract class BaseAccountRoleResourceTestCase {
 			accountRoleResource.
 				getAccountAccountRolesByExternalReferenceCodePage(
 					externalReferenceCode, null, null,
-					Pagination.of(1, itemLimit), null);
+					Pagination.of(1, totalCount + 2), null);
 
 		List<AccountRole> accountRoles1 = (List<AccountRole>)page1.getItems();
 
-		if (accountRoles1.size() < itemLimit) {
-			itemLimit = accountRoles1.size();
-		}
+		Assert.assertEquals(
+			accountRoles1.toString(), totalCount + 2, accountRoles1.size());
 
-		int pages = (int)Math.ceil(accountRolePage.getTotalCount() / itemLimit);
-		List<AccountRole> allItems = new ArrayList<AccountRole>();
+		Page<AccountRole> page2 =
+			accountRoleResource.
+				getAccountAccountRolesByExternalReferenceCodePage(
+					externalReferenceCode, null, null,
+					Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					accountRoles1.toString(), itemLimit, accountRoles1.size());
+		List<AccountRole> accountRoles2 = (List<AccountRole>)page2.getItems();
 
-				Page<AccountRole> page =
-					accountRoleResource.
-						getAccountAccountRolesByExternalReferenceCodePage(
-							externalReferenceCode, null, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(accountRoles2.toString(), 1, accountRoles2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<AccountRole> page3 =
+			accountRoleResource.
+				getAccountAccountRolesByExternalReferenceCodePage(
+					externalReferenceCode, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(accountRole1, allItems);
-		assertContains(accountRole2, allItems);
-		assertContains(accountRole3, allItems);
+		assertContains(accountRole1, (List<AccountRole>)page3.getItems());
+		assertContains(accountRole2, (List<AccountRole>)page3.getItems());
+		assertContains(accountRole3, (List<AccountRole>)page3.getItems());
 	}
 
 	@Test
@@ -1184,7 +1180,6 @@ public abstract class BaseAccountRoleResourceTestCase {
 				accountId, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(accountRolePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		AccountRole accountRole1 =
 			testGetAccountAccountRolesPage_addAccountRole(
@@ -1200,36 +1195,31 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		Page<AccountRole> page1 =
 			accountRoleResource.getAccountAccountRolesPage(
-				accountId, null, null, Pagination.of(1, itemLimit), null);
+				accountId, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<AccountRole> accountRoles1 = (List<AccountRole>)page1.getItems();
 
-		if (accountRoles1.size() < itemLimit) {
-			itemLimit = accountRoles1.size();
-		}
+		Assert.assertEquals(
+			accountRoles1.toString(), totalCount + 2, accountRoles1.size());
 
-		int pages = (int)Math.ceil(accountRolePage.getTotalCount() / itemLimit);
-		List<AccountRole> allItems = new ArrayList<AccountRole>();
+		Page<AccountRole> page2 =
+			accountRoleResource.getAccountAccountRolesPage(
+				accountId, null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					accountRoles1.toString(), itemLimit, accountRoles1.size());
+		List<AccountRole> accountRoles2 = (List<AccountRole>)page2.getItems();
 
-				Page<AccountRole> page =
-					accountRoleResource.getAccountAccountRolesPage(
-						accountId, null, null,
-						Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(accountRoles2.toString(), 1, accountRoles2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<AccountRole> page3 =
+			accountRoleResource.getAccountAccountRolesPage(
+				accountId, null, null, Pagination.of(1, (int)totalCount + 3),
+				null);
 
-		assertContains(accountRole1, allItems);
-		assertContains(accountRole2, allItems);
-		assertContains(accountRole3, allItems);
+		assertContains(accountRole1, (List<AccountRole>)page3.getItems());
+		assertContains(accountRole2, (List<AccountRole>)page3.getItems());
+		assertContains(accountRole3, (List<AccountRole>)page3.getItems());
 	}
 
 	@Test

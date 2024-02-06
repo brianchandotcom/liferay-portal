@@ -299,7 +299,6 @@ public abstract class BaseOptionResourceTestCase {
 			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(optionPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Option option1 = testGetOptionsPage_addOption(randomOption());
 
@@ -308,34 +307,28 @@ public abstract class BaseOptionResourceTestCase {
 		Option option3 = testGetOptionsPage_addOption(randomOption());
 
 		Page<Option> page1 = optionResource.getOptionsPage(
-			null, null, Pagination.of(1, itemLimit), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Option> options1 = (List<Option>)page1.getItems();
 
-		if (options1.size() < itemLimit) {
-			itemLimit = options1.size();
-		}
+		Assert.assertEquals(
+			options1.toString(), totalCount + 2, options1.size());
 
-		int pages = (int)Math.ceil(optionPage.getTotalCount() / itemLimit);
-		List<Option> allItems = new ArrayList<Option>();
+		Page<Option> page2 = optionResource.getOptionsPage(
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					options1.toString(), itemLimit, options1.size());
+		List<Option> options2 = (List<Option>)page2.getItems();
 
-				Page<Option> page = optionResource.getOptionsPage(
-					null, null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(options2.toString(), 1, options2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Option> page3 = optionResource.getOptionsPage(
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(option1, allItems);
-		assertContains(option2, allItems);
-		assertContains(option3, allItems);
+		assertContains(option1, (List<Option>)page3.getItems());
+		assertContains(option2, (List<Option>)page3.getItems());
+		assertContains(option3, (List<Option>)page3.getItems());
 	}
 
 	@Test

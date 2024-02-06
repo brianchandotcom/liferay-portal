@@ -322,7 +322,6 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			sxpBlueprintPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		SXPBlueprint sxpBlueprint1 = testGetSXPBlueprintsPage_addSXPBlueprint(
 			randomSXPBlueprint());
@@ -334,38 +333,31 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 			randomSXPBlueprint());
 
 		Page<SXPBlueprint> page1 = sxpBlueprintResource.getSXPBlueprintsPage(
-			null, null, Pagination.of(1, itemLimit), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<SXPBlueprint> sxpBlueprints1 =
 			(List<SXPBlueprint>)page1.getItems();
 
-		if (sxpBlueprints1.size() < itemLimit) {
-			itemLimit = sxpBlueprints1.size();
-		}
+		Assert.assertEquals(
+			sxpBlueprints1.toString(), totalCount + 2, sxpBlueprints1.size());
 
-		int pages = (int)Math.ceil(
-			sxpBlueprintPage.getTotalCount() / itemLimit);
-		List<SXPBlueprint> allItems = new ArrayList<SXPBlueprint>();
+		Page<SXPBlueprint> page2 = sxpBlueprintResource.getSXPBlueprintsPage(
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					sxpBlueprints1.toString(), itemLimit,
-					sxpBlueprints1.size());
+		List<SXPBlueprint> sxpBlueprints2 =
+			(List<SXPBlueprint>)page2.getItems();
 
-				Page<SXPBlueprint> page =
-					sxpBlueprintResource.getSXPBlueprintsPage(
-						null, null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			sxpBlueprints2.toString(), 1, sxpBlueprints2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<SXPBlueprint> page3 = sxpBlueprintResource.getSXPBlueprintsPage(
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(sxpBlueprint1, allItems);
-		assertContains(sxpBlueprint2, allItems);
-		assertContains(sxpBlueprint3, allItems);
+		assertContains(sxpBlueprint1, (List<SXPBlueprint>)page3.getItems());
+		assertContains(sxpBlueprint2, (List<SXPBlueprint>)page3.getItems());
+		assertContains(sxpBlueprint3, (List<SXPBlueprint>)page3.getItems());
 	}
 
 	@Test

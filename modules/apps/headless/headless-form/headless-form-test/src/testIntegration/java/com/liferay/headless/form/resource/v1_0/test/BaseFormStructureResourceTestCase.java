@@ -322,7 +322,6 @@ public abstract class BaseFormStructureResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			formStructurePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		FormStructure formStructure1 =
 			testGetSiteFormStructuresPage_addFormStructure(
@@ -338,38 +337,33 @@ public abstract class BaseFormStructureResourceTestCase {
 
 		Page<FormStructure> page1 =
 			formStructureResource.getSiteFormStructuresPage(
-				siteId, Pagination.of(1, itemLimit));
+				siteId, Pagination.of(1, totalCount + 2));
 
 		List<FormStructure> formStructures1 =
 			(List<FormStructure>)page1.getItems();
 
-		if (formStructures1.size() < itemLimit) {
-			itemLimit = formStructures1.size();
-		}
+		Assert.assertEquals(
+			formStructures1.toString(), totalCount + 2, formStructures1.size());
 
-		int pages = (int)Math.ceil(
-			formStructurePage.getTotalCount() / itemLimit);
-		List<FormStructure> allItems = new ArrayList<FormStructure>();
+		Page<FormStructure> page2 =
+			formStructureResource.getSiteFormStructuresPage(
+				siteId, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					formStructures1.toString(), itemLimit,
-					formStructures1.size());
+		List<FormStructure> formStructures2 =
+			(List<FormStructure>)page2.getItems();
 
-				Page<FormStructure> page =
-					formStructureResource.getSiteFormStructuresPage(
-						siteId, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			formStructures2.toString(), 1, formStructures2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<FormStructure> page3 =
+			formStructureResource.getSiteFormStructuresPage(
+				siteId, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(formStructure1, allItems);
-		assertContains(formStructure2, allItems);
-		assertContains(formStructure3, allItems);
+		assertContains(formStructure1, (List<FormStructure>)page3.getItems());
+		assertContains(formStructure2, (List<FormStructure>)page3.getItems());
+		assertContains(formStructure3, (List<FormStructure>)page3.getItems());
 	}
 
 	protected FormStructure testGetSiteFormStructuresPage_addFormStructure(

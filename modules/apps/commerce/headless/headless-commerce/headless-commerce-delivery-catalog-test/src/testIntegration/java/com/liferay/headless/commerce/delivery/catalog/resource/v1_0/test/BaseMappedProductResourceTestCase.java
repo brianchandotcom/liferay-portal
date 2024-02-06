@@ -273,7 +273,6 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			mappedProductPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		MappedProduct mappedProduct1 =
 			testGetChannelProductMappedProductsPage_addMappedProduct(
@@ -289,40 +288,36 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		Page<MappedProduct> page1 =
 			mappedProductResource.getChannelProductMappedProductsPage(
-				channelId, productId, null, null, Pagination.of(1, itemLimit),
-				null);
+				channelId, productId, null, null,
+				Pagination.of(1, totalCount + 2), null);
 
 		List<MappedProduct> mappedProducts1 =
 			(List<MappedProduct>)page1.getItems();
 
-		if (mappedProducts1.size() < itemLimit) {
-			itemLimit = mappedProducts1.size();
-		}
+		Assert.assertEquals(
+			mappedProducts1.toString(), totalCount + 2, mappedProducts1.size());
 
-		int pages = (int)Math.ceil(
-			mappedProductPage.getTotalCount() / itemLimit);
-		List<MappedProduct> allItems = new ArrayList<MappedProduct>();
+		Page<MappedProduct> page2 =
+			mappedProductResource.getChannelProductMappedProductsPage(
+				channelId, productId, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					mappedProducts1.toString(), itemLimit,
-					mappedProducts1.size());
+		List<MappedProduct> mappedProducts2 =
+			(List<MappedProduct>)page2.getItems();
 
-				Page<MappedProduct> page =
-					mappedProductResource.getChannelProductMappedProductsPage(
-						channelId, productId, null, null,
-						Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			mappedProducts2.toString(), 1, mappedProducts2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<MappedProduct> page3 =
+			mappedProductResource.getChannelProductMappedProductsPage(
+				channelId, productId, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(mappedProduct1, allItems);
-		assertContains(mappedProduct2, allItems);
-		assertContains(mappedProduct3, allItems);
+		assertContains(mappedProduct1, (List<MappedProduct>)page3.getItems());
+		assertContains(mappedProduct2, (List<MappedProduct>)page3.getItems());
+		assertContains(mappedProduct3, (List<MappedProduct>)page3.getItems());
 	}
 
 	@Test

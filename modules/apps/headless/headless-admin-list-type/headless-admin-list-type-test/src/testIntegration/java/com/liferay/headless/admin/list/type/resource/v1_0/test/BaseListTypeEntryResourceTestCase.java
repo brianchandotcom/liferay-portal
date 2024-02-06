@@ -385,7 +385,6 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			listTypeEntryPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ListTypeEntry listTypeEntry1 =
 			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
@@ -403,40 +402,38 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			listTypeEntryResource.
 				getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
 					externalReferenceCode, null, null, null,
-					Pagination.of(1, itemLimit), null);
+					Pagination.of(1, totalCount + 2), null);
 
 		List<ListTypeEntry> listTypeEntries1 =
 			(List<ListTypeEntry>)page1.getItems();
 
-		if (listTypeEntries1.size() < itemLimit) {
-			itemLimit = listTypeEntries1.size();
-		}
+		Assert.assertEquals(
+			listTypeEntries1.toString(), totalCount + 2,
+			listTypeEntries1.size());
 
-		int pages = (int)Math.ceil(
-			listTypeEntryPage.getTotalCount() / itemLimit);
-		List<ListTypeEntry> allItems = new ArrayList<ListTypeEntry>();
+		Page<ListTypeEntry> page2 =
+			listTypeEntryResource.
+				getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
+					externalReferenceCode, null, null, null,
+					Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					listTypeEntries1.toString(), itemLimit,
-					listTypeEntries1.size());
+		List<ListTypeEntry> listTypeEntries2 =
+			(List<ListTypeEntry>)page2.getItems();
 
-				Page<ListTypeEntry> page =
-					listTypeEntryResource.
-						getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
-							externalReferenceCode, null, null, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			listTypeEntries2.toString(), 1, listTypeEntries2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ListTypeEntry> page3 =
+			listTypeEntryResource.
+				getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
+					externalReferenceCode, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(listTypeEntry1, allItems);
-		assertContains(listTypeEntry2, allItems);
-		assertContains(listTypeEntry3, allItems);
+		assertContains(listTypeEntry1, (List<ListTypeEntry>)page3.getItems());
+		assertContains(listTypeEntry2, (List<ListTypeEntry>)page3.getItems());
+		assertContains(listTypeEntry3, (List<ListTypeEntry>)page3.getItems());
 	}
 
 	@Test
@@ -841,7 +838,6 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			listTypeEntryPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ListTypeEntry listTypeEntry1 =
 			testGetListTypeDefinitionListTypeEntriesPage_addListTypeEntry(
@@ -858,40 +854,36 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		Page<ListTypeEntry> page1 =
 			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
 				listTypeDefinitionId, null, null, null,
-				Pagination.of(1, itemLimit), null);
+				Pagination.of(1, totalCount + 2), null);
 
 		List<ListTypeEntry> listTypeEntries1 =
 			(List<ListTypeEntry>)page1.getItems();
 
-		if (listTypeEntries1.size() < itemLimit) {
-			itemLimit = listTypeEntries1.size();
-		}
+		Assert.assertEquals(
+			listTypeEntries1.toString(), totalCount + 2,
+			listTypeEntries1.size());
 
-		int pages = (int)Math.ceil(
-			listTypeEntryPage.getTotalCount() / itemLimit);
-		List<ListTypeEntry> allItems = new ArrayList<ListTypeEntry>();
+		Page<ListTypeEntry> page2 =
+			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
+				listTypeDefinitionId, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					listTypeEntries1.toString(), itemLimit,
-					listTypeEntries1.size());
+		List<ListTypeEntry> listTypeEntries2 =
+			(List<ListTypeEntry>)page2.getItems();
 
-				Page<ListTypeEntry> page =
-					listTypeEntryResource.
-						getListTypeDefinitionListTypeEntriesPage(
-							listTypeDefinitionId, null, null, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			listTypeEntries2.toString(), 1, listTypeEntries2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ListTypeEntry> page3 =
+			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
+				listTypeDefinitionId, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(listTypeEntry1, allItems);
-		assertContains(listTypeEntry2, allItems);
-		assertContains(listTypeEntry3, allItems);
+		assertContains(listTypeEntry1, (List<ListTypeEntry>)page3.getItems());
+		assertContains(listTypeEntry2, (List<ListTypeEntry>)page3.getItems());
+		assertContains(listTypeEntry3, (List<ListTypeEntry>)page3.getItems());
 	}
 
 	@Test

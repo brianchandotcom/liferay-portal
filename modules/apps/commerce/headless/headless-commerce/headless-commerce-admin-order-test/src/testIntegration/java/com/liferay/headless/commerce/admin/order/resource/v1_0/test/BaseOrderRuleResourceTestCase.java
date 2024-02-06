@@ -315,7 +315,6 @@ public abstract class BaseOrderRuleResourceTestCase {
 			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(orderRulePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		OrderRule orderRule1 = testGetOrderRulesPage_addOrderRule(
 			randomOrderRule());
@@ -327,34 +326,28 @@ public abstract class BaseOrderRuleResourceTestCase {
 			randomOrderRule());
 
 		Page<OrderRule> page1 = orderRuleResource.getOrderRulesPage(
-			null, null, Pagination.of(1, itemLimit), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<OrderRule> orderRules1 = (List<OrderRule>)page1.getItems();
 
-		if (orderRules1.size() < itemLimit) {
-			itemLimit = orderRules1.size();
-		}
+		Assert.assertEquals(
+			orderRules1.toString(), totalCount + 2, orderRules1.size());
 
-		int pages = (int)Math.ceil(orderRulePage.getTotalCount() / itemLimit);
-		List<OrderRule> allItems = new ArrayList<OrderRule>();
+		Page<OrderRule> page2 = orderRuleResource.getOrderRulesPage(
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					orderRules1.toString(), itemLimit, orderRules1.size());
+		List<OrderRule> orderRules2 = (List<OrderRule>)page2.getItems();
 
-				Page<OrderRule> page = orderRuleResource.getOrderRulesPage(
-					null, null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(orderRules2.toString(), 1, orderRules2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<OrderRule> page3 = orderRuleResource.getOrderRulesPage(
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(orderRule1, allItems);
-		assertContains(orderRule2, allItems);
-		assertContains(orderRule3, allItems);
+		assertContains(orderRule1, (List<OrderRule>)page3.getItems());
+		assertContains(orderRule2, (List<OrderRule>)page3.getItems());
+		assertContains(orderRule3, (List<OrderRule>)page3.getItems());
 	}
 
 	@Test

@@ -420,7 +420,6 @@ public abstract class BaseCartItemResourceTestCase {
 			cartId, null, null);
 
 		int totalCount = GetterUtil.getInteger(cartItemPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		CartItem cartItem1 = testGetCartItemsPage_addCartItem(
 			cartId, randomCartItem());
@@ -432,34 +431,28 @@ public abstract class BaseCartItemResourceTestCase {
 			cartId, randomCartItem());
 
 		Page<CartItem> page1 = cartItemResource.getCartItemsPage(
-			cartId, null, Pagination.of(1, itemLimit));
+			cartId, null, Pagination.of(1, totalCount + 2));
 
 		List<CartItem> cartItems1 = (List<CartItem>)page1.getItems();
 
-		if (cartItems1.size() < itemLimit) {
-			itemLimit = cartItems1.size();
-		}
+		Assert.assertEquals(
+			cartItems1.toString(), totalCount + 2, cartItems1.size());
 
-		int pages = (int)Math.ceil(cartItemPage.getTotalCount() / itemLimit);
-		List<CartItem> allItems = new ArrayList<CartItem>();
+		Page<CartItem> page2 = cartItemResource.getCartItemsPage(
+			cartId, null, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					cartItems1.toString(), itemLimit, cartItems1.size());
+		List<CartItem> cartItems2 = (List<CartItem>)page2.getItems();
 
-				Page<CartItem> page = cartItemResource.getCartItemsPage(
-					cartId, null, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(cartItems2.toString(), 1, cartItems2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<CartItem> page3 = cartItemResource.getCartItemsPage(
+			cartId, null, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(cartItem1, allItems);
-		assertContains(cartItem2, allItems);
-		assertContains(cartItem3, allItems);
+		assertContains(cartItem1, (List<CartItem>)page3.getItems());
+		assertContains(cartItem2, (List<CartItem>)page3.getItems());
+		assertContains(cartItem3, (List<CartItem>)page3.getItems());
 	}
 
 	protected CartItem testGetCartItemsPage_addCartItem(

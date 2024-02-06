@@ -613,7 +613,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			accountAddressPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		AccountAddress accountAddress1 =
 			testGetAccountByExternalReferenceCodeAccountAddressesPage_addAccountAddress(
@@ -630,40 +629,37 @@ public abstract class BaseAccountAddressResourceTestCase {
 		Page<AccountAddress> page1 =
 			accountAddressResource.
 				getAccountByExternalReferenceCodeAccountAddressesPage(
-					externalReferenceCode, Pagination.of(1, itemLimit));
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<AccountAddress> accountAddresses1 =
 			(List<AccountAddress>)page1.getItems();
 
-		if (accountAddresses1.size() < itemLimit) {
-			itemLimit = accountAddresses1.size();
-		}
+		Assert.assertEquals(
+			accountAddresses1.toString(), totalCount + 2,
+			accountAddresses1.size());
 
-		int pages = (int)Math.ceil(
-			accountAddressPage.getTotalCount() / itemLimit);
-		List<AccountAddress> allItems = new ArrayList<AccountAddress>();
+		Page<AccountAddress> page2 =
+			accountAddressResource.
+				getAccountByExternalReferenceCodeAccountAddressesPage(
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					accountAddresses1.toString(), itemLimit,
-					accountAddresses1.size());
+		List<AccountAddress> accountAddresses2 =
+			(List<AccountAddress>)page2.getItems();
 
-				Page<AccountAddress> page =
-					accountAddressResource.
-						getAccountByExternalReferenceCodeAccountAddressesPage(
-							externalReferenceCode,
-							Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			accountAddresses2.toString(), 1, accountAddresses2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<AccountAddress> page3 =
+			accountAddressResource.
+				getAccountByExternalReferenceCodeAccountAddressesPage(
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(accountAddress1, allItems);
-		assertContains(accountAddress2, allItems);
-		assertContains(accountAddress3, allItems);
+		assertContains(accountAddress1, (List<AccountAddress>)page3.getItems());
+		assertContains(accountAddress2, (List<AccountAddress>)page3.getItems());
+		assertContains(accountAddress3, (List<AccountAddress>)page3.getItems());
 	}
 
 	protected AccountAddress
@@ -787,7 +783,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			accountAddressPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		AccountAddress accountAddress1 =
 			testGetAccountIdAccountAddressesPage_addAccountAddress(
@@ -803,38 +798,34 @@ public abstract class BaseAccountAddressResourceTestCase {
 
 		Page<AccountAddress> page1 =
 			accountAddressResource.getAccountIdAccountAddressesPage(
-				id, Pagination.of(1, itemLimit));
+				id, Pagination.of(1, totalCount + 2));
 
 		List<AccountAddress> accountAddresses1 =
 			(List<AccountAddress>)page1.getItems();
 
-		if (accountAddresses1.size() < itemLimit) {
-			itemLimit = accountAddresses1.size();
-		}
+		Assert.assertEquals(
+			accountAddresses1.toString(), totalCount + 2,
+			accountAddresses1.size());
 
-		int pages = (int)Math.ceil(
-			accountAddressPage.getTotalCount() / itemLimit);
-		List<AccountAddress> allItems = new ArrayList<AccountAddress>();
+		Page<AccountAddress> page2 =
+			accountAddressResource.getAccountIdAccountAddressesPage(
+				id, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					accountAddresses1.toString(), itemLimit,
-					accountAddresses1.size());
+		List<AccountAddress> accountAddresses2 =
+			(List<AccountAddress>)page2.getItems();
 
-				Page<AccountAddress> page =
-					accountAddressResource.getAccountIdAccountAddressesPage(
-						id, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			accountAddresses2.toString(), 1, accountAddresses2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<AccountAddress> page3 =
+			accountAddressResource.getAccountIdAccountAddressesPage(
+				id, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(accountAddress1, allItems);
-		assertContains(accountAddress2, allItems);
-		assertContains(accountAddress3, allItems);
+		assertContains(accountAddress1, (List<AccountAddress>)page3.getItems());
+		assertContains(accountAddress2, (List<AccountAddress>)page3.getItems());
+		assertContains(accountAddress3, (List<AccountAddress>)page3.getItems());
 	}
 
 	protected AccountAddress

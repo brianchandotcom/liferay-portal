@@ -384,7 +384,6 @@ public abstract class BaseUserGroupResourceTestCase {
 			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(userGroupPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		UserGroup userGroup1 = testGetUserGroupsPage_addUserGroup(
 			randomUserGroup());
@@ -396,34 +395,28 @@ public abstract class BaseUserGroupResourceTestCase {
 			randomUserGroup());
 
 		Page<UserGroup> page1 = userGroupResource.getUserGroupsPage(
-			null, null, Pagination.of(1, itemLimit), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<UserGroup> userGroups1 = (List<UserGroup>)page1.getItems();
 
-		if (userGroups1.size() < itemLimit) {
-			itemLimit = userGroups1.size();
-		}
+		Assert.assertEquals(
+			userGroups1.toString(), totalCount + 2, userGroups1.size());
 
-		int pages = (int)Math.ceil(userGroupPage.getTotalCount() / itemLimit);
-		List<UserGroup> allItems = new ArrayList<UserGroup>();
+		Page<UserGroup> page2 = userGroupResource.getUserGroupsPage(
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					userGroups1.toString(), itemLimit, userGroups1.size());
+		List<UserGroup> userGroups2 = (List<UserGroup>)page2.getItems();
 
-				Page<UserGroup> page = userGroupResource.getUserGroupsPage(
-					null, null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(userGroups2.toString(), 1, userGroups2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<UserGroup> page3 = userGroupResource.getUserGroupsPage(
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(userGroup1, allItems);
-		assertContains(userGroup2, allItems);
-		assertContains(userGroup3, allItems);
+		assertContains(userGroup1, (List<UserGroup>)page3.getItems());
+		assertContains(userGroup2, (List<UserGroup>)page3.getItems());
+		assertContains(userGroup3, (List<UserGroup>)page3.getItems());
 	}
 
 	@Test

@@ -383,7 +383,6 @@ public abstract class BaseKeywordResourceTestCase {
 			assetLibraryId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(keywordPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Keyword keyword1 = testGetAssetLibraryKeywordsPage_addKeyword(
 			assetLibraryId, randomKeyword());
@@ -395,37 +394,31 @@ public abstract class BaseKeywordResourceTestCase {
 			assetLibraryId, randomKeyword());
 
 		Page<Keyword> page1 = keywordResource.getAssetLibraryKeywordsPage(
-			assetLibraryId, null, null, null, Pagination.of(1, itemLimit),
+			assetLibraryId, null, null, null, Pagination.of(1, totalCount + 2),
 			null);
 
 		List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
 
-		if (keywords1.size() < itemLimit) {
-			itemLimit = keywords1.size();
-		}
+		Assert.assertEquals(
+			keywords1.toString(), totalCount + 2, keywords1.size());
 
-		int pages = (int)Math.ceil(keywordPage.getTotalCount() / itemLimit);
-		List<Keyword> allItems = new ArrayList<Keyword>();
+		Page<Keyword> page2 = keywordResource.getAssetLibraryKeywordsPage(
+			assetLibraryId, null, null, null, Pagination.of(2, totalCount + 2),
+			null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					keywords1.toString(), itemLimit, keywords1.size());
+		List<Keyword> keywords2 = (List<Keyword>)page2.getItems();
 
-				Page<Keyword> page =
-					keywordResource.getAssetLibraryKeywordsPage(
-						assetLibraryId, null, null, null,
-						Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Keyword> page3 = keywordResource.getAssetLibraryKeywordsPage(
+			assetLibraryId, null, null, null,
+			Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(keyword1, allItems);
-		assertContains(keyword2, allItems);
-		assertContains(keyword3, allItems);
+		assertContains(keyword1, (List<Keyword>)page3.getItems());
+		assertContains(keyword2, (List<Keyword>)page3.getItems());
+		assertContains(keyword3, (List<Keyword>)page3.getItems());
 	}
 
 	@Test
@@ -707,7 +700,6 @@ public abstract class BaseKeywordResourceTestCase {
 			null, null, null);
 
 		int totalCount = GetterUtil.getInteger(keywordPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Keyword keyword1 = testGetKeywordsRankedPage_addKeyword(
 			randomKeyword());
@@ -719,34 +711,28 @@ public abstract class BaseKeywordResourceTestCase {
 			randomKeyword());
 
 		Page<Keyword> page1 = keywordResource.getKeywordsRankedPage(
-			null, null, Pagination.of(1, itemLimit));
+			null, null, Pagination.of(1, totalCount + 2));
 
 		List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
 
-		if (keywords1.size() < itemLimit) {
-			itemLimit = keywords1.size();
-		}
+		Assert.assertEquals(
+			keywords1.toString(), totalCount + 2, keywords1.size());
 
-		int pages = (int)Math.ceil(keywordPage.getTotalCount() / itemLimit);
-		List<Keyword> allItems = new ArrayList<Keyword>();
+		Page<Keyword> page2 = keywordResource.getKeywordsRankedPage(
+			null, null, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					keywords1.toString(), itemLimit, keywords1.size());
+		List<Keyword> keywords2 = (List<Keyword>)page2.getItems();
 
-				Page<Keyword> page = keywordResource.getKeywordsRankedPage(
-					null, null, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Keyword> page3 = keywordResource.getKeywordsRankedPage(
+			null, null, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(keyword1, allItems);
-		assertContains(keyword2, allItems);
-		assertContains(keyword3, allItems);
+		assertContains(keyword1, (List<Keyword>)page3.getItems());
+		assertContains(keyword2, (List<Keyword>)page3.getItems());
+		assertContains(keyword3, (List<Keyword>)page3.getItems());
 	}
 
 	protected Keyword testGetKeywordsRankedPage_addKeyword(Keyword keyword)
@@ -1090,7 +1076,6 @@ public abstract class BaseKeywordResourceTestCase {
 			siteId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(keywordPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Keyword keyword1 = testGetSiteKeywordsPage_addKeyword(
 			siteId, randomKeyword());
@@ -1102,35 +1087,29 @@ public abstract class BaseKeywordResourceTestCase {
 			siteId, randomKeyword());
 
 		Page<Keyword> page1 = keywordResource.getSiteKeywordsPage(
-			siteId, null, null, null, Pagination.of(1, itemLimit), null);
+			siteId, null, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
 
-		if (keywords1.size() < itemLimit) {
-			itemLimit = keywords1.size();
-		}
+		Assert.assertEquals(
+			keywords1.toString(), totalCount + 2, keywords1.size());
 
-		int pages = (int)Math.ceil(keywordPage.getTotalCount() / itemLimit);
-		List<Keyword> allItems = new ArrayList<Keyword>();
+		Page<Keyword> page2 = keywordResource.getSiteKeywordsPage(
+			siteId, null, null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					keywords1.toString(), itemLimit, keywords1.size());
+		List<Keyword> keywords2 = (List<Keyword>)page2.getItems();
 
-				Page<Keyword> page = keywordResource.getSiteKeywordsPage(
-					siteId, null, null, null, Pagination.of(pageNum, itemLimit),
-					null);
+		Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Keyword> page3 = keywordResource.getSiteKeywordsPage(
+			siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
+			null);
 
-		assertContains(keyword1, allItems);
-		assertContains(keyword2, allItems);
-		assertContains(keyword3, allItems);
+		assertContains(keyword1, (List<Keyword>)page3.getItems());
+		assertContains(keyword2, (List<Keyword>)page3.getItems());
+		assertContains(keyword3, (List<Keyword>)page3.getItems());
 	}
 
 	@Test

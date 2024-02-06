@@ -222,7 +222,6 @@ public abstract class BaseSiteResourceTestCase {
 		Page<Site> sitePage = siteResource.getSitesPage(null, null, null);
 
 		int totalCount = GetterUtil.getInteger(sitePage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Site site1 = testGetSitesPage_addSite(randomSite());
 
@@ -231,34 +230,27 @@ public abstract class BaseSiteResourceTestCase {
 		Site site3 = testGetSitesPage_addSite(randomSite());
 
 		Page<Site> page1 = siteResource.getSitesPage(
-			null, Pagination.of(1, itemLimit), null);
+			null, Pagination.of(1, totalCount + 2), null);
 
 		List<Site> sites1 = (List<Site>)page1.getItems();
 
-		if (sites1.size() < itemLimit) {
-			itemLimit = sites1.size();
-		}
+		Assert.assertEquals(sites1.toString(), totalCount + 2, sites1.size());
 
-		int pages = (int)Math.ceil(sitePage.getTotalCount() / itemLimit);
-		List<Site> allItems = new ArrayList<Site>();
+		Page<Site> page2 = siteResource.getSitesPage(
+			null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					sites1.toString(), itemLimit, sites1.size());
+		List<Site> sites2 = (List<Site>)page2.getItems();
 
-				Page<Site> page = siteResource.getSitesPage(
-					null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(sites2.toString(), 1, sites2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Site> page3 = siteResource.getSitesPage(
+			null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(site1, allItems);
-		assertContains(site2, allItems);
-		assertContains(site3, allItems);
+		assertContains(site1, (List<Site>)page3.getItems());
+		assertContains(site2, (List<Site>)page3.getItems());
+		assertContains(site3, (List<Site>)page3.getItems());
 	}
 
 	@Test

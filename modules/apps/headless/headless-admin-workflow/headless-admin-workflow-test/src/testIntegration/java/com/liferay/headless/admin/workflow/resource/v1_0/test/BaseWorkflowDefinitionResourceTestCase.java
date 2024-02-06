@@ -247,7 +247,6 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			workflowDefinitionPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		WorkflowDefinition workflowDefinition1 =
 			testGetWorkflowDefinitionsPage_addWorkflowDefinition(
@@ -263,38 +262,37 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		Page<WorkflowDefinition> page1 =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(1, itemLimit), null);
+				null, Pagination.of(1, totalCount + 2), null);
 
 		List<WorkflowDefinition> workflowDefinitions1 =
 			(List<WorkflowDefinition>)page1.getItems();
 
-		if (workflowDefinitions1.size() < itemLimit) {
-			itemLimit = workflowDefinitions1.size();
-		}
+		Assert.assertEquals(
+			workflowDefinitions1.toString(), totalCount + 2,
+			workflowDefinitions1.size());
 
-		int pages = (int)Math.ceil(
-			workflowDefinitionPage.getTotalCount() / itemLimit);
-		List<WorkflowDefinition> allItems = new ArrayList<WorkflowDefinition>();
+		Page<WorkflowDefinition> page2 =
+			workflowDefinitionResource.getWorkflowDefinitionsPage(
+				null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					workflowDefinitions1.toString(), itemLimit,
-					workflowDefinitions1.size());
+		List<WorkflowDefinition> workflowDefinitions2 =
+			(List<WorkflowDefinition>)page2.getItems();
 
-				Page<WorkflowDefinition> page =
-					workflowDefinitionResource.getWorkflowDefinitionsPage(
-						null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			workflowDefinitions2.toString(), 1, workflowDefinitions2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<WorkflowDefinition> page3 =
+			workflowDefinitionResource.getWorkflowDefinitionsPage(
+				null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(workflowDefinition1, allItems);
-		assertContains(workflowDefinition2, allItems);
-		assertContains(workflowDefinition3, allItems);
+		assertContains(
+			workflowDefinition1, (List<WorkflowDefinition>)page3.getItems());
+		assertContains(
+			workflowDefinition2, (List<WorkflowDefinition>)page3.getItems());
+		assertContains(
+			workflowDefinition3, (List<WorkflowDefinition>)page3.getItems());
 	}
 
 	@Test

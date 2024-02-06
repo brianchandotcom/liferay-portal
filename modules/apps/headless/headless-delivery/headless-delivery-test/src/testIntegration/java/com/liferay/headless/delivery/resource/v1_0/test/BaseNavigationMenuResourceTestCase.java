@@ -501,7 +501,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			navigationMenuPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		NavigationMenu navigationMenu1 =
 			testGetSiteNavigationMenusPage_addNavigationMenu(
@@ -517,38 +516,34 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		Page<NavigationMenu> page1 =
 			navigationMenuResource.getSiteNavigationMenusPage(
-				siteId, Pagination.of(1, itemLimit));
+				siteId, Pagination.of(1, totalCount + 2));
 
 		List<NavigationMenu> navigationMenus1 =
 			(List<NavigationMenu>)page1.getItems();
 
-		if (navigationMenus1.size() < itemLimit) {
-			itemLimit = navigationMenus1.size();
-		}
+		Assert.assertEquals(
+			navigationMenus1.toString(), totalCount + 2,
+			navigationMenus1.size());
 
-		int pages = (int)Math.ceil(
-			navigationMenuPage.getTotalCount() / itemLimit);
-		List<NavigationMenu> allItems = new ArrayList<NavigationMenu>();
+		Page<NavigationMenu> page2 =
+			navigationMenuResource.getSiteNavigationMenusPage(
+				siteId, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					navigationMenus1.toString(), itemLimit,
-					navigationMenus1.size());
+		List<NavigationMenu> navigationMenus2 =
+			(List<NavigationMenu>)page2.getItems();
 
-				Page<NavigationMenu> page =
-					navigationMenuResource.getSiteNavigationMenusPage(
-						siteId, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			navigationMenus2.toString(), 1, navigationMenus2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<NavigationMenu> page3 =
+			navigationMenuResource.getSiteNavigationMenusPage(
+				siteId, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(navigationMenu1, allItems);
-		assertContains(navigationMenu2, allItems);
-		assertContains(navigationMenu3, allItems);
+		assertContains(navigationMenu1, (List<NavigationMenu>)page3.getItems());
+		assertContains(navigationMenu2, (List<NavigationMenu>)page3.getItems());
+		assertContains(navigationMenu3, (List<NavigationMenu>)page3.getItems());
 	}
 
 	protected NavigationMenu testGetSiteNavigationMenusPage_addNavigationMenu(

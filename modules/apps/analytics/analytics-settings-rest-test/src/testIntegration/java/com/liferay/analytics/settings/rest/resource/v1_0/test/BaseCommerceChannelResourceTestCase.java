@@ -233,7 +233,6 @@ public abstract class BaseCommerceChannelResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			commerceChannelPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		CommerceChannel commerceChannel1 =
 			testGetCommerceChannelsPage_addCommerceChannel(
@@ -249,38 +248,37 @@ public abstract class BaseCommerceChannelResourceTestCase {
 
 		Page<CommerceChannel> page1 =
 			commerceChannelResource.getCommerceChannelsPage(
-				null, Pagination.of(1, itemLimit), null);
+				null, Pagination.of(1, totalCount + 2), null);
 
 		List<CommerceChannel> commerceChannels1 =
 			(List<CommerceChannel>)page1.getItems();
 
-		if (commerceChannels1.size() < itemLimit) {
-			itemLimit = commerceChannels1.size();
-		}
+		Assert.assertEquals(
+			commerceChannels1.toString(), totalCount + 2,
+			commerceChannels1.size());
 
-		int pages = (int)Math.ceil(
-			commerceChannelPage.getTotalCount() / itemLimit);
-		List<CommerceChannel> allItems = new ArrayList<CommerceChannel>();
+		Page<CommerceChannel> page2 =
+			commerceChannelResource.getCommerceChannelsPage(
+				null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					commerceChannels1.toString(), itemLimit,
-					commerceChannels1.size());
+		List<CommerceChannel> commerceChannels2 =
+			(List<CommerceChannel>)page2.getItems();
 
-				Page<CommerceChannel> page =
-					commerceChannelResource.getCommerceChannelsPage(
-						null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			commerceChannels2.toString(), 1, commerceChannels2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<CommerceChannel> page3 =
+			commerceChannelResource.getCommerceChannelsPage(
+				null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(commerceChannel1, allItems);
-		assertContains(commerceChannel2, allItems);
-		assertContains(commerceChannel3, allItems);
+		assertContains(
+			commerceChannel1, (List<CommerceChannel>)page3.getItems());
+		assertContains(
+			commerceChannel2, (List<CommerceChannel>)page3.getItems());
+		assertContains(
+			commerceChannel3, (List<CommerceChannel>)page3.getItems());
 	}
 
 	@Test

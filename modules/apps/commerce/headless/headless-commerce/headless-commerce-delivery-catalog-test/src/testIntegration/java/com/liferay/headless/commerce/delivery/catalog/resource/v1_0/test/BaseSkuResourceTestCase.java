@@ -261,7 +261,6 @@ public abstract class BaseSkuResourceTestCase {
 			channelId, productId, null, null);
 
 		int totalCount = GetterUtil.getInteger(skuPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Sku sku1 = testGetChannelProductSkusPage_addSku(
 			channelId, productId, randomSku());
@@ -273,34 +272,27 @@ public abstract class BaseSkuResourceTestCase {
 			channelId, productId, randomSku());
 
 		Page<Sku> page1 = skuResource.getChannelProductSkusPage(
-			channelId, productId, null, Pagination.of(1, itemLimit));
+			channelId, productId, null, Pagination.of(1, totalCount + 2));
 
 		List<Sku> skus1 = (List<Sku>)page1.getItems();
 
-		if (skus1.size() < itemLimit) {
-			itemLimit = skus1.size();
-		}
+		Assert.assertEquals(skus1.toString(), totalCount + 2, skus1.size());
 
-		int pages = (int)Math.ceil(skuPage.getTotalCount() / itemLimit);
-		List<Sku> allItems = new ArrayList<Sku>();
+		Page<Sku> page2 = skuResource.getChannelProductSkusPage(
+			channelId, productId, null, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(skus1.toString(), itemLimit, skus1.size());
+		List<Sku> skus2 = (List<Sku>)page2.getItems();
 
-				Page<Sku> page = skuResource.getChannelProductSkusPage(
-					channelId, productId, null,
-					Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(skus2.toString(), 1, skus2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Sku> page3 = skuResource.getChannelProductSkusPage(
+			channelId, productId, null, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(sku1, allItems);
-		assertContains(sku2, allItems);
-		assertContains(sku3, allItems);
+		assertContains(sku1, (List<Sku>)page3.getItems());
+		assertContains(sku2, (List<Sku>)page3.getItems());
+		assertContains(sku3, (List<Sku>)page3.getItems());
 	}
 
 	protected Sku testGetChannelProductSkusPage_addSku(

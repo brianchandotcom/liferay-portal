@@ -342,7 +342,6 @@ public abstract class BaseAccountResourceTestCase {
 			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(accountPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Account account1 = testGetAccountsPage_addAccount(randomAccount());
 
@@ -351,34 +350,28 @@ public abstract class BaseAccountResourceTestCase {
 		Account account3 = testGetAccountsPage_addAccount(randomAccount());
 
 		Page<Account> page1 = accountResource.getAccountsPage(
-			null, null, Pagination.of(1, itemLimit), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Account> accounts1 = (List<Account>)page1.getItems();
 
-		if (accounts1.size() < itemLimit) {
-			itemLimit = accounts1.size();
-		}
+		Assert.assertEquals(
+			accounts1.toString(), totalCount + 2, accounts1.size());
 
-		int pages = (int)Math.ceil(accountPage.getTotalCount() / itemLimit);
-		List<Account> allItems = new ArrayList<Account>();
+		Page<Account> page2 = accountResource.getAccountsPage(
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					accounts1.toString(), itemLimit, accounts1.size());
+		List<Account> accounts2 = (List<Account>)page2.getItems();
 
-				Page<Account> page = accountResource.getAccountsPage(
-					null, null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(accounts2.toString(), 1, accounts2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Account> page3 = accountResource.getAccountsPage(
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(account1, allItems);
-		assertContains(account2, allItems);
-		assertContains(account3, allItems);
+		assertContains(account1, (List<Account>)page3.getItems());
+		assertContains(account2, (List<Account>)page3.getItems());
+		assertContains(account3, (List<Account>)page3.getItems());
 	}
 
 	@Test

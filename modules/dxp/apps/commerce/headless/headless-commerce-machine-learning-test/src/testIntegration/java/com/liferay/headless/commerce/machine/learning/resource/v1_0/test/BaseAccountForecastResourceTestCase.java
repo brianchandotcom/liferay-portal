@@ -233,7 +233,6 @@ public abstract class BaseAccountForecastResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			accountForecastPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		AccountForecast accountForecast1 =
 			testGetAccountForecastsByMonthlyRevenuePage_addAccountForecast(
@@ -249,40 +248,37 @@ public abstract class BaseAccountForecastResourceTestCase {
 
 		Page<AccountForecast> page1 =
 			accountForecastResource.getAccountForecastsByMonthlyRevenuePage(
-				null, null, null, null, Pagination.of(1, itemLimit));
+				null, null, null, null, Pagination.of(1, totalCount + 2));
 
 		List<AccountForecast> accountForecasts1 =
 			(List<AccountForecast>)page1.getItems();
 
-		if (accountForecasts1.size() < itemLimit) {
-			itemLimit = accountForecasts1.size();
-		}
+		Assert.assertEquals(
+			accountForecasts1.toString(), totalCount + 2,
+			accountForecasts1.size());
 
-		int pages = (int)Math.ceil(
-			accountForecastPage.getTotalCount() / itemLimit);
-		List<AccountForecast> allItems = new ArrayList<AccountForecast>();
+		Page<AccountForecast> page2 =
+			accountForecastResource.getAccountForecastsByMonthlyRevenuePage(
+				null, null, null, null, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					accountForecasts1.toString(), itemLimit,
-					accountForecasts1.size());
+		List<AccountForecast> accountForecasts2 =
+			(List<AccountForecast>)page2.getItems();
 
-				Page<AccountForecast> page =
-					accountForecastResource.
-						getAccountForecastsByMonthlyRevenuePage(
-							null, null, null, null,
-							Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			accountForecasts2.toString(), 1, accountForecasts2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<AccountForecast> page3 =
+			accountForecastResource.getAccountForecastsByMonthlyRevenuePage(
+				null, null, null, null, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(accountForecast1, allItems);
-		assertContains(accountForecast2, allItems);
-		assertContains(accountForecast3, allItems);
+		assertContains(
+			accountForecast1, (List<AccountForecast>)page3.getItems());
+		assertContains(
+			accountForecast2, (List<AccountForecast>)page3.getItems());
+		assertContains(
+			accountForecast3, (List<AccountForecast>)page3.getItems());
 	}
 
 	protected AccountForecast

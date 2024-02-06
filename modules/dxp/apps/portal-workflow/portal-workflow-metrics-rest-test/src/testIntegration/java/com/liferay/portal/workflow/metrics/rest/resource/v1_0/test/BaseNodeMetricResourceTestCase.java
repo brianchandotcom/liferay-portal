@@ -247,7 +247,6 @@ public abstract class BaseNodeMetricResourceTestCase {
 				processId, null, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(nodeMetricPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		NodeMetric nodeMetric1 = testGetProcessNodeMetricsPage_addNodeMetric(
 			processId, randomNodeMetric());
@@ -260,36 +259,30 @@ public abstract class BaseNodeMetricResourceTestCase {
 
 		Page<NodeMetric> page1 = nodeMetricResource.getProcessNodeMetricsPage(
 			processId, null, null, null, null, null,
-			Pagination.of(1, itemLimit), null);
+			Pagination.of(1, totalCount + 2), null);
 
 		List<NodeMetric> nodeMetrics1 = (List<NodeMetric>)page1.getItems();
 
-		if (nodeMetrics1.size() < itemLimit) {
-			itemLimit = nodeMetrics1.size();
-		}
+		Assert.assertEquals(
+			nodeMetrics1.toString(), totalCount + 2, nodeMetrics1.size());
 
-		int pages = (int)Math.ceil(nodeMetricPage.getTotalCount() / itemLimit);
-		List<NodeMetric> allItems = new ArrayList<NodeMetric>();
+		Page<NodeMetric> page2 = nodeMetricResource.getProcessNodeMetricsPage(
+			processId, null, null, null, null, null,
+			Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					nodeMetrics1.toString(), itemLimit, nodeMetrics1.size());
+		List<NodeMetric> nodeMetrics2 = (List<NodeMetric>)page2.getItems();
 
-				Page<NodeMetric> page =
-					nodeMetricResource.getProcessNodeMetricsPage(
-						processId, null, null, null, null, null,
-						Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(nodeMetrics2.toString(), 1, nodeMetrics2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<NodeMetric> page3 = nodeMetricResource.getProcessNodeMetricsPage(
+			processId, null, null, null, null, null,
+			Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(nodeMetric1, allItems);
-		assertContains(nodeMetric2, allItems);
-		assertContains(nodeMetric3, allItems);
+		assertContains(nodeMetric1, (List<NodeMetric>)page3.getItems());
+		assertContains(nodeMetric2, (List<NodeMetric>)page3.getItems());
+		assertContains(nodeMetric3, (List<NodeMetric>)page3.getItems());
 	}
 
 	@Test

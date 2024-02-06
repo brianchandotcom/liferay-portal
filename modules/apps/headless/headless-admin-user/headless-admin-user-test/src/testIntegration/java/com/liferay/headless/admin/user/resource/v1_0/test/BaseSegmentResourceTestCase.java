@@ -244,7 +244,6 @@ public abstract class BaseSegmentResourceTestCase {
 			siteId, null);
 
 		int totalCount = GetterUtil.getInteger(segmentPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Segment segment1 = testGetSiteSegmentsPage_addSegment(
 			siteId, randomSegment());
@@ -256,34 +255,28 @@ public abstract class BaseSegmentResourceTestCase {
 			siteId, randomSegment());
 
 		Page<Segment> page1 = segmentResource.getSiteSegmentsPage(
-			siteId, Pagination.of(1, itemLimit));
+			siteId, Pagination.of(1, totalCount + 2));
 
 		List<Segment> segments1 = (List<Segment>)page1.getItems();
 
-		if (segments1.size() < itemLimit) {
-			itemLimit = segments1.size();
-		}
+		Assert.assertEquals(
+			segments1.toString(), totalCount + 2, segments1.size());
 
-		int pages = (int)Math.ceil(segmentPage.getTotalCount() / itemLimit);
-		List<Segment> allItems = new ArrayList<Segment>();
+		Page<Segment> page2 = segmentResource.getSiteSegmentsPage(
+			siteId, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					segments1.toString(), itemLimit, segments1.size());
+		List<Segment> segments2 = (List<Segment>)page2.getItems();
 
-				Page<Segment> page = segmentResource.getSiteSegmentsPage(
-					siteId, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(segments2.toString(), 1, segments2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Segment> page3 = segmentResource.getSiteSegmentsPage(
+			siteId, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(segment1, allItems);
-		assertContains(segment2, allItems);
-		assertContains(segment3, allItems);
+		assertContains(segment1, (List<Segment>)page3.getItems());
+		assertContains(segment2, (List<Segment>)page3.getItems());
+		assertContains(segment3, (List<Segment>)page3.getItems());
 	}
 
 	protected Segment testGetSiteSegmentsPage_addSegment(

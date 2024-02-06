@@ -308,7 +308,6 @@ public abstract class BaseCTProcessResourceTestCase {
 			null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(ctProcessPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		CTProcess ctProcess1 = testGetCTProcessesPage_addCTProcess(
 			randomCTProcess());
@@ -320,34 +319,28 @@ public abstract class BaseCTProcessResourceTestCase {
 			randomCTProcess());
 
 		Page<CTProcess> page1 = ctProcessResource.getCTProcessesPage(
-			null, null, null, Pagination.of(1, itemLimit), null);
+			null, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<CTProcess> ctProcesses1 = (List<CTProcess>)page1.getItems();
 
-		if (ctProcesses1.size() < itemLimit) {
-			itemLimit = ctProcesses1.size();
-		}
+		Assert.assertEquals(
+			ctProcesses1.toString(), totalCount + 2, ctProcesses1.size());
 
-		int pages = (int)Math.ceil(ctProcessPage.getTotalCount() / itemLimit);
-		List<CTProcess> allItems = new ArrayList<CTProcess>();
+		Page<CTProcess> page2 = ctProcessResource.getCTProcessesPage(
+			null, null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					ctProcesses1.toString(), itemLimit, ctProcesses1.size());
+		List<CTProcess> ctProcesses2 = (List<CTProcess>)page2.getItems();
 
-				Page<CTProcess> page = ctProcessResource.getCTProcessesPage(
-					null, null, null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(ctProcesses2.toString(), 1, ctProcesses2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<CTProcess> page3 = ctProcessResource.getCTProcessesPage(
+			null, null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(ctProcess1, allItems);
-		assertContains(ctProcess2, allItems);
-		assertContains(ctProcess3, allItems);
+		assertContains(ctProcess1, (List<CTProcess>)page3.getItems());
+		assertContains(ctProcess2, (List<CTProcess>)page3.getItems());
+		assertContains(ctProcess3, (List<CTProcess>)page3.getItems());
 	}
 
 	@Test

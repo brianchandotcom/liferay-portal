@@ -218,7 +218,6 @@ public abstract class BaseProcessMetricResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			processMetricPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ProcessMetric processMetric1 =
 			testGetProcessMetricsPage_addProcessMetric(randomProcessMetric());
@@ -230,38 +229,31 @@ public abstract class BaseProcessMetricResourceTestCase {
 			testGetProcessMetricsPage_addProcessMetric(randomProcessMetric());
 
 		Page<ProcessMetric> page1 = processMetricResource.getProcessMetricsPage(
-			null, Pagination.of(1, itemLimit), null);
+			null, Pagination.of(1, totalCount + 2), null);
 
 		List<ProcessMetric> processMetrics1 =
 			(List<ProcessMetric>)page1.getItems();
 
-		if (processMetrics1.size() < itemLimit) {
-			itemLimit = processMetrics1.size();
-		}
+		Assert.assertEquals(
+			processMetrics1.toString(), totalCount + 2, processMetrics1.size());
 
-		int pages = (int)Math.ceil(
-			processMetricPage.getTotalCount() / itemLimit);
-		List<ProcessMetric> allItems = new ArrayList<ProcessMetric>();
+		Page<ProcessMetric> page2 = processMetricResource.getProcessMetricsPage(
+			null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					processMetrics1.toString(), itemLimit,
-					processMetrics1.size());
+		List<ProcessMetric> processMetrics2 =
+			(List<ProcessMetric>)page2.getItems();
 
-				Page<ProcessMetric> page =
-					processMetricResource.getProcessMetricsPage(
-						null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			processMetrics2.toString(), 1, processMetrics2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ProcessMetric> page3 = processMetricResource.getProcessMetricsPage(
+			null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(processMetric1, allItems);
-		assertContains(processMetric2, allItems);
-		assertContains(processMetric3, allItems);
+		assertContains(processMetric1, (List<ProcessMetric>)page3.getItems());
+		assertContains(processMetric2, (List<ProcessMetric>)page3.getItems());
+		assertContains(processMetric3, (List<ProcessMetric>)page3.getItems());
 	}
 
 	@Test

@@ -302,7 +302,6 @@ public abstract class BaseFormResourceTestCase {
 		Page<Form> formPage = formResource.getSiteFormsPage(siteId, null);
 
 		int totalCount = GetterUtil.getInteger(formPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		Form form1 = testGetSiteFormsPage_addForm(siteId, randomForm());
 
@@ -311,34 +310,27 @@ public abstract class BaseFormResourceTestCase {
 		Form form3 = testGetSiteFormsPage_addForm(siteId, randomForm());
 
 		Page<Form> page1 = formResource.getSiteFormsPage(
-			siteId, Pagination.of(1, itemLimit));
+			siteId, Pagination.of(1, totalCount + 2));
 
 		List<Form> forms1 = (List<Form>)page1.getItems();
 
-		if (forms1.size() < itemLimit) {
-			itemLimit = forms1.size();
-		}
+		Assert.assertEquals(forms1.toString(), totalCount + 2, forms1.size());
 
-		int pages = (int)Math.ceil(formPage.getTotalCount() / itemLimit);
-		List<Form> allItems = new ArrayList<Form>();
+		Page<Form> page2 = formResource.getSiteFormsPage(
+			siteId, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					forms1.toString(), itemLimit, forms1.size());
+		List<Form> forms2 = (List<Form>)page2.getItems();
 
-				Page<Form> page = formResource.getSiteFormsPage(
-					siteId, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(forms2.toString(), 1, forms2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<Form> page3 = formResource.getSiteFormsPage(
+			siteId, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(form1, allItems);
-		assertContains(form2, allItems);
-		assertContains(form3, allItems);
+		assertContains(form1, (List<Form>)page3.getItems());
+		assertContains(form2, (List<Form>)page3.getItems());
+		assertContains(form3, (List<Form>)page3.getItems());
 	}
 
 	protected Form testGetSiteFormsPage_addForm(Long siteId, Form form)

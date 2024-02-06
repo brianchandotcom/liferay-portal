@@ -233,7 +233,6 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			ctCollectionPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		CTCollection ctCollection1 = testGetCTCollectionsPage_addCTCollection(
 			randomCTCollection());
@@ -245,38 +244,31 @@ public abstract class BaseCTCollectionResourceTestCase {
 			randomCTCollection());
 
 		Page<CTCollection> page1 = ctCollectionResource.getCTCollectionsPage(
-			null, null, Pagination.of(1, itemLimit), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<CTCollection> ctCollections1 =
 			(List<CTCollection>)page1.getItems();
 
-		if (ctCollections1.size() < itemLimit) {
-			itemLimit = ctCollections1.size();
-		}
+		Assert.assertEquals(
+			ctCollections1.toString(), totalCount + 2, ctCollections1.size());
 
-		int pages = (int)Math.ceil(
-			ctCollectionPage.getTotalCount() / itemLimit);
-		List<CTCollection> allItems = new ArrayList<CTCollection>();
+		Page<CTCollection> page2 = ctCollectionResource.getCTCollectionsPage(
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					ctCollections1.toString(), itemLimit,
-					ctCollections1.size());
+		List<CTCollection> ctCollections2 =
+			(List<CTCollection>)page2.getItems();
 
-				Page<CTCollection> page =
-					ctCollectionResource.getCTCollectionsPage(
-						null, null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			ctCollections2.toString(), 1, ctCollections2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<CTCollection> page3 = ctCollectionResource.getCTCollectionsPage(
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(ctCollection1, allItems);
-		assertContains(ctCollection2, allItems);
-		assertContains(ctCollection3, allItems);
+		assertContains(ctCollection1, (List<CTCollection>)page3.getItems());
+		assertContains(ctCollection2, (List<CTCollection>)page3.getItems());
+		assertContains(ctCollection3, (List<CTCollection>)page3.getItems());
 	}
 
 	@Test

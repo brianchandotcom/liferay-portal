@@ -291,7 +291,6 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			discountAccountGroupPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		DiscountAccountGroup discountAccountGroup1 =
 			testGetDiscountByExternalReferenceCodeDiscountAccountGroupsPage_addDiscountAccountGroup(
@@ -308,41 +307,44 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 		Page<DiscountAccountGroup> page1 =
 			discountAccountGroupResource.
 				getDiscountByExternalReferenceCodeDiscountAccountGroupsPage(
-					externalReferenceCode, Pagination.of(1, itemLimit));
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<DiscountAccountGroup> discountAccountGroups1 =
 			(List<DiscountAccountGroup>)page1.getItems();
 
-		if (discountAccountGroups1.size() < itemLimit) {
-			itemLimit = discountAccountGroups1.size();
-		}
+		Assert.assertEquals(
+			discountAccountGroups1.toString(), totalCount + 2,
+			discountAccountGroups1.size());
 
-		int pages = (int)Math.ceil(
-			discountAccountGroupPage.getTotalCount() / itemLimit);
-		List<DiscountAccountGroup> allItems =
-			new ArrayList<DiscountAccountGroup>();
+		Page<DiscountAccountGroup> page2 =
+			discountAccountGroupResource.
+				getDiscountByExternalReferenceCodeDiscountAccountGroupsPage(
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					discountAccountGroups1.toString(), itemLimit,
-					discountAccountGroups1.size());
+		List<DiscountAccountGroup> discountAccountGroups2 =
+			(List<DiscountAccountGroup>)page2.getItems();
 
-				Page<DiscountAccountGroup> page =
-					discountAccountGroupResource.
-						getDiscountByExternalReferenceCodeDiscountAccountGroupsPage(
-							externalReferenceCode,
-							Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			discountAccountGroups2.toString(), 1,
+			discountAccountGroups2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<DiscountAccountGroup> page3 =
+			discountAccountGroupResource.
+				getDiscountByExternalReferenceCodeDiscountAccountGroupsPage(
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(discountAccountGroup1, allItems);
-		assertContains(discountAccountGroup2, allItems);
-		assertContains(discountAccountGroup3, allItems);
+		assertContains(
+			discountAccountGroup1,
+			(List<DiscountAccountGroup>)page3.getItems());
+		assertContains(
+			discountAccountGroup2,
+			(List<DiscountAccountGroup>)page3.getItems());
+		assertContains(
+			discountAccountGroup3,
+			(List<DiscountAccountGroup>)page3.getItems());
 	}
 
 	protected DiscountAccountGroup
@@ -576,7 +578,6 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			discountAccountGroupPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		DiscountAccountGroup discountAccountGroup1 =
 			testGetDiscountIdDiscountAccountGroupsPage_addDiscountAccountGroup(
@@ -592,41 +593,41 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 
 		Page<DiscountAccountGroup> page1 =
 			discountAccountGroupResource.getDiscountIdDiscountAccountGroupsPage(
-				id, null, null, Pagination.of(1, itemLimit), null);
+				id, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<DiscountAccountGroup> discountAccountGroups1 =
 			(List<DiscountAccountGroup>)page1.getItems();
 
-		if (discountAccountGroups1.size() < itemLimit) {
-			itemLimit = discountAccountGroups1.size();
-		}
+		Assert.assertEquals(
+			discountAccountGroups1.toString(), totalCount + 2,
+			discountAccountGroups1.size());
 
-		int pages = (int)Math.ceil(
-			discountAccountGroupPage.getTotalCount() / itemLimit);
-		List<DiscountAccountGroup> allItems =
-			new ArrayList<DiscountAccountGroup>();
+		Page<DiscountAccountGroup> page2 =
+			discountAccountGroupResource.getDiscountIdDiscountAccountGroupsPage(
+				id, null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					discountAccountGroups1.toString(), itemLimit,
-					discountAccountGroups1.size());
+		List<DiscountAccountGroup> discountAccountGroups2 =
+			(List<DiscountAccountGroup>)page2.getItems();
 
-				Page<DiscountAccountGroup> page =
-					discountAccountGroupResource.
-						getDiscountIdDiscountAccountGroupsPage(
-							id, null, null, Pagination.of(pageNum, itemLimit),
-							null);
+		Assert.assertEquals(
+			discountAccountGroups2.toString(), 1,
+			discountAccountGroups2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<DiscountAccountGroup> page3 =
+			discountAccountGroupResource.getDiscountIdDiscountAccountGroupsPage(
+				id, null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(discountAccountGroup1, allItems);
-		assertContains(discountAccountGroup2, allItems);
-		assertContains(discountAccountGroup3, allItems);
+		assertContains(
+			discountAccountGroup1,
+			(List<DiscountAccountGroup>)page3.getItems());
+		assertContains(
+			discountAccountGroup2,
+			(List<DiscountAccountGroup>)page3.getItems());
+		assertContains(
+			discountAccountGroup3,
+			(List<DiscountAccountGroup>)page3.getItems());
 	}
 
 	@Test

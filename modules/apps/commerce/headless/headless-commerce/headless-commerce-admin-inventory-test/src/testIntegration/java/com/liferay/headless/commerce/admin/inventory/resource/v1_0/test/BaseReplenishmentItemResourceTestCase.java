@@ -605,7 +605,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			replenishmentItemPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ReplenishmentItem replenishmentItem1 =
 			testGetReplenishmentItemsPage_addReplenishmentItem(
@@ -621,38 +620,37 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 		Page<ReplenishmentItem> page1 =
 			replenishmentItemResource.getReplenishmentItemsPage(
-				sku, Pagination.of(1, itemLimit));
+				sku, Pagination.of(1, totalCount + 2));
 
 		List<ReplenishmentItem> replenishmentItems1 =
 			(List<ReplenishmentItem>)page1.getItems();
 
-		if (replenishmentItems1.size() < itemLimit) {
-			itemLimit = replenishmentItems1.size();
-		}
+		Assert.assertEquals(
+			replenishmentItems1.toString(), totalCount + 2,
+			replenishmentItems1.size());
 
-		int pages = (int)Math.ceil(
-			replenishmentItemPage.getTotalCount() / itemLimit);
-		List<ReplenishmentItem> allItems = new ArrayList<ReplenishmentItem>();
+		Page<ReplenishmentItem> page2 =
+			replenishmentItemResource.getReplenishmentItemsPage(
+				sku, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					replenishmentItems1.toString(), itemLimit,
-					replenishmentItems1.size());
+		List<ReplenishmentItem> replenishmentItems2 =
+			(List<ReplenishmentItem>)page2.getItems();
 
-				Page<ReplenishmentItem> page =
-					replenishmentItemResource.getReplenishmentItemsPage(
-						sku, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			replenishmentItems2.toString(), 1, replenishmentItems2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ReplenishmentItem> page3 =
+			replenishmentItemResource.getReplenishmentItemsPage(
+				sku, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(replenishmentItem1, allItems);
-		assertContains(replenishmentItem2, allItems);
-		assertContains(replenishmentItem3, allItems);
+		assertContains(
+			replenishmentItem1, (List<ReplenishmentItem>)page3.getItems());
+		assertContains(
+			replenishmentItem2, (List<ReplenishmentItem>)page3.getItems());
+		assertContains(
+			replenishmentItem3, (List<ReplenishmentItem>)page3.getItems());
 	}
 
 	protected ReplenishmentItem
@@ -815,7 +813,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			replenishmentItemPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ReplenishmentItem replenishmentItem1 =
 			testGetWarehouseIdReplenishmentItemsPage_addReplenishmentItem(
@@ -831,39 +828,37 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 		Page<ReplenishmentItem> page1 =
 			replenishmentItemResource.getWarehouseIdReplenishmentItemsPage(
-				warehouseId, Pagination.of(1, itemLimit));
+				warehouseId, Pagination.of(1, totalCount + 2));
 
 		List<ReplenishmentItem> replenishmentItems1 =
 			(List<ReplenishmentItem>)page1.getItems();
 
-		if (replenishmentItems1.size() < itemLimit) {
-			itemLimit = replenishmentItems1.size();
-		}
+		Assert.assertEquals(
+			replenishmentItems1.toString(), totalCount + 2,
+			replenishmentItems1.size());
 
-		int pages = (int)Math.ceil(
-			replenishmentItemPage.getTotalCount() / itemLimit);
-		List<ReplenishmentItem> allItems = new ArrayList<ReplenishmentItem>();
+		Page<ReplenishmentItem> page2 =
+			replenishmentItemResource.getWarehouseIdReplenishmentItemsPage(
+				warehouseId, Pagination.of(2, totalCount + 2));
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					replenishmentItems1.toString(), itemLimit,
-					replenishmentItems1.size());
+		List<ReplenishmentItem> replenishmentItems2 =
+			(List<ReplenishmentItem>)page2.getItems();
 
-				Page<ReplenishmentItem> page =
-					replenishmentItemResource.
-						getWarehouseIdReplenishmentItemsPage(
-							warehouseId, Pagination.of(pageNum, itemLimit));
+		Assert.assertEquals(
+			replenishmentItems2.toString(), 1, replenishmentItems2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ReplenishmentItem> page3 =
+			replenishmentItemResource.getWarehouseIdReplenishmentItemsPage(
+				warehouseId, Pagination.of(1, (int)totalCount + 3));
 
-		assertContains(replenishmentItem1, allItems);
-		assertContains(replenishmentItem2, allItems);
-		assertContains(replenishmentItem3, allItems);
+		assertContains(
+			replenishmentItem1, (List<ReplenishmentItem>)page3.getItems());
+		assertContains(
+			replenishmentItem2, (List<ReplenishmentItem>)page3.getItems());
+		assertContains(
+			replenishmentItem3, (List<ReplenishmentItem>)page3.getItems());
 	}
 
 	protected ReplenishmentItem

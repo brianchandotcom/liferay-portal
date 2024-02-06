@@ -233,7 +233,6 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			contactAccountGroupPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ContactAccountGroup contactAccountGroup1 =
 			testGetContactAccountGroupsPage_addContactAccountGroup(
@@ -249,39 +248,37 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 
 		Page<ContactAccountGroup> page1 =
 			contactAccountGroupResource.getContactAccountGroupsPage(
-				null, Pagination.of(1, itemLimit), null);
+				null, Pagination.of(1, totalCount + 2), null);
 
 		List<ContactAccountGroup> contactAccountGroups1 =
 			(List<ContactAccountGroup>)page1.getItems();
 
-		if (contactAccountGroups1.size() < itemLimit) {
-			itemLimit = contactAccountGroups1.size();
-		}
+		Assert.assertEquals(
+			contactAccountGroups1.toString(), totalCount + 2,
+			contactAccountGroups1.size());
 
-		int pages = (int)Math.ceil(
-			contactAccountGroupPage.getTotalCount() / itemLimit);
-		List<ContactAccountGroup> allItems =
-			new ArrayList<ContactAccountGroup>();
+		Page<ContactAccountGroup> page2 =
+			contactAccountGroupResource.getContactAccountGroupsPage(
+				null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					contactAccountGroups1.toString(), itemLimit,
-					contactAccountGroups1.size());
+		List<ContactAccountGroup> contactAccountGroups2 =
+			(List<ContactAccountGroup>)page2.getItems();
 
-				Page<ContactAccountGroup> page =
-					contactAccountGroupResource.getContactAccountGroupsPage(
-						null, Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			contactAccountGroups2.toString(), 1, contactAccountGroups2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ContactAccountGroup> page3 =
+			contactAccountGroupResource.getContactAccountGroupsPage(
+				null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(contactAccountGroup1, allItems);
-		assertContains(contactAccountGroup2, allItems);
-		assertContains(contactAccountGroup3, allItems);
+		assertContains(
+			contactAccountGroup1, (List<ContactAccountGroup>)page3.getItems());
+		assertContains(
+			contactAccountGroup2, (List<ContactAccountGroup>)page3.getItems());
+		assertContains(
+			contactAccountGroup3, (List<ContactAccountGroup>)page3.getItems());
 	}
 
 	@Test

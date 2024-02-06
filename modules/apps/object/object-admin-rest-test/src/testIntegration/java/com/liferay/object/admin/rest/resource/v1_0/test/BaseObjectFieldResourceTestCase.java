@@ -390,7 +390,6 @@ public abstract class BaseObjectFieldResourceTestCase {
 					externalReferenceCode, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(objectFieldPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ObjectField objectField1 =
 			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_addObjectField(
@@ -408,37 +407,34 @@ public abstract class BaseObjectFieldResourceTestCase {
 			objectFieldResource.
 				getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
 					externalReferenceCode, null, null,
-					Pagination.of(1, itemLimit), null);
+					Pagination.of(1, totalCount + 2), null);
 
 		List<ObjectField> objectFields1 = (List<ObjectField>)page1.getItems();
 
-		if (objectFields1.size() < itemLimit) {
-			itemLimit = objectFields1.size();
-		}
+		Assert.assertEquals(
+			objectFields1.toString(), totalCount + 2, objectFields1.size());
 
-		int pages = (int)Math.ceil(objectFieldPage.getTotalCount() / itemLimit);
-		List<ObjectField> allItems = new ArrayList<ObjectField>();
+		Page<ObjectField> page2 =
+			objectFieldResource.
+				getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
+					externalReferenceCode, null, null,
+					Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					objectFields1.toString(), itemLimit, objectFields1.size());
+		List<ObjectField> objectFields2 = (List<ObjectField>)page2.getItems();
 
-				Page<ObjectField> page =
-					objectFieldResource.
-						getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
-							externalReferenceCode, null, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(objectFields2.toString(), 1, objectFields2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ObjectField> page3 =
+			objectFieldResource.
+				getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
+					externalReferenceCode, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(objectField1, allItems);
-		assertContains(objectField2, allItems);
-		assertContains(objectField3, allItems);
+		assertContains(objectField1, (List<ObjectField>)page3.getItems());
+		assertContains(objectField2, (List<ObjectField>)page3.getItems());
+		assertContains(objectField3, (List<ObjectField>)page3.getItems());
 	}
 
 	@Test
@@ -834,7 +830,6 @@ public abstract class BaseObjectFieldResourceTestCase {
 				objectDefinitionId, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(objectFieldPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		ObjectField objectField1 =
 			testGetObjectDefinitionObjectFieldsPage_addObjectField(
@@ -850,37 +845,33 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 		Page<ObjectField> page1 =
 			objectFieldResource.getObjectDefinitionObjectFieldsPage(
-				objectDefinitionId, null, null, Pagination.of(1, itemLimit),
-				null);
+				objectDefinitionId, null, null,
+				Pagination.of(1, totalCount + 2), null);
 
 		List<ObjectField> objectFields1 = (List<ObjectField>)page1.getItems();
 
-		if (objectFields1.size() < itemLimit) {
-			itemLimit = objectFields1.size();
-		}
+		Assert.assertEquals(
+			objectFields1.toString(), totalCount + 2, objectFields1.size());
 
-		int pages = (int)Math.ceil(objectFieldPage.getTotalCount() / itemLimit);
-		List<ObjectField> allItems = new ArrayList<ObjectField>();
+		Page<ObjectField> page2 =
+			objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				objectDefinitionId, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					objectFields1.toString(), itemLimit, objectFields1.size());
+		List<ObjectField> objectFields2 = (List<ObjectField>)page2.getItems();
 
-				Page<ObjectField> page =
-					objectFieldResource.getObjectDefinitionObjectFieldsPage(
-						objectDefinitionId, null, null,
-						Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(objectFields2.toString(), 1, objectFields2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<ObjectField> page3 =
+			objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				objectDefinitionId, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(objectField1, allItems);
-		assertContains(objectField2, allItems);
-		assertContains(objectField3, allItems);
+		assertContains(objectField1, (List<ObjectField>)page3.getItems());
+		assertContains(objectField2, (List<ObjectField>)page3.getItems());
+		assertContains(objectField3, (List<ObjectField>)page3.getItems());
 	}
 
 	@Test

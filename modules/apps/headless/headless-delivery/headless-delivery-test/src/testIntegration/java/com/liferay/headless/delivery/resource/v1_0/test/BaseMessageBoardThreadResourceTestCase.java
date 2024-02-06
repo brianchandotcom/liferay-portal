@@ -414,7 +414,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			messageBoardThreadPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		MessageBoardThread messageBoardThread1 =
 			testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
@@ -432,40 +431,41 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			messageBoardThreadResource.
 				getMessageBoardSectionMessageBoardThreadsPage(
 					messageBoardSectionId, null, null, null,
-					Pagination.of(1, itemLimit), null);
+					Pagination.of(1, totalCount + 2), null);
 
 		List<MessageBoardThread> messageBoardThreads1 =
 			(List<MessageBoardThread>)page1.getItems();
 
-		if (messageBoardThreads1.size() < itemLimit) {
-			itemLimit = messageBoardThreads1.size();
-		}
+		Assert.assertEquals(
+			messageBoardThreads1.toString(), totalCount + 2,
+			messageBoardThreads1.size());
 
-		int pages = (int)Math.ceil(
-			messageBoardThreadPage.getTotalCount() / itemLimit);
-		List<MessageBoardThread> allItems = new ArrayList<MessageBoardThread>();
+		Page<MessageBoardThread> page2 =
+			messageBoardThreadResource.
+				getMessageBoardSectionMessageBoardThreadsPage(
+					messageBoardSectionId, null, null, null,
+					Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					messageBoardThreads1.toString(), itemLimit,
-					messageBoardThreads1.size());
+		List<MessageBoardThread> messageBoardThreads2 =
+			(List<MessageBoardThread>)page2.getItems();
 
-				Page<MessageBoardThread> page =
-					messageBoardThreadResource.
-						getMessageBoardSectionMessageBoardThreadsPage(
-							messageBoardSectionId, null, null, null,
-							Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			messageBoardThreads2.toString(), 1, messageBoardThreads2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<MessageBoardThread> page3 =
+			messageBoardThreadResource.
+				getMessageBoardSectionMessageBoardThreadsPage(
+					messageBoardSectionId, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(messageBoardThread1, allItems);
-		assertContains(messageBoardThread2, allItems);
-		assertContains(messageBoardThread3, allItems);
+		assertContains(
+			messageBoardThread1, (List<MessageBoardThread>)page3.getItems());
+		assertContains(
+			messageBoardThread2, (List<MessageBoardThread>)page3.getItems());
+		assertContains(
+			messageBoardThread3, (List<MessageBoardThread>)page3.getItems());
 	}
 
 	@Test
@@ -737,7 +737,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			messageBoardThreadPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		MessageBoardThread messageBoardThread1 =
 			testGetMessageBoardThreadsRankedPage_addMessageBoardThread(
@@ -753,39 +752,37 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		Page<MessageBoardThread> page1 =
 			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
-				null, null, null, Pagination.of(1, itemLimit), null);
+				null, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<MessageBoardThread> messageBoardThreads1 =
 			(List<MessageBoardThread>)page1.getItems();
 
-		if (messageBoardThreads1.size() < itemLimit) {
-			itemLimit = messageBoardThreads1.size();
-		}
+		Assert.assertEquals(
+			messageBoardThreads1.toString(), totalCount + 2,
+			messageBoardThreads1.size());
 
-		int pages = (int)Math.ceil(
-			messageBoardThreadPage.getTotalCount() / itemLimit);
-		List<MessageBoardThread> allItems = new ArrayList<MessageBoardThread>();
+		Page<MessageBoardThread> page2 =
+			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
+				null, null, null, Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					messageBoardThreads1.toString(), itemLimit,
-					messageBoardThreads1.size());
+		List<MessageBoardThread> messageBoardThreads2 =
+			(List<MessageBoardThread>)page2.getItems();
 
-				Page<MessageBoardThread> page =
-					messageBoardThreadResource.getMessageBoardThreadsRankedPage(
-						null, null, null, Pagination.of(pageNum, itemLimit),
-						null);
+		Assert.assertEquals(
+			messageBoardThreads2.toString(), 1, messageBoardThreads2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<MessageBoardThread> page3 =
+			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
+				null, null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(messageBoardThread1, allItems);
-		assertContains(messageBoardThread2, allItems);
-		assertContains(messageBoardThread3, allItems);
+		assertContains(
+			messageBoardThread1, (List<MessageBoardThread>)page3.getItems());
+		assertContains(
+			messageBoardThread2, (List<MessageBoardThread>)page3.getItems());
+		assertContains(
+			messageBoardThread3, (List<MessageBoardThread>)page3.getItems());
 	}
 
 	@Test
@@ -1504,7 +1501,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		int totalCount = GetterUtil.getInteger(
 			messageBoardThreadPage.getTotalCount());
-		int itemLimit = totalCount;
 
 		MessageBoardThread messageBoardThread1 =
 			testGetSiteMessageBoardThreadsPage_addMessageBoardThread(
@@ -1520,40 +1516,40 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		Page<MessageBoardThread> page1 =
 			messageBoardThreadResource.getSiteMessageBoardThreadsPage(
-				siteId, null, null, null, null, Pagination.of(1, itemLimit),
-				null);
+				siteId, null, null, null, null,
+				Pagination.of(1, totalCount + 2), null);
 
 		List<MessageBoardThread> messageBoardThreads1 =
 			(List<MessageBoardThread>)page1.getItems();
 
-		if (messageBoardThreads1.size() < itemLimit) {
-			itemLimit = messageBoardThreads1.size();
-		}
+		Assert.assertEquals(
+			messageBoardThreads1.toString(), totalCount + 2,
+			messageBoardThreads1.size());
 
-		int pages = (int)Math.ceil(
-			messageBoardThreadPage.getTotalCount() / itemLimit);
-		List<MessageBoardThread> allItems = new ArrayList<MessageBoardThread>();
+		Page<MessageBoardThread> page2 =
+			messageBoardThreadResource.getSiteMessageBoardThreadsPage(
+				siteId, null, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		allItems.addAll(page1.getItems());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-		if (pages > 2) {
-			for (int pageNum = 2; pageNum < pages; pageNum++) {
-				Assert.assertEquals(
-					messageBoardThreads1.toString(), itemLimit,
-					messageBoardThreads1.size());
+		List<MessageBoardThread> messageBoardThreads2 =
+			(List<MessageBoardThread>)page2.getItems();
 
-				Page<MessageBoardThread> page =
-					messageBoardThreadResource.getSiteMessageBoardThreadsPage(
-						siteId, null, null, null, null,
-						Pagination.of(pageNum, itemLimit), null);
+		Assert.assertEquals(
+			messageBoardThreads2.toString(), 1, messageBoardThreads2.size());
 
-				allItems.addAll(page.getItems());
-			}
-		}
+		Page<MessageBoardThread> page3 =
+			messageBoardThreadResource.getSiteMessageBoardThreadsPage(
+				siteId, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertContains(messageBoardThread1, allItems);
-		assertContains(messageBoardThread2, allItems);
-		assertContains(messageBoardThread3, allItems);
+		assertContains(
+			messageBoardThread1, (List<MessageBoardThread>)page3.getItems());
+		assertContains(
+			messageBoardThread2, (List<MessageBoardThread>)page3.getItems());
+		assertContains(
+			messageBoardThread3, (List<MessageBoardThread>)page3.getItems());
 	}
 
 	@Test

@@ -106,7 +106,7 @@ public class AdminUtil {
 			contact.getSuffixListTypeId(), contact.isMale(), birthdayMonth,
 			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
 			twitterSn, contact.getJobTitle(), groupIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, new ServiceContext());
+			roleIds, userGroupRoles, userGroupIds, null);
 	}
 
 	public static User updateUser(

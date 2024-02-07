@@ -3,17 +3,25 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {IItemsActions} from '..';
 import {navigate, openConfirmModal} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import FrontendDataSetContext from '../FrontendDataSetContext';
+import FrontendDataSetContext, {
+	IFrontendDataSetContext,
+} from '../FrontendDataSetContext';
 import {ACTION_ITEM_TARGETS} from '../utils/actionItems/constants';
 import filterItemActions from '../utils/actionItems/filterItemActions';
 import {formatActionURL} from '../utils/actionItems/formatActionURL';
 import {openPermissionsModal} from '../utils/modals/openPermissionsModal';
 import {resolveModalSize} from '../utils/modals/resolveModalSize';
+
+// @ts-ignore
+
 import ViewsContext from '../views/ViewsContext';
+
+// @ts-ignore
+
 import ActionsDropdown from './ActionsDropdown';
 import QuickActions from './QuickActions';
 
@@ -21,7 +29,19 @@ const {MODAL_PERMISSIONS} = ACTION_ITEM_TARGETS;
 
 const QUICK_ACTIONS_MAX_NUMBER = 3;
 
-function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
+function Actions({
+	actions,
+	itemData,
+	itemId,
+	menuActive,
+	onMenuActiveChange,
+}: {
+	actions: Array<IItemsActions>;
+	itemData: any;
+	itemId: string | number;
+	menuActive: boolean;
+	onMenuActiveChange: Function;
+}) {
 	const {
 		executeAsyncItemAction,
 		highlightItems,
@@ -31,13 +51,13 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 		openModal,
 		openSidePanel,
 		toggleItemInlineEdit,
-	} = useContext(FrontendDataSetContext);
+	}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
 
 	const [
 		{
 			activeView: {quickActionsEnabled},
 		},
-	] = useContext(ViewsContext);
+	]: any = useContext(ViewsContext);
 
 	const [loading, setLoading] = useState(false);
 
@@ -56,7 +76,15 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 		});
 	}
 
-	const handleClick = ({action, closeMenu, event}) => {
+	const handleClick = ({
+		action,
+		closeMenu,
+		event,
+	}: {
+		action: IItemsActions;
+		closeMenu: any;
+		event: any;
+	}) => {
 		const {data, href, method, onClick, target} = action;
 
 		const {
@@ -70,7 +98,7 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 
 		const url = formatActionURL(href, itemData);
 
-		const doAction = ({defaultPrevented}) => {
+		const doAction = ({defaultPrevented}: {defaultPrevented: boolean}) => {
 			if (target?.includes('modal')) {
 				event.preventDefault();
 
@@ -78,7 +106,7 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 					openPermissionsModal(url);
 				}
 				else {
-					openModal({
+					openModal!({
 						size: size || resolveModalSize(target),
 						title,
 						url,
@@ -88,9 +116,9 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 			else if (target === 'sidePanel') {
 				event.preventDefault();
 
-				highlightItems([itemId]);
+				highlightItems!([itemId]);
 
-				openSidePanel({
+				openSidePanel!({
 					size: 'lg',
 					title,
 					url,
@@ -101,7 +129,7 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 
 				setLoading(true);
 
-				executeAsyncItemAction({
+				executeAsyncItemAction!({
 					errorMessage,
 					method: method ?? data?.method,
 					setActionItemLoading: setLoading,
@@ -112,7 +140,7 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 			else if (target === 'inlineEdit') {
 				event.preventDefault();
 
-				toggleItemInlineEdit(itemId);
+				toggleItemInlineEdit!(itemId);
 			}
 			else if (target === 'blank') {
 				event.preventDefault();
@@ -179,6 +207,7 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 						QUICK_ACTIONS_MAX_NUMBER
 					)}
 					itemData={itemData}
+					itemId={itemId}
 					onClick={handleClick}
 				/>
 			)}
@@ -195,42 +224,5 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 		</>
 	);
 }
-
-const actionType = PropTypes.shape({
-	data: PropTypes.shape({
-		confirmationMessage: PropTypes.string,
-		errorMessage: PropTypes.string,
-		method: PropTypes.oneOf(['delete', 'get', 'patch', 'post']),
-		permissionKey: PropTypes.string,
-		size: PropTypes.oneOf(['sm', 'lg', 'full-screen']),
-		successMessage: PropTypes.string,
-		title: PropTypes.string,
-	}),
-	href: PropTypes.string,
-	icon: PropTypes.string,
-	label: PropTypes.string,
-	method: PropTypes.oneOf(['delete', 'get', 'patch', 'post']),
-	onClick: PropTypes.func,
-	target: PropTypes.oneOf([
-		'async',
-		'headless',
-		'inlineEdit',
-		'link',
-		'modal',
-		'modal-full-screen',
-		'modal-lg',
-		'modal-permissions',
-		'modal-sm',
-		'sidePanel',
-	]),
-});
-
-export const actionsBasePropTypes = {
-	actions: PropTypes.arrayOf(actionType),
-	itemData: PropTypes.object,
-	itemId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-};
-
-Actions.propTypes = actionsBasePropTypes;
 
 export default Actions;

@@ -18,7 +18,7 @@ export interface IFrontendDataSetContext {
 	executeAsyncItemAction?: Function;
 	formId?: string;
 	formName?: string;
-	highlightItems?: Array<any>;
+	highlightItems?: Function;
 	highlightedItemsValue?: string;
 	id?: string;
 	inlineAddingSettings?: {

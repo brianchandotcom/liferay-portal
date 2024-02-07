@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -32,6 +34,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ModelPermissionsFactory {
 
 	public static final String MODEL_PERMISSIONS_PREFIX = "modelPermissions";
+
+	public static final String ROLE_PERMISSIONS_PREFIX = "rolePermissions";
 
 	public static ModelPermissions create(
 		HttpServletRequest httpServletRequest) {
@@ -166,6 +170,50 @@ public class ModelPermissionsFactory {
 		return parameterName + StringPool.UNDERLINE + className;
 	}
 
+	private static void _addRolePermissions(
+		ModelPermissions modelPermissions, Map<String, String[]> parameterMap) {
+
+		boolean inputPermissionsShowAllRoles = MapUtil.getBoolean(
+			parameterMap, "inputPermissionsShowAllRoles");
+
+		if (inputPermissionsShowAllRoles) {
+			for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+				String key = entry.getKey();
+
+				if (!key.startsWith(ROLE_PERMISSIONS_PREFIX)) {
+					continue;
+				}
+
+				String[] keyTokens = key.split(StringPool.UNDERLINE);
+
+				if (keyTokens.length != 2) {
+					continue;
+				}
+
+				try {
+					Role role = RoleServiceUtil.fetchRole(
+						GetterUtil.getLong(keyTokens[1]));
+
+					if (role == null) {
+						continue;
+					}
+
+					modelPermissions.addRolePermissions(
+						role.getName(), entry.getValue());
+				}
+				catch (PortalException portalException) {
+					if (_log.isInfoEnabled()) {
+						_log.info("Unable to get role " + keyTokens[1]);
+					}
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+				}
+			}
+		}
+	}
+
 	private static ModelPermissions _createModelPermissions(
 		Map<String, String[]> parameterMap, String className) {
 
@@ -186,7 +234,12 @@ public class ModelPermissionsFactory {
 		if ((groupPermissions != null) || (guestPermissions != null) ||
 			Validator.isNotNull(inputPermissionsViewRole)) {
 
-			return create(groupPermissions, guestPermissions, className);
+			ModelPermissions modelPermissions = create(
+				groupPermissions, guestPermissions, className);
+
+			_addRolePermissions(modelPermissions, parameterMap);
+
+			return modelPermissions;
 		}
 
 		if (Validator.isNull(className)) {

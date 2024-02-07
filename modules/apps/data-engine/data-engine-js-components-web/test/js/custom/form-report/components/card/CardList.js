@@ -79,7 +79,21 @@ const props = {
 };
 
 describe('CardList', () => {
-	afterEach(cleanup);
+	const {ResizeObserver} = window;
+
+	beforeAll(() => {
+		delete window.ResizeObserver;
+		window.ResizeObserver = jest.fn().mockImplementation(() => ({
+			disconnect: jest.fn(),
+			observe: jest.fn(),
+			unobserve: jest.fn(),
+		}));
+	});
+
+	afterAll(() => {
+		cleanup();
+		window.ResizeObserver = ResizeObserver;
+	});
 
 	it('shows the card of each field', () => {
 		const {getByText} = render(<CardList {...props} />);

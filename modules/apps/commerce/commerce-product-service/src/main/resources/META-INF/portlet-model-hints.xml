@@ -311,11 +311,14 @@
 		<field name="CPDefinitionId" type="long" />
 		<field name="CPSpecificationOptionId" type="long" />
 		<field name="CPOptionCategoryId" type="long" />
-		<field localized="true" name="value" type="String">
-			<hint-collection name="TEXTAREA" />
+		<field name="key" type="String">
+			<validator name="required" />
 		</field>
 		<field name="priority" type="double">
 			<validator name="number" />
+		</field>
+		<field localized="true" name="value" type="String">
+			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>

@@ -9,6 +9,7 @@ import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../FrontendDataSetContext';
 import {ACTION_ITEM_TARGETS} from '../utils/actionItems/constants';
+import filterItemActions from '../utils/actionItems/filterItemActions';
 import {formatActionURL} from '../utils/actionItems/formatActionURL';
 import {openPermissionsModal} from '../utils/modals/openPermissionsModal';
 import {resolveModalSize} from '../utils/modals/resolveModalSize';
@@ -19,42 +20,6 @@ import QuickActions from './QuickActions';
 const {MODAL_PERMISSIONS} = ACTION_ITEM_TARGETS;
 
 const QUICK_ACTIONS_MAX_NUMBER = 3;
-
-const formatActions = (actions, itemData) => {
-	return actions
-		? actions.reduce((actions, action) => {
-				if (action.data?.permissionKey) {
-					if (
-						itemData.actions &&
-						Object.keys(itemData.actions).some(
-							(itemAction) =>
-								itemAction.toLowerCase() ===
-								action.data.permissionKey.toLowerCase()
-						)
-					) {
-						if (action.target === 'headless') {
-							return [
-								...actions,
-								{
-									...action,
-									...itemData.actions[
-										action.data.permissionKey.toLowerCase()
-									],
-								},
-							];
-						}
-						else {
-							return [...actions, action];
-						}
-					}
-
-					return actions;
-				}
-
-				return [...actions, action];
-		  }, [])
-		: [];
-};
 
 function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 	const {
@@ -81,7 +46,7 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 	const inlineEditingAlwaysOn =
 		inlineEditingAvailable && inlineEditingSettings.alwaysOn;
 
-	const formattedActions = formatActions(actions, itemData);
+	const formattedActions = filterItemActions(actions, itemData);
 
 	if (inlineEditingAvailable && !inlineEditingAlwaysOn) {
 		formattedActions.unshift({

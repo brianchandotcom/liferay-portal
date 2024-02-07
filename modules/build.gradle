@@ -559,6 +559,8 @@ gradle.beforeProject {
 					jvmArgs project.properties["junit.java.add.opens"].split("\\s+")
 				}
 
+				jvmArgs "-Djava.locale.providers=JRE,COMPAT,CLDR"
+
 				if (project.properties["junit.java.security.manager"]) {
 					systemProperty "java.security.manager", project.properties["junit.java.security.manager"]
 				}

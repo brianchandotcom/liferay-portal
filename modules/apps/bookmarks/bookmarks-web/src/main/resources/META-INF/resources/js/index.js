@@ -4,6 +4,5 @@
  */
 
 export {default as SaveConfigurationButtonPropsTransformer} from './SaveConfigurationButtonPropsTransformer';
-export {default as SelectRootFolderButtonPropsTransformer} from './SelectRootFolderButtonPropsTransformer';
 export {default as BookmarksDragAndDrop} from './bookmarks/BookmarksDragAndDrop';
 export {default as BookmarksManagementToolbarPropsTransformer} from './bookmarks/BookmarksManagementToolbarPropsTransformer';

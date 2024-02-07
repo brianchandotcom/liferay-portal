@@ -29,7 +29,7 @@ public class LayoutDescription implements Serializable {
 		StringBundler sb = new StringBundler(_depth + 1);
 
 		for (int i = 0; i < _depth; i++) {
-			sb.append("-&nbsp;");
+			sb.append("- ");
 		}
 
 		sb.append(HtmlUtil.escape(_name));

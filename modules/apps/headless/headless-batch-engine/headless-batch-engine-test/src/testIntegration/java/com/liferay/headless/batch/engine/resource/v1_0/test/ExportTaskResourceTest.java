@@ -32,6 +32,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -165,16 +166,21 @@ public class ExportTaskResourceTest {
 		}
 	}
 
-	private String _splitClassName(String className) {
+	private Map<String, String> _splitClassName(String className) {
+		Map<String, String> result = new HashMap<>();
+
 		if (className.contains("#")) {
 			String[] classNameTaskItemDelegateName = className.split("#");
 
-			_taskItemDelegateName = classNameTaskItemDelegateName[1];
-
-			return classNameTaskItemDelegateName[0];
+			result.put("className", classNameTaskItemDelegateName[0]);
+			result.put(
+				"taskItemDelegateName", classNameTaskItemDelegateName[1]);
+		}
+		else {
+			result.put("className", className);
 		}
 
-		return className;
+		return result;
 	}
 
 	private void _testPostExportTask(String className) throws Exception {
@@ -186,9 +192,11 @@ public class ExportTaskResourceTest {
 			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
 		).build();
 
+		Map<String, String> classNameParts = _splitClassName(className);
+
 		ExportTask exportTask = exportTaskResource.postExportTask(
-			_splitClassName(className), "jsont", null, null, null,
-			_taskItemDelegateName);
+			classNameParts.get("className"), "jsont", null, null, null,
+			classNameParts.get("taskItemDelegateName"));
 
 		String externalReferenceCode = exportTask.getExternalReferenceCode();
 
@@ -257,8 +265,8 @@ public class ExportTaskResourceTest {
 		).build();
 
 		ImportTask importTask = importTaskResource.postImportTask(
-			_splitClassName(className), null, "UPSERT", null, null, null,
-			_taskItemDelegateName, itemsJSONArray);
+			classNameParts.get("className"), null, "UPSERT", null, null, null,
+			classNameParts.get("taskItemDelegateName"), itemsJSONArray);
 
 		externalReferenceCode = importTask.getExternalReferenceCode();
 
@@ -562,6 +570,5 @@ public class ExportTaskResourceTest {
 	private JSONFactory _jsonFactory;
 
 	private final List<LogCapture> _logCaptures = new ArrayList<>();
-	private String _taskItemDelegateName;
 
 }

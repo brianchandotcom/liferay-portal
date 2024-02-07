@@ -145,32 +145,6 @@ public class APIPropertyRelevantObjectEntryModelListener
 							"field-erc-nor-object-relationship-names-" +
 								"properties-associated");
 				}
-
-				String filterString = StringBundler.concat(
-					"id ne '", objectEntry.getObjectEntryId(),
-					"' and name eq '", values.get("name"),
-					"' and r_apiPropertyToAPIProperties_c_apiPropertyId eq '",
-					values.get("r_apiPropertyToAPIProperties_c_apiPropertyId"),
-					"' and r_apiSchemaToAPIProperties_c_apiSchemaId eq '",
-					apiSchemaId, "'");
-
-				ObjectDefinition apiPropertyObjectDefinition =
-					_objectDefinitionLocalService.getObjectDefinition(
-						objectEntry.getObjectDefinitionId());
-
-				if (ListUtil.isNotEmpty(
-						_objectEntryLocalService.getValuesList(
-							objectEntry.getGroupId(),
-							objectEntry.getCompanyId(), objectEntry.getUserId(),
-							objectEntry.getObjectDefinitionId(),
-							_filterFactory.create(
-								filterString, apiPropertyObjectDefinition),
-							null, -1, -1, null))) {
-
-					throw new ObjectEntryValuesException.InvalidObjectField(
-						null, "API property name must be unique",
-						"api-property-name-must-be-unique");
-				}
 			}
 			else {
 				if (Validator.isNull(objectFieldERC)) {
@@ -194,6 +168,11 @@ public class APIPropertyRelevantObjectEntryModelListener
 				}
 			}
 
+			_validateRelatedAPIPropertiesUniqueName(
+				apiSchemaId, (String)values.get("name"), objectEntry,
+				(long)values.get(
+					"r_apiPropertyToAPIProperties_c_apiPropertyId"));
+
 			_validateRelatedAPIProperty(
 				(long)values.get(
 					"r_apiPropertyToAPIProperties_c_apiPropertyId"),
@@ -201,6 +180,37 @@ public class APIPropertyRelevantObjectEntryModelListener
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
+		}
+	}
+
+	private void _validateRelatedAPIPropertiesUniqueName(
+			long apiSchemaId, String name, ObjectEntry objectEntry,
+			long parentAPIProperty)
+		throws Exception {
+
+		String filterString = StringBundler.concat(
+			"id ne '", objectEntry.getObjectEntryId(), "' and name eq '", name,
+			"' and r_apiPropertyToAPIProperties_c_apiPropertyId eq '",
+			parentAPIProperty,
+			"' and r_apiSchemaToAPIProperties_c_apiSchemaId eq '", apiSchemaId,
+			"'");
+
+		ObjectDefinition apiPropertyObjectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		if (ListUtil.isNotEmpty(
+				_objectEntryLocalService.getValuesList(
+					objectEntry.getGroupId(), objectEntry.getCompanyId(),
+					objectEntry.getUserId(),
+					objectEntry.getObjectDefinitionId(),
+					_filterFactory.create(
+						filterString, apiPropertyObjectDefinition),
+					null, -1, -1, null))) {
+
+			throw new ObjectEntryValuesException.InvalidObjectField(
+				null, "API property name must be unique",
+				"api-property-name-must-be-unique");
 		}
 	}
 

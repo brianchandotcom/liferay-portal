@@ -37,7 +37,7 @@ export default function ScheduleOptions({
 				setError(Liferay.Language.get('please-enter-a-valid-date'));
 			}
 			else {
-				setError(Liferay.Language.get(''));
+				setError('');
 			}
 		}
 	}, [setError, displayDate]);

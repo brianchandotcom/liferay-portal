@@ -5,7 +5,7 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {getValueFromItem} from './getValueFromItem';
+import getValueFromItem from './getValueFromItem';
 import createOdataFilter from './odata';
 
 export function getData(apiURL, query) {

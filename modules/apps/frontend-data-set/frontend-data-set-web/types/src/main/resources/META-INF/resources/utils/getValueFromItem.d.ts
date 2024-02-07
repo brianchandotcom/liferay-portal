@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export declare function getValueFromItem(
+declare const getValueFromItem: (
 	item: any,
-	fieldName?: string | string[]
-): string;
+	fieldName?: string | string[] | undefined
+) => string;
+export default getValueFromItem;

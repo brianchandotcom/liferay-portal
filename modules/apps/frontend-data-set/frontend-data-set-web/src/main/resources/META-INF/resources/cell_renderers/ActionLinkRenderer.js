@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../FrontendDataSetContext';
-import {formatActionURL} from '../utils/actionItems/formatActionURL';
+import formatActionURL from '../utils/actionItems/formatActionURL';
 import {openPermissionsModal} from '../utils/modals/openPermissionsModal';
 import DefaultContent from './DefaultRenderer';
 

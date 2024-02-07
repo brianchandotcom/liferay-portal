@@ -16,8 +16,8 @@ import React, {useContext} from 'react';
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../FrontendDataSetContext';
-import {formatActionURL} from '../utils/actionItems/formatActionURL';
-import {isLink} from '../utils/isLink';
+import formatActionURL from '../utils/actionItems/formatActionURL';
+import isLink from '../utils/isLink';
 
 interface IDropdownItem {
 	action: IItemsActions;
@@ -32,7 +32,7 @@ function DropdownItem({action, closeMenu, onClick, url}: IDropdownItem) {
 
 	return (
 		<ClayDropDown.Item
-			href={isLink(target, null) ? url : ''}
+			href={isLink(target, null) ? url : undefined}
 			onClick={(event) =>
 				onClick({
 					action,

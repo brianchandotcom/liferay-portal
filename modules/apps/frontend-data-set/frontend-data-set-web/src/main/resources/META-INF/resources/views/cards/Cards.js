@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useRef} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
-import {isLink} from '../utils/isLink';
+import isLink from '../../utils/isLink';
 
 const Cards = ({items, schema}) => {
 	const {selectedItemsKey, style} = useContext(FrontendDataSetContext);

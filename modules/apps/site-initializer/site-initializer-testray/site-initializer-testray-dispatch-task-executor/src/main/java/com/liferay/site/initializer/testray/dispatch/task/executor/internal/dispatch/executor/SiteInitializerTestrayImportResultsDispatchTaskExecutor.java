@@ -1247,11 +1247,11 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 				unicodeProperties.getProperty("s3BucketName"),
 				Storage.BlobListOption.prefix(s3InboxFolderName + "/"));
 
-			long filesProcessedLimit = GetterUtil.getLong(
-				unicodeProperties.getProperty("filesProcessedLimit"), -1);
+			long filesCountThreshold = GetterUtil.getLong(
+				unicodeProperties.getProperty("filesCountThreshold"), -1);
 
 			for (Blob blob : page.iterateAll()) {
-				if (filesProcessedLimit == 0) {
+				if (filesCountThreshold == 0) {
 					break;
 				}
 
@@ -1282,7 +1282,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 				}
 
 				blob.delete();
-				filesProcessedLimit--;
+				filesCountThreshold--;
 			}
 		}
 		catch (IOException ioException) {

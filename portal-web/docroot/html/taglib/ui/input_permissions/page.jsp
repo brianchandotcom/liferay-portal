@@ -56,10 +56,12 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 		List groupPermissions = ListUtil.fromArray(request.getParameterValues(groupPermissionsName));
 		List guestPermissions = ListUtil.fromArray(request.getParameterValues(guestPermissionsName));
 
-		List supportedActions = (List)request.getAttribute("liferay-ui:input-permissions:supportedActions");
 		List groupDefaultActions = (List)request.getAttribute("liferay-ui:input-permissions:groupDefaultActions");
 		List guestDefaultActions = (List)request.getAttribute("liferay-ui:input-permissions:guestDefaultActions");
 		List guestUnsupportedActions = (List)request.getAttribute("liferay-ui:input-permissions:guestUnsupportedActions");
+		boolean showAllRoles = (boolean)request.getAttribute("liferay-ui:input-permissions:showAllRoles");
+		List supportedActions = (List)request.getAttribute("liferay-ui:input-permissions:supportedActions");
+		List<Role> supportedRoles = (List<Role>)request.getAttribute("liferay-ui:input-permissions:supportedRoles");
 
 		boolean submitted = request.getParameter(groupPermissionsName) != null;
 

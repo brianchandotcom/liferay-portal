@@ -48,7 +48,7 @@ public class BaseBatchEngineTaskServiceTest {
 
 		companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
 
-		normalUser = UserTestUtil.addUser(company);
+		user = UserTestUtil.addUser(company);
 	}
 
 	protected static Company company;
@@ -57,9 +57,9 @@ public class BaseBatchEngineTaskServiceTest {
 	@DeleteAfterTestRun
 	protected User companyAdminUser;
 
-	@DeleteAfterTestRun
-	protected User normalUser;
-
 	protected User omniadminUser;
+
+	@DeleteAfterTestRun
+	protected User user;
 
 }

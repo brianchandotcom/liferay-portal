@@ -1,6 +1,9 @@
 {
 	"author": "",
 	"dependencies": {
+		"axios": "^1.6.7",
+		"dns": "^0.2.2",
+		"glob": "^10.3.10",
 		"properties-file": "^3.3.18",
 		"uuid": "9.0.0"
 	},

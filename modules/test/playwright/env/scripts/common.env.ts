@@ -22,6 +22,35 @@ export function getPlaywrightBaseDir(): string {
 	return resolve(getPlaywrightProperty('playwright.base.dir'));
 }
 
+export function getPlaywrightParentDirs(): string[] {
+	const playwrightProjectDir = getPlaywrightProjectDir();
+	const playwrightBaseDir = getPlaywrightBaseDir();
+	
+	let playwrightParentDirs = [];
+
+	const regex = /(.+)\/[^\/]+/;
+
+	let playwrightParentDir = playwrightProjectDir;
+
+	while (true) {
+		const regexResults = regex.exec(playwrightParentDir);
+
+		if (regexResults === null) {
+			break;
+		}
+
+		playwrightParentDir = regexResults[1];
+
+		playwrightParentDirs.push(playwrightParentDir);
+
+		if (playwrightParentDir === playwrightBaseDir) {
+			break;
+		}
+	}
+
+	return playwrightParentDirs;
+}
+
 export function getPlaywrightProjectDir(): string {
 	const playwrightProjectConfigFiles = glob.sync(getPlaywrightBaseDir() + '/tests/**/config.ts');
 

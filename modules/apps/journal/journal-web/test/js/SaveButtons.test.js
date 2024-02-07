@@ -141,4 +141,41 @@ describe('SaveButtons', () => {
 
 		expect(alerts.length).toBe(2);
 	});
+
+	it('shows error when introducing an invalid date', () => {
+		renderComponent({
+			...DEFAULT_PROPS,
+			articleId: null,
+		});
+
+		runAllTimersAndExecuteAction(() => {
+			userEvent.click(screen.getByText('schedule-publication'));
+		});
+
+		userEvent.type(screen.getByLabelText('date-and-time'), 'pepito');
+
+		expect(
+			screen.getByText('please-enter-a-valid-date')
+		).toBeInTheDocument();
+	});
+
+	it('show error when introducing a past date', () => {
+		renderComponent({
+			...DEFAULT_PROPS,
+			articleId: null,
+		});
+
+		runAllTimersAndExecuteAction(() => {
+			userEvent.click(screen.getByText('schedule-publication'));
+		});
+
+		userEvent.type(
+			screen.getByLabelText('date-and-time'),
+			'1970-01-01 12:00'
+		);
+
+		expect(
+			screen.getByText('the-date-entered-has-already-occurred')
+		).toBeInTheDocument();
+	});
 });

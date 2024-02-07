@@ -153,7 +153,34 @@ public class ExportTaskResourceTest {
 	}
 
 	@Test
-	public void testExportCustomObjectEntryMultipleCompanies()
+	public void testPostExportTask() throws Exception {
+		Assert.assertFalse(_testableClassNames.isEmpty());
+
+		StringBundler sb = new StringBundler();
+
+		for (String className : _testableClassNames) {
+			try {
+				if (_log.isInfoEnabled()) {
+					_log.info("Testing " + className);
+				}
+
+				_testPostExportTask(className);
+			}
+			catch (Throwable throwable) {
+				sb.append(className);
+				sb.append(": ");
+				sb.append(throwable.getMessage());
+				sb.append("\n");
+			}
+		}
+
+		if (sb.length() > 0) {
+			throw new AssertionError(sb.toString());
+		}
+	}
+
+	@Test
+	public void testPostExportTaskCustomObjectEntryMultipleCompanies()
 		throws Exception {
 
 		String objectDefinitionName = RandomTestUtil.randomString() + "abc";
@@ -251,33 +278,6 @@ public class ExportTaskResourceTest {
 
 				throw new AssertionError(exportTask2.getErrorMessage());
 			}
-		}
-	}
-
-	@Test
-	public void testPostExportTask() throws Exception {
-		Assert.assertFalse(_testableClassNames.isEmpty());
-
-		StringBundler sb = new StringBundler();
-
-		for (String className : _testableClassNames) {
-			try {
-				if (_log.isInfoEnabled()) {
-					_log.info("Testing " + className);
-				}
-
-				_testPostExportTask(className);
-			}
-			catch (Throwable throwable) {
-				sb.append(className);
-				sb.append(": ");
-				sb.append(throwable.getMessage());
-				sb.append("\n");
-			}
-		}
-
-		if (sb.length() > 0) {
-			throw new AssertionError(sb.toString());
 		}
 	}
 

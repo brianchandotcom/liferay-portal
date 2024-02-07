@@ -167,11 +167,11 @@ public class OpenSearchSearchEngine
 
 		_indexFactory.registerCompanyId(companyId);
 
-		_indexConfigurationDynamicUpdatesExecutor.execute(companyId);
-
 		if (created) {
 			_waitForYellowStatus();
 		}
+
+		_indexConfigurationDynamicUpdatesExecutor.execute(companyId);
 
 		CrossClusterReplicationHelper crossClusterReplicationHelper =
 			_crossClusterReplicationHelperSnapshot.get();

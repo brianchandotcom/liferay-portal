@@ -198,6 +198,24 @@ public class DLFileVersionTest {
 	}
 
 	@Test
+	public void testUpdateDisplayDate() throws Exception {
+		updateServiceContext(
+			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
+			StringPool.BLANK);
+
+		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
+			_fileVersion.getFileEntryId(), _SOURCE_FILE_NAME,
+			_fileVersion.getMimeType(), _fileVersion.getTitle(),
+			StringPool.BLANK, _fileVersion.getDescription(),
+			_fileVersion.getChangeLog(), DLVersionNumberIncrease.MINOR,
+			_DATA_VERSION_1, new Date(), _fileVersion.getExpirationDate(),
+			_fileVersion.getReviewDate(), _serviceContext);
+
+		Assert.assertNotEquals(
+			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
+	}
+
+	@Test
 	public void testUpdateExpando() throws Exception {
 		updateServiceContext(
 			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),

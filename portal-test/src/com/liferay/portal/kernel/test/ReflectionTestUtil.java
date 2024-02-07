@@ -96,8 +96,6 @@ public class ReflectionTestUtil {
 
 			field.setAccessible(true);
 
-			ReflectionUtil.unfinalField(field);
-
 			return field;
 		}
 		catch (NoSuchFieldException noSuchFieldException) {
@@ -111,8 +109,6 @@ public class ReflectionTestUtil {
 				Field field = clazz.getDeclaredField(fieldName);
 
 				field.setAccessible(true);
-
-				ReflectionUtil.unfinalField(field);
 
 				return field;
 			}

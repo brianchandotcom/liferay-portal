@@ -7,7 +7,6 @@ package com.liferay.petra.reflect;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -27,7 +26,7 @@ public class ReflectionUtil {
 
 		field.setAccessible(true);
 
-		return unfinalField(field);
+		return field;
 	}
 
 	public static Field[] getDeclaredFields(Class<?> clazz) throws Exception {
@@ -35,8 +34,6 @@ public class ReflectionUtil {
 
 		for (Field field : fields) {
 			field.setAccessible(true);
-
-			unfinalField(field);
 		}
 
 		return fields;
@@ -100,44 +97,12 @@ public class ReflectionUtil {
 		return ReflectionUtil.<T, RuntimeException>_throwException(throwable);
 	}
 
-	public static Field unfinalField(Field field) throws Exception {
-		if (_modifiersField == null) {
-			return field;
-		}
-
-		int modifiers = field.getModifiers();
-
-		if ((modifiers & _STATIC_FINAL) == _STATIC_FINAL) {
-			_modifiersField.setInt(field, modifiers - Modifier.FINAL);
-		}
-
-		return field;
-	}
-
 	@SuppressWarnings("unchecked")
 	private static <T, E extends Throwable> T _throwException(
 			Throwable throwable)
 		throws E {
 
 		throw (E)throwable;
-	}
-
-	private static final int _STATIC_FINAL = Modifier.STATIC + Modifier.FINAL;
-
-	private static final Field _modifiersField;
-
-	static {
-		Field modifiersField = null;
-
-		try {
-			modifiersField = Field.class.getDeclaredField("modifiers");
-
-			modifiersField.setAccessible(true);
-		}
-		catch (Exception exception) {
-		}
-
-		_modifiersField = modifiersField;
 	}
 
 }

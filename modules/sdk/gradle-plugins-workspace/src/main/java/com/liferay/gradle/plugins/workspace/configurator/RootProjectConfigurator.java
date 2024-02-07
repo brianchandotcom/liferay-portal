@@ -58,7 +58,6 @@ import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -1040,54 +1039,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					}
 
 					return true;
-				}
-
-			});
-
-		download.doFirst(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					Logger logger = download.getLogger();
-					Project project = download.getProject();
-
-					for (Object src : _getSrcList(download)) {
-						File file = null;
-
-						try {
-							URL srcURL = (URL)src;
-
-							if (Objects.equals(srcURL.getProtocol(), "file")) {
-								URI uri = project.uri(src);
-
-								file = project.file(uri);
-							}
-						}
-						catch (Exception exception) {
-							if (logger.isDebugEnabled()) {
-								logger.debug(exception.getMessage(), exception);
-							}
-						}
-
-						if ((file == null) || !file.exists()) {
-							continue;
-						}
-
-						File destinationFile = download.getDest();
-
-						if (destinationFile.isDirectory()) {
-							destinationFile = new File(
-								destinationFile, file.getName());
-						}
-
-						if (destinationFile.equals(file)) {
-							throw new GradleException(
-								"Download source " + file +
-									" and destination " + destinationFile +
-										" cannot be the same");
-						}
-					}
 				}
 
 			});
@@ -2088,20 +2039,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		}
 
 		return sb.toString();
-	}
-
-	private List<?> _getSrcList(Download download) {
-		Object src = download.getSrc();
-
-		if (src == null) {
-			return Collections.emptyList();
-		}
-
-		if (src instanceof List<?>) {
-			return (List<?>)src;
-		}
-
-		return Collections.singletonList(src);
 	}
 
 	private String _loadTemplate(String name) {

@@ -230,24 +230,9 @@ public class ExportTaskResourceTest {
 			"com.liferay.object.rest.dto.v1_0.ObjectEntry", "json", null, null,
 			null, _objectDefinition1.getName());
 
-		String externalReferenceCode1 = exportTask1.getExternalReferenceCode();
-
-		while (true) {
-			exportTask1 =
-				exportTaskResource.getExportTaskByExternalReferenceCode(
-					externalReferenceCode1);
-
-			if (Objects.equals(
-					exportTask1.getExecuteStatusAsString(), "COMPLETED")) {
-
-				break;
-			}
-			else if (Objects.equals(
-						exportTask1.getExecuteStatusAsString(), "FAILED")) {
-
-				throw new AssertionError(exportTask1.getErrorMessage());
-			}
-		}
+		_assertExecuteStatusEquals(
+			ExportTask.ExecuteStatus.COMPLETED, exportTask1,
+			exportTaskResource);
 
 		exportTaskResource = builder.authentication(
 			"test@able.com", "test"
@@ -261,22 +246,34 @@ public class ExportTaskResourceTest {
 			"com.liferay.object.rest.dto.v1_0.ObjectEntry", "json", null, null,
 			null, _objectDefinition2.getName());
 
-		String externalReferenceCode2 = exportTask2.getExternalReferenceCode();
+		_assertExecuteStatusEquals(
+			ExportTask.ExecuteStatus.COMPLETED, exportTask2,
+			exportTaskResource);
+	}
+
+	private void _assertExecuteStatusEquals(
+			ExportTask.ExecuteStatus expectedExecuteStatus,
+			ExportTask exportTask, ExportTaskResource exportTaskResource)
+		throws Exception {
+
+		String externalReferenceCode = exportTask.getExternalReferenceCode();
 
 		while (true) {
-			exportTask2 =
+			exportTask =
 				exportTaskResource.getExportTaskByExternalReferenceCode(
-					externalReferenceCode2);
+					externalReferenceCode);
 
-			if (Objects.equals(
-					exportTask2.getExecuteStatusAsString(), "COMPLETED")) {
+			ExportTask.ExecuteStatus executeStatus =
+				exportTask.getExecuteStatus();
+
+			if ((executeStatus == ExportTask.ExecuteStatus.COMPLETED) ||
+				(executeStatus == ExportTask.ExecuteStatus.FAILED)) {
+
+				if (expectedExecuteStatus != executeStatus) {
+					throw new AssertionError(exportTask.getErrorMessage());
+				}
 
 				break;
-			}
-			else if (Objects.equals(
-						exportTask2.getExecuteStatusAsString(), "FAILED")) {
-
-				throw new AssertionError(exportTask2.getErrorMessage());
 			}
 		}
 	}
@@ -295,22 +292,8 @@ public class ExportTaskResourceTest {
 
 		String externalReferenceCode = exportTask.getExternalReferenceCode();
 
-		while (true) {
-			exportTask =
-				exportTaskResource.getExportTaskByExternalReferenceCode(
-					externalReferenceCode);
-
-			if (Objects.equals(
-					exportTask.getExecuteStatusAsString(), "COMPLETED")) {
-
-				break;
-			}
-			else if (Objects.equals(
-						exportTask.getExecuteStatusAsString(), "FAILED")) {
-
-				throw new AssertionError(exportTask.getErrorMessage());
-			}
-		}
+		_assertExecuteStatusEquals(
+			ExportTask.ExecuteStatus.COMPLETED, exportTask, exportTaskResource);
 
 		String json = null;
 

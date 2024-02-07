@@ -6,7 +6,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {flipThirdPartyCookiesOff} from '@liferay/cookies-banner-web';
 import CKEditor from 'ckeditor4-react';
-import {loadClientExtensions} from 'frontend-js-web';
+import {loadEditorClientExtensions} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {
 	forwardRef,
@@ -71,42 +71,14 @@ const BaseEditor = forwardRef(
 
 			setLoading(true);
 
-			loadClientExtensions([
-				{
-					clientExtensionDefinitions: initialConfig.editorTransformerURLs.map(
-						(url) => ({
-							importDeclaration: `default from ${url}`,
-						})
-					),
-					onLoad: (bindingContexts) => {
-						let transformedConfig = initialConfig;
+			loadEditorClientExtensions({
+				config: initialConfig,
+				onLoad: ({transformedConfig}) => {
+					setConfig(transformedConfig);
 
-						bindingContexts.forEach(
-							({binding: editorTransformer, error}) => {
-								if (
-									process.env.NODE_ENV === 'development' &&
-									error
-								) {
-									console.error(error);
-								}
-
-								const editorConfigTransformer =
-									editorTransformer?.editorConfigTransformer;
-
-								if (editorConfigTransformer) {
-									transformedConfig = editorConfigTransformer(
-										transformedConfig
-									);
-								}
-							}
-						);
-
-						setConfig(transformedConfig);
-
-						setLoading(false);
-					},
+					setLoading(false);
 				},
-			]);
+			});
 		}, [initialConfig]);
 
 		const getHTML = useCallback(() => {

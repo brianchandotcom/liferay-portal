@@ -294,41 +294,16 @@ name = HtmlUtil.escapeJS(name);
 
 			editorContainer.appendChild(loadingIndicator);
 
-			Liferay.Util.loadClientExtensions([
-				{
-					clientExtensionDefinitions: editorTransformerURLs.map(
-						(url) => ({
-							importDeclaration: 'default from ' + url,
-						})
-					),
-					onLoad: (bindingContexts) => {
-						var transformedConfig = editorConfig;
+			Liferay.Util.loadEditorClientExtensions({
+				config: editorConfig,
+				onLoad: ({transformedConfig}) => {
+					if (loadingIndicator) {
+						loadingIndicator.remove();
+					}
 
-						bindingContexts.forEach(
-							({binding: editorTransformer, error}) => {
-								if (error) {
-									console.error(error);
-								}
-
-								if (
-									editorTransformer &&
-									editorTransformer.editorConfigTransformer
-								) {
-									transformedConfig = editorTransformer.editorConfigTransformer(
-										transformedConfig
-									);
-								}
-							}
-						);
-
-						if (loadingIndicator) {
-							loadingIndicator.remove();
-						}
-
-						initInstance(transformedConfig);
-					},
+					initInstance(transformedConfig);
 				},
-			]);
+			});
 		}
 		else {
 			initInstance(editorConfig);

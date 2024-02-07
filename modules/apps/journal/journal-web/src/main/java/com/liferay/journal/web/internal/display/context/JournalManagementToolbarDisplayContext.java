@@ -168,6 +168,23 @@ public class JournalManagementToolbarDisplayContext
 					dropdownGroupItem.setSeparator(true);
 				}
 			).addGroup(
+				() -> FeatureFlagManagerUtil.isEnabled("LPD-16469"),
+				dropdownGroupItem -> {
+					dropdownGroupItem.setDropdownItems(
+						DropdownItemListBuilder.add(
+							dropdownItem -> {
+								dropdownItem.putData(
+									"action", "changePermissions");
+								dropdownItem.setIcon("password-policies");
+								dropdownItem.setLabel(
+									LanguageUtil.get(
+										httpServletRequest, "permissions"));
+								dropdownItem.setQuickAction(false);
+							}
+						).build());
+					dropdownGroupItem.setSeparator(true);
+				}
+			).addGroup(
 				dropdownGroupItem -> {
 					dropdownGroupItem.setDropdownItems(
 						DropdownItemListBuilder.add(
@@ -233,6 +250,15 @@ public class JournalManagementToolbarDisplayContext
 				"folderId", _journalDisplayContext.getFolderId()
 			).setParameter(
 				"groupId", _themeDisplay.getScopeGroupId()
+			).buildString()
+		).put(
+			"changePermissionsURL",
+			() -> PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/journal/change_articles_permissions"
+			).setWindowState(
+				LiferayWindowState.POP_UP
 			).buildString()
 		).put(
 			"exportTranslationURL",

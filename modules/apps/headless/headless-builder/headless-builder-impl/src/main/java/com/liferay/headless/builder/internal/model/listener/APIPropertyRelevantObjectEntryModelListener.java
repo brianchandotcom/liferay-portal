@@ -239,7 +239,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 								apiSchemaId, "'"),
 							_objectDefinitionLocalService.getObjectDefinition(
 								objectEntry.getObjectDefinitionId())),
-						null, -1, -1, null))) {
+						null, 0, 1, null))) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null, "API property name must be unique",

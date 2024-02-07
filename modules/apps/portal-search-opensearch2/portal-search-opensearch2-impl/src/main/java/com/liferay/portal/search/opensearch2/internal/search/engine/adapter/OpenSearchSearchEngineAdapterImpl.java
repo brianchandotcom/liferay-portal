@@ -26,6 +26,9 @@ import com.liferay.portal.search.engine.adapter.search.SearchResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
+import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
+
+import org.opensearch.client.opensearch._types.OpenSearchException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -130,13 +133,15 @@ public class OpenSearchSearchEngineAdapterImpl implements SearchEngineAdapter {
 			return runtimeException1;
 		}
 
-		Class<?> clazz = runtimeException1.getClass();
+		if (runtimeException1 instanceof OpenSearchException) {
+			Class<?> clazz = runtimeException1.getClass();
 
-		String name = clazz.getName();
+			OpenSearchException openSearchException =
+				(OpenSearchException)runtimeException1;
 
-		if (name.startsWith("org.opensearch")) {
 			RuntimeException runtimeException2 = new RuntimeException(
-				name + ": " + runtimeException1.toString());
+				clazz.getName() + ": " +
+					JsonpUtil.toString(openSearchException.error()));
 
 			runtimeException2.setStackTrace(runtimeException1.getStackTrace());
 

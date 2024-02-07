@@ -1,5 +1,4 @@
 {
-	"externalReferenceCode": "OBJECTDEFINITION-BuildsCases",
 	"label": {
 		"en_US": "Testray Builds Cases"
 	},
@@ -8,7 +7,6 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "OBJECTFIELD-Name",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",

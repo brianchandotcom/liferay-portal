@@ -185,46 +185,6 @@ public class BatchEngineImportTaskServiceTest
 			actualBatchEngineImportTask.getBatchEngineImportTaskId());
 	}
 
-	/*@Test
-	public void testGetBatchEngineImportTask() throws Exception {
-		BatchEngineImportTask batchEngineImportTask =
-			_createBatchEngineImportTask(user.getCompanyId());
-
-		_batchEngineImportTaskService.getBatchEngineImportTask(
-			batchEngineImportTask.getBatchEngineImportTaskId());
-	}
-
-	@Test(expected = PrincipalException.class)
-	public void testGetBatchEngineImportTaskOtherCompanyNotAllowed()
-		throws Exception {
-
-		BatchEngineImportTask batchEngineImportTask =
-			_createBatchEngineImportTask(otherCompany.getCompanyId());
-
-		User groupAdminUser = UserTestUtil.addGroupAdminUser(user.getGroup());
-
-		try {
-			UserTestUtil.setUser(groupAdminUser);
-
-			_batchEngineImportTaskService.getBatchEngineImportTask(
-				batchEngineImportTask.getBatchEngineImportTaskId());
-		}
-		finally {
-			UserTestUtil.setUser(user);
-		}
-	}
-
-	@Test
-	public void testGetBatchEngineImportTaskOtherCompanyOmniadminAllowed()
-		throws Exception {
-
-		BatchEngineImportTask batchEngineImportTask =
-			_createBatchEngineImportTask(otherCompany.getCompanyId());
-
-		_batchEngineImportTaskService.getBatchEngineImportTask(
-			batchEngineImportTask.getBatchEngineImportTaskId());
-	}*/
-
 	private BatchEngineImportTask _createBatchEngineImportTask(
 			long companyId, User user)
 		throws Exception {

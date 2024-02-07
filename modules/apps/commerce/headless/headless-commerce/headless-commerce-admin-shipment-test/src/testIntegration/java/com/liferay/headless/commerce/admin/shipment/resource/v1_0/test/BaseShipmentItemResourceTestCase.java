@@ -561,35 +561,80 @@ public abstract class BaseShipmentItemResourceTestCase {
 			testGetShipmentByExternalReferenceCodeItemsPage_addShipmentItem(
 				externalReferenceCode, randomShipmentItem());
 
-		Page<ShipmentItem> page1 =
-			shipmentItemResource.getShipmentByExternalReferenceCodeItemsPage(
-				externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<ShipmentItem> shipmentItems1 =
-			(List<ShipmentItem>)page1.getItems();
+			int shipmentItem1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int shipmentItem2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int shipmentItem3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			shipmentItems1.toString(), totalCount + 2, shipmentItems1.size());
+			Page<ShipmentItem> page1 =
+				shipmentItemResource.
+					getShipmentByExternalReferenceCodeItemsPage(
+						externalReferenceCode,
+						Pagination.of(shipmentItem1Page, 500));
 
-		Page<ShipmentItem> page2 =
-			shipmentItemResource.getShipmentByExternalReferenceCodeItemsPage(
-				externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(shipmentItem1, (List<ShipmentItem>)page1.getItems());
 
-		List<ShipmentItem> shipmentItems2 =
-			(List<ShipmentItem>)page2.getItems();
+			Page<ShipmentItem> page2 =
+				shipmentItemResource.
+					getShipmentByExternalReferenceCodeItemsPage(
+						externalReferenceCode,
+						Pagination.of(shipmentItem2Page, 500));
 
-		Assert.assertEquals(
-			shipmentItems2.toString(), 1, shipmentItems2.size());
+			assertContains(shipmentItem2, (List<ShipmentItem>)page2.getItems());
 
-		Page<ShipmentItem> page3 =
-			shipmentItemResource.getShipmentByExternalReferenceCodeItemsPage(
-				externalReferenceCode, Pagination.of(1, (int)totalCount + 3));
+			Page<ShipmentItem> page3 =
+				shipmentItemResource.
+					getShipmentByExternalReferenceCodeItemsPage(
+						externalReferenceCode,
+						Pagination.of(shipmentItem3Page, 500));
 
-		assertContains(shipmentItem1, (List<ShipmentItem>)page3.getItems());
-		assertContains(shipmentItem2, (List<ShipmentItem>)page3.getItems());
-		assertContains(shipmentItem3, (List<ShipmentItem>)page3.getItems());
+			assertContains(shipmentItem3, (List<ShipmentItem>)page3.getItems());
+		}
+		else {
+			Page<ShipmentItem> page1 =
+				shipmentItemResource.
+					getShipmentByExternalReferenceCodeItemsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<ShipmentItem> shipmentItems1 =
+				(List<ShipmentItem>)page1.getItems();
+
+			Assert.assertEquals(
+				shipmentItems1.toString(), totalCount + 2,
+				shipmentItems1.size());
+
+			Page<ShipmentItem> page2 =
+				shipmentItemResource.
+					getShipmentByExternalReferenceCodeItemsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ShipmentItem> shipmentItems2 =
+				(List<ShipmentItem>)page2.getItems();
+
+			Assert.assertEquals(
+				shipmentItems2.toString(), 1, shipmentItems2.size());
+
+			Page<ShipmentItem> page3 =
+				shipmentItemResource.
+					getShipmentByExternalReferenceCodeItemsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(shipmentItem1, (List<ShipmentItem>)page3.getItems());
+			assertContains(shipmentItem2, (List<ShipmentItem>)page3.getItems());
+			assertContains(shipmentItem3, (List<ShipmentItem>)page3.getItems());
+		}
 	}
 
 	protected ShipmentItem
@@ -735,32 +780,68 @@ public abstract class BaseShipmentItemResourceTestCase {
 		ShipmentItem shipmentItem3 = testGetShipmentItemsPage_addShipmentItem(
 			shipmentId, randomShipmentItem());
 
-		Page<ShipmentItem> page1 = shipmentItemResource.getShipmentItemsPage(
-			shipmentId, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<ShipmentItem> shipmentItems1 =
-			(List<ShipmentItem>)page1.getItems();
+			int shipmentItem1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int shipmentItem2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int shipmentItem3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			shipmentItems1.toString(), totalCount + 2, shipmentItems1.size());
+			Page<ShipmentItem> page1 =
+				shipmentItemResource.getShipmentItemsPage(
+					shipmentId, Pagination.of(shipmentItem1Page, 500));
 
-		Page<ShipmentItem> page2 = shipmentItemResource.getShipmentItemsPage(
-			shipmentId, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(shipmentItem1, (List<ShipmentItem>)page1.getItems());
 
-		List<ShipmentItem> shipmentItems2 =
-			(List<ShipmentItem>)page2.getItems();
+			Page<ShipmentItem> page2 =
+				shipmentItemResource.getShipmentItemsPage(
+					shipmentId, Pagination.of(shipmentItem2Page, 500));
 
-		Assert.assertEquals(
-			shipmentItems2.toString(), 1, shipmentItems2.size());
+			assertContains(shipmentItem2, (List<ShipmentItem>)page2.getItems());
 
-		Page<ShipmentItem> page3 = shipmentItemResource.getShipmentItemsPage(
-			shipmentId, Pagination.of(1, (int)totalCount + 3));
+			Page<ShipmentItem> page3 =
+				shipmentItemResource.getShipmentItemsPage(
+					shipmentId, Pagination.of(shipmentItem3Page, 500));
 
-		assertContains(shipmentItem1, (List<ShipmentItem>)page3.getItems());
-		assertContains(shipmentItem2, (List<ShipmentItem>)page3.getItems());
-		assertContains(shipmentItem3, (List<ShipmentItem>)page3.getItems());
+			assertContains(shipmentItem3, (List<ShipmentItem>)page3.getItems());
+		}
+		else {
+			Page<ShipmentItem> page1 =
+				shipmentItemResource.getShipmentItemsPage(
+					shipmentId, Pagination.of(1, totalCount + 2));
+
+			List<ShipmentItem> shipmentItems1 =
+				(List<ShipmentItem>)page1.getItems();
+
+			Assert.assertEquals(
+				shipmentItems1.toString(), totalCount + 2,
+				shipmentItems1.size());
+
+			Page<ShipmentItem> page2 =
+				shipmentItemResource.getShipmentItemsPage(
+					shipmentId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ShipmentItem> shipmentItems2 =
+				(List<ShipmentItem>)page2.getItems();
+
+			Assert.assertEquals(
+				shipmentItems2.toString(), 1, shipmentItems2.size());
+
+			Page<ShipmentItem> page3 =
+				shipmentItemResource.getShipmentItemsPage(
+					shipmentId, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(shipmentItem1, (List<ShipmentItem>)page3.getItems());
+			assertContains(shipmentItem2, (List<ShipmentItem>)page3.getItems());
+			assertContains(shipmentItem3, (List<ShipmentItem>)page3.getItems());
+		}
 	}
 
 	protected ShipmentItem testGetShipmentItemsPage_addShipmentItem(

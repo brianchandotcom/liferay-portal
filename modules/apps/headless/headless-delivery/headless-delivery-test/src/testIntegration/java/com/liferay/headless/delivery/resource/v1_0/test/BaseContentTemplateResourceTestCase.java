@@ -404,42 +404,80 @@ public abstract class BaseContentTemplateResourceTestCase {
 			testGetAssetLibraryContentTemplatesPage_addContentTemplate(
 				assetLibraryId, randomContentTemplate());
 
-		Page<ContentTemplate> page1 =
-			contentTemplateResource.getAssetLibraryContentTemplatesPage(
-				assetLibraryId, null, null, null,
-				Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<ContentTemplate> contentTemplates1 =
-			(List<ContentTemplate>)page1.getItems();
+			int contentTemplate1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int contentTemplate2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int contentTemplate3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			contentTemplates1.toString(), totalCount + 2,
-			contentTemplates1.size());
+			Page<ContentTemplate> page1 =
+				contentTemplateResource.getAssetLibraryContentTemplatesPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(contentTemplate1Page, 500), null);
 
-		Page<ContentTemplate> page2 =
-			contentTemplateResource.getAssetLibraryContentTemplatesPage(
-				assetLibraryId, null, null, null,
-				Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				contentTemplate1, (List<ContentTemplate>)page1.getItems());
 
-		List<ContentTemplate> contentTemplates2 =
-			(List<ContentTemplate>)page2.getItems();
+			Page<ContentTemplate> page2 =
+				contentTemplateResource.getAssetLibraryContentTemplatesPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(contentTemplate2Page, 500), null);
 
-		Assert.assertEquals(
-			contentTemplates2.toString(), 1, contentTemplates2.size());
+			assertContains(
+				contentTemplate2, (List<ContentTemplate>)page2.getItems());
 
-		Page<ContentTemplate> page3 =
-			contentTemplateResource.getAssetLibraryContentTemplatesPage(
-				assetLibraryId, null, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+			Page<ContentTemplate> page3 =
+				contentTemplateResource.getAssetLibraryContentTemplatesPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(contentTemplate3Page, 500), null);
 
-		assertContains(
-			contentTemplate1, (List<ContentTemplate>)page3.getItems());
-		assertContains(
-			contentTemplate2, (List<ContentTemplate>)page3.getItems());
-		assertContains(
-			contentTemplate3, (List<ContentTemplate>)page3.getItems());
+			assertContains(
+				contentTemplate3, (List<ContentTemplate>)page3.getItems());
+		}
+		else {
+			Page<ContentTemplate> page1 =
+				contentTemplateResource.getAssetLibraryContentTemplatesPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(1, totalCount + 2), null);
+
+			List<ContentTemplate> contentTemplates1 =
+				(List<ContentTemplate>)page1.getItems();
+
+			Assert.assertEquals(
+				contentTemplates1.toString(), totalCount + 2,
+				contentTemplates1.size());
+
+			Page<ContentTemplate> page2 =
+				contentTemplateResource.getAssetLibraryContentTemplatesPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ContentTemplate> contentTemplates2 =
+				(List<ContentTemplate>)page2.getItems();
+
+			Assert.assertEquals(
+				contentTemplates2.toString(), 1, contentTemplates2.size());
+
+			Page<ContentTemplate> page3 =
+				contentTemplateResource.getAssetLibraryContentTemplatesPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				contentTemplate1, (List<ContentTemplate>)page3.getItems());
+			assertContains(
+				contentTemplate2, (List<ContentTemplate>)page3.getItems());
+			assertContains(
+				contentTemplate3, (List<ContentTemplate>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -803,42 +841,80 @@ public abstract class BaseContentTemplateResourceTestCase {
 			testGetSiteContentTemplatesPage_addContentTemplate(
 				siteId, randomContentTemplate());
 
-		Page<ContentTemplate> page1 =
-			contentTemplateResource.getSiteContentTemplatesPage(
-				siteId, null, null, null, Pagination.of(1, totalCount + 2),
-				null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<ContentTemplate> contentTemplates1 =
-			(List<ContentTemplate>)page1.getItems();
+			int contentTemplate1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int contentTemplate2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int contentTemplate3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			contentTemplates1.toString(), totalCount + 2,
-			contentTemplates1.size());
+			Page<ContentTemplate> page1 =
+				contentTemplateResource.getSiteContentTemplatesPage(
+					siteId, null, null, null,
+					Pagination.of(contentTemplate1Page, 500), null);
 
-		Page<ContentTemplate> page2 =
-			contentTemplateResource.getSiteContentTemplatesPage(
-				siteId, null, null, null, Pagination.of(2, totalCount + 2),
-				null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				contentTemplate1, (List<ContentTemplate>)page1.getItems());
 
-		List<ContentTemplate> contentTemplates2 =
-			(List<ContentTemplate>)page2.getItems();
+			Page<ContentTemplate> page2 =
+				contentTemplateResource.getSiteContentTemplatesPage(
+					siteId, null, null, null,
+					Pagination.of(contentTemplate2Page, 500), null);
 
-		Assert.assertEquals(
-			contentTemplates2.toString(), 1, contentTemplates2.size());
+			assertContains(
+				contentTemplate2, (List<ContentTemplate>)page2.getItems());
 
-		Page<ContentTemplate> page3 =
-			contentTemplateResource.getSiteContentTemplatesPage(
-				siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
-				null);
+			Page<ContentTemplate> page3 =
+				contentTemplateResource.getSiteContentTemplatesPage(
+					siteId, null, null, null,
+					Pagination.of(contentTemplate3Page, 500), null);
 
-		assertContains(
-			contentTemplate1, (List<ContentTemplate>)page3.getItems());
-		assertContains(
-			contentTemplate2, (List<ContentTemplate>)page3.getItems());
-		assertContains(
-			contentTemplate3, (List<ContentTemplate>)page3.getItems());
+			assertContains(
+				contentTemplate3, (List<ContentTemplate>)page3.getItems());
+		}
+		else {
+			Page<ContentTemplate> page1 =
+				contentTemplateResource.getSiteContentTemplatesPage(
+					siteId, null, null, null, Pagination.of(1, totalCount + 2),
+					null);
+
+			List<ContentTemplate> contentTemplates1 =
+				(List<ContentTemplate>)page1.getItems();
+
+			Assert.assertEquals(
+				contentTemplates1.toString(), totalCount + 2,
+				contentTemplates1.size());
+
+			Page<ContentTemplate> page2 =
+				contentTemplateResource.getSiteContentTemplatesPage(
+					siteId, null, null, null, Pagination.of(2, totalCount + 2),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ContentTemplate> contentTemplates2 =
+				(List<ContentTemplate>)page2.getItems();
+
+			Assert.assertEquals(
+				contentTemplates2.toString(), 1, contentTemplates2.size());
+
+			Page<ContentTemplate> page3 =
+				contentTemplateResource.getSiteContentTemplatesPage(
+					siteId, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				contentTemplate1, (List<ContentTemplate>)page3.getItems());
+			assertContains(
+				contentTemplate2, (List<ContentTemplate>)page3.getItems());
+			assertContains(
+				contentTemplate3, (List<ContentTemplate>)page3.getItems());
+		}
 	}
 
 	@Test

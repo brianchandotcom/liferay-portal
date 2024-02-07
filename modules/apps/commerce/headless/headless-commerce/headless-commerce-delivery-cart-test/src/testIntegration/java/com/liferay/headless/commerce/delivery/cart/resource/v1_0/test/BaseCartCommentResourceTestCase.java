@@ -437,29 +437,61 @@ public abstract class BaseCartCommentResourceTestCase {
 		CartComment cartComment3 = testGetCartCommentsPage_addCartComment(
 			cartId, randomCartComment());
 
-		Page<CartComment> page1 = cartCommentResource.getCartCommentsPage(
-			cartId, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<CartComment> cartComments1 = (List<CartComment>)page1.getItems();
+			int cartComment1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int cartComment2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int cartComment3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			cartComments1.toString(), totalCount + 2, cartComments1.size());
+			Page<CartComment> page1 = cartCommentResource.getCartCommentsPage(
+				cartId, Pagination.of(cartComment1Page, 500));
 
-		Page<CartComment> page2 = cartCommentResource.getCartCommentsPage(
-			cartId, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(cartComment1, (List<CartComment>)page1.getItems());
 
-		List<CartComment> cartComments2 = (List<CartComment>)page2.getItems();
+			Page<CartComment> page2 = cartCommentResource.getCartCommentsPage(
+				cartId, Pagination.of(cartComment2Page, 500));
 
-		Assert.assertEquals(cartComments2.toString(), 1, cartComments2.size());
+			assertContains(cartComment2, (List<CartComment>)page2.getItems());
 
-		Page<CartComment> page3 = cartCommentResource.getCartCommentsPage(
-			cartId, Pagination.of(1, (int)totalCount + 3));
+			Page<CartComment> page3 = cartCommentResource.getCartCommentsPage(
+				cartId, Pagination.of(cartComment3Page, 500));
 
-		assertContains(cartComment1, (List<CartComment>)page3.getItems());
-		assertContains(cartComment2, (List<CartComment>)page3.getItems());
-		assertContains(cartComment3, (List<CartComment>)page3.getItems());
+			assertContains(cartComment3, (List<CartComment>)page3.getItems());
+		}
+		else {
+			Page<CartComment> page1 = cartCommentResource.getCartCommentsPage(
+				cartId, Pagination.of(1, totalCount + 2));
+
+			List<CartComment> cartComments1 =
+				(List<CartComment>)page1.getItems();
+
+			Assert.assertEquals(
+				cartComments1.toString(), totalCount + 2, cartComments1.size());
+
+			Page<CartComment> page2 = cartCommentResource.getCartCommentsPage(
+				cartId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<CartComment> cartComments2 =
+				(List<CartComment>)page2.getItems();
+
+			Assert.assertEquals(
+				cartComments2.toString(), 1, cartComments2.size());
+
+			Page<CartComment> page3 = cartCommentResource.getCartCommentsPage(
+				cartId, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(cartComment1, (List<CartComment>)page3.getItems());
+			assertContains(cartComment2, (List<CartComment>)page3.getItems());
+			assertContains(cartComment3, (List<CartComment>)page3.getItems());
+		}
 	}
 
 	protected CartComment testGetCartCommentsPage_addCartComment(

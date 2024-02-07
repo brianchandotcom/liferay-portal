@@ -224,30 +224,62 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		TaxCategory taxCategory3 = testGetTaxCategoriesPage_addTaxCategory(
 			randomTaxCategory());
 
-		Page<TaxCategory> page1 = taxCategoryResource.getTaxCategoriesPage(
-			null, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<TaxCategory> taxCategories1 = (List<TaxCategory>)page1.getItems();
+			int taxCategory1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int taxCategory2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int taxCategory3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			taxCategories1.toString(), totalCount + 2, taxCategories1.size());
+			Page<TaxCategory> page1 = taxCategoryResource.getTaxCategoriesPage(
+				null, Pagination.of(taxCategory1Page, 500));
 
-		Page<TaxCategory> page2 = taxCategoryResource.getTaxCategoriesPage(
-			null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(taxCategory1, (List<TaxCategory>)page1.getItems());
 
-		List<TaxCategory> taxCategories2 = (List<TaxCategory>)page2.getItems();
+			Page<TaxCategory> page2 = taxCategoryResource.getTaxCategoriesPage(
+				null, Pagination.of(taxCategory2Page, 500));
 
-		Assert.assertEquals(
-			taxCategories2.toString(), 1, taxCategories2.size());
+			assertContains(taxCategory2, (List<TaxCategory>)page2.getItems());
 
-		Page<TaxCategory> page3 = taxCategoryResource.getTaxCategoriesPage(
-			null, Pagination.of(1, (int)totalCount + 3));
+			Page<TaxCategory> page3 = taxCategoryResource.getTaxCategoriesPage(
+				null, Pagination.of(taxCategory3Page, 500));
 
-		assertContains(taxCategory1, (List<TaxCategory>)page3.getItems());
-		assertContains(taxCategory2, (List<TaxCategory>)page3.getItems());
-		assertContains(taxCategory3, (List<TaxCategory>)page3.getItems());
+			assertContains(taxCategory3, (List<TaxCategory>)page3.getItems());
+		}
+		else {
+			Page<TaxCategory> page1 = taxCategoryResource.getTaxCategoriesPage(
+				null, Pagination.of(1, totalCount + 2));
+
+			List<TaxCategory> taxCategories1 =
+				(List<TaxCategory>)page1.getItems();
+
+			Assert.assertEquals(
+				taxCategories1.toString(), totalCount + 2,
+				taxCategories1.size());
+
+			Page<TaxCategory> page2 = taxCategoryResource.getTaxCategoriesPage(
+				null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<TaxCategory> taxCategories2 =
+				(List<TaxCategory>)page2.getItems();
+
+			Assert.assertEquals(
+				taxCategories2.toString(), 1, taxCategories2.size());
+
+			Page<TaxCategory> page3 = taxCategoryResource.getTaxCategoriesPage(
+				null, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(taxCategory1, (List<TaxCategory>)page3.getItems());
+			assertContains(taxCategory2, (List<TaxCategory>)page3.getItems());
+			assertContains(taxCategory3, (List<TaxCategory>)page3.getItems());
+		}
 	}
 
 	protected TaxCategory testGetTaxCategoriesPage_addTaxCategory(

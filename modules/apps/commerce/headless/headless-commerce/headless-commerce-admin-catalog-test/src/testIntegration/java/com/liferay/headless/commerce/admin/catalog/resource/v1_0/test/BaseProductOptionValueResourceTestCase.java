@@ -464,42 +464,90 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			testGetProductOptionIdProductOptionValuesPage_addProductOptionValue(
 				id, randomProductOptionValue());
 
-		Page<ProductOptionValue> page1 =
-			productOptionValueResource.
-				getProductOptionIdProductOptionValuesPage(
-					id, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<ProductOptionValue> productOptionValues1 =
-			(List<ProductOptionValue>)page1.getItems();
+			int productOptionValue1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int productOptionValue2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int productOptionValue3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			productOptionValues1.toString(), totalCount + 2,
-			productOptionValues1.size());
+			Page<ProductOptionValue> page1 =
+				productOptionValueResource.
+					getProductOptionIdProductOptionValuesPage(
+						id, null, Pagination.of(productOptionValue1Page, 500),
+						null);
 
-		Page<ProductOptionValue> page2 =
-			productOptionValueResource.
-				getProductOptionIdProductOptionValuesPage(
-					id, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				productOptionValue1,
+				(List<ProductOptionValue>)page1.getItems());
 
-		List<ProductOptionValue> productOptionValues2 =
-			(List<ProductOptionValue>)page2.getItems();
+			Page<ProductOptionValue> page2 =
+				productOptionValueResource.
+					getProductOptionIdProductOptionValuesPage(
+						id, null, Pagination.of(productOptionValue2Page, 500),
+						null);
 
-		Assert.assertEquals(
-			productOptionValues2.toString(), 1, productOptionValues2.size());
+			assertContains(
+				productOptionValue2,
+				(List<ProductOptionValue>)page2.getItems());
 
-		Page<ProductOptionValue> page3 =
-			productOptionValueResource.
-				getProductOptionIdProductOptionValuesPage(
-					id, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<ProductOptionValue> page3 =
+				productOptionValueResource.
+					getProductOptionIdProductOptionValuesPage(
+						id, null, Pagination.of(productOptionValue3Page, 500),
+						null);
 
-		assertContains(
-			productOptionValue1, (List<ProductOptionValue>)page3.getItems());
-		assertContains(
-			productOptionValue2, (List<ProductOptionValue>)page3.getItems());
-		assertContains(
-			productOptionValue3, (List<ProductOptionValue>)page3.getItems());
+			assertContains(
+				productOptionValue3,
+				(List<ProductOptionValue>)page3.getItems());
+		}
+		else {
+			Page<ProductOptionValue> page1 =
+				productOptionValueResource.
+					getProductOptionIdProductOptionValuesPage(
+						id, null, Pagination.of(1, totalCount + 2), null);
+
+			List<ProductOptionValue> productOptionValues1 =
+				(List<ProductOptionValue>)page1.getItems();
+
+			Assert.assertEquals(
+				productOptionValues1.toString(), totalCount + 2,
+				productOptionValues1.size());
+
+			Page<ProductOptionValue> page2 =
+				productOptionValueResource.
+					getProductOptionIdProductOptionValuesPage(
+						id, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ProductOptionValue> productOptionValues2 =
+				(List<ProductOptionValue>)page2.getItems();
+
+			Assert.assertEquals(
+				productOptionValues2.toString(), 1,
+				productOptionValues2.size());
+
+			Page<ProductOptionValue> page3 =
+				productOptionValueResource.
+					getProductOptionIdProductOptionValuesPage(
+						id, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				productOptionValue1,
+				(List<ProductOptionValue>)page3.getItems());
+			assertContains(
+				productOptionValue2,
+				(List<ProductOptionValue>)page3.getItems());
+			assertContains(
+				productOptionValue3,
+				(List<ProductOptionValue>)page3.getItems());
+		}
 	}
 
 	@Test

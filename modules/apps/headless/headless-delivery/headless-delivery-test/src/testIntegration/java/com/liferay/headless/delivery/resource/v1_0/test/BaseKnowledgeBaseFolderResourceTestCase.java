@@ -581,45 +581,93 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				parentKnowledgeBaseFolderId, randomKnowledgeBaseFolder());
 
-		Page<KnowledgeBaseFolder> page1 =
-			knowledgeBaseFolderResource.
-				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-					parentKnowledgeBaseFolderId,
-					Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<KnowledgeBaseFolder> knowledgeBaseFolders1 =
-			(List<KnowledgeBaseFolder>)page1.getItems();
+			int knowledgeBaseFolder1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int knowledgeBaseFolder2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int knowledgeBaseFolder3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			knowledgeBaseFolders1.toString(), totalCount + 2,
-			knowledgeBaseFolders1.size());
+			Page<KnowledgeBaseFolder> page1 =
+				knowledgeBaseFolderResource.
+					getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+						parentKnowledgeBaseFolderId,
+						Pagination.of(knowledgeBaseFolder1Page, 500));
 
-		Page<KnowledgeBaseFolder> page2 =
-			knowledgeBaseFolderResource.
-				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-					parentKnowledgeBaseFolderId,
-					Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				knowledgeBaseFolder1,
+				(List<KnowledgeBaseFolder>)page1.getItems());
 
-		List<KnowledgeBaseFolder> knowledgeBaseFolders2 =
-			(List<KnowledgeBaseFolder>)page2.getItems();
+			Page<KnowledgeBaseFolder> page2 =
+				knowledgeBaseFolderResource.
+					getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+						parentKnowledgeBaseFolderId,
+						Pagination.of(knowledgeBaseFolder2Page, 500));
 
-		Assert.assertEquals(
-			knowledgeBaseFolders2.toString(), 1, knowledgeBaseFolders2.size());
+			assertContains(
+				knowledgeBaseFolder2,
+				(List<KnowledgeBaseFolder>)page2.getItems());
 
-		Page<KnowledgeBaseFolder> page3 =
-			knowledgeBaseFolderResource.
-				getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-					parentKnowledgeBaseFolderId,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<KnowledgeBaseFolder> page3 =
+				knowledgeBaseFolderResource.
+					getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+						parentKnowledgeBaseFolderId,
+						Pagination.of(knowledgeBaseFolder3Page, 500));
 
-		assertContains(
-			knowledgeBaseFolder1, (List<KnowledgeBaseFolder>)page3.getItems());
-		assertContains(
-			knowledgeBaseFolder2, (List<KnowledgeBaseFolder>)page3.getItems());
-		assertContains(
-			knowledgeBaseFolder3, (List<KnowledgeBaseFolder>)page3.getItems());
+			assertContains(
+				knowledgeBaseFolder3,
+				(List<KnowledgeBaseFolder>)page3.getItems());
+		}
+		else {
+			Page<KnowledgeBaseFolder> page1 =
+				knowledgeBaseFolderResource.
+					getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+						parentKnowledgeBaseFolderId,
+						Pagination.of(1, totalCount + 2));
+
+			List<KnowledgeBaseFolder> knowledgeBaseFolders1 =
+				(List<KnowledgeBaseFolder>)page1.getItems();
+
+			Assert.assertEquals(
+				knowledgeBaseFolders1.toString(), totalCount + 2,
+				knowledgeBaseFolders1.size());
+
+			Page<KnowledgeBaseFolder> page2 =
+				knowledgeBaseFolderResource.
+					getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+						parentKnowledgeBaseFolderId,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<KnowledgeBaseFolder> knowledgeBaseFolders2 =
+				(List<KnowledgeBaseFolder>)page2.getItems();
+
+			Assert.assertEquals(
+				knowledgeBaseFolders2.toString(), 1,
+				knowledgeBaseFolders2.size());
+
+			Page<KnowledgeBaseFolder> page3 =
+				knowledgeBaseFolderResource.
+					getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+						parentKnowledgeBaseFolderId,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				knowledgeBaseFolder1,
+				(List<KnowledgeBaseFolder>)page3.getItems());
+			assertContains(
+				knowledgeBaseFolder2,
+				(List<KnowledgeBaseFolder>)page3.getItems());
+			assertContains(
+				knowledgeBaseFolder3,
+				(List<KnowledgeBaseFolder>)page3.getItems());
+		}
 	}
 
 	protected KnowledgeBaseFolder
@@ -776,39 +824,81 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGetSiteKnowledgeBaseFoldersPage_addKnowledgeBaseFolder(
 				siteId, randomKnowledgeBaseFolder());
 
-		Page<KnowledgeBaseFolder> page1 =
-			knowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
-				siteId, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<KnowledgeBaseFolder> knowledgeBaseFolders1 =
-			(List<KnowledgeBaseFolder>)page1.getItems();
+			int knowledgeBaseFolder1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int knowledgeBaseFolder2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int knowledgeBaseFolder3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			knowledgeBaseFolders1.toString(), totalCount + 2,
-			knowledgeBaseFolders1.size());
+			Page<KnowledgeBaseFolder> page1 =
+				knowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+					siteId, Pagination.of(knowledgeBaseFolder1Page, 500));
 
-		Page<KnowledgeBaseFolder> page2 =
-			knowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
-				siteId, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				knowledgeBaseFolder1,
+				(List<KnowledgeBaseFolder>)page1.getItems());
 
-		List<KnowledgeBaseFolder> knowledgeBaseFolders2 =
-			(List<KnowledgeBaseFolder>)page2.getItems();
+			Page<KnowledgeBaseFolder> page2 =
+				knowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+					siteId, Pagination.of(knowledgeBaseFolder2Page, 500));
 
-		Assert.assertEquals(
-			knowledgeBaseFolders2.toString(), 1, knowledgeBaseFolders2.size());
+			assertContains(
+				knowledgeBaseFolder2,
+				(List<KnowledgeBaseFolder>)page2.getItems());
 
-		Page<KnowledgeBaseFolder> page3 =
-			knowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
-				siteId, Pagination.of(1, (int)totalCount + 3));
+			Page<KnowledgeBaseFolder> page3 =
+				knowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+					siteId, Pagination.of(knowledgeBaseFolder3Page, 500));
 
-		assertContains(
-			knowledgeBaseFolder1, (List<KnowledgeBaseFolder>)page3.getItems());
-		assertContains(
-			knowledgeBaseFolder2, (List<KnowledgeBaseFolder>)page3.getItems());
-		assertContains(
-			knowledgeBaseFolder3, (List<KnowledgeBaseFolder>)page3.getItems());
+			assertContains(
+				knowledgeBaseFolder3,
+				(List<KnowledgeBaseFolder>)page3.getItems());
+		}
+		else {
+			Page<KnowledgeBaseFolder> page1 =
+				knowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+					siteId, Pagination.of(1, totalCount + 2));
+
+			List<KnowledgeBaseFolder> knowledgeBaseFolders1 =
+				(List<KnowledgeBaseFolder>)page1.getItems();
+
+			Assert.assertEquals(
+				knowledgeBaseFolders1.toString(), totalCount + 2,
+				knowledgeBaseFolders1.size());
+
+			Page<KnowledgeBaseFolder> page2 =
+				knowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+					siteId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<KnowledgeBaseFolder> knowledgeBaseFolders2 =
+				(List<KnowledgeBaseFolder>)page2.getItems();
+
+			Assert.assertEquals(
+				knowledgeBaseFolders2.toString(), 1,
+				knowledgeBaseFolders2.size());
+
+			Page<KnowledgeBaseFolder> page3 =
+				knowledgeBaseFolderResource.getSiteKnowledgeBaseFoldersPage(
+					siteId, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				knowledgeBaseFolder1,
+				(List<KnowledgeBaseFolder>)page3.getItems());
+			assertContains(
+				knowledgeBaseFolder2,
+				(List<KnowledgeBaseFolder>)page3.getItems());
+			assertContains(
+				knowledgeBaseFolder3,
+				(List<KnowledgeBaseFolder>)page3.getItems());
+		}
 	}
 
 	protected KnowledgeBaseFolder

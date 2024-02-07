@@ -298,40 +298,86 @@ public abstract class BaseChannelAccountResourceTestCase {
 			testGetChannelByExternalReferenceCodeChannelAccountsPage_addChannelAccount(
 				externalReferenceCode, randomChannelAccount());
 
-		Page<ChannelAccount> page1 =
-			channelAccountResource.
-				getChannelByExternalReferenceCodeChannelAccountsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<ChannelAccount> channelAccounts1 =
-			(List<ChannelAccount>)page1.getItems();
+			int channelAccount1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int channelAccount2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int channelAccount3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			channelAccounts1.toString(), totalCount + 2,
-			channelAccounts1.size());
+			Page<ChannelAccount> page1 =
+				channelAccountResource.
+					getChannelByExternalReferenceCodeChannelAccountsPage(
+						externalReferenceCode,
+						Pagination.of(channelAccount1Page, 500));
 
-		Page<ChannelAccount> page2 =
-			channelAccountResource.
-				getChannelByExternalReferenceCodeChannelAccountsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				channelAccount1, (List<ChannelAccount>)page1.getItems());
 
-		List<ChannelAccount> channelAccounts2 =
-			(List<ChannelAccount>)page2.getItems();
+			Page<ChannelAccount> page2 =
+				channelAccountResource.
+					getChannelByExternalReferenceCodeChannelAccountsPage(
+						externalReferenceCode,
+						Pagination.of(channelAccount2Page, 500));
 
-		Assert.assertEquals(
-			channelAccounts2.toString(), 1, channelAccounts2.size());
+			assertContains(
+				channelAccount2, (List<ChannelAccount>)page2.getItems());
 
-		Page<ChannelAccount> page3 =
-			channelAccountResource.
-				getChannelByExternalReferenceCodeChannelAccountsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<ChannelAccount> page3 =
+				channelAccountResource.
+					getChannelByExternalReferenceCodeChannelAccountsPage(
+						externalReferenceCode,
+						Pagination.of(channelAccount3Page, 500));
 
-		assertContains(channelAccount1, (List<ChannelAccount>)page3.getItems());
-		assertContains(channelAccount2, (List<ChannelAccount>)page3.getItems());
-		assertContains(channelAccount3, (List<ChannelAccount>)page3.getItems());
+			assertContains(
+				channelAccount3, (List<ChannelAccount>)page3.getItems());
+		}
+		else {
+			Page<ChannelAccount> page1 =
+				channelAccountResource.
+					getChannelByExternalReferenceCodeChannelAccountsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<ChannelAccount> channelAccounts1 =
+				(List<ChannelAccount>)page1.getItems();
+
+			Assert.assertEquals(
+				channelAccounts1.toString(), totalCount + 2,
+				channelAccounts1.size());
+
+			Page<ChannelAccount> page2 =
+				channelAccountResource.
+					getChannelByExternalReferenceCodeChannelAccountsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ChannelAccount> channelAccounts2 =
+				(List<ChannelAccount>)page2.getItems();
+
+			Assert.assertEquals(
+				channelAccounts2.toString(), 1, channelAccounts2.size());
+
+			Page<ChannelAccount> page3 =
+				channelAccountResource.
+					getChannelByExternalReferenceCodeChannelAccountsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				channelAccount1, (List<ChannelAccount>)page3.getItems());
+			assertContains(
+				channelAccount2, (List<ChannelAccount>)page3.getItems());
+			assertContains(
+				channelAccount3, (List<ChannelAccount>)page3.getItems());
+		}
 	}
 
 	protected ChannelAccount
@@ -563,36 +609,78 @@ public abstract class BaseChannelAccountResourceTestCase {
 			testGetChannelIdChannelAccountsPage_addChannelAccount(
 				id, randomChannelAccount());
 
-		Page<ChannelAccount> page1 =
-			channelAccountResource.getChannelIdChannelAccountsPage(
-				id, null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<ChannelAccount> channelAccounts1 =
-			(List<ChannelAccount>)page1.getItems();
+			int channelAccount1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int channelAccount2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int channelAccount3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			channelAccounts1.toString(), totalCount + 2,
-			channelAccounts1.size());
+			Page<ChannelAccount> page1 =
+				channelAccountResource.getChannelIdChannelAccountsPage(
+					id, null, null, Pagination.of(channelAccount1Page, 500),
+					null);
 
-		Page<ChannelAccount> page2 =
-			channelAccountResource.getChannelIdChannelAccountsPage(
-				id, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				channelAccount1, (List<ChannelAccount>)page1.getItems());
 
-		List<ChannelAccount> channelAccounts2 =
-			(List<ChannelAccount>)page2.getItems();
+			Page<ChannelAccount> page2 =
+				channelAccountResource.getChannelIdChannelAccountsPage(
+					id, null, null, Pagination.of(channelAccount2Page, 500),
+					null);
 
-		Assert.assertEquals(
-			channelAccounts2.toString(), 1, channelAccounts2.size());
+			assertContains(
+				channelAccount2, (List<ChannelAccount>)page2.getItems());
 
-		Page<ChannelAccount> page3 =
-			channelAccountResource.getChannelIdChannelAccountsPage(
-				id, null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<ChannelAccount> page3 =
+				channelAccountResource.getChannelIdChannelAccountsPage(
+					id, null, null, Pagination.of(channelAccount3Page, 500),
+					null);
 
-		assertContains(channelAccount1, (List<ChannelAccount>)page3.getItems());
-		assertContains(channelAccount2, (List<ChannelAccount>)page3.getItems());
-		assertContains(channelAccount3, (List<ChannelAccount>)page3.getItems());
+			assertContains(
+				channelAccount3, (List<ChannelAccount>)page3.getItems());
+		}
+		else {
+			Page<ChannelAccount> page1 =
+				channelAccountResource.getChannelIdChannelAccountsPage(
+					id, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<ChannelAccount> channelAccounts1 =
+				(List<ChannelAccount>)page1.getItems();
+
+			Assert.assertEquals(
+				channelAccounts1.toString(), totalCount + 2,
+				channelAccounts1.size());
+
+			Page<ChannelAccount> page2 =
+				channelAccountResource.getChannelIdChannelAccountsPage(
+					id, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ChannelAccount> channelAccounts2 =
+				(List<ChannelAccount>)page2.getItems();
+
+			Assert.assertEquals(
+				channelAccounts2.toString(), 1, channelAccounts2.size());
+
+			Page<ChannelAccount> page3 =
+				channelAccountResource.getChannelIdChannelAccountsPage(
+					id, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(
+				channelAccount1, (List<ChannelAccount>)page3.getItems());
+			assertContains(
+				channelAccount2, (List<ChannelAccount>)page3.getItems());
+			assertContains(
+				channelAccount3, (List<ChannelAccount>)page3.getItems());
+		}
 	}
 
 	@Test

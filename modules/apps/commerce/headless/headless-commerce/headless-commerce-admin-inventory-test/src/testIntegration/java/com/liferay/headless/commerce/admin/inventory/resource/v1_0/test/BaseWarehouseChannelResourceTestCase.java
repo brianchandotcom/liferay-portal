@@ -300,43 +300,86 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 			testGetWarehouseByExternalReferenceCodeWarehouseChannelsPage_addWarehouseChannel(
 				externalReferenceCode, randomWarehouseChannel());
 
-		Page<WarehouseChannel> page1 =
-			warehouseChannelResource.
-				getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<WarehouseChannel> warehouseChannels1 =
-			(List<WarehouseChannel>)page1.getItems();
+			int warehouseChannel1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int warehouseChannel2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int warehouseChannel3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			warehouseChannels1.toString(), totalCount + 2,
-			warehouseChannels1.size());
+			Page<WarehouseChannel> page1 =
+				warehouseChannelResource.
+					getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
+						externalReferenceCode,
+						Pagination.of(warehouseChannel1Page, 500));
 
-		Page<WarehouseChannel> page2 =
-			warehouseChannelResource.
-				getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				warehouseChannel1, (List<WarehouseChannel>)page1.getItems());
 
-		List<WarehouseChannel> warehouseChannels2 =
-			(List<WarehouseChannel>)page2.getItems();
+			Page<WarehouseChannel> page2 =
+				warehouseChannelResource.
+					getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
+						externalReferenceCode,
+						Pagination.of(warehouseChannel2Page, 500));
 
-		Assert.assertEquals(
-			warehouseChannels2.toString(), 1, warehouseChannels2.size());
+			assertContains(
+				warehouseChannel2, (List<WarehouseChannel>)page2.getItems());
 
-		Page<WarehouseChannel> page3 =
-			warehouseChannelResource.
-				getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<WarehouseChannel> page3 =
+				warehouseChannelResource.
+					getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
+						externalReferenceCode,
+						Pagination.of(warehouseChannel3Page, 500));
 
-		assertContains(
-			warehouseChannel1, (List<WarehouseChannel>)page3.getItems());
-		assertContains(
-			warehouseChannel2, (List<WarehouseChannel>)page3.getItems());
-		assertContains(
-			warehouseChannel3, (List<WarehouseChannel>)page3.getItems());
+			assertContains(
+				warehouseChannel3, (List<WarehouseChannel>)page3.getItems());
+		}
+		else {
+			Page<WarehouseChannel> page1 =
+				warehouseChannelResource.
+					getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<WarehouseChannel> warehouseChannels1 =
+				(List<WarehouseChannel>)page1.getItems();
+
+			Assert.assertEquals(
+				warehouseChannels1.toString(), totalCount + 2,
+				warehouseChannels1.size());
+
+			Page<WarehouseChannel> page2 =
+				warehouseChannelResource.
+					getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<WarehouseChannel> warehouseChannels2 =
+				(List<WarehouseChannel>)page2.getItems();
+
+			Assert.assertEquals(
+				warehouseChannels2.toString(), 1, warehouseChannels2.size());
+
+			Page<WarehouseChannel> page3 =
+				warehouseChannelResource.
+					getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				warehouseChannel1, (List<WarehouseChannel>)page3.getItems());
+			assertContains(
+				warehouseChannel2, (List<WarehouseChannel>)page3.getItems());
+			assertContains(
+				warehouseChannel3, (List<WarehouseChannel>)page3.getItems());
+		}
 	}
 
 	protected WarehouseChannel
@@ -572,39 +615,78 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 			testGetWarehouseIdWarehouseChannelsPage_addWarehouseChannel(
 				id, randomWarehouseChannel());
 
-		Page<WarehouseChannel> page1 =
-			warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
-				id, null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<WarehouseChannel> warehouseChannels1 =
-			(List<WarehouseChannel>)page1.getItems();
+			int warehouseChannel1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int warehouseChannel2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int warehouseChannel3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			warehouseChannels1.toString(), totalCount + 2,
-			warehouseChannels1.size());
+			Page<WarehouseChannel> page1 =
+				warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
+					id, null, null, Pagination.of(warehouseChannel1Page, 500),
+					null);
 
-		Page<WarehouseChannel> page2 =
-			warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
-				id, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				warehouseChannel1, (List<WarehouseChannel>)page1.getItems());
 
-		List<WarehouseChannel> warehouseChannels2 =
-			(List<WarehouseChannel>)page2.getItems();
+			Page<WarehouseChannel> page2 =
+				warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
+					id, null, null, Pagination.of(warehouseChannel2Page, 500),
+					null);
 
-		Assert.assertEquals(
-			warehouseChannels2.toString(), 1, warehouseChannels2.size());
+			assertContains(
+				warehouseChannel2, (List<WarehouseChannel>)page2.getItems());
 
-		Page<WarehouseChannel> page3 =
-			warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
-				id, null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<WarehouseChannel> page3 =
+				warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
+					id, null, null, Pagination.of(warehouseChannel3Page, 500),
+					null);
 
-		assertContains(
-			warehouseChannel1, (List<WarehouseChannel>)page3.getItems());
-		assertContains(
-			warehouseChannel2, (List<WarehouseChannel>)page3.getItems());
-		assertContains(
-			warehouseChannel3, (List<WarehouseChannel>)page3.getItems());
+			assertContains(
+				warehouseChannel3, (List<WarehouseChannel>)page3.getItems());
+		}
+		else {
+			Page<WarehouseChannel> page1 =
+				warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
+					id, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<WarehouseChannel> warehouseChannels1 =
+				(List<WarehouseChannel>)page1.getItems();
+
+			Assert.assertEquals(
+				warehouseChannels1.toString(), totalCount + 2,
+				warehouseChannels1.size());
+
+			Page<WarehouseChannel> page2 =
+				warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
+					id, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<WarehouseChannel> warehouseChannels2 =
+				(List<WarehouseChannel>)page2.getItems();
+
+			Assert.assertEquals(
+				warehouseChannels2.toString(), 1, warehouseChannels2.size());
+
+			Page<WarehouseChannel> page3 =
+				warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
+					id, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(
+				warehouseChannel1, (List<WarehouseChannel>)page3.getItems());
+			assertContains(
+				warehouseChannel2, (List<WarehouseChannel>)page3.getItems());
+			assertContains(
+				warehouseChannel3, (List<WarehouseChannel>)page3.getItems());
+		}
 	}
 
 	@Test

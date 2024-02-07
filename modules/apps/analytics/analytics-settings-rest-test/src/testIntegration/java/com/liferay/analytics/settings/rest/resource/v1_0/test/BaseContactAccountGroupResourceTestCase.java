@@ -246,39 +246,81 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 			testGetContactAccountGroupsPage_addContactAccountGroup(
 				randomContactAccountGroup());
 
-		Page<ContactAccountGroup> page1 =
-			contactAccountGroupResource.getContactAccountGroupsPage(
-				null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<ContactAccountGroup> contactAccountGroups1 =
-			(List<ContactAccountGroup>)page1.getItems();
+			int contactAccountGroup1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int contactAccountGroup2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int contactAccountGroup3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			contactAccountGroups1.toString(), totalCount + 2,
-			contactAccountGroups1.size());
+			Page<ContactAccountGroup> page1 =
+				contactAccountGroupResource.getContactAccountGroupsPage(
+					null, Pagination.of(contactAccountGroup1Page, 500), null);
 
-		Page<ContactAccountGroup> page2 =
-			contactAccountGroupResource.getContactAccountGroupsPage(
-				null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				contactAccountGroup1,
+				(List<ContactAccountGroup>)page1.getItems());
 
-		List<ContactAccountGroup> contactAccountGroups2 =
-			(List<ContactAccountGroup>)page2.getItems();
+			Page<ContactAccountGroup> page2 =
+				contactAccountGroupResource.getContactAccountGroupsPage(
+					null, Pagination.of(contactAccountGroup2Page, 500), null);
 
-		Assert.assertEquals(
-			contactAccountGroups2.toString(), 1, contactAccountGroups2.size());
+			assertContains(
+				contactAccountGroup2,
+				(List<ContactAccountGroup>)page2.getItems());
 
-		Page<ContactAccountGroup> page3 =
-			contactAccountGroupResource.getContactAccountGroupsPage(
-				null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<ContactAccountGroup> page3 =
+				contactAccountGroupResource.getContactAccountGroupsPage(
+					null, Pagination.of(contactAccountGroup3Page, 500), null);
 
-		assertContains(
-			contactAccountGroup1, (List<ContactAccountGroup>)page3.getItems());
-		assertContains(
-			contactAccountGroup2, (List<ContactAccountGroup>)page3.getItems());
-		assertContains(
-			contactAccountGroup3, (List<ContactAccountGroup>)page3.getItems());
+			assertContains(
+				contactAccountGroup3,
+				(List<ContactAccountGroup>)page3.getItems());
+		}
+		else {
+			Page<ContactAccountGroup> page1 =
+				contactAccountGroupResource.getContactAccountGroupsPage(
+					null, Pagination.of(1, totalCount + 2), null);
+
+			List<ContactAccountGroup> contactAccountGroups1 =
+				(List<ContactAccountGroup>)page1.getItems();
+
+			Assert.assertEquals(
+				contactAccountGroups1.toString(), totalCount + 2,
+				contactAccountGroups1.size());
+
+			Page<ContactAccountGroup> page2 =
+				contactAccountGroupResource.getContactAccountGroupsPage(
+					null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ContactAccountGroup> contactAccountGroups2 =
+				(List<ContactAccountGroup>)page2.getItems();
+
+			Assert.assertEquals(
+				contactAccountGroups2.toString(), 1,
+				contactAccountGroups2.size());
+
+			Page<ContactAccountGroup> page3 =
+				contactAccountGroupResource.getContactAccountGroupsPage(
+					null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				contactAccountGroup1,
+				(List<ContactAccountGroup>)page3.getItems());
+			assertContains(
+				contactAccountGroup2,
+				(List<ContactAccountGroup>)page3.getItems());
+			assertContains(
+				contactAccountGroup3,
+				(List<ContactAccountGroup>)page3.getItems());
+		}
 	}
 
 	@Test

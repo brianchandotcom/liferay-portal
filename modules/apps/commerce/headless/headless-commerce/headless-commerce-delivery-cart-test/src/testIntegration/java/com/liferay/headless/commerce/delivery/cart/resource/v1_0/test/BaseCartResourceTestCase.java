@@ -487,28 +487,56 @@ public abstract class BaseCartResourceTestCase {
 		Cart cart3 = testGetChannelCartsPage_addCart(
 			accountId, channelId, randomCart());
 
-		Page<Cart> page1 = cartResource.getChannelCartsPage(
-			accountId, channelId, null, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Cart> carts1 = (List<Cart>)page1.getItems();
+			int cart1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
+			int cart2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
+			int cart3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(carts1.toString(), totalCount + 2, carts1.size());
+			Page<Cart> page1 = cartResource.getChannelCartsPage(
+				accountId, channelId, null, Pagination.of(cart1Page, 500));
 
-		Page<Cart> page2 = cartResource.getChannelCartsPage(
-			accountId, channelId, null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(cart1, (List<Cart>)page1.getItems());
 
-		List<Cart> carts2 = (List<Cart>)page2.getItems();
+			Page<Cart> page2 = cartResource.getChannelCartsPage(
+				accountId, channelId, null, Pagination.of(cart2Page, 500));
 
-		Assert.assertEquals(carts2.toString(), 1, carts2.size());
+			assertContains(cart2, (List<Cart>)page2.getItems());
 
-		Page<Cart> page3 = cartResource.getChannelCartsPage(
-			accountId, channelId, null, Pagination.of(1, (int)totalCount + 3));
+			Page<Cart> page3 = cartResource.getChannelCartsPage(
+				accountId, channelId, null, Pagination.of(cart3Page, 500));
 
-		assertContains(cart1, (List<Cart>)page3.getItems());
-		assertContains(cart2, (List<Cart>)page3.getItems());
-		assertContains(cart3, (List<Cart>)page3.getItems());
+			assertContains(cart3, (List<Cart>)page3.getItems());
+		}
+		else {
+			Page<Cart> page1 = cartResource.getChannelCartsPage(
+				accountId, channelId, null, Pagination.of(1, totalCount + 2));
+
+			List<Cart> carts1 = (List<Cart>)page1.getItems();
+
+			Assert.assertEquals(
+				carts1.toString(), totalCount + 2, carts1.size());
+
+			Page<Cart> page2 = cartResource.getChannelCartsPage(
+				accountId, channelId, null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Cart> carts2 = (List<Cart>)page2.getItems();
+
+			Assert.assertEquals(carts2.toString(), 1, carts2.size());
+
+			Page<Cart> page3 = cartResource.getChannelCartsPage(
+				accountId, channelId, null,
+				Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(cart1, (List<Cart>)page3.getItems());
+			assertContains(cart2, (List<Cart>)page3.getItems());
+			assertContains(cart3, (List<Cart>)page3.getItems());
+		}
 	}
 
 	protected Cart testGetChannelCartsPage_addCart(

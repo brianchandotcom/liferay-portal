@@ -353,39 +353,90 @@ public abstract class BasePlacedOrderCommentResourceTestCase {
 			testGetPlacedOrderPlacedOrderCommentsPage_addPlacedOrderComment(
 				placedOrderId, randomPlacedOrderComment());
 
-		Page<PlacedOrderComment> page1 =
-			placedOrderCommentResource.getPlacedOrderPlacedOrderCommentsPage(
-				placedOrderId, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<PlacedOrderComment> placedOrderComments1 =
-			(List<PlacedOrderComment>)page1.getItems();
+			int placedOrderComment1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int placedOrderComment2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int placedOrderComment3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			placedOrderComments1.toString(), totalCount + 2,
-			placedOrderComments1.size());
+			Page<PlacedOrderComment> page1 =
+				placedOrderCommentResource.
+					getPlacedOrderPlacedOrderCommentsPage(
+						placedOrderId,
+						Pagination.of(placedOrderComment1Page, 500));
 
-		Page<PlacedOrderComment> page2 =
-			placedOrderCommentResource.getPlacedOrderPlacedOrderCommentsPage(
-				placedOrderId, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				placedOrderComment1,
+				(List<PlacedOrderComment>)page1.getItems());
 
-		List<PlacedOrderComment> placedOrderComments2 =
-			(List<PlacedOrderComment>)page2.getItems();
+			Page<PlacedOrderComment> page2 =
+				placedOrderCommentResource.
+					getPlacedOrderPlacedOrderCommentsPage(
+						placedOrderId,
+						Pagination.of(placedOrderComment2Page, 500));
 
-		Assert.assertEquals(
-			placedOrderComments2.toString(), 1, placedOrderComments2.size());
+			assertContains(
+				placedOrderComment2,
+				(List<PlacedOrderComment>)page2.getItems());
 
-		Page<PlacedOrderComment> page3 =
-			placedOrderCommentResource.getPlacedOrderPlacedOrderCommentsPage(
-				placedOrderId, Pagination.of(1, (int)totalCount + 3));
+			Page<PlacedOrderComment> page3 =
+				placedOrderCommentResource.
+					getPlacedOrderPlacedOrderCommentsPage(
+						placedOrderId,
+						Pagination.of(placedOrderComment3Page, 500));
 
-		assertContains(
-			placedOrderComment1, (List<PlacedOrderComment>)page3.getItems());
-		assertContains(
-			placedOrderComment2, (List<PlacedOrderComment>)page3.getItems());
-		assertContains(
-			placedOrderComment3, (List<PlacedOrderComment>)page3.getItems());
+			assertContains(
+				placedOrderComment3,
+				(List<PlacedOrderComment>)page3.getItems());
+		}
+		else {
+			Page<PlacedOrderComment> page1 =
+				placedOrderCommentResource.
+					getPlacedOrderPlacedOrderCommentsPage(
+						placedOrderId, Pagination.of(1, totalCount + 2));
+
+			List<PlacedOrderComment> placedOrderComments1 =
+				(List<PlacedOrderComment>)page1.getItems();
+
+			Assert.assertEquals(
+				placedOrderComments1.toString(), totalCount + 2,
+				placedOrderComments1.size());
+
+			Page<PlacedOrderComment> page2 =
+				placedOrderCommentResource.
+					getPlacedOrderPlacedOrderCommentsPage(
+						placedOrderId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<PlacedOrderComment> placedOrderComments2 =
+				(List<PlacedOrderComment>)page2.getItems();
+
+			Assert.assertEquals(
+				placedOrderComments2.toString(), 1,
+				placedOrderComments2.size());
+
+			Page<PlacedOrderComment> page3 =
+				placedOrderCommentResource.
+					getPlacedOrderPlacedOrderCommentsPage(
+						placedOrderId, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				placedOrderComment1,
+				(List<PlacedOrderComment>)page3.getItems());
+			assertContains(
+				placedOrderComment2,
+				(List<PlacedOrderComment>)page3.getItems());
+			assertContains(
+				placedOrderComment3,
+				(List<PlacedOrderComment>)page3.getItems());
+		}
 	}
 
 	protected PlacedOrderComment

@@ -313,47 +313,93 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 			testGetPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage_addPriceModifierProductGroup(
 				externalReferenceCode, randomPriceModifierProductGroup());
 
-		Page<PriceModifierProductGroup> page1 =
-			priceModifierProductGroupResource.
-				getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<PriceModifierProductGroup> priceModifierProductGroups1 =
-			(List<PriceModifierProductGroup>)page1.getItems();
+			int priceModifierProductGroup1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int priceModifierProductGroup2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int priceModifierProductGroup3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			priceModifierProductGroups1.toString(), totalCount + 2,
-			priceModifierProductGroups1.size());
+			Page<PriceModifierProductGroup> page1 =
+				priceModifierProductGroupResource.
+					getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
+						externalReferenceCode,
+						Pagination.of(priceModifierProductGroup1Page, 500));
 
-		Page<PriceModifierProductGroup> page2 =
-			priceModifierProductGroupResource.
-				getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				priceModifierProductGroup1,
+				(List<PriceModifierProductGroup>)page1.getItems());
 
-		List<PriceModifierProductGroup> priceModifierProductGroups2 =
-			(List<PriceModifierProductGroup>)page2.getItems();
+			Page<PriceModifierProductGroup> page2 =
+				priceModifierProductGroupResource.
+					getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
+						externalReferenceCode,
+						Pagination.of(priceModifierProductGroup2Page, 500));
 
-		Assert.assertEquals(
-			priceModifierProductGroups2.toString(), 1,
-			priceModifierProductGroups2.size());
+			assertContains(
+				priceModifierProductGroup2,
+				(List<PriceModifierProductGroup>)page2.getItems());
 
-		Page<PriceModifierProductGroup> page3 =
-			priceModifierProductGroupResource.
-				getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<PriceModifierProductGroup> page3 =
+				priceModifierProductGroupResource.
+					getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
+						externalReferenceCode,
+						Pagination.of(priceModifierProductGroup3Page, 500));
 
-		assertContains(
-			priceModifierProductGroup1,
-			(List<PriceModifierProductGroup>)page3.getItems());
-		assertContains(
-			priceModifierProductGroup2,
-			(List<PriceModifierProductGroup>)page3.getItems());
-		assertContains(
-			priceModifierProductGroup3,
-			(List<PriceModifierProductGroup>)page3.getItems());
+			assertContains(
+				priceModifierProductGroup3,
+				(List<PriceModifierProductGroup>)page3.getItems());
+		}
+		else {
+			Page<PriceModifierProductGroup> page1 =
+				priceModifierProductGroupResource.
+					getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<PriceModifierProductGroup> priceModifierProductGroups1 =
+				(List<PriceModifierProductGroup>)page1.getItems();
+
+			Assert.assertEquals(
+				priceModifierProductGroups1.toString(), totalCount + 2,
+				priceModifierProductGroups1.size());
+
+			Page<PriceModifierProductGroup> page2 =
+				priceModifierProductGroupResource.
+					getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<PriceModifierProductGroup> priceModifierProductGroups2 =
+				(List<PriceModifierProductGroup>)page2.getItems();
+
+			Assert.assertEquals(
+				priceModifierProductGroups2.toString(), 1,
+				priceModifierProductGroups2.size());
+
+			Page<PriceModifierProductGroup> page3 =
+				priceModifierProductGroupResource.
+					getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				priceModifierProductGroup1,
+				(List<PriceModifierProductGroup>)page3.getItems());
+			assertContains(
+				priceModifierProductGroup2,
+				(List<PriceModifierProductGroup>)page3.getItems());
+			assertContains(
+				priceModifierProductGroup3,
+				(List<PriceModifierProductGroup>)page3.getItems());
+		}
 	}
 
 	protected PriceModifierProductGroup
@@ -610,47 +656,94 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 			testGetPriceModifierIdPriceModifierProductGroupsPage_addPriceModifierProductGroup(
 				id, randomPriceModifierProductGroup());
 
-		Page<PriceModifierProductGroup> page1 =
-			priceModifierProductGroupResource.
-				getPriceModifierIdPriceModifierProductGroupsPage(
-					id, null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<PriceModifierProductGroup> priceModifierProductGroups1 =
-			(List<PriceModifierProductGroup>)page1.getItems();
+			int priceModifierProductGroup1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int priceModifierProductGroup2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int priceModifierProductGroup3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			priceModifierProductGroups1.toString(), totalCount + 2,
-			priceModifierProductGroups1.size());
+			Page<PriceModifierProductGroup> page1 =
+				priceModifierProductGroupResource.
+					getPriceModifierIdPriceModifierProductGroupsPage(
+						id, null, null,
+						Pagination.of(priceModifierProductGroup1Page, 500),
+						null);
 
-		Page<PriceModifierProductGroup> page2 =
-			priceModifierProductGroupResource.
-				getPriceModifierIdPriceModifierProductGroupsPage(
-					id, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				priceModifierProductGroup1,
+				(List<PriceModifierProductGroup>)page1.getItems());
 
-		List<PriceModifierProductGroup> priceModifierProductGroups2 =
-			(List<PriceModifierProductGroup>)page2.getItems();
+			Page<PriceModifierProductGroup> page2 =
+				priceModifierProductGroupResource.
+					getPriceModifierIdPriceModifierProductGroupsPage(
+						id, null, null,
+						Pagination.of(priceModifierProductGroup2Page, 500),
+						null);
 
-		Assert.assertEquals(
-			priceModifierProductGroups2.toString(), 1,
-			priceModifierProductGroups2.size());
+			assertContains(
+				priceModifierProductGroup2,
+				(List<PriceModifierProductGroup>)page2.getItems());
 
-		Page<PriceModifierProductGroup> page3 =
-			priceModifierProductGroupResource.
-				getPriceModifierIdPriceModifierProductGroupsPage(
-					id, null, null, Pagination.of(1, (int)totalCount + 3),
-					null);
+			Page<PriceModifierProductGroup> page3 =
+				priceModifierProductGroupResource.
+					getPriceModifierIdPriceModifierProductGroupsPage(
+						id, null, null,
+						Pagination.of(priceModifierProductGroup3Page, 500),
+						null);
 
-		assertContains(
-			priceModifierProductGroup1,
-			(List<PriceModifierProductGroup>)page3.getItems());
-		assertContains(
-			priceModifierProductGroup2,
-			(List<PriceModifierProductGroup>)page3.getItems());
-		assertContains(
-			priceModifierProductGroup3,
-			(List<PriceModifierProductGroup>)page3.getItems());
+			assertContains(
+				priceModifierProductGroup3,
+				(List<PriceModifierProductGroup>)page3.getItems());
+		}
+		else {
+			Page<PriceModifierProductGroup> page1 =
+				priceModifierProductGroupResource.
+					getPriceModifierIdPriceModifierProductGroupsPage(
+						id, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<PriceModifierProductGroup> priceModifierProductGroups1 =
+				(List<PriceModifierProductGroup>)page1.getItems();
+
+			Assert.assertEquals(
+				priceModifierProductGroups1.toString(), totalCount + 2,
+				priceModifierProductGroups1.size());
+
+			Page<PriceModifierProductGroup> page2 =
+				priceModifierProductGroupResource.
+					getPriceModifierIdPriceModifierProductGroupsPage(
+						id, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<PriceModifierProductGroup> priceModifierProductGroups2 =
+				(List<PriceModifierProductGroup>)page2.getItems();
+
+			Assert.assertEquals(
+				priceModifierProductGroups2.toString(), 1,
+				priceModifierProductGroups2.size());
+
+			Page<PriceModifierProductGroup> page3 =
+				priceModifierProductGroupResource.
+					getPriceModifierIdPriceModifierProductGroupsPage(
+						id, null, null, Pagination.of(1, (int)totalCount + 3),
+						null);
+
+			assertContains(
+				priceModifierProductGroup1,
+				(List<PriceModifierProductGroup>)page3.getItems());
+			assertContains(
+				priceModifierProductGroup2,
+				(List<PriceModifierProductGroup>)page3.getItems());
+			assertContains(
+				priceModifierProductGroup3,
+				(List<PriceModifierProductGroup>)page3.getItems());
+		}
 	}
 
 	@Test

@@ -309,47 +309,93 @@ public abstract class BaseOrderRuleAccountGroupResourceTestCase {
 			testGetOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage_addOrderRuleAccountGroup(
 				externalReferenceCode, randomOrderRuleAccountGroup());
 
-		Page<OrderRuleAccountGroup> page1 =
-			orderRuleAccountGroupResource.
-				getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<OrderRuleAccountGroup> orderRuleAccountGroups1 =
-			(List<OrderRuleAccountGroup>)page1.getItems();
+			int orderRuleAccountGroup1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int orderRuleAccountGroup2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int orderRuleAccountGroup3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			orderRuleAccountGroups1.toString(), totalCount + 2,
-			orderRuleAccountGroups1.size());
+			Page<OrderRuleAccountGroup> page1 =
+				orderRuleAccountGroupResource.
+					getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
+						externalReferenceCode,
+						Pagination.of(orderRuleAccountGroup1Page, 500));
 
-		Page<OrderRuleAccountGroup> page2 =
-			orderRuleAccountGroupResource.
-				getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				orderRuleAccountGroup1,
+				(List<OrderRuleAccountGroup>)page1.getItems());
 
-		List<OrderRuleAccountGroup> orderRuleAccountGroups2 =
-			(List<OrderRuleAccountGroup>)page2.getItems();
+			Page<OrderRuleAccountGroup> page2 =
+				orderRuleAccountGroupResource.
+					getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
+						externalReferenceCode,
+						Pagination.of(orderRuleAccountGroup2Page, 500));
 
-		Assert.assertEquals(
-			orderRuleAccountGroups2.toString(), 1,
-			orderRuleAccountGroups2.size());
+			assertContains(
+				orderRuleAccountGroup2,
+				(List<OrderRuleAccountGroup>)page2.getItems());
 
-		Page<OrderRuleAccountGroup> page3 =
-			orderRuleAccountGroupResource.
-				getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<OrderRuleAccountGroup> page3 =
+				orderRuleAccountGroupResource.
+					getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
+						externalReferenceCode,
+						Pagination.of(orderRuleAccountGroup3Page, 500));
 
-		assertContains(
-			orderRuleAccountGroup1,
-			(List<OrderRuleAccountGroup>)page3.getItems());
-		assertContains(
-			orderRuleAccountGroup2,
-			(List<OrderRuleAccountGroup>)page3.getItems());
-		assertContains(
-			orderRuleAccountGroup3,
-			(List<OrderRuleAccountGroup>)page3.getItems());
+			assertContains(
+				orderRuleAccountGroup3,
+				(List<OrderRuleAccountGroup>)page3.getItems());
+		}
+		else {
+			Page<OrderRuleAccountGroup> page1 =
+				orderRuleAccountGroupResource.
+					getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<OrderRuleAccountGroup> orderRuleAccountGroups1 =
+				(List<OrderRuleAccountGroup>)page1.getItems();
+
+			Assert.assertEquals(
+				orderRuleAccountGroups1.toString(), totalCount + 2,
+				orderRuleAccountGroups1.size());
+
+			Page<OrderRuleAccountGroup> page2 =
+				orderRuleAccountGroupResource.
+					getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OrderRuleAccountGroup> orderRuleAccountGroups2 =
+				(List<OrderRuleAccountGroup>)page2.getItems();
+
+			Assert.assertEquals(
+				orderRuleAccountGroups2.toString(), 1,
+				orderRuleAccountGroups2.size());
+
+			Page<OrderRuleAccountGroup> page3 =
+				orderRuleAccountGroupResource.
+					getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				orderRuleAccountGroup1,
+				(List<OrderRuleAccountGroup>)page3.getItems());
+			assertContains(
+				orderRuleAccountGroup2,
+				(List<OrderRuleAccountGroup>)page3.getItems());
+			assertContains(
+				orderRuleAccountGroup3,
+				(List<OrderRuleAccountGroup>)page3.getItems());
+		}
 	}
 
 	protected OrderRuleAccountGroup
@@ -604,47 +650,91 @@ public abstract class BaseOrderRuleAccountGroupResourceTestCase {
 			testGetOrderRuleIdOrderRuleAccountGroupsPage_addOrderRuleAccountGroup(
 				id, randomOrderRuleAccountGroup());
 
-		Page<OrderRuleAccountGroup> page1 =
-			orderRuleAccountGroupResource.
-				getOrderRuleIdOrderRuleAccountGroupsPage(
-					id, null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<OrderRuleAccountGroup> orderRuleAccountGroups1 =
-			(List<OrderRuleAccountGroup>)page1.getItems();
+			int orderRuleAccountGroup1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int orderRuleAccountGroup2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int orderRuleAccountGroup3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			orderRuleAccountGroups1.toString(), totalCount + 2,
-			orderRuleAccountGroups1.size());
+			Page<OrderRuleAccountGroup> page1 =
+				orderRuleAccountGroupResource.
+					getOrderRuleIdOrderRuleAccountGroupsPage(
+						id, null, null,
+						Pagination.of(orderRuleAccountGroup1Page, 500), null);
 
-		Page<OrderRuleAccountGroup> page2 =
-			orderRuleAccountGroupResource.
-				getOrderRuleIdOrderRuleAccountGroupsPage(
-					id, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				orderRuleAccountGroup1,
+				(List<OrderRuleAccountGroup>)page1.getItems());
 
-		List<OrderRuleAccountGroup> orderRuleAccountGroups2 =
-			(List<OrderRuleAccountGroup>)page2.getItems();
+			Page<OrderRuleAccountGroup> page2 =
+				orderRuleAccountGroupResource.
+					getOrderRuleIdOrderRuleAccountGroupsPage(
+						id, null, null,
+						Pagination.of(orderRuleAccountGroup2Page, 500), null);
 
-		Assert.assertEquals(
-			orderRuleAccountGroups2.toString(), 1,
-			orderRuleAccountGroups2.size());
+			assertContains(
+				orderRuleAccountGroup2,
+				(List<OrderRuleAccountGroup>)page2.getItems());
 
-		Page<OrderRuleAccountGroup> page3 =
-			orderRuleAccountGroupResource.
-				getOrderRuleIdOrderRuleAccountGroupsPage(
-					id, null, null, Pagination.of(1, (int)totalCount + 3),
-					null);
+			Page<OrderRuleAccountGroup> page3 =
+				orderRuleAccountGroupResource.
+					getOrderRuleIdOrderRuleAccountGroupsPage(
+						id, null, null,
+						Pagination.of(orderRuleAccountGroup3Page, 500), null);
 
-		assertContains(
-			orderRuleAccountGroup1,
-			(List<OrderRuleAccountGroup>)page3.getItems());
-		assertContains(
-			orderRuleAccountGroup2,
-			(List<OrderRuleAccountGroup>)page3.getItems());
-		assertContains(
-			orderRuleAccountGroup3,
-			(List<OrderRuleAccountGroup>)page3.getItems());
+			assertContains(
+				orderRuleAccountGroup3,
+				(List<OrderRuleAccountGroup>)page3.getItems());
+		}
+		else {
+			Page<OrderRuleAccountGroup> page1 =
+				orderRuleAccountGroupResource.
+					getOrderRuleIdOrderRuleAccountGroupsPage(
+						id, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<OrderRuleAccountGroup> orderRuleAccountGroups1 =
+				(List<OrderRuleAccountGroup>)page1.getItems();
+
+			Assert.assertEquals(
+				orderRuleAccountGroups1.toString(), totalCount + 2,
+				orderRuleAccountGroups1.size());
+
+			Page<OrderRuleAccountGroup> page2 =
+				orderRuleAccountGroupResource.
+					getOrderRuleIdOrderRuleAccountGroupsPage(
+						id, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OrderRuleAccountGroup> orderRuleAccountGroups2 =
+				(List<OrderRuleAccountGroup>)page2.getItems();
+
+			Assert.assertEquals(
+				orderRuleAccountGroups2.toString(), 1,
+				orderRuleAccountGroups2.size());
+
+			Page<OrderRuleAccountGroup> page3 =
+				orderRuleAccountGroupResource.
+					getOrderRuleIdOrderRuleAccountGroupsPage(
+						id, null, null, Pagination.of(1, (int)totalCount + 3),
+						null);
+
+			assertContains(
+				orderRuleAccountGroup1,
+				(List<OrderRuleAccountGroup>)page3.getItems());
+			assertContains(
+				orderRuleAccountGroup2,
+				(List<OrderRuleAccountGroup>)page3.getItems());
+			assertContains(
+				orderRuleAccountGroup3,
+				(List<OrderRuleAccountGroup>)page3.getItems());
+		}
 	}
 
 	@Test

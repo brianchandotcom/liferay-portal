@@ -424,47 +424,96 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage_addPaymentMethodGroupRelOrderType(
 				id, randomPaymentMethodGroupRelOrderType());
 
-		Page<PaymentMethodGroupRelOrderType> page1 =
-			paymentMethodGroupRelOrderTypeResource.
-				getPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage(
-					id, null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<PaymentMethodGroupRelOrderType> paymentMethodGroupRelOrderTypes1 =
-			(List<PaymentMethodGroupRelOrderType>)page1.getItems();
+			int paymentMethodGroupRelOrderType1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int paymentMethodGroupRelOrderType2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int paymentMethodGroupRelOrderType3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			paymentMethodGroupRelOrderTypes1.toString(), totalCount + 2,
-			paymentMethodGroupRelOrderTypes1.size());
+			Page<PaymentMethodGroupRelOrderType> page1 =
+				paymentMethodGroupRelOrderTypeResource.
+					getPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage(
+						id, null, null,
+						Pagination.of(paymentMethodGroupRelOrderType1Page, 500),
+						null);
 
-		Page<PaymentMethodGroupRelOrderType> page2 =
-			paymentMethodGroupRelOrderTypeResource.
-				getPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage(
-					id, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				paymentMethodGroupRelOrderType1,
+				(List<PaymentMethodGroupRelOrderType>)page1.getItems());
 
-		List<PaymentMethodGroupRelOrderType> paymentMethodGroupRelOrderTypes2 =
-			(List<PaymentMethodGroupRelOrderType>)page2.getItems();
+			Page<PaymentMethodGroupRelOrderType> page2 =
+				paymentMethodGroupRelOrderTypeResource.
+					getPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage(
+						id, null, null,
+						Pagination.of(paymentMethodGroupRelOrderType2Page, 500),
+						null);
 
-		Assert.assertEquals(
-			paymentMethodGroupRelOrderTypes2.toString(), 1,
-			paymentMethodGroupRelOrderTypes2.size());
+			assertContains(
+				paymentMethodGroupRelOrderType2,
+				(List<PaymentMethodGroupRelOrderType>)page2.getItems());
 
-		Page<PaymentMethodGroupRelOrderType> page3 =
-			paymentMethodGroupRelOrderTypeResource.
-				getPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage(
-					id, null, null, Pagination.of(1, (int)totalCount + 3),
-					null);
+			Page<PaymentMethodGroupRelOrderType> page3 =
+				paymentMethodGroupRelOrderTypeResource.
+					getPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage(
+						id, null, null,
+						Pagination.of(paymentMethodGroupRelOrderType3Page, 500),
+						null);
 
-		assertContains(
-			paymentMethodGroupRelOrderType1,
-			(List<PaymentMethodGroupRelOrderType>)page3.getItems());
-		assertContains(
-			paymentMethodGroupRelOrderType2,
-			(List<PaymentMethodGroupRelOrderType>)page3.getItems());
-		assertContains(
-			paymentMethodGroupRelOrderType3,
-			(List<PaymentMethodGroupRelOrderType>)page3.getItems());
+			assertContains(
+				paymentMethodGroupRelOrderType3,
+				(List<PaymentMethodGroupRelOrderType>)page3.getItems());
+		}
+		else {
+			Page<PaymentMethodGroupRelOrderType> page1 =
+				paymentMethodGroupRelOrderTypeResource.
+					getPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage(
+						id, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<PaymentMethodGroupRelOrderType>
+				paymentMethodGroupRelOrderTypes1 =
+					(List<PaymentMethodGroupRelOrderType>)page1.getItems();
+
+			Assert.assertEquals(
+				paymentMethodGroupRelOrderTypes1.toString(), totalCount + 2,
+				paymentMethodGroupRelOrderTypes1.size());
+
+			Page<PaymentMethodGroupRelOrderType> page2 =
+				paymentMethodGroupRelOrderTypeResource.
+					getPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage(
+						id, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<PaymentMethodGroupRelOrderType>
+				paymentMethodGroupRelOrderTypes2 =
+					(List<PaymentMethodGroupRelOrderType>)page2.getItems();
+
+			Assert.assertEquals(
+				paymentMethodGroupRelOrderTypes2.toString(), 1,
+				paymentMethodGroupRelOrderTypes2.size());
+
+			Page<PaymentMethodGroupRelOrderType> page3 =
+				paymentMethodGroupRelOrderTypeResource.
+					getPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage(
+						id, null, null, Pagination.of(1, (int)totalCount + 3),
+						null);
+
+			assertContains(
+				paymentMethodGroupRelOrderType1,
+				(List<PaymentMethodGroupRelOrderType>)page3.getItems());
+			assertContains(
+				paymentMethodGroupRelOrderType2,
+				(List<PaymentMethodGroupRelOrderType>)page3.getItems());
+			assertContains(
+				paymentMethodGroupRelOrderType3,
+				(List<PaymentMethodGroupRelOrderType>)page3.getItems());
+		}
 	}
 
 	@Test

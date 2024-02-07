@@ -281,33 +281,71 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			testGetWorkflowInstanceWorkflowLogsPage_addWorkflowLog(
 				workflowInstanceId, randomWorkflowLog());
 
-		Page<WorkflowLog> page1 =
-			workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
-				workflowInstanceId, null, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<WorkflowLog> workflowLogs1 = (List<WorkflowLog>)page1.getItems();
+			int workflowLog1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int workflowLog2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int workflowLog3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			workflowLogs1.toString(), totalCount + 2, workflowLogs1.size());
+			Page<WorkflowLog> page1 =
+				workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+					workflowInstanceId, null,
+					Pagination.of(workflowLog1Page, 500));
 
-		Page<WorkflowLog> page2 =
-			workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
-				workflowInstanceId, null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(workflowLog1, (List<WorkflowLog>)page1.getItems());
 
-		List<WorkflowLog> workflowLogs2 = (List<WorkflowLog>)page2.getItems();
+			Page<WorkflowLog> page2 =
+				workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+					workflowInstanceId, null,
+					Pagination.of(workflowLog2Page, 500));
 
-		Assert.assertEquals(workflowLogs2.toString(), 1, workflowLogs2.size());
+			assertContains(workflowLog2, (List<WorkflowLog>)page2.getItems());
 
-		Page<WorkflowLog> page3 =
-			workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
-				workflowInstanceId, null,
-				Pagination.of(1, (int)totalCount + 3));
+			Page<WorkflowLog> page3 =
+				workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+					workflowInstanceId, null,
+					Pagination.of(workflowLog3Page, 500));
 
-		assertContains(workflowLog1, (List<WorkflowLog>)page3.getItems());
-		assertContains(workflowLog2, (List<WorkflowLog>)page3.getItems());
-		assertContains(workflowLog3, (List<WorkflowLog>)page3.getItems());
+			assertContains(workflowLog3, (List<WorkflowLog>)page3.getItems());
+		}
+		else {
+			Page<WorkflowLog> page1 =
+				workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+					workflowInstanceId, null, Pagination.of(1, totalCount + 2));
+
+			List<WorkflowLog> workflowLogs1 =
+				(List<WorkflowLog>)page1.getItems();
+
+			Assert.assertEquals(
+				workflowLogs1.toString(), totalCount + 2, workflowLogs1.size());
+
+			Page<WorkflowLog> page2 =
+				workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+					workflowInstanceId, null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<WorkflowLog> workflowLogs2 =
+				(List<WorkflowLog>)page2.getItems();
+
+			Assert.assertEquals(
+				workflowLogs2.toString(), 1, workflowLogs2.size());
+
+			Page<WorkflowLog> page3 =
+				workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
+					workflowInstanceId, null,
+					Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(workflowLog1, (List<WorkflowLog>)page3.getItems());
+			assertContains(workflowLog2, (List<WorkflowLog>)page3.getItems());
+			assertContains(workflowLog3, (List<WorkflowLog>)page3.getItems());
+		}
 	}
 
 	protected WorkflowLog
@@ -487,32 +525,68 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			testGetWorkflowTaskWorkflowLogsPage_addWorkflowLog(
 				workflowTaskId, randomWorkflowLog());
 
-		Page<WorkflowLog> page1 =
-			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-				workflowTaskId, null, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<WorkflowLog> workflowLogs1 = (List<WorkflowLog>)page1.getItems();
+			int workflowLog1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int workflowLog2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int workflowLog3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			workflowLogs1.toString(), totalCount + 2, workflowLogs1.size());
+			Page<WorkflowLog> page1 =
+				workflowLogResource.getWorkflowTaskWorkflowLogsPage(
+					workflowTaskId, null, Pagination.of(workflowLog1Page, 500));
 
-		Page<WorkflowLog> page2 =
-			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-				workflowTaskId, null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(workflowLog1, (List<WorkflowLog>)page1.getItems());
 
-		List<WorkflowLog> workflowLogs2 = (List<WorkflowLog>)page2.getItems();
+			Page<WorkflowLog> page2 =
+				workflowLogResource.getWorkflowTaskWorkflowLogsPage(
+					workflowTaskId, null, Pagination.of(workflowLog2Page, 500));
 
-		Assert.assertEquals(workflowLogs2.toString(), 1, workflowLogs2.size());
+			assertContains(workflowLog2, (List<WorkflowLog>)page2.getItems());
 
-		Page<WorkflowLog> page3 =
-			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-				workflowTaskId, null, Pagination.of(1, (int)totalCount + 3));
+			Page<WorkflowLog> page3 =
+				workflowLogResource.getWorkflowTaskWorkflowLogsPage(
+					workflowTaskId, null, Pagination.of(workflowLog3Page, 500));
 
-		assertContains(workflowLog1, (List<WorkflowLog>)page3.getItems());
-		assertContains(workflowLog2, (List<WorkflowLog>)page3.getItems());
-		assertContains(workflowLog3, (List<WorkflowLog>)page3.getItems());
+			assertContains(workflowLog3, (List<WorkflowLog>)page3.getItems());
+		}
+		else {
+			Page<WorkflowLog> page1 =
+				workflowLogResource.getWorkflowTaskWorkflowLogsPage(
+					workflowTaskId, null, Pagination.of(1, totalCount + 2));
+
+			List<WorkflowLog> workflowLogs1 =
+				(List<WorkflowLog>)page1.getItems();
+
+			Assert.assertEquals(
+				workflowLogs1.toString(), totalCount + 2, workflowLogs1.size());
+
+			Page<WorkflowLog> page2 =
+				workflowLogResource.getWorkflowTaskWorkflowLogsPage(
+					workflowTaskId, null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<WorkflowLog> workflowLogs2 =
+				(List<WorkflowLog>)page2.getItems();
+
+			Assert.assertEquals(
+				workflowLogs2.toString(), 1, workflowLogs2.size());
+
+			Page<WorkflowLog> page3 =
+				workflowLogResource.getWorkflowTaskWorkflowLogsPage(
+					workflowTaskId, null,
+					Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(workflowLog1, (List<WorkflowLog>)page3.getItems());
+			assertContains(workflowLog2, (List<WorkflowLog>)page3.getItems());
+			assertContains(workflowLog3, (List<WorkflowLog>)page3.getItems());
+		}
 	}
 
 	protected WorkflowLog testGetWorkflowTaskWorkflowLogsPage_addWorkflowLog(

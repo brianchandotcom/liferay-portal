@@ -300,32 +300,68 @@ public abstract class BasePlacedOrderResourceTestCase {
 			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
 				accountId, channelId, randomPlacedOrder());
 
-		Page<PlacedOrder> page1 =
-			placedOrderResource.getChannelAccountPlacedOrdersPage(
-				accountId, channelId, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<PlacedOrder> placedOrders1 = (List<PlacedOrder>)page1.getItems();
+			int placedOrder1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int placedOrder2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int placedOrder3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			placedOrders1.toString(), totalCount + 2, placedOrders1.size());
+			Page<PlacedOrder> page1 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId, Pagination.of(placedOrder1Page, 500));
 
-		Page<PlacedOrder> page2 =
-			placedOrderResource.getChannelAccountPlacedOrdersPage(
-				accountId, channelId, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(placedOrder1, (List<PlacedOrder>)page1.getItems());
 
-		List<PlacedOrder> placedOrders2 = (List<PlacedOrder>)page2.getItems();
+			Page<PlacedOrder> page2 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId, Pagination.of(placedOrder2Page, 500));
 
-		Assert.assertEquals(placedOrders2.toString(), 1, placedOrders2.size());
+			assertContains(placedOrder2, (List<PlacedOrder>)page2.getItems());
 
-		Page<PlacedOrder> page3 =
-			placedOrderResource.getChannelAccountPlacedOrdersPage(
-				accountId, channelId, Pagination.of(1, (int)totalCount + 3));
+			Page<PlacedOrder> page3 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId, Pagination.of(placedOrder3Page, 500));
 
-		assertContains(placedOrder1, (List<PlacedOrder>)page3.getItems());
-		assertContains(placedOrder2, (List<PlacedOrder>)page3.getItems());
-		assertContains(placedOrder3, (List<PlacedOrder>)page3.getItems());
+			assertContains(placedOrder3, (List<PlacedOrder>)page3.getItems());
+		}
+		else {
+			Page<PlacedOrder> page1 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId, Pagination.of(1, totalCount + 2));
+
+			List<PlacedOrder> placedOrders1 =
+				(List<PlacedOrder>)page1.getItems();
+
+			Assert.assertEquals(
+				placedOrders1.toString(), totalCount + 2, placedOrders1.size());
+
+			Page<PlacedOrder> page2 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<PlacedOrder> placedOrders2 =
+				(List<PlacedOrder>)page2.getItems();
+
+			Assert.assertEquals(
+				placedOrders2.toString(), 1, placedOrders2.size());
+
+			Page<PlacedOrder> page3 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId,
+					Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(placedOrder1, (List<PlacedOrder>)page3.getItems());
+			assertContains(placedOrder2, (List<PlacedOrder>)page3.getItems());
+			assertContains(placedOrder3, (List<PlacedOrder>)page3.getItems());
+		}
 	}
 
 	protected PlacedOrder testGetChannelAccountPlacedOrdersPage_addPlacedOrder(

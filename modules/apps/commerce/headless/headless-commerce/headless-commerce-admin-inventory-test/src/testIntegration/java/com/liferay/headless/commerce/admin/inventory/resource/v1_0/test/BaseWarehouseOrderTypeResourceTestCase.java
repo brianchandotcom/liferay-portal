@@ -301,43 +301,93 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 			testGetWarehouseByExternalReferenceCodeWarehouseOrderTypesPage_addWarehouseOrderType(
 				externalReferenceCode, randomWarehouseOrderType());
 
-		Page<WarehouseOrderType> page1 =
-			warehouseOrderTypeResource.
-				getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<WarehouseOrderType> warehouseOrderTypes1 =
-			(List<WarehouseOrderType>)page1.getItems();
+			int warehouseOrderType1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int warehouseOrderType2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int warehouseOrderType3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			warehouseOrderTypes1.toString(), totalCount + 2,
-			warehouseOrderTypes1.size());
+			Page<WarehouseOrderType> page1 =
+				warehouseOrderTypeResource.
+					getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
+						externalReferenceCode,
+						Pagination.of(warehouseOrderType1Page, 500));
 
-		Page<WarehouseOrderType> page2 =
-			warehouseOrderTypeResource.
-				getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				warehouseOrderType1,
+				(List<WarehouseOrderType>)page1.getItems());
 
-		List<WarehouseOrderType> warehouseOrderTypes2 =
-			(List<WarehouseOrderType>)page2.getItems();
+			Page<WarehouseOrderType> page2 =
+				warehouseOrderTypeResource.
+					getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
+						externalReferenceCode,
+						Pagination.of(warehouseOrderType2Page, 500));
 
-		Assert.assertEquals(
-			warehouseOrderTypes2.toString(), 1, warehouseOrderTypes2.size());
+			assertContains(
+				warehouseOrderType2,
+				(List<WarehouseOrderType>)page2.getItems());
 
-		Page<WarehouseOrderType> page3 =
-			warehouseOrderTypeResource.
-				getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<WarehouseOrderType> page3 =
+				warehouseOrderTypeResource.
+					getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
+						externalReferenceCode,
+						Pagination.of(warehouseOrderType3Page, 500));
 
-		assertContains(
-			warehouseOrderType1, (List<WarehouseOrderType>)page3.getItems());
-		assertContains(
-			warehouseOrderType2, (List<WarehouseOrderType>)page3.getItems());
-		assertContains(
-			warehouseOrderType3, (List<WarehouseOrderType>)page3.getItems());
+			assertContains(
+				warehouseOrderType3,
+				(List<WarehouseOrderType>)page3.getItems());
+		}
+		else {
+			Page<WarehouseOrderType> page1 =
+				warehouseOrderTypeResource.
+					getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<WarehouseOrderType> warehouseOrderTypes1 =
+				(List<WarehouseOrderType>)page1.getItems();
+
+			Assert.assertEquals(
+				warehouseOrderTypes1.toString(), totalCount + 2,
+				warehouseOrderTypes1.size());
+
+			Page<WarehouseOrderType> page2 =
+				warehouseOrderTypeResource.
+					getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<WarehouseOrderType> warehouseOrderTypes2 =
+				(List<WarehouseOrderType>)page2.getItems();
+
+			Assert.assertEquals(
+				warehouseOrderTypes2.toString(), 1,
+				warehouseOrderTypes2.size());
+
+			Page<WarehouseOrderType> page3 =
+				warehouseOrderTypeResource.
+					getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				warehouseOrderType1,
+				(List<WarehouseOrderType>)page3.getItems());
+			assertContains(
+				warehouseOrderType2,
+				(List<WarehouseOrderType>)page3.getItems());
+			assertContains(
+				warehouseOrderType3,
+				(List<WarehouseOrderType>)page3.getItems());
+		}
 	}
 
 	protected WarehouseOrderType
@@ -582,39 +632,91 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 			testGetWarehouseIdWarehouseOrderTypesPage_addWarehouseOrderType(
 				id, randomWarehouseOrderType());
 
-		Page<WarehouseOrderType> page1 =
-			warehouseOrderTypeResource.getWarehouseIdWarehouseOrderTypesPage(
-				id, null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<WarehouseOrderType> warehouseOrderTypes1 =
-			(List<WarehouseOrderType>)page1.getItems();
+			int warehouseOrderType1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int warehouseOrderType2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int warehouseOrderType3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			warehouseOrderTypes1.toString(), totalCount + 2,
-			warehouseOrderTypes1.size());
+			Page<WarehouseOrderType> page1 =
+				warehouseOrderTypeResource.
+					getWarehouseIdWarehouseOrderTypesPage(
+						id, null, null,
+						Pagination.of(warehouseOrderType1Page, 500), null);
 
-		Page<WarehouseOrderType> page2 =
-			warehouseOrderTypeResource.getWarehouseIdWarehouseOrderTypesPage(
-				id, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				warehouseOrderType1,
+				(List<WarehouseOrderType>)page1.getItems());
 
-		List<WarehouseOrderType> warehouseOrderTypes2 =
-			(List<WarehouseOrderType>)page2.getItems();
+			Page<WarehouseOrderType> page2 =
+				warehouseOrderTypeResource.
+					getWarehouseIdWarehouseOrderTypesPage(
+						id, null, null,
+						Pagination.of(warehouseOrderType2Page, 500), null);
 
-		Assert.assertEquals(
-			warehouseOrderTypes2.toString(), 1, warehouseOrderTypes2.size());
+			assertContains(
+				warehouseOrderType2,
+				(List<WarehouseOrderType>)page2.getItems());
 
-		Page<WarehouseOrderType> page3 =
-			warehouseOrderTypeResource.getWarehouseIdWarehouseOrderTypesPage(
-				id, null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<WarehouseOrderType> page3 =
+				warehouseOrderTypeResource.
+					getWarehouseIdWarehouseOrderTypesPage(
+						id, null, null,
+						Pagination.of(warehouseOrderType3Page, 500), null);
 
-		assertContains(
-			warehouseOrderType1, (List<WarehouseOrderType>)page3.getItems());
-		assertContains(
-			warehouseOrderType2, (List<WarehouseOrderType>)page3.getItems());
-		assertContains(
-			warehouseOrderType3, (List<WarehouseOrderType>)page3.getItems());
+			assertContains(
+				warehouseOrderType3,
+				(List<WarehouseOrderType>)page3.getItems());
+		}
+		else {
+			Page<WarehouseOrderType> page1 =
+				warehouseOrderTypeResource.
+					getWarehouseIdWarehouseOrderTypesPage(
+						id, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<WarehouseOrderType> warehouseOrderTypes1 =
+				(List<WarehouseOrderType>)page1.getItems();
+
+			Assert.assertEquals(
+				warehouseOrderTypes1.toString(), totalCount + 2,
+				warehouseOrderTypes1.size());
+
+			Page<WarehouseOrderType> page2 =
+				warehouseOrderTypeResource.
+					getWarehouseIdWarehouseOrderTypesPage(
+						id, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<WarehouseOrderType> warehouseOrderTypes2 =
+				(List<WarehouseOrderType>)page2.getItems();
+
+			Assert.assertEquals(
+				warehouseOrderTypes2.toString(), 1,
+				warehouseOrderTypes2.size());
+
+			Page<WarehouseOrderType> page3 =
+				warehouseOrderTypeResource.
+					getWarehouseIdWarehouseOrderTypesPage(
+						id, null, null, Pagination.of(1, (int)totalCount + 3),
+						null);
+
+			assertContains(
+				warehouseOrderType1,
+				(List<WarehouseOrderType>)page3.getItems());
+			assertContains(
+				warehouseOrderType2,
+				(List<WarehouseOrderType>)page3.getItems());
+			assertContains(
+				warehouseOrderType3,
+				(List<WarehouseOrderType>)page3.getItems());
+		}
 	}
 
 	@Test

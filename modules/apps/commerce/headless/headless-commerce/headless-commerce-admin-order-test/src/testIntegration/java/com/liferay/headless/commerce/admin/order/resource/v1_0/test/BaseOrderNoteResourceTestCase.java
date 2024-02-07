@@ -526,32 +526,65 @@ public abstract class BaseOrderNoteResourceTestCase {
 			testGetOrderByExternalReferenceCodeOrderNotesPage_addOrderNote(
 				externalReferenceCode, randomOrderNote());
 
-		Page<OrderNote> page1 =
-			orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
-				externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<OrderNote> orderNotes1 = (List<OrderNote>)page1.getItems();
+			int orderNote1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int orderNote2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int orderNote3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			orderNotes1.toString(), totalCount + 2, orderNotes1.size());
+			Page<OrderNote> page1 =
+				orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
+					externalReferenceCode, Pagination.of(orderNote1Page, 500));
 
-		Page<OrderNote> page2 =
-			orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
-				externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(orderNote1, (List<OrderNote>)page1.getItems());
 
-		List<OrderNote> orderNotes2 = (List<OrderNote>)page2.getItems();
+			Page<OrderNote> page2 =
+				orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
+					externalReferenceCode, Pagination.of(orderNote2Page, 500));
 
-		Assert.assertEquals(orderNotes2.toString(), 1, orderNotes2.size());
+			assertContains(orderNote2, (List<OrderNote>)page2.getItems());
 
-		Page<OrderNote> page3 =
-			orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
-				externalReferenceCode, Pagination.of(1, (int)totalCount + 3));
+			Page<OrderNote> page3 =
+				orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
+					externalReferenceCode, Pagination.of(orderNote3Page, 500));
 
-		assertContains(orderNote1, (List<OrderNote>)page3.getItems());
-		assertContains(orderNote2, (List<OrderNote>)page3.getItems());
-		assertContains(orderNote3, (List<OrderNote>)page3.getItems());
+			assertContains(orderNote3, (List<OrderNote>)page3.getItems());
+		}
+		else {
+			Page<OrderNote> page1 =
+				orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
+
+			List<OrderNote> orderNotes1 = (List<OrderNote>)page1.getItems();
+
+			Assert.assertEquals(
+				orderNotes1.toString(), totalCount + 2, orderNotes1.size());
+
+			Page<OrderNote> page2 =
+				orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OrderNote> orderNotes2 = (List<OrderNote>)page2.getItems();
+
+			Assert.assertEquals(orderNotes2.toString(), 1, orderNotes2.size());
+
+			Page<OrderNote> page3 =
+				orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(orderNote1, (List<OrderNote>)page3.getItems());
+			assertContains(orderNote2, (List<OrderNote>)page3.getItems());
+			assertContains(orderNote3, (List<OrderNote>)page3.getItems());
+		}
 	}
 
 	protected OrderNote
@@ -675,29 +708,58 @@ public abstract class BaseOrderNoteResourceTestCase {
 		OrderNote orderNote3 = testGetOrderIdOrderNotesPage_addOrderNote(
 			id, randomOrderNote());
 
-		Page<OrderNote> page1 = orderNoteResource.getOrderIdOrderNotesPage(
-			id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<OrderNote> orderNotes1 = (List<OrderNote>)page1.getItems();
+			int orderNote1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int orderNote2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int orderNote3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			orderNotes1.toString(), totalCount + 2, orderNotes1.size());
+			Page<OrderNote> page1 = orderNoteResource.getOrderIdOrderNotesPage(
+				id, Pagination.of(orderNote1Page, 500));
 
-		Page<OrderNote> page2 = orderNoteResource.getOrderIdOrderNotesPage(
-			id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(orderNote1, (List<OrderNote>)page1.getItems());
 
-		List<OrderNote> orderNotes2 = (List<OrderNote>)page2.getItems();
+			Page<OrderNote> page2 = orderNoteResource.getOrderIdOrderNotesPage(
+				id, Pagination.of(orderNote2Page, 500));
 
-		Assert.assertEquals(orderNotes2.toString(), 1, orderNotes2.size());
+			assertContains(orderNote2, (List<OrderNote>)page2.getItems());
 
-		Page<OrderNote> page3 = orderNoteResource.getOrderIdOrderNotesPage(
-			id, Pagination.of(1, (int)totalCount + 3));
+			Page<OrderNote> page3 = orderNoteResource.getOrderIdOrderNotesPage(
+				id, Pagination.of(orderNote3Page, 500));
 
-		assertContains(orderNote1, (List<OrderNote>)page3.getItems());
-		assertContains(orderNote2, (List<OrderNote>)page3.getItems());
-		assertContains(orderNote3, (List<OrderNote>)page3.getItems());
+			assertContains(orderNote3, (List<OrderNote>)page3.getItems());
+		}
+		else {
+			Page<OrderNote> page1 = orderNoteResource.getOrderIdOrderNotesPage(
+				id, Pagination.of(1, totalCount + 2));
+
+			List<OrderNote> orderNotes1 = (List<OrderNote>)page1.getItems();
+
+			Assert.assertEquals(
+				orderNotes1.toString(), totalCount + 2, orderNotes1.size());
+
+			Page<OrderNote> page2 = orderNoteResource.getOrderIdOrderNotesPage(
+				id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OrderNote> orderNotes2 = (List<OrderNote>)page2.getItems();
+
+			Assert.assertEquals(orderNotes2.toString(), 1, orderNotes2.size());
+
+			Page<OrderNote> page3 = orderNoteResource.getOrderIdOrderNotesPage(
+				id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(orderNote1, (List<OrderNote>)page3.getItems());
+			assertContains(orderNote2, (List<OrderNote>)page3.getItems());
+			assertContains(orderNote3, (List<OrderNote>)page3.getItems());
+		}
 	}
 
 	protected OrderNote testGetOrderIdOrderNotesPage_addOrderNote(

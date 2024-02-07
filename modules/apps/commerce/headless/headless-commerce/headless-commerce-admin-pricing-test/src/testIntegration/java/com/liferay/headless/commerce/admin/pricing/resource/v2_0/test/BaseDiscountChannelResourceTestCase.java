@@ -300,43 +300,86 @@ public abstract class BaseDiscountChannelResourceTestCase {
 			testGetDiscountByExternalReferenceCodeDiscountChannelsPage_addDiscountChannel(
 				externalReferenceCode, randomDiscountChannel());
 
-		Page<DiscountChannel> page1 =
-			discountChannelResource.
-				getDiscountByExternalReferenceCodeDiscountChannelsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<DiscountChannel> discountChannels1 =
-			(List<DiscountChannel>)page1.getItems();
+			int discountChannel1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int discountChannel2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int discountChannel3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			discountChannels1.toString(), totalCount + 2,
-			discountChannels1.size());
+			Page<DiscountChannel> page1 =
+				discountChannelResource.
+					getDiscountByExternalReferenceCodeDiscountChannelsPage(
+						externalReferenceCode,
+						Pagination.of(discountChannel1Page, 500));
 
-		Page<DiscountChannel> page2 =
-			discountChannelResource.
-				getDiscountByExternalReferenceCodeDiscountChannelsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				discountChannel1, (List<DiscountChannel>)page1.getItems());
 
-		List<DiscountChannel> discountChannels2 =
-			(List<DiscountChannel>)page2.getItems();
+			Page<DiscountChannel> page2 =
+				discountChannelResource.
+					getDiscountByExternalReferenceCodeDiscountChannelsPage(
+						externalReferenceCode,
+						Pagination.of(discountChannel2Page, 500));
 
-		Assert.assertEquals(
-			discountChannels2.toString(), 1, discountChannels2.size());
+			assertContains(
+				discountChannel2, (List<DiscountChannel>)page2.getItems());
 
-		Page<DiscountChannel> page3 =
-			discountChannelResource.
-				getDiscountByExternalReferenceCodeDiscountChannelsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<DiscountChannel> page3 =
+				discountChannelResource.
+					getDiscountByExternalReferenceCodeDiscountChannelsPage(
+						externalReferenceCode,
+						Pagination.of(discountChannel3Page, 500));
 
-		assertContains(
-			discountChannel1, (List<DiscountChannel>)page3.getItems());
-		assertContains(
-			discountChannel2, (List<DiscountChannel>)page3.getItems());
-		assertContains(
-			discountChannel3, (List<DiscountChannel>)page3.getItems());
+			assertContains(
+				discountChannel3, (List<DiscountChannel>)page3.getItems());
+		}
+		else {
+			Page<DiscountChannel> page1 =
+				discountChannelResource.
+					getDiscountByExternalReferenceCodeDiscountChannelsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<DiscountChannel> discountChannels1 =
+				(List<DiscountChannel>)page1.getItems();
+
+			Assert.assertEquals(
+				discountChannels1.toString(), totalCount + 2,
+				discountChannels1.size());
+
+			Page<DiscountChannel> page2 =
+				discountChannelResource.
+					getDiscountByExternalReferenceCodeDiscountChannelsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DiscountChannel> discountChannels2 =
+				(List<DiscountChannel>)page2.getItems();
+
+			Assert.assertEquals(
+				discountChannels2.toString(), 1, discountChannels2.size());
+
+			Page<DiscountChannel> page3 =
+				discountChannelResource.
+					getDiscountByExternalReferenceCodeDiscountChannelsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				discountChannel1, (List<DiscountChannel>)page3.getItems());
+			assertContains(
+				discountChannel2, (List<DiscountChannel>)page3.getItems());
+			assertContains(
+				discountChannel3, (List<DiscountChannel>)page3.getItems());
+		}
 	}
 
 	protected DiscountChannel
@@ -571,39 +614,78 @@ public abstract class BaseDiscountChannelResourceTestCase {
 			testGetDiscountIdDiscountChannelsPage_addDiscountChannel(
 				id, randomDiscountChannel());
 
-		Page<DiscountChannel> page1 =
-			discountChannelResource.getDiscountIdDiscountChannelsPage(
-				id, null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<DiscountChannel> discountChannels1 =
-			(List<DiscountChannel>)page1.getItems();
+			int discountChannel1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int discountChannel2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int discountChannel3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			discountChannels1.toString(), totalCount + 2,
-			discountChannels1.size());
+			Page<DiscountChannel> page1 =
+				discountChannelResource.getDiscountIdDiscountChannelsPage(
+					id, null, null, Pagination.of(discountChannel1Page, 500),
+					null);
 
-		Page<DiscountChannel> page2 =
-			discountChannelResource.getDiscountIdDiscountChannelsPage(
-				id, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				discountChannel1, (List<DiscountChannel>)page1.getItems());
 
-		List<DiscountChannel> discountChannels2 =
-			(List<DiscountChannel>)page2.getItems();
+			Page<DiscountChannel> page2 =
+				discountChannelResource.getDiscountIdDiscountChannelsPage(
+					id, null, null, Pagination.of(discountChannel2Page, 500),
+					null);
 
-		Assert.assertEquals(
-			discountChannels2.toString(), 1, discountChannels2.size());
+			assertContains(
+				discountChannel2, (List<DiscountChannel>)page2.getItems());
 
-		Page<DiscountChannel> page3 =
-			discountChannelResource.getDiscountIdDiscountChannelsPage(
-				id, null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<DiscountChannel> page3 =
+				discountChannelResource.getDiscountIdDiscountChannelsPage(
+					id, null, null, Pagination.of(discountChannel3Page, 500),
+					null);
 
-		assertContains(
-			discountChannel1, (List<DiscountChannel>)page3.getItems());
-		assertContains(
-			discountChannel2, (List<DiscountChannel>)page3.getItems());
-		assertContains(
-			discountChannel3, (List<DiscountChannel>)page3.getItems());
+			assertContains(
+				discountChannel3, (List<DiscountChannel>)page3.getItems());
+		}
+		else {
+			Page<DiscountChannel> page1 =
+				discountChannelResource.getDiscountIdDiscountChannelsPage(
+					id, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<DiscountChannel> discountChannels1 =
+				(List<DiscountChannel>)page1.getItems();
+
+			Assert.assertEquals(
+				discountChannels1.toString(), totalCount + 2,
+				discountChannels1.size());
+
+			Page<DiscountChannel> page2 =
+				discountChannelResource.getDiscountIdDiscountChannelsPage(
+					id, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DiscountChannel> discountChannels2 =
+				(List<DiscountChannel>)page2.getItems();
+
+			Assert.assertEquals(
+				discountChannels2.toString(), 1, discountChannels2.size());
+
+			Page<DiscountChannel> page3 =
+				discountChannelResource.getDiscountIdDiscountChannelsPage(
+					id, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(
+				discountChannel1, (List<DiscountChannel>)page3.getItems());
+			assertContains(
+				discountChannel2, (List<DiscountChannel>)page3.getItems());
+			assertContains(
+				discountChannel3, (List<DiscountChannel>)page3.getItems());
+		}
 	}
 
 	@Test

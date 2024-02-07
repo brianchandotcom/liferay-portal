@@ -332,29 +332,55 @@ public abstract class BasePaymentResourceTestCase {
 
 		Payment payment3 = testGetPaymentsPage_addPayment(randomPayment());
 
-		Page<Payment> page1 = paymentResource.getPaymentsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Payment> payments1 = (List<Payment>)page1.getItems();
+			int payment1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
+			int payment2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
+			int payment3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			payments1.toString(), totalCount + 2, payments1.size());
+			Page<Payment> page1 = paymentResource.getPaymentsPage(
+				null, null, Pagination.of(payment1Page, 500), null);
 
-		Page<Payment> page2 = paymentResource.getPaymentsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(payment1, (List<Payment>)page1.getItems());
 
-		List<Payment> payments2 = (List<Payment>)page2.getItems();
+			Page<Payment> page2 = paymentResource.getPaymentsPage(
+				null, null, Pagination.of(payment2Page, 500), null);
 
-		Assert.assertEquals(payments2.toString(), 1, payments2.size());
+			assertContains(payment2, (List<Payment>)page2.getItems());
 
-		Page<Payment> page3 = paymentResource.getPaymentsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<Payment> page3 = paymentResource.getPaymentsPage(
+				null, null, Pagination.of(payment3Page, 500), null);
 
-		assertContains(payment1, (List<Payment>)page3.getItems());
-		assertContains(payment2, (List<Payment>)page3.getItems());
-		assertContains(payment3, (List<Payment>)page3.getItems());
+			assertContains(payment3, (List<Payment>)page3.getItems());
+		}
+		else {
+			Page<Payment> page1 = paymentResource.getPaymentsPage(
+				null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<Payment> payments1 = (List<Payment>)page1.getItems();
+
+			Assert.assertEquals(
+				payments1.toString(), totalCount + 2, payments1.size());
+
+			Page<Payment> page2 = paymentResource.getPaymentsPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Payment> payments2 = (List<Payment>)page2.getItems();
+
+			Assert.assertEquals(payments2.toString(), 1, payments2.size());
+
+			Page<Payment> page3 = paymentResource.getPaymentsPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(payment1, (List<Payment>)page3.getItems());
+			assertContains(payment2, (List<Payment>)page3.getItems());
+			assertContains(payment3, (List<Payment>)page3.getItems());
+		}
 	}
 
 	@Test

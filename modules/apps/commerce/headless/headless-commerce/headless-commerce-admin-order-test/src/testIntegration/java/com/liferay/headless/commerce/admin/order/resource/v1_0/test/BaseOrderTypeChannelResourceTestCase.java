@@ -299,43 +299,86 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 			testGetOrderTypeByExternalReferenceCodeOrderTypeChannelsPage_addOrderTypeChannel(
 				externalReferenceCode, randomOrderTypeChannel());
 
-		Page<OrderTypeChannel> page1 =
-			orderTypeChannelResource.
-				getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<OrderTypeChannel> orderTypeChannels1 =
-			(List<OrderTypeChannel>)page1.getItems();
+			int orderTypeChannel1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int orderTypeChannel2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int orderTypeChannel3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			orderTypeChannels1.toString(), totalCount + 2,
-			orderTypeChannels1.size());
+			Page<OrderTypeChannel> page1 =
+				orderTypeChannelResource.
+					getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
+						externalReferenceCode,
+						Pagination.of(orderTypeChannel1Page, 500));
 
-		Page<OrderTypeChannel> page2 =
-			orderTypeChannelResource.
-				getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				orderTypeChannel1, (List<OrderTypeChannel>)page1.getItems());
 
-		List<OrderTypeChannel> orderTypeChannels2 =
-			(List<OrderTypeChannel>)page2.getItems();
+			Page<OrderTypeChannel> page2 =
+				orderTypeChannelResource.
+					getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
+						externalReferenceCode,
+						Pagination.of(orderTypeChannel2Page, 500));
 
-		Assert.assertEquals(
-			orderTypeChannels2.toString(), 1, orderTypeChannels2.size());
+			assertContains(
+				orderTypeChannel2, (List<OrderTypeChannel>)page2.getItems());
 
-		Page<OrderTypeChannel> page3 =
-			orderTypeChannelResource.
-				getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<OrderTypeChannel> page3 =
+				orderTypeChannelResource.
+					getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
+						externalReferenceCode,
+						Pagination.of(orderTypeChannel3Page, 500));
 
-		assertContains(
-			orderTypeChannel1, (List<OrderTypeChannel>)page3.getItems());
-		assertContains(
-			orderTypeChannel2, (List<OrderTypeChannel>)page3.getItems());
-		assertContains(
-			orderTypeChannel3, (List<OrderTypeChannel>)page3.getItems());
+			assertContains(
+				orderTypeChannel3, (List<OrderTypeChannel>)page3.getItems());
+		}
+		else {
+			Page<OrderTypeChannel> page1 =
+				orderTypeChannelResource.
+					getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<OrderTypeChannel> orderTypeChannels1 =
+				(List<OrderTypeChannel>)page1.getItems();
+
+			Assert.assertEquals(
+				orderTypeChannels1.toString(), totalCount + 2,
+				orderTypeChannels1.size());
+
+			Page<OrderTypeChannel> page2 =
+				orderTypeChannelResource.
+					getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OrderTypeChannel> orderTypeChannels2 =
+				(List<OrderTypeChannel>)page2.getItems();
+
+			Assert.assertEquals(
+				orderTypeChannels2.toString(), 1, orderTypeChannels2.size());
+
+			Page<OrderTypeChannel> page3 =
+				orderTypeChannelResource.
+					getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				orderTypeChannel1, (List<OrderTypeChannel>)page3.getItems());
+			assertContains(
+				orderTypeChannel2, (List<OrderTypeChannel>)page3.getItems());
+			assertContains(
+				orderTypeChannel3, (List<OrderTypeChannel>)page3.getItems());
+		}
 	}
 
 	protected OrderTypeChannel
@@ -473,39 +516,74 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 			testGetOrderTypeIdOrderTypeChannelsPage_addOrderTypeChannel(
 				id, randomOrderTypeChannel());
 
-		Page<OrderTypeChannel> page1 =
-			orderTypeChannelResource.getOrderTypeIdOrderTypeChannelsPage(
-				id, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<OrderTypeChannel> orderTypeChannels1 =
-			(List<OrderTypeChannel>)page1.getItems();
+			int orderTypeChannel1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int orderTypeChannel2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int orderTypeChannel3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			orderTypeChannels1.toString(), totalCount + 2,
-			orderTypeChannels1.size());
+			Page<OrderTypeChannel> page1 =
+				orderTypeChannelResource.getOrderTypeIdOrderTypeChannelsPage(
+					id, null, Pagination.of(orderTypeChannel1Page, 500), null);
 
-		Page<OrderTypeChannel> page2 =
-			orderTypeChannelResource.getOrderTypeIdOrderTypeChannelsPage(
-				id, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				orderTypeChannel1, (List<OrderTypeChannel>)page1.getItems());
 
-		List<OrderTypeChannel> orderTypeChannels2 =
-			(List<OrderTypeChannel>)page2.getItems();
+			Page<OrderTypeChannel> page2 =
+				orderTypeChannelResource.getOrderTypeIdOrderTypeChannelsPage(
+					id, null, Pagination.of(orderTypeChannel2Page, 500), null);
 
-		Assert.assertEquals(
-			orderTypeChannels2.toString(), 1, orderTypeChannels2.size());
+			assertContains(
+				orderTypeChannel2, (List<OrderTypeChannel>)page2.getItems());
 
-		Page<OrderTypeChannel> page3 =
-			orderTypeChannelResource.getOrderTypeIdOrderTypeChannelsPage(
-				id, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<OrderTypeChannel> page3 =
+				orderTypeChannelResource.getOrderTypeIdOrderTypeChannelsPage(
+					id, null, Pagination.of(orderTypeChannel3Page, 500), null);
 
-		assertContains(
-			orderTypeChannel1, (List<OrderTypeChannel>)page3.getItems());
-		assertContains(
-			orderTypeChannel2, (List<OrderTypeChannel>)page3.getItems());
-		assertContains(
-			orderTypeChannel3, (List<OrderTypeChannel>)page3.getItems());
+			assertContains(
+				orderTypeChannel3, (List<OrderTypeChannel>)page3.getItems());
+		}
+		else {
+			Page<OrderTypeChannel> page1 =
+				orderTypeChannelResource.getOrderTypeIdOrderTypeChannelsPage(
+					id, null, Pagination.of(1, totalCount + 2), null);
+
+			List<OrderTypeChannel> orderTypeChannels1 =
+				(List<OrderTypeChannel>)page1.getItems();
+
+			Assert.assertEquals(
+				orderTypeChannels1.toString(), totalCount + 2,
+				orderTypeChannels1.size());
+
+			Page<OrderTypeChannel> page2 =
+				orderTypeChannelResource.getOrderTypeIdOrderTypeChannelsPage(
+					id, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OrderTypeChannel> orderTypeChannels2 =
+				(List<OrderTypeChannel>)page2.getItems();
+
+			Assert.assertEquals(
+				orderTypeChannels2.toString(), 1, orderTypeChannels2.size());
+
+			Page<OrderTypeChannel> page3 =
+				orderTypeChannelResource.getOrderTypeIdOrderTypeChannelsPage(
+					id, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				orderTypeChannel1, (List<OrderTypeChannel>)page3.getItems());
+			assertContains(
+				orderTypeChannel2, (List<OrderTypeChannel>)page3.getItems());
+			assertContains(
+				orderTypeChannel3, (List<OrderTypeChannel>)page3.getItems());
+		}
 	}
 
 	@Test

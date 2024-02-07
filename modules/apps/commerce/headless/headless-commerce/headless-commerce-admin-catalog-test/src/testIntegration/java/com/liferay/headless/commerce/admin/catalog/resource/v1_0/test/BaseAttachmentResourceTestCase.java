@@ -348,32 +348,77 @@ public abstract class BaseAttachmentResourceTestCase {
 			testGetProductByExternalReferenceCodeAttachmentsPage_addAttachment(
 				externalReferenceCode, randomAttachment());
 
-		Page<Attachment> page1 =
-			attachmentResource.getProductByExternalReferenceCodeAttachmentsPage(
-				externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
+			int attachment1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int attachment2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int attachment3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			attachments1.toString(), totalCount + 2, attachments1.size());
+			Page<Attachment> page1 =
+				attachmentResource.
+					getProductByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(attachment1Page, 500));
 
-		Page<Attachment> page2 =
-			attachmentResource.getProductByExternalReferenceCodeAttachmentsPage(
-				externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(attachment1, (List<Attachment>)page1.getItems());
 
-		List<Attachment> attachments2 = (List<Attachment>)page2.getItems();
+			Page<Attachment> page2 =
+				attachmentResource.
+					getProductByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(attachment2Page, 500));
 
-		Assert.assertEquals(attachments2.toString(), 1, attachments2.size());
+			assertContains(attachment2, (List<Attachment>)page2.getItems());
 
-		Page<Attachment> page3 =
-			attachmentResource.getProductByExternalReferenceCodeAttachmentsPage(
-				externalReferenceCode, Pagination.of(1, (int)totalCount + 3));
+			Page<Attachment> page3 =
+				attachmentResource.
+					getProductByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(attachment3Page, 500));
 
-		assertContains(attachment1, (List<Attachment>)page3.getItems());
-		assertContains(attachment2, (List<Attachment>)page3.getItems());
-		assertContains(attachment3, (List<Attachment>)page3.getItems());
+			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
+		else {
+			Page<Attachment> page1 =
+				attachmentResource.
+					getProductByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
+
+			Assert.assertEquals(
+				attachments1.toString(), totalCount + 2, attachments1.size());
+
+			Page<Attachment> page2 =
+				attachmentResource.
+					getProductByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Attachment> attachments2 = (List<Attachment>)page2.getItems();
+
+			Assert.assertEquals(
+				attachments2.toString(), 1, attachments2.size());
+
+			Page<Attachment> page3 =
+				attachmentResource.
+					getProductByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(attachment1, (List<Attachment>)page3.getItems());
+			assertContains(attachment2, (List<Attachment>)page3.getItems());
+			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
 	}
 
 	protected Attachment
@@ -565,32 +610,66 @@ public abstract class BaseAttachmentResourceTestCase {
 			testGetProductByExternalReferenceCodeImagesPage_addAttachment(
 				externalReferenceCode, randomAttachment());
 
-		Page<Attachment> page1 =
-			attachmentResource.getProductByExternalReferenceCodeImagesPage(
-				externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
+			int attachment1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int attachment2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int attachment3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			attachments1.toString(), totalCount + 2, attachments1.size());
+			Page<Attachment> page1 =
+				attachmentResource.getProductByExternalReferenceCodeImagesPage(
+					externalReferenceCode, Pagination.of(attachment1Page, 500));
 
-		Page<Attachment> page2 =
-			attachmentResource.getProductByExternalReferenceCodeImagesPage(
-				externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(attachment1, (List<Attachment>)page1.getItems());
 
-		List<Attachment> attachments2 = (List<Attachment>)page2.getItems();
+			Page<Attachment> page2 =
+				attachmentResource.getProductByExternalReferenceCodeImagesPage(
+					externalReferenceCode, Pagination.of(attachment2Page, 500));
 
-		Assert.assertEquals(attachments2.toString(), 1, attachments2.size());
+			assertContains(attachment2, (List<Attachment>)page2.getItems());
 
-		Page<Attachment> page3 =
-			attachmentResource.getProductByExternalReferenceCodeImagesPage(
-				externalReferenceCode, Pagination.of(1, (int)totalCount + 3));
+			Page<Attachment> page3 =
+				attachmentResource.getProductByExternalReferenceCodeImagesPage(
+					externalReferenceCode, Pagination.of(attachment3Page, 500));
 
-		assertContains(attachment1, (List<Attachment>)page3.getItems());
-		assertContains(attachment2, (List<Attachment>)page3.getItems());
-		assertContains(attachment3, (List<Attachment>)page3.getItems());
+			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
+		else {
+			Page<Attachment> page1 =
+				attachmentResource.getProductByExternalReferenceCodeImagesPage(
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
+
+			List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
+
+			Assert.assertEquals(
+				attachments1.toString(), totalCount + 2, attachments1.size());
+
+			Page<Attachment> page2 =
+				attachmentResource.getProductByExternalReferenceCodeImagesPage(
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Attachment> attachments2 = (List<Attachment>)page2.getItems();
+
+			Assert.assertEquals(
+				attachments2.toString(), 1, attachments2.size());
+
+			Page<Attachment> page3 =
+				attachmentResource.getProductByExternalReferenceCodeImagesPage(
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(attachment1, (List<Attachment>)page3.getItems());
+			assertContains(attachment2, (List<Attachment>)page3.getItems());
+			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
 	}
 
 	protected Attachment
@@ -762,29 +841,65 @@ public abstract class BaseAttachmentResourceTestCase {
 		Attachment attachment3 = testGetProductIdAttachmentsPage_addAttachment(
 			id, randomAttachment());
 
-		Page<Attachment> page1 = attachmentResource.getProductIdAttachmentsPage(
-			id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
+			int attachment1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int attachment2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int attachment3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			attachments1.toString(), totalCount + 2, attachments1.size());
+			Page<Attachment> page1 =
+				attachmentResource.getProductIdAttachmentsPage(
+					id, Pagination.of(attachment1Page, 500));
 
-		Page<Attachment> page2 = attachmentResource.getProductIdAttachmentsPage(
-			id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(attachment1, (List<Attachment>)page1.getItems());
 
-		List<Attachment> attachments2 = (List<Attachment>)page2.getItems();
+			Page<Attachment> page2 =
+				attachmentResource.getProductIdAttachmentsPage(
+					id, Pagination.of(attachment2Page, 500));
 
-		Assert.assertEquals(attachments2.toString(), 1, attachments2.size());
+			assertContains(attachment2, (List<Attachment>)page2.getItems());
 
-		Page<Attachment> page3 = attachmentResource.getProductIdAttachmentsPage(
-			id, Pagination.of(1, (int)totalCount + 3));
+			Page<Attachment> page3 =
+				attachmentResource.getProductIdAttachmentsPage(
+					id, Pagination.of(attachment3Page, 500));
 
-		assertContains(attachment1, (List<Attachment>)page3.getItems());
-		assertContains(attachment2, (List<Attachment>)page3.getItems());
-		assertContains(attachment3, (List<Attachment>)page3.getItems());
+			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
+		else {
+			Page<Attachment> page1 =
+				attachmentResource.getProductIdAttachmentsPage(
+					id, Pagination.of(1, totalCount + 2));
+
+			List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
+
+			Assert.assertEquals(
+				attachments1.toString(), totalCount + 2, attachments1.size());
+
+			Page<Attachment> page2 =
+				attachmentResource.getProductIdAttachmentsPage(
+					id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Attachment> attachments2 = (List<Attachment>)page2.getItems();
+
+			Assert.assertEquals(
+				attachments2.toString(), 1, attachments2.size());
+
+			Page<Attachment> page3 =
+				attachmentResource.getProductIdAttachmentsPage(
+					id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(attachment1, (List<Attachment>)page3.getItems());
+			assertContains(attachment2, (List<Attachment>)page3.getItems());
+			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
 	}
 
 	protected Attachment testGetProductIdAttachmentsPage_addAttachment(
@@ -937,29 +1052,59 @@ public abstract class BaseAttachmentResourceTestCase {
 		Attachment attachment3 = testGetProductIdImagesPage_addAttachment(
 			id, randomAttachment());
 
-		Page<Attachment> page1 = attachmentResource.getProductIdImagesPage(
-			id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
+			int attachment1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int attachment2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int attachment3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			attachments1.toString(), totalCount + 2, attachments1.size());
+			Page<Attachment> page1 = attachmentResource.getProductIdImagesPage(
+				id, Pagination.of(attachment1Page, 500));
 
-		Page<Attachment> page2 = attachmentResource.getProductIdImagesPage(
-			id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(attachment1, (List<Attachment>)page1.getItems());
 
-		List<Attachment> attachments2 = (List<Attachment>)page2.getItems();
+			Page<Attachment> page2 = attachmentResource.getProductIdImagesPage(
+				id, Pagination.of(attachment2Page, 500));
 
-		Assert.assertEquals(attachments2.toString(), 1, attachments2.size());
+			assertContains(attachment2, (List<Attachment>)page2.getItems());
 
-		Page<Attachment> page3 = attachmentResource.getProductIdImagesPage(
-			id, Pagination.of(1, (int)totalCount + 3));
+			Page<Attachment> page3 = attachmentResource.getProductIdImagesPage(
+				id, Pagination.of(attachment3Page, 500));
 
-		assertContains(attachment1, (List<Attachment>)page3.getItems());
-		assertContains(attachment2, (List<Attachment>)page3.getItems());
-		assertContains(attachment3, (List<Attachment>)page3.getItems());
+			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
+		else {
+			Page<Attachment> page1 = attachmentResource.getProductIdImagesPage(
+				id, Pagination.of(1, totalCount + 2));
+
+			List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
+
+			Assert.assertEquals(
+				attachments1.toString(), totalCount + 2, attachments1.size());
+
+			Page<Attachment> page2 = attachmentResource.getProductIdImagesPage(
+				id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Attachment> attachments2 = (List<Attachment>)page2.getItems();
+
+			Assert.assertEquals(
+				attachments2.toString(), 1, attachments2.size());
+
+			Page<Attachment> page3 = attachmentResource.getProductIdImagesPage(
+				id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(attachment1, (List<Attachment>)page3.getItems());
+			assertContains(attachment2, (List<Attachment>)page3.getItems());
+			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
 	}
 
 	protected Attachment testGetProductIdImagesPage_addAttachment(

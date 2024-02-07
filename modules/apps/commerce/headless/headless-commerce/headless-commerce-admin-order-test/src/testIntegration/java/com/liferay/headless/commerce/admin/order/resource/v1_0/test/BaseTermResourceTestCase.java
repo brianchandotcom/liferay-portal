@@ -307,28 +307,55 @@ public abstract class BaseTermResourceTestCase {
 
 		Term term3 = testGetTermsPage_addTerm(randomTerm());
 
-		Page<Term> page1 = termResource.getTermsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Term> terms1 = (List<Term>)page1.getItems();
+			int term1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
+			int term2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
+			int term3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(terms1.toString(), totalCount + 2, terms1.size());
+			Page<Term> page1 = termResource.getTermsPage(
+				null, null, Pagination.of(term1Page, 500), null);
 
-		Page<Term> page2 = termResource.getTermsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(term1, (List<Term>)page1.getItems());
 
-		List<Term> terms2 = (List<Term>)page2.getItems();
+			Page<Term> page2 = termResource.getTermsPage(
+				null, null, Pagination.of(term2Page, 500), null);
 
-		Assert.assertEquals(terms2.toString(), 1, terms2.size());
+			assertContains(term2, (List<Term>)page2.getItems());
 
-		Page<Term> page3 = termResource.getTermsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<Term> page3 = termResource.getTermsPage(
+				null, null, Pagination.of(term3Page, 500), null);
 
-		assertContains(term1, (List<Term>)page3.getItems());
-		assertContains(term2, (List<Term>)page3.getItems());
-		assertContains(term3, (List<Term>)page3.getItems());
+			assertContains(term3, (List<Term>)page3.getItems());
+		}
+		else {
+			Page<Term> page1 = termResource.getTermsPage(
+				null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<Term> terms1 = (List<Term>)page1.getItems();
+
+			Assert.assertEquals(
+				terms1.toString(), totalCount + 2, terms1.size());
+
+			Page<Term> page2 = termResource.getTermsPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Term> terms2 = (List<Term>)page2.getItems();
+
+			Assert.assertEquals(terms2.toString(), 1, terms2.size());
+
+			Page<Term> page3 = termResource.getTermsPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(term1, (List<Term>)page3.getItems());
+			assertContains(term2, (List<Term>)page3.getItems());
+			assertContains(term3, (List<Term>)page3.getItems());
+		}
 	}
 
 	@Test

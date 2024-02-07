@@ -1562,44 +1562,93 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountChannelBillingAddressesPage_addAccountChannelEntry(
 				externalReferenceCode, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelBillingAddressesPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelBillingAddressesPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelBillingAddressesPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelBillingAddressesPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelBillingAddressesPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelBillingAddressesPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelBillingAddressesPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelBillingAddressesPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelBillingAddressesPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -1752,44 +1801,93 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountChannelCurrenciesPage_addAccountChannelEntry(
 				externalReferenceCode, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelCurrenciesPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelCurrenciesPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelCurrenciesPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelCurrenciesPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelCurrenciesPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelCurrenciesPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelCurrenciesPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelCurrenciesPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelCurrenciesPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -1942,44 +2040,93 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage_addAccountChannelEntry(
 				externalReferenceCode, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -2132,44 +2279,93 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountChannelDiscountsPage_addAccountChannelEntry(
 				externalReferenceCode, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelDiscountsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelDiscountsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelDiscountsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelDiscountsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelDiscountsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelDiscountsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelDiscountsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelDiscountsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelDiscountsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -2322,44 +2518,93 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_addAccountChannelEntry(
 				externalReferenceCode, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -2512,44 +2757,93 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountChannelPaymentTermsPage_addAccountChannelEntry(
 				externalReferenceCode, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -2702,44 +2996,93 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountChannelPriceListsPage_addAccountChannelEntry(
 				externalReferenceCode, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelPriceListsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPriceListsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelPriceListsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPriceListsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelPriceListsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPriceListsPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPriceListsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPriceListsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPriceListsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -2892,44 +3235,93 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountChannelShippingAddressesPage_addAccountChannelEntry(
 				externalReferenceCode, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -3082,44 +3474,93 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountChannelUsersPage_addAccountChannelEntry(
 				externalReferenceCode, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelUsersPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelUsersPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelUsersPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelUsersPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountByExternalReferenceCodeAccountChannelUsersPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelUsersPage(
+						externalReferenceCode,
+						Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelUsersPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelUsersPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelUsersPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -3267,43 +3708,87 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountIdAccountChannelBillingAddressesPage_addAccountChannelEntry(
 				id, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelBillingAddressesPage(
-					id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelBillingAddressesPage(
+						id, Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelBillingAddressesPage(
-					id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelBillingAddressesPage(
+						id, Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelBillingAddressesPage(
-					id, Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelBillingAddressesPage(
+						id, Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelBillingAddressesPage(
+						id, Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelBillingAddressesPage(
+						id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelBillingAddressesPage(
+						id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -3449,43 +3934,87 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountIdAccountChannelCurrenciesPage_addAccountChannelEntry(
 				id, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelCurrenciesPage(
-					id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelCurrenciesPage(
+						id, Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelCurrenciesPage(
-					id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelCurrenciesPage(
+						id, Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelCurrenciesPage(
-					id, Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelCurrenciesPage(
+						id, Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelCurrenciesPage(
+						id, Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelCurrenciesPage(
+						id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelCurrenciesPage(
+						id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -3629,43 +4158,87 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountIdAccountChannelDeliveryTermsPage_addAccountChannelEntry(
 				id, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelDeliveryTermsPage(
-					id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelDeliveryTermsPage(
+						id, Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelDeliveryTermsPage(
-					id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelDeliveryTermsPage(
+						id, Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelDeliveryTermsPage(
-					id, Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelDeliveryTermsPage(
+						id, Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelDeliveryTermsPage(
+						id, Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelDeliveryTermsPage(
+						id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelDeliveryTermsPage(
+						id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -3804,40 +4377,87 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountIdAccountChannelDiscountsPage_addAccountChannelEntry(
 				id, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.getAccountIdAccountChannelDiscountsPage(
-				id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelDiscountsPage(
+						id, Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.getAccountIdAccountChannelDiscountsPage(
-				id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelDiscountsPage(
+						id, Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.getAccountIdAccountChannelDiscountsPage(
-				id, Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelDiscountsPage(
+						id, Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelDiscountsPage(
+						id, Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelDiscountsPage(
+						id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelDiscountsPage(
+						id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -3980,43 +4600,87 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountIdAccountChannelPaymentMethodsPage_addAccountChannelEntry(
 				id, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelPaymentMethodsPage(
-					id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPaymentMethodsPage(
+						id, Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelPaymentMethodsPage(
-					id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPaymentMethodsPage(
+						id, Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelPaymentMethodsPage(
-					id, Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPaymentMethodsPage(
+						id, Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPaymentMethodsPage(
+						id, Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPaymentMethodsPage(
+						id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPaymentMethodsPage(
+						id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -4162,43 +4826,87 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountIdAccountChannelPaymentTermsPage_addAccountChannelEntry(
 				id, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelPaymentTermsPage(
-					id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPaymentTermsPage(
+						id, Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelPaymentTermsPage(
-					id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPaymentTermsPage(
+						id, Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelPaymentTermsPage(
-					id, Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPaymentTermsPage(
+						id, Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPaymentTermsPage(
+						id, Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPaymentTermsPage(
+						id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPaymentTermsPage(
+						id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -4342,43 +5050,87 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountIdAccountChannelPriceListsPage_addAccountChannelEntry(
 				id, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelPriceListsPage(
-					id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPriceListsPage(
+						id, Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelPriceListsPage(
-					id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPriceListsPage(
+						id, Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelPriceListsPage(
-					id, Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPriceListsPage(
+						id, Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPriceListsPage(
+						id, Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPriceListsPage(
+						id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPriceListsPage(
+						id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -4522,43 +5274,87 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountIdAccountChannelShippingAddressesPage_addAccountChannelEntry(
 				id, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelShippingAddressesPage(
-					id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelShippingAddressesPage(
+						id, Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelShippingAddressesPage(
-					id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelShippingAddressesPage(
+						id, Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.
-				getAccountIdAccountChannelShippingAddressesPage(
-					id, Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelShippingAddressesPage(
+						id, Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelShippingAddressesPage(
+						id, Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelShippingAddressesPage(
+						id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelShippingAddressesPage(
+						id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry
@@ -4696,40 +5492,81 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountIdAccountChannelUsersPage_addAccountChannelEntry(
 				id, randomAccountChannelEntry());
 
-		Page<AccountChannelEntry> page1 =
-			accountChannelEntryResource.getAccountIdAccountChannelUsersPage(
-				id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountChannelEntry> accountChannelEntries1 =
-			(List<AccountChannelEntry>)page1.getItems();
+			int accountChannelEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountChannelEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountChannelEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountChannelEntries1.toString(), totalCount + 2,
-			accountChannelEntries1.size());
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.getAccountIdAccountChannelUsersPage(
+					id, Pagination.of(accountChannelEntry1Page, 500));
 
-		Page<AccountChannelEntry> page2 =
-			accountChannelEntryResource.getAccountIdAccountChannelUsersPage(
-				id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page1.getItems());
 
-		List<AccountChannelEntry> accountChannelEntries2 =
-			(List<AccountChannelEntry>)page2.getItems();
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.getAccountIdAccountChannelUsersPage(
+					id, Pagination.of(accountChannelEntry2Page, 500));
 
-		Assert.assertEquals(
-			accountChannelEntries2.toString(), 1,
-			accountChannelEntries2.size());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page2.getItems());
 
-		Page<AccountChannelEntry> page3 =
-			accountChannelEntryResource.getAccountIdAccountChannelUsersPage(
-				id, Pagination.of(1, (int)totalCount + 3));
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.getAccountIdAccountChannelUsersPage(
+					id, Pagination.of(accountChannelEntry3Page, 500));
 
-		assertContains(
-			accountChannelEntry1, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry2, (List<AccountChannelEntry>)page3.getItems());
-		assertContains(
-			accountChannelEntry3, (List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
+		else {
+			Page<AccountChannelEntry> page1 =
+				accountChannelEntryResource.getAccountIdAccountChannelUsersPage(
+					id, Pagination.of(1, totalCount + 2));
+
+			List<AccountChannelEntry> accountChannelEntries1 =
+				(List<AccountChannelEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries1.toString(), totalCount + 2,
+				accountChannelEntries1.size());
+
+			Page<AccountChannelEntry> page2 =
+				accountChannelEntryResource.getAccountIdAccountChannelUsersPage(
+					id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountChannelEntry> accountChannelEntries2 =
+				(List<AccountChannelEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				accountChannelEntries2.toString(), 1,
+				accountChannelEntries2.size());
+
+			Page<AccountChannelEntry> page3 =
+				accountChannelEntryResource.getAccountIdAccountChannelUsersPage(
+					id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountChannelEntry1,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry2,
+				(List<AccountChannelEntry>)page3.getItems());
+			assertContains(
+				accountChannelEntry3,
+				(List<AccountChannelEntry>)page3.getItems());
+		}
 	}
 
 	protected AccountChannelEntry

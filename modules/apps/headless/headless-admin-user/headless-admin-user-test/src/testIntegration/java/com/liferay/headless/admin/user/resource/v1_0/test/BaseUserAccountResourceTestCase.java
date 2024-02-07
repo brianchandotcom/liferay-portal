@@ -612,38 +612,79 @@ public abstract class BaseUserAccountResourceTestCase {
 			testGetAccountUserAccountsByExternalReferenceCodePage_addUserAccount(
 				externalReferenceCode, randomUserAccount());
 
-		Page<UserAccount> page1 =
-			userAccountResource.
-				getAccountUserAccountsByExternalReferenceCodePage(
-					externalReferenceCode, null, null,
-					Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<UserAccount> userAccounts1 = (List<UserAccount>)page1.getItems();
+			int userAccount1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int userAccount2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int userAccount3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+			Page<UserAccount> page1 =
+				userAccountResource.
+					getAccountUserAccountsByExternalReferenceCodePage(
+						externalReferenceCode, null, null,
+						Pagination.of(userAccount1Page, 500), null);
 
-		Page<UserAccount> page2 =
-			userAccountResource.
-				getAccountUserAccountsByExternalReferenceCodePage(
-					externalReferenceCode, null, null,
-					Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(userAccount1, (List<UserAccount>)page1.getItems());
 
-		List<UserAccount> userAccounts2 = (List<UserAccount>)page2.getItems();
+			Page<UserAccount> page2 =
+				userAccountResource.
+					getAccountUserAccountsByExternalReferenceCodePage(
+						externalReferenceCode, null, null,
+						Pagination.of(userAccount2Page, 500), null);
 
-		Assert.assertEquals(userAccounts2.toString(), 1, userAccounts2.size());
+			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
 
-		Page<UserAccount> page3 =
-			userAccountResource.
-				getAccountUserAccountsByExternalReferenceCodePage(
-					externalReferenceCode, null, null,
-					Pagination.of(1, (int)totalCount + 3), null);
+			Page<UserAccount> page3 =
+				userAccountResource.
+					getAccountUserAccountsByExternalReferenceCodePage(
+						externalReferenceCode, null, null,
+						Pagination.of(userAccount3Page, 500), null);
 
-		assertContains(userAccount1, (List<UserAccount>)page3.getItems());
-		assertContains(userAccount2, (List<UserAccount>)page3.getItems());
-		assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
+		else {
+			Page<UserAccount> page1 =
+				userAccountResource.
+					getAccountUserAccountsByExternalReferenceCodePage(
+						externalReferenceCode, null, null,
+						Pagination.of(1, totalCount + 2), null);
+
+			List<UserAccount> userAccounts1 =
+				(List<UserAccount>)page1.getItems();
+
+			Assert.assertEquals(
+				userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+
+			Page<UserAccount> page2 =
+				userAccountResource.
+					getAccountUserAccountsByExternalReferenceCodePage(
+						externalReferenceCode, null, null,
+						Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<UserAccount> userAccounts2 =
+				(List<UserAccount>)page2.getItems();
+
+			Assert.assertEquals(
+				userAccounts2.toString(), 1, userAccounts2.size());
+
+			Page<UserAccount> page3 =
+				userAccountResource.
+					getAccountUserAccountsByExternalReferenceCodePage(
+						externalReferenceCode, null, null,
+						Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(userAccount1, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount2, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -1165,33 +1206,73 @@ public abstract class BaseUserAccountResourceTestCase {
 			testGetAccountUserAccountsPage_addUserAccount(
 				accountId, randomUserAccount());
 
-		Page<UserAccount> page1 =
-			userAccountResource.getAccountUserAccountsPage(
-				accountId, null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<UserAccount> userAccounts1 = (List<UserAccount>)page1.getItems();
+			int userAccount1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int userAccount2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int userAccount3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+			Page<UserAccount> page1 =
+				userAccountResource.getAccountUserAccountsPage(
+					accountId, null, null, Pagination.of(userAccount1Page, 500),
+					null);
 
-		Page<UserAccount> page2 =
-			userAccountResource.getAccountUserAccountsPage(
-				accountId, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(userAccount1, (List<UserAccount>)page1.getItems());
 
-		List<UserAccount> userAccounts2 = (List<UserAccount>)page2.getItems();
+			Page<UserAccount> page2 =
+				userAccountResource.getAccountUserAccountsPage(
+					accountId, null, null, Pagination.of(userAccount2Page, 500),
+					null);
 
-		Assert.assertEquals(userAccounts2.toString(), 1, userAccounts2.size());
+			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
 
-		Page<UserAccount> page3 =
-			userAccountResource.getAccountUserAccountsPage(
-				accountId, null, null, Pagination.of(1, (int)totalCount + 3),
-				null);
+			Page<UserAccount> page3 =
+				userAccountResource.getAccountUserAccountsPage(
+					accountId, null, null, Pagination.of(userAccount3Page, 500),
+					null);
 
-		assertContains(userAccount1, (List<UserAccount>)page3.getItems());
-		assertContains(userAccount2, (List<UserAccount>)page3.getItems());
-		assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
+		else {
+			Page<UserAccount> page1 =
+				userAccountResource.getAccountUserAccountsPage(
+					accountId, null, null, Pagination.of(1, totalCount + 2),
+					null);
+
+			List<UserAccount> userAccounts1 =
+				(List<UserAccount>)page1.getItems();
+
+			Assert.assertEquals(
+				userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+
+			Page<UserAccount> page2 =
+				userAccountResource.getAccountUserAccountsPage(
+					accountId, null, null, Pagination.of(2, totalCount + 2),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<UserAccount> userAccounts2 =
+				(List<UserAccount>)page2.getItems();
+
+			Assert.assertEquals(
+				userAccounts2.toString(), 1, userAccounts2.size());
+
+			Page<UserAccount> page3 =
+				userAccountResource.getAccountUserAccountsPage(
+					accountId, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(userAccount1, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount2, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -1828,35 +1909,73 @@ public abstract class BaseUserAccountResourceTestCase {
 			testGetOrganizationUserAccountsPage_addUserAccount(
 				organizationId, randomUserAccount());
 
-		Page<UserAccount> page1 =
-			userAccountResource.getOrganizationUserAccountsPage(
-				organizationId, null, null, Pagination.of(1, totalCount + 2),
-				null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<UserAccount> userAccounts1 = (List<UserAccount>)page1.getItems();
+			int userAccount1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int userAccount2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int userAccount3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+			Page<UserAccount> page1 =
+				userAccountResource.getOrganizationUserAccountsPage(
+					organizationId, null, null,
+					Pagination.of(userAccount1Page, 500), null);
 
-		Page<UserAccount> page2 =
-			userAccountResource.getOrganizationUserAccountsPage(
-				organizationId, null, null, Pagination.of(2, totalCount + 2),
-				null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(userAccount1, (List<UserAccount>)page1.getItems());
 
-		List<UserAccount> userAccounts2 = (List<UserAccount>)page2.getItems();
+			Page<UserAccount> page2 =
+				userAccountResource.getOrganizationUserAccountsPage(
+					organizationId, null, null,
+					Pagination.of(userAccount2Page, 500), null);
 
-		Assert.assertEquals(userAccounts2.toString(), 1, userAccounts2.size());
+			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
 
-		Page<UserAccount> page3 =
-			userAccountResource.getOrganizationUserAccountsPage(
-				organizationId, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+			Page<UserAccount> page3 =
+				userAccountResource.getOrganizationUserAccountsPage(
+					organizationId, null, null,
+					Pagination.of(userAccount3Page, 500), null);
 
-		assertContains(userAccount1, (List<UserAccount>)page3.getItems());
-		assertContains(userAccount2, (List<UserAccount>)page3.getItems());
-		assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
+		else {
+			Page<UserAccount> page1 =
+				userAccountResource.getOrganizationUserAccountsPage(
+					organizationId, null, null,
+					Pagination.of(1, totalCount + 2), null);
+
+			List<UserAccount> userAccounts1 =
+				(List<UserAccount>)page1.getItems();
+
+			Assert.assertEquals(
+				userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+
+			Page<UserAccount> page2 =
+				userAccountResource.getOrganizationUserAccountsPage(
+					organizationId, null, null,
+					Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<UserAccount> userAccounts2 =
+				(List<UserAccount>)page2.getItems();
+
+			Assert.assertEquals(
+				userAccounts2.toString(), 1, userAccounts2.size());
+
+			Page<UserAccount> page3 =
+				userAccountResource.getOrganizationUserAccountsPage(
+					organizationId, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(userAccount1, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount2, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -2202,29 +2321,71 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount3 = testGetSiteUserAccountsPage_addUserAccount(
 			siteId, randomUserAccount());
 
-		Page<UserAccount> page1 = userAccountResource.getSiteUserAccountsPage(
-			siteId, null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<UserAccount> userAccounts1 = (List<UserAccount>)page1.getItems();
+			int userAccount1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int userAccount2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int userAccount3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+			Page<UserAccount> page1 =
+				userAccountResource.getSiteUserAccountsPage(
+					siteId, null, null, Pagination.of(userAccount1Page, 500),
+					null);
 
-		Page<UserAccount> page2 = userAccountResource.getSiteUserAccountsPage(
-			siteId, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(userAccount1, (List<UserAccount>)page1.getItems());
 
-		List<UserAccount> userAccounts2 = (List<UserAccount>)page2.getItems();
+			Page<UserAccount> page2 =
+				userAccountResource.getSiteUserAccountsPage(
+					siteId, null, null, Pagination.of(userAccount2Page, 500),
+					null);
 
-		Assert.assertEquals(userAccounts2.toString(), 1, userAccounts2.size());
+			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
 
-		Page<UserAccount> page3 = userAccountResource.getSiteUserAccountsPage(
-			siteId, null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<UserAccount> page3 =
+				userAccountResource.getSiteUserAccountsPage(
+					siteId, null, null, Pagination.of(userAccount3Page, 500),
+					null);
 
-		assertContains(userAccount1, (List<UserAccount>)page3.getItems());
-		assertContains(userAccount2, (List<UserAccount>)page3.getItems());
-		assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
+		else {
+			Page<UserAccount> page1 =
+				userAccountResource.getSiteUserAccountsPage(
+					siteId, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<UserAccount> userAccounts1 =
+				(List<UserAccount>)page1.getItems();
+
+			Assert.assertEquals(
+				userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+
+			Page<UserAccount> page2 =
+				userAccountResource.getSiteUserAccountsPage(
+					siteId, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<UserAccount> userAccounts2 =
+				(List<UserAccount>)page2.getItems();
+
+			Assert.assertEquals(
+				userAccounts2.toString(), 1, userAccounts2.size());
+
+			Page<UserAccount> page3 =
+				userAccountResource.getSiteUserAccountsPage(
+					siteId, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(userAccount1, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount2, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -2519,29 +2680,61 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount3 = testGetUserAccountsPage_addUserAccount(
 			randomUserAccount());
 
-		Page<UserAccount> page1 = userAccountResource.getUserAccountsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<UserAccount> userAccounts1 = (List<UserAccount>)page1.getItems();
+			int userAccount1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int userAccount2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int userAccount3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+			Page<UserAccount> page1 = userAccountResource.getUserAccountsPage(
+				null, null, Pagination.of(userAccount1Page, 500), null);
 
-		Page<UserAccount> page2 = userAccountResource.getUserAccountsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(userAccount1, (List<UserAccount>)page1.getItems());
 
-		List<UserAccount> userAccounts2 = (List<UserAccount>)page2.getItems();
+			Page<UserAccount> page2 = userAccountResource.getUserAccountsPage(
+				null, null, Pagination.of(userAccount2Page, 500), null);
 
-		Assert.assertEquals(userAccounts2.toString(), 1, userAccounts2.size());
+			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
 
-		Page<UserAccount> page3 = userAccountResource.getUserAccountsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<UserAccount> page3 = userAccountResource.getUserAccountsPage(
+				null, null, Pagination.of(userAccount3Page, 500), null);
 
-		assertContains(userAccount1, (List<UserAccount>)page3.getItems());
-		assertContains(userAccount2, (List<UserAccount>)page3.getItems());
-		assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
+		else {
+			Page<UserAccount> page1 = userAccountResource.getUserAccountsPage(
+				null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<UserAccount> userAccounts1 =
+				(List<UserAccount>)page1.getItems();
+
+			Assert.assertEquals(
+				userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+
+			Page<UserAccount> page2 = userAccountResource.getUserAccountsPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<UserAccount> userAccounts2 =
+				(List<UserAccount>)page2.getItems();
+
+			Assert.assertEquals(
+				userAccounts2.toString(), 1, userAccounts2.size());
+
+			Page<UserAccount> page3 = userAccountResource.getUserAccountsPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(userAccount1, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount2, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -3188,33 +3381,71 @@ public abstract class BaseUserAccountResourceTestCase {
 			testGetUserAccountsByStatusPage_addUserAccount(
 				status, randomUserAccount());
 
-		Page<UserAccount> page1 =
-			userAccountResource.getUserAccountsByStatusPage(
-				status, null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<UserAccount> userAccounts1 = (List<UserAccount>)page1.getItems();
+			int userAccount1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int userAccount2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int userAccount3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+			Page<UserAccount> page1 =
+				userAccountResource.getUserAccountsByStatusPage(
+					status, null, null, Pagination.of(userAccount1Page, 500),
+					null);
 
-		Page<UserAccount> page2 =
-			userAccountResource.getUserAccountsByStatusPage(
-				status, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(userAccount1, (List<UserAccount>)page1.getItems());
 
-		List<UserAccount> userAccounts2 = (List<UserAccount>)page2.getItems();
+			Page<UserAccount> page2 =
+				userAccountResource.getUserAccountsByStatusPage(
+					status, null, null, Pagination.of(userAccount2Page, 500),
+					null);
 
-		Assert.assertEquals(userAccounts2.toString(), 1, userAccounts2.size());
+			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
 
-		Page<UserAccount> page3 =
-			userAccountResource.getUserAccountsByStatusPage(
-				status, null, null, Pagination.of(1, (int)totalCount + 3),
-				null);
+			Page<UserAccount> page3 =
+				userAccountResource.getUserAccountsByStatusPage(
+					status, null, null, Pagination.of(userAccount3Page, 500),
+					null);
 
-		assertContains(userAccount1, (List<UserAccount>)page3.getItems());
-		assertContains(userAccount2, (List<UserAccount>)page3.getItems());
-		assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
+		else {
+			Page<UserAccount> page1 =
+				userAccountResource.getUserAccountsByStatusPage(
+					status, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<UserAccount> userAccounts1 =
+				(List<UserAccount>)page1.getItems();
+
+			Assert.assertEquals(
+				userAccounts1.toString(), totalCount + 2, userAccounts1.size());
+
+			Page<UserAccount> page2 =
+				userAccountResource.getUserAccountsByStatusPage(
+					status, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<UserAccount> userAccounts2 =
+				(List<UserAccount>)page2.getItems();
+
+			Assert.assertEquals(
+				userAccounts2.toString(), 1, userAccounts2.size());
+
+			Page<UserAccount> page3 =
+				userAccountResource.getUserAccountsByStatusPage(
+					status, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(userAccount1, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount2, (List<UserAccount>)page3.getItems());
+			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
+		}
 	}
 
 	@Test

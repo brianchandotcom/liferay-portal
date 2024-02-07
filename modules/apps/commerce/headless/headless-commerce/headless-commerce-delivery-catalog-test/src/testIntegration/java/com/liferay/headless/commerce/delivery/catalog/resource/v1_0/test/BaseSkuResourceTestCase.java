@@ -271,28 +271,55 @@ public abstract class BaseSkuResourceTestCase {
 		Sku sku3 = testGetChannelProductSkusPage_addSku(
 			channelId, productId, randomSku());
 
-		Page<Sku> page1 = skuResource.getChannelProductSkusPage(
-			channelId, productId, null, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Sku> skus1 = (List<Sku>)page1.getItems();
+			int sku1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
+			int sku2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
+			int sku3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(skus1.toString(), totalCount + 2, skus1.size());
+			Page<Sku> page1 = skuResource.getChannelProductSkusPage(
+				channelId, productId, null, Pagination.of(sku1Page, 500));
 
-		Page<Sku> page2 = skuResource.getChannelProductSkusPage(
-			channelId, productId, null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(sku1, (List<Sku>)page1.getItems());
 
-		List<Sku> skus2 = (List<Sku>)page2.getItems();
+			Page<Sku> page2 = skuResource.getChannelProductSkusPage(
+				channelId, productId, null, Pagination.of(sku2Page, 500));
 
-		Assert.assertEquals(skus2.toString(), 1, skus2.size());
+			assertContains(sku2, (List<Sku>)page2.getItems());
 
-		Page<Sku> page3 = skuResource.getChannelProductSkusPage(
-			channelId, productId, null, Pagination.of(1, (int)totalCount + 3));
+			Page<Sku> page3 = skuResource.getChannelProductSkusPage(
+				channelId, productId, null, Pagination.of(sku3Page, 500));
 
-		assertContains(sku1, (List<Sku>)page3.getItems());
-		assertContains(sku2, (List<Sku>)page3.getItems());
-		assertContains(sku3, (List<Sku>)page3.getItems());
+			assertContains(sku3, (List<Sku>)page3.getItems());
+		}
+		else {
+			Page<Sku> page1 = skuResource.getChannelProductSkusPage(
+				channelId, productId, null, Pagination.of(1, totalCount + 2));
+
+			List<Sku> skus1 = (List<Sku>)page1.getItems();
+
+			Assert.assertEquals(skus1.toString(), totalCount + 2, skus1.size());
+
+			Page<Sku> page2 = skuResource.getChannelProductSkusPage(
+				channelId, productId, null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Sku> skus2 = (List<Sku>)page2.getItems();
+
+			Assert.assertEquals(skus2.toString(), 1, skus2.size());
+
+			Page<Sku> page3 = skuResource.getChannelProductSkusPage(
+				channelId, productId, null,
+				Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(sku1, (List<Sku>)page3.getItems());
+			assertContains(sku2, (List<Sku>)page3.getItems());
+			assertContains(sku3, (List<Sku>)page3.getItems());
+		}
 	}
 
 	protected Sku testGetChannelProductSkusPage_addSku(

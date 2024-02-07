@@ -402,42 +402,80 @@ public abstract class BaseContentStructureResourceTestCase {
 			testGetAssetLibraryContentStructuresPage_addContentStructure(
 				assetLibraryId, randomContentStructure());
 
-		Page<ContentStructure> page1 =
-			contentStructureResource.getAssetLibraryContentStructuresPage(
-				assetLibraryId, null, null, null,
-				Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<ContentStructure> contentStructures1 =
-			(List<ContentStructure>)page1.getItems();
+			int contentStructure1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int contentStructure2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int contentStructure3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			contentStructures1.toString(), totalCount + 2,
-			contentStructures1.size());
+			Page<ContentStructure> page1 =
+				contentStructureResource.getAssetLibraryContentStructuresPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(contentStructure1Page, 500), null);
 
-		Page<ContentStructure> page2 =
-			contentStructureResource.getAssetLibraryContentStructuresPage(
-				assetLibraryId, null, null, null,
-				Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				contentStructure1, (List<ContentStructure>)page1.getItems());
 
-		List<ContentStructure> contentStructures2 =
-			(List<ContentStructure>)page2.getItems();
+			Page<ContentStructure> page2 =
+				contentStructureResource.getAssetLibraryContentStructuresPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(contentStructure2Page, 500), null);
 
-		Assert.assertEquals(
-			contentStructures2.toString(), 1, contentStructures2.size());
+			assertContains(
+				contentStructure2, (List<ContentStructure>)page2.getItems());
 
-		Page<ContentStructure> page3 =
-			contentStructureResource.getAssetLibraryContentStructuresPage(
-				assetLibraryId, null, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+			Page<ContentStructure> page3 =
+				contentStructureResource.getAssetLibraryContentStructuresPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(contentStructure3Page, 500), null);
 
-		assertContains(
-			contentStructure1, (List<ContentStructure>)page3.getItems());
-		assertContains(
-			contentStructure2, (List<ContentStructure>)page3.getItems());
-		assertContains(
-			contentStructure3, (List<ContentStructure>)page3.getItems());
+			assertContains(
+				contentStructure3, (List<ContentStructure>)page3.getItems());
+		}
+		else {
+			Page<ContentStructure> page1 =
+				contentStructureResource.getAssetLibraryContentStructuresPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(1, totalCount + 2), null);
+
+			List<ContentStructure> contentStructures1 =
+				(List<ContentStructure>)page1.getItems();
+
+			Assert.assertEquals(
+				contentStructures1.toString(), totalCount + 2,
+				contentStructures1.size());
+
+			Page<ContentStructure> page2 =
+				contentStructureResource.getAssetLibraryContentStructuresPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ContentStructure> contentStructures2 =
+				(List<ContentStructure>)page2.getItems();
+
+			Assert.assertEquals(
+				contentStructures2.toString(), 1, contentStructures2.size());
+
+			Page<ContentStructure> page3 =
+				contentStructureResource.getAssetLibraryContentStructuresPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				contentStructure1, (List<ContentStructure>)page3.getItems());
+			assertContains(
+				contentStructure2, (List<ContentStructure>)page3.getItems());
+			assertContains(
+				contentStructure3, (List<ContentStructure>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -1011,42 +1049,80 @@ public abstract class BaseContentStructureResourceTestCase {
 			testGetSiteContentStructuresPage_addContentStructure(
 				siteId, randomContentStructure());
 
-		Page<ContentStructure> page1 =
-			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, null, Pagination.of(1, totalCount + 2),
-				null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<ContentStructure> contentStructures1 =
-			(List<ContentStructure>)page1.getItems();
+			int contentStructure1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int contentStructure2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int contentStructure3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			contentStructures1.toString(), totalCount + 2,
-			contentStructures1.size());
+			Page<ContentStructure> page1 =
+				contentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, null,
+					Pagination.of(contentStructure1Page, 500), null);
 
-		Page<ContentStructure> page2 =
-			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, null, Pagination.of(2, totalCount + 2),
-				null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				contentStructure1, (List<ContentStructure>)page1.getItems());
 
-		List<ContentStructure> contentStructures2 =
-			(List<ContentStructure>)page2.getItems();
+			Page<ContentStructure> page2 =
+				contentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, null,
+					Pagination.of(contentStructure2Page, 500), null);
 
-		Assert.assertEquals(
-			contentStructures2.toString(), 1, contentStructures2.size());
+			assertContains(
+				contentStructure2, (List<ContentStructure>)page2.getItems());
 
-		Page<ContentStructure> page3 =
-			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
-				null);
+			Page<ContentStructure> page3 =
+				contentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, null,
+					Pagination.of(contentStructure3Page, 500), null);
 
-		assertContains(
-			contentStructure1, (List<ContentStructure>)page3.getItems());
-		assertContains(
-			contentStructure2, (List<ContentStructure>)page3.getItems());
-		assertContains(
-			contentStructure3, (List<ContentStructure>)page3.getItems());
+			assertContains(
+				contentStructure3, (List<ContentStructure>)page3.getItems());
+		}
+		else {
+			Page<ContentStructure> page1 =
+				contentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, null, Pagination.of(1, totalCount + 2),
+					null);
+
+			List<ContentStructure> contentStructures1 =
+				(List<ContentStructure>)page1.getItems();
+
+			Assert.assertEquals(
+				contentStructures1.toString(), totalCount + 2,
+				contentStructures1.size());
+
+			Page<ContentStructure> page2 =
+				contentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, null, Pagination.of(2, totalCount + 2),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ContentStructure> contentStructures2 =
+				(List<ContentStructure>)page2.getItems();
+
+			Assert.assertEquals(
+				contentStructures2.toString(), 1, contentStructures2.size());
+
+			Page<ContentStructure> page3 =
+				contentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				contentStructure1, (List<ContentStructure>)page3.getItems());
+			assertContains(
+				contentStructure2, (List<ContentStructure>)page3.getItems());
+			assertContains(
+				contentStructure3, (List<ContentStructure>)page3.getItems());
+		}
 	}
 
 	@Test

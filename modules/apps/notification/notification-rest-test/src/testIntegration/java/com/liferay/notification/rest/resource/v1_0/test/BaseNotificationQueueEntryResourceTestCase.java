@@ -372,43 +372,84 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			testGetNotificationQueueEntriesPage_addNotificationQueueEntry(
 				randomNotificationQueueEntry());
 
-		Page<NotificationQueueEntry> page1 =
-			notificationQueueEntryResource.getNotificationQueueEntriesPage(
-				null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<NotificationQueueEntry> notificationQueueEntries1 =
-			(List<NotificationQueueEntry>)page1.getItems();
+			int notificationQueueEntry1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int notificationQueueEntry2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int notificationQueueEntry3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			notificationQueueEntries1.toString(), totalCount + 2,
-			notificationQueueEntries1.size());
+			Page<NotificationQueueEntry> page1 =
+				notificationQueueEntryResource.getNotificationQueueEntriesPage(
+					null, null, Pagination.of(notificationQueueEntry1Page, 500),
+					null);
 
-		Page<NotificationQueueEntry> page2 =
-			notificationQueueEntryResource.getNotificationQueueEntriesPage(
-				null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				notificationQueueEntry1,
+				(List<NotificationQueueEntry>)page1.getItems());
 
-		List<NotificationQueueEntry> notificationQueueEntries2 =
-			(List<NotificationQueueEntry>)page2.getItems();
+			Page<NotificationQueueEntry> page2 =
+				notificationQueueEntryResource.getNotificationQueueEntriesPage(
+					null, null, Pagination.of(notificationQueueEntry2Page, 500),
+					null);
 
-		Assert.assertEquals(
-			notificationQueueEntries2.toString(), 1,
-			notificationQueueEntries2.size());
+			assertContains(
+				notificationQueueEntry2,
+				(List<NotificationQueueEntry>)page2.getItems());
 
-		Page<NotificationQueueEntry> page3 =
-			notificationQueueEntryResource.getNotificationQueueEntriesPage(
-				null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<NotificationQueueEntry> page3 =
+				notificationQueueEntryResource.getNotificationQueueEntriesPage(
+					null, null, Pagination.of(notificationQueueEntry3Page, 500),
+					null);
 
-		assertContains(
-			notificationQueueEntry1,
-			(List<NotificationQueueEntry>)page3.getItems());
-		assertContains(
-			notificationQueueEntry2,
-			(List<NotificationQueueEntry>)page3.getItems());
-		assertContains(
-			notificationQueueEntry3,
-			(List<NotificationQueueEntry>)page3.getItems());
+			assertContains(
+				notificationQueueEntry3,
+				(List<NotificationQueueEntry>)page3.getItems());
+		}
+		else {
+			Page<NotificationQueueEntry> page1 =
+				notificationQueueEntryResource.getNotificationQueueEntriesPage(
+					null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<NotificationQueueEntry> notificationQueueEntries1 =
+				(List<NotificationQueueEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				notificationQueueEntries1.toString(), totalCount + 2,
+				notificationQueueEntries1.size());
+
+			Page<NotificationQueueEntry> page2 =
+				notificationQueueEntryResource.getNotificationQueueEntriesPage(
+					null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<NotificationQueueEntry> notificationQueueEntries2 =
+				(List<NotificationQueueEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				notificationQueueEntries2.toString(), 1,
+				notificationQueueEntries2.size());
+
+			Page<NotificationQueueEntry> page3 =
+				notificationQueueEntryResource.getNotificationQueueEntriesPage(
+					null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				notificationQueueEntry1,
+				(List<NotificationQueueEntry>)page3.getItems());
+			assertContains(
+				notificationQueueEntry2,
+				(List<NotificationQueueEntry>)page3.getItems());
+			assertContains(
+				notificationQueueEntry3,
+				(List<NotificationQueueEntry>)page3.getItems());
+		}
 	}
 
 	@Test

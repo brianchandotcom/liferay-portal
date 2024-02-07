@@ -103,7 +103,7 @@ public class BndInvokerTask extends Task {
 			urls.addAll(_getStaticURLs());
 
 			ClassLoader classLoader = new URLClassLoader(
-				urls.toArray(new URL[0]), null);
+				urls.toArray(new URL[0]), ClassLoader.getSystemClassLoader());
 
 			Class<?> clazz = classLoader.loadClass(
 				BndInvokerUtil.class.getName());

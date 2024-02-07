@@ -4609,43 +4609,6 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPatchCustomObjectEntryExternalReferenceCode()
-		throws Exception {
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-			).put(
-				"externalReferenceCode", _ERC_VALUE_1
-			).toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
-
-		_testPatchCustomObjectEntryExternalReferenceCode(
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				jsonObject.getLong("id")),
-			_ERC_VALUE_2);
-
-		_testPatchCustomObjectEntryExternalReferenceCode(
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(),
-				"/by-external-reference-code/", _ERC_VALUE_2),
-			_ERC_VALUE_3);
-	}
-
-	@Test
-	public void testPatchCustomObjectEntryWithDuplicateExternalReferenceCode()
-		throws Exception {
-
-		_testPatchCustomObjectEntryWithDuplicateExternalReferenceCode(
-			_objectDefinition1.getRESTContextPath());
-
-		_testPatchCustomObjectEntryWithDuplicateExternalReferenceCode(
-			_getEndpoint(
-				TestPropsValues.getGroupId(), _siteScopedObjectDefinition1));
-	}
-
-	@Test
 	public void testPatchObjectEntryWithKeywords() throws Exception {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -4745,6 +4708,25 @@ public class ObjectEntryResourceTest {
 			Http.Method.PUT, _siteScopedObjectDefinition1, true);
 	}
 
+	@Test
+	public void testPatchPutCustomObjectEntryExternalReferenceCode()
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", _ERC_VALUE_1
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		_testPatchPutCustomObjectEntryExternalReferenceCode(
+			Http.Method.PATCH, jsonObject.getLong("id"));
+
+		_testPatchPutCustomObjectEntryExternalReferenceCode(
+			Http.Method.PUT, jsonObject.getLong("id"));
+	}
+
 	@FeatureFlags("LPS-174455")
 	@Test
 	public void testPatchPutCustomObjectEntryWithAttachmentField()
@@ -4758,6 +4740,18 @@ public class ObjectEntryResourceTest {
 			Http.Method.PATCH, _siteScopedObjectDefinition1, false);
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			Http.Method.PUT, _siteScopedObjectDefinition1, false);
+	}
+
+	@Test
+	public void testPatchPutCustomObjectEntryWithDuplicateExternalReferenceCode()
+		throws Exception {
+
+		_testPatchPutCustomObjectEntryWithDuplicateExternalReferenceCode(
+			Http.Method.PATCH, _objectDefinition1,
+			_siteScopedObjectDefinition1);
+
+		_testPatchPutCustomObjectEntryWithDuplicateExternalReferenceCode(
+			Http.Method.PUT, _objectDefinition2, _siteScopedObjectDefinition2);
 	}
 
 	@Test
@@ -5864,31 +5858,6 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPutCustomObjectEntryExternalReferenceCode()
-		throws Exception {
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-			).put(
-				"externalReferenceCode", _ERC_VALUE_1
-			).toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
-
-		_testPutCustomObjectEntryExternalReferenceCode(
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				jsonObject.getLong("id")),
-			_ERC_VALUE_2);
-
-		_testPutCustomObjectEntryExternalReferenceCode(
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(),
-				"/by-external-reference-code/", _ERC_VALUE_2),
-			_ERC_VALUE_3);
-	}
-
-	@Test
 	public void testPutCustomObjectEntryUnlinkNestedCustomObjectEntries()
 		throws Exception {
 
@@ -5962,18 +5931,6 @@ public class ObjectEntryResourceTest {
 
 		_testPutCustomObjectEntryUnlinkNestedCustomObjectEntriesByExternalReferenceCode(
 			false);
-	}
-
-	@Test
-	public void testPutCustomObjectEntryWithDuplicateExternalReferenceCode()
-		throws Exception {
-
-		_testPutCustomObjectEntryWithDuplicateExternalReferenceCode(
-			_objectDefinition1.getRESTContextPath());
-
-		_testPutCustomObjectEntryWithDuplicateExternalReferenceCode(
-			_getEndpoint(
-				TestPropsValues.getGroupId(), _siteScopedObjectDefinition1));
 	}
 
 	@Test
@@ -6784,54 +6741,37 @@ public class ObjectEntryResourceTest {
 			expectedFieldName, objectFieldNamesAndObjectFieldValues, type);
 	}
 
-	private void _testPatchCustomObjectEntryExternalReferenceCode(
-			String endpoint, String externalReferenceCode)
+	private void _testPatchPutCustomObjectEntryExternalReferenceCode(
+			Http.Method httpMethod, long objectEntryId)
+		throws Exception {
+
+		_testPatchPutCustomObjectEntryExternalReferenceCode(
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+				objectEntryId),
+			_ERC_VALUE_2, httpMethod);
+
+		_testPatchPutCustomObjectEntryExternalReferenceCode(
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/", _ERC_VALUE_2),
+			_ERC_VALUE_3, httpMethod);
+	}
+
+	private void _testPatchPutCustomObjectEntryExternalReferenceCode(
+			String endpoint, String externalReferenceCode,
+			Http.Method httpMethod)
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"externalReferenceCode", externalReferenceCode
 			).toString(),
-			endpoint, Http.Method.PATCH);
+			endpoint, httpMethod);
 
 		Assert.assertEquals(
 			externalReferenceCode,
 			jsonObject.getString("externalReferenceCode"));
-	}
-
-	private void _testPatchCustomObjectEntryWithDuplicateExternalReferenceCode(
-			String endpoint)
-		throws Exception {
-
-		Assert.assertEquals(
-			200,
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-				).put(
-					"externalReferenceCode", _ERC_VALUE_1
-				).toString(),
-				endpoint, Http.Method.POST));
-
-		Assert.assertEquals(
-			200,
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-				).put(
-					"externalReferenceCode", _ERC_VALUE_2
-				).toString(),
-				endpoint, Http.Method.POST));
-
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					"externalReferenceCode", _ERC_VALUE_2
-				).toString(),
-				StringBundler.concat(
-					endpoint, "/by-external-reference-code/", _ERC_VALUE_1),
-				Http.Method.PATCH));
 	}
 
 	private void _testPatchPutCustomObjectEntryWithAttachmentField(
@@ -7443,6 +7383,63 @@ public class ObjectEntryResourceTest {
 		_assertJSONObjectWithAttachmentField(
 			expectedJSONObjectUnsafeFunction.apply(fileEntry), jsonObject,
 			objectFieldName);
+	}
+
+	private void
+			_testPatchPutCustomObjectEntryWithDuplicateExternalReferenceCode(
+				Http.Method httpMethod, ObjectDefinition objectDefinition,
+				ObjectDefinition siteScopedObjectDefinition)
+		throws Exception {
+
+		_testPatchPutCustomObjectEntryWithDuplicateExternalReferenceCode(
+			objectDefinition.getRESTContextPath(),
+			StringBundler.concat(
+				objectDefinition.getRESTContextPath(),
+				"/by-external-reference-code/", _ERC_VALUE_1),
+			httpMethod);
+
+		_testPatchPutCustomObjectEntryWithDuplicateExternalReferenceCode(
+			_getEndpoint(
+				TestPropsValues.getGroupId(), siteScopedObjectDefinition),
+			StringBundler.concat(
+				_getEndpoint(
+					TestPropsValues.getGroupId(), siteScopedObjectDefinition),
+				"/by-external-reference-code/", _ERC_VALUE_1),
+			httpMethod);
+	}
+
+	private void
+			_testPatchPutCustomObjectEntryWithDuplicateExternalReferenceCode(
+				String endpoint1, String endpoint2, Http.Method httpMethod)
+		throws Exception {
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"externalReferenceCode", _ERC_VALUE_1
+				).toString(),
+				endpoint1, Http.Method.POST));
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"externalReferenceCode", _ERC_VALUE_2
+				).toString(),
+				endpoint1, Http.Method.POST));
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"externalReferenceCode", _ERC_VALUE_2
+				).toString(),
+				endpoint2, httpMethod));
 	}
 
 	private void _testPostCustomObjectEntryWithAttachmentField(
@@ -8068,21 +8065,6 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 	}
 
-	private void _testPutCustomObjectEntryExternalReferenceCode(
-			String endpoint, String externalReferenceCode)
-		throws Exception {
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"externalReferenceCode", externalReferenceCode
-			).toString(),
-			endpoint, Http.Method.PUT);
-
-		Assert.assertEquals(
-			externalReferenceCode,
-			jsonObject.getString("externalReferenceCode"));
-	}
-
 	private void _testPutCustomObjectEntryUnlinkNestedCustomObjectEntries(
 			boolean manyToOne)
 		throws Exception {
@@ -8261,42 +8243,6 @@ public class ObjectEntryResourceTest {
 
 			Assert.assertEquals(0, nestedObjectEntriesJSONArray.length());
 		}
-	}
-
-	private void _testPutCustomObjectEntryWithDuplicateExternalReferenceCode(
-			String objectDefinitionRESTContextPath)
-		throws Exception {
-
-		Assert.assertEquals(
-			200,
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-				).put(
-					"externalReferenceCode", _ERC_VALUE_1
-				).toString(),
-				objectDefinitionRESTContextPath, Http.Method.POST));
-
-		Assert.assertEquals(
-			200,
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-				).put(
-					"externalReferenceCode", _ERC_VALUE_2
-				).toString(),
-				objectDefinitionRESTContextPath, Http.Method.POST));
-
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					"externalReferenceCode", _ERC_VALUE_2
-				).toString(),
-				StringBundler.concat(
-					objectDefinitionRESTContextPath,
-					"/by-external-reference-code/", _ERC_VALUE_1),
-				Http.Method.PUT));
 	}
 
 	private void

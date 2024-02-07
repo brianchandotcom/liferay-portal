@@ -87,23 +87,43 @@ public class FeatureFlagApplication extends Application {
 		@Context HttpServletResponse httpServletResponse,
 		@FormParam("companyId") long companyId, @FormParam("key") String key) {
 
-		FeatureFlagsBag featureFlagsBag =
-			_featureFlagsBagProvider.getOrCreateFeatureFlagsBag(companyId);
+		try {
+			FeatureFlagsBag featureFlagsBag =
+				_featureFlagsBagProvider.getOrCreateFeatureFlagsBag(companyId);
 
-		FeatureFlag featureFlag = featureFlagsBag.getFeatureFlag(key);
+			FeatureFlag featureFlag = featureFlagsBag.getFeatureFlag(key);
 
-		return Response.ok(
-			HashMapBuilder.<String, Object>put(
-				"dependentFeatureFlags",
-				TransformUtil.transform(
-					_getDependentFeatureFlags(featureFlagsBag, key),
-					dependentFeatureFlag -> _toMap(
-						companyId, dependentFeatureFlag, featureFlagsBag))
-			).put(
-				"featureFlag", _toMap(companyId, featureFlag, featureFlagsBag)
-			).build(),
-			MediaType.APPLICATION_JSON
-		).build();
+			if (featureFlag == null) {
+				return Response.ok(
+					HashMapBuilder.<String, Object>put(
+						"error", "Feature flag '" + key + "' cannot be found"
+					).build(),
+					MediaType.APPLICATION_JSON
+				).build();
+			}
+
+			return Response.ok(
+				HashMapBuilder.<String, Object>put(
+					"dependentFeatureFlags",
+					TransformUtil.transform(
+						_getDependentFeatureFlags(featureFlagsBag, key),
+						dependentFeatureFlag -> _toMap(
+							companyId, dependentFeatureFlag, featureFlagsBag))
+				).put(
+					"featureFlag",
+					_toMap(companyId, featureFlag, featureFlagsBag)
+				).build(),
+				MediaType.APPLICATION_JSON
+			).build();
+		}
+		catch (Exception exception) {
+			return Response.ok(
+				HashMapBuilder.<String, Object>put(
+					"error", exception.toString()
+				).build(),
+				MediaType.APPLICATION_JSON
+			).build();
+		}
 	}
 
 	private List<FeatureFlag> _getDependencyFeatureFlags(

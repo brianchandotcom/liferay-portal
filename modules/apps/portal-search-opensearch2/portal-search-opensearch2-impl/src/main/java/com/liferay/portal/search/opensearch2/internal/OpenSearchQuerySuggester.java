@@ -261,11 +261,17 @@ public class OpenSearchQuerySuggester implements QuerySuggester {
 			return _searchEngineAdapter.execute(suggestSearchRequest);
 		}
 		catch (RuntimeException runtimeException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(runtimeException);
+			String message = runtimeException.getMessage();
+
+			if (message.contains("no mapping found for field")) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("No dictionary indexed", runtimeException);
+				}
+
+				return null;
 			}
 
-			return null;
+			throw runtimeException;
 		}
 		finally {
 			if (_log.isInfoEnabled()) {

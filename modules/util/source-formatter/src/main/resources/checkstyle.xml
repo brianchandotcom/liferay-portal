@@ -740,6 +740,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.RESTDTOSetCallCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Ensures using set calls with `UnsafeSupplier` parameter for REST DTO." />
+			<property name="enabled" value="false" />
 			<message key="if.statement.inline" value="Use ''{0}(UnsafeSupplier)'' with inlined if-statement" />
 			<message key="set.method.use.instead" value="Use ''{0}(UnsafeSupplier)'' instead" />
 		</module>

@@ -43,9 +43,7 @@ public class BatchEngineImportTaskServiceTest
 	}
 
 	@Test(expected = PrincipalException.class)
-	public void testAddBatchEngineImportTaskOtherCompanyNotAllowed()
-		throws Exception {
-
+	public void testAddBatchEngineImportTaskOtherCompany() throws Exception {
 		UserTestUtil.setUser(user);
 
 		_batchEngineImportTask1 = _createBatchEngineImportTask(
@@ -56,6 +54,17 @@ public class BatchEngineImportTaskServiceTest
 	public void testGetBatchEngineImportTask() throws Exception {
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
 			company.getCompanyId(), omniadminUser);
+
+		_batchEngineImportTaskService.getBatchEngineImportTask(
+			_batchEngineImportTask1.getBatchEngineImportTaskId());
+	}
+
+	@Test
+	public void testGetBatchEngineImportTaskByCompanyAdmin() throws Exception {
+		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
+			company.getCompanyId(), user);
+
+		UserTestUtil.setUser(companyAdminUser);
 
 		_batchEngineImportTaskService.getBatchEngineImportTask(
 			_batchEngineImportTask1.getBatchEngineImportTaskId());
@@ -77,7 +86,7 @@ public class BatchEngineImportTaskServiceTest
 	}
 
 	@Test
-	public void testGetBatchEngineImportTaskByExternalReferenceCodeCompanyAdminAllowed()
+	public void testGetBatchEngineImportTaskByExternalReferenceCodeByCompanyAdmin()
 		throws Exception {
 
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
@@ -92,7 +101,7 @@ public class BatchEngineImportTaskServiceTest
 	}
 
 	@Test(expected = PrincipalException.class)
-	public void testGetBatchEngineImportTaskByExternalReferenceCodeNotOwnerNotAllowed()
+	public void testGetBatchEngineImportTaskByExternalReferenceCodeByNotOwner()
 		throws Exception {
 
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
@@ -107,22 +116,18 @@ public class BatchEngineImportTaskServiceTest
 	}
 
 	@Test
-	public void testGetBatchEngineImportTaskCompanyAdminAllowed()
-		throws Exception {
-
+	public void testGetBatchEngineImportTaskByOwner() throws Exception {
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
 			company.getCompanyId(), user);
 
-		UserTestUtil.setUser(companyAdminUser);
+		UserTestUtil.setUser(user);
 
 		_batchEngineImportTaskService.getBatchEngineImportTask(
 			_batchEngineImportTask1.getBatchEngineImportTaskId());
 	}
 
 	@Test(expected = PrincipalException.class)
-	public void testGetBatchEngineImportTaskNormalUserNotAllowed()
-		throws Exception {
-
+	public void testGetBatchEngineImportTaskByUser() throws Exception {
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
 			company.getCompanyId(), companyAdminUser);
 
@@ -132,23 +137,8 @@ public class BatchEngineImportTaskServiceTest
 			_batchEngineImportTask1.getBatchEngineImportTaskId());
 	}
 
-	@Test
-	public void testGetBatchEngineImportTaskNormalUserOwnerAllowed()
-		throws Exception {
-
-		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
-			company.getCompanyId(), user);
-
-		UserTestUtil.setUser(user);
-
-		_batchEngineImportTaskService.getBatchEngineImportTask(
-			_batchEngineImportTask1.getBatchEngineImportTaskId());
-	}
-
 	@Test(expected = PrincipalException.class)
-	public void testGetBatchEngineImportTaskOtherCompanyNotAllowed()
-		throws Exception {
-
+	public void testGetBatchEngineImportTaskOtherCompany() throws Exception {
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
 			otherCompany.getCompanyId(), omniadminUser);
 
@@ -159,7 +149,7 @@ public class BatchEngineImportTaskServiceTest
 	}
 
 	@Test
-	public void testGetBatchEngineImportTaskOtherCompanyOmniadminAllowed()
+	public void testGetBatchEngineImportTaskOtherCompanyByOmniadmin()
 		throws Exception {
 
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(

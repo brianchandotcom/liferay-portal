@@ -303,6 +303,12 @@ public class JournalDisplayContext {
 			availableActions.add("deleteEntries");
 		}
 
+		if (JournalArticlePermission.contains(
+				permissionChecker, article, ActionKeys.PERMISSIONS)) {
+
+			availableActions.add("changePermissions");
+		}
+
 		long scopeGroupId = _themeDisplay.getScopeGroupId();
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();

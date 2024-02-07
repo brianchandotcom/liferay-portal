@@ -93,7 +93,7 @@ public interface CTCollectionResource {
 	public String getCTCollectionShareLink(Long ctCollectionId)
 		throws Exception;
 
-	public Page<CTCollection> getCTCollectionsGetHistoriesPage(
+	public Page<CTCollection> getCTCollectionsHistoryPage(
 			Integer classNameId, Integer classPK)
 		throws Exception;
 

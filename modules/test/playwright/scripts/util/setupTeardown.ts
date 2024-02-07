@@ -11,14 +11,20 @@ import {basename, join, resolve} from 'path';
 import tasks from './tasks';
 
 function setupTeardown(setup: boolean, projectName: string) {
-	const testDir = resolve(__dirname, '..', '..', 'tests', projectName);
-
-	if (!existsSync(testDir)) {
+	if (!projectName) {
 		console.error(
 			`❌ Please provide the name of a project to ${
 				setup ? 'setup' : 'teardown'
 			}.`
 		);
+
+		process.exit(1);
+	}
+
+	const testDir = resolve(__dirname, '..', '..', 'tests', projectName);
+
+	if (!existsSync(testDir)) {
+		console.error(`❌ Invalid project name: ${projectName}`);
 
 		process.exit(1);
 	}

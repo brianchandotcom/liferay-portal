@@ -110,6 +110,8 @@ test('Undo and Redo buttons work as expected', async ({
 		getPageDefinition([fragmentDefinition])
 	);
 
+	const tabsFragment = pageEditorPage.getFragment(tabsId);
+
 	// Go to edit mode of page
 
 	await pageEditorPage.goToEditMode(site, layout);
@@ -123,9 +125,13 @@ test('Undo and Redo buttons work as expected', async ({
 		'5'
 	);
 
+	await expect(tabsFragment.getByText('Tab 5')).toBeVisible();
+
 	// Delete tabs fragment
 
 	await pageEditorPage.deleteFragment(tabsId);
+
+	await expect(tabsFragment).not.toBeAttached();
 
 	// Assert undo button is enabled and redo button is disabled
 
@@ -136,11 +142,10 @@ test('Undo and Redo buttons work as expected', async ({
 
 	await pageEditorPage.undoButton.click();
 
+	await expect(tabsFragment).toBeAttached();
+
 	// Assert tabsfragment its present and configuration is not lost
 
-	const tabsFragment = pageEditorPage.getFragment(tabsId);
-
-	await expect(tabsFragment).toBeAttached();
 	await expect(tabsFragment.getByText('Tab 5')).toBeVisible();
 
 	// Undo changing number of tabs
@@ -204,6 +209,10 @@ test('Undo history works as expected', async ({
 		'h2'
 	);
 
+	const headingFragment = pageEditorPage.getFragment(headingId);
+
+	await expect(headingFragment.locator('h2')).toBeAttached();
+
 	await pageEditorPage.changeFragmentConfiguration(
 		headingId,
 		'General',
@@ -211,12 +220,16 @@ test('Undo history works as expected', async ({
 		'h3'
 	);
 
+	await expect(headingFragment.locator('h3')).toBeAttached();
+
 	await pageEditorPage.changeFragmentConfiguration(
 		headingId,
 		'General',
 		'Heading Level',
 		'h4'
 	);
+
+	await expect(headingFragment.locator('h4')).toBeAttached();
 
 	// Open the History dropdown and assert we have 3 + 1 Action including Undo All
 
@@ -236,9 +249,7 @@ test('Undo history works as expected', async ({
 
 	await pageEditorPage.undoHistory.getByRole('menuitem').nth(1).click();
 
-	await expect(
-		pageEditorPage.getFragment(headingId).locator('h3')
-	).toBeAttached();
+	await expect(headingFragment.locator('h3')).toBeAttached();
 
 	// Assert the new History position is updated
 

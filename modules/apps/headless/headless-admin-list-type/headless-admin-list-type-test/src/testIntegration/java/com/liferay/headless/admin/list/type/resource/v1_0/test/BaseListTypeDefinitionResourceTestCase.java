@@ -349,39 +349,89 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			testGetListTypeDefinitionsPage_addListTypeDefinition(
 				randomListTypeDefinition());
 
-		Page<ListTypeDefinition> page1 =
-			listTypeDefinitionResource.getListTypeDefinitionsPage(
-				null, null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<ListTypeDefinition> listTypeDefinitions1 =
-			(List<ListTypeDefinition>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			listTypeDefinitions1.toString(), totalCount + 2,
-			listTypeDefinitions1.size());
+		if (totalCount >= 498) {
+			Page<ListTypeDefinition> page1 =
+				listTypeDefinitionResource.getListTypeDefinitionsPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<ListTypeDefinition> page2 =
-			listTypeDefinitionResource.getListTypeDefinitionsPage(
-				null, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				listTypeDefinition1,
+				(List<ListTypeDefinition>)page1.getItems());
 
-		List<ListTypeDefinition> listTypeDefinitions2 =
-			(List<ListTypeDefinition>)page2.getItems();
+			Page<ListTypeDefinition> page2 =
+				listTypeDefinitionResource.getListTypeDefinitionsPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			listTypeDefinitions2.toString(), 1, listTypeDefinitions2.size());
+			assertContains(
+				listTypeDefinition2,
+				(List<ListTypeDefinition>)page2.getItems());
 
-		Page<ListTypeDefinition> page3 =
-			listTypeDefinitionResource.getListTypeDefinitionsPage(
-				null, null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<ListTypeDefinition> page3 =
+				listTypeDefinitionResource.getListTypeDefinitionsPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			listTypeDefinition1, (List<ListTypeDefinition>)page3.getItems());
-		assertContains(
-			listTypeDefinition2, (List<ListTypeDefinition>)page3.getItems());
-		assertContains(
-			listTypeDefinition3, (List<ListTypeDefinition>)page3.getItems());
+			assertContains(
+				listTypeDefinition3,
+				(List<ListTypeDefinition>)page3.getItems());
+		}
+		else {
+			Page<ListTypeDefinition> page1 =
+				listTypeDefinitionResource.getListTypeDefinitionsPage(
+					null, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<ListTypeDefinition> listTypeDefinitions1 =
+				(List<ListTypeDefinition>)page1.getItems();
+
+			Assert.assertEquals(
+				listTypeDefinitions1.toString(), totalCount + 2,
+				listTypeDefinitions1.size());
+
+			Page<ListTypeDefinition> page2 =
+				listTypeDefinitionResource.getListTypeDefinitionsPage(
+					null, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ListTypeDefinition> listTypeDefinitions2 =
+				(List<ListTypeDefinition>)page2.getItems();
+
+			Assert.assertEquals(
+				listTypeDefinitions2.toString(), 1,
+				listTypeDefinitions2.size());
+
+			Page<ListTypeDefinition> page3 =
+				listTypeDefinitionResource.getListTypeDefinitionsPage(
+					null, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(
+				listTypeDefinition1,
+				(List<ListTypeDefinition>)page3.getItems());
+			assertContains(
+				listTypeDefinition2,
+				(List<ListTypeDefinition>)page3.getItems());
+			assertContains(
+				listTypeDefinition3,
+				(List<ListTypeDefinition>)page3.getItems());
+		}
 	}
 
 	@Test

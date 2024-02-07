@@ -405,47 +405,94 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
 				dataDefinitionId, randomDataRecordCollection());
 
-		Page<DataRecordCollection> page1 =
-			dataRecordCollectionResource.
-				getDataDefinitionDataRecordCollectionsPage(
-					dataDefinitionId, null, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<DataRecordCollection> dataRecordCollections1 =
-			(List<DataRecordCollection>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			dataRecordCollections1.toString(), totalCount + 2,
-			dataRecordCollections1.size());
+		if (totalCount >= 498) {
+			Page<DataRecordCollection> page1 =
+				dataRecordCollectionResource.
+					getDataDefinitionDataRecordCollectionsPage(
+						dataDefinitionId, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Page<DataRecordCollection> page2 =
-			dataRecordCollectionResource.
-				getDataDefinitionDataRecordCollectionsPage(
-					dataDefinitionId, null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				dataRecordCollection1,
+				(List<DataRecordCollection>)page1.getItems());
 
-		List<DataRecordCollection> dataRecordCollections2 =
-			(List<DataRecordCollection>)page2.getItems();
+			Page<DataRecordCollection> page2 =
+				dataRecordCollectionResource.
+					getDataDefinitionDataRecordCollectionsPage(
+						dataDefinitionId, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Assert.assertEquals(
-			dataRecordCollections2.toString(), 1,
-			dataRecordCollections2.size());
+			assertContains(
+				dataRecordCollection2,
+				(List<DataRecordCollection>)page2.getItems());
 
-		Page<DataRecordCollection> page3 =
-			dataRecordCollectionResource.
-				getDataDefinitionDataRecordCollectionsPage(
-					dataDefinitionId, null,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<DataRecordCollection> page3 =
+				dataRecordCollectionResource.
+					getDataDefinitionDataRecordCollectionsPage(
+						dataDefinitionId, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		assertContains(
-			dataRecordCollection1,
-			(List<DataRecordCollection>)page3.getItems());
-		assertContains(
-			dataRecordCollection2,
-			(List<DataRecordCollection>)page3.getItems());
-		assertContains(
-			dataRecordCollection3,
-			(List<DataRecordCollection>)page3.getItems());
+			assertContains(
+				dataRecordCollection3,
+				(List<DataRecordCollection>)page3.getItems());
+		}
+		else {
+			Page<DataRecordCollection> page1 =
+				dataRecordCollectionResource.
+					getDataDefinitionDataRecordCollectionsPage(
+						dataDefinitionId, null,
+						Pagination.of(1, totalCount + 2));
+
+			List<DataRecordCollection> dataRecordCollections1 =
+				(List<DataRecordCollection>)page1.getItems();
+
+			Assert.assertEquals(
+				dataRecordCollections1.toString(), totalCount + 2,
+				dataRecordCollections1.size());
+
+			Page<DataRecordCollection> page2 =
+				dataRecordCollectionResource.
+					getDataDefinitionDataRecordCollectionsPage(
+						dataDefinitionId, null,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DataRecordCollection> dataRecordCollections2 =
+				(List<DataRecordCollection>)page2.getItems();
+
+			Assert.assertEquals(
+				dataRecordCollections2.toString(), 1,
+				dataRecordCollections2.size());
+
+			Page<DataRecordCollection> page3 =
+				dataRecordCollectionResource.
+					getDataDefinitionDataRecordCollectionsPage(
+						dataDefinitionId, null,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				dataRecordCollection1,
+				(List<DataRecordCollection>)page3.getItems());
+			assertContains(
+				dataRecordCollection2,
+				(List<DataRecordCollection>)page3.getItems());
+			assertContains(
+				dataRecordCollection3,
+				(List<DataRecordCollection>)page3.getItems());
+		}
 	}
 
 	protected DataRecordCollection

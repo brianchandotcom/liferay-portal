@@ -274,32 +274,68 @@ public abstract class BaseInstanceResourceTestCase {
 		Instance instance3 = testGetProcessInstancesPage_addInstance(
 			processId, randomInstance());
 
-		Page<Instance> page1 = instanceResource.getProcessInstancesPage(
-			processId, null, null, null, null, null, null, null,
-			Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<Instance> instances1 = (List<Instance>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			instances1.toString(), totalCount + 2, instances1.size());
+		if (totalCount >= 498) {
+			Page<Instance> page1 = instanceResource.getProcessInstancesPage(
+				processId, null, null, null, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<Instance> page2 = instanceResource.getProcessInstancesPage(
-			processId, null, null, null, null, null, null, null,
-			Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(instance1, (List<Instance>)page1.getItems());
 
-		List<Instance> instances2 = (List<Instance>)page2.getItems();
+			Page<Instance> page2 = instanceResource.getProcessInstancesPage(
+				processId, null, null, null, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(instances2.toString(), 1, instances2.size());
+			assertContains(instance2, (List<Instance>)page2.getItems());
 
-		Page<Instance> page3 = instanceResource.getProcessInstancesPage(
-			processId, null, null, null, null, null, null, null,
-			Pagination.of(1, (int)totalCount + 3), null);
+			Page<Instance> page3 = instanceResource.getProcessInstancesPage(
+				processId, null, null, null, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(instance1, (List<Instance>)page3.getItems());
-		assertContains(instance2, (List<Instance>)page3.getItems());
-		assertContains(instance3, (List<Instance>)page3.getItems());
+			assertContains(instance3, (List<Instance>)page3.getItems());
+		}
+		else {
+			Page<Instance> page1 = instanceResource.getProcessInstancesPage(
+				processId, null, null, null, null, null, null, null,
+				Pagination.of(1, totalCount + 2), null);
+
+			List<Instance> instances1 = (List<Instance>)page1.getItems();
+
+			Assert.assertEquals(
+				instances1.toString(), totalCount + 2, instances1.size());
+
+			Page<Instance> page2 = instanceResource.getProcessInstancesPage(
+				processId, null, null, null, null, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Instance> instances2 = (List<Instance>)page2.getItems();
+
+			Assert.assertEquals(instances2.toString(), 1, instances2.size());
+
+			Page<Instance> page3 = instanceResource.getProcessInstancesPage(
+				processId, null, null, null, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(instance1, (List<Instance>)page3.getItems());
+			assertContains(instance2, (List<Instance>)page3.getItems());
+			assertContains(instance3, (List<Instance>)page3.getItems());
+		}
 	}
 
 	@Test

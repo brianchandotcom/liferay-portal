@@ -430,29 +430,62 @@ public abstract class BaseCartItemResourceTestCase {
 		CartItem cartItem3 = testGetCartItemsPage_addCartItem(
 			cartId, randomCartItem());
 
-		Page<CartItem> page1 = cartItemResource.getCartItemsPage(
-			cartId, null, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<CartItem> cartItems1 = (List<CartItem>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			cartItems1.toString(), totalCount + 2, cartItems1.size());
+		if (totalCount >= 498) {
+			Page<CartItem> page1 = cartItemResource.getCartItemsPage(
+				cartId, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
-		Page<CartItem> page2 = cartItemResource.getCartItemsPage(
-			cartId, null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(cartItem1, (List<CartItem>)page1.getItems());
 
-		List<CartItem> cartItems2 = (List<CartItem>)page2.getItems();
+			Page<CartItem> page2 = cartItemResource.getCartItemsPage(
+				cartId, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
-		Assert.assertEquals(cartItems2.toString(), 1, cartItems2.size());
+			assertContains(cartItem2, (List<CartItem>)page2.getItems());
 
-		Page<CartItem> page3 = cartItemResource.getCartItemsPage(
-			cartId, null, Pagination.of(1, (int)totalCount + 3));
+			Page<CartItem> page3 = cartItemResource.getCartItemsPage(
+				cartId, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
-		assertContains(cartItem1, (List<CartItem>)page3.getItems());
-		assertContains(cartItem2, (List<CartItem>)page3.getItems());
-		assertContains(cartItem3, (List<CartItem>)page3.getItems());
+			assertContains(cartItem3, (List<CartItem>)page3.getItems());
+		}
+		else {
+			Page<CartItem> page1 = cartItemResource.getCartItemsPage(
+				cartId, null, Pagination.of(1, totalCount + 2));
+
+			List<CartItem> cartItems1 = (List<CartItem>)page1.getItems();
+
+			Assert.assertEquals(
+				cartItems1.toString(), totalCount + 2, cartItems1.size());
+
+			Page<CartItem> page2 = cartItemResource.getCartItemsPage(
+				cartId, null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<CartItem> cartItems2 = (List<CartItem>)page2.getItems();
+
+			Assert.assertEquals(cartItems2.toString(), 1, cartItems2.size());
+
+			Page<CartItem> page3 = cartItemResource.getCartItemsPage(
+				cartId, null, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(cartItem1, (List<CartItem>)page3.getItems());
+			assertContains(cartItem2, (List<CartItem>)page3.getItems());
+			assertContains(cartItem3, (List<CartItem>)page3.getItems());
+		}
 	}
 
 	protected CartItem testGetCartItemsPage_addCartItem(

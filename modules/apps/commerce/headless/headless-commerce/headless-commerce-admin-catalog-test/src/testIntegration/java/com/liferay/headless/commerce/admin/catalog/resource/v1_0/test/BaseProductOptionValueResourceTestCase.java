@@ -464,42 +464,94 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			testGetProductOptionIdProductOptionValuesPage_addProductOptionValue(
 				id, randomProductOptionValue());
 
-		Page<ProductOptionValue> page1 =
-			productOptionValueResource.
-				getProductOptionIdProductOptionValuesPage(
-					id, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<ProductOptionValue> productOptionValues1 =
-			(List<ProductOptionValue>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			productOptionValues1.toString(), totalCount + 2,
-			productOptionValues1.size());
+		if (totalCount >= 498) {
+			Page<ProductOptionValue> page1 =
+				productOptionValueResource.
+					getProductOptionIdProductOptionValuesPage(
+						id, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		Page<ProductOptionValue> page2 =
-			productOptionValueResource.
-				getProductOptionIdProductOptionValuesPage(
-					id, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				productOptionValue1,
+				(List<ProductOptionValue>)page1.getItems());
 
-		List<ProductOptionValue> productOptionValues2 =
-			(List<ProductOptionValue>)page2.getItems();
+			Page<ProductOptionValue> page2 =
+				productOptionValueResource.
+					getProductOptionIdProductOptionValuesPage(
+						id, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		Assert.assertEquals(
-			productOptionValues2.toString(), 1, productOptionValues2.size());
+			assertContains(
+				productOptionValue2,
+				(List<ProductOptionValue>)page2.getItems());
 
-		Page<ProductOptionValue> page3 =
-			productOptionValueResource.
-				getProductOptionIdProductOptionValuesPage(
-					id, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<ProductOptionValue> page3 =
+				productOptionValueResource.
+					getProductOptionIdProductOptionValuesPage(
+						id, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		assertContains(
-			productOptionValue1, (List<ProductOptionValue>)page3.getItems());
-		assertContains(
-			productOptionValue2, (List<ProductOptionValue>)page3.getItems());
-		assertContains(
-			productOptionValue3, (List<ProductOptionValue>)page3.getItems());
+			assertContains(
+				productOptionValue3,
+				(List<ProductOptionValue>)page3.getItems());
+		}
+		else {
+			Page<ProductOptionValue> page1 =
+				productOptionValueResource.
+					getProductOptionIdProductOptionValuesPage(
+						id, null, Pagination.of(1, totalCount + 2), null);
+
+			List<ProductOptionValue> productOptionValues1 =
+				(List<ProductOptionValue>)page1.getItems();
+
+			Assert.assertEquals(
+				productOptionValues1.toString(), totalCount + 2,
+				productOptionValues1.size());
+
+			Page<ProductOptionValue> page2 =
+				productOptionValueResource.
+					getProductOptionIdProductOptionValuesPage(
+						id, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ProductOptionValue> productOptionValues2 =
+				(List<ProductOptionValue>)page2.getItems();
+
+			Assert.assertEquals(
+				productOptionValues2.toString(), 1,
+				productOptionValues2.size());
+
+			Page<ProductOptionValue> page3 =
+				productOptionValueResource.
+					getProductOptionIdProductOptionValuesPage(
+						id, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				productOptionValue1,
+				(List<ProductOptionValue>)page3.getItems());
+			assertContains(
+				productOptionValue2,
+				(List<ProductOptionValue>)page3.getItems());
+			assertContains(
+				productOptionValue3,
+				(List<ProductOptionValue>)page3.getItems());
+		}
 	}
 
 	@Test

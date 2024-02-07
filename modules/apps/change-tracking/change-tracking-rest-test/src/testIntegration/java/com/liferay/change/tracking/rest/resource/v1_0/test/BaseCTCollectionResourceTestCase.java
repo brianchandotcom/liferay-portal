@@ -243,32 +243,75 @@ public abstract class BaseCTCollectionResourceTestCase {
 		CTCollection ctCollection3 = testGetCTCollectionsPage_addCTCollection(
 			randomCTCollection());
 
-		Page<CTCollection> page1 = ctCollectionResource.getCTCollectionsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<CTCollection> ctCollections1 =
-			(List<CTCollection>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			ctCollections1.toString(), totalCount + 2, ctCollections1.size());
+		if (totalCount >= 498) {
+			Page<CTCollection> page1 =
+				ctCollectionResource.getCTCollectionsPage(
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<CTCollection> page2 = ctCollectionResource.getCTCollectionsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(ctCollection1, (List<CTCollection>)page1.getItems());
 
-		List<CTCollection> ctCollections2 =
-			(List<CTCollection>)page2.getItems();
+			Page<CTCollection> page2 =
+				ctCollectionResource.getCTCollectionsPage(
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			ctCollections2.toString(), 1, ctCollections2.size());
+			assertContains(ctCollection2, (List<CTCollection>)page2.getItems());
 
-		Page<CTCollection> page3 = ctCollectionResource.getCTCollectionsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<CTCollection> page3 =
+				ctCollectionResource.getCTCollectionsPage(
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(ctCollection1, (List<CTCollection>)page3.getItems());
-		assertContains(ctCollection2, (List<CTCollection>)page3.getItems());
-		assertContains(ctCollection3, (List<CTCollection>)page3.getItems());
+			assertContains(ctCollection3, (List<CTCollection>)page3.getItems());
+		}
+		else {
+			Page<CTCollection> page1 =
+				ctCollectionResource.getCTCollectionsPage(
+					null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<CTCollection> ctCollections1 =
+				(List<CTCollection>)page1.getItems();
+
+			Assert.assertEquals(
+				ctCollections1.toString(), totalCount + 2,
+				ctCollections1.size());
+
+			Page<CTCollection> page2 =
+				ctCollectionResource.getCTCollectionsPage(
+					null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<CTCollection> ctCollections2 =
+				(List<CTCollection>)page2.getItems();
+
+			Assert.assertEquals(
+				ctCollections2.toString(), 1, ctCollections2.size());
+
+			Page<CTCollection> page3 =
+				ctCollectionResource.getCTCollectionsPage(
+					null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(ctCollection1, (List<CTCollection>)page3.getItems());
+			assertContains(ctCollection2, (List<CTCollection>)page3.getItems());
+			assertContains(ctCollection3, (List<CTCollection>)page3.getItems());
+		}
 	}
 
 	@Test

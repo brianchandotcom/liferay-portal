@@ -542,38 +542,83 @@ public abstract class BaseOptionValueResourceTestCase {
 			testGetOptionByExternalReferenceCodeOptionValuesPage_addOptionValue(
 				externalReferenceCode, randomOptionValue());
 
-		Page<OptionValue> page1 =
-			optionValueResource.
-				getOptionByExternalReferenceCodeOptionValuesPage(
-					externalReferenceCode, null,
-					Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<OptionValue> optionValues1 = (List<OptionValue>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			optionValues1.toString(), totalCount + 2, optionValues1.size());
+		if (totalCount >= 498) {
+			Page<OptionValue> page1 =
+				optionValueResource.
+					getOptionByExternalReferenceCodeOptionValuesPage(
+						externalReferenceCode, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		Page<OptionValue> page2 =
-			optionValueResource.
-				getOptionByExternalReferenceCodeOptionValuesPage(
-					externalReferenceCode, null,
-					Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(optionValue1, (List<OptionValue>)page1.getItems());
 
-		List<OptionValue> optionValues2 = (List<OptionValue>)page2.getItems();
+			Page<OptionValue> page2 =
+				optionValueResource.
+					getOptionByExternalReferenceCodeOptionValuesPage(
+						externalReferenceCode, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		Assert.assertEquals(optionValues2.toString(), 1, optionValues2.size());
+			assertContains(optionValue2, (List<OptionValue>)page2.getItems());
 
-		Page<OptionValue> page3 =
-			optionValueResource.
-				getOptionByExternalReferenceCodeOptionValuesPage(
-					externalReferenceCode, null,
-					Pagination.of(1, (int)totalCount + 3), null);
+			Page<OptionValue> page3 =
+				optionValueResource.
+					getOptionByExternalReferenceCodeOptionValuesPage(
+						externalReferenceCode, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		assertContains(optionValue1, (List<OptionValue>)page3.getItems());
-		assertContains(optionValue2, (List<OptionValue>)page3.getItems());
-		assertContains(optionValue3, (List<OptionValue>)page3.getItems());
+			assertContains(optionValue3, (List<OptionValue>)page3.getItems());
+		}
+		else {
+			Page<OptionValue> page1 =
+				optionValueResource.
+					getOptionByExternalReferenceCodeOptionValuesPage(
+						externalReferenceCode, null,
+						Pagination.of(1, totalCount + 2), null);
+
+			List<OptionValue> optionValues1 =
+				(List<OptionValue>)page1.getItems();
+
+			Assert.assertEquals(
+				optionValues1.toString(), totalCount + 2, optionValues1.size());
+
+			Page<OptionValue> page2 =
+				optionValueResource.
+					getOptionByExternalReferenceCodeOptionValuesPage(
+						externalReferenceCode, null,
+						Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OptionValue> optionValues2 =
+				(List<OptionValue>)page2.getItems();
+
+			Assert.assertEquals(
+				optionValues2.toString(), 1, optionValues2.size());
+
+			Page<OptionValue> page3 =
+				optionValueResource.
+					getOptionByExternalReferenceCodeOptionValuesPage(
+						externalReferenceCode, null,
+						Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(optionValue1, (List<OptionValue>)page3.getItems());
+			assertContains(optionValue2, (List<OptionValue>)page3.getItems());
+			assertContains(optionValue3, (List<OptionValue>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -863,32 +908,74 @@ public abstract class BaseOptionValueResourceTestCase {
 			testGetOptionIdOptionValuesPage_addOptionValue(
 				id, randomOptionValue());
 
-		Page<OptionValue> page1 =
-			optionValueResource.getOptionIdOptionValuesPage(
-				id, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<OptionValue> optionValues1 = (List<OptionValue>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			optionValues1.toString(), totalCount + 2, optionValues1.size());
+		if (totalCount >= 498) {
+			Page<OptionValue> page1 =
+				optionValueResource.getOptionIdOptionValuesPage(
+					id, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<OptionValue> page2 =
-			optionValueResource.getOptionIdOptionValuesPage(
-				id, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(optionValue1, (List<OptionValue>)page1.getItems());
 
-		List<OptionValue> optionValues2 = (List<OptionValue>)page2.getItems();
+			Page<OptionValue> page2 =
+				optionValueResource.getOptionIdOptionValuesPage(
+					id, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(optionValues2.toString(), 1, optionValues2.size());
+			assertContains(optionValue2, (List<OptionValue>)page2.getItems());
 
-		Page<OptionValue> page3 =
-			optionValueResource.getOptionIdOptionValuesPage(
-				id, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<OptionValue> page3 =
+				optionValueResource.getOptionIdOptionValuesPage(
+					id, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(optionValue1, (List<OptionValue>)page3.getItems());
-		assertContains(optionValue2, (List<OptionValue>)page3.getItems());
-		assertContains(optionValue3, (List<OptionValue>)page3.getItems());
+			assertContains(optionValue3, (List<OptionValue>)page3.getItems());
+		}
+		else {
+			Page<OptionValue> page1 =
+				optionValueResource.getOptionIdOptionValuesPage(
+					id, null, Pagination.of(1, totalCount + 2), null);
+
+			List<OptionValue> optionValues1 =
+				(List<OptionValue>)page1.getItems();
+
+			Assert.assertEquals(
+				optionValues1.toString(), totalCount + 2, optionValues1.size());
+
+			Page<OptionValue> page2 =
+				optionValueResource.getOptionIdOptionValuesPage(
+					id, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OptionValue> optionValues2 =
+				(List<OptionValue>)page2.getItems();
+
+			Assert.assertEquals(
+				optionValues2.toString(), 1, optionValues2.size());
+
+			Page<OptionValue> page3 =
+				optionValueResource.getOptionIdOptionValuesPage(
+					id, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(optionValue1, (List<OptionValue>)page3.getItems());
+			assertContains(optionValue2, (List<OptionValue>)page3.getItems());
+			assertContains(optionValue3, (List<OptionValue>)page3.getItems());
+		}
 	}
 
 	@Test

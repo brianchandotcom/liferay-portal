@@ -317,29 +317,65 @@ public abstract class BaseCurrencyResourceTestCase {
 		Currency currency3 = testGetCurrenciesPage_addCurrency(
 			randomCurrency());
 
-		Page<Currency> page1 = currencyResource.getCurrenciesPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<Currency> currencies1 = (List<Currency>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			currencies1.toString(), totalCount + 2, currencies1.size());
+		if (totalCount >= 498) {
+			Page<Currency> page1 = currencyResource.getCurrenciesPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<Currency> page2 = currencyResource.getCurrenciesPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(currency1, (List<Currency>)page1.getItems());
 
-		List<Currency> currencies2 = (List<Currency>)page2.getItems();
+			Page<Currency> page2 = currencyResource.getCurrenciesPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(currencies2.toString(), 1, currencies2.size());
+			assertContains(currency2, (List<Currency>)page2.getItems());
 
-		Page<Currency> page3 = currencyResource.getCurrenciesPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<Currency> page3 = currencyResource.getCurrenciesPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(currency1, (List<Currency>)page3.getItems());
-		assertContains(currency2, (List<Currency>)page3.getItems());
-		assertContains(currency3, (List<Currency>)page3.getItems());
+			assertContains(currency3, (List<Currency>)page3.getItems());
+		}
+		else {
+			Page<Currency> page1 = currencyResource.getCurrenciesPage(
+				null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<Currency> currencies1 = (List<Currency>)page1.getItems();
+
+			Assert.assertEquals(
+				currencies1.toString(), totalCount + 2, currencies1.size());
+
+			Page<Currency> page2 = currencyResource.getCurrenciesPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Currency> currencies2 = (List<Currency>)page2.getItems();
+
+			Assert.assertEquals(currencies2.toString(), 1, currencies2.size());
+
+			Page<Currency> page3 = currencyResource.getCurrenciesPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(currency1, (List<Currency>)page3.getItems());
+			assertContains(currency2, (List<Currency>)page3.getItems());
+			assertContains(currency3, (List<Currency>)page3.getItems());
+		}
 	}
 
 	@Test

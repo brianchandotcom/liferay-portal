@@ -425,40 +425,87 @@ public abstract class BaseProductChannelResourceTestCase {
 			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
 				externalReferenceCode, randomProductChannel());
 
-		Page<ProductChannel> page1 =
-			productChannelResource.
-				getProductByExternalReferenceCodeProductChannelsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<ProductChannel> productChannels1 =
-			(List<ProductChannel>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			productChannels1.toString(), totalCount + 2,
-			productChannels1.size());
+		if (totalCount >= 498) {
+			Page<ProductChannel> page1 =
+				productChannelResource.
+					getProductByExternalReferenceCodeProductChannelsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Page<ProductChannel> page2 =
-			productChannelResource.
-				getProductByExternalReferenceCodeProductChannelsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				productChannel1, (List<ProductChannel>)page1.getItems());
 
-		List<ProductChannel> productChannels2 =
-			(List<ProductChannel>)page2.getItems();
+			Page<ProductChannel> page2 =
+				productChannelResource.
+					getProductByExternalReferenceCodeProductChannelsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Assert.assertEquals(
-			productChannels2.toString(), 1, productChannels2.size());
+			assertContains(
+				productChannel2, (List<ProductChannel>)page2.getItems());
 
-		Page<ProductChannel> page3 =
-			productChannelResource.
-				getProductByExternalReferenceCodeProductChannelsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<ProductChannel> page3 =
+				productChannelResource.
+					getProductByExternalReferenceCodeProductChannelsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		assertContains(productChannel1, (List<ProductChannel>)page3.getItems());
-		assertContains(productChannel2, (List<ProductChannel>)page3.getItems());
-		assertContains(productChannel3, (List<ProductChannel>)page3.getItems());
+			assertContains(
+				productChannel3, (List<ProductChannel>)page3.getItems());
+		}
+		else {
+			Page<ProductChannel> page1 =
+				productChannelResource.
+					getProductByExternalReferenceCodeProductChannelsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<ProductChannel> productChannels1 =
+				(List<ProductChannel>)page1.getItems();
+
+			Assert.assertEquals(
+				productChannels1.toString(), totalCount + 2,
+				productChannels1.size());
+
+			Page<ProductChannel> page2 =
+				productChannelResource.
+					getProductByExternalReferenceCodeProductChannelsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ProductChannel> productChannels2 =
+				(List<ProductChannel>)page2.getItems();
+
+			Assert.assertEquals(
+				productChannels2.toString(), 1, productChannels2.size());
+
+			Page<ProductChannel> page3 =
+				productChannelResource.
+					getProductByExternalReferenceCodeProductChannelsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				productChannel1, (List<ProductChannel>)page3.getItems());
+			assertContains(
+				productChannel2, (List<ProductChannel>)page3.getItems());
+			assertContains(
+				productChannel3, (List<ProductChannel>)page3.getItems());
+		}
 	}
 
 	protected ProductChannel
@@ -572,36 +619,78 @@ public abstract class BaseProductChannelResourceTestCase {
 			testGetProductIdProductChannelsPage_addProductChannel(
 				id, randomProductChannel());
 
-		Page<ProductChannel> page1 =
-			productChannelResource.getProductIdProductChannelsPage(
-				id, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<ProductChannel> productChannels1 =
-			(List<ProductChannel>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			productChannels1.toString(), totalCount + 2,
-			productChannels1.size());
+		if (totalCount >= 498) {
+			Page<ProductChannel> page1 =
+				productChannelResource.getProductIdProductChannelsPage(
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Page<ProductChannel> page2 =
-			productChannelResource.getProductIdProductChannelsPage(
-				id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				productChannel1, (List<ProductChannel>)page1.getItems());
 
-		List<ProductChannel> productChannels2 =
-			(List<ProductChannel>)page2.getItems();
+			Page<ProductChannel> page2 =
+				productChannelResource.getProductIdProductChannelsPage(
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Assert.assertEquals(
-			productChannels2.toString(), 1, productChannels2.size());
+			assertContains(
+				productChannel2, (List<ProductChannel>)page2.getItems());
 
-		Page<ProductChannel> page3 =
-			productChannelResource.getProductIdProductChannelsPage(
-				id, Pagination.of(1, (int)totalCount + 3));
+			Page<ProductChannel> page3 =
+				productChannelResource.getProductIdProductChannelsPage(
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		assertContains(productChannel1, (List<ProductChannel>)page3.getItems());
-		assertContains(productChannel2, (List<ProductChannel>)page3.getItems());
-		assertContains(productChannel3, (List<ProductChannel>)page3.getItems());
+			assertContains(
+				productChannel3, (List<ProductChannel>)page3.getItems());
+		}
+		else {
+			Page<ProductChannel> page1 =
+				productChannelResource.getProductIdProductChannelsPage(
+					id, Pagination.of(1, totalCount + 2));
+
+			List<ProductChannel> productChannels1 =
+				(List<ProductChannel>)page1.getItems();
+
+			Assert.assertEquals(
+				productChannels1.toString(), totalCount + 2,
+				productChannels1.size());
+
+			Page<ProductChannel> page2 =
+				productChannelResource.getProductIdProductChannelsPage(
+					id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ProductChannel> productChannels2 =
+				(List<ProductChannel>)page2.getItems();
+
+			Assert.assertEquals(
+				productChannels2.toString(), 1, productChannels2.size());
+
+			Page<ProductChannel> page3 =
+				productChannelResource.getProductIdProductChannelsPage(
+					id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				productChannel1, (List<ProductChannel>)page3.getItems());
+			assertContains(
+				productChannel2, (List<ProductChannel>)page3.getItems());
+			assertContains(
+				productChannel3, (List<ProductChannel>)page3.getItems());
+		}
 	}
 
 	protected ProductChannel

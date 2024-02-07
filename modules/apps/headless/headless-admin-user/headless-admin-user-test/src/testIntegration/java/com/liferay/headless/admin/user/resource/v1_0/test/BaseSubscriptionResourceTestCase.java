@@ -242,35 +242,72 @@ public abstract class BaseSubscriptionResourceTestCase {
 			testGetMyUserAccountSubscriptionsPage_addSubscription(
 				randomSubscription());
 
-		Page<Subscription> page1 =
-			subscriptionResource.getMyUserAccountSubscriptionsPage(
-				null, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<Subscription> subscriptions1 =
-			(List<Subscription>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			subscriptions1.toString(), totalCount + 2, subscriptions1.size());
+		if (totalCount >= 498) {
+			Page<Subscription> page1 =
+				subscriptionResource.getMyUserAccountSubscriptionsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Page<Subscription> page2 =
-			subscriptionResource.getMyUserAccountSubscriptionsPage(
-				null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(subscription1, (List<Subscription>)page1.getItems());
 
-		List<Subscription> subscriptions2 =
-			(List<Subscription>)page2.getItems();
+			Page<Subscription> page2 =
+				subscriptionResource.getMyUserAccountSubscriptionsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Assert.assertEquals(
-			subscriptions2.toString(), 1, subscriptions2.size());
+			assertContains(subscription2, (List<Subscription>)page2.getItems());
 
-		Page<Subscription> page3 =
-			subscriptionResource.getMyUserAccountSubscriptionsPage(
-				null, Pagination.of(1, (int)totalCount + 3));
+			Page<Subscription> page3 =
+				subscriptionResource.getMyUserAccountSubscriptionsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		assertContains(subscription1, (List<Subscription>)page3.getItems());
-		assertContains(subscription2, (List<Subscription>)page3.getItems());
-		assertContains(subscription3, (List<Subscription>)page3.getItems());
+			assertContains(subscription3, (List<Subscription>)page3.getItems());
+		}
+		else {
+			Page<Subscription> page1 =
+				subscriptionResource.getMyUserAccountSubscriptionsPage(
+					null, Pagination.of(1, totalCount + 2));
+
+			List<Subscription> subscriptions1 =
+				(List<Subscription>)page1.getItems();
+
+			Assert.assertEquals(
+				subscriptions1.toString(), totalCount + 2,
+				subscriptions1.size());
+
+			Page<Subscription> page2 =
+				subscriptionResource.getMyUserAccountSubscriptionsPage(
+					null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Subscription> subscriptions2 =
+				(List<Subscription>)page2.getItems();
+
+			Assert.assertEquals(
+				subscriptions2.toString(), 1, subscriptions2.size());
+
+			Page<Subscription> page3 =
+				subscriptionResource.getMyUserAccountSubscriptionsPage(
+					null, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(subscription1, (List<Subscription>)page3.getItems());
+			assertContains(subscription2, (List<Subscription>)page3.getItems());
+			assertContains(subscription3, (List<Subscription>)page3.getItems());
+		}
 	}
 
 	protected Subscription

@@ -241,29 +241,65 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 		CTRemote ctRemote3 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
 
-		Page<CTRemote> page1 = ctRemoteResource.getCTRemotesPage(
-			null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<CTRemote> ctRemotes1 = (List<CTRemote>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			ctRemotes1.toString(), totalCount + 2, ctRemotes1.size());
+		if (totalCount >= 498) {
+			Page<CTRemote> page1 = ctRemoteResource.getCTRemotesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<CTRemote> page2 = ctRemoteResource.getCTRemotesPage(
-			null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(ctRemote1, (List<CTRemote>)page1.getItems());
 
-		List<CTRemote> ctRemotes2 = (List<CTRemote>)page2.getItems();
+			Page<CTRemote> page2 = ctRemoteResource.getCTRemotesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(ctRemotes2.toString(), 1, ctRemotes2.size());
+			assertContains(ctRemote2, (List<CTRemote>)page2.getItems());
 
-		Page<CTRemote> page3 = ctRemoteResource.getCTRemotesPage(
-			null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<CTRemote> page3 = ctRemoteResource.getCTRemotesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(ctRemote1, (List<CTRemote>)page3.getItems());
-		assertContains(ctRemote2, (List<CTRemote>)page3.getItems());
-		assertContains(ctRemote3, (List<CTRemote>)page3.getItems());
+			assertContains(ctRemote3, (List<CTRemote>)page3.getItems());
+		}
+		else {
+			Page<CTRemote> page1 = ctRemoteResource.getCTRemotesPage(
+				null, Pagination.of(1, totalCount + 2), null);
+
+			List<CTRemote> ctRemotes1 = (List<CTRemote>)page1.getItems();
+
+			Assert.assertEquals(
+				ctRemotes1.toString(), totalCount + 2, ctRemotes1.size());
+
+			Page<CTRemote> page2 = ctRemoteResource.getCTRemotesPage(
+				null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<CTRemote> ctRemotes2 = (List<CTRemote>)page2.getItems();
+
+			Assert.assertEquals(ctRemotes2.toString(), 1, ctRemotes2.size());
+
+			Page<CTRemote> page3 = ctRemoteResource.getCTRemotesPage(
+				null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(ctRemote1, (List<CTRemote>)page3.getItems());
+			assertContains(ctRemote2, (List<CTRemote>)page3.getItems());
+			assertContains(ctRemote3, (List<CTRemote>)page3.getItems());
+		}
 	}
 
 	@Test

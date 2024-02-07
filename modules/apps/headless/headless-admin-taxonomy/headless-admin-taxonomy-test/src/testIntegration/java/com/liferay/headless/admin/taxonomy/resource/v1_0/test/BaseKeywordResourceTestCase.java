@@ -393,32 +393,68 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword3 = testGetAssetLibraryKeywordsPage_addKeyword(
 			assetLibraryId, randomKeyword());
 
-		Page<Keyword> page1 = keywordResource.getAssetLibraryKeywordsPage(
-			assetLibraryId, null, null, null, Pagination.of(1, totalCount + 2),
-			null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			keywords1.toString(), totalCount + 2, keywords1.size());
+		if (totalCount >= 498) {
+			Page<Keyword> page1 = keywordResource.getAssetLibraryKeywordsPage(
+				assetLibraryId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<Keyword> page2 = keywordResource.getAssetLibraryKeywordsPage(
-			assetLibraryId, null, null, null, Pagination.of(2, totalCount + 2),
-			null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(keyword1, (List<Keyword>)page1.getItems());
 
-		List<Keyword> keywords2 = (List<Keyword>)page2.getItems();
+			Page<Keyword> page2 = keywordResource.getAssetLibraryKeywordsPage(
+				assetLibraryId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
+			assertContains(keyword2, (List<Keyword>)page2.getItems());
 
-		Page<Keyword> page3 = keywordResource.getAssetLibraryKeywordsPage(
-			assetLibraryId, null, null, null,
-			Pagination.of(1, (int)totalCount + 3), null);
+			Page<Keyword> page3 = keywordResource.getAssetLibraryKeywordsPage(
+				assetLibraryId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(keyword1, (List<Keyword>)page3.getItems());
-		assertContains(keyword2, (List<Keyword>)page3.getItems());
-		assertContains(keyword3, (List<Keyword>)page3.getItems());
+			assertContains(keyword3, (List<Keyword>)page3.getItems());
+		}
+		else {
+			Page<Keyword> page1 = keywordResource.getAssetLibraryKeywordsPage(
+				assetLibraryId, null, null, null,
+				Pagination.of(1, totalCount + 2), null);
+
+			List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
+
+			Assert.assertEquals(
+				keywords1.toString(), totalCount + 2, keywords1.size());
+
+			Page<Keyword> page2 = keywordResource.getAssetLibraryKeywordsPage(
+				assetLibraryId, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Keyword> keywords2 = (List<Keyword>)page2.getItems();
+
+			Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
+
+			Page<Keyword> page3 = keywordResource.getAssetLibraryKeywordsPage(
+				assetLibraryId, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(keyword1, (List<Keyword>)page3.getItems());
+			assertContains(keyword2, (List<Keyword>)page3.getItems());
+			assertContains(keyword3, (List<Keyword>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -710,29 +746,62 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword3 = testGetKeywordsRankedPage_addKeyword(
 			randomKeyword());
 
-		Page<Keyword> page1 = keywordResource.getKeywordsRankedPage(
-			null, null, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			keywords1.toString(), totalCount + 2, keywords1.size());
+		if (totalCount >= 498) {
+			Page<Keyword> page1 = keywordResource.getKeywordsRankedPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
-		Page<Keyword> page2 = keywordResource.getKeywordsRankedPage(
-			null, null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(keyword1, (List<Keyword>)page1.getItems());
 
-		List<Keyword> keywords2 = (List<Keyword>)page2.getItems();
+			Page<Keyword> page2 = keywordResource.getKeywordsRankedPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
-		Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
+			assertContains(keyword2, (List<Keyword>)page2.getItems());
 
-		Page<Keyword> page3 = keywordResource.getKeywordsRankedPage(
-			null, null, Pagination.of(1, (int)totalCount + 3));
+			Page<Keyword> page3 = keywordResource.getKeywordsRankedPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
-		assertContains(keyword1, (List<Keyword>)page3.getItems());
-		assertContains(keyword2, (List<Keyword>)page3.getItems());
-		assertContains(keyword3, (List<Keyword>)page3.getItems());
+			assertContains(keyword3, (List<Keyword>)page3.getItems());
+		}
+		else {
+			Page<Keyword> page1 = keywordResource.getKeywordsRankedPage(
+				null, null, Pagination.of(1, totalCount + 2));
+
+			List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
+
+			Assert.assertEquals(
+				keywords1.toString(), totalCount + 2, keywords1.size());
+
+			Page<Keyword> page2 = keywordResource.getKeywordsRankedPage(
+				null, null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Keyword> keywords2 = (List<Keyword>)page2.getItems();
+
+			Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
+
+			Page<Keyword> page3 = keywordResource.getKeywordsRankedPage(
+				null, null, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(keyword1, (List<Keyword>)page3.getItems());
+			assertContains(keyword2, (List<Keyword>)page3.getItems());
+			assertContains(keyword3, (List<Keyword>)page3.getItems());
+		}
 	}
 
 	protected Keyword testGetKeywordsRankedPage_addKeyword(Keyword keyword)
@@ -1086,30 +1155,68 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword3 = testGetSiteKeywordsPage_addKeyword(
 			siteId, randomKeyword());
 
-		Page<Keyword> page1 = keywordResource.getSiteKeywordsPage(
-			siteId, null, null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			keywords1.toString(), totalCount + 2, keywords1.size());
+		if (totalCount >= 498) {
+			Page<Keyword> page1 = keywordResource.getSiteKeywordsPage(
+				siteId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<Keyword> page2 = keywordResource.getSiteKeywordsPage(
-			siteId, null, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(keyword1, (List<Keyword>)page1.getItems());
 
-		List<Keyword> keywords2 = (List<Keyword>)page2.getItems();
+			Page<Keyword> page2 = keywordResource.getSiteKeywordsPage(
+				siteId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
+			assertContains(keyword2, (List<Keyword>)page2.getItems());
 
-		Page<Keyword> page3 = keywordResource.getSiteKeywordsPage(
-			siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
-			null);
+			Page<Keyword> page3 = keywordResource.getSiteKeywordsPage(
+				siteId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(keyword1, (List<Keyword>)page3.getItems());
-		assertContains(keyword2, (List<Keyword>)page3.getItems());
-		assertContains(keyword3, (List<Keyword>)page3.getItems());
+			assertContains(keyword3, (List<Keyword>)page3.getItems());
+		}
+		else {
+			Page<Keyword> page1 = keywordResource.getSiteKeywordsPage(
+				siteId, null, null, null, Pagination.of(1, totalCount + 2),
+				null);
+
+			List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
+
+			Assert.assertEquals(
+				keywords1.toString(), totalCount + 2, keywords1.size());
+
+			Page<Keyword> page2 = keywordResource.getSiteKeywordsPage(
+				siteId, null, null, null, Pagination.of(2, totalCount + 2),
+				null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Keyword> keywords2 = (List<Keyword>)page2.getItems();
+
+			Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
+
+			Page<Keyword> page3 = keywordResource.getSiteKeywordsPage(
+				siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
+				null);
+
+			assertContains(keyword1, (List<Keyword>)page3.getItems());
+			assertContains(keyword2, (List<Keyword>)page3.getItems());
+			assertContains(keyword3, (List<Keyword>)page3.getItems());
+		}
 	}
 
 	@Test

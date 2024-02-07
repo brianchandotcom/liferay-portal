@@ -334,29 +334,66 @@ public abstract class BaseSXPElementResourceTestCase {
 		SXPElement sxpElement3 = testGetSXPElementsPage_addSXPElement(
 			randomSXPElement());
 
-		Page<SXPElement> page1 = sxpElementResource.getSXPElementsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<SXPElement> sxpElements1 = (List<SXPElement>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			sxpElements1.toString(), totalCount + 2, sxpElements1.size());
+		if (totalCount >= 498) {
+			Page<SXPElement> page1 = sxpElementResource.getSXPElementsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<SXPElement> page2 = sxpElementResource.getSXPElementsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(sxpElement1, (List<SXPElement>)page1.getItems());
 
-		List<SXPElement> sxpElements2 = (List<SXPElement>)page2.getItems();
+			Page<SXPElement> page2 = sxpElementResource.getSXPElementsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(sxpElements2.toString(), 1, sxpElements2.size());
+			assertContains(sxpElement2, (List<SXPElement>)page2.getItems());
 
-		Page<SXPElement> page3 = sxpElementResource.getSXPElementsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<SXPElement> page3 = sxpElementResource.getSXPElementsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(sxpElement1, (List<SXPElement>)page3.getItems());
-		assertContains(sxpElement2, (List<SXPElement>)page3.getItems());
-		assertContains(sxpElement3, (List<SXPElement>)page3.getItems());
+			assertContains(sxpElement3, (List<SXPElement>)page3.getItems());
+		}
+		else {
+			Page<SXPElement> page1 = sxpElementResource.getSXPElementsPage(
+				null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<SXPElement> sxpElements1 = (List<SXPElement>)page1.getItems();
+
+			Assert.assertEquals(
+				sxpElements1.toString(), totalCount + 2, sxpElements1.size());
+
+			Page<SXPElement> page2 = sxpElementResource.getSXPElementsPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<SXPElement> sxpElements2 = (List<SXPElement>)page2.getItems();
+
+			Assert.assertEquals(
+				sxpElements2.toString(), 1, sxpElements2.size());
+
+			Page<SXPElement> page3 = sxpElementResource.getSXPElementsPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(sxpElement1, (List<SXPElement>)page3.getItems());
+			assertContains(sxpElement2, (List<SXPElement>)page3.getItems());
+			assertContains(sxpElement3, (List<SXPElement>)page3.getItems());
+		}
 	}
 
 	@Test

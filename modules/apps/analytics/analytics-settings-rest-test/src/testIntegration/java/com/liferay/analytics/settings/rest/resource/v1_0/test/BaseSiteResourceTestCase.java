@@ -229,28 +229,65 @@ public abstract class BaseSiteResourceTestCase {
 
 		Site site3 = testGetSitesPage_addSite(randomSite());
 
-		Page<Site> page1 = siteResource.getSitesPage(
-			null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<Site> sites1 = (List<Site>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(sites1.toString(), totalCount + 2, sites1.size());
+		if (totalCount >= 498) {
+			Page<Site> page1 = siteResource.getSitesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<Site> page2 = siteResource.getSitesPage(
-			null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(site1, (List<Site>)page1.getItems());
 
-		List<Site> sites2 = (List<Site>)page2.getItems();
+			Page<Site> page2 = siteResource.getSitesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(sites2.toString(), 1, sites2.size());
+			assertContains(site2, (List<Site>)page2.getItems());
 
-		Page<Site> page3 = siteResource.getSitesPage(
-			null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<Site> page3 = siteResource.getSitesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(site1, (List<Site>)page3.getItems());
-		assertContains(site2, (List<Site>)page3.getItems());
-		assertContains(site3, (List<Site>)page3.getItems());
+			assertContains(site3, (List<Site>)page3.getItems());
+		}
+		else {
+			Page<Site> page1 = siteResource.getSitesPage(
+				null, Pagination.of(1, totalCount + 2), null);
+
+			List<Site> sites1 = (List<Site>)page1.getItems();
+
+			Assert.assertEquals(
+				sites1.toString(), totalCount + 2, sites1.size());
+
+			Page<Site> page2 = siteResource.getSitesPage(
+				null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Site> sites2 = (List<Site>)page2.getItems();
+
+			Assert.assertEquals(sites2.toString(), 1, sites2.size());
+
+			Page<Site> page3 = siteResource.getSitesPage(
+				null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(site1, (List<Site>)page3.getItems());
+			assertContains(site2, (List<Site>)page3.getItems());
+			assertContains(site3, (List<Site>)page3.getItems());
+		}
 	}
 
 	@Test

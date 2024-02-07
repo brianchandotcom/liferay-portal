@@ -340,39 +340,81 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			testGetMeasurementUnitsPage_addMeasurementUnit(
 				randomMeasurementUnit());
 
-		Page<MeasurementUnit> page1 =
-			measurementUnitResource.getMeasurementUnitsPage(
-				null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<MeasurementUnit> measurementUnits1 =
-			(List<MeasurementUnit>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			measurementUnits1.toString(), totalCount + 2,
-			measurementUnits1.size());
+		if (totalCount >= 498) {
+			Page<MeasurementUnit> page1 =
+				measurementUnitResource.getMeasurementUnitsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<MeasurementUnit> page2 =
-			measurementUnitResource.getMeasurementUnitsPage(
-				null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				measurementUnit1, (List<MeasurementUnit>)page1.getItems());
 
-		List<MeasurementUnit> measurementUnits2 =
-			(List<MeasurementUnit>)page2.getItems();
+			Page<MeasurementUnit> page2 =
+				measurementUnitResource.getMeasurementUnitsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			measurementUnits2.toString(), 1, measurementUnits2.size());
+			assertContains(
+				measurementUnit2, (List<MeasurementUnit>)page2.getItems());
 
-		Page<MeasurementUnit> page3 =
-			measurementUnitResource.getMeasurementUnitsPage(
-				null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<MeasurementUnit> page3 =
+				measurementUnitResource.getMeasurementUnitsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			measurementUnit1, (List<MeasurementUnit>)page3.getItems());
-		assertContains(
-			measurementUnit2, (List<MeasurementUnit>)page3.getItems());
-		assertContains(
-			measurementUnit3, (List<MeasurementUnit>)page3.getItems());
+			assertContains(
+				measurementUnit3, (List<MeasurementUnit>)page3.getItems());
+		}
+		else {
+			Page<MeasurementUnit> page1 =
+				measurementUnitResource.getMeasurementUnitsPage(
+					null, Pagination.of(1, totalCount + 2), null);
+
+			List<MeasurementUnit> measurementUnits1 =
+				(List<MeasurementUnit>)page1.getItems();
+
+			Assert.assertEquals(
+				measurementUnits1.toString(), totalCount + 2,
+				measurementUnits1.size());
+
+			Page<MeasurementUnit> page2 =
+				measurementUnitResource.getMeasurementUnitsPage(
+					null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<MeasurementUnit> measurementUnits2 =
+				(List<MeasurementUnit>)page2.getItems();
+
+			Assert.assertEquals(
+				measurementUnits2.toString(), 1, measurementUnits2.size());
+
+			Page<MeasurementUnit> page3 =
+				measurementUnitResource.getMeasurementUnitsPage(
+					null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				measurementUnit1, (List<MeasurementUnit>)page3.getItems());
+			assertContains(
+				measurementUnit2, (List<MeasurementUnit>)page3.getItems());
+			assertContains(
+				measurementUnit3, (List<MeasurementUnit>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -920,40 +962,84 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			testGetMeasurementUnitsByType_addMeasurementUnit(
 				measurementUnitType, randomMeasurementUnit());
 
-		Page<MeasurementUnit> page1 =
-			measurementUnitResource.getMeasurementUnitsByType(
-				measurementUnitType, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<MeasurementUnit> measurementUnits1 =
-			(List<MeasurementUnit>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			measurementUnits1.toString(), totalCount + 2,
-			measurementUnits1.size());
+		if (totalCount >= 498) {
+			Page<MeasurementUnit> page1 =
+				measurementUnitResource.getMeasurementUnitsByType(
+					measurementUnitType,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<MeasurementUnit> page2 =
-			measurementUnitResource.getMeasurementUnitsByType(
-				measurementUnitType, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				measurementUnit1, (List<MeasurementUnit>)page1.getItems());
 
-		List<MeasurementUnit> measurementUnits2 =
-			(List<MeasurementUnit>)page2.getItems();
+			Page<MeasurementUnit> page2 =
+				measurementUnitResource.getMeasurementUnitsByType(
+					measurementUnitType,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			measurementUnits2.toString(), 1, measurementUnits2.size());
+			assertContains(
+				measurementUnit2, (List<MeasurementUnit>)page2.getItems());
 
-		Page<MeasurementUnit> page3 =
-			measurementUnitResource.getMeasurementUnitsByType(
-				measurementUnitType, Pagination.of(1, (int)totalCount + 3),
-				null);
+			Page<MeasurementUnit> page3 =
+				measurementUnitResource.getMeasurementUnitsByType(
+					measurementUnitType,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			measurementUnit1, (List<MeasurementUnit>)page3.getItems());
-		assertContains(
-			measurementUnit2, (List<MeasurementUnit>)page3.getItems());
-		assertContains(
-			measurementUnit3, (List<MeasurementUnit>)page3.getItems());
+			assertContains(
+				measurementUnit3, (List<MeasurementUnit>)page3.getItems());
+		}
+		else {
+			Page<MeasurementUnit> page1 =
+				measurementUnitResource.getMeasurementUnitsByType(
+					measurementUnitType, Pagination.of(1, totalCount + 2),
+					null);
+
+			List<MeasurementUnit> measurementUnits1 =
+				(List<MeasurementUnit>)page1.getItems();
+
+			Assert.assertEquals(
+				measurementUnits1.toString(), totalCount + 2,
+				measurementUnits1.size());
+
+			Page<MeasurementUnit> page2 =
+				measurementUnitResource.getMeasurementUnitsByType(
+					measurementUnitType, Pagination.of(2, totalCount + 2),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<MeasurementUnit> measurementUnits2 =
+				(List<MeasurementUnit>)page2.getItems();
+
+			Assert.assertEquals(
+				measurementUnits2.toString(), 1, measurementUnits2.size());
+
+			Page<MeasurementUnit> page3 =
+				measurementUnitResource.getMeasurementUnitsByType(
+					measurementUnitType, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(
+				measurementUnit1, (List<MeasurementUnit>)page3.getItems());
+			assertContains(
+				measurementUnit2, (List<MeasurementUnit>)page3.getItems());
+			assertContains(
+				measurementUnit3, (List<MeasurementUnit>)page3.getItems());
+		}
 	}
 
 	@Test

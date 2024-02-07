@@ -369,43 +369,89 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			testGetNotificationTemplatesPage_addNotificationTemplate(
 				randomNotificationTemplate());
 
-		Page<NotificationTemplate> page1 =
-			notificationTemplateResource.getNotificationTemplatesPage(
-				null, null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<NotificationTemplate> notificationTemplates1 =
-			(List<NotificationTemplate>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			notificationTemplates1.toString(), totalCount + 2,
-			notificationTemplates1.size());
+		if (totalCount >= 498) {
+			Page<NotificationTemplate> page1 =
+				notificationTemplateResource.getNotificationTemplatesPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<NotificationTemplate> page2 =
-			notificationTemplateResource.getNotificationTemplatesPage(
-				null, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				notificationTemplate1,
+				(List<NotificationTemplate>)page1.getItems());
 
-		List<NotificationTemplate> notificationTemplates2 =
-			(List<NotificationTemplate>)page2.getItems();
+			Page<NotificationTemplate> page2 =
+				notificationTemplateResource.getNotificationTemplatesPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			notificationTemplates2.toString(), 1,
-			notificationTemplates2.size());
+			assertContains(
+				notificationTemplate2,
+				(List<NotificationTemplate>)page2.getItems());
 
-		Page<NotificationTemplate> page3 =
-			notificationTemplateResource.getNotificationTemplatesPage(
-				null, null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<NotificationTemplate> page3 =
+				notificationTemplateResource.getNotificationTemplatesPage(
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			notificationTemplate1,
-			(List<NotificationTemplate>)page3.getItems());
-		assertContains(
-			notificationTemplate2,
-			(List<NotificationTemplate>)page3.getItems());
-		assertContains(
-			notificationTemplate3,
-			(List<NotificationTemplate>)page3.getItems());
+			assertContains(
+				notificationTemplate3,
+				(List<NotificationTemplate>)page3.getItems());
+		}
+		else {
+			Page<NotificationTemplate> page1 =
+				notificationTemplateResource.getNotificationTemplatesPage(
+					null, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<NotificationTemplate> notificationTemplates1 =
+				(List<NotificationTemplate>)page1.getItems();
+
+			Assert.assertEquals(
+				notificationTemplates1.toString(), totalCount + 2,
+				notificationTemplates1.size());
+
+			Page<NotificationTemplate> page2 =
+				notificationTemplateResource.getNotificationTemplatesPage(
+					null, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<NotificationTemplate> notificationTemplates2 =
+				(List<NotificationTemplate>)page2.getItems();
+
+			Assert.assertEquals(
+				notificationTemplates2.toString(), 1,
+				notificationTemplates2.size());
+
+			Page<NotificationTemplate> page3 =
+				notificationTemplateResource.getNotificationTemplatesPage(
+					null, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(
+				notificationTemplate1,
+				(List<NotificationTemplate>)page3.getItems());
+			assertContains(
+				notificationTemplate2,
+				(List<NotificationTemplate>)page3.getItems());
+			assertContains(
+				notificationTemplate3,
+				(List<NotificationTemplate>)page3.getItems());
+		}
 	}
 
 	@Test

@@ -660,30 +660,77 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting3 = testGetSiteBlogPostingsPage_addBlogPosting(
 			siteId, randomBlogPosting());
 
-		Page<BlogPosting> page1 = blogPostingResource.getSiteBlogPostingsPage(
-			siteId, null, null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<BlogPosting> blogPostings1 = (List<BlogPosting>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			blogPostings1.toString(), totalCount + 2, blogPostings1.size());
+		if (totalCount >= 498) {
+			Page<BlogPosting> page1 =
+				blogPostingResource.getSiteBlogPostingsPage(
+					siteId, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<BlogPosting> page2 = blogPostingResource.getSiteBlogPostingsPage(
-			siteId, null, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(blogPosting1, (List<BlogPosting>)page1.getItems());
 
-		List<BlogPosting> blogPostings2 = (List<BlogPosting>)page2.getItems();
+			Page<BlogPosting> page2 =
+				blogPostingResource.getSiteBlogPostingsPage(
+					siteId, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(blogPostings2.toString(), 1, blogPostings2.size());
+			assertContains(blogPosting2, (List<BlogPosting>)page2.getItems());
 
-		Page<BlogPosting> page3 = blogPostingResource.getSiteBlogPostingsPage(
-			siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
-			null);
+			Page<BlogPosting> page3 =
+				blogPostingResource.getSiteBlogPostingsPage(
+					siteId, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(blogPosting1, (List<BlogPosting>)page3.getItems());
-		assertContains(blogPosting2, (List<BlogPosting>)page3.getItems());
-		assertContains(blogPosting3, (List<BlogPosting>)page3.getItems());
+			assertContains(blogPosting3, (List<BlogPosting>)page3.getItems());
+		}
+		else {
+			Page<BlogPosting> page1 =
+				blogPostingResource.getSiteBlogPostingsPage(
+					siteId, null, null, null, Pagination.of(1, totalCount + 2),
+					null);
+
+			List<BlogPosting> blogPostings1 =
+				(List<BlogPosting>)page1.getItems();
+
+			Assert.assertEquals(
+				blogPostings1.toString(), totalCount + 2, blogPostings1.size());
+
+			Page<BlogPosting> page2 =
+				blogPostingResource.getSiteBlogPostingsPage(
+					siteId, null, null, null, Pagination.of(2, totalCount + 2),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<BlogPosting> blogPostings2 =
+				(List<BlogPosting>)page2.getItems();
+
+			Assert.assertEquals(
+				blogPostings2.toString(), 1, blogPostings2.size());
+
+			Page<BlogPosting> page3 =
+				blogPostingResource.getSiteBlogPostingsPage(
+					siteId, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(blogPosting1, (List<BlogPosting>)page3.getItems());
+			assertContains(blogPosting2, (List<BlogPosting>)page3.getItems());
+			assertContains(blogPosting3, (List<BlogPosting>)page3.getItems());
+		}
 	}
 
 	@Test

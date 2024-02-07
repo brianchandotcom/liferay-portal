@@ -300,43 +300,87 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 			testGetOrderRuleByExternalReferenceCodeOrderRuleChannelsPage_addOrderRuleChannel(
 				externalReferenceCode, randomOrderRuleChannel());
 
-		Page<OrderRuleChannel> page1 =
-			orderRuleChannelResource.
-				getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<OrderRuleChannel> orderRuleChannels1 =
-			(List<OrderRuleChannel>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			orderRuleChannels1.toString(), totalCount + 2,
-			orderRuleChannels1.size());
+		if (totalCount >= 498) {
+			Page<OrderRuleChannel> page1 =
+				orderRuleChannelResource.
+					getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Page<OrderRuleChannel> page2 =
-			orderRuleChannelResource.
-				getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				orderRuleChannel1, (List<OrderRuleChannel>)page1.getItems());
 
-		List<OrderRuleChannel> orderRuleChannels2 =
-			(List<OrderRuleChannel>)page2.getItems();
+			Page<OrderRuleChannel> page2 =
+				orderRuleChannelResource.
+					getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Assert.assertEquals(
-			orderRuleChannels2.toString(), 1, orderRuleChannels2.size());
+			assertContains(
+				orderRuleChannel2, (List<OrderRuleChannel>)page2.getItems());
 
-		Page<OrderRuleChannel> page3 =
-			orderRuleChannelResource.
-				getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<OrderRuleChannel> page3 =
+				orderRuleChannelResource.
+					getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		assertContains(
-			orderRuleChannel1, (List<OrderRuleChannel>)page3.getItems());
-		assertContains(
-			orderRuleChannel2, (List<OrderRuleChannel>)page3.getItems());
-		assertContains(
-			orderRuleChannel3, (List<OrderRuleChannel>)page3.getItems());
+			assertContains(
+				orderRuleChannel3, (List<OrderRuleChannel>)page3.getItems());
+		}
+		else {
+			Page<OrderRuleChannel> page1 =
+				orderRuleChannelResource.
+					getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<OrderRuleChannel> orderRuleChannels1 =
+				(List<OrderRuleChannel>)page1.getItems();
+
+			Assert.assertEquals(
+				orderRuleChannels1.toString(), totalCount + 2,
+				orderRuleChannels1.size());
+
+			Page<OrderRuleChannel> page2 =
+				orderRuleChannelResource.
+					getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OrderRuleChannel> orderRuleChannels2 =
+				(List<OrderRuleChannel>)page2.getItems();
+
+			Assert.assertEquals(
+				orderRuleChannels2.toString(), 1, orderRuleChannels2.size());
+
+			Page<OrderRuleChannel> page3 =
+				orderRuleChannelResource.
+					getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				orderRuleChannel1, (List<OrderRuleChannel>)page3.getItems());
+			assertContains(
+				orderRuleChannel2, (List<OrderRuleChannel>)page3.getItems());
+			assertContains(
+				orderRuleChannel3, (List<OrderRuleChannel>)page3.getItems());
+		}
 	}
 
 	protected OrderRuleChannel
@@ -572,39 +616,82 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 			testGetOrderRuleIdOrderRuleChannelsPage_addOrderRuleChannel(
 				id, randomOrderRuleChannel());
 
-		Page<OrderRuleChannel> page1 =
-			orderRuleChannelResource.getOrderRuleIdOrderRuleChannelsPage(
-				id, null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<OrderRuleChannel> orderRuleChannels1 =
-			(List<OrderRuleChannel>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			orderRuleChannels1.toString(), totalCount + 2,
-			orderRuleChannels1.size());
+		if (totalCount >= 498) {
+			Page<OrderRuleChannel> page1 =
+				orderRuleChannelResource.getOrderRuleIdOrderRuleChannelsPage(
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<OrderRuleChannel> page2 =
-			orderRuleChannelResource.getOrderRuleIdOrderRuleChannelsPage(
-				id, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				orderRuleChannel1, (List<OrderRuleChannel>)page1.getItems());
 
-		List<OrderRuleChannel> orderRuleChannels2 =
-			(List<OrderRuleChannel>)page2.getItems();
+			Page<OrderRuleChannel> page2 =
+				orderRuleChannelResource.getOrderRuleIdOrderRuleChannelsPage(
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			orderRuleChannels2.toString(), 1, orderRuleChannels2.size());
+			assertContains(
+				orderRuleChannel2, (List<OrderRuleChannel>)page2.getItems());
 
-		Page<OrderRuleChannel> page3 =
-			orderRuleChannelResource.getOrderRuleIdOrderRuleChannelsPage(
-				id, null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<OrderRuleChannel> page3 =
+				orderRuleChannelResource.getOrderRuleIdOrderRuleChannelsPage(
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			orderRuleChannel1, (List<OrderRuleChannel>)page3.getItems());
-		assertContains(
-			orderRuleChannel2, (List<OrderRuleChannel>)page3.getItems());
-		assertContains(
-			orderRuleChannel3, (List<OrderRuleChannel>)page3.getItems());
+			assertContains(
+				orderRuleChannel3, (List<OrderRuleChannel>)page3.getItems());
+		}
+		else {
+			Page<OrderRuleChannel> page1 =
+				orderRuleChannelResource.getOrderRuleIdOrderRuleChannelsPage(
+					id, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<OrderRuleChannel> orderRuleChannels1 =
+				(List<OrderRuleChannel>)page1.getItems();
+
+			Assert.assertEquals(
+				orderRuleChannels1.toString(), totalCount + 2,
+				orderRuleChannels1.size());
+
+			Page<OrderRuleChannel> page2 =
+				orderRuleChannelResource.getOrderRuleIdOrderRuleChannelsPage(
+					id, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OrderRuleChannel> orderRuleChannels2 =
+				(List<OrderRuleChannel>)page2.getItems();
+
+			Assert.assertEquals(
+				orderRuleChannels2.toString(), 1, orderRuleChannels2.size());
+
+			Page<OrderRuleChannel> page3 =
+				orderRuleChannelResource.getOrderRuleIdOrderRuleChannelsPage(
+					id, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(
+				orderRuleChannel1, (List<OrderRuleChannel>)page3.getItems());
+			assertContains(
+				orderRuleChannel2, (List<OrderRuleChannel>)page3.getItems());
+			assertContains(
+				orderRuleChannel3, (List<OrderRuleChannel>)page3.getItems());
+		}
 	}
 
 	@Test

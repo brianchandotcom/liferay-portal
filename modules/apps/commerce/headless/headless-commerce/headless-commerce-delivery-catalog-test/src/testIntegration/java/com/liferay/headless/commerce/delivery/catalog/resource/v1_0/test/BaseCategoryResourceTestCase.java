@@ -266,29 +266,69 @@ public abstract class BaseCategoryResourceTestCase {
 		Category category3 = testGetChannelProductCategoriesPage_addCategory(
 			channelId, productId, randomCategory());
 
-		Page<Category> page1 = categoryResource.getChannelProductCategoriesPage(
-			channelId, productId, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<Category> categories1 = (List<Category>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			categories1.toString(), totalCount + 2, categories1.size());
+		if (totalCount >= 498) {
+			Page<Category> page1 =
+				categoryResource.getChannelProductCategoriesPage(
+					channelId, productId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Page<Category> page2 = categoryResource.getChannelProductCategoriesPage(
-			channelId, productId, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(category1, (List<Category>)page1.getItems());
 
-		List<Category> categories2 = (List<Category>)page2.getItems();
+			Page<Category> page2 =
+				categoryResource.getChannelProductCategoriesPage(
+					channelId, productId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Assert.assertEquals(categories2.toString(), 1, categories2.size());
+			assertContains(category2, (List<Category>)page2.getItems());
 
-		Page<Category> page3 = categoryResource.getChannelProductCategoriesPage(
-			channelId, productId, Pagination.of(1, (int)totalCount + 3));
+			Page<Category> page3 =
+				categoryResource.getChannelProductCategoriesPage(
+					channelId, productId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		assertContains(category1, (List<Category>)page3.getItems());
-		assertContains(category2, (List<Category>)page3.getItems());
-		assertContains(category3, (List<Category>)page3.getItems());
+			assertContains(category3, (List<Category>)page3.getItems());
+		}
+		else {
+			Page<Category> page1 =
+				categoryResource.getChannelProductCategoriesPage(
+					channelId, productId, Pagination.of(1, totalCount + 2));
+
+			List<Category> categories1 = (List<Category>)page1.getItems();
+
+			Assert.assertEquals(
+				categories1.toString(), totalCount + 2, categories1.size());
+
+			Page<Category> page2 =
+				categoryResource.getChannelProductCategoriesPage(
+					channelId, productId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Category> categories2 = (List<Category>)page2.getItems();
+
+			Assert.assertEquals(categories2.toString(), 1, categories2.size());
+
+			Page<Category> page3 =
+				categoryResource.getChannelProductCategoriesPage(
+					channelId, productId,
+					Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(category1, (List<Category>)page3.getItems());
+			assertContains(category2, (List<Category>)page3.getItems());
+			assertContains(category3, (List<Category>)page3.getItems());
+		}
 	}
 
 	protected Category testGetChannelProductCategoriesPage_addCategory(

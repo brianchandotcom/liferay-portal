@@ -358,39 +358,78 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 			testGetPlacedOrderPlacedOrderItemsPage_addPlacedOrderItem(
 				placedOrderId, randomPlacedOrderItem());
 
-		Page<PlacedOrderItem> page1 =
-			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-				placedOrderId, null, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<PlacedOrderItem> placedOrderItems1 =
-			(List<PlacedOrderItem>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			placedOrderItems1.toString(), totalCount + 2,
-			placedOrderItems1.size());
+		if (totalCount >= 498) {
+			Page<PlacedOrderItem> page1 =
+				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
+					placedOrderId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Page<PlacedOrderItem> page2 =
-			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-				placedOrderId, null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				placedOrderItem1, (List<PlacedOrderItem>)page1.getItems());
 
-		List<PlacedOrderItem> placedOrderItems2 =
-			(List<PlacedOrderItem>)page2.getItems();
+			Page<PlacedOrderItem> page2 =
+				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
+					placedOrderId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Assert.assertEquals(
-			placedOrderItems2.toString(), 1, placedOrderItems2.size());
+			assertContains(
+				placedOrderItem2, (List<PlacedOrderItem>)page2.getItems());
 
-		Page<PlacedOrderItem> page3 =
-			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-				placedOrderId, null, Pagination.of(1, (int)totalCount + 3));
+			Page<PlacedOrderItem> page3 =
+				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
+					placedOrderId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		assertContains(
-			placedOrderItem1, (List<PlacedOrderItem>)page3.getItems());
-		assertContains(
-			placedOrderItem2, (List<PlacedOrderItem>)page3.getItems());
-		assertContains(
-			placedOrderItem3, (List<PlacedOrderItem>)page3.getItems());
+			assertContains(
+				placedOrderItem3, (List<PlacedOrderItem>)page3.getItems());
+		}
+		else {
+			Page<PlacedOrderItem> page1 =
+				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
+					placedOrderId, null, Pagination.of(1, totalCount + 2));
+
+			List<PlacedOrderItem> placedOrderItems1 =
+				(List<PlacedOrderItem>)page1.getItems();
+
+			Assert.assertEquals(
+				placedOrderItems1.toString(), totalCount + 2,
+				placedOrderItems1.size());
+
+			Page<PlacedOrderItem> page2 =
+				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
+					placedOrderId, null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<PlacedOrderItem> placedOrderItems2 =
+				(List<PlacedOrderItem>)page2.getItems();
+
+			Assert.assertEquals(
+				placedOrderItems2.toString(), 1, placedOrderItems2.size());
+
+			Page<PlacedOrderItem> page3 =
+				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
+					placedOrderId, null, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				placedOrderItem1, (List<PlacedOrderItem>)page3.getItems());
+			assertContains(
+				placedOrderItem2, (List<PlacedOrderItem>)page3.getItems());
+			assertContains(
+				placedOrderItem3, (List<PlacedOrderItem>)page3.getItems());
+		}
 	}
 
 	protected PlacedOrderItem

@@ -542,29 +542,65 @@ public abstract class BaseCatalogResourceTestCase {
 
 		Catalog catalog3 = testGetCatalogsPage_addCatalog(randomCatalog());
 
-		Page<Catalog> page1 = catalogResource.getCatalogsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<Catalog> catalogs1 = (List<Catalog>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			catalogs1.toString(), totalCount + 2, catalogs1.size());
+		if (totalCount >= 498) {
+			Page<Catalog> page1 = catalogResource.getCatalogsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<Catalog> page2 = catalogResource.getCatalogsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(catalog1, (List<Catalog>)page1.getItems());
 
-		List<Catalog> catalogs2 = (List<Catalog>)page2.getItems();
+			Page<Catalog> page2 = catalogResource.getCatalogsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(catalogs2.toString(), 1, catalogs2.size());
+			assertContains(catalog2, (List<Catalog>)page2.getItems());
 
-		Page<Catalog> page3 = catalogResource.getCatalogsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<Catalog> page3 = catalogResource.getCatalogsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(catalog1, (List<Catalog>)page3.getItems());
-		assertContains(catalog2, (List<Catalog>)page3.getItems());
-		assertContains(catalog3, (List<Catalog>)page3.getItems());
+			assertContains(catalog3, (List<Catalog>)page3.getItems());
+		}
+		else {
+			Page<Catalog> page1 = catalogResource.getCatalogsPage(
+				null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<Catalog> catalogs1 = (List<Catalog>)page1.getItems();
+
+			Assert.assertEquals(
+				catalogs1.toString(), totalCount + 2, catalogs1.size());
+
+			Page<Catalog> page2 = catalogResource.getCatalogsPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Catalog> catalogs2 = (List<Catalog>)page2.getItems();
+
+			Assert.assertEquals(catalogs2.toString(), 1, catalogs2.size());
+
+			Page<Catalog> page3 = catalogResource.getCatalogsPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(catalog1, (List<Catalog>)page3.getItems());
+			assertContains(catalog2, (List<Catalog>)page3.getItems());
+			assertContains(catalog3, (List<Catalog>)page3.getItems());
+		}
 	}
 
 	@Test

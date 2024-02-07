@@ -394,29 +394,65 @@ public abstract class BaseUserGroupResourceTestCase {
 		UserGroup userGroup3 = testGetUserGroupsPage_addUserGroup(
 			randomUserGroup());
 
-		Page<UserGroup> page1 = userGroupResource.getUserGroupsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<UserGroup> userGroups1 = (List<UserGroup>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			userGroups1.toString(), totalCount + 2, userGroups1.size());
+		if (totalCount >= 498) {
+			Page<UserGroup> page1 = userGroupResource.getUserGroupsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<UserGroup> page2 = userGroupResource.getUserGroupsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(userGroup1, (List<UserGroup>)page1.getItems());
 
-		List<UserGroup> userGroups2 = (List<UserGroup>)page2.getItems();
+			Page<UserGroup> page2 = userGroupResource.getUserGroupsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(userGroups2.toString(), 1, userGroups2.size());
+			assertContains(userGroup2, (List<UserGroup>)page2.getItems());
 
-		Page<UserGroup> page3 = userGroupResource.getUserGroupsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<UserGroup> page3 = userGroupResource.getUserGroupsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(userGroup1, (List<UserGroup>)page3.getItems());
-		assertContains(userGroup2, (List<UserGroup>)page3.getItems());
-		assertContains(userGroup3, (List<UserGroup>)page3.getItems());
+			assertContains(userGroup3, (List<UserGroup>)page3.getItems());
+		}
+		else {
+			Page<UserGroup> page1 = userGroupResource.getUserGroupsPage(
+				null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<UserGroup> userGroups1 = (List<UserGroup>)page1.getItems();
+
+			Assert.assertEquals(
+				userGroups1.toString(), totalCount + 2, userGroups1.size());
+
+			Page<UserGroup> page2 = userGroupResource.getUserGroupsPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<UserGroup> userGroups2 = (List<UserGroup>)page2.getItems();
+
+			Assert.assertEquals(userGroups2.toString(), 1, userGroups2.size());
+
+			Page<UserGroup> page3 = userGroupResource.getUserGroupsPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(userGroup1, (List<UserGroup>)page3.getItems());
+			assertContains(userGroup2, (List<UserGroup>)page3.getItems());
+			assertContains(userGroup3, (List<UserGroup>)page3.getItems());
+		}
 	}
 
 	@Test

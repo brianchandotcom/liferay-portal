@@ -246,39 +246,88 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 			testGetContactAccountGroupsPage_addContactAccountGroup(
 				randomContactAccountGroup());
 
-		Page<ContactAccountGroup> page1 =
-			contactAccountGroupResource.getContactAccountGroupsPage(
-				null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<ContactAccountGroup> contactAccountGroups1 =
-			(List<ContactAccountGroup>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			contactAccountGroups1.toString(), totalCount + 2,
-			contactAccountGroups1.size());
+		if (totalCount >= 498) {
+			Page<ContactAccountGroup> page1 =
+				contactAccountGroupResource.getContactAccountGroupsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<ContactAccountGroup> page2 =
-			contactAccountGroupResource.getContactAccountGroupsPage(
-				null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				contactAccountGroup1,
+				(List<ContactAccountGroup>)page1.getItems());
 
-		List<ContactAccountGroup> contactAccountGroups2 =
-			(List<ContactAccountGroup>)page2.getItems();
+			Page<ContactAccountGroup> page2 =
+				contactAccountGroupResource.getContactAccountGroupsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			contactAccountGroups2.toString(), 1, contactAccountGroups2.size());
+			assertContains(
+				contactAccountGroup2,
+				(List<ContactAccountGroup>)page2.getItems());
 
-		Page<ContactAccountGroup> page3 =
-			contactAccountGroupResource.getContactAccountGroupsPage(
-				null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<ContactAccountGroup> page3 =
+				contactAccountGroupResource.getContactAccountGroupsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			contactAccountGroup1, (List<ContactAccountGroup>)page3.getItems());
-		assertContains(
-			contactAccountGroup2, (List<ContactAccountGroup>)page3.getItems());
-		assertContains(
-			contactAccountGroup3, (List<ContactAccountGroup>)page3.getItems());
+			assertContains(
+				contactAccountGroup3,
+				(List<ContactAccountGroup>)page3.getItems());
+		}
+		else {
+			Page<ContactAccountGroup> page1 =
+				contactAccountGroupResource.getContactAccountGroupsPage(
+					null, Pagination.of(1, totalCount + 2), null);
+
+			List<ContactAccountGroup> contactAccountGroups1 =
+				(List<ContactAccountGroup>)page1.getItems();
+
+			Assert.assertEquals(
+				contactAccountGroups1.toString(), totalCount + 2,
+				contactAccountGroups1.size());
+
+			Page<ContactAccountGroup> page2 =
+				contactAccountGroupResource.getContactAccountGroupsPage(
+					null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ContactAccountGroup> contactAccountGroups2 =
+				(List<ContactAccountGroup>)page2.getItems();
+
+			Assert.assertEquals(
+				contactAccountGroups2.toString(), 1,
+				contactAccountGroups2.size());
+
+			Page<ContactAccountGroup> page3 =
+				contactAccountGroupResource.getContactAccountGroupsPage(
+					null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				contactAccountGroup1,
+				(List<ContactAccountGroup>)page3.getItems());
+			assertContains(
+				contactAccountGroup2,
+				(List<ContactAccountGroup>)page3.getItems());
+			assertContains(
+				contactAccountGroup3,
+				(List<ContactAccountGroup>)page3.getItems());
+		}
 	}
 
 	@Test

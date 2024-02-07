@@ -405,29 +405,65 @@ public abstract class BaseOrderTypeResourceTestCase {
 		OrderType orderType3 = testGetOrderTypesPage_addOrderType(
 			randomOrderType());
 
-		Page<OrderType> page1 = orderTypeResource.getOrderTypesPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<OrderType> orderTypes1 = (List<OrderType>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			orderTypes1.toString(), totalCount + 2, orderTypes1.size());
+		if (totalCount >= 498) {
+			Page<OrderType> page1 = orderTypeResource.getOrderTypesPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<OrderType> page2 = orderTypeResource.getOrderTypesPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(orderType1, (List<OrderType>)page1.getItems());
 
-		List<OrderType> orderTypes2 = (List<OrderType>)page2.getItems();
+			Page<OrderType> page2 = orderTypeResource.getOrderTypesPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(orderTypes2.toString(), 1, orderTypes2.size());
+			assertContains(orderType2, (List<OrderType>)page2.getItems());
 
-		Page<OrderType> page3 = orderTypeResource.getOrderTypesPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<OrderType> page3 = orderTypeResource.getOrderTypesPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(orderType1, (List<OrderType>)page3.getItems());
-		assertContains(orderType2, (List<OrderType>)page3.getItems());
-		assertContains(orderType3, (List<OrderType>)page3.getItems());
+			assertContains(orderType3, (List<OrderType>)page3.getItems());
+		}
+		else {
+			Page<OrderType> page1 = orderTypeResource.getOrderTypesPage(
+				null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<OrderType> orderTypes1 = (List<OrderType>)page1.getItems();
+
+			Assert.assertEquals(
+				orderTypes1.toString(), totalCount + 2, orderTypes1.size());
+
+			Page<OrderType> page2 = orderTypeResource.getOrderTypesPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OrderType> orderTypes2 = (List<OrderType>)page2.getItems();
+
+			Assert.assertEquals(orderTypes2.toString(), 1, orderTypes2.size());
+
+			Page<OrderType> page3 = orderTypeResource.getOrderTypesPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(orderType1, (List<OrderType>)page3.getItems());
+			assertContains(orderType2, (List<OrderType>)page3.getItems());
+			assertContains(orderType3, (List<OrderType>)page3.getItems());
+		}
 	}
 
 	@Test

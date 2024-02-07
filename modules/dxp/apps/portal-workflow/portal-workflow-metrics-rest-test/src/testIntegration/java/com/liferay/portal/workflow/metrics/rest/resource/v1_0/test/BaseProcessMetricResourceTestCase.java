@@ -228,32 +228,81 @@ public abstract class BaseProcessMetricResourceTestCase {
 		ProcessMetric processMetric3 =
 			testGetProcessMetricsPage_addProcessMetric(randomProcessMetric());
 
-		Page<ProcessMetric> page1 = processMetricResource.getProcessMetricsPage(
-			null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<ProcessMetric> processMetrics1 =
-			(List<ProcessMetric>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			processMetrics1.toString(), totalCount + 2, processMetrics1.size());
+		if (totalCount >= 498) {
+			Page<ProcessMetric> page1 =
+				processMetricResource.getProcessMetricsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<ProcessMetric> page2 = processMetricResource.getProcessMetricsPage(
-			null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				processMetric1, (List<ProcessMetric>)page1.getItems());
 
-		List<ProcessMetric> processMetrics2 =
-			(List<ProcessMetric>)page2.getItems();
+			Page<ProcessMetric> page2 =
+				processMetricResource.getProcessMetricsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			processMetrics2.toString(), 1, processMetrics2.size());
+			assertContains(
+				processMetric2, (List<ProcessMetric>)page2.getItems());
 
-		Page<ProcessMetric> page3 = processMetricResource.getProcessMetricsPage(
-			null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<ProcessMetric> page3 =
+				processMetricResource.getProcessMetricsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(processMetric1, (List<ProcessMetric>)page3.getItems());
-		assertContains(processMetric2, (List<ProcessMetric>)page3.getItems());
-		assertContains(processMetric3, (List<ProcessMetric>)page3.getItems());
+			assertContains(
+				processMetric3, (List<ProcessMetric>)page3.getItems());
+		}
+		else {
+			Page<ProcessMetric> page1 =
+				processMetricResource.getProcessMetricsPage(
+					null, Pagination.of(1, totalCount + 2), null);
+
+			List<ProcessMetric> processMetrics1 =
+				(List<ProcessMetric>)page1.getItems();
+
+			Assert.assertEquals(
+				processMetrics1.toString(), totalCount + 2,
+				processMetrics1.size());
+
+			Page<ProcessMetric> page2 =
+				processMetricResource.getProcessMetricsPage(
+					null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ProcessMetric> processMetrics2 =
+				(List<ProcessMetric>)page2.getItems();
+
+			Assert.assertEquals(
+				processMetrics2.toString(), 1, processMetrics2.size());
+
+			Page<ProcessMetric> page3 =
+				processMetricResource.getProcessMetricsPage(
+					null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				processMetric1, (List<ProcessMetric>)page3.getItems());
+			assertContains(
+				processMetric2, (List<ProcessMetric>)page3.getItems());
+			assertContains(
+				processMetric3, (List<ProcessMetric>)page3.getItems());
+		}
 	}
 
 	@Test

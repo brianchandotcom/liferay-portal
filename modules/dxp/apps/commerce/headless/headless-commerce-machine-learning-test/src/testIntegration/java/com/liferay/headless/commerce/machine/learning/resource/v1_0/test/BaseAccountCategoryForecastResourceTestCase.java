@@ -263,49 +263,94 @@ public abstract class BaseAccountCategoryForecastResourceTestCase {
 			testGetAccountCategoryForecastsByMonthlyRevenuePage_addAccountCategoryForecast(
 				randomAccountCategoryForecast());
 
-		Page<AccountCategoryForecast> page1 =
-			accountCategoryForecastResource.
-				getAccountCategoryForecastsByMonthlyRevenuePage(
-					null, null, null, null, null,
-					Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<AccountCategoryForecast> accountCategoryForecasts1 =
-			(List<AccountCategoryForecast>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			accountCategoryForecasts1.toString(), totalCount + 2,
-			accountCategoryForecasts1.size());
+		if (totalCount >= 498) {
+			Page<AccountCategoryForecast> page1 =
+				accountCategoryForecastResource.
+					getAccountCategoryForecastsByMonthlyRevenuePage(
+						null, null, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Page<AccountCategoryForecast> page2 =
-			accountCategoryForecastResource.
-				getAccountCategoryForecastsByMonthlyRevenuePage(
-					null, null, null, null, null,
-					Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountCategoryForecast1,
+				(List<AccountCategoryForecast>)page1.getItems());
 
-		List<AccountCategoryForecast> accountCategoryForecasts2 =
-			(List<AccountCategoryForecast>)page2.getItems();
+			Page<AccountCategoryForecast> page2 =
+				accountCategoryForecastResource.
+					getAccountCategoryForecastsByMonthlyRevenuePage(
+						null, null, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Assert.assertEquals(
-			accountCategoryForecasts2.toString(), 1,
-			accountCategoryForecasts2.size());
+			assertContains(
+				accountCategoryForecast2,
+				(List<AccountCategoryForecast>)page2.getItems());
 
-		Page<AccountCategoryForecast> page3 =
-			accountCategoryForecastResource.
-				getAccountCategoryForecastsByMonthlyRevenuePage(
-					null, null, null, null, null,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<AccountCategoryForecast> page3 =
+				accountCategoryForecastResource.
+					getAccountCategoryForecastsByMonthlyRevenuePage(
+						null, null, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		assertContains(
-			accountCategoryForecast1,
-			(List<AccountCategoryForecast>)page3.getItems());
-		assertContains(
-			accountCategoryForecast2,
-			(List<AccountCategoryForecast>)page3.getItems());
-		assertContains(
-			accountCategoryForecast3,
-			(List<AccountCategoryForecast>)page3.getItems());
+			assertContains(
+				accountCategoryForecast3,
+				(List<AccountCategoryForecast>)page3.getItems());
+		}
+		else {
+			Page<AccountCategoryForecast> page1 =
+				accountCategoryForecastResource.
+					getAccountCategoryForecastsByMonthlyRevenuePage(
+						null, null, null, null, null,
+						Pagination.of(1, totalCount + 2));
+
+			List<AccountCategoryForecast> accountCategoryForecasts1 =
+				(List<AccountCategoryForecast>)page1.getItems();
+
+			Assert.assertEquals(
+				accountCategoryForecasts1.toString(), totalCount + 2,
+				accountCategoryForecasts1.size());
+
+			Page<AccountCategoryForecast> page2 =
+				accountCategoryForecastResource.
+					getAccountCategoryForecastsByMonthlyRevenuePage(
+						null, null, null, null, null,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountCategoryForecast> accountCategoryForecasts2 =
+				(List<AccountCategoryForecast>)page2.getItems();
+
+			Assert.assertEquals(
+				accountCategoryForecasts2.toString(), 1,
+				accountCategoryForecasts2.size());
+
+			Page<AccountCategoryForecast> page3 =
+				accountCategoryForecastResource.
+					getAccountCategoryForecastsByMonthlyRevenuePage(
+						null, null, null, null, null,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountCategoryForecast1,
+				(List<AccountCategoryForecast>)page3.getItems());
+			assertContains(
+				accountCategoryForecast2,
+				(List<AccountCategoryForecast>)page3.getItems());
+			assertContains(
+				accountCategoryForecast3,
+				(List<AccountCategoryForecast>)page3.getItems());
+		}
 	}
 
 	protected AccountCategoryForecast

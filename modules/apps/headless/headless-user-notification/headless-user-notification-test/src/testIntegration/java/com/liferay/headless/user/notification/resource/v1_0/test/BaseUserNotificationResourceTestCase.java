@@ -336,39 +336,81 @@ public abstract class BaseUserNotificationResourceTestCase {
 			testGetMyUserNotificationsPage_addUserNotification(
 				randomUserNotification());
 
-		Page<UserNotification> page1 =
-			userNotificationResource.getMyUserNotificationsPage(
-				null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<UserNotification> userNotifications1 =
-			(List<UserNotification>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			userNotifications1.toString(), totalCount + 2,
-			userNotifications1.size());
+		if (totalCount >= 498) {
+			Page<UserNotification> page1 =
+				userNotificationResource.getMyUserNotificationsPage(
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<UserNotification> page2 =
-			userNotificationResource.getMyUserNotificationsPage(
-				null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				userNotification1, (List<UserNotification>)page1.getItems());
 
-		List<UserNotification> userNotifications2 =
-			(List<UserNotification>)page2.getItems();
+			Page<UserNotification> page2 =
+				userNotificationResource.getMyUserNotificationsPage(
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			userNotifications2.toString(), 1, userNotifications2.size());
+			assertContains(
+				userNotification2, (List<UserNotification>)page2.getItems());
 
-		Page<UserNotification> page3 =
-			userNotificationResource.getMyUserNotificationsPage(
-				null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<UserNotification> page3 =
+				userNotificationResource.getMyUserNotificationsPage(
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			userNotification1, (List<UserNotification>)page3.getItems());
-		assertContains(
-			userNotification2, (List<UserNotification>)page3.getItems());
-		assertContains(
-			userNotification3, (List<UserNotification>)page3.getItems());
+			assertContains(
+				userNotification3, (List<UserNotification>)page3.getItems());
+		}
+		else {
+			Page<UserNotification> page1 =
+				userNotificationResource.getMyUserNotificationsPage(
+					null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<UserNotification> userNotifications1 =
+				(List<UserNotification>)page1.getItems();
+
+			Assert.assertEquals(
+				userNotifications1.toString(), totalCount + 2,
+				userNotifications1.size());
+
+			Page<UserNotification> page2 =
+				userNotificationResource.getMyUserNotificationsPage(
+					null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<UserNotification> userNotifications2 =
+				(List<UserNotification>)page2.getItems();
+
+			Assert.assertEquals(
+				userNotifications2.toString(), 1, userNotifications2.size());
+
+			Page<UserNotification> page3 =
+				userNotificationResource.getMyUserNotificationsPage(
+					null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				userNotification1, (List<UserNotification>)page3.getItems());
+			assertContains(
+				userNotification2, (List<UserNotification>)page3.getItems());
+			assertContains(
+				userNotification3, (List<UserNotification>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -721,42 +763,84 @@ public abstract class BaseUserNotificationResourceTestCase {
 			testGetUserAccountUserNotificationsPage_addUserNotification(
 				userAccountId, randomUserNotification());
 
-		Page<UserNotification> page1 =
-			userNotificationResource.getUserAccountUserNotificationsPage(
-				userAccountId, null, null, Pagination.of(1, totalCount + 2),
-				null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<UserNotification> userNotifications1 =
-			(List<UserNotification>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			userNotifications1.toString(), totalCount + 2,
-			userNotifications1.size());
+		if (totalCount >= 498) {
+			Page<UserNotification> page1 =
+				userNotificationResource.getUserAccountUserNotificationsPage(
+					userAccountId, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<UserNotification> page2 =
-			userNotificationResource.getUserAccountUserNotificationsPage(
-				userAccountId, null, null, Pagination.of(2, totalCount + 2),
-				null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				userNotification1, (List<UserNotification>)page1.getItems());
 
-		List<UserNotification> userNotifications2 =
-			(List<UserNotification>)page2.getItems();
+			Page<UserNotification> page2 =
+				userNotificationResource.getUserAccountUserNotificationsPage(
+					userAccountId, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			userNotifications2.toString(), 1, userNotifications2.size());
+			assertContains(
+				userNotification2, (List<UserNotification>)page2.getItems());
 
-		Page<UserNotification> page3 =
-			userNotificationResource.getUserAccountUserNotificationsPage(
-				userAccountId, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+			Page<UserNotification> page3 =
+				userNotificationResource.getUserAccountUserNotificationsPage(
+					userAccountId, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			userNotification1, (List<UserNotification>)page3.getItems());
-		assertContains(
-			userNotification2, (List<UserNotification>)page3.getItems());
-		assertContains(
-			userNotification3, (List<UserNotification>)page3.getItems());
+			assertContains(
+				userNotification3, (List<UserNotification>)page3.getItems());
+		}
+		else {
+			Page<UserNotification> page1 =
+				userNotificationResource.getUserAccountUserNotificationsPage(
+					userAccountId, null, null, Pagination.of(1, totalCount + 2),
+					null);
+
+			List<UserNotification> userNotifications1 =
+				(List<UserNotification>)page1.getItems();
+
+			Assert.assertEquals(
+				userNotifications1.toString(), totalCount + 2,
+				userNotifications1.size());
+
+			Page<UserNotification> page2 =
+				userNotificationResource.getUserAccountUserNotificationsPage(
+					userAccountId, null, null, Pagination.of(2, totalCount + 2),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<UserNotification> userNotifications2 =
+				(List<UserNotification>)page2.getItems();
+
+			Assert.assertEquals(
+				userNotifications2.toString(), 1, userNotifications2.size());
+
+			Page<UserNotification> page3 =
+				userNotificationResource.getUserAccountUserNotificationsPage(
+					userAccountId, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				userNotification1, (List<UserNotification>)page3.getItems());
+			assertContains(
+				userNotification2, (List<UserNotification>)page3.getItems());
+			assertContains(
+				userNotification3, (List<UserNotification>)page3.getItems());
+		}
 	}
 
 	@Test

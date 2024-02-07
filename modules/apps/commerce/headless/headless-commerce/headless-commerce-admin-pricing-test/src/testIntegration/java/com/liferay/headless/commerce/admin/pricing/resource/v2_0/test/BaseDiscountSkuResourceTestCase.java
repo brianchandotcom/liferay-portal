@@ -296,36 +296,80 @@ public abstract class BaseDiscountSkuResourceTestCase {
 			testGetDiscountByExternalReferenceCodeDiscountSkusPage_addDiscountSku(
 				externalReferenceCode, randomDiscountSku());
 
-		Page<DiscountSku> page1 =
-			discountSkuResource.
-				getDiscountByExternalReferenceCodeDiscountSkusPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<DiscountSku> discountSkus1 = (List<DiscountSku>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			discountSkus1.toString(), totalCount + 2, discountSkus1.size());
+		if (totalCount >= 498) {
+			Page<DiscountSku> page1 =
+				discountSkuResource.
+					getDiscountByExternalReferenceCodeDiscountSkusPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Page<DiscountSku> page2 =
-			discountSkuResource.
-				getDiscountByExternalReferenceCodeDiscountSkusPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(discountSku1, (List<DiscountSku>)page1.getItems());
 
-		List<DiscountSku> discountSkus2 = (List<DiscountSku>)page2.getItems();
+			Page<DiscountSku> page2 =
+				discountSkuResource.
+					getDiscountByExternalReferenceCodeDiscountSkusPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Assert.assertEquals(discountSkus2.toString(), 1, discountSkus2.size());
+			assertContains(discountSku2, (List<DiscountSku>)page2.getItems());
 
-		Page<DiscountSku> page3 =
-			discountSkuResource.
-				getDiscountByExternalReferenceCodeDiscountSkusPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<DiscountSku> page3 =
+				discountSkuResource.
+					getDiscountByExternalReferenceCodeDiscountSkusPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		assertContains(discountSku1, (List<DiscountSku>)page3.getItems());
-		assertContains(discountSku2, (List<DiscountSku>)page3.getItems());
-		assertContains(discountSku3, (List<DiscountSku>)page3.getItems());
+			assertContains(discountSku3, (List<DiscountSku>)page3.getItems());
+		}
+		else {
+			Page<DiscountSku> page1 =
+				discountSkuResource.
+					getDiscountByExternalReferenceCodeDiscountSkusPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<DiscountSku> discountSkus1 =
+				(List<DiscountSku>)page1.getItems();
+
+			Assert.assertEquals(
+				discountSkus1.toString(), totalCount + 2, discountSkus1.size());
+
+			Page<DiscountSku> page2 =
+				discountSkuResource.
+					getDiscountByExternalReferenceCodeDiscountSkusPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DiscountSku> discountSkus2 =
+				(List<DiscountSku>)page2.getItems();
+
+			Assert.assertEquals(
+				discountSkus2.toString(), 1, discountSkus2.size());
+
+			Page<DiscountSku> page3 =
+				discountSkuResource.
+					getDiscountByExternalReferenceCodeDiscountSkusPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(discountSku1, (List<DiscountSku>)page3.getItems());
+			assertContains(discountSku2, (List<DiscountSku>)page3.getItems());
+			assertContains(discountSku3, (List<DiscountSku>)page3.getItems());
+		}
 	}
 
 	protected DiscountSku
@@ -554,32 +598,75 @@ public abstract class BaseDiscountSkuResourceTestCase {
 			testGetDiscountIdDiscountSkusPage_addDiscountSku(
 				id, randomDiscountSku());
 
-		Page<DiscountSku> page1 =
-			discountSkuResource.getDiscountIdDiscountSkusPage(
-				id, null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<DiscountSku> discountSkus1 = (List<DiscountSku>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			discountSkus1.toString(), totalCount + 2, discountSkus1.size());
+		if (totalCount >= 498) {
+			Page<DiscountSku> page1 =
+				discountSkuResource.getDiscountIdDiscountSkusPage(
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<DiscountSku> page2 =
-			discountSkuResource.getDiscountIdDiscountSkusPage(
-				id, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(discountSku1, (List<DiscountSku>)page1.getItems());
 
-		List<DiscountSku> discountSkus2 = (List<DiscountSku>)page2.getItems();
+			Page<DiscountSku> page2 =
+				discountSkuResource.getDiscountIdDiscountSkusPage(
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(discountSkus2.toString(), 1, discountSkus2.size());
+			assertContains(discountSku2, (List<DiscountSku>)page2.getItems());
 
-		Page<DiscountSku> page3 =
-			discountSkuResource.getDiscountIdDiscountSkusPage(
-				id, null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<DiscountSku> page3 =
+				discountSkuResource.getDiscountIdDiscountSkusPage(
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(discountSku1, (List<DiscountSku>)page3.getItems());
-		assertContains(discountSku2, (List<DiscountSku>)page3.getItems());
-		assertContains(discountSku3, (List<DiscountSku>)page3.getItems());
+			assertContains(discountSku3, (List<DiscountSku>)page3.getItems());
+		}
+		else {
+			Page<DiscountSku> page1 =
+				discountSkuResource.getDiscountIdDiscountSkusPage(
+					id, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<DiscountSku> discountSkus1 =
+				(List<DiscountSku>)page1.getItems();
+
+			Assert.assertEquals(
+				discountSkus1.toString(), totalCount + 2, discountSkus1.size());
+
+			Page<DiscountSku> page2 =
+				discountSkuResource.getDiscountIdDiscountSkusPage(
+					id, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DiscountSku> discountSkus2 =
+				(List<DiscountSku>)page2.getItems();
+
+			Assert.assertEquals(
+				discountSkus2.toString(), 1, discountSkus2.size());
+
+			Page<DiscountSku> page3 =
+				discountSkuResource.getDiscountIdDiscountSkusPage(
+					id, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(discountSku1, (List<DiscountSku>)page3.getItems());
+			assertContains(discountSku2, (List<DiscountSku>)page3.getItems());
+			assertContains(discountSku3, (List<DiscountSku>)page3.getItems());
+		}
 	}
 
 	@Test

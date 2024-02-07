@@ -262,32 +262,68 @@ public abstract class BaseAssigneeResourceTestCase {
 		Assignee assignee3 = testGetWorkflowTaskAssignableUsersPage_addAssignee(
 			workflowTaskId, randomAssignee());
 
-		Page<Assignee> page1 =
-			assigneeResource.getWorkflowTaskAssignableUsersPage(
-				workflowTaskId, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<Assignee> assignees1 = (List<Assignee>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			assignees1.toString(), totalCount + 2, assignees1.size());
+		if (totalCount >= 498) {
+			Page<Assignee> page1 =
+				assigneeResource.getWorkflowTaskAssignableUsersPage(
+					workflowTaskId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Page<Assignee> page2 =
-			assigneeResource.getWorkflowTaskAssignableUsersPage(
-				workflowTaskId, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(assignee1, (List<Assignee>)page1.getItems());
 
-		List<Assignee> assignees2 = (List<Assignee>)page2.getItems();
+			Page<Assignee> page2 =
+				assigneeResource.getWorkflowTaskAssignableUsersPage(
+					workflowTaskId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Assert.assertEquals(assignees2.toString(), 1, assignees2.size());
+			assertContains(assignee2, (List<Assignee>)page2.getItems());
 
-		Page<Assignee> page3 =
-			assigneeResource.getWorkflowTaskAssignableUsersPage(
-				workflowTaskId, Pagination.of(1, (int)totalCount + 3));
+			Page<Assignee> page3 =
+				assigneeResource.getWorkflowTaskAssignableUsersPage(
+					workflowTaskId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		assertContains(assignee1, (List<Assignee>)page3.getItems());
-		assertContains(assignee2, (List<Assignee>)page3.getItems());
-		assertContains(assignee3, (List<Assignee>)page3.getItems());
+			assertContains(assignee3, (List<Assignee>)page3.getItems());
+		}
+		else {
+			Page<Assignee> page1 =
+				assigneeResource.getWorkflowTaskAssignableUsersPage(
+					workflowTaskId, Pagination.of(1, totalCount + 2));
+
+			List<Assignee> assignees1 = (List<Assignee>)page1.getItems();
+
+			Assert.assertEquals(
+				assignees1.toString(), totalCount + 2, assignees1.size());
+
+			Page<Assignee> page2 =
+				assigneeResource.getWorkflowTaskAssignableUsersPage(
+					workflowTaskId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Assignee> assignees2 = (List<Assignee>)page2.getItems();
+
+			Assert.assertEquals(assignees2.toString(), 1, assignees2.size());
+
+			Page<Assignee> page3 =
+				assigneeResource.getWorkflowTaskAssignableUsersPage(
+					workflowTaskId, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(assignee1, (List<Assignee>)page3.getItems());
+			assertContains(assignee2, (List<Assignee>)page3.getItems());
+			assertContains(assignee3, (List<Assignee>)page3.getItems());
+		}
 	}
 
 	protected Assignee testGetWorkflowTaskAssignableUsersPage_addAssignee(

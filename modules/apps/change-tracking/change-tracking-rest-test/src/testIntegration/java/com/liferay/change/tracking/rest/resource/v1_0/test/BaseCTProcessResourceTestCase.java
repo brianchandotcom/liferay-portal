@@ -318,29 +318,66 @@ public abstract class BaseCTProcessResourceTestCase {
 		CTProcess ctProcess3 = testGetCTProcessesPage_addCTProcess(
 			randomCTProcess());
 
-		Page<CTProcess> page1 = ctProcessResource.getCTProcessesPage(
-			null, null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<CTProcess> ctProcesses1 = (List<CTProcess>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			ctProcesses1.toString(), totalCount + 2, ctProcesses1.size());
+		if (totalCount >= 498) {
+			Page<CTProcess> page1 = ctProcessResource.getCTProcessesPage(
+				null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<CTProcess> page2 = ctProcessResource.getCTProcessesPage(
-			null, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(ctProcess1, (List<CTProcess>)page1.getItems());
 
-		List<CTProcess> ctProcesses2 = (List<CTProcess>)page2.getItems();
+			Page<CTProcess> page2 = ctProcessResource.getCTProcessesPage(
+				null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(ctProcesses2.toString(), 1, ctProcesses2.size());
+			assertContains(ctProcess2, (List<CTProcess>)page2.getItems());
 
-		Page<CTProcess> page3 = ctProcessResource.getCTProcessesPage(
-			null, null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<CTProcess> page3 = ctProcessResource.getCTProcessesPage(
+				null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(ctProcess1, (List<CTProcess>)page3.getItems());
-		assertContains(ctProcess2, (List<CTProcess>)page3.getItems());
-		assertContains(ctProcess3, (List<CTProcess>)page3.getItems());
+			assertContains(ctProcess3, (List<CTProcess>)page3.getItems());
+		}
+		else {
+			Page<CTProcess> page1 = ctProcessResource.getCTProcessesPage(
+				null, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<CTProcess> ctProcesses1 = (List<CTProcess>)page1.getItems();
+
+			Assert.assertEquals(
+				ctProcesses1.toString(), totalCount + 2, ctProcesses1.size());
+
+			Page<CTProcess> page2 = ctProcessResource.getCTProcessesPage(
+				null, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<CTProcess> ctProcesses2 = (List<CTProcess>)page2.getItems();
+
+			Assert.assertEquals(
+				ctProcesses2.toString(), 1, ctProcesses2.size());
+
+			Page<CTProcess> page3 = ctProcessResource.getCTProcessesPage(
+				null, null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(ctProcess1, (List<CTProcess>)page3.getItems());
+			assertContains(ctProcess2, (List<CTProcess>)page3.getItems());
+			assertContains(ctProcess3, (List<CTProcess>)page3.getItems());
+		}
 	}
 
 	@Test

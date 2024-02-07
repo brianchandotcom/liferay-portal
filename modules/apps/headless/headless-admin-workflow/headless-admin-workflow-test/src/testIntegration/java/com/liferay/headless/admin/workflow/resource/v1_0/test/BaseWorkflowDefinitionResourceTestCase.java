@@ -260,39 +260,88 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			testGetWorkflowDefinitionsPage_addWorkflowDefinition(
 				randomWorkflowDefinition());
 
-		Page<WorkflowDefinition> page1 =
-			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<WorkflowDefinition> workflowDefinitions1 =
-			(List<WorkflowDefinition>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			workflowDefinitions1.toString(), totalCount + 2,
-			workflowDefinitions1.size());
+		if (totalCount >= 498) {
+			Page<WorkflowDefinition> page1 =
+				workflowDefinitionResource.getWorkflowDefinitionsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<WorkflowDefinition> page2 =
-			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				workflowDefinition1,
+				(List<WorkflowDefinition>)page1.getItems());
 
-		List<WorkflowDefinition> workflowDefinitions2 =
-			(List<WorkflowDefinition>)page2.getItems();
+			Page<WorkflowDefinition> page2 =
+				workflowDefinitionResource.getWorkflowDefinitionsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			workflowDefinitions2.toString(), 1, workflowDefinitions2.size());
+			assertContains(
+				workflowDefinition2,
+				(List<WorkflowDefinition>)page2.getItems());
 
-		Page<WorkflowDefinition> page3 =
-			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<WorkflowDefinition> page3 =
+				workflowDefinitionResource.getWorkflowDefinitionsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			workflowDefinition1, (List<WorkflowDefinition>)page3.getItems());
-		assertContains(
-			workflowDefinition2, (List<WorkflowDefinition>)page3.getItems());
-		assertContains(
-			workflowDefinition3, (List<WorkflowDefinition>)page3.getItems());
+			assertContains(
+				workflowDefinition3,
+				(List<WorkflowDefinition>)page3.getItems());
+		}
+		else {
+			Page<WorkflowDefinition> page1 =
+				workflowDefinitionResource.getWorkflowDefinitionsPage(
+					null, Pagination.of(1, totalCount + 2), null);
+
+			List<WorkflowDefinition> workflowDefinitions1 =
+				(List<WorkflowDefinition>)page1.getItems();
+
+			Assert.assertEquals(
+				workflowDefinitions1.toString(), totalCount + 2,
+				workflowDefinitions1.size());
+
+			Page<WorkflowDefinition> page2 =
+				workflowDefinitionResource.getWorkflowDefinitionsPage(
+					null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<WorkflowDefinition> workflowDefinitions2 =
+				(List<WorkflowDefinition>)page2.getItems();
+
+			Assert.assertEquals(
+				workflowDefinitions2.toString(), 1,
+				workflowDefinitions2.size());
+
+			Page<WorkflowDefinition> page3 =
+				workflowDefinitionResource.getWorkflowDefinitionsPage(
+					null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				workflowDefinition1,
+				(List<WorkflowDefinition>)page3.getItems());
+			assertContains(
+				workflowDefinition2,
+				(List<WorkflowDefinition>)page3.getItems());
+			assertContains(
+				workflowDefinition3,
+				(List<WorkflowDefinition>)page3.getItems());
+		}
 	}
 
 	@Test

@@ -359,30 +359,68 @@ public abstract class BaseSitePageResourceTestCase {
 		SitePage sitePage3 = testGetSiteSitePagesPage_addSitePage(
 			siteId, randomSitePage());
 
-		Page<SitePage> page1 = sitePageResource.getSiteSitePagesPage(
-			siteId, null, null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<SitePage> sitePages1 = (List<SitePage>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			sitePages1.toString(), totalCount + 2, sitePages1.size());
+		if (totalCount >= 498) {
+			Page<SitePage> page1 = sitePageResource.getSiteSitePagesPage(
+				siteId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<SitePage> page2 = sitePageResource.getSiteSitePagesPage(
-			siteId, null, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(sitePage1, (List<SitePage>)page1.getItems());
 
-		List<SitePage> sitePages2 = (List<SitePage>)page2.getItems();
+			Page<SitePage> page2 = sitePageResource.getSiteSitePagesPage(
+				siteId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(sitePages2.toString(), 1, sitePages2.size());
+			assertContains(sitePage2, (List<SitePage>)page2.getItems());
 
-		Page<SitePage> page3 = sitePageResource.getSiteSitePagesPage(
-			siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
-			null);
+			Page<SitePage> page3 = sitePageResource.getSiteSitePagesPage(
+				siteId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(sitePage1, (List<SitePage>)page3.getItems());
-		assertContains(sitePage2, (List<SitePage>)page3.getItems());
-		assertContains(sitePage3, (List<SitePage>)page3.getItems());
+			assertContains(sitePage3, (List<SitePage>)page3.getItems());
+		}
+		else {
+			Page<SitePage> page1 = sitePageResource.getSiteSitePagesPage(
+				siteId, null, null, null, Pagination.of(1, totalCount + 2),
+				null);
+
+			List<SitePage> sitePages1 = (List<SitePage>)page1.getItems();
+
+			Assert.assertEquals(
+				sitePages1.toString(), totalCount + 2, sitePages1.size());
+
+			Page<SitePage> page2 = sitePageResource.getSiteSitePagesPage(
+				siteId, null, null, null, Pagination.of(2, totalCount + 2),
+				null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<SitePage> sitePages2 = (List<SitePage>)page2.getItems();
+
+			Assert.assertEquals(sitePages2.toString(), 1, sitePages2.size());
+
+			Page<SitePage> page3 = sitePageResource.getSiteSitePagesPage(
+				siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
+				null);
+
+			assertContains(sitePage1, (List<SitePage>)page3.getItems());
+			assertContains(sitePage2, (List<SitePage>)page3.getItems());
+			assertContains(sitePage3, (List<SitePage>)page3.getItems());
+		}
 	}
 
 	@Test

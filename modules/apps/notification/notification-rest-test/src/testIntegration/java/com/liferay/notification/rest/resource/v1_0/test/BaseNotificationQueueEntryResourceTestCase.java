@@ -372,43 +372,88 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			testGetNotificationQueueEntriesPage_addNotificationQueueEntry(
 				randomNotificationQueueEntry());
 
-		Page<NotificationQueueEntry> page1 =
-			notificationQueueEntryResource.getNotificationQueueEntriesPage(
-				null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<NotificationQueueEntry> notificationQueueEntries1 =
-			(List<NotificationQueueEntry>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			notificationQueueEntries1.toString(), totalCount + 2,
-			notificationQueueEntries1.size());
+		if (totalCount >= 498) {
+			Page<NotificationQueueEntry> page1 =
+				notificationQueueEntryResource.getNotificationQueueEntriesPage(
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<NotificationQueueEntry> page2 =
-			notificationQueueEntryResource.getNotificationQueueEntriesPage(
-				null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				notificationQueueEntry1,
+				(List<NotificationQueueEntry>)page1.getItems());
 
-		List<NotificationQueueEntry> notificationQueueEntries2 =
-			(List<NotificationQueueEntry>)page2.getItems();
+			Page<NotificationQueueEntry> page2 =
+				notificationQueueEntryResource.getNotificationQueueEntriesPage(
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			notificationQueueEntries2.toString(), 1,
-			notificationQueueEntries2.size());
+			assertContains(
+				notificationQueueEntry2,
+				(List<NotificationQueueEntry>)page2.getItems());
 
-		Page<NotificationQueueEntry> page3 =
-			notificationQueueEntryResource.getNotificationQueueEntriesPage(
-				null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<NotificationQueueEntry> page3 =
+				notificationQueueEntryResource.getNotificationQueueEntriesPage(
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			notificationQueueEntry1,
-			(List<NotificationQueueEntry>)page3.getItems());
-		assertContains(
-			notificationQueueEntry2,
-			(List<NotificationQueueEntry>)page3.getItems());
-		assertContains(
-			notificationQueueEntry3,
-			(List<NotificationQueueEntry>)page3.getItems());
+			assertContains(
+				notificationQueueEntry3,
+				(List<NotificationQueueEntry>)page3.getItems());
+		}
+		else {
+			Page<NotificationQueueEntry> page1 =
+				notificationQueueEntryResource.getNotificationQueueEntriesPage(
+					null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<NotificationQueueEntry> notificationQueueEntries1 =
+				(List<NotificationQueueEntry>)page1.getItems();
+
+			Assert.assertEquals(
+				notificationQueueEntries1.toString(), totalCount + 2,
+				notificationQueueEntries1.size());
+
+			Page<NotificationQueueEntry> page2 =
+				notificationQueueEntryResource.getNotificationQueueEntriesPage(
+					null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<NotificationQueueEntry> notificationQueueEntries2 =
+				(List<NotificationQueueEntry>)page2.getItems();
+
+			Assert.assertEquals(
+				notificationQueueEntries2.toString(), 1,
+				notificationQueueEntries2.size());
+
+			Page<NotificationQueueEntry> page3 =
+				notificationQueueEntryResource.getNotificationQueueEntriesPage(
+					null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				notificationQueueEntry1,
+				(List<NotificationQueueEntry>)page3.getItems());
+			assertContains(
+				notificationQueueEntry2,
+				(List<NotificationQueueEntry>)page3.getItems());
+			assertContains(
+				notificationQueueEntry3,
+				(List<NotificationQueueEntry>)page3.getItems());
+		}
 	}
 
 	@Test

@@ -402,42 +402,84 @@ public abstract class BaseContentStructureResourceTestCase {
 			testGetAssetLibraryContentStructuresPage_addContentStructure(
 				assetLibraryId, randomContentStructure());
 
-		Page<ContentStructure> page1 =
-			contentStructureResource.getAssetLibraryContentStructuresPage(
-				assetLibraryId, null, null, null,
-				Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<ContentStructure> contentStructures1 =
-			(List<ContentStructure>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			contentStructures1.toString(), totalCount + 2,
-			contentStructures1.size());
+		if (totalCount >= 498) {
+			Page<ContentStructure> page1 =
+				contentStructureResource.getAssetLibraryContentStructuresPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<ContentStructure> page2 =
-			contentStructureResource.getAssetLibraryContentStructuresPage(
-				assetLibraryId, null, null, null,
-				Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				contentStructure1, (List<ContentStructure>)page1.getItems());
 
-		List<ContentStructure> contentStructures2 =
-			(List<ContentStructure>)page2.getItems();
+			Page<ContentStructure> page2 =
+				contentStructureResource.getAssetLibraryContentStructuresPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			contentStructures2.toString(), 1, contentStructures2.size());
+			assertContains(
+				contentStructure2, (List<ContentStructure>)page2.getItems());
 
-		Page<ContentStructure> page3 =
-			contentStructureResource.getAssetLibraryContentStructuresPage(
-				assetLibraryId, null, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+			Page<ContentStructure> page3 =
+				contentStructureResource.getAssetLibraryContentStructuresPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			contentStructure1, (List<ContentStructure>)page3.getItems());
-		assertContains(
-			contentStructure2, (List<ContentStructure>)page3.getItems());
-		assertContains(
-			contentStructure3, (List<ContentStructure>)page3.getItems());
+			assertContains(
+				contentStructure3, (List<ContentStructure>)page3.getItems());
+		}
+		else {
+			Page<ContentStructure> page1 =
+				contentStructureResource.getAssetLibraryContentStructuresPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(1, totalCount + 2), null);
+
+			List<ContentStructure> contentStructures1 =
+				(List<ContentStructure>)page1.getItems();
+
+			Assert.assertEquals(
+				contentStructures1.toString(), totalCount + 2,
+				contentStructures1.size());
+
+			Page<ContentStructure> page2 =
+				contentStructureResource.getAssetLibraryContentStructuresPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ContentStructure> contentStructures2 =
+				(List<ContentStructure>)page2.getItems();
+
+			Assert.assertEquals(
+				contentStructures2.toString(), 1, contentStructures2.size());
+
+			Page<ContentStructure> page3 =
+				contentStructureResource.getAssetLibraryContentStructuresPage(
+					assetLibraryId, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				contentStructure1, (List<ContentStructure>)page3.getItems());
+			assertContains(
+				contentStructure2, (List<ContentStructure>)page3.getItems());
+			assertContains(
+				contentStructure3, (List<ContentStructure>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -1011,42 +1053,84 @@ public abstract class BaseContentStructureResourceTestCase {
 			testGetSiteContentStructuresPage_addContentStructure(
 				siteId, randomContentStructure());
 
-		Page<ContentStructure> page1 =
-			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, null, Pagination.of(1, totalCount + 2),
-				null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<ContentStructure> contentStructures1 =
-			(List<ContentStructure>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			contentStructures1.toString(), totalCount + 2,
-			contentStructures1.size());
+		if (totalCount >= 498) {
+			Page<ContentStructure> page1 =
+				contentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<ContentStructure> page2 =
-			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, null, Pagination.of(2, totalCount + 2),
-				null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				contentStructure1, (List<ContentStructure>)page1.getItems());
 
-		List<ContentStructure> contentStructures2 =
-			(List<ContentStructure>)page2.getItems();
+			Page<ContentStructure> page2 =
+				contentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			contentStructures2.toString(), 1, contentStructures2.size());
+			assertContains(
+				contentStructure2, (List<ContentStructure>)page2.getItems());
 
-		Page<ContentStructure> page3 =
-			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
-				null);
+			Page<ContentStructure> page3 =
+				contentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			contentStructure1, (List<ContentStructure>)page3.getItems());
-		assertContains(
-			contentStructure2, (List<ContentStructure>)page3.getItems());
-		assertContains(
-			contentStructure3, (List<ContentStructure>)page3.getItems());
+			assertContains(
+				contentStructure3, (List<ContentStructure>)page3.getItems());
+		}
+		else {
+			Page<ContentStructure> page1 =
+				contentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, null, Pagination.of(1, totalCount + 2),
+					null);
+
+			List<ContentStructure> contentStructures1 =
+				(List<ContentStructure>)page1.getItems();
+
+			Assert.assertEquals(
+				contentStructures1.toString(), totalCount + 2,
+				contentStructures1.size());
+
+			Page<ContentStructure> page2 =
+				contentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, null, Pagination.of(2, totalCount + 2),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ContentStructure> contentStructures2 =
+				(List<ContentStructure>)page2.getItems();
+
+			Assert.assertEquals(
+				contentStructures2.toString(), 1, contentStructures2.size());
+
+			Page<ContentStructure> page3 =
+				contentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				contentStructure1, (List<ContentStructure>)page3.getItems());
+			assertContains(
+				contentStructure2, (List<ContentStructure>)page3.getItems());
+			assertContains(
+				contentStructure3, (List<ContentStructure>)page3.getItems());
+		}
 	}
 
 	@Test

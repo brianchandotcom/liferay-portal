@@ -300,32 +300,72 @@ public abstract class BasePlacedOrderResourceTestCase {
 			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
 				accountId, channelId, randomPlacedOrder());
 
-		Page<PlacedOrder> page1 =
-			placedOrderResource.getChannelAccountPlacedOrdersPage(
-				accountId, channelId, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<PlacedOrder> placedOrders1 = (List<PlacedOrder>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			placedOrders1.toString(), totalCount + 2, placedOrders1.size());
+		if (totalCount >= 498) {
+			Page<PlacedOrder> page1 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Page<PlacedOrder> page2 =
-			placedOrderResource.getChannelAccountPlacedOrdersPage(
-				accountId, channelId, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(placedOrder1, (List<PlacedOrder>)page1.getItems());
 
-		List<PlacedOrder> placedOrders2 = (List<PlacedOrder>)page2.getItems();
+			Page<PlacedOrder> page2 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Assert.assertEquals(placedOrders2.toString(), 1, placedOrders2.size());
+			assertContains(placedOrder2, (List<PlacedOrder>)page2.getItems());
 
-		Page<PlacedOrder> page3 =
-			placedOrderResource.getChannelAccountPlacedOrdersPage(
-				accountId, channelId, Pagination.of(1, (int)totalCount + 3));
+			Page<PlacedOrder> page3 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		assertContains(placedOrder1, (List<PlacedOrder>)page3.getItems());
-		assertContains(placedOrder2, (List<PlacedOrder>)page3.getItems());
-		assertContains(placedOrder3, (List<PlacedOrder>)page3.getItems());
+			assertContains(placedOrder3, (List<PlacedOrder>)page3.getItems());
+		}
+		else {
+			Page<PlacedOrder> page1 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId, Pagination.of(1, totalCount + 2));
+
+			List<PlacedOrder> placedOrders1 =
+				(List<PlacedOrder>)page1.getItems();
+
+			Assert.assertEquals(
+				placedOrders1.toString(), totalCount + 2, placedOrders1.size());
+
+			Page<PlacedOrder> page2 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<PlacedOrder> placedOrders2 =
+				(List<PlacedOrder>)page2.getItems();
+
+			Assert.assertEquals(
+				placedOrders2.toString(), 1, placedOrders2.size());
+
+			Page<PlacedOrder> page3 =
+				placedOrderResource.getChannelAccountPlacedOrdersPage(
+					accountId, channelId,
+					Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(placedOrder1, (List<PlacedOrder>)page3.getItems());
+			assertContains(placedOrder2, (List<PlacedOrder>)page3.getItems());
+			assertContains(placedOrder3, (List<PlacedOrder>)page3.getItems());
+		}
 	}
 
 	protected PlacedOrder testGetChannelAccountPlacedOrdersPage_addPlacedOrder(

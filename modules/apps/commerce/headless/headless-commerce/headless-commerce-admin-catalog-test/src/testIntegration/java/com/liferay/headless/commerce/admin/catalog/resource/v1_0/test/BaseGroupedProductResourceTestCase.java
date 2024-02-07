@@ -336,40 +336,87 @@ public abstract class BaseGroupedProductResourceTestCase {
 			testGetProductByExternalReferenceCodeGroupedProductsPage_addGroupedProduct(
 				externalReferenceCode, randomGroupedProduct());
 
-		Page<GroupedProduct> page1 =
-			groupedProductResource.
-				getProductByExternalReferenceCodeGroupedProductsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<GroupedProduct> groupedProducts1 =
-			(List<GroupedProduct>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			groupedProducts1.toString(), totalCount + 2,
-			groupedProducts1.size());
+		if (totalCount >= 498) {
+			Page<GroupedProduct> page1 =
+				groupedProductResource.
+					getProductByExternalReferenceCodeGroupedProductsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Page<GroupedProduct> page2 =
-			groupedProductResource.
-				getProductByExternalReferenceCodeGroupedProductsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				groupedProduct1, (List<GroupedProduct>)page1.getItems());
 
-		List<GroupedProduct> groupedProducts2 =
-			(List<GroupedProduct>)page2.getItems();
+			Page<GroupedProduct> page2 =
+				groupedProductResource.
+					getProductByExternalReferenceCodeGroupedProductsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Assert.assertEquals(
-			groupedProducts2.toString(), 1, groupedProducts2.size());
+			assertContains(
+				groupedProduct2, (List<GroupedProduct>)page2.getItems());
 
-		Page<GroupedProduct> page3 =
-			groupedProductResource.
-				getProductByExternalReferenceCodeGroupedProductsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<GroupedProduct> page3 =
+				groupedProductResource.
+					getProductByExternalReferenceCodeGroupedProductsPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		assertContains(groupedProduct1, (List<GroupedProduct>)page3.getItems());
-		assertContains(groupedProduct2, (List<GroupedProduct>)page3.getItems());
-		assertContains(groupedProduct3, (List<GroupedProduct>)page3.getItems());
+			assertContains(
+				groupedProduct3, (List<GroupedProduct>)page3.getItems());
+		}
+		else {
+			Page<GroupedProduct> page1 =
+				groupedProductResource.
+					getProductByExternalReferenceCodeGroupedProductsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<GroupedProduct> groupedProducts1 =
+				(List<GroupedProduct>)page1.getItems();
+
+			Assert.assertEquals(
+				groupedProducts1.toString(), totalCount + 2,
+				groupedProducts1.size());
+
+			Page<GroupedProduct> page2 =
+				groupedProductResource.
+					getProductByExternalReferenceCodeGroupedProductsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<GroupedProduct> groupedProducts2 =
+				(List<GroupedProduct>)page2.getItems();
+
+			Assert.assertEquals(
+				groupedProducts2.toString(), 1, groupedProducts2.size());
+
+			Page<GroupedProduct> page3 =
+				groupedProductResource.
+					getProductByExternalReferenceCodeGroupedProductsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				groupedProduct1, (List<GroupedProduct>)page3.getItems());
+			assertContains(
+				groupedProduct2, (List<GroupedProduct>)page3.getItems());
+			assertContains(
+				groupedProduct3, (List<GroupedProduct>)page3.getItems());
+		}
 	}
 
 	protected GroupedProduct
@@ -506,36 +553,78 @@ public abstract class BaseGroupedProductResourceTestCase {
 			testGetProductIdGroupedProductsPage_addGroupedProduct(
 				id, randomGroupedProduct());
 
-		Page<GroupedProduct> page1 =
-			groupedProductResource.getProductIdGroupedProductsPage(
-				id, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<GroupedProduct> groupedProducts1 =
-			(List<GroupedProduct>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			groupedProducts1.toString(), totalCount + 2,
-			groupedProducts1.size());
+		if (totalCount >= 498) {
+			Page<GroupedProduct> page1 =
+				groupedProductResource.getProductIdGroupedProductsPage(
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Page<GroupedProduct> page2 =
-			groupedProductResource.getProductIdGroupedProductsPage(
-				id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				groupedProduct1, (List<GroupedProduct>)page1.getItems());
 
-		List<GroupedProduct> groupedProducts2 =
-			(List<GroupedProduct>)page2.getItems();
+			Page<GroupedProduct> page2 =
+				groupedProductResource.getProductIdGroupedProductsPage(
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Assert.assertEquals(
-			groupedProducts2.toString(), 1, groupedProducts2.size());
+			assertContains(
+				groupedProduct2, (List<GroupedProduct>)page2.getItems());
 
-		Page<GroupedProduct> page3 =
-			groupedProductResource.getProductIdGroupedProductsPage(
-				id, Pagination.of(1, (int)totalCount + 3));
+			Page<GroupedProduct> page3 =
+				groupedProductResource.getProductIdGroupedProductsPage(
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		assertContains(groupedProduct1, (List<GroupedProduct>)page3.getItems());
-		assertContains(groupedProduct2, (List<GroupedProduct>)page3.getItems());
-		assertContains(groupedProduct3, (List<GroupedProduct>)page3.getItems());
+			assertContains(
+				groupedProduct3, (List<GroupedProduct>)page3.getItems());
+		}
+		else {
+			Page<GroupedProduct> page1 =
+				groupedProductResource.getProductIdGroupedProductsPage(
+					id, Pagination.of(1, totalCount + 2));
+
+			List<GroupedProduct> groupedProducts1 =
+				(List<GroupedProduct>)page1.getItems();
+
+			Assert.assertEquals(
+				groupedProducts1.toString(), totalCount + 2,
+				groupedProducts1.size());
+
+			Page<GroupedProduct> page2 =
+				groupedProductResource.getProductIdGroupedProductsPage(
+					id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<GroupedProduct> groupedProducts2 =
+				(List<GroupedProduct>)page2.getItems();
+
+			Assert.assertEquals(
+				groupedProducts2.toString(), 1, groupedProducts2.size());
+
+			Page<GroupedProduct> page3 =
+				groupedProductResource.getProductIdGroupedProductsPage(
+					id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				groupedProduct1, (List<GroupedProduct>)page3.getItems());
+			assertContains(
+				groupedProduct2, (List<GroupedProduct>)page3.getItems());
+			assertContains(
+				groupedProduct3, (List<GroupedProduct>)page3.getItems());
+		}
 	}
 
 	protected GroupedProduct

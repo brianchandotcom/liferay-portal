@@ -332,32 +332,75 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		SXPBlueprint sxpBlueprint3 = testGetSXPBlueprintsPage_addSXPBlueprint(
 			randomSXPBlueprint());
 
-		Page<SXPBlueprint> page1 = sxpBlueprintResource.getSXPBlueprintsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<SXPBlueprint> sxpBlueprints1 =
-			(List<SXPBlueprint>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			sxpBlueprints1.toString(), totalCount + 2, sxpBlueprints1.size());
+		if (totalCount >= 498) {
+			Page<SXPBlueprint> page1 =
+				sxpBlueprintResource.getSXPBlueprintsPage(
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<SXPBlueprint> page2 = sxpBlueprintResource.getSXPBlueprintsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(sxpBlueprint1, (List<SXPBlueprint>)page1.getItems());
 
-		List<SXPBlueprint> sxpBlueprints2 =
-			(List<SXPBlueprint>)page2.getItems();
+			Page<SXPBlueprint> page2 =
+				sxpBlueprintResource.getSXPBlueprintsPage(
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			sxpBlueprints2.toString(), 1, sxpBlueprints2.size());
+			assertContains(sxpBlueprint2, (List<SXPBlueprint>)page2.getItems());
 
-		Page<SXPBlueprint> page3 = sxpBlueprintResource.getSXPBlueprintsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<SXPBlueprint> page3 =
+				sxpBlueprintResource.getSXPBlueprintsPage(
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(sxpBlueprint1, (List<SXPBlueprint>)page3.getItems());
-		assertContains(sxpBlueprint2, (List<SXPBlueprint>)page3.getItems());
-		assertContains(sxpBlueprint3, (List<SXPBlueprint>)page3.getItems());
+			assertContains(sxpBlueprint3, (List<SXPBlueprint>)page3.getItems());
+		}
+		else {
+			Page<SXPBlueprint> page1 =
+				sxpBlueprintResource.getSXPBlueprintsPage(
+					null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<SXPBlueprint> sxpBlueprints1 =
+				(List<SXPBlueprint>)page1.getItems();
+
+			Assert.assertEquals(
+				sxpBlueprints1.toString(), totalCount + 2,
+				sxpBlueprints1.size());
+
+			Page<SXPBlueprint> page2 =
+				sxpBlueprintResource.getSXPBlueprintsPage(
+					null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<SXPBlueprint> sxpBlueprints2 =
+				(List<SXPBlueprint>)page2.getItems();
+
+			Assert.assertEquals(
+				sxpBlueprints2.toString(), 1, sxpBlueprints2.size());
+
+			Page<SXPBlueprint> page3 =
+				sxpBlueprintResource.getSXPBlueprintsPage(
+					null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(sxpBlueprint1, (List<SXPBlueprint>)page3.getItems());
+			assertContains(sxpBlueprint2, (List<SXPBlueprint>)page3.getItems());
+			assertContains(sxpBlueprint3, (List<SXPBlueprint>)page3.getItems());
+		}
 	}
 
 	@Test

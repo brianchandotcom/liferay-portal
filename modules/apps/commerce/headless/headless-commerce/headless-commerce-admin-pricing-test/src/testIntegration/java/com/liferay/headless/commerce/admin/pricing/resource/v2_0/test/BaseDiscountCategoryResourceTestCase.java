@@ -300,43 +300,87 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 			testGetDiscountByExternalReferenceCodeDiscountCategoriesPage_addDiscountCategory(
 				externalReferenceCode, randomDiscountCategory());
 
-		Page<DiscountCategory> page1 =
-			discountCategoryResource.
-				getDiscountByExternalReferenceCodeDiscountCategoriesPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<DiscountCategory> discountCategories1 =
-			(List<DiscountCategory>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			discountCategories1.toString(), totalCount + 2,
-			discountCategories1.size());
+		if (totalCount >= 498) {
+			Page<DiscountCategory> page1 =
+				discountCategoryResource.
+					getDiscountByExternalReferenceCodeDiscountCategoriesPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Page<DiscountCategory> page2 =
-			discountCategoryResource.
-				getDiscountByExternalReferenceCodeDiscountCategoriesPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				discountCategory1, (List<DiscountCategory>)page1.getItems());
 
-		List<DiscountCategory> discountCategories2 =
-			(List<DiscountCategory>)page2.getItems();
+			Page<DiscountCategory> page2 =
+				discountCategoryResource.
+					getDiscountByExternalReferenceCodeDiscountCategoriesPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Assert.assertEquals(
-			discountCategories2.toString(), 1, discountCategories2.size());
+			assertContains(
+				discountCategory2, (List<DiscountCategory>)page2.getItems());
 
-		Page<DiscountCategory> page3 =
-			discountCategoryResource.
-				getDiscountByExternalReferenceCodeDiscountCategoriesPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<DiscountCategory> page3 =
+				discountCategoryResource.
+					getDiscountByExternalReferenceCodeDiscountCategoriesPage(
+						externalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		assertContains(
-			discountCategory1, (List<DiscountCategory>)page3.getItems());
-		assertContains(
-			discountCategory2, (List<DiscountCategory>)page3.getItems());
-		assertContains(
-			discountCategory3, (List<DiscountCategory>)page3.getItems());
+			assertContains(
+				discountCategory3, (List<DiscountCategory>)page3.getItems());
+		}
+		else {
+			Page<DiscountCategory> page1 =
+				discountCategoryResource.
+					getDiscountByExternalReferenceCodeDiscountCategoriesPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<DiscountCategory> discountCategories1 =
+				(List<DiscountCategory>)page1.getItems();
+
+			Assert.assertEquals(
+				discountCategories1.toString(), totalCount + 2,
+				discountCategories1.size());
+
+			Page<DiscountCategory> page2 =
+				discountCategoryResource.
+					getDiscountByExternalReferenceCodeDiscountCategoriesPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DiscountCategory> discountCategories2 =
+				(List<DiscountCategory>)page2.getItems();
+
+			Assert.assertEquals(
+				discountCategories2.toString(), 1, discountCategories2.size());
+
+			Page<DiscountCategory> page3 =
+				discountCategoryResource.
+					getDiscountByExternalReferenceCodeDiscountCategoriesPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				discountCategory1, (List<DiscountCategory>)page3.getItems());
+			assertContains(
+				discountCategory2, (List<DiscountCategory>)page3.getItems());
+			assertContains(
+				discountCategory3, (List<DiscountCategory>)page3.getItems());
+		}
 	}
 
 	protected DiscountCategory
@@ -572,39 +616,82 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 			testGetDiscountIdDiscountCategoriesPage_addDiscountCategory(
 				id, randomDiscountCategory());
 
-		Page<DiscountCategory> page1 =
-			discountCategoryResource.getDiscountIdDiscountCategoriesPage(
-				id, null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<DiscountCategory> discountCategories1 =
-			(List<DiscountCategory>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			discountCategories1.toString(), totalCount + 2,
-			discountCategories1.size());
+		if (totalCount >= 498) {
+			Page<DiscountCategory> page1 =
+				discountCategoryResource.getDiscountIdDiscountCategoriesPage(
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<DiscountCategory> page2 =
-			discountCategoryResource.getDiscountIdDiscountCategoriesPage(
-				id, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				discountCategory1, (List<DiscountCategory>)page1.getItems());
 
-		List<DiscountCategory> discountCategories2 =
-			(List<DiscountCategory>)page2.getItems();
+			Page<DiscountCategory> page2 =
+				discountCategoryResource.getDiscountIdDiscountCategoriesPage(
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			discountCategories2.toString(), 1, discountCategories2.size());
+			assertContains(
+				discountCategory2, (List<DiscountCategory>)page2.getItems());
 
-		Page<DiscountCategory> page3 =
-			discountCategoryResource.getDiscountIdDiscountCategoriesPage(
-				id, null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<DiscountCategory> page3 =
+				discountCategoryResource.getDiscountIdDiscountCategoriesPage(
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			discountCategory1, (List<DiscountCategory>)page3.getItems());
-		assertContains(
-			discountCategory2, (List<DiscountCategory>)page3.getItems());
-		assertContains(
-			discountCategory3, (List<DiscountCategory>)page3.getItems());
+			assertContains(
+				discountCategory3, (List<DiscountCategory>)page3.getItems());
+		}
+		else {
+			Page<DiscountCategory> page1 =
+				discountCategoryResource.getDiscountIdDiscountCategoriesPage(
+					id, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<DiscountCategory> discountCategories1 =
+				(List<DiscountCategory>)page1.getItems();
+
+			Assert.assertEquals(
+				discountCategories1.toString(), totalCount + 2,
+				discountCategories1.size());
+
+			Page<DiscountCategory> page2 =
+				discountCategoryResource.getDiscountIdDiscountCategoriesPage(
+					id, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DiscountCategory> discountCategories2 =
+				(List<DiscountCategory>)page2.getItems();
+
+			Assert.assertEquals(
+				discountCategories2.toString(), 1, discountCategories2.size());
+
+			Page<DiscountCategory> page3 =
+				discountCategoryResource.getDiscountIdDiscountCategoriesPage(
+					id, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(
+				discountCategory1, (List<DiscountCategory>)page3.getItems());
+			assertContains(
+				discountCategory2, (List<DiscountCategory>)page3.getItems());
+			assertContains(
+				discountCategory3, (List<DiscountCategory>)page3.getItems());
+		}
 	}
 
 	@Test

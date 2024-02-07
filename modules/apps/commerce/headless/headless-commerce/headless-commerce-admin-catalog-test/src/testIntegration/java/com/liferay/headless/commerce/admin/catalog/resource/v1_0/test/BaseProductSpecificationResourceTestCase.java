@@ -458,43 +458,91 @@ public abstract class BaseProductSpecificationResourceTestCase {
 			testGetProductIdProductSpecificationsPage_addProductSpecification(
 				id, randomProductSpecification());
 
-		Page<ProductSpecification> page1 =
-			productSpecificationResource.getProductIdProductSpecificationsPage(
-				id, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<ProductSpecification> productSpecifications1 =
-			(List<ProductSpecification>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			productSpecifications1.toString(), totalCount + 2,
-			productSpecifications1.size());
+		if (totalCount >= 498) {
+			Page<ProductSpecification> page1 =
+				productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Page<ProductSpecification> page2 =
-			productSpecificationResource.getProductIdProductSpecificationsPage(
-				id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				productSpecification1,
+				(List<ProductSpecification>)page1.getItems());
 
-		List<ProductSpecification> productSpecifications2 =
-			(List<ProductSpecification>)page2.getItems();
+			Page<ProductSpecification> page2 =
+				productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Assert.assertEquals(
-			productSpecifications2.toString(), 1,
-			productSpecifications2.size());
+			assertContains(
+				productSpecification2,
+				(List<ProductSpecification>)page2.getItems());
 
-		Page<ProductSpecification> page3 =
-			productSpecificationResource.getProductIdProductSpecificationsPage(
-				id, Pagination.of(1, (int)totalCount + 3));
+			Page<ProductSpecification> page3 =
+				productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		assertContains(
-			productSpecification1,
-			(List<ProductSpecification>)page3.getItems());
-		assertContains(
-			productSpecification2,
-			(List<ProductSpecification>)page3.getItems());
-		assertContains(
-			productSpecification3,
-			(List<ProductSpecification>)page3.getItems());
+			assertContains(
+				productSpecification3,
+				(List<ProductSpecification>)page3.getItems());
+		}
+		else {
+			Page<ProductSpecification> page1 =
+				productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						id, Pagination.of(1, totalCount + 2));
+
+			List<ProductSpecification> productSpecifications1 =
+				(List<ProductSpecification>)page1.getItems();
+
+			Assert.assertEquals(
+				productSpecifications1.toString(), totalCount + 2,
+				productSpecifications1.size());
+
+			Page<ProductSpecification> page2 =
+				productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ProductSpecification> productSpecifications2 =
+				(List<ProductSpecification>)page2.getItems();
+
+			Assert.assertEquals(
+				productSpecifications2.toString(), 1,
+				productSpecifications2.size());
+
+			Page<ProductSpecification> page3 =
+				productSpecificationResource.
+					getProductIdProductSpecificationsPage(
+						id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				productSpecification1,
+				(List<ProductSpecification>)page3.getItems());
+			assertContains(
+				productSpecification2,
+				(List<ProductSpecification>)page3.getItems());
+			assertContains(
+				productSpecification3,
+				(List<ProductSpecification>)page3.getItems());
+		}
 	}
 
 	protected ProductSpecification

@@ -482,41 +482,84 @@ public abstract class BaseObjectActionResourceTestCase {
 			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_addObjectAction(
 				externalReferenceCode, randomObjectAction());
 
-		Page<ObjectAction> page1 =
-			objectActionResource.
-				getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
-					externalReferenceCode, null,
-					Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<ObjectAction> objectActions1 =
-			(List<ObjectAction>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			objectActions1.toString(), totalCount + 2, objectActions1.size());
+		if (totalCount >= 498) {
+			Page<ObjectAction> page1 =
+				objectActionResource.
+					getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+						externalReferenceCode, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		Page<ObjectAction> page2 =
-			objectActionResource.
-				getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
-					externalReferenceCode, null,
-					Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(objectAction1, (List<ObjectAction>)page1.getItems());
 
-		List<ObjectAction> objectActions2 =
-			(List<ObjectAction>)page2.getItems();
+			Page<ObjectAction> page2 =
+				objectActionResource.
+					getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+						externalReferenceCode, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		Assert.assertEquals(
-			objectActions2.toString(), 1, objectActions2.size());
+			assertContains(objectAction2, (List<ObjectAction>)page2.getItems());
 
-		Page<ObjectAction> page3 =
-			objectActionResource.
-				getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
-					externalReferenceCode, null,
-					Pagination.of(1, (int)totalCount + 3), null);
+			Page<ObjectAction> page3 =
+				objectActionResource.
+					getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+						externalReferenceCode, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		assertContains(objectAction1, (List<ObjectAction>)page3.getItems());
-		assertContains(objectAction2, (List<ObjectAction>)page3.getItems());
-		assertContains(objectAction3, (List<ObjectAction>)page3.getItems());
+			assertContains(objectAction3, (List<ObjectAction>)page3.getItems());
+		}
+		else {
+			Page<ObjectAction> page1 =
+				objectActionResource.
+					getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+						externalReferenceCode, null,
+						Pagination.of(1, totalCount + 2), null);
+
+			List<ObjectAction> objectActions1 =
+				(List<ObjectAction>)page1.getItems();
+
+			Assert.assertEquals(
+				objectActions1.toString(), totalCount + 2,
+				objectActions1.size());
+
+			Page<ObjectAction> page2 =
+				objectActionResource.
+					getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+						externalReferenceCode, null,
+						Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ObjectAction> objectActions2 =
+				(List<ObjectAction>)page2.getItems();
+
+			Assert.assertEquals(
+				objectActions2.toString(), 1, objectActions2.size());
+
+			Page<ObjectAction> page3 =
+				objectActionResource.
+					getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+						externalReferenceCode, null,
+						Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(objectAction1, (List<ObjectAction>)page3.getItems());
+			assertContains(objectAction2, (List<ObjectAction>)page3.getItems());
+			assertContains(objectAction3, (List<ObjectAction>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -829,38 +872,78 @@ public abstract class BaseObjectActionResourceTestCase {
 			testGetObjectDefinitionObjectActionsPage_addObjectAction(
 				objectDefinitionId, randomObjectAction());
 
-		Page<ObjectAction> page1 =
-			objectActionResource.getObjectDefinitionObjectActionsPage(
-				objectDefinitionId, null, Pagination.of(1, totalCount + 2),
-				null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<ObjectAction> objectActions1 =
-			(List<ObjectAction>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			objectActions1.toString(), totalCount + 2, objectActions1.size());
+		if (totalCount >= 498) {
+			Page<ObjectAction> page1 =
+				objectActionResource.getObjectDefinitionObjectActionsPage(
+					objectDefinitionId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<ObjectAction> page2 =
-			objectActionResource.getObjectDefinitionObjectActionsPage(
-				objectDefinitionId, null, Pagination.of(2, totalCount + 2),
-				null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(objectAction1, (List<ObjectAction>)page1.getItems());
 
-		List<ObjectAction> objectActions2 =
-			(List<ObjectAction>)page2.getItems();
+			Page<ObjectAction> page2 =
+				objectActionResource.getObjectDefinitionObjectActionsPage(
+					objectDefinitionId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			objectActions2.toString(), 1, objectActions2.size());
+			assertContains(objectAction2, (List<ObjectAction>)page2.getItems());
 
-		Page<ObjectAction> page3 =
-			objectActionResource.getObjectDefinitionObjectActionsPage(
-				objectDefinitionId, null, Pagination.of(1, (int)totalCount + 3),
-				null);
+			Page<ObjectAction> page3 =
+				objectActionResource.getObjectDefinitionObjectActionsPage(
+					objectDefinitionId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(objectAction1, (List<ObjectAction>)page3.getItems());
-		assertContains(objectAction2, (List<ObjectAction>)page3.getItems());
-		assertContains(objectAction3, (List<ObjectAction>)page3.getItems());
+			assertContains(objectAction3, (List<ObjectAction>)page3.getItems());
+		}
+		else {
+			Page<ObjectAction> page1 =
+				objectActionResource.getObjectDefinitionObjectActionsPage(
+					objectDefinitionId, null, Pagination.of(1, totalCount + 2),
+					null);
+
+			List<ObjectAction> objectActions1 =
+				(List<ObjectAction>)page1.getItems();
+
+			Assert.assertEquals(
+				objectActions1.toString(), totalCount + 2,
+				objectActions1.size());
+
+			Page<ObjectAction> page2 =
+				objectActionResource.getObjectDefinitionObjectActionsPage(
+					objectDefinitionId, null, Pagination.of(2, totalCount + 2),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ObjectAction> objectActions2 =
+				(List<ObjectAction>)page2.getItems();
+
+			Assert.assertEquals(
+				objectActions2.toString(), 1, objectActions2.size());
+
+			Page<ObjectAction> page3 =
+				objectActionResource.getObjectDefinitionObjectActionsPage(
+					objectDefinitionId, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(objectAction1, (List<ObjectAction>)page3.getItems());
+			assertContains(objectAction2, (List<ObjectAction>)page3.getItems());
+			assertContains(objectAction3, (List<ObjectAction>)page3.getItems());
+		}
 	}
 
 	@Test

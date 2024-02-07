@@ -246,39 +246,81 @@ public abstract class BaseCommerceChannelResourceTestCase {
 			testGetCommerceChannelsPage_addCommerceChannel(
 				randomCommerceChannel());
 
-		Page<CommerceChannel> page1 =
-			commerceChannelResource.getCommerceChannelsPage(
-				null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<CommerceChannel> commerceChannels1 =
-			(List<CommerceChannel>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			commerceChannels1.toString(), totalCount + 2,
-			commerceChannels1.size());
+		if (totalCount >= 498) {
+			Page<CommerceChannel> page1 =
+				commerceChannelResource.getCommerceChannelsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<CommerceChannel> page2 =
-			commerceChannelResource.getCommerceChannelsPage(
-				null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				commerceChannel1, (List<CommerceChannel>)page1.getItems());
 
-		List<CommerceChannel> commerceChannels2 =
-			(List<CommerceChannel>)page2.getItems();
+			Page<CommerceChannel> page2 =
+				commerceChannelResource.getCommerceChannelsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(
-			commerceChannels2.toString(), 1, commerceChannels2.size());
+			assertContains(
+				commerceChannel2, (List<CommerceChannel>)page2.getItems());
 
-		Page<CommerceChannel> page3 =
-			commerceChannelResource.getCommerceChannelsPage(
-				null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<CommerceChannel> page3 =
+				commerceChannelResource.getCommerceChannelsPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(
-			commerceChannel1, (List<CommerceChannel>)page3.getItems());
-		assertContains(
-			commerceChannel2, (List<CommerceChannel>)page3.getItems());
-		assertContains(
-			commerceChannel3, (List<CommerceChannel>)page3.getItems());
+			assertContains(
+				commerceChannel3, (List<CommerceChannel>)page3.getItems());
+		}
+		else {
+			Page<CommerceChannel> page1 =
+				commerceChannelResource.getCommerceChannelsPage(
+					null, Pagination.of(1, totalCount + 2), null);
+
+			List<CommerceChannel> commerceChannels1 =
+				(List<CommerceChannel>)page1.getItems();
+
+			Assert.assertEquals(
+				commerceChannels1.toString(), totalCount + 2,
+				commerceChannels1.size());
+
+			Page<CommerceChannel> page2 =
+				commerceChannelResource.getCommerceChannelsPage(
+					null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<CommerceChannel> commerceChannels2 =
+				(List<CommerceChannel>)page2.getItems();
+
+			Assert.assertEquals(
+				commerceChannels2.toString(), 1, commerceChannels2.size());
+
+			Page<CommerceChannel> page3 =
+				commerceChannelResource.getCommerceChannelsPage(
+					null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				commerceChannel1, (List<CommerceChannel>)page3.getItems());
+			assertContains(
+				commerceChannel2, (List<CommerceChannel>)page3.getItems());
+			assertContains(
+				commerceChannel3, (List<CommerceChannel>)page3.getItems());
+		}
 	}
 
 	@Test

@@ -332,29 +332,65 @@ public abstract class BasePaymentResourceTestCase {
 
 		Payment payment3 = testGetPaymentsPage_addPayment(randomPayment());
 
-		Page<Payment> page1 = paymentResource.getPaymentsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<Payment> payments1 = (List<Payment>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			payments1.toString(), totalCount + 2, payments1.size());
+		if (totalCount >= 498) {
+			Page<Payment> page1 = paymentResource.getPaymentsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<Payment> page2 = paymentResource.getPaymentsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(payment1, (List<Payment>)page1.getItems());
 
-		List<Payment> payments2 = (List<Payment>)page2.getItems();
+			Page<Payment> page2 = paymentResource.getPaymentsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(payments2.toString(), 1, payments2.size());
+			assertContains(payment2, (List<Payment>)page2.getItems());
 
-		Page<Payment> page3 = paymentResource.getPaymentsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<Payment> page3 = paymentResource.getPaymentsPage(
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(payment1, (List<Payment>)page3.getItems());
-		assertContains(payment2, (List<Payment>)page3.getItems());
-		assertContains(payment3, (List<Payment>)page3.getItems());
+			assertContains(payment3, (List<Payment>)page3.getItems());
+		}
+		else {
+			Page<Payment> page1 = paymentResource.getPaymentsPage(
+				null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<Payment> payments1 = (List<Payment>)page1.getItems();
+
+			Assert.assertEquals(
+				payments1.toString(), totalCount + 2, payments1.size());
+
+			Page<Payment> page2 = paymentResource.getPaymentsPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Payment> payments2 = (List<Payment>)page2.getItems();
+
+			Assert.assertEquals(payments2.toString(), 1, payments2.size());
+
+			Page<Payment> page3 = paymentResource.getPaymentsPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(payment1, (List<Payment>)page3.getItems());
+			assertContains(payment2, (List<Payment>)page3.getItems());
+			assertContains(payment3, (List<Payment>)page3.getItems());
+		}
 	}
 
 	@Test

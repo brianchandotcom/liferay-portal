@@ -266,36 +266,78 @@ public abstract class BaseShippingMethodResourceTestCase {
 			testGetChannelShippingMethodsPage_addShippingMethod(
 				channelId, randomShippingMethod());
 
-		Page<ShippingMethod> page1 =
-			shippingMethodResource.getChannelShippingMethodsPage(
-				channelId, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<ShippingMethod> shippingMethods1 =
-			(List<ShippingMethod>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			shippingMethods1.toString(), totalCount + 2,
-			shippingMethods1.size());
+		if (totalCount >= 498) {
+			Page<ShippingMethod> page1 =
+				shippingMethodResource.getChannelShippingMethodsPage(
+					channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Page<ShippingMethod> page2 =
-			shippingMethodResource.getChannelShippingMethodsPage(
-				channelId, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				shippingMethod1, (List<ShippingMethod>)page1.getItems());
 
-		List<ShippingMethod> shippingMethods2 =
-			(List<ShippingMethod>)page2.getItems();
+			Page<ShippingMethod> page2 =
+				shippingMethodResource.getChannelShippingMethodsPage(
+					channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Assert.assertEquals(
-			shippingMethods2.toString(), 1, shippingMethods2.size());
+			assertContains(
+				shippingMethod2, (List<ShippingMethod>)page2.getItems());
 
-		Page<ShippingMethod> page3 =
-			shippingMethodResource.getChannelShippingMethodsPage(
-				channelId, Pagination.of(1, (int)totalCount + 3));
+			Page<ShippingMethod> page3 =
+				shippingMethodResource.getChannelShippingMethodsPage(
+					channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		assertContains(shippingMethod1, (List<ShippingMethod>)page3.getItems());
-		assertContains(shippingMethod2, (List<ShippingMethod>)page3.getItems());
-		assertContains(shippingMethod3, (List<ShippingMethod>)page3.getItems());
+			assertContains(
+				shippingMethod3, (List<ShippingMethod>)page3.getItems());
+		}
+		else {
+			Page<ShippingMethod> page1 =
+				shippingMethodResource.getChannelShippingMethodsPage(
+					channelId, Pagination.of(1, totalCount + 2));
+
+			List<ShippingMethod> shippingMethods1 =
+				(List<ShippingMethod>)page1.getItems();
+
+			Assert.assertEquals(
+				shippingMethods1.toString(), totalCount + 2,
+				shippingMethods1.size());
+
+			Page<ShippingMethod> page2 =
+				shippingMethodResource.getChannelShippingMethodsPage(
+					channelId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ShippingMethod> shippingMethods2 =
+				(List<ShippingMethod>)page2.getItems();
+
+			Assert.assertEquals(
+				shippingMethods2.toString(), 1, shippingMethods2.size());
+
+			Page<ShippingMethod> page3 =
+				shippingMethodResource.getChannelShippingMethodsPage(
+					channelId, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				shippingMethod1, (List<ShippingMethod>)page3.getItems());
+			assertContains(
+				shippingMethod2, (List<ShippingMethod>)page3.getItems());
+			assertContains(
+				shippingMethod3, (List<ShippingMethod>)page3.getItems());
+		}
 	}
 
 	protected ShippingMethod

@@ -656,8 +656,9 @@
 		<column name="CPDefinitionId" type="long" />
 		<column name="CPSpecificationOptionId" type="long" />
 		<column name="CPOptionCategoryId" type="long" />
-		<column localized="true" name="value" type="String" />
+		<column name="key" type="String" />
 		<column name="priority" type="double" />
+		<column localized="true" name="value" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
@@ -691,6 +692,10 @@
 		<finder name="C_COC" return-type="Collection">
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="CPOptionCategoryId" />
+		</finder>
+		<finder name="C_K" return-type="CPDefinitionSpecificationOptionValue" unique="true">
+			<finder-column name="CPDefinitionId" />
+			<finder-column name="key" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CPDisplayLayout" remote-service="true" uuid="true">
@@ -1280,6 +1285,7 @@
 		<exception>CPDefinitionOptionValueRelPrice</exception>
 		<exception>CPDefinitionOptionValueRelQuantity</exception>
 		<exception>CPDefinitionProductTypeName</exception>
+		<exception>CPDefinitionSpecificationOptionValueKey</exception>
 		<exception>CPDefinitionSubscriptionLength</exception>
 		<exception>CPDisplayLayoutEntry</exception>
 		<exception>CPDisplayLayoutEntryUuid</exception>

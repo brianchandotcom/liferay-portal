@@ -9,7 +9,7 @@ definition {
 	property test.liferay.virtual.instance = "false";
 	property test.run.type = "single";
 	property testray.component.names = "Online Editing";
-	property testray.main.component.name = "Upgrades Lima";
+	property testray.main.component.name = "Upgrades Content Management";
 
 	setUp {
 		SignIn.signIn();

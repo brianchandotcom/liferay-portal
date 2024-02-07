@@ -1,4 +1,4 @@
-@component-name = "portal-lima"
+@component-name = "portal-content-management"
 definition {
 
 	property custom.properties = "dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=";

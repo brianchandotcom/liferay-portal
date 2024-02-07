@@ -37,6 +37,7 @@ public class StrategyResourceImpl extends BaseStrategyResourceImpl {
 
 		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
 			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
+				contextCompany.getCompanyId(),
 				TaskItemUtil.getInternalClassName(internalClassNameKey),
 				TaskItemUtil.getTaskItemDelegateName(internalClassNameKey));
 

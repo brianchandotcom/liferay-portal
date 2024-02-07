@@ -14,6 +14,6 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface BatchEngineTaskItemDelegateRegistry {
 
 	public BatchEngineTaskItemDelegate<?> getBatchEngineTaskItemDelegate(
-		String itemClassName, String taskItemDelegateName);
+		long companyId, String itemClassName, String taskItemDelegateName);
 
 }

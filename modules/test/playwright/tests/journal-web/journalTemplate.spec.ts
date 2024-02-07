@@ -17,6 +17,24 @@ export const test = mergeTests(
 	loginTest
 );
 
+const RESERVED_VARIABLES = [
+	'Author Email Address',
+	'Author ID',
+	'Author Job Title',
+	'Author Name',
+	'Comments',
+	'Create Date',
+	'Description',
+	'Display Date',
+	'ID',
+	'Modified Date',
+	'Small Image URL',
+	'Tags',
+	'Title',
+	'URL Title',
+	'Version',
+];
+
 test('This is a test for LPS-177690. The tooltip of the back button should be Go to Web Content in the editor of Templates.', async ({
 	journalEditTemplatePage,
 	page,
@@ -24,4 +42,17 @@ test('This is a test for LPS-177690. The tooltip of the back button should be Go
 	await journalEditTemplatePage.goto();
 
 	await expect(page.getByTitle('Go to Web Content')).toBeVisible();
+});
+
+test('This is a test for LPS-153976. View reserved variables list under Journal section in web content template.', async ({
+	journalEditTemplatePage,
+	page,
+}) => {
+	await journalEditTemplatePage.gotoElements();
+
+	for (const reservedVariable of RESERVED_VARIABLES) {
+		await expect(
+			page.getByRole('button', {exact: true, name: reservedVariable})
+		).toBeVisible();
+	}
 });

@@ -38,6 +38,7 @@ export default function ViewportSizeSelector({
 						onClick={() => onSizeSelected(sizeId as ViewportSize)}
 						size="sm"
 						symbol={icon}
+						title={label}
 					/>
 				)
 			)}

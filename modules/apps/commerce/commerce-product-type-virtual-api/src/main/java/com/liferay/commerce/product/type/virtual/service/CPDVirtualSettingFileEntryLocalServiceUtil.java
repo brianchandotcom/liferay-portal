@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
@@ -63,6 +64,22 @@ public class CPDVirtualSettingFileEntryLocalServiceUtil {
 			version);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry
+			addFileEntry(
+				long userId, long groupId, String className, long classPK,
+				String serviceName, long folderId, InputStream inputStream,
+				String fileName, String mimeType)
+		throws PortalException {
+
+		return getService().addFileEntry(
+			userId, groupId, className, classPK, serviceName, folderId,
+			inputStream, fileName, mimeType);
+	}
+
+	public static int countByFileEntryId(long fileEntryId) {
+		return getService().countByFileEntryId(fileEntryId);
+	}
+
 	/**
 	 * Creates a new cpd virtual setting file entry with the primary key. Does not add the cpd virtual setting file entry to the database.
 	 *
@@ -84,6 +101,14 @@ public class CPDVirtualSettingFileEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static void deleteCPDVirtualSettingFileEntries(
+			long cpDefinitionVirtualSettingId)
+		throws PortalException {
+
+		getService().deleteCPDVirtualSettingFileEntries(
+			cpDefinitionVirtualSettingId);
 	}
 
 	/**

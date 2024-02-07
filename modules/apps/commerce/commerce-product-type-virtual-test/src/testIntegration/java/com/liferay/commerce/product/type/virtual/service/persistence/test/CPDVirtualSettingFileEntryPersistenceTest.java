@@ -239,6 +239,13 @@ public class CPDVirtualSettingFileEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByFileEntryId() throws Exception {
+		_persistence.countByFileEntryId(RandomTestUtil.nextLong());
+
+		_persistence.countByFileEntryId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPDVirtualSettingFileEntry newCPDVirtualSettingFileEntry =
 			addCPDVirtualSettingFileEntry();

@@ -88,6 +88,51 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry
+			addFileEntry(
+				HttpPrincipal httpPrincipal, long groupId, long folderId,
+				java.io.InputStream inputStream, String fileName,
+				String mimeType, String serviceName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPDVirtualSettingFileEntryServiceUtil.class, "addFileEntry",
+				_addFileEntryParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, folderId, inputStream, fileName, mimeType,
+				serviceName);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.repository.model.FileEntry)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static
 		com.liferay.commerce.product.type.virtual.model.
 			CPDVirtualSettingFileEntry deleteCPDVirtualSettingFileEntry(
@@ -99,7 +144,7 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDVirtualSettingFileEntryServiceUtil.class,
 				"deleteCPDVirtualSettingFileEntry",
-				_deleteCPDVirtualSettingFileEntryParameterTypes1);
+				_deleteCPDVirtualSettingFileEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK, cpdVirtualSettingFileEntryId);
@@ -144,7 +189,7 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDVirtualSettingFileEntryServiceUtil.class,
 				"fetchCPDVirtualSettingFileEntry",
-				_fetchCPDVirtualSettingFileEntryParameterTypes2);
+				_fetchCPDVirtualSettingFileEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpdVirtualSettingFileEntryId);
@@ -189,7 +234,7 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDVirtualSettingFileEntryServiceUtil.class,
 				"getCPDVirtualSettingFileEntries",
-				_getCPDVirtualSettingFileEntriesParameterTypes3);
+				_getCPDVirtualSettingFileEntriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK, cpDefinitionVirtualSettingId,
@@ -236,7 +281,7 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDVirtualSettingFileEntryServiceUtil.class,
 				"getCPDVirtualSettingFileEntry",
-				_getCPDVirtualSettingFileEntryParameterTypes4);
+				_getCPDVirtualSettingFileEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpdVirtualSettingFileEntryId);
@@ -282,7 +327,7 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDVirtualSettingFileEntryServiceUtil.class,
 				"updateCPDefinitionVirtualSetting",
-				_updateCPDefinitionVirtualSettingParameterTypes5);
+				_updateCPDefinitionVirtualSettingParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpdVirtualSettingFileEntryId, fileEntryId, url,
@@ -325,24 +370,28 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 			long.class, String.class, long.class, long.class, long.class,
 			String.class, String.class
 		};
+	private static final Class<?>[] _addFileEntryParameterTypes1 = new Class[] {
+		long.class, long.class, java.io.InputStream.class, String.class,
+		String.class, String.class
+	};
 	private static final Class<?>[]
-		_deleteCPDVirtualSettingFileEntryParameterTypes1 = new Class[] {
+		_deleteCPDVirtualSettingFileEntryParameterTypes2 = new Class[] {
 			String.class, long.class, long.class
 		};
 	private static final Class<?>[]
-		_fetchCPDVirtualSettingFileEntryParameterTypes2 = new Class[] {
+		_fetchCPDVirtualSettingFileEntryParameterTypes3 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_getCPDVirtualSettingFileEntriesParameterTypes3 = new Class[] {
+		_getCPDVirtualSettingFileEntriesParameterTypes4 = new Class[] {
 			String.class, long.class, long.class, int.class, int.class
 		};
 	private static final Class<?>[]
-		_getCPDVirtualSettingFileEntryParameterTypes4 = new Class[] {
+		_getCPDVirtualSettingFileEntryParameterTypes5 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_updateCPDefinitionVirtualSettingParameterTypes5 = new Class[] {
+		_updateCPDefinitionVirtualSettingParameterTypes6 = new Class[] {
 			long.class, long.class, String.class, String.class
 		};
 

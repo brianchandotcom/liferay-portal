@@ -67,6 +67,24 @@ public class CPDVirtualSettingFileEntryLocalServiceWrapper
 				version);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
+			long userId, long groupId, String className, long classPK,
+			String serviceName, long folderId, java.io.InputStream inputStream,
+			String fileName, String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpdVirtualSettingFileEntryLocalService.addFileEntry(
+			userId, groupId, className, classPK, serviceName, folderId,
+			inputStream, fileName, mimeType);
+	}
+
+	@Override
+	public int countByFileEntryId(long fileEntryId) {
+		return _cpdVirtualSettingFileEntryLocalService.countByFileEntryId(
+			fileEntryId);
+	}
+
 	/**
 	 * Creates a new cpd virtual setting file entry with the primary key. Does not add the cpd virtual setting file entry to the database.
 	 *
@@ -94,6 +112,15 @@ public class CPDVirtualSettingFileEntryLocalServiceWrapper
 
 		return _cpdVirtualSettingFileEntryLocalService.createPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public void deleteCPDVirtualSettingFileEntries(
+			long cpDefinitionVirtualSettingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpdVirtualSettingFileEntryLocalService.
+			deleteCPDVirtualSettingFileEntries(cpDefinitionVirtualSettingId);
 	}
 
 	/**

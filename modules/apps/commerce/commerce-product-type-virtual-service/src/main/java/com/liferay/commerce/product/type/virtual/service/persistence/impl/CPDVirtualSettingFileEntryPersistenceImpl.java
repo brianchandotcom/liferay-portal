@@ -2018,6 +2018,520 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 		_FINDER_COLUMN_CPDEFINITIONVIRTUALSETTINGID_CPDEFINITIONVIRTUALSETTINGID_2 =
 			"cpdVirtualSettingFileEntry.CPDefinitionVirtualSettingId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByFileEntryId;
+	private FinderPath _finderPathWithoutPaginationFindByFileEntryId;
+	private FinderPath _finderPathCountByFileEntryId;
+
+	/**
+	 * Returns all the cpd virtual setting file entries where fileEntryId = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @return the matching cpd virtual setting file entries
+	 */
+	@Override
+	public List<CPDVirtualSettingFileEntry> findByFileEntryId(
+		long fileEntryId) {
+
+		return findByFileEntryId(
+			fileEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the cpd virtual setting file entries where fileEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDVirtualSettingFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param start the lower bound of the range of cpd virtual setting file entries
+	 * @param end the upper bound of the range of cpd virtual setting file entries (not inclusive)
+	 * @return the range of matching cpd virtual setting file entries
+	 */
+	@Override
+	public List<CPDVirtualSettingFileEntry> findByFileEntryId(
+		long fileEntryId, int start, int end) {
+
+		return findByFileEntryId(fileEntryId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the cpd virtual setting file entries where fileEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDVirtualSettingFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param start the lower bound of the range of cpd virtual setting file entries
+	 * @param end the upper bound of the range of cpd virtual setting file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cpd virtual setting file entries
+	 */
+	@Override
+	public List<CPDVirtualSettingFileEntry> findByFileEntryId(
+		long fileEntryId, int start, int end,
+		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
+
+		return findByFileEntryId(
+			fileEntryId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cpd virtual setting file entries where fileEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDVirtualSettingFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param start the lower bound of the range of cpd virtual setting file entries
+	 * @param end the upper bound of the range of cpd virtual setting file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cpd virtual setting file entries
+	 */
+	@Override
+	public List<CPDVirtualSettingFileEntry> findByFileEntryId(
+		long fileEntryId, int start, int end,
+		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByFileEntryId;
+				finderArgs = new Object[] {fileEntryId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByFileEntryId;
+			finderArgs = new Object[] {
+				fileEntryId, start, end, orderByComparator
+			};
+		}
+
+		List<CPDVirtualSettingFileEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<CPDVirtualSettingFileEntry>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
+						list) {
+
+					if (fileEntryId !=
+							cpdVirtualSettingFileEntry.getFileEntryId()) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_CPDVIRTUALSETTINGFILEENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_FILEENTRYID_FILEENTRYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CPDVirtualSettingFileEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(fileEntryId);
+
+				list = (List<CPDVirtualSettingFileEntry>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first cpd virtual setting file entry in the ordered set where fileEntryId = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cpd virtual setting file entry
+	 * @throws NoSuchCPDVirtualSettingFileEntryException if a matching cpd virtual setting file entry could not be found
+	 */
+	@Override
+	public CPDVirtualSettingFileEntry findByFileEntryId_First(
+			long fileEntryId,
+			OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator)
+		throws NoSuchCPDVirtualSettingFileEntryException {
+
+		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
+			fetchByFileEntryId_First(fileEntryId, orderByComparator);
+
+		if (cpdVirtualSettingFileEntry != null) {
+			return cpdVirtualSettingFileEntry;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("fileEntryId=");
+		sb.append(fileEntryId);
+
+		sb.append("}");
+
+		throw new NoSuchCPDVirtualSettingFileEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first cpd virtual setting file entry in the ordered set where fileEntryId = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cpd virtual setting file entry, or <code>null</code> if a matching cpd virtual setting file entry could not be found
+	 */
+	@Override
+	public CPDVirtualSettingFileEntry fetchByFileEntryId_First(
+		long fileEntryId,
+		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
+
+		List<CPDVirtualSettingFileEntry> list = findByFileEntryId(
+			fileEntryId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last cpd virtual setting file entry in the ordered set where fileEntryId = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cpd virtual setting file entry
+	 * @throws NoSuchCPDVirtualSettingFileEntryException if a matching cpd virtual setting file entry could not be found
+	 */
+	@Override
+	public CPDVirtualSettingFileEntry findByFileEntryId_Last(
+			long fileEntryId,
+			OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator)
+		throws NoSuchCPDVirtualSettingFileEntryException {
+
+		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
+			fetchByFileEntryId_Last(fileEntryId, orderByComparator);
+
+		if (cpdVirtualSettingFileEntry != null) {
+			return cpdVirtualSettingFileEntry;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("fileEntryId=");
+		sb.append(fileEntryId);
+
+		sb.append("}");
+
+		throw new NoSuchCPDVirtualSettingFileEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last cpd virtual setting file entry in the ordered set where fileEntryId = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cpd virtual setting file entry, or <code>null</code> if a matching cpd virtual setting file entry could not be found
+	 */
+	@Override
+	public CPDVirtualSettingFileEntry fetchByFileEntryId_Last(
+		long fileEntryId,
+		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
+
+		int count = countByFileEntryId(fileEntryId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CPDVirtualSettingFileEntry> list = findByFileEntryId(
+			fileEntryId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the cpd virtual setting file entries before and after the current cpd virtual setting file entry in the ordered set where fileEntryId = &#63;.
+	 *
+	 * @param CPDefinitionVirtualSettingFileEntryId the primary key of the current cpd virtual setting file entry
+	 * @param fileEntryId the file entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cpd virtual setting file entry
+	 * @throws NoSuchCPDVirtualSettingFileEntryException if a cpd virtual setting file entry with the primary key could not be found
+	 */
+	@Override
+	public CPDVirtualSettingFileEntry[] findByFileEntryId_PrevAndNext(
+			long CPDefinitionVirtualSettingFileEntryId, long fileEntryId,
+			OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator)
+		throws NoSuchCPDVirtualSettingFileEntryException {
+
+		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
+			findByPrimaryKey(CPDefinitionVirtualSettingFileEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CPDVirtualSettingFileEntry[] array =
+				new CPDVirtualSettingFileEntryImpl[3];
+
+			array[0] = getByFileEntryId_PrevAndNext(
+				session, cpdVirtualSettingFileEntry, fileEntryId,
+				orderByComparator, true);
+
+			array[1] = cpdVirtualSettingFileEntry;
+
+			array[2] = getByFileEntryId_PrevAndNext(
+				session, cpdVirtualSettingFileEntry, fileEntryId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CPDVirtualSettingFileEntry getByFileEntryId_PrevAndNext(
+		Session session, CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry,
+		long fileEntryId,
+		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_CPDVIRTUALSETTINGFILEENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_FILEENTRYID_FILEENTRYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CPDVirtualSettingFileEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(fileEntryId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						cpdVirtualSettingFileEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CPDVirtualSettingFileEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the cpd virtual setting file entries where fileEntryId = &#63; from the database.
+	 *
+	 * @param fileEntryId the file entry ID
+	 */
+	@Override
+	public void removeByFileEntryId(long fileEntryId) {
+		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
+				findByFileEntryId(
+					fileEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(cpdVirtualSettingFileEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of cpd virtual setting file entries where fileEntryId = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @return the number of matching cpd virtual setting file entries
+	 */
+	@Override
+	public int countByFileEntryId(long fileEntryId) {
+		FinderPath finderPath = _finderPathCountByFileEntryId;
+
+		Object[] finderArgs = new Object[] {fileEntryId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_CPDVIRTUALSETTINGFILEENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_FILEENTRYID_FILEENTRYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(fileEntryId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_FILEENTRYID_FILEENTRYID_2 =
+		"cpdVirtualSettingFileEntry.fileEntryId = ?";
+
 	public CPDVirtualSettingFileEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2728,6 +3242,24 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 			"countByCPDefinitionVirtualSettingId",
 			new String[] {Long.class.getName()},
 			new String[] {"CPDefinitionVirtualSettingId"}, false);
+
+		_finderPathWithPaginationFindByFileEntryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileEntryId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"fileEntryId"}, true);
+
+		_finderPathWithoutPaginationFindByFileEntryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFileEntryId",
+			new String[] {Long.class.getName()}, new String[] {"fileEntryId"},
+			true);
+
+		_finderPathCountByFileEntryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileEntryId",
+			new String[] {Long.class.getName()}, new String[] {"fileEntryId"},
+			false);
 
 		CPDVirtualSettingFileEntryUtil.setPersistence(this);
 	}

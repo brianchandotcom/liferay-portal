@@ -9,11 +9,14 @@ import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntr
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.io.InputStream;
 
 import java.util.List;
 
@@ -46,6 +49,11 @@ public interface CPDVirtualSettingFileEntryService extends BaseService {
 			long groupId, String className, long classPK,
 			long cpDefinitionVirtualSettingId, long fileEntryId, String url,
 			String version)
+		throws PortalException;
+
+	public FileEntry addFileEntry(
+			long groupId, long folderId, InputStream inputStream,
+			String fileName, String mimeType, String serviceName)
 		throws PortalException;
 
 	public CPDVirtualSettingFileEntry deleteCPDVirtualSettingFileEntry(

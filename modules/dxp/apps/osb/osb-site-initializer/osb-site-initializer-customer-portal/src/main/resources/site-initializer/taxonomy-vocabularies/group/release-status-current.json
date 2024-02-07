@@ -1,4 +1,11 @@
 {
+	"assetTypes": [
+		{
+			"required": true,
+			"subtype": "RELEASE-NOTES-FEATURE-STRUCTURE",
+			"type": "StructuredContent"
+		}
+	],
 	"name": "Release Status Current",
 	"viewableBy": "Anyone"
 }

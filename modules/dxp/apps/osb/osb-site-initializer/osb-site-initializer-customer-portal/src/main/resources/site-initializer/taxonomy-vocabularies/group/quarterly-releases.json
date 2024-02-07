@@ -1,4 +1,16 @@
 {
+	"assetTypes": [
+		{
+			"required": true,
+			"subtype": "RELEASE-NOTES-FEATURE-STRUCTURE",
+			"type": "StructuredContent"
+		},
+		{
+			"required": true,
+			"subtype": "RELEASE-NOTES-HIGHLIGHT-STRUCTURE",
+			"type": "StructuredContent"
+		}
+	],
 	"name": "Quarterly Releases",
 	"viewableBy": "Anyone"
 }

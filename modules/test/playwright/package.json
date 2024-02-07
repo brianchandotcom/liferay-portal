@@ -1,6 +1,7 @@
 {
 	"author": "",
 	"dependencies": {
+		"properties-file": "^3.3.18",
 		"uuid": "9.0.0"
 	},
 	"description": "",

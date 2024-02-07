@@ -62,7 +62,7 @@ export default function ScheduleOptions({
 				required
 				time
 				timezone={timeZone}
-				value={displayDate}
+				value={displayDate || ''}
 				years={{
 					end: 9999,
 					start: new Date().getFullYear(),

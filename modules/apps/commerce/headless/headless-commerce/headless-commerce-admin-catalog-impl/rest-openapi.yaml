@@ -1482,6 +1482,8 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                key:
+                    type: string
                 label:
                     additionalProperties:
                         type: string

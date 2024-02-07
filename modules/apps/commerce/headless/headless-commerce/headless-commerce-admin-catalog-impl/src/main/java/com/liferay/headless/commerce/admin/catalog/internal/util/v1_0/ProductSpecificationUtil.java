@@ -44,8 +44,8 @@ public class ProductSpecificationUtil {
 					productSpecification, serviceContext),
 				_getCPOptionCategoryId(
 					cpSpecificationOption, productSpecification),
-				LanguageUtils.getLocalizedMap(productSpecification.getValue()),
 				GetterUtil.get(productSpecification.getPriority(), 0D),
+				LanguageUtils.getLocalizedMap(productSpecification.getValue()),
 				serviceContext);
 	}
 
@@ -72,10 +72,13 @@ public class ProductSpecificationUtil {
 					getCPDefinitionSpecificationOptionValueId(),
 				_getCPOptionCategoryId(
 					cpSpecificationOption, productSpecification),
-				LanguageUtils.getLocalizedMap(productSpecification.getValue()),
+				GetterUtil.getString(
+					productSpecification.getKey(),
+					cpDefinitionSpecificationOptionValue.getKey()),
 				GetterUtil.get(
 					productSpecification.getPriority(),
 					cpDefinitionSpecificationOptionValue.getPriority()),
+				LanguageUtils.getLocalizedMap(productSpecification.getValue()),
 				serviceContext);
 	}
 

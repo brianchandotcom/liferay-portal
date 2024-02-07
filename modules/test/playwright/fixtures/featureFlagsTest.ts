@@ -60,13 +60,19 @@ function featureFlagsTest(options: FeatureFlagsOptions) {
 				const originalFeatureFlags: FeatureFlagResult[] = [];
 
 				for (const key of Object.keys(options)) {
-					const result = await invokeServer<IsEnabledResult>(
+					const reply = await invokeServer<IsEnabledResult>(
 						backendPage,
 						'/o/com-liferay-feature-flag-web/is-enabled',
 						{
 							key,
 						}
 					);
+
+					if (reply.error) {
+						throw new Error(reply.error);
+					}
+
+					const {result} = reply;
 
 					originalFeatureFlags.push(result.featureFlag);
 					originalFeatureFlags.push(...result.dependentFeatureFlags);
@@ -136,6 +142,11 @@ interface SetEnabledResult {
 	dependentFeatureFlags: FeatureFlagResult[];
 }
 
+interface ServerReply<T> {
+	error?: string;
+	result?: T;
+}
+
 interface FeatureFlagResult {
 	companyId: number;
 	dependenciesFulfilled: boolean;
@@ -151,7 +162,7 @@ async function invokeServer<T>(
 	page: Page,
 	url: string,
 	partialBody: object
-): Promise<T> {
+): Promise<ServerReply<T>> {
 	return await page.evaluate(
 		async ({partialBody, url}) =>
 			new Promise((resolve, reject) => {
@@ -163,8 +174,20 @@ async function invokeServer<T>(
 					method: 'POST',
 				})
 					.then((response) => response.text())
-					.then(JSON.parse)
-					.then(resolve)
+					.then((text) => {
+						const json = JSON.parse(text);
+
+						if (json.error) {
+							resolve({
+								error: json.error,
+							});
+						}
+						else {
+							resolve({
+								result: json,
+							});
+						}
+					})
 					.catch(reject);
 			}),
 		{

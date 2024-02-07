@@ -5,24 +5,16 @@
 
 package com.liferay.portal.cache.test.util;
 
-import com.liferay.portal.cache.LowLevelCache;
 import com.liferay.portal.cache.MVCCPortalCache;
-import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.concurrent.Semaphore;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -51,18 +43,19 @@ public class MVCCPortalCacheTest {
 
 	@Before
 	public void setUp() {
-		_portalCache = new TestPortalCache<>(_PORTAL_CACHE_NAME);
+		_mvccTestPortalCache = new MVCCTestPortalCache<>(_PORTAL_CACHE_NAME);
 
-		_mvccPortalCache = new MVCCPortalCache<>(
-			(LowLevelCache<String, MockMVCCModel>)_portalCache);
+		_mvccPortalCache = new MVCCPortalCache<>(_mvccTestPortalCache);
 
 		_testPortalCacheListener = new TestPortalCacheListener<>();
 
-		_portalCache.registerPortalCacheListener(_testPortalCacheListener);
+		_mvccTestPortalCache.registerPortalCacheListener(
+			_testPortalCacheListener);
 
 		_testPortalCacheReplicator = new TestPortalCacheReplicator<>();
 
-		_portalCache.registerPortalCacheListener(_testPortalCacheReplicator);
+		_mvccTestPortalCache.registerPortalCacheListener(
+			_testPortalCacheReplicator);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -79,16 +72,14 @@ public class MVCCPortalCacheTest {
 		mvccPortalCache.put(key, value, 10);
 	}
 
-	@AdviseWith(adviceClasses = TestPortalCacheAdvice.class)
-	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
-	public void testMVCCCacheWithAdvice() throws Exception {
+	public void testMVCCCacheWithConcurrent() throws Exception {
 		Assert.assertNull(_mvccPortalCache.get(_KEY_1));
 		Assert.assertNull(_mvccPortalCache.get(_KEY_2));
 
 		// Concurrent put 1
 
-		TestPortalCacheAdvice.block();
+		_mvccTestPortalCache.block();
 
 		Thread thread1 = new Thread() {
 
@@ -101,7 +92,7 @@ public class MVCCPortalCacheTest {
 
 		thread1.start();
 
-		TestPortalCacheAdvice.waitUntilBlock(1);
+		_mvccTestPortalCache.waitUntilBlock(1);
 
 		Thread thread2 = new Thread() {
 
@@ -114,9 +105,9 @@ public class MVCCPortalCacheTest {
 
 		thread2.start();
 
-		TestPortalCacheAdvice.waitUntilBlock(2);
+		_mvccTestPortalCache.waitUntilBlock(2);
 
-		TestPortalCacheAdvice.unblock(2);
+		_mvccTestPortalCache.unblock(2);
 
 		thread1.join();
 		thread2.join();
@@ -138,7 +129,7 @@ public class MVCCPortalCacheTest {
 
 		// Concurrent put 2
 
-		TestPortalCacheAdvice.block();
+		_mvccTestPortalCache.block();
 
 		thread1 = new Thread() {
 
@@ -152,7 +143,7 @@ public class MVCCPortalCacheTest {
 
 		thread1.start();
 
-		TestPortalCacheAdvice.waitUntilBlock(1);
+		_mvccTestPortalCache.waitUntilBlock(1);
 
 		thread2 = new Thread() {
 
@@ -166,9 +157,9 @@ public class MVCCPortalCacheTest {
 
 		thread2.start();
 
-		TestPortalCacheAdvice.waitUntilBlock(2);
+		_mvccTestPortalCache.waitUntilBlock(2);
 
-		TestPortalCacheAdvice.unblock(2);
+		_mvccTestPortalCache.unblock(2);
 
 		thread1.join();
 		thread2.join();
@@ -212,65 +203,6 @@ public class MVCCPortalCacheTest {
 		mvccPortalCache.put(key, mockMVCCModel2);
 
 		Assert.assertSame(mockMVCCModel2, mvccPortalCache.get(key));
-	}
-
-	@Aspect
-	public static class TestPortalCacheAdvice {
-
-		public static void block() {
-			_semaphore = new Semaphore(0);
-		}
-
-		public static void unblock(int permits) {
-			Semaphore semaphore = _semaphore;
-
-			_semaphore = null;
-
-			semaphore.release(permits);
-		}
-
-		public static void waitUntilBlock(int threadCount) {
-			Semaphore semaphore = _semaphore;
-
-			if (semaphore != null) {
-				while (semaphore.getQueueLength() < threadCount);
-			}
-		}
-
-		@Around(
-			"execution(protected * com.liferay.portal.cache.test.util." +
-				"TestPortalCache.doPutIfAbsent(..))"
-		)
-		public Object doPutIfAbsent(ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
-
-			Semaphore semaphore = _semaphore;
-
-			if (semaphore != null) {
-				semaphore.acquire();
-			}
-
-			return proceedingJoinPoint.proceed();
-		}
-
-		@Around(
-			"execution(protected * com.liferay.portal.cache.test.util." +
-				"TestPortalCache.doReplace(..))"
-		)
-		public Object doReplace(ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
-
-			Semaphore semaphore = _semaphore;
-
-			if (semaphore != null) {
-				semaphore.acquire();
-			}
-
-			return proceedingJoinPoint.proceed();
-		}
-
-		private static volatile Semaphore _semaphore;
-
 	}
 
 	protected void doTestMVCCCache(boolean timeToLive) {
@@ -387,10 +319,75 @@ public class MVCCPortalCacheTest {
 	private static final long _VERSION_2 = 2;
 
 	private MVCCPortalCache<String, MockMVCCModel> _mvccPortalCache;
-	private PortalCache<String, MockMVCCModel> _portalCache;
+	private MVCCTestPortalCache<String, MockMVCCModel> _mvccTestPortalCache;
 	private TestPortalCacheListener<String, MockMVCCModel>
 		_testPortalCacheListener;
 	private TestPortalCacheReplicator<String, MockMVCCModel>
 		_testPortalCacheReplicator;
+
+	private class MVCCTestPortalCache<K extends Serializable, V>
+		extends TestPortalCache<K, V> {
+
+		public void block() {
+			_semaphore = new Semaphore(0);
+		}
+
+		public void unblock(int permits) {
+			Semaphore semaphore = _semaphore;
+
+			_semaphore = null;
+
+			semaphore.release(permits);
+		}
+
+		public void waitUntilBlock(int threadCount) {
+			Semaphore semaphore = _semaphore;
+
+			if (semaphore != null) {
+				while (semaphore.getQueueLength() < threadCount);
+			}
+		}
+
+		@Override
+		protected V doPutIfAbsent(K key, V value, int timeToLive) {
+			Semaphore semaphore = _semaphore;
+
+			if (semaphore != null) {
+				try {
+					semaphore.acquire();
+				}
+				catch (Exception exception) {
+					throw new IllegalStateException(exception);
+				}
+			}
+
+			return super.doPutIfAbsent(key, value, timeToLive);
+		}
+
+		@Override
+		protected boolean doReplace(
+			K key, V oldValue, V newValue, int timeToLive) {
+
+			Semaphore semaphore = _semaphore;
+
+			if (semaphore != null) {
+				try {
+					semaphore.acquire();
+				}
+				catch (Exception exception) {
+					throw new IllegalStateException(exception);
+				}
+			}
+
+			return super.doReplace(key, oldValue, newValue, timeToLive);
+		}
+
+		private MVCCTestPortalCache(String portalCacheName) {
+			super(portalCacheName);
+		}
+
+		private volatile Semaphore _semaphore;
+
+	}
 
 }

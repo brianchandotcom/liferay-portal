@@ -10,7 +10,7 @@ import {
 	copyFileSync,
 	existsSync,
 	readFileSync,
-	rmSync,
+	unlinkSync,
 	writeFileSync,
 } from 'fs';
 import {join} from 'path';
@@ -39,7 +39,7 @@ function copyFile(
 	else {
 		process.stdout.write(`      Undeploying file: ${to}`);
 
-		rmSync(toPath);
+		unlinkSync(toPath);
 	}
 
 	console.log(' ✅');
@@ -103,7 +103,7 @@ function deployClientExtension(
 			`      Undeploying client extension: ${projectName}`
 		);
 
-		rmSync(
+		unlinkSync(
 			join(bundlesDir, 'osgi', 'client-extensions', `${projectName}.zip`)
 		);
 	}

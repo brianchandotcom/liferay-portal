@@ -180,6 +180,14 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 				String variableName = firstChildDetailAST.getText();
 
+				DetailAST variableDefinitionDetailAST =
+					getVariableDefinitionDetailAST(
+						childDetailAST, variableName, false);
+
+				if (variableDefinitionDetailAST != null) {
+					return;
+				}
+
 				String methodName =
 					"set" + StringUtil.upperCaseFirstLetter(variableName);
 

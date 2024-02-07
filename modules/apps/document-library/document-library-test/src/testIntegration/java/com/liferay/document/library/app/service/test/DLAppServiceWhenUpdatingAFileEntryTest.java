@@ -34,6 +34,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.File;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -173,6 +174,84 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		AssertUtils.assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
+	}
+
+	@Test
+	public void testFileEntryShouldUpdateDisplayDate() throws Exception {
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, null, null);
+
+		Assert.assertNull(fileEntry.getDisplayDate());
+		Assert.assertNull(fileEntry.getExpirationDate());
+		Assert.assertNull(fileEntry.getReviewDate());
+
+		Date displayDate = new Date();
+
+		fileEntry = dlAppService.updateFileEntry(
+			fileEntry.getFileEntryId(), RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.MAJOR, CONTENT.getBytes(),
+			displayDate, fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(),
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		Assert.assertEquals(displayDate, fileEntry.getDisplayDate());
+		Assert.assertNull(fileEntry.getExpirationDate());
+		Assert.assertNull(fileEntry.getReviewDate());
+	}
+
+	@Test
+	public void testFileEntryShouldUpdateExpirationDate() throws Exception {
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, null, null);
+
+		Assert.assertNull(fileEntry.getDisplayDate());
+		Assert.assertNull(fileEntry.getExpirationDate());
+		Assert.assertNull(fileEntry.getReviewDate());
+
+		Date expirationDate = new Date();
+
+		fileEntry = dlAppService.updateFileEntry(
+			fileEntry.getFileEntryId(), RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.MAJOR, CONTENT.getBytes(),
+			fileEntry.getDisplayDate(), expirationDate,
+			fileEntry.getReviewDate(),
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		Assert.assertNull(fileEntry.getDisplayDate());
+		Assert.assertEquals(expirationDate, fileEntry.getExpirationDate());
+		Assert.assertNull(fileEntry.getReviewDate());
+	}
+
+	@Test
+	public void testFileEntryShouldUpdateReviewDate() throws Exception {
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, null, null);
+
+		Assert.assertNull(fileEntry.getDisplayDate());
+		Assert.assertNull(fileEntry.getExpirationDate());
+		Assert.assertNull(fileEntry.getReviewDate());
+
+		Date reviewDate = new Date();
+
+		fileEntry = dlAppService.updateFileEntry(
+			fileEntry.getFileEntryId(), RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.MAJOR, CONTENT.getBytes(),
+			fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
+			reviewDate,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		Assert.assertNull(fileEntry.getDisplayDate());
+		Assert.assertNull(fileEntry.getExpirationDate());
+		Assert.assertEquals(reviewDate, fileEntry.getReviewDate());
 	}
 
 	@Test

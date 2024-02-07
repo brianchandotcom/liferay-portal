@@ -249,6 +249,13 @@ public class ExportTaskResourceTest {
 		_assertExecuteStatusEquals(
 			ExportTask.ExecuteStatus.COMPLETED, exportTask2,
 			exportTaskResource);
+
+		ExportTask exportTask3 = exportTaskResource.postExportTask(
+			"com.liferay.object.rest.dto.v1_0.ObjectEntry", "json", null, null,
+			null, _objectDefinition1.getName());
+
+		_assertExecuteStatusEquals(
+			ExportTask.ExecuteStatus.FAILED, exportTask3, exportTaskResource);
 	}
 
 	private void _assertExecuteStatusEquals(

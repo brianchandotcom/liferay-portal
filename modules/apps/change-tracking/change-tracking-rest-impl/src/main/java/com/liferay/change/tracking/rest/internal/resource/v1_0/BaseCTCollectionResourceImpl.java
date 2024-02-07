@@ -495,7 +495,7 @@ public abstract class BaseCTCollectionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-collections/get-histories'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-collections/history'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -513,10 +513,10 @@ public abstract class BaseCTCollectionResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "CTCollection")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/ct-collections/get-histories")
+	@javax.ws.rs.Path("/ct-collections/history")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<CTCollection> getCTCollectionsGetHistoriesPage(
+	public Page<CTCollection> getCTCollectionsHistoryPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("classNameId")
 			Integer classNameId,

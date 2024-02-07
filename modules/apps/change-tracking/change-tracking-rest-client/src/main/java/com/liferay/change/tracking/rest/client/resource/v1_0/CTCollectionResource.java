@@ -134,13 +134,12 @@ public interface CTCollectionResource {
 			Long ctCollectionId)
 		throws Exception;
 
-	public Page<CTCollection> getCTCollectionsGetHistoriesPage(
+	public Page<CTCollection> getCTCollectionsHistoryPage(
 			Integer classNameId, Integer classPK)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			getCTCollectionsGetHistoriesPageHttpResponse(
-				Integer classNameId, Integer classPK)
+	public HttpInvoker.HttpResponse getCTCollectionsHistoryPageHttpResponse(
+			Integer classNameId, Integer classPK)
 		throws Exception;
 
 	public void deleteCTCollection(Long ctCollectionId) throws Exception;
@@ -1525,13 +1524,12 @@ public interface CTCollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<CTCollection> getCTCollectionsGetHistoriesPage(
+		public Page<CTCollection> getCTCollectionsHistoryPage(
 				Integer classNameId, Integer classPK)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getCTCollectionsGetHistoriesPageHttpResponse(
-					classNameId, classPK);
+				getCTCollectionsHistoryPageHttpResponse(classNameId, classPK);
 
 			String content = httpResponse.getContent();
 
@@ -1592,9 +1590,8 @@ public interface CTCollectionResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				getCTCollectionsGetHistoriesPageHttpResponse(
-					Integer classNameId, Integer classPK)
+		public HttpInvoker.HttpResponse getCTCollectionsHistoryPageHttpResponse(
+				Integer classNameId, Integer classPK)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1630,7 +1627,7 @@ public interface CTCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-collections/get-histories");
+						"/o/change-tracking-rest/v1.0/ct-collections/history");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

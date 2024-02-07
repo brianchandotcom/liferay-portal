@@ -230,10 +230,10 @@ public class ServletDataImpl implements ServletData {
 							CTCollectionResourceImpl.class,
 							"getCTCollectionShareLink"));
 					put(
-						"query#cTCollectionsGetHistories",
+						"query#cTCollectionsHistory",
 						new ObjectValuePair<>(
 							CTCollectionResourceImpl.class,
-							"getCTCollectionsGetHistoriesPage"));
+							"getCTCollectionsHistoryPage"));
 					put(
 						"query#cTCollection",
 						new ObjectValuePair<>(

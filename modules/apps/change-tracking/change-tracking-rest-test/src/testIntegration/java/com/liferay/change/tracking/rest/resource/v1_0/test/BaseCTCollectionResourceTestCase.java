@@ -659,29 +659,27 @@ public abstract class BaseCTCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testGetCTCollectionsGetHistoriesPage() throws Exception {
+	public void testGetCTCollectionsHistoryPage() throws Exception {
 		Page<CTCollection> page =
-			ctCollectionResource.getCTCollectionsGetHistoriesPage(null, null);
+			ctCollectionResource.getCTCollectionsHistoryPage(null, null);
 
 		long totalCount = page.getTotalCount();
 
 		CTCollection ctCollection1 =
-			testGetCTCollectionsGetHistoriesPage_addCTCollection(
+			testGetCTCollectionsHistoryPage_addCTCollection(
 				randomCTCollection());
 
 		CTCollection ctCollection2 =
-			testGetCTCollectionsGetHistoriesPage_addCTCollection(
+			testGetCTCollectionsHistoryPage_addCTCollection(
 				randomCTCollection());
 
-		page = ctCollectionResource.getCTCollectionsGetHistoriesPage(
-			null, null);
+		page = ctCollectionResource.getCTCollectionsHistoryPage(null, null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
 		assertContains(ctCollection1, (List<CTCollection>)page.getItems());
 		assertContains(ctCollection2, (List<CTCollection>)page.getItems());
-		assertValid(
-			page, testGetCTCollectionsGetHistoriesPage_getExpectedActions());
+		assertValid(page, testGetCTCollectionsHistoryPage_getExpectedActions());
 
 		ctCollectionResource.deleteCTCollection(ctCollection1.getId());
 
@@ -689,7 +687,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetCTCollectionsGetHistoriesPage_getExpectedActions()
+			testGetCTCollectionsHistoryPage_getExpectedActions()
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -697,7 +695,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 		return expectedActions;
 	}
 
-	protected CTCollection testGetCTCollectionsGetHistoriesPage_addCTCollection(
+	protected CTCollection testGetCTCollectionsHistoryPage_addCTCollection(
 			CTCollection ctCollection)
 		throws Exception {
 

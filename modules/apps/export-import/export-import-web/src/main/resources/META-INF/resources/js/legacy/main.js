@@ -62,6 +62,8 @@ AUI.add(
 
 					if (form) {
 						let configurationNode;
+						let rightConfigurationArrow;
+						let downConfigurationArrow;
 
 						form.delegate(
 							STR_CLICK,
@@ -86,12 +88,28 @@ AUI.add(
 									);
 								}
 
+								if (!rightConfigurationArrow) {
+									rightConfigurationArrow = instance.byId(
+										'rightConfigurationArrow_' + portletId
+									);
+								}
+
+								if (!downConfigurationArrow) {
+									downConfigurationArrow = instance.byId(
+										'downConfigurationArrow_' + portletId
+									);
+								}
+
+								downConfigurationArrow.toggle('hide');
+								rightConfigurationArrow.toggle('hide');
 								configurationNode.toggle('hide');
 							},
 							'.configuration-link'
 						);
 
 						let contentNode;
+						let rightContentArrow;
+						let downContentArrow;
 
 						form.delegate(
 							STR_CLICK,
@@ -120,6 +138,20 @@ AUI.add(
 									);
 								}
 
+								if (!rightContentArrow) {
+									rightContentArrow = instance.byId(
+										'rightContentArrow_' + portletId
+									);
+								}
+
+								if (!downContentArrow) {
+									downContentArrow = instance.byId(
+										'downContentArrow_' + portletId
+									);
+								}
+
+								downContentArrow.toggle('hide');
+								rightContentArrow.toggle('hide');
 								contentNode.toggle('hide');
 							},
 							'.content-link'
@@ -239,12 +271,22 @@ AUI.add(
 						'contentOptionsLink'
 					);
 
+					const downContentOptionsArrow = instance.byId(
+						'downContentOptionsArrow'
+					);
+
+					const rightContentOptionsArrow = instance.byId(
+						'rightContentOptionsArrow'
+					);
+
 					if (contentOptionsLink) {
 						const contentOptionsNode = instance.byId(
 							'contentOptions'
 						);
 
 						contentOptionsLink.on(STR_CLICK, () => {
+							downContentOptionsArrow.toggle('hide');
+							rightContentOptionsArrow.toggle('hide');
 							contentOptionsNode.toggle('hide');
 						});
 

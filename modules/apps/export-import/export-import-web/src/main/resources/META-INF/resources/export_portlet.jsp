@@ -128,6 +128,17 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 																method="get"
 																role="button"
 															/>
+
+															<span id="<portlet:namespace />rightConfigurationArrow_<%= selPortlet.getRootPortletId() %>">
+																<clay:icon
+																	symbol="angle-right"
+																/>
+															</span>
+															<span class="hide" id="<portlet:namespace />downConfigurationArrow_<%= selPortlet.getRootPortletId() %>">
+																<clay:icon
+																	symbol="angle-down"
+																/>
+															</span>
 														</li>
 													</ul>
 
@@ -136,13 +147,16 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 															<li class="tree-item">
 																<aui:fieldset cssClass="portlet-type-data-section" id="configuration">
 																	<ul class="lfr-tree list-unstyled">
-																		<% request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
-																			request.setAttribute("render_controls.jsp-childControl", false);
-																			request.setAttribute("render_controls.jsp-controls", configurationControls);
-																			request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
-																			request.setAttribute("render_controls.jsp-rootControlId", rootControlId); %>
 
-																			<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
+																		<%
+																		request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
+																		request.setAttribute("render_controls.jsp-childControl", false);
+																		request.setAttribute("render_controls.jsp-controls", configurationControls);
+																		request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
+																		request.setAttribute("render_controls.jsp-rootControlId", rootControlId);
+																		%>
+
+																		<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 																	</ul>
 																</aui:fieldset>
 															</li>
@@ -349,6 +363,17 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 																			method="get"
 																			role="button"
 																		/>
+
+																		<span id="<portlet:namespace />rightContentArrow_<%= selPortlet.getRootPortletId() %>">
+																			<clay:icon
+																				symbol="angle-right"
+																			/>
+																		</span>
+																		<span class="hide" id="<portlet:namespace />downContentArrow_<%= selPortlet.getRootPortletId() %>">
+																			<clay:icon
+																				symbol="angle-down"
+																			/>
+																		</span>
 																	</li>
 																</ul>
 
@@ -357,25 +382,31 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 																		<li class="tree-item">
 																			<aui:fieldset cssClass="portlet-type-data-section" id="content">
 																				<c:if test="<%= exportControls != null %>">
-																					<% request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
-																						request.setAttribute("render_controls.jsp-childControl", false);
-																						request.setAttribute("render_controls.jsp-controls", exportControls);
-																						request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
-																						request.setAttribute("render_controls.jsp-portletDisabled",
-																						!portletDataHandler.isPublishToLiveByDefault());
-																						request.setAttribute("render_controls.jsp-rootControlId", rootControlId); %>
 
-																						<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
-																							<ul class="lfr-tree list-unstyled">
-																								<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
-																							</ul>
-																						</aui:field-wrapper>
+																					<%
+																					request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
+																					request.setAttribute("render_controls.jsp-childControl", false);
+																					request.setAttribute("render_controls.jsp-controls", exportControls);
+																					request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
+																					request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
+																					request.setAttribute("render_controls.jsp-rootControlId", rootControlId);
+																					%>
+
+																					<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
+																						<ul class="lfr-tree list-unstyled">
+																							<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
+																						</ul>
+																					</aui:field-wrapper>
 																				</c:if>
 
 																				<c:if test="<%= metadataControls != null %>">
-																					<% for (PortletDataHandlerControl metadataControl : metadataControls) { PortletDataHandlerBoolean
-																						control=(PortletDataHandlerBoolean)metadataControl; PortletDataHandlerControl[]
-																						childrenControls=control.getChildren(); %>
+
+																					<%
+																					for (PortletDataHandlerControl metadataControl : metadataControls) {
+																						PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControl;
+
+																						PortletDataHandlerControl[] childrenControls = control.getChildren();
+																					%>
 
 																						<c:if test="<%= ArrayUtil.isNotEmpty(childrenControls) %>">
 
@@ -383,16 +414,16 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 																							request.setAttribute("render_controls.jsp-controls", childrenControls);
 																							%>
 
-																								<aui:field-wrapper label="content-metadata">
-																									<ul class="lfr-tree list-unstyled">
-																										<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
-																									</ul>
-																								</aui:field-wrapper>
+																							<aui:field-wrapper label="content-metadata">
+																								<ul class="lfr-tree list-unstyled">
+																									<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
+																								</ul>
+																							</aui:field-wrapper>
 																						</c:if>
 
-																						<%
-																						}
-																						%>
+																					<%
+																					}
+																					%>
 
 																				</c:if>
 																			</aui:fieldset>
@@ -415,6 +446,17 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 															<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 
 															<aui:a cssClass="modify-link options-link" href="javascript:void(0);" id="contentOptionsLink" label="change" method="get" role="button" />
+
+															<span id="<portlet:namespace />rightContentOptionsArrow">
+																<clay:icon
+																	symbol="angle-right"
+																/>
+															</span>
+															<span class="hide" id="<portlet:namespace />downContentOptionsArrow">
+																<clay:icon
+																	symbol="angle-down"
+																/>
+															</span>
 
 															<div class="hide" id="<portlet:namespace />contentOptions">
 																<ul class="lfr-tree list-unstyled">

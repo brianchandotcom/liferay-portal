@@ -115,9 +115,9 @@ public class CommerceWishListResource {
 
 			long commerceWishListItemCount =
 				_commerceWishListItemService.
-					getCommerceWishListItemByContainsCPInstanceCount(
+					getCommerceWishListItemByContainsCProductCount(
 						commerceWishList.getCommerceWishListId(),
-						cpInstanceUuid);
+						cpCatalogEntry.getCProductId());
 
 			if (commerceWishListItemCount == 0) {
 				_commerceWishListItemService.addCommerceWishListItem(

@@ -45,8 +45,8 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 	public CPDefinitionSpecificationOptionValue
 			addCPDefinitionSpecificationOptionValue(
 				long cpDefinitionId, long cpSpecificationOptionId,
-				long cpOptionCategoryId, Map<Locale, String> valueMap,
-				double priority, ServiceContext serviceContext)
+				long cpOptionCategoryId, double priority,
+				Map<Locale, String> valueMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkCommerceCatalog(cpDefinitionId, ActionKeys.UPDATE);
@@ -54,7 +54,7 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 		return cpDefinitionSpecificationOptionValueLocalService.
 			addCPDefinitionSpecificationOptionValue(
 				cpDefinitionId, cpSpecificationOptionId, cpOptionCategoryId,
-				valueMap, priority, serviceContext);
+				priority, valueMap, serviceContext);
 	}
 
 	@Override
@@ -167,8 +167,8 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 	public CPDefinitionSpecificationOptionValue
 			updateCPDefinitionSpecificationOptionValue(
 				long cpDefinitionSpecificationOptionValueId,
-				long cpOptionCategoryId, Map<Locale, String> valueMap,
-				double priority, ServiceContext serviceContext)
+				long cpOptionCategoryId, String key, double priority,
+				Map<Locale, String> valueMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionSpecificationOptionValue
@@ -183,8 +183,8 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 
 		return cpDefinitionSpecificationOptionValueLocalService.
 			updateCPDefinitionSpecificationOptionValue(
-				cpDefinitionSpecificationOptionValueId, cpOptionCategoryId,
-				valueMap, priority, serviceContext);
+				cpDefinitionSpecificationOptionValueId, cpOptionCategoryId, key,
+				priority, valueMap, serviceContext);
 	}
 
 	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)

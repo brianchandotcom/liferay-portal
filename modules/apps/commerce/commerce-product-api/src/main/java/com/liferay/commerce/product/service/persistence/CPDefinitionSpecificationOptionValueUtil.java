@@ -1839,6 +1839,75 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	}
 
 	/**
+	 * Returns the cp definition specification option value where CPDefinitionId = &#63; and key = &#63; or throws a <code>NoSuchCPDefinitionSpecificationOptionValueException</code> if it could not be found.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param key the key
+	 * @return the matching cp definition specification option value
+	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
+	 */
+	public static CPDefinitionSpecificationOptionValue findByC_K(
+			long CPDefinitionId, String key)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPDefinitionSpecificationOptionValueException {
+
+		return getPersistence().findByC_K(CPDefinitionId, key);
+	}
+
+	/**
+	 * Returns the cp definition specification option value where CPDefinitionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param key the key
+	 * @return the matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
+	 */
+	public static CPDefinitionSpecificationOptionValue fetchByC_K(
+		long CPDefinitionId, String key) {
+
+		return getPersistence().fetchByC_K(CPDefinitionId, key);
+	}
+
+	/**
+	 * Returns the cp definition specification option value where CPDefinitionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param key the key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
+	 */
+	public static CPDefinitionSpecificationOptionValue fetchByC_K(
+		long CPDefinitionId, String key, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_K(CPDefinitionId, key, useFinderCache);
+	}
+
+	/**
+	 * Removes the cp definition specification option value where CPDefinitionId = &#63; and key = &#63; from the database.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param key the key
+	 * @return the cp definition specification option value that was removed
+	 */
+	public static CPDefinitionSpecificationOptionValue removeByC_K(
+			long CPDefinitionId, String key)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPDefinitionSpecificationOptionValueException {
+
+		return getPersistence().removeByC_K(CPDefinitionId, key);
+	}
+
+	/**
+	 * Returns the number of cp definition specification option values where CPDefinitionId = &#63; and key = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param key the key
+	 * @return the number of matching cp definition specification option values
+	 */
+	public static int countByC_K(long CPDefinitionId, String key) {
+		return getPersistence().countByC_K(CPDefinitionId, key);
+	}
+
+	/**
 	 * Caches the cp definition specification option value in the entity cache if it is enabled.
 	 *
 	 * @param cpDefinitionSpecificationOptionValue the cp definition specification option value

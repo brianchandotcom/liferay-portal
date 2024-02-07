@@ -279,6 +279,35 @@ public interface CPDefinitionSpecificationOptionValueModel
 	public void setCPOptionCategoryId(long CPOptionCategoryId);
 
 	/**
+	 * Returns the key of this cp definition specification option value.
+	 *
+	 * @return the key of this cp definition specification option value
+	 */
+	@AutoEscape
+	public String getKey();
+
+	/**
+	 * Sets the key of this cp definition specification option value.
+	 *
+	 * @param key the key of this cp definition specification option value
+	 */
+	public void setKey(String key);
+
+	/**
+	 * Returns the priority of this cp definition specification option value.
+	 *
+	 * @return the priority of this cp definition specification option value
+	 */
+	public double getPriority();
+
+	/**
+	 * Sets the priority of this cp definition specification option value.
+	 *
+	 * @param priority the priority of this cp definition specification option value
+	 */
+	public void setPriority(double priority);
+
+	/**
 	 * Returns the value of this cp definition specification option value.
 	 *
 	 * @return the value of this cp definition specification option value
@@ -376,20 +405,6 @@ public interface CPDefinitionSpecificationOptionValueModel
 	 * @param defaultLocale the default locale
 	 */
 	public void setValueMap(Map<Locale, String> valueMap, Locale defaultLocale);
-
-	/**
-	 * Returns the priority of this cp definition specification option value.
-	 *
-	 * @return the priority of this cp definition specification option value
-	 */
-	public double getPriority();
-
-	/**
-	 * Sets the priority of this cp definition specification option value.
-	 *
-	 * @param priority the priority of this cp definition specification option value
-	 */
-	public void setPriority(double priority);
 
 	/**
 	 * Returns the last publish date of this cp definition specification option value.

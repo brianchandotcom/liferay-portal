@@ -67,12 +67,14 @@ public class CPDefinitionSpecificationOptionValueTable
 		CPOptionCategoryId = createColumn(
 			"CPOptionCategoryId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionSpecificationOptionValueTable, String>
-		value = createColumn(
-			"value", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionSpecificationOptionValueTable, String> key =
+		createColumn("key_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionSpecificationOptionValueTable, Double>
 		priority = createColumn(
 			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionSpecificationOptionValueTable, String>
+		value = createColumn(
+			"value", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionSpecificationOptionValueTable, Date>
 		lastPublishDate = createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

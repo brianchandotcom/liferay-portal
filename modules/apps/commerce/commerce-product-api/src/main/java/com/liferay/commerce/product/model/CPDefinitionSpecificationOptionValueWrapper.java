@@ -55,8 +55,9 @@ public class CPDefinitionSpecificationOptionValueWrapper
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("CPSpecificationOptionId", getCPSpecificationOptionId());
 		attributes.put("CPOptionCategoryId", getCPOptionCategoryId());
-		attributes.put("value", getValue());
+		attributes.put("key", getKey());
 		attributes.put("priority", getPriority());
+		attributes.put("value", getValue());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -145,16 +146,22 @@ public class CPDefinitionSpecificationOptionValueWrapper
 			setCPOptionCategoryId(CPOptionCategoryId);
 		}
 
-		String value = (String)attributes.get("value");
+		String key = (String)attributes.get("key");
 
-		if (value != null) {
-			setValue(value);
+		if (key != null) {
+			setKey(key);
 		}
 
 		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		String value = (String)attributes.get("value");
+
+		if (value != null) {
+			setValue(value);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -278,6 +285,16 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the key of this cp definition specification option value.
+	 *
+	 * @return the key of this cp definition specification option value
+	 */
+	@Override
+	public String getKey() {
+		return model.getKey();
 	}
 
 	/**
@@ -547,6 +564,16 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the key of this cp definition specification option value.
+	 *
+	 * @param key the key of this cp definition specification option value
+	 */
+	@Override
+	public void setKey(String key) {
+		model.setKey(key);
 	}
 
 	/**

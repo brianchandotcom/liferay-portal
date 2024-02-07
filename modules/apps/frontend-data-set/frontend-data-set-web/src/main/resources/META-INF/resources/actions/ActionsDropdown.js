@@ -15,6 +15,7 @@ import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../FrontendDataSetContext';
 import {formatActionURL} from '../utils/actionItems/formatActionURL';
+import {isLink} from '../utils/isLink';
 import {actionsBasePropTypes, isLink} from './Actions';
 
 function DropdownItem({action, closeMenu, onClick, url}) {

@@ -20,10 +20,6 @@ const {MODAL_PERMISSIONS} = ACTION_ITEM_TARGETS;
 
 const QUICK_ACTIONS_MAX_NUMBER = 3;
 
-export function isLink(target, onClick) {
-	return !(target && target !== 'link') && !onClick;
-}
-
 const formatActions = (actions, itemData) => {
 	return actions
 		? actions.reduce((actions, action) => {

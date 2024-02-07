@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useRef} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
-import {handleAction, isLink} from '../../actions/Actions';
+import {isLink} from '../utils/isLink';
 
 const Cards = ({items, schema}) => {
 	const {selectedItemsKey, style} = useContext(FrontendDataSetContext);
@@ -46,12 +46,9 @@ const Cards = ({items, schema}) => {
 
 const Card = ({item, schema}) => {
 	const {
-		executeAsyncItemAction,
-		highlightItems,
 		itemsActions,
 		loadData,
 		onActionDropdownItemClick,
-		openModal,
 		openSidePanel,
 		selectItems,
 		selectable,
@@ -76,22 +73,6 @@ const Card = ({item, schema}) => {
 							openSidePanel,
 						});
 					}
-
-					handleAction(
-						{
-							event,
-							itemId: item[selectedItemsKey],
-							method: action.data?.method,
-							url: action.href,
-							...action,
-						},
-						{
-							executeAsyncItemAction,
-							highlightItems,
-							openModal,
-							openSidePanel,
-						}
-					);
 				},
 			}))}
 			description={schema.description && item[schema.description]}

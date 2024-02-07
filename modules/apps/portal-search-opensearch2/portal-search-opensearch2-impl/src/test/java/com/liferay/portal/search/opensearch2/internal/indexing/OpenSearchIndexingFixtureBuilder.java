@@ -25,7 +25,7 @@ public class OpenSearchIndexingFixtureBuilder {
 		openSearchIndexingFixture.setFacetProcessor(_facetProcessor);
 		openSearchIndexingFixture.setLiferayMappingsAddedToIndex(
 			_liferayMappingsAddedToIndex);
-		openSearchIndexingFixture.setUseLiferayIndex(_useLiferayIndex);
+		openSearchIndexingFixture.setUseLiferayMappings(_useLiferayMappings);
 
 		return openSearchIndexingFixture;
 	}
@@ -57,7 +57,7 @@ public class OpenSearchIndexingFixtureBuilder {
 	public OpenSearchIndexingFixtureBuilder useLiferayIndex(
 		boolean useLiferayIndex) {
 
-		_useLiferayIndex = useLiferayIndex;
+		_useLiferayMappings = useLiferayIndex;
 
 		return this;
 	}
@@ -75,6 +75,6 @@ public class OpenSearchIndexingFixtureBuilder {
 	private FacetProcessor<SearchRequest.Builder> _facetProcessor;
 	private boolean _liferayMappingsAddedToIndex;
 	private TestOpenSearchConnectionManager _testOpenSearchConnectionManager;
-	private boolean _useLiferayIndex;
+	private boolean _useLiferayMappings;
 
 }

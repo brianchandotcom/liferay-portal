@@ -206,7 +206,7 @@ public class OpenSearchIndexSearcherSearchAfterTest {
 					new TestOpenSearchConnectionManager(
 						Collections.singletonMap(
 							"indexMaxResultWindow", _INDEX_MAX_RESULT_WINDOW)));
-				setUseLiferayIndex(true);
+				setUseLiferayMappings(true);
 			}
 		};
 	}

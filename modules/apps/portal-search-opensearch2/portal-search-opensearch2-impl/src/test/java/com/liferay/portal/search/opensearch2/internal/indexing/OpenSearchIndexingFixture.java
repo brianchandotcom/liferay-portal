@@ -117,14 +117,14 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 			indexNameBuilder, localization, _testOpenSearchConnectionManager,
 			_searchEngineAdapter);
 
-		if (_useLiferayIndex) {
+		if (_useLiferayMappings) {
 			_createIndex(indexNameBuilder);
 		}
 	}
 
 	@Override
 	public void tearDown() throws Exception {
-		if (_useLiferayIndex) {
+		if (_useLiferayMappings) {
 			_deleteIndex(String::valueOf);
 		}
 	}
@@ -169,8 +169,8 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 		_testOpenSearchConnectionManager = testOpenSearchConnectionManager;
 	}
 
-	protected void setUseLiferayIndex(boolean useLiferayIndex) {
-		_useLiferayIndex = useLiferayIndex;
+	protected void setUseLiferayMappings(boolean useLiferayMappings) {
+		_useLiferayMappings = useLiferayMappings;
 	}
 
 	private void _createIndex(IndexNameBuilder indexNameBuilder) {
@@ -344,6 +344,6 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 	private boolean _liferayMappingsAddedToIndex;
 	private SearchEngineAdapter _searchEngineAdapter;
 	private TestOpenSearchConnectionManager _testOpenSearchConnectionManager;
-	private boolean _useLiferayIndex;
+	private boolean _useLiferayMappings;
 
 }

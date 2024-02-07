@@ -101,7 +101,7 @@ Object.defineProperties(window.HTMLElement.prototype, {
 	},
 });
 
-describe.skip('The WorkflowInstanceTracker component should', () => {
+describe('The WorkflowInstanceTracker component should', () => {
 	let container;
 	let queryAllByText;
 	let queryByText;

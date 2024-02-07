@@ -22,6 +22,16 @@ import ErrorFeedback from './ErrorFeedback';
 
 const eventObserver = new EventObserver();
 
+let ReactFlowDefault = ReactFlow;
+
+// `react-flow-renderer` provides both a commonjs and ESM version.
+// We need this logic here so that both work. Unit tests rely on commonjs and
+// our DXP runtime uses ESM.
+
+if (ReactFlowDefault.default) {
+	ReactFlowDefault = ReactFlowDefault.default;
+}
+
 export default function WorkflowInstanceTracker({workflowInstanceId}) {
 	const [currentNodes, setCurrentNodes] = useState([]);
 	const [definitionElements, setDefinitionElements] = useState({});
@@ -157,7 +167,7 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 		<div className="workflow-instance-tracker">
 			{!!layoutedElements.length && (
 				<ReactFlowProvider>
-					<ReactFlow.default
+					<ReactFlowDefault
 						edgeTypes={edgeTypes}
 						elements={layoutedElements}
 						minZoom="0.1"

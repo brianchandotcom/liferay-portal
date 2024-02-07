@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -1246,7 +1247,14 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 				unicodeProperties.getProperty("s3BucketName"),
 				Storage.BlobListOption.prefix(s3InboxFolderName + "/"));
 
+			long filesProcessedLimit = GetterUtil.getLong(
+				unicodeProperties.getProperty("filesProcessedLimit"), -1);
+
 			for (Blob blob : page.iterateAll()) {
+				if (filesProcessedLimit == 0) {
+					break;
+				}
+
 				String name = blob.getName();
 
 				if (name.equals(s3InboxFolderName + "/")) {
@@ -1274,6 +1282,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 				}
 
 				blob.delete();
+				filesProcessedLimit--;
 			}
 		}
 		catch (IOException ioException) {

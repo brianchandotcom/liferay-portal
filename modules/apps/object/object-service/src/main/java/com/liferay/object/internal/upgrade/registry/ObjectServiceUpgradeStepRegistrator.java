@@ -329,8 +329,10 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register("7.1.1", "7.1.2", new DummyUpgradeStep());
 
+		registry.register("7.1.2", "7.2.0", new DummyUpgradeStep());
+
 		registry.register(
-			"7.1.2", "8.0.0",
+			"7.2.0", "8.0.0",
 			new com.liferay.object.internal.upgrade.v8_0_0.
 				ObjectFolderItemUpgradeProcess());
 
@@ -376,10 +378,7 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register("8.6.1", "8.6.2", new DummyUpgradeStep());
 
-		registry.register(
-			"8.6.2", "8.7.0",
-			UpgradeProcessFactory.addColumns(
-				"ObjectEntry", "rootObjectEntryId LONG"));
+		registry.register("8.6.2", "8.7.0", new DummyUpgradeStep());
 
 		registry.register(
 			"8.7.0", "8.8.0",
@@ -420,6 +419,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"9.0.1", "9.0.2",
 			new com.liferay.object.internal.upgrade.v9_0_2.
 				ObjectFolderUpgradeProcess());
+
+		registry.register(
+			"9.0.2", "9.1.0",
+			UpgradeProcessFactory.addColumns(
+				"ObjectEntry", "rootObjectEntryId LONG"));
 	}
 
 	@Reference

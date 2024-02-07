@@ -7,6 +7,7 @@ package com.liferay.portal.search.opensearch2.internal.index;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -141,10 +142,15 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 		Mockito.when(
 			_openSearchConfigurationWrapper.additionalIndexConfigurations()
 		).thenReturn(
-			"{\n  \"index\": {\n    \"number_of_replicas\": 1,\n" +
-				"    \"number_of_shards\": 2\n  }\n}"
+			JSONUtil.put(
+				"index",
+				JSONUtil.put(
+					"number_of_replicas", 1
+				).put(
+					"number_of_shards", 2
+				)
+			).toString()
 		);
-
 		createIndices();
 
 		_assertIndexSettings(1, 2);
@@ -371,8 +377,14 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 		Mockito.when(
 			_openSearchConfigurationWrapper.additionalIndexConfigurations()
 		).thenReturn(
-			"{\n  \"index\": {\n    \"number_of_replicas\": 0,\n" +
-				"    \"number_of_shards\": 0\n  }\n}"
+			JSONUtil.put(
+				"index",
+				JSONUtil.put(
+					"number_of_replicas", 0
+				).put(
+					"number_of_shards", 0
+				)
+			).toString()
 		);
 
 		createIndices();

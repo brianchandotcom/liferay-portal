@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
@@ -40,12 +40,18 @@ public class UpdateIndexSettingsIndexRequestExecutorTest
 			new UpdateIndexSettingsIndexRequest(TEST_INDEX_NAME);
 
 		updateIndexSettingsIndexRequest.setSettings(
-			StringBundler.concat(
-				"{\n", "    \"analysis\": {\n", "        \"analyzer\": {\n",
-				"            \"content\": {\n",
-				"                \"tokenizer\": \"whitespace\",\n",
-				"                \"type\": \"custom\"\n", "            }\n",
-				"        }\n", "    }\n", "}"));
+			JSONUtil.put(
+				"analysis",
+				JSONUtil.put(
+					"analyzer",
+					JSONUtil.put(
+						"content",
+						JSONUtil.put(
+							"tokenizer", "whitespace"
+						).put(
+							"type", "custom"
+						)))
+			).toString());
 
 		UpdateIndexSettingsIndexRequestExecutorImpl
 			updateIndexSettingsIndexRequestExecutorImpl =

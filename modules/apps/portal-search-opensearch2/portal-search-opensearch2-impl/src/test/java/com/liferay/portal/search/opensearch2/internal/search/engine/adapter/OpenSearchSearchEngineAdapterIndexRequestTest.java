@@ -5,11 +5,11 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -140,16 +140,20 @@ public class OpenSearchSearchEngineAdapterIndexRequestTest
 	@Test
 	public void testExecuteAnalyzeIndexRequestWithCharFilters() {
 		_putSettings(
-			StringBundler.concat(
-				"{\n", "    \"settings\": {\n", "        \"analysis\": {\n",
-				"            \"char_filter\": {\n",
-				"                \"custom_cf\": {\n",
-				"                    \"type\": \"mapping\",\n",
-				"                    \"mappings\": [\n",
-				"                        \"- => +\",\n",
-				"                        \"2 => 3\"\n",
-				"                    ]\n", "                }\n",
-				"            }\n", "        }\n", "    }\n", "}"));
+			JSONUtil.put(
+				"settings",
+				JSONUtil.put(
+					"analysis",
+					JSONUtil.put(
+						"char_filter",
+						JSONUtil.put(
+							"custom_cf",
+							JSONUtil.put(
+								"mappings", JSONUtil.putAll("- => +", "2 => 3")
+							).put(
+								"type", "mapping"
+							))))
+			).toString());
 
 		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
 
@@ -218,7 +222,11 @@ public class OpenSearchSearchEngineAdapterIndexRequestTest
 	@Test
 	public void testExecuteAnalyzeIndexRequestWithFieldName() throws Exception {
 		_putMapping(
-			"{\"properties\":{\"keywordTestField\":{\"type\":\"keyword\"}}}");
+			JSONUtil.put(
+				"properties",
+				JSONUtil.put(
+					"keywordTestField", JSONUtil.put("type", "keyword"))
+			).toString());
 
 		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
 
@@ -233,14 +241,20 @@ public class OpenSearchSearchEngineAdapterIndexRequestTest
 	@Test
 	public void testExecuteAnalyzeIndexRequestWithNormalizer() {
 		_putSettings(
-			StringBundler.concat(
-				"{\n", "    \"settings\": {\n", "        \"analysis\": {\n",
-				"            \"normalizer\": {\n",
-				"                \"custom_normalizer\": {\n",
-				"                    \"type\": \"custom\",\n",
-				"                    \"filter\": [\"uppercase\"]\n",
-				"                }\n", "            }\n", "        }\n",
-				"    }\n", "}"));
+			JSONUtil.put(
+				"settings",
+				JSONUtil.put(
+					"analysis",
+					JSONUtil.put(
+						"normalizer",
+						JSONUtil.put(
+							"custom_normalizer",
+							JSONUtil.put(
+								"filter", JSONUtil.put("uppercase")
+							).put(
+								"type", "custom"
+							))))
+			).toString());
 
 		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
 
@@ -300,15 +314,17 @@ public class OpenSearchSearchEngineAdapterIndexRequestTest
 			"test_index_2");
 
 		createIndexRequest.setSource(
-			StringBundler.concat(
-				"{\n", "    \"settings\": {\n",
-				"        \"number_of_shards\": 1\n", "    },\n",
-				"    \"mappings\": {\n", "        \"type1\": {\n",
-				"            \"properties\": {\n",
-				"                \"field1\": {\n",
-				"                    \"type\": \"text\"\n",
-				"                }\n", "            }\n", "        }\n",
-				"    }\n", "}"));
+			JSONUtil.put(
+				"settings",
+				JSONUtil.put(
+					"mappings",
+					JSONUtil.put(
+						"properties",
+						JSONUtil.put("field1", JSONUtil.put("type", "text")))
+				).put(
+					"number_of_shards", 1
+				)
+			).toString());
 
 		CreateIndexResponse createIndexResponse = searchEngineAdapter.execute(
 			createIndexRequest);
@@ -350,11 +366,15 @@ public class OpenSearchSearchEngineAdapterIndexRequestTest
 
 	@Test
 	public void testExecuteGetFieldMappingIndexRequest() throws Exception {
-		String mappingSource =
-			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}, " +
-				"\"otherTestField\":{\"type\":\"keyword\"}}}";
-
-		_putMapping(mappingSource);
+		_putMapping(
+			JSONUtil.put(
+				"properties",
+				JSONUtil.put(
+					"otherTestField", JSONUtil.put("type", "keyword")
+				).put(
+					"testField", JSONUtil.put("type", "keyword")
+				)
+			).toString());
 
 		String[] fields = {"otherTestField"};
 
@@ -380,8 +400,10 @@ public class OpenSearchSearchEngineAdapterIndexRequestTest
 
 	@Test
 	public void testExecuteGetIndexIndexRequest() throws Exception {
-		String mappingSource =
-			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}}}";
+		String mappingSource = JSONUtil.put(
+			"properties",
+			JSONUtil.put("testField", JSONUtil.put("type", "keyword"))
+		).toString();
 
 		_putMapping(mappingSource);
 
@@ -408,8 +430,10 @@ public class OpenSearchSearchEngineAdapterIndexRequestTest
 
 	@Test
 	public void testExecuteGetMappingIndexRequest() throws Exception {
-		String mappingSource =
-			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}}}";
+		String mappingSource = JSONUtil.put(
+			"properties",
+			JSONUtil.put("testField", JSONUtil.put("type", "keyword"))
+		).toString();
 
 		_putMapping(mappingSource);
 
@@ -471,8 +495,10 @@ public class OpenSearchSearchEngineAdapterIndexRequestTest
 
 	@Test
 	public void testExecutePutMappingIndexRequest() {
-		String mappingSource =
-			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}}}";
+		String mappingSource = JSONUtil.put(
+			"properties",
+			JSONUtil.put("testField", JSONUtil.put("type", "keyword"))
+		).toString();
 
 		PutMappingIndexRequest putMappingIndexRequest =
 			new PutMappingIndexRequest(
@@ -517,9 +543,9 @@ public class OpenSearchSearchEngineAdapterIndexRequestTest
 			new UpdateIndexSettingsIndexRequest("test_index_2");
 
 		updateIndexSettingsIndexRequest.setSettings(
-			StringBundler.concat(
-				"{\n", "    \"index\": {\n",
-				"        \"refresh_interval\": \"2s\"\n", "    }\n", "}"));
+			JSONUtil.put(
+				"index", JSONUtil.put("refresh_interval", "2s")
+			).toString());
 
 		UpdateIndexSettingsIndexResponse indexSettingsIndexResponse =
 			searchEngineAdapter.execute(updateIndexSettingsIndexRequest);

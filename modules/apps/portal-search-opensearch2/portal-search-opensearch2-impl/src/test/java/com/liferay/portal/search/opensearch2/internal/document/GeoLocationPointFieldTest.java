@@ -6,8 +6,7 @@
 package com.liferay.portal.search.opensearch2.internal.document;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
@@ -123,19 +122,26 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 
 			putMappingRequestBuilder.index(indexName);
 
-			String mappingsSource = StringBundler.concat(
-				"{ \"properties\": { \"", _CUSTOM_FIELD, "\" : { \"fields\": ",
-				"{ \"geopoint\" : { \"store\": true, \"type\": \"keyword\" } ",
-				"}, \"store\": true, \"type\": \"geo_point\" } } }");
-
-			try {
-				putMappingRequestBuilder.properties(
-					IndexUtil.getPropertiesMap(
-						JSONFactoryUtil.createJSONObject(mappingsSource)));
-			}
-			catch (JSONException jsonException) {
-				throw new RuntimeException(jsonException);
-			}
+			putMappingRequestBuilder.properties(
+				IndexUtil.getPropertiesMap(
+					JSONUtil.put(
+						"properties",
+						JSONUtil.put(
+							_CUSTOM_FIELD,
+							JSONUtil.put(
+								"fields",
+								JSONUtil.put(
+									"geopoint",
+									JSONUtil.put(
+										"store", true
+									).put(
+										"type", "keyword"
+									))
+							).put(
+								"store", "true"
+							).put(
+								"type", "geo_point"
+							)))));
 
 			OpenSearchClient openSearchClient =
 				_openSearchConnectionManager.getOpenSearchClient();

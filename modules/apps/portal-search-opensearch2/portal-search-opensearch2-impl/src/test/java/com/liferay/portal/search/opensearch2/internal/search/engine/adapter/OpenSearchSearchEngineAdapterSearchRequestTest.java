@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -118,21 +119,51 @@ public class OpenSearchSearchEngineAdapterSearchRequestTest
 		_documentFixture.setUp();
 
 		_putMapping(
-			StringBundler.concat(
-				"{\n\"dynamic_templates\": [\n{\n",
-				"\"template_en\": {\n\"mapping\": {\n",
-				"\"analyzer\": \"english\",\n\"store\": true,\n",
-				"\"term_vector\": \"with_positions_offsets\",\n",
-				"\"type\": \"text\"\n},\n",
-				"\"match\": \"\\\\w+_en\\\\b|\\\\w+_en_[A-Z]{2}\\\\b\",\n",
-				"\"match_mapping_type\": \"string\",\n",
-				"\"match_pattern\": \"regex\"\n}\n}\n],\n",
-				"\"properties\": {\n\"companyId\": {\n",
-				"\"store\": true,\n\"type\": \"keyword\"\n},\n",
-				"\"languageId\": {\n\"index\": false,\n",
-				"\"store\": true,\n\"type\": \"keyword\"\n},",
-				"\"keywordSuggestion\" : {\n\"type\" : \"completion\"\n",
-				"}\n\n}\n}"));
+			JSONUtil.put(
+				"dynamic_templates",
+				JSONUtil.put(
+					JSONUtil.put(
+						"template_en",
+						JSONUtil.put(
+							"mapping",
+							JSONUtil.put(
+								"analyzer", "english"
+							).put(
+								"store", true
+							).put(
+								"term_vector", "with_positions_offsets"
+							).put(
+								"type", "text"
+							)
+						).put(
+							"match", "\\w+_en\\b|\\w+_en_[A-Z]{2}\\b"
+						).put(
+							"match_mapping_type", "string"
+						).put(
+							"match_pattern", "regex"
+						)))
+			).put(
+				"properties",
+				JSONUtil.put(
+					"companyId",
+					JSONUtil.put(
+						"store", true
+					).put(
+						"type", "keyword"
+					)
+				).put(
+					"keywordSuggestion", JSONUtil.put("type", "completion")
+				).put(
+					"languageId",
+					JSONUtil.put(
+						"index", false
+					).put(
+						"store", true
+					).put(
+						"type", "keyword"
+					)
+				)
+			).toString());
 	}
 
 	@After

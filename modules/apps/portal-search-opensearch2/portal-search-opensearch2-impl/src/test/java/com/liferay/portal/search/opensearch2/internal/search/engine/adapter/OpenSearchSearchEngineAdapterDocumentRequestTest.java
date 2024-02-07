@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -633,13 +634,15 @@ public class OpenSearchSearchEngineAdapterDocumentRequestTest
 
 		builder.index(TEST_INDEX_NAME);
 
-		JSONObject mappingsJSONObject = JSONFactoryUtil.createJSONObject(
-			_MAPPING_SOURCE);
-
 		builder.mappings(
 			TypeMapping.of(
 				typeMapping -> typeMapping.properties(
-					IndexUtil.getPropertiesMap(mappingsJSONObject))));
+					IndexUtil.getPropertiesMap(
+						JSONUtil.put(
+							"properties",
+							JSONUtil.put(
+								"matchDocument",
+								JSONUtil.put("type", "boolean")))))));
 
 		try {
 			_openSearchIndicesClient.create(builder.build());
@@ -736,9 +739,6 @@ public class OpenSearchSearchEngineAdapterDocumentRequestTest
 	}
 
 	private static final String _FIELD_NAME = "matchDocument";
-
-	private static final String _MAPPING_SOURCE =
-		"{\"properties\":{\"matchDocument\":{\"type\":\"boolean\"}}}";
 
 	private static final Scripts _scripts = new ScriptsImpl();
 

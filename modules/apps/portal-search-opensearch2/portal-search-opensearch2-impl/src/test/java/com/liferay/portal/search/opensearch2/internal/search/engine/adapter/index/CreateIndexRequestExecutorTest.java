@@ -5,8 +5,8 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
@@ -36,14 +36,20 @@ public class CreateIndexRequestExecutorTest extends BaseOpenSearchTestCase {
 			TEST_INDEX_NAME);
 
 		createIndexRequest.setSource(
-			StringBundler.concat(
-				"{\n", "    \"settings\": {\n", "        \"analysis\": {\n",
-				"            \"analyzer\": {\n",
-				"                \"content\": {\n",
-				"                    \"tokenizer\": \"whitespace\",\n",
-				"                    \"type\": \"custom\"\n",
-				"                }\n", "            }\n", "        }\n",
-				"    }\n", "}"));
+			JSONUtil.put(
+				"settings",
+				JSONUtil.put(
+					"analysis",
+					JSONUtil.put(
+						"analyzer",
+						JSONUtil.put(
+							"content",
+							JSONUtil.put(
+								"tokenizer", "whitespace"
+							).put(
+								"type", "custom"
+							))))
+			).toString());
 
 		CreateIndexRequestExecutorImpl createIndexRequestExecutorImpl =
 			new CreateIndexRequestExecutorImpl();

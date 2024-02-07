@@ -6,6 +6,7 @@
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index;
 
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
@@ -40,8 +41,10 @@ public class PutMappingIndexRequestExecutorTest extends BaseOpenSearchTestCase {
 		PutMappingIndexRequest putMappingIndexRequest =
 			new PutMappingIndexRequest(
 				new String[] {TEST_INDEX_NAME},
-				"{\"properties\": {\"" + _FIELD_NAME +
-					"\": {\"type\": \"text\"}}}");
+				JSONUtil.put(
+					"properties",
+					JSONUtil.put(_FIELD_NAME, JSONUtil.put("type", "text"))
+				).toString());
 
 		PutMappingIndexRequestExecutorImpl putMappingIndexRequestExecutorImpl =
 			new PutMappingIndexRequestExecutorImpl();

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {IActionsDropdown, IItemsActions} from '..';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
@@ -10,20 +11,28 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {LinkOrButton} from '@clayui/shared';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import FrontendDataSetContext from '../FrontendDataSetContext';
+import FrontendDataSetContext, {
+	IFrontendDataSetContext,
+} from '../FrontendDataSetContext';
 import {formatActionURL} from '../utils/actionItems/formatActionURL';
 import {isLink} from '../utils/isLink';
-import {actionsBasePropTypes} from './Actions';
 
-function DropdownItem({action, closeMenu, onClick, url}) {
+interface IDropdownItem {
+	action: IItemsActions;
+	closeMenu: Function;
+	onClick: Function;
+	setLoading: Function;
+	url: string | undefined;
+}
+
+function DropdownItem({action, closeMenu, onClick, url}: IDropdownItem) {
 	const {icon, label, target} = action;
 
 	return (
 		<ClayDropDown.Item
-			href={isLink(target, null) ? url : null}
+			href={isLink(target, null) ? url : ''}
 			onClick={(event) =>
 				onClick({
 					action,
@@ -52,14 +61,14 @@ function ActionsDropdown({
 	onClick,
 	onMenuActiveChange,
 	setLoading,
-}) {
+}: IActionsDropdown) {
 	const {
 		applyItemInlineUpdates,
 		inlineEditingSettings,
 		itemsChanges,
 		toggleItemInlineEdit,
 		uniformActionsDisplay,
-	} = useContext(FrontendDataSetContext);
+	}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
 
 	const inlineEditingAvailable =
 		inlineEditingSettings && itemData.actions?.update;
@@ -69,21 +78,31 @@ function ActionsDropdown({
 
 	const isMounted = useIsMounted();
 
-	const editModeActive = !!itemsChanges[itemId];
+	let parsedItemId: number;
+
+	if (typeof itemId === 'string') {
+		parsedItemId = parseInt(itemId, 10);
+	}
+	else {
+		parsedItemId = itemId;
+	}
+
+	const editModeActive = !!itemsChanges![parsedItemId];
 
 	const itemChanges =
-		editModeActive && Object.keys(itemsChanges[itemId]).length
-			? itemsChanges[itemId]
+		editModeActive && Object.keys(itemsChanges![parsedItemId]).length
+			? itemsChanges![parsedItemId]
 			: null;
 
 	const inlineEditingActions = (
 		<div className="d-flex">
 			<ClayButtonWithIcon
+				aria-label={Liferay.Language.get('edit')}
 				className="mr-1"
 				disabled={inlineEditingAlwaysOn && !itemChanges}
 				displayType="secondary"
-				onClick={() => toggleItemInlineEdit(itemId)}
-				small
+				onClick={() => toggleItemInlineEdit!(parsedItemId)}
+				size="xs"
 				symbol="times-small"
 			/>
 
@@ -91,18 +110,19 @@ function ActionsDropdown({
 				<ClayLoadingIndicator className="mb-2 mt-2" />
 			) : (
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('save')}
 					disabled={!itemChanges}
 					monospaced
 					onClick={() => {
 						setLoading(true);
 
-						applyItemInlineUpdates(itemId).finally(() => {
+						applyItemInlineUpdates!(parsedItemId).finally(() => {
 							if (isMounted()) {
 								setLoading(false);
 							}
 						});
 					}}
-					small
+					size="xs"
 					symbol="check"
 				/>
 			)}
@@ -139,12 +159,15 @@ function ActionsDropdown({
 				aria-label={action.label}
 				className="btn btn-secondary btn-sm"
 				href={
-					isLink(action.target, action.onClick)
+					isLink(
+						action.target,
+						action.onClick ? action.onClick : null
+					)
 						? formatActionURL(action.href, itemData)
 						: null
 				}
 				monospaced={Boolean(action.icon)}
-				onClick={(event) => {
+				onClick={(event: any) => {
 					onClick({
 						action,
 						event,
@@ -161,7 +184,7 @@ function ActionsDropdown({
 		return <ClayLoadingIndicator className="mb-2 mt-2" />;
 	}
 
-	const renderItems = (items) =>
+	const renderItems = (items: IItemsActions[]) =>
 		items.map(({items: nestedItems = [], separator, type, ...item}, i) => {
 			if (type === 'group') {
 				return (
@@ -195,7 +218,7 @@ function ActionsDropdown({
 
 			<ClayDropDown
 				active={menuActive}
-				onActiveChange={onMenuActiveChange}
+				onActiveChange={() => onMenuActiveChange(!menuActive)}
 				trigger={
 					<ClayButton
 						className={classnames(
@@ -222,12 +245,5 @@ function ActionsDropdown({
 		</div>
 	);
 }
-
-ActionsDropdown.propTypes = {
-	...actionsBasePropTypes,
-	loading: PropTypes.bool.isRequired,
-	onClick: PropTypes.func.isRequired,
-	setLoading: PropTypes.func.isRequired,
-};
 
 export default ActionsDropdown;

@@ -77,10 +77,18 @@ export interface IInlineEditingSettings {
 	defaultBodyContent: object;
 }
 
+export interface IActionsDropdown extends IBaseActions {
+	loading: boolean;
+	menuActive: boolean;
+	onClick: Function;
+	onMenuActiveChange: Function;
+	setLoading: Function;
+}
+
 export interface IBaseActions {
 	actions: IItemsActions[];
 	itemData: any;
-	itemId?: number | string;
+	itemId: number | string;
 }
 
 export interface IItemsActions {
@@ -88,6 +96,7 @@ export interface IItemsActions {
 	href?: string;
 	icon?: string;
 	id?: string | number;
+	items?: IItemsActions[];
 	label?: string;
 	method?: string;
 	onClick?: Function;

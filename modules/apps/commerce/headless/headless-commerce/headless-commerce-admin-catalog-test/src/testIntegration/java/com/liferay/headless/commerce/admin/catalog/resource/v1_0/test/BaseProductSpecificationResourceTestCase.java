@@ -175,6 +175,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		ProductSpecification productSpecification =
 			randomProductSpecification();
 
+		productSpecification.setKey(regex);
 		productSpecification.setSpecificationKey(regex);
 
 		String json = ProductSpecificationSerDes.toJSON(productSpecification);
@@ -183,6 +184,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		productSpecification = ProductSpecificationSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, productSpecification.getKey());
 		Assert.assertEquals(regex, productSpecification.getSpecificationKey());
 	}
 
@@ -691,6 +693,14 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (productSpecification.getKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("label", additionalAssertFieldName)) {
 				if (productSpecification.getLabel() == null) {
 					valid = false;
@@ -872,6 +882,17 @@ public abstract class BaseProductSpecificationResourceTestCase {
 				if (!Objects.deepEquals(
 						productSpecification1.getId(),
 						productSpecification2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productSpecification1.getKey(),
+						productSpecification2.getKey())) {
 
 					return false;
 				}
@@ -1069,6 +1090,52 @@ public abstract class BaseProductSpecificationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("key")) {
+			Object object = productSpecification.getKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("label")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1193,6 +1260,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		return new ProductSpecification() {
 			{
 				id = RandomTestUtil.randomLong();
+				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				optionCategoryId = RandomTestUtil.randomLong();
 				priority = RandomTestUtil.randomDouble();
 				productId = RandomTestUtil.randomLong();

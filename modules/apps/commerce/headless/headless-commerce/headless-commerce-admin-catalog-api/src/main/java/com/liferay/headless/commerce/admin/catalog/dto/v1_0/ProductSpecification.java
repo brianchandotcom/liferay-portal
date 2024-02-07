@@ -95,6 +95,45 @@ public class ProductSpecification implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
+	@Schema
+	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+
+		_keySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String key;
+
+	@JsonIgnore
+	private Supplier<String> _keySupplier;
+
 	@Schema(
 		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
 	)
@@ -430,6 +469,22 @@ public class ProductSpecification implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		String key = getKey();
+
+		if (key != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"key\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(key));
+
+			sb.append("\"");
 		}
 
 		Map<String, String> label = getLabel();

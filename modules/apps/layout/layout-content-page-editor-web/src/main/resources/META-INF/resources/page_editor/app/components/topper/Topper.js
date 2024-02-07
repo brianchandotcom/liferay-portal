@@ -35,6 +35,7 @@ import {
 	useSelector,
 	useSelectorCallback,
 } from '../../contexts/StoreContext';
+import {useLayoutKeyboardNavigation} from '../../hooks/app_hooks/useLayoutKeyboardNavigation';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
@@ -184,6 +185,8 @@ function TopperContent({
 		topperIsDraggingSource ||
 		keyboardMovementSource?.itemId === item.itemId;
 
+	const {elementRef, isFocusable} = useLayoutKeyboardNavigation(item);
+
 	return (
 		<div
 			className={classNames(className, 'page-editor__topper', {
@@ -236,7 +239,14 @@ function TopperContent({
 
 				hoverItem(item.itemId);
 			}}
-			ref={canBeDragged ? itemHandlerRef : null}
+			ref={(element) => {
+				if (canBeDragged) {
+					itemHandlerRef(element);
+				}
+
+				elementRef.current = element;
+			}}
+			tabIndex={isFocusable ? 0 : -1}
 		>
 			{isActive || isHighlighted ? (
 				<TopperLabel

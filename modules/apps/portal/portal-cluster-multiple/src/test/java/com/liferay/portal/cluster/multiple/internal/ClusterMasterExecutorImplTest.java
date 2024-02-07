@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.Closeable;
@@ -50,10 +49,6 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -418,8 +413,6 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = ClusterExecutorAdvice.class)
-	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testGetMasterClusterNodeIdRetry() throws Exception {
 
@@ -437,7 +430,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		try (Closeable closeable = _activate(clusterMasterExecutorImpl)) {
 			mockClusterExecutor.setCoordinatorAddress(_TEST_ADDRESS);
 
-			ClusterExecutorAdvice.block();
+			mockClusterExecutor.block();
 
 			Thread thread = new Thread() {
 
@@ -473,24 +466,23 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 			thread.start();
 
-			ClusterExecutorAdvice.waitUntilBlock(1);
+			mockClusterExecutor.waitUntilBlock(1);
 
-			ClusterExecutorAdvice.unblock(1);
+			mockClusterExecutor.unblock(1);
 
-			Assert.assertNull(ClusterExecutorAdvice.waitClusterNodeId());
+			Assert.assertNull(mockClusterExecutor.waitClusterNodeId());
 
-			ClusterExecutorAdvice.waitUntilBlock(1);
+			mockClusterExecutor.waitUntilBlock(1);
 
 			ClusterNode clusterNode = new ClusterNode(
 				_TEST_CLUSTER_NODE_ID, InetAddress.getLocalHost());
 
 			mockClusterExecutor.addClusterNode(_TEST_ADDRESS, clusterNode);
 
-			ClusterExecutorAdvice.unblock(1);
+			mockClusterExecutor.unblock(1);
 
 			Assert.assertSame(
-				_TEST_CLUSTER_NODE_ID,
-				ClusterExecutorAdvice.waitClusterNodeId());
+				_TEST_CLUSTER_NODE_ID, mockClusterExecutor.waitClusterNodeId());
 
 			thread.join();
 
@@ -498,7 +490,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 			mockClusterExecutor.removeClusterNode(_TEST_ADDRESS);
 
-			ClusterExecutorAdvice.block();
+			mockClusterExecutor.block();
 
 			thread = new Thread() {
 
@@ -525,21 +517,20 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 			thread.start();
 
-			ClusterExecutorAdvice.waitUntilBlock(1);
+			mockClusterExecutor.waitUntilBlock(1);
 
-			ClusterExecutorAdvice.unblock(1);
+			mockClusterExecutor.unblock(1);
 
-			Assert.assertNull(ClusterExecutorAdvice.waitClusterNodeId());
+			Assert.assertNull(mockClusterExecutor.waitClusterNodeId());
 
-			ClusterExecutorAdvice.waitUntilBlock(1);
+			mockClusterExecutor.waitUntilBlock(1);
 
 			mockClusterExecutor.addClusterNode(_TEST_ADDRESS, clusterNode);
 
-			ClusterExecutorAdvice.unblock(1);
+			mockClusterExecutor.unblock(1);
 
 			Assert.assertSame(
-				_TEST_CLUSTER_NODE_ID,
-				ClusterExecutorAdvice.waitClusterNodeId());
+				_TEST_CLUSTER_NODE_ID, mockClusterExecutor.waitClusterNodeId());
 
 			thread.join();
 		}
@@ -662,61 +653,6 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 				isMasterTokenReleasedNotified());
 	}
 
-	@Aspect
-	public static class ClusterExecutorAdvice {
-
-		public static void block() {
-			_semaphore = new Semaphore(0);
-		}
-
-		public static void unblock(int permits) {
-			_semaphore.release(permits);
-		}
-
-		public static String waitClusterNodeId() throws Exception {
-			try {
-				return _clusterNodeIdExchanger.exchange(
-					null, 1000, TimeUnit.MILLISECONDS);
-			}
-			catch (TimeoutException timeoutException) {
-				return "null";
-			}
-		}
-
-		public static void waitUntilBlock(int threadCount) {
-			Semaphore semaphore = _semaphore;
-
-			if (semaphore != null) {
-				while (semaphore.getQueueLength() < threadCount);
-			}
-		}
-
-		@Around(
-			"execution(protected * com.liferay.portal.cluster.multiple." +
-				"internal.ClusterExecutorImpl.getClusterNodeId(..))"
-		)
-		public Object getClusterNodeId(ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
-
-			Semaphore semaphore = _semaphore;
-
-			if (semaphore != null) {
-				semaphore.acquire();
-			}
-
-			Object result = proceedingJoinPoint.proceed();
-
-			_clusterNodeIdExchanger.exchange((String)result);
-
-			return result;
-		}
-
-		private static final Exchanger<String> _clusterNodeIdExchanger =
-			new Exchanger<>();
-		private static volatile Semaphore _semaphore;
-
-	}
-
 	private Closeable _activate(
 		ClusterMasterExecutorImpl clusterMasterExecutorImpl) {
 
@@ -805,6 +741,10 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			_clusterNodes.put(address, clusterNode);
 		}
 
+		public void block() {
+			_semaphore = new Semaphore(0);
+		}
+
 		@Override
 		public FutureClusterResponses execute(ClusterRequest clusterRequest) {
 			if (!_enabled) {
@@ -889,24 +829,66 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			field.set(clusterReceiver, address);
 		}
 
+		public void unblock(int permits) {
+			_semaphore.release(permits);
+		}
+
+		public String waitClusterNodeId() throws Exception {
+			try {
+				return _clusterNodeIdExchanger.exchange(
+					null, 1000, TimeUnit.MILLISECONDS);
+			}
+			catch (TimeoutException timeoutException) {
+				return "null";
+			}
+		}
+
+		public void waitUntilBlock(int threadCount) {
+			Semaphore semaphore = _semaphore;
+
+			if (semaphore != null) {
+				while (semaphore.getQueueLength() < threadCount);
+			}
+		}
+
 		@Override
 		protected String getClusterNodeId(Address address) {
-			ClusterNode clusterNode = _clusterNodes.get(address);
+			Semaphore semaphore = _semaphore;
 
-			if (clusterNode == null) {
-				return null;
+			try {
+				if (semaphore != null) {
+					semaphore.acquire();
+				}
+
+				String clusterNodeId = null;
+
+				ClusterNode clusterNode = _clusterNodes.get(address);
+
+				if (clusterNode != null) {
+					clusterNodeId = clusterNode.getClusterNodeId();
+				}
+
+				if (semaphore != null) {
+					_clusterNodeIdExchanger.exchange(clusterNodeId);
+				}
+
+				return clusterNodeId;
 			}
-
-			return clusterNode.getClusterNodeId();
+			catch (Exception exception) {
+				throw new IllegalStateException(exception);
+			}
 		}
 
 		private MockClusterExecutor(boolean enabled) {
 			_enabled = enabled;
 		}
 
+		private final Exchanger<String> _clusterNodeIdExchanger =
+			new Exchanger<>();
 		private final Map<Address, ClusterNode> _clusterNodes =
 			new ConcurrentHashMap<>();
 		private final boolean _enabled;
+		private volatile Semaphore _semaphore;
 
 	}
 

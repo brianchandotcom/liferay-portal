@@ -64,7 +64,7 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 - *liferay-sample-editor-config-contributor*
 
-	Build a function to modify the configuration of the WYSIWYG editor.
+	Build a JavaScript function to configure the WYSIWYG editors.
 
 - *liferay-sample-etc-cron*
 

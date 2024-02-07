@@ -168,104 +168,86 @@ public class APIPropertyRelevantObjectEntryModelListener
 				}
 			}
 
-			_validateRelatedAPIPropertiesUniqueName(
-				apiSchemaId, (String)values.get("name"), objectEntry,
-				(long)values.get(
-					"r_apiPropertyToAPIProperties_c_apiPropertyId"));
+			long parentAPIPropertyId = (long)values.get(
+				"r_apiPropertyToAPIProperties_c_apiPropertyId");
 
-			_validateRelatedAPIProperty(
-				(long)values.get(
-					"r_apiPropertyToAPIProperties_c_apiPropertyId"),
-				apiSchemaId, type);
+			if (parentAPIPropertyId != 0) {
+				if (!_validationHelper.isValidObjectEntry(
+						"L_API_PROPERTY", parentAPIPropertyId)) {
+
+					throw new ObjectEntryValuesException.InvalidObjectField(
+						null,
+						"An API property must be related to an API property",
+						"an-api-property-must-be-related-to-an-api-property");
+				}
+
+				ObjectEntry relatedAPIPropertyObjectEntry =
+					_objectEntryLocalService.getObjectEntry(
+						parentAPIPropertyId);
+
+				Map<String, Serializable> apiPropertyValues =
+					relatedAPIPropertyObjectEntry.getValues();
+
+				if (!Objects.equals(
+						apiPropertyValues.get(
+							"r_apiSchemaToAPIProperties_c_apiSchemaId"),
+						apiSchemaId)) {
+
+					throw new ObjectEntryValuesException.InvalidObjectField(
+						null,
+						"A related API property must belong to the same API " +
+							"schema",
+						"a-related-api-property-must-belong-to-the-same-api-" +
+							"schema");
+				}
+
+				if (Objects.equals(values.get("type"), "field") &&
+					Objects.equals(apiPropertyValues.get("type"), "field")) {
+
+					throw new ObjectEntryValuesException.InvalidObjectField(
+						null,
+						"A field API property must be related to an object " +
+							"API property",
+						"a-field-api-property-must-be-related-to-an-object-" +
+							"api-property");
+				}
+
+				if (Objects.equals(values.get("type"), "object") &&
+					Objects.equals(apiPropertyValues.get("type"), "field")) {
+
+					throw new ObjectEntryValuesException.InvalidObjectField(
+						null,
+						"An object API property must be related to another " +
+							"object API property",
+						"an-object-api-property-must-be-related-to-another-" +
+							"object-api-property");
+				}
+			}
+
+			if (ListUtil.isNotEmpty(
+					_objectEntryLocalService.getValuesList(
+						objectEntry.getGroupId(), objectEntry.getCompanyId(),
+						objectEntry.getUserId(),
+						objectEntry.getObjectDefinitionId(),
+						_filterFactory.create(
+							StringBundler.concat(
+								"id ne '", objectEntry.getObjectEntryId(),
+								"' and name eq '", values.get("name"), "' and ",
+								"r_apiPropertyToAPIProperties_c_apiPropertyId ",
+								"eq '", parentAPIPropertyId, "' and ",
+								"r_apiSchemaToAPIProperties_c_apiSchemaId eq '",
+								apiSchemaId, "'"),
+							_objectDefinitionLocalService.getObjectDefinition(
+								objectEntry.getObjectDefinitionId())),
+						null, -1, -1, null))) {
+
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					null, "API property name must be unique",
+					"api-property-name-must-be-unique");
+			}
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
-		}
-	}
-
-	private void _validateRelatedAPIPropertiesUniqueName(
-			long apiSchemaId, String name, ObjectEntry objectEntry,
-			long parentAPIProperty)
-		throws Exception {
-
-		String filterString = StringBundler.concat(
-			"id ne '", objectEntry.getObjectEntryId(), "' and name eq '", name,
-			"' and r_apiPropertyToAPIProperties_c_apiPropertyId eq '",
-			parentAPIProperty,
-			"' and r_apiSchemaToAPIProperties_c_apiSchemaId eq '", apiSchemaId,
-			"'");
-
-		ObjectDefinition apiPropertyObjectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		if (ListUtil.isNotEmpty(
-				_objectEntryLocalService.getValuesList(
-					objectEntry.getGroupId(), objectEntry.getCompanyId(),
-					objectEntry.getUserId(),
-					objectEntry.getObjectDefinitionId(),
-					_filterFactory.create(
-						filterString, apiPropertyObjectDefinition),
-					null, -1, -1, null))) {
-
-			throw new ObjectEntryValuesException.InvalidObjectField(
-				null, "API property name must be unique",
-				"api-property-name-must-be-unique");
-		}
-	}
-
-	private void _validateRelatedAPIProperty(
-			long apiPropertyId, long apiSchemaId, String type)
-		throws Exception {
-
-		if (apiPropertyId != 0) {
-			if (!_validationHelper.isValidObjectEntry(
-					"L_API_PROPERTY", apiPropertyId)) {
-
-				throw new ObjectEntryValuesException.InvalidObjectField(
-					null, "An API property must be related to an API property",
-					"an-api-property-must-be-related-to-an-api-property");
-			}
-
-			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-				apiPropertyId);
-
-			Map<String, Serializable> apiPropertyValues =
-				objectEntry.getValues();
-
-			if (!Objects.equals(
-					apiPropertyValues.get(
-						"r_apiSchemaToAPIProperties_c_apiSchemaId"),
-					apiSchemaId)) {
-
-				throw new ObjectEntryValuesException.InvalidObjectField(
-					null,
-					"A related API property must belong to the same API schema",
-					"a-related-api-property-must-belong-to-the-same-api-" +
-						"schema");
-			}
-
-			if (Objects.equals(type, "field") &&
-				Objects.equals(apiPropertyValues.get("type"), "field")) {
-
-				throw new ObjectEntryValuesException.InvalidObjectField(
-					null,
-					"A field API property must be related to an object API " +
-						"property",
-					"a-field-api-property-must-be-related-to-an-object-api-" +
-						"property");
-			}
-
-			if (Objects.equals(type, "object") &&
-				Objects.equals(apiPropertyValues.get("type"), "field")) {
-
-				throw new ObjectEntryValuesException.InvalidObjectField(
-					null,
-					"An object API property must be related to another " +
-						"object API property",
-					"an-object-api-property-must-be-related-to-another-" +
-						"object-api-property");
-			}
 		}
 	}
 

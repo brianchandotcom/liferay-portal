@@ -14,7 +14,7 @@ import ScheduleOptions from '../ScheduleOptions';
 export default function PublishModal({
 	actionButton,
 	articleId,
-	displayDate,
+	displayDate: defaultDisplayDate,
 	onCloseModal,
 	onPublishButtonClick,
 	permissionsURL,
@@ -36,6 +36,7 @@ export default function PublishModal({
 		workflowEnabled,
 	});
 
+	const [displayDate, setDisplayDate] = useState(defaultDisplayDate);
 	const [dateError, setDateError] = useState('');
 	const [showErrorAlert, setShowErrorAlert] = useState(false);
 
@@ -62,6 +63,7 @@ export default function PublishModal({
 						error={dateError}
 						formId={formId}
 						portletNamespace={portletNamespace}
+						setDisplayDate={setDisplayDate}
 						setError={setDateError}
 						timeZone={timeZone}
 					/>

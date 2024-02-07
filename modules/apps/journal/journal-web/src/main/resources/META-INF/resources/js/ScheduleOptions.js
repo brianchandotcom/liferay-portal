@@ -9,22 +9,22 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {sub} from 'frontend-js-web';
 import moment from 'moment/min/moment-with-locales';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
 export default function ScheduleOptions({
 	displayDate,
 	error,
 	formId,
 	portletNamespace,
+	setDisplayDate,
 	setError,
 	timeZone,
 }) {
-	const [value, setValue] = useState(displayDate);
-	const {day, hour, minutes, month, year} = getDate(value);
+	const {day, hour, minutes, month, year} = getDate(displayDate);
 
 	useEffect(() => {
-		if (value) {
-			const date = new Date(value);
+		if (displayDate) {
+			const date = new Date(displayDate);
 
 			if (date.valueOf() <= new Date().valueOf()) {
 				setError(
@@ -40,7 +40,7 @@ export default function ScheduleOptions({
 				setError(Liferay.Language.get(''));
 			}
 		}
-	}, [setError, value]);
+	}, [setError, displayDate]);
 
 	return (
 		<>
@@ -57,12 +57,12 @@ export default function ScheduleOptions({
 
 			<ClayDatePicker
 				id={`${portletNamespace}displayDatePicker`}
-				onChange={setValue}
+				onChange={setDisplayDate}
 				placeholder="YYYY-MM-DD HH:mm"
 				required
 				time
 				timezone={timeZone}
-				value={value}
+				value={displayDate}
 				years={{
 					end: 9999,
 					start: new Date().getFullYear(),

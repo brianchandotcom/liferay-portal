@@ -54,8 +54,6 @@ public class OAuth2ApplicationsDisplayContext {
 			OrderByComparatorFactoryUtil.create(
 				"OAuth2Application", _getOrderByCol(),
 				Objects.equals(_getOrderByType(), "asc")));
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_liferayPortletResponse));
 		searchContainer.setResultsAndTotal(
 			() -> OAuth2ApplicationServiceUtil.getOAuth2Applications(
 				_themeDisplay.getCompanyId(), searchContainer.getStart(),
@@ -63,6 +61,8 @@ public class OAuth2ApplicationsDisplayContext {
 				searchContainer.getOrderByComparator()),
 			OAuth2ApplicationServiceUtil.getOAuth2ApplicationsCount(
 				_themeDisplay.getCompanyId()));
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_liferayPortletResponse));
 
 		_searchContainer = searchContainer;
 

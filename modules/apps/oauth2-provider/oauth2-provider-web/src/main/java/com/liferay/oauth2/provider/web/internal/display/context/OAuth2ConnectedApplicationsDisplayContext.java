@@ -52,13 +52,13 @@ public class OAuth2ConnectedApplicationsDisplayContext {
 			OrderByComparatorFactoryUtil.create(
 				"OAuth2Authorization", _getOrderByCol(),
 				Objects.equals(_getOrderByType(), "asc")));
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_liferayPortletResponse));
 		searchContainer.setResultsAndTotal(
 			() -> OAuth2AuthorizationServiceUtil.getUserOAuth2Authorizations(
 				searchContainer.getStart(), searchContainer.getEnd(),
 				searchContainer.getOrderByComparator()),
 			OAuth2AuthorizationServiceUtil.getUserOAuth2AuthorizationsCount());
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_liferayPortletResponse));
 
 		_searchContainer = searchContainer;
 

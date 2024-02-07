@@ -34,10 +34,22 @@ public class BatchEngineTaskItemDelegateRegistryImpl
 
 	@Override
 	public BatchEngineTaskItemDelegate<?> getBatchEngineTaskItemDelegate(
-		String itemClassName, String taskItemDelegateName) {
+		long companyId, String itemClassName, String taskItemDelegateName) {
 
-		return _serviceTrackerMap.getService(
-			_encodeKey(itemClassName, taskItemDelegateName));
+		String companyIdKey = _encodeKey(
+			companyId, itemClassName, taskItemDelegateName);
+
+		if (_serviceTrackerMap.containsKey(companyIdKey)) {
+			return _serviceTrackerMap.getService(companyIdKey);
+		}
+
+		String key = _encodeKey(null, itemClassName, taskItemDelegateName);
+
+		if (_serviceTrackerMap.containsKey(key)) {
+			return _serviceTrackerMap.getService(key);
+		}
+
+		return null;
 	}
 
 	@Activate
@@ -53,6 +65,7 @@ public class BatchEngineTaskItemDelegateRegistryImpl
 
 					emitter.emit(
 						_encodeKey(
+							(Long)serviceReference.getProperty("companyId"),
 							itemClass.getName(),
 							(String)serviceReference.getProperty(
 								"batch.engine.task.item.delegate.name")));
@@ -98,14 +111,20 @@ public class BatchEngineTaskItemDelegateRegistryImpl
 	}
 
 	private String _encodeKey(
-		String itemClassName, String taskItemDelegateName) {
+		Long companyId, String itemClassName, String taskItemDelegateName) {
 
 		if (Validator.isNull(taskItemDelegateName)) {
 			taskItemDelegateName = "DEFAULT";
 		}
 
+		if (Validator.isNull(companyId)) {
+			return StringBundler.concat(
+				itemClassName, StringPool.POUND, taskItemDelegateName);
+		}
+
 		return StringBundler.concat(
-			itemClassName, StringPool.POUND, taskItemDelegateName);
+			itemClassName, StringPool.POUND, taskItemDelegateName,
+			StringPool.POUND, companyId);
 	}
 
 	private Class<?> _getItemClass(

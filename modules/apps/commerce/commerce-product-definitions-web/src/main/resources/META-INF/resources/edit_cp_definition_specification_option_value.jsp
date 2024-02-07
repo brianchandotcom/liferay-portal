@@ -31,6 +31,8 @@ long cpOptionCategoryId = BeanParamUtil.getLong(cpDefinitionSpecificationOptionV
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="cpDefinitionSpecificationOptionValueId" type="hidden" value="<%= String.valueOf(cpDefinitionSpecificationOptionValue.getCPDefinitionSpecificationOptionValueId()) %>" />
 
+			<liferay-ui:error exception="<%= CPDefinitionSpecificationOptionValueKeyException.class %>" message="please-enter-a-valid-key" />
+
 			<aui:field-wrapper label='<%= LanguageUtil.get(resourceBundle, "value") %>' name="valueFieldWrapper">
 				<liferay-ui:input-localized
 					name="value"
@@ -51,6 +53,8 @@ long cpOptionCategoryId = BeanParamUtil.getLong(cpDefinitionSpecificationOptionV
 				%>
 
 			</aui:select>
+
+			<aui:input label="key" name="key" required="<%= true %>" value="<%= cpDefinitionSpecificationOptionValue.getKey() %>" />
 
 			<%
 			NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);

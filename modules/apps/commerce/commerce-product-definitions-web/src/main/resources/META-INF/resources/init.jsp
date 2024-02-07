@@ -67,6 +67,7 @@ page import="com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKe
 page import="com.liferay.commerce.product.exception.CPDefinitionOptionValueRelPriceException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionOptionValueRelQuantityException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException" %><%@
+page import="com.liferay.commerce.product.exception.CPDefinitionSpecificationOptionValueKeyException" %><%@
 page import="com.liferay.commerce.product.exception.CPDisplayLayoutEntryException" %><%@
 page import="com.liferay.commerce.product.exception.CPDisplayLayoutEntryUuidException" %><%@
 page import="com.liferay.commerce.product.exception.CPInstanceJsonException" %><%@

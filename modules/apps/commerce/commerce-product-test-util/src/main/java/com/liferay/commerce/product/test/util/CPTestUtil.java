@@ -27,6 +27,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
+import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
@@ -35,6 +36,7 @@ import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionValueLocalServiceUtil;
+import com.liferay.commerce.product.service.CPSpecificationOptionLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalServiceUtil;
@@ -664,6 +666,19 @@ public class CPTestUtil {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
+	public static CPSpecificationOption addCPSpecificationOption(long groupId)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CPSpecificationOptionLocalServiceUtil.addCPSpecificationOption(
+			serviceContext.getUserId(), 0,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), false,
+			RandomTestUtil.randomString(), serviceContext);
+	}
+
 	public static void buildCPInstances(CPDefinition cpDefinition)
 		throws PortalException {
 
@@ -771,6 +786,14 @@ public class CPTestUtil {
 		}
 
 		return searchContext;
+	}
+
+	public static CommerceCatalog getSystemCommerceCatalog(long companyId) {
+		List<CommerceCatalog> commerceCatalogs =
+			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
+				companyId, true);
+
+		return commerceCatalogs.get(0);
 	}
 
 	public static BigDecimal stripTrailingZeros(BigDecimal bigDecimal) {

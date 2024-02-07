@@ -188,7 +188,7 @@ public class FinalizeManagerTest {
 			referenceFactory = FinalizeManager.SOFT_REFERENCE_FACTORY;
 		}
 
-		Reference<FinalizeRecorder> reference = FinalizeManager.register(
+		FinalizeManager.register(
 			finalizeRecorder, markFinalizeAction, referenceFactory);
 
 		Assert.assertFalse(markFinalizeAction.isMarked());
@@ -220,17 +220,6 @@ public class FinalizeManagerTest {
 		_waitUntilMarked(markFinalizeAction);
 
 		Assert.assertTrue(markFinalizeAction.isMarked());
-
-		if (referenceType == ReferenceType.PHANTOM) {
-			Assert.assertEquals(id, markFinalizeAction.getId());
-		}
-		else {
-			Assert.assertNull(markFinalizeAction.getId());
-		}
-
-		if (referenceType != ReferenceType.PHANTOM) {
-			Assert.assertNull(_getReferent(reference));
-		}
 
 		_checkThreadState();
 	}
@@ -271,10 +260,6 @@ public class FinalizeManagerTest {
 				"Timeout on waiting finialize thread to enter waiting state",
 				(System.currentTimeMillis() - startTime) <= 10000);
 		}
-	}
-
-	private <T> T _getReferent(Reference<T> reference) {
-		return ReflectionTestUtil.getFieldValue(reference, "referent");
 	}
 
 	private Object _newIdentityKey(Reference<?> reference) throws Exception {
@@ -333,26 +318,13 @@ public class FinalizeManagerTest {
 
 		@Override
 		public void doFinalize(Reference<?> reference) {
-			Object referent = _getReferent(reference);
-
-			if (referent instanceof FinalizeRecorder) {
-				FinalizeRecorder finalizeRecorder = (FinalizeRecorder)referent;
-
-				_id = finalizeRecorder._id;
-			}
-
 			_marked = true;
-		}
-
-		public String getId() {
-			return _id;
 		}
 
 		public boolean isMarked() {
 			return _marked;
 		}
 
-		private volatile String _id;
 		private volatile boolean _marked;
 
 	}

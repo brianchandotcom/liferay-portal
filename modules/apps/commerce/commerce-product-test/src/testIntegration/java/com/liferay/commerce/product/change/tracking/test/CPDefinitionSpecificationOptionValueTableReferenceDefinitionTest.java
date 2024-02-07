@@ -91,8 +91,8 @@ public class CPDefinitionSpecificationOptionValueTableReferenceDefinitionTest
 				_cpDefinition.getCPDefinitionId(),
 				_cpSpecificationOption.getCPSpecificationOptionId(),
 				_cpOptionCategory.getCPOptionCategoryId(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomDouble(), _serviceContext);
+				RandomTestUtil.randomDouble(),
+				RandomTestUtil.randomLocaleStringMap(), _serviceContext);
 	}
 
 	@Inject

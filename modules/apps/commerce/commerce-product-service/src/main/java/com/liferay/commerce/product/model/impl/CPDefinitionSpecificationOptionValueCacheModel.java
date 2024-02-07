@@ -75,7 +75,7 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -103,10 +103,12 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 		sb.append(CPSpecificationOptionId);
 		sb.append(", CPOptionCategoryId=");
 		sb.append(CPOptionCategoryId);
-		sb.append(", value=");
-		sb.append(value);
+		sb.append(", key=");
+		sb.append(key);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", value=");
+		sb.append(value);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -168,14 +170,21 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 		cpDefinitionSpecificationOptionValueImpl.setCPOptionCategoryId(
 			CPOptionCategoryId);
 
+		if (key == null) {
+			cpDefinitionSpecificationOptionValueImpl.setKey("");
+		}
+		else {
+			cpDefinitionSpecificationOptionValueImpl.setKey(key);
+		}
+
+		cpDefinitionSpecificationOptionValueImpl.setPriority(priority);
+
 		if (value == null) {
 			cpDefinitionSpecificationOptionValueImpl.setValue("");
 		}
 		else {
 			cpDefinitionSpecificationOptionValueImpl.setValue(value);
 		}
-
-		cpDefinitionSpecificationOptionValueImpl.setPriority(priority);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			cpDefinitionSpecificationOptionValueImpl.setLastPublishDate(null);
@@ -213,9 +222,10 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 		CPSpecificationOptionId = objectInput.readLong();
 
 		CPOptionCategoryId = objectInput.readLong();
-		value = objectInput.readUTF();
+		key = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
+		value = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -256,6 +266,15 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 
 		objectOutput.writeLong(CPOptionCategoryId);
 
+		if (key == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(key);
+		}
+
+		objectOutput.writeDouble(priority);
+
 		if (value == null) {
 			objectOutput.writeUTF("");
 		}
@@ -263,7 +282,6 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 			objectOutput.writeUTF(value);
 		}
 
-		objectOutput.writeDouble(priority);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -280,8 +298,9 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 	public long CPDefinitionId;
 	public long CPSpecificationOptionId;
 	public long CPOptionCategoryId;
-	public String value;
+	public String key;
 	public double priority;
+	public String value;
 	public long lastPublishDate;
 
 }

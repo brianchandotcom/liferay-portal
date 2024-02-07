@@ -63,8 +63,9 @@ create table CPDSpecificationOptionValue (
 	CPDefinitionId LONG,
 	CPSpecificationOptionId LONG,
 	CPOptionCategoryId LONG,
-	value STRING null,
+	key_ VARCHAR(75) null,
 	priority DOUBLE,
+	value STRING null,
 	lastPublishDate DATE null,
 	primary key (CPDSpecificationOptionValueId, ctCollectionId)
 );

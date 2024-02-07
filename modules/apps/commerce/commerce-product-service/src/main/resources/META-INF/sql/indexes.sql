@@ -14,6 +14,7 @@ create index IX_80E4E528 on CPAttachmentFileEntry (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_95975FB4 on CPDSpecificationOptionValue (CPDefinitionId, CPOptionCategoryId);
 create index IX_173E8E91 on CPDSpecificationOptionValue (CPDefinitionId, CPSpecificationOptionId);
+create unique index IX_F8AB4D57 on CPDSpecificationOptionValue (CPDefinitionId, key_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_4F4EDBA5 on CPDSpecificationOptionValue (CPOptionCategoryId);
 create index IX_573BE140 on CPDSpecificationOptionValue (CPSpecificationOptionId);
 create index IX_8DA57014 on CPDSpecificationOptionValue (groupId);

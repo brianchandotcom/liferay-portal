@@ -5272,6 +5272,283 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	private static final String _FINDER_COLUMN_C_COC_CPOPTIONCATEGORYID_2 =
 		"cpDefinitionSpecificationOptionValue.CPOptionCategoryId = ?";
 
+	private FinderPath _finderPathFetchByC_K;
+	private FinderPath _finderPathCountByC_K;
+
+	/**
+	 * Returns the cp definition specification option value where CPDefinitionId = &#63; and key = &#63; or throws a <code>NoSuchCPDefinitionSpecificationOptionValueException</code> if it could not be found.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param key the key
+	 * @return the matching cp definition specification option value
+	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
+	 */
+	@Override
+	public CPDefinitionSpecificationOptionValue findByC_K(
+			long CPDefinitionId, String key)
+		throws NoSuchCPDefinitionSpecificationOptionValueException {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue = fetchByC_K(
+				CPDefinitionId, key);
+
+		if (cpDefinitionSpecificationOptionValue == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("CPDefinitionId=");
+			sb.append(CPDefinitionId);
+
+			sb.append(", key=");
+			sb.append(key);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCPDefinitionSpecificationOptionValueException(
+				sb.toString());
+		}
+
+		return cpDefinitionSpecificationOptionValue;
+	}
+
+	/**
+	 * Returns the cp definition specification option value where CPDefinitionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param key the key
+	 * @return the matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
+	 */
+	@Override
+	public CPDefinitionSpecificationOptionValue fetchByC_K(
+		long CPDefinitionId, String key) {
+
+		return fetchByC_K(CPDefinitionId, key, true);
+	}
+
+	/**
+	 * Returns the cp definition specification option value where CPDefinitionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param key the key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
+	 */
+	@Override
+	public CPDefinitionSpecificationOptionValue fetchByC_K(
+		long CPDefinitionId, String key, boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CPDefinitionSpecificationOptionValue.class)) {
+
+			key = Objects.toString(key, "");
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {CPDefinitionId, key};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByC_K, finderArgs, this);
+			}
+
+			if (result instanceof CPDefinitionSpecificationOptionValue) {
+				CPDefinitionSpecificationOptionValue
+					cpDefinitionSpecificationOptionValue =
+						(CPDefinitionSpecificationOptionValue)result;
+
+				if ((CPDefinitionId !=
+						cpDefinitionSpecificationOptionValue.
+							getCPDefinitionId()) ||
+					!Objects.equals(
+						key, cpDefinitionSpecificationOptionValue.getKey())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(
+					_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE);
+
+				sb.append(_FINDER_COLUMN_C_K_CPDEFINITIONID_2);
+
+				boolean bindKey = false;
+
+				if (key.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_K_KEY_3);
+				}
+				else {
+					bindKey = true;
+
+					sb.append(_FINDER_COLUMN_C_K_KEY_2);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(CPDefinitionId);
+
+					if (bindKey) {
+						queryPos.add(key);
+					}
+
+					List<CPDefinitionSpecificationOptionValue> list =
+						query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByC_K, finderArgs, list);
+						}
+					}
+					else {
+						CPDefinitionSpecificationOptionValue
+							cpDefinitionSpecificationOptionValue = list.get(0);
+
+						result = cpDefinitionSpecificationOptionValue;
+
+						cacheResult(cpDefinitionSpecificationOptionValue);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (CPDefinitionSpecificationOptionValue)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the cp definition specification option value where CPDefinitionId = &#63; and key = &#63; from the database.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param key the key
+	 * @return the cp definition specification option value that was removed
+	 */
+	@Override
+	public CPDefinitionSpecificationOptionValue removeByC_K(
+			long CPDefinitionId, String key)
+		throws NoSuchCPDefinitionSpecificationOptionValueException {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue = findByC_K(
+				CPDefinitionId, key);
+
+		return remove(cpDefinitionSpecificationOptionValue);
+	}
+
+	/**
+	 * Returns the number of cp definition specification option values where CPDefinitionId = &#63; and key = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param key the key
+	 * @return the number of matching cp definition specification option values
+	 */
+	@Override
+	public int countByC_K(long CPDefinitionId, String key) {
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CPDefinitionSpecificationOptionValue.class)) {
+
+			key = Objects.toString(key, "");
+
+			FinderPath finderPath = _finderPathCountByC_K;
+
+			Object[] finderArgs = new Object[] {CPDefinitionId, key};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(
+					_SQL_COUNT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE);
+
+				sb.append(_FINDER_COLUMN_C_K_CPDEFINITIONID_2);
+
+				boolean bindKey = false;
+
+				if (key.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_K_KEY_3);
+				}
+				else {
+					bindKey = true;
+
+					sb.append(_FINDER_COLUMN_C_K_KEY_2);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(CPDefinitionId);
+
+					if (bindKey) {
+						queryPos.add(key);
+					}
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_C_K_CPDEFINITIONID_2 =
+		"cpDefinitionSpecificationOptionValue.CPDefinitionId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_K_KEY_2 =
+		"cpDefinitionSpecificationOptionValue.key = ?";
+
+	private static final String _FINDER_COLUMN_C_K_KEY_3 =
+		"(cpDefinitionSpecificationOptionValue.key IS NULL OR cpDefinitionSpecificationOptionValue.key = '')";
+
 	public CPDefinitionSpecificationOptionValuePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -5279,6 +5556,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		dbColumnNames.put(
 			"CPDefinitionSpecificationOptionValueId",
 			"CPDSpecificationOptionValueId");
+		dbColumnNames.put("key", "key_");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -5323,6 +5601,14 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 					cpDefinitionSpecificationOptionValue.
 						getCPDefinitionSpecificationOptionValueId(),
 					cpDefinitionSpecificationOptionValue.getCPDefinitionId()
+				},
+				cpDefinitionSpecificationOptionValue);
+
+			finderCache.putResult(
+				_finderPathFetchByC_K,
+				new Object[] {
+					cpDefinitionSpecificationOptionValue.getCPDefinitionId(),
+					cpDefinitionSpecificationOptionValue.getKey()
 				},
 				cpDefinitionSpecificationOptionValue);
 		}
@@ -5455,6 +5741,17 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				_finderPathCountByC_CSOVI, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByC_CSOVI, args,
+				cpDefinitionSpecificationOptionValueModelImpl);
+
+			args = new Object[] {
+				cpDefinitionSpecificationOptionValueModelImpl.
+					getCPDefinitionId(),
+				cpDefinitionSpecificationOptionValueModelImpl.getKey()
+			};
+
+			finderCache.putResult(_finderPathCountByC_K, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByC_K, args,
 				cpDefinitionSpecificationOptionValueModelImpl);
 		}
 	}
@@ -6224,8 +6521,9 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		ctStrictColumnNames.add("CPDefinitionId");
 		ctStrictColumnNames.add("CPSpecificationOptionId");
 		ctStrictColumnNames.add("CPOptionCategoryId");
-		ctStrictColumnNames.add("value");
+		ctStrictColumnNames.add("key_");
 		ctStrictColumnNames.add("priority");
+		ctStrictColumnNames.add("value");
 		ctStrictColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
@@ -6242,6 +6540,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		_uniqueIndexColumnNames.add(
 			new String[] {"CPDSpecificationOptionValueId", "CPDefinitionId"});
+
+		_uniqueIndexColumnNames.add(new String[] {"CPDefinitionId", "key_"});
 	}
 
 	/**
@@ -6437,6 +6737,16 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"CPDefinitionId", "CPOptionCategoryId"}, false);
 
+		_finderPathFetchByC_K = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"CPDefinitionId", "key_"}, true);
+
+		_finderPathCountByC_K = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"CPDefinitionId", "key_"}, false);
+
 		CPDefinitionSpecificationOptionValueUtil.setPersistence(this);
 	}
 
@@ -6512,7 +6822,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		CPDefinitionSpecificationOptionValuePersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid", "CPDefinitionSpecificationOptionValueId"});
+		new String[] {"uuid", "CPDefinitionSpecificationOptionValueId", "key"});
 
 	@Override
 	protected FinderCache getFinderCache() {

@@ -161,11 +161,14 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 		newCPDefinitionSpecificationOptionValue.setCPOptionCategoryId(
 			RandomTestUtil.nextLong());
 
-		newCPDefinitionSpecificationOptionValue.setValue(
+		newCPDefinitionSpecificationOptionValue.setKey(
 			RandomTestUtil.randomString());
 
 		newCPDefinitionSpecificationOptionValue.setPriority(
 			RandomTestUtil.nextDouble());
+
+		newCPDefinitionSpecificationOptionValue.setValue(
+			RandomTestUtil.randomString());
 
 		newCPDefinitionSpecificationOptionValue.setLastPublishDate(
 			RandomTestUtil.nextDate());
@@ -227,11 +230,14 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 				getCPOptionCategoryId(),
 			newCPDefinitionSpecificationOptionValue.getCPOptionCategoryId());
 		Assert.assertEquals(
-			existingCPDefinitionSpecificationOptionValue.getValue(),
-			newCPDefinitionSpecificationOptionValue.getValue());
+			existingCPDefinitionSpecificationOptionValue.getKey(),
+			newCPDefinitionSpecificationOptionValue.getKey());
 		AssertUtils.assertEquals(
 			existingCPDefinitionSpecificationOptionValue.getPriority(),
 			newCPDefinitionSpecificationOptionValue.getPriority());
+		Assert.assertEquals(
+			existingCPDefinitionSpecificationOptionValue.getValue(),
+			newCPDefinitionSpecificationOptionValue.getValue());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingCPDefinitionSpecificationOptionValue.
@@ -320,6 +326,15 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_K() throws Exception {
+		_persistence.countByC_K(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_K(0L, "null");
+
+		_persistence.countByC_K(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPDefinitionSpecificationOptionValue
 			newCPDefinitionSpecificationOptionValue =
@@ -357,8 +372,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 			"CPDefinitionSpecificationOptionValueId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "CPDefinitionId", true,
-			"CPSpecificationOptionId", true, "CPOptionCategoryId", true,
-			"value", true, "priority", true, "lastPublishDate", true);
+			"CPSpecificationOptionId", true, "CPOptionCategoryId", true, "key",
+			true, "priority", true, "value", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -717,6 +732,18 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				cpDefinitionSpecificationOptionValue, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "CPDefinitionId"));
+
+		Assert.assertEquals(
+			Long.valueOf(
+				cpDefinitionSpecificationOptionValue.getCPDefinitionId()),
+			ReflectionTestUtil.<Long>invoke(
+				cpDefinitionSpecificationOptionValue, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "CPDefinitionId"));
+		Assert.assertEquals(
+			cpDefinitionSpecificationOptionValue.getKey(),
+			ReflectionTestUtil.invoke(
+				cpDefinitionSpecificationOptionValue, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "key_"));
 	}
 
 	protected CPDefinitionSpecificationOptionValue
@@ -764,11 +791,14 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 		cpDefinitionSpecificationOptionValue.setCPOptionCategoryId(
 			RandomTestUtil.nextLong());
 
-		cpDefinitionSpecificationOptionValue.setValue(
+		cpDefinitionSpecificationOptionValue.setKey(
 			RandomTestUtil.randomString());
 
 		cpDefinitionSpecificationOptionValue.setPriority(
 			RandomTestUtil.nextDouble());
+
+		cpDefinitionSpecificationOptionValue.setValue(
+			RandomTestUtil.randomString());
 
 		cpDefinitionSpecificationOptionValue.setLastPublishDate(
 			RandomTestUtil.nextDate());

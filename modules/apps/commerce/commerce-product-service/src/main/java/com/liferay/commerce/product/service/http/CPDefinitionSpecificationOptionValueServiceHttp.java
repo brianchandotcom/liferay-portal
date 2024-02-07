@@ -46,8 +46,8 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 				addCPDefinitionSpecificationOptionValue(
 					HttpPrincipal httpPrincipal, long cpDefinitionId,
 					long cpSpecificationOptionId, long cpOptionCategoryId,
-					java.util.Map<java.util.Locale, String> valueMap,
 					double priority,
+					java.util.Map<java.util.Locale, String> valueMap,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -60,7 +60,7 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, cpSpecificationOptionId,
-				cpOptionCategoryId, valueMap, priority, serviceContext);
+				cpOptionCategoryId, priority, valueMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -400,9 +400,8 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 				updateCPDefinitionSpecificationOptionValue(
 					HttpPrincipal httpPrincipal,
 					long cpDefinitionSpecificationOptionValueId,
-					long cpOptionCategoryId,
+					long cpOptionCategoryId, String key, double priority,
 					java.util.Map<java.util.Locale, String> valueMap,
-					double priority,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -415,7 +414,7 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionSpecificationOptionValueId,
-				cpOptionCategoryId, valueMap, priority, serviceContext);
+				cpOptionCategoryId, key, priority, valueMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -451,8 +450,9 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 
 	private static final Class<?>[]
 		_addCPDefinitionSpecificationOptionValueParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, java.util.Map.class,
-			double.class, com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, long.class, long.class, double.class,
+			java.util.Map.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_deleteCPDefinitionSpecificationOptionValueParameterTypes1 =
@@ -482,7 +482,8 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 	private static final Class<?>[]
 		_updateCPDefinitionSpecificationOptionValueParameterTypes8 =
 			new Class[] {
-				long.class, long.class, java.util.Map.class, double.class,
+				long.class, long.class, String.class, double.class,
+				java.util.Map.class,
 				com.liferay.portal.kernel.service.ServiceContext.class
 			};
 

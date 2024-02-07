@@ -80,8 +80,9 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"CPDefinitionId", Types.BIGINT},
 		{"CPSpecificationOptionId", Types.BIGINT},
-		{"CPOptionCategoryId", Types.BIGINT}, {"value", Types.VARCHAR},
-		{"priority", Types.DOUBLE}, {"lastPublishDate", Types.TIMESTAMP}
+		{"CPOptionCategoryId", Types.BIGINT}, {"key_", Types.VARCHAR},
+		{"priority", Types.DOUBLE}, {"value", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -101,13 +102,14 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPSpecificationOptionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPOptionCategoryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDSpecificationOptionValue (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPDSpecificationOptionValueId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPSpecificationOptionId LONG,CPOptionCategoryId LONG,value STRING null,priority DOUBLE,lastPublishDate DATE null,primary key (CPDSpecificationOptionValueId, ctCollectionId))";
+		"create table CPDSpecificationOptionValue (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPDSpecificationOptionValueId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPSpecificationOptionId LONG,CPOptionCategoryId LONG,key_ VARCHAR(75) null,priority DOUBLE,value STRING null,lastPublishDate DATE null,primary key (CPDSpecificationOptionValueId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDSpecificationOptionValue";
@@ -165,14 +167,20 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long KEY_COLUMN_BITMASK = 64L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIORITY_COLUMN_BITMASK = 128L;
+	public static final long PRIORITY_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -329,9 +337,11 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 				"CPOptionCategoryId",
 				CPDefinitionSpecificationOptionValue::getCPOptionCategoryId);
 			attributeGetterFunctions.put(
-				"value", CPDefinitionSpecificationOptionValue::getValue);
+				"key", CPDefinitionSpecificationOptionValue::getKey);
 			attributeGetterFunctions.put(
 				"priority", CPDefinitionSpecificationOptionValue::getPriority);
+			attributeGetterFunctions.put(
+				"value", CPDefinitionSpecificationOptionValue::getValue);
 			attributeGetterFunctions.put(
 				"lastPublishDate",
 				CPDefinitionSpecificationOptionValue::getLastPublishDate);
@@ -411,13 +421,17 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 					CPDefinitionSpecificationOptionValue::
 						setCPOptionCategoryId);
 			attributeSetterBiConsumers.put(
-				"value",
+				"key",
 				(BiConsumer<CPDefinitionSpecificationOptionValue, String>)
-					CPDefinitionSpecificationOptionValue::setValue);
+					CPDefinitionSpecificationOptionValue::setKey);
 			attributeSetterBiConsumers.put(
 				"priority",
 				(BiConsumer<CPDefinitionSpecificationOptionValue, Double>)
 					CPDefinitionSpecificationOptionValue::setPriority);
+			attributeSetterBiConsumers.put(
+				"value",
+				(BiConsumer<CPDefinitionSpecificationOptionValue, String>)
+					CPDefinitionSpecificationOptionValue::setValue);
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<CPDefinitionSpecificationOptionValue, Date>)
@@ -729,6 +743,50 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 
 	@JSON
 	@Override
+	public String getKey() {
+		if (_key == null) {
+			return "";
+		}
+		else {
+			return _key;
+		}
+	}
+
+	@Override
+	public void setKey(String key) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_key = key;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalKey() {
+		return getColumnOriginalValue("key_");
+	}
+
+	@JSON
+	@Override
+	public double getPriority() {
+		return _priority;
+	}
+
+	@Override
+	public void setPriority(double priority) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_priority = priority;
+	}
+
+	@JSON
+	@Override
 	public String getValue() {
 		if (_value == null) {
 			return "";
@@ -834,21 +892,6 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 			LocalizationUtil.updateLocalization(
 				valueMap, getValue(), "Value",
 				LocaleUtil.toLanguageId(defaultLocale)));
-	}
-
-	@JSON
-	@Override
-	public double getPriority() {
-		return _priority;
-	}
-
-	@Override
-	public void setPriority(double priority) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_priority = priority;
 	}
 
 	@JSON
@@ -1020,8 +1063,9 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 			getCPSpecificationOptionId());
 		cpDefinitionSpecificationOptionValueImpl.setCPOptionCategoryId(
 			getCPOptionCategoryId());
-		cpDefinitionSpecificationOptionValueImpl.setValue(getValue());
+		cpDefinitionSpecificationOptionValueImpl.setKey(getKey());
 		cpDefinitionSpecificationOptionValueImpl.setPriority(getPriority());
+		cpDefinitionSpecificationOptionValueImpl.setValue(getValue());
 		cpDefinitionSpecificationOptionValueImpl.setLastPublishDate(
 			getLastPublishDate());
 
@@ -1064,10 +1108,12 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 			this.<Long>getColumnOriginalValue("CPSpecificationOptionId"));
 		cpDefinitionSpecificationOptionValueImpl.setCPOptionCategoryId(
 			this.<Long>getColumnOriginalValue("CPOptionCategoryId"));
-		cpDefinitionSpecificationOptionValueImpl.setValue(
-			this.<String>getColumnOriginalValue("value"));
+		cpDefinitionSpecificationOptionValueImpl.setKey(
+			this.<String>getColumnOriginalValue("key_"));
 		cpDefinitionSpecificationOptionValueImpl.setPriority(
 			this.<Double>getColumnOriginalValue("priority"));
+		cpDefinitionSpecificationOptionValueImpl.setValue(
+			this.<String>getColumnOriginalValue("value"));
 		cpDefinitionSpecificationOptionValueImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 
@@ -1229,6 +1275,16 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 		cpDefinitionSpecificationOptionValueCacheModel.CPOptionCategoryId =
 			getCPOptionCategoryId();
 
+		cpDefinitionSpecificationOptionValueCacheModel.key = getKey();
+
+		String key = cpDefinitionSpecificationOptionValueCacheModel.key;
+
+		if ((key != null) && (key.length() == 0)) {
+			cpDefinitionSpecificationOptionValueCacheModel.key = null;
+		}
+
+		cpDefinitionSpecificationOptionValueCacheModel.priority = getPriority();
+
 		cpDefinitionSpecificationOptionValueCacheModel.value = getValue();
 
 		String value = cpDefinitionSpecificationOptionValueCacheModel.value;
@@ -1236,8 +1292,6 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 		if ((value != null) && (value.length() == 0)) {
 			cpDefinitionSpecificationOptionValueCacheModel.value = null;
 		}
-
-		cpDefinitionSpecificationOptionValueCacheModel.priority = getPriority();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1329,9 +1383,10 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	private long _CPDefinitionId;
 	private long _CPSpecificationOptionId;
 	private long _CPOptionCategoryId;
+	private String _key;
+	private double _priority;
 	private String _value;
 	private String _valueCurrentLanguageId;
-	private double _priority;
 	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1380,8 +1435,9 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 		_columnOriginalValues.put(
 			"CPSpecificationOptionId", _CPSpecificationOptionId);
 		_columnOriginalValues.put("CPOptionCategoryId", _CPOptionCategoryId);
-		_columnOriginalValues.put("value", _value);
+		_columnOriginalValues.put("key_", _key);
 		_columnOriginalValues.put("priority", _priority);
+		_columnOriginalValues.put("value", _value);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
 
@@ -1394,6 +1450,7 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 		attributeNames.put(
 			"CPDSpecificationOptionValueId",
 			"CPDefinitionSpecificationOptionValueId");
+		attributeNames.put("key_", "key");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1435,11 +1492,13 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 
 		columnBitmasks.put("CPOptionCategoryId", 4096L);
 
-		columnBitmasks.put("value", 8192L);
+		columnBitmasks.put("key_", 8192L);
 
 		columnBitmasks.put("priority", 16384L);
 
-		columnBitmasks.put("lastPublishDate", 32768L);
+		columnBitmasks.put("value", 32768L);
+
+		columnBitmasks.put("lastPublishDate", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

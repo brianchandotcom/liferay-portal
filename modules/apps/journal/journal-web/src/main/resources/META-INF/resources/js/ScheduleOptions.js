@@ -125,7 +125,9 @@ export default function ScheduleOptions({
 }
 
 function getDate(value) {
-	if (value) {
+	const date = new Date(value);
+
+	if (moment(date).isValid()) {
 		const date = new Date(value);
 
 		return {

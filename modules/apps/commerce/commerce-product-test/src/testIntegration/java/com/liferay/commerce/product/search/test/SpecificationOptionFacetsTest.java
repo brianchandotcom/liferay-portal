@@ -117,8 +117,8 @@ public class SpecificationOptionFacetsTest {
 				cpDefinition.getCPDefinitionId(),
 				cpSpecificationOption.getCPSpecificationOptionId(),
 				cpOptionCategory.getCPOptionCategoryId(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomDouble(), serviceContext);
+				RandomTestUtil.randomDouble(),
+				RandomTestUtil.randomLocaleStringMap(), serviceContext);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_commerceCatalog.getGroupId());
@@ -194,8 +194,8 @@ public class SpecificationOptionFacetsTest {
 				cpDefinition.getCPDefinitionId(),
 				cpSpecificationOption.getCPSpecificationOptionId(),
 				cpOptionCategory.getCPOptionCategoryId(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomDouble(), serviceContext);
+				RandomTestUtil.randomDouble(),
+				RandomTestUtil.randomLocaleStringMap(), serviceContext);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_commerceCatalog.getGroupId());

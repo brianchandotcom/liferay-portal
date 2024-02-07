@@ -132,8 +132,9 @@ public class ProductSpecificationResourceTest
 						_cpDefinition.getCPDefinitionId(),
 						productSpecification.getSpecificationId(),
 						productSpecification.getOptionCategoryId(),
+						productSpecification.getPriority(),
 						RandomTestUtil.randomLocaleStringMap(),
-						productSpecification.getPriority(), _serviceContext);
+						_serviceContext);
 
 		_cpDefinitionSpecificationOptionValues.add(
 			cpDefinitionSpecificationOptionValue);

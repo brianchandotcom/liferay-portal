@@ -65,7 +65,9 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 		_journalArticleLocalService.checkArticles(group.getCompanyId());
 
-		_assertExpiredJournalArticleNotifications(expiredArticle);
+		_assertJournalArticleNotifications(
+			expiredArticle,
+			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY);
 	}
 
 	@Test
@@ -82,7 +84,29 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			expiredArticle.getUrlTitle(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_assertExpiredJournalArticleNotifications(expiredArticle);
+		_assertJournalArticleNotifications(
+			expiredArticle,
+			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY);
+	}
+
+	@Test
+	public void testUserNotificationWhenJournalArticleReviewNotificationIsSent()
+		throws Exception {
+
+		JournalArticle journalArticle = (JournalArticle)addBaseModel();
+
+		journalArticle.setUserId(user.getUserId());
+		journalArticle.setReviewDate(
+			new Date(System.currentTimeMillis() - (Time.SECOND * 1)));
+
+		journalArticle = _journalArticleLocalService.updateJournalArticle(
+			journalArticle);
+
+		_journalArticleLocalService.checkArticles(group.getCompanyId());
+
+		_assertJournalArticleNotifications(
+			journalArticle,
+			UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY);
 	}
 
 	@Override
@@ -116,8 +140,8 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			(JournalArticle)baseModel, true);
 	}
 
-	private void _assertExpiredJournalArticleNotifications(
-			JournalArticle expiredArticle)
+	private void _assertJournalArticleNotifications(
+			JournalArticle expiredArticle, int notificationType)
 		throws Exception {
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
@@ -134,8 +158,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		Assert.assertEquals(
 			expiredArticle.getId(), jsonObject.getLong("classPK"));
 		Assert.assertEquals(
-			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY,
-			jsonObject.getInt("notificationType"));
+			notificationType, jsonObject.getInt("notificationType"));
 	}
 
 	private JournalFolder _folder;

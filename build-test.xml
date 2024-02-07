@@ -5607,6 +5607,44 @@ ${custom.upgrade.properties}</echo>
 		</sequential>
 	</macrodef>
 
+	<target name="print-tomcat-logs">
+		<parallel>
+			<daemons>
+				<beanshell>
+					<![CDATA[
+						import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+						String catalinaOutFilePath = project.getProperty("app.server.tomcat.dir") + "/logs/catalina.out";
+
+						File catalinaOutFile = new File(catalinaOutFilePath);
+
+						JenkinsResultsParserUtil.delete(catalinaOutFile);
+
+						while (!catalinaOutFile.exists()) {
+							System.out.println("Waiting for " + catalinaOutFile);
+
+							JenkinsResultsParserUtil.sleep(10000);
+						}
+
+						BufferedReader bufferedReader = new BufferedReader(new FileReader(catalinaOutFile));
+
+						while (true) {
+							String line = bufferedReader.readLine();
+
+							if (line == null) {
+								JenkinsResultsParserUtil.sleep(5000);
+
+								continue;
+							}
+
+							System.out.println(line);
+						}
+					]]>
+				</beanshell>
+			</daemons>
+		</parallel>
+	</target>
+
 	<macrodef name="rebuild-database">
 		<sequential>
 			<if>

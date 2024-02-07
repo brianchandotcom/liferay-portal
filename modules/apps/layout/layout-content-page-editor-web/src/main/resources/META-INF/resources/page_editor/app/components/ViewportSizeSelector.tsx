@@ -4,9 +4,11 @@
  */
 
 import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
+import {Option, Picker} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Key} from 'react';
 
 import {VIEWPORT_SIZES, ViewportSize} from '../config/constants/viewportSizes';
 import {config} from '../config/index';
@@ -23,7 +25,11 @@ export default function ViewportSizeSelector({
 	const {availableViewportSizes} = config;
 
 	return (
-		<ClayButton.Group className="flex-nowrap flex-shrink-0">
+		<ClayButton.Group
+			className={classNames('flex-nowrap flex-shrink-0', {
+				'd-lg-block d-none': Liferay.FeatureFlags['LPD-10988'],
+			})}
+		>
 			{Object.values(availableViewportSizes).map(
 				({icon, label, sizeId}) => (
 					<ClayButtonWithIcon

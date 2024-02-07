@@ -26,7 +26,6 @@ const options = [
 	},
 	{
 		assignmentType: 'roleType',
-		disabled: true,
 		label: Liferay.Language.get('role-type'),
 	},
 	{

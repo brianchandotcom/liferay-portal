@@ -7,6 +7,7 @@ package com.liferay.headless.builder.model.listener.test;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.test.BaseTestCase;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -417,8 +418,8 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 	private static final String _OBJECT_FIELD_NAME =
 		"x" + RandomTestUtil.randomString();
 
-	private static final String _OBJECT_NAME = StringUtil.upperCaseFirstLetter(
-		RandomTestUtil.randomString());
+	private static final String _OBJECT_NAME =
+		ObjectDefinitionTestUtil.getRandomName();
 
 	private static JSONObject _objectDefinitionJSONObject;
 	private static JSONObject _objectEntryJSONObject;

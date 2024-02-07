@@ -92,17 +92,11 @@ import java.sql.Timestamp;
 
 import java.text.SimpleDateFormat;
 
-import java.util.AbstractSet;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -217,8 +211,8 @@ public class ObjectEntryDTOConverter
 								objectEntry.getObjectEntryId()),
 							AssetTag.NAME_ACCESSOR);
 					});
-				setProperties(
-					() -> _toProperties(
+				setLazyProperties(
+					_toProperties(
 						dtoConverterContext, objectDefinition, objectEntry));
 				setScopeKey(() -> _getScopeKey(objectDefinition, objectEntry));
 				setStatus(
@@ -254,125 +248,6 @@ public class ObjectEntryDTOConverter
 					});
 			}
 		};
-	}
-
-	/**
-	 * @author Alejandro Tardín
-	 */
-	public class LazyMap<K, V> implements Map<K, V> {
-
-		public LazyMap(Map<K, Supplier<V>> supplierMap) {
-			_supplierMap = supplierMap;
-		}
-
-		@Override
-		public void clear() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public boolean containsKey(Object key) {
-			return _supplierMap.containsKey(key);
-		}
-
-		@Override
-		public boolean containsValue(Object value) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public Set<Map.Entry<K, V>> entrySet() {
-			return new AbstractSet<Map.Entry<K, V>>() {
-
-				@Override
-				public Iterator<Map.Entry<K, V>> iterator() {
-					return (Iterator<Map.Entry<K, V>>)new HashSet<>(
-						TransformUtil.transform(
-							_supplierMap.entrySet(),
-							entry -> new Map.Entry<K, V>() {
-
-								@Override
-								public K getKey() {
-									return entry.getKey();
-								}
-
-								@Override
-								public V getValue() {
-									Supplier<V> supplier = _supplierMap.get(
-										entry.getKey());
-
-									return supplier.get();
-								}
-
-								@Override
-								public Object setValue(Object value) {
-									return null;
-								}
-
-							}));
-				}
-
-				@Override
-				public int size() {
-					return _supplierMap.size();
-				}
-
-			};
-		}
-
-		@Override
-		public V get(Object key) {
-			return _valueMap.computeIfAbsent(
-				(K)key,
-				k -> {
-					Supplier<V> supplier = _supplierMap.get(k);
-
-					if (supplier != null) {
-						return supplier.get();
-					}
-
-					return null;
-				});
-		}
-
-		@Override
-		public boolean isEmpty() {
-			return _supplierMap.isEmpty();
-		}
-
-		@Override
-		public Set<K> keySet() {
-			return _supplierMap.keySet();
-		}
-
-		@Override
-		public V put(K key, V value) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void putAll(Map<? extends K, ? extends V> m) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public V remove(Object key) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public int size() {
-			return _supplierMap.size();
-		}
-
-		@Override
-		public Collection<V> values() {
-			throw new UnsupportedOperationException();
-		}
-
-		private final Map<K, Supplier<V>> _supplierMap;
-		private final Map<K, V> _valueMap = new HashMap<>();
-
 	}
 
 	private void _addManyToOneObjectRelationshipNames(
@@ -810,7 +685,7 @@ public class ObjectEntryDTOConverter
 		return ExtendedEntity.extend(dto, nestedFieldsRelatedProperties, null);
 	}
 
-	private Map<String, Object> _toProperties(
+	private Map<String, UnsafeSupplier<Object, Exception>> _toProperties(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry objectEntry)
@@ -1032,18 +907,18 @@ public class ObjectEntryDTOConverter
 
 		values.remove(objectDefinition.getPKObjectFieldName());
 
-		LazyMap lazyMap = new LazyMap(map);
+		/* TODO deal with this later
+			Map<String, Serializable> nestedFieldsRelatedProperties =
+				_getNestedFieldsRelatedProperties(
+					dtoConverterContext, objectEntry.getGroupId(), objectDefinition,
+					objectEntry.getObjectEntryId());
 
-		Map<String, Serializable> nestedFieldsRelatedProperties =
-			_getNestedFieldsRelatedProperties(
-				dtoConverterContext, objectEntry.getGroupId(), objectDefinition,
-				objectEntry.getObjectEntryId());
+			if (nestedFieldsRelatedProperties != null) {
+				map.putAll(nestedFieldsRelatedProperties);
+			}
+		*/
 
-		if (nestedFieldsRelatedProperties != null) {
-			lazyMap.putAll(nestedFieldsRelatedProperties);
-		}
-
-		return lazyMap;
+		return map;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -2125,6 +2125,46 @@ war.path=${app.server.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="node-execute">
+		<attribute name="dir" />
+
+		<text name="script" />
+
+		<sequential>
+			<if>
+				<or>
+					<not>
+						<available file="${node.home}" />
+					</not>
+					<not>
+						<available file="${npm.home}" />
+					</not>
+				</or>
+				<then>
+					<setup-yarn />
+				</then>
+			</if>
+
+			<property location="@{dir}/script.sh" name="script.sh.file" />
+
+			<echo file="${script.sh.file}"><![CDATA[@{script}]]></echo>
+
+			<echo file="${script.sh.file}">
+				set -e -x
+
+				export PATH=${node.home}/bin:${npm.home}:${env.PATH}
+
+				@{script}
+			</echo>
+
+			<exec dir="@{dir}" executable="/bin/bash">
+				<arg value="${script.sh.file}" />
+			</exec>
+
+			<delete file="${script.sh.file}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="poshi-execute">
 		<attribute default="portal-web/build-test.gradle" name="build.gradle.file" />
 		<attribute default="${basedir}" name="build.gradle.dir" />

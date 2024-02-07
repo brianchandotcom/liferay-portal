@@ -8,10 +8,18 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
+import {VIEWPORT_SIZES, ViewportSize} from '../config/constants/viewportSizes';
 import {config} from '../config/index';
 
-export default function ViewportSizeSelector({onSizeSelected, selectedSize}) {
+interface Props {
+	onSizeSelected: (sizeId: ViewportSize) => void;
+	selectedSize: ViewportSize;
+}
+
+export default function ViewportSizeSelector({
+	onSizeSelected,
+	selectedSize,
+}: Props) {
 	const {availableViewportSizes} = config;
 
 	return (
@@ -27,7 +35,7 @@ export default function ViewportSizeSelector({onSizeSelected, selectedSize}) {
 						})}
 						displayType="secondary"
 						key={sizeId}
-						onClick={() => onSizeSelected(sizeId)}
+						onClick={() => onSizeSelected(sizeId as ViewportSize)}
 						size="sm"
 						symbol={icon}
 					/>

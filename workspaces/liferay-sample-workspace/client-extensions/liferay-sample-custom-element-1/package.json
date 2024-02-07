@@ -1,0 +1,13 @@
+{
+	"devDependencies": {
+		"css-loader": "6.10.0",
+		"style-loader": "3.3.4",
+		"webpack": "5.90.1"
+	},
+	"name": "@liferay/liferay-sample-custom-element-1",
+	"private": true,
+	"scripts": {
+		"build": "webpack"
+	},
+	"version": "0.1.0"
+}

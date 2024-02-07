@@ -36,20 +36,20 @@ public class BatchEngineImportTaskServiceTest
 
 	@Test
 	public void testAddBatchEngineImportTask() throws Exception {
-		UserTestUtil.setUser(normalUser);
+		UserTestUtil.setUser(user);
 
 		_batchEngineImportTask1 = _createBatchEngineImportTask(
-			company.getCompanyId(), normalUser);
+			company.getCompanyId(), user);
 	}
 
 	@Test(expected = PrincipalException.class)
 	public void testAddBatchEngineImportTaskOtherCompanyNotAllowed()
 		throws Exception {
 
-		UserTestUtil.setUser(normalUser);
+		UserTestUtil.setUser(user);
 
 		_batchEngineImportTask1 = _createBatchEngineImportTask(
-			otherCompany.getCompanyId(), normalUser);
+			otherCompany.getCompanyId(), user);
 	}
 
 	@Test
@@ -66,9 +66,9 @@ public class BatchEngineImportTaskServiceTest
 		throws Exception {
 
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
-			company.getCompanyId(), normalUser);
+			company.getCompanyId(), user);
 
-		UserTestUtil.setUser(normalUser);
+		UserTestUtil.setUser(user);
 
 		_batchEngineImportTaskService.
 			getBatchEngineImportTaskByExternalReferenceCode(
@@ -81,7 +81,7 @@ public class BatchEngineImportTaskServiceTest
 		throws Exception {
 
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
-			company.getCompanyId(), normalUser);
+			company.getCompanyId(), user);
 
 		UserTestUtil.setUser(companyAdminUser);
 
@@ -98,7 +98,7 @@ public class BatchEngineImportTaskServiceTest
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
 			company.getCompanyId(), companyAdminUser);
 
-		UserTestUtil.setUser(normalUser);
+		UserTestUtil.setUser(user);
 
 		_batchEngineImportTaskService.
 			getBatchEngineImportTaskByExternalReferenceCode(
@@ -111,7 +111,7 @@ public class BatchEngineImportTaskServiceTest
 		throws Exception {
 
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
-			company.getCompanyId(), normalUser);
+			company.getCompanyId(), user);
 
 		UserTestUtil.setUser(companyAdminUser);
 
@@ -126,7 +126,7 @@ public class BatchEngineImportTaskServiceTest
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
 			company.getCompanyId(), companyAdminUser);
 
-		UserTestUtil.setUser(normalUser);
+		UserTestUtil.setUser(user);
 
 		_batchEngineImportTaskService.getBatchEngineImportTask(
 			_batchEngineImportTask1.getBatchEngineImportTaskId());
@@ -137,9 +137,9 @@ public class BatchEngineImportTaskServiceTest
 		throws Exception {
 
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
-			company.getCompanyId(), normalUser);
+			company.getCompanyId(), user);
 
-		UserTestUtil.setUser(normalUser);
+		UserTestUtil.setUser(user);
 
 		_batchEngineImportTaskService.getBatchEngineImportTask(
 			_batchEngineImportTask1.getBatchEngineImportTaskId());
@@ -152,7 +152,7 @@ public class BatchEngineImportTaskServiceTest
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
 			otherCompany.getCompanyId(), omniadminUser);
 
-		UserTestUtil.setUser(normalUser);
+		UserTestUtil.setUser(user);
 
 		_batchEngineImportTaskService.getBatchEngineImportTask(
 			_batchEngineImportTask1.getBatchEngineImportTaskId());
@@ -172,12 +172,12 @@ public class BatchEngineImportTaskServiceTest
 	@Test
 	public void testGetBatchEngineImportTasks() throws Exception {
 		_batchEngineImportTask1 = _createTestBatchEngineImportTask(
-			company.getCompanyId(), normalUser);
+			company.getCompanyId(), user);
 
 		_batchEngineImportTask2 = _createTestBatchEngineImportTask(
 			company.getCompanyId(), omniadminUser);
 
-		UserTestUtil.setUser(normalUser);
+		UserTestUtil.setUser(user);
 
 		List<BatchEngineImportTask> batchEngineImportTasks =
 			_batchEngineImportTaskService.getBatchEngineImportTasks(

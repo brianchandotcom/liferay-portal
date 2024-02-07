@@ -53,7 +53,7 @@ export class DataSetsPage {
 		this.page = page;
 	}
 
-	async createSampleDataSetUI() {
+	async createSampleDataSet() {
 		await this.newDataSetButton.click();
 		await this.newDataSetModal.nameInput.waitFor();
 

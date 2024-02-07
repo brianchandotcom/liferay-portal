@@ -38,7 +38,7 @@ export class ViewsPage {
 		await this.dataSetsPage.gotoSampleDataSet();
 	}
 
-	async createSampleDataSetViewUI() {
+	async createSampleDataSetView() {
 		await this.newDataSetViewButton.click();
 
 		await this.newDataSetViewModal.nameInput.fill('Data Set View Sample');

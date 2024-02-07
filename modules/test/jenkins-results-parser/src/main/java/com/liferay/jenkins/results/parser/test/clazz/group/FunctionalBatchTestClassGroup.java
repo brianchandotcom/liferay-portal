@@ -551,8 +551,28 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 	private String _getTestBatchRunPropertyQuery(File testBaseDir) {
 		if (!testRelevantChanges && !testHotfixChanges) {
-			return getDefaultTestBatchRunPropertyQuery(
+			String defaultPQL = getDefaultTestBatchRunPropertyQuery(
 				testBaseDir, testSuiteName);
+
+			JobProperty globalJobProperty = getJobProperty(
+				"test.batch.run.property.global.query", testSuiteName,
+				batchName);
+
+			String globalJobPropertyValue = globalJobProperty.getValue();
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(
+					globalJobPropertyValue)) {
+
+				JenkinsResultsParserUtil.validatePQL(
+					globalJobPropertyValue, testBaseDir);
+
+				recordJobProperty(globalJobProperty);
+
+				return JenkinsResultsParserUtil.combine(
+					"(", globalJobPropertyValue, ") AND (", defaultPQL, ")");
+			}
+
+			return defaultPQL;
 		}
 
 		File testPropertiesFile = new File(

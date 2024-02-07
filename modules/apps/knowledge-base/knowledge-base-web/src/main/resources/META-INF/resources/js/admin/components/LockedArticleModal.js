@@ -5,18 +5,44 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
-export default function LockedArticleModal() {
-	const {observer, onOpenChange, open} = useModal();
+export default function LockedArticleModal({open, portletNamespace}) {
+	const [showModal, setShowModal] = useState(open);
+
+	const handleOnClose = () => {
+		setShowModal(false);
+	};
+
+	const {observer, onClose} = useModal({
+		onClose: handleOnClose,
+	});
 
 	useEffect(() => {
-		onOpenChange(true);
-	}, [onOpenChange]);
+		const bridgeComponentId = `${portletNamespace}LockedKBArticleModal`;
+
+		if (!Liferay.component(bridgeComponentId)) {
+			Liferay.component(
+				bridgeComponentId,
+				{
+					open: () => {
+						setShowModal(true);
+					},
+				},
+				{
+					destroyOnNavigate: true,
+				}
+			);
+		}
+
+		return () => {
+			Liferay.destroyComponent(bridgeComponentId);
+		};
+	}, [portletNamespace]);
 
 	return (
 		<>
-			{open && (
+			{showModal && (
 				<ClayModal observer={observer} size="md" status="info">
 					<ClayModal.Header>
 						{Liferay.Language.get('article-in-edition')}
@@ -32,10 +58,7 @@ export default function LockedArticleModal() {
 
 					<ClayModal.Footer
 						last={
-							<ClayButton
-								displayType="primary"
-								onClick={() => onOpenChange(false)}
-							>
+							<ClayButton displayType="primary" onClick={onClose}>
 								{Liferay.Language.get('ok')}
 							</ClayButton>
 						}

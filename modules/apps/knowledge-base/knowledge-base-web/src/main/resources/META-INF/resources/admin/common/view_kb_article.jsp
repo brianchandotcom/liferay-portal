@@ -281,13 +281,13 @@ String kbArticleSuccessMessage = GetterUtil.getString(MultiSessionMessages.get(r
 	/>
 </c:if>
 
-<c:if test="<%= MultiSessionErrors.contains(liferayPortletRequest, DuplicateLockException.class.getName()) %>">
-	<div>
-		<react:component
-			module="{LockedArticleModal} from knowledge-base-web"
-		/>
-	</div>
-</c:if>
+<div>
+	<react:component module="{LockedArticleModal} from knowledge-base-web" props='<%=
+			HashMapBuilder.<String, Object>put(
+				"open", MultiSessionErrors.contains(liferayPortletRequest, DuplicateLockException.class.getName())
+			).build()
+		%>' />
+</div>
 
 <%
 List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(KBArticle.class.getName(), kbArticle.getClassPK());

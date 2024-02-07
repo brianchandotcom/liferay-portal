@@ -67,9 +67,6 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
-
 /**
  * Modify the value of _testableClassNames to test specific class names.
  *
@@ -194,65 +191,67 @@ public class ExportTaskResourceTest {
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)),
 			ObjectDefinitionConstants.SCOPE_COMPANY, _user.getUserId());
 
-		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
-			null, _exportTaskEndpoint() + _objectDefinition1.getName(),
-			Http.Method.POST);
+		ExportTaskResource.Builder builder = ExportTaskResource.builder();
 
-		JSONObject jsonObject3 = HTTPTestUtil.invokeToJSONObject(
-			null,
-			"headless-batch-engine/v1.0/export-task/" +
-				jsonObject2.getString("id"),
-			Http.Method.GET);
+		ExportTaskResource exportTaskResource = builder.authentication(
+			"test@liferay.com", "test"
+		).header(
+			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
+		).build();
 
-		try {
-			JSONAssert.assertEquals(
-				JSONUtil.put(
-					"className", "com.liferay.object.rest.dto.v1_0.ObjectEntry"
-				).put(
-					"errorMessage", ""
-				).put(
-					"executeStatus", "COMPLETED"
-				).toString(),
-				jsonObject3.toString(), JSONCompareMode.LENIENT);
-		}
-		catch (AssertionError error) {
-			Assert.fail(jsonObject3.getString("errorMessage"));
-		}
+		ExportTask exportTask1 = exportTaskResource.postExportTask(
+			"com.liferay.object.rest.dto.v1_0.ObjectEntry", "json", null, null,
+			null, _objectDefinition1.getName());
 
-		HTTPTestUtil.customize(
-		).withBaseURL(
-			"http://www.able.com:8080"
-		).withCredentials(
-			"test@able.com", "test"
-		).apply(
-			() -> {
-				JSONObject jsonObject4 = HTTPTestUtil.invokeToJSONObject(
-					null, _exportTaskEndpoint() + _objectDefinition2.getName(),
-					Http.Method.POST);
+		String externalReferenceCode1 = exportTask1.getExternalReferenceCode();
 
-				JSONObject jsonObject5 = HTTPTestUtil.invokeToJSONObject(
-					null,
-					"headless-batch-engine/v1.0/export-task/" +
-						jsonObject4.getString("id"),
-					Http.Method.GET);
+		while (true) {
+			exportTask1 =
+				exportTaskResource.getExportTaskByExternalReferenceCode(
+					externalReferenceCode1);
 
-				try {
-					JSONAssert.assertEquals(
-						JSONUtil.put(
-							"className",
-							"com.liferay.object.rest.dto.v1_0.ObjectEntry"
-						).put(
-							"errorMessage", ""
-						).put(
-							"executeStatus", "COMPLETED"
-						).toString(),
-						jsonObject5.toString(), JSONCompareMode.LENIENT);
-				}
-				catch (AssertionError error) {
-					Assert.fail(jsonObject5.getString("errorMessage"));
-				}
+			if (Objects.equals(
+					exportTask1.getExecuteStatusAsString(), "COMPLETED")) {
+
+				break;
 			}
-		);
+			else if (Objects.equals(
+						exportTask1.getExecuteStatusAsString(), "FAILED")) {
+
+				throw new AssertionError(exportTask1.getErrorMessage());
+			}
+		}
+
+		exportTaskResource = builder.authentication(
+			"test@able.com", "test"
+		).endpoint(
+			"www.able.com:8080", "http"
+		).header(
+			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
+		).build();
+
+		ExportTask exportTask2 = exportTaskResource.postExportTask(
+			"com.liferay.object.rest.dto.v1_0.ObjectEntry", "json", null, null,
+			null, _objectDefinition2.getName());
+
+		String externalReferenceCode2 = exportTask2.getExternalReferenceCode();
+
+		while (true) {
+			exportTask2 =
+				exportTaskResource.getExportTaskByExternalReferenceCode(
+					externalReferenceCode2);
+
+			if (Objects.equals(
+					exportTask2.getExecuteStatusAsString(), "COMPLETED")) {
+
+				break;
+			}
+			else if (Objects.equals(
+						exportTask2.getExecuteStatusAsString(), "FAILED")) {
+
+				throw new AssertionError(exportTask2.getErrorMessage());
+			}
+		}
 	}
 
 	@Test
@@ -280,12 +279,6 @@ public class ExportTaskResourceTest {
 		if (sb.length() > 0) {
 			throw new AssertionError(sb.toString());
 		}
-	}
-
-	private String _exportTaskEndpoint() {
-		return "headless-batch-engine/v1.0/export-task" +
-			"/com.liferay.object.rest.dto.v1_0.ObjectEntry" +
-				"/json?fieldNames=id&taskItemDelegateName=";
 	}
 
 	private void _testPostExportTask(String className) throws Exception {

@@ -77,19 +77,17 @@ export interface IInlineEditingSettings {
 	defaultBodyContent: object;
 }
 
+export interface IBaseActions {
+	actions: IItemsActions[];
+	itemData: IItemActionsData;
+	itemId: number | string;
+}
+
 export interface IItemsActions {
-	data?: {
-		confirmationMessage?: string;
-		id?: string;
-		method?: 'delete' | 'get';
-		permissionKey?: string;
-		size?: 'sm' | 'lg' | 'full-screen';
-		status?: string;
-		title?: string;
-	};
+	data?: IItemActionsData;
 	href?: string;
 	icon?: string;
-	id?: string;
+	id?: string | number;
 	label?: string;
 	onClick?: Function;
 	separator?: boolean;
@@ -102,6 +100,20 @@ export interface IItemsActions {
 		| 'sidePanel'
 		| 'event';
 	type?: string;
+}
+
+export interface IItemActionsData {
+	confirmationMessage?: string;
+	id?: string | number;
+	method?: 'delete' | 'get' | 'patch' | 'post';
+	permissionKey?: string;
+	size?: 'sm' | 'lg' | 'full-screen';
+	status?: string | Record<string, number | string>;
+	title?: string;
+}
+
+export interface IQuickActions extends IBaseActions {
+	onClick: Function;
 }
 
 type TSorting = {

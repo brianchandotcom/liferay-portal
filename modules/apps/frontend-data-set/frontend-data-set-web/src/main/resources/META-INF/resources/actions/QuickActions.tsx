@@ -5,13 +5,12 @@
 
 import ClayIcon from '@clayui/icon';
 import {LinkOrButton} from '@clayui/shared';
-import PropTypes from 'prop-types';
 import React from 'react';
 
+import {IQuickActions} from '../index';
 import {formatActionURL} from '../utils/actionItems/formatActionURL';
-import {actionsBasePropTypes} from './Actions';
 
-function QuickActions({actions, itemData, itemId, onClick}) {
+function QuickActions({actions, itemData, itemId, onClick}: IQuickActions) {
 	return (
 		<div className="quick-action-menu">
 			{actions.map((action) => {
@@ -26,7 +25,7 @@ function QuickActions({actions, itemData, itemId, onClick}) {
 						}
 						key={action.data?.id || action.label}
 						monospaced={false}
-						onClick={(event) =>
+						onClick={(event: any) =>
 							onClick({
 								action,
 								event,
@@ -37,17 +36,12 @@ function QuickActions({actions, itemData, itemId, onClick}) {
 						symbol={action.icon}
 						title={action.label}
 					>
-						<ClayIcon symbol={action.icon} />
+						{action.icon && <ClayIcon symbol={action.icon} />}
 					</LinkOrButton>
 				);
 			})}
 		</div>
 	);
 }
-
-QuickActions.propTypes = {
-	...actionsBasePropTypes,
-	onClick: PropTypes.func.isRequired,
-};
 
 export default QuickActions;

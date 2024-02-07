@@ -42,7 +42,7 @@ public class BatchEngineExportTaskServiceImpl
 			Map<String, Serializable> parameters, String taskItemDelegateName)
 		throws PortalException {
 
-		_checkCrossCompanyPermissions(companyId);
+		_checkCompanyPermissions(companyId);
 
 		return batchEngineExportTaskLocalService.addBatchEngineExportTask(
 			externalReferenceCode, companyId, userId, callbackURL, className,
@@ -59,7 +59,7 @@ public class BatchEngineExportTaskServiceImpl
 			batchEngineExportTaskLocalService.getBatchEngineExportTask(
 				batchEngineExportTaskId);
 
-		_checkCrossCompanyPermissions(batchEngineExportTask.getCompanyId());
+		_checkCompanyPermissions(batchEngineExportTask.getCompanyId());
 
 		_checkTaskPermissions(batchEngineExportTask);
 
@@ -72,7 +72,7 @@ public class BatchEngineExportTaskServiceImpl
 				String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		_checkCrossCompanyPermissions(companyId);
+		_checkCompanyPermissions(companyId);
 
 		BatchEngineExportTask batchEngineExportTask =
 			batchEngineExportTaskLocalService.
@@ -89,7 +89,7 @@ public class BatchEngineExportTaskServiceImpl
 			long companyId, int start, int end)
 		throws PortalException {
 
-		_checkCrossCompanyPermissions(companyId);
+		_checkCompanyPermissions(companyId);
 
 		return _filterTaskListByPermissions(
 			batchEngineExportTaskLocalService.getBatchEngineExportTasks(
@@ -102,7 +102,7 @@ public class BatchEngineExportTaskServiceImpl
 			OrderByComparator<BatchEngineExportTask> orderByComparator)
 		throws PortalException {
 
-		_checkCrossCompanyPermissions(companyId);
+		_checkCompanyPermissions(companyId);
 
 		return _filterTaskListByPermissions(
 			batchEngineExportTaskPersistence.findByCompanyId(
@@ -113,14 +113,14 @@ public class BatchEngineExportTaskServiceImpl
 	public int getBatchEngineExportTasksCount(long companyId)
 		throws PortalException {
 
-		_checkCrossCompanyPermissions(companyId);
+		_checkCompanyPermissions(companyId);
 
 		return _filterTaskListByPermissions(
 			batchEngineExportTaskPersistence.findByCompanyId(companyId)
 		).size();
 	}
 
-	private void _checkCrossCompanyPermissions(long companyId)
+	private void _checkCompanyPermissions(long companyId)
 		throws PrincipalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();

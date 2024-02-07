@@ -9,6 +9,7 @@ export class ProductMenuPage {
 	readonly closeProductMenuButton: Locator;
 	readonly contentAndDataMenuItem: Locator;
 	readonly knowledgeBaseMenuItem: Locator;
+	readonly journalMenuItem: Locator;
 	readonly openProductMenuButton: Locator;
 	readonly page: Page;
 	readonly documentsAndMediaMenuItem: Locator;
@@ -18,6 +19,9 @@ export class ProductMenuPage {
 		this.contentAndDataMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Content & Data',
+		});
+		this.journalMenuItem = page.getByRole('menuitem', {
+			name: 'Web Content',
 		});
 		this.knowledgeBaseMenuItem = page.getByRole('menuitem', {
 			exact: true,
@@ -49,6 +53,11 @@ export class ProductMenuPage {
 		if (await this.closeProductMenuButton.isVisible()) {
 			await this.closeProductMenuButton.click();
 		}
+	}
+
+	async goToJournalMenuItem() {
+		await this.goToContentAndData();
+		await this.journalMenuItem.click();
 	}
 
 	async goToKnowledgeBaseMenuItem() {

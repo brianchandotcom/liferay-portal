@@ -160,12 +160,21 @@ public class ProductSpecificationResourceImpl
 			}
 		}
 
+		CPDefinition cpDefinition =
+			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
+
+		if (cpDefinition == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find product with ID " + id);
+		}
+
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue =
 				ProductSpecificationUtil.
 					addCPDefinitionSpecificationOptionValue(
 						_cpDefinitionSpecificationOptionValueService,
-						_cpSpecificationOptionService, id, productSpecification,
+						_cpSpecificationOptionService,
+						cpDefinition.getCPDefinitionId(), productSpecification,
 						_serviceContextHelper.getServiceContext());
 
 		return _toProductSpecification(

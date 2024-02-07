@@ -542,38 +542,79 @@ public abstract class BaseOptionValueResourceTestCase {
 			testGetOptionByExternalReferenceCodeOptionValuesPage_addOptionValue(
 				externalReferenceCode, randomOptionValue());
 
-		Page<OptionValue> page1 =
-			optionValueResource.
-				getOptionByExternalReferenceCodeOptionValuesPage(
-					externalReferenceCode, null,
-					Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<OptionValue> optionValues1 = (List<OptionValue>)page1.getItems();
+			int optionValue1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int optionValue2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int optionValue3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			optionValues1.toString(), totalCount + 2, optionValues1.size());
+			Page<OptionValue> page1 =
+				optionValueResource.
+					getOptionByExternalReferenceCodeOptionValuesPage(
+						externalReferenceCode, null,
+						Pagination.of(optionValue1Page, 500), null);
 
-		Page<OptionValue> page2 =
-			optionValueResource.
-				getOptionByExternalReferenceCodeOptionValuesPage(
-					externalReferenceCode, null,
-					Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(optionValue1, (List<OptionValue>)page1.getItems());
 
-		List<OptionValue> optionValues2 = (List<OptionValue>)page2.getItems();
+			Page<OptionValue> page2 =
+				optionValueResource.
+					getOptionByExternalReferenceCodeOptionValuesPage(
+						externalReferenceCode, null,
+						Pagination.of(optionValue2Page, 500), null);
 
-		Assert.assertEquals(optionValues2.toString(), 1, optionValues2.size());
+			assertContains(optionValue2, (List<OptionValue>)page2.getItems());
 
-		Page<OptionValue> page3 =
-			optionValueResource.
-				getOptionByExternalReferenceCodeOptionValuesPage(
-					externalReferenceCode, null,
-					Pagination.of(1, (int)totalCount + 3), null);
+			Page<OptionValue> page3 =
+				optionValueResource.
+					getOptionByExternalReferenceCodeOptionValuesPage(
+						externalReferenceCode, null,
+						Pagination.of(optionValue3Page, 500), null);
 
-		assertContains(optionValue1, (List<OptionValue>)page3.getItems());
-		assertContains(optionValue2, (List<OptionValue>)page3.getItems());
-		assertContains(optionValue3, (List<OptionValue>)page3.getItems());
+			assertContains(optionValue3, (List<OptionValue>)page3.getItems());
+		}
+		else {
+			Page<OptionValue> page1 =
+				optionValueResource.
+					getOptionByExternalReferenceCodeOptionValuesPage(
+						externalReferenceCode, null,
+						Pagination.of(1, totalCount + 2), null);
+
+			List<OptionValue> optionValues1 =
+				(List<OptionValue>)page1.getItems();
+
+			Assert.assertEquals(
+				optionValues1.toString(), totalCount + 2, optionValues1.size());
+
+			Page<OptionValue> page2 =
+				optionValueResource.
+					getOptionByExternalReferenceCodeOptionValuesPage(
+						externalReferenceCode, null,
+						Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OptionValue> optionValues2 =
+				(List<OptionValue>)page2.getItems();
+
+			Assert.assertEquals(
+				optionValues2.toString(), 1, optionValues2.size());
+
+			Page<OptionValue> page3 =
+				optionValueResource.
+					getOptionByExternalReferenceCodeOptionValuesPage(
+						externalReferenceCode, null,
+						Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(optionValue1, (List<OptionValue>)page3.getItems());
+			assertContains(optionValue2, (List<OptionValue>)page3.getItems());
+			assertContains(optionValue3, (List<OptionValue>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -863,32 +904,67 @@ public abstract class BaseOptionValueResourceTestCase {
 			testGetOptionIdOptionValuesPage_addOptionValue(
 				id, randomOptionValue());
 
-		Page<OptionValue> page1 =
-			optionValueResource.getOptionIdOptionValuesPage(
-				id, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<OptionValue> optionValues1 = (List<OptionValue>)page1.getItems();
+			int optionValue1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int optionValue2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int optionValue3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			optionValues1.toString(), totalCount + 2, optionValues1.size());
+			Page<OptionValue> page1 =
+				optionValueResource.getOptionIdOptionValuesPage(
+					id, null, Pagination.of(optionValue1Page, 500), null);
 
-		Page<OptionValue> page2 =
-			optionValueResource.getOptionIdOptionValuesPage(
-				id, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(optionValue1, (List<OptionValue>)page1.getItems());
 
-		List<OptionValue> optionValues2 = (List<OptionValue>)page2.getItems();
+			Page<OptionValue> page2 =
+				optionValueResource.getOptionIdOptionValuesPage(
+					id, null, Pagination.of(optionValue2Page, 500), null);
 
-		Assert.assertEquals(optionValues2.toString(), 1, optionValues2.size());
+			assertContains(optionValue2, (List<OptionValue>)page2.getItems());
 
-		Page<OptionValue> page3 =
-			optionValueResource.getOptionIdOptionValuesPage(
-				id, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<OptionValue> page3 =
+				optionValueResource.getOptionIdOptionValuesPage(
+					id, null, Pagination.of(optionValue3Page, 500), null);
 
-		assertContains(optionValue1, (List<OptionValue>)page3.getItems());
-		assertContains(optionValue2, (List<OptionValue>)page3.getItems());
-		assertContains(optionValue3, (List<OptionValue>)page3.getItems());
+			assertContains(optionValue3, (List<OptionValue>)page3.getItems());
+		}
+		else {
+			Page<OptionValue> page1 =
+				optionValueResource.getOptionIdOptionValuesPage(
+					id, null, Pagination.of(1, totalCount + 2), null);
+
+			List<OptionValue> optionValues1 =
+				(List<OptionValue>)page1.getItems();
+
+			Assert.assertEquals(
+				optionValues1.toString(), totalCount + 2, optionValues1.size());
+
+			Page<OptionValue> page2 =
+				optionValueResource.getOptionIdOptionValuesPage(
+					id, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OptionValue> optionValues2 =
+				(List<OptionValue>)page2.getItems();
+
+			Assert.assertEquals(
+				optionValues2.toString(), 1, optionValues2.size());
+
+			Page<OptionValue> page3 =
+				optionValueResource.getOptionIdOptionValuesPage(
+					id, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(optionValue1, (List<OptionValue>)page3.getItems());
+			assertContains(optionValue2, (List<OptionValue>)page3.getItems());
+			assertContains(optionValue3, (List<OptionValue>)page3.getItems());
+		}
 	}
 
 	@Test

@@ -316,36 +316,74 @@ public abstract class BaseDataListViewResourceTestCase {
 			testGetDataDefinitionDataListViewsPage_addDataListView(
 				dataDefinitionId, randomDataListView());
 
-		Page<DataListView> page1 =
-			dataListViewResource.getDataDefinitionDataListViewsPage(
-				dataDefinitionId, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<DataListView> dataListViews1 =
-			(List<DataListView>)page1.getItems();
+			int dataListView1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int dataListView2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int dataListView3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			dataListViews1.toString(), totalCount + 2, dataListViews1.size());
+			Page<DataListView> page1 =
+				dataListViewResource.getDataDefinitionDataListViewsPage(
+					dataDefinitionId, null,
+					Pagination.of(dataListView1Page, 500), null);
 
-		Page<DataListView> page2 =
-			dataListViewResource.getDataDefinitionDataListViewsPage(
-				dataDefinitionId, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(dataListView1, (List<DataListView>)page1.getItems());
 
-		List<DataListView> dataListViews2 =
-			(List<DataListView>)page2.getItems();
+			Page<DataListView> page2 =
+				dataListViewResource.getDataDefinitionDataListViewsPage(
+					dataDefinitionId, null,
+					Pagination.of(dataListView2Page, 500), null);
 
-		Assert.assertEquals(
-			dataListViews2.toString(), 1, dataListViews2.size());
+			assertContains(dataListView2, (List<DataListView>)page2.getItems());
 
-		Page<DataListView> page3 =
-			dataListViewResource.getDataDefinitionDataListViewsPage(
-				dataDefinitionId, null, Pagination.of(1, (int)totalCount + 3),
-				null);
+			Page<DataListView> page3 =
+				dataListViewResource.getDataDefinitionDataListViewsPage(
+					dataDefinitionId, null,
+					Pagination.of(dataListView3Page, 500), null);
 
-		assertContains(dataListView1, (List<DataListView>)page3.getItems());
-		assertContains(dataListView2, (List<DataListView>)page3.getItems());
-		assertContains(dataListView3, (List<DataListView>)page3.getItems());
+			assertContains(dataListView3, (List<DataListView>)page3.getItems());
+		}
+		else {
+			Page<DataListView> page1 =
+				dataListViewResource.getDataDefinitionDataListViewsPage(
+					dataDefinitionId, null, Pagination.of(1, totalCount + 2),
+					null);
+
+			List<DataListView> dataListViews1 =
+				(List<DataListView>)page1.getItems();
+
+			Assert.assertEquals(
+				dataListViews1.toString(), totalCount + 2,
+				dataListViews1.size());
+
+			Page<DataListView> page2 =
+				dataListViewResource.getDataDefinitionDataListViewsPage(
+					dataDefinitionId, null, Pagination.of(2, totalCount + 2),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DataListView> dataListViews2 =
+				(List<DataListView>)page2.getItems();
+
+			Assert.assertEquals(
+				dataListViews2.toString(), 1, dataListViews2.size());
+
+			Page<DataListView> page3 =
+				dataListViewResource.getDataDefinitionDataListViewsPage(
+					dataDefinitionId, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(dataListView1, (List<DataListView>)page3.getItems());
+			assertContains(dataListView2, (List<DataListView>)page3.getItems());
+			assertContains(dataListView3, (List<DataListView>)page3.getItems());
+		}
 	}
 
 	@Test

@@ -283,35 +283,71 @@ public abstract class BaseDataRecordResourceTestCase {
 			testGetDataDefinitionDataRecordsPage_addDataRecord(
 				dataDefinitionId, randomDataRecord());
 
-		Page<DataRecord> page1 =
-			dataRecordResource.getDataDefinitionDataRecordsPage(
-				dataDefinitionId, null, null, Pagination.of(1, totalCount + 2),
-				null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<DataRecord> dataRecords1 = (List<DataRecord>)page1.getItems();
+			int dataRecord1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int dataRecord2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int dataRecord3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			dataRecords1.toString(), totalCount + 2, dataRecords1.size());
+			Page<DataRecord> page1 =
+				dataRecordResource.getDataDefinitionDataRecordsPage(
+					dataDefinitionId, null, null,
+					Pagination.of(dataRecord1Page, 500), null);
 
-		Page<DataRecord> page2 =
-			dataRecordResource.getDataDefinitionDataRecordsPage(
-				dataDefinitionId, null, null, Pagination.of(2, totalCount + 2),
-				null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(dataRecord1, (List<DataRecord>)page1.getItems());
 
-		List<DataRecord> dataRecords2 = (List<DataRecord>)page2.getItems();
+			Page<DataRecord> page2 =
+				dataRecordResource.getDataDefinitionDataRecordsPage(
+					dataDefinitionId, null, null,
+					Pagination.of(dataRecord2Page, 500), null);
 
-		Assert.assertEquals(dataRecords2.toString(), 1, dataRecords2.size());
+			assertContains(dataRecord2, (List<DataRecord>)page2.getItems());
 
-		Page<DataRecord> page3 =
-			dataRecordResource.getDataDefinitionDataRecordsPage(
-				dataDefinitionId, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+			Page<DataRecord> page3 =
+				dataRecordResource.getDataDefinitionDataRecordsPage(
+					dataDefinitionId, null, null,
+					Pagination.of(dataRecord3Page, 500), null);
 
-		assertContains(dataRecord1, (List<DataRecord>)page3.getItems());
-		assertContains(dataRecord2, (List<DataRecord>)page3.getItems());
-		assertContains(dataRecord3, (List<DataRecord>)page3.getItems());
+			assertContains(dataRecord3, (List<DataRecord>)page3.getItems());
+		}
+		else {
+			Page<DataRecord> page1 =
+				dataRecordResource.getDataDefinitionDataRecordsPage(
+					dataDefinitionId, null, null,
+					Pagination.of(1, totalCount + 2), null);
+
+			List<DataRecord> dataRecords1 = (List<DataRecord>)page1.getItems();
+
+			Assert.assertEquals(
+				dataRecords1.toString(), totalCount + 2, dataRecords1.size());
+
+			Page<DataRecord> page2 =
+				dataRecordResource.getDataDefinitionDataRecordsPage(
+					dataDefinitionId, null, null,
+					Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DataRecord> dataRecords2 = (List<DataRecord>)page2.getItems();
+
+			Assert.assertEquals(
+				dataRecords2.toString(), 1, dataRecords2.size());
+
+			Page<DataRecord> page3 =
+				dataRecordResource.getDataDefinitionDataRecordsPage(
+					dataDefinitionId, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(dataRecord1, (List<DataRecord>)page3.getItems());
+			assertContains(dataRecord2, (List<DataRecord>)page3.getItems());
+			assertContains(dataRecord3, (List<DataRecord>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -606,35 +642,71 @@ public abstract class BaseDataRecordResourceTestCase {
 			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
 				dataRecordCollectionId, randomDataRecord());
 
-		Page<DataRecord> page1 =
-			dataRecordResource.getDataRecordCollectionDataRecordsPage(
-				dataRecordCollectionId, null, null,
-				Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<DataRecord> dataRecords1 = (List<DataRecord>)page1.getItems();
+			int dataRecord1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int dataRecord2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int dataRecord3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			dataRecords1.toString(), totalCount + 2, dataRecords1.size());
+			Page<DataRecord> page1 =
+				dataRecordResource.getDataRecordCollectionDataRecordsPage(
+					dataRecordCollectionId, null, null,
+					Pagination.of(dataRecord1Page, 500), null);
 
-		Page<DataRecord> page2 =
-			dataRecordResource.getDataRecordCollectionDataRecordsPage(
-				dataRecordCollectionId, null, null,
-				Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(dataRecord1, (List<DataRecord>)page1.getItems());
 
-		List<DataRecord> dataRecords2 = (List<DataRecord>)page2.getItems();
+			Page<DataRecord> page2 =
+				dataRecordResource.getDataRecordCollectionDataRecordsPage(
+					dataRecordCollectionId, null, null,
+					Pagination.of(dataRecord2Page, 500), null);
 
-		Assert.assertEquals(dataRecords2.toString(), 1, dataRecords2.size());
+			assertContains(dataRecord2, (List<DataRecord>)page2.getItems());
 
-		Page<DataRecord> page3 =
-			dataRecordResource.getDataRecordCollectionDataRecordsPage(
-				dataRecordCollectionId, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+			Page<DataRecord> page3 =
+				dataRecordResource.getDataRecordCollectionDataRecordsPage(
+					dataRecordCollectionId, null, null,
+					Pagination.of(dataRecord3Page, 500), null);
 
-		assertContains(dataRecord1, (List<DataRecord>)page3.getItems());
-		assertContains(dataRecord2, (List<DataRecord>)page3.getItems());
-		assertContains(dataRecord3, (List<DataRecord>)page3.getItems());
+			assertContains(dataRecord3, (List<DataRecord>)page3.getItems());
+		}
+		else {
+			Page<DataRecord> page1 =
+				dataRecordResource.getDataRecordCollectionDataRecordsPage(
+					dataRecordCollectionId, null, null,
+					Pagination.of(1, totalCount + 2), null);
+
+			List<DataRecord> dataRecords1 = (List<DataRecord>)page1.getItems();
+
+			Assert.assertEquals(
+				dataRecords1.toString(), totalCount + 2, dataRecords1.size());
+
+			Page<DataRecord> page2 =
+				dataRecordResource.getDataRecordCollectionDataRecordsPage(
+					dataRecordCollectionId, null, null,
+					Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DataRecord> dataRecords2 = (List<DataRecord>)page2.getItems();
+
+			Assert.assertEquals(
+				dataRecords2.toString(), 1, dataRecords2.size());
+
+			Page<DataRecord> page3 =
+				dataRecordResource.getDataRecordCollectionDataRecordsPage(
+					dataRecordCollectionId, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(dataRecord1, (List<DataRecord>)page3.getItems());
+			assertContains(dataRecord2, (List<DataRecord>)page3.getItems());
+			assertContains(dataRecord3, (List<DataRecord>)page3.getItems());
+		}
 	}
 
 	@Test

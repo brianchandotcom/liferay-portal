@@ -309,47 +309,93 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 			testGetPriceListByExternalReferenceCodePriceListAccountGroupsPage_addPriceListAccountGroup(
 				externalReferenceCode, randomPriceListAccountGroup());
 
-		Page<PriceListAccountGroup> page1 =
-			priceListAccountGroupResource.
-				getPriceListByExternalReferenceCodePriceListAccountGroupsPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<PriceListAccountGroup> priceListAccountGroups1 =
-			(List<PriceListAccountGroup>)page1.getItems();
+			int priceListAccountGroup1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int priceListAccountGroup2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int priceListAccountGroup3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			priceListAccountGroups1.toString(), totalCount + 2,
-			priceListAccountGroups1.size());
+			Page<PriceListAccountGroup> page1 =
+				priceListAccountGroupResource.
+					getPriceListByExternalReferenceCodePriceListAccountGroupsPage(
+						externalReferenceCode,
+						Pagination.of(priceListAccountGroup1Page, 500));
 
-		Page<PriceListAccountGroup> page2 =
-			priceListAccountGroupResource.
-				getPriceListByExternalReferenceCodePriceListAccountGroupsPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				priceListAccountGroup1,
+				(List<PriceListAccountGroup>)page1.getItems());
 
-		List<PriceListAccountGroup> priceListAccountGroups2 =
-			(List<PriceListAccountGroup>)page2.getItems();
+			Page<PriceListAccountGroup> page2 =
+				priceListAccountGroupResource.
+					getPriceListByExternalReferenceCodePriceListAccountGroupsPage(
+						externalReferenceCode,
+						Pagination.of(priceListAccountGroup2Page, 500));
 
-		Assert.assertEquals(
-			priceListAccountGroups2.toString(), 1,
-			priceListAccountGroups2.size());
+			assertContains(
+				priceListAccountGroup2,
+				(List<PriceListAccountGroup>)page2.getItems());
 
-		Page<PriceListAccountGroup> page3 =
-			priceListAccountGroupResource.
-				getPriceListByExternalReferenceCodePriceListAccountGroupsPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<PriceListAccountGroup> page3 =
+				priceListAccountGroupResource.
+					getPriceListByExternalReferenceCodePriceListAccountGroupsPage(
+						externalReferenceCode,
+						Pagination.of(priceListAccountGroup3Page, 500));
 
-		assertContains(
-			priceListAccountGroup1,
-			(List<PriceListAccountGroup>)page3.getItems());
-		assertContains(
-			priceListAccountGroup2,
-			(List<PriceListAccountGroup>)page3.getItems());
-		assertContains(
-			priceListAccountGroup3,
-			(List<PriceListAccountGroup>)page3.getItems());
+			assertContains(
+				priceListAccountGroup3,
+				(List<PriceListAccountGroup>)page3.getItems());
+		}
+		else {
+			Page<PriceListAccountGroup> page1 =
+				priceListAccountGroupResource.
+					getPriceListByExternalReferenceCodePriceListAccountGroupsPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<PriceListAccountGroup> priceListAccountGroups1 =
+				(List<PriceListAccountGroup>)page1.getItems();
+
+			Assert.assertEquals(
+				priceListAccountGroups1.toString(), totalCount + 2,
+				priceListAccountGroups1.size());
+
+			Page<PriceListAccountGroup> page2 =
+				priceListAccountGroupResource.
+					getPriceListByExternalReferenceCodePriceListAccountGroupsPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<PriceListAccountGroup> priceListAccountGroups2 =
+				(List<PriceListAccountGroup>)page2.getItems();
+
+			Assert.assertEquals(
+				priceListAccountGroups2.toString(), 1,
+				priceListAccountGroups2.size());
+
+			Page<PriceListAccountGroup> page3 =
+				priceListAccountGroupResource.
+					getPriceListByExternalReferenceCodePriceListAccountGroupsPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				priceListAccountGroup1,
+				(List<PriceListAccountGroup>)page3.getItems());
+			assertContains(
+				priceListAccountGroup2,
+				(List<PriceListAccountGroup>)page3.getItems());
+			assertContains(
+				priceListAccountGroup3,
+				(List<PriceListAccountGroup>)page3.getItems());
+		}
 	}
 
 	protected PriceListAccountGroup
@@ -604,47 +650,91 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 			testGetPriceListIdPriceListAccountGroupsPage_addPriceListAccountGroup(
 				id, randomPriceListAccountGroup());
 
-		Page<PriceListAccountGroup> page1 =
-			priceListAccountGroupResource.
-				getPriceListIdPriceListAccountGroupsPage(
-					id, null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<PriceListAccountGroup> priceListAccountGroups1 =
-			(List<PriceListAccountGroup>)page1.getItems();
+			int priceListAccountGroup1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int priceListAccountGroup2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int priceListAccountGroup3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			priceListAccountGroups1.toString(), totalCount + 2,
-			priceListAccountGroups1.size());
+			Page<PriceListAccountGroup> page1 =
+				priceListAccountGroupResource.
+					getPriceListIdPriceListAccountGroupsPage(
+						id, null, null,
+						Pagination.of(priceListAccountGroup1Page, 500), null);
 
-		Page<PriceListAccountGroup> page2 =
-			priceListAccountGroupResource.
-				getPriceListIdPriceListAccountGroupsPage(
-					id, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				priceListAccountGroup1,
+				(List<PriceListAccountGroup>)page1.getItems());
 
-		List<PriceListAccountGroup> priceListAccountGroups2 =
-			(List<PriceListAccountGroup>)page2.getItems();
+			Page<PriceListAccountGroup> page2 =
+				priceListAccountGroupResource.
+					getPriceListIdPriceListAccountGroupsPage(
+						id, null, null,
+						Pagination.of(priceListAccountGroup2Page, 500), null);
 
-		Assert.assertEquals(
-			priceListAccountGroups2.toString(), 1,
-			priceListAccountGroups2.size());
+			assertContains(
+				priceListAccountGroup2,
+				(List<PriceListAccountGroup>)page2.getItems());
 
-		Page<PriceListAccountGroup> page3 =
-			priceListAccountGroupResource.
-				getPriceListIdPriceListAccountGroupsPage(
-					id, null, null, Pagination.of(1, (int)totalCount + 3),
-					null);
+			Page<PriceListAccountGroup> page3 =
+				priceListAccountGroupResource.
+					getPriceListIdPriceListAccountGroupsPage(
+						id, null, null,
+						Pagination.of(priceListAccountGroup3Page, 500), null);
 
-		assertContains(
-			priceListAccountGroup1,
-			(List<PriceListAccountGroup>)page3.getItems());
-		assertContains(
-			priceListAccountGroup2,
-			(List<PriceListAccountGroup>)page3.getItems());
-		assertContains(
-			priceListAccountGroup3,
-			(List<PriceListAccountGroup>)page3.getItems());
+			assertContains(
+				priceListAccountGroup3,
+				(List<PriceListAccountGroup>)page3.getItems());
+		}
+		else {
+			Page<PriceListAccountGroup> page1 =
+				priceListAccountGroupResource.
+					getPriceListIdPriceListAccountGroupsPage(
+						id, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<PriceListAccountGroup> priceListAccountGroups1 =
+				(List<PriceListAccountGroup>)page1.getItems();
+
+			Assert.assertEquals(
+				priceListAccountGroups1.toString(), totalCount + 2,
+				priceListAccountGroups1.size());
+
+			Page<PriceListAccountGroup> page2 =
+				priceListAccountGroupResource.
+					getPriceListIdPriceListAccountGroupsPage(
+						id, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<PriceListAccountGroup> priceListAccountGroups2 =
+				(List<PriceListAccountGroup>)page2.getItems();
+
+			Assert.assertEquals(
+				priceListAccountGroups2.toString(), 1,
+				priceListAccountGroups2.size());
+
+			Page<PriceListAccountGroup> page3 =
+				priceListAccountGroupResource.
+					getPriceListIdPriceListAccountGroupsPage(
+						id, null, null, Pagination.of(1, (int)totalCount + 3),
+						null);
+
+			assertContains(
+				priceListAccountGroup1,
+				(List<PriceListAccountGroup>)page3.getItems());
+			assertContains(
+				priceListAccountGroup2,
+				(List<PriceListAccountGroup>)page3.getItems());
+			assertContains(
+				priceListAccountGroup3,
+				(List<PriceListAccountGroup>)page3.getItems());
+		}
 	}
 
 	@Test

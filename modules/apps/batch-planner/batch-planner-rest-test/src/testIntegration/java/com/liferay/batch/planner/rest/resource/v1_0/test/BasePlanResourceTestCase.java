@@ -235,28 +235,55 @@ public abstract class BasePlanResourceTestCase {
 
 		Plan plan3 = testGetPlansPage_addPlan(randomPlan());
 
-		Page<Plan> page1 = planResource.getPlansPage(
-			Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Plan> plans1 = (List<Plan>)page1.getItems();
+			int plan1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
+			int plan2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
+			int plan3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(plans1.toString(), totalCount + 2, plans1.size());
+			Page<Plan> page1 = planResource.getPlansPage(
+				Pagination.of(plan1Page, 500));
 
-		Page<Plan> page2 = planResource.getPlansPage(
-			Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(plan1, (List<Plan>)page1.getItems());
 
-		List<Plan> plans2 = (List<Plan>)page2.getItems();
+			Page<Plan> page2 = planResource.getPlansPage(
+				Pagination.of(plan2Page, 500));
 
-		Assert.assertEquals(plans2.toString(), 1, plans2.size());
+			assertContains(plan2, (List<Plan>)page2.getItems());
 
-		Page<Plan> page3 = planResource.getPlansPage(
-			Pagination.of(1, (int)totalCount + 3));
+			Page<Plan> page3 = planResource.getPlansPage(
+				Pagination.of(plan3Page, 500));
 
-		assertContains(plan1, (List<Plan>)page3.getItems());
-		assertContains(plan2, (List<Plan>)page3.getItems());
-		assertContains(plan3, (List<Plan>)page3.getItems());
+			assertContains(plan3, (List<Plan>)page3.getItems());
+		}
+		else {
+			Page<Plan> page1 = planResource.getPlansPage(
+				Pagination.of(1, totalCount + 2));
+
+			List<Plan> plans1 = (List<Plan>)page1.getItems();
+
+			Assert.assertEquals(
+				plans1.toString(), totalCount + 2, plans1.size());
+
+			Page<Plan> page2 = planResource.getPlansPage(
+				Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Plan> plans2 = (List<Plan>)page2.getItems();
+
+			Assert.assertEquals(plans2.toString(), 1, plans2.size());
+
+			Page<Plan> page3 = planResource.getPlansPage(
+				Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(plan1, (List<Plan>)page3.getItems());
+			assertContains(plan2, (List<Plan>)page3.getItems());
+			assertContains(plan3, (List<Plan>)page3.getItems());
+		}
 	}
 
 	protected Plan testGetPlansPage_addPlan(Plan plan) throws Exception {

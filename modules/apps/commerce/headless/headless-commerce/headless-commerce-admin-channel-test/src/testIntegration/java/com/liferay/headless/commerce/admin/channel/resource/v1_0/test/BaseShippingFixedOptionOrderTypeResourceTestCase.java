@@ -422,47 +422,94 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 			testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPage_addShippingFixedOptionOrderType(
 				id, randomShippingFixedOptionOrderType());
 
-		Page<ShippingFixedOptionOrderType> page1 =
-			shippingFixedOptionOrderTypeResource.
-				getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
-					id, null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<ShippingFixedOptionOrderType> shippingFixedOptionOrderTypes1 =
-			(List<ShippingFixedOptionOrderType>)page1.getItems();
+			int shippingFixedOptionOrderType1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int shippingFixedOptionOrderType2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int shippingFixedOptionOrderType3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			shippingFixedOptionOrderTypes1.toString(), totalCount + 2,
-			shippingFixedOptionOrderTypes1.size());
+			Page<ShippingFixedOptionOrderType> page1 =
+				shippingFixedOptionOrderTypeResource.
+					getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
+						id, null, null,
+						Pagination.of(shippingFixedOptionOrderType1Page, 500),
+						null);
 
-		Page<ShippingFixedOptionOrderType> page2 =
-			shippingFixedOptionOrderTypeResource.
-				getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
-					id, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				shippingFixedOptionOrderType1,
+				(List<ShippingFixedOptionOrderType>)page1.getItems());
 
-		List<ShippingFixedOptionOrderType> shippingFixedOptionOrderTypes2 =
-			(List<ShippingFixedOptionOrderType>)page2.getItems();
+			Page<ShippingFixedOptionOrderType> page2 =
+				shippingFixedOptionOrderTypeResource.
+					getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
+						id, null, null,
+						Pagination.of(shippingFixedOptionOrderType2Page, 500),
+						null);
 
-		Assert.assertEquals(
-			shippingFixedOptionOrderTypes2.toString(), 1,
-			shippingFixedOptionOrderTypes2.size());
+			assertContains(
+				shippingFixedOptionOrderType2,
+				(List<ShippingFixedOptionOrderType>)page2.getItems());
 
-		Page<ShippingFixedOptionOrderType> page3 =
-			shippingFixedOptionOrderTypeResource.
-				getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
-					id, null, null, Pagination.of(1, (int)totalCount + 3),
-					null);
+			Page<ShippingFixedOptionOrderType> page3 =
+				shippingFixedOptionOrderTypeResource.
+					getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
+						id, null, null,
+						Pagination.of(shippingFixedOptionOrderType3Page, 500),
+						null);
 
-		assertContains(
-			shippingFixedOptionOrderType1,
-			(List<ShippingFixedOptionOrderType>)page3.getItems());
-		assertContains(
-			shippingFixedOptionOrderType2,
-			(List<ShippingFixedOptionOrderType>)page3.getItems());
-		assertContains(
-			shippingFixedOptionOrderType3,
-			(List<ShippingFixedOptionOrderType>)page3.getItems());
+			assertContains(
+				shippingFixedOptionOrderType3,
+				(List<ShippingFixedOptionOrderType>)page3.getItems());
+		}
+		else {
+			Page<ShippingFixedOptionOrderType> page1 =
+				shippingFixedOptionOrderTypeResource.
+					getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
+						id, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<ShippingFixedOptionOrderType> shippingFixedOptionOrderTypes1 =
+				(List<ShippingFixedOptionOrderType>)page1.getItems();
+
+			Assert.assertEquals(
+				shippingFixedOptionOrderTypes1.toString(), totalCount + 2,
+				shippingFixedOptionOrderTypes1.size());
+
+			Page<ShippingFixedOptionOrderType> page2 =
+				shippingFixedOptionOrderTypeResource.
+					getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
+						id, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ShippingFixedOptionOrderType> shippingFixedOptionOrderTypes2 =
+				(List<ShippingFixedOptionOrderType>)page2.getItems();
+
+			Assert.assertEquals(
+				shippingFixedOptionOrderTypes2.toString(), 1,
+				shippingFixedOptionOrderTypes2.size());
+
+			Page<ShippingFixedOptionOrderType> page3 =
+				shippingFixedOptionOrderTypeResource.
+					getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
+						id, null, null, Pagination.of(1, (int)totalCount + 3),
+						null);
+
+			assertContains(
+				shippingFixedOptionOrderType1,
+				(List<ShippingFixedOptionOrderType>)page3.getItems());
+			assertContains(
+				shippingFixedOptionOrderType2,
+				(List<ShippingFixedOptionOrderType>)page3.getItems());
+			assertContains(
+				shippingFixedOptionOrderType3,
+				(List<ShippingFixedOptionOrderType>)page3.getItems());
+		}
 	}
 
 	@Test

@@ -334,36 +334,74 @@ public abstract class BaseOptionCategoryResourceTestCase {
 			testGetOptionCategoriesPage_addOptionCategory(
 				randomOptionCategory());
 
-		Page<OptionCategory> page1 =
-			optionCategoryResource.getOptionCategoriesPage(
-				null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<OptionCategory> optionCategories1 =
-			(List<OptionCategory>)page1.getItems();
+			int optionCategory1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int optionCategory2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int optionCategory3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			optionCategories1.toString(), totalCount + 2,
-			optionCategories1.size());
+			Page<OptionCategory> page1 =
+				optionCategoryResource.getOptionCategoriesPage(
+					null, Pagination.of(optionCategory1Page, 500), null);
 
-		Page<OptionCategory> page2 =
-			optionCategoryResource.getOptionCategoriesPage(
-				null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				optionCategory1, (List<OptionCategory>)page1.getItems());
 
-		List<OptionCategory> optionCategories2 =
-			(List<OptionCategory>)page2.getItems();
+			Page<OptionCategory> page2 =
+				optionCategoryResource.getOptionCategoriesPage(
+					null, Pagination.of(optionCategory2Page, 500), null);
 
-		Assert.assertEquals(
-			optionCategories2.toString(), 1, optionCategories2.size());
+			assertContains(
+				optionCategory2, (List<OptionCategory>)page2.getItems());
 
-		Page<OptionCategory> page3 =
-			optionCategoryResource.getOptionCategoriesPage(
-				null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<OptionCategory> page3 =
+				optionCategoryResource.getOptionCategoriesPage(
+					null, Pagination.of(optionCategory3Page, 500), null);
 
-		assertContains(optionCategory1, (List<OptionCategory>)page3.getItems());
-		assertContains(optionCategory2, (List<OptionCategory>)page3.getItems());
-		assertContains(optionCategory3, (List<OptionCategory>)page3.getItems());
+			assertContains(
+				optionCategory3, (List<OptionCategory>)page3.getItems());
+		}
+		else {
+			Page<OptionCategory> page1 =
+				optionCategoryResource.getOptionCategoriesPage(
+					null, Pagination.of(1, totalCount + 2), null);
+
+			List<OptionCategory> optionCategories1 =
+				(List<OptionCategory>)page1.getItems();
+
+			Assert.assertEquals(
+				optionCategories1.toString(), totalCount + 2,
+				optionCategories1.size());
+
+			Page<OptionCategory> page2 =
+				optionCategoryResource.getOptionCategoriesPage(
+					null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<OptionCategory> optionCategories2 =
+				(List<OptionCategory>)page2.getItems();
+
+			Assert.assertEquals(
+				optionCategories2.toString(), 1, optionCategories2.size());
+
+			Page<OptionCategory> page3 =
+				optionCategoryResource.getOptionCategoriesPage(
+					null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				optionCategory1, (List<OptionCategory>)page3.getItems());
+			assertContains(
+				optionCategory2, (List<OptionCategory>)page3.getItems());
+			assertContains(
+				optionCategory3, (List<OptionCategory>)page3.getItems());
+		}
 	}
 
 	@Test

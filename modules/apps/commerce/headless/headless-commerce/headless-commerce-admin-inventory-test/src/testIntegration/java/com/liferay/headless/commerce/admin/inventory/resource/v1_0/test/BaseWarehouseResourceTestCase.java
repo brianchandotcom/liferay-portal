@@ -326,29 +326,58 @@ public abstract class BaseWarehouseResourceTestCase {
 		Warehouse warehouse3 = testGetWarehousesPage_addWarehouse(
 			randomWarehouse());
 
-		Page<Warehouse> page1 = warehouseResource.getWarehousesPage(
-			null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Warehouse> warehouses1 = (List<Warehouse>)page1.getItems();
+			int warehouse1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int warehouse2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int warehouse3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			warehouses1.toString(), totalCount + 2, warehouses1.size());
+			Page<Warehouse> page1 = warehouseResource.getWarehousesPage(
+				null, Pagination.of(warehouse1Page, 500), null);
 
-		Page<Warehouse> page2 = warehouseResource.getWarehousesPage(
-			null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(warehouse1, (List<Warehouse>)page1.getItems());
 
-		List<Warehouse> warehouses2 = (List<Warehouse>)page2.getItems();
+			Page<Warehouse> page2 = warehouseResource.getWarehousesPage(
+				null, Pagination.of(warehouse2Page, 500), null);
 
-		Assert.assertEquals(warehouses2.toString(), 1, warehouses2.size());
+			assertContains(warehouse2, (List<Warehouse>)page2.getItems());
 
-		Page<Warehouse> page3 = warehouseResource.getWarehousesPage(
-			null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<Warehouse> page3 = warehouseResource.getWarehousesPage(
+				null, Pagination.of(warehouse3Page, 500), null);
 
-		assertContains(warehouse1, (List<Warehouse>)page3.getItems());
-		assertContains(warehouse2, (List<Warehouse>)page3.getItems());
-		assertContains(warehouse3, (List<Warehouse>)page3.getItems());
+			assertContains(warehouse3, (List<Warehouse>)page3.getItems());
+		}
+		else {
+			Page<Warehouse> page1 = warehouseResource.getWarehousesPage(
+				null, Pagination.of(1, totalCount + 2), null);
+
+			List<Warehouse> warehouses1 = (List<Warehouse>)page1.getItems();
+
+			Assert.assertEquals(
+				warehouses1.toString(), totalCount + 2, warehouses1.size());
+
+			Page<Warehouse> page2 = warehouseResource.getWarehousesPage(
+				null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Warehouse> warehouses2 = (List<Warehouse>)page2.getItems();
+
+			Assert.assertEquals(warehouses2.toString(), 1, warehouses2.size());
+
+			Page<Warehouse> page3 = warehouseResource.getWarehousesPage(
+				null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(warehouse1, (List<Warehouse>)page3.getItems());
+			assertContains(warehouse2, (List<Warehouse>)page3.getItems());
+			assertContains(warehouse3, (List<Warehouse>)page3.getItems());
+		}
 	}
 
 	@Test

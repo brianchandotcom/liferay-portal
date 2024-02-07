@@ -265,35 +265,74 @@ public abstract class BaseLinkedProductResourceTestCase {
 			testGetProductIdLinkedProductsPage_addLinkedProduct(
 				id, randomLinkedProduct());
 
-		Page<LinkedProduct> page1 =
-			linkedProductResource.getProductIdLinkedProductsPage(
-				id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<LinkedProduct> linkedProducts1 =
-			(List<LinkedProduct>)page1.getItems();
+			int linkedProduct1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int linkedProduct2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int linkedProduct3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			linkedProducts1.toString(), totalCount + 2, linkedProducts1.size());
+			Page<LinkedProduct> page1 =
+				linkedProductResource.getProductIdLinkedProductsPage(
+					id, Pagination.of(linkedProduct1Page, 500));
 
-		Page<LinkedProduct> page2 =
-			linkedProductResource.getProductIdLinkedProductsPage(
-				id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				linkedProduct1, (List<LinkedProduct>)page1.getItems());
 
-		List<LinkedProduct> linkedProducts2 =
-			(List<LinkedProduct>)page2.getItems();
+			Page<LinkedProduct> page2 =
+				linkedProductResource.getProductIdLinkedProductsPage(
+					id, Pagination.of(linkedProduct2Page, 500));
 
-		Assert.assertEquals(
-			linkedProducts2.toString(), 1, linkedProducts2.size());
+			assertContains(
+				linkedProduct2, (List<LinkedProduct>)page2.getItems());
 
-		Page<LinkedProduct> page3 =
-			linkedProductResource.getProductIdLinkedProductsPage(
-				id, Pagination.of(1, (int)totalCount + 3));
+			Page<LinkedProduct> page3 =
+				linkedProductResource.getProductIdLinkedProductsPage(
+					id, Pagination.of(linkedProduct3Page, 500));
 
-		assertContains(linkedProduct1, (List<LinkedProduct>)page3.getItems());
-		assertContains(linkedProduct2, (List<LinkedProduct>)page3.getItems());
-		assertContains(linkedProduct3, (List<LinkedProduct>)page3.getItems());
+			assertContains(
+				linkedProduct3, (List<LinkedProduct>)page3.getItems());
+		}
+		else {
+			Page<LinkedProduct> page1 =
+				linkedProductResource.getProductIdLinkedProductsPage(
+					id, Pagination.of(1, totalCount + 2));
+
+			List<LinkedProduct> linkedProducts1 =
+				(List<LinkedProduct>)page1.getItems();
+
+			Assert.assertEquals(
+				linkedProducts1.toString(), totalCount + 2,
+				linkedProducts1.size());
+
+			Page<LinkedProduct> page2 =
+				linkedProductResource.getProductIdLinkedProductsPage(
+					id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<LinkedProduct> linkedProducts2 =
+				(List<LinkedProduct>)page2.getItems();
+
+			Assert.assertEquals(
+				linkedProducts2.toString(), 1, linkedProducts2.size());
+
+			Page<LinkedProduct> page3 =
+				linkedProductResource.getProductIdLinkedProductsPage(
+					id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				linkedProduct1, (List<LinkedProduct>)page3.getItems());
+			assertContains(
+				linkedProduct2, (List<LinkedProduct>)page3.getItems());
+			assertContains(
+				linkedProduct3, (List<LinkedProduct>)page3.getItems());
+		}
 	}
 
 	protected LinkedProduct testGetProductIdLinkedProductsPage_addLinkedProduct(

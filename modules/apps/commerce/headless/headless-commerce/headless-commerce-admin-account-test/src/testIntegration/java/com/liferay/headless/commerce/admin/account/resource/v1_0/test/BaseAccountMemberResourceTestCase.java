@@ -285,39 +285,86 @@ public abstract class BaseAccountMemberResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountMembersPage_addAccountMember(
 				externalReferenceCode, randomAccountMember());
 
-		Page<AccountMember> page1 =
-			accountMemberResource.
-				getAccountByExternalReferenceCodeAccountMembersPage(
-					externalReferenceCode, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountMember> accountMembers1 =
-			(List<AccountMember>)page1.getItems();
+			int accountMember1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountMember2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountMember3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountMembers1.toString(), totalCount + 2, accountMembers1.size());
+			Page<AccountMember> page1 =
+				accountMemberResource.
+					getAccountByExternalReferenceCodeAccountMembersPage(
+						externalReferenceCode,
+						Pagination.of(accountMember1Page, 500));
 
-		Page<AccountMember> page2 =
-			accountMemberResource.
-				getAccountByExternalReferenceCodeAccountMembersPage(
-					externalReferenceCode, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountMember1, (List<AccountMember>)page1.getItems());
 
-		List<AccountMember> accountMembers2 =
-			(List<AccountMember>)page2.getItems();
+			Page<AccountMember> page2 =
+				accountMemberResource.
+					getAccountByExternalReferenceCodeAccountMembersPage(
+						externalReferenceCode,
+						Pagination.of(accountMember2Page, 500));
 
-		Assert.assertEquals(
-			accountMembers2.toString(), 1, accountMembers2.size());
+			assertContains(
+				accountMember2, (List<AccountMember>)page2.getItems());
 
-		Page<AccountMember> page3 =
-			accountMemberResource.
-				getAccountByExternalReferenceCodeAccountMembersPage(
-					externalReferenceCode,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<AccountMember> page3 =
+				accountMemberResource.
+					getAccountByExternalReferenceCodeAccountMembersPage(
+						externalReferenceCode,
+						Pagination.of(accountMember3Page, 500));
 
-		assertContains(accountMember1, (List<AccountMember>)page3.getItems());
-		assertContains(accountMember2, (List<AccountMember>)page3.getItems());
-		assertContains(accountMember3, (List<AccountMember>)page3.getItems());
+			assertContains(
+				accountMember3, (List<AccountMember>)page3.getItems());
+		}
+		else {
+			Page<AccountMember> page1 =
+				accountMemberResource.
+					getAccountByExternalReferenceCodeAccountMembersPage(
+						externalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<AccountMember> accountMembers1 =
+				(List<AccountMember>)page1.getItems();
+
+			Assert.assertEquals(
+				accountMembers1.toString(), totalCount + 2,
+				accountMembers1.size());
+
+			Page<AccountMember> page2 =
+				accountMemberResource.
+					getAccountByExternalReferenceCodeAccountMembersPage(
+						externalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountMember> accountMembers2 =
+				(List<AccountMember>)page2.getItems();
+
+			Assert.assertEquals(
+				accountMembers2.toString(), 1, accountMembers2.size());
+
+			Page<AccountMember> page3 =
+				accountMemberResource.
+					getAccountByExternalReferenceCodeAccountMembersPage(
+						externalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountMember1, (List<AccountMember>)page3.getItems());
+			assertContains(
+				accountMember2, (List<AccountMember>)page3.getItems());
+			assertContains(
+				accountMember3, (List<AccountMember>)page3.getItems());
+		}
 	}
 
 	protected AccountMember
@@ -484,35 +531,74 @@ public abstract class BaseAccountMemberResourceTestCase {
 			testGetAccountIdAccountMembersPage_addAccountMember(
 				id, randomAccountMember());
 
-		Page<AccountMember> page1 =
-			accountMemberResource.getAccountIdAccountMembersPage(
-				id, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<AccountMember> accountMembers1 =
-			(List<AccountMember>)page1.getItems();
+			int accountMember1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int accountMember2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int accountMember3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			accountMembers1.toString(), totalCount + 2, accountMembers1.size());
+			Page<AccountMember> page1 =
+				accountMemberResource.getAccountIdAccountMembersPage(
+					id, Pagination.of(accountMember1Page, 500));
 
-		Page<AccountMember> page2 =
-			accountMemberResource.getAccountIdAccountMembersPage(
-				id, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				accountMember1, (List<AccountMember>)page1.getItems());
 
-		List<AccountMember> accountMembers2 =
-			(List<AccountMember>)page2.getItems();
+			Page<AccountMember> page2 =
+				accountMemberResource.getAccountIdAccountMembersPage(
+					id, Pagination.of(accountMember2Page, 500));
 
-		Assert.assertEquals(
-			accountMembers2.toString(), 1, accountMembers2.size());
+			assertContains(
+				accountMember2, (List<AccountMember>)page2.getItems());
 
-		Page<AccountMember> page3 =
-			accountMemberResource.getAccountIdAccountMembersPage(
-				id, Pagination.of(1, (int)totalCount + 3));
+			Page<AccountMember> page3 =
+				accountMemberResource.getAccountIdAccountMembersPage(
+					id, Pagination.of(accountMember3Page, 500));
 
-		assertContains(accountMember1, (List<AccountMember>)page3.getItems());
-		assertContains(accountMember2, (List<AccountMember>)page3.getItems());
-		assertContains(accountMember3, (List<AccountMember>)page3.getItems());
+			assertContains(
+				accountMember3, (List<AccountMember>)page3.getItems());
+		}
+		else {
+			Page<AccountMember> page1 =
+				accountMemberResource.getAccountIdAccountMembersPage(
+					id, Pagination.of(1, totalCount + 2));
+
+			List<AccountMember> accountMembers1 =
+				(List<AccountMember>)page1.getItems();
+
+			Assert.assertEquals(
+				accountMembers1.toString(), totalCount + 2,
+				accountMembers1.size());
+
+			Page<AccountMember> page2 =
+				accountMemberResource.getAccountIdAccountMembersPage(
+					id, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AccountMember> accountMembers2 =
+				(List<AccountMember>)page2.getItems();
+
+			Assert.assertEquals(
+				accountMembers2.toString(), 1, accountMembers2.size());
+
+			Page<AccountMember> page3 =
+				accountMemberResource.getAccountIdAccountMembersPage(
+					id, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				accountMember1, (List<AccountMember>)page3.getItems());
+			assertContains(
+				accountMember2, (List<AccountMember>)page3.getItems());
+			assertContains(
+				accountMember3, (List<AccountMember>)page3.getItems());
+		}
 	}
 
 	protected AccountMember testGetAccountIdAccountMembersPage_addAccountMember(

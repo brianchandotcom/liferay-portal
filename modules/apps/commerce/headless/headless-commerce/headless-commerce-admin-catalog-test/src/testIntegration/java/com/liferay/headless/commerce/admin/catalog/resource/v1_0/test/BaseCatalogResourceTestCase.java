@@ -542,29 +542,55 @@ public abstract class BaseCatalogResourceTestCase {
 
 		Catalog catalog3 = testGetCatalogsPage_addCatalog(randomCatalog());
 
-		Page<Catalog> page1 = catalogResource.getCatalogsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Catalog> catalogs1 = (List<Catalog>)page1.getItems();
+			int catalog1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
+			int catalog2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
+			int catalog3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			catalogs1.toString(), totalCount + 2, catalogs1.size());
+			Page<Catalog> page1 = catalogResource.getCatalogsPage(
+				null, null, Pagination.of(catalog1Page, 500), null);
 
-		Page<Catalog> page2 = catalogResource.getCatalogsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(catalog1, (List<Catalog>)page1.getItems());
 
-		List<Catalog> catalogs2 = (List<Catalog>)page2.getItems();
+			Page<Catalog> page2 = catalogResource.getCatalogsPage(
+				null, null, Pagination.of(catalog2Page, 500), null);
 
-		Assert.assertEquals(catalogs2.toString(), 1, catalogs2.size());
+			assertContains(catalog2, (List<Catalog>)page2.getItems());
 
-		Page<Catalog> page3 = catalogResource.getCatalogsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<Catalog> page3 = catalogResource.getCatalogsPage(
+				null, null, Pagination.of(catalog3Page, 500), null);
 
-		assertContains(catalog1, (List<Catalog>)page3.getItems());
-		assertContains(catalog2, (List<Catalog>)page3.getItems());
-		assertContains(catalog3, (List<Catalog>)page3.getItems());
+			assertContains(catalog3, (List<Catalog>)page3.getItems());
+		}
+		else {
+			Page<Catalog> page1 = catalogResource.getCatalogsPage(
+				null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<Catalog> catalogs1 = (List<Catalog>)page1.getItems();
+
+			Assert.assertEquals(
+				catalogs1.toString(), totalCount + 2, catalogs1.size());
+
+			Page<Catalog> page2 = catalogResource.getCatalogsPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Catalog> catalogs2 = (List<Catalog>)page2.getItems();
+
+			Assert.assertEquals(catalogs2.toString(), 1, catalogs2.size());
+
+			Page<Catalog> page3 = catalogResource.getCatalogsPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(catalog1, (List<Catalog>)page3.getItems());
+			assertContains(catalog2, (List<Catalog>)page3.getItems());
+			assertContains(catalog3, (List<Catalog>)page3.getItems());
+		}
 	}
 
 	@Test

@@ -286,38 +286,80 @@ public abstract class BaseMappedProductResourceTestCase {
 			testGetChannelProductMappedProductsPage_addMappedProduct(
 				channelId, productId, randomMappedProduct());
 
-		Page<MappedProduct> page1 =
-			mappedProductResource.getChannelProductMappedProductsPage(
-				channelId, productId, null, null,
-				Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<MappedProduct> mappedProducts1 =
-			(List<MappedProduct>)page1.getItems();
+			int mappedProduct1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int mappedProduct2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int mappedProduct3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			mappedProducts1.toString(), totalCount + 2, mappedProducts1.size());
+			Page<MappedProduct> page1 =
+				mappedProductResource.getChannelProductMappedProductsPage(
+					channelId, productId, null, null,
+					Pagination.of(mappedProduct1Page, 500), null);
 
-		Page<MappedProduct> page2 =
-			mappedProductResource.getChannelProductMappedProductsPage(
-				channelId, productId, null, null,
-				Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				mappedProduct1, (List<MappedProduct>)page1.getItems());
 
-		List<MappedProduct> mappedProducts2 =
-			(List<MappedProduct>)page2.getItems();
+			Page<MappedProduct> page2 =
+				mappedProductResource.getChannelProductMappedProductsPage(
+					channelId, productId, null, null,
+					Pagination.of(mappedProduct2Page, 500), null);
 
-		Assert.assertEquals(
-			mappedProducts2.toString(), 1, mappedProducts2.size());
+			assertContains(
+				mappedProduct2, (List<MappedProduct>)page2.getItems());
 
-		Page<MappedProduct> page3 =
-			mappedProductResource.getChannelProductMappedProductsPage(
-				channelId, productId, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+			Page<MappedProduct> page3 =
+				mappedProductResource.getChannelProductMappedProductsPage(
+					channelId, productId, null, null,
+					Pagination.of(mappedProduct3Page, 500), null);
 
-		assertContains(mappedProduct1, (List<MappedProduct>)page3.getItems());
-		assertContains(mappedProduct2, (List<MappedProduct>)page3.getItems());
-		assertContains(mappedProduct3, (List<MappedProduct>)page3.getItems());
+			assertContains(
+				mappedProduct3, (List<MappedProduct>)page3.getItems());
+		}
+		else {
+			Page<MappedProduct> page1 =
+				mappedProductResource.getChannelProductMappedProductsPage(
+					channelId, productId, null, null,
+					Pagination.of(1, totalCount + 2), null);
+
+			List<MappedProduct> mappedProducts1 =
+				(List<MappedProduct>)page1.getItems();
+
+			Assert.assertEquals(
+				mappedProducts1.toString(), totalCount + 2,
+				mappedProducts1.size());
+
+			Page<MappedProduct> page2 =
+				mappedProductResource.getChannelProductMappedProductsPage(
+					channelId, productId, null, null,
+					Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<MappedProduct> mappedProducts2 =
+				(List<MappedProduct>)page2.getItems();
+
+			Assert.assertEquals(
+				mappedProducts2.toString(), 1, mappedProducts2.size());
+
+			Page<MappedProduct> page3 =
+				mappedProductResource.getChannelProductMappedProductsPage(
+					channelId, productId, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				mappedProduct1, (List<MappedProduct>)page3.getItems());
+			assertContains(
+				mappedProduct2, (List<MappedProduct>)page3.getItems());
+			assertContains(
+				mappedProduct3, (List<MappedProduct>)page3.getItems());
+		}
 	}
 
 	@Test

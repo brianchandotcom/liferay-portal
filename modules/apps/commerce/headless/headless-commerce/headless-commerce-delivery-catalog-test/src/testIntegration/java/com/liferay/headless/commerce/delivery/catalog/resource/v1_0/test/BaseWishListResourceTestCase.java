@@ -258,29 +258,58 @@ public abstract class BaseWishListResourceTestCase {
 		WishList wishList3 = testGetChannelWishListsPage_addWishList(
 			channelId, randomWishList());
 
-		Page<WishList> page1 = wishListResource.getChannelWishListsPage(
-			channelId, null, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<WishList> wishLists1 = (List<WishList>)page1.getItems();
+			int wishList1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int wishList2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int wishList3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			wishLists1.toString(), totalCount + 2, wishLists1.size());
+			Page<WishList> page1 = wishListResource.getChannelWishListsPage(
+				channelId, null, Pagination.of(wishList1Page, 500));
 
-		Page<WishList> page2 = wishListResource.getChannelWishListsPage(
-			channelId, null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(wishList1, (List<WishList>)page1.getItems());
 
-		List<WishList> wishLists2 = (List<WishList>)page2.getItems();
+			Page<WishList> page2 = wishListResource.getChannelWishListsPage(
+				channelId, null, Pagination.of(wishList2Page, 500));
 
-		Assert.assertEquals(wishLists2.toString(), 1, wishLists2.size());
+			assertContains(wishList2, (List<WishList>)page2.getItems());
 
-		Page<WishList> page3 = wishListResource.getChannelWishListsPage(
-			channelId, null, Pagination.of(1, (int)totalCount + 3));
+			Page<WishList> page3 = wishListResource.getChannelWishListsPage(
+				channelId, null, Pagination.of(wishList3Page, 500));
 
-		assertContains(wishList1, (List<WishList>)page3.getItems());
-		assertContains(wishList2, (List<WishList>)page3.getItems());
-		assertContains(wishList3, (List<WishList>)page3.getItems());
+			assertContains(wishList3, (List<WishList>)page3.getItems());
+		}
+		else {
+			Page<WishList> page1 = wishListResource.getChannelWishListsPage(
+				channelId, null, Pagination.of(1, totalCount + 2));
+
+			List<WishList> wishLists1 = (List<WishList>)page1.getItems();
+
+			Assert.assertEquals(
+				wishLists1.toString(), totalCount + 2, wishLists1.size());
+
+			Page<WishList> page2 = wishListResource.getChannelWishListsPage(
+				channelId, null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<WishList> wishLists2 = (List<WishList>)page2.getItems();
+
+			Assert.assertEquals(wishLists2.toString(), 1, wishLists2.size());
+
+			Page<WishList> page3 = wishListResource.getChannelWishListsPage(
+				channelId, null, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(wishList1, (List<WishList>)page3.getItems());
+			assertContains(wishList2, (List<WishList>)page3.getItems());
+			assertContains(wishList3, (List<WishList>)page3.getItems());
+		}
 	}
 
 	protected WishList testGetChannelWishListsPage_addWishList(

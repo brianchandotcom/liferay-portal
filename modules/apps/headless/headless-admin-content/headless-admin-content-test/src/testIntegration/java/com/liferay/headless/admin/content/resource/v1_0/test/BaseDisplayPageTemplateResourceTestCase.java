@@ -277,39 +277,81 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 			testGetSiteDisplayPageTemplatesPage_addDisplayPageTemplate(
 				siteId, randomDisplayPageTemplate());
 
-		Page<DisplayPageTemplate> page1 =
-			displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
-				siteId, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<DisplayPageTemplate> displayPageTemplates1 =
-			(List<DisplayPageTemplate>)page1.getItems();
+			int displayPageTemplate1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int displayPageTemplate2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int displayPageTemplate3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			displayPageTemplates1.toString(), totalCount + 2,
-			displayPageTemplates1.size());
+			Page<DisplayPageTemplate> page1 =
+				displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
+					siteId, Pagination.of(displayPageTemplate1Page, 500), null);
 
-		Page<DisplayPageTemplate> page2 =
-			displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
-				siteId, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				displayPageTemplate1,
+				(List<DisplayPageTemplate>)page1.getItems());
 
-		List<DisplayPageTemplate> displayPageTemplates2 =
-			(List<DisplayPageTemplate>)page2.getItems();
+			Page<DisplayPageTemplate> page2 =
+				displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
+					siteId, Pagination.of(displayPageTemplate2Page, 500), null);
 
-		Assert.assertEquals(
-			displayPageTemplates2.toString(), 1, displayPageTemplates2.size());
+			assertContains(
+				displayPageTemplate2,
+				(List<DisplayPageTemplate>)page2.getItems());
 
-		Page<DisplayPageTemplate> page3 =
-			displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
-				siteId, Pagination.of(1, (int)totalCount + 3), null);
+			Page<DisplayPageTemplate> page3 =
+				displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
+					siteId, Pagination.of(displayPageTemplate3Page, 500), null);
 
-		assertContains(
-			displayPageTemplate1, (List<DisplayPageTemplate>)page3.getItems());
-		assertContains(
-			displayPageTemplate2, (List<DisplayPageTemplate>)page3.getItems());
-		assertContains(
-			displayPageTemplate3, (List<DisplayPageTemplate>)page3.getItems());
+			assertContains(
+				displayPageTemplate3,
+				(List<DisplayPageTemplate>)page3.getItems());
+		}
+		else {
+			Page<DisplayPageTemplate> page1 =
+				displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
+					siteId, Pagination.of(1, totalCount + 2), null);
+
+			List<DisplayPageTemplate> displayPageTemplates1 =
+				(List<DisplayPageTemplate>)page1.getItems();
+
+			Assert.assertEquals(
+				displayPageTemplates1.toString(), totalCount + 2,
+				displayPageTemplates1.size());
+
+			Page<DisplayPageTemplate> page2 =
+				displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
+					siteId, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DisplayPageTemplate> displayPageTemplates2 =
+				(List<DisplayPageTemplate>)page2.getItems();
+
+			Assert.assertEquals(
+				displayPageTemplates2.toString(), 1,
+				displayPageTemplates2.size());
+
+			Page<DisplayPageTemplate> page3 =
+				displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
+					siteId, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				displayPageTemplate1,
+				(List<DisplayPageTemplate>)page3.getItems());
+			assertContains(
+				displayPageTemplate2,
+				(List<DisplayPageTemplate>)page3.getItems());
+			assertContains(
+				displayPageTemplate3,
+				(List<DisplayPageTemplate>)page3.getItems());
+		}
 	}
 
 	@Test

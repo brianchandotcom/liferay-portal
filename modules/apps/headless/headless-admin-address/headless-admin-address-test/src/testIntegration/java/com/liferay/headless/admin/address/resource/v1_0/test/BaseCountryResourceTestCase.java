@@ -235,29 +235,55 @@ public abstract class BaseCountryResourceTestCase {
 
 		Country country3 = testGetCountriesPage_addCountry(randomCountry());
 
-		Page<Country> page1 = countryResource.getCountriesPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Country> countries1 = (List<Country>)page1.getItems();
+			int country1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
+			int country2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
+			int country3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			countries1.toString(), totalCount + 2, countries1.size());
+			Page<Country> page1 = countryResource.getCountriesPage(
+				null, null, Pagination.of(country1Page, 500), null);
 
-		Page<Country> page2 = countryResource.getCountriesPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(country1, (List<Country>)page1.getItems());
 
-		List<Country> countries2 = (List<Country>)page2.getItems();
+			Page<Country> page2 = countryResource.getCountriesPage(
+				null, null, Pagination.of(country2Page, 500), null);
 
-		Assert.assertEquals(countries2.toString(), 1, countries2.size());
+			assertContains(country2, (List<Country>)page2.getItems());
 
-		Page<Country> page3 = countryResource.getCountriesPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<Country> page3 = countryResource.getCountriesPage(
+				null, null, Pagination.of(country3Page, 500), null);
 
-		assertContains(country1, (List<Country>)page3.getItems());
-		assertContains(country2, (List<Country>)page3.getItems());
-		assertContains(country3, (List<Country>)page3.getItems());
+			assertContains(country3, (List<Country>)page3.getItems());
+		}
+		else {
+			Page<Country> page1 = countryResource.getCountriesPage(
+				null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<Country> countries1 = (List<Country>)page1.getItems();
+
+			Assert.assertEquals(
+				countries1.toString(), totalCount + 2, countries1.size());
+
+			Page<Country> page2 = countryResource.getCountriesPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Country> countries2 = (List<Country>)page2.getItems();
+
+			Assert.assertEquals(countries2.toString(), 1, countries2.size());
+
+			Page<Country> page3 = countryResource.getCountriesPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(country1, (List<Country>)page3.getItems());
+			assertContains(country2, (List<Country>)page3.getItems());
+			assertContains(country3, (List<Country>)page3.getItems());
+		}
 	}
 
 	@Test

@@ -369,43 +369,85 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			testGetNotificationTemplatesPage_addNotificationTemplate(
 				randomNotificationTemplate());
 
-		Page<NotificationTemplate> page1 =
-			notificationTemplateResource.getNotificationTemplatesPage(
-				null, null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<NotificationTemplate> notificationTemplates1 =
-			(List<NotificationTemplate>)page1.getItems();
+			int notificationTemplate1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int notificationTemplate2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int notificationTemplate3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			notificationTemplates1.toString(), totalCount + 2,
-			notificationTemplates1.size());
+			Page<NotificationTemplate> page1 =
+				notificationTemplateResource.getNotificationTemplatesPage(
+					null, null, null,
+					Pagination.of(notificationTemplate1Page, 500), null);
 
-		Page<NotificationTemplate> page2 =
-			notificationTemplateResource.getNotificationTemplatesPage(
-				null, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				notificationTemplate1,
+				(List<NotificationTemplate>)page1.getItems());
 
-		List<NotificationTemplate> notificationTemplates2 =
-			(List<NotificationTemplate>)page2.getItems();
+			Page<NotificationTemplate> page2 =
+				notificationTemplateResource.getNotificationTemplatesPage(
+					null, null, null,
+					Pagination.of(notificationTemplate2Page, 500), null);
 
-		Assert.assertEquals(
-			notificationTemplates2.toString(), 1,
-			notificationTemplates2.size());
+			assertContains(
+				notificationTemplate2,
+				(List<NotificationTemplate>)page2.getItems());
 
-		Page<NotificationTemplate> page3 =
-			notificationTemplateResource.getNotificationTemplatesPage(
-				null, null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<NotificationTemplate> page3 =
+				notificationTemplateResource.getNotificationTemplatesPage(
+					null, null, null,
+					Pagination.of(notificationTemplate3Page, 500), null);
 
-		assertContains(
-			notificationTemplate1,
-			(List<NotificationTemplate>)page3.getItems());
-		assertContains(
-			notificationTemplate2,
-			(List<NotificationTemplate>)page3.getItems());
-		assertContains(
-			notificationTemplate3,
-			(List<NotificationTemplate>)page3.getItems());
+			assertContains(
+				notificationTemplate3,
+				(List<NotificationTemplate>)page3.getItems());
+		}
+		else {
+			Page<NotificationTemplate> page1 =
+				notificationTemplateResource.getNotificationTemplatesPage(
+					null, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<NotificationTemplate> notificationTemplates1 =
+				(List<NotificationTemplate>)page1.getItems();
+
+			Assert.assertEquals(
+				notificationTemplates1.toString(), totalCount + 2,
+				notificationTemplates1.size());
+
+			Page<NotificationTemplate> page2 =
+				notificationTemplateResource.getNotificationTemplatesPage(
+					null, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<NotificationTemplate> notificationTemplates2 =
+				(List<NotificationTemplate>)page2.getItems();
+
+			Assert.assertEquals(
+				notificationTemplates2.toString(), 1,
+				notificationTemplates2.size());
+
+			Page<NotificationTemplate> page3 =
+				notificationTemplateResource.getNotificationTemplatesPage(
+					null, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
+
+			assertContains(
+				notificationTemplate1,
+				(List<NotificationTemplate>)page3.getItems());
+			assertContains(
+				notificationTemplate2,
+				(List<NotificationTemplate>)page3.getItems());
+			assertContains(
+				notificationTemplate3,
+				(List<NotificationTemplate>)page3.getItems());
+		}
 	}
 
 	@Test

@@ -284,32 +284,64 @@ public abstract class BaseWarehouseResourceTestCase {
 			testGetCommerceAdminSiteSettingGroupWarehousePage_addWarehouse(
 				groupId, randomWarehouse());
 
-		Page<Warehouse> page1 =
-			warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
-				groupId, null, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Warehouse> warehouses1 = (List<Warehouse>)page1.getItems();
+			int warehouse1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int warehouse2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int warehouse3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			warehouses1.toString(), totalCount + 2, warehouses1.size());
+			Page<Warehouse> page1 =
+				warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
+					groupId, null, Pagination.of(warehouse1Page, 500));
 
-		Page<Warehouse> page2 =
-			warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
-				groupId, null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(warehouse1, (List<Warehouse>)page1.getItems());
 
-		List<Warehouse> warehouses2 = (List<Warehouse>)page2.getItems();
+			Page<Warehouse> page2 =
+				warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
+					groupId, null, Pagination.of(warehouse2Page, 500));
 
-		Assert.assertEquals(warehouses2.toString(), 1, warehouses2.size());
+			assertContains(warehouse2, (List<Warehouse>)page2.getItems());
 
-		Page<Warehouse> page3 =
-			warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
-				groupId, null, Pagination.of(1, (int)totalCount + 3));
+			Page<Warehouse> page3 =
+				warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
+					groupId, null, Pagination.of(warehouse3Page, 500));
 
-		assertContains(warehouse1, (List<Warehouse>)page3.getItems());
-		assertContains(warehouse2, (List<Warehouse>)page3.getItems());
-		assertContains(warehouse3, (List<Warehouse>)page3.getItems());
+			assertContains(warehouse3, (List<Warehouse>)page3.getItems());
+		}
+		else {
+			Page<Warehouse> page1 =
+				warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
+					groupId, null, Pagination.of(1, totalCount + 2));
+
+			List<Warehouse> warehouses1 = (List<Warehouse>)page1.getItems();
+
+			Assert.assertEquals(
+				warehouses1.toString(), totalCount + 2, warehouses1.size());
+
+			Page<Warehouse> page2 =
+				warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
+					groupId, null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Warehouse> warehouses2 = (List<Warehouse>)page2.getItems();
+
+			Assert.assertEquals(warehouses2.toString(), 1, warehouses2.size());
+
+			Page<Warehouse> page3 =
+				warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
+					groupId, null, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(warehouse1, (List<Warehouse>)page3.getItems());
+			assertContains(warehouse2, (List<Warehouse>)page3.getItems());
+			assertContains(warehouse3, (List<Warehouse>)page3.getItems());
+		}
 	}
 
 	protected Warehouse

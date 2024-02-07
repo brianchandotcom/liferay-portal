@@ -394,29 +394,58 @@ public abstract class BaseUserGroupResourceTestCase {
 		UserGroup userGroup3 = testGetUserGroupsPage_addUserGroup(
 			randomUserGroup());
 
-		Page<UserGroup> page1 = userGroupResource.getUserGroupsPage(
-			null, null, Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<UserGroup> userGroups1 = (List<UserGroup>)page1.getItems();
+			int userGroup1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int userGroup2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int userGroup3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			userGroups1.toString(), totalCount + 2, userGroups1.size());
+			Page<UserGroup> page1 = userGroupResource.getUserGroupsPage(
+				null, null, Pagination.of(userGroup1Page, 500), null);
 
-		Page<UserGroup> page2 = userGroupResource.getUserGroupsPage(
-			null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(userGroup1, (List<UserGroup>)page1.getItems());
 
-		List<UserGroup> userGroups2 = (List<UserGroup>)page2.getItems();
+			Page<UserGroup> page2 = userGroupResource.getUserGroupsPage(
+				null, null, Pagination.of(userGroup2Page, 500), null);
 
-		Assert.assertEquals(userGroups2.toString(), 1, userGroups2.size());
+			assertContains(userGroup2, (List<UserGroup>)page2.getItems());
 
-		Page<UserGroup> page3 = userGroupResource.getUserGroupsPage(
-			null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<UserGroup> page3 = userGroupResource.getUserGroupsPage(
+				null, null, Pagination.of(userGroup3Page, 500), null);
 
-		assertContains(userGroup1, (List<UserGroup>)page3.getItems());
-		assertContains(userGroup2, (List<UserGroup>)page3.getItems());
-		assertContains(userGroup3, (List<UserGroup>)page3.getItems());
+			assertContains(userGroup3, (List<UserGroup>)page3.getItems());
+		}
+		else {
+			Page<UserGroup> page1 = userGroupResource.getUserGroupsPage(
+				null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<UserGroup> userGroups1 = (List<UserGroup>)page1.getItems();
+
+			Assert.assertEquals(
+				userGroups1.toString(), totalCount + 2, userGroups1.size());
+
+			Page<UserGroup> page2 = userGroupResource.getUserGroupsPage(
+				null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<UserGroup> userGroups2 = (List<UserGroup>)page2.getItems();
+
+			Assert.assertEquals(userGroups2.toString(), 1, userGroups2.size());
+
+			Page<UserGroup> page3 = userGroupResource.getUserGroupsPage(
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(userGroup1, (List<UserGroup>)page3.getItems());
+			assertContains(userGroup2, (List<UserGroup>)page3.getItems());
+			assertContains(userGroup3, (List<UserGroup>)page3.getItems());
+		}
 	}
 
 	@Test

@@ -254,29 +254,55 @@ public abstract class BaseSegmentResourceTestCase {
 		Segment segment3 = testGetSiteSegmentsPage_addSegment(
 			siteId, randomSegment());
 
-		Page<Segment> page1 = segmentResource.getSiteSegmentsPage(
-			siteId, Pagination.of(1, totalCount + 2));
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<Segment> segments1 = (List<Segment>)page1.getItems();
+			int segment1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
+			int segment2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
+			int segment3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			segments1.toString(), totalCount + 2, segments1.size());
+			Page<Segment> page1 = segmentResource.getSiteSegmentsPage(
+				siteId, Pagination.of(segment1Page, 500));
 
-		Page<Segment> page2 = segmentResource.getSiteSegmentsPage(
-			siteId, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(segment1, (List<Segment>)page1.getItems());
 
-		List<Segment> segments2 = (List<Segment>)page2.getItems();
+			Page<Segment> page2 = segmentResource.getSiteSegmentsPage(
+				siteId, Pagination.of(segment2Page, 500));
 
-		Assert.assertEquals(segments2.toString(), 1, segments2.size());
+			assertContains(segment2, (List<Segment>)page2.getItems());
 
-		Page<Segment> page3 = segmentResource.getSiteSegmentsPage(
-			siteId, Pagination.of(1, (int)totalCount + 3));
+			Page<Segment> page3 = segmentResource.getSiteSegmentsPage(
+				siteId, Pagination.of(segment3Page, 500));
 
-		assertContains(segment1, (List<Segment>)page3.getItems());
-		assertContains(segment2, (List<Segment>)page3.getItems());
-		assertContains(segment3, (List<Segment>)page3.getItems());
+			assertContains(segment3, (List<Segment>)page3.getItems());
+		}
+		else {
+			Page<Segment> page1 = segmentResource.getSiteSegmentsPage(
+				siteId, Pagination.of(1, totalCount + 2));
+
+			List<Segment> segments1 = (List<Segment>)page1.getItems();
+
+			Assert.assertEquals(
+				segments1.toString(), totalCount + 2, segments1.size());
+
+			Page<Segment> page2 = segmentResource.getSiteSegmentsPage(
+				siteId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Segment> segments2 = (List<Segment>)page2.getItems();
+
+			Assert.assertEquals(segments2.toString(), 1, segments2.size());
+
+			Page<Segment> page3 = segmentResource.getSiteSegmentsPage(
+				siteId, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(segment1, (List<Segment>)page3.getItems());
+			assertContains(segment2, (List<Segment>)page3.getItems());
+			assertContains(segment3, (List<Segment>)page3.getItems());
+		}
 	}
 
 	protected Segment testGetSiteSegmentsPage_addSegment(

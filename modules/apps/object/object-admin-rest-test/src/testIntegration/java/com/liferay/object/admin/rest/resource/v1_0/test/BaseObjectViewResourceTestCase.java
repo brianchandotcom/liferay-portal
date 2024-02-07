@@ -286,38 +286,77 @@ public abstract class BaseObjectViewResourceTestCase {
 			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_addObjectView(
 				externalReferenceCode, randomObjectView());
 
-		Page<ObjectView> page1 =
-			objectViewResource.
-				getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
-					externalReferenceCode, null,
-					Pagination.of(1, totalCount + 2), null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<ObjectView> objectViews1 = (List<ObjectView>)page1.getItems();
+			int objectView1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int objectView2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int objectView3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			objectViews1.toString(), totalCount + 2, objectViews1.size());
+			Page<ObjectView> page1 =
+				objectViewResource.
+					getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+						externalReferenceCode, null,
+						Pagination.of(objectView1Page, 500), null);
 
-		Page<ObjectView> page2 =
-			objectViewResource.
-				getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
-					externalReferenceCode, null,
-					Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(objectView1, (List<ObjectView>)page1.getItems());
 
-		List<ObjectView> objectViews2 = (List<ObjectView>)page2.getItems();
+			Page<ObjectView> page2 =
+				objectViewResource.
+					getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+						externalReferenceCode, null,
+						Pagination.of(objectView2Page, 500), null);
 
-		Assert.assertEquals(objectViews2.toString(), 1, objectViews2.size());
+			assertContains(objectView2, (List<ObjectView>)page2.getItems());
 
-		Page<ObjectView> page3 =
-			objectViewResource.
-				getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
-					externalReferenceCode, null,
-					Pagination.of(1, (int)totalCount + 3), null);
+			Page<ObjectView> page3 =
+				objectViewResource.
+					getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+						externalReferenceCode, null,
+						Pagination.of(objectView3Page, 500), null);
 
-		assertContains(objectView1, (List<ObjectView>)page3.getItems());
-		assertContains(objectView2, (List<ObjectView>)page3.getItems());
-		assertContains(objectView3, (List<ObjectView>)page3.getItems());
+			assertContains(objectView3, (List<ObjectView>)page3.getItems());
+		}
+		else {
+			Page<ObjectView> page1 =
+				objectViewResource.
+					getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+						externalReferenceCode, null,
+						Pagination.of(1, totalCount + 2), null);
+
+			List<ObjectView> objectViews1 = (List<ObjectView>)page1.getItems();
+
+			Assert.assertEquals(
+				objectViews1.toString(), totalCount + 2, objectViews1.size());
+
+			Page<ObjectView> page2 =
+				objectViewResource.
+					getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+						externalReferenceCode, null,
+						Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ObjectView> objectViews2 = (List<ObjectView>)page2.getItems();
+
+			Assert.assertEquals(
+				objectViews2.toString(), 1, objectViews2.size());
+
+			Page<ObjectView> page3 =
+				objectViewResource.
+					getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+						externalReferenceCode, null,
+						Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(objectView1, (List<ObjectView>)page3.getItems());
+			assertContains(objectView2, (List<ObjectView>)page3.getItems());
+			assertContains(objectView3, (List<ObjectView>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -622,35 +661,71 @@ public abstract class BaseObjectViewResourceTestCase {
 			testGetObjectDefinitionObjectViewsPage_addObjectView(
 				objectDefinitionId, randomObjectView());
 
-		Page<ObjectView> page1 =
-			objectViewResource.getObjectDefinitionObjectViewsPage(
-				objectDefinitionId, null, Pagination.of(1, totalCount + 2),
-				null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<ObjectView> objectViews1 = (List<ObjectView>)page1.getItems();
+			int objectView1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int objectView2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int objectView3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			objectViews1.toString(), totalCount + 2, objectViews1.size());
+			Page<ObjectView> page1 =
+				objectViewResource.getObjectDefinitionObjectViewsPage(
+					objectDefinitionId, null,
+					Pagination.of(objectView1Page, 500), null);
 
-		Page<ObjectView> page2 =
-			objectViewResource.getObjectDefinitionObjectViewsPage(
-				objectDefinitionId, null, Pagination.of(2, totalCount + 2),
-				null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(objectView1, (List<ObjectView>)page1.getItems());
 
-		List<ObjectView> objectViews2 = (List<ObjectView>)page2.getItems();
+			Page<ObjectView> page2 =
+				objectViewResource.getObjectDefinitionObjectViewsPage(
+					objectDefinitionId, null,
+					Pagination.of(objectView2Page, 500), null);
 
-		Assert.assertEquals(objectViews2.toString(), 1, objectViews2.size());
+			assertContains(objectView2, (List<ObjectView>)page2.getItems());
 
-		Page<ObjectView> page3 =
-			objectViewResource.getObjectDefinitionObjectViewsPage(
-				objectDefinitionId, null, Pagination.of(1, (int)totalCount + 3),
-				null);
+			Page<ObjectView> page3 =
+				objectViewResource.getObjectDefinitionObjectViewsPage(
+					objectDefinitionId, null,
+					Pagination.of(objectView3Page, 500), null);
 
-		assertContains(objectView1, (List<ObjectView>)page3.getItems());
-		assertContains(objectView2, (List<ObjectView>)page3.getItems());
-		assertContains(objectView3, (List<ObjectView>)page3.getItems());
+			assertContains(objectView3, (List<ObjectView>)page3.getItems());
+		}
+		else {
+			Page<ObjectView> page1 =
+				objectViewResource.getObjectDefinitionObjectViewsPage(
+					objectDefinitionId, null, Pagination.of(1, totalCount + 2),
+					null);
+
+			List<ObjectView> objectViews1 = (List<ObjectView>)page1.getItems();
+
+			Assert.assertEquals(
+				objectViews1.toString(), totalCount + 2, objectViews1.size());
+
+			Page<ObjectView> page2 =
+				objectViewResource.getObjectDefinitionObjectViewsPage(
+					objectDefinitionId, null, Pagination.of(2, totalCount + 2),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ObjectView> objectViews2 = (List<ObjectView>)page2.getItems();
+
+			Assert.assertEquals(
+				objectViews2.toString(), 1, objectViews2.size());
+
+			Page<ObjectView> page3 =
+				objectViewResource.getObjectDefinitionObjectViewsPage(
+					objectDefinitionId, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(objectView1, (List<ObjectView>)page3.getItems());
+			assertContains(objectView2, (List<ObjectView>)page3.getItems());
+			assertContains(objectView3, (List<ObjectView>)page3.getItems());
+		}
 	}
 
 	@Test

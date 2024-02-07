@@ -540,42 +540,80 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
 				siteId, randomBlogPostingImage());
 
-		Page<BlogPostingImage> page1 =
-			blogPostingImageResource.getSiteBlogPostingImagesPage(
-				siteId, null, null, null, Pagination.of(1, totalCount + 2),
-				null);
+		if (totalCount >= 498) {
+			double totalCountDouble = GetterUtil.getDouble(totalCount);
 
-		List<BlogPostingImage> blogPostingImages1 =
-			(List<BlogPostingImage>)page1.getItems();
+			int blogPostingImage1Page = (int)Math.ceil(
+				(totalCountDouble + 1.0) / 500.0);
+			int blogPostingImage2Page = (int)Math.ceil(
+				(totalCountDouble + 2.0) / 500.0);
+			int blogPostingImage3Page = (int)Math.ceil(
+				(totalCountDouble + 3.0) / 500.0);
 
-		Assert.assertEquals(
-			blogPostingImages1.toString(), totalCount + 2,
-			blogPostingImages1.size());
+			Page<BlogPostingImage> page1 =
+				blogPostingImageResource.getSiteBlogPostingImagesPage(
+					siteId, null, null, null,
+					Pagination.of(blogPostingImage1Page, 500), null);
 
-		Page<BlogPostingImage> page2 =
-			blogPostingImageResource.getSiteBlogPostingImagesPage(
-				siteId, null, null, null, Pagination.of(2, totalCount + 2),
-				null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				blogPostingImage1, (List<BlogPostingImage>)page1.getItems());
 
-		List<BlogPostingImage> blogPostingImages2 =
-			(List<BlogPostingImage>)page2.getItems();
+			Page<BlogPostingImage> page2 =
+				blogPostingImageResource.getSiteBlogPostingImagesPage(
+					siteId, null, null, null,
+					Pagination.of(blogPostingImage2Page, 500), null);
 
-		Assert.assertEquals(
-			blogPostingImages2.toString(), 1, blogPostingImages2.size());
+			assertContains(
+				blogPostingImage2, (List<BlogPostingImage>)page2.getItems());
 
-		Page<BlogPostingImage> page3 =
-			blogPostingImageResource.getSiteBlogPostingImagesPage(
-				siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
-				null);
+			Page<BlogPostingImage> page3 =
+				blogPostingImageResource.getSiteBlogPostingImagesPage(
+					siteId, null, null, null,
+					Pagination.of(blogPostingImage3Page, 500), null);
 
-		assertContains(
-			blogPostingImage1, (List<BlogPostingImage>)page3.getItems());
-		assertContains(
-			blogPostingImage2, (List<BlogPostingImage>)page3.getItems());
-		assertContains(
-			blogPostingImage3, (List<BlogPostingImage>)page3.getItems());
+			assertContains(
+				blogPostingImage3, (List<BlogPostingImage>)page3.getItems());
+		}
+		else {
+			Page<BlogPostingImage> page1 =
+				blogPostingImageResource.getSiteBlogPostingImagesPage(
+					siteId, null, null, null, Pagination.of(1, totalCount + 2),
+					null);
+
+			List<BlogPostingImage> blogPostingImages1 =
+				(List<BlogPostingImage>)page1.getItems();
+
+			Assert.assertEquals(
+				blogPostingImages1.toString(), totalCount + 2,
+				blogPostingImages1.size());
+
+			Page<BlogPostingImage> page2 =
+				blogPostingImageResource.getSiteBlogPostingImagesPage(
+					siteId, null, null, null, Pagination.of(2, totalCount + 2),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<BlogPostingImage> blogPostingImages2 =
+				(List<BlogPostingImage>)page2.getItems();
+
+			Assert.assertEquals(
+				blogPostingImages2.toString(), 1, blogPostingImages2.size());
+
+			Page<BlogPostingImage> page3 =
+				blogPostingImageResource.getSiteBlogPostingImagesPage(
+					siteId, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				blogPostingImage1, (List<BlogPostingImage>)page3.getItems());
+			assertContains(
+				blogPostingImage2, (List<BlogPostingImage>)page3.getItems());
+			assertContains(
+				blogPostingImage3, (List<BlogPostingImage>)page3.getItems());
+		}
 	}
 
 	@Test

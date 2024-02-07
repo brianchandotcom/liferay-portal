@@ -234,6 +234,7 @@ PlusStatementCheck | [Styling](styling_checks.markdown#styling-checks) | Perform
 [PortletURLBuilderCheck](check/builder_check.markdown#buildercheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | Checks that `PortletURLBuilder` is used when possible. |
 PrimitiveWrapperInstantiationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases where `new Type` is used for primitive types (use `Type.valueOf` instead). |
 PrincipalExceptionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds calls to `PrincipalException.class.getName()` (use `PrincipalException.getNestedClasses()` instead). |
+RESTDTOSetCallCheck | [Performance](performance_checks.markdown#performance-checks) | Ensures using set calls with `UnsafeSupplier` parameter for REST DTO. |
 RedundantBranchingStatementCheck | [Performance](performance_checks.markdown#performance-checks) | Finds unnecessary branching (`break`, `continue` or `return`) statements. |
 [RedundantLogCheck](check/redundant_log_check.markdown#redundantlogcheck) | [Performance](performance_checks.markdown#performance-checks) | Finds unnecessary logs. |
 ReferenceAnnotationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on classes with @Reference annotation. |

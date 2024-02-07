@@ -876,6 +876,12 @@ AUI.add(
 					}
 					else {
 						instance
+							.byId('downConfigurationArrow_' + portletId)
+							.hide();
+						instance
+							.byId('rightConfigurationArrow_' + portletId)
+							.show();
+						instance
 							.byId('showChangeConfiguration_' + portletId)
 							.show();
 					}

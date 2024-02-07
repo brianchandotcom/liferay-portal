@@ -1,36 +1,53 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+/* global MktoForms2, mktoForms2BaseStyle, mktoForms2ThemeStyle*/
+/* eslint no-undef: "error"*/
+
 const mktoCallback = function (form) {
-	var formEl = form.getFormElem()[0];
+	const formElement = form.getFormElem()[0];
 
-	var arrayify = getSelection.call.bind([].slice);
+	const arrayify = getSelection.call.bind([].slice);
 
-	var styledEls = arrayify(formEl.querySelectorAll('[style]')).concat(formEl);
+	const styledEls = arrayify(formElement.querySelectorAll('[style]')).concat(
+		formElement
+	);
 
-	styledEls.forEach(function (el) {
-		el.removeAttribute('style');
+	styledEls.forEach((element) => {
+		element.removeAttribute('style');
 	});
 
-	formEl.querySelectorAll('style').forEach(function (el) {
-		el.remove();
+	formElement.querySelectorAll('style').forEach((element) => {
+		element.remove();
 	});
 
-	var styleSheets = arrayify(document.styleSheets);
+	const styleSheets = arrayify(document.styleSheets);
 
-	styleSheets.forEach(function (stylesheet) {
+	styleSheets.forEach((stylesheet) => {
 		if (
 			[mktoForms2BaseStyle, mktoForms2ThemeStyle].indexOf(
 				stylesheet.ownerNode
-			) != -1 ||
-			formEl.contains(stylesheet.ownerNode)
+			) !== -1 ||
+			formElement.contains(stylesheet.ownerNode)
 		) {
 			stylesheet.disabled = true;
 		}
 	});
 
-	var buttonElem = form.getFormElem().find('button.mktoButton');
+	const buttonElem = form.getFormElem().find('button.mktoButton');
 
 	if (buttonElem) {
 		buttonElem.html(Liferay.Language.get(configuration.submitButtonText));
 	}
 };
 
-MktoForms2.loadForm(configuration.podId, configuration.munchkinId, configuration.formId, mktoCallback);
+if (MktoForms2) {
+	MktoForms2.loadForm(
+		configuration.podId,
+		configuration.munchkinId,
+		configuration.formId,
+		mktoCallback
+	);
+}

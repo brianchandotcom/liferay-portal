@@ -3,32 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import DropdownProvider from 'liferay-dotcom-utils';
+import {
+	DropdownProvider,
+	SpatialNavigationProvider,
+} from 'liferay-dotcom-utils';
 
 window.addEventListener('load', () => {
 	const searchInput = fragmentElement.querySelector('.search-input');
 
 	searchInput.value = '';
 
-	new DropdownProvider(
-		'.account-info',
-		'.account-info',
-		'menu-open'
-	);
+	new DropdownProvider('.account-info', '.account-info', 'menu-open');
 
-	new DropdownProvider(
-		'.account-info',
-		'.account-dropdown',
-		'show',
-		true
-	);
+	new DropdownProvider('.account-info', '.account-dropdown', 'show', true);
 
-	new DropdownProvider(
-		'.sites',
-		'.liferay-sites-dropdown',
-		'show',
-		true
-	);
+	new DropdownProvider('.sites', '.liferay-sites-dropdown', 'show', true);
 
 	new DropdownProvider('.sites', '.sites', 'show', true);
 
@@ -51,19 +40,14 @@ window.addEventListener('load', () => {
 		'dropdown-open',
 		false,
 		(menu) => {
-			adtSpatialNavigationProvider.addFocusableClasses(menu);
+			SpatialNavigationProvider.addFocusableClasses(menu);
 		},
 		(menu) => {
-			adtSpatialNavigationProvider.removeFocusableClasses(menu);
+			SpatialNavigationProvider.removeFocusableClasses(menu);
 		}
 	);
 
-	new DropdownProvider(
-		'.language',
-		'.language-selector',
-		'list-open',
-		true
-	);
+	new DropdownProvider('.language', '.language-selector', 'list-open', true);
 
 	new DropdownProvider(
 		'.language',

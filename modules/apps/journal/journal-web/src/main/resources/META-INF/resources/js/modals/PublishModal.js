@@ -45,7 +45,7 @@ export default function PublishModal({
 			<ClayModal.Header>{heading}</ClayModal.Header>
 
 			<ClayModal.Body className="m-0">
-				{showErrorAlert ? (
+				{showErrorAlert && dateError ? (
 					<ClayAlert
 						displayType="danger"
 						onClose={() => setShowErrorAlert(false)}
@@ -90,14 +90,24 @@ export default function PublishModal({
 							displayType="primary"
 							form={formId}
 							onClick={() => {
-								if (dateError) {
+								if (!displayDate) {
+									setDateError(
+										Liferay.Language.get(
+											'please-enter-a-valid-date'
+										)
+									);
+									setShowErrorAlert(true);
+								}
+								else if (dateError) {
 									setShowErrorAlert(true);
 								}
 								else {
 									onPublishButtonClick();
 								}
 							}}
-							type={!dateError ? 'submit' : 'button'}
+							type={
+								!dateError && displayDate ? 'submit' : 'button'
+							}
 						>
 							{button}
 						</ClayButton>

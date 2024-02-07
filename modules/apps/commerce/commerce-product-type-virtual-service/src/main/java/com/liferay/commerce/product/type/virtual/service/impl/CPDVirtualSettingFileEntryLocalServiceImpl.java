@@ -15,8 +15,12 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.io.InputStream;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -71,6 +75,18 @@ public class CPDVirtualSettingFileEntryLocalServiceImpl
 
 		return cpdVirtualSettingFileEntryPersistence.update(
 			cpdVirtualSettingFileEntry);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long userId, long groupId, String className, long classPK,
+			String serviceName, long folderId, InputStream inputStream,
+			String fileName, String mimeType)
+		throws PortalException {
+
+		return _portletFileRepository.addPortletFileEntry(
+			null, groupId, userId, className, classPK, serviceName, folderId,
+			inputStream, fileName, mimeType, false);
 	}
 
 	@Override
@@ -153,6 +169,9 @@ public class CPDVirtualSettingFileEntryLocalServiceImpl
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private UserLocalService _userLocalService;

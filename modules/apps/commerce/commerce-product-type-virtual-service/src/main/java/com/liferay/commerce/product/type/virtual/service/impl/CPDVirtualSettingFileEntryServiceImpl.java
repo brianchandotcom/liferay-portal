@@ -16,9 +16,12 @@ import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettin
 import com.liferay.commerce.product.type.virtual.service.base.CPDVirtualSettingFileEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+
+import java.io.InputStream;
 
 import java.util.List;
 
@@ -51,6 +54,28 @@ public class CPDVirtualSettingFileEntryServiceImpl
 			addCPDVirtualSettingFileEntry(
 				getUserId(), groupId, cpDefinitionVirtualSettingId, fileEntryId,
 				url, version);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long groupId, long folderId, InputStream inputStream,
+			String fileName, String mimeType, String serviceName)
+		throws PortalException {
+
+		CommerceCatalog commerceCatalog =
+			_commerceCatalogLocalService.fetchCommerceCatalogByGroupId(groupId);
+
+		if (commerceCatalog == null) {
+			throw new PrincipalException();
+		}
+
+		_commerceCatalogModelResourcePermission.check(
+			getPermissionChecker(), commerceCatalog, ActionKeys.UPDATE);
+
+		return cpdVirtualSettingFileEntryLocalService.addFileEntry(
+			getUserId(), groupId, CommerceCatalog.class.getName(),
+			commerceCatalog.getCommerceCatalogId(), serviceName, folderId,
+			inputStream, fileName, mimeType);
 	}
 
 	@Override

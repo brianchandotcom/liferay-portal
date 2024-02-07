@@ -7,6 +7,8 @@ package com.liferay.commerce.product.type.virtual.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -28,6 +30,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.string.StringPool;
@@ -247,18 +250,26 @@ public class CPDefinitionVirtualSettingDisplayContext
 			RequestBackedPortletURLFactoryUtil.create(
 				cpRequestHelper.getRenderRequest());
 
-		FileItemSelectorCriterion fileItemSelectorCriterion =
-			new FileItemSelectorCriterion();
-
-		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			Collections.<ItemSelectorReturnType>singletonList(
-				new FileEntryItemSelectorReturnType()));
-
 		return String.valueOf(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory,
-				GroupLocalServiceUtil.getGroup(_getGroupId()), 0,
-				"uploadCPDefinitionVirtualSetting", fileItemSelectorCriterion));
+				GroupLocalServiceUtil.getGroup(_getGroupId()), _getGroupId(),
+				"uploadCPDefinitionVirtualSetting",
+				UploadItemSelectorCriterion.builder(
+				).desiredItemSelectorReturnTypes(
+					new FileEntryItemSelectorReturnType()
+				).repositoryName(
+					CPConstants.SERVICE_NAME_PRODUCT
+				).url(
+					PortletURLBuilder.create(
+						requestBackedPortletURLFactory.createActionURL(
+							CPPortletKeys.CP_DEFINITIONS)
+					).setActionName(
+						"/cp_definitions/upload_cpd_virtual_setting_file_entry"
+					).setParameter(
+						"catalogGroupId", _getGroupId()
+					).buildString()
+				).build()));
 	}
 
 	public JournalArticle getJournalArticle() throws PortalException {
@@ -293,6 +304,22 @@ public class CPDefinitionVirtualSettingDisplayContext
 		}
 
 		return null;
+	}
+
+	public String getSampleItemSelctorURL() throws PortalException {
+		FileItemSelectorCriterion fileItemSelectorCriterion =
+			new FileItemSelectorCriterion();
+
+		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			Collections.<ItemSelectorReturnType>singletonList(
+				new FileEntryItemSelectorReturnType()));
+
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(
+					cpRequestHelper.getRenderRequest()),
+				GroupLocalServiceUtil.getGroup(_getGroupId()), 0,
+				"uploadCPDefinitionVirtualSetting", fileItemSelectorCriterion));
 	}
 
 	@Override

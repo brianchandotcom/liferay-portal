@@ -51,6 +51,10 @@ public class ProductSpecificationDTOConverter
 				setId(
 					cpDefinitionSpecificationOptionValue::
 						getCPDefinitionSpecificationOptionValueId);
+				setKey(cpDefinitionSpecificationOptionValue::getKey);
+				setLabel(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpSpecificationOption.getTitleMap()));
 				setOptionCategoryId(
 					cpDefinitionSpecificationOptionValue::
 						getCPOptionCategoryId);

@@ -7,6 +7,7 @@ import groupBy from 'lodash.groupby';
 import isEqual from 'lodash.isequal';
 
 import loadClientExtensions from '../utils/client_extensions/loadClientExtensions';
+import loadEditorClientExtensions from '../utils/client_extensions/loadEditorClientExtensions';
 import DynamicSelect from './DynamicSelect';
 import BREAKPOINTS from './breakpoints';
 import {
@@ -268,6 +269,7 @@ Liferay.Util.isPhone = isPhone;
 Liferay.Util.isTablet = isTablet;
 
 Liferay.Util.loadClientExtensions = loadClientExtensions;
+Liferay.Util.loadEditorClientExtensions = loadEditorClientExtensions;
 Liferay.Util.navigate = navigate;
 Liferay.Util.ns = ns;
 Liferay.Util.objectToFormData = objectToFormData;

@@ -85,6 +85,7 @@ export {default as createResourceURL} from './liferay/util/portlet_url/create_re
 // Client Extensions API
 
 export {default as loadClientExtensions} from './utils/client_extensions/loadClientExtensions';
+export {default as loadEditorClientExtensions} from './utils/client_extensions/loadEditorClientExtensions';
 export {loadModule} from './utils/client_extensions/loadModule';
 
 // Session API

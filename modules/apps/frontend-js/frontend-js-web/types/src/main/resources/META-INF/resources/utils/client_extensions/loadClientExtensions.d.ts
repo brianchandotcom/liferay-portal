@@ -4,7 +4,7 @@
  */
 
 interface ClientExtensionDefinition<T> {
-	context: T;
+	context?: T;
 	importDeclaration: string;
 }
 interface ClientExtensionDefinitionsHandlerItem<T> {

@@ -6,7 +6,7 @@
 import {loadModule} from './loadModule';
 
 interface ClientExtensionDefinition<T> {
-	context: T;
+	context?: T;
 	importDeclaration: string;
 }
 

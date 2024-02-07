@@ -791,7 +791,7 @@ public class CPDefinitionsImporter {
 			addCPDefinitionSpecificationOptionValue(
 				cpDefinitionId,
 				cpSpecificationOption.getCPSpecificationOptionId(),
-				cpOptionCategoryId, valueMap, priority, serviceContext);
+				cpOptionCategoryId, priority, valueMap, serviceContext);
 	}
 
 	private CPInstance _importCPInstance(

@@ -114,7 +114,7 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 			_cpDefinitionSpecificationOptionValueService.
 				addCPDefinitionSpecificationOptionValue(
 					cpDefinitionId, cpSpecificationOptionId,
-					cpSpecificationOption.getCPOptionCategoryId(), null, i,
+					cpSpecificationOption.getCPOptionCategoryId(), i, null,
 					serviceContext);
 		}
 	}

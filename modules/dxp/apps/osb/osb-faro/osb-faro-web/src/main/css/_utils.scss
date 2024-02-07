@@ -87,3 +87,11 @@
 .bb-tooltip-container {
 	background-color: white;
 }
+
+/**
+ * Force dropdown to appear on top of AC old Modals
+ */
+
+.dropdown-menu {
+	z-index: 1060;
+}

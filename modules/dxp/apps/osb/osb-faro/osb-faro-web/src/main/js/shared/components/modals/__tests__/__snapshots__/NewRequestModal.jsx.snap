@@ -183,49 +183,49 @@ exports[`NewRequestModal renders 1`] = `
                       class="input-group"
                     >
                       <div
-                        class="search-input-list-root input-group-item"
+                        class="form-control form-control-tag-group input-group"
                       >
                         <div
-                          class="form-control form-control-tag-group d-flex"
+                          class="input-group-item"
                         >
                           <div
-                            class="dropdown dropdown-root base-select-container search-input-list-container new-request-modal-container"
+                            class="input-group"
                           >
                             <div
-                              aria-controls="clay-dropdown-menu-1"
-                              aria-expanded="false"
-                              aria-haspopup="true"
-                              class="dropdown-toggle"
+                              class="input-group-item d-contents input-group-item-shrink input-group-prepend"
+                              role="grid"
+                            />
+                            <div
+                              class="input-group-item input-group-prepend"
                             >
-                              <div
-                                class="input-group base-select-input-root select-input-root flex-grow-1 inset"
-                              >
-                                <div
-                                  class="input-group-item"
-                                >
-                                  <input
-                                    autocomplete="off"
-                                    class="input-root form-control input-group-inset input-group-inset-after form-control-sm"
-                                    placeholder="example@email.com"
-                                    type="text"
-                                    value=""
-                                  />
-                                  <div
-                                    class="input-group-inset-item input-group-inset-item-after"
-                                  >
-                                    <svg
-                                      class="lexicon-icon lexicon-icon-caret-bottom icon-root"
-                                      role="presentation"
-                                    >
-                                      <use
-                                        href="#caret-bottom"
-                                      />
-                                    </svg>
-                                  </div>
-                                </div>
-                              </div>
+                              <input
+                                aria-autocomplete="list"
+                                aria-controls="clay-id-1"
+                                aria-expanded="false"
+                                autocomplete="off"
+                                autocorrect="off"
+                                class="form-control-inset"
+                                placeholder="example@email.com"
+                                role="combobox"
+                                spellcheck="false"
+                                type="text"
+                                value=""
+                              />
                             </div>
                           </div>
+                        </div>
+                        <div
+                          class="sr-only"
+                        >
+                          <span
+                            id="clay-id-1"
+                          >
+                            Press backspace to delete the current row.
+                          </span>
+                          <span
+                            aria-live="polite"
+                            aria-relevant="text"
+                          />
                         </div>
                       </div>
                     </div>

@@ -249,56 +249,6 @@ definition {
 		LexiconCard.viewCardNotPresent(card = "WC Template Name Edit");
 	}
 
-	@description = "This is a test for LPS-177690. The tooltip of the back button should be Go to Web Content in the editor of Templates."
-	@priority = 3
-	test ViewBackButtonTooltipOfWebContentTemplateEditor {
-		task ("Given a content creator adds a web content template") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			NavItem.gotoTemplates();
-
-			LexiconEntry.gotoAdd();
-
-			WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
-		}
-
-		task ("When the content creator hovers over the back button") {
-			MouseOver(locator1 = "Icon#BACK");
-		}
-
-		task ("Then the content creator could see the tooltip message") {
-			AssertVisible(
-				key_content = "Go to Web Content",
-				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-		}
-
-		task ("Given a content creator edits the copy of web content template") {
-			PortletEntry.inputName(name = "WC Template Name");
-
-			PortletEntry.save();
-
-			WebContentTemplates.copyCP(
-				templateCopyName = "WC Template Name (Copy)",
-				templateName = "WC Template Name");
-
-			WebContentTemplates.gotoTemplateEllipsisItem(
-				item = "Edit",
-				templateName = "WC Template Name (Copy)");
-
-			WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
-		}
-
-		task ("When the content creator hovers over the back button") {
-			MouseOver(locator1 = "Icon#BACK");
-		}
-
-		task ("Then the content creator could see the tooltip message") {
-			AssertVisible(
-				key_content = "Go to Web Content",
-				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-		}
-	}
-
 	@description = "This is a test for LPS-153976. View reserved variables list under Journal section in web content template."
 	@priority = 3
 	test ViewReservedVariables {

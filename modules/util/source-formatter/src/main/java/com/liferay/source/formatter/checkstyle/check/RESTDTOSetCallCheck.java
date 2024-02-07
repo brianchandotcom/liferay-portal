@@ -5,16 +5,27 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.parser.JavaMethod;
+import com.liferay.source.formatter.parser.JavaParameter;
+import com.liferay.source.formatter.parser.JavaSignature;
+import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.parser.ParseException;
+import com.liferay.source.formatter.util.FileUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
@@ -81,7 +92,10 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 			String fullyQualifiedTypeName = getVariableTypeName(
 				methodCallDetailAST, variableName, false, false, true);
 
-			if (fullyQualifiedTypeName == null) {
+			if ((fullyQualifiedTypeName == null) ||
+				!fullyQualifiedTypeName.startsWith("com.liferay.") ||
+				!fullyQualifiedTypeName.contains(".dto.v")) {
+
 				continue;
 			}
 
@@ -106,12 +120,59 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 			return;
 		}
 
+		DetailAST literalNewDetailAST = parentDetailAST;
+
+		String fullyQualifiedTypeName = null;
+
+		DetailAST firstChildDetailAST = parentDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			fullyQualifiedTypeName = getFullyQualifiedTypeName(
+				firstChildDetailAST.getText(), detailAST, false);
+		}
+		else if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+			FullIdent fullIdent = FullIdent.createFullIdent(
+				firstChildDetailAST);
+
+			fullyQualifiedTypeName = fullIdent.getText();
+		}
+
+		if ((fullyQualifiedTypeName == null) ||
+			!fullyQualifiedTypeName.startsWith("com.liferay.") ||
+			!fullyQualifiedTypeName.contains(".dto.v")) {
+
+			return;
+		}
+
 		List<DetailAST> childDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.ASSIGN, TokenTypes.METHOD_CALL);
 
 		for (DetailAST childDetailAST : childDetailASTList) {
+			parentDetailAST = getParentWithTokenType(
+				childDetailAST, TokenTypes.INSTANCE_INIT);
+
+			if (parentDetailAST == null) {
+				continue;
+			}
+
+			parentDetailAST = parentDetailAST.getParent();
+
+			if ((parentDetailAST == null) ||
+				(parentDetailAST.getType() != TokenTypes.OBJBLOCK)) {
+
+				continue;
+			}
+
+			parentDetailAST = parentDetailAST.getParent();
+
+			if ((parentDetailAST == null) ||
+				!equals(parentDetailAST, literalNewDetailAST)) {
+
+				continue;
+			}
+
 			if (childDetailAST.getType() == TokenTypes.ASSIGN) {
-				DetailAST firstChildDetailAST = childDetailAST.getFirstChild();
+				firstChildDetailAST = childDetailAST.getFirstChild();
 
 				if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
 					continue;
@@ -122,7 +183,9 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 				String methodName =
 					"set" + StringUtil.upperCaseFirstLetter(variableName);
 
-				log(childDetailAST, _MSG_USE_SET_METHOD_INSTEAD, methodName);
+				_checkSetCall(
+					absolutePath, childDetailAST, methodName,
+					fullyQualifiedTypeName);
 			}
 			else {
 				DetailAST dotDetailAST = childDetailAST.findFirstToken(
@@ -138,48 +201,6 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 					continue;
 				}
 
-				parentDetailAST = getParentWithTokenType(
-					childDetailAST, TokenTypes.INSTANCE_INIT);
-
-				if (parentDetailAST == null) {
-					continue;
-				}
-
-				parentDetailAST = parentDetailAST.getParent();
-
-				if ((parentDetailAST == null) ||
-					(parentDetailAST.getType() != TokenTypes.OBJBLOCK)) {
-
-					continue;
-				}
-
-				parentDetailAST = parentDetailAST.getParent();
-
-				if ((parentDetailAST == null) ||
-					(parentDetailAST.getType() != TokenTypes.LITERAL_NEW)) {
-
-					continue;
-				}
-
-				String fullyQualifiedTypeName = null;
-
-				DetailAST firstChildDetailAST = parentDetailAST.getFirstChild();
-
-				if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
-					fullyQualifiedTypeName = getFullyQualifiedTypeName(
-						firstChildDetailAST.getText(), parentDetailAST, false);
-				}
-				else if (firstChildDetailAST.getType() == TokenTypes.DOT) {
-					FullIdent fullIdent = FullIdent.createFullIdent(
-						firstChildDetailAST);
-
-					fullyQualifiedTypeName = fullIdent.getText();
-				}
-
-				if (fullyQualifiedTypeName == null) {
-					continue;
-				}
-
 				_checkSetCall(
 					absolutePath, childDetailAST, methodName,
 					fullyQualifiedTypeName);
@@ -191,9 +212,23 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		String absolutePath, DetailAST detailAST, String methodName,
 		String fullyQualifiedTypeName) {
 
-		if (!fullyQualifiedTypeName.startsWith("com.liferay.") ||
-			!fullyQualifiedTypeName.contains(".dto.v") ||
-			!_isRESTDTOType(absolutePath, fullyQualifiedTypeName)) {
+		File javaFile = JavaSourceUtil.getJavaFile(
+			fullyQualifiedTypeName, _getRootDirName(absolutePath),
+			_getBundleSymbolicNamesMap(absolutePath));
+
+		if (javaFile == null) {
+			return;
+		}
+
+		JavaClass javaClass = null;
+
+		try {
+			javaClass = _getJavaClass(absolutePath, fullyQualifiedTypeName);
+		}
+		catch (IOException | ParseException exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 
 			return;
 		}
@@ -206,7 +241,9 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 		parentDetailAST = parentDetailAST.getParent();
 
-		if (parentDetailAST.getType() != TokenTypes.SLIST) {
+		if ((parentDetailAST.getType() != TokenTypes.SLIST) ||
+			!_hasReplacableMethodSignature(methodName, javaClass)) {
+
 			return;
 		}
 
@@ -214,8 +251,11 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 		if (parentDetailAST.getType() == TokenTypes.LITERAL_IF) {
 			log(detailAST, _MSG_INLINE_IF_STATEMENT, methodName);
+
+			return;
 		}
-		else {
+
+		if (detailAST.getType() == TokenTypes.METHOD_CALL) {
 			DetailAST elistDetailAST = detailAST.findFirstToken(
 				TokenTypes.ELIST);
 
@@ -228,9 +268,9 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 				return;
 			}
-
-			log(detailAST, _MSG_USE_SET_METHOD_INSTEAD, methodName);
 		}
+
+		log(detailAST, _MSG_USE_SET_METHOD_INSTEAD, methodName);
 	}
 
 	private synchronized Map<String, String> _getBundleSymbolicNamesMap(
@@ -244,6 +284,22 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		return _bundleSymbolicNamesMap;
 	}
 
+	private JavaClass _getJavaClass(
+			String absolutePath, String fullyQualifiedTypeName)
+		throws IOException, ParseException {
+
+		File javaFile = JavaSourceUtil.getJavaFile(
+			fullyQualifiedTypeName, _getRootDirName(absolutePath),
+			_getBundleSymbolicNamesMap(absolutePath));
+
+		if (javaFile == null) {
+			return null;
+		}
+
+		return JavaClassParser.parseJavaClass(
+			SourceUtil.getAbsolutePath(javaFile), FileUtil.read(javaFile));
+	}
+
 	private synchronized String _getRootDirName(String absolutePath) {
 		if (_rootDirName != null) {
 			return _rootDirName;
@@ -254,37 +310,38 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		return _rootDirName;
 	}
 
-	private boolean _isRESTDTOType(
-		String absolutePath, String fullyQualifiedTypeName) {
+	private boolean _hasReplacableMethodSignature(
+		String methodName, JavaClass javaClass) {
 
-		File file = JavaSourceUtil.getJavaFile(
-			fullyQualifiedTypeName, _getRootDirName(absolutePath),
-			_getBundleSymbolicNamesMap(absolutePath));
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if (!javaTerm.isJavaMethod() || javaTerm.isPrivate()) {
+				continue;
+			}
 
-		if (file == null) {
-			return false;
+			JavaMethod javaMethod = (JavaMethod)javaTerm;
+
+			if (!StringUtil.equals(methodName, javaMethod.getName())) {
+				continue;
+			}
+
+			JavaSignature javaSignature = javaMethod.getSignature();
+
+			List<JavaParameter> javaParameters = javaSignature.getParameters();
+
+			if (javaParameters.size() != 1) {
+				continue;
+			}
+
+			JavaParameter javaParameter = javaParameters.get(0);
+
+			String parameterType = javaParameter.getParameterType();
+
+			if (parameterType.startsWith("UnsafeSupplier")) {
+				return true;
+			}
 		}
 
-		String dtoFileAbsolutePath = SourceUtil.getAbsolutePath(file);
-
-		int x = StringUtil.lastIndexOfAny(
-			dtoFileAbsolutePath,
-			new String[] {"-api/src/main/", "-client/src/main/"});
-
-		if (x == -1) {
-			return false;
-		}
-
-		String restOpenAPIFilePath =
-			dtoFileAbsolutePath.substring(0, x) + "-impl/rest-openapi.yaml";
-
-		file = new File(restOpenAPIFilePath);
-
-		if (!file.exists()) {
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	private static final String _MSG_INLINE_IF_STATEMENT =
@@ -292,6 +349,9 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 	private static final String _MSG_USE_SET_METHOD_INSTEAD =
 		"set.method.use.instead";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RESTDTOSetCallCheck.class);
 
 	private volatile Map<String, String> _bundleSymbolicNamesMap;
 	private volatile String _rootDirName;

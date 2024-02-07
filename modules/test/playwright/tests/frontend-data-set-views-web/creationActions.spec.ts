@@ -23,29 +23,43 @@ export const test = mergeTests(
 	viewsPageTest
 );
 
+const LINK_CREATION_ACTION_NAME = 'Link creation action';
+
 test('Create a Creation Action', async ({
 	actionsPage,
 	dataSetsPage,
 	page,
 	viewsPage,
 }) => {
-	await dataSetsPage.goto();
-	await dataSetsPage.createSampleDataSetUI();
+	await test.step('Create Data Set', async () => {
+		await dataSetsPage.goto();
+		await dataSetsPage.createSampleDataSetUI();
+	});
 
-	await viewsPage.goto();
-	await viewsPage.createSampleDataSetViewUI();
+	await test.step('Create Data Set View', async () => {
+		await viewsPage.goto();
+		await viewsPage.createSampleDataSetViewUI();
+	});
 
-	await actionsPage.goto();
-	await actionsPage.createCreationAction({
-		icon: 'arrow-right-full',
-		name: 'Link action',
-		type: 'link',
-		url: liferayConfig.environment.baseUrl,
+	await test.step('Go to Actions tab', async () => {
+		await actionsPage.goto();
+	});
+
+	await test.step('Create an item action', async () => {
+		await actionsPage.createCreationAction({
+			icon: 'arrow-right-full',
+			name: LINK_CREATION_ACTION_NAME,
+			type: 'link',
+			url: liferayConfig.environment.baseUrl,
+		});
 	});
 
 	await expect(
 		page
-			.getByRole('cell', {exact: true, name: 'Link action'})
+			.getByRole('cell', {
+				exact: true,
+				name: LINK_CREATION_ACTION_NAME,
+			})
 			.locator('span')
 			.first()
 	).toBeVisible();

@@ -46,7 +46,7 @@ public class BatchEngineImportTaskServiceImpl
 			String taskItemDelegateName)
 		throws PortalException {
 
-		_checkCrossCompanyPermissions(companyId);
+		_checkCompanyPermissions(companyId);
 
 		return batchEngineImportTaskLocalService.addBatchEngineImportTask(
 			externalReferenceCode, companyId, userId, batchSize, callbackURL,
@@ -65,7 +65,7 @@ public class BatchEngineImportTaskServiceImpl
 			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate)
 		throws PortalException {
 
-		_checkCrossCompanyPermissions(companyId);
+		_checkCompanyPermissions(companyId);
 
 		return batchEngineImportTaskLocalService.addBatchEngineImportTask(
 			externalReferenceCode, companyId, userId, batchSize, callbackURL,
@@ -83,7 +83,7 @@ public class BatchEngineImportTaskServiceImpl
 			batchEngineImportTaskLocalService.getBatchEngineImportTask(
 				batchEngineImportTaskId);
 
-		_checkCrossCompanyPermissions(batchEngineImportTask.getCompanyId());
+		_checkCompanyPermissions(batchEngineImportTask.getCompanyId());
 
 		_checkTaskPermissions(batchEngineImportTask);
 
@@ -96,7 +96,7 @@ public class BatchEngineImportTaskServiceImpl
 				String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		_checkCrossCompanyPermissions(companyId);
+		_checkCompanyPermissions(companyId);
 
 		BatchEngineImportTask batchEngineImportTask =
 			batchEngineImportTaskLocalService.
@@ -113,7 +113,7 @@ public class BatchEngineImportTaskServiceImpl
 			long companyId, int start, int end)
 		throws PortalException {
 
-		_checkCrossCompanyPermissions(companyId);
+		_checkCompanyPermissions(companyId);
 
 		return _filterTaskListByPermissions(
 			batchEngineImportTaskLocalService.getBatchEngineImportTasks(
@@ -126,7 +126,7 @@ public class BatchEngineImportTaskServiceImpl
 			OrderByComparator<BatchEngineImportTask> orderByComparator)
 		throws PortalException {
 
-		_checkCrossCompanyPermissions(companyId);
+		_checkCompanyPermissions(companyId);
 
 		return _filterTaskListByPermissions(
 			batchEngineImportTaskLocalService.getBatchEngineImportTasks(
@@ -137,7 +137,7 @@ public class BatchEngineImportTaskServiceImpl
 	public int getBatchEngineImportTasksCount(long companyId)
 		throws PortalException {
 
-		_checkCrossCompanyPermissions(companyId);
+		_checkCompanyPermissions(companyId);
 
 		return _filterTaskListByPermissions(
 			batchEngineImportTaskLocalService.getBatchEngineImportTasks(
@@ -145,7 +145,7 @@ public class BatchEngineImportTaskServiceImpl
 		).size();
 	}
 
-	private void _checkCrossCompanyPermissions(long companyId)
+	private void _checkCompanyPermissions(long companyId)
 		throws PrincipalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();

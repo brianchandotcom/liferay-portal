@@ -47,6 +47,8 @@ public abstract class BaseUserNotificationTestCase {
 
 		_userNotificationDeliveries = _getUserNotificationDeliveries(
 			user.getUserId());
+
+		MailServiceTestUtil.clearMessages();
 	}
 
 	@After

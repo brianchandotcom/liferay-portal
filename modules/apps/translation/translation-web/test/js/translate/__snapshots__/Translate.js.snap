@@ -326,6 +326,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
               </label>
               <div
                 id="_mock_TranslationPortlet_infoField--description--0Container"
+                role="textbox"
               >
                 <div
                   id="_mock_TranslationPortlet_infoField--description--0"
@@ -399,6 +400,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
               </label>
               <div
                 id="_mock_TranslationPortlet_infoField--content--0Container"
+                role="textbox"
               >
                 <div
                   id="_mock_TranslationPortlet_infoField--content--0"
@@ -450,6 +452,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
               </label>
               <div
                 id="_mock_TranslationPortlet_infoField--repeteableContent--0Container"
+                role="textbox"
               >
                 <div
                   id="_mock_TranslationPortlet_infoField--repeteableContent--0"
@@ -501,6 +504,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
               </label>
               <div
                 id="_mock_TranslationPortlet_infoField--repeteableContent--1Container"
+                role="textbox"
               >
                 <div
                   id="_mock_TranslationPortlet_infoField--repeteableContent--1"
@@ -552,6 +556,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
               </label>
               <div
                 id="_mock_TranslationPortlet_infoField--repeteableContent--2Container"
+                role="textbox"
               >
                 <div
                   id="_mock_TranslationPortlet_infoField--repeteableContent--2"
@@ -956,6 +961,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                   </label>
                   <div
                     id="_mock_TranslationPortlet_infoField--description--0Container"
+                    role="textbox"
                   >
                     <div
                       id="_mock_TranslationPortlet_infoField--description--0"
@@ -1060,6 +1066,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                   </label>
                   <div
                     id="_mock_TranslationPortlet_infoField--content--0Container"
+                    role="textbox"
                   >
                     <div
                       id="_mock_TranslationPortlet_infoField--content--0"
@@ -1142,6 +1149,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                   </label>
                   <div
                     id="_mock_TranslationPortlet_infoField--repeteableContent--0Container"
+                    role="textbox"
                   >
                     <div
                       id="_mock_TranslationPortlet_infoField--repeteableContent--0"
@@ -1224,6 +1232,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                   </label>
                   <div
                     id="_mock_TranslationPortlet_infoField--repeteableContent--1Container"
+                    role="textbox"
                   >
                     <div
                       id="_mock_TranslationPortlet_infoField--repeteableContent--1"
@@ -1306,6 +1315,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                   </label>
                   <div
                     id="_mock_TranslationPortlet_infoField--repeteableContent--2Container"
+                    role="textbox"
                   >
                     <div
                       id="_mock_TranslationPortlet_infoField--repeteableContent--2"
@@ -1772,6 +1782,7 @@ exports[`Translate renders with experiences selector 1`] = `
                   </label>
                   <div
                     id="_mock_TranslationPortlet_infoField--description--0Container"
+                    role="textbox"
                   >
                     <div
                       id="_mock_TranslationPortlet_infoField--description--0"
@@ -1876,6 +1887,7 @@ exports[`Translate renders with experiences selector 1`] = `
                   </label>
                   <div
                     id="_mock_TranslationPortlet_infoField--content--0Container"
+                    role="textbox"
                   >
                     <div
                       id="_mock_TranslationPortlet_infoField--content--0"
@@ -1958,6 +1970,7 @@ exports[`Translate renders with experiences selector 1`] = `
                   </label>
                   <div
                     id="_mock_TranslationPortlet_infoField--repeteableContent--0Container"
+                    role="textbox"
                   >
                     <div
                       id="_mock_TranslationPortlet_infoField--repeteableContent--0"
@@ -2040,6 +2053,7 @@ exports[`Translate renders with experiences selector 1`] = `
                   </label>
                   <div
                     id="_mock_TranslationPortlet_infoField--repeteableContent--1Container"
+                    role="textbox"
                   >
                     <div
                       id="_mock_TranslationPortlet_infoField--repeteableContent--1"
@@ -2122,6 +2136,7 @@ exports[`Translate renders with experiences selector 1`] = `
                   </label>
                   <div
                     id="_mock_TranslationPortlet_infoField--repeteableContent--2Container"
+                    role="textbox"
                   >
                     <div
                       id="_mock_TranslationPortlet_infoField--repeteableContent--2"

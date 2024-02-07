@@ -7797,6 +7797,10 @@ public class JournalArticleLocalServiceImpl
 				NOTIFICATION_TYPE_MOVE_ENTRY_TO_TRASH;
 		}
 
+		if (emailType.equals("review")) {
+			return UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY;
+		}
+
 		if (emailType.equals("update")) {
 			return UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
 		}

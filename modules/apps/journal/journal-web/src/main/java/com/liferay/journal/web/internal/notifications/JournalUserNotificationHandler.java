@@ -84,6 +84,13 @@ public class JournalUserNotificationHandler
 			}
 		}
 		else if (notificationType ==
+					UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY) {
+
+			title = _language.get(
+				serviceContext.getLocale(),
+				"web-content-article-needs-to-be-reviewed");
+		}
+		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
 			title = _language.format(

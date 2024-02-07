@@ -771,11 +771,11 @@ public class RenderLayoutStructureTagTest {
 			).put(
 				"type", InfoListItemSelectorReturnType.class.getName()
 			));
-		collectionStyledLayoutStructureItem.setNamespace(
-			RandomTestUtil.randomString());
 		collectionStyledLayoutStructureItem.setListStyle(
 			"com.liferay.journal.web.internal.info.list.renderer." +
 				"BulletedJournalArticleBasicInfoListRenderer");
+		collectionStyledLayoutStructureItem.setNamespace(
+			RandomTestUtil.randomString());
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(

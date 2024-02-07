@@ -5,20 +5,13 @@
 
 /// <reference types="react" />
 
-import PropTypes from 'prop-types';
 import {ViewportSize} from '../config/constants/viewportSizes';
 interface Props {
 	onSizeSelected: (sizeId: ViewportSize) => void;
 	selectedSize: ViewportSize;
 }
-declare function ViewportSizeSelector({
+export default function ViewportSizeSelector({
 	onSizeSelected,
 	selectedSize,
 }: Props): JSX.Element;
-declare namespace ViewportSizeSelector {
-	var propTypes: {
-		onSizeSelected: PropTypes.Requireable<(...args: any[]) => any>;
-		selectedSize: PropTypes.Requireable<string>;
-	};
-}
-export default ViewportSizeSelector;
+export {};

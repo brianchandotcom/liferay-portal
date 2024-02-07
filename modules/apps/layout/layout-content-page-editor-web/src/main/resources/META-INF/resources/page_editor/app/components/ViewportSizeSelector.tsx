@@ -7,7 +7,7 @@ import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
+import {sub} from 'frontend-js-web';
 import React, {Key} from 'react';
 
 import {VIEWPORT_SIZES, ViewportSize} from '../config/constants/viewportSizes';
@@ -18,6 +18,23 @@ interface Props {
 	selectedSize: ViewportSize;
 }
 
+const Trigger = React.forwardRef<HTMLButtonElement, any>(
+	({icon, label, ...otherProps}, ref) => (
+		<ClayButtonWithIcon
+			{...otherProps}
+			aria-label={sub(
+				Liferay.Language.get('select-a-viewport.-current-viewport-x'),
+				label
+			)}
+			displayType="secondary"
+			ref={ref}
+			size="sm"
+			symbol={icon}
+			title={Liferay.Language.get('select-a-viewport')}
+		/>
+	)
+);
+
 export default function ViewportSizeSelector({
 	onSizeSelected,
 	selectedSize,
@@ -25,34 +42,59 @@ export default function ViewportSizeSelector({
 	const {availableViewportSizes} = config;
 
 	return (
-		<ClayButton.Group
-			className={classNames('flex-nowrap flex-shrink-0', {
-				'd-lg-block d-none': Liferay.FeatureFlags['LPD-10988'],
-			})}
-		>
-			{Object.values(availableViewportSizes).map(
-				({icon, label, sizeId}) => (
-					<ClayButtonWithIcon
-						aria-label={label}
-						aria-pressed={selectedSize === sizeId}
-						className={classNames({
-							'page-editor__viewport-size-selector--default':
-								sizeId === VIEWPORT_SIZES.desktop,
-						})}
-						displayType="secondary"
-						key={sizeId}
-						onClick={() => onSizeSelected(sizeId as ViewportSize)}
-						size="sm"
-						symbol={icon}
-						title={label}
-					/>
-				)
-			)}
-		</ClayButton.Group>
+		<>
+			<ClayButton.Group
+				className={classNames('flex-nowrap flex-shrink-0', {
+					'd-lg-block d-none': Liferay.FeatureFlags['LPD-10988'],
+				})}
+			>
+				{Object.values(availableViewportSizes).map(
+					({icon, label, sizeId}) => (
+						<ClayButtonWithIcon
+							aria-label={label}
+							aria-pressed={selectedSize === sizeId}
+							className={classNames({
+								'page-editor__viewport-size-selector--default':
+									sizeId === VIEWPORT_SIZES.desktop,
+							})}
+							displayType="secondary"
+							key={sizeId}
+							onClick={() =>
+								onSizeSelected(sizeId as ViewportSize)
+							}
+							size="sm"
+							symbol={icon}
+							title={label}
+						/>
+					)
+				)}
+			</ClayButton.Group>
+
+			{Liferay.FeatureFlags['LPD-10988'] ? (
+				<Picker
+					UNSAFE_menuClassName="cadmin"
+					as={Trigger}
+					className="d-lg-none"
+					icon={availableViewportSizes[selectedSize].icon}
+					items={Object.values(availableViewportSizes)}
+					label={availableViewportSizes[selectedSize].label}
+					onSelectionChange={(size: Key) =>
+						onSizeSelected(size as ViewportSize)
+					}
+					selectedItem={selectedSize}
+					selectedKey={selectedSize}
+				>
+					{({icon, label, sizeId}) => (
+						<Option key={sizeId} textValue={label}>
+							<span className="inline-item inline-item-before ml-1 mr-3">
+								<ClayIcon symbol={icon} />
+							</span>
+
+							{label}
+						</Option>
+					)}
+				</Picker>
+			) : null}
+		</>
 	);
 }
-
-ViewportSizeSelector.propTypes = {
-	onSizeSelected: PropTypes.func,
-	selectedSize: PropTypes.string,
-};

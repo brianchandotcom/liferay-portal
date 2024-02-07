@@ -23,9 +23,9 @@
  *
  */
 
-import {getValueFromItem} from '../getValueFromItem';
+import getValueFromItem from '../getValueFromItem';
 
-export function formatActionURL(url: string | undefined, item: any): string {
+const formatActionURL = function (url: string | undefined, item: any): string {
 	if (!url) {
 		return '';
 	}
@@ -43,4 +43,6 @@ export function formatActionURL(url: string | undefined, item: any): string {
 			matched.substring(3, matched.length - 3).split('.')
 		)
 	);
-}
+};
+
+export default formatActionURL;

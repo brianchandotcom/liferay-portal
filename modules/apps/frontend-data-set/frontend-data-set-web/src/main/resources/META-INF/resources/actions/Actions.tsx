@@ -12,7 +12,7 @@ import FrontendDataSetContext, {
 } from '../FrontendDataSetContext';
 import {ACTION_ITEM_TARGETS} from '../utils/actionItems/constants';
 import filterItemActions from '../utils/actionItems/filterItemActions';
-import {formatActionURL} from '../utils/actionItems/formatActionURL';
+import formatActionURL from '../utils/actionItems/formatActionURL';
 import {openPermissionsModal} from '../utils/modals/openPermissionsModal';
 import {resolveModalSize} from '../utils/modals/resolveModalSize';
 

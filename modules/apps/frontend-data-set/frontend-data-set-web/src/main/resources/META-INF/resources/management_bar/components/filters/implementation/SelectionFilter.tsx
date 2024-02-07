@@ -20,7 +20,7 @@ import React, {
 	useState,
 } from 'react';
 
-import {getValueFromItem} from '../../../../utils/getValueFromItem';
+import getValueFromItem from '../../../../utils/getValueFromItem';
 
 // @ts-ignore
 

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {isLink} from '../../src/main/resources/META-INF/resources/utils/isLink';
+import isLink from '../../src/main/resources/META-INF/resources/utils/isLink';
 
 describe('isLink utility', () => {
 	it('returns false when it is called with a callback function', () => {

@@ -51,11 +51,7 @@ export class ActionsPage {
 		await this.viewsPage.goto();
 		await this.viewsPage.gotoSampleDataSetView();
 
-		await this.page
-			.locator('li')
-			.filter({hasText: 'Actions'})
-			.first()
-			.click();
+		await this.page.getByRole('button', {name: 'Actions'}).first().click();
 	}
 
 	async createCreationAction({

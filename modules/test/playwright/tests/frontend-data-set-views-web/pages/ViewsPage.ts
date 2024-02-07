@@ -21,7 +21,8 @@ export class ViewsPage {
 	constructor(page: Page) {
 		this.dataSetsPage = new DataSetsPage(page);
 		this.dataSetsViewTable = page.getByText(
-			'ViewsData Set View SampleActions'
+			'ViewsData Set View SampleActions',
+			{exact: true}
 		);
 		this.newDataSetViewButton = page.getByLabel('New Data Set View');
 		this.newDataSetViewEmptyButton = page.getByText('New Data Set View');

@@ -209,8 +209,7 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 	}
 
 	private Schema _getPropertySchema(
-		OpenAPIResource openAPIResource, APIApplication.Property property,
-		Map<String, Schema> schemas) {
+		APIApplication.Property property, Map<String, Schema> schemas) {
 
 		APIApplication.Property.Type type = property.getType();
 
@@ -304,7 +303,7 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 			schema.setProperties(
 				HashMapBuilder.put(
 					childProperty.getName(),
-					_getPropertySchema(openAPIResource, childProperty, schemas)
+					_getPropertySchema(childProperty, schemas)
 				).putAll(
 					schema.getProperties()
 				).build());
@@ -536,8 +535,7 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 
 		for (APIApplication.Property property : schema.getProperties()) {
 			properties.put(
-				property.getName(),
-				_getPropertySchema(_openAPIResource, property, schemas));
+				property.getName(), _getPropertySchema(property, schemas));
 		}
 
 		schemas.put(

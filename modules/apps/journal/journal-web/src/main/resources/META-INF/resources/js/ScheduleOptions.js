@@ -6,6 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayDatePicker from '@clayui/date-picker';
 import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {sub} from 'frontend-js-web';
 import moment from 'moment/min/moment-with-locales';
 import React, {useEffect, useState} from 'react';
@@ -45,12 +46,20 @@ export default function ScheduleOptions({
 		<>
 			<label htmlFor={`${portletNamespace}displayDatePicker`}>
 				{Liferay.Language.get('date-and-time')}
+
+				<ClayIcon
+					className="ml-1 reference-mark"
+					focusable="false"
+					role="presentation"
+					symbol="asterisk"
+				/>
 			</label>
 
 			<ClayDatePicker
 				id={`${portletNamespace}displayDatePicker`}
 				onChange={setValue}
 				placeholder="YYYY-MM-DD HH:mm"
+				required
 				time
 				timezone={timeZone}
 				value={value}

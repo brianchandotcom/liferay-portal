@@ -27,7 +27,7 @@ const chartFactory = (
 		totalEntries,
 		values,
 	},
-	dataEngineModule
+	_dataEngineModule
 ) => {
 	const {options, type} = field;
 

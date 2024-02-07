@@ -89,64 +89,6 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 
 	@Override
 	@Test
-	public void testGetCTCollectionsGetHistoriesPage() throws Exception {
-		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
-
-		try {
-			long layoutClassNameId = _classNameLocalService.getClassNameId(
-				Layout.class);
-			long classPK = layout.getPlid();
-
-			Page<CTCollection> page =
-				ctCollectionResource.getCTCollectionsGetHistoriesPage(
-					(int)layoutClassNameId, (int)classPK);
-
-			long totalCount = page.getTotalCount();
-
-			CTCollection ctCollection1 =
-				testGetCTCollectionsGetHistoriesPage_addCTCollection(
-					randomCTCollection());
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ctCollection1.getId())) {
-
-				_layoutLocalService.updateName(
-					layout, ctCollection1.getName(),
-					layout.getDefaultLanguageId());
-			}
-
-			CTCollection ctCollection2 =
-				testGetCTCollectionsGetHistoriesPage_addCTCollection(
-					randomCTCollection());
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ctCollection2.getId())) {
-
-				_layoutLocalService.updateName(
-					layout, ctCollection2.getName(),
-					layout.getDefaultLanguageId());
-			}
-
-			page = ctCollectionResource.getCTCollectionsGetHistoriesPage(
-				(int)layoutClassNameId, (int)classPK);
-
-			Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-			assertContains(ctCollection1, (List<CTCollection>)page.getItems());
-			assertContains(ctCollection2, (List<CTCollection>)page.getItems());
-			assertValid(
-				page,
-				testGetCTCollectionsGetHistoriesPage_getExpectedActions());
-		}
-		finally {
-			_layoutLocalService.deleteLayout(layout);
-		}
-	}
-
-	@Override
-	@Test
 	public void testGetCTCollectionShareLink() throws Exception {
 		CTCollection ctCollection = ctCollectionResource.postCTCollection(
 			randomCTCollection());
@@ -169,6 +111,63 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 			StringPool.BLANK,
 			ctCollectionResource.getCTCollectionShareLink(
 				ctCollection.getId()));
+	}
+
+	@Override
+	@Test
+	public void testGetCTCollectionsHistoryPage() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
+
+		try {
+			long layoutClassNameId = _classNameLocalService.getClassNameId(
+				Layout.class);
+			long classPK = layout.getPlid();
+
+			Page<CTCollection> page =
+				ctCollectionResource.getCTCollectionsHistoryPage(
+					(int)layoutClassNameId, (int)classPK);
+
+			long totalCount = page.getTotalCount();
+
+			CTCollection ctCollection1 =
+				testGetCTCollectionsHistoryPage_addCTCollection(
+					randomCTCollection());
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollection1.getId())) {
+
+				_layoutLocalService.updateName(
+					layout, ctCollection1.getName(),
+					layout.getDefaultLanguageId());
+			}
+
+			CTCollection ctCollection2 =
+				testGetCTCollectionsHistoryPage_addCTCollection(
+					randomCTCollection());
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollection2.getId())) {
+
+				_layoutLocalService.updateName(
+					layout, ctCollection2.getName(),
+					layout.getDefaultLanguageId());
+			}
+
+			page = ctCollectionResource.getCTCollectionsHistoryPage(
+				(int)layoutClassNameId, (int)classPK);
+
+			Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+			assertContains(ctCollection1, (List<CTCollection>)page.getItems());
+			assertContains(ctCollection2, (List<CTCollection>)page.getItems());
+			assertValid(
+				page, testGetCTCollectionsHistoryPage_getExpectedActions());
+		}
+		finally {
+			_layoutLocalService.deleteLayout(layout);
+		}
 	}
 
 	@Override
@@ -353,7 +352,7 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 	}
 
 	@Override
-	protected CTCollection testGetCTCollectionsGetHistoriesPage_addCTCollection(
+	protected CTCollection testGetCTCollectionsHistoryPage_addCTCollection(
 			CTCollection ctCollection)
 		throws Exception {
 

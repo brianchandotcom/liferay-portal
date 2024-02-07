@@ -121,7 +121,14 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 	}
 
 	@Override
-	public Page<CTCollection> getCTCollectionsGetHistoriesPage(
+	public String getCTCollectionShareLink(Long ctCollectionId)
+		throws Exception {
+
+		return _getShareLink(ctCollectionId);
+	}
+
+	@Override
+	public Page<CTCollection> getCTCollectionsHistoryPage(
 			Integer classNameId, Integer classPK)
 		throws Exception {
 
@@ -142,13 +149,6 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 		return Page.of(
 			TransformUtil.transform(ctCollections, this::_toCTCollection));
-	}
-
-	@Override
-	public String getCTCollectionShareLink(Long ctCollectionId)
-		throws Exception {
-
-		return _getShareLink(ctCollectionId);
 	}
 
 	@Override

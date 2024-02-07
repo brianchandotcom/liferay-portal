@@ -561,6 +561,7 @@ public class JobFactory {
 
 		if (jobName.startsWith("generate-reports") ||
 			jobName.startsWith("test-portal-testsuite-upstream-controller(") ||
+			jobName.startsWith("test-portal-upstream-controller(") ||
 			jobName.equals("test-poshi-release") ||
 			jobName.equals("test-results-consistency-report-controller") ||
 			jobName.startsWith(

@@ -56,6 +56,13 @@ public class BuildRunnerFactory {
 			}
 		}
 
+		if ((buildRunner == null) &&
+			jobName.startsWith("test-portal-upstream-controller(")) {
+
+			buildRunner = new PortalUpstreamControllerSingleSuiteBuildRunner(
+				(PortalTestSuiteUpstreamControllerBuildData)buildData);
+		}
+
 		if ((buildRunner == null) && jobName.equals("test-poshi-release")) {
 			buildRunner = new PoshiReleasePortalTopLevelBuildRunner(
 				(PortalTopLevelBuildData)buildData);

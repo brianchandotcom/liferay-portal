@@ -129,6 +129,9 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 		invocationParameters.put(
 			"PORTAL_GITHUB_URL", buildData.getPortalGitHubURL());
 		invocationParameters.put(
+			"PORTAL_UPSTREAM_BRANCH_NAME",
+			buildData.getPortalUpstreamBranchName());
+		invocationParameters.put(
 			"TEST_PORTAL_BUILD_PROFILE",
 			getTestPortalBuildProfile(testSuiteName));
 

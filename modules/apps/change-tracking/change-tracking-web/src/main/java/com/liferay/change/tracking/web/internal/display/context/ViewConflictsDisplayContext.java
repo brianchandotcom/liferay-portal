@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
@@ -345,7 +346,14 @@ public class ViewConflictsDisplayContext {
 				T productionModel = _ctDisplayRendererRegistry.fetchCTModel(
 					modelClassNameId, conflictInfo.getTargetPrimaryKey());
 
-				if (productionModel != null) {
+				if ((productionModel != null) &&
+					!Objects.equals(
+						conflictInfo.getResolutionDescription(resourceBundle),
+						LanguageUtil.get(
+							resourceBundle,
+							"deletion-conflicts-with-modifications-in-other-" +
+								"publications"))) {
+
 					actionsJSONArray.put(
 						_createEditActionJSONObject(
 							_language.format(

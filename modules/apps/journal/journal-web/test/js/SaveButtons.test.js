@@ -28,11 +28,8 @@ const renderComponent = (props = DEFAULT_PROPS) => {
 	return render(
 		<>
 			<div className="article-content-content" />
-			<form
-				action="action"
-				id={`${props.portletNamespace}fm1`}
-				onSubmit={() => {}}
-			/>
+			<input id={`${props.portletNamespace}workflowAction`} />
+			<input id={`${props.portletNamespace}javax-portlet-action`} />
 			<SaveButtons {...props} />
 		</>
 	);
@@ -52,15 +49,18 @@ const runAllTimersAndExecuteAction = (action) => {
 
 describe('SaveButtons', () => {
 	beforeEach(() => {
-		global.Liferay.component = jest
-			.fn()
-			.mockReturnValue({getValue: () => 'title'});
+		global.Liferay.component = jest.fn().mockReturnValue({
+			get: () => new Set([DEFAULT_PROPS.selectedLanguageId]),
+			getValue: () => 'title',
+		});
 
 		global.fetch = jest.fn().mockReturnValue(
 			Promise.resolve({
 				html: () => Promise.resolve('<div>holi</div>'),
 			})
 		);
+
+		global.Liferay.Workflow = {ACTION_PUBLISH: null};
 	});
 
 	it('renders', () => {
@@ -70,6 +70,45 @@ describe('SaveButtons', () => {
 		});
 
 		expect(screen.getByText('save article')).toBeInTheDocument();
+	});
+
+	it('Do not open modal for all buttons when there is an articleId', () => {
+		renderComponent({
+			...DEFAULT_PROPS,
+			articleId: '2611',
+			publishButtonLabel: 'publish',
+			saveButtonLabel: 'save',
+		});
+
+		userEvent.click(screen.getByText('save'));
+
+		expect(
+			screen.queryByText(
+				'confirm-the-web-content-visibility-before-saving-as-draft'
+			)
+		).not.toBeInTheDocument();
+
+		userEvent.click(
+			screen.getByText('publish', {selector: '.dropdown-item'})
+		);
+
+		expect(
+			screen.queryByText(
+				'confirm-the-web-content-visibility-before-publishing'
+			)
+		).not.toBeInTheDocument();
+
+		userEvent.click(
+			screen.getByText('schedule-publication', {
+				selector: '.dropdown-item',
+			})
+		);
+
+		expect(
+			screen.queryByText(
+				'set-the-date-and-time-for-publishing-the-web-content-and-confirm-the-visibility-before-scheduling'
+			)
+		).not.toBeInTheDocument();
 	});
 
 	it('opens modal for all buttons when there is not an articleId', () => {
@@ -121,6 +160,27 @@ describe('SaveButtons', () => {
 		expect(
 			screen.getByText(
 				'set-the-date-and-time-for-publishing-the-web-content-and-confirm-the-visibility-before-scheduling'
+			)
+		).toBeInTheDocument();
+	});
+
+	it('Show an alert appears when the title is empty', () => {
+		global.Liferay.component = jest
+			.fn()
+			.mockReturnValue({getValue: () => null});
+
+		renderComponent({
+			...DEFAULT_PROPS,
+			articleId: null,
+		});
+
+		userEvent.click(
+			screen.getByText('publish', {selector: '.dropdown-item'})
+		);
+
+		expect(
+			screen.getByText(
+				'please-enter-a-valid-title-for-the-default-language-x'
 			)
 		).toBeInTheDocument();
 	});

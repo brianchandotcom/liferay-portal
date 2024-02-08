@@ -858,10 +858,17 @@ public class AssetListAssetEntryProviderTest {
 			long groupId, String firstName)
 		throws Exception {
 
+		return _getSegmentsEntry(groupId, "(firstName eq '%s')", firstName);
+	}
+
+	private SegmentsEntry _getSegmentsEntry(
+			long groupId, String criteriaString, String param)
+		throws Exception {
+
 		Criteria criteria = new Criteria();
 
 		_segmentsCriteriaContributor.contribute(
-			criteria, String.format("(firstName eq '%s')", firstName),
+			criteria, String.format(criteriaString, param),
 			Criteria.Conjunction.AND);
 
 		return SegmentsTestUtil.addSegmentsEntry(

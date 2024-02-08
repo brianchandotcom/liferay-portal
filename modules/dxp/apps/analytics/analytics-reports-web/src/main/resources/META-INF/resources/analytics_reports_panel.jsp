@@ -14,6 +14,6 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 <span aria-hidden="true" className="loading-animation loading-animation-sm"></span>
 
 <react:component
-	module="js/AnalyticsReportsApp"
+	module="{AnalyticsReportsApp} from analytics-reports-web"
 	props="<%= analyticsReportsDisplayContext.getData() %>"
 />

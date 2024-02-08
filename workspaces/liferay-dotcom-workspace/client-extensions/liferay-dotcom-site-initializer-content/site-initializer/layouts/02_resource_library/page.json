@@ -1,7 +1,7 @@
 {
 	"description": "",
 	"fragmentCompositionDefinitionPath": "page-definition.json",
-	"friendlyURL": "/resource-library",
+	"friendlyURL": "/resources",
 	"hidden": false,
 	"name": "Resource Library",
 	"name_i18n": {

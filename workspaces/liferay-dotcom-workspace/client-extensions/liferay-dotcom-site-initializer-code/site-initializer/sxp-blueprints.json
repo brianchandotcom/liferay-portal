@@ -1,0 +1,56 @@
+[
+	{
+		"configuration": {
+			"advancedConfiguration": {
+			},
+			"aggregationConfiguration": {
+			},
+			"generalConfiguration": {
+				"clauseContributorsExcludes": [
+				],
+				"clauseContributorsIncludes": [
+					"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMStructureLayoutKeywordQueryContributor",
+					"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMStructureLayoutModelPreFilterContributor",
+					"com.liferay.layout.internal.search.spi.model.query.contributor.LayoutKeywordQueryContributor",
+					"com.liferay.layout.internal.search.spi.model.query.contributor.LayoutModelPreFilterContributor",
+					"com.liferay.object.internal.search.spi.model.query.contributor.ObjectLayoutKeywordQueryContributor",
+					"com.liferay.object.internal.search.spi.model.query.contributor.ObjectLayoutModelPreFilterContributor",
+					"com.liferay.portal.search.internal.spi.model.query.contributor.LayoutQueryPreFilterContributor",
+					"com.liferay.search.experiences.internal.search.spi.model.query.contributor.SXPBlueprintKeywordQueryContributor",
+					"com.liferay.search.experiences.internal.search.spi.model.query.contributor.SXPElementKeywordQueryContributor",
+					"com.liferay.asset.categories.internal.search.spi.model.query.contributor.AssetCategoryKeywordQueryContributor",
+					"com.liferay.asset.categories.internal.search.spi.model.query.contributor.AssetCategoryModelPreFilterContributor",
+					"com.liferay.asset.categories.internal.search.spi.model.query.contributor.AssetVocabularyKeywordQueryContributor",
+					"com.liferay.asset.internal.search.spi.model.query.contributor.AssetEntryModelPreFilterContributor",
+					"com.liferay.asset.tags.internal.search.spi.model.query.contributor.AssetTagKeywordQueryContributor",
+					"com.liferay.portal.search.internal.spi.model.query.contributor.AssetCategoryIdsQueryPreFilterContributor",
+					"com.liferay.portal.search.internal.spi.model.query.contributor.AssetCategoryTitlesKeywordQueryContributor",
+					"com.liferay.portal.search.internal.spi.model.query.contributor.AssetInternalCategoryTitlesKeywordQueryContributor",
+					"com.liferay.portal.search.internal.spi.model.query.contributor.AssetTagNamesKeywordQueryContributor",
+					"com.liferay.portal.search.internal.spi.model.query.contributor.AssetTagNamesQueryPreFilterContributor"
+				],
+				"searchableAssetTypes": [
+					"com.liferay.portal.kernel.model.Layout"
+				]
+			},
+			"highlightConfiguration": {
+			},
+			"parameterConfiguration": {
+			},
+			"queryConfiguration": {
+				"applyIndexerClauses": true
+			},
+			"sortConfiguration": {
+			}
+		},
+		"description_i18n": {
+		},
+		"elementInstances": [
+		],
+		"externalReferenceCode": "siteSearchBlueprint",
+		"schemaVersion": "1.0",
+		"title_i18n": {
+			"en_US": "Site Search"
+		}
+	}
+]

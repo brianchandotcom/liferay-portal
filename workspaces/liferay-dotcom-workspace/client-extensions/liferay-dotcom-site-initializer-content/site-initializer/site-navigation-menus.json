@@ -1,126 +1,329 @@
 [
 	{
-		"externalReferenceCode": "SITE-NAVIGATION-FOOTER",
+		"externalReferenceCode": "SITE-NAVIGATION-MAIN",
 		"menuItems": [
 			{
-				"externalReferenceCode": "SITE-NAVIGATION-PLATFORM",
+				"externalReferenceCode": "SITE-NAVIGATION-PRODUCT",
 				"menuItems": [
 					{
-						"externalReferenceCode": "SITE-NAVIGATION-PLATFORM-1",
-						"friendlyURL": "/resource-library",
-						"privateLayout": false,
-						"type": "layout"
+						"externalReferenceCode": "SITE-NAVIGATION-DXP",
+						"menuItems": [
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-PLATFORM",
+								"friendlyURL": "/platform",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-OFFERINGS",
+								"friendlyURL": "/offerings",
+								"type": "layout"
+							}
+						],
+						"name": "Digital Experience Platform",
+						"name_i18n": {
+							"en_US": "Digital Experience Platform"
+						},
+						"type": "node"
 					},
 					{
-						"externalReferenceCode": "SITE-NAVIGATION-PLATFORM-2",
-						"friendlyURL": "/subscription-services",
-						"privateLayout": false,
-						"type": "layout"
-					},
-					{
-						"externalReferenceCode": "SITE-NAVIGATION-PLATFORM-3",
-						"friendlyURL": "/request-a-demo",
-						"privateLayout": false,
-						"type": "layout"
-					},
-					{
-						"externalReferenceCode": "SITE-NAVIGATION-PLATFORM-4",
-						"name": "Marketplace Apps",
-						"type": "url",
-						"url": "https://web.liferay.com/marketplace",
-						"useNewTab": false
-					},
-					{
-						"externalReferenceCode": "SITE-NAVIGATION-PLATFORM-5",
-						"friendlyURL": "/trial",
-						"privateLayout": false,
-						"type": "layout"
+						"externalReferenceCode": "SITE-NAVIGATION-CAPABILITIES",
+						"menuItems": [
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-SITES",
+								"friendlyURL": "/capabilities/sites",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-PERSONALIZATION",
+								"friendlyURL": "/capabilities/personalization",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-CONTENT-MANAGEMENT-SYSTEM",
+								"friendlyURL": "/capabilities/content-management-system",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-SEARCH",
+								"friendlyURL": "/capabilities/search",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-COMMERCE",
+								"friendlyURL": "/capabilities/commerce",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-LOW-CODE",
+								"friendlyURL": "/capabilities/low-code",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-CAPABILITIES-ALL",
+								"friendlyURL": "/capabilities",
+								"type": "layout"
+							}
+						],
+						"name": "Capabilities",
+						"name_i18n": {
+							"en_US": "Capabilities"
+						},
+						"type": "node"
 					}
 				],
+				"name": "Product",
 				"name_i18n": {
-					"en_US": "Platform"
+					"en_US": "Product"
 				},
-				"title": "Platform",
+				"type": "node"
+			},
+			{
+				"externalReferenceCode": "SITE-NAVIGATION-SOLUTIONS",
+				"menuItems": [
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-SOLUTIONS-SUBMENU",
+						"menuItems": [
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-S1",
+								"friendlyURL": "/s1",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-S2",
+								"friendlyURL": "/s2",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-S3",
+								"friendlyURL": "/s3",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-S4",
+								"friendlyURL": "/s4",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-S5",
+								"friendlyURL": "/s5",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-S6",
+								"friendlyURL": "/s6",
+								"type": "layout"
+							}
+						],
+						"name": "Solutions",
+						"name_i18n": {
+							"en_US": "Solutions"
+						},
+						"type": "node"
+					},
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-INDUSTRIES",
+						"menuItems": [
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-I1",
+								"friendlyURL": "/i1",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-I2",
+								"friendlyURL": "/i2",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-I3",
+								"friendlyURL": "/i3",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-I4",
+								"friendlyURL": "/i4",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-I5",
+								"friendlyURL": "/i5",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-I6",
+								"friendlyURL": "/i6",
+								"type": "layout"
+							}
+						],
+						"name": "Industries",
+						"name_i18n": {
+							"en_US": "Industries"
+						},
+						"type": "node"
+					}
+				],
+				"name": "Solutions",
+				"name_i18n": {
+					"en_US": "Solutions"
+				},
+				"type": "node"
+			},
+			{
+				"externalReferenceCode": "SITE-NAVIGATION-RESOURCES",
+				"menuItems": [
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-LEARN",
+						"menuItems": [
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-RESOURCE-LIBRARY",
+								"friendlyURL": "/resources",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-L2",
+								"friendlyURL": "/l2",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-L3",
+								"friendlyURL": "/l3",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-L4",
+								"friendlyURL": "/l4",
+								"type": "layout"
+							}
+						],
+						"name": "Learn",
+						"name_i18n": {
+							"en_US": "Learn"
+						},
+						"type": "node"
+					},
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-CONNECT",
+						"menuItems": [
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-C1",
+								"friendlyURL": "/c1",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-C2",
+								"friendlyURL": "/c2",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-C3",
+								"friendlyURL": "/c3",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-C4",
+								"friendlyURL": "/c4",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-C5",
+								"friendlyURL": "/c5",
+								"type": "layout"
+							}
+						],
+						"name": "Connect",
+						"name_i18n": {
+							"en_US": "Connect"
+						},
+						"type": "node"
+					}
+				],
+				"name": "Resources",
+				"name_i18n": {
+					"en_US": "Resources"
+				},
+				"type": "node"
+			},
+			{
+				"externalReferenceCode": "SITE-NAVIGATION-SERVICES",
+				"menuItems": [
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-SERVICES-SUBMENU",
+						"menuItems": [
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-SUBSCRIPTION-SERVICES",
+								"friendlyURL": "/subscription-services",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-CONSULTING",
+								"friendlyURL": "/consulting",
+								"type": "layout"
+							}
+							,
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-CUSTOMER-SUCCESS",
+								"friendlyURL": "/learning",
+								"type": "layout"
+							}
+						],
+						"name": "Services",
+						"name_i18n": {
+							"en_US": "Services"
+						},
+						"type": "node"
+					}
+				],
+				"name": "Services",
+				"name_i18n": {
+					"en_US": "Services"
+				},
 				"type": "node"
 			},
 			{
 				"externalReferenceCode": "SITE-NAVIGATION-COMPANY",
 				"menuItems": [
 					{
-						"externalReferenceCode": "SITE-NAVIGATION-COMPANY-1",
-						"friendlyURL": "/press-releases",
-						"privateLayout": false,
-						"type": "layout"
-					},
-					{
-						"externalReferenceCode": "SITE-NAVIGATION-COMPANY-2",
-						"friendlyURL": "/careers",
-						"privateLayout": false,
-						"type": "layout"
-					},
-					{
-						"externalReferenceCode": "SITE-NAVIGATION-COMPANY-3",
-						"friendlyURL": "/gdpr",
-						"privateLayout": false,
-						"type": "layout"
-					},
-					{
-						"externalReferenceCode": "SITE-NAVIGATION-COMPANY-4",
-						"friendlyURL": "/our-story",
-						"privateLayout": false,
-						"type": "layout"
-					},
-					{
-						"externalReferenceCode": "SITE-NAVIGATION-COMPANY-5",
-						"friendlyURL": "/compliance",
-						"privateLayout": false,
-						"type": "layout"
+						"externalReferenceCode": "SITE-NAVIGATION-COMPANY-SUBMENU",
+						"menuItems": [
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-ABOUT-US",
+								"friendlyURL": "/company/our-story",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-CAREERS",
+								"friendlyURL": "/careers",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-CONTACT-US",
+								"friendlyURL": "/contact-us",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-LOCATIONS",
+								"friendlyURL": "/locations",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "SITE-NAVIGATION-PRESS-RELEASES",
+								"friendlyURL": "/press-releases",
+								"type": "layout"
+							}
+						],
+						"name": "Company",
+						"name_i18n": {
+							"en_US": "Company"
+						},
+						"type": "node"
 					}
 				],
+				"name": "Company",
 				"name_i18n": {
 					"en_US": "Company"
 				},
-				"title": "Company",
-				"type": "node"
-			},
-			{
-				"externalReferenceCode": "SITE-NAVIGATION-EXPAND-CONNECT",
-				"menuItems": [
-					{
-						"externalReferenceCode": "SITE-NAVIGATION-EXPAND-CONNECT-1",
-						"name_i18n": {
-							"en_US": "Community"
-						},
-						"type": "url",
-						"url": "https://liferay.dev",
-						"useNewTab": false
-					},
-					{
-						"externalReferenceCode": "SITE-NAVIGATION-EXPAND-CONNECT-2",
-						"name_i18n": {
-							"en_US": "Developer Network"
-						},
-						"type": "url",
-						"url": "https://portal.liferay.dev",
-						"useNewTab": false
-					},
-					{
-						"externalReferenceCode": "SITE-NAVIGATION-EXPAND-CONNECT-3",
-						"name_i18n": {
-							"en_US": "Marketplace"
-						},
-						"type": "url",
-						"url": "https://marketplace.liferay.com",
-						"useNewTab": false
-					}
-				],
-				"name_i18n": {
-					"en_US": "Expand & Connect"
-				},
-				"title": "Expand & Connect",
 				"type": "node"
 			}
 		],
-		"name": "Footer"
+		"name": "Main"
 	}
 ]

@@ -21,15 +21,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = NodeBuilder.class)
-public class TaskNodeBuilder
-	extends BaseNodeBuilder<Task> implements NodeBuilder {
+public class TaskNodeBuilder extends BaseNodeBuilder<Task> {
+
+	public TaskNodeBuilder(
+		KaleoTaskFormLocalService kaleoTaskFormLocalService,
+		KaleoTaskLocalService kaleoTaskLocalService) {
+
+		_kaleoTaskFormLocalService = kaleoTaskFormLocalService;
+		_kaleoTaskLocalService = kaleoTaskLocalService;
+	}
 
 	@Override
 	public NodeType getNodeType() {
@@ -90,10 +93,7 @@ public class TaskNodeBuilder
 		return taskForms;
 	}
 
-	@Reference
-	private KaleoTaskFormLocalService _kaleoTaskFormLocalService;
-
-	@Reference
-	private KaleoTaskLocalService _kaleoTaskLocalService;
+	private final KaleoTaskFormLocalService _kaleoTaskFormLocalService;
+	private final KaleoTaskLocalService _kaleoTaskLocalService;
 
 }

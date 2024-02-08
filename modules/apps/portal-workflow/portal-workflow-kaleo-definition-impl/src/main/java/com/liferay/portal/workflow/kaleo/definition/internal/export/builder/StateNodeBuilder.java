@@ -9,14 +9,10 @@ import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.State;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = NodeBuilder.class)
-public class StateNodeBuilder
-	extends BaseNodeBuilder<State> implements NodeBuilder {
+public class StateNodeBuilder extends BaseNodeBuilder<State> {
 
 	@Override
 	public NodeType getNodeType() {

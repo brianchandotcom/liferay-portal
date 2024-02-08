@@ -5,9 +5,6 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.export.builder;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -21,17 +18,21 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
+import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskFormLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -66,18 +67,19 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext,
-			(Class<NodeBuilder<Node>>)(Class<?>)NodeBuilder.class, null,
-			ServiceReferenceMapperFactory.create(
-				bundleContext,
-				(nodeBuilder, emitter) -> emitter.emit(
-					String.valueOf(nodeBuilder.getNodeType()))));
+		_addNodeBuilder(new ConditionNodeBuilder(_kaleoConditionLocalService));
+		_addNodeBuilder(new ForkNodeBuilder());
+		_addNodeBuilder(new JoinNodeBuilder());
+		_addNodeBuilder(new StateNodeBuilder());
+		_addNodeBuilder(
+			new TaskNodeBuilder(
+				_kaleoTaskFormLocalService, _kaleoTaskLocalService));
+		_addNodeBuilder(new JoinXorNodeBuilder());
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
+	private void _addNodeBuilder(NodeBuilder<? extends Node> nodeBuilder) {
+		_nodeBuilders.put(
+			String.valueOf(nodeBuilder.getNodeType()), nodeBuilder);
 	}
 
 	private Definition _buildDefinition(
@@ -95,7 +97,7 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 				kaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
 		for (KaleoNode kaleoNode : kaleoNodes) {
-			NodeBuilder<Node> nodeBuilder = _serviceTrackerMap.getService(
+			NodeBuilder<? extends Node> nodeBuilder = _nodeBuilders.get(
 				kaleoNode.getType());
 
 			Node node = nodeBuilder.buildNode(kaleoNode);
@@ -137,6 +139,9 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 	}
 
 	@Reference
+	private KaleoConditionLocalService _kaleoConditionLocalService;
+
+	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
 
 	@Reference
@@ -147,8 +152,15 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 	private KaleoNodeLocalService _kaleoNodeLocalService;
 
 	@Reference
+	private KaleoTaskFormLocalService _kaleoTaskFormLocalService;
+
+	@Reference
+	private KaleoTaskLocalService _kaleoTaskLocalService;
+
+	@Reference
 	private KaleoTransitionLocalService _kaleoTransitionLocalService;
 
-	private ServiceTrackerMap<String, NodeBuilder<Node>> _serviceTrackerMap;
+	private final Map<String, NodeBuilder<? extends Node>> _nodeBuilders =
+		new HashMap<>();
 
 }

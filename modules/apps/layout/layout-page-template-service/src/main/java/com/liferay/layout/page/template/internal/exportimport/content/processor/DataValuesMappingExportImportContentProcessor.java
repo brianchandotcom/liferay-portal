@@ -16,6 +16,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorException;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -88,7 +89,8 @@ public class DataValuesMappingExportImportContentProcessor
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(data);
 
-		_replaceImportContentReferences(jsonObject, portletDataContext);
+		_replaceImportContentReferences(
+			jsonObject, portletDataContext, stagedModel);
 
 		return jsonObject.toString();
 	}
@@ -402,7 +404,8 @@ public class DataValuesMappingExportImportContentProcessor
 	}
 
 	private void _replaceCollectionImportContentReferences(
-		JSONObject itemJSONObject, PortletDataContext portletDataContext) {
+		JSONObject itemJSONObject, PortletDataContext portletDataContext,
+		StagedModel stagedModel) {
 
 		if (!itemJSONObject.has("config")) {
 			return;
@@ -432,6 +435,41 @@ public class DataValuesMappingExportImportContentProcessor
 				AssetListEntry.class.getName());
 
 		long newClassPK = MapUtil.getLong(
+			assetListEntryNewPrimaryKeys, classPK, -1);
+
+		if (newClassPK == -1) {
+			try {
+				StagedModelDataHandlerUtil.importReferenceStagedModel(
+					portletDataContext, stagedModel, AssetListEntry.class,
+					classPK);
+			}
+			catch (Exception exception) {
+				StringBundler exceptionSB = new StringBundler(6);
+
+				exceptionSB.append("Unable to process asset list entry ");
+				exceptionSB.append(classPK);
+				exceptionSB.append(" for ");
+				exceptionSB.append(stagedModel.getModelClassName());
+				exceptionSB.append(" with primary key ");
+				exceptionSB.append(stagedModel.getPrimaryKeyObj());
+
+				ExportImportContentProcessorException
+					exportImportContentProcessorException =
+						new ExportImportContentProcessorException(
+							exceptionSB.toString(), exception);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						exceptionSB.toString(),
+						exportImportContentProcessorException);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(exceptionSB.toString());
+				}
+			}
+		}
+
+		newClassPK = MapUtil.getLong(
 			assetListEntryNewPrimaryKeys, classPK, classPK);
 
 		AssetListEntry assetListEntry =
@@ -510,7 +548,8 @@ public class DataValuesMappingExportImportContentProcessor
 	}
 
 	private void _replaceImportContentReferences(
-		JSONObject jsonObject, PortletDataContext portletDataContext) {
+		JSONObject jsonObject, PortletDataContext portletDataContext,
+		StagedModel stagedModel) {
 
 		if (!jsonObject.has("items")) {
 			return;
@@ -537,7 +576,7 @@ public class DataValuesMappingExportImportContentProcessor
 						LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
 
 				_replaceCollectionImportContentReferences(
-					itemJSONObject, portletDataContext);
+					itemJSONObject, portletDataContext, stagedModel);
 			}
 			else if (Objects.equals(
 						itemJSONObject.get("type"),

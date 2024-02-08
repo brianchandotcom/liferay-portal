@@ -8,22 +8,22 @@ import {Locator, Page} from '@playwright/test';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class HeadlessBuilderPage {
+	readonly addNewApplicationButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly createApplicationButton: Locator;
-	readonly page: Page;
-	readonly addNewApplicationButton: Locator;
 	readonly newApplicationTitleBox: Locator;
+	readonly page: Page;
 
 	constructor(page: Page) {
+		this.addNewApplicationButton = page.getByLabel(
+			'Add New API Application'
+		);
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.createApplicationButton = page.getByRole('button', {
 			name: 'Create',
 		});
-		this.page = page;
-		this.addNewApplicationButton = page.getByLabel(
-			'Add New API Application'
-		);
 		this.newApplicationTitleBox = page.getByPlaceholder('Enter title.');
+		this.page = page;
 	}
 
 	async openApplicationActions(title: string) {

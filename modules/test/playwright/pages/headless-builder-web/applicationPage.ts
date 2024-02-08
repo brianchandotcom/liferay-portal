@@ -6,21 +6,21 @@
 import {Locator, Page} from '@playwright/test';
 
 export class ApplicationPage {
-	readonly page: Page;
 	readonly addEndpointButton: Locator;
 	readonly addSchemaButton: Locator;
 	readonly createButton: Locator;
 	readonly endpointPathTextBox: Locator;
+	readonly page: Page;
 	readonly pathParameterTextBox: Locator;
 	readonly publishButton: Locator;
 	readonly schemaNameTextBox: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
 		this.addEndpointButton = page.getByLabel('Add API Endpoint');
 		this.addSchemaButton = page.getByLabel('Add New Schema');
 		this.createButton = page.getByRole('button', {name: 'Create'});
 		this.endpointPathTextBox = page.getByPlaceholder('Enter Path');
+		this.page = page;
 		this.pathParameterTextBox = page.getByPlaceholder('{Enter Parameter}');
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
 		this.schemaNameTextBox = page.getByPlaceholder('Enter name.');

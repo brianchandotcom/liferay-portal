@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {DataSetsPage} from './DataSetsPage';
 
@@ -17,6 +17,7 @@ export class ViewsPage {
 		saveButton: Locator;
 	};
 	readonly page: Page;
+	disposed: boolean;
 
 	constructor(page: Page) {
 		this.dataSetsPage = new DataSetsPage(page);
@@ -33,6 +34,10 @@ export class ViewsPage {
 	async goto() {
 		await this.dataSetsPage.goto();
 		await this.dataSetsPage.gotoSampleDataSet();
+
+		await expect(
+			this.page.getByRole('heading', {name: 'Data Set Sample'})
+		).toBeInViewport();
 	}
 
 	async createSampleDataSetView() {
@@ -52,8 +57,9 @@ export class ViewsPage {
 			.first()
 			.click();
 
-		await this.page
-			.getByRole('heading', {name: 'Data Set View Sample'})
-			.waitFor();
+		// await this.page
+		// 	.getByRole('heading', {name: 'Data Set View Sample'})
+		// 	.waitFor();
+
 	}
 }

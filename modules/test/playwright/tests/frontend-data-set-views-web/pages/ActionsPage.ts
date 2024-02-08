@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {CreationActionTypes, ItemActionTypes} from '../utils/types';
 import {ViewsPage} from './ViewsPage';
@@ -50,6 +50,10 @@ export class ActionsPage {
 	async goto() {
 		await this.viewsPage.goto();
 		await this.viewsPage.gotoSampleDataSetView();
+
+		await expect(
+			this.page.getByRole('heading', {name: 'Data Set View Sample'})
+		).toBeInViewport();
 
 		await this.page.getByRole('button', {name: 'Actions'}).first().click();
 	}

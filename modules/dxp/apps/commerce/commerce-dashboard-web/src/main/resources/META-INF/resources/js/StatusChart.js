@@ -5,15 +5,9 @@
 
 import React from 'react';
 
-import ChartWrapper from '../ChartWrapper.es';
+import ChartWrapper from './ChartWrapper';
 
-export default function StatusChart(
-	_accountIdParamName,
-	_APIBaseUrl,
-	_commerceAccountId,
-	_noAccountErrorMessage,
-	noDataErrorMessage
-) {
+export default function StatusChart() {
 	const chartData = {
 		axis: {
 			x: {
@@ -46,7 +40,7 @@ export default function StatusChart(
 	return (
 		<ChartWrapper
 			data={chartData}
-			noDataErrorMessage={noDataErrorMessage}
+			noDataErrorMessage={Liferay.Language.get('no-data-available')}
 		/>
 	);
 }

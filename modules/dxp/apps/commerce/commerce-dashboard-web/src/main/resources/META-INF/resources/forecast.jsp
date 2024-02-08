@@ -8,7 +8,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String forecastChartRootElementId = liferayPortletResponse.getNamespace() + "-forecast-chart";
 CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
 
 CommerceDashboardForecastDisplayContext commerceDashboardForecastDisplayContext = (CommerceDashboardForecastDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
@@ -31,17 +30,18 @@ if (accountEntry != null) {
 %>
 
 <c:if test="<%= commerceDashboardForecastDisplayContext.hasViewPermission() %>">
-	<div id="<%= forecastChartRootElementId %>">
-		<span aria-hidden="true" class="loading-animation"></span>
-	</div>
-
-	<aui:script require="commerce-dashboard-web/js/forecast/index.es as chart">
-		chart.default('<%= forecastChartRootElementId %>', {
-			APIBaseUrl:
-				'/o/headless-commerce-machine-learning/v1.0/accountCategoryForecasts/by-monthlyRevenue',
-			accountIds: <%= accountIds %>,
-			categoryIds: <%= categoryIds %>,
-			portletId: '<%= portletDisplay.getId() %>',
-		});
-	</aui:script>
+	<react:component
+		module="{ForecastChart} from commerce-dashboard-web"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"accountIds", accountIds
+			).put(
+				"APIBaseUrl", "/o/headless-commerce-machine-learning/v1.0/accountCategoryForecasts/by-monthlyRevenue"
+			).put(
+				"categoryIds", categoryIds
+			).put(
+				"portletId", portletDisplay.getId()
+			).build()
+		%>'
+	/>
 </c:if>

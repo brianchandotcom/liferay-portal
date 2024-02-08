@@ -17,7 +17,6 @@ export class ViewsPage {
 		saveButton: Locator;
 	};
 	readonly page: Page;
-	disposed: boolean;
 
 	constructor(page: Page) {
 		this.dataSetsPage = new DataSetsPage(page);
@@ -56,10 +55,5 @@ export class ViewsPage {
 			})
 			.first()
 			.click();
-
-		// await this.page
-		// 	.getByRole('heading', {name: 'Data Set View Sample'})
-		// 	.waitFor();
-
 	}
 }

@@ -87,7 +87,6 @@ import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewFilterColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
@@ -187,6 +186,23 @@ public class BatchEngineBrokerTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_objectEncryptionAlgorithmSafeCloseable =
+			PropsValuesTestUtil.swapWithSafeCloseable(
+				"OBJECT_ENCRYPTION_ALGORITHM", "AES");
+		_objectEncryptionEnabledSafeCloseable =
+			PropsValuesTestUtil.swapWithSafeCloseable(
+				"OBJECT_ENCRYPTION_ENABLED", true);
+
+		KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+
+		keyGenerator.init(128);
+
+		Key key = keyGenerator.generateKey();
+
+		_objectEncryptionKeySafeCloseable =
+			PropsValuesTestUtil.swapWithSafeCloseable(
+				"OBJECT_ENCRYPTION_KEY", Base64.encode(key.getEncoded()));
 	}
 
 	@After
@@ -205,6 +221,10 @@ public class BatchEngineBrokerTest {
 			_companyLocalService.deleteCompany(_company2);
 			_company2 = null;
 		}
+
+		_objectEncryptionAlgorithmSafeCloseable.close();
+		_objectEncryptionEnabledSafeCloseable.close();
+		_objectEncryptionKeySafeCloseable.close();
 	}
 
 	@Test
@@ -1204,18 +1224,16 @@ public class BatchEngineBrokerTest {
 							objectRelationship.getName()))
 				).build());
 
-			_withAddEncryptedObjectField(
-				"AES",
-				() -> _addCustomObjectField(
-					new EncryptedObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"testEncryptedField"
-					).objectDefinitionId(
-						objectDefinition.getObjectDefinitionId()
-					).build()));
+			_addCustomObjectField(
+				new EncryptedObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"testEncryptedField"
+				).objectDefinitionId(
+					objectDefinition.getObjectDefinitionId()
+				).build());
 
 			return _objectDefinitionLocalService.publishCustomObjectDefinition(
 				user.getUserId(), objectDefinition.getObjectDefinitionId());
@@ -1389,30 +1407,6 @@ public class BatchEngineBrokerTest {
 		return csvRecord.toList();
 	}
 
-	private void _withAddEncryptedObjectField(
-			String algorithm, UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
-
-		keyGenerator.init(128);
-
-		Key key = keyGenerator.generateKey();
-
-		try (SafeCloseable safeCloseable1 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"OBJECT_ENCRYPTION_ALGORITHM", algorithm);
-			SafeCloseable safeCloseable2 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"OBJECT_ENCRYPTION_ENABLED", true);
-			SafeCloseable safeCloseable3 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"OBJECT_ENCRYPTION_KEY", Base64.encode(key.getEncoded()))) {
-
-			unsafeRunnable.run();
-		}
-	}
-
 	private static final String _DELIMITER_VALUE = StringPool.COMMA;
 
 	private static final String _ENCLOSING_CHARACTER_VALUE = StringPool.QUOTE;
@@ -1566,6 +1560,10 @@ public class BatchEngineBrokerTest {
 
 	@Inject
 	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
+
+	private SafeCloseable _objectEncryptionAlgorithmSafeCloseable;
+	private SafeCloseable _objectEncryptionEnabledSafeCloseable;
+	private SafeCloseable _objectEncryptionKeySafeCloseable;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

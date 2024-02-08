@@ -51,5 +51,9 @@ export class ViewsPage {
 			})
 			.first()
 			.click();
+
+		await this.page
+			.getByRole('heading', {name: 'Data Set View Sample'})
+			.waitFor();
 	}
 }

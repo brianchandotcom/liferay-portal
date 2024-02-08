@@ -833,13 +833,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						random${schemaName}());
 
+						// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+						int pageSizeLimit = 500;
+
 						if (totalCount >= 498) {
-							double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-							int ${schemaVarName}1Page = (int) Math.ceil((totalCountDouble + 1.0) / 500.0);
-							int ${schemaVarName}2Page = (int) Math.ceil((totalCountDouble + 2.0) / 500.0);
-							int ${schemaVarName}3Page = (int) Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 							Page<${schemaName}> page1 = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
 
 							<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
@@ -848,7 +846,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								</#if>
 
 								<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
-									Pagination.of(${schemaVarName}1Page, 500)
+									Pagination.of((int) Math.ceil((totalCount + 1.0) / pageSizeLimit), pageSizeLimit)
 								<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 									${javaMethodParameter.parameterName}
 								<#else>
@@ -870,7 +868,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								</#if>
 
 								<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
-									Pagination.of(${schemaVarName}2Page, 500)
+									Pagination.of((int) Math.ceil((totalCount + 2.0) / pageSizeLimit), pageSizeLimit)
 								<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 									${javaMethodParameter.parameterName}
 								<#else>
@@ -890,7 +888,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								</#if>
 
 								<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
-									Pagination.of(${schemaVarName}3Page, 500)
+									Pagination.of((int) Math.ceil((totalCount + 3.0) / pageSizeLimit), pageSizeLimit)
 								<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 									${javaMethodParameter.parameterName}
 								<#else>

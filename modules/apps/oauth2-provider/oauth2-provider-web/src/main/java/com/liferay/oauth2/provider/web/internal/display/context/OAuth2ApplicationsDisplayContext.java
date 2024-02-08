@@ -70,7 +70,8 @@ public class OAuth2ApplicationsDisplayContext {
 	}
 
 	private String _getOrderByCol() {
-		return ParamUtil.getString(_liferayPortletRequest, "orderByCol");
+		return ParamUtil.getString(
+			_liferayPortletRequest, "orderByCol", "name");
 	}
 
 	private String _getOrderByType() {

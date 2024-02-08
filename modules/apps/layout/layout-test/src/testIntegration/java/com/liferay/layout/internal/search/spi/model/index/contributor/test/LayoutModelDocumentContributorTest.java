@@ -510,7 +510,8 @@ public class LayoutModelDocumentContributorTest {
 
 	private List<LogEntry> _reindexLogEntries(Layout layout) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.DEBUG)) {
+				_CLASS_NAME_LAYOUT_MODEL_DOCUMENT_CONTRIBUTOR,
+				LoggerTestUtil.DEBUG)) {
 
 			Indexer<Layout> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				Layout.class);
@@ -542,12 +543,12 @@ public class LayoutModelDocumentContributorTest {
 			assetEntry, journalArticle, layout, portletId);
 	}
 
-	private static final String _CLASS_NAME =
-		"com.liferay.layout.internal.search.spi.model.index.contributor." +
-			"LayoutModelDocumentContributor";
-
 	private static final String _CLASS_NAME_INCLUDE_TAG =
 		"com.liferay.taglib.util.IncludeTag";
+
+	private static final String _CLASS_NAME_LAYOUT_MODEL_DOCUMENT_CONTRIBUTOR =
+		"com.liferay.layout.internal.search.spi.model.index.contributor." +
+			"LayoutModelDocumentContributor";
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;

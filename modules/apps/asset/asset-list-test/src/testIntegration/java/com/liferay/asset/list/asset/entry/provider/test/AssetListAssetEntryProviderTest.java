@@ -952,7 +952,7 @@ public class AssetListAssetEntryProviderTest {
 			long groupId, long categoryId)
 		throws Exception {
 
-		return _getSegmentsEntry(
+		return _addSegmentsEntry(
 			groupId, "(assetCategoryIds eq '%s')", String.valueOf(categoryId));
 	}
 
@@ -960,10 +960,10 @@ public class AssetListAssetEntryProviderTest {
 			long groupId, String firstName)
 		throws Exception {
 
-		return _getSegmentsEntry(groupId, "(firstName eq '%s')", firstName);
+		return _addSegmentsEntry(groupId, "(firstName eq '%s')", firstName);
 	}
 
-	private SegmentsEntry _getSegmentsEntry(
+	private SegmentsEntry _addSegmentsEntry(
 			long groupId, String criteriaString, String firstName)
 		throws Exception {
 

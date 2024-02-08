@@ -12,8 +12,8 @@ export function executeBashScript(bashScript: string): string {
 }
 
 export function executeBashScriptPrint(bashScript: string) {
-	console.log('Executing Bash Script:');
-	console.log(bashScript);
+	process.stdout.write('Executing Bash Script:');
+	process.stdout.write(bashScript);
 
 	execSync(bashScript, {stdio: 'inherit'});
 }

@@ -6,14 +6,23 @@
 import axios from 'axios';
 import {setDefaultResultOrder} from 'dns';
 import {glob} from 'glob';
-import {copyFile, existsSync, mkdirSync, readFileSync} from 'node:fs'
+import {copyFile, existsSync, mkdirSync, readFileSync} from 'node:fs';
 
 import {executeBashScript, executeBashScriptPrint} from './bashUtil.env';
-import {getLiferayHome, getLiferayPortalDir, getPlaywrightBaseDir, getPlaywrightParentDirs, getPlaywrightProjectDir} from './common.env';
+import {
+	getLiferayHome,
+	getLiferayPortalDir,
+	getPlaywrightBaseDir,
+	getPlaywrightParentDirs,
+	getPlaywrightProjectDir,
+} from './common.env';
 import {executeGradleTask} from './gradleUtil.env';
-import {getPropertiesFromFiles, writePropertiesFile} from './propertiesUtil.env';
+import {
+	getPropertiesFromFiles,
+	writePropertiesFile,
+} from './propertiesUtil.env';
 
-setDefaultResultOrder("ipv4first");
+setDefaultResultOrder('ipv4first');
 
 export function deployParentProjectClientExtensions() {
 	for (const playwrightParentDir of getPlaywrightParentDirs()) {
@@ -42,7 +51,7 @@ export function deployProjectDeployDir() {
 }
 
 export function deployProjectOSGiModules() {
-	_deployOSGiModulesListFile(getPlaywrightProjectDir())
+	_deployOSGiModulesListFile(getPlaywrightProjectDir());
 }
 
 export function startAppServer() {
@@ -59,12 +68,14 @@ export function stopAppServer() {
 
 export function updatePortalExtProperties() {
 	const liferayHome = getLiferayHome();
-	
+
 	let portalExtPropertiesFile = liferayHome + '/portal-ext.properties';
 
-	let portalExtPropertiesFiles = glob.sync(liferayHome + '/**/portal-ext.properties');
+	let portalExtPropertiesFiles = glob.sync(
+		liferayHome + '/**/portal-ext.properties'
+	);
 
-	if (portalExtPropertiesFiles.length == 0) {
+	if (!portalExtPropertiesFiles.length) {
 		portalExtPropertiesFiles.push(portalExtPropertiesFile);
 	}
 	else {
@@ -73,52 +84,73 @@ export function updatePortalExtProperties() {
 
 	portalExtPropertiesFiles = portalExtPropertiesFiles.concat([
 		getPlaywrightBaseDir() + '/env/portal-ext.properties',
-		getPlaywrightProjectDir() + '/env/portal-ext.properties'
+		getPlaywrightProjectDir() + '/env/portal-ext.properties',
 	]);
-	
+
 	const portalProperties = getPropertiesFromFiles(portalExtPropertiesFiles);
 
 	writePropertiesFile(portalExtPropertiesFile, portalProperties);
 }
 
 export async function waitForStartedAppServer() {
-	console.log('Wating for app server to start up.');
+	process.stdout.write('Wating for app server to start up.');
 
 	return _waitForURLAvailable('http://localhost:8080/web/guest');
 }
 
 function _deployClientExtension(clientExtension: string) {
-	const clientExtensionDirs = glob.sync(getLiferayPortalDir() + '/workspaces/*-workspace/client-extensions/' + clientExtension);
+	const clientExtensionDirs = glob.sync(
+		getLiferayPortalDir() +
+			'/workspaces/*-workspace/client-extensions/' +
+			clientExtension
+	);
 
-	if (clientExtensionDirs.length == 0) {
-		throw new Error("Unable to find client extension " + clientExtension);
+	if (!clientExtensionDirs.length) {
+		throw new Error('Unable to find client extension ' + clientExtension);
 	}
 
-	const clientExtensionDir = clientExtensionDirs[0]
+	const clientExtensionDir = clientExtensionDirs[0];
 
 	const workspaceDir = _getWorkspaceDir(clientExtensionDir);
 
 	const gradleParameters = [];
 
-	gradleParameters.push({name: 'liferay.workspace.home.dir', value: getLiferayHome()});
+	gradleParameters.push({
+		name: 'liferay.workspace.home.dir',
+		value: getLiferayHome(),
+	});
 
-	executeGradleTask(workspaceDir, ':client-extensions:' + clientExtension + ':deploy', gradleParameters);
+	executeGradleTask(
+		workspaceDir,
+		':client-extensions:' + clientExtension + ':deploy',
+		gradleParameters
+	);
 }
 
 function _deployClientExtensionsListFile(playwrightProjectDir: string) {
-	const clientExtensionsListFile = playwrightProjectDir + '/env/client-extensions.list';
+	const clientExtensionsListFile =
+		playwrightProjectDir + '/env/client-extensions.list';
 
 	if (existsSync(clientExtensionsListFile)) {
-		const clientExtensionsListFileContent = readFileSync(clientExtensionsListFile).toString();
+		const clientExtensionsListFileContent = readFileSync(
+			clientExtensionsListFile
+		).toString();
 
-		for (const clientExtension of clientExtensionsListFileContent.split("\n")) {
+		for (const clientExtension of clientExtensionsListFileContent.split(
+			'\n'
+		)) {
 			_deployClientExtension(clientExtension);
 		}
 	}
 }
 
 function _deployOSGiModule(osgiModule: string) {
-	const script = 'find ' + getLiferayPortalDir() + '/modules | grep -v .releng | grep -v node_modules | grep -v \.npmscripts | grep /' + osgiModule + '$';
+	const script =
+		'find ' +
+		getLiferayPortalDir() +
+		'/modules | grep -v .releng | grep -v node_modules | grep -v .npmscripts | grep /' +
+		osgiModule +
+		'$';
 
 	let osgiModuleDir = executeBashScript(script);
 
@@ -128,20 +160,25 @@ function _deployOSGiModule(osgiModule: string) {
 		throw new Error('Unable to find ' + osgiModule);
 	}
 
-	osgiModuleDir = osgiModuleDir.replace(/.+\/modules(\/.+)/, '\$1');
+	osgiModuleDir = osgiModuleDir.replace(/.+\/modules(\/.+)/, '$1');
 
 	const modulesDir = getLiferayPortalDir() + '/modules';
 
-	executeGradleTask(modulesDir, osgiModuleDir.replace(/\//g, ':') + ':deploy', []);
+	executeGradleTask(
+		modulesDir,
+		osgiModuleDir.replace(/\//g, ':') + ':deploy',
+		[]
+	);
 }
 
 function _deployOSGiModulesListFile(playwrightProjectDir: string) {
 	const osgiModulesListFile = playwrightProjectDir + '/env/osgi-modules.list';
 
 	if (existsSync(osgiModulesListFile)) {
-		const osgiModulesListFileContent = readFileSync(osgiModulesListFile).toString();
+		const osgiModulesListFileContent =
+			readFileSync(osgiModulesListFile).toString();
 
-		for (const osgiModule of osgiModulesListFileContent.split("\n")) {
+		for (const osgiModule of osgiModulesListFileContent.split('\n')) {
 			_deployOSGiModule(osgiModule);
 		}
 	}
@@ -153,14 +190,14 @@ function _deployProjectDeployDir(playwrightProjectDir: string) {
 	if (existsSync(projectDeployDir)) {
 		const deployDir = getLiferayHome() + '/deploy';
 
-		if (!existsSync(deployDir)){
-			mkdirSync(deployDir, { recursive: true });
+		if (!existsSync(deployDir)) {
+			mkdirSync(deployDir, {recursive: true});
 		}
 
 		const deployFiles = glob.sync(projectDeployDir + '/*');
 
 		for (const deployFile of deployFiles) {
-			const deployFileName = deployFile.replace(/.+\/([^\/]+)/, '\$1');
+			const deployFileName = deployFile.replace(/.+\/([^/]+)/, '$1');
 
 			copyFile(deployFile, deployDir + '/' + deployFileName, (error) => {
 				if (error) {
@@ -174,7 +211,7 @@ function _deployProjectDeployDir(playwrightProjectDir: string) {
 function _getTomcatDir(): string {
 	const tomcatBinDirs = glob.sync(getLiferayHome() + '/tomcat*/bin');
 
-	if (tomcatBinDirs.length === 0) {
+	if (!tomcatBinDirs.length) {
 		throw new Error('Could not find tomcat bin dir');
 	}
 
@@ -182,7 +219,10 @@ function _getTomcatDir(): string {
 }
 
 function _getWorkspaceDir(clientExtensionDir: string): string {
-	return clientExtensionDir.replace(/(.+\/workspaces\/[^\/]+-workspace)\/.+/, '\$1');
+	return clientExtensionDir.replace(
+		/(.+\/workspaces\/[^/]+-workspace)\/.+/,
+		'$1'
+	);
 }
 
 async function _isURLAvailable(url: string): Promise<Boolean> {
@@ -205,15 +245,17 @@ async function _waitForURLAvailable(url: string, timeoutMinutes: number = 5) {
 
 	while (!(await _isURLAvailable(url))) {
 		if (Date.now() - startTime > timeoutMinutes * 60 * 1000) {
-			console.log(url + ' is unavailable in ' + timeoutMinutes + ' minutes.');
+			process.stdout.write(
+				url + ' is unavailable in ' + timeoutMinutes + ' minutes.'
+			);
 
 			return false;
 		}
 
-		await new Promise(resolve => setTimeout(resolve, 5000));
+		await new Promise((resolve) => setTimeout(resolve, 5000));
 	}
 
-	console.log(url + ' is available.');
+	process.stdout.write(url + ' is available.');
 
 	return true;
 }

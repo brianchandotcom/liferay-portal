@@ -45,7 +45,7 @@ test('Create a Creation Action', async ({
 		await actionsPage.goto();
 	});
 
-	await test.step('Create an item action', async () => {
+	await test.step('Create a creation action', async () => {
 		await actionsPage.createCreationAction({
 			icon: 'arrow-right-full',
 			name: LINK_CREATION_ACTION_NAME,

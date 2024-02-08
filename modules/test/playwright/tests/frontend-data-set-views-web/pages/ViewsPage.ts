@@ -20,10 +20,7 @@ export class ViewsPage {
 
 	constructor(page: Page) {
 		this.dataSetsPage = new DataSetsPage(page);
-		this.dataSetsViewTable = page.getByText(
-			'ViewsData Set View SampleActions',
-			{exact: true}
-		);
+		this.dataSetsViewTable = page.locator('.data-set-content-wrapper');
 		this.newDataSetViewButton = page.getByLabel('New Data Set View');
 		this.newDataSetViewEmptyButton = page.getByText('New Data Set View');
 		this.newDataSetViewModal = {
@@ -48,7 +45,10 @@ export class ViewsPage {
 
 	async gotoSampleDataSetView() {
 		await this.dataSetsViewTable
-			.getByRole('link', {name: 'Data Set View Sample'})
+			.getByRole('link', {
+				exact: true,
+				name: 'Data Set View Sample',
+			})
 			.first()
 			.click();
 	}

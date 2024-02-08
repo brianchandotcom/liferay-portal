@@ -98,6 +98,20 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async patchProduct(productId: string, product?: DataObject) {
+		const response = await this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}`,
+			{
+				name: {
+					en_US: 'Product' + getRandomInt(),
+				},
+				...(product || {}),
+			}
+		);
+
+		return response;
+	}
+
 	async postAttachment(
 		productId: number,
 		fileEntryId: number,

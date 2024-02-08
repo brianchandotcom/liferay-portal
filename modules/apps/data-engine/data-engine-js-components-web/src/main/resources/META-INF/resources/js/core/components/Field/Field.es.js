@@ -246,6 +246,7 @@ export function Field({field, itemPath, loc, ...otherProps}) {
 						null
 					}
 					data-field-name={field.fieldName}
+					data-qa-id={field.fieldName}
 				>
 					<Suspense fallback={<ClayLoadingIndicator />}>
 						<ParentFieldContext.Provider

@@ -11,19 +11,23 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 String randomNamespace = (String)row.getParameter("randomNamespace");
+
+WorkflowDefinitionLinkSearchEntry workflowDefinitionLinkSearchEntry = (WorkflowDefinitionLinkSearchEntry)row.getObject();
 %>
 
-<div class="btn-group btn-group-nowrap d-none" id="<%= randomNamespace %>saveCancelGroup">
-	<div class="btn-group-item">
-		<button class="btn btn-primary btn-sm" id="<%= randomNamespace %>saveButton" type="button")><liferay-ui:message key="save" /></button>
+<div data-qa-id='<%= "action" + workflowDefinitionLinkSearchEntry.getResource() %>'>
+	<div class="btn-group btn-group-nowrap d-none" id="<%= randomNamespace %>saveCancelGroup">
+		<div class="btn-group-item">
+			<button class="btn btn-primary btn-sm" id="<%= randomNamespace %>saveButton" type="button")><liferay-ui:message key="save" /></button>
+		</div>
+
+		<div class="btn-group-item">
+			<button class="btn btn-secondary btn-sm" id="<%= randomNamespace %>cancelButton" type="button"><liferay-ui:message key="cancel" /></button>
+		</div>
 	</div>
 
-	<div class="btn-group-item">
-		<button class="btn btn-secondary btn-sm" id="<%= randomNamespace %>cancelButton" type="button"><liferay-ui:message key="cancel" /></button>
-	</div>
+	<button class="btn btn-secondary btn-sm" id="<%= randomNamespace %>editButton" type="button"><liferay-ui:message key="edit" /></button>
 </div>
-
-<button class="btn btn-secondary btn-sm" id="<%= randomNamespace %>editButton" type="button"><liferay-ui:message key="edit" /></button>
 
 <aui:script use="liferay-workflow-web">
 	var saveWorkflowDefinitionLink = A.rbind(

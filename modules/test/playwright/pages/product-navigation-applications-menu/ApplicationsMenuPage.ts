@@ -17,9 +17,10 @@ export class ApplicationsMenuPage {
 	private readonly dataMigrationCenterMenuItem: Locator;
 	private readonly dataSetManagerMenuItem: Locator;
 	private readonly homePage: HomePage;
-	private readonly instanceSettingsLink: Locator;
+	private readonly instanceSettingsMenuItem: Locator;
 	private readonly objectsMenuItem: Locator;
 	readonly page: Page;
+	private readonly processBuilderItem: Locator;
 	private readonly usersAndOrganizationsItem: Locator;
 
 	constructor(page: Page) {
@@ -44,9 +45,6 @@ export class ApplicationsMenuPage {
 			name: 'Control Panel',
 		});
 		this.homePage = new HomePage(page);
-		this.instanceSettingsLink = page.getByRole('link', {
-			name: 'Instance Settings',
-		});
 		this.dataMigrationCenterMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Data Migration Center',
@@ -55,11 +53,19 @@ export class ApplicationsMenuPage {
 			exact: true,
 			name: 'Data Sets',
 		});
+		this.instanceSettingsMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Instance Settings',
+		});
 		this.objectsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Objects',
 		});
 		this.page = page;
+		this.processBuilderItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Process Builder',
+		});
 		this.usersAndOrganizationsItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Users and Organizations',
@@ -105,7 +111,7 @@ export class ApplicationsMenuPage {
 
 	async goToInstanceSettings() {
 		await this.goToControlPanel();
-		await this.instanceSettingsLink.click();
+		await this.instanceSettingsMenuItem.click();
 	}
 
 	async goToCommercePanel() {
@@ -121,6 +127,11 @@ export class ApplicationsMenuPage {
 	async goToControlPanel() {
 		await this.goto();
 		await this.controlPanelButton.click();
+	}
+
+	async goToProcessBuilder() {
+		await this.goToApplicationsMenu();
+		await this.processBuilderItem.click();
 	}
 
 	async goToUsersAndOrganizations() {

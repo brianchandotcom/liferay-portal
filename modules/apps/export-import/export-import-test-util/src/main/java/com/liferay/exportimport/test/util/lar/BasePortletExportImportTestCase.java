@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.User;
@@ -464,6 +465,57 @@ public abstract class BasePortletExportImportTestCase
 		}
 	}
 
+	protected void exportPortlet(String portletId, Layout layout)
+		throws Exception {
+
+		exportPortlet(
+			portletId, new LinkedHashMap<String, String[]>(), false, layout);
+	}
+
+	protected void exportPortlet(
+			String portletId, Map<String, String[]> exportParameterMap,
+			boolean portletStagingInProcess, Layout layout)
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		MapUtil.merge(getExportParameterMap(), exportParameterMap);
+
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportPortletSettingsMap(
+					user, layout.getPlid(), layout.getGroupId(), portletId,
+					exportParameterMap, StringPool.BLANK);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					user.getUserId(),
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_LOCAL,
+					settingsMap);
+
+		ExportImportThreadLocal.setPortletStagingInProcess(
+			portletStagingInProcess);
+
+		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+			ExportImportLifecycleConstants.
+				EVENT_PUBLICATION_PORTLET_LOCAL_STARTED,
+			ExportImportLifecycleConstants.
+				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
+			String.valueOf(
+				exportImportConfiguration.getExportImportConfigurationId()),
+			exportImportConfiguration);
+
+		try {
+			larFile = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
+				exportImportConfiguration);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
+	}
+
 	protected PortletPreferences getImportedPortletPreferences(
 			Map<String, String[]> preferenceMap)
 		throws Exception {
@@ -489,6 +541,87 @@ public abstract class BasePortletExportImportTestCase
 		exportImportPortlet(portletId, portletStagingInProcess);
 
 		return LayoutTestUtil.getPortletPreferences(importedLayout, portletId);
+	}
+
+	protected void importPortlet(String portletId, Layout layout)
+		throws Exception {
+
+		importPortlet(
+			portletId, new LinkedHashMap<String, String[]>(), false, layout);
+	}
+
+	protected void importPortlet(
+			String portletId, Map<String, String[]> importParameterMap,
+			boolean portletStagingInProcess, Layout layout)
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportPortletSettingsMap(
+					user, layout.getPlid(), layout.getGroupId(), portletId,
+					importParameterMap, StringPool.BLANK);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					user.getUserId(),
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_LOCAL,
+					settingsMap);
+
+		ExportImportThreadLocal.setPortletStagingInProcess(
+			portletStagingInProcess);
+
+		try {
+			importedLayout = LayoutTestUtil.addTypePortletLayout(importedGroup);
+
+			MapUtil.merge(getImportParameterMap(), importParameterMap);
+
+			settingsMap =
+				ExportImportConfigurationSettingsMapFactoryUtil.
+					buildImportPortletSettingsMap(
+						user, importedLayout.getPlid(),
+						importedGroup.getGroupId(), portletId,
+						importParameterMap);
+
+			exportImportConfiguration =
+				ExportImportConfigurationLocalServiceUtil.
+					updateExportImportConfiguration(
+						user.getUserId(),
+						exportImportConfiguration.
+							getExportImportConfigurationId(),
+						StringPool.BLANK, StringPool.BLANK, settingsMap,
+						new ServiceContext());
+
+			exportImportConfiguration.setGroupId(importedGroup.getGroupId());
+
+			exportImportConfiguration =
+				ExportImportConfigurationLocalServiceUtil.
+					updateExportImportConfiguration(exportImportConfiguration);
+
+			ExportImportLocalServiceUtil.validateImportPortletInfo(
+				exportImportConfiguration, larFile);
+
+			ExportImportLocalServiceUtil.importPortletDataDeletions(
+				exportImportConfiguration, larFile);
+
+			ExportImportLocalServiceUtil.importPortletInfo(
+				exportImportConfiguration, larFile);
+
+			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+				ExportImportLifecycleConstants.
+					EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED,
+				ExportImportLifecycleConstants.
+					PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
+				exportImportConfiguration);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
 	}
 
 	protected boolean isVersioningEnabled() {

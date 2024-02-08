@@ -430,30 +430,34 @@ public abstract class BaseCartItemResourceTestCase {
 		CartItem cartItem3 = testGetCartItemsPage_addCartItem(
 			cartId, randomCartItem());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int cartItem1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int cartItem2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int cartItem3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<CartItem> page1 = cartItemResource.getCartItemsPage(
-				cartId, null, Pagination.of(cartItem1Page, 500));
+				cartId, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(cartItem1, (List<CartItem>)page1.getItems());
 
 			Page<CartItem> page2 = cartItemResource.getCartItemsPage(
-				cartId, null, Pagination.of(cartItem2Page, 500));
+				cartId, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(cartItem2, (List<CartItem>)page2.getItems());
 
 			Page<CartItem> page3 = cartItemResource.getCartItemsPage(
-				cartId, null, Pagination.of(cartItem3Page, 500));
+				cartId, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(cartItem3, (List<CartItem>)page3.getItems());
 		}

@@ -318,30 +318,37 @@ public abstract class BaseCTProcessResourceTestCase {
 		CTProcess ctProcess3 = testGetCTProcessesPage_addCTProcess(
 			randomCTProcess());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int ctProcess1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int ctProcess2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int ctProcess3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<CTProcess> page1 = ctProcessResource.getCTProcessesPage(
-				null, null, null, Pagination.of(ctProcess1Page, 500), null);
+				null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(ctProcess1, (List<CTProcess>)page1.getItems());
 
 			Page<CTProcess> page2 = ctProcessResource.getCTProcessesPage(
-				null, null, null, Pagination.of(ctProcess2Page, 500), null);
+				null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(ctProcess2, (List<CTProcess>)page2.getItems());
 
 			Page<CTProcess> page3 = ctProcessResource.getCTProcessesPage(
-				null, null, null, Pagination.of(ctProcess3Page, 500), null);
+				null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(ctProcess3, (List<CTProcess>)page3.getItems());
 		}

@@ -246,19 +246,18 @@ public abstract class BaseContactOrganizationResourceTestCase {
 			testGetContactOrganizationsPage_addContactOrganization(
 				randomContactOrganization());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int contactOrganization1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int contactOrganization2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int contactOrganization3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ContactOrganization> page1 =
 				contactOrganizationResource.getContactOrganizationsPage(
-					null, Pagination.of(contactOrganization1Page, 500), null);
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -268,7 +267,11 @@ public abstract class BaseContactOrganizationResourceTestCase {
 
 			Page<ContactOrganization> page2 =
 				contactOrganizationResource.getContactOrganizationsPage(
-					null, Pagination.of(contactOrganization2Page, 500), null);
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				contactOrganization2,
@@ -276,7 +279,11 @@ public abstract class BaseContactOrganizationResourceTestCase {
 
 			Page<ContactOrganization> page3 =
 				contactOrganizationResource.getContactOrganizationsPage(
-					null, Pagination.of(contactOrganization3Page, 500), null);
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				contactOrganization3,

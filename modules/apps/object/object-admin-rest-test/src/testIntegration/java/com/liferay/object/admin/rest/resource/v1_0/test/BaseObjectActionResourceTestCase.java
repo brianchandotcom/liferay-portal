@@ -482,21 +482,19 @@ public abstract class BaseObjectActionResourceTestCase {
 			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_addObjectAction(
 				externalReferenceCode, randomObjectAction());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int objectAction1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int objectAction2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int objectAction3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ObjectAction> page1 =
 				objectActionResource.
 					getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
 						externalReferenceCode, null,
-						Pagination.of(objectAction1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -506,7 +504,10 @@ public abstract class BaseObjectActionResourceTestCase {
 				objectActionResource.
 					getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
 						externalReferenceCode, null,
-						Pagination.of(objectAction2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(objectAction2, (List<ObjectAction>)page2.getItems());
 
@@ -514,7 +515,10 @@ public abstract class BaseObjectActionResourceTestCase {
 				objectActionResource.
 					getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
 						externalReferenceCode, null,
-						Pagination.of(objectAction3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(objectAction3, (List<ObjectAction>)page3.getItems());
 		}
@@ -868,20 +872,18 @@ public abstract class BaseObjectActionResourceTestCase {
 			testGetObjectDefinitionObjectActionsPage_addObjectAction(
 				objectDefinitionId, randomObjectAction());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int objectAction1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int objectAction2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int objectAction3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ObjectAction> page1 =
 				objectActionResource.getObjectDefinitionObjectActionsPage(
 					objectDefinitionId, null,
-					Pagination.of(objectAction1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -890,14 +892,20 @@ public abstract class BaseObjectActionResourceTestCase {
 			Page<ObjectAction> page2 =
 				objectActionResource.getObjectDefinitionObjectActionsPage(
 					objectDefinitionId, null,
-					Pagination.of(objectAction2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(objectAction2, (List<ObjectAction>)page2.getItems());
 
 			Page<ObjectAction> page3 =
 				objectActionResource.getObjectDefinitionObjectActionsPage(
 					objectDefinitionId, null,
-					Pagination.of(objectAction3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(objectAction3, (List<ObjectAction>)page3.getItems());
 		}

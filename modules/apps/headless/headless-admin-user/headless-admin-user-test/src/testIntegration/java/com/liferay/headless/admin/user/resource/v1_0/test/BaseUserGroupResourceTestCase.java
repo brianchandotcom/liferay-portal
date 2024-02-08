@@ -394,30 +394,37 @@ public abstract class BaseUserGroupResourceTestCase {
 		UserGroup userGroup3 = testGetUserGroupsPage_addUserGroup(
 			randomUserGroup());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int userGroup1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int userGroup2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int userGroup3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<UserGroup> page1 = userGroupResource.getUserGroupsPage(
-				null, null, Pagination.of(userGroup1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(userGroup1, (List<UserGroup>)page1.getItems());
 
 			Page<UserGroup> page2 = userGroupResource.getUserGroupsPage(
-				null, null, Pagination.of(userGroup2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(userGroup2, (List<UserGroup>)page2.getItems());
 
 			Page<UserGroup> page3 = userGroupResource.getUserGroupsPage(
-				null, null, Pagination.of(userGroup3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(userGroup3, (List<UserGroup>)page3.getItems());
 		}

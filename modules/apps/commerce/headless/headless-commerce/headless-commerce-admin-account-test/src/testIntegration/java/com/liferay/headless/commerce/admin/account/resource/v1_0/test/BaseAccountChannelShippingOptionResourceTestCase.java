@@ -508,21 +508,18 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountChannelShippingOptionPage_addAccountChannelShippingOption(
 				externalReferenceCode, randomAccountChannelShippingOption());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int accountChannelShippingOption1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int accountChannelShippingOption2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int accountChannelShippingOption3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AccountChannelShippingOption> page1 =
 				accountChannelShippingOptionResource.
 					getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
 						externalReferenceCode,
-						Pagination.of(accountChannelShippingOption1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -534,7 +531,9 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 				accountChannelShippingOptionResource.
 					getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
 						externalReferenceCode,
-						Pagination.of(accountChannelShippingOption2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				accountChannelShippingOption2,
@@ -544,7 +543,9 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 				accountChannelShippingOptionResource.
 					getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
 						externalReferenceCode,
-						Pagination.of(accountChannelShippingOption3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				accountChannelShippingOption3,
@@ -754,21 +755,18 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 			testGetAccountIdAccountChannelShippingOptionPage_addAccountChannelShippingOption(
 				id, randomAccountChannelShippingOption());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int accountChannelShippingOption1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int accountChannelShippingOption2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int accountChannelShippingOption3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AccountChannelShippingOption> page1 =
 				accountChannelShippingOptionResource.
 					getAccountIdAccountChannelShippingOptionPage(
 						id,
-						Pagination.of(accountChannelShippingOption1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -780,7 +778,9 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 				accountChannelShippingOptionResource.
 					getAccountIdAccountChannelShippingOptionPage(
 						id,
-						Pagination.of(accountChannelShippingOption2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				accountChannelShippingOption2,
@@ -790,7 +790,9 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 				accountChannelShippingOptionResource.
 					getAccountIdAccountChannelShippingOptionPage(
 						id,
-						Pagination.of(accountChannelShippingOption3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				accountChannelShippingOption3,

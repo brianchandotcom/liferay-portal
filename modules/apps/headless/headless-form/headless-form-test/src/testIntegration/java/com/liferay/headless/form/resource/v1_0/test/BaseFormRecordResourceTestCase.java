@@ -347,30 +347,34 @@ public abstract class BaseFormRecordResourceTestCase {
 		FormRecord formRecord3 = testGetFormFormRecordsPage_addFormRecord(
 			formId, randomFormRecord());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int formRecord1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int formRecord2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int formRecord3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<FormRecord> page1 = formRecordResource.getFormFormRecordsPage(
-				formId, Pagination.of(formRecord1Page, 500));
+				formId,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(formRecord1, (List<FormRecord>)page1.getItems());
 
 			Page<FormRecord> page2 = formRecordResource.getFormFormRecordsPage(
-				formId, Pagination.of(formRecord2Page, 500));
+				formId,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(formRecord2, (List<FormRecord>)page2.getItems());
 
 			Page<FormRecord> page3 = formRecordResource.getFormFormRecordsPage(
-				formId, Pagination.of(formRecord3Page, 500));
+				formId,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(formRecord3, (List<FormRecord>)page3.getItems());
 		}

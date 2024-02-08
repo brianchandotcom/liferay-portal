@@ -262,19 +262,17 @@ public abstract class BaseSegmentUserResourceTestCase {
 			testGetSegmentUserAccountsPage_addSegmentUser(
 				segmentId, randomSegmentUser());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int segmentUser1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int segmentUser2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int segmentUser3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<SegmentUser> page1 =
 				segmentUserResource.getSegmentUserAccountsPage(
-					segmentId, Pagination.of(segmentUser1Page, 500));
+					segmentId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -282,13 +280,19 @@ public abstract class BaseSegmentUserResourceTestCase {
 
 			Page<SegmentUser> page2 =
 				segmentUserResource.getSegmentUserAccountsPage(
-					segmentId, Pagination.of(segmentUser2Page, 500));
+					segmentId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(segmentUser2, (List<SegmentUser>)page2.getItems());
 
 			Page<SegmentUser> page3 =
 				segmentUserResource.getSegmentUserAccountsPage(
-					segmentId, Pagination.of(segmentUser3Page, 500));
+					segmentId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(segmentUser3, (List<SegmentUser>)page3.getItems());
 		}

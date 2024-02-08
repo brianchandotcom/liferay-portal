@@ -277,19 +277,18 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 			testGetSiteDisplayPageTemplatesPage_addDisplayPageTemplate(
 				siteId, randomDisplayPageTemplate());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int displayPageTemplate1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int displayPageTemplate2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int displayPageTemplate3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DisplayPageTemplate> page1 =
 				displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
-					siteId, Pagination.of(displayPageTemplate1Page, 500), null);
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -299,7 +298,11 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 
 			Page<DisplayPageTemplate> page2 =
 				displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
-					siteId, Pagination.of(displayPageTemplate2Page, 500), null);
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				displayPageTemplate2,
@@ -307,7 +310,11 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 
 			Page<DisplayPageTemplate> page3 =
 				displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
-					siteId, Pagination.of(displayPageTemplate3Page, 500), null);
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				displayPageTemplate3,

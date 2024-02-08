@@ -289,21 +289,18 @@ public abstract class BaseRelatedProductResourceTestCase {
 			testGetProductByExternalReferenceCodeRelatedProductsPage_addRelatedProduct(
 				externalReferenceCode, randomRelatedProduct());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int relatedProduct1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int relatedProduct2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int relatedProduct3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<RelatedProduct> page1 =
 				relatedProductResource.
 					getProductByExternalReferenceCodeRelatedProductsPage(
 						externalReferenceCode, null,
-						Pagination.of(relatedProduct1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -314,7 +311,9 @@ public abstract class BaseRelatedProductResourceTestCase {
 				relatedProductResource.
 					getProductByExternalReferenceCodeRelatedProductsPage(
 						externalReferenceCode, null,
-						Pagination.of(relatedProduct2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				relatedProduct2, (List<RelatedProduct>)page2.getItems());
@@ -323,7 +322,9 @@ public abstract class BaseRelatedProductResourceTestCase {
 				relatedProductResource.
 					getProductByExternalReferenceCodeRelatedProductsPage(
 						externalReferenceCode, null,
-						Pagination.of(relatedProduct3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				relatedProduct3, (List<RelatedProduct>)page3.getItems());
@@ -506,19 +507,17 @@ public abstract class BaseRelatedProductResourceTestCase {
 			testGetProductIdRelatedProductsPage_addRelatedProduct(
 				id, randomRelatedProduct());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int relatedProduct1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int relatedProduct2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int relatedProduct3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<RelatedProduct> page1 =
 				relatedProductResource.getProductIdRelatedProductsPage(
-					id, null, Pagination.of(relatedProduct1Page, 500));
+					id, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -527,14 +526,20 @@ public abstract class BaseRelatedProductResourceTestCase {
 
 			Page<RelatedProduct> page2 =
 				relatedProductResource.getProductIdRelatedProductsPage(
-					id, null, Pagination.of(relatedProduct2Page, 500));
+					id, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				relatedProduct2, (List<RelatedProduct>)page2.getItems());
 
 			Page<RelatedProduct> page3 =
 				relatedProductResource.getProductIdRelatedProductsPage(
-					id, null, Pagination.of(relatedProduct3Page, 500));
+					id, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				relatedProduct3, (List<RelatedProduct>)page3.getItems());

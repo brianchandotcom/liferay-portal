@@ -413,21 +413,18 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPage_addPaymentMethodGroupRelTerm(
 				id, randomPaymentMethodGroupRelTerm());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int paymentMethodGroupRelTerm1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int paymentMethodGroupRelTerm2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int paymentMethodGroupRelTerm3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PaymentMethodGroupRelTerm> page1 =
 				paymentMethodGroupRelTermResource.
 					getPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPage(
 						id, null, null,
-						Pagination.of(paymentMethodGroupRelTerm1Page, 500),
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
 						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -440,7 +437,9 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 				paymentMethodGroupRelTermResource.
 					getPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPage(
 						id, null, null,
-						Pagination.of(paymentMethodGroupRelTerm2Page, 500),
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
 						null);
 
 			assertContains(
@@ -451,7 +450,9 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 				paymentMethodGroupRelTermResource.
 					getPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPage(
 						id, null, null,
-						Pagination.of(paymentMethodGroupRelTerm3Page, 500),
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
 						null);
 
 			assertContains(

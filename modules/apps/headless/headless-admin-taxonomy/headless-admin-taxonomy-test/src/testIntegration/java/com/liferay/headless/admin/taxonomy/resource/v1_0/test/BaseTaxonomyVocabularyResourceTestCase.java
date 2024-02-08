@@ -428,21 +428,19 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 				assetLibraryId, randomTaxonomyVocabulary());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int taxonomyVocabulary1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int taxonomyVocabulary2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int taxonomyVocabulary3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<TaxonomyVocabulary> page1 =
 				taxonomyVocabularyResource.
 					getAssetLibraryTaxonomyVocabulariesPage(
 						assetLibraryId, null, null, null,
-						Pagination.of(taxonomyVocabulary1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -454,7 +452,10 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				taxonomyVocabularyResource.
 					getAssetLibraryTaxonomyVocabulariesPage(
 						assetLibraryId, null, null, null,
-						Pagination.of(taxonomyVocabulary2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				taxonomyVocabulary2,
@@ -464,7 +465,10 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				taxonomyVocabularyResource.
 					getAssetLibraryTaxonomyVocabulariesPage(
 						assetLibraryId, null, null, null,
-						Pagination.of(taxonomyVocabulary3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				taxonomyVocabulary3,
@@ -1233,20 +1237,18 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 				siteId, randomTaxonomyVocabulary());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int taxonomyVocabulary1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int taxonomyVocabulary2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int taxonomyVocabulary3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<TaxonomyVocabulary> page1 =
 				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
 					siteId, null, null, null,
-					Pagination.of(taxonomyVocabulary1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1257,7 +1259,10 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			Page<TaxonomyVocabulary> page2 =
 				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
 					siteId, null, null, null,
-					Pagination.of(taxonomyVocabulary2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				taxonomyVocabulary2,
@@ -1266,7 +1271,10 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			Page<TaxonomyVocabulary> page3 =
 				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
 					siteId, null, null, null,
-					Pagination.of(taxonomyVocabulary3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				taxonomyVocabulary3,

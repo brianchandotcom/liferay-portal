@@ -313,21 +313,18 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 			testGetPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage_addPriceModifierProductGroup(
 				externalReferenceCode, randomPriceModifierProductGroup());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int priceModifierProductGroup1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int priceModifierProductGroup2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int priceModifierProductGroup3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PriceModifierProductGroup> page1 =
 				priceModifierProductGroupResource.
 					getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
 						externalReferenceCode,
-						Pagination.of(priceModifierProductGroup1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -339,7 +336,9 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 				priceModifierProductGroupResource.
 					getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
 						externalReferenceCode,
-						Pagination.of(priceModifierProductGroup2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				priceModifierProductGroup2,
@@ -349,7 +348,9 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 				priceModifierProductGroupResource.
 					getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
 						externalReferenceCode,
-						Pagination.of(priceModifierProductGroup3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				priceModifierProductGroup3,
@@ -656,21 +657,18 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 			testGetPriceModifierIdPriceModifierProductGroupsPage_addPriceModifierProductGroup(
 				id, randomPriceModifierProductGroup());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int priceModifierProductGroup1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int priceModifierProductGroup2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int priceModifierProductGroup3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PriceModifierProductGroup> page1 =
 				priceModifierProductGroupResource.
 					getPriceModifierIdPriceModifierProductGroupsPage(
 						id, null, null,
-						Pagination.of(priceModifierProductGroup1Page, 500),
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
 						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -683,7 +681,9 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 				priceModifierProductGroupResource.
 					getPriceModifierIdPriceModifierProductGroupsPage(
 						id, null, null,
-						Pagination.of(priceModifierProductGroup2Page, 500),
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
 						null);
 
 			assertContains(
@@ -694,7 +694,9 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 				priceModifierProductGroupResource.
 					getPriceModifierIdPriceModifierProductGroupsPage(
 						id, null, null,
-						Pagination.of(priceModifierProductGroup3Page, 500),
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
 						null);
 
 			assertContains(

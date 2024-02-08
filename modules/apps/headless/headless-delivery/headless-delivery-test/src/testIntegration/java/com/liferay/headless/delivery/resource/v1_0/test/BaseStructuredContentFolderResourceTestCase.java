@@ -446,21 +446,19 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testGetAssetLibraryStructuredContentFoldersPage_addStructuredContentFolder(
 				assetLibraryId, randomStructuredContentFolder());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int structuredContentFolder1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int structuredContentFolder2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int structuredContentFolder3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<StructuredContentFolder> page1 =
 				structuredContentFolderResource.
 					getAssetLibraryStructuredContentFoldersPage(
 						assetLibraryId, null, null, null, null,
-						Pagination.of(structuredContentFolder1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -472,7 +470,10 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				structuredContentFolderResource.
 					getAssetLibraryStructuredContentFoldersPage(
 						assetLibraryId, null, null, null, null,
-						Pagination.of(structuredContentFolder2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				structuredContentFolder2,
@@ -482,7 +483,10 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				structuredContentFolderResource.
 					getAssetLibraryStructuredContentFoldersPage(
 						assetLibraryId, null, null, null, null,
-						Pagination.of(structuredContentFolder3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				structuredContentFolder3,
@@ -1272,21 +1276,19 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testGetSiteStructuredContentFoldersPage_addStructuredContentFolder(
 				siteId, randomStructuredContentFolder());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int structuredContentFolder1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int structuredContentFolder2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int structuredContentFolder3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<StructuredContentFolder> page1 =
 				structuredContentFolderResource.
 					getSiteStructuredContentFoldersPage(
 						siteId, null, null, null, null,
-						Pagination.of(structuredContentFolder1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1298,7 +1300,10 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				structuredContentFolderResource.
 					getSiteStructuredContentFoldersPage(
 						siteId, null, null, null, null,
-						Pagination.of(structuredContentFolder2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				structuredContentFolder2,
@@ -1308,7 +1313,10 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				structuredContentFolderResource.
 					getSiteStructuredContentFoldersPage(
 						siteId, null, null, null, null,
-						Pagination.of(structuredContentFolder3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				structuredContentFolder3,
@@ -2252,21 +2260,19 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				parentStructuredContentFolderId,
 				randomStructuredContentFolder());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int structuredContentFolder1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int structuredContentFolder2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int structuredContentFolder3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<StructuredContentFolder> page1 =
 				structuredContentFolderResource.
 					getStructuredContentFolderStructuredContentFoldersPage(
 						parentStructuredContentFolderId, null, null, null,
-						Pagination.of(structuredContentFolder1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -2278,7 +2284,10 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				structuredContentFolderResource.
 					getStructuredContentFolderStructuredContentFoldersPage(
 						parentStructuredContentFolderId, null, null, null,
-						Pagination.of(structuredContentFolder2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				structuredContentFolder2,
@@ -2288,7 +2297,10 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				structuredContentFolderResource.
 					getStructuredContentFolderStructuredContentFoldersPage(
 						parentStructuredContentFolderId, null, null, null,
-						Pagination.of(structuredContentFolder3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				structuredContentFolder3,

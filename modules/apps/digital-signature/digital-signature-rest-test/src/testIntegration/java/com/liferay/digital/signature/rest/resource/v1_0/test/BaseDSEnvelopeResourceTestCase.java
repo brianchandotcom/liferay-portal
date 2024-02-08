@@ -275,30 +275,34 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		DSEnvelope dsEnvelope3 = testGetSiteDSEnvelopesPage_addDSEnvelope(
 			siteId, randomDSEnvelope());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int dsEnvelope1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int dsEnvelope2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int dsEnvelope3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DSEnvelope> page1 = dsEnvelopeResource.getSiteDSEnvelopesPage(
-				siteId, Pagination.of(dsEnvelope1Page, 500));
+				siteId,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(dsEnvelope1, (List<DSEnvelope>)page1.getItems());
 
 			Page<DSEnvelope> page2 = dsEnvelopeResource.getSiteDSEnvelopesPage(
-				siteId, Pagination.of(dsEnvelope2Page, 500));
+				siteId,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(dsEnvelope2, (List<DSEnvelope>)page2.getItems());
 
 			Page<DSEnvelope> page3 = dsEnvelopeResource.getSiteDSEnvelopesPage(
-				siteId, Pagination.of(dsEnvelope3Page, 500));
+				siteId,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(dsEnvelope3, (List<DSEnvelope>)page3.getItems());
 		}

@@ -297,21 +297,19 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			testGetDataDefinitionByContentTypeContentTypePage_addDataDefinition(
 				contentType, randomDataDefinition());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int dataDefinition1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int dataDefinition2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int dataDefinition3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DataDefinition> page1 =
 				dataDefinitionResource.
 					getDataDefinitionByContentTypeContentTypePage(
 						contentType, null,
-						Pagination.of(dataDefinition1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -322,7 +320,10 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				dataDefinitionResource.
 					getDataDefinitionByContentTypeContentTypePage(
 						contentType, null,
-						Pagination.of(dataDefinition2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				dataDefinition2, (List<DataDefinition>)page2.getItems());
@@ -331,7 +332,10 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				dataDefinitionResource.
 					getDataDefinitionByContentTypeContentTypePage(
 						contentType, null,
-						Pagination.of(dataDefinition3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				dataDefinition3, (List<DataDefinition>)page3.getItems());
@@ -979,21 +983,19 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			testGetSiteDataDefinitionByContentTypeContentTypePage_addDataDefinition(
 				siteId, contentType, randomDataDefinition());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int dataDefinition1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int dataDefinition2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int dataDefinition3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DataDefinition> page1 =
 				dataDefinitionResource.
 					getSiteDataDefinitionByContentTypeContentTypePage(
 						siteId, contentType, null,
-						Pagination.of(dataDefinition1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1004,7 +1006,10 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				dataDefinitionResource.
 					getSiteDataDefinitionByContentTypeContentTypePage(
 						siteId, contentType, null,
-						Pagination.of(dataDefinition2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				dataDefinition2, (List<DataDefinition>)page2.getItems());
@@ -1013,7 +1018,10 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				dataDefinitionResource.
 					getSiteDataDefinitionByContentTypeContentTypePage(
 						siteId, contentType, null,
-						Pagination.of(dataDefinition3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				dataDefinition3, (List<DataDefinition>)page3.getItems());

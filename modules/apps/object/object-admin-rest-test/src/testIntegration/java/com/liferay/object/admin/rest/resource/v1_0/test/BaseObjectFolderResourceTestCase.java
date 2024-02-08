@@ -238,19 +238,17 @@ public abstract class BaseObjectFolderResourceTestCase {
 		ObjectFolder objectFolder3 = testGetObjectFoldersPage_addObjectFolder(
 			randomObjectFolder());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int objectFolder1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int objectFolder2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int objectFolder3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ObjectFolder> page1 =
 				objectFolderResource.getObjectFoldersPage(
-					null, Pagination.of(objectFolder1Page, 500));
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -258,13 +256,19 @@ public abstract class BaseObjectFolderResourceTestCase {
 
 			Page<ObjectFolder> page2 =
 				objectFolderResource.getObjectFoldersPage(
-					null, Pagination.of(objectFolder2Page, 500));
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(objectFolder2, (List<ObjectFolder>)page2.getItems());
 
 			Page<ObjectFolder> page3 =
 				objectFolderResource.getObjectFoldersPage(
-					null, Pagination.of(objectFolder3Page, 500));
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(objectFolder3, (List<ObjectFolder>)page3.getItems());
 		}

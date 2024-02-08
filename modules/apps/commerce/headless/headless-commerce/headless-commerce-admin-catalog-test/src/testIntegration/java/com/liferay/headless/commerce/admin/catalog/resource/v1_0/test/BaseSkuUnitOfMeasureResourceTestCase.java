@@ -461,21 +461,18 @@ public abstract class BaseSkuUnitOfMeasureResourceTestCase {
 			testGetSkuByExternalReferenceCodeSkuUnitOfMeasuresPage_addSkuUnitOfMeasure(
 				externalReferenceCode, randomSkuUnitOfMeasure());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int skuUnitOfMeasure1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int skuUnitOfMeasure2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int skuUnitOfMeasure3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<SkuUnitOfMeasure> page1 =
 				skuUnitOfMeasureResource.
 					getSkuByExternalReferenceCodeSkuUnitOfMeasuresPage(
 						externalReferenceCode,
-						Pagination.of(skuUnitOfMeasure1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -486,7 +483,9 @@ public abstract class BaseSkuUnitOfMeasureResourceTestCase {
 				skuUnitOfMeasureResource.
 					getSkuByExternalReferenceCodeSkuUnitOfMeasuresPage(
 						externalReferenceCode,
-						Pagination.of(skuUnitOfMeasure2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				skuUnitOfMeasure2, (List<SkuUnitOfMeasure>)page2.getItems());
@@ -495,7 +494,9 @@ public abstract class BaseSkuUnitOfMeasureResourceTestCase {
 				skuUnitOfMeasureResource.
 					getSkuByExternalReferenceCodeSkuUnitOfMeasuresPage(
 						externalReferenceCode,
-						Pagination.of(skuUnitOfMeasure3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				skuUnitOfMeasure3, (List<SkuUnitOfMeasure>)page3.getItems());
@@ -680,19 +681,17 @@ public abstract class BaseSkuUnitOfMeasureResourceTestCase {
 			testGetSkuIdSkuUnitOfMeasuresPage_addSkuUnitOfMeasure(
 				id, randomSkuUnitOfMeasure());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int skuUnitOfMeasure1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int skuUnitOfMeasure2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int skuUnitOfMeasure3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<SkuUnitOfMeasure> page1 =
 				skuUnitOfMeasureResource.getSkuIdSkuUnitOfMeasuresPage(
-					id, Pagination.of(skuUnitOfMeasure1Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -701,14 +700,20 @@ public abstract class BaseSkuUnitOfMeasureResourceTestCase {
 
 			Page<SkuUnitOfMeasure> page2 =
 				skuUnitOfMeasureResource.getSkuIdSkuUnitOfMeasuresPage(
-					id, Pagination.of(skuUnitOfMeasure2Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				skuUnitOfMeasure2, (List<SkuUnitOfMeasure>)page2.getItems());
 
 			Page<SkuUnitOfMeasure> page3 =
 				skuUnitOfMeasureResource.getSkuIdSkuUnitOfMeasuresPage(
-					id, Pagination.of(skuUnitOfMeasure3Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				skuUnitOfMeasure3, (List<SkuUnitOfMeasure>)page3.getItems());

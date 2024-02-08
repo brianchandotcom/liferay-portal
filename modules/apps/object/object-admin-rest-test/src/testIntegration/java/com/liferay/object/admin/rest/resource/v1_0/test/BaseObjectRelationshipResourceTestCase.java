@@ -418,21 +418,19 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
 				externalReferenceCode, randomObjectRelationship());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int objectRelationship1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int objectRelationship2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int objectRelationship3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ObjectRelationship> page1 =
 				objectRelationshipResource.
 					getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
 						externalReferenceCode, null, null,
-						Pagination.of(objectRelationship1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -444,7 +442,10 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				objectRelationshipResource.
 					getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
 						externalReferenceCode, null, null,
-						Pagination.of(objectRelationship2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				objectRelationship2,
@@ -454,7 +455,10 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				objectRelationshipResource.
 					getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
 						externalReferenceCode, null, null,
-						Pagination.of(objectRelationship3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				objectRelationship3,
@@ -941,21 +945,19 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			testGetObjectDefinitionObjectRelationshipsPage_addObjectRelationship(
 				objectDefinitionId, randomObjectRelationship());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int objectRelationship1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int objectRelationship2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int objectRelationship3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ObjectRelationship> page1 =
 				objectRelationshipResource.
 					getObjectDefinitionObjectRelationshipsPage(
 						objectDefinitionId, null, null,
-						Pagination.of(objectRelationship1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -967,7 +969,10 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				objectRelationshipResource.
 					getObjectDefinitionObjectRelationshipsPage(
 						objectDefinitionId, null, null,
-						Pagination.of(objectRelationship2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				objectRelationship2,
@@ -977,7 +982,10 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				objectRelationshipResource.
 					getObjectDefinitionObjectRelationshipsPage(
 						objectDefinitionId, null, null,
-						Pagination.of(objectRelationship3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				objectRelationship3,

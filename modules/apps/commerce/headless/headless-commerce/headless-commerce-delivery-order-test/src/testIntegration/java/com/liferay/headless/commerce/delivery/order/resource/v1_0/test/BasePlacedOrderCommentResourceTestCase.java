@@ -353,21 +353,18 @@ public abstract class BasePlacedOrderCommentResourceTestCase {
 			testGetPlacedOrderPlacedOrderCommentsPage_addPlacedOrderComment(
 				placedOrderId, randomPlacedOrderComment());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int placedOrderComment1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int placedOrderComment2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int placedOrderComment3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PlacedOrderComment> page1 =
 				placedOrderCommentResource.
 					getPlacedOrderPlacedOrderCommentsPage(
 						placedOrderId,
-						Pagination.of(placedOrderComment1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -379,7 +376,9 @@ public abstract class BasePlacedOrderCommentResourceTestCase {
 				placedOrderCommentResource.
 					getPlacedOrderPlacedOrderCommentsPage(
 						placedOrderId,
-						Pagination.of(placedOrderComment2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				placedOrderComment2,
@@ -389,7 +388,9 @@ public abstract class BasePlacedOrderCommentResourceTestCase {
 				placedOrderCommentResource.
 					getPlacedOrderPlacedOrderCommentsPage(
 						placedOrderId,
-						Pagination.of(placedOrderComment3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				placedOrderComment3,

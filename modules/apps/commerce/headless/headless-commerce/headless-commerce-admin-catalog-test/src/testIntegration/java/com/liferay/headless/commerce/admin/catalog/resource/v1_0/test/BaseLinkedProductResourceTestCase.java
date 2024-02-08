@@ -265,19 +265,17 @@ public abstract class BaseLinkedProductResourceTestCase {
 			testGetProductIdLinkedProductsPage_addLinkedProduct(
 				id, randomLinkedProduct());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int linkedProduct1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int linkedProduct2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int linkedProduct3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<LinkedProduct> page1 =
 				linkedProductResource.getProductIdLinkedProductsPage(
-					id, Pagination.of(linkedProduct1Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -286,14 +284,20 @@ public abstract class BaseLinkedProductResourceTestCase {
 
 			Page<LinkedProduct> page2 =
 				linkedProductResource.getProductIdLinkedProductsPage(
-					id, Pagination.of(linkedProduct2Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				linkedProduct2, (List<LinkedProduct>)page2.getItems());
 
 			Page<LinkedProduct> page3 =
 				linkedProductResource.getProductIdLinkedProductsPage(
-					id, Pagination.of(linkedProduct3Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				linkedProduct3, (List<LinkedProduct>)page3.getItems());

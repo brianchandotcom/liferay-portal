@@ -425,21 +425,18 @@ public abstract class BaseProductChannelResourceTestCase {
 			testGetProductByExternalReferenceCodeProductChannelsPage_addProductChannel(
 				externalReferenceCode, randomProductChannel());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int productChannel1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int productChannel2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int productChannel3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ProductChannel> page1 =
 				productChannelResource.
 					getProductByExternalReferenceCodeProductChannelsPage(
 						externalReferenceCode,
-						Pagination.of(productChannel1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -450,7 +447,9 @@ public abstract class BaseProductChannelResourceTestCase {
 				productChannelResource.
 					getProductByExternalReferenceCodeProductChannelsPage(
 						externalReferenceCode,
-						Pagination.of(productChannel2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				productChannel2, (List<ProductChannel>)page2.getItems());
@@ -459,7 +458,9 @@ public abstract class BaseProductChannelResourceTestCase {
 				productChannelResource.
 					getProductByExternalReferenceCodeProductChannelsPage(
 						externalReferenceCode,
-						Pagination.of(productChannel3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				productChannel3, (List<ProductChannel>)page3.getItems());
@@ -618,19 +619,17 @@ public abstract class BaseProductChannelResourceTestCase {
 			testGetProductIdProductChannelsPage_addProductChannel(
 				id, randomProductChannel());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int productChannel1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int productChannel2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int productChannel3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ProductChannel> page1 =
 				productChannelResource.getProductIdProductChannelsPage(
-					id, Pagination.of(productChannel1Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -639,14 +638,20 @@ public abstract class BaseProductChannelResourceTestCase {
 
 			Page<ProductChannel> page2 =
 				productChannelResource.getProductIdProductChannelsPage(
-					id, Pagination.of(productChannel2Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				productChannel2, (List<ProductChannel>)page2.getItems());
 
 			Page<ProductChannel> page3 =
 				productChannelResource.getProductIdProductChannelsPage(
-					id, Pagination.of(productChannel3Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				productChannel3, (List<ProductChannel>)page3.getItems());

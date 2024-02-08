@@ -316,20 +316,18 @@ public abstract class BaseDataListViewResourceTestCase {
 			testGetDataDefinitionDataListViewsPage_addDataListView(
 				dataDefinitionId, randomDataListView());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int dataListView1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int dataListView2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int dataListView3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DataListView> page1 =
 				dataListViewResource.getDataDefinitionDataListViewsPage(
 					dataDefinitionId, null,
-					Pagination.of(dataListView1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -338,14 +336,20 @@ public abstract class BaseDataListViewResourceTestCase {
 			Page<DataListView> page2 =
 				dataListViewResource.getDataDefinitionDataListViewsPage(
 					dataDefinitionId, null,
-					Pagination.of(dataListView2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(dataListView2, (List<DataListView>)page2.getItems());
 
 			Page<DataListView> page3 =
 				dataListViewResource.getDataDefinitionDataListViewsPage(
 					dataDefinitionId, null,
-					Pagination.of(dataListView3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(dataListView3, (List<DataListView>)page3.getItems());
 		}

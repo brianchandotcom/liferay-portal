@@ -296,21 +296,18 @@ public abstract class BasePriceModifierResourceTestCase {
 			testGetPriceListByExternalReferenceCodePriceModifiersPage_addPriceModifier(
 				externalReferenceCode, randomPriceModifier());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int priceModifier1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int priceModifier2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int priceModifier3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PriceModifier> page1 =
 				priceModifierResource.
 					getPriceListByExternalReferenceCodePriceModifiersPage(
 						externalReferenceCode,
-						Pagination.of(priceModifier1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -321,7 +318,9 @@ public abstract class BasePriceModifierResourceTestCase {
 				priceModifierResource.
 					getPriceListByExternalReferenceCodePriceModifiersPage(
 						externalReferenceCode,
-						Pagination.of(priceModifier2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				priceModifier2, (List<PriceModifier>)page2.getItems());
@@ -330,7 +329,9 @@ public abstract class BasePriceModifierResourceTestCase {
 				priceModifierResource.
 					getPriceListByExternalReferenceCodePriceModifiersPage(
 						externalReferenceCode,
-						Pagination.of(priceModifier3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				priceModifier3, (List<PriceModifier>)page3.getItems());
@@ -610,19 +611,17 @@ public abstract class BasePriceModifierResourceTestCase {
 			testGetPriceListIdPriceModifiersPage_addPriceModifier(
 				id, randomPriceModifier());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int priceModifier1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int priceModifier2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int priceModifier3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PriceModifier> page1 =
 				priceModifierResource.getPriceListIdPriceModifiersPage(
-					id, null, null, Pagination.of(priceModifier1Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -632,7 +631,10 @@ public abstract class BasePriceModifierResourceTestCase {
 
 			Page<PriceModifier> page2 =
 				priceModifierResource.getPriceListIdPriceModifiersPage(
-					id, null, null, Pagination.of(priceModifier2Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(
@@ -640,7 +642,10 @@ public abstract class BasePriceModifierResourceTestCase {
 
 			Page<PriceModifier> page3 =
 				priceModifierResource.getPriceListIdPriceModifiersPage(
-					id, null, null, Pagination.of(priceModifier3Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(

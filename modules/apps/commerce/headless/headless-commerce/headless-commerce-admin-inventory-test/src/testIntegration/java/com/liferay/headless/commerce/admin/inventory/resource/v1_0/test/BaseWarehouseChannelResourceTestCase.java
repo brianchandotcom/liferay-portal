@@ -300,21 +300,18 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 			testGetWarehouseByExternalReferenceCodeWarehouseChannelsPage_addWarehouseChannel(
 				externalReferenceCode, randomWarehouseChannel());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int warehouseChannel1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int warehouseChannel2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int warehouseChannel3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<WarehouseChannel> page1 =
 				warehouseChannelResource.
 					getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
 						externalReferenceCode,
-						Pagination.of(warehouseChannel1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -325,7 +322,9 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 				warehouseChannelResource.
 					getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
 						externalReferenceCode,
-						Pagination.of(warehouseChannel2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				warehouseChannel2, (List<WarehouseChannel>)page2.getItems());
@@ -334,7 +333,9 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 				warehouseChannelResource.
 					getWarehouseByExternalReferenceCodeWarehouseChannelsPage(
 						externalReferenceCode,
-						Pagination.of(warehouseChannel3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				warehouseChannel3, (List<WarehouseChannel>)page3.getItems());
@@ -615,19 +616,17 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 			testGetWarehouseIdWarehouseChannelsPage_addWarehouseChannel(
 				id, randomWarehouseChannel());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int warehouseChannel1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int warehouseChannel2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int warehouseChannel3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<WarehouseChannel> page1 =
 				warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
-					id, null, null, Pagination.of(warehouseChannel1Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -637,7 +636,10 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 
 			Page<WarehouseChannel> page2 =
 				warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
-					id, null, null, Pagination.of(warehouseChannel2Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(
@@ -645,7 +647,10 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 
 			Page<WarehouseChannel> page3 =
 				warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
-					id, null, null, Pagination.of(warehouseChannel3Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(

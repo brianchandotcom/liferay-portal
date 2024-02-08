@@ -612,21 +612,19 @@ public abstract class BaseUserAccountResourceTestCase {
 			testGetAccountUserAccountsByExternalReferenceCodePage_addUserAccount(
 				externalReferenceCode, randomUserAccount());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int userAccount1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int userAccount2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int userAccount3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<UserAccount> page1 =
 				userAccountResource.
 					getAccountUserAccountsByExternalReferenceCodePage(
 						externalReferenceCode, null, null,
-						Pagination.of(userAccount1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -636,7 +634,10 @@ public abstract class BaseUserAccountResourceTestCase {
 				userAccountResource.
 					getAccountUserAccountsByExternalReferenceCodePage(
 						externalReferenceCode, null, null,
-						Pagination.of(userAccount2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
 
@@ -644,7 +645,10 @@ public abstract class BaseUserAccountResourceTestCase {
 				userAccountResource.
 					getAccountUserAccountsByExternalReferenceCodePage(
 						externalReferenceCode, null, null,
-						Pagination.of(userAccount3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
 		}
@@ -1206,19 +1210,17 @@ public abstract class BaseUserAccountResourceTestCase {
 			testGetAccountUserAccountsPage_addUserAccount(
 				accountId, randomUserAccount());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int userAccount1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int userAccount2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int userAccount3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<UserAccount> page1 =
 				userAccountResource.getAccountUserAccountsPage(
-					accountId, null, null, Pagination.of(userAccount1Page, 500),
+					accountId, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -1227,14 +1229,20 @@ public abstract class BaseUserAccountResourceTestCase {
 
 			Page<UserAccount> page2 =
 				userAccountResource.getAccountUserAccountsPage(
-					accountId, null, null, Pagination.of(userAccount2Page, 500),
+					accountId, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
 
 			Page<UserAccount> page3 =
 				userAccountResource.getAccountUserAccountsPage(
-					accountId, null, null, Pagination.of(userAccount3Page, 500),
+					accountId, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
@@ -1909,20 +1917,18 @@ public abstract class BaseUserAccountResourceTestCase {
 			testGetOrganizationUserAccountsPage_addUserAccount(
 				organizationId, randomUserAccount());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int userAccount1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int userAccount2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int userAccount3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<UserAccount> page1 =
 				userAccountResource.getOrganizationUserAccountsPage(
 					organizationId, null, null,
-					Pagination.of(userAccount1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1931,14 +1937,20 @@ public abstract class BaseUserAccountResourceTestCase {
 			Page<UserAccount> page2 =
 				userAccountResource.getOrganizationUserAccountsPage(
 					organizationId, null, null,
-					Pagination.of(userAccount2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
 
 			Page<UserAccount> page3 =
 				userAccountResource.getOrganizationUserAccountsPage(
 					organizationId, null, null,
-					Pagination.of(userAccount3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
 		}
@@ -2321,19 +2333,17 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount3 = testGetSiteUserAccountsPage_addUserAccount(
 			siteId, randomUserAccount());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int userAccount1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int userAccount2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int userAccount3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<UserAccount> page1 =
 				userAccountResource.getSiteUserAccountsPage(
-					siteId, null, null, Pagination.of(userAccount1Page, 500),
+					siteId, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -2342,14 +2352,20 @@ public abstract class BaseUserAccountResourceTestCase {
 
 			Page<UserAccount> page2 =
 				userAccountResource.getSiteUserAccountsPage(
-					siteId, null, null, Pagination.of(userAccount2Page, 500),
+					siteId, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
 
 			Page<UserAccount> page3 =
 				userAccountResource.getSiteUserAccountsPage(
-					siteId, null, null, Pagination.of(userAccount3Page, 500),
+					siteId, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
@@ -2680,30 +2696,37 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount3 = testGetUserAccountsPage_addUserAccount(
 			randomUserAccount());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int userAccount1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int userAccount2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int userAccount3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<UserAccount> page1 = userAccountResource.getUserAccountsPage(
-				null, null, Pagination.of(userAccount1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(userAccount1, (List<UserAccount>)page1.getItems());
 
 			Page<UserAccount> page2 = userAccountResource.getUserAccountsPage(
-				null, null, Pagination.of(userAccount2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
 
 			Page<UserAccount> page3 = userAccountResource.getUserAccountsPage(
-				null, null, Pagination.of(userAccount3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(userAccount3, (List<UserAccount>)page3.getItems());
 		}
@@ -3381,19 +3404,17 @@ public abstract class BaseUserAccountResourceTestCase {
 			testGetUserAccountsByStatusPage_addUserAccount(
 				status, randomUserAccount());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int userAccount1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int userAccount2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int userAccount3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<UserAccount> page1 =
 				userAccountResource.getUserAccountsByStatusPage(
-					status, null, null, Pagination.of(userAccount1Page, 500),
+					status, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -3402,14 +3423,20 @@ public abstract class BaseUserAccountResourceTestCase {
 
 			Page<UserAccount> page2 =
 				userAccountResource.getUserAccountsByStatusPage(
-					status, null, null, Pagination.of(userAccount2Page, 500),
+					status, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(userAccount2, (List<UserAccount>)page2.getItems());
 
 			Page<UserAccount> page3 =
 				userAccountResource.getUserAccountsByStatusPage(
-					status, null, null, Pagination.of(userAccount3Page, 500),
+					status, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(userAccount3, (List<UserAccount>)page3.getItems());

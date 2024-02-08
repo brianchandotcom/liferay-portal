@@ -399,27 +399,37 @@ public abstract class BaseChannelResourceTestCase {
 
 		Channel channel3 = testGetChannelsPage_addChannel(randomChannel());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int channel1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int channel2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int channel3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Channel> page1 = channelResource.getChannelsPage(
-				null, null, Pagination.of(channel1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(channel1, (List<Channel>)page1.getItems());
 
 			Page<Channel> page2 = channelResource.getChannelsPage(
-				null, null, Pagination.of(channel2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(channel2, (List<Channel>)page2.getItems());
 
 			Page<Channel> page3 = channelResource.getChannelsPage(
-				null, null, Pagination.of(channel3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(channel3, (List<Channel>)page3.getItems());
 		}

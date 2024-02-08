@@ -307,21 +307,19 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 			testGetObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage_addObjectValidationRule(
 				externalReferenceCode, randomObjectValidationRule());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int objectValidationRule1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int objectValidationRule2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int objectValidationRule3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ObjectValidationRule> page1 =
 				objectValidationRuleResource.
 					getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
 						externalReferenceCode, null,
-						Pagination.of(objectValidationRule1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -333,7 +331,10 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 				objectValidationRuleResource.
 					getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
 						externalReferenceCode, null,
-						Pagination.of(objectValidationRule2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				objectValidationRule2,
@@ -343,7 +344,10 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 				objectValidationRuleResource.
 					getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
 						externalReferenceCode, null,
-						Pagination.of(objectValidationRule3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				objectValidationRule3,
@@ -728,21 +732,19 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 			testGetObjectDefinitionObjectValidationRulesPage_addObjectValidationRule(
 				objectDefinitionId, randomObjectValidationRule());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int objectValidationRule1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int objectValidationRule2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int objectValidationRule3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ObjectValidationRule> page1 =
 				objectValidationRuleResource.
 					getObjectDefinitionObjectValidationRulesPage(
 						objectDefinitionId, null,
-						Pagination.of(objectValidationRule1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -754,7 +756,10 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 				objectValidationRuleResource.
 					getObjectDefinitionObjectValidationRulesPage(
 						objectDefinitionId, null,
-						Pagination.of(objectValidationRule2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				objectValidationRule2,
@@ -764,7 +769,10 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 				objectValidationRuleResource.
 					getObjectDefinitionObjectValidationRulesPage(
 						objectDefinitionId, null,
-						Pagination.of(objectValidationRule3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				objectValidationRule3,

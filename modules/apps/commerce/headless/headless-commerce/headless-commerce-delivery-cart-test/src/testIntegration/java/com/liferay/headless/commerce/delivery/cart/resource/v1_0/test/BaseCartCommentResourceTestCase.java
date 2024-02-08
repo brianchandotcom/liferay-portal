@@ -437,30 +437,34 @@ public abstract class BaseCartCommentResourceTestCase {
 		CartComment cartComment3 = testGetCartCommentsPage_addCartComment(
 			cartId, randomCartComment());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int cartComment1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int cartComment2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int cartComment3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<CartComment> page1 = cartCommentResource.getCartCommentsPage(
-				cartId, Pagination.of(cartComment1Page, 500));
+				cartId,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(cartComment1, (List<CartComment>)page1.getItems());
 
 			Page<CartComment> page2 = cartCommentResource.getCartCommentsPage(
-				cartId, Pagination.of(cartComment2Page, 500));
+				cartId,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(cartComment2, (List<CartComment>)page2.getItems());
 
 			Page<CartComment> page3 = cartCommentResource.getCartCommentsPage(
-				cartId, Pagination.of(cartComment3Page, 500));
+				cartId,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(cartComment3, (List<CartComment>)page3.getItems());
 		}

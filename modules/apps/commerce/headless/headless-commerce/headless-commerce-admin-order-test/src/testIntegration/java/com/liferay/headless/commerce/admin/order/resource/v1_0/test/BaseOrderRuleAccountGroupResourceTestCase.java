@@ -309,21 +309,18 @@ public abstract class BaseOrderRuleAccountGroupResourceTestCase {
 			testGetOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage_addOrderRuleAccountGroup(
 				externalReferenceCode, randomOrderRuleAccountGroup());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int orderRuleAccountGroup1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int orderRuleAccountGroup2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int orderRuleAccountGroup3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<OrderRuleAccountGroup> page1 =
 				orderRuleAccountGroupResource.
 					getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
 						externalReferenceCode,
-						Pagination.of(orderRuleAccountGroup1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -335,7 +332,9 @@ public abstract class BaseOrderRuleAccountGroupResourceTestCase {
 				orderRuleAccountGroupResource.
 					getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
 						externalReferenceCode,
-						Pagination.of(orderRuleAccountGroup2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				orderRuleAccountGroup2,
@@ -345,7 +344,9 @@ public abstract class BaseOrderRuleAccountGroupResourceTestCase {
 				orderRuleAccountGroupResource.
 					getOrderRuleByExternalReferenceCodeOrderRuleAccountGroupsPage(
 						externalReferenceCode,
-						Pagination.of(orderRuleAccountGroup3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				orderRuleAccountGroup3,
@@ -650,21 +651,19 @@ public abstract class BaseOrderRuleAccountGroupResourceTestCase {
 			testGetOrderRuleIdOrderRuleAccountGroupsPage_addOrderRuleAccountGroup(
 				id, randomOrderRuleAccountGroup());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int orderRuleAccountGroup1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int orderRuleAccountGroup2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int orderRuleAccountGroup3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<OrderRuleAccountGroup> page1 =
 				orderRuleAccountGroupResource.
 					getOrderRuleIdOrderRuleAccountGroupsPage(
 						id, null, null,
-						Pagination.of(orderRuleAccountGroup1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -676,7 +675,10 @@ public abstract class BaseOrderRuleAccountGroupResourceTestCase {
 				orderRuleAccountGroupResource.
 					getOrderRuleIdOrderRuleAccountGroupsPage(
 						id, null, null,
-						Pagination.of(orderRuleAccountGroup2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				orderRuleAccountGroup2,
@@ -686,7 +688,10 @@ public abstract class BaseOrderRuleAccountGroupResourceTestCase {
 				orderRuleAccountGroupResource.
 					getOrderRuleIdOrderRuleAccountGroupsPage(
 						id, null, null,
-						Pagination.of(orderRuleAccountGroup3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				orderRuleAccountGroup3,

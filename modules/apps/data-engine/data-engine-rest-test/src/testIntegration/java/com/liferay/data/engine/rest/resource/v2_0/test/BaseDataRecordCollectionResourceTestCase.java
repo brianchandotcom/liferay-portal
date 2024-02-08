@@ -405,21 +405,18 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
 				dataDefinitionId, randomDataRecordCollection());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int dataRecordCollection1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int dataRecordCollection2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int dataRecordCollection3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DataRecordCollection> page1 =
 				dataRecordCollectionResource.
 					getDataDefinitionDataRecordCollectionsPage(
 						dataDefinitionId, null,
-						Pagination.of(dataRecordCollection1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -431,7 +428,9 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 				dataRecordCollectionResource.
 					getDataDefinitionDataRecordCollectionsPage(
 						dataDefinitionId, null,
-						Pagination.of(dataRecordCollection2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				dataRecordCollection2,
@@ -441,7 +440,9 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 				dataRecordCollectionResource.
 					getDataDefinitionDataRecordCollectionsPage(
 						dataDefinitionId, null,
-						Pagination.of(dataRecordCollection3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				dataRecordCollection3,

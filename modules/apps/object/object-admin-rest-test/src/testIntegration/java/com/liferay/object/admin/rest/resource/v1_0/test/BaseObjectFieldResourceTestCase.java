@@ -403,21 +403,19 @@ public abstract class BaseObjectFieldResourceTestCase {
 			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_addObjectField(
 				externalReferenceCode, randomObjectField());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int objectField1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int objectField2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int objectField3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ObjectField> page1 =
 				objectFieldResource.
 					getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
 						externalReferenceCode, null, null,
-						Pagination.of(objectField1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -427,7 +425,10 @@ public abstract class BaseObjectFieldResourceTestCase {
 				objectFieldResource.
 					getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
 						externalReferenceCode, null, null,
-						Pagination.of(objectField2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(objectField2, (List<ObjectField>)page2.getItems());
 
@@ -435,7 +436,10 @@ public abstract class BaseObjectFieldResourceTestCase {
 				objectFieldResource.
 					getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
 						externalReferenceCode, null, null,
-						Pagination.of(objectField3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(objectField3, (List<ObjectField>)page3.getItems());
 		}
@@ -884,20 +888,18 @@ public abstract class BaseObjectFieldResourceTestCase {
 			testGetObjectDefinitionObjectFieldsPage_addObjectField(
 				objectDefinitionId, randomObjectField());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int objectField1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int objectField2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int objectField3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ObjectField> page1 =
 				objectFieldResource.getObjectDefinitionObjectFieldsPage(
 					objectDefinitionId, null, null,
-					Pagination.of(objectField1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -906,14 +908,20 @@ public abstract class BaseObjectFieldResourceTestCase {
 			Page<ObjectField> page2 =
 				objectFieldResource.getObjectDefinitionObjectFieldsPage(
 					objectDefinitionId, null, null,
-					Pagination.of(objectField2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(objectField2, (List<ObjectField>)page2.getItems());
 
 			Page<ObjectField> page3 =
 				objectFieldResource.getObjectDefinitionObjectFieldsPage(
 					objectDefinitionId, null, null,
-					Pagination.of(objectField3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(objectField3, (List<ObjectField>)page3.getItems());
 		}

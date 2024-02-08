@@ -582,21 +582,19 @@ public abstract class BaseAccountRoleResourceTestCase {
 			testGetAccountAccountRolesByExternalReferenceCodePage_addAccountRole(
 				externalReferenceCode, randomAccountRole());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int accountRole1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int accountRole2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int accountRole3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AccountRole> page1 =
 				accountRoleResource.
 					getAccountAccountRolesByExternalReferenceCodePage(
 						externalReferenceCode, null, null,
-						Pagination.of(accountRole1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -606,7 +604,10 @@ public abstract class BaseAccountRoleResourceTestCase {
 				accountRoleResource.
 					getAccountAccountRolesByExternalReferenceCodePage(
 						externalReferenceCode, null, null,
-						Pagination.of(accountRole2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(accountRole2, (List<AccountRole>)page2.getItems());
 
@@ -614,7 +615,10 @@ public abstract class BaseAccountRoleResourceTestCase {
 				accountRoleResource.
 					getAccountAccountRolesByExternalReferenceCodePage(
 						externalReferenceCode, null, null,
-						Pagination.of(accountRole3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(accountRole3, (List<AccountRole>)page3.getItems());
 		}
@@ -1234,19 +1238,17 @@ public abstract class BaseAccountRoleResourceTestCase {
 			testGetAccountAccountRolesPage_addAccountRole(
 				accountId, randomAccountRole());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int accountRole1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int accountRole2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int accountRole3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AccountRole> page1 =
 				accountRoleResource.getAccountAccountRolesPage(
-					accountId, null, null, Pagination.of(accountRole1Page, 500),
+					accountId, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -1255,14 +1257,20 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 			Page<AccountRole> page2 =
 				accountRoleResource.getAccountAccountRolesPage(
-					accountId, null, null, Pagination.of(accountRole2Page, 500),
+					accountId, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(accountRole2, (List<AccountRole>)page2.getItems());
 
 			Page<AccountRole> page3 =
 				accountRoleResource.getAccountAccountRolesPage(
-					accountId, null, null, Pagination.of(accountRole3Page, 500),
+					accountId, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(accountRole3, (List<AccountRole>)page3.getItems());

@@ -287,16 +287,17 @@ public abstract class BaseSkuResourceTestCase {
 		Sku sku3 = testGetProductByExternalReferenceCodeSkusPage_addSku(
 			externalReferenceCode, randomSku());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int sku1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int sku2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int sku3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Sku> page1 =
 				skuResource.getProductByExternalReferenceCodeSkusPage(
-					externalReferenceCode, Pagination.of(sku1Page, 500));
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -304,13 +305,19 @@ public abstract class BaseSkuResourceTestCase {
 
 			Page<Sku> page2 =
 				skuResource.getProductByExternalReferenceCodeSkusPage(
-					externalReferenceCode, Pagination.of(sku2Page, 500));
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(sku2, (List<Sku>)page2.getItems());
 
 			Page<Sku> page3 =
 				skuResource.getProductByExternalReferenceCodeSkusPage(
-					externalReferenceCode, Pagination.of(sku3Page, 500));
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(sku3, (List<Sku>)page3.getItems());
 		}
@@ -450,27 +457,34 @@ public abstract class BaseSkuResourceTestCase {
 
 		Sku sku3 = testGetProductIdSkusPage_addSku(id, randomSku());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int sku1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int sku2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int sku3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Sku> page1 = skuResource.getProductIdSkusPage(
-				id, Pagination.of(sku1Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(sku1, (List<Sku>)page1.getItems());
 
 			Page<Sku> page2 = skuResource.getProductIdSkusPage(
-				id, Pagination.of(sku2Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(sku2, (List<Sku>)page2.getItems());
 
 			Page<Sku> page3 = skuResource.getProductIdSkusPage(
-				id, Pagination.of(sku3Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(sku3, (List<Sku>)page3.getItems());
 		}
@@ -644,27 +658,37 @@ public abstract class BaseSkuResourceTestCase {
 
 		Sku sku3 = testGetSkusPage_addSku(randomSku());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int sku1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int sku2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int sku3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Sku> page1 = skuResource.getSkusPage(
-				null, null, Pagination.of(sku1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(sku1, (List<Sku>)page1.getItems());
 
 			Page<Sku> page2 = skuResource.getSkusPage(
-				null, null, Pagination.of(sku2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(sku2, (List<Sku>)page2.getItems());
 
 			Page<Sku> page3 = skuResource.getSkusPage(
-				null, null, Pagination.of(sku3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(sku3, (List<Sku>)page3.getItems());
 		}
@@ -1258,27 +1282,37 @@ public abstract class BaseSkuResourceTestCase {
 
 		Sku sku3 = testGetUnitOfMeasureSkusPage_addSku(randomSku());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int sku1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int sku2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int sku3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Sku> page1 = skuResource.getUnitOfMeasureSkusPage(
-				null, null, Pagination.of(sku1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(sku1, (List<Sku>)page1.getItems());
 
 			Page<Sku> page2 = skuResource.getUnitOfMeasureSkusPage(
-				null, null, Pagination.of(sku2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(sku2, (List<Sku>)page2.getItems());
 
 			Page<Sku> page3 = skuResource.getUnitOfMeasureSkusPage(
-				null, null, Pagination.of(sku3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(sku3, (List<Sku>)page3.getItems());
 		}

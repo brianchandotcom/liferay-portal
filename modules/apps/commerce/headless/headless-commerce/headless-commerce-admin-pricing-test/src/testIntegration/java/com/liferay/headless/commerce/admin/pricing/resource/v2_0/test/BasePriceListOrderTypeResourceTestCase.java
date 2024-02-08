@@ -297,21 +297,18 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 			testGetPriceListByExternalReferenceCodePriceListOrderTypesPage_addPriceListOrderType(
 				externalReferenceCode, randomPriceListOrderType());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int priceListOrderType1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int priceListOrderType2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int priceListOrderType3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PriceListOrderType> page1 =
 				priceListOrderTypeResource.
 					getPriceListByExternalReferenceCodePriceListOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(priceListOrderType1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -323,7 +320,9 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 				priceListOrderTypeResource.
 					getPriceListByExternalReferenceCodePriceListOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(priceListOrderType2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				priceListOrderType2,
@@ -333,7 +332,9 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 				priceListOrderTypeResource.
 					getPriceListByExternalReferenceCodePriceListOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(priceListOrderType3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				priceListOrderType3,
@@ -526,20 +527,18 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 			testGetPriceListIdPriceListOrderTypesPage_addPriceListOrderType(
 				id, randomPriceListOrderType());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int priceListOrderType1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int priceListOrderType2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int priceListOrderType3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PriceListOrderType> page1 =
 				priceListOrderTypeResource.
 					getPriceListIdPriceListOrderTypesPage(
-						id, null, Pagination.of(priceListOrderType1Page, 500));
+						id, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -550,7 +549,10 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 			Page<PriceListOrderType> page2 =
 				priceListOrderTypeResource.
 					getPriceListIdPriceListOrderTypesPage(
-						id, null, Pagination.of(priceListOrderType2Page, 500));
+						id, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				priceListOrderType2,
@@ -559,7 +561,10 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 			Page<PriceListOrderType> page3 =
 				priceListOrderTypeResource.
 					getPriceListIdPriceListOrderTypesPage(
-						id, null, Pagination.of(priceListOrderType3Page, 500));
+						id, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				priceListOrderType3,

@@ -536,21 +536,18 @@ public abstract class BasePriceEntryResourceTestCase {
 			testGetPriceListByExternalReferenceCodePriceEntriesPage_addPriceEntry(
 				externalReferenceCode, randomPriceEntry());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int priceEntry1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int priceEntry2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int priceEntry3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PriceEntry> page1 =
 				priceEntryResource.
 					getPriceListByExternalReferenceCodePriceEntriesPage(
 						externalReferenceCode,
-						Pagination.of(priceEntry1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -560,7 +557,9 @@ public abstract class BasePriceEntryResourceTestCase {
 				priceEntryResource.
 					getPriceListByExternalReferenceCodePriceEntriesPage(
 						externalReferenceCode,
-						Pagination.of(priceEntry2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(priceEntry2, (List<PriceEntry>)page2.getItems());
 
@@ -568,7 +567,9 @@ public abstract class BasePriceEntryResourceTestCase {
 				priceEntryResource.
 					getPriceListByExternalReferenceCodePriceEntriesPage(
 						externalReferenceCode,
-						Pagination.of(priceEntry3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(priceEntry3, (List<PriceEntry>)page3.getItems());
 		}
@@ -741,19 +742,17 @@ public abstract class BasePriceEntryResourceTestCase {
 			testGetPriceListIdPriceEntriesPage_addPriceEntry(
 				id, randomPriceEntry());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int priceEntry1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int priceEntry2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int priceEntry3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PriceEntry> page1 =
 				priceEntryResource.getPriceListIdPriceEntriesPage(
-					id, Pagination.of(priceEntry1Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -761,13 +760,19 @@ public abstract class BasePriceEntryResourceTestCase {
 
 			Page<PriceEntry> page2 =
 				priceEntryResource.getPriceListIdPriceEntriesPage(
-					id, Pagination.of(priceEntry2Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(priceEntry2, (List<PriceEntry>)page2.getItems());
 
 			Page<PriceEntry> page3 =
 				priceEntryResource.getPriceListIdPriceEntriesPage(
-					id, Pagination.of(priceEntry3Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(priceEntry3, (List<PriceEntry>)page3.getItems());
 		}

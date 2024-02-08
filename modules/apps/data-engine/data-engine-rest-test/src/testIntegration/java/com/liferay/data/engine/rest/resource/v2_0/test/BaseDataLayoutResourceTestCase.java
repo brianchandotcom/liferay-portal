@@ -318,19 +318,17 @@ public abstract class BaseDataLayoutResourceTestCase {
 			testGetDataDefinitionDataLayoutsPage_addDataLayout(
 				dataDefinitionId, randomDataLayout());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int dataLayout1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int dataLayout2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int dataLayout3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DataLayout> page1 =
 				dataLayoutResource.getDataDefinitionDataLayoutsPage(
-					dataDefinitionId, null, Pagination.of(dataLayout1Page, 500),
+					dataDefinitionId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -339,14 +337,20 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 			Page<DataLayout> page2 =
 				dataLayoutResource.getDataDefinitionDataLayoutsPage(
-					dataDefinitionId, null, Pagination.of(dataLayout2Page, 500),
+					dataDefinitionId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(dataLayout2, (List<DataLayout>)page2.getItems());
 
 			Page<DataLayout> page3 =
 				dataLayoutResource.getDataDefinitionDataLayoutsPage(
-					dataDefinitionId, null, Pagination.of(dataLayout3Page, 500),
+					dataDefinitionId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(dataLayout3, (List<DataLayout>)page3.getItems());

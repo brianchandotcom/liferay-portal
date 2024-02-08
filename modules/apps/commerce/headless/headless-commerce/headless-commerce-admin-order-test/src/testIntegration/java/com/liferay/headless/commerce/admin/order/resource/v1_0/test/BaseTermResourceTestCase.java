@@ -307,27 +307,37 @@ public abstract class BaseTermResourceTestCase {
 
 		Term term3 = testGetTermsPage_addTerm(randomTerm());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int term1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int term2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int term3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Term> page1 = termResource.getTermsPage(
-				null, null, Pagination.of(term1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(term1, (List<Term>)page1.getItems());
 
 			Page<Term> page2 = termResource.getTermsPage(
-				null, null, Pagination.of(term2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(term2, (List<Term>)page2.getItems());
 
 			Page<Term> page3 = termResource.getTermsPage(
-				null, null, Pagination.of(term3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(term3, (List<Term>)page3.getItems());
 		}

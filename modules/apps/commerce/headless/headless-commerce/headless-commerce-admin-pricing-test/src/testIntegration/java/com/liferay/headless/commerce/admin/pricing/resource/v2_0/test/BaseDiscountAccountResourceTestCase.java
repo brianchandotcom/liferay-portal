@@ -300,21 +300,18 @@ public abstract class BaseDiscountAccountResourceTestCase {
 			testGetDiscountByExternalReferenceCodeDiscountAccountsPage_addDiscountAccount(
 				externalReferenceCode, randomDiscountAccount());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int discountAccount1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int discountAccount2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int discountAccount3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DiscountAccount> page1 =
 				discountAccountResource.
 					getDiscountByExternalReferenceCodeDiscountAccountsPage(
 						externalReferenceCode,
-						Pagination.of(discountAccount1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -325,7 +322,9 @@ public abstract class BaseDiscountAccountResourceTestCase {
 				discountAccountResource.
 					getDiscountByExternalReferenceCodeDiscountAccountsPage(
 						externalReferenceCode,
-						Pagination.of(discountAccount2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				discountAccount2, (List<DiscountAccount>)page2.getItems());
@@ -334,7 +333,9 @@ public abstract class BaseDiscountAccountResourceTestCase {
 				discountAccountResource.
 					getDiscountByExternalReferenceCodeDiscountAccountsPage(
 						externalReferenceCode,
-						Pagination.of(discountAccount3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				discountAccount3, (List<DiscountAccount>)page3.getItems());
@@ -614,19 +615,17 @@ public abstract class BaseDiscountAccountResourceTestCase {
 			testGetDiscountIdDiscountAccountsPage_addDiscountAccount(
 				id, randomDiscountAccount());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int discountAccount1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int discountAccount2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int discountAccount3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DiscountAccount> page1 =
 				discountAccountResource.getDiscountIdDiscountAccountsPage(
-					id, null, null, Pagination.of(discountAccount1Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -636,7 +635,10 @@ public abstract class BaseDiscountAccountResourceTestCase {
 
 			Page<DiscountAccount> page2 =
 				discountAccountResource.getDiscountIdDiscountAccountsPage(
-					id, null, null, Pagination.of(discountAccount2Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(
@@ -644,7 +646,10 @@ public abstract class BaseDiscountAccountResourceTestCase {
 
 			Page<DiscountAccount> page3 =
 				discountAccountResource.getDiscountIdDiscountAccountsPage(
-					id, null, null, Pagination.of(discountAccount3Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(

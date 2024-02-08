@@ -372,19 +372,17 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			testGetNotificationQueueEntriesPage_addNotificationQueueEntry(
 				randomNotificationQueueEntry());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int notificationQueueEntry1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int notificationQueueEntry2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int notificationQueueEntry3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<NotificationQueueEntry> page1 =
 				notificationQueueEntryResource.getNotificationQueueEntriesPage(
-					null, null, Pagination.of(notificationQueueEntry1Page, 500),
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -395,7 +393,10 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 
 			Page<NotificationQueueEntry> page2 =
 				notificationQueueEntryResource.getNotificationQueueEntriesPage(
-					null, null, Pagination.of(notificationQueueEntry2Page, 500),
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(
@@ -404,7 +405,10 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 
 			Page<NotificationQueueEntry> page3 =
 				notificationQueueEntryResource.getNotificationQueueEntriesPage(
-					null, null, Pagination.of(notificationQueueEntry3Page, 500),
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(

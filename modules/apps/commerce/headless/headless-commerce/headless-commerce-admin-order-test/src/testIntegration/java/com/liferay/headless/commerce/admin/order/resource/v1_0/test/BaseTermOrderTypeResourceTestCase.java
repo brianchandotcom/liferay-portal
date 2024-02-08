@@ -292,21 +292,18 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 			testGetTermByExternalReferenceCodeTermOrderTypesPage_addTermOrderType(
 				externalReferenceCode, randomTermOrderType());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int termOrderType1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int termOrderType2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int termOrderType3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<TermOrderType> page1 =
 				termOrderTypeResource.
 					getTermByExternalReferenceCodeTermOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(termOrderType1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -317,7 +314,9 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 				termOrderTypeResource.
 					getTermByExternalReferenceCodeTermOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(termOrderType2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				termOrderType2, (List<TermOrderType>)page2.getItems());
@@ -326,7 +325,9 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 				termOrderTypeResource.
 					getTermByExternalReferenceCodeTermOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(termOrderType3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				termOrderType3, (List<TermOrderType>)page3.getItems());
@@ -502,19 +503,17 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 			testGetTermIdTermOrderTypesPage_addTermOrderType(
 				id, randomTermOrderType());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int termOrderType1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int termOrderType2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int termOrderType3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<TermOrderType> page1 =
 				termOrderTypeResource.getTermIdTermOrderTypesPage(
-					id, null, Pagination.of(termOrderType1Page, 500));
+					id, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -523,14 +522,20 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 
 			Page<TermOrderType> page2 =
 				termOrderTypeResource.getTermIdTermOrderTypesPage(
-					id, null, Pagination.of(termOrderType2Page, 500));
+					id, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				termOrderType2, (List<TermOrderType>)page2.getItems());
 
 			Page<TermOrderType> page3 =
 				termOrderTypeResource.getTermIdTermOrderTypesPage(
-					id, null, Pagination.of(termOrderType3Page, 500));
+					id, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				termOrderType3, (List<TermOrderType>)page3.getItems());

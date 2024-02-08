@@ -618,19 +618,17 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 			testGetReplenishmentItemsPage_addReplenishmentItem(
 				sku, randomReplenishmentItem());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int replenishmentItem1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int replenishmentItem2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int replenishmentItem3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ReplenishmentItem> page1 =
 				replenishmentItemResource.getReplenishmentItemsPage(
-					sku, Pagination.of(replenishmentItem1Page, 500));
+					sku,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -639,14 +637,20 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 			Page<ReplenishmentItem> page2 =
 				replenishmentItemResource.getReplenishmentItemsPage(
-					sku, Pagination.of(replenishmentItem2Page, 500));
+					sku,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				replenishmentItem2, (List<ReplenishmentItem>)page2.getItems());
 
 			Page<ReplenishmentItem> page3 =
 				replenishmentItemResource.getReplenishmentItemsPage(
-					sku, Pagination.of(replenishmentItem3Page, 500));
+					sku,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				replenishmentItem3, (List<ReplenishmentItem>)page3.getItems());
@@ -861,19 +865,17 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 			testGetWarehouseIdReplenishmentItemsPage_addReplenishmentItem(
 				warehouseId, randomReplenishmentItem());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int replenishmentItem1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int replenishmentItem2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int replenishmentItem3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ReplenishmentItem> page1 =
 				replenishmentItemResource.getWarehouseIdReplenishmentItemsPage(
-					warehouseId, Pagination.of(replenishmentItem1Page, 500));
+					warehouseId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -882,14 +884,20 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 			Page<ReplenishmentItem> page2 =
 				replenishmentItemResource.getWarehouseIdReplenishmentItemsPage(
-					warehouseId, Pagination.of(replenishmentItem2Page, 500));
+					warehouseId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				replenishmentItem2, (List<ReplenishmentItem>)page2.getItems());
 
 			Page<ReplenishmentItem> page3 =
 				replenishmentItemResource.getWarehouseIdReplenishmentItemsPage(
-					warehouseId, Pagination.of(replenishmentItem3Page, 500));
+					warehouseId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				replenishmentItem3, (List<ReplenishmentItem>)page3.getItems());

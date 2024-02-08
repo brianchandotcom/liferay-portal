@@ -285,21 +285,18 @@ public abstract class BaseTierPriceResourceTestCase {
 			testGetPriceEntryByExternalReferenceCodeTierPricesPage_addTierPrice(
 				externalReferenceCode, randomTierPrice());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int tierPrice1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int tierPrice2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int tierPrice3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<TierPrice> page1 =
 				tierPriceResource.
 					getPriceEntryByExternalReferenceCodeTierPricesPage(
 						externalReferenceCode,
-						Pagination.of(tierPrice1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -309,7 +306,9 @@ public abstract class BaseTierPriceResourceTestCase {
 				tierPriceResource.
 					getPriceEntryByExternalReferenceCodeTierPricesPage(
 						externalReferenceCode,
-						Pagination.of(tierPrice2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(tierPrice2, (List<TierPrice>)page2.getItems());
 
@@ -317,7 +316,9 @@ public abstract class BaseTierPriceResourceTestCase {
 				tierPriceResource.
 					getPriceEntryByExternalReferenceCodeTierPricesPage(
 						externalReferenceCode,
-						Pagination.of(tierPrice3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(tierPrice3, (List<TierPrice>)page3.getItems());
 		}
@@ -482,19 +483,17 @@ public abstract class BaseTierPriceResourceTestCase {
 		TierPrice tierPrice3 = testGetPriceEntryIdTierPricesPage_addTierPrice(
 			id, randomTierPrice());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int tierPrice1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int tierPrice2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int tierPrice3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<TierPrice> page1 =
 				tierPriceResource.getPriceEntryIdTierPricesPage(
-					id, Pagination.of(tierPrice1Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -502,13 +501,19 @@ public abstract class BaseTierPriceResourceTestCase {
 
 			Page<TierPrice> page2 =
 				tierPriceResource.getPriceEntryIdTierPricesPage(
-					id, Pagination.of(tierPrice2Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(tierPrice2, (List<TierPrice>)page2.getItems());
 
 			Page<TierPrice> page3 =
 				tierPriceResource.getPriceEntryIdTierPricesPage(
-					id, Pagination.of(tierPrice3Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(tierPrice3, (List<TierPrice>)page3.getItems());
 		}

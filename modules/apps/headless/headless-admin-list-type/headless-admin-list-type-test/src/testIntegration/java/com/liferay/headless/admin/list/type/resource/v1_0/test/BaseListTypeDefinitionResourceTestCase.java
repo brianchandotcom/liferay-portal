@@ -349,20 +349,18 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			testGetListTypeDefinitionsPage_addListTypeDefinition(
 				randomListTypeDefinition());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int listTypeDefinition1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int listTypeDefinition2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int listTypeDefinition3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ListTypeDefinition> page1 =
 				listTypeDefinitionResource.getListTypeDefinitionsPage(
 					null, null, null,
-					Pagination.of(listTypeDefinition1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -373,7 +371,10 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			Page<ListTypeDefinition> page2 =
 				listTypeDefinitionResource.getListTypeDefinitionsPage(
 					null, null, null,
-					Pagination.of(listTypeDefinition2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				listTypeDefinition2,
@@ -382,7 +383,10 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			Page<ListTypeDefinition> page3 =
 				listTypeDefinitionResource.getListTypeDefinitionsPage(
 					null, null, null,
-					Pagination.of(listTypeDefinition3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				listTypeDefinition3,

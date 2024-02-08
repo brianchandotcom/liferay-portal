@@ -335,19 +335,17 @@ public abstract class BaseFormStructureResourceTestCase {
 			testGetSiteFormStructuresPage_addFormStructure(
 				siteId, randomFormStructure());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int formStructure1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int formStructure2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int formStructure3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<FormStructure> page1 =
 				formStructureResource.getSiteFormStructuresPage(
-					siteId, Pagination.of(formStructure1Page, 500));
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -356,14 +354,20 @@ public abstract class BaseFormStructureResourceTestCase {
 
 			Page<FormStructure> page2 =
 				formStructureResource.getSiteFormStructuresPage(
-					siteId, Pagination.of(formStructure2Page, 500));
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				formStructure2, (List<FormStructure>)page2.getItems());
 
 			Page<FormStructure> page3 =
 				formStructureResource.getSiteFormStructuresPage(
-					siteId, Pagination.of(formStructure3Page, 500));
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				formStructure3, (List<FormStructure>)page3.getItems());

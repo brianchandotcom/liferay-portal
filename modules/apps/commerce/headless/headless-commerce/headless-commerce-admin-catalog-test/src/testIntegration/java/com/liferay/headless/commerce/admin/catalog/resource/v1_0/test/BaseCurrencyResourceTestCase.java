@@ -317,30 +317,37 @@ public abstract class BaseCurrencyResourceTestCase {
 		Currency currency3 = testGetCurrenciesPage_addCurrency(
 			randomCurrency());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int currency1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int currency2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int currency3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Currency> page1 = currencyResource.getCurrenciesPage(
-				null, null, Pagination.of(currency1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(currency1, (List<Currency>)page1.getItems());
 
 			Page<Currency> page2 = currencyResource.getCurrenciesPage(
-				null, null, Pagination.of(currency2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(currency2, (List<Currency>)page2.getItems());
 
 			Page<Currency> page3 = currencyResource.getCurrenciesPage(
-				null, null, Pagination.of(currency3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(currency3, (List<Currency>)page3.getItems());
 		}

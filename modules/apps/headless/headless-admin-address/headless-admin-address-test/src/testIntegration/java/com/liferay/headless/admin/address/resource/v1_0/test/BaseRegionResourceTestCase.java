@@ -271,27 +271,37 @@ public abstract class BaseRegionResourceTestCase {
 		Region region3 = testGetCountryRegionsPage_addRegion(
 			countryId, randomRegion());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int region1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int region2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int region3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Region> page1 = regionResource.getCountryRegionsPage(
-				countryId, null, null, Pagination.of(region1Page, 500), null);
+				countryId, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(region1, (List<Region>)page1.getItems());
 
 			Page<Region> page2 = regionResource.getCountryRegionsPage(
-				countryId, null, null, Pagination.of(region2Page, 500), null);
+				countryId, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(region2, (List<Region>)page2.getItems());
 
 			Page<Region> page3 = regionResource.getCountryRegionsPage(
-				countryId, null, null, Pagination.of(region3Page, 500), null);
+				countryId, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(region3, (List<Region>)page3.getItems());
 		}
@@ -627,27 +637,37 @@ public abstract class BaseRegionResourceTestCase {
 
 		Region region3 = testGetRegionsPage_addRegion(randomRegion());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int region1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int region2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int region3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Region> page1 = regionResource.getRegionsPage(
-				null, null, Pagination.of(region1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(region1, (List<Region>)page1.getItems());
 
 			Page<Region> page2 = regionResource.getRegionsPage(
-				null, null, Pagination.of(region2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(region2, (List<Region>)page2.getItems());
 
 			Page<Region> page3 = regionResource.getRegionsPage(
-				null, null, Pagination.of(region3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(region3, (List<Region>)page3.getItems());
 		}

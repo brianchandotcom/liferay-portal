@@ -393,20 +393,18 @@ public abstract class BaseContentElementResourceTestCase {
 			testGetAssetLibraryContentElementsPage_addContentElement(
 				assetLibraryId, randomContentElement());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int contentElement1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int contentElement2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int contentElement3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ContentElement> page1 =
 				contentElementResource.getAssetLibraryContentElementsPage(
 					assetLibraryId, null, null, null,
-					Pagination.of(contentElement1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -416,7 +414,10 @@ public abstract class BaseContentElementResourceTestCase {
 			Page<ContentElement> page2 =
 				contentElementResource.getAssetLibraryContentElementsPage(
 					assetLibraryId, null, null, null,
-					Pagination.of(contentElement2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				contentElement2, (List<ContentElement>)page2.getItems());
@@ -424,7 +425,10 @@ public abstract class BaseContentElementResourceTestCase {
 			Page<ContentElement> page3 =
 				contentElementResource.getAssetLibraryContentElementsPage(
 					assetLibraryId, null, null, null,
-					Pagination.of(contentElement3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				contentElement3, (List<ContentElement>)page3.getItems());
@@ -826,20 +830,18 @@ public abstract class BaseContentElementResourceTestCase {
 			testGetSiteContentElementsPage_addContentElement(
 				siteId, randomContentElement());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int contentElement1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int contentElement2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int contentElement3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ContentElement> page1 =
 				contentElementResource.getSiteContentElementsPage(
 					siteId, null, null, null,
-					Pagination.of(contentElement1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -849,7 +851,10 @@ public abstract class BaseContentElementResourceTestCase {
 			Page<ContentElement> page2 =
 				contentElementResource.getSiteContentElementsPage(
 					siteId, null, null, null,
-					Pagination.of(contentElement2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				contentElement2, (List<ContentElement>)page2.getItems());
@@ -857,7 +862,10 @@ public abstract class BaseContentElementResourceTestCase {
 			Page<ContentElement> page3 =
 				contentElementResource.getSiteContentElementsPage(
 					siteId, null, null, null,
-					Pagination.of(contentElement3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				contentElement3, (List<ContentElement>)page3.getItems());

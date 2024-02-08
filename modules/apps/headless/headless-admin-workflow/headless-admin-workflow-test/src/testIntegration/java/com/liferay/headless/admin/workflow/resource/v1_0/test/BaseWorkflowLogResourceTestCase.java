@@ -281,20 +281,17 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			testGetWorkflowInstanceWorkflowLogsPage_addWorkflowLog(
 				workflowInstanceId, randomWorkflowLog());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int workflowLog1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int workflowLog2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int workflowLog3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<WorkflowLog> page1 =
 				workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
 					workflowInstanceId, null,
-					Pagination.of(workflowLog1Page, 500));
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -303,14 +300,18 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			Page<WorkflowLog> page2 =
 				workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
 					workflowInstanceId, null,
-					Pagination.of(workflowLog2Page, 500));
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(workflowLog2, (List<WorkflowLog>)page2.getItems());
 
 			Page<WorkflowLog> page3 =
 				workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
 					workflowInstanceId, null,
-					Pagination.of(workflowLog3Page, 500));
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(workflowLog3, (List<WorkflowLog>)page3.getItems());
 		}
@@ -525,19 +526,17 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			testGetWorkflowTaskWorkflowLogsPage_addWorkflowLog(
 				workflowTaskId, randomWorkflowLog());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int workflowLog1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int workflowLog2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int workflowLog3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<WorkflowLog> page1 =
 				workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-					workflowTaskId, null, Pagination.of(workflowLog1Page, 500));
+					workflowTaskId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -545,13 +544,19 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 			Page<WorkflowLog> page2 =
 				workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-					workflowTaskId, null, Pagination.of(workflowLog2Page, 500));
+					workflowTaskId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(workflowLog2, (List<WorkflowLog>)page2.getItems());
 
 			Page<WorkflowLog> page3 =
 				workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-					workflowTaskId, null, Pagination.of(workflowLog3Page, 500));
+					workflowTaskId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(workflowLog3, (List<WorkflowLog>)page3.getItems());
 		}

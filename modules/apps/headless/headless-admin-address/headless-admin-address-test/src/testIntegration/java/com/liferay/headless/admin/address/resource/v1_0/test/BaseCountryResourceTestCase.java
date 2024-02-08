@@ -235,27 +235,37 @@ public abstract class BaseCountryResourceTestCase {
 
 		Country country3 = testGetCountriesPage_addCountry(randomCountry());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int country1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int country2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int country3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Country> page1 = countryResource.getCountriesPage(
-				null, null, Pagination.of(country1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(country1, (List<Country>)page1.getItems());
 
 			Page<Country> page2 = countryResource.getCountriesPage(
-				null, null, Pagination.of(country2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(country2, (List<Country>)page2.getItems());
 
 			Page<Country> page3 = countryResource.getCountriesPage(
-				null, null, Pagination.of(country3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(country3, (List<Country>)page3.getItems());
 		}

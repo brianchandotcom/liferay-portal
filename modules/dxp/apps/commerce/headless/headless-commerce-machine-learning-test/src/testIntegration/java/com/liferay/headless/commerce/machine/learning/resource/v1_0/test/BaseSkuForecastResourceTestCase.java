@@ -243,32 +243,72 @@ public abstract class BaseSkuForecastResourceTestCase {
 			testGetSkuForecastsByMonthlyRevenuePage_addSkuForecast(
 				randomSkuForecast());
 
-		Page<SkuForecast> page1 =
-			skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
-				null, null, null, null, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
 
-		List<SkuForecast> skuForecasts1 = (List<SkuForecast>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			skuForecasts1.toString(), totalCount + 2, skuForecasts1.size());
+		if (totalCount >= 498) {
+			Page<SkuForecast> page1 =
+				skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
+					null, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Page<SkuForecast> page2 =
-			skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
-				null, null, null, null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(skuForecast1, (List<SkuForecast>)page1.getItems());
 
-		List<SkuForecast> skuForecasts2 = (List<SkuForecast>)page2.getItems();
+			Page<SkuForecast> page2 =
+				skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
+					null, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Assert.assertEquals(skuForecasts2.toString(), 1, skuForecasts2.size());
+			assertContains(skuForecast2, (List<SkuForecast>)page2.getItems());
 
-		Page<SkuForecast> page3 =
-			skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
-				null, null, null, null, Pagination.of(1, (int)totalCount + 3));
+			Page<SkuForecast> page3 =
+				skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
+					null, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		assertContains(skuForecast1, (List<SkuForecast>)page3.getItems());
-		assertContains(skuForecast2, (List<SkuForecast>)page3.getItems());
-		assertContains(skuForecast3, (List<SkuForecast>)page3.getItems());
+			assertContains(skuForecast3, (List<SkuForecast>)page3.getItems());
+		}
+		else {
+			Page<SkuForecast> page1 =
+				skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
+					null, null, null, null, Pagination.of(1, totalCount + 2));
+
+			List<SkuForecast> skuForecasts1 =
+				(List<SkuForecast>)page1.getItems();
+
+			Assert.assertEquals(
+				skuForecasts1.toString(), totalCount + 2, skuForecasts1.size());
+
+			Page<SkuForecast> page2 =
+				skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
+					null, null, null, null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<SkuForecast> skuForecasts2 =
+				(List<SkuForecast>)page2.getItems();
+
+			Assert.assertEquals(
+				skuForecasts2.toString(), 1, skuForecasts2.size());
+
+			Page<SkuForecast> page3 =
+				skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
+					null, null, null, null,
+					Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(skuForecast1, (List<SkuForecast>)page3.getItems());
+			assertContains(skuForecast2, (List<SkuForecast>)page3.getItems());
+			assertContains(skuForecast3, (List<SkuForecast>)page3.getItems());
+		}
 	}
 
 	protected SkuForecast

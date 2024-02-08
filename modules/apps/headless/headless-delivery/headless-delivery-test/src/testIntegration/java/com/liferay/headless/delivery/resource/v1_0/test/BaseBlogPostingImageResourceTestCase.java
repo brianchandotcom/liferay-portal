@@ -540,20 +540,18 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
 				siteId, randomBlogPostingImage());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int blogPostingImage1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int blogPostingImage2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int blogPostingImage3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<BlogPostingImage> page1 =
 				blogPostingImageResource.getSiteBlogPostingImagesPage(
 					siteId, null, null, null,
-					Pagination.of(blogPostingImage1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -563,7 +561,10 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			Page<BlogPostingImage> page2 =
 				blogPostingImageResource.getSiteBlogPostingImagesPage(
 					siteId, null, null, null,
-					Pagination.of(blogPostingImage2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				blogPostingImage2, (List<BlogPostingImage>)page2.getItems());
@@ -571,7 +572,10 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			Page<BlogPostingImage> page3 =
 				blogPostingImageResource.getSiteBlogPostingImagesPage(
 					siteId, null, null, null,
-					Pagination.of(blogPostingImage3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				blogPostingImage3, (List<BlogPostingImage>)page3.getItems());

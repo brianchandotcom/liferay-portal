@@ -139,10 +139,10 @@ public class AssetListAssetEntryProviderTest {
 
 		Assert.assertEquals(assetEntries.toString(), 3, assetEntries.size());
 
-		AssetEntry firstAssetEntry = assetEntries.get(0);
+		AssetEntry assetEntry = assetEntries.get(0);
 
 		Assert.assertEquals(
-			firstAssetEntry.getTitle(LocaleUtil.US),
+			assetEntry.getTitle(LocaleUtil.US),
 			journalArticle.getTitle(LocaleUtil.US));
 	}
 
@@ -228,10 +228,10 @@ public class AssetListAssetEntryProviderTest {
 
 		Assert.assertEquals(assetEntries.toString(), 1, assetEntries.size());
 
-		AssetEntry firstAssetEntry = assetEntries.get(0);
+		AssetEntry assetEntry = assetEntries.get(0);
 
 		Assert.assertEquals(
-			firstAssetEntry.getTitle(LocaleUtil.US),
+			assetEntry.getTitle(LocaleUtil.US),
 			journalArticle.getTitle(LocaleUtil.US));
 	}
 
@@ -282,10 +282,10 @@ public class AssetListAssetEntryProviderTest {
 
 		Assert.assertEquals(assetEntries.toString(), 3, assetEntries.size());
 
-		AssetEntry firstAssetEntry = assetEntries.get(0);
+		AssetEntry assetEntry = assetEntries.get(0);
 
 		Assert.assertEquals(
-			firstAssetEntry.getTitle(LocaleUtil.US),
+			assetEntry.getTitle(LocaleUtil.US),
 			journalArticle.getTitle(LocaleUtil.US));
 	}
 
@@ -923,10 +923,10 @@ public class AssetListAssetEntryProviderTest {
 
 		Assert.assertEquals(assetEntries.toString(), 2, assetEntries.size());
 
-		AssetEntry firstAssetEntry = assetEntries.get(0);
+		AssetEntry assetEntry = assetEntries.get(0);
 
 		Assert.assertEquals(
-			firstAssetEntry.getTitle(LocaleUtil.US),
+			assetEntry.getTitle(LocaleUtil.US),
 			journalArticle.getTitle(LocaleUtil.US));
 	}
 

@@ -151,7 +151,24 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 					ddmDataProviderInstance,
 					DDMRESTDataProviderSettings.class));
 
-		return ddmDataProviderInvokeCommand.execute();
+		DDMDataProviderResponse ddmDataProviderResponse =
+			ddmDataProviderInvokeCommand.execute();
+
+		try {
+			deactivate();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to disable the Data Provider threads from running",
+					exception);
+			}
+		}
+
+		return ddmDataProviderResponse;
 	}
 
 	protected DDMDataProviderInstance fetchDDMDataProviderInstance(

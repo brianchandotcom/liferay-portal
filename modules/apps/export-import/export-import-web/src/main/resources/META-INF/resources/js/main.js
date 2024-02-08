@@ -107,51 +107,39 @@ AUI.add(
 							'.configuration-link'
 						);
 
-						let contentNode;
-						let rightContentArrow;
-						let downContentArrow;
-
 						form.delegate(
 							STR_CLICK,
 							(event) => {
 								const portletId = event.currentTarget.attr(
 									'data-portletid'
 								);
+ 
+								let contentNode = instance.byId(
+									'content_' + portletId
+								);
 
-								if (!contentNode) {
-									contentNode = instance.byId(
-										'content_' + portletId
-									);
+								contentNode.delegate(
+									'change',
+									() => {
+										instance._setContentLabels(
+											portletId
+										);
 
-									contentNode.delegate(
-										'change',
-										() => {
-											instance._setContentLabels(
-												portletId
-											);
+										instance._storeNodeInputStates(
+											contentNode
+										);
+									},
+									'input[type="checkbox]'
+								);
+							
+								instance.byId(
+									'rightContentArrow_' + portletId
+								).toggle('hide');
 
-											instance._storeNodeInputStates(
-												contentNode
-											);
-										},
-										'input[type="checkbox]'
-									);
-								}
+								instance.byId(
+									'downContentArrow_' + portletId
+								).toggle('hide');
 
-								if (!rightContentArrow) {
-									rightContentArrow = instance.byId(
-										'rightContentArrow_' + portletId
-									);
-								}
-
-								if (!downContentArrow) {
-									downContentArrow = instance.byId(
-										'downContentArrow_' + portletId
-									);
-								}
-
-								downContentArrow.toggle('hide');
-								rightContentArrow.toggle('hide');
 								contentNode.toggle('hide');
 							},
 							'.content-link'

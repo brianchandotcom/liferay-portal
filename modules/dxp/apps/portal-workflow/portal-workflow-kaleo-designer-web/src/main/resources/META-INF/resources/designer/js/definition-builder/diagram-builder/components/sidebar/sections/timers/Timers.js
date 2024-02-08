@@ -106,11 +106,23 @@ const Timers = ({setContentName, setErrors}) => {
 							);
 						}
 						else if (
-							reassignments.assignmentType[0] === 'roleType'
+							reassignments.assignmentType[0] === 'roleType' &&
+							Object.keys(filteredTimerActions[0]).includes(
+								'sectionData'
+							)
 						) {
-
-							// TO DO
-
+							reassignments.autoCreate = filteredTimerActions[0].sectionData.map(
+								({autoCreate}) => autoCreate
+							);
+							reassignments.roleKey = filteredTimerActions[0].sectionData.map(
+								({roleKey}) => roleKey
+							);
+							reassignments.roleName = filteredTimerActions[0].sectionData.map(
+								({roleName}) => roleName
+							);
+							reassignments.roleType = filteredTimerActions[0].sectionData.map(
+								({roleType}) => roleType
+							);
 						}
 
 						return reassignments;
@@ -193,6 +205,12 @@ const Timers = ({setContentName, setErrors}) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [timerSections]);
 
+	function filterSectionDataProperty(data, index, propertyName) {
+		return data.some((entry) => entry[0] === propertyName)
+			? data.filter((entry) => entry[0] === propertyName)[0][1][index]
+			: null;
+	}
+
 	const getAllTimerActions = (index) => {
 		const allTimerActions = {
 			reassignments: Object.entries(
@@ -244,6 +262,32 @@ const Timers = ({setContentName, setErrors}) => {
 						.map((email, index) => ({
 							emailAddress: email,
 							identifier: `${Date.now()}-${index}`,
+						}));
+				}
+				else if (
+					section.assignmentType === 'roleType' &&
+					data.some((entry) => entry[0] === 'roleKey')
+				) {
+					section.sectionData = data
+						.find((entry) => entry[0] === 'roleKey')[1]
+						.map((roleKey, index) => ({
+							autoCreate: filterSectionDataProperty(
+								data,
+								index,
+								'autoCreate'
+							),
+							identifier: `${Date.now()}-${index}`,
+							roleKey,
+							roleName: filterSectionDataProperty(
+								data,
+								index,
+								'roleName'
+							),
+							roleType: filterSectionDataProperty(
+								data,
+								index,
+								'roleType'
+							),
 						}));
 				}
 				else {

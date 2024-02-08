@@ -29,7 +29,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 			>
 				<clay:management-toolbar
 					managementToolbarDisplayContext="<%= new GroupFragmentEntryUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, groupFragmentEntryLinkDisplayContext.getSearchContainer()) %>"
-					propsTransformer="js/FragmentEntryUsagesManagementToolbarPropsTransformer"
+					propsTransformer="{FragmentEntryUsagesManagementToolbarPropsTransformer} from fragment-web"
 				/>
 
 				<portlet:actionURL name="/fragment/propagate_group_fragment_entry_changes" var="propagateGroupFragmentEntryChangesURL">

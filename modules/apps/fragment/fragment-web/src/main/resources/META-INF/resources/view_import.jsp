@@ -18,6 +18,6 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 %>
 
 <react:component
-	module="js/ImportFragments"
+	module="{ImportFragments} from fragment-web"
 	props="<%= importDisplayContext.getProps() %>"
 />

@@ -14,7 +14,7 @@ ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagement
 <clay:management-toolbar
 	additionalProps="<%= contributedFragmentManagementToolbarDisplayContext.getComponentContext() %>"
 	managementToolbarDisplayContext="<%= contributedFragmentManagementToolbarDisplayContext %>"
-	propsTransformer="js/ViewContributedFragmentEntriesManagementToolbarPropsTransformer"
+	propsTransformer="{ViewContributedFragmentEntriesManagementToolbarPropsTransformer} from fragment-web"
 />
 
 <aui:form name="fm">
@@ -30,14 +30,14 @@ ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagement
 					<c:when test="<%= object instanceof FragmentComposition %>">
 						<clay:vertical-card
 							additionalProps="<%= fragmentEntriesDisplayContext.getAdditionalProps() %>"
-							propsTransformer="js/ContributedFragmentEntryDropdownPropsTransformer"
+							propsTransformer="{ContributedFragmentEntryDropdownPropsTransformer} from fragment-web"
 							verticalCard="<%= new ContributedFragmentCompositionVerticalCard((FragmentComposition)object, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>
 					</c:when>
 					<c:otherwise>
 						<clay:vertical-card
 							additionalProps="<%= fragmentEntriesDisplayContext.getAdditionalProps() %>"
-							propsTransformer="js/ContributedFragmentEntryDropdownPropsTransformer"
+							propsTransformer="{ContributedFragmentEntryDropdownPropsTransformer} from fragment-web"
 							verticalCard="<%= new ContributedFragmentEntryVerticalCard((FragmentEntry)object, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>
 					</c:otherwise>

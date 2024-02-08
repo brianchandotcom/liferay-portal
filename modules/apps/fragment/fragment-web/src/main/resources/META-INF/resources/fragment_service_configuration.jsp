@@ -34,7 +34,7 @@ FragmentServiceConfigurationDisplayContext fragmentServiceConfigurationDisplayCo
 				<span aria-hidden="true" class="loading-animation"></span>
 
 				<react:component
-					module="js/FragmentServiceConfiguration"
+					module="{FragmentServiceConfiguration} from fragment-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
 							"alreadyPropagateContributedFragmentChanges", fragmentServiceConfigurationDisplayContext.isAlreadyPropagateContributedFragmentChanges()

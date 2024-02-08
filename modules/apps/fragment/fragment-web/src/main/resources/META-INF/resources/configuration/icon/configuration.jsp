@@ -22,6 +22,6 @@ ConfigurationDisplayContext configurationDisplayContext = new ConfigurationDispl
 
 	<react:component
 		data="<%= configurationDisplayContext.getData() %>"
-		module="js/FormFragmentsConfiguration"
+		module="{FormFragmentsConfiguration} from fragment-web"
 	/>
 </div>

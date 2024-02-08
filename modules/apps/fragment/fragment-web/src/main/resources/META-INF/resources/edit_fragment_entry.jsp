@@ -13,7 +13,7 @@ EditFragmentEntryDisplayContext editFragmentEntryDisplayContext = new EditFragme
 
 <div>
 	<react:component
-		module="js/fragment-editor/FragmentEditor"
+		module="{FragmentEditor} from fragment-web"
 		props="<%= editFragmentEntryDisplayContext.getFragmentEditorData() %>"
 	/>
 </div>

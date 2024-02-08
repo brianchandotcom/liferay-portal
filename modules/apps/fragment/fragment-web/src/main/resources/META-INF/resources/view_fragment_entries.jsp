@@ -18,7 +18,7 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 <clay:management-toolbar
 	additionalProps="<%= fragmentManagementToolbarDisplayContext.getComponentContext() %>"
 	managementToolbarDisplayContext="<%= fragmentManagementToolbarDisplayContext %>"
-	propsTransformer="js/ViewFragmentEntriesManagementToolbarPropsTransformer"
+	propsTransformer="{ViewFragmentEntriesManagementToolbarPropsTransformer} from fragment-web"
 />
 
 <aui:form name="fm">
@@ -43,14 +43,14 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 				<c:choose>
 					<c:when test="<%= object instanceof FragmentComposition %>">
 						<clay:vertical-card
-							propsTransformer="js/FragmentCompositionDropdownPropsTransformer"
+							propsTransformer="{FragmentCompositionDropdownPropsTransformer} from fragment-web"
 							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard((FragmentComposition)object, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentEntriesDisplayContext.getFragmentType()) %>"
 						/>
 					</c:when>
 					<c:otherwise>
 						<clay:vertical-card
 							additionalProps="<%= fragmentEntriesDisplayContext.getAdditionalProps() %>"
-							propsTransformer="js/FragmentEntryDropdownPropsTransformer"
+							propsTransformer="{FragmentEntryDropdownPropsTransformer} from fragment-web"
 							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard((FragmentEntry)object, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentEntriesDisplayContext.getFragmentType()) %>"
 						/>
 					</c:otherwise>

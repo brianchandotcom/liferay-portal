@@ -91,7 +91,7 @@ describe('UsageOverview', () => {
 
 		expect(getByText('1,000')).toBeInTheDocument();
 
-		expect(getByText('1% since Jul 08, 2018.')).toBeInTheDocument();
+		expect(getByText('1% Since Jul 08, 2018')).toBeInTheDocument();
 	});
 
 	it('should display the limit of INDIVIDUALS and PAGE VIEWS. Also, it should render a warning if INDIVIDUALS is over the limit. Also, it should render the current plan name.', () => {
@@ -144,7 +144,7 @@ describe('UsageOverview', () => {
 
 		expect(getByText('111,123')).toBeInTheDocument();
 
-		expect(getByText('1.6% since Jul 08, 2018.')).toBeInTheDocument();
+		expect(getByText('1.6% Since Jul 08, 2018')).toBeInTheDocument();
 	});
 
 	it('should render with an overage warning if the PAGE VIEWS metric has exceeded the plan limit', () => {

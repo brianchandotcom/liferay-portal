@@ -75,7 +75,7 @@ describe('UsageMetric', () => {
 
 		const {getByText} = render(<DefaultComponent {...props} />);
 
-		expect(getByText('10% since Jul 08, 2018.')).toBeInTheDocument();
+		expect(getByText('10% Since Jul 08, 2018')).toBeInTheDocument();
 	});
 
 	it('should display last anniversary date when subscription plan is enterprise', () => {
@@ -91,6 +91,6 @@ describe('UsageMetric', () => {
 
 		const {getByText} = render(<DefaultComponent {...props} />);
 
-		expect(getByText('10% since Jul 10, 2017.')).toBeInTheDocument();
+		expect(getByText('10% Since Jul 10, 2017')).toBeInTheDocument();
 	});
 });

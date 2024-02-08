@@ -44,7 +44,7 @@ exports[`UsageMetric should render 1`] = `
         <span
           class="text-3 text-secondary font-weight-semi-bold"
         >
-          0% since Jul 08, 2018.
+          0% Since Jul 08, 2018
         </span>
         <div>
           <span

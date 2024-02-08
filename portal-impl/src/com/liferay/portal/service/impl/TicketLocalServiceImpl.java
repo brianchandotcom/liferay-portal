@@ -64,6 +64,15 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteTickets(
+		long companyId, String className, long classPK, int type) {
+
+		ticketPersistence.removeByC_C_C_T(
+			companyId, _classNameLocalService.getClassNameId(className),
+			classPK, type);
+	}
+
+	@Override
 	public Ticket fetchTicket(String key) {
 		return ticketPersistence.fetchByKey(key);
 	}

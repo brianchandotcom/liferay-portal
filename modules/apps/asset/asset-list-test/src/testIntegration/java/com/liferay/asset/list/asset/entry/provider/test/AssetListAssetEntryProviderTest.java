@@ -118,11 +118,6 @@ public class AssetListAssetEntryProviderTest {
 		_addJournalArticle(new long[0], TestPropsValues.getUserId());
 		_addJournalArticle(new long[0], user.getUserId());
 
-		long[] segmentsEntryIds = {
-			segmentsEntry1.getSegmentsEntryId(),
-			segmentsEntry2.getSegmentsEntryId()
-		};
-
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry,
 			segmentsEntry1.getSegmentsEntryId(),
@@ -131,6 +126,11 @@ public class AssetListAssetEntryProviderTest {
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry,
 			segmentsEntry2.getSegmentsEntryId(), _getTypeSettings(userName));
+
+		long[] segmentsEntryIds = {
+			segmentsEntry1.getSegmentsEntryId(),
+			segmentsEntry2.getSegmentsEntryId()
+		};
 
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
@@ -204,11 +204,6 @@ public class AssetListAssetEntryProviderTest {
 
 		_addJournalArticle(new long[0], TestPropsValues.getUserId());
 
-		long[] segmentsEntryIds = {
-			segmentsEntry1.getSegmentsEntryId(),
-			segmentsEntry2.getSegmentsEntryId()
-		};
-
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry,
 			segmentsEntry1.getSegmentsEntryId(),
@@ -218,6 +213,11 @@ public class AssetListAssetEntryProviderTest {
 			_group.getGroupId(), assetListEntry,
 			segmentsEntry2.getSegmentsEntryId(),
 			_getTypeSettings(user.getFirstName()));
+
+		long[] segmentsEntryIds = {
+			segmentsEntry1.getSegmentsEntryId(),
+			segmentsEntry2.getSegmentsEntryId()
+		};
 
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
@@ -260,11 +260,6 @@ public class AssetListAssetEntryProviderTest {
 		_addJournalArticle(new long[0], TestPropsValues.getUserId());
 		_addJournalArticle(new long[0], TestPropsValues.getUserId());
 
-		long[] segmentsEntryIds = {
-			segmentsEntry1.getSegmentsEntryId(),
-			segmentsEntry2.getSegmentsEntryId()
-		};
-
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry,
 			segmentsEntry1.getSegmentsEntryId(),
@@ -274,6 +269,11 @@ public class AssetListAssetEntryProviderTest {
 			_group.getGroupId(), assetListEntry,
 			segmentsEntry2.getSegmentsEntryId(),
 			_getTypeSettings(user.getFirstName()));
+
+		long[] segmentsEntryIds = {
+			segmentsEntry1.getSegmentsEntryId(),
+			segmentsEntry2.getSegmentsEntryId()
+		};
 
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(

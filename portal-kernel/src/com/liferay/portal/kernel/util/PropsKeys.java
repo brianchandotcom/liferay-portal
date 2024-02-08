@@ -370,6 +370,9 @@ public interface PropsKeys {
 
 	public static final String CDN_HOST_HTTPS = "cdn.host.https";
 
+	public static final String CHANGE_TRACKING_DELETION_PROTECTION_ENABLED =
+		"change.tracking.deletion.protection.enabled";
+
 	public static final String CLUSTER_LINK_AUTH_VALUE =
 		"cluster.link.auth.value";
 

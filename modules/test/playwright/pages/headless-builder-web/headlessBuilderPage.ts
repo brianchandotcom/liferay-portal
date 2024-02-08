@@ -35,7 +35,7 @@ export class HeadlessBuilderPage {
 			.click();
 	}
 
-	async deleteApplicationThroughUI(applicationTitle: string) {
+	async deleteApplication(applicationTitle: string) {
 		await this.accessApplicationActions(applicationTitle);
 		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
 		await this.page

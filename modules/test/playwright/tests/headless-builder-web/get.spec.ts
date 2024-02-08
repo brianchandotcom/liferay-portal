@@ -58,7 +58,7 @@ test('can see available path parameter properties of a singleElement endpoint', 
 	await expect(page.getByRole('menuitem', {name: 'ID'})).toBeVisible();
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.deleteApplicationThroughUI('My-app');
+	await headlessBuilderPage.deleteApplication('My-app');
 });
 
 test('can see path parameter property with map details', async ({
@@ -103,7 +103,7 @@ test('can see path parameter property with map details', async ({
 	).toBeVisible();
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.deleteApplicationThroughUI('My-app');
+	await headlessBuilderPage.deleteApplication('My-app');
 });
 
 test('can list site scoped endpoint', async ({

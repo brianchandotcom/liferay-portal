@@ -28,7 +28,9 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Locale;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,6 +39,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Carolina Barbosa
@@ -51,50 +54,59 @@ public class UserModelListenerTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Test
-	public void testOnAfterUpdate() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
+	@Before
+	public void setUp() throws Exception {
+		_company = CompanyTestUtil.addCompany();
 
 		CompanyTestUtil.resetCompanyLocales(
-			company.getCompanyId(),
+			_company.getCompanyId(),
 			ListUtil.fromArray(LocaleUtil.SPAIN, LocaleUtil.US), LocaleUtil.US);
 
 		Bundle bundle = FrameworkUtil.getBundle(UserModelListenerTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		String name = ObjectDefinitionTestUtil.getRandomName();
-
-		bundleContext.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			SystemObjectDefinitionManager.class,
 			new TestSystemObjectDefinitionManager(
-				ObjectEntry.class, name, "/o/test-endpoint/entries"),
+				ObjectEntry.class, _OBJECT_DEFINITION_NAME,
+				"/o/test-endpoint/entries"),
 			new HashMapDictionary<>());
+	}
 
+	@After
+	public void tearDown() throws Exception {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+
+		_objectDefinitionLocalService.deleteCompanyObjectDefinitions(
+			_company.getCompanyId());
+
+		_companyLocalService.deleteCompany(_company.getCompanyId());
+	}
+
+	@Test
+	public void testOnAfterUpdate() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				company.getCompanyId(), name);
+				_company.getCompanyId(), _OBJECT_DEFINITION_NAME);
 
 		_assertEquals(LocaleUtil.SPAIN, objectDefinition);
 		_assertEquals(LocaleUtil.US, objectDefinition);
 		_assertEqualsSorted(new String[] {"es_ES", "en_US"}, objectDefinition);
 
 		CompanyTestUtil.resetCompanyLocales(
-			company.getCompanyId(),
+			_company.getCompanyId(),
 			ListUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.SPAIN),
 			LocaleUtil.BRAZIL);
 
 		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
-			company.getCompanyId(), name);
+			_company.getCompanyId(), _OBJECT_DEFINITION_NAME);
 
 		_assertEquals(LocaleUtil.BRAZIL, objectDefinition);
 		_assertEqualsSorted(
 			new String[] {"es_ES", "en_US", "pt_BR"}, objectDefinition);
-
-		_objectDefinitionLocalService.deleteCompanyObjectDefinitions(
-			company.getCompanyId());
-
-		_companyLocalService.deleteCompany(company.getCompanyId());
 	}
 
 	private void _assertEquals(
@@ -119,6 +131,11 @@ public class UserModelListenerTest {
 				objectDefinition.getPluralLabel()));
 	}
 
+	private static final String _OBJECT_DEFINITION_NAME =
+		ObjectDefinitionTestUtil.getRandomName();
+
+	private Company _company;
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -130,5 +147,8 @@ public class UserModelListenerTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private ServiceRegistration<SystemObjectDefinitionManager>
+		_serviceRegistration;
 
 }

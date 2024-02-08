@@ -281,7 +281,11 @@ function ToolbarBody({className}) {
 					<NetworkStatusBar {...network} />
 				</li>
 
-				<li className="nav-item">
+				<li
+					className={classNames('nav-item', {
+						'd-lg-flex d-none': Liferay.FeatureFlags['LPD-10988'],
+					})}
+				>
 					<Undo onRedo={onRedo} onUndo={onUndo} />
 				</li>
 
@@ -289,7 +293,11 @@ function ToolbarBody({className}) {
 					<EditModeSelector />
 				</li>
 
-				<li className="nav-item">
+				<li
+					className={classNames('nav-item', {
+						'd-lg-flex d-none': Liferay.FeatureFlags['LPD-10988'],
+					})}
+				>
 					<ul className="navbar-nav">
 						<li className="nav-item">
 							<HideSidebarButton />
@@ -297,7 +305,11 @@ function ToolbarBody({className}) {
 					</ul>
 				</li>
 
-				<li className="nav-item">
+				<li
+					className={classNames('nav-item', {
+						'd-lg-flex d-none': Liferay.FeatureFlags['LPD-10988'],
+					})}
+				>
 					<form action={config.discardDraftURL} method="POST">
 						<ClayButton
 							disabled={!enableDiscard}

@@ -11,5 +11,5 @@
 
 <liferay-frontend:component
 	componentId="importScript"
-	module="js/configuration/icon/ImportScript"
+	module="{ImportScript} from template-web"
 />

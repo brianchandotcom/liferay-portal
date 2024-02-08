@@ -112,7 +112,7 @@ else {
 			<react:component
 				componentId="ddmTemplateEditor"
 				data="<%= editDDMTemplateDisplayContext.getDDMTemplateEditorContext() %>"
-				module="js/ddm_template_editor/components/App"
+				module="{TemplateEditor} from template-web"
 			/>
 		</div>
 	</div>

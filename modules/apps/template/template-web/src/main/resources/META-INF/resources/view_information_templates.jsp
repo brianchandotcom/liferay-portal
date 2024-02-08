@@ -21,7 +21,7 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 <clay:management-toolbar
 	additionalProps="<%= informationTemplatesManagementToolbarDisplayContext.getAdditionalProps() %>"
 	managementToolbarDisplayContext="<%= informationTemplatesManagementToolbarDisplayContext %>"
-	propsTransformer="js/InformationTemplatesManagementToolbarPropsTransformer"
+	propsTransformer="{InformationTemplatesManagementToolbarPropsTransformer} from template-web"
 />
 
 <portlet:actionURL name="/template/delete_template_entry" var="deleteTemplateEntryURL">
@@ -72,7 +72,7 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 					<clay:dropdown-actions
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= informationTemplatesTemplateDisplayContext.getTemplateEntryActionDropdownItems(templateEntry) %>"
-						propsTransformer="js/InformationTemplatesDropdownPropsTransformer"
+						propsTransformer="{InformationTemplatesDropdownPropsTransformer} from template-web"
 					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>

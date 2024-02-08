@@ -12,7 +12,7 @@ import AnalyticsReports from './components/AnalyticsReports';
 
 import '../css/main.scss';
 
-export default function AnalyticsReportsApp({context, portletNamespace}) {
+export function AnalyticsReportsApp({context, portletNamespace}) {
 	const {analyticsReportsDataURL, isPanelStateOpen} = context;
 	const [
 		hoverOrFocusEventTriggered,

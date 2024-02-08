@@ -836,21 +836,22 @@ public class AssetListAssetEntryProviderTest {
 			journalArticle.getTitle(LocaleUtil.US));
 	}
 
-	private JournalArticle _addJournalArticle(long[] assetCategories)
+	private JournalArticle _addJournalArticle(long[] assetCategoryIds)
 		throws Exception {
 
-		return _addJournalArticle(assetCategories, TestPropsValues.getUserId());
+		return _addJournalArticle(
+			assetCategoryIds, TestPropsValues.getUserId());
 	}
 
 	private JournalArticle _addJournalArticle(
-			long[] assetCategories, long userId)
+			long[] assetCategoryIds, long userId)
 		throws Exception {
 
 		return JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), userId, assetCategories));
+				_group.getGroupId(), userId, assetCategoryIds));
 	}
 
 	private SegmentsEntry _addSegmentsEntryByFirstName(long groupId, User user)

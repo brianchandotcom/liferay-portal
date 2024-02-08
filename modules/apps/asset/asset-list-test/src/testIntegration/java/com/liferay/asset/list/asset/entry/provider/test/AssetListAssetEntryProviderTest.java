@@ -176,6 +176,8 @@ public class AssetListAssetEntryProviderTest {
 				).buildString(),
 				_serviceContext);
 
+		User user = TestPropsValues.getUser();
+
 		AssetVocabulary globalAssetVocabulary = AssetTestUtil.addVocabulary(
 			globalGroup.getGroupId());
 
@@ -183,8 +185,6 @@ public class AssetListAssetEntryProviderTest {
 			globalGroup.getGroupId(), globalAssetVocabulary.getVocabularyId());
 
 		long[] assetCategoryIds = {globalAssetCategory.getCategoryId()};
-
-		User user = TestPropsValues.getUser();
 
 		_userLocalService.updateAsset(
 			user.getUserId(), user, assetCategoryIds, null);

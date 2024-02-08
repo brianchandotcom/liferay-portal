@@ -7,15 +7,16 @@ import {mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {headlessBuilderTest} from '../../fixtures/headlessBuilderTest';
 import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {waitForHeadlessBuilderReady} from './utils/headlessBuilder';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPS-178642': true,
 	}),
+	headlessBuilderTest,
 	headlessDiscoveryPagesTest,
 	loginTest
 );
@@ -41,7 +42,6 @@ test('can see filter and sort parameters for collection endpoints', async ({
 	apiHelpers,
 	page,
 }) => {
-	await waitForHeadlessBuilderReady(apiHelpers, page);
 	await apiHelpers.object.postObjectEntry(
 		basicAPIApplication,
 		'headless-builder/applications'
@@ -80,7 +80,6 @@ test('cannot see filter and sort parameters for singleElement endpoints', async 
 	apiHelpers,
 	page,
 }) => {
-	await waitForHeadlessBuilderReady(apiHelpers, page);
 	await apiHelpers.object.postObjectEntry(
 		basicAPIApplication,
 		'headless-builder/applications'

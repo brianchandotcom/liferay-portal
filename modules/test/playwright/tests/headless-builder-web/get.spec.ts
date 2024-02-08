@@ -10,7 +10,6 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {headlessBuilderPagesTest} from '../../fixtures/headlessBuilderPagesTest';
 import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {waitForHeadlessBuilderReady} from './utils/headlessBuilder';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -23,13 +22,10 @@ export const test = mergeTests(
 );
 
 test('can see available path parameter properties of a singleElement endpoint', async ({
-	apiHelpers,
 	applicationPage,
 	headlessBuilderPage,
 	page,
 }) => {
-	await waitForHeadlessBuilderReady(apiHelpers, page);
-
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.addNewApplicationButton.click();
 	await headlessBuilderPage.newApplicationTitleBox.fill('My-app');
@@ -62,13 +58,10 @@ test('can see available path parameter properties of a singleElement endpoint', 
 });
 
 test('can see path parameter property with map details', async ({
-	apiHelpers,
 	applicationPage,
 	headlessBuilderPage,
 	page,
 }) => {
-	await waitForHeadlessBuilderReady(apiHelpers, page);
-
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.addNewApplicationButton.click();
 	await headlessBuilderPage.newApplicationTitleBox.fill('My-app');
@@ -112,7 +105,6 @@ test('can list site scoped endpoint', async ({
 	headlessBuilderPage,
 	page,
 }) => {
-	await waitForHeadlessBuilderReady(apiHelpers, page);
 	const studentSiteDefinition =
 		await apiHelpers.objectAdmin.postObjectDefinition({
 			active: true,

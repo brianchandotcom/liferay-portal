@@ -72,7 +72,8 @@ public class OAuth2AuthorizationsDisplayContext {
 	}
 
 	private String _getOrderByCol() {
-		return ParamUtil.getString(_liferayPortletRequest, "orderByCol");
+		return ParamUtil.getString(
+			_liferayPortletRequest, "orderByCol", "createDate");
 	}
 
 	private String _getOrderByType() {

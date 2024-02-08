@@ -157,7 +157,7 @@ public class AssetListAssetEntryProviderTest {
 
 		Group globalGroup = company.getGroup();
 
-		DDMStructure structure = _ddmStructureLocalService.fetchStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			globalGroup.getGroupId(),
 			_portal.getClassNameId(JournalArticle.class), "BASIC-WEB-CONTENT");
 
@@ -172,22 +172,22 @@ public class AssetListAssetEntryProviderTest {
 					String.valueOf(_portal.getClassNameId(JournalArticle.class))
 				).put(
 					"anyClassTypeJournalArticleAssetRendererFactory",
-					structure.getStructureId()
+					ddmStructure.getStructureId()
 				).buildString(),
 				_serviceContext);
 
-		AssetVocabulary globalVocabulary = AssetTestUtil.addVocabulary(
+		AssetVocabulary globalAssetVocabulary = AssetTestUtil.addVocabulary(
 			globalGroup.getGroupId());
 
-		AssetCategory globalCategory = AssetTestUtil.addCategory(
-			globalGroup.getGroupId(), globalVocabulary.getVocabularyId());
+		AssetCategory globalAssetCategory = AssetTestUtil.addCategory(
+			globalGroup.getGroupId(), globalAssetVocabulary.getVocabularyId());
 
-		long[] assetCategoryIds = {globalCategory.getCategoryId()};
+		long[] assetCategoryIds = {globalAssetCategory.getCategoryId()};
 
-		User userTest = TestPropsValues.getUser();
+		User user = TestPropsValues.getUser();
 
 		_userLocalService.updateAsset(
-			userTest.getUserId(), userTest, assetCategoryIds, null);
+			user.getUserId(), user, assetCategoryIds, null);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
@@ -195,9 +195,9 @@ public class AssetListAssetEntryProviderTest {
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
 
 		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), userTest.getFirstName());
+			_group.getGroupId(), user.getFirstName());
 		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByCategoryId(
-			_group.getGroupId(), globalCategory.getCategoryId());
+			_group.getGroupId(), globalAssetCategory.getCategoryId());
 
 		JournalArticle journalArticle = _addJournalArticle(
 			assetCategoryIds, TestPropsValues.getUserId());
@@ -212,17 +212,17 @@ public class AssetListAssetEntryProviderTest {
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry,
 			segmentsEntry1.getSegmentsEntryId(),
-			_getTypeSettings(userTest.getFirstName()));
+			_getTypeSettings(user.getFirstName()));
 
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry,
 			segmentsEntry2.getSegmentsEntryId(),
-			_getTypeSettings(userTest.getFirstName()));
+			_getTypeSettings(user.getFirstName()));
 
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
 				assetListEntry, segmentsEntryIds,
-				new long[][] {{globalCategory.getCategoryId()}}, null,
+				new long[][] {{globalAssetCategory.getCategoryId()}}, null,
 				StringPool.BLANK, StringPool.BLANK, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -247,12 +247,12 @@ public class AssetListAssetEntryProviderTest {
 				"Dynamic title", AssetListEntryTypeConstants.TYPE_DYNAMIC, null,
 				_serviceContext);
 
-		User userTest = TestPropsValues.getUser();
+		User user = TestPropsValues.getUser();
 
 		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), userTest.getFirstName());
+			_group.getGroupId(), user.getFirstName());
 		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), userTest.getFirstName());
+			_group.getGroupId(), user.getFirstName());
 
 		JournalArticle journalArticle = _addJournalArticle(
 			new long[0], TestPropsValues.getUserId());
@@ -268,12 +268,12 @@ public class AssetListAssetEntryProviderTest {
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry,
 			segmentsEntry1.getSegmentsEntryId(),
-			_getTypeSettings(userTest.getFirstName()));
+			_getTypeSettings(user.getFirstName()));
 
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry,
 			segmentsEntry2.getSegmentsEntryId(),
-			_getTypeSettings(userTest.getFirstName()));
+			_getTypeSettings(user.getFirstName()));
 
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(

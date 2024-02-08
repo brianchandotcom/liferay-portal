@@ -9,13 +9,11 @@ import classnames from 'classnames';
 import {fetch, navigate, objectToFormData, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
-import ReactDOM from 'react-dom';
 
 import getSearchItems from '../utils/getSearchItems';
 import normalizeItems from '../utils/normalizeItems';
 import showSuccessMessage from '../utils/showSuccessMessage';
 import ActionsDropdown from './ActionsDropdown';
-import LockedArticleModal from './LockedArticleModal';
 import SearchField from './SearchField';
 
 const ITEM_TYPES_SYMBOL = {
@@ -90,10 +88,11 @@ export default function NavigationPanel({
 			})
 			.then((response) => {
 				if (response.lockException) {
-					ReactDOM.render(
-						<LockedArticleModal />,
-						document.createElement('div')
-					);
+					Liferay.componentReady(
+						`${portletNamespace}LockedKBArticleModal`
+					).then((component) => {
+						component.open();
+					});
 
 					return;
 				}

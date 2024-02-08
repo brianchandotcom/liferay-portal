@@ -13,10 +13,7 @@ import {
 	openToast,
 	sub,
 } from 'frontend-js-web';
-import React from 'react';
-import ReactDOM from 'react-dom';
 
-import LockedArticleModal from './components/LockedArticleModal';
 import showSuccessMessage from './utils/showSuccessMessage';
 
 const ITEM_TYPES = {
@@ -89,10 +86,11 @@ const ACTIONS = {
 					})
 					.then((response) => {
 						if (response.lockException) {
-							ReactDOM.render(
-								<LockedArticleModal />,
-								document.createElement('div')
-							);
+							Liferay.componentReady(
+								`${portletNamespace}LockedKBArticleModal`
+							).then((component) => {
+								component.open();
+							});
 
 							return;
 						}

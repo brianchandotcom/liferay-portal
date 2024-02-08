@@ -44,10 +44,23 @@ test('This is a test for LPS-177690. The tooltip of the back button should be Go
 	await expect(page.getByTitle('Go to Web Content')).toBeVisible();
 });
 
-test('This is a test for LPS-153976. View reserved variables list under Journal section in web content template.', async ({
+test('This is a test for LPS-153976 and LPD-16407.', async ({
 	journalEditTemplatePage,
 	page,
 }) => {
+
+	// Featured image is present when we are editing a template.
+
+	await journalEditTemplatePage.goto();
+
+	await expect(
+		page.locator(
+			'[id="_com_liferay_journal_web_portlet_JournalPortlet_smallImageSource"]'
+		)
+	).toBeVisible();
+
+	// View reserved variables list under Journal section in web content template.
+
 	await journalEditTemplatePage.gotoElements();
 
 	for (const reservedVariable of RESERVED_VARIABLES) {

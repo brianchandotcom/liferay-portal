@@ -244,10 +244,6 @@ definition {
 		Uncheck.uncheckToggleSwitch(
 			locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX",
 			value1 = ${key_subContent});
-
-		AssertClick.assertTextClickNoMouseOver(
-			locator1 = "Button#OK",
-			value1 = "OK");
 	}
 
 	@summary = "Default summary"
@@ -263,11 +259,7 @@ definition {
 		var key_subContent = ${subContent};
 		var key_subSubContent = ${uncheckSubSubContent};
 
-		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX");
-
-		AssertClick(
-			locator1 = "Button#OK",
-			value1 = "OK");
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "xpath=(//input[contains(@data-name,'Referenced Content')])");
 	}
 
 }

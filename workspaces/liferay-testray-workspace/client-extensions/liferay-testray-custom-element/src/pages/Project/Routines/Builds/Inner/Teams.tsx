@@ -95,6 +95,7 @@ const Teams = () => {
 				tableProps={{
 					columns: [
 						{
+							clickable: true,
 							key: 'name',
 							size: 'md',
 							value: i18n.translate('team'),
@@ -173,7 +174,6 @@ const Teams = () => {
 							value: i18n.translate('total'),
 						},
 						{
-							clickable: true,
 							key: 'metrics',
 							render: (_, {teamToComponents}) => (
 								<ProgressBar
@@ -195,6 +195,16 @@ const Teams = () => {
 							width: '300',
 						},
 					],
+
+					navigateTo: (team) =>
+						`..?${new URLSearchParams({
+							filter: JSON.stringify({
+								'componentToCaseResult/r_teamToComponents_c_teamId': [
+									team.id,
+								],
+							}),
+							filterSchema: 'buildResults',
+						})}`,
 				}}
 				variables={{
 					filter: SearchBuilder.eq(

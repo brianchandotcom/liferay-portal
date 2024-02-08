@@ -176,6 +176,14 @@ if (portletTitleBasedNavigation) {
 	</liferay-ui:search-container>
 </aui:fieldset>
 
+<div>
+	<react:component module="{LockedKBArticleModal} from knowledge-base-web" props='<%=
+			HashMapBuilder.<String, Object>put(
+				"open", MultiSessionErrors.contains(liferayPortletRequest, DuplicateLockException.class.getName())
+			).build()
+		%>' />
+</div>
+
 <aui:script require="frontend-js-web/index as frontendJsWeb">
 	var {delegate} = frontendJsWeb;
 

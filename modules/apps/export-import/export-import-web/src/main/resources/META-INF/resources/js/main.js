@@ -907,8 +907,12 @@ AUI.add(
 							.attr('checked', false);
 
 						instance.byId('showChangeContent_' + portletId).hide();
+
+						contentNode.hide();
 					}
 					else {
+						instance.byId('downContentArrow_' + portletId).hide();
+						instance.byId('rightContentArrow_' + portletId).show();
 						instance.byId('showChangeContent_' + portletId).show();
 					}
 

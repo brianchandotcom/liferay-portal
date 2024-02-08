@@ -2,6 +2,11 @@
 	"assetTypes": [
 		{
 			"required": true,
+			"subtype": "RELEASE-NOTES-BREAKING-CHANGE-STRUCTURE",
+			"type": "StructuredContent"
+		},
+		{
+			"required": true,
 			"subtype": "RELEASE-NOTES-FEATURE-STRUCTURE",
 			"type": "StructuredContent"
 		},

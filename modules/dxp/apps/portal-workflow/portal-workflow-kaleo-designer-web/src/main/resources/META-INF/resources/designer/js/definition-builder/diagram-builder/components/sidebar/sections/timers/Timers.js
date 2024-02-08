@@ -98,10 +98,10 @@ const Timers = ({setContentName, setErrors}) => {
 						else if (
 							reassignments.assignmentType[0] === 'user' &&
 							Object.keys(filteredTimerActions[0]).includes(
-								'users'
+								'sectionData'
 							)
 						) {
-							reassignments.emailAddress = filteredTimerActions[0].users.map(
+							reassignments.emailAddress = filteredTimerActions[0].sectionData.map(
 								({emailAddress}) => emailAddress
 							);
 						}
@@ -239,7 +239,7 @@ const Timers = ({setContentName, setErrors}) => {
 					section.assignmentType === 'user' &&
 					data.some((entry) => entry[0] === 'emailAddress')
 				) {
-					section.users = data
+					section.sectionData = data
 						.find((entry) => entry[0] === 'emailAddress')[1]
 						.map((email, index) => ({
 							emailAddress: email,

@@ -34,9 +34,8 @@ const ActionTypeReassignment = ({
 }) => {
 	const reassignmentType = actionData.assignmentType;
 	const [subSections, setSubSections] = useState(
-		actionData?.users?.length &&
-			actionData.users.some(({emailAddress}) => emailAddress)
-			? actionData.users
+		actionData?.sectionData?.length
+			? actionData?.sectionData
 			: [{identifier: `${Date.now()}-0`}]
 	);
 
@@ -46,7 +45,7 @@ const ActionTypeReassignment = ({
 				const updatedSections = [...currentSections];
 
 				updatedSections[actionSectionsIndex].assignmentType = 'user';
-				updatedSections[actionSectionsIndex].users = subSections;
+				updatedSections[actionSectionsIndex].sectionData = subSections;
 
 				return updatedSections;
 			});
@@ -57,13 +56,14 @@ const ActionTypeReassignment = ({
 
 	useEffect(() => {
 		if (
-			actionData?.users?.length &&
-			actionData.users.some(({emailAddress}) => emailAddress)
+			reassignmentType === 'user' &&
+			actionData?.sectionData?.length &&
+			actionData.sectionData.some(({emailAddress}) => emailAddress)
 		) {
 			const retrievedUsers = [];
 			retrieveUsersBy(
 				'emailAddress',
-				actionData.users.map(({emailAddress}) => emailAddress)
+				actionData.sectionData.map(({emailAddress}) => emailAddress)
 			)
 				.then((response) => response.json())
 				.then(({items}) => {

@@ -11,14 +11,14 @@ export class JournalPage {
 	readonly newButton: Locator;
 	readonly page: Page;
 	readonly productMenuPage: ProductMenuPage;
-	readonly templatesButton: Locator;
+	readonly templatesLink: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
 		this.newButton = page.getByText('New', {exact: true});
 		this.productMenuPage = new ProductMenuPage(page);
-		this.templatesButton = page.getByRole('link', {name: 'Templates'});
+		this.templatesLink = page.getByRole('link', {name: 'Templates'});
 	}
 
 	async goto() {
@@ -32,6 +32,6 @@ export class JournalPage {
 
 	async goToTemplates() {
 		await this.goto();
-		await this.templatesButton.click();
+		await this.templatesLink.click();
 	}
 }

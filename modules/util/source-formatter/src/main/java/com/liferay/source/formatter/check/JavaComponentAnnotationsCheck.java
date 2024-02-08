@@ -256,6 +256,17 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			return;
 		}
 
+		List<String> allowedUsesInternalServiceClassNames = getAttributeValues(
+			_ALLOWED_USES_INTERNAL_SERVICE_CLASS_NAMES_KEY, absolutePath);
+
+		for (String allowedUsesInternalServiceClassName :
+				allowedUsesInternalServiceClassNames) {
+
+			if (absolutePath.contains(allowedUsesInternalServiceClassName)) {
+				return;
+			}
+		}
+
 		String className = serviceAttributeValue.substring(
 			0, serviceAttributeValue.indexOf(CharPool.PERIOD));
 
@@ -924,6 +935,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 	private static final String _ALLOWED_SELF_REGISTRATION_CLASS_NAMES_KEY =
 		"allowedSelfRegistrationClassNames";
+
+	private static final String _ALLOWED_USES_INTERNAL_SERVICE_CLASS_NAMES_KEY =
+		"allowedUsesInternalServiceClassNames";
 
 	private static final String _CHECK_CONFIGURATION_PID_ATTRIBUTE_KEY =
 		"checkConfigurationPidAttribute";

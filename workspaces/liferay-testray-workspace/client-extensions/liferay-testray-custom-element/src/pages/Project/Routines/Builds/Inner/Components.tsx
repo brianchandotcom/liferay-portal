@@ -42,6 +42,7 @@ const Components = () => {
 				tableProps={{
 					columns: [
 						{
+							clickable: true,
 							key: 'name',
 							size: 'lg',
 							value: i18n.translate('component'),
@@ -101,7 +102,6 @@ const Components = () => {
 							value: i18n.translate('total'),
 						},
 						{
-							clickable: true,
 							key: 'metrics',
 							render: (_, testrayComponent) => (
 								<ProgressBar
@@ -123,6 +123,14 @@ const Components = () => {
 							width: '300',
 						},
 					],
+
+					navigateTo: (componet) =>
+						`..?${new URLSearchParams({
+							filter: JSON.stringify({
+								'componentToCaseResult/id': [componet.id],
+							}),
+							filterSchema: 'buildResults',
+						})}`,
 				}}
 				transformData={(response) =>
 					testrayComponentImpl.transformDataFromList(response)

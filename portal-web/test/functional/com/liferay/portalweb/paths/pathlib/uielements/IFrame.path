@@ -237,7 +237,7 @@
 </tr>
 <tr>
 	<td>SELECT_USER_SITES</td>
-	<td>//iframe[contains(@id,'selectSite_iframe_')]</td>
+	<td>//iframe[contains(@id,'selectGroup_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>

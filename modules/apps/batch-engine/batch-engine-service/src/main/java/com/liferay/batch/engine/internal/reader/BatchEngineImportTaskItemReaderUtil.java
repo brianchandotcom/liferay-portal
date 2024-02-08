@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.Field;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -136,6 +138,36 @@ public class BatchEngineImportTaskItemReaderUtil {
 						targetFieldName, entry.getValue());
 				}
 			}
+			else {
+				String[] fieldNameParts = StringUtil.split(
+					entry.getKey(), StringPool.PERIOD);
+
+				targetFieldName = (String)fieldNameMappingMap.get(
+					fieldNameParts[0]);
+
+				if (Validator.isNotNull(targetFieldName)) {
+					if (fieldNameParts[1].matches(
+							_MULTISELECT_PICKLIST_KEY_REGEX)) {
+
+						List<Object> list =
+							(List<Object>)
+								targetFieldNameValueMap.computeIfAbsent(
+									targetFieldName, key -> new ArrayList<>());
+
+						list.add(entry.getValue());
+					}
+					else if (Objects.equals(fieldNameParts[1], "key") ||
+							 Objects.equals(fieldNameParts[1], "name")) {
+
+						Map<String, Object> map =
+							(Map<String, Object>)
+								targetFieldNameValueMap.computeIfAbsent(
+									targetFieldName, key -> new HashMap<>());
+
+						map.put(fieldNameParts[1], entry.getValue());
+					}
+				}
+			}
 		}
 
 		return targetFieldNameValueMap;
@@ -166,6 +198,8 @@ public class BatchEngineImportTaskItemReaderUtil {
 			}
 		};
 	}
+
+	private static final String _MULTISELECT_PICKLIST_KEY_REGEX = "key_\\d+";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineImportTaskItemReaderUtil.class);

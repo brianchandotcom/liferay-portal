@@ -696,7 +696,7 @@ public class SugarCRMObjectEntryManagerImpl
 			}
 
 			options.setFollowRedirects(false);
-			options.setLocation(sugarCRMConfiguration.baseURL() + location);
+			options.setLocation(sugarCRMConfiguration.baseURL() + StringPool.FORWARD_SLASH + location);
 			options.setMethod(method);
 
 			if (_log.isDebugEnabled()) {

@@ -5,10 +5,10 @@
 
 import {test} from '@playwright/test';
 
-import {JournalPage} from '../pages/journal-web/Journal.page';
-import {JournalEditTemplatePage} from '../pages/journal-web/JournalEditTemplate.page';
+import {JournalEditTemplatePage} from '../pages/JournalEditTemplatePage';
+import {JournalPage} from '../pages/JournalPage';
 
-const journalPages = test.extend<{
+const journalPagesTest = test.extend<{
 	journalEditTemplatePage: JournalEditTemplatePage;
 	journalPage: JournalPage;
 }>({
@@ -20,4 +20,4 @@ const journalPages = test.extend<{
 	},
 });
 
-export {journalPages};
+export {journalPagesTest};

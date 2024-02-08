@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ProductMenuPage} from '../product-navigation-product-menu/ProductMenu.page';
+import {ProductMenuPage} from '../../../pages/product-navigation-product-menu/ProductMenu.page';
 
 export class JournalPage {
 	readonly newButton: Locator;

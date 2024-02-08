@@ -5,15 +5,15 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {journalPages} from '../../fixtures/JournalPages';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {journalPagesTest} from './fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
-	journalPages,
+	journalPagesTest,
 	loginTest
 );
 

@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {JournalPage} from './Journal.page';
+import {JournalPage} from './JournalPage';
 
 export class JournalEditTemplatePage {
 	readonly elementsPanel: Locator;

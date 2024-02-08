@@ -13,7 +13,7 @@ import {
 	startAppServer,
 	updatePortalExtProperties,
 	waitForStartedAppServer,
-} from './appServerUtil.env';
+} from './appServerUtil';
 
 deployParentProjectClientExtensions();
 

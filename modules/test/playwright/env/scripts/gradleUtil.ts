@@ -6,7 +6,7 @@
 import {PathOrFileDescriptor, existsSync} from 'node:fs';
 import {resolve} from 'node:path';
 
-import {executeBashScriptPrint} from './bashUtil.env';
+import {executeBashScriptPrint} from './bashUtil';
 
 export type GradleParameter = {
 	name: string;

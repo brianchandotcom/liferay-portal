@@ -8,7 +8,7 @@ import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {KeyValuePairObject} from 'properties-file';
 
-import {getPropertiesFromFiles, getPropertyValue} from './propertiesUtil.env';
+import {getPropertiesFromFiles, getPropertyValue} from './propertiesUtil';
 
 export function getLiferayHome(): string {
 	return resolve(getPlaywrightProperty('liferay.home'));

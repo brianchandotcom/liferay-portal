@@ -8,19 +8,16 @@ import {setDefaultResultOrder} from 'dns';
 import {glob} from 'glob';
 import {copyFile, existsSync, mkdirSync, readFileSync} from 'node:fs';
 
-import {executeBashScript, executeBashScriptPrint} from './bashUtil.env';
+import {executeBashScript, executeBashScriptPrint} from './bashUtil';
 import {
 	getLiferayHome,
 	getLiferayPortalDir,
 	getPlaywrightBaseDir,
 	getPlaywrightParentDirs,
 	getPlaywrightProjectDir,
-} from './common.env';
-import {executeGradleTask} from './gradleUtil.env';
-import {
-	getPropertiesFromFiles,
-	writePropertiesFile,
-} from './propertiesUtil.env';
+} from './environmentUtil';
+import {executeGradleTask} from './gradleUtil';
+import {getPropertiesFromFiles, writePropertiesFile} from './propertiesUtil';
 
 setDefaultResultOrder('ipv4first');
 

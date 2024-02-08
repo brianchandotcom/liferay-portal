@@ -105,7 +105,9 @@ export function parseReassignments(node) {
 		else if (item['roles']) {
 			if (item['roles'][0]['role']?.['role-type']) {
 				assignments.assignmentType = ['roleType'];
-				assignments.autoCreate = [item['roles'][0]['auto-create']];
+				assignments.autoCreate = [
+					item['roles'][0]['role']['auto-create'],
+				];
 				assignments.roleKey = [item['roles'][0]['role']['name']];
 				assignments.roleType = [item['roles'][0]['role']['role-type']];
 			}

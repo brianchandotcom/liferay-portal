@@ -9,14 +9,10 @@ import com.liferay.portal.workflow.kaleo.definition.JoinXor;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = NodeBuilder.class)
-public class JoinXorNodeBuilder
-	extends BaseNodeBuilder<JoinXor> implements NodeBuilder {
+public class JoinXorNodeBuilder extends BaseNodeBuilder<JoinXor> {
 
 	@Override
 	public NodeType getNodeType() {

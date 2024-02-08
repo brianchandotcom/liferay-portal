@@ -9,14 +9,10 @@ import com.liferay.portal.workflow.kaleo.definition.Join;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = NodeBuilder.class)
-public class JoinNodeBuilder
-	extends BaseNodeBuilder<Join> implements NodeBuilder {
+public class JoinNodeBuilder extends BaseNodeBuilder<Join> {
 
 	@Override
 	public NodeType getNodeType() {

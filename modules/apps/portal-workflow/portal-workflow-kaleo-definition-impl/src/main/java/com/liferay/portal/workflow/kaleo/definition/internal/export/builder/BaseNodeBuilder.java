@@ -60,7 +60,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
+public abstract class BaseNodeBuilder<T extends Node>
+	implements NodeBuilder<T> {
 
 	@Override
 	public T buildNode(KaleoNode kaleoNode) throws PortalException {

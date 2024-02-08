@@ -12,15 +12,16 @@ import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = NodeBuilder.class)
-public class ConditionNodeBuilder
-	extends BaseNodeBuilder<Condition> implements NodeBuilder {
+public class ConditionNodeBuilder extends BaseNodeBuilder<Condition> {
+
+	public ConditionNodeBuilder(
+		KaleoConditionLocalService kaleoConditionLocalService) {
+
+		_kaleoConditionLocalService = kaleoConditionLocalService;
+	}
 
 	@Override
 	public NodeType getNodeType() {
@@ -39,7 +40,6 @@ public class ConditionNodeBuilder
 			kaleoCondition.getScriptRequiredContexts());
 	}
 
-	@Reference
-	private KaleoConditionLocalService _kaleoConditionLocalService;
+	private final KaleoConditionLocalService _kaleoConditionLocalService;
 
 }

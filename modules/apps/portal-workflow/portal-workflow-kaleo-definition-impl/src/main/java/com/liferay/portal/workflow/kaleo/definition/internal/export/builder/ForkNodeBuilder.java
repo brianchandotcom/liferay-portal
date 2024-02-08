@@ -9,14 +9,10 @@ import com.liferay.portal.workflow.kaleo.definition.Fork;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = NodeBuilder.class)
-public class ForkNodeBuilder
-	extends BaseNodeBuilder<Fork> implements NodeBuilder {
+public class ForkNodeBuilder extends BaseNodeBuilder<Fork> {
 
 	@Override
 	public NodeType getNodeType() {

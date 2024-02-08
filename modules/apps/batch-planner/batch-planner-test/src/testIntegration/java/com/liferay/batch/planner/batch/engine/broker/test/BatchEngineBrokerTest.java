@@ -575,21 +575,6 @@ public class BatchEngineBrokerTest {
 			_company2.getGroupId(), _objectDefinition2, user.getUserId());
 	}
 
-	private ObjectRelationship _addObjectRelationship(
-			ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2)
-		throws Exception {
-
-		return _objectRelationshipLocalService.addObjectRelationship(
-			null, TestPropsValues.getUserId(),
-			objectDefinition1.getObjectDefinitionId(),
-			objectDefinition2.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"a" + RandomTestUtil.randomString(), false,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-	}
-
 	private void _assertActions(JsonNode fieldJsonNode, String fieldName) {
 		JsonNode jsonNode = fieldJsonNode.get(fieldName);
 
@@ -1204,8 +1189,16 @@ public class BatchEngineBrokerTest {
 							"testTextField"
 						).build()));
 
-			ObjectRelationship objectRelationship = _addObjectRelationship(
-				objectDefinition, objectDefinition);
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.addObjectRelationship(
+					null, TestPropsValues.getUserId(),
+					objectDefinition.getObjectDefinitionId(),
+					objectDefinition.getObjectDefinitionId(), 0,
+					ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					"a" + RandomTestUtil.randomString(), false,
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 			_addCustomObjectField(
 				new AggregationObjectFieldBuilder(

@@ -99,7 +99,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 	}
 
 	async patchProduct(productId: string, product?: DataObject) {
-		const response = await this.apiHelpers.patch(
+		return this.apiHelpers.patch(
 			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}`,
 			{
 				name: {
@@ -108,8 +108,6 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 				...(product || {}),
 			}
 		);
-
-		return response;
 	}
 
 	async postAttachment(

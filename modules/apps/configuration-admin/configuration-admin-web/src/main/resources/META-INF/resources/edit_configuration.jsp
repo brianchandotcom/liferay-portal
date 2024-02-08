@@ -232,10 +232,10 @@ renderResponse.setTitle(categoryDisplayName);
 							<aui:button-row>
 								<c:choose>
 									<c:when test="<%= configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope()) %>">
-										<aui:button name="update" type="submit" value="update" />
+										<aui:button data-qa-id="submitConfiguration" name="update" type="submit" value="update" />
 									</c:when>
 									<c:otherwise>
-										<aui:button name="save" type="submit" value="save" />
+										<aui:button data-qa-id="submitConfiguration" name="save" type="submit" value="save" />
 									</c:otherwise>
 								</c:choose>
 

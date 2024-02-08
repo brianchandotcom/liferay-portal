@@ -24,7 +24,7 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 	<span aria-hidden="true" class="loading-animation"></span>
 
 	<react:component
-		module="semantic_search/js/configuration/index"
+		module="{SemanticSearchConfiguration} from search-experiences-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"availableEmbeddingVectorDimensions", semanticSearchCompanyConfigurationDisplayContext.getAvailableEmbeddingVectorDimensions()

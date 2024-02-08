@@ -31,7 +31,7 @@
 				%>
 
 				<react:component
-					module="sxp_blueprint_options/js/configuration/index"
+					module="{BlueprintConfiguration} from search-experiences-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
 							"initialFederatedSearchKey", SXPBlueprintOptionsPortletPreferencesUtil.getValue(portletPreferences, "federatedSearchKey")

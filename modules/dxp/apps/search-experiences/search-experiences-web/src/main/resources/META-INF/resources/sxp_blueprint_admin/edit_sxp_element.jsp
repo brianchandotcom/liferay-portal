@@ -31,7 +31,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-element"));
 	<span aria-hidden="true" class="loading-animation"></span>
 
 	<react:component
-		module="sxp_blueprint_admin/js/edit_sxp_element/index"
+		module="{EditElement} from search-experiences-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())

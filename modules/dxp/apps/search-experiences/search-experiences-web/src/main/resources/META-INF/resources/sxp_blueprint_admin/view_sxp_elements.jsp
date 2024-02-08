@@ -21,7 +21,7 @@ ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDi
 		fdsActionDropdownItems="<%= viewSXPElementsDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= SXPBlueprintAdminFDSNames.SXP_ELEMENTS %>"
-		propsTransformer="sxp_blueprint_admin/js/view_sxp_elements/ViewSXPElementsPropsTransformer"
+		propsTransformer="{ViewSXPElementsPropsTransformer} from search-experiences-web"
 		selectedItemsKey="id"
 		selectionType="multiple"
 		style="fluid"
@@ -30,7 +30,7 @@ ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDi
 
 <div id="<portlet:namespace />addSXPElement">
 	<react:component
-		module="sxp_blueprint_admin/js/view_sxp_elements/AddSXPElementModal"
+		module="{AddSXPElementModal} from search-experiences-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
@@ -49,7 +49,7 @@ ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDi
 </div>
 
 <liferay-frontend:component
-	module="sxp_blueprint_admin/js/utils/openInitialSuccessToastHandler"
+	module="{openInitialSuccessToastHandler} from search-experiences-web"
 />
 
 <c:if test="<%= SessionErrors.contains(renderRequest, SXPElementReadOnlyException.class) %>">

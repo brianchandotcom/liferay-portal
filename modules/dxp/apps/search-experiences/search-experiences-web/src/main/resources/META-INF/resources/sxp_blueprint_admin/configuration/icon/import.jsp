@@ -9,7 +9,7 @@
 
 <div>
 	<react:component
-		module="sxp_blueprint_admin/js/view_sxp_blueprints/ImportSXPBlueprintModal"
+		module="{ImportSXPBlueprintModal} from search-experiences-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"portletNamespace", liferayPortletResponse.getNamespace()

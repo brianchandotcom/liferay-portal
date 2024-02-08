@@ -21,7 +21,7 @@ ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext = (ViewSXPBluepr
 		fdsActionDropdownItems="<%= viewSXPBlueprintsDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= SXPBlueprintAdminFDSNames.SXP_BLUEPRINTS %>"
-		propsTransformer="sxp_blueprint_admin/js/view_sxp_blueprints/ViewSXPBlueprintsPropsTransformer"
+		propsTransformer="{ViewSXPBlueprintsPropsTransformer} from search-experiences-web"
 		selectedItemsKey="id"
 		selectionType="multiple"
 		style="fluid"
@@ -30,7 +30,7 @@ ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext = (ViewSXPBluepr
 
 <div id="<portlet:namespace />addSXPBlueprint">
 	<react:component
-		module="sxp_blueprint_admin/js/view_sxp_blueprints/AddSXPBlueprintModal"
+		module="{AddSXPBlueprintModal} from search-experiences-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"contextPath", application.getContextPath()
@@ -51,5 +51,5 @@ ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext = (ViewSXPBluepr
 </div>
 
 <liferay-frontend:component
-	module="sxp_blueprint_admin/js/utils/openInitialSuccessToastHandler"
+	module="{openInitialSuccessToastHandler} from search-experiences-web"
 />

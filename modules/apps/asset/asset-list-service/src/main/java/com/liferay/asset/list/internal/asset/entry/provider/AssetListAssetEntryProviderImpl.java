@@ -459,31 +459,6 @@ public class AssetListAssetEntryProviderImpl
 		};
 	}
 
-	private BooleanClause[] _getClassTypeIdsBooleanClauses(
-		long[] classTypeIds) {
-
-		if (ArrayUtil.isEmpty(classTypeIds)) {
-			return new BooleanClause[0];
-		}
-
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
-
-		BooleanFilter booleanFilter = new BooleanFilter();
-
-		TermsFilter termsFilter = new TermsFilter(Field.CLASS_TYPE_ID);
-
-		termsFilter.addValues(ArrayUtil.toStringArray(classTypeIds));
-
-		booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
-
-		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
-
-		return new BooleanClause[] {
-			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
-		};
-	}
-
 	private List<AssetListEntryAssetEntryRel> _getAssetListEntryAssetEntryRels(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
 
@@ -675,6 +650,31 @@ public class AssetListAssetEntryProviderImpl
 		}
 
 		return availableClassTypeIds;
+	}
+
+	private BooleanClause[] _getClassTypeIdsBooleanClauses(
+		long[] classTypeIds) {
+
+		if (ArrayUtil.isEmpty(classTypeIds)) {
+			return new BooleanClause[0];
+		}
+
+		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		TermsFilter termsFilter = new TermsFilter(Field.CLASS_TYPE_ID);
+
+		termsFilter.addValues(ArrayUtil.toStringArray(classTypeIds));
+
+		booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+
+		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
+
+		return new BooleanClause[] {
+			BooleanClauseFactoryUtil.create(
+				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
+		};
 	}
 
 	private long[] _getCombinedSegmentsEntryIds(

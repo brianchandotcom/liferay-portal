@@ -12,12 +12,15 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.test.system.TestSystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -70,7 +73,9 @@ public class UserModelListenerTest {
 			SystemObjectDefinitionManager.class,
 			new TestSystemObjectDefinitionManager(
 				ObjectEntry.class, _OBJECT_DEFINITION_NAME,
-				"/o/test-endpoint/entries"),
+				StringBundler.concat(
+					"/o/", RandomTestUtil.randomString(), StringPool.SLASH,
+					RandomTestUtil.randomString())),
 			new HashMapDictionary<>());
 	}
 

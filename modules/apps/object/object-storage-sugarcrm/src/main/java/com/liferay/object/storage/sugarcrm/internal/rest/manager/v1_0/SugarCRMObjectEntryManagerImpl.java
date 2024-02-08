@@ -182,10 +182,21 @@ public class SugarCRMObjectEntryManagerImpl
 			ActionKeys.UPDATE, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
-		// TODO LPD-11274
+		if (Validator.isNull(externalReferenceCode)) {
+			return null;
+		}
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		JSONObject responseJSONObject = _sugarCRMHttp.put(
+			objectDefinition.getCompanyId(),
+			getGroupId(objectDefinition, scopeKey),
+			StringBundler.concat(
+				_getObjectLocation(objectDefinition), StringPool.FORWARD_SLASH,
+				externalReferenceCode),
+			_toJSONObject(objectDefinition, objectEntry));
+
+		return _toObjectEntry(
+			objectDefinition.getCompanyId(), _getDateFormat(),
+			dtoConverterContext, responseJSONObject, objectDefinition);
 	}
 
 	private void _appendFilter(StringBuilder sb, String filterString) {
@@ -593,20 +604,6 @@ public class SugarCRMObjectEntryManagerImpl
 			}
 		}
 
-		public JSONObject patch(
-			long companyId, long groupId, String location,
-			JSONObject bodyJSONObject) {
-
-			try {
-				return _invoke(
-					companyId, groupId, location, Http.Method.PATCH,
-					bodyJSONObject);
-			}
-			catch (Exception exception) {
-				return ReflectionUtil.throwException(exception);
-			}
-		}
-
 		public JSONObject post(
 			long companyId, long groupId, String location,
 			JSONObject bodyJSONObject) {
@@ -614,6 +611,20 @@ public class SugarCRMObjectEntryManagerImpl
 			try {
 				return _invoke(
 					companyId, groupId, location, Http.Method.POST,
+					bodyJSONObject);
+			}
+			catch (Exception exception) {
+				return ReflectionUtil.throwException(exception);
+			}
+		}
+
+		public JSONObject put(
+			long companyId, long groupId, String location,
+			JSONObject bodyJSONObject) {
+
+			try {
+				return _invoke(
+					companyId, groupId, location, Http.Method.PUT,
 					bodyJSONObject);
 			}
 			catch (Exception exception) {
@@ -696,7 +707,9 @@ public class SugarCRMObjectEntryManagerImpl
 			}
 
 			options.setFollowRedirects(false);
-			options.setLocation(sugarCRMConfiguration.baseURL() + StringPool.FORWARD_SLASH + location);
+			options.setLocation(
+				sugarCRMConfiguration.baseURL() + StringPool.FORWARD_SLASH +
+					location);
 			options.setMethod(method);
 
 			if (_log.isDebugEnabled()) {

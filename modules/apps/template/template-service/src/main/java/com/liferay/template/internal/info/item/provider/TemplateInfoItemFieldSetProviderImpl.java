@@ -5,7 +5,9 @@
 
 package com.liferay.template.internal.info.item.provider;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
@@ -22,6 +24,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.staging.StagingGroupHelper;
@@ -123,13 +127,27 @@ public class TemplateInfoItemFieldSetProviderImpl
 			return Collections.emptyList();
 		}
 
+		long ddmStructureKey = GetterUtil.getLong(infoItemFormVariationKey);
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			ddmStructureKey);
+
+		List<Long> groupIds = new ArrayList<>();
+
+		if (ddmStructure != null) {
+			groupIds.add(ddmStructure.getGroupId());
+		}
+
+		groupIds.add(
+			_stagingGroupHelper.getStagedPortletGroupId(
+				serviceContext.getScopeGroupId(),
+				TemplatePortletKeys.TEMPLATE));
+
 		try {
 			return _templateEntryLocalService.getTemplateEntries(
-				_stagingGroupHelper.getStagedPortletGroupId(
-					serviceContext.getScopeGroupId(),
-					TemplatePortletKeys.TEMPLATE),
-				infoItemClassName, infoItemFormVariationKey, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+				ArrayUtil.toLongArray(groupIds), infoItemClassName,
+				infoItemFormVariationKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -202,6 +220,9 @@ public class TemplateInfoItemFieldSetProviderImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TemplateInfoItemFieldSetProviderImpl.class);
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;

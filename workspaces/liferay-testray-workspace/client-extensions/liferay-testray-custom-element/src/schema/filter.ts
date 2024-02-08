@@ -415,9 +415,17 @@ const filterSchema = {
 	},
 	buildRuns: {
 		fields: [
-			baseFilters.priority,
-			baseFilters.caseType,
-			baseFilters.team,
+			overrides(baseFilters.priority, {
+				name: 'runToCaseResult/caseToCaseResult/priority',
+				removeQuoteMark: true,
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.caseType, {
+				name: 'runToCaseResult/caseToCaseResult/caseTypeToCases/id',
+			}),
+			overrides(baseFilters.team, {
+				disabled: true,
+			}),
 		] as RendererFields[],
 		name: 'buildRuns',
 	},

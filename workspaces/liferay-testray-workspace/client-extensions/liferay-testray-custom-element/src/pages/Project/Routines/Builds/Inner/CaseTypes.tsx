@@ -43,6 +43,7 @@ const CaseTypes = () => {
 				tableProps={{
 					columns: [
 						{
+							clickable: true,
 							key: 'name',
 							size: 'md',
 							value: i18n.translate('test-type'),
@@ -96,7 +97,6 @@ const CaseTypes = () => {
 							value: i18n.translate('test-fix'),
 						},
 						{
-							clickable: true,
 							key: 'metrics',
 							render: (_, caseType) => (
 								<ProgressBar
@@ -114,6 +114,15 @@ const CaseTypes = () => {
 							value: i18n.translate('metrics'),
 						},
 					],
+					navigateTo: (caseType) =>
+						`..?${new URLSearchParams({
+							filter: JSON.stringify({
+								'caseToCaseResult/r_caseTypeToCases_c_caseTypeId': [
+									caseType.id,
+								],
+							}),
+							filterSchema: 'buildResults',
+						})}`,
 				}}
 				transformData={(response) =>
 					testrayCaseTypeImpl.transformDataFromList(response)

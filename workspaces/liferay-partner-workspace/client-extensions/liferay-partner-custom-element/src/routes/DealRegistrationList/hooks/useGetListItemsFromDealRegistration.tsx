@@ -107,6 +107,18 @@ export default function useGetListItemsFromDealRegistration(
 				[DealRegistrationColumnKey.ISCONVERTED]: item.isConverted
 					? item.isConverted
 					: false,
+				[DealRegistrationColumnKey.ADDITIONAL_INFORMATION_ABOUT_THE_OPPORTUNITY]: item.additionalInformationAboutTheOpportunity
+					? item.additionalInformationAboutTheOpportunity
+					: ' - ',
+				[DealRegistrationColumnKey.PROJECT_NEED]: item.projectNeed
+					? item.projectNeed
+					: ' - ',
+				[DealRegistrationColumnKey.PROJECT_CATEGORIES]: item.projectCategories
+					? item.projectCategories
+					: ' - ',
+				[DealRegistrationColumnKey.PROJECT_TIMELINE]: item.projectTimeline
+					? item.projectTimeline
+					: ' - ',
 			})),
 		[swrResponse.data?.items]
 	);

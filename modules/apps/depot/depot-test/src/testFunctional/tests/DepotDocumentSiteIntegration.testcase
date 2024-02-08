@@ -1295,7 +1295,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+		ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
 		DMDocument.viewFilterByDetails(
 			noTagNames = "site tag",
@@ -1309,7 +1309,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Categories...");
+		ManagementBar.setFilterAndOrder(filterBy = "Categories");
 
 		DMDocument.viewFilterByDetails(
 			category = "Depot Category",
@@ -1323,7 +1323,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Extension...");
+		ManagementBar.setFilterAndOrder(filterBy = "Extension");
 
 		DMDocument.viewFilterByDetails(
 			category = "Text (1 Item)",
@@ -1377,7 +1377,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+		ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
 		DMDocument.viewFilterByDetails(
 			noTagNames = "site tag",
@@ -1385,7 +1385,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Categories...");
+		ManagementBar.setFilterAndOrder(filterBy = "Categories");
 
 		DMDocument.viewFilterByDetails(
 			category = "Depot Category",
@@ -1393,7 +1393,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Extension...");
+		ManagementBar.setFilterAndOrder(filterBy = "Extension");
 
 		DMDocument.viewFilterByDetails(
 			category = "Text (1 Item)",

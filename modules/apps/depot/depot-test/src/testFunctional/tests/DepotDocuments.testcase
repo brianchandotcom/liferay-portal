@@ -331,7 +331,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Categories...");
+		ManagementBar.setFilterAndOrder(filterBy = "Categories");
 
 		DMDocument.selectFilterItems(categories = "Category1");
 
@@ -343,7 +343,7 @@ definition {
 
 		LexiconEntry.viewNoEntry(rowEntry = "DM Document Title 2");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Categories...");
+		ManagementBar.setFilterAndOrder(filterBy = "Categories");
 
 		DMDocument.selectFilterItems(
 			categories = "Category2",
@@ -379,7 +379,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Extension...");
+		ManagementBar.setFilterAndOrder(filterBy = "Extension");
 
 		DMDocument.viewFilterByDetails(
 			category = "Image (1 Item),Text (1 Item)",
@@ -393,7 +393,7 @@ definition {
 
 		ManagementBar.setFilterAndOrder(
 			active = "true",
-			filterBy = "Extension...");
+			filterBy = "Extension");
 
 		DMDocument.selectFilterItems(
 			categories = "Image (1 Item)",
@@ -427,7 +427,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+		ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
 		DMDocument.selectTags(tagNameList = "tag1");
 
@@ -437,7 +437,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+		ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
 		DMDocument.selectTags(tagNameList = "tag2");
 

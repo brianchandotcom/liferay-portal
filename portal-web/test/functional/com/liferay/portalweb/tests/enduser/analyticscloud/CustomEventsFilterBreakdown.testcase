@@ -642,9 +642,9 @@ definition {
 		property test.run.type = "single";
 
 		var attributeName = "city";
-		var inputValue = "recife";
+		var inputValue = "los angeles";
 
-		var attributeValueList = "${inputValue},los angeles,madrid";
+		var attributeValueList = "los angeles,madrid";
 		var optionValueList = "contains,not contains,is,is not";
 
 		task ("Fill fields and create custom event") {

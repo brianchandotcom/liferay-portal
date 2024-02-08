@@ -22,7 +22,7 @@ exports[`Subscription Details renders subscription details for BASIC PLAN 1`] = 
     class="m-0"
   />
   <div
-    class="card-body pb-0"
+    class="card-body"
   >
     <div
       class="mb-2"
@@ -498,7 +498,7 @@ exports[`UsageOverview should render 1`] = `
                     <span
                       class="text-3 text-secondary font-weight-semi-bold"
                     >
-                      2% since Jul 08, 2018.
+                      2% Since Jul 08, 2018
                     </span>
                     <div>
                       <span
@@ -567,7 +567,7 @@ exports[`UsageOverview should render 1`] = `
                     <span
                       class="text-3 text-secondary font-weight-semi-bold"
                     >
-                      1.4% since Jul 08, 2018.
+                      1.4% Since Jul 08, 2018
                     </span>
                     <div>
                       <span

@@ -46,7 +46,7 @@ export class HeadlessBuilderPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToApiBuilder();
+		await this.applicationsMenuPage.goToAPIBuilder();
 	}
 
 	async goToEditAPIApplication(apiApplicationName: string) {

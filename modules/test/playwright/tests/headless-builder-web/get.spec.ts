@@ -41,7 +41,7 @@ test('can see available path parameter properties of a singleElement endpoint', 
 	await apiApplicationPage.setSchemaMainObjectDefinition('APIApplication');
 	await apiApplicationPage.createButton.click();
 
-	await apiApplicationPage.createSingleElementApiEndpoint(
+	await apiApplicationPage.createSingleElementAPIEndpoint(
 		'Company',
 		'gettest',
 		'entryid'
@@ -82,7 +82,7 @@ test('can see path parameter property with map details', async ({
 	await apiApplicationPage.setSchemaMainObjectDefinition('APIApplication');
 	await apiApplicationPage.createButton.click();
 
-	await apiApplicationPage.createSingleElementApiEndpoint(
+	await apiApplicationPage.createSingleElementAPIEndpoint(
 		'Company',
 		'gettest',
 		'entryid'
@@ -184,7 +184,7 @@ test('can list site scoped endpoint', async ({
 
 	await headlessBuilderPage.goto();
 	await headlessBuilderPage.goToEditAPIApplication(studentApplication.title);
-	await apiApplicationPage.createSingleElementApiEndpoint(
+	await apiApplicationPage.createSingleElementAPIEndpoint(
 		'Site',
 		'gettest',
 		'entryerc'

@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export class ApiApplicationPage {
+export class APIApplicationPage {
 	readonly page: Page;
 	readonly addAPIEndpointButton: Locator;
 	readonly addAPISchemaButton: Locator;
@@ -90,7 +90,7 @@ export class ApiApplicationPage {
 		await this.page.getByRole('menuitem', {name: objectName}).click();
 	}
 
-	async createApiEndpoint(
+	async createAPIEndpoint(
 		httpMethod: 'GET' | 'POST',
 		scope: 'Company' | 'Site',
 		path: string
@@ -103,7 +103,7 @@ export class ApiApplicationPage {
 		await this.createButton.click();
 	}
 
-	async createSingleElementApiEndpoint(
+	async createSingleElementAPIEndpoint(
 		scope: 'Company' | 'Site',
 		path: string,
 		pathParameter: string

@@ -20,7 +20,7 @@ export const test = mergeTests(
 	loginTest
 );
 
-const basicApiApplication = {
+const basicAPIApplication = {
 	apiApplicationToAPISchemas: [
 		{
 			description: 'API Application Schema',
@@ -43,7 +43,7 @@ test('can see filter and sort parameters for collection endpoints', async ({
 }) => {
 	await waitForHeadlessBuilderReady(apiHelpers, page);
 	await apiHelpers.object.postObjectEntry(
-		basicApiApplication,
+		basicAPIApplication,
 		'headless-builder/applications'
 	);
 	const collectionEndpoint = await apiHelpers.object.postObjectEntry(
@@ -54,14 +54,14 @@ test('can see filter and sort parameters for collection endpoints', async ({
 			name: 'Basic collection API Endpoint',
 			path: '/collection-endpoint',
 			r_apiApplicationToAPIEndpoints_c_apiApplicationERC:
-				basicApiApplication.externalReferenceCode,
+				basicAPIApplication.externalReferenceCode,
 			retrieveType: 'collection',
 			scope: 'company',
 		},
 		'headless-builder/endpoints'
 	);
 
-	await apiExplorerPage.goToApplication(`c/${basicApiApplication.baseURL}`);
+	await apiExplorerPage.goToApplication(`c/${basicAPIApplication.baseURL}`);
 
 	await apiExplorerPage.expectEndpointWithParameters(
 		collectionEndpoint.path,
@@ -71,7 +71,7 @@ test('can see filter and sort parameters for collection endpoints', async ({
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
-		basicApiApplication.externalReferenceCode
+		basicAPIApplication.externalReferenceCode
 	);
 });
 
@@ -82,7 +82,7 @@ test('cannot see filter and sort parameters for singleElement endpoints', async 
 }) => {
 	await waitForHeadlessBuilderReady(apiHelpers, page);
 	await apiHelpers.object.postObjectEntry(
-		basicApiApplication,
+		basicAPIApplication,
 		'headless-builder/applications'
 	);
 
@@ -95,9 +95,9 @@ test('cannot see filter and sort parameters for singleElement endpoints', async 
 			path: '/single-element-endpoint/{id}',
 			pathParameter: 'id',
 			r_apiApplicationToAPIEndpoints_c_apiApplicationERC:
-				basicApiApplication.externalReferenceCode,
+				basicAPIApplication.externalReferenceCode,
 			r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC:
-				basicApiApplication.apiApplicationToAPISchemas[0]
+				basicAPIApplication.apiApplicationToAPISchemas[0]
 					.externalReferenceCode,
 			retrieveType: 'singleElement',
 			scope: 'company',
@@ -105,7 +105,7 @@ test('cannot see filter and sort parameters for singleElement endpoints', async 
 		'headless-builder/endpoints'
 	);
 
-	await apiExplorerPage.goToApplication(`c/${basicApiApplication.baseURL}`);
+	await apiExplorerPage.goToApplication(`c/${basicAPIApplication.baseURL}`);
 
 	await apiExplorerPage.expectEndpointWithoutParameters(
 		singleElementEndpoint.path,
@@ -115,6 +115,6 @@ test('cannot see filter and sort parameters for singleElement endpoints', async 
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
-		basicApiApplication.externalReferenceCode
+		basicAPIApplication.externalReferenceCode
 	);
 });

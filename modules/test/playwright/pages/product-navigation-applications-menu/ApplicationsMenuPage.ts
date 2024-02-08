@@ -93,7 +93,7 @@ export class ApplicationsMenuPage {
 		await this.dataMigrationCenterMenuItem.click();
 	}
 
-	async goToApiBuilder() {
+	async goToAPIBuilder() {
 		await this.goToControlPanel();
 		await this.apiBuilderMenuItem.click();
 	}

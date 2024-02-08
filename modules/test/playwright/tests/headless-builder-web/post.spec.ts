@@ -22,7 +22,7 @@ export const test = mergeTests(
 	})
 );
 
-const basicApiApplication = {
+const basicAPIApplication = {
 	apiApplicationToAPISchemas: [
 		{
 			description: 'API Application Schema',
@@ -218,7 +218,7 @@ test('can create post endpoint with different request and response schema', asyn
 		studentSubjectsApplication.title
 	);
 
-	await apiApplicationPage.createApiEndpoint('POST', 'Company', 'student');
+	await apiApplicationPage.createAPIEndpoint('POST', 'Company', 'student');
 
 	await apiApplicationPage.goToEndpointConfigurationTab();
 	await apiApplicationPage.selectEndpointRequestSchema(
@@ -257,14 +257,14 @@ test('can create post method endpoint with company scope', async ({
 }) => {
 	await waitForHeadlessBuilderReady(apiHelpers, page);
 	await apiHelpers.object.postObjectEntry(
-		basicApiApplication,
+		basicAPIApplication,
 		'headless-builder/applications'
 	);
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.goToEditAPIApplication(basicApiApplication.title);
+	await headlessBuilderPage.goToEditAPIApplication(basicAPIApplication.title);
 
-	await apiApplicationPage.createApiEndpoint(
+	await apiApplicationPage.createAPIEndpoint(
 		'POST',
 		'Company',
 		'test-post-endpoint'
@@ -272,11 +272,11 @@ test('can create post method endpoint with company scope', async ({
 
 	await apiApplicationPage.goToEndpointConfigurationTab();
 	await apiApplicationPage.selectEndpointRequestSchema(
-		basicApiApplication.apiApplicationToAPISchemas[0].name
+		basicAPIApplication.apiApplicationToAPISchemas[0].name
 	);
 	await apiApplicationPage.publishButton.click();
 
-	await apiExplorerPage.goToApplication(`c/${basicApiApplication.baseURL}`);
+	await apiExplorerPage.goToApplication(`c/${basicAPIApplication.baseURL}`);
 
 	await expect(
 		apiExplorerPage.getEndpointLocator('/test-post-endpoint')
@@ -285,6 +285,6 @@ test('can create post method endpoint with company scope', async ({
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
-		basicApiApplication.externalReferenceCode
+		basicAPIApplication.externalReferenceCode
 	);
 });

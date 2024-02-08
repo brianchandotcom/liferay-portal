@@ -78,17 +78,17 @@ export function Page({page: {successPageSettings}}) {
 	const {initialBody, initialTitle} = {
 		initialBody:
 			(successPageSettings.body &&
-				(successPageSettings.body[
-					Liferay.ThemeDisplay.getLanguageId()
-				] ||
+				(successPageSettings.body[editingLanguageId] ||
 					successPageSettings.body[defaultLanguageId])) ||
+			Liferay.Language.get(
+				'your-information-was-successfully-received-thank-you-for-filling-out-the-form'
+			) ||
 			'',
 		initialTitle:
 			(successPageSettings.title &&
-				(successPageSettings.title[
-					Liferay.ThemeDisplay.getLanguageId()
-				] ||
+				(successPageSettings.title[editingLanguageId] ||
 					successPageSettings.title[defaultLanguageId])) ||
+			Liferay.Language.get('thank-you') ||
 			'',
 	};
 

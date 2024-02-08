@@ -48,10 +48,6 @@
 		"regionCode": "HA"
 	},
 	{
-		"name": "Hong Kong SAR",
-		"regionCode": "HK"
-	},
-	{
 		"name": "Hubei Sheng",
 		"regionCode": "HB"
 	},
@@ -74,10 +70,6 @@
 	{
 		"name": "Liaoning Sheng",
 		"regionCode": "LN"
-	},
-	{
-		"name": "Macao SAR",
-		"regionCode": "MO"
 	},
 	{
 		"name": "Nei Mongol Zizhiqu",

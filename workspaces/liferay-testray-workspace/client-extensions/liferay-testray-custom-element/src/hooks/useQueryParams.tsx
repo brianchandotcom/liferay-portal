@@ -76,16 +76,16 @@ const useQueryParams = () => {
 					? field.resource(parameters)
 					: (field.resource as string);
 
-			const newFilter = SearchBuilder.eq(
+			const filter = SearchBuilder.eq(
 				'id',
 				serializedFilter[field.name][0]
 			);
 
-			const resourceWithNewFilter = resource.includes('filter=')
-				? resource.replace(/(filter=.*?)(&|$)/, `$1 and ${newFilter}$2`)
-				: `${resource}&filter=${newFilter}`;
+			const resourceFilter = resource.includes('filter=')
+				? resource.replace(/(filter=.*?)(&|$)/, `$1 and ${filter}$2`)
+				: `${resource}&filter=${filter}`;
 
-			const response = await fetcher(resourceWithNewFilter);
+			const response = await fetcher(resourceFilter);
 
 			if (field.transformData) {
 				const parsedValue = field.transformData(response);

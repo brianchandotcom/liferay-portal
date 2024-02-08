@@ -10,7 +10,6 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {headlessBuilderPagesTest} from '../../fixtures/headlessBuilderPagesTest';
 import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {waitForHeadlessBuilderReady} from './utils/headlessBuilder';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -207,7 +206,6 @@ test('can create post endpoint with different request and response schema', asyn
 		},
 	});
 
-	await waitForHeadlessBuilderReady(apiHelpers, page);
 	await apiHelpers.object.postObjectEntry(
 		studentSubjectsApplication,
 		'headless-builder/applications'
@@ -263,7 +261,6 @@ test('can create post method endpoint with company scope', async ({
 	headlessBuilderPage,
 	page,
 }) => {
-	await waitForHeadlessBuilderReady(apiHelpers, page);
 	await apiHelpers.object.postObjectEntry(
 		basicAPIApplication,
 		'headless-builder/applications'

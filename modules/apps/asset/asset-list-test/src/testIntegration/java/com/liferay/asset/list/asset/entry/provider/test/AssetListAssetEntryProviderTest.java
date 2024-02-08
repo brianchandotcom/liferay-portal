@@ -948,15 +948,13 @@ public class AssetListAssetEntryProviderTest {
 				_group.getGroupId(), userId, assetCategoryIds));
 	}
 
-	private SegmentsEntry _addSegmentsEntry(
-			long groupId, String criteriaString, String firstName)
+	private SegmentsEntry _addSegmentsEntry(long groupId, String filterString)
 		throws Exception {
 
 		Criteria criteria = new Criteria();
 
 		_segmentsCriteriaContributor.contribute(
-			criteria, String.format(criteriaString, firstName),
-			Criteria.Conjunction.AND);
+			criteria, filterString, Criteria.Conjunction.AND);
 
 		return SegmentsTestUtil.addSegmentsEntry(
 			groupId, CriteriaSerializer.serialize(criteria));
@@ -967,14 +965,15 @@ public class AssetListAssetEntryProviderTest {
 		throws Exception {
 
 		return _addSegmentsEntry(
-			groupId, "(assetCategoryIds eq '%s')", String.valueOf(categoryId));
+			groupId, String.format("(assetCategoryIds eq '%s')", categoryId));
 	}
 
 	private SegmentsEntry _addSegmentsEntryByFirstName(
 			long groupId, String firstName)
 		throws Exception {
 
-		return _addSegmentsEntry(groupId, "(firstName eq '%s')", firstName);
+		return _addSegmentsEntry(
+			groupId, String.format("(firstName eq '%s')", firstName));
 	}
 
 	private String _getTypeSettings(String queryValue) {

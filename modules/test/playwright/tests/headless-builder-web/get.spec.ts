@@ -23,31 +23,31 @@ export const test = mergeTests(
 );
 
 test('can see available path parameter properties of a singleElement endpoint', async ({
-	apiApplicationPage,
 	apiHelpers,
+	applicationPage,
 	headlessBuilderPage,
 	page,
 }) => {
 	await waitForHeadlessBuilderReady(apiHelpers, page);
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.addNewAPIApplicationButton.click();
-	await headlessBuilderPage.newAPIApplicationTitleBox.fill('My-app');
+	await headlessBuilderPage.addNewApplicationButton.click();
+	await headlessBuilderPage.newApplicationTitleBox.fill('My-app');
 	await headlessBuilderPage.createApplicationButton.click();
 
-	await apiApplicationPage.goToSchemasTab();
-	await apiApplicationPage.addAPISchemaButton.click();
-	await apiApplicationPage.schemaNameTextBox.fill('API Application schema');
-	await apiApplicationPage.setSchemaMainObjectDefinition('APIApplication');
-	await apiApplicationPage.createButton.click();
+	await applicationPage.goToSchemasTab();
+	await applicationPage.addSchemaButton.click();
+	await applicationPage.schemaNameTextBox.fill('API Application schema');
+	await applicationPage.setSchemaMainObjectDefinition('APIApplication');
+	await applicationPage.createButton.click();
 
-	await apiApplicationPage.createSingleElementAPIEndpoint(
+	await applicationPage.createSingleElementEndpoint(
 		'Company',
 		'gettest',
 		'entryid'
 	);
-	await apiApplicationPage.goToEndpointConfigurationTab();
-	await apiApplicationPage.selectEndpointResponseSchema(
+	await applicationPage.goToEndpointConfigurationTab();
+	await applicationPage.selectEndpointResponseSchema(
 		'API Application schema'
 	);
 
@@ -62,31 +62,31 @@ test('can see available path parameter properties of a singleElement endpoint', 
 });
 
 test('can see path parameter property with map details', async ({
-	apiApplicationPage,
 	apiHelpers,
+	applicationPage,
 	headlessBuilderPage,
 	page,
 }) => {
 	await waitForHeadlessBuilderReady(apiHelpers, page);
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.addNewAPIApplicationButton.click();
-	await headlessBuilderPage.newAPIApplicationTitleBox.fill('My-app');
+	await headlessBuilderPage.addNewApplicationButton.click();
+	await headlessBuilderPage.newApplicationTitleBox.fill('My-app');
 	await headlessBuilderPage.createApplicationButton.click();
 
-	await apiApplicationPage.goToSchemasTab();
-	await apiApplicationPage.addAPISchemaButton.click();
-	await apiApplicationPage.schemaNameTextBox.fill('API Application schema');
-	await apiApplicationPage.setSchemaMainObjectDefinition('APIApplication');
-	await apiApplicationPage.createButton.click();
+	await applicationPage.goToSchemasTab();
+	await applicationPage.addSchemaButton.click();
+	await applicationPage.schemaNameTextBox.fill('API Application schema');
+	await applicationPage.setSchemaMainObjectDefinition('APIApplication');
+	await applicationPage.createButton.click();
 
-	await apiApplicationPage.createSingleElementAPIEndpoint(
+	await applicationPage.createSingleElementEndpoint(
 		'Company',
 		'gettest',
 		'entryid'
 	);
-	await apiApplicationPage.goToEndpointConfigurationTab();
-	await apiApplicationPage.selectEndpointResponseSchema(
+	await applicationPage.goToEndpointConfigurationTab();
+	await applicationPage.selectEndpointResponseSchema(
 		'API Application schema'
 	);
 
@@ -107,8 +107,8 @@ test('can see path parameter property with map details', async ({
 });
 
 test('can list site scoped endpoint', async ({
-	apiApplicationPage,
 	apiHelpers,
+	applicationPage,
 	headlessBuilderPage,
 	page,
 }) => {
@@ -179,14 +179,14 @@ test('can list site scoped endpoint', async ({
 	);
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.goToEditAPIApplication(studentApplication.title);
-	await apiApplicationPage.createSingleElementAPIEndpoint(
+	await headlessBuilderPage.goToEditApplication(studentApplication.title);
+	await applicationPage.createSingleElementEndpoint(
 		'Site',
 		'gettest',
 		'entryerc'
 	);
 
-	await apiApplicationPage.goToEndpointConfigurationTab();
+	await applicationPage.goToEndpointConfigurationTab();
 	await page.getByLabel('Response Body Schema').click();
 	await page
 		.getByRole('menuitem', {
@@ -195,12 +195,12 @@ test('can list site scoped endpoint', async ({
 		.click();
 	await page.getByRole('button', {name: 'Select an Option'}).click();
 	await page.getByRole('menuitem', {name: 'External Reference Code'}).click();
-	await apiApplicationPage.publishButton.click();
+	await applicationPage.publishButton.click();
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.goToEditAPIApplication(studentApplication.title);
-	await apiApplicationPage.goToEndpointsTab();
-	await apiApplicationPage.goToEditEndpoint('/gettest/{entryerc}/');
+	await headlessBuilderPage.goToEditApplication(studentApplication.title);
+	await applicationPage.goToEndpointsTab();
+	await applicationPage.goToEditEndpoint('/gettest/{entryerc}/');
 
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(

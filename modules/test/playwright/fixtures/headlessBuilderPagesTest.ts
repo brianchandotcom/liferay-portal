@@ -5,15 +5,15 @@
 
 import {test} from '@playwright/test';
 
-import {APIApplicationPage} from '../pages/headless-builder-web/apiApplicationPage';
+import {ApplicationPage} from '../pages/headless-builder-web/applicationPage';
 import {HeadlessBuilderPage} from '../pages/headless-builder-web/headlessBuilderPage';
 
 const headlessBuilderPagesTest = test.extend<{
-	apiApplicationPage: APIApplicationPage;
+	applicationPage: ApplicationPage;
 	headlessBuilderPage: HeadlessBuilderPage;
 }>({
-	apiApplicationPage: async ({page}, use) => {
-		await use(new APIApplicationPage(page));
+	applicationPage: async ({page}, use) => {
+		await use(new ApplicationPage(page));
 	},
 	headlessBuilderPage: async ({page}, use) => {
 		await use(new HeadlessBuilderPage(page));

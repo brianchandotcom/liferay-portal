@@ -77,9 +77,9 @@ const studentSubjectsApplication = {
 };
 
 test('can create post endpoint with different request and response schema', async ({
-	apiApplicationPage,
 	apiExplorerPage,
 	apiHelpers,
+	applicationPage,
 	headlessBuilderPage,
 	page,
 }) => {
@@ -214,14 +214,14 @@ test('can create post endpoint with different request and response schema', asyn
 	);
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.goToEditAPIApplication(
+	await headlessBuilderPage.goToEditApplication(
 		studentSubjectsApplication.title
 	);
 
-	await apiApplicationPage.createAPIEndpoint('POST', 'Company', 'student');
+	await applicationPage.createEndpoint('POST', 'Company', 'student');
 
-	await apiApplicationPage.goToEndpointConfigurationTab();
-	await apiApplicationPage.selectEndpointRequestSchema(
+	await applicationPage.goToEndpointConfigurationTab();
+	await applicationPage.selectEndpointRequestSchema(
 		studentSubjectsApplication.apiApplicationToAPISchemas[0].name
 	);
 
@@ -236,7 +236,7 @@ test('can create post endpoint with different request and response schema', asyn
 		})
 		.click();
 
-	await apiApplicationPage.publishButton.click();
+	await applicationPage.publishButton.click();
 
 	await apiExplorerPage.goToApplication(
 		`c/${studentSubjectsApplication.baseURL}`
@@ -257,9 +257,9 @@ test('can create post endpoint with different request and response schema', asyn
 });
 
 test('can create post method endpoint with company scope', async ({
-	apiApplicationPage,
 	apiExplorerPage,
 	apiHelpers,
+	applicationPage,
 	headlessBuilderPage,
 	page,
 }) => {
@@ -270,19 +270,19 @@ test('can create post method endpoint with company scope', async ({
 	);
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.goToEditAPIApplication(basicAPIApplication.title);
+	await headlessBuilderPage.goToEditApplication(basicAPIApplication.title);
 
-	await apiApplicationPage.createAPIEndpoint(
+	await applicationPage.createEndpoint(
 		'POST',
 		'Company',
 		'test-post-endpoint'
 	);
 
-	await apiApplicationPage.goToEndpointConfigurationTab();
-	await apiApplicationPage.selectEndpointRequestSchema(
+	await applicationPage.goToEndpointConfigurationTab();
+	await applicationPage.selectEndpointRequestSchema(
 		basicAPIApplication.apiApplicationToAPISchemas[0].name
 	);
-	await apiApplicationPage.publishButton.click();
+	await applicationPage.publishButton.click();
 
 	await apiExplorerPage.goToApplication(`c/${basicAPIApplication.baseURL}`);
 

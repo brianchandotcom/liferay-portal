@@ -11,8 +11,8 @@ export class HeadlessBuilderPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly createApplicationButton: Locator;
 	readonly page: Page;
-	readonly addNewAPIApplicationButton: Locator;
-	readonly newAPIApplicationTitleBox: Locator;
+	readonly addNewApplicationButton: Locator;
+	readonly newApplicationTitleBox: Locator;
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
@@ -20,23 +20,23 @@ export class HeadlessBuilderPage {
 			name: 'Create',
 		});
 		this.page = page;
-		this.addNewAPIApplicationButton = page.getByLabel(
+		this.addNewApplicationButton = page.getByLabel(
 			'Add New API Application'
 		);
-		this.newAPIApplicationTitleBox = page.getByPlaceholder('Enter title.');
+		this.newApplicationTitleBox = page.getByPlaceholder('Enter title.');
 	}
 
-	async accessApplicationActions(applicationTitle: string) {
+	async openApplicationActions(title: string) {
 		await this.page
 			.locator(
-				`[class="dropdown-toggle component-action dropdown-toggle ml-1 btn btn-unstyled"]:right-of(:text("${applicationTitle}"))`
+				`[class="dropdown-toggle component-action dropdown-toggle ml-1 btn btn-unstyled"]:right-of(:text("${title}"))`
 			)
 			.first()
 			.click();
 	}
 
-	async deleteApplication(applicationTitle: string) {
-		await this.accessApplicationActions(applicationTitle);
+	async deleteApplication(title: string) {
+		await this.openApplicationActions(title);
 		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
 		await this.page
 			.getByLabel('Delete API Application')
@@ -49,7 +49,7 @@ export class HeadlessBuilderPage {
 		await this.applicationsMenuPage.goToAPIBuilder();
 	}
 
-	async goToEditAPIApplication(apiApplicationName: string) {
-		await this.page.getByRole('link', {name: apiApplicationName}).click();
+	async goToEditApplication(name: string) {
+		await this.page.getByRole('link', {name}).click();
 	}
 }

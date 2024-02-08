@@ -5,10 +5,10 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export class APIApplicationPage {
+export class ApplicationPage {
 	readonly page: Page;
-	readonly addAPIEndpointButton: Locator;
-	readonly addAPISchemaButton: Locator;
+	readonly addEndpointButton: Locator;
+	readonly addSchemaButton: Locator;
 	readonly createButton: Locator;
 	readonly endpointPathTextBox: Locator;
 	readonly pathParameterTextBox: Locator;
@@ -17,8 +17,8 @@ export class APIApplicationPage {
 
 	constructor(page: Page) {
 		this.page = page;
-		this.addAPIEndpointButton = page.getByLabel('Add API Endpoint');
-		this.addAPISchemaButton = page.getByLabel('Add New Schema');
+		this.addEndpointButton = page.getByLabel('Add API Endpoint');
+		this.addSchemaButton = page.getByLabel('Add New Schema');
 		this.createButton = page.getByRole('button', {name: 'Create'});
 		this.endpointPathTextBox = page.getByPlaceholder('Enter Path');
 		this.pathParameterTextBox = page.getByPlaceholder('{Enter Parameter}');
@@ -51,34 +51,34 @@ export class APIApplicationPage {
 		await this.page.waitForLoadState();
 	}
 
-	async goToEditEndpoint(endpointPath: string) {
-		await this.page.getByRole('button', {name: endpointPath}).click();
+	async goToEditEndpoint(path: string) {
+		await this.page.getByRole('button', {name: path}).click();
 		await this.page.waitForLoadState();
 	}
 
-	async selectEndpointRequestSchema(schemaName: string) {
+	async selectEndpointRequestSchema(name: string) {
 		await this.page.getByLabel('Request Body Schema').click();
-		await this.page.getByRole('menuitem', {name: schemaName}).click();
+		await this.page.getByRole('menuitem', {name}).click();
 	}
 
-	async selectEndpointResponseSchema(schemaName: string) {
+	async selectEndpointResponseSchema(name: string) {
 		await this.page.getByLabel('Response Body Schema').click();
-		await this.page.getByRole('menuitem', {name: schemaName}).click();
+		await this.page.getByRole('menuitem', {name}).click();
 	}
 
-	async setEndpointMethod(methodValue: 'GET' | 'POST') {
+	async setEndpointMethod(method: 'GET' | 'POST') {
 		await this.page.getByLabel('Method').click();
-		await this.page.getByRole('menuitem', {name: methodValue}).click();
+		await this.page.getByRole('menuitem', {name: method}).click();
 	}
 
-	async setEndpointScope(scopeValue: 'Company' | 'Site') {
+	async setEndpointScope(scope: 'Company' | 'Site') {
 		await this.page.getByLabel('Select Scope').click();
-		await this.page.getByRole('menuitem', {name: scopeValue}).click();
+		await this.page.getByRole('menuitem', {name: scope}).click();
 	}
 
-	async setEndpointType(typeValue: 'Collection' | 'Single Element') {
+	async setEndpointType(type: 'Collection' | 'Single Element') {
 		await this.page.getByLabel('Select Type').click();
-		await this.page.getByRole('menuitem', {name: typeValue}).click();
+		await this.page.getByRole('menuitem', {name: type}).click();
 	}
 
 	async setSchemaMainObjectDefinition(objectName: string) {
@@ -88,26 +88,26 @@ export class APIApplicationPage {
 		await this.page.getByRole('menuitem', {name: objectName}).click();
 	}
 
-	async createAPIEndpoint(
-		httpMethod: 'GET' | 'POST',
+	async createEndpoint(
+		method: 'GET' | 'POST',
 		scope: 'Company' | 'Site',
 		path: string
 	) {
 		await this.goToEndpointsTab();
-		await this.addAPIEndpointButton.click();
-		await this.setEndpointMethod(httpMethod);
+		await this.addEndpointButton.click();
+		await this.setEndpointMethod(method);
 		await this.setEndpointScope(scope);
 		await this.endpointPathTextBox.fill(path);
 		await this.createButton.click();
 	}
 
-	async createSingleElementAPIEndpoint(
+	async createSingleElementEndpoint(
 		scope: 'Company' | 'Site',
 		path: string,
 		pathParameter: string
 	) {
 		await this.goToEndpointsTab();
-		await this.addAPIEndpointButton.click();
+		await this.addEndpointButton.click();
 		await this.setEndpointMethod('GET');
 		await this.setEndpointType('Single Element');
 		await this.setEndpointScope(scope);

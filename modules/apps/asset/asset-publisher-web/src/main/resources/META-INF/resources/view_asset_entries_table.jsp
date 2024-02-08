@@ -21,6 +21,12 @@ if (stageableGroup.isLayout()) {
 }
 %>
 
+<c:if test="<%= Validator.isNotNull(assetEntryResult.getTitle()) %>">
+	<p class="h4">
+		<%= assetEntryResult.getTitle() %>
+	</p>
+</c:if>
+
 <div class="table-responsive">
 	<table class="table table-autofit table-head-bordered table-hover table-list table-striped">
 		<thead>

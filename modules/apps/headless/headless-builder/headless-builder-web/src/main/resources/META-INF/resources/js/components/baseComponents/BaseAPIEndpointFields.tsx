@@ -26,6 +26,7 @@ interface BaseAPIApplicationFieldsProps {
 	basePath: string;
 	data: Partial<APIEndpointUIData>;
 	displayError: EndpointDataError;
+	editing?: Boolean;
 	setData: Dispatch<SetStateAction<Partial<APIEndpointUIData>>>;
 }
 
@@ -34,6 +35,7 @@ export default function BaseAPIEndpointFields({
 	basePath,
 	data,
 	displayError,
+	editing,
 	setData,
 }: BaseAPIApplicationFieldsProps) {
 	const [httpMethodOptions, setHttpMethodOptions] = useState<SelectOption[]>(
@@ -269,6 +271,7 @@ export default function BaseAPIEndpointFields({
 				</label>
 
 				<Select
+					disabled={!!editing}
 					invalid={displayError.httpMethod}
 					onClick={(value) =>
 						handleDropdownChange(

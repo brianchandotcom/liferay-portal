@@ -620,6 +620,7 @@ export default function EditAPIEndpoint({
 										basePath={basePath}
 										data={localUIData}
 										displayError={displayError}
+										editing
 										setData={setLocalUIData}
 									/>
 								</div>

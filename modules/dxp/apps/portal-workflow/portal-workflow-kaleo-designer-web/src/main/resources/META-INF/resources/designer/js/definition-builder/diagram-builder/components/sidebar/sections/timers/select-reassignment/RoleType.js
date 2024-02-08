@@ -11,7 +11,7 @@ import {headers, userBaseURL} from '../../../../../../util/fetchUtil';
 import SidebarPanel from '../../../SidebarPanel';
 import BaseRoleType from '../../shared-components/BaseRoleType';
 
-const RoleType = (props) => {
+const RoleType = ({subSectionIdentifier, subSectionsLength, ...otherProps}) => {
 	const [networkStatus, setNetworkStatus] = useState(4);
 
 	const {resource} = useResource({
@@ -30,14 +30,22 @@ const RoleType = (props) => {
 		},
 	});
 
+	const {autoCreate, roleKey, roleName, roleType} = otherProps?.restProps;
+
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('selected-role')}>
 			<BaseRoleType
+				{...otherProps}
+				autoCreate={autoCreate}
 				buttonName={Liferay.Language.get('new-section')}
+				identifier={subSectionIdentifier}
 				inputLabel={Liferay.Language.get('role-type')}
 				networkStatus={networkStatus}
-				{...props}
 				resource={resource}
+				roleKey={roleKey}
+				roleName={roleName}
+				roleType={roleType}
+				sectionsLength={subSectionsLength}
 			/>
 		</SidebarPanel>
 	);

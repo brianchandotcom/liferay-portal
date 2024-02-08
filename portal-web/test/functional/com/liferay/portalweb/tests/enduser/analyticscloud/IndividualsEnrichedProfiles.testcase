@@ -52,6 +52,7 @@ definition {
 	test IncreaseByOneWhenAnonymousIndividualConvertedToKnownIndividual {
 		property portal.acceptance = "false";
 		property portal.release = "false";
+		property test.run.type = "single";
 
 		task ("Add a new user") {
 			JSONUser.addUser(

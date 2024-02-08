@@ -103,9 +103,9 @@ public class AssetListAssetEntryProviderTest {
 			null, ServiceContextTestUtil.getServiceContext());
 
 		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), userTest);
+			_group.getGroupId(), userTest.getFirstName());
 		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), user);
+			_group.getGroupId(), user.getFirstName());
 
 		JournalArticle journalArticle = _addJournalArticle(
 			new long[0], TestPropsValues.getUserId());
@@ -156,9 +156,9 @@ public class AssetListAssetEntryProviderTest {
 		User userTest = TestPropsValues.getUser();
 
 		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), userTest);
+			_group.getGroupId(), userTest.getFirstName());
 		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), userTest);
+			_group.getGroupId(), userTest.getFirstName());
 
 		JournalArticle journalArticle = _addJournalArticle(
 			new long[0], TestPropsValues.getUserId());
@@ -798,9 +798,9 @@ public class AssetListAssetEntryProviderTest {
 			null, ServiceContextTestUtil.getServiceContext());
 
 		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), userTest);
+			_group.getGroupId(), userTest.getFirstName());
 		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), user);
+			_group.getGroupId(), user.getFirstName());
 
 		JournalArticle journalArticle = _addJournalArticle(
 			new long[0], TestPropsValues.getUserId());
@@ -854,13 +854,14 @@ public class AssetListAssetEntryProviderTest {
 				_group.getGroupId(), userId, assetCategoryIds));
 	}
 
-	private SegmentsEntry _addSegmentsEntryByFirstName(long groupId, User user)
+	private SegmentsEntry _addSegmentsEntryByFirstName(
+			long groupId, String firstName)
 		throws Exception {
 
 		Criteria criteria = new Criteria();
 
 		_segmentsCriteriaContributor.contribute(
-			criteria, String.format("(firstName eq '%s')", user.getFirstName()),
+			criteria, String.format("(firstName eq '%s')", firstName),
 			Criteria.Conjunction.AND);
 
 		return SegmentsTestUtil.addSegmentsEntry(

@@ -61,7 +61,7 @@ function InfoPanelProvider({namespace, pathImage, selectLogoURL, spritemap}) {
 				'info-panel',
 				'sidenav-menu-slider',
 				{
-					active,
+					'contextual-sidebar-visible': active,
 				}
 			)}
 		>

@@ -113,17 +113,15 @@ AUI.add(
 								const portletId = event.currentTarget.attr(
 									'data-portletid'
 								);
- 
-								let contentNode = instance.byId(
+
+								const contentNode = instance.byId(
 									'content_' + portletId
 								);
 
 								contentNode.delegate(
 									'change',
 									() => {
-										instance._setContentLabels(
-											portletId
-										);
+										instance._setContentLabels(portletId);
 
 										instance._storeNodeInputStates(
 											contentNode
@@ -131,14 +129,14 @@ AUI.add(
 									},
 									'input[type="checkbox]'
 								);
-							
-								instance.byId(
-									'rightContentArrow_' + portletId
-								).toggle('hide');
 
-								instance.byId(
-									'downContentArrow_' + portletId
-								).toggle('hide');
+								instance
+									.byId('rightContentArrow_' + portletId)
+									.toggle('hide');
+
+								instance
+									.byId('downContentArrow_' + portletId)
+									.toggle('hide');
 
 								contentNode.toggle('hide');
 							},
@@ -860,7 +858,7 @@ AUI.add(
 							.byId('showChangeConfiguration_' + portletId)
 							.hide();
 
-						instance.byId('configuration_' + portletId).hide();
+						configurationNode.hide();
 					}
 					else {
 						instance

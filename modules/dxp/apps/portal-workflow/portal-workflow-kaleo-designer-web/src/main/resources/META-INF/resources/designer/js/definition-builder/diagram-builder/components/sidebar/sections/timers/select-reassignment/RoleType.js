@@ -30,18 +30,6 @@ const RoleType = (props) => {
 		},
 	});
 
-	const updateRoleType = (values) => {
-		props.updateSelectedItem({
-			reassignments: {
-				assignmentType: ['roleType'],
-				autoCreate: values.map(({autoCreate}) => autoCreate),
-				roleKey: values.map(({roleKey}) => roleKey),
-				roleName: values.map(({roleName}) => roleName),
-				roleType: values.map(({roleType}) => roleType),
-			},
-		});
-	};
-
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('selected-role')}>
 			<BaseRoleType
@@ -50,7 +38,6 @@ const RoleType = (props) => {
 				networkStatus={networkStatus}
 				{...props}
 				resource={resource}
-				updateSelectedItem={updateRoleType}
 			/>
 		</SidebarPanel>
 	);

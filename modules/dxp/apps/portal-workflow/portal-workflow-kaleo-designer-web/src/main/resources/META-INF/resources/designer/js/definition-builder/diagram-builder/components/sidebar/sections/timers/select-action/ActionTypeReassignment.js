@@ -40,17 +40,18 @@ const ActionTypeReassignment = ({
 	);
 
 	useEffect(() => {
-		if (reassignmentType === 'user') {
+		if (reassignmentType === 'user' || reassignmentType === 'roleType') {
 			setActionSections((currentSections) => {
 				const updatedSections = [...currentSections];
 
-				updatedSections[actionSectionsIndex].assignmentType = 'user';
+				updatedSections[
+					actionSectionsIndex
+				].assignmentType = reassignmentType;
 				updatedSections[actionSectionsIndex].sectionData = subSections;
 
 				return updatedSections;
 			});
 		}
-
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [subSections]);
 

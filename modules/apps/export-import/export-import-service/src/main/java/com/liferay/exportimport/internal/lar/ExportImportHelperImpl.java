@@ -399,9 +399,30 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				parentLayouts = getMissingParentLayouts(layout, targetGroupId);
 			}
 
-			for (Layout parentLayout : parentLayouts) {
-				if (!layouts.contains(parentLayout)) {
-					layouts.add(parentLayout);
+			if (FeatureFlagManagerUtil.isEnabled("LPS-199086")) {
+				try {
+					StagingConfiguration stagingConfiguration =
+						_configurationProvider.getCompanyConfiguration(
+							StagingConfiguration.class,
+							CompanyThreadLocal.getCompanyId());
+
+					if (stagingConfiguration.publishParentLayoutsByDefault()) {
+						for (Layout parentLayout : parentLayouts) {
+							if (!layouts.contains(parentLayout)) {
+								layouts.add(parentLayout);
+							}
+						}
+					}
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+			}
+			else {
+				for (Layout parentLayout : parentLayouts) {
+					if (!layouts.contains(parentLayout)) {
+						layouts.add(parentLayout);
+					}
 				}
 			}
 

@@ -23,14 +23,14 @@ export const test = mergeTests(
 	viewsPageTest
 );
 
-const LINK_CREATION_ACTION_NAME = 'Link creation action';
-
 test('Create a Creation Action', async ({
 	actionsPage,
 	dataSetsPage,
 	page,
 	viewsPage,
 }) => {
+	const LINK_CREATION_ACTION_NAME = 'Link creation action';
+
 	await test.step('Create Data Set', async () => {
 		await dataSetsPage.goto();
 		await dataSetsPage.createSampleDataSet();
@@ -54,13 +54,20 @@ test('Create a Creation Action', async ({
 		});
 	});
 
-	await expect(
-		page
-			.getByRole('cell', {
-				exact: true,
-				name: LINK_CREATION_ACTION_NAME,
-			})
-			.locator('span')
-			.first()
-	).toBeVisible();
+	await test.step('Check that the creation action is in the list', async () => {
+		await expect(
+			page
+				.getByRole('cell', {
+					exact: true,
+					name: LINK_CREATION_ACTION_NAME,
+				})
+				.locator('span')
+				.first()
+		).toBeVisible();
+	});
+
+	await test.step('Delete Data Set', async () => {
+		await dataSetsPage.goto();
+		await dataSetsPage.deleteDataSet();
+	});
 });

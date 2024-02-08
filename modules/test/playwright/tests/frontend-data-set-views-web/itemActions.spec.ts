@@ -22,26 +22,31 @@ export const test = mergeTests(
 	viewsPageTest
 );
 
-const LINK_ITEM_ACTION_NAME = 'Link item action';
-
 test('Create a Link Item Action', async ({
 	actionsPage,
 	dataSetsPage,
 	page,
 	viewsPage,
 }) => {
+	const DATASET_NAME = 'Item Actions DS';
+	const DATASET_VIEW_NAME = 'Item Actions DS View';
+	const LINK_ITEM_ACTION_NAME = 'Link item action';
+
 	await test.step('Create Data Set', async () => {
 		await dataSetsPage.goto();
-		await dataSetsPage.createSampleDataSet();
+		await dataSetsPage.createSampleDataSet({name: DATASET_NAME});
 	});
 
 	await test.step('Create Data Set View', async () => {
-		await viewsPage.goto();
-		await viewsPage.createSampleDataSetView();
+		await viewsPage.goto(DATASET_NAME);
+		await viewsPage.createSampleDataSetView({name: DATASET_VIEW_NAME});
 	});
 
 	await test.step('Go to Actions tab', async () => {
-		await actionsPage.goto();
+		await actionsPage.goto({
+			dataSetName: DATASET_NAME,
+			dataSetViewName: DATASET_VIEW_NAME,
+		});
 	});
 
 	await test.step('Create an item action', async () => {
@@ -53,13 +58,19 @@ test('Create a Link Item Action', async ({
 		});
 	});
 
-	await expect(
-		page
-			.getByRole('cell', {
-				exact: true,
-				name: LINK_ITEM_ACTION_NAME,
-			})
-			.locator('span')
-			.first()
-	).toBeVisible();
+	await test.step('Check that the item action is in the list', async () => {
+		await expect(
+			page
+				.getByRole('cell', {
+					exact: true,
+					name: LINK_ITEM_ACTION_NAME,
+				})
+				.locator('span')
+				.first()
+		).toBeVisible();
+	});
+
+	await test.step('Delete Data Set', async () => {
+		await dataSetsPage.deleteDataSet(DATASET_NAME);
+	});
 });

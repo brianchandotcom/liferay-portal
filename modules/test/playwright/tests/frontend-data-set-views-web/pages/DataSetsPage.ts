@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
@@ -53,27 +53,37 @@ export class DataSetsPage {
 		this.page = page;
 	}
 
-	async createSampleDataSet() {
+	async createSampleDataSet({
+		name = 'Data Set Sample',
+		restApplication = '/data-set-manager/fields',
+		restEndpoint = '/',
+		restSchema = 'FDSField',
+	}: {
+		name?: string;
+		restApplication?: string;
+		restEndpoint?: string;
+		restSchema?: string;
+	} = {}) {
 		await this.newDataSetButton.click();
 		await this.newDataSetModal.nameInput.waitFor();
 
-		await this.newDataSetModal.nameInput.fill('Data Set Sample');
+		await this.newDataSetModal.nameInput.fill(name);
 		await this.newDataSetModal.restApplicationField.click();
 		await this.newDataSetModal.restApplicationOptions
-			.getByRole('option', {name: '/data-set-manager/fields'})
+			.getByRole('option', {name: restApplication})
 			.click();
 
 		await this.newDataSetModal.restSchemaField.waitFor();
 		await this.newDataSetModal.restSchemaField.click();
 		await this.newDataSetModal.restSchemaOptions
-			.getByRole('option', {name: 'FDSField'})
+			.getByRole('option', {name: restSchema})
 			.click();
 		await this.newDataSetModal.restSchemaField.click();
 
 		await this.newDataSetModal.restEndpointField.waitFor();
 		await this.newDataSetModal.restEndpointField.click();
 		await this.newDataSetModal.restEndpointOptions
-			.getByRole('option', {name: '/'})
+			.getByRole('option', {name: restEndpoint})
 			.click();
 		await this.newDataSetModal.restEndpointField.click();
 
@@ -83,15 +93,43 @@ export class DataSetsPage {
 	async goto() {
 		await this.applicationsMenuPage.goToDataSetManager();
 
-		await expect(
-			this.page.getByRole('heading', {name: 'Data Sets'})
-		).toBeInViewport();
+		await this.page
+			.getByRole('heading', {
+				name: 'Data Sets',
+			})
+			.waitFor();
 	}
 
-	async gotoSampleDataSet() {
-		await this.dataSetsTable
-			.getByRole('link', {name: 'Data Set Sample'})
+	async gotoSampleDataSet(name = 'Data Set Sample') {
+		await this.page
+			.locator('.data-set-content-wrapper')
+			.getByRole('link', {name})
 			.first()
 			.click();
+
+		await this.page
+			.getByRole('heading', {
+				name,
+			})
+			.waitFor();
+	}
+
+	async deleteDataSet(name = 'Data Set Sample') {
+		await this.goto();
+
+		const datasetTestRow = await this.page
+			.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
+			.filter({hasText: name});
+
+		await datasetTestRow
+			.first()
+			.getByRole('button', {name: 'Actions'})
+			.click();
+
+		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		const deleteModal = await this.page.getByRole('dialog');
+
+		await deleteModal.getByRole('button', {name: 'Delete'}).click();
 	}
 }

@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
 import {DataSetsPage} from './DataSetsPage';
+
+const DEFAULT_DATA_SET_VIEW_NAME = 'Data Set View Sample';
 
 export class ViewsPage {
 	readonly dataSetsPage: DataSetsPage;
@@ -13,6 +15,7 @@ export class ViewsPage {
 	readonly newDataSetViewButton: Locator;
 	readonly newDataSetViewEmptyButton: Locator;
 	readonly newDataSetViewModal: {
+		descriptionInput: Locator;
 		nameInput: Locator;
 		saveButton: Locator;
 	};
@@ -24,36 +27,49 @@ export class ViewsPage {
 		this.newDataSetViewButton = page.getByLabel('New Data Set View');
 		this.newDataSetViewEmptyButton = page.getByText('New Data Set View');
 		this.newDataSetViewModal = {
+			descriptionInput: page.getByLabel('Description'),
 			nameInput: page.getByLabel('NameRequired'),
 			saveButton: page.getByRole('button', {name: 'Save'}),
 		};
 		this.page = page;
 	}
 
-	async goto() {
+	async goto(dataSetName?: string) {
 		await this.dataSetsPage.goto();
-		await this.dataSetsPage.gotoSampleDataSet();
-
-		await expect(
-			this.page.getByRole('heading', {name: 'Data Set Sample'})
-		).toBeInViewport();
+		await this.dataSetsPage.gotoSampleDataSet(dataSetName);
 	}
 
-	async createSampleDataSetView() {
+	async createSampleDataSetView({
+		description,
+		name = DEFAULT_DATA_SET_VIEW_NAME,
+	}: {
+		description?: string;
+		name?: string;
+	} = {}) {
 		await this.newDataSetViewButton.click();
 
-		await this.newDataSetViewModal.nameInput.fill('Data Set View Sample');
+		await this.newDataSetViewModal.nameInput.fill(name);
+
+		if (description) {
+			await this.newDataSetViewModal.descriptionInput.fill(description);
+		}
 
 		await this.newDataSetViewModal.saveButton.click();
 	}
 
-	async gotoSampleDataSetView() {
+	async gotoSampleDataSetView(name = DEFAULT_DATA_SET_VIEW_NAME) {
 		await this.dataSetsViewTable
 			.getByRole('link', {
 				exact: true,
-				name: 'Data Set View Sample',
+				name,
 			})
 			.first()
 			.click();
+
+		await this.page
+			.getByRole('heading', {
+				name,
+			})
+			.waitFor();
 	}
 }

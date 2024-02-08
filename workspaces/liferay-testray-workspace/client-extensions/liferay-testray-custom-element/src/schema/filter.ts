@@ -189,7 +189,7 @@ const baseFilters: Filter = {
 		transformData(item) {
 			return dataToOptions(transformData<TestrayRun>(item), (run) => ({
 				label: run?.number?.toString().padStart(2, '0'),
-				value: run.number,
+				value: run.id,
 			}));
 		},
 		type: 'select',
@@ -284,8 +284,7 @@ const filterSchema = {
 				type: 'text',
 			},
 			overrides(baseFilters.run, {
-				name: 'runToCaseResult/number',
-				removeQuoteMark: true,
+				name: 'runToCaseResult/id',
 				type: 'select',
 			}),
 			{

@@ -120,7 +120,6 @@ const Runs = () => {
 							value: i18n.translate('total'),
 						},
 						{
-							clickable: true,
 							key: 'metrics',
 							render: (_, testrayRun) => (
 								<ProgressBar
@@ -138,7 +137,13 @@ const Runs = () => {
 							width: '300',
 						},
 					],
-					navigateTo: (run) => `..?runId=${run.id}`,
+					navigateTo: (run) =>
+						`..?${new URLSearchParams({
+							filter: JSON.stringify({
+								'runToCaseResult/id': [run.id],
+							}),
+							filterSchema: 'buildResults',
+						})}`,
 					onClickRow(item) {
 						dispatch({
 							payload: item.number,

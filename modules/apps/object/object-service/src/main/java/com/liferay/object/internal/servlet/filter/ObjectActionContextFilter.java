@@ -42,9 +42,12 @@ public class ObjectActionContextFilter extends BaseFilter {
 
 		ObjectActionThreadLocal.setHttpServletRequest(httpServletRequest);
 
-		filterChain.doFilter(httpServletRequest, httpServletResponse);
-
-		ObjectActionThreadLocal.setHttpServletRequest(null);
+		try {
+			filterChain.doFilter(httpServletRequest, httpServletResponse);
+		}
+		finally {
+			ObjectActionThreadLocal.setHttpServletRequest(null);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

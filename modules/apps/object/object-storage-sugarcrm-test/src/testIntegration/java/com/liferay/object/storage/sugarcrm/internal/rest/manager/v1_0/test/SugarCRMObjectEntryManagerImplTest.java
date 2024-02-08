@@ -15,7 +15,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.object.storage.sugarcrm.configuration.SugarCRMConfiguration;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -40,7 +39,6 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -76,12 +74,12 @@ public class SugarCRMObjectEntryManagerImplTest
 		companyId = TestPropsValues.getCompanyId();
 
 		_configurationProvider.saveCompanyConfiguration(
-			SalesforceConfiguration.class, companyId,
+			SugarCRMConfiguration.class, companyId,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"accessTokenUrl",
+				"accessTokenURL",
 				TestPropsUtil.get("object.storage.sugarcrm.access.token.url")
 			).put(
-				"baseUrl", TestPropsUtil.get("object.storage.sugarcrm.base.url")
+				"baseURL", TestPropsUtil.get("object.storage.sugarcrm.base.url")
 			).put(
 				"clientId",
 				TestPropsUtil.get("object.storage.sugarcrm.client.id")
@@ -103,7 +101,7 @@ public class SugarCRMObjectEntryManagerImplTest
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_configurationProvider.saveCompanyConfiguration(
-			SalesforceConfiguration.class, companyId,
+			SugarCRMConfiguration.class, companyId,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"accessTokenUrl", ""
 			).put(
@@ -126,8 +124,8 @@ public class SugarCRMObjectEntryManagerImplTest
 		_objectDefinition =
 			objectDefinitionLocalService.addCustomObjectDefinition(
 				adminUser.getUserId(), 0, false, false, false,
-				LocalizedMapUtil.getLocalizedMap("Ticket"), "Ticket", null,
-				null, LocalizedMapUtil.getLocalizedMap("Tickets"), true,
+				LocalizedMapUtil.getLocalizedMap("Contact"), "Contact", null,
+				null, LocalizedMapUtil.getLocalizedMap("Contacts"), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_SUGARCRM,
 				Collections.emptyList());
@@ -135,13 +133,13 @@ public class SugarCRMObjectEntryManagerImplTest
 		ObjectFieldUtil.addCustomObjectField(
 			new DateObjectFieldBuilder(
 			).externalReferenceCode(
-				"Due_date__c"
+				"first_name"
 			).userId(
 				adminUser.getUserId()
 			).labelMap(
-				LocalizedMapUtil.getLocalizedMap("Due Date")
+				LocalizedMapUtil.getLocalizedMap("First Name")
 			).name(
-				"dueDate"
+				"firstName"
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
 			).build());
@@ -149,20 +147,20 @@ public class SugarCRMObjectEntryManagerImplTest
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).externalReferenceCode(
-				"Title__c"
+				"last_name"
 			).userId(
 				adminUser.getUserId()
 			).labelMap(
-				LocalizedMapUtil.getLocalizedMap("Title")
+				LocalizedMapUtil.getLocalizedMap("Last Name")
 			).name(
-				"title"
+				"lastName"
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
 			).build());
 
 		_objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
 
-		_objectDefinition.setExternalReferenceCode("Ticket__c");
+		_objectDefinition.setExternalReferenceCode("Contacts");
 
 		_objectDefinition = objectDefinitionLocalService.updateObjectDefinition(
 			_objectDefinition);
@@ -190,24 +188,68 @@ public class SugarCRMObjectEntryManagerImplTest
 
 	@Test
 	public void testAddObjectEntry() throws Exception {
-		ObjectEntry objectEntry = _addObjectEntry(
-			null, null, RandomTestUtil.randomString());
+		String firstName = RandomTestUtil.randomString();
+		String lastName = RandomTestUtil.randomString();
+
+		ObjectEntry objectEntry = _addObjectEntry(firstName, lastName);
 
 		Assert.assertNotNull(objectEntry.getExternalReferenceCode());
 	}
 
 	@Test
-	public void testAddOrUpdateObjectEntry() throws Exception {
-		ObjectEntry objectEntry = _addObjectEntry(
-			null, null, RandomTestUtil.randomString());
+	public void testGetObjectEntries() throws Exception {
+		String firstName1 = "a" + RandomTestUtil.randomString();
+		String lastName1 = "a" + RandomTestUtil.randomString();
+		String firstName2 = "b" + RandomTestUtil.randomString();
+		String lastName2 = "b" + RandomTestUtil.randomString();
 
-		String title = RandomTestUtil.randomString();
+		ObjectEntry objectEntry1 = _addObjectEntry(firstName1, lastName1);
+		ObjectEntry objectEntry2 = _addObjectEntry(firstName2, lastName2);
+
+		// Test for standard filter format
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter", "[0][id]=" + objectEntry1.getExternalReferenceCode()
+			).build(),
+			objectEntry1);
+
+		// Test for json filter format
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				"=[{\"id\":\"" + objectEntry2.getExternalReferenceCode() +
+					"\"}]"
+			).build(),
+			objectEntry2);
+	}
+
+	@Test
+	public void testGetObjectEntry() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+		String lastName = RandomTestUtil.randomString();
+
+		ObjectEntry objectEntry = _addObjectEntry(firstName, lastName);
+
+		_assertObjectEntry(
+			objectEntry.getExternalReferenceCode(), firstName, lastName);
+	}
+
+	@Test
+	public void testUpdateObjectEntry() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+		String lastName = RandomTestUtil.randomString();
+
+		ObjectEntry objectEntry = _addObjectEntry(firstName, lastName);
+
+		String updatedFirstName = RandomTestUtil.randomString();
 
 		objectEntry.setProperties(
 			HashMapBuilder.putAll(
 				objectEntry.getProperties()
 			).put(
-				"title", title
+				"firstName", updatedFirstName
 			).build());
 
 		objectEntry = _objectEntryManager.updateObjectEntry(
@@ -216,174 +258,8 @@ public class SugarCRMObjectEntryManagerImplTest
 			objectEntry, ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		Assert.assertEquals(
-			title, MapUtil.getString(objectEntry.getProperties(), "title"));
-	}
-
-	@Test
-	public void testGetObjectEntries() throws Exception {
-		String title1 = "a" + RandomTestUtil.randomString();
-		String title2 = "b" + RandomTestUtil.randomString();
-		String title3 = "c" + RandomTestUtil.randomString();
-		String title4 = "d" + RandomTestUtil.randomString();
-
-		Date date = RandomTestUtil.nextDate();
-
-		ObjectEntry objectEntry1 = _addObjectEntry("queued", date, title1);
-		ObjectEntry objectEntry2 = _addObjectEntry(
-			"started", new Date(date.getTime() - Time.DAY), title2);
-		ObjectEntry objectEntry3 = _addObjectEntry(
-			"completed", new Date(date.getTime() + Time.DAY), title3);
-		ObjectEntry objectEntry4 = _addObjectEntry("queued", date, title4);
-
-		// And/or with equals/not equals expression
-
-		String filterString = StringBundler.concat(
-			"(title eq ", getValue(title1), " or title eq ", getValue(title2),
-			" or title eq ", getValue(title3), " or title eq ",
-			getValue(title4), ") and ");
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				StringBundler.concat(
-					filterString,
-					buildEqualsExpressionFilterString("customStatus", "queued"),
-					" and ", buildEqualsExpressionFilterString("dueDate", date),
-					" and ", buildEqualsExpressionFilterString("title", title1))
-			).build(),
-			objectEntry1);
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				StringBundler.concat(
-					filterString,
-					_buildNotEqualsExpressionFilterString(
-						"customStatus", "queued"),
-					" and ",
-					_buildNotEqualsExpressionFilterString("dueDate", date),
-					" and ",
-					_buildNotEqualsExpressionFilterString("title", title1))
-			).build(),
-			objectEntry2, objectEntry3);
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				StringBundler.concat(
-					filterString,
-					buildEqualsExpressionFilterString("customStatus", "queued"),
-					" or ", buildEqualsExpressionFilterString("dueDate", date),
-					" or ", buildEqualsExpressionFilterString("title", title1))
-			).build(),
-			objectEntry1, objectEntry4);
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				StringBundler.concat(
-					filterString,
-					_buildNotEqualsExpressionFilterString(
-						"customStatus", "queued"),
-					" or ",
-					_buildNotEqualsExpressionFilterString("dueDate", date),
-					" or ",
-					_buildNotEqualsExpressionFilterString("title", title1))
-			).build(),
-			objectEntry2, objectEntry3, objectEntry4);
-
-		// Equals/not equals expression
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				filterString.concat(
-					buildEqualsExpressionFilterString("customStatus", "queued"))
-			).build(),
-			objectEntry1, objectEntry4);
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				filterString.concat(
-					_buildNotEqualsExpressionFilterString(
-						"customStatus", "queued"))
-			).build(),
-			objectEntry2, objectEntry3);
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				filterString.concat(
-					buildEqualsExpressionFilterString("dueDate", date))
-			).build(),
-			objectEntry1, objectEntry4);
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				filterString.concat(
-					_buildNotEqualsExpressionFilterString("dueDate", date))
-			).build(),
-			objectEntry2, objectEntry3);
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				filterString.concat(
-					buildEqualsExpressionFilterString("title", title1))
-			).build(),
-			objectEntry1);
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				filterString.concat(
-					_buildNotEqualsExpressionFilterString("title", title1))
-			).build(),
-			objectEntry2, objectEntry3, objectEntry4);
-
-		// Range expression
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				buildRangeExpression(
-					_simpleDateFormat.parse(
-						MapUtil.getString(
-							objectEntry1.getProperties(), "dueDate")),
-					new Date(), "dueDate", "yyyy-MM-dd")
-			).build(),
-			objectEntry1, objectEntry4);
-	}
-
-	@Test
-	public void testGetObjectEntry() throws Exception {
-		String title = RandomTestUtil.randomString();
-
-		ObjectEntry objectEntry = _addObjectEntry(null, null, title);
-
-		_assertObjectEntry(objectEntry.getExternalReferenceCode(), title);
-	}
-
-	@Test
-	public void testPartialUpdateObjectEntry() throws Exception {
-		ObjectEntry objectEntry = _addObjectEntry(
-			null, null, RandomTestUtil.randomString());
-
-		_objectEntryManager.partialUpdateObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"title", "Able"
-					).build();
-				}
-			},
-			null);
-
-		_assertObjectEntry(objectEntry.getExternalReferenceCode(), "Able");
+			updatedFirstName,
+			MapUtil.getString(objectEntry.getProperties(), "firstName"));
 	}
 
 	@Override
@@ -391,18 +267,15 @@ public class SugarCRMObjectEntryManagerImplTest
 			Map<String, String> context, Sort[] sorts)
 		throws Exception {
 
-		if (sorts == null) {
-			sorts = new Sort[] {SortFactoryUtil.create("title", false)};
-		}
+		sorts = new Sort[] {SortFactoryUtil.create("firstName", false)};
 
 		return _objectEntryManager.getObjectEntries(
 			companyId, _objectDefinition, null, null, dtoConverterContext,
-			context.get("filter"), Pagination.of(1, 3), context.get("search"),
+			context.get("filter"), Pagination.of(1, 20), context.get("search"),
 			sorts);
 	}
 
-	private ObjectEntry _addObjectEntry(
-			String customStatus, Date date, String title)
+	private ObjectEntry _addObjectEntry(String firstName, String lastName)
 		throws Exception {
 
 		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
@@ -410,12 +283,9 @@ public class SugarCRMObjectEntryManagerImplTest
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
-						"customStatus", customStatus
+						"firstName", firstName
 					).put(
-						"dueDate",
-						(date != null) ? _simpleDateFormat.format(date) : null
-					).put(
-						"title", title
+						"lastName", lastName
 					).build();
 				}
 			},
@@ -426,7 +296,8 @@ public class SugarCRMObjectEntryManagerImplTest
 		return objectEntry;
 	}
 
-	private void _assertObjectEntry(String externalReferenceCode, String title)
+	private void _assertObjectEntry(
+			String externalReferenceCode, String firstName, String lastName)
 		throws Exception {
 
 		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
@@ -434,13 +305,12 @@ public class SugarCRMObjectEntryManagerImplTest
 			_objectDefinition, ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		Assert.assertEquals(
-			title, MapUtil.getString(objectEntry.getProperties(), "title"));
-	}
+			firstName,
+			MapUtil.getString(objectEntry.getProperties(), "firstName"));
 
-	private String _buildNotEqualsExpressionFilterString(
-		String fieldName, Object value) {
-
-		return StringBundler.concat(fieldName, " ne ", getValue(value));
+		Assert.assertEquals(
+			lastName,
+			MapUtil.getString(objectEntry.getProperties(), "lastName"));
 	}
 
 	@Inject

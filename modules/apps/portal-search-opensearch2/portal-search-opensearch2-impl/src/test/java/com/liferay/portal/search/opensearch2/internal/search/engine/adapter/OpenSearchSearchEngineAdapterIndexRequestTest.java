@@ -69,7 +69,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.opensearch.client.json.JsonpMapper;
@@ -237,7 +236,6 @@ public class OpenSearchSearchEngineAdapterIndexRequestTest
 			"The 2 QUICK Brown-Foxes jumped over the lazy dog's bone.");
 	}
 
-	@Ignore
 	@Test
 	public void testExecuteAnalyzeIndexRequestWithNormalizer() {
 		_putSettings(

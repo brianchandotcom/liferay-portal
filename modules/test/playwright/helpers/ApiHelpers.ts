@@ -8,8 +8,8 @@
 import {Page} from '@playwright/test';
 
 import {liferayConfig} from '../liferay.config';
-import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
 import {ApiBuilderHelper} from './ApiBuilderHelper';
+import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
 import {HeadlessAdminUserApiHelper} from './HeadlessAdminUserApiHelper';
 import {HeadlessCommerceAdminCatalogApiHelper} from './HeadlessCommerceAdminCatalogApiHelper';
 import {HeadlessCommerceAdminChannelApiHelper} from './HeadlessCommerceAdminChannelApiHelper';
@@ -40,18 +40,14 @@ export class ApiHelpers {
 		this.baseUrl = liferayConfig.environment.baseUrl + '/o/';
 		this.featureFlag = new FeatureFlagApiHelper(page);
 		this.headlessAdminUser = new HeadlessAdminUserApiHelper(this);
-		this.headlessCommerceAdminCatalog = new HeadlessCommerceAdminCatalogApiHelper(
-			this
-		);
-		this.headlessCommerceAdminChannel = new HeadlessCommerceAdminChannelApiHelper(
-			this
-		);
-		this.headlessCommerceDeliveryCatalog = new HeadlessCommerceDeliveryCatalogApiHelper(
-			this
-		);
-		this.headlessCommerceDeliveryCart = new HeadlessCommerceDeliveryCartApiHelper(
-			this
-		);
+		this.headlessCommerceAdminCatalog =
+			new HeadlessCommerceAdminCatalogApiHelper(this);
+		this.headlessCommerceAdminChannel =
+			new HeadlessCommerceAdminChannelApiHelper(this);
+		this.headlessCommerceDeliveryCatalog =
+			new HeadlessCommerceDeliveryCatalogApiHelper(this);
+		this.headlessCommerceDeliveryCart =
+			new HeadlessCommerceDeliveryCartApiHelper(this);
 		this.headlessDelivery = new HeadlessDeliveryApiHelper(this);
 		this.headlessSite = new HeadlessSiteApiHelper(this);
 		this.object = new ObjectApiHelper(this);

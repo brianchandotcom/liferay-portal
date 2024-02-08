@@ -47,6 +47,24 @@ import org.springframework.web.util.UriBuilder;
 @Component
 public class QueueListener {
 
+	public static final String ACCOUNT_ROLE_NAME_PARTNER_MANAGER =
+		"[Account] Partner Manager (PM)";
+
+	public static final String ACCOUNT_ROLE_NAME_PARTNER_MARKETING_USER =
+		"[Account] Partner Marketing User (PMU)";
+
+	public static final String ACCOUNT_ROLE_NAME_PARTNER_SALES_USER =
+		"[Account] Partner Sales User (PSU)";
+
+	public static final String REGULAR_ROLE_NAME_PARTNER_MANAGER =
+		"Partner Manager (PM)";
+
+	public static final String REGULAR_ROLE_NAME_PARTNER_MARKETING_USER =
+		"Partner Marketing User (PMU)";
+
+	public static final String REGULAR_ROLE_NAME_PARTNER_SALES_USER =
+		"Partner Sales User (PSU)";
+
 	@RabbitListener(
 		bindings = {
 			@QueueBinding(
@@ -169,9 +187,9 @@ public class QueueListener {
 				}
 				catch (Exception exception) {
 					_log.error(
-						"Could not get Account from SALESFORCE: " + exception);
+						"Could NOT get Account from SALESFORCE: " + exception);
 
-					channel.basicReject(deliveryTag, false);
+					channel.basicReject(deliveryTag, true);
 
 					return;
 				}
@@ -201,9 +219,11 @@ public class QueueListener {
 					}
 				}
 				catch (Exception exception) {
+					channel.basicReject(deliveryTag, true);
+
 					_log.error(
 						StringBundler.concat(
-							"Could not Update Account with name: ", accountName,
+							"Could NOT Update Account with name: ", accountName,
 							" ERROR: ", exception));
 				}
 			}
@@ -240,8 +260,202 @@ public class QueueListener {
 				catch (Exception exception) {
 					_log.error(
 						StringBundler.concat(
-							"Could not Delete Account with name: ", accountName,
+							"Could NOT Delete Account with name: ", accountName,
 							" ERROR: ", exception));
+				}
+			}
+
+			if (receivedRoutingKey.equals(
+					"koroneiki.account.contactrole.assigned") ||
+				receivedRoutingKey.equals(
+					"koroneiki.account.contactrole.unassigned")) {
+
+				JSONObject jsonObject = new JSONObject(body);
+
+				JSONObject accountJSONObject = jsonObject.getJSONObject(
+					"account");
+
+				String salesforceAccountKey = _getSalesforceAccountKey(
+					accountJSONObject);
+
+				JSONObject contactJSONObject = jsonObject.getJSONObject(
+					"contact");
+
+				String contactEmailAddress = contactJSONObject.optString(
+					"emailAddress");
+
+				JSONObject contactRoleJSONObject = jsonObject.getJSONObject(
+					"contactRole");
+
+				String contactRoleName = contactRoleJSONObject.getString(
+					"name");
+
+				Map<String, String> roleNames = new HashMap<>();
+
+				if (contactRoleName.equals("Partner Manager")) {
+					roleNames.put(
+						ACCOUNT_ROLE_NAME_PARTNER_MANAGER,
+						REGULAR_ROLE_NAME_PARTNER_MANAGER);
+				}
+
+				if (contactRoleName.equals("Partner Member")) {
+					roleNames.put(
+						ACCOUNT_ROLE_NAME_PARTNER_MARKETING_USER,
+						REGULAR_ROLE_NAME_PARTNER_MARKETING_USER);
+					roleNames.put(
+						ACCOUNT_ROLE_NAME_PARTNER_SALES_USER,
+						REGULAR_ROLE_NAME_PARTNER_SALES_USER);
+				}
+
+				if ((salesforceAccountKey == null) ||
+					(contactEmailAddress == null) || roleNames.isEmpty()) {
+
+					channel.basicAck(deliveryTag, false);
+
+					return;
+				}
+
+				String accountName = accountJSONObject.getString("name");
+
+				JSONArray contanctTeamsJSONArray =
+					contactJSONObject.getJSONArray("teams");
+
+				boolean unassignUser = true;
+
+				for (int i = 0; i < contanctTeamsJSONArray.length(); i++) {
+					JSONObject teamsJSONObject =
+						contanctTeamsJSONArray.getJSONObject(i);
+
+					if (StringUtil.equalsIgnoreCase(
+							teamsJSONObject.getString("accountKey"),
+							accountJSONObject.getString("key"))) {
+
+						unassignUser = false;
+
+						break;
+					}
+				}
+
+				for (Map.Entry<String, String> roleName :
+						roleNames.entrySet()) {
+
+					String accountRoleName = roleName.getKey();
+
+					if (receivedRoutingKey.equals(
+							"koroneiki.account.contactrole.assigned")) {
+
+						try {
+							_assignUserAccount(
+								salesforceAccountKey, contactEmailAddress);
+
+							_log.info(
+								StringBundler.concat(
+									"User with Email Address: ",
+									contactEmailAddress,
+									" was assigned to the Account: ",
+									accountName, " (", salesforceAccountKey,
+									")"));
+
+							_assignUserAccountToAccountRole(
+								accountRoleName, salesforceAccountKey,
+								contactEmailAddress);
+
+							_log.info(
+								StringBundler.concat(
+									"User with Email Address: ",
+									contactEmailAddress,
+									" was assigned to the Account Role: ",
+									accountRoleName));
+
+							JSONObject userAccountJSONObject =
+								_getUserAccountJSONObject(contactEmailAddress);
+
+							Long userAccountId = userAccountJSONObject.getLong(
+								"id");
+
+							_assignUserAccountToRegularRole(
+								roleNames.get(accountRoleName), userAccountId);
+
+							_log.info(
+								StringBundler.concat(
+									"User with Email Address: ",
+									contactEmailAddress,
+									" was assigned to the Regular Role: ",
+									accountRoleName));
+						}
+						catch (Exception exception) {
+							_log.error(
+								StringBundler.concat(
+									"Could NOT assign User with Email",
+									"Address: ", contactEmailAddress,
+									" to the Account: ", accountName,
+									" ERROR: ", exception));
+
+							channel.basicReject(deliveryTag, false);
+
+							return;
+						}
+					}
+
+					if (receivedRoutingKey.equals(
+							"koroneiki.account.contactrole.unassigned")) {
+
+						try {
+							_unassignUserAccountToAccountRole(
+								accountRoleName, salesforceAccountKey,
+								contactEmailAddress);
+
+							_log.info(
+								StringBundler.concat(
+									"User with Email Address: ",
+									contactEmailAddress,
+									" was unassigned from the Account Role: ",
+									accountRoleName));
+
+							JSONObject userAccountJSONObject =
+								_getUserAccountJSONObject(contactEmailAddress);
+
+							Long userAccountId = userAccountJSONObject.getLong(
+								"id");
+
+							_unassignUserAccountToRegularRole(
+								roleNames.get(accountRoleName), userAccountId);
+
+							_log.info(
+								StringBundler.concat(
+									"User with Email Address: ",
+									contactEmailAddress,
+									" was unassigned from the Regular Role: ",
+									roleNames.get(accountRoleName)));
+
+							if (unassignUser) {
+								_unassignUserAccount(
+									salesforceAccountKey, contactEmailAddress);
+
+								unassignUser = false;
+
+								_log.info(
+									StringBundler.concat(
+										"User with Email Address: ",
+										contactEmailAddress,
+										" was unassigned from the Account: ",
+										accountName, " (",
+										salesforceAccountKey));
+							}
+						}
+						catch (Exception exception) {
+							_log.error(
+								StringBundler.concat(
+									"Could NOT unassign User with Email ",
+									"Address: ", contactEmailAddress,
+									" to the Account: ", accountName,
+									" ERROR: ", exception));
+
+							channel.basicReject(deliveryTag, false);
+
+							return;
+						}
+					}
 				}
 			}
 
@@ -317,8 +531,51 @@ public class QueueListener {
 		}
 	}
 
-	private void _delete(String path) {
-		_getWebClient(
+	private void _assignUserAccount(
+		String salesforceAccountKey, String contactEmailAddress) {
+
+		_post(
+			"",
+			StringBundler.concat(
+				"/o/headless-admin-user/v1.0/accounts",
+				"/by-external-reference-code/", salesforceAccountKey,
+				"/user-accounts/by-email-address/", contactEmailAddress));
+	}
+
+	private void _assignUserAccountToAccountRole(
+		String accountRole, String salesforceAccountKey,
+		String contactEmailAddress) {
+
+		Map<String, Long> accountRolesIds = _getAccountRolesIds(
+			salesforceAccountKey);
+
+		Long accountRoleID = accountRolesIds.get(accountRole);
+
+		_post(
+			"",
+			StringBundler.concat(
+				"/o/headless-admin-user/v1.0/accounts",
+				"/by-external-reference-code/", salesforceAccountKey,
+				"/account-roles/", accountRoleID,
+				"/user-accounts/by-email-address/", contactEmailAddress));
+	}
+
+	private void _assignUserAccountToRegularRole(
+		String regularRole, Long userAccontID) {
+
+		Map<String, Long> regularRolesIDs = _getRegularRolesIds();
+
+		Long regularRoleID = regularRolesIDs.get(regularRole);
+
+		_post(
+			"",
+			StringBundler.concat(
+				"/o/headless-admin-user/v1.0/roles/", regularRoleID,
+				"/association/user-account/", userAccontID));
+	}
+
+	private String _delete(String path) {
+		return _getWebClient(
 		).delete(
 		).uri(
 			uriBuilder -> uriBuilder.path(
@@ -331,7 +588,7 @@ public class QueueListener {
 			"Bearer " + _oAuth2AccessToken.getTokenValue()
 		).retrieve(
 		).bodyToMono(
-			Void.class
+			String.class
 		).block();
 	}
 
@@ -385,6 +642,39 @@ public class QueueListener {
 		}
 
 		return countryISOCode;
+	}
+
+	private Map<String, Long> _getAccountRolesIds(
+		String accountExternalReferenceCode) {
+
+		JSONObject accountRolesResponseJSONObject = _get(
+			uriBuilder -> uriBuilder.path(
+				StringBundler.concat(
+					"/o/headless-admin-user/v1.0/accounts",
+					"/by-external-reference-code/",
+					accountExternalReferenceCode, "/account-roles")
+			).queryParam(
+				"pageSize", "-1"
+			).build());
+
+		Map<String, Long> accountRolesIds = new HashMap<>();
+
+		if (accountRolesResponseJSONObject.getInt("totalCount") > 0) {
+			JSONArray accountRolesJSONArray =
+				accountRolesResponseJSONObject.getJSONArray("items");
+
+			for (int r = 0; r < accountRolesJSONArray.length(); r++) {
+				JSONObject accountRoleJSONObject =
+					accountRolesJSONArray.getJSONObject(r);
+
+				String roleName = accountRoleJSONObject.getString("name");
+				Long roleID = accountRoleJSONObject.getLong("id");
+
+				accountRolesIds.put(roleName, roleID);
+			}
+		}
+
+		return accountRolesIds;
 	}
 
 	private Map<String, String> _getPartnerLevelExternalReferenceCodes() {
@@ -462,6 +752,34 @@ public class QueueListener {
 		return regionsIDs;
 	}
 
+	private Map<String, Long> _getRegularRolesIds() {
+		JSONObject regularRolesResponseJSONObject = _get(
+			uriBuilder -> uriBuilder.path(
+				"/o/headless-admin-user/v1.0/roles"
+			).queryParam(
+				"pageSize", "-1"
+			).build());
+
+		Map<String, Long> regularRolesIds = new HashMap<>();
+
+		if (regularRolesResponseJSONObject.getInt("totalCount") > 0) {
+			JSONArray regularRolesJSONArray =
+				regularRolesResponseJSONObject.getJSONArray("items");
+
+			for (int r = 0; r < regularRolesJSONArray.length(); r++) {
+				JSONObject regularRoleJSONObject =
+					regularRolesJSONArray.getJSONObject(r);
+
+				String roleName = regularRoleJSONObject.getString("name");
+				Long roleID = regularRoleJSONObject.getLong("id");
+
+				regularRolesIds.put(roleName, roleID);
+			}
+		}
+
+		return regularRolesIds;
+	}
+
 	private String _getSalesforceAccountKey(JSONObject accountJSONObject) {
 		JSONArray entitlementsJSONArray = accountJSONObject.getJSONArray(
 			"entitlements");
@@ -513,6 +831,14 @@ public class QueueListener {
 		}
 
 		return null;
+	}
+
+	private JSONObject _getUserAccountJSONObject(String contactEmailAddress) {
+		return _get(
+			uriBuilder -> uriBuilder.path(
+				"/o/headless-admin-user/v1.0/user-accounts/by-email-address/" +
+					contactEmailAddress
+			).build());
 	}
 
 	private WebClient _getWebClient() {
@@ -594,6 +920,46 @@ public class QueueListener {
 		).bodyToMono(
 			String.class
 		).block();
+	}
+
+	private void _unassignUserAccount(
+		String salesforceAccountKey, String contactEmailAddress) {
+
+		_delete(
+			StringBundler.concat(
+				"/o/headless-admin-user/v1.0/accounts",
+				"/by-external-reference-code/", salesforceAccountKey,
+				"/user-accounts/by-email-address/", contactEmailAddress));
+	}
+
+	private void _unassignUserAccountToAccountRole(
+		String accountRole, String salesforceAccountKey,
+		String contactEmailAddress) {
+
+		Map<String, Long> accountRolesIds = _getAccountRolesIds(
+			salesforceAccountKey);
+
+		Long accountRoleID = accountRolesIds.get(accountRole);
+
+		_delete(
+			StringBundler.concat(
+				"/o/headless-admin-user/v1.0/accounts",
+				"/by-external-reference-code/", salesforceAccountKey,
+				"/account-roles/", accountRoleID,
+				"/user-accounts/by-email-address/", contactEmailAddress));
+	}
+
+	private void _unassignUserAccountToRegularRole(
+		String regularRole, Long userAccontID) {
+
+		Map<String, Long> regularRolesIDs = _getRegularRolesIds();
+
+		Long regularRoleID = regularRolesIDs.get(regularRole);
+
+		_delete(
+			StringBundler.concat(
+				"/o/headless-admin-user/v1.0/roles/", regularRoleID,
+				"/association/user-account/", userAccontID));
 	}
 
 	private static final Log _log = LogFactory.getLog(QueueListener.class);

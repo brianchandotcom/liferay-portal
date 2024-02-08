@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -268,6 +269,52 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	@Test
+	public void testReindexPublishedLayoutWithPortletDisplayingJournalArticleWithGeolocationDDMFormField()
+		throws Exception {
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		String portletId = _addJournalContentPortletToLayout(draftLayout);
+
+		DDMFormField ddmFormField = _createDDMFormField(
+			DDMFormFieldTypeConstants.GEOLOCATION);
+
+		double lat = RandomTestUtil.randomDouble();
+		double lng = RandomTestUtil.randomDouble();
+
+		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter,
+			JSONUtil.put(
+				"lat", lat
+			).put(
+				"lng", lng
+			).toString(),
+			_group.getGroupId(), _journalConverter);
+
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		_setUpPortletPreferences(
+			assetEntry, journalArticle, draftLayout, portletId);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertPortletPreferences(
+			assetEntry, journalArticle, layout, portletId);
+
+		_assertReindex(layout, "\"lat\":" + lat, "\"lng\":" + lng);
+	}
+
+	@Test
 	public void testReindexUnpublishedDraftLayout() throws Exception {
 		String elementText = RandomTestUtil.randomString();
 
@@ -380,6 +427,18 @@ public class LayoutModelDocumentContributorTest {
 			portletPreferences.getValue("groupId", null));
 	}
 
+	private void _assertReindex(Layout layout, String... expectedContents)
+		throws Exception {
+
+		List<LogEntry> logEntries = _reindexLayoutsLogEntries();
+
+		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+
+		for (String keywords : expectedContents) {
+			_assertSearch(keywords, layout.getPlid());
+		}
+	}
+
 	private void _assertReindex(String expectedContent, Layout layout)
 		throws Exception {
 
@@ -436,6 +495,19 @@ public class LayoutModelDocumentContributorTest {
 		return ddmFormField;
 	}
 
+	private List<LogEntry> _reindexLayoutsLogEntries() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_INCLUDE_TAG, LoggerTestUtil.DEBUG)) {
+
+			_indexWriterHelper.reindex(
+				TestPropsValues.getUserId(), "reindex",
+				new long[] {_group.getCompanyId()}, Layout.class.getName(),
+				null);
+
+			return logCapture.getLogEntries();
+		}
+	}
+
 	private List<LogEntry> _reindexLogEntries(Layout layout) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.DEBUG)) {
@@ -474,6 +546,9 @@ public class LayoutModelDocumentContributorTest {
 		"com.liferay.layout.internal.search.spi.model.index.contributor." +
 			"LayoutModelDocumentContributor";
 
+	private static final String _CLASS_NAME_INCLUDE_TAG =
+		"com.liferay.taglib.util.IncludeTag";
+
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -491,6 +566,9 @@ public class LayoutModelDocumentContributorTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private IndexWriterHelper _indexWriterHelper;
 
 	@Inject
 	private JournalConverter _journalConverter;

@@ -10,6 +10,7 @@ export class ApplicationPage {
 	readonly addSchemaButton: Locator;
 	readonly createButton: Locator;
 	readonly endpointPathTextBox: Locator;
+	readonly httpMethodButton: Locator;
 	readonly page: Page;
 	readonly pathParameterTextBox: Locator;
 	readonly publishButton: Locator;
@@ -20,6 +21,7 @@ export class ApplicationPage {
 		this.addSchemaButton = page.getByLabel('Add New Schema');
 		this.createButton = page.getByRole('button', {name: 'Create'});
 		this.endpointPathTextBox = page.getByPlaceholder('Enter Path');
+		this.httpMethodButton = page.getByLabel('Method');
 		this.page = page;
 		this.pathParameterTextBox = page.getByPlaceholder('{Enter Parameter}');
 		this.publishButton = page.getByRole('button', {name: 'Publish'});

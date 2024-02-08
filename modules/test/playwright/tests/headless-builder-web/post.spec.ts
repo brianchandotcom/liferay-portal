@@ -75,6 +75,30 @@ const studentSubjectsApplication = {
 	title: 'Student-Subject manager',
 };
 
+test('can create post endpoint and can not edit http method', async ({
+	apiHelpers,
+	applicationPage,
+	headlessBuilderPage,
+}) => {
+	await apiHelpers.object.postObjectEntry(
+		basicAPIApplication,
+		'headless-builder/applications'
+	);
+
+	await headlessBuilderPage.goto();
+	await headlessBuilderPage.goToEditApplication(basicAPIApplication.title);
+
+	await applicationPage.createEndpoint('POST', 'Company', 'student');
+
+	await applicationPage.goToEndpointInfoTab();
+
+	const isDisabled = await applicationPage.httpMethodButton.evaluate(
+		(element: HTMLButtonElement) => element.disabled
+	);
+
+	await expect(isDisabled).toBeTruthy();
+});
+
 test('can create post endpoint with different request and response schema', async ({
 	apiExplorerPage,
 	apiHelpers,

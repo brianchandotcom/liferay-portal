@@ -126,14 +126,34 @@ export function parseReassignments(node) {
 		else if (item['user'] !== undefined) {
 			assignments.assignmentType = ['user'];
 
-			if (item['user'][0]?.['email-address']) {
-				assignments.emailAddress = [item['user'][0]['email-address']];
+			const usersLength = item['user']?.length;
+
+			const emailAddress = [];
+			const screenName = [];
+			const userId = [];
+
+			for (let i = 0; i < usersLength; i++) {
+				if (item['user'][i]?.['email-address']) {
+					emailAddress.push(item['user'][i]?.['email-address']);
+				}
+				else if (item['user'][0]?.['screen-name']) {
+					screenName.push(item['user'][i]?.['screen-name']);
+				}
+				else if (item['user'][0]?.['user-id']) {
+					userId.push(item['user'][i]?.['user-id']);
+				}
 			}
-			else if (item['user'][0]?.['user-id']) {
-				assignments.userId = [item['user'][0]['user-id']];
+
+			if (emailAddress.length) {
+				assignments.emailAddress = emailAddress;
 			}
-			else if (item['user'][0]?.['screen-name']) {
-				assignments.screenName = [item['user'][0]['screen-name']];
+
+			if (screenName.length) {
+				assignments.screenName = screenName;
+			}
+
+			if (userId.length) {
+				assignments.userId = userId;
 			}
 		}
 	});

@@ -58,6 +58,10 @@ module.exports = {
 						'/': '*',
 					},
 
+					'@liferay/frontend-js-codemirror-web': {
+						'/': '*',
+					},
+
 					'@liferay/frontend-js-dependencies-web': {
 						'/': '*',
 						'axe-core': '*',
@@ -373,6 +377,11 @@ module.exports = {
 			'@liferay/fragment-renderer-collection-filter-impl': [],
 			'@liferay/frontend-data-set-web': [],
 			'@liferay/frontend-icons-web': [],
+			'@liferay/frontend-js-codemirror-web': [
+				'codemirror/addon/fold/foldgutter.css',
+				'codemirror/addon/hint/show-hint.css',
+				'codemirror/lib/codemirror.css',
+			],
 			'@liferay/frontend-js-dependencies-web': [
 				'html-to-image',
 				'jspdf',
@@ -793,7 +802,6 @@ module.exports = {
 
 			// Doesn't support ESM
 
-			'codemirror',
 			'leaflet',
 
 			// Node Shims

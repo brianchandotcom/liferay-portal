@@ -670,6 +670,7 @@
 			<property name="checkMismatchedServiceAttribute" value="false" />
 			<property name="checkResourceImpl" value="false" />
 			<property name="checkSelfRegistration" value="false" />
+			<property name="checkUsesInternalService" value="false" />
 		</check>
 		<check name="JavaDeprecatedJavadocCheck">
 			<category name="Javadoc" />

@@ -638,9 +638,6 @@ public class SugarCRMObjectEntryManagerImpl
 		private SugarCRMConfiguration _getSugarCRMConfiguration(
 			long companyId, long groupId) {
 
-			System.out.println(companyId + " - " + groupId);
-			System.out.println(_configurationProvider);
-
 			try {
 				if (groupId == 0) {
 					return _configurationProvider.getCompanyConfiguration(

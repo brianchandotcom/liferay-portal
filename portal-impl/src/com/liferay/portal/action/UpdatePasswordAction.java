@@ -309,7 +309,9 @@ public class UpdatePasswordAction implements Action {
 			user.getCompanyId());
 
 		if (ticket != null) {
-			TicketLocalServiceUtil.deleteTicket(ticket);
+			TicketLocalServiceUtil.deleteTickets(
+				user.getCompanyId(), User.class.getName(), userId,
+				ticket.getType());
 
 			UserLocalServiceUtil.updateLockout(user, false);
 

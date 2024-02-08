@@ -17,6 +17,7 @@ import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandKey;
 import com.netflix.hystrix.HystrixCommandProperties;
+import com.netflix.hystrix.HystrixThreadPoolProperties;
 import com.netflix.hystrix.strategy.HystrixPlugins;
 import com.netflix.hystrix.strategy.properties.HystrixPropertiesStrategy;
 
@@ -40,9 +41,17 @@ public class DDMDataProviderInvokeCommand
 				HystrixCommandKey.Factory.asKey(
 					"DDMDataProviderInvokeCommand#" + nameCurrentValue)
 			).andCommandPropertiesDefaults(
-				HystrixCommandProperties.Setter().
-					withExecutionTimeoutInMilliseconds(
+				HystrixCommandProperties.Setter()
+					.withExecutionIsolationStrategy(
+						HystrixCommandProperties.ExecutionIsolationStrategy.THREAD)
+					.withExecutionTimeoutInMilliseconds(
 						_getTimeout(ddmRESTDataProviderSettings))
+					.withFallbackEnabled(false)
+			).andThreadPoolPropertiesDefaults(
+				HystrixThreadPoolProperties.Setter()
+					.withAllowMaximumSizeToDivergeFromCoreSize(true)
+					.withCoreSize(5)
+					.withMetricsRollingStatisticalWindowInMilliseconds(1000)
 			));
 
 		_ddmDataProvider = ddmDataProvider;

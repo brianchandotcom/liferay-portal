@@ -468,15 +468,15 @@ public class AssetListAssetEntryProviderImpl
 
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
-		BooleanFilter assetTagNamesBooleanFilter = new BooleanFilter();
+		BooleanFilter booleanFilter = new BooleanFilter();
 
 		TermsFilter termsFilter = new TermsFilter(field);
 
 		termsFilter.addValues(ArrayUtil.toStringArray(longArray));
 
-		assetTagNamesBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+		booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
 
-		booleanQueryImpl.setPreBooleanFilter(assetTagNamesBooleanFilter);
+		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
 
 		return new BooleanClause[] {
 			BooleanClauseFactoryUtil.create(

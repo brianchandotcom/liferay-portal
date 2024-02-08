@@ -457,6 +457,9 @@ public class LayoutServiceContextHelperImpl
 			if ((name != null) && (value != null)) {
 				_attributes.put(name, value);
 			}
+			else if (name != null) {
+				_attributes.remove(name);
+			}
 		}
 
 		@Override

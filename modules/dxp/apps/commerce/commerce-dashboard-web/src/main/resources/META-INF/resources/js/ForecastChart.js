@@ -5,8 +5,8 @@
 
 import React, {useEffect, useState} from 'react';
 
-import ChartWrapper from '../ChartWrapper.es';
-import {loadData} from '../utils/index.es';
+import ChartWrapper from './ChartWrapper';
+import {loadData} from './utils/index.es';
 export default function ForecastChart({
 	APIBaseUrl,
 	accountIds: initialAccountsIds = [],

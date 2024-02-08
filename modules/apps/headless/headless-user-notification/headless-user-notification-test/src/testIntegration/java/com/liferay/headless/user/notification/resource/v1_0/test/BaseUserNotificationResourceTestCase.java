@@ -336,19 +336,17 @@ public abstract class BaseUserNotificationResourceTestCase {
 			testGetMyUserNotificationsPage_addUserNotification(
 				randomUserNotification());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int userNotification1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int userNotification2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int userNotification3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<UserNotification> page1 =
 				userNotificationResource.getMyUserNotificationsPage(
-					null, null, Pagination.of(userNotification1Page, 500),
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -358,7 +356,10 @@ public abstract class BaseUserNotificationResourceTestCase {
 
 			Page<UserNotification> page2 =
 				userNotificationResource.getMyUserNotificationsPage(
-					null, null, Pagination.of(userNotification2Page, 500),
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(
@@ -366,7 +367,10 @@ public abstract class BaseUserNotificationResourceTestCase {
 
 			Page<UserNotification> page3 =
 				userNotificationResource.getMyUserNotificationsPage(
-					null, null, Pagination.of(userNotification3Page, 500),
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(
@@ -759,20 +763,18 @@ public abstract class BaseUserNotificationResourceTestCase {
 			testGetUserAccountUserNotificationsPage_addUserNotification(
 				userAccountId, randomUserNotification());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int userNotification1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int userNotification2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int userNotification3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<UserNotification> page1 =
 				userNotificationResource.getUserAccountUserNotificationsPage(
 					userAccountId, null, null,
-					Pagination.of(userNotification1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -782,7 +784,10 @@ public abstract class BaseUserNotificationResourceTestCase {
 			Page<UserNotification> page2 =
 				userNotificationResource.getUserAccountUserNotificationsPage(
 					userAccountId, null, null,
-					Pagination.of(userNotification2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				userNotification2, (List<UserNotification>)page2.getItems());
@@ -790,7 +795,10 @@ public abstract class BaseUserNotificationResourceTestCase {
 			Page<UserNotification> page3 =
 				userNotificationResource.getUserAccountUserNotificationsPage(
 					userAccountId, null, null,
-					Pagination.of(userNotification3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				userNotification3, (List<UserNotification>)page3.getItems());

@@ -276,21 +276,18 @@ public abstract class BaseCategoryResourceTestCase {
 			testGetProductByExternalReferenceCodeCategoriesPage_addCategory(
 				externalReferenceCode, randomCategory());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int category1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int category2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int category3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Category> page1 =
 				categoryResource.
 					getProductByExternalReferenceCodeCategoriesPage(
 						externalReferenceCode,
-						Pagination.of(category1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -300,7 +297,9 @@ public abstract class BaseCategoryResourceTestCase {
 				categoryResource.
 					getProductByExternalReferenceCodeCategoriesPage(
 						externalReferenceCode,
-						Pagination.of(category2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(category2, (List<Category>)page2.getItems());
 
@@ -308,7 +307,9 @@ public abstract class BaseCategoryResourceTestCase {
 				categoryResource.
 					getProductByExternalReferenceCodeCategoriesPage(
 						externalReferenceCode,
-						Pagination.of(category3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(category3, (List<Category>)page3.getItems());
 		}
@@ -452,30 +453,34 @@ public abstract class BaseCategoryResourceTestCase {
 		Category category3 = testGetProductIdCategoriesPage_addCategory(
 			id, randomCategory());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int category1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int category2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int category3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Category> page1 = categoryResource.getProductIdCategoriesPage(
-				id, Pagination.of(category1Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(category1, (List<Category>)page1.getItems());
 
 			Page<Category> page2 = categoryResource.getProductIdCategoriesPage(
-				id, Pagination.of(category2Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(category2, (List<Category>)page2.getItems());
 
 			Page<Category> page3 = categoryResource.getProductIdCategoriesPage(
-				id, Pagination.of(category3Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(category3, (List<Category>)page3.getItems());
 		}

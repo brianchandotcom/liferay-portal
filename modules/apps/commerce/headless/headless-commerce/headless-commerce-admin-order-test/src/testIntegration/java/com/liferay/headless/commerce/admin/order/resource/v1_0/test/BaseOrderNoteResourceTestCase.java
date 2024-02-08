@@ -526,19 +526,17 @@ public abstract class BaseOrderNoteResourceTestCase {
 			testGetOrderByExternalReferenceCodeOrderNotesPage_addOrderNote(
 				externalReferenceCode, randomOrderNote());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int orderNote1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int orderNote2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int orderNote3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<OrderNote> page1 =
 				orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
-					externalReferenceCode, Pagination.of(orderNote1Page, 500));
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -546,13 +544,19 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 			Page<OrderNote> page2 =
 				orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
-					externalReferenceCode, Pagination.of(orderNote2Page, 500));
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(orderNote2, (List<OrderNote>)page2.getItems());
 
 			Page<OrderNote> page3 =
 				orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
-					externalReferenceCode, Pagination.of(orderNote3Page, 500));
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(orderNote3, (List<OrderNote>)page3.getItems());
 		}
@@ -708,30 +712,34 @@ public abstract class BaseOrderNoteResourceTestCase {
 		OrderNote orderNote3 = testGetOrderIdOrderNotesPage_addOrderNote(
 			id, randomOrderNote());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int orderNote1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int orderNote2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int orderNote3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<OrderNote> page1 = orderNoteResource.getOrderIdOrderNotesPage(
-				id, Pagination.of(orderNote1Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(orderNote1, (List<OrderNote>)page1.getItems());
 
 			Page<OrderNote> page2 = orderNoteResource.getOrderIdOrderNotesPage(
-				id, Pagination.of(orderNote2Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(orderNote2, (List<OrderNote>)page2.getItems());
 
 			Page<OrderNote> page3 = orderNoteResource.getOrderIdOrderNotesPage(
-				id, Pagination.of(orderNote3Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(orderNote3, (List<OrderNote>)page3.getItems());
 		}

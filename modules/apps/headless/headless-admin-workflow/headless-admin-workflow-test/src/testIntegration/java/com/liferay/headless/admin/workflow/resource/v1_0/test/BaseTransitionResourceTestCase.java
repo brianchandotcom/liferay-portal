@@ -274,19 +274,17 @@ public abstract class BaseTransitionResourceTestCase {
 			testGetWorkflowInstanceNextTransitionsPage_addTransition(
 				workflowInstanceId, randomTransition());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int transition1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int transition2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int transition3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Transition> page1 =
 				transitionResource.getWorkflowInstanceNextTransitionsPage(
-					workflowInstanceId, Pagination.of(transition1Page, 500));
+					workflowInstanceId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -294,13 +292,19 @@ public abstract class BaseTransitionResourceTestCase {
 
 			Page<Transition> page2 =
 				transitionResource.getWorkflowInstanceNextTransitionsPage(
-					workflowInstanceId, Pagination.of(transition2Page, 500));
+					workflowInstanceId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(transition2, (List<Transition>)page2.getItems());
 
 			Page<Transition> page3 =
 				transitionResource.getWorkflowInstanceNextTransitionsPage(
-					workflowInstanceId, Pagination.of(transition3Page, 500));
+					workflowInstanceId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(transition3, (List<Transition>)page3.getItems());
 		}
@@ -447,19 +451,17 @@ public abstract class BaseTransitionResourceTestCase {
 			testGetWorkflowTaskNextTransitionsPage_addTransition(
 				workflowTaskId, randomTransition());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int transition1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int transition2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int transition3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Transition> page1 =
 				transitionResource.getWorkflowTaskNextTransitionsPage(
-					workflowTaskId, Pagination.of(transition1Page, 500));
+					workflowTaskId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -467,13 +469,19 @@ public abstract class BaseTransitionResourceTestCase {
 
 			Page<Transition> page2 =
 				transitionResource.getWorkflowTaskNextTransitionsPage(
-					workflowTaskId, Pagination.of(transition2Page, 500));
+					workflowTaskId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(transition2, (List<Transition>)page2.getItems());
 
 			Page<Transition> page3 =
 				transitionResource.getWorkflowTaskNextTransitionsPage(
-					workflowTaskId, Pagination.of(transition3Page, 500));
+					workflowTaskId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(transition3, (List<Transition>)page3.getItems());
 		}

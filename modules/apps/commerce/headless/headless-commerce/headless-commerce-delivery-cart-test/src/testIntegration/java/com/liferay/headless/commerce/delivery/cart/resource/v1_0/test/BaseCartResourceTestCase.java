@@ -487,27 +487,34 @@ public abstract class BaseCartResourceTestCase {
 		Cart cart3 = testGetChannelCartsPage_addCart(
 			accountId, channelId, randomCart());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int cart1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int cart2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int cart3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Cart> page1 = cartResource.getChannelCartsPage(
-				accountId, channelId, null, Pagination.of(cart1Page, 500));
+				accountId, channelId, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(cart1, (List<Cart>)page1.getItems());
 
 			Page<Cart> page2 = cartResource.getChannelCartsPage(
-				accountId, channelId, null, Pagination.of(cart2Page, 500));
+				accountId, channelId, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(cart2, (List<Cart>)page2.getItems());
 
 			Page<Cart> page3 = cartResource.getChannelCartsPage(
-				accountId, channelId, null, Pagination.of(cart3Page, 500));
+				accountId, channelId, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(cart3, (List<Cart>)page3.getItems());
 		}

@@ -288,21 +288,18 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountOrganizationsPage_addAccountOrganization(
 				externalReferenceCode, randomAccountOrganization());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int accountOrganization1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int accountOrganization2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int accountOrganization3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AccountOrganization> page1 =
 				accountOrganizationResource.
 					getAccountByExternalReferenceCodeAccountOrganizationsPage(
 						externalReferenceCode,
-						Pagination.of(accountOrganization1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -314,7 +311,9 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 				accountOrganizationResource.
 					getAccountByExternalReferenceCodeAccountOrganizationsPage(
 						externalReferenceCode,
-						Pagination.of(accountOrganization2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				accountOrganization2,
@@ -324,7 +323,9 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 				accountOrganizationResource.
 					getAccountByExternalReferenceCodeAccountOrganizationsPage(
 						externalReferenceCode,
-						Pagination.of(accountOrganization3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				accountOrganization3,
@@ -543,20 +544,18 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 			testGetAccountIdAccountOrganizationsPage_addAccountOrganization(
 				id, randomAccountOrganization());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int accountOrganization1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int accountOrganization2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int accountOrganization3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AccountOrganization> page1 =
 				accountOrganizationResource.
 					getAccountIdAccountOrganizationsPage(
-						id, Pagination.of(accountOrganization1Page, 500));
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -567,7 +566,10 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 			Page<AccountOrganization> page2 =
 				accountOrganizationResource.
 					getAccountIdAccountOrganizationsPage(
-						id, Pagination.of(accountOrganization2Page, 500));
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				accountOrganization2,
@@ -576,7 +578,10 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 			Page<AccountOrganization> page3 =
 				accountOrganizationResource.
 					getAccountIdAccountOrganizationsPage(
-						id, Pagination.of(accountOrganization3Page, 500));
+						id,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				accountOrganization3,

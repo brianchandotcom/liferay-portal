@@ -287,21 +287,19 @@ public abstract class BaseObjectLayoutResourceTestCase {
 			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_addObjectLayout(
 				externalReferenceCode, randomObjectLayout());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int objectLayout1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int objectLayout2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int objectLayout3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ObjectLayout> page1 =
 				objectLayoutResource.
 					getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
 						externalReferenceCode, null,
-						Pagination.of(objectLayout1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -311,7 +309,10 @@ public abstract class BaseObjectLayoutResourceTestCase {
 				objectLayoutResource.
 					getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
 						externalReferenceCode, null,
-						Pagination.of(objectLayout2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(objectLayout2, (List<ObjectLayout>)page2.getItems());
 
@@ -319,7 +320,10 @@ public abstract class BaseObjectLayoutResourceTestCase {
 				objectLayoutResource.
 					getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
 						externalReferenceCode, null,
-						Pagination.of(objectLayout3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(objectLayout3, (List<ObjectLayout>)page3.getItems());
 		}
@@ -673,20 +677,18 @@ public abstract class BaseObjectLayoutResourceTestCase {
 			testGetObjectDefinitionObjectLayoutsPage_addObjectLayout(
 				objectDefinitionId, randomObjectLayout());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int objectLayout1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int objectLayout2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int objectLayout3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ObjectLayout> page1 =
 				objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
 					objectDefinitionId, null,
-					Pagination.of(objectLayout1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -695,14 +697,20 @@ public abstract class BaseObjectLayoutResourceTestCase {
 			Page<ObjectLayout> page2 =
 				objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
 					objectDefinitionId, null,
-					Pagination.of(objectLayout2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(objectLayout2, (List<ObjectLayout>)page2.getItems());
 
 			Page<ObjectLayout> page3 =
 				objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
 					objectDefinitionId, null,
-					Pagination.of(objectLayout3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(objectLayout3, (List<ObjectLayout>)page3.getItems());
 		}

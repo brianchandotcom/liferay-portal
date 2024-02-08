@@ -263,15 +263,16 @@ public abstract class BasePinResourceTestCase {
 		Pin pin3 = testGetChannelProductPinsPage_addPin(
 			channelId, productId, randomPin());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int pin1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int pin2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int pin3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Pin> page1 = pinResource.getChannelProductPinsPage(
-				channelId, productId, null, null, Pagination.of(pin1Page, 500),
+				channelId, productId, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
 				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -279,13 +280,19 @@ public abstract class BasePinResourceTestCase {
 			assertContains(pin1, (List<Pin>)page1.getItems());
 
 			Page<Pin> page2 = pinResource.getChannelProductPinsPage(
-				channelId, productId, null, null, Pagination.of(pin2Page, 500),
+				channelId, productId, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
 				null);
 
 			assertContains(pin2, (List<Pin>)page2.getItems());
 
 			Page<Pin> page3 = pinResource.getChannelProductPinsPage(
-				channelId, productId, null, null, Pagination.of(pin3Page, 500),
+				channelId, productId, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
 				null);
 
 			assertContains(pin3, (List<Pin>)page3.getItems());

@@ -300,21 +300,18 @@ public abstract class BasePriceListChannelResourceTestCase {
 			testGetPriceListByExternalReferenceCodePriceListChannelsPage_addPriceListChannel(
 				externalReferenceCode, randomPriceListChannel());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int priceListChannel1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int priceListChannel2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int priceListChannel3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PriceListChannel> page1 =
 				priceListChannelResource.
 					getPriceListByExternalReferenceCodePriceListChannelsPage(
 						externalReferenceCode,
-						Pagination.of(priceListChannel1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -325,7 +322,9 @@ public abstract class BasePriceListChannelResourceTestCase {
 				priceListChannelResource.
 					getPriceListByExternalReferenceCodePriceListChannelsPage(
 						externalReferenceCode,
-						Pagination.of(priceListChannel2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				priceListChannel2, (List<PriceListChannel>)page2.getItems());
@@ -334,7 +333,9 @@ public abstract class BasePriceListChannelResourceTestCase {
 				priceListChannelResource.
 					getPriceListByExternalReferenceCodePriceListChannelsPage(
 						externalReferenceCode,
-						Pagination.of(priceListChannel3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				priceListChannel3, (List<PriceListChannel>)page3.getItems());
@@ -615,19 +616,17 @@ public abstract class BasePriceListChannelResourceTestCase {
 			testGetPriceListIdPriceListChannelsPage_addPriceListChannel(
 				id, randomPriceListChannel());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int priceListChannel1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int priceListChannel2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int priceListChannel3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PriceListChannel> page1 =
 				priceListChannelResource.getPriceListIdPriceListChannelsPage(
-					id, null, null, Pagination.of(priceListChannel1Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -637,7 +636,10 @@ public abstract class BasePriceListChannelResourceTestCase {
 
 			Page<PriceListChannel> page2 =
 				priceListChannelResource.getPriceListIdPriceListChannelsPage(
-					id, null, null, Pagination.of(priceListChannel2Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(
@@ -645,7 +647,10 @@ public abstract class BasePriceListChannelResourceTestCase {
 
 			Page<PriceListChannel> page3 =
 				priceListChannelResource.getPriceListIdPriceListChannelsPage(
-					id, null, null, Pagination.of(priceListChannel3Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(

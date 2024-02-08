@@ -348,21 +348,18 @@ public abstract class BaseAttachmentResourceTestCase {
 			testGetProductByExternalReferenceCodeAttachmentsPage_addAttachment(
 				externalReferenceCode, randomAttachment());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int attachment1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int attachment2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int attachment3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Attachment> page1 =
 				attachmentResource.
 					getProductByExternalReferenceCodeAttachmentsPage(
 						externalReferenceCode,
-						Pagination.of(attachment1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -372,7 +369,9 @@ public abstract class BaseAttachmentResourceTestCase {
 				attachmentResource.
 					getProductByExternalReferenceCodeAttachmentsPage(
 						externalReferenceCode,
-						Pagination.of(attachment2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(attachment2, (List<Attachment>)page2.getItems());
 
@@ -380,7 +379,9 @@ public abstract class BaseAttachmentResourceTestCase {
 				attachmentResource.
 					getProductByExternalReferenceCodeAttachmentsPage(
 						externalReferenceCode,
-						Pagination.of(attachment3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(attachment3, (List<Attachment>)page3.getItems());
 		}
@@ -610,19 +611,17 @@ public abstract class BaseAttachmentResourceTestCase {
 			testGetProductByExternalReferenceCodeImagesPage_addAttachment(
 				externalReferenceCode, randomAttachment());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int attachment1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int attachment2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int attachment3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Attachment> page1 =
 				attachmentResource.getProductByExternalReferenceCodeImagesPage(
-					externalReferenceCode, Pagination.of(attachment1Page, 500));
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -630,13 +629,19 @@ public abstract class BaseAttachmentResourceTestCase {
 
 			Page<Attachment> page2 =
 				attachmentResource.getProductByExternalReferenceCodeImagesPage(
-					externalReferenceCode, Pagination.of(attachment2Page, 500));
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(attachment2, (List<Attachment>)page2.getItems());
 
 			Page<Attachment> page3 =
 				attachmentResource.getProductByExternalReferenceCodeImagesPage(
-					externalReferenceCode, Pagination.of(attachment3Page, 500));
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(attachment3, (List<Attachment>)page3.getItems());
 		}
@@ -841,19 +846,17 @@ public abstract class BaseAttachmentResourceTestCase {
 		Attachment attachment3 = testGetProductIdAttachmentsPage_addAttachment(
 			id, randomAttachment());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int attachment1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int attachment2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int attachment3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Attachment> page1 =
 				attachmentResource.getProductIdAttachmentsPage(
-					id, Pagination.of(attachment1Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -861,13 +864,19 @@ public abstract class BaseAttachmentResourceTestCase {
 
 			Page<Attachment> page2 =
 				attachmentResource.getProductIdAttachmentsPage(
-					id, Pagination.of(attachment2Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(attachment2, (List<Attachment>)page2.getItems());
 
 			Page<Attachment> page3 =
 				attachmentResource.getProductIdAttachmentsPage(
-					id, Pagination.of(attachment3Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(attachment3, (List<Attachment>)page3.getItems());
 		}
@@ -1052,30 +1061,34 @@ public abstract class BaseAttachmentResourceTestCase {
 		Attachment attachment3 = testGetProductIdImagesPage_addAttachment(
 			id, randomAttachment());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int attachment1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int attachment2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int attachment3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Attachment> page1 = attachmentResource.getProductIdImagesPage(
-				id, Pagination.of(attachment1Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(attachment1, (List<Attachment>)page1.getItems());
 
 			Page<Attachment> page2 = attachmentResource.getProductIdImagesPage(
-				id, Pagination.of(attachment2Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(attachment2, (List<Attachment>)page2.getItems());
 
 			Page<Attachment> page3 = attachmentResource.getProductIdImagesPage(
-				id, Pagination.of(attachment3Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(attachment3, (List<Attachment>)page3.getItems());
 		}

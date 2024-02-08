@@ -514,19 +514,17 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			testGetSiteNavigationMenusPage_addNavigationMenu(
 				siteId, randomNavigationMenu());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int navigationMenu1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int navigationMenu2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int navigationMenu3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<NavigationMenu> page1 =
 				navigationMenuResource.getSiteNavigationMenusPage(
-					siteId, Pagination.of(navigationMenu1Page, 500));
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -535,14 +533,20 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 			Page<NavigationMenu> page2 =
 				navigationMenuResource.getSiteNavigationMenusPage(
-					siteId, Pagination.of(navigationMenu2Page, 500));
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				navigationMenu2, (List<NavigationMenu>)page2.getItems());
 
 			Page<NavigationMenu> page3 =
 				navigationMenuResource.getSiteNavigationMenusPage(
-					siteId, Pagination.of(navigationMenu3Page, 500));
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				navigationMenu3, (List<NavigationMenu>)page3.getItems());

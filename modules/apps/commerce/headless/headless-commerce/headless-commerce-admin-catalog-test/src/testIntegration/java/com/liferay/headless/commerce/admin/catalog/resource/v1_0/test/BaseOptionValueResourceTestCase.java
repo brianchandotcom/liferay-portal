@@ -542,21 +542,19 @@ public abstract class BaseOptionValueResourceTestCase {
 			testGetOptionByExternalReferenceCodeOptionValuesPage_addOptionValue(
 				externalReferenceCode, randomOptionValue());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int optionValue1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int optionValue2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int optionValue3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<OptionValue> page1 =
 				optionValueResource.
 					getOptionByExternalReferenceCodeOptionValuesPage(
 						externalReferenceCode, null,
-						Pagination.of(optionValue1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -566,7 +564,10 @@ public abstract class BaseOptionValueResourceTestCase {
 				optionValueResource.
 					getOptionByExternalReferenceCodeOptionValuesPage(
 						externalReferenceCode, null,
-						Pagination.of(optionValue2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(optionValue2, (List<OptionValue>)page2.getItems());
 
@@ -574,7 +575,10 @@ public abstract class BaseOptionValueResourceTestCase {
 				optionValueResource.
 					getOptionByExternalReferenceCodeOptionValuesPage(
 						externalReferenceCode, null,
-						Pagination.of(optionValue3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(optionValue3, (List<OptionValue>)page3.getItems());
 		}
@@ -904,19 +908,18 @@ public abstract class BaseOptionValueResourceTestCase {
 			testGetOptionIdOptionValuesPage_addOptionValue(
 				id, randomOptionValue());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int optionValue1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int optionValue2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int optionValue3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<OptionValue> page1 =
 				optionValueResource.getOptionIdOptionValuesPage(
-					id, null, Pagination.of(optionValue1Page, 500), null);
+					id, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -924,13 +927,21 @@ public abstract class BaseOptionValueResourceTestCase {
 
 			Page<OptionValue> page2 =
 				optionValueResource.getOptionIdOptionValuesPage(
-					id, null, Pagination.of(optionValue2Page, 500), null);
+					id, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(optionValue2, (List<OptionValue>)page2.getItems());
 
 			Page<OptionValue> page3 =
 				optionValueResource.getOptionIdOptionValuesPage(
-					id, null, Pagination.of(optionValue3Page, 500), null);
+					id, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(optionValue3, (List<OptionValue>)page3.getItems());
 		}

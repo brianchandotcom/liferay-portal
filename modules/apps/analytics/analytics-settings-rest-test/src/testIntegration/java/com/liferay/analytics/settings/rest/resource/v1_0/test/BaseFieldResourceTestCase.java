@@ -232,27 +232,37 @@ public abstract class BaseFieldResourceTestCase {
 
 		Field field3 = testGetFieldsAccountsPage_addField(randomField());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int field1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int field2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int field3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Field> page1 = fieldResource.getFieldsAccountsPage(
-				null, Pagination.of(field1Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(field1, (List<Field>)page1.getItems());
 
 			Page<Field> page2 = fieldResource.getFieldsAccountsPage(
-				null, Pagination.of(field2Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(field2, (List<Field>)page2.getItems());
 
 			Page<Field> page3 = fieldResource.getFieldsAccountsPage(
-				null, Pagination.of(field3Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(field3, (List<Field>)page3.getItems());
 		}
@@ -463,27 +473,37 @@ public abstract class BaseFieldResourceTestCase {
 
 		Field field3 = testGetFieldsOrdersPage_addField(randomField());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int field1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int field2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int field3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Field> page1 = fieldResource.getFieldsOrdersPage(
-				null, Pagination.of(field1Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(field1, (List<Field>)page1.getItems());
 
 			Page<Field> page2 = fieldResource.getFieldsOrdersPage(
-				null, Pagination.of(field2Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(field2, (List<Field>)page2.getItems());
 
 			Page<Field> page3 = fieldResource.getFieldsOrdersPage(
-				null, Pagination.of(field3Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(field3, (List<Field>)page3.getItems());
 		}
@@ -693,27 +713,37 @@ public abstract class BaseFieldResourceTestCase {
 
 		Field field3 = testGetFieldsPeoplePage_addField(randomField());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int field1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int field2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int field3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Field> page1 = fieldResource.getFieldsPeoplePage(
-				null, Pagination.of(field1Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(field1, (List<Field>)page1.getItems());
 
 			Page<Field> page2 = fieldResource.getFieldsPeoplePage(
-				null, Pagination.of(field2Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(field2, (List<Field>)page2.getItems());
 
 			Page<Field> page3 = fieldResource.getFieldsPeoplePage(
-				null, Pagination.of(field3Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(field3, (List<Field>)page3.getItems());
 		}
@@ -923,27 +953,37 @@ public abstract class BaseFieldResourceTestCase {
 
 		Field field3 = testGetFieldsProductsPage_addField(randomField());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int field1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int field2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int field3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Field> page1 = fieldResource.getFieldsProductsPage(
-				null, Pagination.of(field1Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(field1, (List<Field>)page1.getItems());
 
 			Page<Field> page2 = fieldResource.getFieldsProductsPage(
-				null, Pagination.of(field2Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(field2, (List<Field>)page2.getItems());
 
 			Page<Field> page3 = fieldResource.getFieldsProductsPage(
-				null, Pagination.of(field3Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(field3, (List<Field>)page3.getItems());
 		}

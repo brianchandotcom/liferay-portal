@@ -402,19 +402,17 @@ public abstract class BaseWarehouseItemResourceTestCase {
 			testGetWarehouseItemsUpdatedPage_addWarehouseItem(
 				randomWarehouseItem());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int warehouseItem1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int warehouseItem2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int warehouseItem3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<WarehouseItem> page1 =
 				warehouseItemResource.getWarehouseItemsUpdatedPage(
-					null, null, Pagination.of(warehouseItem1Page, 500));
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -423,14 +421,20 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 			Page<WarehouseItem> page2 =
 				warehouseItemResource.getWarehouseItemsUpdatedPage(
-					null, null, Pagination.of(warehouseItem2Page, 500));
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				warehouseItem2, (List<WarehouseItem>)page2.getItems());
 
 			Page<WarehouseItem> page3 =
 				warehouseItemResource.getWarehouseItemsUpdatedPage(
-					null, null, Pagination.of(warehouseItem3Page, 500));
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				warehouseItem3, (List<WarehouseItem>)page3.getItems());
@@ -720,21 +724,18 @@ public abstract class BaseWarehouseItemResourceTestCase {
 			testGetWarehouseByExternalReferenceCodeWarehouseItemsPage_addWarehouseItem(
 				externalReferenceCode, randomWarehouseItem());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int warehouseItem1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int warehouseItem2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int warehouseItem3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<WarehouseItem> page1 =
 				warehouseItemResource.
 					getWarehouseByExternalReferenceCodeWarehouseItemsPage(
 						externalReferenceCode,
-						Pagination.of(warehouseItem1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -745,7 +746,9 @@ public abstract class BaseWarehouseItemResourceTestCase {
 				warehouseItemResource.
 					getWarehouseByExternalReferenceCodeWarehouseItemsPage(
 						externalReferenceCode,
-						Pagination.of(warehouseItem2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				warehouseItem2, (List<WarehouseItem>)page2.getItems());
@@ -754,7 +757,9 @@ public abstract class BaseWarehouseItemResourceTestCase {
 				warehouseItemResource.
 					getWarehouseByExternalReferenceCodeWarehouseItemsPage(
 						externalReferenceCode,
-						Pagination.of(warehouseItem3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				warehouseItem3, (List<WarehouseItem>)page3.getItems());
@@ -935,19 +940,17 @@ public abstract class BaseWarehouseItemResourceTestCase {
 			testGetWarehouseIdWarehouseItemsPage_addWarehouseItem(
 				id, randomWarehouseItem());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int warehouseItem1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int warehouseItem2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int warehouseItem3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<WarehouseItem> page1 =
 				warehouseItemResource.getWarehouseIdWarehouseItemsPage(
-					id, Pagination.of(warehouseItem1Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -956,14 +959,20 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 			Page<WarehouseItem> page2 =
 				warehouseItemResource.getWarehouseIdWarehouseItemsPage(
-					id, Pagination.of(warehouseItem2Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				warehouseItem2, (List<WarehouseItem>)page2.getItems());
 
 			Page<WarehouseItem> page3 =
 				warehouseItemResource.getWarehouseIdWarehouseItemsPage(
-					id, Pagination.of(warehouseItem3Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				warehouseItem3, (List<WarehouseItem>)page3.getItems());

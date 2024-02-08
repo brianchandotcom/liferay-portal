@@ -336,21 +336,18 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 			testGetDiscountByExternalReferenceCodeDiscountCategoriesPage_addDiscountCategory(
 				externalReferenceCode, randomDiscountCategory());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int discountCategory1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int discountCategory2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int discountCategory3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DiscountCategory> page1 =
 				discountCategoryResource.
 					getDiscountByExternalReferenceCodeDiscountCategoriesPage(
 						externalReferenceCode,
-						Pagination.of(discountCategory1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -361,7 +358,9 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 				discountCategoryResource.
 					getDiscountByExternalReferenceCodeDiscountCategoriesPage(
 						externalReferenceCode,
-						Pagination.of(discountCategory2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				discountCategory2, (List<DiscountCategory>)page2.getItems());
@@ -370,7 +369,9 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 				discountCategoryResource.
 					getDiscountByExternalReferenceCodeDiscountCategoriesPage(
 						externalReferenceCode,
-						Pagination.of(discountCategory3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				discountCategory3, (List<DiscountCategory>)page3.getItems());
@@ -558,19 +559,17 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 			testGetDiscountIdDiscountCategoriesPage_addDiscountCategory(
 				id, randomDiscountCategory());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int discountCategory1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int discountCategory2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int discountCategory3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DiscountCategory> page1 =
 				discountCategoryResource.getDiscountIdDiscountCategoriesPage(
-					id, Pagination.of(discountCategory1Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -579,14 +578,20 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 
 			Page<DiscountCategory> page2 =
 				discountCategoryResource.getDiscountIdDiscountCategoriesPage(
-					id, Pagination.of(discountCategory2Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				discountCategory2, (List<DiscountCategory>)page2.getItems());
 
 			Page<DiscountCategory> page3 =
 				discountCategoryResource.getDiscountIdDiscountCategoriesPage(
-					id, Pagination.of(discountCategory3Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				discountCategory3, (List<DiscountCategory>)page3.getItems());

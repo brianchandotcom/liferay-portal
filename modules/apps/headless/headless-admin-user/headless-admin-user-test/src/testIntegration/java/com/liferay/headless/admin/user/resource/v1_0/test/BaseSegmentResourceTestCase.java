@@ -254,27 +254,34 @@ public abstract class BaseSegmentResourceTestCase {
 		Segment segment3 = testGetSiteSegmentsPage_addSegment(
 			siteId, randomSegment());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int segment1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int segment2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int segment3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Segment> page1 = segmentResource.getSiteSegmentsPage(
-				siteId, Pagination.of(segment1Page, 500));
+				siteId,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(segment1, (List<Segment>)page1.getItems());
 
 			Page<Segment> page2 = segmentResource.getSiteSegmentsPage(
-				siteId, Pagination.of(segment2Page, 500));
+				siteId,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(segment2, (List<Segment>)page2.getItems());
 
 			Page<Segment> page3 = segmentResource.getSiteSegmentsPage(
-				siteId, Pagination.of(segment3Page, 500));
+				siteId,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(segment3, (List<Segment>)page3.getItems());
 		}

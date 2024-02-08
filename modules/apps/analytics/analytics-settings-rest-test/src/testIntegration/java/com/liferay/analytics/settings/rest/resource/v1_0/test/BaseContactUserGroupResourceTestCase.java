@@ -242,19 +242,18 @@ public abstract class BaseContactUserGroupResourceTestCase {
 			testGetContactUserGroupsPage_addContactUserGroup(
 				randomContactUserGroup());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int contactUserGroup1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int contactUserGroup2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int contactUserGroup3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ContactUserGroup> page1 =
 				contactUserGroupResource.getContactUserGroupsPage(
-					null, Pagination.of(contactUserGroup1Page, 500), null);
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -263,14 +262,22 @@ public abstract class BaseContactUserGroupResourceTestCase {
 
 			Page<ContactUserGroup> page2 =
 				contactUserGroupResource.getContactUserGroupsPage(
-					null, Pagination.of(contactUserGroup2Page, 500), null);
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				contactUserGroup2, (List<ContactUserGroup>)page2.getItems());
 
 			Page<ContactUserGroup> page3 =
 				contactUserGroupResource.getContactUserGroupsPage(
-					null, Pagination.of(contactUserGroup3Page, 500), null);
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				contactUserGroup3, (List<ContactUserGroup>)page3.getItems());

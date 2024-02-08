@@ -332,27 +332,37 @@ public abstract class BasePaymentResourceTestCase {
 
 		Payment payment3 = testGetPaymentsPage_addPayment(randomPayment());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int payment1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int payment2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int payment3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Payment> page1 = paymentResource.getPaymentsPage(
-				null, null, Pagination.of(payment1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(payment1, (List<Payment>)page1.getItems());
 
 			Page<Payment> page2 = paymentResource.getPaymentsPage(
-				null, null, Pagination.of(payment2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(payment2, (List<Payment>)page2.getItems());
 
 			Page<Payment> page3 = paymentResource.getPaymentsPage(
-				null, null, Pagination.of(payment3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(payment3, (List<Payment>)page3.getItems());
 		}

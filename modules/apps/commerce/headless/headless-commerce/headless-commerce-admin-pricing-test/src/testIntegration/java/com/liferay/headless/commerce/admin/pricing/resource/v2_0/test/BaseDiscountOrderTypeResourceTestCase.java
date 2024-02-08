@@ -301,21 +301,18 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 			testGetDiscountByExternalReferenceCodeDiscountOrderTypesPage_addDiscountOrderType(
 				externalReferenceCode, randomDiscountOrderType());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int discountOrderType1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int discountOrderType2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int discountOrderType3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DiscountOrderType> page1 =
 				discountOrderTypeResource.
 					getDiscountByExternalReferenceCodeDiscountOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(discountOrderType1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -326,7 +323,9 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 				discountOrderTypeResource.
 					getDiscountByExternalReferenceCodeDiscountOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(discountOrderType2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				discountOrderType2, (List<DiscountOrderType>)page2.getItems());
@@ -335,7 +334,9 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 				discountOrderTypeResource.
 					getDiscountByExternalReferenceCodeDiscountOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(discountOrderType3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				discountOrderType3, (List<DiscountOrderType>)page3.getItems());
@@ -618,19 +619,17 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 			testGetDiscountIdDiscountOrderTypesPage_addDiscountOrderType(
 				id, randomDiscountOrderType());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int discountOrderType1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int discountOrderType2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int discountOrderType3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DiscountOrderType> page1 =
 				discountOrderTypeResource.getDiscountIdDiscountOrderTypesPage(
-					id, null, null, Pagination.of(discountOrderType1Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -640,7 +639,10 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 
 			Page<DiscountOrderType> page2 =
 				discountOrderTypeResource.getDiscountIdDiscountOrderTypesPage(
-					id, null, null, Pagination.of(discountOrderType2Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(
@@ -648,7 +650,10 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 
 			Page<DiscountOrderType> page3 =
 				discountOrderTypeResource.getDiscountIdDiscountOrderTypesPage(
-					id, null, null, Pagination.of(discountOrderType3Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(

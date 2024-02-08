@@ -335,30 +335,37 @@ public abstract class BaseOrderItemResourceTestCase {
 		OrderItem orderItem3 = testGetOrderItemsPage_addOrderItem(
 			randomOrderItem());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int orderItem1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int orderItem2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int orderItem3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<OrderItem> page1 = orderItemResource.getOrderItemsPage(
-				null, null, Pagination.of(orderItem1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(orderItem1, (List<OrderItem>)page1.getItems());
 
 			Page<OrderItem> page2 = orderItemResource.getOrderItemsPage(
-				null, null, Pagination.of(orderItem2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(orderItem2, (List<OrderItem>)page2.getItems());
 
 			Page<OrderItem> page3 = orderItemResource.getOrderItemsPage(
-				null, null, Pagination.of(orderItem3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(orderItem3, (List<OrderItem>)page3.getItems());
 		}
@@ -987,19 +994,17 @@ public abstract class BaseOrderItemResourceTestCase {
 			testGetOrderByExternalReferenceCodeOrderItemsPage_addOrderItem(
 				externalReferenceCode, randomOrderItem());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int orderItem1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int orderItem2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int orderItem3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<OrderItem> page1 =
 				orderItemResource.getOrderByExternalReferenceCodeOrderItemsPage(
-					externalReferenceCode, Pagination.of(orderItem1Page, 500));
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1007,13 +1012,19 @@ public abstract class BaseOrderItemResourceTestCase {
 
 			Page<OrderItem> page2 =
 				orderItemResource.getOrderByExternalReferenceCodeOrderItemsPage(
-					externalReferenceCode, Pagination.of(orderItem2Page, 500));
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(orderItem2, (List<OrderItem>)page2.getItems());
 
 			Page<OrderItem> page3 =
 				orderItemResource.getOrderByExternalReferenceCodeOrderItemsPage(
-					externalReferenceCode, Pagination.of(orderItem3Page, 500));
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(orderItem3, (List<OrderItem>)page3.getItems());
 		}
@@ -1169,30 +1180,34 @@ public abstract class BaseOrderItemResourceTestCase {
 		OrderItem orderItem3 = testGetOrderIdOrderItemsPage_addOrderItem(
 			id, randomOrderItem());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int orderItem1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int orderItem2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int orderItem3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<OrderItem> page1 = orderItemResource.getOrderIdOrderItemsPage(
-				id, Pagination.of(orderItem1Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(orderItem1, (List<OrderItem>)page1.getItems());
 
 			Page<OrderItem> page2 = orderItemResource.getOrderIdOrderItemsPage(
-				id, Pagination.of(orderItem2Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(orderItem2, (List<OrderItem>)page2.getItems());
 
 			Page<OrderItem> page3 = orderItemResource.getOrderIdOrderItemsPage(
-				id, Pagination.of(orderItem3Page, 500));
+				id,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(orderItem3, (List<OrderItem>)page3.getItems());
 		}

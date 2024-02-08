@@ -403,21 +403,19 @@ public abstract class BaseOrganizationResourceTestCase {
 			testGetAccountByExternalReferenceCodeOrganizationsPage_addOrganization(
 				externalReferenceCode, randomOrganization());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int organization1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int organization2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int organization3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Organization> page1 =
 				organizationResource.
 					getAccountByExternalReferenceCodeOrganizationsPage(
 						externalReferenceCode, null, null,
-						Pagination.of(organization1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -427,7 +425,10 @@ public abstract class BaseOrganizationResourceTestCase {
 				organizationResource.
 					getAccountByExternalReferenceCodeOrganizationsPage(
 						externalReferenceCode, null, null,
-						Pagination.of(organization2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(organization2, (List<Organization>)page2.getItems());
 
@@ -435,7 +436,10 @@ public abstract class BaseOrganizationResourceTestCase {
 				organizationResource.
 					getAccountByExternalReferenceCodeOrganizationsPage(
 						externalReferenceCode, null, null,
-						Pagination.of(organization3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(organization3, (List<Organization>)page3.getItems());
 		}
@@ -1035,20 +1039,18 @@ public abstract class BaseOrganizationResourceTestCase {
 			testGetAccountOrganizationsPage_addOrganization(
 				accountId, randomOrganization());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int organization1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int organization2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int organization3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Organization> page1 =
 				organizationResource.getAccountOrganizationsPage(
 					accountId, null, null,
-					Pagination.of(organization1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1057,14 +1059,20 @@ public abstract class BaseOrganizationResourceTestCase {
 			Page<Organization> page2 =
 				organizationResource.getAccountOrganizationsPage(
 					accountId, null, null,
-					Pagination.of(organization2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(organization2, (List<Organization>)page2.getItems());
 
 			Page<Organization> page3 =
 				organizationResource.getAccountOrganizationsPage(
 					accountId, null, null,
-					Pagination.of(organization3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(organization3, (List<Organization>)page3.getItems());
 		}
@@ -1568,19 +1576,17 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization organization3 = testGetOrganizationsPage_addOrganization(
 			randomOrganization());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int organization1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int organization2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int organization3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Organization> page1 =
 				organizationResource.getOrganizationsPage(
-					null, null, null, Pagination.of(organization1Page, 500),
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -1589,14 +1595,20 @@ public abstract class BaseOrganizationResourceTestCase {
 
 			Page<Organization> page2 =
 				organizationResource.getOrganizationsPage(
-					null, null, null, Pagination.of(organization2Page, 500),
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(organization2, (List<Organization>)page2.getItems());
 
 			Page<Organization> page3 =
 				organizationResource.getOrganizationsPage(
-					null, null, null, Pagination.of(organization3Page, 500),
+					null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(organization3, (List<Organization>)page3.getItems());
@@ -2446,20 +2458,18 @@ public abstract class BaseOrganizationResourceTestCase {
 			testGetOrganizationChildOrganizationsPage_addOrganization(
 				organizationId, randomOrganization());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int organization1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int organization2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int organization3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Organization> page1 =
 				organizationResource.getOrganizationChildOrganizationsPage(
 					organizationId, null, null, null,
-					Pagination.of(organization1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -2468,14 +2478,20 @@ public abstract class BaseOrganizationResourceTestCase {
 			Page<Organization> page2 =
 				organizationResource.getOrganizationChildOrganizationsPage(
 					organizationId, null, null, null,
-					Pagination.of(organization2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(organization2, (List<Organization>)page2.getItems());
 
 			Page<Organization> page3 =
 				organizationResource.getOrganizationChildOrganizationsPage(
 					organizationId, null, null, null,
-					Pagination.of(organization3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(organization3, (List<Organization>)page3.getItems());
 		}
@@ -2940,20 +2956,18 @@ public abstract class BaseOrganizationResourceTestCase {
 			testGetOrganizationOrganizationsPage_addOrganization(
 				parentOrganizationId, randomOrganization());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int organization1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int organization2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int organization3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Organization> page1 =
 				organizationResource.getOrganizationOrganizationsPage(
 					parentOrganizationId, null, null, null,
-					Pagination.of(organization1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -2962,14 +2976,20 @@ public abstract class BaseOrganizationResourceTestCase {
 			Page<Organization> page2 =
 				organizationResource.getOrganizationOrganizationsPage(
 					parentOrganizationId, null, null, null,
-					Pagination.of(organization2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(organization2, (List<Organization>)page2.getItems());
 
 			Page<Organization> page3 =
 				organizationResource.getOrganizationOrganizationsPage(
 					parentOrganizationId, null, null, null,
-					Pagination.of(organization3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(organization3, (List<Organization>)page3.getItems());
 		}

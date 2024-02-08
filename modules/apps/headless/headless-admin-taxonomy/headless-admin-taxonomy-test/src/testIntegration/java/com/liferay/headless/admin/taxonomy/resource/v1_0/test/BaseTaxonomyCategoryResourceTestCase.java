@@ -262,19 +262,17 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testGetTaxonomyCategoriesRankedPage_addTaxonomyCategory(
 				randomTaxonomyCategory());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int taxonomyCategory1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int taxonomyCategory2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int taxonomyCategory3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<TaxonomyCategory> page1 =
 				taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
-					null, Pagination.of(taxonomyCategory1Page, 500));
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -283,14 +281,20 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 			Page<TaxonomyCategory> page2 =
 				taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
-					null, Pagination.of(taxonomyCategory2Page, 500));
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				taxonomyCategory2, (List<TaxonomyCategory>)page2.getItems());
 
 			Page<TaxonomyCategory> page3 =
 				taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
-					null, Pagination.of(taxonomyCategory3Page, 500));
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				taxonomyCategory3, (List<TaxonomyCategory>)page3.getItems());
@@ -551,21 +555,19 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
 				parentTaxonomyCategoryId, randomTaxonomyCategory());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int taxonomyCategory1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int taxonomyCategory2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int taxonomyCategory3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<TaxonomyCategory> page1 =
 				taxonomyCategoryResource.
 					getTaxonomyCategoryTaxonomyCategoriesPage(
 						parentTaxonomyCategoryId, null, null, null,
-						Pagination.of(taxonomyCategory1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -576,7 +578,10 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				taxonomyCategoryResource.
 					getTaxonomyCategoryTaxonomyCategoriesPage(
 						parentTaxonomyCategoryId, null, null, null,
-						Pagination.of(taxonomyCategory2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				taxonomyCategory2, (List<TaxonomyCategory>)page2.getItems());
@@ -585,7 +590,10 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				taxonomyCategoryResource.
 					getTaxonomyCategoryTaxonomyCategoriesPage(
 						parentTaxonomyCategoryId, null, null, null,
-						Pagination.of(taxonomyCategory3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				taxonomyCategory3, (List<TaxonomyCategory>)page3.getItems());
@@ -1335,21 +1343,19 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testGetTaxonomyVocabularyTaxonomyCategoriesPage_addTaxonomyCategory(
 				taxonomyVocabularyId, randomTaxonomyCategory());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int taxonomyCategory1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int taxonomyCategory2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int taxonomyCategory3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<TaxonomyCategory> page1 =
 				taxonomyCategoryResource.
 					getTaxonomyVocabularyTaxonomyCategoriesPage(
 						taxonomyVocabularyId, null, null, null, null,
-						Pagination.of(taxonomyCategory1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1360,7 +1366,10 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				taxonomyCategoryResource.
 					getTaxonomyVocabularyTaxonomyCategoriesPage(
 						taxonomyVocabularyId, null, null, null, null,
-						Pagination.of(taxonomyCategory2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				taxonomyCategory2, (List<TaxonomyCategory>)page2.getItems());
@@ -1369,7 +1378,10 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				taxonomyCategoryResource.
 					getTaxonomyVocabularyTaxonomyCategoriesPage(
 						taxonomyVocabularyId, null, null, null, null,
-						Pagination.of(taxonomyCategory3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				taxonomyCategory3, (List<TaxonomyCategory>)page3.getItems());

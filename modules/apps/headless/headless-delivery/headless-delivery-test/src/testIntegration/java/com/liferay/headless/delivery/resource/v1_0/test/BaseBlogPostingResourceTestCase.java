@@ -660,20 +660,18 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting3 = testGetSiteBlogPostingsPage_addBlogPosting(
 			siteId, randomBlogPosting());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int blogPosting1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int blogPosting2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int blogPosting3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<BlogPosting> page1 =
 				blogPostingResource.getSiteBlogPostingsPage(
 					siteId, null, null, null,
-					Pagination.of(blogPosting1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -682,14 +680,20 @@ public abstract class BaseBlogPostingResourceTestCase {
 			Page<BlogPosting> page2 =
 				blogPostingResource.getSiteBlogPostingsPage(
 					siteId, null, null, null,
-					Pagination.of(blogPosting2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(blogPosting2, (List<BlogPosting>)page2.getItems());
 
 			Page<BlogPosting> page3 =
 				blogPostingResource.getSiteBlogPostingsPage(
 					siteId, null, null, null,
-					Pagination.of(blogPosting3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(blogPosting3, (List<BlogPosting>)page3.getItems());
 		}

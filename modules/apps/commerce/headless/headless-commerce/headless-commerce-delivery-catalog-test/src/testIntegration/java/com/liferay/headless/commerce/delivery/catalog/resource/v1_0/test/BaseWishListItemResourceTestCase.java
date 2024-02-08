@@ -418,19 +418,17 @@ public abstract class BaseWishListItemResourceTestCase {
 			testGetWishlistWishListWishListItemsPage_addWishListItem(
 				wishListId, randomWishListItem());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int wishListItem1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int wishListItem2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int wishListItem3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<WishListItem> page1 =
 				wishListItemResource.getWishlistWishListWishListItemsPage(
-					wishListId, null, Pagination.of(wishListItem1Page, 500));
+					wishListId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -438,13 +436,19 @@ public abstract class BaseWishListItemResourceTestCase {
 
 			Page<WishListItem> page2 =
 				wishListItemResource.getWishlistWishListWishListItemsPage(
-					wishListId, null, Pagination.of(wishListItem2Page, 500));
+					wishListId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(wishListItem2, (List<WishListItem>)page2.getItems());
 
 			Page<WishListItem> page3 =
 				wishListItemResource.getWishlistWishListWishListItemsPage(
-					wishListId, null, Pagination.of(wishListItem3Page, 500));
+					wishListId, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(wishListItem3, (List<WishListItem>)page3.getItems());
 		}

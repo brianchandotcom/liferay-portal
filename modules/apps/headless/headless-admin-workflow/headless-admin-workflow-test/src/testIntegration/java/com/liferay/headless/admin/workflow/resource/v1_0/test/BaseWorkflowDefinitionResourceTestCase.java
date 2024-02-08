@@ -260,19 +260,18 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			testGetWorkflowDefinitionsPage_addWorkflowDefinition(
 				randomWorkflowDefinition());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int workflowDefinition1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int workflowDefinition2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int workflowDefinition3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<WorkflowDefinition> page1 =
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					null, Pagination.of(workflowDefinition1Page, 500), null);
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -282,7 +281,11 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 			Page<WorkflowDefinition> page2 =
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					null, Pagination.of(workflowDefinition2Page, 500), null);
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				workflowDefinition2,
@@ -290,7 +293,11 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 			Page<WorkflowDefinition> page3 =
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					null, Pagination.of(workflowDefinition3Page, 500), null);
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				workflowDefinition3,

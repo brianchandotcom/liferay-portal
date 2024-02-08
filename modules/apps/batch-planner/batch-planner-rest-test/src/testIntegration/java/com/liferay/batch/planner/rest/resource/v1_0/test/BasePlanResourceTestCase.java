@@ -235,27 +235,31 @@ public abstract class BasePlanResourceTestCase {
 
 		Plan plan3 = testGetPlansPage_addPlan(randomPlan());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int plan1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int plan2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int plan3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Plan> page1 = planResource.getPlansPage(
-				Pagination.of(plan1Page, 500));
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(plan1, (List<Plan>)page1.getItems());
 
 			Page<Plan> page2 = planResource.getPlansPage(
-				Pagination.of(plan2Page, 500));
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(plan2, (List<Plan>)page2.getItems());
 
 			Page<Plan> page3 = planResource.getPlansPage(
-				Pagination.of(plan3Page, 500));
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(plan3, (List<Plan>)page3.getItems());
 		}

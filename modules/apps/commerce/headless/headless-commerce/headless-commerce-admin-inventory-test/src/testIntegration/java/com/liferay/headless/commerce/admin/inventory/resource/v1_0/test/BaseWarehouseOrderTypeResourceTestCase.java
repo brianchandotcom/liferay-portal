@@ -301,21 +301,18 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 			testGetWarehouseByExternalReferenceCodeWarehouseOrderTypesPage_addWarehouseOrderType(
 				externalReferenceCode, randomWarehouseOrderType());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int warehouseOrderType1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int warehouseOrderType2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int warehouseOrderType3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<WarehouseOrderType> page1 =
 				warehouseOrderTypeResource.
 					getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(warehouseOrderType1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -327,7 +324,9 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 				warehouseOrderTypeResource.
 					getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(warehouseOrderType2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				warehouseOrderType2,
@@ -337,7 +336,9 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 				warehouseOrderTypeResource.
 					getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(warehouseOrderType3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				warehouseOrderType3,
@@ -632,21 +633,19 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 			testGetWarehouseIdWarehouseOrderTypesPage_addWarehouseOrderType(
 				id, randomWarehouseOrderType());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int warehouseOrderType1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int warehouseOrderType2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int warehouseOrderType3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<WarehouseOrderType> page1 =
 				warehouseOrderTypeResource.
 					getWarehouseIdWarehouseOrderTypesPage(
 						id, null, null,
-						Pagination.of(warehouseOrderType1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -658,7 +657,10 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 				warehouseOrderTypeResource.
 					getWarehouseIdWarehouseOrderTypesPage(
 						id, null, null,
-						Pagination.of(warehouseOrderType2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				warehouseOrderType2,
@@ -668,7 +670,10 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 				warehouseOrderTypeResource.
 					getWarehouseIdWarehouseOrderTypesPage(
 						id, null, null,
-						Pagination.of(warehouseOrderType3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				warehouseOrderType3,

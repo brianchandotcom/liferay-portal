@@ -229,27 +229,37 @@ public abstract class BaseSiteResourceTestCase {
 
 		Site site3 = testGetSitesPage_addSite(randomSite());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int site1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int site2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int site3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Site> page1 = siteResource.getSitesPage(
-				null, Pagination.of(site1Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(site1, (List<Site>)page1.getItems());
 
 			Page<Site> page2 = siteResource.getSitesPage(
-				null, Pagination.of(site2Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(site2, (List<Site>)page2.getItems());
 
 			Page<Site> page3 = siteResource.getSitesPage(
-				null, Pagination.of(site3Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(site3, (List<Site>)page3.getItems());
 		}

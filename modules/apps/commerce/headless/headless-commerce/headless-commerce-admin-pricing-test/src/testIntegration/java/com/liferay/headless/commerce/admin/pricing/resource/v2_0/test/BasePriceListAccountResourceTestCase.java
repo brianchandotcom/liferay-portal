@@ -300,21 +300,18 @@ public abstract class BasePriceListAccountResourceTestCase {
 			testGetPriceListByExternalReferenceCodePriceListAccountsPage_addPriceListAccount(
 				externalReferenceCode, randomPriceListAccount());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int priceListAccount1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int priceListAccount2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int priceListAccount3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PriceListAccount> page1 =
 				priceListAccountResource.
 					getPriceListByExternalReferenceCodePriceListAccountsPage(
 						externalReferenceCode,
-						Pagination.of(priceListAccount1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -325,7 +322,9 @@ public abstract class BasePriceListAccountResourceTestCase {
 				priceListAccountResource.
 					getPriceListByExternalReferenceCodePriceListAccountsPage(
 						externalReferenceCode,
-						Pagination.of(priceListAccount2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				priceListAccount2, (List<PriceListAccount>)page2.getItems());
@@ -334,7 +333,9 @@ public abstract class BasePriceListAccountResourceTestCase {
 				priceListAccountResource.
 					getPriceListByExternalReferenceCodePriceListAccountsPage(
 						externalReferenceCode,
-						Pagination.of(priceListAccount3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				priceListAccount3, (List<PriceListAccount>)page3.getItems());
@@ -615,19 +616,17 @@ public abstract class BasePriceListAccountResourceTestCase {
 			testGetPriceListIdPriceListAccountsPage_addPriceListAccount(
 				id, randomPriceListAccount());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int priceListAccount1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int priceListAccount2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int priceListAccount3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PriceListAccount> page1 =
 				priceListAccountResource.getPriceListIdPriceListAccountsPage(
-					id, null, null, Pagination.of(priceListAccount1Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -637,7 +636,10 @@ public abstract class BasePriceListAccountResourceTestCase {
 
 			Page<PriceListAccount> page2 =
 				priceListAccountResource.getPriceListIdPriceListAccountsPage(
-					id, null, null, Pagination.of(priceListAccount2Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(
@@ -645,7 +647,10 @@ public abstract class BasePriceListAccountResourceTestCase {
 
 			Page<PriceListAccount> page3 =
 				priceListAccountResource.getPriceListIdPriceListAccountsPage(
-					id, null, null, Pagination.of(priceListAccount3Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(

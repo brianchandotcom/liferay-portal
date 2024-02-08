@@ -336,21 +336,18 @@ public abstract class BaseGroupedProductResourceTestCase {
 			testGetProductByExternalReferenceCodeGroupedProductsPage_addGroupedProduct(
 				externalReferenceCode, randomGroupedProduct());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int groupedProduct1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int groupedProduct2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int groupedProduct3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<GroupedProduct> page1 =
 				groupedProductResource.
 					getProductByExternalReferenceCodeGroupedProductsPage(
 						externalReferenceCode,
-						Pagination.of(groupedProduct1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -361,7 +358,9 @@ public abstract class BaseGroupedProductResourceTestCase {
 				groupedProductResource.
 					getProductByExternalReferenceCodeGroupedProductsPage(
 						externalReferenceCode,
-						Pagination.of(groupedProduct2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				groupedProduct2, (List<GroupedProduct>)page2.getItems());
@@ -370,7 +369,9 @@ public abstract class BaseGroupedProductResourceTestCase {
 				groupedProductResource.
 					getProductByExternalReferenceCodeGroupedProductsPage(
 						externalReferenceCode,
-						Pagination.of(groupedProduct3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				groupedProduct3, (List<GroupedProduct>)page3.getItems());
@@ -552,19 +553,17 @@ public abstract class BaseGroupedProductResourceTestCase {
 			testGetProductIdGroupedProductsPage_addGroupedProduct(
 				id, randomGroupedProduct());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int groupedProduct1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int groupedProduct2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int groupedProduct3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<GroupedProduct> page1 =
 				groupedProductResource.getProductIdGroupedProductsPage(
-					id, Pagination.of(groupedProduct1Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -573,14 +572,20 @@ public abstract class BaseGroupedProductResourceTestCase {
 
 			Page<GroupedProduct> page2 =
 				groupedProductResource.getProductIdGroupedProductsPage(
-					id, Pagination.of(groupedProduct2Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				groupedProduct2, (List<GroupedProduct>)page2.getItems());
 
 			Page<GroupedProduct> page3 =
 				groupedProductResource.getProductIdGroupedProductsPage(
-					id, Pagination.of(groupedProduct3Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				groupedProduct3, (List<GroupedProduct>)page3.getItems());

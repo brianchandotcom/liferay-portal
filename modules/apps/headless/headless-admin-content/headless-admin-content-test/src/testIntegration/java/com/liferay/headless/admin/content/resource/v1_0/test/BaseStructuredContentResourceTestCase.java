@@ -384,20 +384,18 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGetSiteStructuredContentsPage_addStructuredContent(
 				siteId, randomStructuredContent());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int structuredContent1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int structuredContent2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int structuredContent3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<StructuredContent> page1 =
 				structuredContentResource.getSiteStructuredContentsPage(
 					siteId, null, null, null, null,
-					Pagination.of(structuredContent1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -407,7 +405,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 			Page<StructuredContent> page2 =
 				structuredContentResource.getSiteStructuredContentsPage(
 					siteId, null, null, null, null,
-					Pagination.of(structuredContent2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				structuredContent2, (List<StructuredContent>)page2.getItems());
@@ -415,7 +416,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 			Page<StructuredContent> page3 =
 				structuredContentResource.getSiteStructuredContentsPage(
 					siteId, null, null, null, null,
-					Pagination.of(structuredContent3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				structuredContent3, (List<StructuredContent>)page3.getItems());

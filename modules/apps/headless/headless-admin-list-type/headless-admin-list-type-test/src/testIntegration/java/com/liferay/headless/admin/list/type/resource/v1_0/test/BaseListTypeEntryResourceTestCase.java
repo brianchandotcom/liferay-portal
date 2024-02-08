@@ -398,21 +398,19 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
 				externalReferenceCode, randomListTypeEntry());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int listTypeEntry1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int listTypeEntry2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int listTypeEntry3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ListTypeEntry> page1 =
 				listTypeEntryResource.
 					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
 						externalReferenceCode, null, null, null,
-						Pagination.of(listTypeEntry1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -423,7 +421,10 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				listTypeEntryResource.
 					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
 						externalReferenceCode, null, null, null,
-						Pagination.of(listTypeEntry2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				listTypeEntry2, (List<ListTypeEntry>)page2.getItems());
@@ -432,7 +433,10 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				listTypeEntryResource.
 					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
 						externalReferenceCode, null, null, null,
-						Pagination.of(listTypeEntry3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				listTypeEntry3, (List<ListTypeEntry>)page3.getItems());
@@ -895,20 +899,18 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			testGetListTypeDefinitionListTypeEntriesPage_addListTypeEntry(
 				listTypeDefinitionId, randomListTypeEntry());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int listTypeEntry1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int listTypeEntry2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int listTypeEntry3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ListTypeEntry> page1 =
 				listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
 					listTypeDefinitionId, null, null, null,
-					Pagination.of(listTypeEntry1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -918,7 +920,10 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			Page<ListTypeEntry> page2 =
 				listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
 					listTypeDefinitionId, null, null, null,
-					Pagination.of(listTypeEntry2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				listTypeEntry2, (List<ListTypeEntry>)page2.getItems());
@@ -926,7 +931,10 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			Page<ListTypeEntry> page3 =
 				listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
 					listTypeDefinitionId, null, null, null,
-					Pagination.of(listTypeEntry3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				listTypeEntry3, (List<ListTypeEntry>)page3.getItems());

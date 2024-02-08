@@ -246,19 +246,18 @@ public abstract class BaseCommerceChannelResourceTestCase {
 			testGetCommerceChannelsPage_addCommerceChannel(
 				randomCommerceChannel());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int commerceChannel1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int commerceChannel2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int commerceChannel3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<CommerceChannel> page1 =
 				commerceChannelResource.getCommerceChannelsPage(
-					null, Pagination.of(commerceChannel1Page, 500), null);
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -267,14 +266,22 @@ public abstract class BaseCommerceChannelResourceTestCase {
 
 			Page<CommerceChannel> page2 =
 				commerceChannelResource.getCommerceChannelsPage(
-					null, Pagination.of(commerceChannel2Page, 500), null);
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				commerceChannel2, (List<CommerceChannel>)page2.getItems());
 
 			Page<CommerceChannel> page3 =
 				commerceChannelResource.getCommerceChannelsPage(
-					null, Pagination.of(commerceChannel3Page, 500), null);
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				commerceChannel3, (List<CommerceChannel>)page3.getItems());

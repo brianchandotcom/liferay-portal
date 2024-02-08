@@ -241,30 +241,37 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 		CTRemote ctRemote3 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int ctRemote1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int ctRemote2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int ctRemote3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<CTRemote> page1 = ctRemoteResource.getCTRemotesPage(
-				null, Pagination.of(ctRemote1Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(ctRemote1, (List<CTRemote>)page1.getItems());
 
 			Page<CTRemote> page2 = ctRemoteResource.getCTRemotesPage(
-				null, Pagination.of(ctRemote2Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(ctRemote2, (List<CTRemote>)page2.getItems());
 
 			Page<CTRemote> page3 = ctRemoteResource.getCTRemotesPage(
-				null, Pagination.of(ctRemote3Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(ctRemote3, (List<CTRemote>)page3.getItems());
 		}

@@ -262,19 +262,17 @@ public abstract class BaseAssigneeResourceTestCase {
 		Assignee assignee3 = testGetWorkflowTaskAssignableUsersPage_addAssignee(
 			workflowTaskId, randomAssignee());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int assignee1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int assignee2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int assignee3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Assignee> page1 =
 				assigneeResource.getWorkflowTaskAssignableUsersPage(
-					workflowTaskId, Pagination.of(assignee1Page, 500));
+					workflowTaskId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -282,13 +280,19 @@ public abstract class BaseAssigneeResourceTestCase {
 
 			Page<Assignee> page2 =
 				assigneeResource.getWorkflowTaskAssignableUsersPage(
-					workflowTaskId, Pagination.of(assignee2Page, 500));
+					workflowTaskId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(assignee2, (List<Assignee>)page2.getItems());
 
 			Page<Assignee> page3 =
 				assigneeResource.getWorkflowTaskAssignableUsersPage(
-					workflowTaskId, Pagination.of(assignee3Page, 500));
+					workflowTaskId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(assignee3, (List<Assignee>)page3.getItems());
 		}

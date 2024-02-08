@@ -242,19 +242,17 @@ public abstract class BaseSubscriptionResourceTestCase {
 			testGetMyUserAccountSubscriptionsPage_addSubscription(
 				randomSubscription());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int subscription1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int subscription2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int subscription3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Subscription> page1 =
 				subscriptionResource.getMyUserAccountSubscriptionsPage(
-					null, Pagination.of(subscription1Page, 500));
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -262,13 +260,19 @@ public abstract class BaseSubscriptionResourceTestCase {
 
 			Page<Subscription> page2 =
 				subscriptionResource.getMyUserAccountSubscriptionsPage(
-					null, Pagination.of(subscription2Page, 500));
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(subscription2, (List<Subscription>)page2.getItems());
 
 			Page<Subscription> page3 =
 				subscriptionResource.getMyUserAccountSubscriptionsPage(
-					null, Pagination.of(subscription3Page, 500));
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(subscription3, (List<Subscription>)page3.getItems());
 		}

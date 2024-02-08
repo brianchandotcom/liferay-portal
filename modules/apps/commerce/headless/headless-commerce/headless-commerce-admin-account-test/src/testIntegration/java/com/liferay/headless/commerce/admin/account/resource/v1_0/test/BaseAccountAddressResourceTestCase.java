@@ -626,21 +626,18 @@ public abstract class BaseAccountAddressResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountAddressesPage_addAccountAddress(
 				externalReferenceCode, randomAccountAddress());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int accountAddress1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int accountAddress2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int accountAddress3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AccountAddress> page1 =
 				accountAddressResource.
 					getAccountByExternalReferenceCodeAccountAddressesPage(
 						externalReferenceCode,
-						Pagination.of(accountAddress1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -651,7 +648,9 @@ public abstract class BaseAccountAddressResourceTestCase {
 				accountAddressResource.
 					getAccountByExternalReferenceCodeAccountAddressesPage(
 						externalReferenceCode,
-						Pagination.of(accountAddress2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				accountAddress2, (List<AccountAddress>)page2.getItems());
@@ -660,7 +659,9 @@ public abstract class BaseAccountAddressResourceTestCase {
 				accountAddressResource.
 					getAccountByExternalReferenceCodeAccountAddressesPage(
 						externalReferenceCode,
-						Pagination.of(accountAddress3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				accountAddress3, (List<AccountAddress>)page3.getItems());
@@ -842,19 +843,17 @@ public abstract class BaseAccountAddressResourceTestCase {
 			testGetAccountIdAccountAddressesPage_addAccountAddress(
 				id, randomAccountAddress());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int accountAddress1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int accountAddress2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int accountAddress3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AccountAddress> page1 =
 				accountAddressResource.getAccountIdAccountAddressesPage(
-					id, Pagination.of(accountAddress1Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -863,14 +862,20 @@ public abstract class BaseAccountAddressResourceTestCase {
 
 			Page<AccountAddress> page2 =
 				accountAddressResource.getAccountIdAccountAddressesPage(
-					id, Pagination.of(accountAddress2Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				accountAddress2, (List<AccountAddress>)page2.getItems());
 
 			Page<AccountAddress> page3 =
 				accountAddressResource.getAccountIdAccountAddressesPage(
-					id, Pagination.of(accountAddress3Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				accountAddress3, (List<AccountAddress>)page3.getItems());

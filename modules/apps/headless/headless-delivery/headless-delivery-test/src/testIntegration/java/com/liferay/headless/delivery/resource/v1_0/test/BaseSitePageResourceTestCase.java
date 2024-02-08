@@ -359,18 +359,16 @@ public abstract class BaseSitePageResourceTestCase {
 		SitePage sitePage3 = testGetSiteSitePagesPage_addSitePage(
 			siteId, randomSitePage());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int sitePage1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int sitePage2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int sitePage3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<SitePage> page1 = sitePageResource.getSiteSitePagesPage(
-				siteId, null, null, null, Pagination.of(sitePage1Page, 500),
+				siteId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
 				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -378,13 +376,19 @@ public abstract class BaseSitePageResourceTestCase {
 			assertContains(sitePage1, (List<SitePage>)page1.getItems());
 
 			Page<SitePage> page2 = sitePageResource.getSiteSitePagesPage(
-				siteId, null, null, null, Pagination.of(sitePage2Page, 500),
+				siteId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
 				null);
 
 			assertContains(sitePage2, (List<SitePage>)page2.getItems());
 
 			Page<SitePage> page3 = sitePageResource.getSiteSitePagesPage(
-				siteId, null, null, null, Pagination.of(sitePage3Page, 500),
+				siteId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
 				null);
 
 			assertContains(sitePage3, (List<SitePage>)page3.getItems());

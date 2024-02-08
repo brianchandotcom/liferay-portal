@@ -285,21 +285,18 @@ public abstract class BaseDiscountRuleResourceTestCase {
 			testGetDiscountByExternalReferenceCodeDiscountRulesPage_addDiscountRule(
 				externalReferenceCode, randomDiscountRule());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int discountRule1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int discountRule2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int discountRule3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DiscountRule> page1 =
 				discountRuleResource.
 					getDiscountByExternalReferenceCodeDiscountRulesPage(
 						externalReferenceCode,
-						Pagination.of(discountRule1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -309,7 +306,9 @@ public abstract class BaseDiscountRuleResourceTestCase {
 				discountRuleResource.
 					getDiscountByExternalReferenceCodeDiscountRulesPage(
 						externalReferenceCode,
-						Pagination.of(discountRule2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(discountRule2, (List<DiscountRule>)page2.getItems());
 
@@ -317,7 +316,9 @@ public abstract class BaseDiscountRuleResourceTestCase {
 				discountRuleResource.
 					getDiscountByExternalReferenceCodeDiscountRulesPage(
 						externalReferenceCode,
-						Pagination.of(discountRule3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(discountRule3, (List<DiscountRule>)page3.getItems());
 		}
@@ -630,19 +631,17 @@ public abstract class BaseDiscountRuleResourceTestCase {
 			testGetDiscountIdDiscountRulesPage_addDiscountRule(
 				id, randomDiscountRule());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int discountRule1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int discountRule2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int discountRule3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DiscountRule> page1 =
 				discountRuleResource.getDiscountIdDiscountRulesPage(
-					id, Pagination.of(discountRule1Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -650,13 +649,19 @@ public abstract class BaseDiscountRuleResourceTestCase {
 
 			Page<DiscountRule> page2 =
 				discountRuleResource.getDiscountIdDiscountRulesPage(
-					id, Pagination.of(discountRule2Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(discountRule2, (List<DiscountRule>)page2.getItems());
 
 			Page<DiscountRule> page3 =
 				discountRuleResource.getDiscountIdDiscountRulesPage(
-					id, Pagination.of(discountRule3Page, 500));
+					id,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(discountRule3, (List<DiscountRule>)page3.getItems());
 		}

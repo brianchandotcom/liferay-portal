@@ -266,19 +266,17 @@ public abstract class BaseShippingMethodResourceTestCase {
 			testGetChannelShippingMethodsPage_addShippingMethod(
 				channelId, randomShippingMethod());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int shippingMethod1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int shippingMethod2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int shippingMethod3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ShippingMethod> page1 =
 				shippingMethodResource.getChannelShippingMethodsPage(
-					channelId, Pagination.of(shippingMethod1Page, 500));
+					channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -287,14 +285,20 @@ public abstract class BaseShippingMethodResourceTestCase {
 
 			Page<ShippingMethod> page2 =
 				shippingMethodResource.getChannelShippingMethodsPage(
-					channelId, Pagination.of(shippingMethod2Page, 500));
+					channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				shippingMethod2, (List<ShippingMethod>)page2.getItems());
 
 			Page<ShippingMethod> page3 =
 				shippingMethodResource.getChannelShippingMethodsPage(
-					channelId, Pagination.of(shippingMethod3Page, 500));
+					channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				shippingMethod3, (List<ShippingMethod>)page3.getItems());

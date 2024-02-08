@@ -365,27 +365,37 @@ public abstract class BaseOrderResourceTestCase {
 
 		Order order3 = testGetOrdersPage_addOrder(randomOrder());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int order1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int order2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int order3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Order> page1 = orderResource.getOrdersPage(
-				null, null, Pagination.of(order1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(order1, (List<Order>)page1.getItems());
 
 			Page<Order> page2 = orderResource.getOrdersPage(
-				null, null, Pagination.of(order2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(order2, (List<Order>)page2.getItems());
 
 			Page<Order> page3 = orderResource.getOrdersPage(
-				null, null, Pagination.of(order3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(order3, (List<Order>)page3.getItems());
 		}

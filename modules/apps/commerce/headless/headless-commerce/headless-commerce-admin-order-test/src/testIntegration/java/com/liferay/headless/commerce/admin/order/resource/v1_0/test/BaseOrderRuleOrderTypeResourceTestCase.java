@@ -297,21 +297,18 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 			testGetOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage_addOrderRuleOrderType(
 				externalReferenceCode, randomOrderRuleOrderType());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int orderRuleOrderType1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int orderRuleOrderType2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int orderRuleOrderType3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<OrderRuleOrderType> page1 =
 				orderRuleOrderTypeResource.
 					getOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(orderRuleOrderType1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -323,7 +320,9 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 				orderRuleOrderTypeResource.
 					getOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(orderRuleOrderType2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				orderRuleOrderType2,
@@ -333,7 +332,9 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 				orderRuleOrderTypeResource.
 					getOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage(
 						externalReferenceCode,
-						Pagination.of(orderRuleOrderType3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				orderRuleOrderType3,
@@ -526,20 +527,18 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 			testGetOrderRuleIdOrderRuleOrderTypesPage_addOrderRuleOrderType(
 				id, randomOrderRuleOrderType());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int orderRuleOrderType1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int orderRuleOrderType2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int orderRuleOrderType3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<OrderRuleOrderType> page1 =
 				orderRuleOrderTypeResource.
 					getOrderRuleIdOrderRuleOrderTypesPage(
-						id, null, Pagination.of(orderRuleOrderType1Page, 500));
+						id, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -550,7 +549,10 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 			Page<OrderRuleOrderType> page2 =
 				orderRuleOrderTypeResource.
 					getOrderRuleIdOrderRuleOrderTypesPage(
-						id, null, Pagination.of(orderRuleOrderType2Page, 500));
+						id, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				orderRuleOrderType2,
@@ -559,7 +561,10 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 			Page<OrderRuleOrderType> page3 =
 				orderRuleOrderTypeResource.
 					getOrderRuleIdOrderRuleOrderTypesPage(
-						id, null, Pagination.of(orderRuleOrderType3Page, 500));
+						id, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				orderRuleOrderType3,

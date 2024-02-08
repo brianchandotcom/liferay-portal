@@ -368,16 +368,17 @@ public abstract class BaseCTEntryResourceTestCase {
 		CTEntry ctEntry3 = testGetCtCollectionCTEntriesPage_addCTEntry(
 			ctCollectionId, randomCTEntry());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int ctEntry1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int ctEntry2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int ctEntry3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<CTEntry> page1 = ctEntryResource.getCtCollectionCTEntriesPage(
 				ctCollectionId, null, null, null,
-				Pagination.of(ctEntry1Page, 500), null);
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -385,13 +386,19 @@ public abstract class BaseCTEntryResourceTestCase {
 
 			Page<CTEntry> page2 = ctEntryResource.getCtCollectionCTEntriesPage(
 				ctCollectionId, null, null, null,
-				Pagination.of(ctEntry2Page, 500), null);
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(ctEntry2, (List<CTEntry>)page2.getItems());
 
 			Page<CTEntry> page3 = ctEntryResource.getCtCollectionCTEntriesPage(
 				ctCollectionId, null, null, null,
-				Pagination.of(ctEntry3Page, 500), null);
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(ctEntry3, (List<CTEntry>)page3.getItems());
 		}

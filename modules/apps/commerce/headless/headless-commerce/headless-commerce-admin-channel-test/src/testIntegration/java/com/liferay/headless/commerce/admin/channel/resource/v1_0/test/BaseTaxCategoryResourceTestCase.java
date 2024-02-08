@@ -224,30 +224,34 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		TaxCategory taxCategory3 = testGetTaxCategoriesPage_addTaxCategory(
 			randomTaxCategory());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int taxCategory1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int taxCategory2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int taxCategory3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<TaxCategory> page1 = taxCategoryResource.getTaxCategoriesPage(
-				null, Pagination.of(taxCategory1Page, 500));
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(taxCategory1, (List<TaxCategory>)page1.getItems());
 
 			Page<TaxCategory> page2 = taxCategoryResource.getTaxCategoriesPage(
-				null, Pagination.of(taxCategory2Page, 500));
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(taxCategory2, (List<TaxCategory>)page2.getItems());
 
 			Page<TaxCategory> page3 = taxCategoryResource.getTaxCategoriesPage(
-				null, Pagination.of(taxCategory3Page, 500));
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit));
 
 			assertContains(taxCategory3, (List<TaxCategory>)page3.getItems());
 		}

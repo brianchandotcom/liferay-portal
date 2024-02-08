@@ -326,30 +326,37 @@ public abstract class BaseWarehouseResourceTestCase {
 		Warehouse warehouse3 = testGetWarehousesPage_addWarehouse(
 			randomWarehouse());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int warehouse1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int warehouse2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int warehouse3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Warehouse> page1 = warehouseResource.getWarehousesPage(
-				null, Pagination.of(warehouse1Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(warehouse1, (List<Warehouse>)page1.getItems());
 
 			Page<Warehouse> page2 = warehouseResource.getWarehousesPage(
-				null, Pagination.of(warehouse2Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(warehouse2, (List<Warehouse>)page2.getItems());
 
 			Page<Warehouse> page3 = warehouseResource.getWarehousesPage(
-				null, Pagination.of(warehouse3Page, 500), null);
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(warehouse3, (List<Warehouse>)page3.getItems());
 		}

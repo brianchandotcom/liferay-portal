@@ -318,30 +318,37 @@ public abstract class BaseShipmentResourceTestCase {
 
 		Shipment shipment3 = testGetShipmentsPage_addShipment(randomShipment());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int shipment1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int shipment2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int shipment3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<Shipment> page1 = shipmentResource.getShipmentsPage(
-				null, null, Pagination.of(shipment1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(shipment1, (List<Shipment>)page1.getItems());
 
 			Page<Shipment> page2 = shipmentResource.getShipmentsPage(
-				null, null, Pagination.of(shipment2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(shipment2, (List<Shipment>)page2.getItems());
 
 			Page<Shipment> page3 = shipmentResource.getShipmentsPage(
-				null, null, Pagination.of(shipment3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(shipment3, (List<Shipment>)page3.getItems());
 		}

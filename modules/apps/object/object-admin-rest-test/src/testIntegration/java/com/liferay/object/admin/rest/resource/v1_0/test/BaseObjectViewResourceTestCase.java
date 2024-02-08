@@ -286,21 +286,19 @@ public abstract class BaseObjectViewResourceTestCase {
 			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_addObjectView(
 				externalReferenceCode, randomObjectView());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int objectView1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int objectView2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int objectView3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ObjectView> page1 =
 				objectViewResource.
 					getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
 						externalReferenceCode, null,
-						Pagination.of(objectView1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -310,7 +308,10 @@ public abstract class BaseObjectViewResourceTestCase {
 				objectViewResource.
 					getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
 						externalReferenceCode, null,
-						Pagination.of(objectView2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(objectView2, (List<ObjectView>)page2.getItems());
 
@@ -318,7 +319,10 @@ public abstract class BaseObjectViewResourceTestCase {
 				objectViewResource.
 					getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
 						externalReferenceCode, null,
-						Pagination.of(objectView3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(objectView3, (List<ObjectView>)page3.getItems());
 		}
@@ -661,20 +665,18 @@ public abstract class BaseObjectViewResourceTestCase {
 			testGetObjectDefinitionObjectViewsPage_addObjectView(
 				objectDefinitionId, randomObjectView());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int objectView1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int objectView2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int objectView3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ObjectView> page1 =
 				objectViewResource.getObjectDefinitionObjectViewsPage(
 					objectDefinitionId, null,
-					Pagination.of(objectView1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -683,14 +685,20 @@ public abstract class BaseObjectViewResourceTestCase {
 			Page<ObjectView> page2 =
 				objectViewResource.getObjectDefinitionObjectViewsPage(
 					objectDefinitionId, null,
-					Pagination.of(objectView2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(objectView2, (List<ObjectView>)page2.getItems());
 
 			Page<ObjectView> page3 =
 				objectViewResource.getObjectDefinitionObjectViewsPage(
 					objectDefinitionId, null,
-					Pagination.of(objectView3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(objectView3, (List<ObjectView>)page3.getItems());
 		}

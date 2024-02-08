@@ -300,19 +300,17 @@ public abstract class BasePlacedOrderResourceTestCase {
 			testGetChannelAccountPlacedOrdersPage_addPlacedOrder(
 				accountId, channelId, randomPlacedOrder());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int placedOrder1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int placedOrder2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int placedOrder3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<PlacedOrder> page1 =
 				placedOrderResource.getChannelAccountPlacedOrdersPage(
-					accountId, channelId, Pagination.of(placedOrder1Page, 500));
+					accountId, channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -320,13 +318,19 @@ public abstract class BasePlacedOrderResourceTestCase {
 
 			Page<PlacedOrder> page2 =
 				placedOrderResource.getChannelAccountPlacedOrdersPage(
-					accountId, channelId, Pagination.of(placedOrder2Page, 500));
+					accountId, channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(placedOrder2, (List<PlacedOrder>)page2.getItems());
 
 			Page<PlacedOrder> page3 =
 				placedOrderResource.getChannelAccountPlacedOrdersPage(
-					accountId, channelId, Pagination.of(placedOrder3Page, 500));
+					accountId, channelId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(placedOrder3, (List<PlacedOrder>)page3.getItems());
 		}

@@ -594,18 +594,16 @@ public abstract class BaseWikiPageResourceTestCase {
 		WikiPage wikiPage3 = testGetWikiNodeWikiPagesPage_addWikiPage(
 			wikiNodeId, randomWikiPage());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int wikiPage1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int wikiPage2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int wikiPage3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<WikiPage> page1 = wikiPageResource.getWikiNodeWikiPagesPage(
-				wikiNodeId, null, null, null, Pagination.of(wikiPage1Page, 500),
+				wikiNodeId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
 				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -613,13 +611,19 @@ public abstract class BaseWikiPageResourceTestCase {
 			assertContains(wikiPage1, (List<WikiPage>)page1.getItems());
 
 			Page<WikiPage> page2 = wikiPageResource.getWikiNodeWikiPagesPage(
-				wikiNodeId, null, null, null, Pagination.of(wikiPage2Page, 500),
+				wikiNodeId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
 				null);
 
 			assertContains(wikiPage2, (List<WikiPage>)page2.getItems());
 
 			Page<WikiPage> page3 = wikiPageResource.getWikiNodeWikiPagesPage(
-				wikiNodeId, null, null, null, Pagination.of(wikiPage3Page, 500),
+				wikiNodeId, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
 				null);
 
 			assertContains(wikiPage3, (List<WikiPage>)page3.getItems());

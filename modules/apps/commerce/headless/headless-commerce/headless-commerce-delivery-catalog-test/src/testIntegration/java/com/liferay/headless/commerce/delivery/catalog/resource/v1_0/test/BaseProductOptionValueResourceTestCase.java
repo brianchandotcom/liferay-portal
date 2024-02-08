@@ -325,21 +325,18 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				channelId, productId, productOptionId,
 				randomProductOptionValue());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int productOptionValue1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int productOptionValue2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int productOptionValue3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<ProductOptionValue> page1 =
 				productOptionValueResource.
 					getChannelProductProductOptionProductOptionValuesPage(
 						channelId, productId, productOptionId, null, null, null,
-						Pagination.of(productOptionValue1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -351,7 +348,9 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				productOptionValueResource.
 					getChannelProductProductOptionProductOptionValuesPage(
 						channelId, productId, productOptionId, null, null, null,
-						Pagination.of(productOptionValue2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				productOptionValue2,
@@ -361,7 +360,9 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				productOptionValueResource.
 					getChannelProductProductOptionProductOptionValuesPage(
 						channelId, productId, productOptionId, null, null, null,
-						Pagination.of(productOptionValue3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				productOptionValue3,

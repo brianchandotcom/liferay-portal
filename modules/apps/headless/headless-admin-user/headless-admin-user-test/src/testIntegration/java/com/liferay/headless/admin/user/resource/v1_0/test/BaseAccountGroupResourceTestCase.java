@@ -325,19 +325,18 @@ public abstract class BaseAccountGroupResourceTestCase {
 		AccountGroup accountGroup3 = testGetAccountGroupsPage_addAccountGroup(
 			randomAccountGroup());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int accountGroup1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int accountGroup2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int accountGroup3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AccountGroup> page1 =
 				accountGroupResource.getAccountGroupsPage(
-					null, null, Pagination.of(accountGroup1Page, 500), null);
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -345,13 +344,21 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 			Page<AccountGroup> page2 =
 				accountGroupResource.getAccountGroupsPage(
-					null, null, Pagination.of(accountGroup2Page, 500), null);
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(accountGroup2, (List<AccountGroup>)page2.getItems());
 
 			Page<AccountGroup> page3 =
 				accountGroupResource.getAccountGroupsPage(
-					null, null, Pagination.of(accountGroup3Page, 500), null);
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(accountGroup3, (List<AccountGroup>)page3.getItems());
 		}
@@ -1162,21 +1169,18 @@ public abstract class BaseAccountGroupResourceTestCase {
 			testGetAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage_addAccountGroup(
 				accountExternalReferenceCode, randomAccountGroup());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int accountGroup1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int accountGroup2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int accountGroup3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AccountGroup> page1 =
 				accountGroupResource.
 					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
 						accountExternalReferenceCode,
-						Pagination.of(accountGroup1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1186,7 +1190,9 @@ public abstract class BaseAccountGroupResourceTestCase {
 				accountGroupResource.
 					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
 						accountExternalReferenceCode,
-						Pagination.of(accountGroup2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(accountGroup2, (List<AccountGroup>)page2.getItems());
 
@@ -1194,7 +1200,9 @@ public abstract class BaseAccountGroupResourceTestCase {
 				accountGroupResource.
 					getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
 						accountExternalReferenceCode,
-						Pagination.of(accountGroup3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(accountGroup3, (List<AccountGroup>)page3.getItems());
 		}
@@ -1349,19 +1357,17 @@ public abstract class BaseAccountGroupResourceTestCase {
 			testGetAccountAccountGroupsPage_addAccountGroup(
 				accountId, randomAccountGroup());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int accountGroup1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int accountGroup2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int accountGroup3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AccountGroup> page1 =
 				accountGroupResource.getAccountAccountGroupsPage(
-					accountId, Pagination.of(accountGroup1Page, 500));
+					accountId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1369,13 +1375,19 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 			Page<AccountGroup> page2 =
 				accountGroupResource.getAccountAccountGroupsPage(
-					accountId, Pagination.of(accountGroup2Page, 500));
+					accountId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(accountGroup2, (List<AccountGroup>)page2.getItems());
 
 			Page<AccountGroup> page3 =
 				accountGroupResource.getAccountAccountGroupsPage(
-					accountId, Pagination.of(accountGroup3Page, 500));
+					accountId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(accountGroup3, (List<AccountGroup>)page3.getItems());
 		}

@@ -417,20 +417,18 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetAssetLibraryDocumentFoldersPage_addDocumentFolder(
 				assetLibraryId, randomDocumentFolder());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int documentFolder1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int documentFolder2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int documentFolder3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DocumentFolder> page1 =
 				documentFolderResource.getAssetLibraryDocumentFoldersPage(
 					assetLibraryId, null, null, null, null,
-					Pagination.of(documentFolder1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -440,7 +438,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			Page<DocumentFolder> page2 =
 				documentFolderResource.getAssetLibraryDocumentFoldersPage(
 					assetLibraryId, null, null, null, null,
-					Pagination.of(documentFolder2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				documentFolder2, (List<DocumentFolder>)page2.getItems());
@@ -448,7 +449,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			Page<DocumentFolder> page3 =
 				documentFolderResource.getAssetLibraryDocumentFoldersPage(
 					assetLibraryId, null, null, null, null,
-					Pagination.of(documentFolder3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				documentFolder3, (List<DocumentFolder>)page3.getItems());
@@ -859,21 +863,18 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetAssetLibraryDocumentFoldersRatedByMePage_addDocumentFolder(
 				assetLibraryId, randomDocumentFolder());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int documentFolder1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int documentFolder2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int documentFolder3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DocumentFolder> page1 =
 				documentFolderResource.
 					getAssetLibraryDocumentFoldersRatedByMePage(
 						assetLibraryId,
-						Pagination.of(documentFolder1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -884,7 +885,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				documentFolderResource.
 					getAssetLibraryDocumentFoldersRatedByMePage(
 						assetLibraryId,
-						Pagination.of(documentFolder2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				documentFolder2, (List<DocumentFolder>)page2.getItems());
@@ -893,7 +896,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				documentFolderResource.
 					getAssetLibraryDocumentFoldersRatedByMePage(
 						assetLibraryId,
-						Pagination.of(documentFolder3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				documentFolder3, (List<DocumentFolder>)page3.getItems());
@@ -1496,20 +1501,18 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
 				parentDocumentFolderId, randomDocumentFolder());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int documentFolder1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int documentFolder2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int documentFolder3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DocumentFolder> page1 =
 				documentFolderResource.getDocumentFolderDocumentFoldersPage(
 					parentDocumentFolderId, null, null, null, null,
-					Pagination.of(documentFolder1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1519,7 +1522,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			Page<DocumentFolder> page2 =
 				documentFolderResource.getDocumentFolderDocumentFoldersPage(
 					parentDocumentFolderId, null, null, null, null,
-					Pagination.of(documentFolder2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				documentFolder2, (List<DocumentFolder>)page2.getItems());
@@ -1527,7 +1533,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			Page<DocumentFolder> page3 =
 				documentFolderResource.getDocumentFolderDocumentFoldersPage(
 					parentDocumentFolderId, null, null, null, null,
-					Pagination.of(documentFolder3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				documentFolder3, (List<DocumentFolder>)page3.getItems());
@@ -1966,20 +1975,18 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetSiteDocumentFoldersPage_addDocumentFolder(
 				siteId, randomDocumentFolder());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int documentFolder1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int documentFolder2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int documentFolder3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DocumentFolder> page1 =
 				documentFolderResource.getSiteDocumentFoldersPage(
 					siteId, null, null, null, null,
-					Pagination.of(documentFolder1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1989,7 +1996,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			Page<DocumentFolder> page2 =
 				documentFolderResource.getSiteDocumentFoldersPage(
 					siteId, null, null, null, null,
-					Pagination.of(documentFolder2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				documentFolder2, (List<DocumentFolder>)page2.getItems());
@@ -1997,7 +2007,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			Page<DocumentFolder> page3 =
 				documentFolderResource.getSiteDocumentFoldersPage(
 					siteId, null, null, null, null,
-					Pagination.of(documentFolder3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				documentFolder3, (List<DocumentFolder>)page3.getItems());
@@ -2449,19 +2462,17 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetSiteDocumentFoldersRatedByMePage_addDocumentFolder(
 				siteId, randomDocumentFolder());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int documentFolder1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int documentFolder2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int documentFolder3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DocumentFolder> page1 =
 				documentFolderResource.getSiteDocumentFoldersRatedByMePage(
-					siteId, Pagination.of(documentFolder1Page, 500));
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -2470,14 +2481,20 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 			Page<DocumentFolder> page2 =
 				documentFolderResource.getSiteDocumentFoldersRatedByMePage(
-					siteId, Pagination.of(documentFolder2Page, 500));
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				documentFolder2, (List<DocumentFolder>)page2.getItems());
 
 			Page<DocumentFolder> page3 =
 				documentFolderResource.getSiteDocumentFoldersRatedByMePage(
-					siteId, Pagination.of(documentFolder3Page, 500));
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
 			assertContains(
 				documentFolder3, (List<DocumentFolder>)page3.getItems());

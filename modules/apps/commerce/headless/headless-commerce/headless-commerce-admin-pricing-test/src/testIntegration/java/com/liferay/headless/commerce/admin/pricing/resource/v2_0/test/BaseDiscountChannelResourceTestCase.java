@@ -300,21 +300,18 @@ public abstract class BaseDiscountChannelResourceTestCase {
 			testGetDiscountByExternalReferenceCodeDiscountChannelsPage_addDiscountChannel(
 				externalReferenceCode, randomDiscountChannel());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int discountChannel1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int discountChannel2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int discountChannel3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DiscountChannel> page1 =
 				discountChannelResource.
 					getDiscountByExternalReferenceCodeDiscountChannelsPage(
 						externalReferenceCode,
-						Pagination.of(discountChannel1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -325,7 +322,9 @@ public abstract class BaseDiscountChannelResourceTestCase {
 				discountChannelResource.
 					getDiscountByExternalReferenceCodeDiscountChannelsPage(
 						externalReferenceCode,
-						Pagination.of(discountChannel2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				discountChannel2, (List<DiscountChannel>)page2.getItems());
@@ -334,7 +333,9 @@ public abstract class BaseDiscountChannelResourceTestCase {
 				discountChannelResource.
 					getDiscountByExternalReferenceCodeDiscountChannelsPage(
 						externalReferenceCode,
-						Pagination.of(discountChannel3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				discountChannel3, (List<DiscountChannel>)page3.getItems());
@@ -614,19 +615,17 @@ public abstract class BaseDiscountChannelResourceTestCase {
 			testGetDiscountIdDiscountChannelsPage_addDiscountChannel(
 				id, randomDiscountChannel());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int discountChannel1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int discountChannel2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int discountChannel3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<DiscountChannel> page1 =
 				discountChannelResource.getDiscountIdDiscountChannelsPage(
-					id, null, null, Pagination.of(discountChannel1Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
@@ -636,7 +635,10 @@ public abstract class BaseDiscountChannelResourceTestCase {
 
 			Page<DiscountChannel> page2 =
 				discountChannelResource.getDiscountIdDiscountChannelsPage(
-					id, null, null, Pagination.of(discountChannel2Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(
@@ -644,7 +646,10 @@ public abstract class BaseDiscountChannelResourceTestCase {
 
 			Page<DiscountChannel> page3 =
 				discountChannelResource.getDiscountIdDiscountChannelsPage(
-					id, null, null, Pagination.of(discountChannel3Page, 500),
+					id, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
 					null);
 
 			assertContains(

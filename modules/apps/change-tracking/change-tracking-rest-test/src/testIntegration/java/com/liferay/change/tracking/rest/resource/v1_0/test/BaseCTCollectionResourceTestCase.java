@@ -243,19 +243,18 @@ public abstract class BaseCTCollectionResourceTestCase {
 		CTCollection ctCollection3 = testGetCTCollectionsPage_addCTCollection(
 			randomCTCollection());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int ctCollection1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int ctCollection2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int ctCollection3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<CTCollection> page1 =
 				ctCollectionResource.getCTCollectionsPage(
-					null, null, Pagination.of(ctCollection1Page, 500), null);
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -263,13 +262,21 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 			Page<CTCollection> page2 =
 				ctCollectionResource.getCTCollectionsPage(
-					null, null, Pagination.of(ctCollection2Page, 500), null);
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(ctCollection2, (List<CTCollection>)page2.getItems());
 
 			Page<CTCollection> page3 =
 				ctCollectionResource.getCTCollectionsPage(
-					null, null, Pagination.of(ctCollection3Page, 500), null);
+					null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(ctCollection3, (List<CTCollection>)page3.getItems());
 		}

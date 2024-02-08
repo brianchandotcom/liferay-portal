@@ -542,27 +542,37 @@ public abstract class BaseCatalogResourceTestCase {
 
 		Catalog catalog3 = testGetCatalogsPage_addCatalog(randomCatalog());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int catalog1Page = (int)Math.ceil((totalCountDouble + 1.0) / 500.0);
-			int catalog2Page = (int)Math.ceil((totalCountDouble + 2.0) / 500.0);
-			int catalog3Page = (int)Math.ceil((totalCountDouble + 3.0) / 500.0);
-
 			Page<Catalog> page1 = catalogResource.getCatalogsPage(
-				null, null, Pagination.of(catalog1Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(catalog1, (List<Catalog>)page1.getItems());
 
 			Page<Catalog> page2 = catalogResource.getCatalogsPage(
-				null, null, Pagination.of(catalog2Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(catalog2, (List<Catalog>)page2.getItems());
 
 			Page<Catalog> page3 = catalogResource.getCatalogsPage(
-				null, null, Pagination.of(catalog3Page, 500), null);
+				null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
 			assertContains(catalog3, (List<Catalog>)page3.getItems());
 		}

@@ -309,21 +309,18 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 			testGetAccountAddressByExternalReferenceCodeAccountAddressChannelsPage_addAccountAddressChannel(
 				externalReferenceCode, randomAccountAddressChannel());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int accountAddressChannel1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int accountAddressChannel2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int accountAddressChannel3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AccountAddressChannel> page1 =
 				accountAddressChannelResource.
 					getAccountAddressByExternalReferenceCodeAccountAddressChannelsPage(
 						externalReferenceCode,
-						Pagination.of(accountAddressChannel1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -335,7 +332,9 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 				accountAddressChannelResource.
 					getAccountAddressByExternalReferenceCodeAccountAddressChannelsPage(
 						externalReferenceCode,
-						Pagination.of(accountAddressChannel2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				accountAddressChannel2,
@@ -345,7 +344,9 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 				accountAddressChannelResource.
 					getAccountAddressByExternalReferenceCodeAccountAddressChannelsPage(
 						externalReferenceCode,
-						Pagination.of(accountAddressChannel3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				accountAddressChannel3,
@@ -655,21 +656,19 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 			testGetAccountAddressIdAccountAddressChannelsPage_addAccountAddressChannel(
 				addressId, randomAccountAddressChannel());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int accountAddressChannel1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int accountAddressChannel2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int accountAddressChannel3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AccountAddressChannel> page1 =
 				accountAddressChannelResource.
 					getAccountAddressIdAccountAddressChannelsPage(
 						addressId, null, null,
-						Pagination.of(accountAddressChannel1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -681,7 +680,10 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 				accountAddressChannelResource.
 					getAccountAddressIdAccountAddressChannelsPage(
 						addressId, null, null,
-						Pagination.of(accountAddressChannel2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				accountAddressChannel2,
@@ -691,7 +693,10 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 				accountAddressChannelResource.
 					getAccountAddressIdAccountAddressChannelsPage(
 						addressId, null, null,
-						Pagination.of(accountAddressChannel3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				accountAddressChannel3,

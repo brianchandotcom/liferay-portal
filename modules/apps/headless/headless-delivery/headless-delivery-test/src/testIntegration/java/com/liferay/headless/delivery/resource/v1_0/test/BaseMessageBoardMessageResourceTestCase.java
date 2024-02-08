@@ -832,21 +832,19 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			testGetMessageBoardMessageMessageBoardMessagesPage_addMessageBoardMessage(
 				parentMessageBoardMessageId, randomMessageBoardMessage());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int messageBoardMessage1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int messageBoardMessage2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int messageBoardMessage3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<MessageBoardMessage> page1 =
 				messageBoardMessageResource.
 					getMessageBoardMessageMessageBoardMessagesPage(
 						parentMessageBoardMessageId, null, null, null, null,
-						Pagination.of(messageBoardMessage1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -858,7 +856,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				messageBoardMessageResource.
 					getMessageBoardMessageMessageBoardMessagesPage(
 						parentMessageBoardMessageId, null, null, null, null,
-						Pagination.of(messageBoardMessage2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				messageBoardMessage2,
@@ -868,7 +869,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				messageBoardMessageResource.
 					getMessageBoardMessageMessageBoardMessagesPage(
 						parentMessageBoardMessageId, null, null, null, null,
-						Pagination.of(messageBoardMessage3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				messageBoardMessage3,
@@ -1360,21 +1364,19 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			testGetMessageBoardThreadMessageBoardMessagesPage_addMessageBoardMessage(
 				messageBoardThreadId, randomMessageBoardMessage());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int messageBoardMessage1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int messageBoardMessage2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int messageBoardMessage3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<MessageBoardMessage> page1 =
 				messageBoardMessageResource.
 					getMessageBoardThreadMessageBoardMessagesPage(
 						messageBoardThreadId, null, null, null,
-						Pagination.of(messageBoardMessage1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1386,7 +1388,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				messageBoardMessageResource.
 					getMessageBoardThreadMessageBoardMessagesPage(
 						messageBoardThreadId, null, null, null,
-						Pagination.of(messageBoardMessage2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				messageBoardMessage2,
@@ -1396,7 +1401,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				messageBoardMessageResource.
 					getMessageBoardThreadMessageBoardMessagesPage(
 						messageBoardThreadId, null, null, null,
-						Pagination.of(messageBoardMessage3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				messageBoardMessage3,
@@ -1857,20 +1865,18 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
 				siteId, randomMessageBoardMessage());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int messageBoardMessage1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int messageBoardMessage2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int messageBoardMessage3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<MessageBoardMessage> page1 =
 				messageBoardMessageResource.getSiteMessageBoardMessagesPage(
 					siteId, null, null, null, null,
-					Pagination.of(messageBoardMessage1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1881,7 +1887,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			Page<MessageBoardMessage> page2 =
 				messageBoardMessageResource.getSiteMessageBoardMessagesPage(
 					siteId, null, null, null, null,
-					Pagination.of(messageBoardMessage2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				messageBoardMessage2,
@@ -1890,7 +1899,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			Page<MessageBoardMessage> page3 =
 				messageBoardMessageResource.getSiteMessageBoardMessagesPage(
 					siteId, null, null, null, null,
-					Pagination.of(messageBoardMessage3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				messageBoardMessage3,
@@ -2715,21 +2727,18 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
 				siteId, userId, randomMessageBoardMessage());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int messageBoardMessage1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int messageBoardMessage2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int messageBoardMessage3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<MessageBoardMessage> page1 =
 				messageBoardMessageResource.
 					getSiteUserMessageBoardMessagesActivityPage(
 						siteId, userId,
-						Pagination.of(messageBoardMessage1Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -2741,7 +2750,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				messageBoardMessageResource.
 					getSiteUserMessageBoardMessagesActivityPage(
 						siteId, userId,
-						Pagination.of(messageBoardMessage2Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				messageBoardMessage2,
@@ -2751,7 +2762,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				messageBoardMessageResource.
 					getSiteUserMessageBoardMessagesActivityPage(
 						siteId, userId,
-						Pagination.of(messageBoardMessage3Page, 500));
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				messageBoardMessage3,

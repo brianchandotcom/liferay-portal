@@ -431,20 +431,18 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 			testGetCommerceAdminSiteSettingGroupAvailabilityEstimatePage_addAvailabilityEstimate(
 				groupId, randomAvailabilityEstimate());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int availabilityEstimate1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int availabilityEstimate2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int availabilityEstimate3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<AvailabilityEstimate> page1 =
 				availabilityEstimateResource.
 					getCommerceAdminSiteSettingGroupAvailabilityEstimatePage(
-						groupId, Pagination.of(availabilityEstimate1Page, 500));
+						groupId,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -455,7 +453,10 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 			Page<AvailabilityEstimate> page2 =
 				availabilityEstimateResource.
 					getCommerceAdminSiteSettingGroupAvailabilityEstimatePage(
-						groupId, Pagination.of(availabilityEstimate2Page, 500));
+						groupId,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				availabilityEstimate2,
@@ -464,7 +465,10 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 			Page<AvailabilityEstimate> page3 =
 				availabilityEstimateResource.
 					getCommerceAdminSiteSettingGroupAvailabilityEstimatePage(
-						groupId, Pagination.of(availabilityEstimate3Page, 500));
+						groupId,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
 			assertContains(
 				availabilityEstimate3,

@@ -789,21 +789,19 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				parentKnowledgeBaseArticleId, randomKnowledgeBaseArticle());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int knowledgeBaseArticle1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int knowledgeBaseArticle2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int knowledgeBaseArticle3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<KnowledgeBaseArticle> page1 =
 				knowledgeBaseArticleResource.
 					getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 						parentKnowledgeBaseArticleId, null, null, null, null,
-						Pagination.of(knowledgeBaseArticle1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -815,7 +813,10 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				knowledgeBaseArticleResource.
 					getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 						parentKnowledgeBaseArticleId, null, null, null, null,
-						Pagination.of(knowledgeBaseArticle2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				knowledgeBaseArticle2,
@@ -825,7 +826,10 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				knowledgeBaseArticleResource.
 					getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 						parentKnowledgeBaseArticleId, null, null, null, null,
-						Pagination.of(knowledgeBaseArticle3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				knowledgeBaseArticle3,
@@ -1321,21 +1325,19 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseFolderId, randomKnowledgeBaseArticle());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int knowledgeBaseArticle1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int knowledgeBaseArticle2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int knowledgeBaseArticle3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<KnowledgeBaseArticle> page1 =
 				knowledgeBaseArticleResource.
 					getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 						knowledgeBaseFolderId, null, null, null, null,
-						Pagination.of(knowledgeBaseArticle1Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1347,7 +1349,10 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				knowledgeBaseArticleResource.
 					getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 						knowledgeBaseFolderId, null, null, null, null,
-						Pagination.of(knowledgeBaseArticle2Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				knowledgeBaseArticle2,
@@ -1357,7 +1362,10 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				knowledgeBaseArticleResource.
 					getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 						knowledgeBaseFolderId, null, null, null, null,
-						Pagination.of(knowledgeBaseArticle3Page, 500), null);
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				knowledgeBaseArticle3,
@@ -1831,20 +1839,18 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				siteId, randomKnowledgeBaseArticle());
 
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit()
+
+		int pageSizeLimit = 500;
+
 		if (totalCount >= 498) {
-			double totalCountDouble = GetterUtil.getDouble(totalCount);
-
-			int knowledgeBaseArticle1Page = (int)Math.ceil(
-				(totalCountDouble + 1.0) / 500.0);
-			int knowledgeBaseArticle2Page = (int)Math.ceil(
-				(totalCountDouble + 2.0) / 500.0);
-			int knowledgeBaseArticle3Page = (int)Math.ceil(
-				(totalCountDouble + 3.0) / 500.0);
-
 			Page<KnowledgeBaseArticle> page1 =
 				knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
 					siteId, null, null, null, null,
-					Pagination.of(knowledgeBaseArticle1Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -1855,7 +1861,10 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			Page<KnowledgeBaseArticle> page2 =
 				knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
 					siteId, null, null, null, null,
-					Pagination.of(knowledgeBaseArticle2Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				knowledgeBaseArticle2,
@@ -1864,7 +1873,10 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			Page<KnowledgeBaseArticle> page3 =
 				knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
 					siteId, null, null, null, null,
-					Pagination.of(knowledgeBaseArticle3Page, 500), null);
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				knowledgeBaseArticle3,

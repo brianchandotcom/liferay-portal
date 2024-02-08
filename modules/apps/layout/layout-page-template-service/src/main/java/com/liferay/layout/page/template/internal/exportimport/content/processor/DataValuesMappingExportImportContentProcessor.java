@@ -130,7 +130,7 @@ public class DataValuesMappingExportImportContentProcessor
 		if (assetListEntry != null) {
 			try {
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, assetListEntry, stagedModel,
+					portletDataContext, stagedModel, assetListEntry,
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 			}
 			catch (PortletDataException portletDataException) {

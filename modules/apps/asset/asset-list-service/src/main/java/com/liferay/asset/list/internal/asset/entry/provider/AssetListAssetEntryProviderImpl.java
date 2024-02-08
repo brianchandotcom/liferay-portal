@@ -459,10 +459,10 @@ public class AssetListAssetEntryProviderImpl
 		};
 	}
 
-	private BooleanClause[] _getAssetEntryQueryBooleanClauses(
-		String field, long[] longArray) {
+	private BooleanClause[] _getClassTypeIdsBooleanClauses(
+		long[] classTypeIds) {
 
-		if (ArrayUtil.isEmpty(longArray)) {
+		if (ArrayUtil.isEmpty(classTypeIds)) {
 			return new BooleanClause[0];
 		}
 
@@ -470,9 +470,9 @@ public class AssetListAssetEntryProviderImpl
 
 		BooleanFilter booleanFilter = new BooleanFilter();
 
-		TermsFilter termsFilter = new TermsFilter(field);
+		TermsFilter termsFilter = new TermsFilter(Field.CLASS_TYPE_ID);
 
-		termsFilter.addValues(ArrayUtil.toStringArray(longArray));
+		termsFilter.addValues(ArrayUtil.toStringArray(classTypeIds));
 
 		booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
 
@@ -776,8 +776,8 @@ public class AssetListAssetEntryProviderImpl
 			ArrayUtil.append(
 				_getAssetCategoryIdsBooleanClauses(assetCategoryIds),
 				_getAssetTagNamesBooleanClauses(assetTagNames),
-				_getAssetEntryQueryBooleanClauses(
-					Field.CLASS_TYPE_ID, assetEntryQuery.getClassTypeIds())));
+				_getClassTypeIdsBooleanClauses(
+					assetEntryQuery.getClassTypeIds())));
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(assetEntryQuery.getEnd());
 		searchContext.setKeywords(keywords);

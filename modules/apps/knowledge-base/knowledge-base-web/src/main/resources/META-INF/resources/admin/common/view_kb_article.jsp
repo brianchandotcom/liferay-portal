@@ -282,11 +282,14 @@ String kbArticleSuccessMessage = GetterUtil.getString(MultiSessionMessages.get(r
 </c:if>
 
 <div>
-	<react:component module="{LockedKBArticleModal} from knowledge-base-web" props='<%=
+	<react:component
+		module="{LockedKBArticleModal} from knowledge-base-web"
+		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"open", MultiSessionErrors.contains(liferayPortletRequest, DuplicateLockException.class.getName())
 			).build()
-		%>' />
+		%>'
+	/>
 </div>
 
 <%

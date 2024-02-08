@@ -141,14 +141,13 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (PortalException portalException) {
 			if (portalException instanceof DuplicateLockException) {
-				JSONObject jsonObject = JSONUtil.put(
-					"lockException", Boolean.TRUE
-				).put(
-					"success", Boolean.FALSE
-				);
-
 				JSONPortletResponseUtil.writeJSON(
-					actionRequest, actionResponse, jsonObject);
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"lockException", Boolean.TRUE
+					).put(
+						"success", Boolean.FALSE
+					));
 
 				return;
 			}

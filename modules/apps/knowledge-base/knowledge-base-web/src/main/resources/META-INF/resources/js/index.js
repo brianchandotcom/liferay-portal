@@ -17,4 +17,4 @@ export {default as VerticalBar} from './admin/components/VerticalBar';
 export {default as openToast} from './admin/utils/openToast';
 export {default as MoveModal} from './admin/components/MoveModal';
 export {default as ScheduleModal} from './admin/components/ScheduleModal';
-export {default as LockedArticleModal} from './admin/components/LockedArticleModal';
+export {default as LockedKBArticleModal} from './admin/components/LockedKBArticleModal';

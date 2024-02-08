@@ -45,7 +45,8 @@ public class LockedLayoutsPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
+		if (FeatureFlagManagerUtil.isEnabled("LPD-11003") ||
+			!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
 			group.isCompany() || _stagingGroupHelper.isLocalLiveGroup(group) ||
 			_stagingGroupHelper.isRemoteLiveGroup(group)) {
 

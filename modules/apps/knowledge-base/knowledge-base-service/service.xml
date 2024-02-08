@@ -262,6 +262,12 @@
 			<finder-column name="latest" />
 			<finder-column comparator="!=" name="status" />
 		</finder>
+		<finder name="G_P_M_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="parentResourcePrimKey" />
+			<finder-column name="main" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="G_P_M_NotS" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" name="parentResourcePrimKey" />

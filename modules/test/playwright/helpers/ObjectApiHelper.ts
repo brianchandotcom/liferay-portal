@@ -45,6 +45,23 @@ export class ObjectApiHelper {
 		);
 	}
 
+	async postObjectDefinitionRandomObjectEntries(
+		applicationName: String,
+		fieldName: any,
+		fieldValue: String
+	) {
+		const data = {
+			[fieldName]: fieldValue,
+		};
+
+		return this.apiHelpers.postResponse(
+			`${this.apiHelpers.baseUrl}c/${
+				applicationName.toLowerCase() + 's'
+			}`,
+			data
+		);
+	}
+
 	async postObjectEntry(data: DataObject, applicationName: string) {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${applicationName}/`,

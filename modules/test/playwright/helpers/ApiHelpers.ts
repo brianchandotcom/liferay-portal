@@ -9,6 +9,7 @@ import {Page} from '@playwright/test';
 
 import {liferayConfig} from '../liferay.config';
 import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
+import {ApiBuilderHelper} from './ApiBuilderHelper';
 import {HeadlessAdminUserApiHelper} from './HeadlessAdminUserApiHelper';
 import {HeadlessCommerceAdminCatalogApiHelper} from './HeadlessCommerceAdminCatalogApiHelper';
 import {HeadlessCommerceAdminChannelApiHelper} from './HeadlessCommerceAdminChannelApiHelper';
@@ -20,6 +21,7 @@ import {ObjectAdminApiHelper} from './ObjectAdminApiHelper';
 import {ObjectApiHelper} from './ObjectApiHelper';
 
 export class ApiHelpers {
+	readonly apiBuilder: ApiBuilderHelper;
 	readonly baseUrl: string;
 	readonly featureFlag: FeatureFlagApiHelper;
 	readonly headlessAdminUser: HeadlessAdminUserApiHelper;
@@ -34,22 +36,52 @@ export class ApiHelpers {
 	readonly page: Page;
 
 	constructor(page: Page) {
+		this.apiBuilder = new ApiBuilderHelper(this);
 		this.baseUrl = liferayConfig.environment.baseUrl + '/o/';
 		this.featureFlag = new FeatureFlagApiHelper(page);
 		this.headlessAdminUser = new HeadlessAdminUserApiHelper(this);
-		this.headlessCommerceAdminCatalog =
-			new HeadlessCommerceAdminCatalogApiHelper(this);
-		this.headlessCommerceAdminChannel =
-			new HeadlessCommerceAdminChannelApiHelper(this);
-		this.headlessCommerceDeliveryCatalog =
-			new HeadlessCommerceDeliveryCatalogApiHelper(this);
-		this.headlessCommerceDeliveryCart =
-			new HeadlessCommerceDeliveryCartApiHelper(this);
+		this.headlessCommerceAdminCatalog = new HeadlessCommerceAdminCatalogApiHelper(
+			this
+		);
+		this.headlessCommerceAdminChannel = new HeadlessCommerceAdminChannelApiHelper(
+			this
+		);
+		this.headlessCommerceDeliveryCatalog = new HeadlessCommerceDeliveryCatalogApiHelper(
+			this
+		);
+		this.headlessCommerceDeliveryCart = new HeadlessCommerceDeliveryCartApiHelper(
+			this
+		);
 		this.headlessDelivery = new HeadlessDeliveryApiHelper(this);
 		this.headlessSite = new HeadlessSiteApiHelper(this);
 		this.object = new ObjectApiHelper(this);
 		this.objectAdmin = new ObjectAdminApiHelper(this);
 		this.page = page;
+	}
+
+	async postResponse(url: string, data: DataObject) {
+		const response = await this.page.request.post(url, {
+			data,
+			headers: await this.getHeader(),
+		});
+
+		return response;
+	}
+
+	async getResponse(url: string) {
+		const response = await this.page.request.get(url, {
+			headers: await this.getHeader(),
+		});
+
+		return response;
+	}
+
+	async putResponse(url: string) {
+		const response = await this.page.request.put(url, {
+			headers: await this.getHeader(),
+		});
+
+		return response;
 	}
 
 	async delete(url: string) {

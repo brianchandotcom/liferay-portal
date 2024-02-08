@@ -197,6 +197,7 @@ TLDTypeCheck | .tld | Ensures the fully qualified name is used for types in `.tl
 TestClassMissingLiferayUnitTestRuleCheck | .java | Finds missing LiferayUnitTestRule. |
 [ThreadContextClassLoaderCheck](check/thread_context_class_loader_check.markdown#threadcontextclassloadercheck) | .java | Checks usage of `Thread.setContextClassLoader` |
 TransactionalTestRuleCheck | .java | Finds usage of `TransactionalTestRule` in `*StagedModelDataHandlerTest`. |
+URLInputStreamCheck | .java | Checks usages of `URL.openStream()`. |
 UnparameterizedClassCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds `Class` instantiation without generic type. |
 UnwrappedVariableInfoCheck | .java | Finds cases where the variable should be wrapped into an inner class in order to defer array elements initialization. |
 ValidatorIsNullCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Ensures that only variable of type `Long`, `Serializable` or `String` is passed to method `com.liferay.portal.kernel.util.Validator.isNull`. |

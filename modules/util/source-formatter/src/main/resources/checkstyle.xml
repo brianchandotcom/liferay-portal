@@ -928,7 +928,7 @@
 			<message key="variable.not.found" value="Variable ''{0}'' no longer exists in class ''{1}'' for version ''{2}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.URLInputStreamCheck">
-			<property name="category" value="Performance" />
+			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks usages of `URL.openStream()`." />
 			<message key="replace.usage" value="Use method ''{0}'' instead of ''{1}''" />
 		</module>

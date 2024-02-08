@@ -127,6 +127,9 @@ public interface TicketLocalService
 
 	public void deleteTickets(long companyId, String className, long classPK);
 
+	public void deleteTickets(
+		long companyId, String className, long classPK, int type);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 

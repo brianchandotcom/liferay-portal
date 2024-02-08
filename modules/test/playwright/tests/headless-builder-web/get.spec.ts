@@ -47,11 +47,9 @@ test('can see available path parameter properties of a singleElement endpoint', 
 		'entryid'
 	);
 	await apiApplicationPage.goToEndpointConfigurationTab();
-
-	// TODO Change when LPD-16654 is fixed
-
-	await page.getByLabel('Response Body Schema').click();
-	await page.getByRole('menuitem', {name: 'API Application schema'}).click();
+	await apiApplicationPage.selectEndpointResponseSchema(
+		'API Application schema'
+	);
 
 	await page.getByRole('button', {name: 'Select an Option'}).click();
 	await expect(
@@ -88,11 +86,9 @@ test('can see path parameter property with map details', async ({
 		'entryid'
 	);
 	await apiApplicationPage.goToEndpointConfigurationTab();
-
-	// TODO Change when LPD-16654 is fixed
-
-	await page.getByLabel('Response Body Schema').click();
-	await page.getByRole('menuitem', {name: 'API Application schema'}).click();
+	await apiApplicationPage.selectEndpointResponseSchema(
+		'API Application schema'
+	);
 
 	await expect(
 		page.getByRole('button', {name: 'Select an Option'})

@@ -224,9 +224,17 @@ test('can create post endpoint with different request and response schema', asyn
 	await apiApplicationPage.selectEndpointRequestSchema(
 		studentSubjectsApplication.apiApplicationToAPISchemas[0].name
 	);
-	await apiApplicationPage.selectEndpointResponseSchema(
-		studentSubjectsApplication.apiApplicationToAPISchemas[1].name
-	);
+
+	// TODO Change to:
+	// await apiApplicationPage.selectEndpointResponseSchema(...)
+	// when LPD-16654 is fixed
+
+	await page.getByRole('button', {name: 'Select a Schema'}).click();
+	await page
+		.getByRole('menuitem', {
+			name: studentSubjectsApplication.apiApplicationToAPISchemas[1].name,
+		})
+		.click();
 
 	await apiApplicationPage.publishButton.click();
 

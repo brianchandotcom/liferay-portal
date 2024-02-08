@@ -8,8 +8,9 @@ import {Locator, Page} from '@playwright/test';
 import {ProductMenuPage} from '../../../pages/product-navigation-product-menu/ProductMenu.page';
 
 export class JournalPage {
-	readonly newButton: Locator;
 	readonly page: Page;
+
+	readonly newButton: Locator;
 	readonly productMenuPage: ProductMenuPage;
 	readonly templatesLink: Locator;
 

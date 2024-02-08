@@ -8,11 +8,11 @@ import {Locator, Page} from '@playwright/test';
 import {JournalPage} from './JournalPage';
 
 export class JournalEditTemplatePage {
-	readonly elementsPanel: Locator;
 	readonly page: Page;
-	readonly saveButton: Locator;
 
-	journalPage: JournalPage;
+	readonly elementsPanel: Locator;
+	readonly journalPage: JournalPage;
+	readonly saveButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;

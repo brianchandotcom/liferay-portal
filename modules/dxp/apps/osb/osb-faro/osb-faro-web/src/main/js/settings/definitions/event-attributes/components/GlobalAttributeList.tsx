@@ -15,7 +15,7 @@ import {
 import {mapListResultsToProps} from 'shared/util/mappers';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
-import {useQueryPagination} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
 const GlobalAttributeList: React.FC = () => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({

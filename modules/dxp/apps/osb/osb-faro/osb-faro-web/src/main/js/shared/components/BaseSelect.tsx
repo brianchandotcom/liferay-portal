@@ -8,9 +8,9 @@ import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
 import {ARROW_DOWN, ARROW_UP, ENTER} from '../util/key-constants';
 import {DocumentNode} from 'graphql';
 import {identity, noop} from 'lodash';
-import {useDebounce} from 'shared/hooks';
+import {useDebounce} from 'shared/hooks/useDebounce';
 import {useQuery} from '@apollo/react-hooks';
-import {useRequest} from 'shared/hooks';
+import {useRequest} from 'shared/hooks/useRequest';
 
 const DEBOUNCE_DELAY = 250;
 const SELECT_KEYS = [ARROW_DOWN, ARROW_UP, ENTER];

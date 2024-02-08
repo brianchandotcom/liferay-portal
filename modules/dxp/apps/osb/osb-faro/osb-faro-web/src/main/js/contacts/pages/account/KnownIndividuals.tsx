@@ -16,7 +16,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {individualsListColumns} from 'shared/util/table-columns';
 import {RootState} from 'shared/store';
 import {Sizes} from 'shared/util/constants';
-import {useQueryPagination} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
 const fetchIndividuals = ({id, ...otherParams}) =>
 	API.individuals.search({

@@ -17,7 +17,7 @@ import {interestListColumns} from 'shared/util/table-columns';
 import {Routes, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
-import {useQueryPagination} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
 export const TOTAL_DAYS = 90;
 

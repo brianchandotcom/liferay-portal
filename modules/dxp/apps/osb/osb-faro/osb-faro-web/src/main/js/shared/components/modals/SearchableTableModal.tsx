@@ -11,7 +11,8 @@ import {Column} from 'shared/components/table';
 import {FilterByType} from 'shared/types';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
-import {useRequest, useStatefulPagination} from 'shared/hooks';
+import {useRequest} from 'shared/hooks/useRequest';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
 interface ISearchableTableModalProps {
 	checkDisabled: (item: {[key: string]: any}) => boolean;

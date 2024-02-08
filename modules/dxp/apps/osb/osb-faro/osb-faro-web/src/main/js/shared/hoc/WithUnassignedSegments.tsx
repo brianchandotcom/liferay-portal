@@ -12,7 +12,7 @@ import {
 } from 'shared/actions/preferences';
 import {RootState} from 'shared/store';
 import {useChannelContext} from 'shared/context/channel';
-import {useRequest} from 'shared/hooks';
+import {useRequest} from 'shared/hooks/useRequest';
 
 const connector = connect(
 	(state: RootState) => ({

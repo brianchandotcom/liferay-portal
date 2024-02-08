@@ -9,7 +9,8 @@ import NoResultsDisplay, {
 import React, {useEffect, useState} from 'react';
 import Toolbar from 'shared/components/toolbar';
 import {sub} from 'shared/util/lang';
-import {useRequest, useStatefulPagination} from 'shared/hooks';
+import {useRequest} from 'shared/hooks/useRequest';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
 interface ISearchableModalProps {
 	children: React.ReactNode;

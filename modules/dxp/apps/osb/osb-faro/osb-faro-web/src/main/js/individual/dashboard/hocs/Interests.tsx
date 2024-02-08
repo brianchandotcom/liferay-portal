@@ -14,7 +14,7 @@ import {
 import {graphql} from '@apollo/react-hoc';
 import {Routes, toRoute} from 'shared/util/router';
 import {useParams} from 'react-router-dom';
-import {useQueryPagination} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {withBaseResults} from 'shared/hoc';
 
 const withData = () =>

@@ -17,7 +17,7 @@ import {Routes} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
-import {useQueryPagination} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
 const CustomAssetsListCard: React.FC<{timeZoneId: string}> = ({timeZoneId}) => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({

@@ -35,7 +35,8 @@ import {Routes, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import {useParams} from 'react-router-dom';
-import {useQueryPagination, useQueryRangeSelectors} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
+import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 import {
 	useSelectionContext,
 	withSelectionProvider

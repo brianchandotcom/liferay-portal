@@ -14,7 +14,7 @@ import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
 import {QueryHookOptions, useQuery} from '@apollo/react-hooks';
 import {safeResultToProps} from 'shared/util/mappers';
-import {useStatefulPagination} from 'shared/hooks';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
 interface ISearchableTableModalGraphQLProps extends IPagination {
 	className: string;

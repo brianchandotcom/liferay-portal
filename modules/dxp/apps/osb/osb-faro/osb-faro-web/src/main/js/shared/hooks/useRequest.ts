@@ -1,6 +1,6 @@
 import {debounce} from 'lodash/fp';
 import {useCallback, useRef, useState} from 'react';
-import {useDeepEqualEffect} from 'shared/hooks';
+import {useDeepEqualEffect} from 'shared/hooks/useDeepEqualEffect';
 
 export const useRequest = ({
 	dataSourceFn,

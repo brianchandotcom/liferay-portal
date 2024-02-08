@@ -11,7 +11,7 @@ import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
 import {Sizes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
-import {useStatefulPagination} from 'shared/hooks';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 import {withEmpty} from 'cerebro-shared/hocs/utils';
 import {withError, withLoading} from 'shared/hoc/util';
 

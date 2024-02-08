@@ -22,8 +22,9 @@ import {OrderedMap} from 'immutable';
 import {RootState} from 'shared/store';
 import {SelectionProvider} from 'shared/context/selection';
 import {Sizes} from 'shared/util/constants';
-import {useQueryPagination, useRequest} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {User} from 'shared/util/records';
+import {useRequest} from 'shared/hooks/useRequest';
 import {usersListColumns} from 'shared/util/table-columns';
 import {withEmpty} from 'cerebro-shared/hocs/utils';
 

@@ -11,7 +11,7 @@ import {DownloadIndividualReportModal} from 'shared/components/download-report/D
 import {getMatchedRoute, Routes} from 'shared/util/router';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
-import {useDataSource} from 'shared/hooks';
+import {useDataSource} from 'shared/hooks/useDataSource';
 
 const Distribution = lazy(
 	() =>

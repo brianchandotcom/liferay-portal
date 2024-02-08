@@ -44,7 +44,7 @@ import {
 } from 'shared/util/router';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import {useParams} from 'react-router-dom';
-import {useQueryPagination} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {User} from 'shared/util/records';
 import {
 	useSelectionContext,

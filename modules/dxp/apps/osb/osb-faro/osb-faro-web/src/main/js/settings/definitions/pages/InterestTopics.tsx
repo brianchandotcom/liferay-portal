@@ -30,8 +30,9 @@ import {Routes, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {UNAUTHORIZED_ACCESS} from 'shared/util/request';
-import {useQueryPagination, useRequest} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {User} from 'shared/util/records';
+import {useRequest} from 'shared/hooks/useRequest';
 
 const INITIAL_PAGE = 1;
 

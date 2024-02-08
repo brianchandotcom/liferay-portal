@@ -19,7 +19,8 @@ import {individualsListColumns} from 'shared/util/table-columns';
 import {Map, OrderedMap} from 'immutable';
 import {RootState} from 'shared/store';
 import {sub} from 'shared/util/lang';
-import {useRequest, useStatefulPagination} from 'shared/hooks';
+import {useRequest} from 'shared/hooks/useRequest';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
 const ORDER_BY_OPTIONS = [
 	{

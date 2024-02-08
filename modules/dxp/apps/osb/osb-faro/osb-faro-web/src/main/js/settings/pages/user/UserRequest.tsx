@@ -10,7 +10,8 @@ import {compose, withAdminPermission} from 'shared/hoc';
 import {connect, ConnectedProps} from 'react-redux';
 import {createOrderIOMap, EMAIL_ADDRESS, NAME} from 'shared/util/pagination';
 import {sub} from 'shared/util/lang';
-import {useQueryPagination, useRequest} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
+import {useRequest} from 'shared/hooks/useRequest';
 import {UserStatuses} from 'shared/util/constants';
 
 const connector = connect(null, {addAlert, close, open});

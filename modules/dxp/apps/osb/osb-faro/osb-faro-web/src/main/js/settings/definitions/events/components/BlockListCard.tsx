@@ -42,7 +42,7 @@ import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {useMutation, useQuery} from '@apollo/react-hooks';
-import {useQueryPagination} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {User} from 'shared/util/records';
 import {
 	useSelectionContext,

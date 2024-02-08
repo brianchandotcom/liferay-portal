@@ -31,7 +31,7 @@ import {sub} from 'shared/util/lang';
 import {UNAUTHORIZED_ACCESS} from 'shared/util/request';
 import {updateDefaultChannelId} from 'shared/actions/preferences';
 import {User} from 'shared/util/records';
-import {useRequest} from 'shared/hooks';
+import {useRequest} from 'shared/hooks/useRequest';
 
 const {channelPermissionTypes} = Constants;
 

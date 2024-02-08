@@ -1,6 +1,6 @@
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {RangeSelectors} from 'shared/types';
-import {useQueryParams} from 'shared/hooks';
+import {useQueryParams} from 'shared/hooks/useQueryParams';
 
 export const useQueryRangeSelectors = (
 	initialRangeSelectors: RangeSelectors = {

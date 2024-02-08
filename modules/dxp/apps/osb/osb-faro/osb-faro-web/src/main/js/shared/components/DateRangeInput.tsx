@@ -12,7 +12,7 @@ import {formatDateWithTimezone} from './dropdown-range-key/utils';
 import {isNil, noop} from 'lodash';
 import {sub} from 'shared/util/lang';
 import {useRetentionPeriod} from 'shared/hooks/useRetentionPeriod';
-import {useTimeZoneId} from 'shared/hooks';
+import {useTimeZoneId} from 'shared/hooks/useTimeZoneId';
 
 const convertToMoment = (value: string, format): moment.Moment => {
 	const date = moment(value, format);

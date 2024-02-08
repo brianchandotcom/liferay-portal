@@ -1,5 +1,5 @@
 import React from 'react';
-import {useQueryPagination} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
 const withQueryPagination = initialParams => WrappedComponent => (
 	props: any

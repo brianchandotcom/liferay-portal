@@ -17,7 +17,8 @@ import {Routes} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
-import {useQueryPagination, useQueryRangeSelectors} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
+import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 const BlogsListCard: React.FC = () => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({

@@ -7,7 +7,7 @@ import {
 	getMetricUnit,
 	mergedVariants
 } from 'experiments/util/experiments';
-import {useStatefulPagination} from 'shared/hooks';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
 export const VariantTable = ({experiment}) => {
 	const {onOrderIOMapChange, orderIOMap} = useStatefulPagination(null, {

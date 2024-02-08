@@ -26,8 +26,9 @@ import {
 } from 'shared/util/pagination';
 import {getDisplayRole, getPluralMessage, sub} from 'shared/util/lang';
 import {UNAUTHORIZED_ACCESS} from 'shared/util/request';
-import {useQueryPagination, useRequest} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {User} from 'shared/util/records';
+import {useRequest} from 'shared/hooks/useRequest';
 import {UserRoleNames, UserStatuses} from 'shared/util/constants';
 
 const userRoleOptions = [UserRoleNames.Member, UserRoleNames.Administrator].map(

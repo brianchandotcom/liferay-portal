@@ -39,7 +39,8 @@ import {Link} from 'react-router-dom';
 import {RootState} from 'shared/store';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
-import {useQueryPagination, useRequest} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
+import {useRequest} from 'shared/hooks/useRequest';
 
 interface ICellProps {
 	data: {[key: string]: any};

@@ -37,7 +37,7 @@ import {segmentsListColumns} from 'shared/util/table-columns';
 import {SegmentStates, SegmentTypes, Sizes} from 'shared/util/constants';
 import {setUriQueryValues} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
-import {useQueryPagination} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
 export interface FetchSegmentsParams {
 	channelId: string;

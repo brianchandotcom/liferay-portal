@@ -38,8 +38,8 @@ import {mapListResultsToProps} from 'shared/util/mappers';
 import {RangeKeyTimeRanges, SessionEntityTypes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {useQuery} from '@apollo/react-hooks';
-import {useSelectedPoint} from 'shared/hooks';
-import {useStatefulPagination} from 'shared/hooks';
+import {useSelectedPoint} from 'shared/hooks/useSelectedPoint';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 import {withEmpty} from 'cerebro-shared/hocs/utils';
 import {withError, withLoading, WrapSafeResults} from 'shared/hoc/util';
 

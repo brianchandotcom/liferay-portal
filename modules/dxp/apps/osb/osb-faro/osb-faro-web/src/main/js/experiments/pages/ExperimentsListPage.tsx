@@ -18,10 +18,10 @@ import {IBasePageContext, Router} from 'shared/types';
 import {RootState} from 'shared/store';
 import {Routes, toRoute} from 'shared/util/router';
 import {useChannelContext} from 'shared/context/channel';
-import {useDataSource} from 'shared/hooks';
+import {useDataSource} from 'shared/hooks/useDataSource';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
-import {useQueryPagination} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {User} from 'shared/util/records';
 
 const connector = connect(

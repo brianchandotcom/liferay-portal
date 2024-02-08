@@ -9,7 +9,7 @@ import {
 } from 'shared/util/pagination';
 import {pagesListColumns} from 'shared/util/table-columns';
 import {Routes} from 'shared/util/router';
-import {useQueryPagination} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
 const PAGES_ORDER_BY_OPTIONS = [
 	{

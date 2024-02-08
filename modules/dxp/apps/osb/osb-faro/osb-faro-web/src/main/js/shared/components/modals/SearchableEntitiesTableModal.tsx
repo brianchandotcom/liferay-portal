@@ -6,7 +6,7 @@ import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {noop} from 'lodash';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
-import {useStatefulPagination} from 'shared/hooks';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
 interface ISearchableEntitiesTableModalProps {
 	className: string;

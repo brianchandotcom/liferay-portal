@@ -13,7 +13,7 @@ import {Router} from 'shared/types';
 import {sub} from 'shared/util/lang';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
-import {useDataSource} from 'shared/hooks';
+import {useDataSource} from 'shared/hooks/useDataSource';
 import {User} from 'shared/util/records';
 import {withCurrentUser} from 'shared/hoc';
 

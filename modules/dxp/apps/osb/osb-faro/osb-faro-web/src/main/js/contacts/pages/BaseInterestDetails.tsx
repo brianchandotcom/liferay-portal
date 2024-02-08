@@ -20,7 +20,7 @@ import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {formatUTCDateFromUnix} from 'shared/util/date';
 import {individualsListColumns} from 'shared/util/table-columns';
 import {sub} from 'shared/util/lang';
-import {useQueryPagination} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
 const tabIds = {
 	INDIVIDUALS,

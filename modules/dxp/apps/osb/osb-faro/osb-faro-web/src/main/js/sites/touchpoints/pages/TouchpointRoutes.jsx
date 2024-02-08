@@ -19,7 +19,7 @@ import {pickBy} from 'lodash';
 import {PropTypes} from 'prop-types';
 import {Switch} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
-import {useDataSource} from 'shared/hooks';
+import {useDataSource} from 'shared/hooks/useDataSource';
 
 const KnownIndividuals = lazy(() =>
 	import(

@@ -16,7 +16,7 @@ import {Routes} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {TitleKey, Type} from './types';
 import {toThousands} from 'shared/util/numbers';
-import {useQueryRangeSelectors} from 'shared/hooks';
+import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 function truncateText(text: string, limit: number) {
 	if (text.length > limit) {

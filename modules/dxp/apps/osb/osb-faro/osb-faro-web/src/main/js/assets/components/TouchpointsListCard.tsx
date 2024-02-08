@@ -7,7 +7,7 @@ import {Link, useParams} from 'react-router-dom';
 import {Routes} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {toFixedPoint} from 'shared/util/numbers';
-import {useQueryRangeSelectors} from 'shared/hooks';
+import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 export interface ITouchpointRouter {
 	params: {

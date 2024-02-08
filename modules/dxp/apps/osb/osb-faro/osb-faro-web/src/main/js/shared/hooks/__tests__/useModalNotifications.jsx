@@ -13,7 +13,7 @@ import {
 } from 'shared/util/records/Notification';
 import {Provider} from 'react-redux';
 import {range} from 'lodash';
-import {useModalNotifications} from 'shared/hooks';
+import {useModalNotifications} from 'shared/hooks/useModalNotifications';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');

@@ -3,7 +3,7 @@ import {FilterByType, Pagination} from 'shared/types';
 import {Map, OrderedMap, Set} from 'immutable';
 import {OrderParams} from 'shared/util/records';
 import {pick} from 'lodash';
-import {useQueryParams} from 'shared/hooks';
+import {useQueryParams} from 'shared/hooks/useQueryParams';
 
 const {
 	delta: defaultDelta,

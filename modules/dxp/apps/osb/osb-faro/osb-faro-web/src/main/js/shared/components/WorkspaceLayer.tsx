@@ -10,7 +10,7 @@ import {Project} from 'shared/util/records';
 import {RootState} from 'shared/store';
 import {Routes} from 'shared/util/router';
 import {Switch} from 'react-router-dom';
-import {useModalNotifications} from 'shared/hooks';
+import {useModalNotifications} from 'shared/hooks/useModalNotifications';
 import {withHelpWidget} from 'shared/hoc';
 
 // App Routes with Sidebar

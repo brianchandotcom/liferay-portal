@@ -34,8 +34,9 @@ import {setBackURL} from 'shared/actions/settings';
 import {Sizes} from 'shared/util/constants';
 import {UNAUTHORIZED_ACCESS} from 'shared/util/request';
 import {updateDefaultChannelId} from 'shared/actions/preferences';
-import {useQueryPagination, useRequest} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {User} from 'shared/util/records';
+import {useRequest} from 'shared/hooks/useRequest';
 
 type ChannelNameFn = (attrs: {
 	data: {id: string; name: string};

@@ -23,7 +23,7 @@ import {
 } from 'shared/util/date';
 import {Interval, RangeSelectors} from 'shared/types';
 import {sub} from 'shared/util/lang';
-import {useStatefulPagination} from 'shared/hooks';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 import {withSelectedPoint} from 'shared/hoc';
 
 const getActivities = ({

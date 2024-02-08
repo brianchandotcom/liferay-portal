@@ -47,7 +47,7 @@ import {OrderByDirections, RangeKeyTimeRanges} from 'shared/util/constants';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
 import {sub} from 'shared/util/lang';
-import {useStatefulPagination} from 'shared/hooks';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
 const {
 	greyjoy: CHART_BLACK,

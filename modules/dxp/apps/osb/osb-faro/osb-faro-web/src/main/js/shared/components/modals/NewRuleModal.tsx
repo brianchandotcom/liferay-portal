@@ -15,7 +15,7 @@ import {
 import {EXCLUDE, INCLUDE} from 'settings/recommendations/utils/utils';
 import {isArray, isString} from 'lodash';
 import {useLazyQuery} from '@apollo/react-hooks';
-import {useStatefulPagination} from 'shared/hooks';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 import {withEmpty, withPaginationBar} from 'shared/hoc';
 
 const {

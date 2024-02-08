@@ -15,7 +15,7 @@ import {accountsListColumns} from 'shared/util/table-columns';
 import {FetchSegmentsParams} from 'segment/pages/List';
 import {Routes, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
-import {useQueryPagination} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {User} from 'shared/util/records';
 import {withCurrentUser} from 'shared/hoc';
 

@@ -21,7 +21,7 @@ import {spritemap} from 'shared/util/constants';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {useRetentionPeriod} from 'shared/hooks/useRetentionPeriod';
-import {useTimeZoneId} from 'shared/hooks';
+import {useTimeZoneId} from 'shared/hooks/useTimeZoneId';
 
 export enum ReportType {
 	CSV = 'CSV',

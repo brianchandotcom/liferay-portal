@@ -16,7 +16,8 @@ import {
 import {Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {useParams} from 'react-router-dom';
-import {useQueryPagination, useRequest} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
+import {useRequest} from 'shared/hooks/useRequest';
 
 type Item = {
 	children: Item[];

@@ -22,7 +22,8 @@ import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {useChannelContext} from 'shared/context/channel';
 import {useParams} from 'react-router-dom';
-import {useQueryPagination, useQueryRangeSelectors} from 'shared/hooks';
+import {useQueryPagination} from 'shared/hooks/useQueryPagination';
+import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 import {withHistory, withPaginationBar, withTableData} from 'shared/hoc';
 
 const {

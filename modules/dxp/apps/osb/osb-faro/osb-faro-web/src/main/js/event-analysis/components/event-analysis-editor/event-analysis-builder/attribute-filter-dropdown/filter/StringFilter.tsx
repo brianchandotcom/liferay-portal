@@ -8,7 +8,7 @@ import {
 	STRING_OPTIONS
 } from 'event-analysis/utils/utils';
 import {useParams} from 'react-router-dom';
-import {useStatefulPagination} from 'shared/hooks';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
 type EventAttributeValuesData = {
 	eventAttributeValues: EventAttributeValues;

@@ -2,7 +2,7 @@ import * as API from 'shared/api';
 import Form, {validateRequired} from 'shared/components/form';
 import React, {useState} from 'react';
 import {TimeZone} from 'shared/util/records';
-import {useRequest} from 'shared/hooks';
+import {useRequest} from 'shared/hooks/useRequest';
 
 interface ITimeZonePicker {
 	disabled?: boolean;

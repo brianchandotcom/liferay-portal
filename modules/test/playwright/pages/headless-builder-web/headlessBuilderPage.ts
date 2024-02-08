@@ -28,10 +28,8 @@ export class HeadlessBuilderPage {
 
 	async openApplicationActions(title: string) {
 		await this.page
-			.locator(
-				`[class="dropdown-toggle component-action dropdown-toggle ml-1 btn btn-unstyled"]:right-of(:text("${title}"))`
-			)
-			.first()
+			.locator('.dnd-tr', {hasText: title})
+			.getByRole('button')
 			.click();
 	}
 

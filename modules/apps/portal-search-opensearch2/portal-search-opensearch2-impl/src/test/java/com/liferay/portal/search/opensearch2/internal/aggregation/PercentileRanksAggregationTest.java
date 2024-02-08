@@ -5,15 +5,18 @@
 
 package com.liferay.portal.search.opensearch2.internal.aggregation;
 
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.aggregation.metrics.PercentileRanksAggregation;
+import com.liferay.portal.search.aggregation.metrics.PercentileRanksAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.PercentilesMethod;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.indexing.LiferayOpenSearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.aggregation.metrics.BasePercentileRanksAggregationTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * @author Rafael Praxedes
@@ -29,16 +32,35 @@ public class PercentileRanksAggregationTest
 	public static final OpenSearchTestRule openSearchTestRule =
 		OpenSearchTestRule.INSTANCE;
 
-	@Ignore
 	@Override
-	@Test
-	public void testPercentileRanksAggregationHDR() throws Exception {
-	}
+	protected void assertPercentileRanks(
+		PercentilesMethod percentilesMethod, double[] values, String expected) {
 
-	@Ignore
-	@Override
-	@Test
-	public void testPercentileRanksAggregationTDigest() throws Exception {
+		PercentileRanksAggregation percentileRanksAggregation =
+			aggregations.percentileRanks(
+				"percentileRanks", Field.PRIORITY, values);
+
+		percentileRanksAggregation.setKeyed(false);
+		percentileRanksAggregation.setPercentilesMethod(percentilesMethod);
+
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.defineRequest(
+					searchRequestBuilder -> searchRequestBuilder.addAggregation(
+						percentileRanksAggregation));
+
+				indexingTestHelper.search();
+
+				PercentileRanksAggregationResult
+					percentileRanksAggregationResult =
+						indexingTestHelper.getAggregationResult(
+							percentileRanksAggregation);
+
+				Assert.assertEquals(
+					expected,
+					String.valueOf(
+						percentileRanksAggregationResult.getPercentiles()));
+			});
 	}
 
 	@Override

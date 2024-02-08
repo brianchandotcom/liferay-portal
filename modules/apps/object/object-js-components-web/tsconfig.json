@@ -1,5 +1,5 @@
 {
-	"@generated": "b08be50778f0f0b3c64a79dc219e98e99173c1c8",
+	"@generated": "fed837a562d2fbb629833f79054e65a8d6a0d2d4",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -13,6 +13,9 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
+			"@liferay/frontend-js-codemirror-web": [
+				"../../frontend-js/frontend-js-codemirror-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
 			"frontend-js-components-web": [
 				"../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
 			],
@@ -38,6 +41,9 @@
 		"../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../frontend-js/frontend-js-codemirror-web"
+		},
 		{
 			"path": "../../frontend-js/frontend-js-components-web"
 		},

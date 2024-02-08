@@ -5,7 +5,6 @@
 
 /// <reference types="react" />
 
-import 'codemirror/mode/groovy/groovy';
 import {FormError, SidebarCategory} from '@liferay/object-js-components-web';
 interface ActionProps {
 	isApproved?: boolean;

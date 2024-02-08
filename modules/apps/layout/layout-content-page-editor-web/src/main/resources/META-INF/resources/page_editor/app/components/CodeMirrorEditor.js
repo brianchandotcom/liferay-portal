@@ -3,47 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import 'codemirror/addon/display/autorefresh';
-
-import 'codemirror/addon/edit/closebrackets';
-
-import 'codemirror/addon/edit/closetag';
-
-import 'codemirror/addon/edit/matchbrackets';
-
-import 'codemirror/addon/fold/brace-fold';
-
-import 'codemirror/addon/fold/comment-fold';
-
-import 'codemirror/addon/fold/foldcode';
-
-import 'codemirror/addon/fold/foldgutter.css';
-
-import 'codemirror/addon/fold/foldgutter';
-
-import 'codemirror/addon/fold/indent-fold';
-
-import 'codemirror/addon/fold/xml-fold';
-
-import 'codemirror/addon/hint/css-hint';
-
-import 'codemirror/addon/hint/html-hint';
-
-import 'codemirror/addon/hint/show-hint.css';
-
-import 'codemirror/addon/hint/show-hint';
-
-import 'codemirror/addon/hint/xml-hint';
-
-import 'codemirror/lib/codemirror.css';
-
-import 'codemirror/mode/css/css';
-
-import 'codemirror/mode/htmlmixed/htmlmixed';
-
-import 'codemirror/mode/xml/xml';
+import CodeMirror from '@liferay/frontend-js-codemirror-web';
 import classNames from 'classnames';
-import CodeMirror from 'codemirror';
 import {CodeMirrorKeyboardMessage} from 'frontend-js-components-web';
 import React, {useEffect, useRef, useState} from 'react';
 

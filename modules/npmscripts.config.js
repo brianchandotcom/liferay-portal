@@ -772,6 +772,7 @@ module.exports = {
 			'youtube-web',
 		],
 		'allowed-non-global-dependencies': [
+			'codemirror',
 			'd3',
 			'history',
 			'jest-fetch-mock',

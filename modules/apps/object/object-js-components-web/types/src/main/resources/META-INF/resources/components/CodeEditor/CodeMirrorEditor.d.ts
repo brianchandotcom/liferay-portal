@@ -3,12 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import 'codemirror/addon/display/autorefresh';
-import 'codemirror/addon/fold/foldgutter';
-import 'codemirror/addon/fold/foldgutter.css';
-import 'codemirror/addon/display/placeholder';
-import 'codemirror/lib/codemirror.css';
-import CodeMirror from 'codemirror';
+import CodeMirror from '@liferay/frontend-js-codemirror-web';
 import React from 'react';
 import './CodeMirrorEditor.scss';
 declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponent<

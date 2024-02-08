@@ -5,7 +5,6 @@
 
 /// <reference types="react" />
 
-import 'codemirror/mode/groovy/groovy';
 import {SidebarCategory} from '@liferay/object-js-components-web';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import {TabProps} from './useObjectValidationForm';

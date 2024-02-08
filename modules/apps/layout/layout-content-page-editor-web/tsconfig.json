@@ -1,5 +1,5 @@
 {
-	"@generated": "8da9ec01add1ab8f0686e3e2325cdd606b775dcf",
+	"@generated": "49b903db97b74188928d59fd7888d742f8d3e2db",
 	"@overrides": {
 		"compilerOptions": {
 			"lib": [
@@ -28,6 +28,9 @@
 			],
 			"@liferay/frontend-icons-web": [
 				"../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/frontend-js-codemirror-web": [
+				"../../frontend-js/frontend-js-codemirror-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"@liferay/frontend-js-react-web": [
 				"../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
@@ -71,6 +74,9 @@
 		},
 		{
 			"path": "../../frontend-icons/frontend-icons-web"
+		},
+		{
+			"path": "../../frontend-js/frontend-js-codemirror-web"
 		},
 		{
 			"path": "../../frontend-js/frontend-js-react-web"

@@ -4,8 +4,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-
-import 'codemirror/mode/groovy/groovy';
 import {
 	Card,
 	CodeEditor,

@@ -10,6 +10,7 @@ import {
 	useParams,
 	useSearchParams,
 } from 'react-router-dom';
+import SearchBuilder from '~/core/SearchBuilder';
 import i18n from '~/i18n';
 import fetcher from '~/services/fetcher';
 import {safeJSONParse} from '~/util';
@@ -70,19 +71,28 @@ const useQueryParams = () => {
 		const _resourceFieldOptions: any = {};
 
 		for (const field of resourceFields) {
-			const result = await fetcher(
+			const resource =
 				typeof field.resource === 'function'
 					? field.resource(parameters)
-					: (field.resource as string)
+					: (field.resource as string);
+
+			const newFilter = SearchBuilder.eq(
+				'id',
+				serializedFilter[field.name][0]
 			);
 
+			const resourceWithNewFilter = resource.includes('filter=')
+				? resource.replace(/(filter=.*?)(&|$)/, `$1 and ${newFilter}$2`)
+				: `${resource}&filter=${newFilter}`;
+
+			const response = await fetcher(resourceWithNewFilter);
+
 			if (field.transformData) {
-				const parsedValue = field.transformData(result);
+				const parsedValue = field.transformData(response);
 
 				if (Array.isArray(parsedValue)) {
 					_resourceFieldOptions[field.name] = parsedValue;
-				}
-				else {
+				} else {
 					if (
 						filterKeys.every(
 							(key) => parsedValue && key in parsedValue
@@ -138,8 +148,7 @@ const useQueryParams = () => {
 				if (filteredOptions.length) {
 					updatedFilterOptions[key] = filteredOptions;
 				}
-			}
-			else {
+			} else {
 				const matchingValues = _resourceFieldOptions[key]?.filter(
 					(options: Options) =>
 						options.value === serializedFilter[key]

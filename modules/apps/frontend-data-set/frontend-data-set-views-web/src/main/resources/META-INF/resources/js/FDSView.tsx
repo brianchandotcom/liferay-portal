@@ -116,7 +116,7 @@ const FDSView = ({
 	const Content = NAVIGATION_BAR_ITEMS[activeIndex].Component;
 
 	return (
-		<>
+		<div className="cadmin">
 			<ClayNavigationBar
 				triggerLabel={NAVIGATION_BAR_ITEMS[activeIndex].label}
 			>
@@ -152,7 +152,7 @@ const FDSView = ({
 					/>
 				)
 			)}
-		</>
+		</div>
 	);
 };
 

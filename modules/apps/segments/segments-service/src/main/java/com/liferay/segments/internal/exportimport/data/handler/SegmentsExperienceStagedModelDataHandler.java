@@ -167,8 +167,7 @@ public class SegmentsExperienceStagedModelDataHandler
 		}
 
 		if ((existingSegmentsExperience == null) ||
-			!portletDataContext.isDataStrategyMirror()) {
-
+						!portletDataContext.isDataStrategyMirror()) {
 			importedSegmentsExperience = _stagedModelRepository.addStagedModel(
 				portletDataContext, importedSegmentsExperience);
 		}

@@ -94,9 +94,7 @@ public class LayoutPageTemplateStructureStagedModelDataHandler
 						importedLayoutPageTemplateStructure.getPlid());
 		}
 
-		if ((existingLayoutPageTemplateStructure == null) ||
-			!portletDataContext.isDataStrategyMirror()) {
-
+		if (existingLayoutPageTemplateStructure == null) {
 			importedLayoutPageTemplateStructure =
 				_stagedModelRepository.addStagedModel(
 					portletDataContext, importedLayoutPageTemplateStructure);

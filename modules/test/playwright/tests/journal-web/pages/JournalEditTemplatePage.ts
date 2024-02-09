@@ -10,14 +10,14 @@ import {JournalPage} from './JournalPage';
 export class JournalEditTemplatePage {
 	readonly page: Page;
 
-	readonly elementsPanel: Locator;
+	readonly elementsButton: Locator;
 	readonly journalPage: JournalPage;
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
-		this.elementsPanel = page.getByTitle('Elements', {exact: true});
+		this.elementsButton = page.getByTitle('Elements', {exact: true});
 		this.journalPage = new JournalPage(page);
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
 	}
@@ -27,6 +27,6 @@ export class JournalEditTemplatePage {
 	}
 
 	async gotoElements() {
-		await this.elementsPanel.click();
+		await this.elementsButton.click();
 	}
 }

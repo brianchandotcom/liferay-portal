@@ -257,8 +257,7 @@
 								"externalReferenceCode": "SITE-NAVIGATION-CONSULTING",
 								"friendlyURL": "/consulting",
 								"type": "layout"
-							}
-							,
+							},
 							{
 								"externalReferenceCode": "SITE-NAVIGATION-CUSTOMER-SUCCESS",
 								"friendlyURL": "/learning",

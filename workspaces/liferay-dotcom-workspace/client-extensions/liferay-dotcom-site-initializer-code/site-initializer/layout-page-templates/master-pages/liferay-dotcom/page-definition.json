@@ -46,7 +46,8 @@
 							"fragmentConfig": {
 								"verticalSpacing": "py-0"
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"fragmentStyle": {
 								"marginTop": "10",
 								"paddingTop": "10"
@@ -56,7 +57,8 @@
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -93,41 +95,43 @@
 														"siteKey": "Guest"
 													},
 													"fragmentConfig": {
-														"verticalGapTablet": "40px",
-														"horizontalGapMobile": "",
-														"fillHeightMobile": true,
-														"widthBasisDesktop": "1",
-														"distributeDesktop": "flex-start",
-														"directionDesktop": "column",
-														"wrapDesktop": "nowrap",
-														"wrapMobile": "nowrap",
-														"wrapTablet": "nowrap",
-														"verticalGapMobile": "40px",
-														"verticalGapDesktop": "40px",
-														"directionTablet": "column",
-														"widthTablet": "manual",
-														"alignTablet": "flex-start",
-														"horizontalGapDesktop": "",
-														"widthDesktop": "manual",
-														"widthMobile": "manual",
-														"widthBasisMobile": "1",
-														"directionMobile": "column",
-														"horizontalGapTablet": "",
-														"distributeTablet": "flex-start",
-														"fillHeightTablet": true,
 														"alignDesktop": "flex-start",
 														"alignMobile": "flex-start",
+														"alignTablet": "flex-start",
+														"directionDesktop": "column",
+														"directionMobile": "column",
+														"directionTablet": "column",
+														"distributeDesktop": "flex-start",
 														"distributeMobile": "flex-start",
+														"distributeTablet": "flex-start",
 														"fillHeightDesktop": true,
-														"widthBasisTablet": "1"
+														"fillHeightMobile": true,
+														"fillHeightTablet": true,
+														"horizontalGapDesktop": "",
+														"horizontalGapMobile": "",
+														"horizontalGapTablet": "",
+														"verticalGapDesktop": "40px",
+														"verticalGapMobile": "40px",
+														"verticalGapTablet": "40px",
+														"widthBasisDesktop": "1",
+														"widthBasisMobile": "1",
+														"widthBasisTablet": "1",
+														"widthDesktop": "manual",
+														"widthMobile": "manual",
+														"widthTablet": "manual",
+														"wrapDesktop": "nowrap",
+														"wrapMobile": "nowrap",
+														"wrapTablet": "nowrap"
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"indexed": true,
 													"name": "Footer Content"
 												},
 												"pageElements": [
 													{
-														"definition": {},
+														"definition": {
+														},
 														"pageElements": [
 															{
 																"definition": {
@@ -136,35 +140,36 @@
 																		"siteKey": "Guest"
 																	},
 																	"fragmentConfig": {
-																		"verticalGapTablet": "",
-																		"horizontalGapMobile": "",
-																		"fillHeightMobile": true,
-																		"widthBasisDesktop": "1",
-																		"distributeDesktop": "flex-start",
-																		"directionDesktop": "row",
-																		"wrapDesktop": "nowrap",
-																		"wrapMobile": "nowrap",
-																		"wrapTablet": "nowrap",
-																		"verticalGapMobile": "48px",
-																		"verticalGapDesktop": "",
-																		"directionTablet": "row",
-																		"widthTablet": "manual",
-																		"alignTablet": "flex-start",
-																		"horizontalGapDesktop": "48px",
-																		"widthDesktop": "manual",
-																		"widthMobile": "manual",
-																		"widthBasisMobile": "1",
-																		"directionMobile": "column",
-																		"horizontalGapTablet": "48px",
-																		"distributeTablet": "flex-start",
-																		"fillHeightTablet": true,
 																		"alignDesktop": "flex-start",
 																		"alignMobile": "flex-start",
+																		"alignTablet": "flex-start",
+																		"directionDesktop": "row",
+																		"directionMobile": "column",
+																		"directionTablet": "row",
+																		"distributeDesktop": "flex-start",
 																		"distributeMobile": "flex-start",
+																		"distributeTablet": "flex-start",
 																		"fillHeightDesktop": false,
-																		"widthBasisTablet": "1"
+																		"fillHeightMobile": true,
+																		"fillHeightTablet": true,
+																		"horizontalGapDesktop": "48px",
+																		"horizontalGapMobile": "",
+																		"horizontalGapTablet": "48px",
+																		"verticalGapDesktop": "",
+																		"verticalGapMobile": "48px",
+																		"verticalGapTablet": "",
+																		"widthBasisDesktop": "1",
+																		"widthBasisMobile": "1",
+																		"widthBasisTablet": "1",
+																		"widthDesktop": "manual",
+																		"widthMobile": "manual",
+																		"widthTablet": "manual",
+																		"wrapDesktop": "nowrap",
+																		"wrapMobile": "nowrap",
+																		"wrapTablet": "nowrap"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"width": "100%"
 																	},
@@ -173,7 +178,8 @@
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -182,35 +188,36 @@
 																						"siteKey": "Guest"
 																					},
 																					"fragmentConfig": {
-																						"verticalGapTablet": "24px",
-																						"horizontalGapMobile": "",
-																						"fillHeightMobile": true,
-																						"widthBasisDesktop": "1",
-																						"distributeDesktop": "flex-start",
-																						"directionDesktop": "column",
-																						"wrapDesktop": "nowrap",
-																						"wrapMobile": "nowrap",
-																						"wrapTablet": "nowrap",
-																						"verticalGapMobile": "24px",
-																						"verticalGapDesktop": "24px",
-																						"directionTablet": "column",
-																						"widthTablet": "auto",
-																						"alignTablet": "flex-start",
-																						"horizontalGapDesktop": "",
-																						"widthDesktop": "auto",
-																						"widthMobile": "manual",
-																						"widthBasisMobile": "1",
-																						"directionMobile": "column",
-																						"horizontalGapTablet": "",
-																						"distributeTablet": "flex-start",
-																						"fillHeightTablet": false,
 																						"alignDesktop": "flex-start",
 																						"alignMobile": "flex-start",
+																						"alignTablet": "flex-start",
+																						"directionDesktop": "column",
+																						"directionMobile": "column",
+																						"directionTablet": "column",
+																						"distributeDesktop": "flex-start",
 																						"distributeMobile": "flex-start",
+																						"distributeTablet": "flex-start",
 																						"fillHeightDesktop": false,
-																						"widthBasisTablet": "1"
+																						"fillHeightMobile": true,
+																						"fillHeightTablet": false,
+																						"horizontalGapDesktop": "",
+																						"horizontalGapMobile": "",
+																						"horizontalGapTablet": "",
+																						"verticalGapDesktop": "24px",
+																						"verticalGapMobile": "24px",
+																						"verticalGapTablet": "24px",
+																						"widthBasisDesktop": "1",
+																						"widthBasisMobile": "1",
+																						"widthBasisTablet": "1",
+																						"widthDesktop": "auto",
+																						"widthMobile": "manual",
+																						"widthTablet": "auto",
+																						"wrapDesktop": "nowrap",
+																						"wrapMobile": "nowrap",
+																						"wrapTablet": "nowrap"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"fragmentStyle": {
 																						"minWidth": "180px"
 																					},
@@ -219,7 +226,8 @@
 																				},
 																				"pageElements": [
 																					{
-																						"definition": {},
+																						"definition": {
+																						},
 																						"pageElements": [
 																							{
 																								"definition": {
@@ -231,7 +239,8 @@
 																										}
 																									},
 																									"indexed": true,
-																									"layout": {},
+																									"layout": {
+																									},
 																									"name": "Liferay Logo"
 																								},
 																								"pageElements": [
@@ -240,8 +249,10 @@
 																											"fragment": {
 																												"key": "BASIC_COMPONENT-html"
 																											},
-																											"fragmentConfig": {},
-																											"fragmentFields": [],
+																											"fragmentConfig": {
+																											},
+																											"fragmentFields": [
+																											],
 																											"fragmentStyle": {
 																												"paddingBottom": "0px",
 																												"paddingTop": "2px"
@@ -257,10 +268,10 @@
 																								"definition": {
 																									"widgetInstance": {
 																										"widgetConfig": {
-																											"displayStyle": "ddmTemplate_LANGUAGE-ICON-MENU-FTL",
-																											"languageIds": "en_US,zh_CN,fr_FR,de_DE,it_IT,ja_JP,pt_BR,es_ES,en_AU",
 																											"displayCurrentLocale": "true",
-																											"displayStyleGroupId": "10195"
+																											"displayStyle": "ddmTemplate_LANGUAGE-ICON-MENU-FTL",
+																											"displayStyleGroupId": "10195",
+																											"languageIds": "en_US,zh_CN,fr_FR,de_DE,it_IT,ja_JP,pt_BR,es_ES,en_AU"
 																										},
 																										"widgetName": "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet"
 																									}
@@ -275,11 +286,12 @@
 																									},
 																									"fragmentConfig": {
 																										"color": "var(--color-neutral-10)",
+																										"fontWeight": "var(--font-weight-regular)",
 																										"size": "paragraphBase",
-																										"tag": "span",
-																										"fontWeight": "var(--font-weight-regular)"
+																										"tag": "span"
 																									},
-																									"fragmentFields": [],
+																									"fragmentFields": [
+																									],
 																									"indexed": true,
 																									"name": "Address"
 																								},
@@ -298,41 +310,43 @@
 																						"siteKey": "Guest"
 																					},
 																					"fragmentConfig": {
-																						"verticalGapTablet": "48px",
-																						"horizontalGapMobile": "",
-																						"fillHeightMobile": true,
-																						"widthBasisDesktop": "1",
-																						"distributeDesktop": "flex-start",
-																						"directionDesktop": "row",
-																						"wrapDesktop": "nowrap",
-																						"wrapMobile": "nowrap",
-																						"wrapTablet": "nowrap",
-																						"verticalGapMobile": "48px",
-																						"verticalGapDesktop": "",
-																						"directionTablet": "column",
-																						"widthTablet": "manual",
-																						"alignTablet": "flex-start",
-																						"horizontalGapDesktop": "48px",
-																						"widthDesktop": "manual",
-																						"widthMobile": "manual",
-																						"widthBasisMobile": "1",
-																						"directionMobile": "column",
-																						"horizontalGapTablet": "",
-																						"distributeTablet": "flex-start",
-																						"fillHeightTablet": true,
 																						"alignDesktop": "flex-start",
 																						"alignMobile": "flex-start",
+																						"alignTablet": "flex-start",
+																						"directionDesktop": "row",
+																						"directionMobile": "column",
+																						"directionTablet": "column",
+																						"distributeDesktop": "flex-start",
 																						"distributeMobile": "flex-start",
+																						"distributeTablet": "flex-start",
 																						"fillHeightDesktop": true,
-																						"widthBasisTablet": "1"
+																						"fillHeightMobile": true,
+																						"fillHeightTablet": true,
+																						"horizontalGapDesktop": "48px",
+																						"horizontalGapMobile": "",
+																						"horizontalGapTablet": "",
+																						"verticalGapDesktop": "",
+																						"verticalGapMobile": "48px",
+																						"verticalGapTablet": "48px",
+																						"widthBasisDesktop": "1",
+																						"widthBasisMobile": "1",
+																						"widthBasisTablet": "1",
+																						"widthDesktop": "manual",
+																						"widthMobile": "manual",
+																						"widthTablet": "manual",
+																						"wrapDesktop": "nowrap",
+																						"wrapMobile": "nowrap",
+																						"wrapTablet": "nowrap"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true,
 																					"name": "Footer Links Section"
 																				},
 																				"pageElements": [
 																					{
-																						"definition": {},
+																						"definition": {
+																						},
 																						"pageElements": [
 																							{
 																								"definition": {
@@ -342,35 +356,36 @@
 																										"siteKey": "Guest"
 																									},
 																									"fragmentConfig": {
-																										"verticalGapTablet": "",
-																										"horizontalGapMobile": "",
-																										"fillHeightMobile": true,
-																										"widthBasisDesktop": "1",
-																										"distributeDesktop": "flex-start",
-																										"directionDesktop": "row",
-																										"wrapDesktop": "nowrap",
-																										"wrapMobile": "nowrap",
-																										"wrapTablet": "nowrap",
-																										"verticalGapMobile": "48px",
-																										"verticalGapDesktop": "",
-																										"directionTablet": "row",
-																										"widthTablet": "manual",
-																										"alignTablet": "flex-start",
-																										"horizontalGapDesktop": "48px",
-																										"widthDesktop": "manual",
-																										"widthMobile": "manual",
-																										"widthBasisMobile": "1",
-																										"directionMobile": "column",
-																										"horizontalGapTablet": "",
-																										"distributeTablet": "flex-start",
-																										"fillHeightTablet": true,
 																										"alignDesktop": "flex-start",
 																										"alignMobile": "flex-start",
+																										"alignTablet": "flex-start",
+																										"directionDesktop": "row",
+																										"directionMobile": "column",
+																										"directionTablet": "row",
+																										"distributeDesktop": "flex-start",
 																										"distributeMobile": "flex-start",
+																										"distributeTablet": "flex-start",
 																										"fillHeightDesktop": true,
-																										"widthBasisTablet": "1"
+																										"fillHeightMobile": true,
+																										"fillHeightTablet": true,
+																										"horizontalGapDesktop": "48px",
+																										"horizontalGapMobile": "",
+																										"horizontalGapTablet": "",
+																										"verticalGapDesktop": "",
+																										"verticalGapMobile": "48px",
+																										"verticalGapTablet": "",
+																										"widthBasisDesktop": "1",
+																										"widthBasisMobile": "1",
+																										"widthBasisTablet": "1",
+																										"widthDesktop": "manual",
+																										"widthMobile": "manual",
+																										"widthTablet": "manual",
+																										"wrapDesktop": "nowrap",
+																										"wrapMobile": "nowrap",
+																										"wrapTablet": "nowrap"
 																									},
-																									"fragmentFields": [],
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"width": "100%"
 																									},
@@ -379,7 +394,8 @@
 																								},
 																								"pageElements": [
 																									{
-																										"definition": {},
+																										"definition": {
+																										},
 																										"pageElements": [
 																											{
 																												"definition": {
@@ -388,41 +404,43 @@
 																														"siteKey": "Guest"
 																													},
 																													"fragmentConfig": {
-																														"verticalGapTablet": "24px",
-																														"horizontalGapMobile": "",
-																														"fillHeightMobile": true,
-																														"widthBasisDesktop": "1",
-																														"distributeDesktop": "flex-start",
-																														"directionDesktop": "column",
-																														"wrapDesktop": "nowrap",
-																														"wrapMobile": "nowrap",
-																														"wrapTablet": "nowrap",
-																														"verticalGapMobile": "24px",
-																														"verticalGapDesktop": "24px",
-																														"directionTablet": "column",
-																														"widthTablet": "manual",
-																														"alignTablet": "flex-start",
-																														"horizontalGapDesktop": "",
-																														"widthDesktop": "manual",
-																														"widthMobile": "manual",
-																														"widthBasisMobile": "1",
-																														"directionMobile": "column",
-																														"horizontalGapTablet": "",
-																														"distributeTablet": "flex-start",
-																														"fillHeightTablet": true,
 																														"alignDesktop": "flex-start",
 																														"alignMobile": "flex-start",
+																														"alignTablet": "flex-start",
+																														"directionDesktop": "column",
+																														"directionMobile": "column",
+																														"directionTablet": "column",
+																														"distributeDesktop": "flex-start",
 																														"distributeMobile": "flex-start",
+																														"distributeTablet": "flex-start",
 																														"fillHeightDesktop": true,
-																														"widthBasisTablet": "1"
+																														"fillHeightMobile": true,
+																														"fillHeightTablet": true,
+																														"horizontalGapDesktop": "",
+																														"horizontalGapMobile": "",
+																														"horizontalGapTablet": "",
+																														"verticalGapDesktop": "24px",
+																														"verticalGapMobile": "24px",
+																														"verticalGapTablet": "24px",
+																														"widthBasisDesktop": "1",
+																														"widthBasisMobile": "1",
+																														"widthBasisTablet": "1",
+																														"widthDesktop": "manual",
+																														"widthMobile": "manual",
+																														"widthTablet": "manual",
+																														"wrapDesktop": "nowrap",
+																														"wrapMobile": "nowrap",
+																														"wrapTablet": "nowrap"
 																													},
-																													"fragmentFields": [],
+																													"fragmentFields": [
+																													],
 																													"indexed": true,
 																													"name": "Liferay DXP Section"
 																												},
 																												"pageElements": [
 																													{
-																														"definition": {},
+																														"definition": {
+																														},
 																														"pageElements": [
 																															{
 																																"definition": {
@@ -432,11 +450,12 @@
 																																	},
 																																	"fragmentConfig": {
 																																		"color": "var(--color-brand-primary-darken-4)",
+																																		"fontWeight": "var(--font-weight-semi-bold)",
 																																		"size": "heading5",
-																																		"tag": "span",
-																																		"fontWeight": "var(--font-weight-semi-bold)"
+																																		"tag": "span"
 																																	},
-																																	"fragmentFields": [],
+																																	"fragmentFields": [
+																																	],
 																																	"indexed": true
 																																},
 																																"type": "Fragment"
@@ -449,41 +468,43 @@
 																																		"siteKey": "Guest"
 																																	},
 																																	"fragmentConfig": {
-																																		"verticalGapTablet": "16px",
-																																		"horizontalGapMobile": "",
-																																		"fillHeightMobile": true,
-																																		"widthBasisDesktop": "1",
-																																		"distributeDesktop": "flex-start",
-																																		"directionDesktop": "column",
-																																		"wrapDesktop": "nowrap",
-																																		"wrapMobile": "nowrap",
-																																		"wrapTablet": "nowrap",
-																																		"verticalGapMobile": "16px",
-																																		"verticalGapDesktop": "16px",
-																																		"directionTablet": "column",
-																																		"widthTablet": "auto",
-																																		"alignTablet": "flex-start",
-																																		"horizontalGapDesktop": "",
-																																		"widthDesktop": "auto",
-																																		"widthMobile": "auto",
-																																		"widthBasisMobile": "1",
-																																		"directionMobile": "column",
-																																		"horizontalGapTablet": "",
-																																		"distributeTablet": "space-between",
-																																		"fillHeightTablet": true,
 																																		"alignDesktop": "flex-start",
 																																		"alignMobile": "flex-start",
+																																		"alignTablet": "flex-start",
+																																		"directionDesktop": "column",
+																																		"directionMobile": "column",
+																																		"directionTablet": "column",
+																																		"distributeDesktop": "flex-start",
 																																		"distributeMobile": "flex-start",
+																																		"distributeTablet": "space-between",
 																																		"fillHeightDesktop": true,
-																																		"widthBasisTablet": "1"
+																																		"fillHeightMobile": true,
+																																		"fillHeightTablet": true,
+																																		"horizontalGapDesktop": "",
+																																		"horizontalGapMobile": "",
+																																		"horizontalGapTablet": "",
+																																		"verticalGapDesktop": "16px",
+																																		"verticalGapMobile": "16px",
+																																		"verticalGapTablet": "16px",
+																																		"widthBasisDesktop": "1",
+																																		"widthBasisMobile": "1",
+																																		"widthBasisTablet": "1",
+																																		"widthDesktop": "auto",
+																																		"widthMobile": "auto",
+																																		"widthTablet": "auto",
+																																		"wrapDesktop": "nowrap",
+																																		"wrapMobile": "nowrap",
+																																		"wrapTablet": "nowrap"
 																																	},
-																																	"fragmentFields": [],
+																																	"fragmentFields": [
+																																	],
 																																	"indexed": true,
 																																	"name": "Liferay DXP Links"
 																																},
 																																"pageElements": [
 																																	{
-																																		"definition": {},
+																																		"definition": {
+																																		},
 																																		"pageElements": [
 																																			{
 																																				"definition": {
@@ -493,11 +514,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -510,11 +532,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -527,11 +550,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -544,11 +568,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -572,41 +597,43 @@
 																														"siteKey": "Guest"
 																													},
 																													"fragmentConfig": {
-																														"verticalGapTablet": "24px",
-																														"horizontalGapMobile": "",
-																														"fillHeightMobile": true,
-																														"widthBasisDesktop": "1",
-																														"distributeDesktop": "flex-start",
-																														"directionDesktop": "column",
-																														"wrapDesktop": "nowrap",
-																														"wrapMobile": "nowrap",
-																														"wrapTablet": "nowrap",
-																														"verticalGapMobile": "24px",
-																														"verticalGapDesktop": "24px",
-																														"directionTablet": "column",
-																														"widthTablet": "manual",
-																														"alignTablet": "flex-start",
-																														"horizontalGapDesktop": "",
-																														"widthDesktop": "manual",
-																														"widthMobile": "manual",
-																														"widthBasisMobile": "1",
-																														"directionMobile": "column",
-																														"horizontalGapTablet": "",
-																														"distributeTablet": "flex-start",
-																														"fillHeightTablet": true,
 																														"alignDesktop": "flex-start",
 																														"alignMobile": "flex-start",
+																														"alignTablet": "flex-start",
+																														"directionDesktop": "column",
+																														"directionMobile": "column",
+																														"directionTablet": "column",
+																														"distributeDesktop": "flex-start",
 																														"distributeMobile": "flex-start",
+																														"distributeTablet": "flex-start",
 																														"fillHeightDesktop": true,
-																														"widthBasisTablet": "1"
+																														"fillHeightMobile": true,
+																														"fillHeightTablet": true,
+																														"horizontalGapDesktop": "",
+																														"horizontalGapMobile": "",
+																														"horizontalGapTablet": "",
+																														"verticalGapDesktop": "24px",
+																														"verticalGapMobile": "24px",
+																														"verticalGapTablet": "24px",
+																														"widthBasisDesktop": "1",
+																														"widthBasisMobile": "1",
+																														"widthBasisTablet": "1",
+																														"widthDesktop": "manual",
+																														"widthMobile": "manual",
+																														"widthTablet": "manual",
+																														"wrapDesktop": "nowrap",
+																														"wrapMobile": "nowrap",
+																														"wrapTablet": "nowrap"
 																													},
-																													"fragmentFields": [],
+																													"fragmentFields": [
+																													],
 																													"indexed": true,
 																													"name": "Resources Section"
 																												},
 																												"pageElements": [
 																													{
-																														"definition": {},
+																														"definition": {
+																														},
 																														"pageElements": [
 																															{
 																																"definition": {
@@ -617,11 +644,12 @@
 																																	},
 																																	"fragmentConfig": {
 																																		"color": "var(--color-brand-primary-darken-4)",
+																																		"fontWeight": "var(--font-weight-semi-bold)",
 																																		"size": "heading5",
-																																		"tag": "span",
-																																		"fontWeight": "var(--font-weight-semi-bold)"
+																																		"tag": "span"
 																																	},
-																																	"fragmentFields": [],
+																																	"fragmentFields": [
+																																	],
 																																	"indexed": true
 																																},
 																																"type": "Fragment"
@@ -634,41 +662,43 @@
 																																		"siteKey": "Guest"
 																																	},
 																																	"fragmentConfig": {
-																																		"verticalGapTablet": "16px",
-																																		"horizontalGapMobile": "",
-																																		"fillHeightMobile": true,
-																																		"widthBasisDesktop": "1",
-																																		"distributeDesktop": "flex-start",
-																																		"directionDesktop": "column",
-																																		"wrapDesktop": "nowrap",
-																																		"wrapMobile": "nowrap",
-																																		"wrapTablet": "nowrap",
-																																		"verticalGapMobile": "16px",
-																																		"verticalGapDesktop": "16px",
-																																		"directionTablet": "column",
-																																		"widthTablet": "auto",
-																																		"alignTablet": "flex-start",
-																																		"horizontalGapDesktop": "",
-																																		"widthDesktop": "auto",
-																																		"widthMobile": "auto",
-																																		"widthBasisMobile": "1",
-																																		"directionMobile": "column",
-																																		"horizontalGapTablet": "",
-																																		"distributeTablet": "space-between",
-																																		"fillHeightTablet": true,
 																																		"alignDesktop": "flex-start",
 																																		"alignMobile": "flex-start",
+																																		"alignTablet": "flex-start",
+																																		"directionDesktop": "column",
+																																		"directionMobile": "column",
+																																		"directionTablet": "column",
+																																		"distributeDesktop": "flex-start",
 																																		"distributeMobile": "flex-start",
+																																		"distributeTablet": "space-between",
 																																		"fillHeightDesktop": true,
-																																		"widthBasisTablet": "1"
+																																		"fillHeightMobile": true,
+																																		"fillHeightTablet": true,
+																																		"horizontalGapDesktop": "",
+																																		"horizontalGapMobile": "",
+																																		"horizontalGapTablet": "",
+																																		"verticalGapDesktop": "16px",
+																																		"verticalGapMobile": "16px",
+																																		"verticalGapTablet": "16px",
+																																		"widthBasisDesktop": "1",
+																																		"widthBasisMobile": "1",
+																																		"widthBasisTablet": "1",
+																																		"widthDesktop": "auto",
+																																		"widthMobile": "auto",
+																																		"widthTablet": "auto",
+																																		"wrapDesktop": "nowrap",
+																																		"wrapMobile": "nowrap",
+																																		"wrapTablet": "nowrap"
 																																	},
-																																	"fragmentFields": [],
+																																	"fragmentFields": [
+																																	],
 																																	"indexed": true,
 																																	"name": "Resources Links"
 																																},
 																																"pageElements": [
 																																	{
-																																		"definition": {},
+																																		"definition": {
+																																		},
 																																		"pageElements": [
 																																			{
 																																				"definition": {
@@ -678,11 +708,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -695,11 +726,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -712,11 +744,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -729,11 +762,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -764,35 +798,36 @@
 																										"siteKey": "Guest"
 																									},
 																									"fragmentConfig": {
-																										"verticalGapTablet": "",
-																										"horizontalGapMobile": "",
-																										"fillHeightMobile": true,
-																										"widthBasisDesktop": "1",
-																										"distributeDesktop": "flex-start",
-																										"directionDesktop": "row",
-																										"wrapDesktop": "nowrap",
-																										"wrapMobile": "nowrap",
-																										"wrapTablet": "nowrap",
-																										"verticalGapMobile": "48px",
-																										"verticalGapDesktop": "",
-																										"directionTablet": "row",
-																										"widthTablet": "manual",
-																										"alignTablet": "flex-start",
-																										"horizontalGapDesktop": "48px",
-																										"widthDesktop": "manual",
-																										"widthMobile": "manual",
-																										"widthBasisMobile": "1",
-																										"directionMobile": "column",
-																										"horizontalGapTablet": "",
-																										"distributeTablet": "flex-start",
-																										"fillHeightTablet": true,
 																										"alignDesktop": "flex-start",
 																										"alignMobile": "flex-start",
+																										"alignTablet": "flex-start",
+																										"directionDesktop": "row",
+																										"directionMobile": "column",
+																										"directionTablet": "row",
+																										"distributeDesktop": "flex-start",
 																										"distributeMobile": "flex-start",
+																										"distributeTablet": "flex-start",
 																										"fillHeightDesktop": true,
-																										"widthBasisTablet": "1"
+																										"fillHeightMobile": true,
+																										"fillHeightTablet": true,
+																										"horizontalGapDesktop": "48px",
+																										"horizontalGapMobile": "",
+																										"horizontalGapTablet": "",
+																										"verticalGapDesktop": "",
+																										"verticalGapMobile": "48px",
+																										"verticalGapTablet": "",
+																										"widthBasisDesktop": "1",
+																										"widthBasisMobile": "1",
+																										"widthBasisTablet": "1",
+																										"widthDesktop": "manual",
+																										"widthMobile": "manual",
+																										"widthTablet": "manual",
+																										"wrapDesktop": "nowrap",
+																										"wrapMobile": "nowrap",
+																										"wrapTablet": "nowrap"
 																									},
-																									"fragmentFields": [],
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"width": "100%"
 																									},
@@ -801,7 +836,8 @@
 																								},
 																								"pageElements": [
 																									{
-																										"definition": {},
+																										"definition": {
+																										},
 																										"pageElements": [
 																											{
 																												"definition": {
@@ -810,41 +846,43 @@
 																														"siteKey": "Guest"
 																													},
 																													"fragmentConfig": {
-																														"verticalGapTablet": "24px",
-																														"horizontalGapMobile": "",
-																														"fillHeightMobile": true,
-																														"widthBasisDesktop": "1",
-																														"distributeDesktop": "flex-start",
-																														"directionDesktop": "column",
-																														"wrapDesktop": "nowrap",
-																														"wrapMobile": "nowrap",
-																														"wrapTablet": "nowrap",
-																														"verticalGapMobile": "24px",
-																														"verticalGapDesktop": "24px",
-																														"directionTablet": "column",
-																														"widthTablet": "manual",
-																														"alignTablet": "flex-start",
-																														"horizontalGapDesktop": "",
-																														"widthDesktop": "manual",
-																														"widthMobile": "manual",
-																														"widthBasisMobile": "1",
-																														"directionMobile": "column",
-																														"horizontalGapTablet": "",
-																														"distributeTablet": "flex-start",
-																														"fillHeightTablet": true,
 																														"alignDesktop": "flex-start",
 																														"alignMobile": "flex-start",
+																														"alignTablet": "flex-start",
+																														"directionDesktop": "column",
+																														"directionMobile": "column",
+																														"directionTablet": "column",
+																														"distributeDesktop": "flex-start",
 																														"distributeMobile": "flex-start",
+																														"distributeTablet": "flex-start",
 																														"fillHeightDesktop": true,
-																														"widthBasisTablet": "1"
+																														"fillHeightMobile": true,
+																														"fillHeightTablet": true,
+																														"horizontalGapDesktop": "",
+																														"horizontalGapMobile": "",
+																														"horizontalGapTablet": "",
+																														"verticalGapDesktop": "24px",
+																														"verticalGapMobile": "24px",
+																														"verticalGapTablet": "24px",
+																														"widthBasisDesktop": "1",
+																														"widthBasisMobile": "1",
+																														"widthBasisTablet": "1",
+																														"widthDesktop": "manual",
+																														"widthMobile": "manual",
+																														"widthTablet": "manual",
+																														"wrapDesktop": "nowrap",
+																														"wrapMobile": "nowrap",
+																														"wrapTablet": "nowrap"
 																													},
-																													"fragmentFields": [],
+																													"fragmentFields": [
+																													],
 																													"indexed": true,
 																													"name": "Company Section"
 																												},
 																												"pageElements": [
 																													{
-																														"definition": {},
+																														"definition": {
+																														},
 																														"pageElements": [
 																															{
 																																"definition": {
@@ -855,11 +893,12 @@
 																																	},
 																																	"fragmentConfig": {
 																																		"color": "var(--color-brand-primary-darken-4)",
+																																		"fontWeight": "var(--font-weight-semi-bold)",
 																																		"size": "heading5",
-																																		"tag": "span",
-																																		"fontWeight": "var(--font-weight-semi-bold)"
+																																		"tag": "span"
 																																	},
-																																	"fragmentFields": [],
+																																	"fragmentFields": [
+																																	],
 																																	"indexed": true
 																																},
 																																"type": "Fragment"
@@ -872,41 +911,43 @@
 																																		"siteKey": "Guest"
 																																	},
 																																	"fragmentConfig": {
-																																		"verticalGapTablet": "16px",
-																																		"horizontalGapMobile": "",
-																																		"fillHeightMobile": true,
-																																		"widthBasisDesktop": "1",
-																																		"distributeDesktop": "flex-start",
-																																		"directionDesktop": "column",
-																																		"wrapDesktop": "nowrap",
-																																		"wrapMobile": "nowrap",
-																																		"wrapTablet": "nowrap",
-																																		"verticalGapMobile": "16px",
-																																		"verticalGapDesktop": "16px",
-																																		"directionTablet": "column",
-																																		"widthTablet": "auto",
-																																		"alignTablet": "flex-start",
-																																		"horizontalGapDesktop": "",
-																																		"widthDesktop": "auto",
-																																		"widthMobile": "auto",
-																																		"widthBasisMobile": "1",
-																																		"directionMobile": "column",
-																																		"horizontalGapTablet": "",
-																																		"distributeTablet": "space-between",
-																																		"fillHeightTablet": true,
 																																		"alignDesktop": "flex-start",
 																																		"alignMobile": "flex-start",
+																																		"alignTablet": "flex-start",
+																																		"directionDesktop": "column",
+																																		"directionMobile": "column",
+																																		"directionTablet": "column",
+																																		"distributeDesktop": "flex-start",
 																																		"distributeMobile": "flex-start",
+																																		"distributeTablet": "space-between",
 																																		"fillHeightDesktop": true,
-																																		"widthBasisTablet": "1"
+																																		"fillHeightMobile": true,
+																																		"fillHeightTablet": true,
+																																		"horizontalGapDesktop": "",
+																																		"horizontalGapMobile": "",
+																																		"horizontalGapTablet": "",
+																																		"verticalGapDesktop": "16px",
+																																		"verticalGapMobile": "16px",
+																																		"verticalGapTablet": "16px",
+																																		"widthBasisDesktop": "1",
+																																		"widthBasisMobile": "1",
+																																		"widthBasisTablet": "1",
+																																		"widthDesktop": "auto",
+																																		"widthMobile": "auto",
+																																		"widthTablet": "auto",
+																																		"wrapDesktop": "nowrap",
+																																		"wrapMobile": "nowrap",
+																																		"wrapTablet": "nowrap"
 																																	},
-																																	"fragmentFields": [],
+																																	"fragmentFields": [
+																																	],
 																																	"indexed": true,
 																																	"name": "Company Links"
 																																},
 																																"pageElements": [
 																																	{
-																																		"definition": {},
+																																		"definition": {
+																																		},
 																																		"pageElements": [
 																																			{
 																																				"definition": {
@@ -916,11 +957,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -933,11 +975,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -950,11 +993,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -967,11 +1011,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -995,41 +1040,43 @@
 																														"siteKey": "Guest"
 																													},
 																													"fragmentConfig": {
-																														"verticalGapTablet": "24px",
-																														"horizontalGapMobile": "",
-																														"fillHeightMobile": true,
-																														"widthBasisDesktop": "1",
-																														"distributeDesktop": "flex-start",
-																														"directionDesktop": "column",
-																														"wrapDesktop": "nowrap",
-																														"wrapMobile": "nowrap",
-																														"wrapTablet": "nowrap",
-																														"verticalGapMobile": "24px",
-																														"verticalGapDesktop": "24px",
-																														"directionTablet": "column",
-																														"widthTablet": "manual",
-																														"alignTablet": "flex-start",
-																														"horizontalGapDesktop": "",
-																														"widthDesktop": "manual",
-																														"widthMobile": "manual",
-																														"widthBasisMobile": "1",
-																														"directionMobile": "column",
-																														"horizontalGapTablet": "",
-																														"distributeTablet": "flex-start",
-																														"fillHeightTablet": true,
 																														"alignDesktop": "flex-start",
 																														"alignMobile": "flex-start",
+																														"alignTablet": "flex-start",
+																														"directionDesktop": "column",
+																														"directionMobile": "column",
+																														"directionTablet": "column",
+																														"distributeDesktop": "flex-start",
 																														"distributeMobile": "flex-start",
+																														"distributeTablet": "flex-start",
 																														"fillHeightDesktop": true,
-																														"widthBasisTablet": "1"
+																														"fillHeightMobile": true,
+																														"fillHeightTablet": true,
+																														"horizontalGapDesktop": "",
+																														"horizontalGapMobile": "",
+																														"horizontalGapTablet": "",
+																														"verticalGapDesktop": "24px",
+																														"verticalGapMobile": "24px",
+																														"verticalGapTablet": "24px",
+																														"widthBasisDesktop": "1",
+																														"widthBasisMobile": "1",
+																														"widthBasisTablet": "1",
+																														"widthDesktop": "manual",
+																														"widthMobile": "manual",
+																														"widthTablet": "manual",
+																														"wrapDesktop": "nowrap",
+																														"wrapMobile": "nowrap",
+																														"wrapTablet": "nowrap"
 																													},
-																													"fragmentFields": [],
+																													"fragmentFields": [
+																													],
 																													"indexed": true,
 																													"name": "Expand Section"
 																												},
 																												"pageElements": [
 																													{
-																														"definition": {},
+																														"definition": {
+																														},
 																														"pageElements": [
 																															{
 																																"definition": {
@@ -1040,11 +1087,12 @@
 																																	},
 																																	"fragmentConfig": {
 																																		"color": "var(--color-brand-primary-darken-4)",
+																																		"fontWeight": "var(--font-weight-semi-bold)",
 																																		"size": "heading5",
-																																		"tag": "span",
-																																		"fontWeight": "var(--font-weight-semi-bold)"
+																																		"tag": "span"
 																																	},
-																																	"fragmentFields": [],
+																																	"fragmentFields": [
+																																	],
 																																	"indexed": true
 																																},
 																																"type": "Fragment"
@@ -1057,41 +1105,43 @@
 																																		"siteKey": "Guest"
 																																	},
 																																	"fragmentConfig": {
-																																		"verticalGapTablet": "16px",
-																																		"horizontalGapMobile": "",
-																																		"fillHeightMobile": true,
-																																		"widthBasisDesktop": "1",
-																																		"distributeDesktop": "flex-start",
-																																		"directionDesktop": "column",
-																																		"wrapDesktop": "nowrap",
-																																		"wrapMobile": "nowrap",
-																																		"wrapTablet": "nowrap",
-																																		"verticalGapMobile": "16px",
-																																		"verticalGapDesktop": "16px",
-																																		"directionTablet": "column",
-																																		"widthTablet": "auto",
-																																		"alignTablet": "flex-start",
-																																		"horizontalGapDesktop": "",
-																																		"widthDesktop": "auto",
-																																		"widthMobile": "auto",
-																																		"widthBasisMobile": "1",
-																																		"directionMobile": "column",
-																																		"horizontalGapTablet": "",
-																																		"distributeTablet": "flex-start",
-																																		"fillHeightTablet": true,
 																																		"alignDesktop": "flex-start",
 																																		"alignMobile": "flex-start",
+																																		"alignTablet": "flex-start",
+																																		"directionDesktop": "column",
+																																		"directionMobile": "column",
+																																		"directionTablet": "column",
+																																		"distributeDesktop": "flex-start",
 																																		"distributeMobile": "flex-start",
+																																		"distributeTablet": "flex-start",
 																																		"fillHeightDesktop": false,
-																																		"widthBasisTablet": "1"
+																																		"fillHeightMobile": true,
+																																		"fillHeightTablet": true,
+																																		"horizontalGapDesktop": "",
+																																		"horizontalGapMobile": "",
+																																		"horizontalGapTablet": "",
+																																		"verticalGapDesktop": "16px",
+																																		"verticalGapMobile": "16px",
+																																		"verticalGapTablet": "16px",
+																																		"widthBasisDesktop": "1",
+																																		"widthBasisMobile": "1",
+																																		"widthBasisTablet": "1",
+																																		"widthDesktop": "auto",
+																																		"widthMobile": "auto",
+																																		"widthTablet": "auto",
+																																		"wrapDesktop": "nowrap",
+																																		"wrapMobile": "nowrap",
+																																		"wrapTablet": "nowrap"
 																																	},
-																																	"fragmentFields": [],
+																																	"fragmentFields": [
+																																	],
 																																	"indexed": true,
 																																	"name": "Expand Links"
 																																},
 																																"pageElements": [
 																																	{
-																																		"definition": {},
+																																		"definition": {
+																																		},
 																																		"pageElements": [
 																																			{
 																																				"definition": {
@@ -1101,11 +1151,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -1118,11 +1169,12 @@
 																																					},
 																																					"fragmentConfig": {
 																																						"color": "var(--color-neutral-10)",
+																																						"fontWeight": "var(--font-weight-semi-bold)",
 																																						"size": "paragraphBase",
-																																						"tag": "span",
-																																						"fontWeight": "var(--font-weight-semi-bold)"
+																																						"tag": "span"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -1133,8 +1185,10 @@
 																																						"key": "navigation-footer-sign-in",
 																																						"siteKey": "Guest"
 																																					},
-																																					"fragmentConfig": {},
-																																					"fragmentFields": [],
+																																					"fragmentConfig": {
+																																					},
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -1145,8 +1199,10 @@
 																																						"key": "navigation-footer-account",
 																																						"siteKey": "Guest"
 																																					},
-																																					"fragmentConfig": {},
-																																					"fragmentFields": [],
+																																					"fragmentConfig": {
+																																					},
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true
 																																				},
 																																				"type": "Fragment"
@@ -1165,35 +1221,36 @@
 																																		"siteKey": "Guest"
 																																	},
 																																	"fragmentConfig": {
-																																		"verticalGapTablet": "",
-																																		"horizontalGapMobile": "",
-																																		"fillHeightMobile": true,
-																																		"widthBasisDesktop": "1",
-																																		"distributeDesktop": "flex-start",
-																																		"directionDesktop": "row",
-																																		"wrapDesktop": "nowrap",
-																																		"wrapMobile": "nowrap",
-																																		"wrapTablet": "nowrap",
-																																		"verticalGapMobile": "",
-																																		"verticalGapDesktop": "",
-																																		"directionTablet": "column",
-																																		"widthTablet": "manual",
-																																		"alignTablet": "flex-start",
-																																		"horizontalGapDesktop": "",
-																																		"widthDesktop": "manual",
-																																		"widthMobile": "manual",
-																																		"widthBasisMobile": "1",
-																																		"directionMobile": "column",
-																																		"horizontalGapTablet": "",
-																																		"distributeTablet": "flex-start",
-																																		"fillHeightTablet": true,
 																																		"alignDesktop": "flex-start",
 																																		"alignMobile": "flex-start",
+																																		"alignTablet": "flex-start",
+																																		"directionDesktop": "row",
+																																		"directionMobile": "column",
+																																		"directionTablet": "column",
+																																		"distributeDesktop": "flex-start",
 																																		"distributeMobile": "flex-start",
+																																		"distributeTablet": "flex-start",
 																																		"fillHeightDesktop": true,
-																																		"widthBasisTablet": "1"
+																																		"fillHeightMobile": true,
+																																		"fillHeightTablet": true,
+																																		"horizontalGapDesktop": "",
+																																		"horizontalGapMobile": "",
+																																		"horizontalGapTablet": "",
+																																		"verticalGapDesktop": "",
+																																		"verticalGapMobile": "",
+																																		"verticalGapTablet": "",
+																																		"widthBasisDesktop": "1",
+																																		"widthBasisMobile": "1",
+																																		"widthBasisTablet": "1",
+																																		"widthDesktop": "manual",
+																																		"widthMobile": "manual",
+																																		"widthTablet": "manual",
+																																		"wrapDesktop": "nowrap",
+																																		"wrapMobile": "nowrap",
+																																		"wrapTablet": "nowrap"
 																																	},
-																																	"fragmentFields": [],
+																																	"fragmentFields": [
+																																	],
 																																	"fragmentStyle": {
 																																		"marginBottom": "23px",
 																																		"textColor": "colorNeutral10"
@@ -1203,7 +1260,8 @@
 																																},
 																																"pageElements": [
 																																	{
-																																		"definition": {},
+																																		"definition": {
+																																		},
 																																		"pageElements": [
 																																			{
 																																				"definition": {
@@ -1212,35 +1270,36 @@
 																																						"siteKey": "Guest"
 																																					},
 																																					"fragmentConfig": {
-																																						"verticalGapTablet": "",
-																																						"horizontalGapMobile": "",
-																																						"fillHeightMobile": true,
-																																						"widthBasisDesktop": "1",
-																																						"distributeDesktop": "flex-start",
-																																						"directionDesktop": "row",
-																																						"wrapDesktop": "nowrap",
-																																						"wrapMobile": "nowrap",
-																																						"wrapTablet": "nowrap",
-																																						"verticalGapMobile": "",
-																																						"verticalGapDesktop": "",
-																																						"directionTablet": "row",
-																																						"widthTablet": "manual",
-																																						"alignTablet": "flex-start",
-																																						"horizontalGapDesktop": "",
-																																						"widthDesktop": "auto",
-																																						"widthMobile": "manual",
-																																						"widthBasisMobile": "1",
-																																						"directionMobile": "row",
-																																						"horizontalGapTablet": "",
-																																						"distributeTablet": "flex-start",
-																																						"fillHeightTablet": true,
 																																						"alignDesktop": "flex-start",
 																																						"alignMobile": "flex-start",
+																																						"alignTablet": "flex-start",
+																																						"directionDesktop": "row",
+																																						"directionMobile": "row",
+																																						"directionTablet": "row",
+																																						"distributeDesktop": "flex-start",
 																																						"distributeMobile": "flex-start",
+																																						"distributeTablet": "flex-start",
 																																						"fillHeightDesktop": true,
-																																						"widthBasisTablet": "1"
+																																						"fillHeightMobile": true,
+																																						"fillHeightTablet": true,
+																																						"horizontalGapDesktop": "",
+																																						"horizontalGapMobile": "",
+																																						"horizontalGapTablet": "",
+																																						"verticalGapDesktop": "",
+																																						"verticalGapMobile": "",
+																																						"verticalGapTablet": "",
+																																						"widthBasisDesktop": "1",
+																																						"widthBasisMobile": "1",
+																																						"widthBasisTablet": "1",
+																																						"widthDesktop": "auto",
+																																						"widthMobile": "manual",
+																																						"widthTablet": "manual",
+																																						"wrapDesktop": "nowrap",
+																																						"wrapMobile": "nowrap",
+																																						"wrapTablet": "nowrap"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"fragmentStyle": {
 																																						"paddingBottom": "4"
 																																					},
@@ -1249,15 +1308,18 @@
 																																				},
 																																				"pageElements": [
 																																					{
-																																						"definition": {},
+																																						"definition": {
+																																						},
 																																						"pageElements": [
 																																							{
 																																								"definition": {
 																																									"fragment": {
 																																										"key": "BASIC_COMPONENT-html"
 																																									},
-																																									"fragmentConfig": {},
-																																									"fragmentFields": [],
+																																									"fragmentConfig": {
+																																									},
+																																									"fragmentFields": [
+																																									],
 																																									"fragmentStyle": {
 																																										"paddingRight": "3",
 																																										"textColor": "colorNeutral10"
@@ -1272,8 +1334,10 @@
 																																									"fragment": {
 																																										"key": "BASIC_COMPONENT-html"
 																																									},
-																																									"fragmentConfig": {},
-																																									"fragmentFields": [],
+																																									"fragmentConfig": {
+																																									},
+																																									"fragmentFields": [
+																																									],
 																																									"fragmentStyle": {
 																																										"paddingRight": "3"
 																																									},
@@ -1287,8 +1351,10 @@
 																																									"fragment": {
 																																										"key": "BASIC_COMPONENT-html"
 																																									},
-																																									"fragmentConfig": {},
-																																									"fragmentFields": [],
+																																									"fragmentConfig": {
+																																									},
+																																									"fragmentFields": [
+																																									],
 																																									"fragmentStyle": {
 																																										"paddingRight": "3"
 																																									},
@@ -1310,49 +1376,53 @@
 																																						"siteKey": "Guest"
 																																					},
 																																					"fragmentConfig": {
-																																						"verticalGapTablet": "",
-																																						"horizontalGapMobile": "",
-																																						"fillHeightMobile": true,
-																																						"widthBasisDesktop": "1",
-																																						"distributeDesktop": "flex-start",
-																																						"directionDesktop": "row",
-																																						"wrapDesktop": "nowrap",
-																																						"wrapMobile": "nowrap",
-																																						"wrapTablet": "nowrap",
-																																						"verticalGapMobile": "",
-																																						"verticalGapDesktop": "",
-																																						"directionTablet": "row",
-																																						"widthTablet": "manual",
-																																						"alignTablet": "flex-start",
-																																						"horizontalGapDesktop": "",
-																																						"widthDesktop": "auto",
-																																						"widthMobile": "manual",
-																																						"widthBasisMobile": "1",
-																																						"directionMobile": "row",
-																																						"horizontalGapTablet": "",
-																																						"distributeTablet": "flex-start",
-																																						"fillHeightTablet": true,
 																																						"alignDesktop": "flex-start",
 																																						"alignMobile": "flex-start",
+																																						"alignTablet": "flex-start",
+																																						"directionDesktop": "row",
+																																						"directionMobile": "row",
+																																						"directionTablet": "row",
+																																						"distributeDesktop": "flex-start",
 																																						"distributeMobile": "flex-start",
+																																						"distributeTablet": "flex-start",
 																																						"fillHeightDesktop": true,
-																																						"widthBasisTablet": "1"
+																																						"fillHeightMobile": true,
+																																						"fillHeightTablet": true,
+																																						"horizontalGapDesktop": "",
+																																						"horizontalGapMobile": "",
+																																						"horizontalGapTablet": "",
+																																						"verticalGapDesktop": "",
+																																						"verticalGapMobile": "",
+																																						"verticalGapTablet": "",
+																																						"widthBasisDesktop": "1",
+																																						"widthBasisMobile": "1",
+																																						"widthBasisTablet": "1",
+																																						"widthDesktop": "auto",
+																																						"widthMobile": "manual",
+																																						"widthTablet": "manual",
+																																						"wrapDesktop": "nowrap",
+																																						"wrapMobile": "nowrap",
+																																						"wrapTablet": "nowrap"
 																																					},
-																																					"fragmentFields": [],
+																																					"fragmentFields": [
+																																					],
 																																					"indexed": true,
 																																					"name": "Logos Bottom"
 																																				},
 																																				"pageElements": [
 																																					{
-																																						"definition": {},
+																																						"definition": {
+																																						},
 																																						"pageElements": [
 																																							{
 																																								"definition": {
 																																									"fragment": {
 																																										"key": "BASIC_COMPONENT-html"
 																																									},
-																																									"fragmentConfig": {},
-																																									"fragmentFields": [],
+																																									"fragmentConfig": {
+																																									},
+																																									"fragmentFields": [
+																																									],
 																																									"fragmentStyle": {
 																																										"paddingRight": "3"
 																																									},
@@ -1366,8 +1436,10 @@
 																																									"fragment": {
 																																										"key": "BASIC_COMPONENT-html"
 																																									},
-																																									"fragmentConfig": {},
-																																									"fragmentFields": [],
+																																									"fragmentConfig": {
+																																									},
+																																									"fragmentFields": [
+																																									],
 																																									"fragmentStyle": {
 																																										"paddingRight": "3"
 																																									},
@@ -1381,8 +1453,10 @@
 																																									"fragment": {
 																																										"key": "BASIC_COMPONENT-html"
 																																									},
-																																									"fragmentConfig": {},
-																																									"fragmentFields": [],
+																																									"fragmentConfig": {
+																																									},
+																																									"fragmentFields": [
+																																									],
 																																									"fragmentStyle": {
 																																										"paddingRight": "3"
 																																									},
@@ -1434,35 +1508,36 @@
 																		"siteKey": "Guest"
 																	},
 																	"fragmentConfig": {
-																		"verticalGapTablet": "",
-																		"horizontalGapMobile": "",
-																		"fillHeightMobile": true,
-																		"widthBasisDesktop": "1",
-																		"distributeDesktop": "flex-start",
-																		"directionDesktop": "row",
-																		"wrapDesktop": "nowrap",
-																		"wrapMobile": "nowrap",
-																		"wrapTablet": "nowrap",
-																		"verticalGapMobile": "",
-																		"verticalGapDesktop": "",
-																		"directionTablet": "column",
-																		"widthTablet": "manual",
-																		"alignTablet": "center",
-																		"horizontalGapDesktop": "24px",
-																		"widthDesktop": "manual",
-																		"widthMobile": "manual",
-																		"widthBasisMobile": "1",
-																		"directionMobile": "column",
-																		"horizontalGapTablet": "",
-																		"distributeTablet": "flex-start",
-																		"fillHeightTablet": true,
 																		"alignDesktop": "center",
 																		"alignMobile": "center",
+																		"alignTablet": "center",
+																		"directionDesktop": "row",
+																		"directionMobile": "column",
+																		"directionTablet": "column",
+																		"distributeDesktop": "flex-start",
 																		"distributeMobile": "flex-start",
+																		"distributeTablet": "flex-start",
 																		"fillHeightDesktop": true,
-																		"widthBasisTablet": "1"
+																		"fillHeightMobile": true,
+																		"fillHeightTablet": true,
+																		"horizontalGapDesktop": "24px",
+																		"horizontalGapMobile": "",
+																		"horizontalGapTablet": "",
+																		"verticalGapDesktop": "",
+																		"verticalGapMobile": "",
+																		"verticalGapTablet": "",
+																		"widthBasisDesktop": "1",
+																		"widthBasisMobile": "1",
+																		"widthBasisTablet": "1",
+																		"widthDesktop": "manual",
+																		"widthMobile": "manual",
+																		"widthTablet": "manual",
+																		"wrapDesktop": "nowrap",
+																		"wrapMobile": "nowrap",
+																		"wrapTablet": "nowrap"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentStyle": {
 																		"marginTop": "0px"
 																	},
@@ -1471,7 +1546,8 @@
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -1480,41 +1556,43 @@
 																						"siteKey": "Guest"
 																					},
 																					"fragmentConfig": {
-																						"verticalGapTablet": "",
-																						"horizontalGapMobile": "",
-																						"fillHeightMobile": true,
-																						"widthBasisDesktop": "1",
-																						"distributeDesktop": "flex-start",
-																						"directionDesktop": "row",
-																						"wrapDesktop": "nowrap",
-																						"wrapMobile": "nowrap",
-																						"wrapTablet": "nowrap",
-																						"verticalGapMobile": "",
-																						"verticalGapDesktop": "",
-																						"directionTablet": "row",
-																						"widthTablet": "manual",
-																						"alignTablet": "flex-start",
-																						"horizontalGapDesktop": "",
-																						"widthDesktop": "manual",
-																						"widthMobile": "manual",
-																						"widthBasisMobile": "1",
-																						"directionMobile": "row",
-																						"horizontalGapTablet": "",
-																						"distributeTablet": "center",
-																						"fillHeightTablet": true,
 																						"alignDesktop": "flex-start",
 																						"alignMobile": "flex-start",
+																						"alignTablet": "flex-start",
+																						"directionDesktop": "row",
+																						"directionMobile": "row",
+																						"directionTablet": "row",
+																						"distributeDesktop": "flex-start",
 																						"distributeMobile": "center",
+																						"distributeTablet": "center",
 																						"fillHeightDesktop": true,
-																						"widthBasisTablet": "1"
+																						"fillHeightMobile": true,
+																						"fillHeightTablet": true,
+																						"horizontalGapDesktop": "",
+																						"horizontalGapMobile": "",
+																						"horizontalGapTablet": "",
+																						"verticalGapDesktop": "",
+																						"verticalGapMobile": "",
+																						"verticalGapTablet": "",
+																						"widthBasisDesktop": "1",
+																						"widthBasisMobile": "1",
+																						"widthBasisTablet": "1",
+																						"widthDesktop": "manual",
+																						"widthMobile": "manual",
+																						"widthTablet": "manual",
+																						"wrapDesktop": "nowrap",
+																						"wrapMobile": "nowrap",
+																						"wrapTablet": "nowrap"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true,
 																					"name": "Left"
 																				},
 																				"pageElements": [
 																					{
-																						"definition": {},
+																						"definition": {
+																						},
 																						"pageElements": [
 																							{
 																								"definition": {
@@ -1524,11 +1602,12 @@
 																									},
 																									"fragmentConfig": {
 																										"color": "var(--color-neutral-10)",
+																										"fontWeight": "var(--font-weight-regular)",
 																										"size": "paragraphSmall",
-																										"tag": "span",
-																										"fontWeight": "var(--font-weight-regular)"
+																										"tag": "span"
 																									},
-																									"fragmentFields": [],
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"opacity": "80"
 																									},
@@ -1549,41 +1628,43 @@
 																						"siteKey": "Guest"
 																					},
 																					"fragmentConfig": {
-																						"verticalGapTablet": "",
-																						"horizontalGapMobile": "",
-																						"fillHeightMobile": true,
-																						"widthBasisDesktop": ".75",
-																						"distributeDesktop": "center",
-																						"directionDesktop": "row",
-																						"wrapDesktop": "nowrap",
-																						"wrapMobile": "nowrap",
-																						"wrapTablet": "nowrap",
-																						"verticalGapMobile": "",
-																						"verticalGapDesktop": "",
-																						"directionTablet": "row",
-																						"widthTablet": "manual",
-																						"alignTablet": "flex-start",
-																						"horizontalGapDesktop": "",
-																						"widthDesktop": "manual",
-																						"widthMobile": "manual",
-																						"widthBasisMobile": "1",
-																						"directionMobile": "row",
-																						"horizontalGapTablet": "",
-																						"distributeTablet": "center",
-																						"fillHeightTablet": true,
 																						"alignDesktop": "flex-start",
 																						"alignMobile": "flex-start",
+																						"alignTablet": "flex-start",
+																						"directionDesktop": "row",
+																						"directionMobile": "row",
+																						"directionTablet": "row",
+																						"distributeDesktop": "center",
 																						"distributeMobile": "center",
+																						"distributeTablet": "center",
 																						"fillHeightDesktop": true,
-																						"widthBasisTablet": "1"
+																						"fillHeightMobile": true,
+																						"fillHeightTablet": true,
+																						"horizontalGapDesktop": "",
+																						"horizontalGapMobile": "",
+																						"horizontalGapTablet": "",
+																						"verticalGapDesktop": "",
+																						"verticalGapMobile": "",
+																						"verticalGapTablet": "",
+																						"widthBasisDesktop": ".75",
+																						"widthBasisMobile": "1",
+																						"widthBasisTablet": "1",
+																						"widthDesktop": "manual",
+																						"widthMobile": "manual",
+																						"widthTablet": "manual",
+																						"wrapDesktop": "nowrap",
+																						"wrapMobile": "nowrap",
+																						"wrapTablet": "nowrap"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true,
 																					"name": "Center"
 																				},
 																				"pageElements": [
 																					{
-																						"definition": {},
+																						"definition": {
+																						},
 																						"pageElements": [
 																							{
 																								"definition": {
@@ -1593,11 +1674,12 @@
 																									},
 																									"fragmentConfig": {
 																										"color": "var(--color-neutral-10)",
+																										"fontWeight": "var(--font-weight-regular)",
 																										"size": "paragraphSmall",
-																										"tag": "span",
-																										"fontWeight": "var(--font-weight-regular)"
+																										"tag": "span"
 																									},
-																									"fragmentFields": [],
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"opacity": "80"
 																									},
@@ -1618,42 +1700,45 @@
 																						"siteKey": "Guest"
 																					},
 																					"fragmentConfig": {
-																						"verticalGapTablet": "",
-																						"horizontalGapMobile": "24px",
-																						"fillHeightMobile": true,
-																						"widthBasisDesktop": "1",
-																						"distributeDesktop": "end",
-																						"directionDesktop": "row",
-																						"wrapDesktop": "nowrap",
-																						"wrapMobile": "wrap",
-																						"wrapTablet": "nowrap",
-																						"verticalGapMobile": "",
-																						"verticalGapDesktop": "",
-																						"directionTablet": "row",
-																						"widthTablet": "manual",
-																						"alignTablet": "flex-start",
-																						"horizontalGapDesktop": "24px",
-																						"widthDesktop": "manual",
-																						"widthMobile": "manual",
-																						"widthBasisMobile": "",
-																						"directionMobile": "row",
-																						"horizontalGapTablet": "24px",
-																						"distributeTablet": "center",
-																						"fillHeightTablet": true,
 																						"alignDesktop": "flex-start",
 																						"alignMobile": "flex-start",
+																						"alignTablet": "flex-start",
+																						"directionDesktop": "row",
+																						"directionMobile": "row",
+																						"directionTablet": "row",
+																						"distributeDesktop": "end",
 																						"distributeMobile": "center",
+																						"distributeTablet": "center",
 																						"fillHeightDesktop": true,
-																						"widthBasisTablet": "1"
+																						"fillHeightMobile": true,
+																						"fillHeightTablet": true,
+																						"horizontalGapDesktop": "24px",
+																						"horizontalGapMobile": "24px",
+																						"horizontalGapTablet": "24px",
+																						"verticalGapDesktop": "",
+																						"verticalGapMobile": "",
+																						"verticalGapTablet": "",
+																						"widthBasisDesktop": "1",
+																						"widthBasisMobile": "",
+																						"widthBasisTablet": "1",
+																						"widthDesktop": "manual",
+																						"widthMobile": "manual",
+																						"widthTablet": "manual",
+																						"wrapDesktop": "nowrap",
+																						"wrapMobile": "wrap",
+																						"wrapTablet": "nowrap"
 																					},
-																					"fragmentFields": [],
-																					"fragmentStyle": {},
+																					"fragmentFields": [
+																					],
+																					"fragmentStyle": {
+																					},
 																					"indexed": true,
 																					"name": "Right"
 																				},
 																				"pageElements": [
 																					{
-																						"definition": {},
+																						"definition": {
+																						},
 																						"pageElements": [
 																							{
 																								"definition": {
@@ -1663,11 +1748,12 @@
 																									},
 																									"fragmentConfig": {
 																										"color": "var(--color-neutral-10)",
+																										"fontWeight": "var(--font-weight-regular)",
 																										"size": "paragraphSmall",
-																										"tag": "span",
-																										"fontWeight": "var(--font-weight-regular)"
+																										"tag": "span"
 																									},
-																									"fragmentFields": [],
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"opacity": "80"
 																									},
@@ -1683,11 +1769,12 @@
 																									},
 																									"fragmentConfig": {
 																										"color": "var(--color-neutral-10)",
+																										"fontWeight": "var(--font-weight-regular)",
 																										"size": "paragraphSmall",
-																										"tag": "span",
-																										"fontWeight": "var(--font-weight-regular)"
+																										"tag": "span"
 																									},
-																									"fragmentFields": [],
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"opacity": "80"
 																									},
@@ -1703,11 +1790,12 @@
 																									},
 																									"fragmentConfig": {
 																										"color": "var(--color-neutral-10)",
+																										"fontWeight": "var(--font-weight-regular)",
 																										"size": "paragraphSmall",
-																										"tag": "span",
-																										"fontWeight": "var(--font-weight-regular)"
+																										"tag": "span"
 																									},
-																									"fragmentFields": [],
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"opacity": "80"
 																									},
@@ -1723,11 +1811,12 @@
 																									},
 																									"fragmentConfig": {
 																										"color": "var(--color-neutral-10)",
+																										"fontWeight": "var(--font-weight-regular)",
 																										"size": "paragraphSmall",
-																										"tag": "span",
-																										"fontWeight": "var(--font-weight-regular)"
+																										"tag": "span"
 																									},
-																									"fragmentFields": [],
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"opacity": "80"
 																									},
@@ -1743,11 +1832,12 @@
 																									},
 																									"fragmentConfig": {
 																										"color": "var(--color-neutral-10)",
+																										"fontWeight": "var(--font-weight-regular)",
 																										"size": "paragraphSmall",
-																										"tag": "span",
-																										"fontWeight": "var(--font-weight-regular)"
+																										"tag": "span"
 																									},
-																									"fragmentFields": [],
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"opacity": "80"
 																									},

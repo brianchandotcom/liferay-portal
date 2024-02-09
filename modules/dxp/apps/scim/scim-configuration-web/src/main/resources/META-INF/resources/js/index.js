@@ -9,7 +9,7 @@ import {PortletBase, openToast} from 'frontend-js-web';
 /**
  * @class InfoPanel
  */
-class InfoPanel extends PortletBase {
+export class InfoPanel extends PortletBase {
 
 	/**
 	 * @inheritdoc
@@ -37,5 +37,3 @@ class InfoPanel extends PortletBase {
 		});
 	}
 }
-
-export default InfoPanel;

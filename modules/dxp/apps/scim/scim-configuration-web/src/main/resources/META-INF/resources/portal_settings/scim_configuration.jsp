@@ -88,7 +88,7 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 </c:choose>
 
 <liferay-frontend:component
-	module="portal_settings/js/InfoPanel.es"
+	module="{InfoPanel} from scim-configuration-web"
 />
 
 <script>

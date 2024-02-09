@@ -4,6 +4,7 @@
 		"frontend-js-web": "*"
 	},
 	"description": "",
+	"main": "js/index.js",
 	"name": "@liferay/scim-configuration-web",
 	"private": true,
 	"scripts": {

@@ -267,6 +267,17 @@ public class CommerceOrderModelResourcePermissionLogic
 		}
 
 		AccountEntry accountEntry = commerceOrder.getAccountEntry();
+		String manageNotesPermission = restricted ?
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES :
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES;
+
+		if (_hasRoleAccountSupplier(permissionChecker, commerceOrder) &&
+			_hasPermission(
+				permissionChecker, accountEntry.getAccountEntryGroupId(),
+				manageNotesPermission)) {
+
+			return true;
+		}
 
 		return _hasAncestorPermission(
 			permissionChecker, accountEntry.getAccountEntryGroupId(),

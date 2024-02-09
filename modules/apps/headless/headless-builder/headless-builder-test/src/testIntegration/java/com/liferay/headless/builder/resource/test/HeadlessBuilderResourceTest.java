@@ -2413,9 +2413,12 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			objectDefinition.getObjectDefinitionId()
 		).objectFieldSettings(
 			Arrays.asList(
-				_createObjectFieldSetting("function", "COUNT"),
 				_createObjectFieldSetting(
-					"objectRelationshipName", relationshipName))
+					ObjectFieldSettingConstants.NAME_FUNCTION,
+					ObjectFieldSettingConstants.VALUE_COUNT),
+				_createObjectFieldSetting(
+					ObjectFieldSettingConstants.NAME_OBJECT_RELATIONSHIP_NAME,
+					relationshipName))
 		).build();
 
 		ObjectFieldTestUtil.addCustomObjectField(

@@ -156,19 +156,21 @@ public class ObjectFieldLocalServiceTest {
 						Arrays.asList(
 							new ObjectFieldSettingBuilder(
 							).name(
-								"function"
+								ObjectFieldSettingConstants.NAME_FUNCTION
 							).value(
-								"MAX"
+								ObjectFieldSettingConstants.VALUE_MAX
 							).build(),
 							new ObjectFieldSettingBuilder(
 							).name(
-								"objectFieldName"
+								ObjectFieldSettingConstants.
+									NAME_OBJECT_FIELD_NAME
 							).value(
 								"integer"
 							).build(),
 							new ObjectFieldSettingBuilder(
 							).name(
-								"objectRelationshipName"
+								ObjectFieldSettingConstants.
+									NAME_OBJECT_RELATIONSHIP_NAME
 							).value(
 								"oneToManyRelationshipName"
 							).build())
@@ -268,19 +270,21 @@ public class ObjectFieldLocalServiceTest {
 						Arrays.asList(
 							new ObjectFieldSettingBuilder(
 							).name(
-								"function"
+								ObjectFieldSettingConstants.NAME_FUNCTION
 							).value(
 								"MAX"
 							).build(),
 							new ObjectFieldSettingBuilder(
 							).name(
-								"objectFieldName"
+								ObjectFieldSettingConstants.
+									NAME_OBJECT_FIELD_NAME
 							).value(
 								"integer"
 							).build(),
 							new ObjectFieldSettingBuilder(
 							).name(
-								"objectRelationshipName"
+								ObjectFieldSettingConstants.
+									NAME_OBJECT_RELATIONSHIP_NAME
 							).value(
 								"oneToManyRelationshipName"
 							).build())
@@ -2258,19 +2262,20 @@ public class ObjectFieldLocalServiceTest {
 				Arrays.asList(
 					new ObjectFieldSettingBuilder(
 					).name(
-						"function"
+						ObjectFieldSettingConstants.NAME_FUNCTION
 					).value(
 						"MAX"
 					).build(),
 					new ObjectFieldSettingBuilder(
 					).name(
-						"objectFieldName"
+						ObjectFieldSettingConstants.NAME_OBJECT_FIELD_NAME
 					).value(
 						"integer"
 					).build(),
 					new ObjectFieldSettingBuilder(
 					).name(
-						"objectRelationshipName"
+						ObjectFieldSettingConstants.
+							NAME_OBJECT_RELATIONSHIP_NAME
 					).value(
 						"oneToManyRelationshipName"
 					).build())

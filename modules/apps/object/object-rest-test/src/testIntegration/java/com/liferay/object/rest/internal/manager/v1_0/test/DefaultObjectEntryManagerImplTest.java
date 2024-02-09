@@ -3527,17 +3527,22 @@ public class DefaultObjectEntryManagerImplTest
 		List<ObjectFieldSetting> objectFieldSettings = new ArrayList<>();
 
 		objectFieldSettings.add(
-			_createObjectFieldSetting("function", functionName));
+			_createObjectFieldSetting(
+				ObjectFieldSettingConstants.NAME_FUNCTION, functionName));
 
-		if (!Objects.equals(functionName, "COUNT")) {
+		if (!Objects.equals(
+				functionName, ObjectFieldSettingConstants.VALUE_COUNT)) {
+
 			objectFieldSettings.add(
 				_createObjectFieldSetting(
-					"objectFieldName", argumentObjectFieldName));
+					ObjectFieldSettingConstants.NAME_OBJECT_FIELD_NAME,
+					argumentObjectFieldName));
 		}
 
 		objectFieldSettings.add(
 			_createObjectFieldSetting(
-				"objectRelationshipName", objectRelationshipName));
+				ObjectFieldSettingConstants.NAME_OBJECT_RELATIONSHIP_NAME,
+				objectRelationshipName));
 
 		_addCustomObjectField(
 			new AggregationObjectFieldBuilder(

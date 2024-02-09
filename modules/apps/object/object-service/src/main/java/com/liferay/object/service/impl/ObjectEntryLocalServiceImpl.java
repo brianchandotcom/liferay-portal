@@ -2133,13 +2133,17 @@ public class ObjectEntryLocalServiceImpl
 			relatedDynamicObjectDefinitionTable.getPrimaryKeyColumn();
 
 		String function = GetterUtil.getString(
-			objectFieldSettingsValues.get("function"));
+			objectFieldSettingsValues.get(
+				ObjectFieldSettingConstants.NAME_FUNCTION));
 
-		if (!Objects.equals(function, "COUNT")) {
+		if (!Objects.equals(
+				function, ObjectFieldSettingConstants.VALUE_COUNT)) {
+
 			column = _objectFieldLocalService.getColumn(
 				relatedObjectDefinition.getObjectDefinitionId(),
 				GetterUtil.getString(
-					objectFieldSettingsValues.get("objectFieldName")));
+					objectFieldSettingsValues.get(
+						ObjectFieldSettingConstants.NAME_OBJECT_FIELD_NAME)));
 
 			if (objectRelationship.isSelf()) {
 				Table table = column.getTable();

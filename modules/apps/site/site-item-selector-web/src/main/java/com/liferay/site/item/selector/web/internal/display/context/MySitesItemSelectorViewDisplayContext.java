@@ -67,7 +67,7 @@ public class MySitesItemSelectorViewDisplayContext
 		GroupSearch groupSearch = new GroupSearch(_portletRequest, portletURL);
 
 		GroupSearchProvider.setResultsAndTotal(
-			_getClassNames(), groupSearch, _portletRequest);
+			_getClassNames(), null, groupSearch, _portletRequest);
 
 		if (groupSearch.getStart() == 0) {
 			GroupItemSelectorCriterion groupItemSelectorCriterion =

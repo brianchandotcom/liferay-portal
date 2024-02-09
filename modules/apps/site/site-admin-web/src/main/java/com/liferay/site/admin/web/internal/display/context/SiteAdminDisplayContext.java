@@ -181,7 +181,7 @@ public class SiteAdminDisplayContext {
 			Arrays.asList(
 				Company.class.getName(), Group.class.getName(),
 				Organization.class.getName()),
-			groupSearch, _liferayPortletRequest);
+			null, groupSearch, _liferayPortletRequest);
 
 		SiteChecker siteChecker = new SiteChecker(_liferayPortletResponse);
 

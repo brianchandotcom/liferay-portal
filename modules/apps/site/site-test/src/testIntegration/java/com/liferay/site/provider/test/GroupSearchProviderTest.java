@@ -131,7 +131,7 @@ public class GroupSearchProviderTest {
 			Arrays.asList(
 				Company.class.getName(), Group.class.getName(),
 				Organization.class.getName()),
-			groupSearch, mockLiferayPortletActionRequest);
+			null, groupSearch, mockLiferayPortletActionRequest);
 
 		_assertGroupSearch(childGroup1, groupSearch);
 
@@ -151,7 +151,7 @@ public class GroupSearchProviderTest {
 			Arrays.asList(
 				Company.class.getName(), Group.class.getName(),
 				Organization.class.getName()),
-			complexSQLGroupSearch, mockLiferayPortletActionRequest);
+			null, complexSQLGroupSearch, mockLiferayPortletActionRequest);
 
 		_assertGroupSearch(childGroup1, complexSQLGroupSearch);
 	}

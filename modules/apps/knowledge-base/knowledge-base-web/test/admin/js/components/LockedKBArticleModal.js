@@ -30,34 +30,29 @@ describe('LockedKBArticleModal', () => {
 	});
 
 	it('does not render the modal first', () => {
-		const result = render(<LockedKBArticleModal open={false} />);
+		const {queryByText} = render(<LockedKBArticleModal open={false} />);
 
 		act(() => {
 			jest.runAllTimers();
 		});
 
-		const title = result.queryByText('article-in-edition');
-
-		expect(title).not.toBeInTheDocument();
+		expect(queryByText('article-in-edition')).not.toBeInTheDocument();
 	});
 
 	it('renders the modal when try to edit/expire/delete a locked article', () => {
-		const result = render(<LockedKBArticleModal open={true} />);
+		const {getByText} = render(<LockedKBArticleModal open={true} />);
 
 		act(() => {
 			jest.runAllTimers();
 		});
 
-		const title = result.getByText('article-in-edition');
-		const okButton = result.getByText('ok');
-
-		expect(title).toBeInTheDocument();
-		expect(okButton).toBeInTheDocument();
+		expect(getByText('article-in-edition')).toBeInTheDocument();
+		expect(getByText('ok')).toBeInTheDocument();
 	});
 
 	describe('when try to move a locked article', () => {
 		it('renders the modal when called through the bridge component', async () => {
-			const result = await render(
+			const {getByText} = await render(
 				<LockedKBArticleModal
 					open={false}
 					portletNamespace="_portletNamespace_"
@@ -74,9 +69,7 @@ describe('LockedKBArticleModal', () => {
 				jest.runAllTimers();
 			});
 
-			const title = result.getByText('article-in-edition');
-
-			expect(title).toBeInTheDocument();
+			expect(getByText('article-in-edition')).toBeInTheDocument();
 		});
 	});
 });

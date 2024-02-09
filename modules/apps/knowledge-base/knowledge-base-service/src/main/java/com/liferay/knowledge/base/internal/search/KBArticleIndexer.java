@@ -114,7 +114,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 				BooleanClauseOccur.MUST);
 
 			modelBooleanQuery.add(
-				keywordsBooleanQuery, BooleanClauseOccur.SHOULD);
+				keywordsBooleanQuery, BooleanClauseOccur.MUST);
 
 			searchQuery.add(modelBooleanQuery, BooleanClauseOccur.SHOULD);
 		}

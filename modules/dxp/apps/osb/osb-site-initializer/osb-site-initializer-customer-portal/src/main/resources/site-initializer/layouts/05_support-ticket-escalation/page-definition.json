@@ -30,7 +30,10 @@
 										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Escalate a Ticket"
+												"en_US": "Escalate a Ticket",
+												"es_ES": "Escala un ticket",
+												"ja_JP": "チケットをエスカレーションする",
+												"pt_BR": "Escale um ticket"
 											}
 										}
 									}
@@ -56,7 +59,10 @@
 										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Raise an issue regarding an existing ticket."
+												"en_US": "Raise an issue regarding an existing ticket.",
+												"es_ES": "Plantea una incidencia relativa a un ticket existente.",
+												"ja_JP": "既存のチケットに関する問題を提起する",
+												"pt_BR": "Levante um problema relacionado a um ticket existente."
 											}
 										}
 									}
@@ -76,25 +82,17 @@
 								"formReference": {
 									"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:SupportTicketEscalation$]",
 									"classType": 0
-								}
-							},
-							"formSuccessSubmissionResult": {
-								"itemReference": {
-									"className": "com.liferay.portal.kernel.model.Layout",
-									"fields": [
-										{
-											"fieldName": "friendlyURL",
-											"fieldValue": "/home"
-										},
-										{
-											"fieldName": "privatePage",
-											"fieldValue": "false"
-										},
-										{
-											"fieldName": "siteKey",
-											"fieldValue": "[$GROUP_KEY$]"
+								},
+								"formSuccessSubmissionResult": {
+									"message": {
+										"value_i18n": {
+											"en_US": "Thank you for submitting your Support Escalation request. One of our technical managers will be reviewing your request and contacting you shortly.",
+											"es_ES": "Gracias por enviar tu petición de escalado a soporte. Uno de nuestros responsables técnicos la revisará y te contactará en breve.",
+											"ja_JP": "サポートエスカレーションのリクエストを送信していただき、ありがとうございます。テクニカルマネージャーがリクエストを確認し、折り返しご連絡させていただきます。",
+											"pt_BR": "Obrigado por enviar a sua solicitação de escalação ao suporte. Um dos nossos gerentes técnicos avaliará a sua solicitação e entrará em contato em breve."
 										}
-									]
+									},
+									"messageType": "Embedded"
 								}
 							},
 							"indexed": true,
@@ -110,7 +108,15 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_ticketsIDs",
 										"inputHelpText": {
-											"en_US": "Provide the Ticket IDs to be prioritized."
+											"en_US": "Provide the Ticket IDs to be prioritized.",
+											"es_ES": "Proporciona los identificadores de los tickets que quieras priorizar",
+											"ja_JP": "優先順位をつけるチケットIDを指定する",
+											"pt_BR": "Informe os IDs dos tickets a serem priorizados"
+										},
+										"inputLabel": {
+											"es_ES": "Identificador del ticket",
+											"ja_JP": "チケットID",
+											"pt_BR": "ID do ticket"
 										},
 										"inputShowHelpText": true,
 										"placeholder": "",
@@ -133,7 +139,15 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_description",
 										"inputHelpText": {
-											"en_US": "Please describe why these tickets need to be prioritized."
+											"en_US": "Please describe why these tickets need to be prioritized and what you hope to achieve from this escalation.",
+											"es_ES": "Por favor, describe por qué estos tickets necesitan priorizarse y qué resultado esperas de este proceso de escalado.",
+											"ja_JP": "これらのチケットを優先する必要がある理由と、このエスカレーションによって何を達成したいかをご記入ください。",
+											"pt_BR": "Por favor, descreva o motivo destes tickets necessitarem de priorização e qual o resultado esperado com esta escalação."
+										},
+										"inputLabel": {
+											"es_ES": "Descripción",
+											"ja_JP": "説明",
+											"pt_BR": "Descrição"
 										},
 										"inputShowHelpText": true,
 										"numberOfLines": 5,
@@ -164,6 +178,13 @@
 											"id": "submit-button-text",
 											"value": {
 												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"es_ES": "Enviar",
+														"ja_JP": "送信",
+														"pt_BR": "Enviar"
+													}
 												}
 											}
 										}

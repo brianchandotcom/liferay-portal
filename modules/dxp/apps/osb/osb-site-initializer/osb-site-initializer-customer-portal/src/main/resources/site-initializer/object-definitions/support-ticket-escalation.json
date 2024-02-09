@@ -180,7 +180,7 @@
 	],
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "Support Tickets Escalation"
+		"en_US": "Support Ticket Escalations"
 	},
 	"portlet": true,
 	"scope": "company",

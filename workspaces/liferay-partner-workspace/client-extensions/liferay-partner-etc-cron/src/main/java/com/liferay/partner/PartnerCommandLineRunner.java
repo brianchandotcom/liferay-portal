@@ -58,7 +58,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 		if (responseJSONObject.getInt("totalCount") > 0) {
 			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
-			List<String> activeActivities = new ArrayList<>();
+			List<String> activityIndicators = new ArrayList<>();
 
 			for (int i = 0; i < itemsJSONArray.length(); i++) {
 				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
@@ -72,7 +72,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 					"name", "Active"
 				);
 
-				activeActivities.add(
+				activityIndicators.add(
 					StringBundler.concat(
 						itemJSONObject.getString("name"), " (",
 						itemJSONObject.getLong("id"), ")"));
@@ -83,8 +83,8 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"The following Activities are now ACTIVE: " +
-							String.join(", ", activeActivities));
+						"The following activities were Activated in batch: " +
+							String.join(", ", activityIndicators));
 				}
 			}
 			catch (Exception exception) {
@@ -98,9 +98,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 			).queryParam(
 				"filter",
 				"activityStatus eq 'active' and endDate lt " +
-					_toString(
-						zonedDateTime.minusDays(
-							_EXPIRATION_DAYS_AFTER_END_DATE))
+					_toString(zonedDateTime.minusDays(_EXPIRATION_DAYS))
 			).queryParam(
 				"page", "1"
 			).queryParam(
@@ -109,7 +107,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 		if (responseJSONObject.getInt("totalCount") > 0) {
 			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
-			List<String> expiredActivities = new ArrayList<>();
+			List<String> activityIndicators = new ArrayList<>();
 
 			for (int i = 0; i < itemsJSONArray.length(); i++) {
 				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
@@ -123,7 +121,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 					"name", "Expired"
 				);
 
-				expiredActivities.add(
+				activityIndicators.add(
 					StringBundler.concat(
 						itemJSONObject.getString("name"), " (",
 						itemJSONObject.getLong("id"), ")"));
@@ -134,8 +132,8 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"The following Activities are now EXPIRED: " +
-							String.join(", ", expiredActivities));
+						"The following activities were Expired in batch: " +
+							String.join(", ", activityIndicators));
 				}
 			}
 			catch (Exception exception) {
@@ -151,9 +149,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 				StringBundler.concat(
 					"submitted eq true and activityStatus eq 'active' and ",
 					"endDate le ",
-					_toString(
-						zonedDateTime.minusDays(
-							_EXPIRATION_DAYS_AFTER_END_DATE - 15)),
+					_toString(zonedDateTime.minusDays(_EXPIRATION_DAYS - 15)),
 					" and mdfReqToActs/mdfRequestStatus eq 'approved'")
 			).queryParam(
 				"nestedFields", "actToMDFClmActs"
@@ -169,23 +165,24 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 			for (int i = 0; i < itemsJSONArray.length(); i++) {
 				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
-				long activityId = itemJSONObject.getLong("id");
-
-				String activityName = itemJSONObject.getString("name");
+				long mdfRequestId = itemJSONObject.getLong(
+					"r_mdfReqToActs_c_mdfRequestId");
 
 				ZonedDateTime zonedActivityEndDate = ZonedDateTime.parse(
 					itemJSONObject.getString("endDate"));
 
 				ZonedDateTime zonedActivityExpirationDate =
-					zonedActivityEndDate.plusDays(
-						_EXPIRATION_DAYS_AFTER_END_DATE);
+					zonedActivityEndDate.plusDays(_EXPIRATION_DAYS);
 
 				JSONArray mdfClaimActivitiesJSONArray =
 					itemJSONObject.getJSONArray("actToMDFClmActs");
 
-				if (mdfClaimActivitiesJSONArray.length() == 0) {
+				if ((mdfClaimActivitiesJSONArray.length() == 0) &&
+					(mdfRequestId == 19290271)) {
+
+					System.out.println("mdfRequestId: " + mdfRequestId);
 					_sendNotification(
-						activityName, activityId, zonedActivityExpirationDate,
+						itemJSONObject, zonedActivityExpirationDate,
 						zonedDateTime);
 				}
 				else {
@@ -232,10 +229,14 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 						}
 					}
 
-					if (claimedMdfClaimActivityJSONArray.length() == 0) {
+					if ((claimedMdfClaimActivityJSONArray.length() == 0) &&
+						(mdfRequestId == 19290271)) {
+
+						System.out.println("mdfRequestId: " + mdfRequestId);
+
 						_sendNotification(
-							activityName, activityId,
-							zonedActivityExpirationDate, zonedDateTime);
+							itemJSONObject, zonedActivityExpirationDate,
+							zonedDateTime);
 					}
 				}
 			}
@@ -297,9 +298,12 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 	}
 
 	private void _sendNotification(
-		String activityName, long activityId,
+		JSONObject activityJSONObject,
 		ZonedDateTime zonedActivityExpirationDate,
 		ZonedDateTime zonedDateTime) {
+
+		long activityId = activityJSONObject.getLong("id");
+		String activityName = activityJSONObject.getString("name");
 
 		if (zonedActivityExpirationDate.toLocalDate(
 			).isEqual(
@@ -311,15 +315,17 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 			try {
 				_put(
 					"",
-					"/o/c/activities/" + activityId +
-						"/object-actions/notificationDueDate15DaysTemplateAction");
+					StringBundler.concat(
+						"/o/c/activities/", activityId, "/object-actions",
+						"/notificationDueDate15DaysTemplateAction"));
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Notification Due Date 15 Days Action EXECUTED for the ",
-							"following activity: ", activityName, " (",
-							activityId, ")"));
+							"Email notification about being 15 days from the ",
+							"due date was triggered for the creator of ",
+							"activity named: ", activityName, " (", activityId,
+							") via the standalone object action"));
 				}
 			}
 			catch (Exception exception) {
@@ -336,15 +342,17 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 			try {
 				_put(
 					"",
-					"/o/c/activities/" + activityId +
-						"/object-actions/notificationDueDate5DaysTemplateAction");
+					StringBundler.concat(
+						"/o/c/activities/", activityId, "/object-actions",
+						"/notificationDueDate5DaysTemplateAction"));
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Notification Due Date 5 Days Action EXECUTED for the ",
-							"following activity: ", activityName, " (",
-							activityId, ")"));
+							"Email notification about being 5 days from the ",
+							"due date was triggered for the creator of ",
+							"activity named: ", activityName, " (", activityId,
+							") via the standalone object action"));
 				}
 			}
 			catch (Exception exception) {
@@ -361,15 +369,17 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 			try {
 				_put(
 					"",
-					"/o/c/activities/" + activityId +
-						"/object-actions/notificationDueDate1DayTemplateAction");
+					StringBundler.concat(
+						"/o/c/activities/", activityId, "/object-actions",
+						"/notificationDueDate1DayTemplateAction"));
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Notification Due Date Days Action EXECUTED for the  ",
-							"following activity: ", activityName, " (",
-							activityId, ")"));
+							"Email notification about being 1 day from the ",
+							"due date was triggered for the creator of ",
+							"activity named: ", activityName, " (", activityId,
+							") via the standalone object action"));
 				}
 			}
 			catch (Exception exception) {
@@ -382,7 +392,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 		return zonedDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
 	}
 
-	private static final int _EXPIRATION_DAYS_AFTER_END_DATE = 45;
+	private static final int _EXPIRATION_DAYS = 45;
 
 	private static final Log _log = LogFactory.getLog(
 		PartnerCommandLineRunner.class);

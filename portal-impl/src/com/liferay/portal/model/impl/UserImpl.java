@@ -783,7 +783,9 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isEmailAddressVerificationComplete() {
-		if (isGuestUser() || isEmailAddressVerified()) {
+		if (isGuestUser() || isEmailAddressVerified() ||
+			isServiceAccountUser()) {
+
 			return true;
 		}
 
@@ -840,12 +842,12 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public boolean isPasswordReset() {
-		if (isGuestUser() || isServiceAccountUser()) {
+	public boolean isPasswordResetRequired() {
+		if (isGuestUser() || !isPasswordReset() || isServiceAccountUser()) {
 			return false;
 		}
 
-		return getPasswordReset();
+		return true;
 	}
 
 	@Override

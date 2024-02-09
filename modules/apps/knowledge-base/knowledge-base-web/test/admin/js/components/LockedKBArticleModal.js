@@ -12,20 +12,21 @@ import {LockedKBArticleModal} from '../../../../src/main/resources/META-INF/reso
 
 const bridgeComponentId = '_portletNamespace_LockedKBArticleModal';
 
+const components = {};
+Liferay = {
+	...Liferay,
+	component(id, component) {
+		components[id] = component;
+	},
+	componentReady(id) {
+		return Promise.resolve(components[id]);
+	},
+	destroyComponent() {},
+};
+
 describe('LockedKBArticleModal', () => {
 	beforeAll(() => {
 		jest.useFakeTimers();
-	});
-
-	beforeEach(() => {
-		const components = {};
-
-		Liferay.component = (id, component) => {
-			components[id] = component;
-		};
-		Liferay.componentReady = (id) => Promise.resolve(components[id]);
-
-		Liferay.destroyComponent = jest.fn();
 	});
 
 	it('does not render the modal first', () => {
@@ -55,29 +56,25 @@ describe('LockedKBArticleModal', () => {
 	});
 
 	describe('when try to move a locked article', () => {
-		let result;
-
-		beforeEach(() => {
-			result = render(
+		it('renders the modal when called through the bridge component', async () => {
+			const result = await render(
 				<LockedKBArticleModal
 					open={false}
 					portletNamespace="_portletNamespace_"
 				/>
 			);
 
-			return act(() =>
+			await act(() =>
 				Liferay.componentReady(bridgeComponentId).then(({open}) => {
 					open();
 				})
 			);
-		});
 
-		it('renders the modal when called through the bridge component', async () => {
 			act(() => {
 				jest.runAllTimers();
 			});
 
-			const title = await result.getByText('article-in-edition');
+			const title = result.getByText('article-in-edition');
 
 			expect(title).toBeInTheDocument();
 		});

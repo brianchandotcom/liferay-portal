@@ -141,6 +141,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 							<div>
 								<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-141392") && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT) %>'>
 									<clay:button
+										cssClass="mr-3"
 										data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "/journal/add_article" : "/journal/update_article" %>'
 										displayType="secondary"
 										id='<%= liferayPortletResponse.getNamespace() + "saveButton" %>'

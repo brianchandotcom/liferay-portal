@@ -158,7 +158,7 @@ export default function SaveButtons({
 		<div className="d-flex">
 			{!Liferay.FeatureFlags['LPS-141392'] && !editingDefaultValues ? (
 				<ClayButton
-					className="mr-1"
+					className="mr-3"
 					displayType="secondary"
 					form={formId}
 					onClick={() => onClick('draft')}

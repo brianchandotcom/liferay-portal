@@ -32,7 +32,7 @@
 			"<rootDir>/jest-setup.config.js"
 		],
 		"testMatch": [
-			"<rootDir>/tests/**/*.spec.{ts,tsx}"
+			"<rootDir>/tests/**/*.{ts,tsx}"
 		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/jest-setup.config.js"

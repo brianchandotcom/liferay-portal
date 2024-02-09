@@ -106,7 +106,7 @@ function Actions({
 					openPermissionsModal(url);
 				}
 				else {
-					openModal!({
+					openModal({
 						size: size || resolveModalSize(target),
 						title,
 						url,
@@ -118,7 +118,7 @@ function Actions({
 
 				highlightItems!([itemId]);
 
-				openSidePanel!({
+				openSidePanel({
 					size: 'lg',
 					title,
 					url,

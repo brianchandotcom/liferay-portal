@@ -6,19 +6,15 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {headlessBuilderPagesTest} from '../../fixtures/headlessBuilderPagesTest';
 import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	loginTest,
 	headlessBuilderPagesTest,
 	headlessDiscoveryPagesTest,
-	featureFlagsTest({
-		'LPS-178642': true,
-	})
+	loginTest
 );
 
 test('can get updated title in response after publish', async ({

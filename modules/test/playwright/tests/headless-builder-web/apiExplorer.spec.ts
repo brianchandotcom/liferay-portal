@@ -6,16 +6,12 @@
 import {mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {headlessBuilderTest} from '../../fixtures/headlessBuilderTest';
 import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	featureFlagsTest({
-		'LPS-178642': true,
-	}),
 	headlessBuilderTest,
 	headlessDiscoveryPagesTest,
 	loginTest

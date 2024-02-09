@@ -32,12 +32,12 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_NAVITEM_SUBITEM</td>
-	<td>//*[contains(@data-qa-id,'editRolePermissionsNavigation')]//button[contains(.,'${key_navItem}') and contains(@role,'button')]/following-sibling::*//button[contains(.,'${key_subItem}')]</td>
+	<td>//*[contains(@data-qa-id,'editRolePermissionsNavigation')]//button[contains(.,'${key_navItem}') and contains(@role,'menuitem')]/following-sibling::*//button[contains(.,'${key_subItem}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_NAVITEM_SUBITEM_COLLAPSED</td>
-	<td>//*[contains(@data-qa-id,'editRolePermissionsNavigation')]//button[contains(.,'${key_navItem}') and contains(@role,'button')]/following-sibling::*//button[contains(.,'${key_subItem}') and contains(@class,'collapsed')]</td>
+	<td>//*[contains(@data-qa-id,'editRolePermissionsNavigation')]//button[contains(.,'${key_navItem}') and contains(@role,'menuitem')]/following-sibling::*//button[contains(.,'${key_subItem}') and contains(@class,'collapsed')]</td>
 	<td></td>
 </tr>
 <tr>

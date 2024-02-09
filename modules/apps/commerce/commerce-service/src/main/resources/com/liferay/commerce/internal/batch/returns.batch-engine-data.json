@@ -1,0 +1,122 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-9361",
+			"importStrategy": "ON_ERROR_FAIL",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"enableCategorization": true,
+			"externalReferenceCode": "L_COMMERCE_RETURN",
+			"label": {
+				"en_US": "Commerce Return"
+			},
+			"modifiable": true,
+			"name": "CommerceReturn",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "L_COMMERCE_RETURN_STATE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Commerce Return State"
+					},
+					"listTypeDefinitionExternalReferenceCode": "L_COMMERCE_RETURN_STATE_PICKLIST",
+					"localized": false,
+					"name": "commerceReturnState",
+					"objectFieldSettings": [
+						{
+							"name": "defaultValueType",
+							"value": "inputAsValue"
+						}
+					],
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Commerce Returns"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		},
+		{
+			"accountEntryRestricted": false,
+			"enableCategorization": true,
+			"enableLocalization": false,
+			"externalReferenceCode": "L_COMMERCE_ORDER",
+			"objectFolderExternalReferenceCode": "default",
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "Commerce Order to Commerce Returns"
+					},
+					"name": "commerceOrderToCommerceReturns",
+					"objectDefinitionExternalReferenceCode1": "L_COMMERCE_ORDER",
+					"objectDefinitionExternalReferenceCode2": "L_COMMERCE_RETURN",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "CommerceReturn",
+					"objectDefinitionSystem2": true,
+					"objectField": {
+						"DBType": "Long",
+						"businessType": "Relationship",
+						"indexed": true,
+						"indexedAsKeyword": false,
+						"indexedLanguageId": "",
+						"label": {
+							"en_US": "Commerce Order to Commerce Returns"
+						},
+						"localized": false,
+						"name": "r_commerceOrderToCommerceReturns_commerceOrderId",
+						"objectFieldSettings": [
+							{
+								"name": "objectDefinition1ShortName",
+								"value": "CommerceOrder"
+							},
+							{
+								"name": "objectRelationshipERCObjectFieldName",
+								"value": "r_commerceOrderToCommerceReturns_commerceOrderERC"
+							}
+						],
+						"readOnly": "false",
+						"readOnlyConditionExpression": "",
+						"relationshipType": "oneToMany",
+						"required": false,
+						"state": false,
+						"system": false,
+						"type": "Long",
+						"unique": false
+					},
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": false,
+					"type": "oneToMany"
+				}
+			]
+		}
+	]
+}

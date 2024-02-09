@@ -67,7 +67,7 @@ public class LayoutSetPrototypeManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (_layoutSetPrototypeDisplayContext.isShowAddButton()) {
+		if (!_layoutSetPrototypeDisplayContext.isShowAddButton()) {
 			return null;
 		}
 

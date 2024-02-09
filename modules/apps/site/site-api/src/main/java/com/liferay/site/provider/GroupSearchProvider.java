@@ -36,8 +36,8 @@ import javax.portlet.PortletRequest;
 public class GroupSearchProvider {
 
 	public static void setResultsAndTotal(
-			List<String> classNames, GroupSearch groupSearch,
-			PortletRequest portletRequest)
+			List<String> classNames, long[] excludedGroupIds,
+			GroupSearch groupSearch, PortletRequest portletRequest)
 		throws PortalException {
 
 		long parentGroupId = _getParentGroupId(portletRequest);
@@ -61,14 +61,17 @@ public class GroupSearchProvider {
 				() -> GroupLocalServiceUtil.search(
 					themeDisplay.getCompanyId(), classNameIds,
 					_getKeywords(portletRequest),
-					_getGroupParams(classNames, portletRequest, parentGroupId),
+					_getGroupParams(
+						classNames, excludedGroupIds, portletRequest,
+						parentGroupId),
 					groupSearch.getStart(), groupSearch.getEnd(),
 					groupSearch.getOrderByComparator()),
 				GroupLocalServiceUtil.searchCount(
 					themeDisplay.getCompanyId(), classNameIds,
 					_getKeywords(portletRequest),
 					_getGroupParams(
-						classNames, portletRequest, parentGroupId)));
+						classNames, excludedGroupIds, portletRequest,
+						parentGroupId)));
 		}
 		else {
 			long[] classNameIds = TransformUtil.transformToLongArray(
@@ -82,14 +85,17 @@ public class GroupSearchProvider {
 				() -> GroupLocalServiceUtil.search(
 					themeDisplay.getCompanyId(), classNameIds, groupId,
 					_getKeywords(portletRequest),
-					_getGroupParams(classNames, portletRequest, parentGroupId),
+					_getGroupParams(
+						classNames, excludedGroupIds, portletRequest,
+						parentGroupId),
 					groupSearch.getStart(), groupSearch.getEnd(),
 					groupSearch.getOrderByComparator()),
 				GroupLocalServiceUtil.searchCount(
 					themeDisplay.getCompanyId(), classNameIds, groupId,
 					_getKeywords(portletRequest),
 					_getGroupParams(
-						classNames, portletRequest, parentGroupId)));
+						classNames, excludedGroupIds, portletRequest,
+						parentGroupId)));
 		}
 	}
 
@@ -118,13 +124,15 @@ public class GroupSearchProvider {
 	}
 
 	private static LinkedHashMap<String, Object> _getGroupParams(
-			List<String> classNames, PortletRequest portletRequest,
-			long parentGroupId)
+			List<String> classNames, long[] excludedGroupIds,
+			PortletRequest portletRequest, long parentGroupId)
 		throws PortalException {
 
 		LinkedHashMap<String, Object> groupParams =
 			LinkedHashMapBuilder.<String, Object>put(
 				"actionId", ActionKeys.VIEW
+			).put(
+				"excludedGroupIds", ListUtil.fromArray(excludedGroupIds)
 			).put(
 				"site", Boolean.TRUE
 			).build();

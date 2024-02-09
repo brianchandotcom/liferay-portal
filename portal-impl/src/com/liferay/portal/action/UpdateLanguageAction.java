@@ -12,13 +12,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
+import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.model.ActionForward;
 import com.liferay.portal.struts.model.ActionMapping;
-import com.liferay.portlet.admin.util.AdminUtil;
 
 import java.util.Locale;
 
@@ -67,17 +65,8 @@ public class UpdateLanguageAction implements Action {
 				httpServletRequest, "persistState", true);
 
 			if (themeDisplay.isSignedIn() && persistState) {
-				User user = themeDisplay.getUser();
-
-				Contact contact = user.getContact();
-
-				AdminUtil.updateUser(
-					httpServletRequest, user.getUserId(), user.getScreenName(),
-					user.getEmailAddress(), user.getFacebookId(),
-					user.getOpenId(), languageId, user.getTimeZoneId(),
-					user.getGreeting(), user.getComments(), contact.getSmsSn(),
-					contact.getFacebookSn(), contact.getJabberSn(),
-					contact.getSkypeSn(), contact.getTwitterSn());
+				UserServiceUtil.updateLanguageId(
+					themeDisplay.getUserId(), languageId);
 			}
 
 			HttpSession httpSession = httpServletRequest.getSession();

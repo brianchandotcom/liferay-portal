@@ -3,6 +3,7 @@
 		"date-fns": "2.29.3",
 		"frontend-js-web": "*"
 	},
+	"main": "js/index.js",
 	"name": "portal-reports-engine-console-web",
 	"private": true,
 	"scripts": {

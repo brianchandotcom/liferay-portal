@@ -25,7 +25,7 @@ const TPL_TAG_FORM =
 	'</div>' +
 	'</div>';
 
-export default function ReportParameters({namespace, parameters}) {
+export function reportParameters({namespace, parameters}) {
 	const portletMessageContainer = document.querySelector('.report-message');
 
 	const parametersKeyElement = document.querySelector('.parameters-key');

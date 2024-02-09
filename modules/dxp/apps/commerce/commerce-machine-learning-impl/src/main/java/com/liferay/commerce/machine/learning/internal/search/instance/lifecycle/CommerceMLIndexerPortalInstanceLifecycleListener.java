@@ -5,20 +5,25 @@
 
 package com.liferay.commerce.machine.learning.internal.search.instance.lifecycle;
 
-import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.commerce.machine.learning.internal.search.api.IndexMappingFileNames;
+import com.liferay.commerce.machine.learning.internal.search.api.IndexNamePatterns;
+import com.liferay.commerce.machine.learning.internal.search.index.CommerceMLIndexer;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.index.IndexNameBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -31,8 +36,10 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		try {
-			for (CommerceMLIndexer commerceMLIndexer : _serviceTrackerList) {
-				commerceMLIndexer.createIndex(company.getCompanyId());
+			for (CommerceMLIndexer commerceMLIndexer : _commerceMLIndexers) {
+				commerceMLIndexer.createIndex(
+					_indexNameBuilder, _searchCapabilities,
+					_searchEngineAdapter, company.getCompanyId());
 			}
 		}
 		catch (Exception exception) {
@@ -45,8 +52,10 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
 		try {
-			for (CommerceMLIndexer commerceMLIndexer : _serviceTrackerList) {
-				commerceMLIndexer.dropIndex(company.getCompanyId());
+			for (CommerceMLIndexer commerceMLIndexer : _commerceMLIndexers) {
+				commerceMLIndexer.dropIndex(
+					_indexNameBuilder, _searchCapabilities,
+					_searchEngineAdapter, company.getCompanyId());
 			}
 		}
 		catch (Exception exception) {
@@ -59,21 +68,43 @@ public class CommerceMLIndexerPortalInstanceLifecycleListener
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, CommerceMLIndexer.class);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerList.close();
+		_commerceMLIndexers.add(
+			new CommerceMLIndexer(
+				IndexMappingFileNames.FORECAST, IndexNamePatterns.FORECAST));
+		_commerceMLIndexers.add(
+			new CommerceMLIndexer(
+				IndexMappingFileNames.FREQUENT_PATTERN_RECOMMENDATION,
+				IndexNamePatterns.FREQUENT_PATTERN_RECOMMENDATION));
+		_commerceMLIndexers.add(
+			new CommerceMLIndexer(
+				IndexMappingFileNames.PRODUCT_RECOMMENDATION,
+				IndexNamePatterns.PRODUCT_CONTENT_RECOMMENDATION));
+		_commerceMLIndexers.add(
+			new CommerceMLIndexer(
+				IndexMappingFileNames.PRODUCT_RECOMMENDATION,
+				IndexNamePatterns.PRODUCT_INTERACTION_RECOMMENDATION));
+		_commerceMLIndexers.add(
+			new CommerceMLIndexer(
+				IndexMappingFileNames.USER_RECOMMENDATION,
+				IndexNamePatterns.USER_RECOMMENDATION));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceMLIndexerPortalInstanceLifecycleListener.class);
 
+	private final List<CommerceMLIndexer> _commerceMLIndexers =
+		new ArrayList<>();
+
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
+
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
-	private ServiceTrackerList<CommerceMLIndexer> _serviceTrackerList;
+	@Reference
+	private SearchCapabilities _searchCapabilities;
+
+	@Reference
+	private SearchEngineAdapter _searchEngineAdapter;
 
 }

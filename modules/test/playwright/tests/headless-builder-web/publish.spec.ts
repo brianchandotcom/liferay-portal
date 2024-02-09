@@ -50,6 +50,7 @@ test('can get updated title in response after publish', async ({
 		`${application.title} 1`
 	);
 	await applicationPage.publishButton.click();
+	await expect(page.getByText('API application was published')).toBeVisible();
 
 	expect(
 		(

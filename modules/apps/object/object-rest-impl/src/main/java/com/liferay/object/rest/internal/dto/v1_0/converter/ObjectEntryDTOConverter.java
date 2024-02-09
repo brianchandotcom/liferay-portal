@@ -474,6 +474,10 @@ public class ObjectEntryDTOConverter
 		NestedFieldsContext nestedFieldsContext =
 			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
+		if (nestedFieldsContext == null) {
+			return null;
+		}
+
 		Map<String, UnsafeSupplier<Object, Exception>> nestedFieldValues =
 			new HashMap<>();
 

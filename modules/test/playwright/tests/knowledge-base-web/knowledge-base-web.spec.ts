@@ -108,3 +108,30 @@ testFeatureFlagsEnabled(
 		).toBeVisible();
 	}
 );
+
+testFeatureFlagsEnabled(
+	'can schedule and delete an article with scheduling enabled',
+	async ({
+		knowledgeBaseEditArticlePage,
+		knowledgeBaseViewArticlePage,
+		page,
+	}) => {
+		const title = getRandomString();
+		const kbArticle = page.getByRole('link', {name: title});
+
+		await knowledgeBaseEditArticlePage.scheduleNewKnowledgeBaseArticle(
+			getRandomString(),
+			`${new Date().getFullYear() + 1}-01-01 00:00`,
+			title
+		);
+		await expect(kbArticle).toBeVisible();
+
+		await knowledgeBaseViewArticlePage.deleteKnowledgeBaseArticle(title);
+		await expect(
+			page.locator(
+				'[id="_com_liferay_knowledge_base_web_portlet_AdminPortlet_recycleBinAlert"]'
+			)
+		).toBeVisible();
+		await expect(kbArticle).toBeHidden();
+	}
+);

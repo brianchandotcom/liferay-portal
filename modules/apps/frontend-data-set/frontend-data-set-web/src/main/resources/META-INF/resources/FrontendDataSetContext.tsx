@@ -11,14 +11,14 @@ export interface IFrontendDataSetContext {
 	actionParameterName?: string | null;
 	apiURL?: string;
 	appURL?: string;
-	applyItemInlineUpdates?: Function;
-	createInlineItem?: Function;
+	applyItemInlineUpdates: Function;
+	createInlineItem: Function;
 	customDataRenderers?: Array<any>;
 	customRenderers?: {tableCell?: Array<TRenderer>};
-	executeAsyncItemAction?: Function;
+	executeAsyncItemAction: Function;
 	formId?: string;
 	formName?: string;
-	highlightItems?: Function;
+	highlightItems: Function;
 	highlightedItemsValue?: string;
 	id?: string;
 	inlineAddingSettings?: {
@@ -28,19 +28,19 @@ export interface IFrontendDataSetContext {
 	inlineEditingSettings?: IInlineEditingSettings;
 	itemsActions?: IItemsActions[];
 	itemsChanges?: Array<any>;
-	loadData?: Function;
+	loadData: Function;
 	modalId?: string;
 	namespace?: string;
 	nestedItemsKey?: string;
 	nestedItemsReferenceKey?: string;
-	onActionDropdownItemClick?: Function;
-	onBulkActionItemClick?: Function;
-	onSelect?: Function;
+	onActionDropdownItemClick: Function;
+	onBulkActionItemClick: Function;
+	onSelect: Function;
 	openModal: Function;
 	openSidePanel: Function;
 	portletId?: string;
 	searchParam?: string;
-	selectItems?: Function;
+	selectItems: Function;
 	selectable?: boolean;
 	selectedItemsKey?: string;
 	selectedItemsValue?: Array<any>;
@@ -48,11 +48,11 @@ export interface IFrontendDataSetContext {
 	sidePanelId?: string;
 	sorts?: Array<TRenderer>;
 	style?: string;
-	toggleItemInlineEdit?: Function;
+	toggleItemInlineEdit: Function;
 	uniformActionsDisplay?: boolean;
-	updateDataSetItems?: Function;
-	updateItem?: Function;
-	updateSearchParam?: Function;
+	updateDataSetItems: Function;
+	updateItem: Function;
+	updateSearchParam: Function;
 }
 
 export interface IHTMLElementBuilder {
@@ -78,12 +78,23 @@ export interface IInternalRenderer {
 export type TRenderer = IClientExtensionRenderer | IInternalRenderer;
 
 const FrontendDataSetContext = React.createContext({
+	applyItemInlineUpdates: () => {},
+	createInlineItem: () => {},
+	executeAsyncItemAction: () => {},
+	highlightItems: () => {},
 	loadData: () => {},
+	onActionDropdownItemClick: () => {},
+	onBulkActionItemClick: () => {},
+	onSelect: () => {},
 	openModal: () => {},
 	openSidePanel: () => {},
 	selectItems: () => {},
 	selectable: false,
 	selectedItemsValue: [],
+	toggleItemInlineEdit: () => {},
+	updateDataSetItems: () => {},
+	updateItem: () => {},
+	updateSearchParam: () => {},
 } as IFrontendDataSetContext);
 
 export default FrontendDataSetContext;

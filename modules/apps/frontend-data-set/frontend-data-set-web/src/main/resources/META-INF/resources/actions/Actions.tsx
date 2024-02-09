@@ -116,7 +116,7 @@ function Actions({
 			else if (target === 'sidePanel') {
 				event.preventDefault();
 
-				highlightItems!([itemId]);
+				highlightItems([itemId]);
 
 				openSidePanel({
 					size: 'lg',
@@ -129,7 +129,7 @@ function Actions({
 
 				setLoading(true);
 
-				executeAsyncItemAction!({
+				executeAsyncItemAction({
 					errorMessage,
 					method: method ?? data?.method,
 					setActionItemLoading: setLoading,
@@ -140,7 +140,7 @@ function Actions({
 			else if (target === 'inlineEdit') {
 				event.preventDefault();
 
-				toggleItemInlineEdit!(itemId);
+				toggleItemInlineEdit(itemId);
 			}
 			else if (target === 'blank') {
 				event.preventDefault();

@@ -5,8 +5,9 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayDatePicker from '@clayui/date-picker';
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import moment from 'moment/min/moment-with-locales';
 import React, {useEffect} from 'react';
@@ -44,43 +45,47 @@ export default function ScheduleOptions({
 
 	return (
 		<>
-			<label htmlFor={`${portletNamespace}displayDatePicker`}>
-				{Liferay.Language.get('date-and-time')}
+			<ClayForm.Group
+				className={classNames('mb-0', {'has-error': error})}
+			>
+				<label htmlFor={`${portletNamespace}displayDatePicker`}>
+					{Liferay.Language.get('date-and-time')}
 
-				<ClayIcon
-					className="ml-1 reference-mark"
-					focusable="false"
-					role="presentation"
-					symbol="asterisk"
+					<ClayIcon
+						className="ml-1 reference-mark"
+						focusable="false"
+						role="presentation"
+						symbol="asterisk"
+					/>
+				</label>
+
+				<ClayDatePicker
+					id={`${portletNamespace}displayDatePicker`}
+					onChange={setDisplayDate}
+					placeholder="YYYY-MM-DD HH:mm"
+					required
+					time
+					timezone={timeZone}
+					value={displayDate || ''}
+					years={{
+						end: 9999,
+						start: new Date().getFullYear(),
+					}}
 				/>
-			</label>
 
-			<ClayDatePicker
-				id={`${portletNamespace}displayDatePicker`}
-				onChange={setDisplayDate}
-				placeholder="YYYY-MM-DD HH:mm"
-				required
-				time
-				timezone={timeZone}
-				value={displayDate || ''}
-				years={{
-					end: 9999,
-					start: new Date().getFullYear(),
-				}}
-			/>
-
-			{error ? (
-				<div className="error-container mt-1">
-					<ClayAlert
-						className="mt-1"
-						displayType="danger"
-						title={Liferay.Language.get('error-colon') + ' '}
-						variant="feedback"
-					>
-						{error}
-					</ClayAlert>
-				</div>
-			) : null}
+				{error ? (
+					<div className="error-container mt-1">
+						<ClayAlert
+							className="mt-1"
+							displayType="danger"
+							title={Liferay.Language.get('error-colon') + ' '}
+							variant="feedback"
+						>
+							{error}
+						</ClayAlert>
+					</div>
+				) : null}
+			</ClayForm.Group>
 
 			<p className="mt-1 text-3 text-secondary">
 				{sub(Liferay.Language.get('time-zone-x'), timeZone)}

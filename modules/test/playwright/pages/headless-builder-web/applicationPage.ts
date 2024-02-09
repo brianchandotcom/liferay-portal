@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 export class ApplicationPage {
 	readonly addEndpointButton: Locator;
 	readonly addSchemaButton: Locator;
+	readonly applicationTitleTextBox: Locator;
 	readonly createButton: Locator;
 	readonly endpointPathTextBox: Locator;
 	readonly page: Page;
@@ -18,6 +19,9 @@ export class ApplicationPage {
 	constructor(page: Page) {
 		this.addEndpointButton = page.getByLabel('Add API Endpoint');
 		this.addSchemaButton = page.getByLabel('Add New Schema');
+		this.applicationTitleTextBox = page.getByRole('textbox', {
+			name: 'Enter title.',
+		});
 		this.createButton = page.getByRole('button', {name: 'Create'});
 		this.endpointPathTextBox = page.getByPlaceholder('Enter Path');
 		this.page = page;

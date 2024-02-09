@@ -74,39 +74,6 @@ definition {
 	}
 
 	@priority = 4
-	test CanGetUpdatedTitleInResponseAfterPublish {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given I publish an API application") {
-			APIBuilderUI.publishApplication(key_title = "App-test");
-		}
-
-		task ("And Given I edit the title and publish the api application again") {
-			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
-
-			Type(
-				locator1 = "APIBuilder#ENTER_TITLE",
-				value1 = "App-test-1");
-
-			Click(locator1 = "APIBuilder#PUBLISH_BUTTON");
-		}
-
-		task ("When with getAPIApplicationsPage to retrieve the api application") {
-			var response = ApplicationAPI.getAPIApplications();
-		}
-
-		task ("Then I can get the update title in response") {
-			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items..title");
-
-			TestUtils.assertEquals(
-				actual = ${actualValue},
-				expected = "App-test-1");
-		}
-	}
-
-	@priority = 4
 	test CanPromptCancelChangesDialog {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";

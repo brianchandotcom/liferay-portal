@@ -37,7 +37,7 @@
 			"<rootDir>/test/js/setup.es.js"
 		]
 	},
-	"main": "js/index.es.js",
+	"main": "js/index.js",
 	"name": "portal-search-ranking-web",
 	"private": true,
 	"scripts": {

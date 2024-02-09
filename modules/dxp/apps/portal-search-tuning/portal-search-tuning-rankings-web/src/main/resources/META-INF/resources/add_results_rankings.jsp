@@ -71,7 +71,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 		</div>
 
 		<react:component
-			module="js/components/ResultRankingsAdd.es"
+			module="{ResultRankingsAdd} from portal-search-tuning-rankings-web"
 			props="<%= addRankingDisplayContext.getProps() %>"
 		/>
 	</div>

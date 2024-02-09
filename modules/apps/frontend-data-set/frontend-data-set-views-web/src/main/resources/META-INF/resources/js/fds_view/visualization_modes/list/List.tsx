@@ -5,13 +5,14 @@
 
 import ClayAlert from '@clayui/alert';
 import {ClayButtonWithIcon} from '@clayui/button';
-import {Body, Cell, Head, Row, Table} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {openModal} from 'frontend-js-web';
 import React from 'react';
 
+import '../../../../css/ListVisualizationMode.scss';
 import {IFDSViewSectionProps} from '../../../FDSView';
 import {IBaseVisualizationMode} from '../VisualizationModes';
 import {IFDSField} from '../table/Table';
@@ -32,8 +33,6 @@ const LIST_VISUALIZATION_MODE_FIELDS: IListField[] = [
 	{fieldId: 'label', label: Liferay.Language.get('label')},
 ];
 
-const LABEL_CELL_WIDTH = '30%';
-
 export default function List(props: IFDSViewSectionProps) {
 	const [fieldValues, setFieldValues] = React.useState<
 		Record<IListField['fieldId'], IFDSField>
@@ -51,18 +50,18 @@ export default function List(props: IFDSViewSectionProps) {
 				)}
 			</ClayAlert>
 
-			<Table className="mb-0" columnsVisibility={false}>
-				<Head>
-					<Cell width={LABEL_CELL_WIDTH}>
+			<ClayTable className="mb-0">
+				<ClayTable.Head>
+					<ClayTable.Cell className="list-visualization-mode-label-cell">
 						{Liferay.Language.get('list-element')}
-					</Cell>
+					</ClayTable.Cell>
 
-					<Cell className="border-left-0">
+					<ClayTable.Cell className="list-visualization-mode-value-cell">
 						{Liferay.Language.get('field')}
-					</Cell>
-				</Head>
+					</ClayTable.Cell>
+				</ClayTable.Head>
 
-				<Body>
+				<ClayTable.Body>
 					{LIST_VISUALIZATION_MODE_FIELDS.map((field) => (
 						<ListField
 							field={field}
@@ -77,8 +76,8 @@ export default function List(props: IFDSViewSectionProps) {
 							value={fieldValues[field.fieldId]}
 						/>
 					))}
-				</Body>
-			</Table>
+				</ClayTable.Body>
+			</ClayTable>
 		</ClayLayout.ContentCol>
 	);
 }
@@ -108,12 +107,12 @@ function ListField({field, modalProps, onSave, value}: IListFieldProps) {
 	};
 
 	return (
-		<Row>
-			<Cell width={LABEL_CELL_WIDTH}>
+		<ClayTable.Row>
+			<ClayTable.Cell className="list-visualization-mode-label-cell">
 				<strong>{field.label}</strong>
-			</Cell>
+			</ClayTable.Cell>
 
-			<Cell>
+			<ClayTable.Cell className="list-visualization-mode-value-cell">
 				<ClayInput.Group small>
 					<ClayInput.GroupItem>
 						<p
@@ -137,7 +136,7 @@ function ListField({field, modalProps, onSave, value}: IListFieldProps) {
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
-			</Cell>
-		</Row>
+			</ClayTable.Cell>
+		</ClayTable.Row>
 	);
 }

@@ -166,6 +166,7 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 	SiteItemSelectorCriterion siteItemSelectorCriterion = new SiteItemSelectorCriterion();
 
 	siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new GroupItemSelectorReturnType());
+	siteItemSelectorCriterion.setExcludedGroupIds(new long[] {siteGroup.getGroupId()});
 	siteItemSelectorCriterion.setIncludeCompany(false);
 	siteItemSelectorCriterion.setIncludeRecentSites(false);
 	%>
@@ -174,8 +175,6 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 		componentId='<%= liferayPortletResponse.getNamespace() + "details" %>'
 		context='<%=
 			HashMapBuilder.<String, Object>put(
-				"currentGroupId", siteGroup.getGroupId()
-			).put(
 				"defaultParentGroupId", GroupConstants.DEFAULT_PARENT_GROUP_ID
 			).put(
 				"portletURL", String.valueOf(itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), liferayPortletResponse.getNamespace() + "selectGroup", siteItemSelectorCriterion))

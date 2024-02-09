@@ -5,12 +5,7 @@
 
 import {delegate, openSelectionModal} from 'frontend-js-web';
 
-export default function ({
-	currentGroupId,
-	defaultParentGroupId,
-	namespace,
-	portletURL,
-}) {
+export default function ({defaultParentGroupId, namespace, portletURL}) {
 	const eventDelegates = [];
 	const form = document.getElementById(`${namespace}fm`);
 	const membershipContainer = document.getElementById(
@@ -28,13 +23,11 @@ export default function ({
 			onSelect: (event) => {
 				const {groupdescriptivename, groupid, grouptype} = event;
 
-				if (groupid !== currentGroupId) {
-					parentSiteInput.value = `${groupdescriptivename} (${grouptype})`;
+				parentSiteInput.value = `${groupdescriptivename} (${grouptype})`;
 
-					primaryKeysInput.value = groupid;
+				primaryKeysInput.value = groupid;
 
-					membershipContainer.classList.remove('hide');
-				}
+				membershipContainer.classList.remove('hide');
 			},
 			selectEventName: `${namespace}selectGroup`,
 			title: Liferay.Language.get('select-site'),

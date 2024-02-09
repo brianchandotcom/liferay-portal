@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -133,7 +134,16 @@ public class LockedLayoutsDisplayContext {
 							PortletURLBuilder.createActionURL(
 								_liferayPortletResponse
 							).setActionName(
-								"/layout_locked_layouts/unlock_layouts"
+								() -> {
+									if (FeatureFlagManagerUtil.isEnabled(
+											"LPD-11003")) {
+
+										return "/locked_items/unlock_layouts";
+									}
+
+									return "/layout_locked_layouts" +
+										"/unlock_layouts";
+								}
 							).setRedirect(
 								_themeDisplay.getURLCurrent()
 							).setParameter(

@@ -147,7 +147,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 				BooleanClauseOccur.MUST);
 
 			modelBooleanQuery.add(
-				keywordsBooleanQuery, BooleanClauseOccur.SHOULD);
+				keywordsBooleanQuery, BooleanClauseOccur.MUST);
 
 			booleanQuery.add(modelBooleanQuery, BooleanClauseOccur.SHOULD);
 		}

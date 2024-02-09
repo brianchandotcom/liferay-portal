@@ -13,12 +13,12 @@
 	<body class="speedwell ${css_class}" id="content">
 		<@liferay.control_menu />
 
-		<div class="position-relative" id="wrapper">
-			<div class="liferay-top">
-				<@liferay_ui["quick-access"] contentId="#main-content" />
-				<@liferay_util["include"] page=body_top_include />
-			</div>
+		<div class="liferay-top">
+			<@liferay_ui["quick-access"] contentId="#main-content" />
+			<@liferay_util["include"] page=body_top_include />
+		</div>
 
+		<div class="position-relative" id="wrapper">
 			<main class="speedwell-frame" id="speedwell">
 				<div class="speedwell-frame__topbar">
 					<#include "${full_templates_path}/topbar.ftl" />
@@ -57,11 +57,11 @@
 					</div>
 				</footer>
 			</main>
+		</div>
 
-			<div class="liferay-bottom">
+		<div class="liferay-bottom">
 				<@liferay_util["include"] page=body_bottom_include />
 				<@liferay_util["include"] page=bottom_include />
-			</div>
 		</div>
 
 		<script ${nonceAttribute} src="${javascript_folder}/features/accessibility.js" type="text/javascript"></script>

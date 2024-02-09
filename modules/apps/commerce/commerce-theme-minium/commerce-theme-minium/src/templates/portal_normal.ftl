@@ -33,11 +33,11 @@
 
 	<@liferay.control_menu />
 
-	<div class="position-relative" id="wrapper">
-		<div class="liferay-top">
-			<@liferay_util["include"] page=body_top_include />
-		</div>
+	<div class="liferay-top">
+		<@liferay_util["include"] page=body_top_include />
+	</div>
 
+	<div class="position-relative" id="wrapper">
 		<main class="minium minium-frame" id="minium">
 			<#if show_sidebar>
 				<div class="minium-frame__sidebar">
@@ -79,11 +79,11 @@
 				<@liferay_commerce_ui["search-results"] />
 			</div>
 		</main>
+	</div>
 
-		<div class="liferay-bottom">
+	<div class="liferay-bottom">
 			<@liferay_util["include"] page=body_bottom_include />
 			<@liferay_util["include"] page=bottom_include />
-		</div>
 	</div>
 </body>
 </html>

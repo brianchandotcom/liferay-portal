@@ -10,15 +10,10 @@ import com.liferay.portal.reports.engine.ReportRequest;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.data.JRXmlDataSource;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Gavin Wan
  * @author Brian Wing Shun Chan
  */
-@Component(
-	property = "reportDataSourceType=xml", service = ReportFillManager.class
-)
 public class XmlReportFillManager extends BaseReportFillManager {
 
 	@Override

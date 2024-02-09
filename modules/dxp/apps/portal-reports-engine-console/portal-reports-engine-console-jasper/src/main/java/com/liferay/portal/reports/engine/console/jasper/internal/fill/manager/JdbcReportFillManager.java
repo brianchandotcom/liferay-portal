@@ -16,15 +16,10 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Gavin Wan
  * @author Brian Wing Shun Chan
  */
-@Component(
-	property = "reportDataSourceType=jdbc", service = ReportFillManager.class
-)
 public class JdbcReportFillManager extends BaseReportFillManager {
 
 	@Override

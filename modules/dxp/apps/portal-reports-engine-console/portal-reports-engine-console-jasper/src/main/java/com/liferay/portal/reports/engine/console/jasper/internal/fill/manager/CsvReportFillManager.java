@@ -12,15 +12,10 @@ import com.liferay.portal.reports.engine.ReportRequest;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.data.JRCsvDataSource;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Gavin Wan
  * @author Brian Wing Shun Chan
  */
-@Component(
-	property = "reportDataSourceType=csv", service = ReportFillManager.class
-)
 public class CsvReportFillManager extends BaseReportFillManager {
 
 	@Override

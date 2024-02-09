@@ -20,12 +20,12 @@
 
 <tr>
 	<td>FILTER_BY_OVERRIDE_BOLD_LANGUAGE_WITH_OVERRIDE</td>
-	<td>//dd[contains(.,'${key_languageKey}')]//h6/strong[contains (.,'${key_language}')]</td>
+	<td>//dd[contains(.,'${key_languageKey}')]//div/strong[contains (.,'${key_language}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_BY_OVERRIDE_LANGUAGES_WITH_OVERRIDE</td>
-	<td>//div[contains(@class,'autofit-col-expand')]//h6[contains (.,'Languages With Override:')]</td>
+	<td>//div[contains(@class,'autofit-col-expand')]//div[contains (.,'Languages With Override:')]</td>
 	<td></td>
 </tr>
 <tr>

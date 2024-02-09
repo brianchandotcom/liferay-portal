@@ -43,12 +43,12 @@
 </tr>
 <tr>
 	<td>PROCESS_SUCCESSFUL</td>
-	<td>//*[@data-qa-id='processResult'][contains(.,'Successful')] | //h6[contains(.,'Successful')]</td>
+	<td>//*[@data-qa-id='processResult'][contains(.,'Successful')] | //div[contains(@class, 'h6')][contains(.,'Successful')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PROCESS_FAILED</td>
-	<td>//*[@data-qa-id='processResult'][contains(.,'Failed')] | //h6[contains(.,'Failed')]</td>
+	<td>//*[@data-qa-id='processResult'][contains(.,'Failed')] | //div[contains(@class, 'h6')][contains(.,'Failed')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -58,7 +58,7 @@
 </tr>
 <tr>
 	<td>PROCESS_RESULT</td>
-	<td>//*[@data-qa-id='processResult'] | //h6[contains(@class,'background-task-status-row')]</td>
+	<td>//*[@data-qa-id='processResult'] | //div[contains(@class,'background-task-status-row')]</td>
 	<td></td>
 </tr>
 <tr>

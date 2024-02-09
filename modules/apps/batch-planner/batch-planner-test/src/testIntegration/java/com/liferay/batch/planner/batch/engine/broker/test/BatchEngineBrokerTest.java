@@ -314,8 +314,8 @@ public class BatchEngineBrokerTest {
 	@Test
 	public void testImportExportCompanyScopeObjectEntryCSV() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObjectCSV",
-			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+			"TestObjectCSV", ObjectDefinitionConstants.SCOPE_COMPANY,
+			TestPropsValues.getUser());
 
 		_addObjectEntryInDifferentCompany("TestObjectCSV");
 
@@ -353,8 +353,8 @@ public class BatchEngineBrokerTest {
 	@Test
 	public void testImportExportCompanyScopeObjectEntryJSON() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObject",
-			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+			"TestObject", ObjectDefinitionConstants.SCOPE_COMPANY,
+			TestPropsValues.getUser());
 
 		File file = _createImportFile(
 			_addDLFileEntry(
@@ -406,8 +406,7 @@ public class BatchEngineBrokerTest {
 
 		try (FileInputStream fileInputStream = new FileInputStream(file)) {
 			_objectDefinition2 = _publishObjectDefinition(
-				TestPropsValues.getCompanyId(), "TestObject2",
-				ObjectDefinitionConstants.SCOPE_COMPANY,
+				"TestObject2", ObjectDefinitionConstants.SCOPE_COMPANY,
 				TestPropsValues.getUser());
 
 			_objectDefinition2 =
@@ -460,8 +459,8 @@ public class BatchEngineBrokerTest {
 		// Default group
 
 		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObjectCSV",
-			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
+			"TestObjectCSV", ObjectDefinitionConstants.SCOPE_SITE,
+			TestPropsValues.getUser());
 
 		_testImportExportSiteScopeObjectEntryCSV(
 			TestPropsValues.getGroupId(), _OBJECT_ENTRY_ERC_1);
@@ -488,8 +487,8 @@ public class BatchEngineBrokerTest {
 		// Default group
 
 		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObject",
-			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
+			"TestObject", ObjectDefinitionConstants.SCOPE_SITE,
+			TestPropsValues.getUser());
 
 		_testImportExportSiteScopeObjectEntryJSON(
 			TestPropsValues.getGroupId(), _OBJECT_ENTRY_ERC_1);
@@ -551,92 +550,91 @@ public class BatchEngineBrokerTest {
 			ObjectDefinition objectDefinition, long userId)
 		throws Exception {
 
+		DLFileEntry dlFileEntry = _addDLFileEntry(groupId, userId);
+
+		return _objectEntryLocalService.addOrUpdateObjectEntry(
+			externalReferenceCode, userId,
+			_getGroupId(groupId, objectDefinition),
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"testAttachmentField", dlFileEntry.getFileEntryId()
+			).put(
+				"testBooleanField", RandomTestUtil.randomBoolean()
+			).put(
+				"testDateField", "2022-01-01"
+			).put(
+				"testDateTimeField", "2023-07-27T12:00:00.000Z"
+			).put(
+				"testDecimalField", 7.5
+			).put(
+				"testIntegerField", 5
+			).put(
+				"testLongIntegerField", 123456789L
+			).put(
+				"testLongTextField",
+				StringBundler.concat(
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit, ",
+					"sed do eiusmod tempor incididunt ut labore et dolore ",
+					"magna aliqua. Ut enim ad minim veniam, quis nostrud ",
+					"exercitation ullamco laboris nisi ut aliquip ex ea ",
+					"commodo consequat. Duis aute irure dolor in ",
+					"reprehenderit in voluptate velit esse cillum dolore eu ",
+					"fugiat nulla pariatur. Excepteur sint occaecat cupidatat ",
+					"non proident, sunt in culpa qui officia deserunt mollit ",
+					"anim id est laborum.")
+			).put(
+				"testMultiselectPicklistField",
+				"listTypeEntryKey1, listTypeEntryKey2"
+			).put(
+				"testPicklistField", "listTypeEntryKey1"
+			).put(
+				"testPrecisionDecimalField",
+				new BigDecimal(0.1234567891234567, MathContext.DECIMAL64)
+			).put(
+				"testRichTextField",
+				StringBundler.concat(
+					"<p>Test text</p>\n<p>\n",
+					"  <img alt=\"\" height=\"202\" src=\"",
+					"http://localhost:8080/image/company_logo\">\n</p>")
+			).put(
+				"testTextField", "Lorem Ipsum"
+			).build(),
+			ServiceContextTestUtil.getServiceContext(
+				companyId, groupId, userId));
+	}
+
+	private void _addObjectEntryInDifferentCompany(String name)
+		throws Exception {
+
 		String originalName = PrincipalThreadLocal.getName();
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
+		_company2 = CompanyTestUtil.addCompany(true);
+
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setWithSafeCloseable(
+					_company2.getCompanyId())) {
+
+			User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
 
 			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(
-					_userLocalService.getUser(userId)));
+				PermissionCheckerFactoryUtil.create(user));
 
-			PrincipalThreadLocal.setName(userId);
+			PrincipalThreadLocal.setName(user.getUserId());
 
-			DLFileEntry dlFileEntry = _addDLFileEntry(groupId, userId);
+			_objectDefinition2 = _publishObjectDefinition(
+				name, ObjectDefinitionConstants.SCOPE_COMPANY, user);
 
-			return _objectEntryLocalService.addOrUpdateObjectEntry(
-				externalReferenceCode, userId,
-				_getGroupId(groupId, objectDefinition),
-				objectDefinition.getObjectDefinitionId(),
-				HashMapBuilder.<String, Serializable>put(
-					"testAttachmentField", dlFileEntry.getFileEntryId()
-				).put(
-					"testBooleanField", RandomTestUtil.randomBoolean()
-				).put(
-					"testDateField", "2022-01-01"
-				).put(
-					"testDateTimeField", "2023-07-27T12:00:00.000Z"
-				).put(
-					"testDecimalField", 7.5
-				).put(
-					"testIntegerField", 5
-				).put(
-					"testLongIntegerField", 123456789L
-				).put(
-					"testLongTextField",
-					StringBundler.concat(
-						"Lorem ipsum dolor sit amet, consectetur adipiscing ",
-						"elit, sed do eiusmod tempor incididunt ut labore et ",
-						"dolore magna aliqua. Ut enim ad minim veniam, quis ",
-						"nostrud exercitation ullamco laboris nisi ut aliquip ",
-						"ex ea commodo consequat. Duis aute irure dolor in ",
-						"reprehenderit in voluptate velit esse cillum dolore ",
-						"eu fugiat nulla pariatur. Excepteur sint occaecat ",
-						"cupidatat non proident, sunt in culpa qui officia ",
-						"deserunt mollit anim id est laborum.")
-				).put(
-					"testMultiselectPicklistField",
-					"listTypeEntryKey1, listTypeEntryKey2"
-				).put(
-					"testPicklistField", "listTypeEntryKey1"
-				).put(
-					"testPrecisionDecimalField",
-					new BigDecimal(0.1234567891234567, MathContext.DECIMAL64)
-				).put(
-					"testRichTextField",
-					StringBundler.concat(
-						"<p>Test text</p>\n<p>\n",
-						"  <img alt=\"\" height=\"202\" src=\"",
-						"http://localhost:8080/image/company_logo\">\n</p>")
-				).put(
-					"testTextField", "Lorem Ipsum"
-				).build(),
-				ServiceContextTestUtil.getServiceContext(
-					companyId, groupId, userId));
+			_addObjectEntry(
+				_company2.getCompanyId(), RandomTestUtil.randomString(),
+				_company2.getGroupId(), _objectDefinition2, user.getUserId());
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
 			PrincipalThreadLocal.setName(originalName);
 		}
-	}
-
-	private void _addObjectEntryInDifferentCompany(String name)
-		throws Exception {
-
-		_company2 = CompanyTestUtil.addCompany(true);
-
-		User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
-
-		_objectDefinition2 = _publishObjectDefinition(
-			_company2.getCompanyId(), name,
-			ObjectDefinitionConstants.SCOPE_COMPANY, user);
-
-		_addObjectEntry(
-			_company2.getCompanyId(), RandomTestUtil.randomString(),
-			_company2.getGroupId(), _objectDefinition2, user.getUserId());
 	}
 
 	private void _assertActions(JsonNode fieldJsonNode, String fieldName) {
@@ -1116,15 +1114,140 @@ public class BatchEngineBrokerTest {
 	}
 
 	private ObjectDefinition _publishObjectDefinition(
-			long companyId, String name, String scope, User user)
+			String name, String scope, User user)
 		throws Exception {
 
-		String originalName = PrincipalThreadLocal.getName();
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		ListTypeEntry listTypeEntry1 = ListTypeEntryUtil.createListTypeEntry(
+			"listTypeEntryKey1",
+			Collections.singletonMap(LocaleUtil.US, "listTypeEntryName1"));
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+		ListTypeEntry listTypeEntry2 = ListTypeEntryUtil.createListTypeEntry(
+			"listTypeEntryKey2",
+			Collections.singletonMap(LocaleUtil.US, "listTypeEntryName2"));
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, user.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				false, Arrays.asList(listTypeEntry1, listTypeEntry2));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				user.getUserId(), 0, false, false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				name, null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Arrays.asList(
+					new AttachmentObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"testAttachmentField"
+					).objectFieldSettings(
+						Arrays.asList(
+							_createObjectFieldSetting(
+								"acceptedFileExtensions", "txt"),
+							_createObjectFieldSetting(
+								"fileSource", "documentsAndMedia"),
+							_createObjectFieldSetting("maximumFileSize", "100"))
+					).build(),
+					new BooleanObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"testBooleanField"
+					).build(),
+					new DateObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"testDateField"
+					).build(),
+					new DateTimeObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"testDateTimeField"
+					).objectFieldSettings(
+						Collections.singletonList(
+							_createObjectFieldSetting(
+								ObjectFieldSettingConstants.NAME_TIME_STORAGE,
+								ObjectFieldSettingConstants.
+									VALUE_USE_INPUT_AS_ENTERED))
+					).build(),
+					new DecimalObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"testDecimalField"
+					).build(),
+					new IntegerObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"testIntegerField"
+					).build(),
+					new LongIntegerObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"testLongIntegerField"
+					).build(),
+					new LongTextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"testLongTextField"
+					).build(),
+					new MultiselectPicklistObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).listTypeDefinitionId(
+						listTypeDefinition.getListTypeDefinitionId()
+					).name(
+						"testMultiselectPicklistField"
+					).build(),
+					new PicklistObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).listTypeDefinitionId(
+						listTypeDefinition.getListTypeDefinitionId()
+					).name(
+						"testPicklistField"
+					).build(),
+					new PrecisionDecimalObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"testPrecisionDecimalField"
+					).build(),
+					new RichTextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"testRichTextField"
+					).build(),
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"testTextField"
+					).build()));
 
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(user));
@@ -1334,8 +1457,8 @@ public class BatchEngineBrokerTest {
 
 	private void _setUpObjectDefinition(String name) throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), name,
-			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+			name, ObjectDefinitionConstants.SCOPE_COMPANY,
+			TestPropsValues.getUser());
 
 		_objectDefinition1 =
 			_objectDefinitionLocalService.updateExternalReferenceCode(
@@ -1371,8 +1494,8 @@ public class BatchEngineBrokerTest {
 			Collections.emptyList());
 
 		_objectDefinition2 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), "TestObject2",
-			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
+			"TestObject2", ObjectDefinitionConstants.SCOPE_COMPANY,
+			TestPropsValues.getUser());
 
 		_objectRelationshipLocalService.addObjectRelationship(
 			null, TestPropsValues.getUserId(),

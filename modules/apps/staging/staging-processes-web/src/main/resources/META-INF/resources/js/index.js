@@ -9,7 +9,10 @@ import {
 	postForm,
 } from 'frontend-js-web';
 
-export default function propsTransformer({portletNamespace, ...otherProps}) {
+export function StagingProcessesWebToolbarPropsTransformer({
+	portletNamespace,
+	...otherProps
+}) {
 	return {
 		...otherProps,
 		itemsTotal: document.getElementsByName(`${portletNamespace}rowIds`)

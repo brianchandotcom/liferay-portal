@@ -20,7 +20,7 @@ boolean hasPublishStagingPermission = GroupPermissionUtil.contains(permissionChe
 	creationMenu="<%= stagingProcessesWebToolbarDisplayContext.getCreationMenu(hasPublishStagingPermission) %>"
 	filterDropdownItems="<%= stagingProcessesWebToolbarDisplayContext.getFilterDropdownItems() %>"
 	orderDropdownItems="<%= stagingProcessesWebToolbarDisplayContext.getOrderByDropDownItems() %>"
-	propsTransformer="js/StagingProcessesWebToolbarPropsTransformer"
+	propsTransformer="{StagingProcessesWebToolbarPropsTransformer} from staging-processes-web"
 	searchContainerId="<%= searchContainerId %>"
 	selectable="<%= hasPublishStagingPermission %>"
 	showCreationMenu='<%= tabs1.equals("processes") && hasPublishStagingPermission %>'

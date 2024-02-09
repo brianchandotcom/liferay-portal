@@ -1,33 +1,36 @@
 @import 'atlas-variables';
+@import 'cadmin-variables';
 
-.dsm-actions-icon-selection-modal ul li {
-	color: $gray-600;
-	cursor: pointer;
-	padding-bottom: 8px;
-	padding-top: 8px;
+html#{$cadmin-selector} .cadmin {
+	.dsm-actions-icon-selection-modal ul li {
+		color: $gray-600;
+		cursor: pointer;
+		padding-bottom: 8px;
+		padding-top: 8px;
 
-	&:hover {
-		background-color: #f0f5ff;
-		color: #272833;
-	}
-}
-
-.panel-unstyled {
-	margin-bottom: 0;
-	padding: 1rem 1.5rem;
-
-	.panel-header {
-		&,
-		&.collapsed {
-			border-color: $gray-400;
-		}
-
-		&.panel-header-link {
-			border-radius: 0;
+		&:hover {
+			background-color: #f0f5ff;
+			color: #272833;
 		}
 	}
 
-	.tab-content.action-messages .tab-pane {
-		padding: 2rem 0;
+	.panel-unstyled {
+		margin-bottom: 0;
+		padding: 1rem 1.5rem;
+
+		.panel-header {
+			&,
+			&.collapsed {
+				border-color: $gray-400;
+			}
+
+			&.panel-header-link {
+				border-radius: 0;
+			}
+		}
+
+		.tab-content.action-messages .tab-pane {
+			padding: 2rem 0;
+		}
 	}
 }

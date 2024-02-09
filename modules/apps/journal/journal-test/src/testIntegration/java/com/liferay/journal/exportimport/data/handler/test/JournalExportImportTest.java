@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.staging.configuration.StagingConfiguration;
@@ -100,6 +101,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Juan Fernández
  */
+@FeatureFlags("LPS-199086")
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
 public class JournalExportImportTest extends BasePortletExportImportTestCase {

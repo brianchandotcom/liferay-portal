@@ -11,6 +11,7 @@ const API_URL = {
 	FDS_DYNAMIC_FILTERS: '/o/data-set-manager/dynamic-filters',
 	FDS_ENTRIES: '/o/data-set-manager/entries',
 	FDS_FIELDS: '/o/data-set-manager/fields',
+	FDS_LIST_SECTIONS: '/o/data-set-manager/list-sections',
 	FDS_SORTS: '/o/data-set-manager/sorts',
 	FDS_VIEWS: '/o/data-set-manager/views',
 };
@@ -40,6 +41,9 @@ const OBJECT_RELATIONSHIP = {
 	FDS_VIEW_FDS_ITEM_ACTION: 'fdsViewFDSItemActionRelationship',
 	FDS_VIEW_FDS_ITEM_ACTION_ID:
 		'r_fdsViewFDSItemActionRelationship_c_fdsViewId',
+	FDS_VIEW_FDS_LIST_SECTION: 'fdsViewFDSListSectionRelationship',
+	FDS_VIEW_FDS_LIST_SECTION_ID:
+		'r_fdsViewFDSListSectionRelationship_c_fdsViewId',
 	FDS_VIEW_FDS_SORT: 'fdsViewFDSSortRelationship',
 	FDS_VIEW_FDS_SORT_ID: 'r_fdsViewFDSSortRelationship_c_fdsViewId',
 } as const;

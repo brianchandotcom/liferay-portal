@@ -10,6 +10,7 @@ declare const API_URL: {
 	FDS_DYNAMIC_FILTERS: string;
 	FDS_ENTRIES: string;
 	FDS_FIELDS: string;
+	FDS_LIST_SECTIONS: string;
 	FDS_SORTS: string;
 	FDS_VIEWS: string;
 };
@@ -32,6 +33,8 @@ declare const OBJECT_RELATIONSHIP: {
 	readonly FDS_VIEW_FDS_FIELD_ID: 'r_fdsViewFDSFieldRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_ITEM_ACTION: 'fdsViewFDSItemActionRelationship';
 	readonly FDS_VIEW_FDS_ITEM_ACTION_ID: 'r_fdsViewFDSItemActionRelationship_c_fdsViewId';
+	readonly FDS_VIEW_FDS_LIST_SECTION: 'fdsViewFDSListSectionRelationship';
+	readonly FDS_VIEW_FDS_LIST_SECTION_ID: 'r_fdsViewFDSListSectionRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_SORT: 'fdsViewFDSSortRelationship';
 	readonly FDS_VIEW_FDS_SORT_ID: 'r_fdsViewFDSSortRelationship_c_fdsViewId';
 };

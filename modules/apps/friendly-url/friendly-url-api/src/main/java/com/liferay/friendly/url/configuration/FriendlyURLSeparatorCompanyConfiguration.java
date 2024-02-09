@@ -27,6 +27,6 @@ public interface FriendlyURLSeparatorCompanyConfiguration {
 		deflt = "{}", description = "friendly-url-separators-description",
 		name = "friendly-url-separators-name", required = false
 	)
-	public String friendlyURLSeparators();
+	public String friendlyURLSeparatorsJSONObjectString();
 
 }

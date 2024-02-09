@@ -14,6 +14,19 @@ import {useForm, useFormState} from '../../../core/hooks/useForm.es';
 import {setValue} from '../../../utils/i18n.es';
 import {EVENT_TYPES} from '../eventTypes';
 
+const getValue = (defaultLanguageId, editingLanguageId, localizedValue) => {
+	if (!localizedValue) {
+		return '';
+	}
+
+	return (
+		localizedValue[editingLanguageId] ||
+		localizedValue[defaultLanguageId] ||
+		localizedValue[Liferay.ThemeDisplay.getLanguageId()] ||
+		''
+	);
+};
+
 export function Container({children, pages, strings = {}}) {
 	const {editingLanguageId} = useFormState();
 	const dispatch = useForm();
@@ -76,20 +89,16 @@ export function Page({page: {successPageSettings}}) {
 	const prevEditingLanguageId = usePrevious(editingLanguageId);
 
 	const {initialBody, initialTitle} = {
-		initialBody:
-			(successPageSettings.body &&
-				(successPageSettings.body[editingLanguageId] ||
-					successPageSettings.body[defaultLanguageId])) ||
-			Liferay.Language.get(
-				'your-information-was-successfully-received-thank-you-for-filling-out-the-form'
-			) ||
-			'',
-		initialTitle:
-			(successPageSettings.title &&
-				(successPageSettings.title[editingLanguageId] ||
-					successPageSettings.title[defaultLanguageId])) ||
-			Liferay.Language.get('thank-you') ||
-			'',
+		initialBody: getValue(
+			defaultLanguageId,
+			editingLanguageId,
+			successPageSettings.body
+		),
+		initialTitle: getValue(
+			defaultLanguageId,
+			editingLanguageId,
+			successPageSettings.title
+		),
 	};
 
 	const [body, setBody] = useState(initialBody);

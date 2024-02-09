@@ -50,26 +50,24 @@ describe('LockedKBArticleModal', () => {
 		expect(getByText('ok')).toBeInTheDocument();
 	});
 
-	describe('when try to move a locked article', () => {
-		it('renders the modal when called through the bridge component', async () => {
-			const {getByText} = await render(
-				<LockedKBArticleModal
-					open={false}
-					portletNamespace="_portletNamespace_"
-				/>
-			);
+	it('renders the modal when try to move a locked article', async () => {
+		const {getByText} = await render(
+			<LockedKBArticleModal
+				open={false}
+				portletNamespace="_portletNamespace_"
+			/>
+		);
 
-			await act(() =>
-				Liferay.componentReady(bridgeComponentId).then(({open}) => {
-					open();
-				})
-			);
+		await act(() =>
+			Liferay.componentReady(bridgeComponentId).then(({open}) => {
+				open();
+			})
+		);
 
-			act(() => {
-				jest.runAllTimers();
-			});
-
-			expect(getByText('article-in-edition')).toBeInTheDocument();
+		act(() => {
+			jest.runAllTimers();
 		});
+
+		expect(getByText('article-in-edition')).toBeInTheDocument();
 	});
 });

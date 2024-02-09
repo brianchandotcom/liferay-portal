@@ -15,6 +15,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-page-template-admin-api")
+	compileOnly project(":apps:locked-items:locked-items-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-settings:portal-settings-api")
 	compileOnly project(":apps:site:site-api")

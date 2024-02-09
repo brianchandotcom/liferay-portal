@@ -13,13 +13,10 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-@Component(service = ReportCompiler.class)
 public class DefaultReportCompiler implements ReportCompiler {
 
 	@Override

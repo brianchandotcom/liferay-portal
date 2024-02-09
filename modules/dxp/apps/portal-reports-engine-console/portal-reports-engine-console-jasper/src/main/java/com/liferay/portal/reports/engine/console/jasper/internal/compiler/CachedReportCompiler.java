@@ -15,15 +15,15 @@ import java.util.Map;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-@Component(service = ReportCompiler.class)
 public class CachedReportCompiler implements ReportCompiler {
+
+	public CachedReportCompiler(ReportCompiler reportCompiler) {
+		_reportCompiler = reportCompiler;
+	}
 
 	@Override
 	public JasperReport compile(ReportDesignRetriever reportDesignRetriever)
@@ -68,9 +68,7 @@ public class CachedReportCompiler implements ReportCompiler {
 	private final Map<String, CachedJasperReport> _cachedJasperReports =
 		Collections.synchronizedMap(
 			new LRUMap<String, CachedJasperReport>(_DEFAULT_MAX_SIZE));
-
-	@Reference
-	private ReportCompiler _reportCompiler;
+	private final ReportCompiler _reportCompiler;
 
 	private class CachedJasperReport {
 

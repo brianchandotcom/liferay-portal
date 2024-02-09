@@ -262,7 +262,17 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			testrayCaseId = objectEntry.getId();
 
 			_objectEntryIds.put(objectEntryIdsKey, testrayCaseId);
+		}
 
+		ObjectEntry objectEntry = ObjectEntryUtil.getObjectEntriesPage(
+			null, companyId, _defaultDTOConverterContext,
+			StringBundler.concat(
+				"buildId eq '", testrayBuildId, "' and caseId eq '",
+				testrayCaseId, "'"),
+			"BuildsCases", _objectEntryManager, null
+		).fetchFirstItem();
+
+		if (objectEntry == null) {
 			ObjectEntryUtil.addObjectEntry(
 				_defaultDTOConverterContext, "BuildsCases", _objectEntryManager,
 				HashMapBuilder.<String, Object>put(

@@ -55,20 +55,24 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 	}
 
 	@Test
-	public void testGetEmptyFriendlyURLSeparators() throws Exception {
-		String friendlyURLSeparators =
-			_friendlyURLSeparatorConfigurationManager.getFriendlyURLSeparators(
-				_companyId);
+	public void testGetEmptyFriendlyURLSeparatorsJSONObjectString()
+		throws Exception {
 
-		Assert.assertNotNull(friendlyURLSeparators);
+		String friendlyURLSeparatorsJSONObjectString =
+			_friendlyURLSeparatorConfigurationManager.
+				getFriendlyURLSeparatorsJSONObjectString(_companyId);
+
+		Assert.assertNotNull(friendlyURLSeparatorsJSONObjectString);
 		Assert.assertEquals(
 			_jsonFactory.createJSONObject(
 			).toString(),
-			friendlyURLSeparators);
+			friendlyURLSeparatorsJSONObjectString);
 	}
 
 	@Test
-	public void testGetFriendlyURLSeparators() throws Exception {
+	public void testGetFriendlyURLSeparatorsJSONObjectString()
+		throws Exception {
+
 		JSONObject friendlyURLSeparatorsJSONObject = JSONUtil.put(
 			JournalArticle.class.getName(), "/test1/");
 
@@ -78,7 +82,7 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 				_configurationProvider.saveCompanyConfiguration(
 					FriendlyURLSeparatorCompanyConfiguration.class, _companyId,
 					HashMapDictionaryBuilder.<String, Object>put(
-						"friendlyURLSeparators",
+						"friendlyURLSeparatorsJSONObjectString",
 						friendlyURLSeparatorsJSONObject.toString()
 					).build());
 
@@ -91,13 +95,14 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 				configuration.update();
 			});
 
-		String friendlyURLSeparators =
-			_friendlyURLSeparatorConfigurationManager.getFriendlyURLSeparators(
-				_companyId);
+		String friendlyURLSeparatorsJSONObjectString =
+			_friendlyURLSeparatorConfigurationManager.
+				getFriendlyURLSeparatorsJSONObjectString(_companyId);
 
-		Assert.assertNotNull(friendlyURLSeparators);
+		Assert.assertNotNull(friendlyURLSeparatorsJSONObjectString);
 		Assert.assertEquals(
-			friendlyURLSeparatorsJSONObject.toString(), friendlyURLSeparators);
+			friendlyURLSeparatorsJSONObject.toString(),
+			friendlyURLSeparatorsJSONObjectString);
 	}
 
 	@Test
@@ -119,7 +124,8 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 		Assert.assertNotNull(friendlyURLSeparatorCompanyConfiguration);
 		Assert.assertEquals(
 			friendlyURLSeparatorsJSONObject.toString(),
-			friendlyURLSeparatorCompanyConfiguration.friendlyURLSeparators());
+			friendlyURLSeparatorCompanyConfiguration.
+				friendlyURLSeparatorsJSONObjectString());
 	}
 
 	@Inject

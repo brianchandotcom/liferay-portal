@@ -126,7 +126,7 @@ public class FileEntryLayoutDisplayPageProviderTest {
 						FriendlyURLSeparatorCompanyConfiguration.class.
 							getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"friendlyURLSeparators",
+							"friendlyURLSeparatorsJSONObjectString",
 							JSONUtil.put(
 								DLFileEntry.class.getName(),
 								fileEntryFriendlyURLSeparator)

@@ -187,12 +187,12 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_CONTAINER</td>
-	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']/parent::div[contains(@class,'form-group')] | //legend[normalize-space(text())='${key_fieldFieldLabel}']/parent::fieldset/parent::div[contains(@class,'form-group')]</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']/parent::div[contains(@class,'form-group')] | //label[normalize-space(text())='${key_fieldFieldLabel}']/parent::div/parent::div[contains(@class,'form-group')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELD_CONTAINER_TARGET</td>
-	<td>//label[normalize-space(text())='${key_targetFieldLabel}']/parent::div[contains(@class,'form-group')] | //legend[normalize-space(text())='${key_targetFieldLabel}']/parent::fieldset/parent::div[contains(@class,'form-group')]</td>
+	<td>//label[normalize-space(text())='${key_targetFieldLabel}']/parent::div[contains(@class,'form-group')] | //label[normalize-space(text())='${key_targetFieldLabel}']/parent::div/parent::div[contains(@class,'form-group')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>GRID_OPTION</td>
-	<td>//legend[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//tbody/tr[${key_row}]/td[${key_column}]//input</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//tbody/tr[${key_row}]/td[${key_column}]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>SELECTION_OPTION</td>
-	<td>//legend[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//input//following-sibling::span[normalize-space()='${key_optionValue}']//preceding-sibling::input</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//input//following-sibling::span[normalize-space()='${key_optionValue}']//preceding-sibling::input</td>
 	<td></td>
 </tr>
 <tr>

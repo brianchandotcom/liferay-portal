@@ -6,12 +6,14 @@
 package com.liferay.asset.publisher.web.internal.display.context;
 
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.search.GroupSearch;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -25,10 +27,13 @@ public class ParentSitesItemSelectorViewDisplayContext
 	extends BaseItemSelectorViewDisplayContext {
 
 	public ParentSitesItemSelectorViewDisplayContext(
+		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		HttpServletRequest httpServletRequest,
 		AssetPublisherHelper assetPublisherHelper, PortletURL portletURL) {
 
 		super(httpServletRequest, assetPublisherHelper, portletURL);
+
+		_groupItemSelectorCriterion = groupItemSelectorCriterion;
 	}
 
 	@Override
@@ -42,7 +47,20 @@ public class ParentSitesItemSelectorViewDisplayContext
 
 		Group group = themeDisplay.getSiteGroup();
 
-		List<Group> groups = _filterParentSitesGroups(group.getAncestors());
+		long[] excludedGroupIds =
+			_groupItemSelectorCriterion.getExcludedGroupIds();
+
+		List<Group> groups = ListUtil.filter(
+			group.getAncestors(),
+			curGroup -> {
+				if (curGroup.isContentSharingWithChildrenEnabled() &&
+					!ArrayUtil.contains(excludedGroupIds, group.getGroupId())) {
+
+					return true;
+				}
+
+				return false;
+			});
 
 		groupSearch.setResultsAndTotal(() -> groups, groups.size());
 
@@ -54,16 +72,6 @@ public class ParentSitesItemSelectorViewDisplayContext
 		return false;
 	}
 
-	private List<Group> _filterParentSitesGroups(List<Group> groups) {
-		List<Group> filteredGroups = new ArrayList<>();
-
-		for (Group group : groups) {
-			if (group.isContentSharingWithChildrenEnabled()) {
-				filteredGroups.add(group);
-			}
-		}
-
-		return filteredGroups;
-	}
+	private final GroupItemSelectorCriterion _groupItemSelectorCriterion;
 
 }

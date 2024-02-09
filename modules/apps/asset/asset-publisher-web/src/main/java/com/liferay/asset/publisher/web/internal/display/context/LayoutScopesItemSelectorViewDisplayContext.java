@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.search.GroupSearch;
 
@@ -86,14 +88,22 @@ public class LayoutScopesItemSelectorViewDisplayContext
 			List<Group> groups, Boolean privateLayout)
 		throws Exception {
 
+		long[] excludedGroupIds =
+			_groupItemSelectorCriterion.getExcludedGroupIds();
+
 		if (privateLayout == null) {
-			return groups;
+			return ListUtil.filter(
+				groups,
+				group -> !ArrayUtil.contains(
+					excludedGroupIds, group.getGroupId()));
 		}
 
 		List<Group> filteredGroups = new ArrayList<>();
 
 		for (Group group : groups) {
-			if (!group.isLayout()) {
+			if (!group.isLayout() ||
+				ArrayUtil.contains(excludedGroupIds, group.getGroupId())) {
+
 				continue;
 			}
 

@@ -90,6 +90,7 @@ public class ParentSitesItemSelectorView
 		ParentSitesItemSelectorViewDisplayContext
 			parentSitesItemSelectorViewDisplayContext =
 				new ParentSitesItemSelectorViewDisplayContext(
+					groupItemSelectorCriterion,
 					(HttpServletRequest)servletRequest, _assetPublisherHelper,
 					portletURL);
 

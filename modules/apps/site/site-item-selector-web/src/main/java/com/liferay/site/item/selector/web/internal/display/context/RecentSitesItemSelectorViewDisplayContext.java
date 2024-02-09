@@ -11,6 +11,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.site.item.selector.display.context.SitesItemSelectorViewDisplayContext;
 import com.liferay.site.manager.RecentGroupManager;
 import com.liferay.site.search.GroupSearch;
@@ -60,8 +62,16 @@ public class RecentSitesItemSelectorViewDisplayContext
 
 		groupSearch.setEmptyResultsMessage(
 			"you-have-not-visited-any-sites-recently");
+
+		GroupItemSelectorCriterion groupItemSelectorCriterion =
+			getGroupItemSelectorCriterion();
+
 		groupSearch.setResultsAndTotal(
-			_recentGroupManager.getRecentGroups(httpServletRequest));
+			ListUtil.filter(
+				_recentGroupManager.getRecentGroups(httpServletRequest),
+				group -> !ArrayUtil.contains(
+					groupItemSelectorCriterion.getExcludedGroupIds(),
+					group.getGroupId())));
 
 		return groupSearch;
 	}

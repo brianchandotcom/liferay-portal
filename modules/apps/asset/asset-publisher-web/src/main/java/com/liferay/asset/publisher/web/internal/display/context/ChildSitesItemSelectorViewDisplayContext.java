@@ -6,12 +6,14 @@
 package com.liferay.asset.publisher.web.internal.display.context;
 
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -20,6 +22,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.search.GroupSearch;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -34,10 +37,13 @@ public class ChildSitesItemSelectorViewDisplayContext
 	extends BaseItemSelectorViewDisplayContext {
 
 	public ChildSitesItemSelectorViewDisplayContext(
+		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		HttpServletRequest httpServletRequest,
 		AssetPublisherHelper assetPublisherHelper, PortletURL portletURL) {
 
 		super(httpServletRequest, assetPublisherHelper, portletURL);
+
+		_groupItemSelectorCriterion = groupItemSelectorCriterion;
 	}
 
 	@Override
@@ -95,6 +101,13 @@ public class ChildSitesItemSelectorViewDisplayContext
 			() -> {
 				List<Long> excludedGroupIds = new ArrayList<>();
 
+				if (_groupItemSelectorCriterion.getExcludedGroupIds() != null) {
+					Collections.addAll(
+						excludedGroupIds,
+						ArrayUtil.toLongArray(
+							_groupItemSelectorCriterion.getExcludedGroupIds()));
+				}
+
 				Group group = themeDisplay.getSiteGroup();
 
 				if (group.isStagingGroup()) {
@@ -116,6 +129,7 @@ public class ChildSitesItemSelectorViewDisplayContext
 		PortalUtil.getClassNameId(Organization.class)
 	};
 
+	private final GroupItemSelectorCriterion _groupItemSelectorCriterion;
 	private LinkedHashMap<String, Object> _groupParams;
 
 }

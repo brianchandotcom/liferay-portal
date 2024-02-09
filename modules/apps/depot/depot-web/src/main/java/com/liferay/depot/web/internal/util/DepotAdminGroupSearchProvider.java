@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -50,14 +51,16 @@ public class DepotAdminGroupSearchProvider {
 				portletRequest, portletURL);
 		}
 
-		return _getGroupSearch(portletRequest, portletURL);
+		return _getGroupSearch(
+			groupItemSelectorCriterion.getExcludedGroupIds(), portletRequest,
+			portletURL);
 	}
 
 	public GroupSearch getGroupSearch(
 			PortletRequest portletRequest, PortletURL portletURL)
 		throws PortalException {
 
-		return _getGroupSearch(portletRequest, portletURL);
+		return _getGroupSearch(null, portletRequest, portletURL);
 	}
 
 	@Activate
@@ -101,7 +104,8 @@ public class DepotAdminGroupSearchProvider {
 	}
 
 	private GroupSearch _getGroupSearch(
-			PortletRequest portletRequest, PortletURL portletURL)
+			long[] excludedGroupIds, PortletRequest portletRequest,
+			PortletURL portletURL)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -112,6 +116,8 @@ public class DepotAdminGroupSearchProvider {
 		LinkedHashMap<String, Object> groupParams =
 			LinkedHashMapBuilder.<String, Object>put(
 				"actionId", ActionKeys.VIEW
+			).put(
+				"excludedGroupIds", ListUtil.fromArray(excludedGroupIds)
 			).put(
 				"site", Boolean.FALSE
 			).build();

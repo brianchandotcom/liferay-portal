@@ -55,6 +55,9 @@ public class MySitesItemSelectorViewDisplayContext
 
 	@Override
 	public GroupSearch getGroupSearch() throws Exception {
+		GroupItemSelectorCriterion groupItemSelectorCriterion =
+			getGroupItemSelectorCriterion();
+
 		PortletURL portletURL = getPortletURL();
 
 		Group group = _getGroup();
@@ -67,12 +70,10 @@ public class MySitesItemSelectorViewDisplayContext
 		GroupSearch groupSearch = new GroupSearch(_portletRequest, portletURL);
 
 		GroupSearchProvider.setResultsAndTotal(
-			_getClassNames(), null, groupSearch, _portletRequest);
+			_getClassNames(), groupItemSelectorCriterion.getExcludedGroupIds(),
+			groupSearch, _portletRequest);
 
 		if (groupSearch.getStart() == 0) {
-			GroupItemSelectorCriterion groupItemSelectorCriterion =
-				getGroupItemSelectorCriterion();
-
 			if (groupItemSelectorCriterion.isIncludeUserPersonalSite()) {
 				_prependGroup(
 					groupSearch,

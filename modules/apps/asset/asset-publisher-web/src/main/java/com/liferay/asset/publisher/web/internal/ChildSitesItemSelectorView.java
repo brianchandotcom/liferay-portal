@@ -96,6 +96,7 @@ public class ChildSitesItemSelectorView
 		ChildSitesItemSelectorViewDisplayContext
 			childSitesItemSelectorViewDisplayContext =
 				new ChildSitesItemSelectorViewDisplayContext(
+					groupItemSelectorCriterion,
 					(HttpServletRequest)servletRequest, _assetPublisherHelper,
 					portletURL);
 

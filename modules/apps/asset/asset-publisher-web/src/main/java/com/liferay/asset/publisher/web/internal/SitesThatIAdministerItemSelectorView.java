@@ -98,6 +98,7 @@ public class SitesThatIAdministerItemSelectorView
 		SitesThatIAdministerItemSelectorViewDisplayContext
 			sitesItemSelectorViewDisplayContext =
 				new SitesThatIAdministerItemSelectorViewDisplayContext(
+					groupItemSelectorCriterion,
 					(HttpServletRequest)servletRequest, _assetPublisherHelper,
 					portletURL);
 

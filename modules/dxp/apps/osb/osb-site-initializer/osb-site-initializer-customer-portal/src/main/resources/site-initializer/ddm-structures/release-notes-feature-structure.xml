@@ -11,6 +11,7 @@
 						"en_US"
 					],
 					"defaultLanguageId": "en_US",
+					"definitionSchemaVersion": "2.0",
 					"fields": [
 						{
 							"dataType": "string",
@@ -52,7 +53,7 @@
 							"tip": {
 								"en_US": ""
 							},
-							"type": "text"
+							"type": "rich_text"
 						},
 						{
 							"dataType": "",
@@ -107,7 +108,8 @@
 									"type": "text"
 								}
 							],
-							"options": [],
+							"options": [
+							],
 							"repeatable": true,
 							"required": false,
 							"rows": [
@@ -117,9 +119,9 @@
 											"fields": [
 												"TicketURLTitle"
 											],
-											"size":12
+											"size": 12
 										}
-									],
+									]
 								},
 								{
 									"columns": [
@@ -188,7 +190,8 @@
 									"type": "text"
 								}
 							],
-							"options": [],
+							"options": [
+							],
 							"repeatable": true,
 							"required": false,
 							"rows": [
@@ -198,9 +201,9 @@
 											"fields": [
 												"MoreInfoURLTitle"
 											],
-											"size":12
+											"size": 12
 										}
-									],
+									]
 								},
 								{
 									"columns": [

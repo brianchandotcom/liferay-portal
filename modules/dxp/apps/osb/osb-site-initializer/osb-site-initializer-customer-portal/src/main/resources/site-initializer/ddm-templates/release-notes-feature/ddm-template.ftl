@@ -52,12 +52,11 @@
 	</#if>
 </#list>
 
-<@clay.panel displayTitle='${name} ${productCapabilities}'>
+<@clay.panel displayTitle="${name} ${productCapabilities}">
 	<#if description??>
 		${description}
 	</#if>
 </@clay.panel>
-
 
 <#list moreInfoURLs as moreInfoURL>
 	<p class="bg-brand-primary-lighten-5 cp-key-details-paragraph px-3 py-2 rounded">
@@ -76,7 +75,7 @@
 		<span class="release-status-previous">
 			${releaseStatusPrevious}
 		</span>
-		
+
 		->
 	</#if>
 

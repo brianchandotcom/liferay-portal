@@ -2,7 +2,7 @@
 
 <root>
 	<structure>
-		<name>RELEASE-NOTES-BREAKING_CHANGE-STRUCTURE</name>
+		<name>RELEASE-NOTES-BREAKING-CHANGE-STRUCTURE</name>
 		<description></description>
 		<definition>
 			<![CDATA[
@@ -11,6 +11,7 @@
 						"en_US"
 					],
 					"defaultLanguageId": "en_US",
+					"definitionSchemaVersion": "2.0",
 					"fields": [
 						{
 							"dataType": "string",
@@ -62,7 +63,7 @@
 									"tip": {
 										"en_US": ""
 									},
-									"type": "text"
+									"type": "rich_text"
 								},
 								{
 									"dataType": "string",
@@ -83,7 +84,7 @@
 									"tip": {
 										"en_US": ""
 									},
-									"type": "text"
+									"type": "rich_text"
 								},
 								{
 									"dataType": "string",
@@ -104,7 +105,7 @@
 									"tip": {
 										"en_US": ""
 									},
-									"type": "text"
+									"type": "rich_text"
 								},
 								{
 									"dataType": "string",
@@ -125,10 +126,11 @@
 									"tip": {
 										"en_US": ""
 									},
-									"type": "text"
+									"type": "rich_text"
 								}
 							],
-							"options": [],
+							"options": [
+							],
 							"repeatable": false,
 							"required": false,
 							"rows": [
@@ -138,9 +140,9 @@
 											"fields": [
 												"WhatChanged"
 											],
-											"size":12
+											"size": 12
 										}
-									],
+									]
 								},
 								{
 									"columns": [
@@ -148,9 +150,9 @@
 											"fields": [
 												"WhoIsAffected"
 											],
-											"size":12
+											"size": 12
 										}
-									],
+									]
 								},
 								{
 									"columns": [
@@ -158,9 +160,9 @@
 											"fields": [
 												"WhatDoINeedToDo"
 											],
-											"size":12
+											"size": 12
 										}
-									],
+									]
 								},
 								{
 									"columns": [
@@ -229,7 +231,8 @@
 									"type": "text"
 								}
 							],
-							"options": [],
+							"options": [
+							],
 							"repeatable": true,
 							"required": false,
 							"rows": [
@@ -239,9 +242,9 @@
 											"fields": [
 												"TicketURLTitle"
 											],
-											"size":12
+											"size": 12
 										}
-									],
+									]
 								},
 								{
 									"columns": [
@@ -310,7 +313,8 @@
 									"type": "text"
 								}
 							],
-							"options": [],
+							"options": [
+							],
 							"repeatable": true,
 							"required": false,
 							"rows": [
@@ -320,9 +324,9 @@
 											"fields": [
 												"MoreInfoURLTitle"
 											],
-											"size":12
+											"size": 12
 										}
-									],
+									]
 								},
 								{
 									"columns": [

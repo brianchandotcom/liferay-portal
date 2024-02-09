@@ -135,20 +135,20 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
 			_serviceTrackerMap.getService(Long.valueOf(classNameId));
 
-		List<com.liferay.change.tracking.model.CTCollection> ctCollections;
-
 		if (ctCollectionHistoryProvider == null) {
-			ctCollections =
-				_ctCollectionLocalService.getExclusivePublishedCTCollections(
-					classNameId, classPK);
-		}
-		else {
-			ctCollections = ctCollectionHistoryProvider.getCTCollections(
-				classNameId, classPK);
+			return Page.of(
+				TransformUtil.transform(
+					_ctCollectionLocalService.
+						getExclusivePublishedCTCollections(
+							classNameId, classPK),
+					this::_toCTCollection));
 		}
 
 		return Page.of(
-			TransformUtil.transform(ctCollections, this::_toCTCollection));
+			TransformUtil.transform(
+				_ctCollectionLocalService.getCTCollections(
+					classNameId, classPK),
+				this::_toCTCollection));
 	}
 
 	@Override

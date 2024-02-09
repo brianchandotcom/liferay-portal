@@ -28,11 +28,10 @@ public class KBArticleSiblingNavigationHelper
 
 	@Override
 	protected KBArticle fetchFirstChildKBArticle(KBArticle kbArticle) {
-		List<KBArticle> kbArticles =
-			_kbArticlePersistence.filterFindByG_P_M_NotS(
-				kbArticle.getGroupId(), kbArticle.getResourcePrimKey(), true,
-				WorkflowConstants.STATUS_IN_TRASH, 0, 1,
-				new KBArticlePriorityComparator(true));
+		List<KBArticle> kbArticles = _kbArticlePersistence.filterFindByG_P_M_S(
+			kbArticle.getGroupId(), kbArticle.getResourcePrimKey(), true,
+			WorkflowConstants.STATUS_APPROVED, 0, 1,
+			new KBArticlePriorityComparator(true));
 
 		if (kbArticles.isEmpty()) {
 			return null;
@@ -43,12 +42,11 @@ public class KBArticleSiblingNavigationHelper
 
 	@Override
 	protected KBArticle fetchLastChildKBArticle(KBArticle previousKBArticle) {
-		List<KBArticle> kbArticles =
-			_kbArticlePersistence.filterFindByG_P_M_NotS(
-				previousKBArticle.getGroupId(),
-				previousKBArticle.getResourcePrimKey(), true,
-				WorkflowConstants.STATUS_IN_TRASH, 0, 1,
-				new KBArticlePriorityComparator(false));
+		List<KBArticle> kbArticles = _kbArticlePersistence.filterFindByG_P_M_S(
+			previousKBArticle.getGroupId(),
+			previousKBArticle.getResourcePrimKey(), true,
+			WorkflowConstants.STATUS_APPROVED, 0, 1,
+			new KBArticlePriorityComparator(false));
 
 		if (kbArticles.isEmpty()) {
 			return null;
@@ -59,9 +57,9 @@ public class KBArticleSiblingNavigationHelper
 
 	@Override
 	protected List<KBArticle> findChildKBArticles(KBArticle kbArticle) {
-		return _kbArticlePersistence.filterFindByG_P_M_NotS(
+		return _kbArticlePersistence.filterFindByG_P_M_S(
 			kbArticle.getGroupId(), kbArticle.getParentResourcePrimKey(), true,
-			WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
 	}
 

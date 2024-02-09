@@ -28,26 +28,26 @@ public class KBArticleLocalSiblingNavigationHelper
 
 	@Override
 	protected KBArticle fetchFirstChildKBArticle(KBArticle kbArticle) {
-		return _kbArticlePersistence.fetchByG_P_M_NotS_First(
+		return _kbArticlePersistence.fetchByG_P_M_S_First(
 			kbArticle.getGroupId(), kbArticle.getResourcePrimKey(), true,
-			WorkflowConstants.STATUS_IN_TRASH,
+			WorkflowConstants.STATUS_APPROVED,
 			new KBArticlePriorityComparator(true));
 	}
 
 	@Override
 	protected KBArticle fetchLastChildKBArticle(KBArticle previousKBArticle) {
-		return _kbArticlePersistence.fetchByG_P_M_NotS_Last(
+		return _kbArticlePersistence.fetchByG_P_M_S_Last(
 			previousKBArticle.getGroupId(),
 			previousKBArticle.getResourcePrimKey(), true,
-			WorkflowConstants.STATUS_IN_TRASH,
+			WorkflowConstants.STATUS_APPROVED,
 			new KBArticlePriorityComparator(true));
 	}
 
 	@Override
 	protected List<KBArticle> findChildKBArticles(KBArticle kbArticle) {
-		return _kbArticlePersistence.findByG_P_M_NotS(
+		return _kbArticlePersistence.findByG_P_M_S(
 			kbArticle.getGroupId(), kbArticle.getParentResourcePrimKey(), true,
-			WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
 	}
 

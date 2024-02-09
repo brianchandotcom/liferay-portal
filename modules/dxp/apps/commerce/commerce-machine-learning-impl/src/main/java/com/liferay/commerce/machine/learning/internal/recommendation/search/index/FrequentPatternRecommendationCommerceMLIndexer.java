@@ -6,6 +6,7 @@
 package com.liferay.commerce.machine.learning.internal.recommendation.search.index;
 
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
+import com.liferay.commerce.machine.learning.internal.search.api.IndexNamePatterns;
 import com.liferay.commerce.machine.learning.internal.search.index.BaseCommerceMLIndexer;
 
 import org.osgi.service.component.annotations.Component;
@@ -18,13 +19,12 @@ public class FrequentPatternRecommendationCommerceMLIndexer
 	extends BaseCommerceMLIndexer {
 
 	public FrequentPatternRecommendationCommerceMLIndexer() {
-		super(_INDEX_MAPPING_FILE_NAME, _INDEX_NAME_PATTERN);
+		super(
+			_INDEX_MAPPING_FILE_NAME,
+			IndexNamePatterns.FREQUENT_PATTERN_RECOMMENDATION);
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =
 		"frequent-pattern-commerce-ml-recommendation-mappings.json";
-
-	private static final String _INDEX_NAME_PATTERN =
-		"%s-frequent-pattern-commerce-ml-recommendation";
 
 }

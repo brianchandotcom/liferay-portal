@@ -6,6 +6,7 @@
 package com.liferay.commerce.machine.learning.internal.recommendation.search.index;
 
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
+import com.liferay.commerce.machine.learning.internal.search.api.IndexNamePatterns;
 import com.liferay.commerce.machine.learning.internal.search.index.BaseCommerceMLIndexer;
 
 import org.osgi.service.component.annotations.Component;
@@ -17,13 +18,10 @@ import org.osgi.service.component.annotations.Component;
 public class UserRecommendationCommerceMLIndexer extends BaseCommerceMLIndexer {
 
 	public UserRecommendationCommerceMLIndexer() {
-		super(_INDEX_MAPPING_FILE_NAME, _INDEX_NAME_PATTERN);
+		super(_INDEX_MAPPING_FILE_NAME, IndexNamePatterns.USER_RECOMMENDATION);
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =
 		"user-commerce-ml-recommendation-mappings.json";
-
-	private static final String _INDEX_NAME_PATTERN =
-		"%s-user-commerce-ml-recommendation";
 
 }

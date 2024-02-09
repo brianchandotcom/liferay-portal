@@ -51,7 +51,6 @@ test('can get updated title in response after publish', async ({
 	);
 	await applicationPage.publishButton.click();
 
-	await page.goto('/');
 	const modifiedBasicAPIApplication =
 		await apiHelpers.object.getObjectEntryByExternalReferenceCode(
 			'headless-builder/applications',
